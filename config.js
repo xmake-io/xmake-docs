@@ -8,7 +8,7 @@ docute.init({
     repo: 'tboox/xmake',
     twitter: 'waruqi',
     url: 'http://xmake.io',
-    'edit-link': 'https://github.com/tboox/xmake-docs/blob/master/docs',
+    'edit-link': 'https://github.com/tboox/xmake-docs/blob/master',
     announcement(route) {
     const info = { type: 'success' }
     if (/\/zh/.test(route.path)) {
