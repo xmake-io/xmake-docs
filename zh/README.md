@@ -154,10 +154,42 @@ $ sudo apt-get install xmake
 
 #### 编译安装
 
+通过脚本编译安装:
+
 ```bash
 $ git clone git@github.com:waruqi/xmake.git
 $ cd ./xmake
 $ ./scripts/get.sh __local__
+```
+
+仅仅安装和更新xmake的lua脚本:
+
+```bash
+$ ./scripts/get.sh __local__ __install_only__
+```
+
+卸载:
+
+```bash
+$ ./scripts/get.sh __uninstall__
+```
+
+通过make进行编译安装:
+
+```bash
+$ make build; sudo make install
+```
+
+安装到其他指定目录:
+
+```bash
+$ sudo make install prefix=/usr/local
+```
+
+卸载:
+
+```bash
+$ sudo make uninstall
 ```
 
 ## 快速开始

@@ -126,10 +126,42 @@ Or download deb package to install it:
 
 #### Compilation
 
+Compile and install:
+
 ```bash
 $ git clone git@github.com:waruqi/xmake.git
 $ cd ./xmake
 $ ./scripts/get.sh __local__
+```
+
+Only install and update lua scripts:
+
+```bash
+$ ./scripts/get.sh __local__ __install_only__
+```
+
+Uninstall:
+
+```bash
+$ ./scripts/get.sh __uninstall__
+```
+
+Or compile and install via make:
+
+```bash
+$ make build; sudo make install
+```
+
+Install to other given directory:
+
+```bash
+$ sudo make install prefix=/usr/local
+```
+
+Uninstall:
+
+```bash
+$ sudo make uninstall
 ```
 
 ## Quick Start
