@@ -4067,6 +4067,9 @@ if (errors) raise(errors)
 | [os.cp](#os-cp)                                 | 复制文件或目录                               | >= 2.0.1 |
 | [os.mv](#os-mv)                                 | 移动重命名文件或目录                         | >= 2.0.1 |
 | [os.rm](#os-rm)                                 | 删除文件或目录树                             | >= 2.0.1 |
+| [os.trycp](#os-trycp)                           | 尝试复制文件或目录                           | >= 2.1.6 |
+| [os.trymv](#os-trymv)                           | 尝试移动重命名文件或目录                     | >= 2.1.6 |
+| [os.tryrm](#os-tryrm)                           | 尝试删除文件或目录树                         | >= 2.1.6 |
 | [os.cd](#os-cd)                                 | 进入指定目录                                 | >= 2.0.1 |
 | [os.rmdir](#os-rmdir)                           | 删除目录树                                   | >= 2.0.1 |
 | [os.mkdir](#os-mkdir)                           | 创建指定目录                                 | >= 2.0.1 |
@@ -4144,6 +4147,39 @@ os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
 
 ```lua
 os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
+```
+
+###### os.trycp
+
+- 尝试复制文件或目录
+
+跟[os.cp](#os-cp)类似，唯一的区别就是，此接口操作失败不会跑出异常中断xmake，而是通过返回值标示是否执行成功。
+
+```lua
+if os.trycp("file", "dest/file") then
+end
+```
+
+###### os.trymv
+
+- 尝试移动文件或目录
+
+跟[os.mv](#os-mv)类似，唯一的区别就是，此接口操作失败不会跑出异常中断xmake，而是通过返回值标示是否执行成功。
+
+```lua
+if os.trymv("file", "dest/file") then
+end
+```
+
+###### os.tryrm
+
+- 尝试删除文件或目录
+
+跟[os.rm](#os-rm)类似，唯一的区别就是，此接口操作失败不会跑出异常中断xmake，而是通过返回值标示是否执行成功。
+
+```lua
+if os.tryrm("file") then
+end
 ```
 
 ###### os.cd
