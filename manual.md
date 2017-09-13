@@ -4048,7 +4048,7 @@ local s = vformat("hello %s $(mode) $(arch) $(env PATH)", xmake)
 
 ###### 抛出异常中断程序
 
-如果想在自定义脚本、插件任务中中断xmake运行，可以使用这个接口跑出异常，如果上层没有显示调用[try-catch](#try-catch-finally)捕获的话，xmake就会中断执行，并且显示出错信息。
+如果想在自定义脚本、插件任务中中断xmake运行，可以使用这个接口抛出异常，如果上层没有显示调用[try-catch](#try-catch-finally)捕获的话，xmake就会中断执行，并且显示出错信息。
 
 ```lua
 if (errors) raise(errors)
@@ -4153,7 +4153,7 @@ os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
 
 - 尝试复制文件或目录
 
-跟[os.cp](#os-cp)类似，唯一的区别就是，此接口操作失败不会跑出异常中断xmake，而是通过返回值标示是否执行成功。
+跟[os.cp](#os-cp)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
 
 ```lua
 if os.trycp("file", "dest/file") then
@@ -4164,7 +4164,7 @@ end
 
 - 尝试移动文件或目录
 
-跟[os.mv](#os-mv)类似，唯一的区别就是，此接口操作失败不会跑出异常中断xmake，而是通过返回值标示是否执行成功。
+跟[os.mv](#os-mv)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
 
 ```lua
 if os.trymv("file", "dest/file") then
@@ -4175,7 +4175,7 @@ end
 
 - 尝试删除文件或目录
 
-跟[os.rm](#os-rm)类似，唯一的区别就是，此接口操作失败不会跑出异常中断xmake，而是通过返回值标示是否执行成功。
+跟[os.rm](#os-rm)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
 
 ```lua
 if os.tryrm("file") then
