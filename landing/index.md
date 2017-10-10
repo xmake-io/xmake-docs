@@ -90,6 +90,10 @@ $ xmake run -d console
 
 Please download and install from the plugins repository [xmake-plugins](https://github.com/tboox/xmake-plugins).
 
+## IDE Integration
+
+* [![xmake-vscode](https://img.shields.io/vscode-marketplace/v/tboox.xmake-vscode.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=tboox.xmake-vscode#overview)
+
 ## More Examples
 
 Debug and release modes:

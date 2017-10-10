@@ -90,6 +90,10 @@ $ xmake run -d console
 
 请到插件仓库进行下载安装: [xmake-plugins](https://github.com/tboox/xmake-plugins).
 
+## IDE插件
+
+* [![xmake-vscode](https://img.shields.io/vscode-marketplace/v/tboox.xmake-vscode.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=tboox.xmake-vscode#overview)
+
 ## 更多例子
 
 Debug和Release模式：
