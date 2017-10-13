@@ -4018,6 +4018,8 @@ $ export COLORTERM=truecolor
 $ xmake --version
 ```
 
+2.1.7版本可通过`COLORTERM=nocolor`来禁用色彩输出。
+
 ##### cprintf
 
 ###### 无换行彩色打印终端日志
@@ -6092,7 +6094,7 @@ local program = find_program("ccache")
 指定搜索目录，修改尝试运行的检测命令参数（默认是：`ccache --version`）：
 
 ```lua
-local program = find_program("ccache", {"/usr/bin", "/usr/local/bin"}, "--help") 
+local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = "--help"}) 
 ```
 
 上述代码会尝试运行：`/usr/bin/ccache --help`，如果运行成功，则返回：`/usr/bin/ccache`。
@@ -6100,14 +6102,14 @@ local program = find_program("ccache", {"/usr/bin", "/usr/local/bin"}, "--help")
 如果`--help`也没法满足需求，有些程序没有`--version/--help`参数，那么可以自定义运行脚本，来运行检测：
 
 ```lua
-local program = find_program("ccache", {"/usr/bin", "/usr/local/bin"}, function (program) os.run("%s -h", program) end)
+local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = function (program) os.run("%s -h", program) end})
 ```
 
 同样，搜索路径列表支持内建变量和自定义脚本：
 
 ```lua
-local program = find_program("ccache", {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"})
-local program = find_program("ccache", {"$(env PATH)", function () return "/usr/local/bin" end})
+local program = find_program("ccache", {pathes = {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"}})
+local program = find_program("ccache", {pathes = {"$(env PATH)", function () return "/usr/local/bin" end}})
 ```
 
 <p class="tip">
@@ -6133,20 +6135,20 @@ local programver = find_programver("ccache")
 默认它会通过`ccache --version`尝试获取版本，如果不存在此参数，可以自己指定其他参数：
 
 ```lua
-local version = find_programver("ccache", "-v")
+local version = find_programver("ccache", {command = "-v"})
 ```
 
 甚至自定义版本获取脚本：
 
 ```lua
-local version = find_programver("ccache", function () return os.iorun("ccache --version") end)
+local version = find_programver("ccache", {command = function () return os.iorun("ccache --version") end})
 ```
 
 对于版本号的提取规则，如果内置的匹配模式不满足要求，也可以自定义：
 
 ```lua
-local version = find_programver("ccache", "--version", "(%d+%.?%d*%.?%d*.-)%s")
-local version = find_programver("ccache", "--version", function (output) return output:match("(%d+%.?%d*%.?%d*.-)%s") end)
+local version = find_programver("ccache", {command = "--version", parse = "(%d+%.?%d*%.?%d*.-)%s"})
+local version = find_programver("ccache", {command = "--version", parse = function (output) return output:match("(%d+%.?%d*%.?%d*.-)%s") end})
 ```
 
 <p class="tip">

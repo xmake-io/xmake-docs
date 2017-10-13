@@ -280,6 +280,46 @@ hello`main:
     你也可以使用简写的命令行选项，例如: `xmake r` 或者 `xmake run`
 </p>
 
+## 工程实例
+
+#### 可执行程序
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+```
+
+#### 静态库程序
+
+```lua
+target("library")
+    set_kind("static")
+    add_files("src/library/*.c")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+    add_deps("library")
+```
+
+通过`add_deps`将一个静态库自动链接到test可执行程序。
+
+#### 动态库程序
+
+```lua
+target("library")
+    set_kind("shared")
+    add_files("src/library/*.c")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+    add_deps("library")
+```
+
+通过`add_deps`将一个动态库自动链接到test可执行程序。
+
 ## 配置
 
 通过`xmake f|config`配置命令，设置构建前的相关配置信息，详细参数选项，请运行: `xmake f --help`。

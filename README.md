@@ -252,6 +252,46 @@ hello`main:
     You can also use short command option, for exmaple: `xmake r` or `xmake run`
 </p>
 
+## Project Examples
+
+#### Executale Program
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+```
+
+#### Static Library Program
+
+```lua
+target("library")
+    set_kind("static")
+    add_files("src/library/*.c")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+    add_deps("library")
+```
+
+We use `add_deps` to link a static library to test target.
+
+#### Share Library Program
+
+```lua
+target("library")
+    set_kind("shared")
+    add_files("src/library/*.c")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+    add_deps("library")
+```
+
+We use `add_deps` to link a share library to test target.
+
 ## Configuration
 
 Set compilation configuration before building project with command `xmake f|config`.
