@@ -18,6 +18,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 <a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
 
 | 2016.11.10 | [lc-soft](https://github.com/lc-soft) | oschina | ¥10 |
+| 2017.10.26 | Welthy | alipay | ¥5 |
 
 ## Sponsors
 
