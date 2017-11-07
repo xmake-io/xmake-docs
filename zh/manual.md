@@ -1399,6 +1399,12 @@ target("test")
     add_options("wchar")
 ```
 
+2.1.8 之后版本，支持针对每个局部配置文件，单独设置版本号，优先于全局的[set_version](#set_version)，例如：
+
+```lua
+    set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG", version = "2.1.8", build = "%Y%m%d%H%M"})
+```
+
 ##### target:set_pcheader
 
 ###### 设置c预编译头文件
