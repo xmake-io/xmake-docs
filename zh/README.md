@@ -549,6 +549,12 @@ $ xmake f -p linux --sdk=/user/toolsdk --as=armv7-linux-as
 
 如果存在`AS`环境变量的话，会优先使用当前环境变量中指定的值。
 
+<p class="tips">
+如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。
+这个时候我们可以通过：`xmake f --as=gcc@/home/xxx/asmips.exe` 设置ccmips.exe编译器作为类gcc的使用方式来编译。
+也就是说，在指定编译器为`asmips.exe`的同时，告诉xmake，它跟gcc用法和参数选项基本相同。
+</p>
+
 ###### --cc
 
 - 设置c编译器
@@ -560,6 +566,12 @@ $ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang
 ```
 
 如果存在`CC`环境变量的话，会优先使用当前环境变量中指定的值。
+
+<p class="tips">
+如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。
+这个时候我们可以通过：`xmake f --cc=gcc@/home/xxx/ccmips.exe` 设置ccmips.exe编译器作为类gcc的使用方式来编译。
+也就是说，在指定编译器为`ccmips.exe`的同时，告诉xmake，它跟gcc用法和参数选项基本相同。
+</p>
 
 ###### --cxx
 
@@ -573,6 +585,12 @@ $ xmake f -p linux --sdk=/user/toolsdk --cxx=armv7-linux-clang++
 
 如果存在`CXX`环境变量的话，会优先使用当前环境变量中指定的值。
 
+<p class="tips">
+如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。
+这个时候我们可以通过：`xmake f --cxx=clang++@/home/xxx/c++mips.exe` 设置c++mips.exe编译器作为类clang++的使用方式来编译。
+也就是说，在指定编译器为`c++mips.exe`的同时，告诉xmake，它跟clang++用法和参数选项基本相同。
+</p>
+
 ###### --ld
 
 - 设置`c/c++/objc/asm`链接器
@@ -585,6 +603,12 @@ $ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++
 
 如果存在`LD`环境变量的话，会优先使用当前环境变量中指定的值。
 
+<p class="tips">
+如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么链接器工具检测就会失败。
+这个时候我们可以通过：`xmake f --ld=g++@/home/xxx/c++mips.exe` 设置c++mips.exe链接器作为类g++的使用方式来编译。
+也就是说，在指定链接器为`c++mips.exe`的同时，告诉xmake，它跟g++用法和参数选项基本相同。
+</p>
+
 ###### --sh
 
 - 设置`c/c++/objc/asm`共享库链接器
@@ -595,6 +619,12 @@ $ xmake f -p linux --sdk=/user/toolsdk --sh=armv7-linux-clang++
 
 如果存在`SH`环境变量的话，会优先使用当前环境变量中指定的值。
 
+<p class="tips">
+如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么链接器工具检测就会失败。
+这个时候我们可以通过：`xmake f --sh=g++@/home/xxx/c++mips.exe` 设置c++mips.exe链接器作为类g++的使用方式来编译。
+也就是说，在指定链接器为`c++mips.exe`的同时，告诉xmake，它跟g++用法和参数选项基本相同。
+</p>
+
 ###### --ar
 
 - 设置`c/c++/objc/asm`静态库归档器
@@ -604,6 +634,12 @@ $ xmake f -p linux --sdk=/user/toolsdk --ar=armv7-linux-ar
 ```
 
 如果存在`AR`环境变量的话，会优先使用当前环境变量中指定的值。
+
+<p class="tips">
+如果指定的编译器名不是那些xmake内置可识别的名字（带有ar等字样），那么链接器工具检测就会失败。
+这个时候我们可以通过：`xmake f --ar=ar@/home/xxx/armips.exe` 设置armips.exe链接器作为类ar的使用方式来编译。
+也就是说，在指定链接器为`armips.exe`的同时，告诉xmake，它跟ar用法和参数选项基本相同。
+</p>
 
 #### 全局配置
 

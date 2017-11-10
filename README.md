@@ -514,6 +514,10 @@ $ xmake f -p linux --sdk=/user/toolsdk --as=armv7-linux-as
 
 If the 'AS' environment variable exists, it will use the values specified in the current environment variables.
 
+<p class="tips">
+We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --as=gcc@/home/xxx/asmips.exe` 
+</p>
+
 ###### --cc
 
 - Set c compiler
@@ -523,6 +527,10 @@ $ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang
 ```
 
 If the 'CC' environment variable exists, it will use the values specified in the current environment variables.
+
+<p class="tips">
+We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --cc=gcc@/home/xxx/ccmips.exe` 
+</p>
 
 ###### --cxx
 
@@ -534,6 +542,10 @@ $ xmake f -p linux --sdk=/user/toolsdk --cxx=armv7-linux-clang++
 
 If the 'CXX' environment variable exists, it will use the values specified in the current environment variables.
 
+<p class="tips">
+We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --cxx=g++@/home/xxx/c++mips.exe` 
+</p>
+
 ###### --ld
 
 - Set `c/c++/objc/asm` linker
@@ -543,6 +555,10 @@ $ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++
 ```
 
 If the 'LD' environment variable exists, it will use the values specified in the current environment variables.
+
+<p class="tips">
+We can set a unknown compiler as like-gcc/clang linker, .e.g `xmake f --ld=g++@/home/xxx/c++mips.exe` 
+</p>
 
 ###### --sh
 
@@ -554,6 +570,10 @@ $ xmake f -p linux --sdk=/user/toolsdk --sh=armv7-linux-clang++
 
 If the 'SH' environment variable exists, it will use the values specified in the current environment variables.
 
+<p class="tips">
+We can set a unknown compiler as like-gcc/clang linker, .e.g `xmake f --sh=g++@/home/xxx/c++mips.exe` 
+</p>
+
 ###### --ar
 
 - Set `c/c++/objc/asm` static library archiver
@@ -563,6 +583,10 @@ $ xmake f -p linux --sdk=/user/toolsdk --ar=armv7-linux-ar
 ```
 
 If the 'AR' environment variable exists, it will use the values specified in the current environment variables.
+
+<p class="tips">
+We can set a unknown compiler as like-ar archiver, .e.g `xmake f --ar=ar@/home/xxx/armips.exe` 
+</p>
 
 #### Global Configuration
 

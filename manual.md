@@ -518,6 +518,7 @@ target("test2")
 | [add_deps](#targetadd_deps)                   | 添加子工程目标依赖                   | >= 1.0.1 |
 | [add_links](#targetadd_links)                 | 添加链接库名                         | >= 1.0.1 |
 | [add_files](#targetadd_files)                 | 添加源代码文件                       | >= 1.0.1 |
+| [del_files](#targetdel_files)                 | 从前面的源文件列表中删除指定文件     | >= 2.1.9 |
 | [add_headers](#targetadd_headers)             | 添加安装的头文件                     | >= 1.0.1 |
 | [add_linkdirs](#targetadd_linkdirs)           | 添加链接库搜索目录                   | >= 1.0.1 |
 | [add_rpathdirs](#targetadd_rpathdirs)         | 添加运行时候动态链接库搜索目录       | >= 2.1.3 |
@@ -1561,6 +1562,35 @@ target("test")
 ```
 
 可以在`add_files`的最后一个参数，传入一个配置table，去控制指定files的编译选项，里面的配置参数跟target的一致，并且这些文件还会继承target的通用配置`-DTEST1`
+
+##### target:del_files
+
+###### 从前面的源代码文件列表中删除指定文件
+
+通过此接口，可以从前面[add_files](targetadd_files)接口添加的文件列表中，删除指定的文件，例如：
+
+```lua
+target("test")
+    add_files("src/*.c")
+    del_files("src/test.c")
+```
+
+上面的例子，可以从`src`目录下添加除`test.c`以外的所有文件，当然这个也可以通过`add_files("src/*.c|test.c")`来达到相同的目的，但是这种方式更加灵活。
+
+例如，我们可以条件判断来控制删除哪些文件，并且此接口也支持[add_files](targetadd_files)的匹配模式，过滤模式，进行批量移除。
+
+```lua
+target("test")
+    add_files("src/**.c")
+    del_files("src/test*.c")
+    del_files("src/subdir/*.c|xxx.c")
+    if is_plat("iphoneos") then
+        add_files("xxx.m")
+    end
+```
+
+通过上面的例子，我们可以看出`add_files`和`del_files`是根据调用顺序，进行顺序添加和删除的，并且通过`del_files("src/subdir/*.c|xxx.c")`删除一批文件，
+并且排除`src/subdir/xxx.c`（就是说，不删除这个文件）。
 
 ##### target:add_headers
 
