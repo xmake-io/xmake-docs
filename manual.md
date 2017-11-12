@@ -491,6 +491,8 @@ target("test2")
 | [set_headerdir](#targetset_headerdir)         | 设置头文件安装目录                   | >= 1.0.1 |
 | [set_targetdir](#targetset_targetdir)         | 设置生成目标文件目录                 | >= 1.0.1 |
 | [set_objectdir](#targetset_objectdir)         | 设置对象文件生成目录                 | >= 1.0.1 |
+| [add_imports](#targetadd_imports)             | 为所有自定义脚本预先导入扩展模块     | >= 2.1.7 |
+| [add_rules](#targetadd_rules)                 | 添加规则到目标                       | >= 2.1.9 |
 | [on_load](#targeton_load)                     | 自定义目标加载脚本                   | >= 2.1.5 |
 | [on_build](#targeton_build)                   | 自定义编译脚本                       | >= 2.0.1 |
 | [on_clean](#targeton_clean)                   | 自定义清理脚本                       | >= 2.0.1 |
@@ -926,6 +928,78 @@ target("test")
 target("test")
     set_objectdir("$(buildir)/.objs")
 ```
+
+##### target:add_imports
+
+###### 为自定义脚本预先导入扩展模块
+
+通常，我们在[on_build](#targeton_build)等自定义脚本内部，可以通过`import("core.base.task")`的方式导入扩展模块，
+但是对于自定义脚本比较多的情况下，每个自定义脚本都重复导入一遍，非常的繁琐，那么可以通过这个接口，实现预先导入，例如：
+
+```lua
+target("test")
+    on_load(function (target)
+        import("core.base.task")
+        import("core.project.project")
+
+        task.run("xxxx")
+    end)
+    on_build(function (target)
+        import("core.base.task")
+        import("core.project.project")
+        
+        task.run("xxxx")
+    end)
+    on_install(function (target)
+        import("core.base.task")
+        import("core.project.project")
+        
+        task.run("xxxx")
+    end)
+```
+
+通过此接口可以简化为：
+
+```lua
+target("test")
+    add_imports("core.base.task", "core.project.project")
+    on_load(function (target)
+        task.run("xxxx")
+    end)
+    on_build(function (target)
+        task.run("xxxx")
+    end)
+    on_install(function (target)
+        task.run("xxxx")
+    end)
+```
+
+##### target:add_rules
+
+###### 添加规则到目标
+
+我们可以通过预先设置规则支持的文件后缀，来扩展其他文件的构建支持：
+
+```lua
+-- 定义一个markdown文件的构建规则
+rule("markdown")
+    set_extensions(".md", ".markdown")
+    on_build(function (target, sourcefile)
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+    end)
+
+target("test")
+    set_kind("binary")
+    
+    -- 使test目标支持markdown文件的构建规则
+    add_rules("markdown")
+
+    -- 添加markdown文件的构建
+    add_files("src/*.md")
+    add_files("src/*.markdown")
+```
+
+我们也可以指定应用局部文件到规则，具体使用见：[add_files](#targetadd_files)。
 
 ##### target:on_load
 
@@ -1562,6 +1636,16 @@ target("test")
 ```
 
 可以在`add_files`的最后一个参数，传入一个配置table，去控制指定files的编译选项，里面的配置参数跟target的一致，并且这些文件还会继承target的通用配置`-DTEST1`
+
+2.1.9版本之后，支持添加未知的代码文件，通过设置rule自定义规则，实现这些文件的自定义构建，例如：
+
+```lua
+target("test")
+    -- ...
+    add_files("src/test/*.md", {rule = "markdown"})
+```
+
+关于自定义构建规则的使用说明，详细见：[构建规则](#构建规则)。
 
 ##### target:del_files
 
@@ -2989,6 +3073,258 @@ task.run("hello", {color="red"}, arg1, arg2, arg3)
 里面的`arg1, arg2`这些就是传入`hello`任务`main(...)`入口的参数列表，而`{color="red"}`用来指定任务菜单中的参数选项。
 
 更加详细的`task.run`描述，见：[task.run](#task-run)
+
+#### Custom Rule
+
+在2.1.9版本之后，xmake不仅原生内置支持多种语言文件的构建，而且还可以通过自定义构建规则，让用户自己来实现复杂的未知文件构建。
+
+我们可以通过预先设置规则支持的文件后缀，来扩展其他文件的构建支持：
+
+```lua
+-- 定义一个markdown文件的构建规则
+rule("markdown")
+    set_extensions(".md", ".markdown")
+    on_build(function (target, sourcefile)
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+    end)
+
+target("test")
+    set_kind("binary")
+    
+    -- 使test目标支持markdown文件的构建规则
+    add_rules("markdown")
+
+    -- 添加markdown文件的构建
+    add_files("src/*.md")
+    add_files("src/*.markdown")
+```
+
+我们也可以指定某些零散的其他文件作为markdown规则来处理：
+
+```lua
+target("test")
+    -- ...
+    add_files("src/test/*.md.in", {rule = "markdown"})
+```
+
+<p class="tips">
+通过`add_files("*.md", {rule = "markdown"})`方式指定的规则，优先级高于`add_rules("markdown")`设置的规则。
+</p>
+
+我们还可以实现规则的级联构建，例如在构建man规则后，继续调用markdown规则，实现级联构建：
+
+```lua
+rule("man")
+    add_imports("core.project.rule")
+    on_build(function (target, sourcefile)
+        rule.build("markdown", target, sourcefile)
+    end)
+```
+
+对于有些文件，需要支持多文件构建生成单一对象的模式，可以通过[on_build_all](#ruleon_build_all)来实现：
+
+```lua
+rule("man")
+    on_build_all(function (target, sourcefiles)
+        -- build some source files
+        for _, sourcefile in ipairs(sourcefiles) do
+            -- ...
+        end
+    end)
+
+target("test")
+    -- ...
+    add_files("src/test/*.doc.in", {rule = "man"})
+```
+
+| 接口                                            | 描述                                         | 支持版本 |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [rule](#rule)                                   | 定义规则                                     | >= 2.1.9 |
+| [add_imports](#ruleadd_imports)                 | 为所有自定义脚本预先导入扩展模块             | >= 2.1.9 |
+| [set_extensions](#ruleset_extensions)           | 设置规则支持的文件扩展类型                   | >= 2.1.9 |
+| [on_build](#ruleon_build)                       | 自定义编译脚本                               | >= 2.1.9 |
+| [on_clean](#ruleon_clean)                       | 自定义清理脚本                               | >= 2.1.9 |
+| [on_package](#ruleon_package)                   | 自定义打包脚本                               | >= 2.1.9 |
+| [on_install](#ruleon_install)                   | 自定义安装脚本                               | >= 2.1.9 |
+| [on_uninstall](#ruleon_uninstall)               | 自定义卸载脚本                               | >= 2.1.9 |
+| [on_build_all](#ruleon_build_all)               | 自定义编译脚本, 实现多文件构建               | >= 2.1.9 |
+| [on_clean_all](#ruleon_clean_all)               | 自定义清理脚本，实现多文件清理               | >= 2.1.9 |
+| [on_package_all](#ruleon_package_all)           | 自定义打包脚本，实现多文件打包               | >= 2.1.9 |
+| [on_install_all](#ruleon_install_all)           | 自定义安装脚本，实现多文件安装               | >= 2.1.9 |
+| [on_uninstall_all](#ruleon_uninstall_all)       | 自定义卸载脚本，实现多文件卸载               | >= 2.1.9 |
+| [rule_end](#rule_end)                           | 结束定义规则                                 | >= 2.1.9 |
+
+##### rule
+
+###### 定义规则
+
+```lua
+rule("markdown")
+    set_extensions(".md", ".markdown")
+    on_build(function (target, sourcefile)
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+    end)
+```
+
+##### rule:add_imports
+
+###### 为所有自定义脚本预先导入扩展模块
+
+使用方式和说明请见：[target:add_imports](#targetadd_imports)，用法相同。
+
+##### rule:set_extensions
+
+###### 设置规则支持的文件扩展类型
+
+通过设置支持的扩展文件类型，将规则应用于带这些后缀的文件上，例如：
+
+```lua
+-- 定义一个markdown文件的构建规则
+rule("markdown")
+    set_extensions(".md", ".markdown")
+    on_build(function (target, sourcefile)
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+    end)
+
+target("test")
+    set_kind("binary")
+    
+    -- 使test目标支持markdown文件的构建规则
+    add_rules("markdown")
+
+    -- 添加markdown文件的构建
+    add_files("src/*.md")
+    add_files("src/*.markdown")
+```
+
+##### rule:on_build
+
+###### 自定义编译脚本
+
+用于实现自定规则的构建脚本，每次处理一个源文件，例如：
+
+```lua
+rule("markdown")
+    on_build(function (target, sourcefile)
+        -- generate sourcefile to sourcefile.html
+    end)
+```
+
+##### rule:on_clean
+
+###### 自定义清理脚本
+
+用于实现自定规则的清理脚本，每次处理一个源文件，例如：
+
+```lua
+rule("markdown")
+    on_clean(function (target, sourcefile)
+        -- remove sourcefile.html
+    end)
+```
+
+注：清理的文件可以通过源文件推算出来
+
+##### rule:on_package
+
+###### 自定义打包脚本
+
+用于实现自定规则的打包脚本，每次处理一个源文件，例如：
+
+```lua
+rule("markdown")
+    on_package(function (target, sourcefile)
+        -- package sourcefile.html
+    end)
+```
+
+注：打包的文件可以通过源文件推算出来
+
+##### rule:on_install
+
+###### 自定义安装脚本
+
+用于实现自定规则的安装脚本，每次处理一个源文件，例如：
+
+```lua
+rule("markdown")
+    on_install(function (target, sourcefile)
+        -- install sourcefile.html
+    end)
+```
+
+注：安装的文件可以通过源文件推算出来
+
+##### rule:on_uninstall
+
+###### 自定义卸载脚本
+
+用于实现自定规则的卸载脚本，每次处理一个源文件，例如：
+
+```lua
+rule("markdown")
+    on_uninstall(function (target, sourcefile)
+        -- uninstall sourcefile.html
+    end)
+```
+
+注：卸载的文件可以通过源文件推算出来
+
+##### rule:on_build_all
+
+###### 自定义编译脚本，一次处理多个源文件
+
+大部分的自定义构建规则，每次都是处理单独一个文件，输出一个目标文件，例如：a.c => a.o
+
+但是，有些情况下，我们需要同时输入多个源文件一起构建生成一个目标文件，例如：a.c b.c d.c => x.o
+
+对于这种情况，我们可以通过自定义这个脚本来实现：
+
+```lua
+rule("markdown")
+    on_build_all(function (target, sourcefiles)
+        -- build some source files
+        for _, sourcefile in ipairs(sourcefiles) do
+            -- ...
+        end
+    end)
+```
+
+##### rule:on_clean_all
+
+###### 自定义清理脚本，一次处理多个源文件
+
+可参考：[on_clean](#ruleon_clean) 和 [on_build_all](#ruleon_build_all)，使用方式类似。
+
+##### rule:on_package_all
+
+###### 自定义打包脚本，一次处理多个源文件
+
+可参考：[on_package](#ruleon_package) 和 [on_build_all](#ruleon_build_all)，使用方式类似。
+
+##### rule:on_install_all
+
+###### 自定义安装脚本，一次处理多个源文件
+
+可参考：[on_install](#ruleon_install) 和 [on_build_all](#ruleon_build_all)，使用方式类似。
+
+##### rule:on_uninstall_all
+
+###### 自定义卸载脚本，一次处理多个源文件
+
+可参考：[on_uninstall](#ruleon_uninstall) 和 [on_build_all](#ruleon_build_all)，使用方式类似。
+
+##### rule_end
+
+###### 结束定义规则
+
+这个是可选的，如果想要手动结束rule的定义，可以调用它：
+
+```lua
+rule("test")
+    -- ..
+rule_end()
+```
 
 #### Extension Platforms
 
