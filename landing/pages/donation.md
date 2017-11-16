@@ -17,9 +17,6 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 <a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
 
-| 2016.11.10 | [lc-soft](https://github.com/lc-soft) | oschina | ¥10 |
-| 2017.10.26 | Welthy | alipay | ¥5 |
-
 ## Sponsors
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/xmake#sponsor)]
@@ -42,6 +39,12 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 ## Weixin 
 
 <img src="{{site.baseurl}}/assets/img/weixin.png" alt="weixin" width="218" height="218">
+
+## Supporters 
+
+| 2016.11.10 | [lc-soft](https://github.com/lc-soft) | oschina | ¥10 | |
+| 2017.10.26 | Welthy | alipay | ¥5 | xmake很好用啊 |
+| 2017.11.16 | 琪峻 | alipay | ¥15 | 感谢好用的xmake |
 
 
 
