@@ -1647,6 +1647,13 @@ target("test")
 
 关于自定义构建规则的使用说明，详细见：[构建规则](#构建规则)。
 
+<p class="tips">
+默认情况下，添加的cxflags,cflags等编译选项的都是带自动检测和映射的，如果传入的选项，当前编译器不支持，就会自动忽略或者自动映射为当前编译器支持的选项。
+如果觉得传入的参数确实没问题，但是xmake确自动忽略了，这个时候可以通过`xmake -v`显示详细的检测失败信息。
+并且在2.1.9版本之后，可以通过force参数来强制禁用自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：
+`add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})`
+</p>
+
 ##### target:del_files
 
 ###### 从前面的源代码文件列表中删除指定文件
@@ -1816,6 +1823,12 @@ add_cflags("-g", "-O2", "-DDEBUG")
 用户无需操心其兼容性，如果其他编译器没有对应的匹配值，那么xmake会自动忽略器设置。
 </p>
 
+在2.1.9版本之后，可以通过force参数来强制禁用flags的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：
+
+```lua
+add_cflags("-g", "-O2", {force = true})
+```
+
 ##### target:add_cxflags
 
 ###### 添加c/c++编译选项
@@ -1836,6 +1849,12 @@ add_cflags("-g", "-O2", "-DDEBUG")
 
 ```lua
 add_mflags("-g", "-O2", "-DDEBUG")
+```
+
+在2.1.9版本之后，可以通过force参数来强制禁用flags的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：
+
+```lua
+add_mflags("-g", "-O2", {force = true})
 ```
 
 ##### target:add_mxflags
