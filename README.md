@@ -132,7 +132,7 @@ Or download deb package to install it:
 Compile and install:
 
 ```bash
-$ git clone git@github.com:waruqi/xmake.git
+$ git clone https://github.com/tboox/xmake.git
 $ cd ./xmake
 $ ./scripts/get.sh __local__
 ```
