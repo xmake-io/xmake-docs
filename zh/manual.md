@@ -2290,7 +2290,7 @@ option("test2")
 option("test")
     set_default(false)
     set_showmenu(true)
-    add_defines("-DTEST")
+    add_defines("TEST")
 ```
 
 然后关联到指定的target中去：
@@ -6062,6 +6062,12 @@ end
 ```lua
 local target = project.target("test")
 if target then
+
+    -- 获取目标名
+    print(target:name())
+
+    -- 获取目标目录, 2.1.9版本之后才有
+    print(target:targetdir())
 
     -- 获取目标文件名
     print(target:targetfile())

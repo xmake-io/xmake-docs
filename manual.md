@@ -2271,7 +2271,7 @@ option("test2")
 option("test")
     set_default(false)
     set_showmenu(true)
-    add_defines("-DTEST")
+    add_defines("TEST")
 ```
 
 然后关联到指定的target中去：
