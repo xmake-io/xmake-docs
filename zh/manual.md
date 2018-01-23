@@ -2534,9 +2534,9 @@ Options:
 option("mode")
     set_default("debug")
     set_showmenu(true)
-    set_description("Set build mode"
-                    "    - debug"
-                    "    - release"
+    set_description("Set build mode",
+                    "    - debug",
+                    "    - release",
                     "    - profile")
 ```
 
