@@ -88,7 +88,7 @@ $ xmake m -b                        # start to record
 $ xmake f -p iphoneos -m debug
 $ xmake
 $ xmake m -e                        # stop to record
-$ xmake m .                         # palyback commands
+$ xmake m .                         # playback commands
 ```
 
 #### Run the custom lua script plugin
