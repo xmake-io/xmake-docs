@@ -133,12 +133,35 @@
 
 <h2 id="builtin-plugins">Builtin Plugins</h2>
 
-<ul>
-  <li>Macros script plugin</li>
-  <li>Run the custom lua script plugin</li>
-  <li>Generate IDE project file plugin（makefile, vs2002 - vs2017 .. ）</li>
-  <li>Generate doxygen document plugin</li>
-</ul>
+<h4 id="macros-script-plugin">Macros script plugin</h4>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake m -b                        <span class="c"># start to record</span>
+<span class="gp">$ </span>xmake f -p iphoneos -m debug
+<span class="gp">$ </span>xmake
+<span class="gp">$ </span>xmake m -e                        <span class="c"># stop to record</span>
+<span class="gp">$ </span>xmake m .                         <span class="c"># palyback commands</span>
+</code></pre>
+</div>
+
+<h4 id="run-the-custom-lua-script-plugin">Run the custom lua script plugin</h4>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake l ./test.lua
+<span class="gp">$ </span>xmake l -c <span class="s2">"print('hello xmake!')"</span>
+<span class="gp">$ </span>xmake l lib.detect.find_tool gcc
+</code></pre>
+</div>
+
+<h4 id="generate-ide-project-file-pluginmakefile-vs2002---vs2017--">Generate IDE project file plugin（makefile, vs2002 - vs2017 .. ）</h4>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake project -k vs2017 -m <span class="s2">"debug,release"</span>
+</code></pre>
+</div>
+
+<h4 id="generate-doxygen-document-plugin">Generate doxygen document plugin</h4>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake doxygen <span class="o">[</span>srcdir]
+</code></pre>
+</div>
 
 <h2 id="more-plugins">More Plugins</h2>
 

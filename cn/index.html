@@ -133,14 +133,37 @@
 
 <h2 id="section-8">内置插件</h2>
 
-<ul>
-  <li>宏记录脚本和回放插件</li>
-  <li>加载自定义lua脚本插件</li>
-  <li>生成IDE工程文件插件（makefile, vs2002 - vs2017, …）</li>
-  <li>生成doxygen文档插件</li>
-</ul>
+<h4 id="section-9">宏记录脚本和回放插件</h4>
 
-<h2 id="section-9">更多插件</h2>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake m -b                        <span class="c"># 开始记录</span>
+<span class="gp">$ </span>xmake f -p iphoneos -m debug
+<span class="gp">$ </span>xmake
+<span class="gp">$ </span>xmake m -e                        <span class="c"># 结束记录</span>
+<span class="gp">$ </span>xmake m .                         <span class="c"># 回放命令</span>
+</code></pre>
+</div>
+
+<h4 id="lua">加载自定义lua脚本插件</h4>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake l ./test.lua
+<span class="gp">$ </span>xmake l -c <span class="s2">"print('hello xmake!')"</span>
+<span class="gp">$ </span>xmake l lib.detect.find_tool gcc
+</code></pre>
+</div>
+
+<h4 id="idemakefile-vs2002---vs2017-">生成IDE工程文件插件（makefile, vs2002 - vs2017, …）</h4>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake project -k vs2017 -m <span class="s2">"debug,release"</span>
+</code></pre>
+</div>
+
+<h4 id="doxygen">生成doxygen文档插件</h4>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake doxygen <span class="o">[</span>srcdir]
+</code></pre>
+</div>
+
+<h2 id="section-10">更多插件</h2>
 
 <p>请到插件仓库进行下载安装: <a href="https://github.com/tboox/xmake-plugins">xmake-plugins</a>.</p>
 
@@ -168,7 +191,7 @@
   <li><a href="https://github.com/luzhlon/xmake.vim">xmake.vim</a> (third-party, thanks <a href="https://github.com/luzhlon">@luzhlon</a>)</li>
 </ul>
 
-<h2 id="section-10">更多例子</h2>
+<h2 id="section-11">更多例子</h2>
 
 <p>Debug和Release模式：</p>
 
@@ -212,7 +235,7 @@
 </code></pre>
 </div>
 
-<h2 id="section-11">项目例子</h2>
+<h2 id="section-12">项目例子</h2>
 
 <p>一些使用xmake的项目：</p>
 
@@ -223,11 +246,11 @@
   <li><a href="https://github.com/vm86/xmake/wiki/%E4%BD%BF%E7%94%A8xmake%E7%9A%84%E5%BC%80%E6%BA%90%E5%BA%93">更多</a></li>
 </ul>
 
-<h2 id="section-12">演示视频</h2>
+<h2 id="section-13">演示视频</h2>
 
 <p><a href="https://asciinema.org/a/133693"><img src="https://asciinema.org/a/133693.png" alt="asciicast" /></a></p>
 
-<h2 id="section-13">联系方式</h2>
+<h2 id="section-14">联系方式</h2>
 
 <ul>
   <li>邮箱：<a href="mailto:waruqi@gmail.com">waruqi@gmail.com</a></li>
