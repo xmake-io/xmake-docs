@@ -1949,7 +1949,7 @@ add_rcflags("xxx")
 
 ###### 添加链接选项
 
-添加静态链接库选项
+添加静态链接选项
 
 ```lua
 add_ldflags("-L/xxx", "-lxxx")
