@@ -2227,6 +2227,7 @@ option("test2")
 | [before_check](#optionbefore_check)                   | 选项检测之前执行此脚本                       | >= 2.1.5 |
 | [on_check](#optionon_check)                           | 自定义选项检测脚本                           | >= 2.1.5 |
 | [after_check](#optionafter_check)                     | 选项检测之后执行此脚本                       | >= 2.1.5 |
+| [set_values](#optionset_values)                       | 设置选项值列表                               | >= 2.1.9 |
 | [set_default](#optionset_default)                     | 设置默认值                                   | >= 2.0.1 |
 | [set_showmenu](#optionset_showmenu)                   | 设置是否启用菜单显示                         | >= 1.0.1 |
 | [set_category](#optionset_category)                   | 设置选项分类，仅用于菜单显示                 | >= 1.0.1 |
@@ -2388,6 +2389,23 @@ option("test")
     end)
 ```
 
+##### option:set_values
+
+###### 设置选项值列表
+
+仅用于`xmake f --menu`的图形菜单配置时，提供选项值列表供用户快速选择使用，例如：
+
+```lua
+option("test")
+    set_default("b")
+    set_showmenu(true)
+    set_values("a", "b", "c")
+```
+
+效果图如下：
+
+<img src="/assets/img/manual/option_set_values.png" width="60%" />
+
 ##### option:set_default
 
 ###### 设置选项默认值
@@ -2505,6 +2523,48 @@ Options:
 ```
 
 这个接口，仅仅是为了调整显示布局，更加美观而已，没其他用途。
+
+在2.1.9版本中，可以通过category设置分级路径名`set_category("root/submenu/submenu2")`，来配置`xmake f --menu`的图形菜单界面，例如：
+
+```lua
+-- 'boolean' option
+option("test1")
+    set_default(true)
+    set_showmenu(true)
+    set_category("root menu/test1")
+
+-- 'choice' option with values: "a", "b", "c"
+option("test2")
+    set_default("a")
+    set_values("a", "b", "c")
+    set_showmenu(true)
+    set_category("root menu/test2")
+
+-- 'string' option
+option("test3")
+    set_default("xx")
+    set_showmenu(true)
+    set_category("root menu/test3/test3")
+
+-- 'number' option
+option("test4")
+    set_default(6)
+    set_showmenu(true)
+    set_category("root menu/test4")
+```
+
+上述配置最后显示的菜单界面路径结构：
+
+- root menu
+  - test1
+  - test2
+  - test3
+    - test3
+  - test4
+
+效果图如下：
+
+<img src="/assets/img/manual/option_set_category.gif" width="60%" />
 
 ##### option:set_description
 
@@ -4504,6 +4564,7 @@ os模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是
 | [os.tmpdir](#os-tmpdir)                         | 获取临时目录路径                             | >= 2.0.1 |
 | [os.tmpfile](#os-tmpfile)                       | 获取临时文件路径                             | >= 2.0.1 |
 | [os.curdir](#os-curdir)                         | 获取当前目录路径                             | >= 2.0.1 |
+| [os.filesize](#os-filesize)                     | 获取文件大小                                 | >= 2.1.9 |
 | [os.scriptdir](#os-scriptdir)                   | 获取脚本目录路径                             | >= 2.0.1 |
 | [os.programdir](#os-programdir)                 | 获取xmake安装主程序脚本目录                  | >= 2.1.5 |
 | [os.projectdir](#os-projectdir)                 | 获取工程主目录                               | >= 2.1.5 |
@@ -4835,6 +4896,14 @@ print("$(tmpdir)/file.txt"))
 跟[$(curdir)](#var-curdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 用法参考：[os.tmpdir](#os-tmpdir)。
+
+###### os.filesize
+
+- 获取文件大小
+
+```lua
+print(os.filesize("/tmp/a"))
+```
 
 ###### os.scriptdir
 
