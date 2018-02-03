@@ -56,6 +56,14 @@ $ xmake f -p [windows|linux|macosx|android|iphoneos ..] -a [x86|arm64 ..] -m [de
 $ xmake
 ```
 
+## 图形化菜单配置
+
+```bash
+$ xmake f --menu
+```
+
+<img src="/assets/img/index/menuconf.gif" width="60%" />
+
 ## 支持特性
 
 * Tasks
@@ -193,7 +201,9 @@ target("test")
 
 ## 演示视频
 
-[![asciicast](https://asciinema.org/a/133693.png)](https://asciinema.org/a/133693)
+<a href="https://asciinema.org/a/133693">
+<img src="https://asciinema.org/a/133693.png" width="60%" />
+</a>
 
 ## 联系方式
 
