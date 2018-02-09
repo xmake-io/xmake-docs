@@ -5652,7 +5652,7 @@ emd
 针对target，链接指定对象文件列表，生成对应的目标文件，例如：
 
 ```lua
-linker.link({"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
+linker.link("binary", "cc", {"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
 ```
 
 其中[target](#target)，为工程目标，这里传入，主要用于获取target特定的链接选项，具体如果获取工程目标对象，见：[core.project.project](#core-project-project)
@@ -5662,6 +5662,28 @@ linker.link({"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
 ```lua
 linker.link("binary", "cc", {"a.o", "b.o", "c.o"}, "/tmp/targetfile")
 ```
+
+第一个参数指定链接类型，目前支持：binary, static, shared
+第二个参数告诉链接器，应该作为那种源文件对象进行链接，这些对象源文件使用什么编译器编译的，例如：
+
+| 第二个参数值 | 描述         |
+| ------------ | ------------ |
+| cc           | c编译器      |
+| cxx          | c++编译器    |
+| mm           | objc编译器   |
+| mxx          | objc++编译器 |
+| gc           | go编译器     |
+| as           | 汇编器       |
+| sc           | swift编译器  |
+| rc           | rust编译器   |
+
+指定不同的编译器类型，链接器会适配最合适的链接器来处理链接，并且如果几种支持混合编译的语言，那么可以同时传入多个编译器类型，指定链接器选择支持这些混合编译语言的链接器进行链接处理：
+
+```lua
+linker.link("binary", {"cc", "mxx", "sc"}, {"a.o", "b.o", "c.o"}, "/tmp/targetfile")
+```
+
+上述代码告诉链接器，a, b, c三个对象文件有可能分别是c, objc++, swift代码编译出来的，链接器会从当前系统和工具链中选择最合适的链接器去处理这个链接过程。
 
 ###### linker.linkcmd
 
