@@ -64,16 +64,6 @@ $ xmake f --menu
 
 <img src="/assets/img/index/menuconf.gif" width="60%" />
 
-## Support features
-
-* Tasks
-* Macros
-* Actions
-* Options
-* Plugins
-* Modules
-* Templates
-
 ## Support platforms
 
 * Windows (x86, x64)

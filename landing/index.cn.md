@@ -64,16 +64,6 @@ $ xmake f --menu
 
 <img src="/assets/img/index/menuconf.gif" width="60%" />
 
-## 支持特性
-
-* Tasks
-* Macros
-* Actions
-* Options
-* Plugins
-* Modules
-* Templates
-
 ## 支持平台
 
 * Windows (x86, x64)
