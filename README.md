@@ -254,7 +254,7 @@ hello`main:
 
 ## Project Examples
 
-#### Executale Program
+#### Executable Program
 
 ```lua
 target("test")
@@ -673,14 +673,19 @@ If it fails again, please add `-v` or `--verbose` options to get more verbose in
 For exmaple: 
 
 ```hash
-$ xmake -v 
-$ xmake --verbose
+$ xmake [-v|--verbose] 
 ```
 
 And add `--backtrace` to get the verbose backtrace info, then you can submit these infos to [issues](https://github.com/tboox/xmake/issues).
 
 ```bash
 $ xmake -v --backtrace
+```
+
+#### How to see verbose compiling warnings and arguments?
+
+```bash
+$ xmake [-v|--verbose] 
 ```
 
 ## Backers

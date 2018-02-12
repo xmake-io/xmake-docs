@@ -728,14 +728,21 @@ $ xmake
 例如：
 
 ```hash
-$ xmake -v 
-$ xmake --verbose
+$ xmake [-v|--verbose] 
 ```
 
 并且可以加上 `--backtrace` 选项获取出错时的xmake的调试栈信息, 然后你可以提交这些信息到[issues](https://github.com/tboox/xmake/issues).
 
 ```bash
 $ xmake -v --backtrace
+```
+
+#### 怎样看实时编译警告和详细的编译参数?
+
+加上`-v`选项启用详细输出就行了。
+
+```bash
+$ xmake [-v|--verbose] 
 ```
 
 ## 支持项目
