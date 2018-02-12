@@ -557,6 +557,8 @@ target("test2")
 | [add_scflags](#targetadd_scflags)             | 添加swift编译选项                    | >= 2.0.1 |
 | [add_asflags](#targetadd_asflags)             | 添加汇编编译选项                     | >= 2.0.1 |
 | [add_gcflags](#targetadd_gcflags)             | 添加go编译选项                       | >= 2.1.1 |
+| [add_dcflags](#targetadd_dcflags)             | 添加dlang编译选项                    | >= 2.1.1 |
+| [add_rcflags](#targetadd_rcflags)             | 添加rust编译选项                     | >= 2.1.1 |
 | [add_ldflags](#targetadd_ldflags)             | 添加链接选项                         | >= 1.0.1 |
 | [add_arflags](#targetadd_arflags)             | 添加静态库归档选项                   | >= 1.0.1 |
 | [add_shflags](#targetadd_shflags)             | 添加动态库链接选项                   | >= 1.0.1 |
