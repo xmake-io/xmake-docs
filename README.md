@@ -682,11 +682,35 @@ And add `--backtrace` to get the verbose backtrace info, then you can submit the
 $ xmake -v --backtrace
 ```
 
-#### How to see verbose compiling warnings and arguments?
+#### How to see verbose compiling warnings?
 
 ```bash
-$ xmake [-v|--verbose] 
+$ xmake [-w|--warning] 
 ```
+
+#### How to scan source code and generate xmake.lua automaticlly
+
+You only need run the following command:
+
+```bash
+$ xmake
+```
+
+xmake will scan all source code in current directory and build it automaticlly. 
+
+And we can run it directly.
+
+```bash
+$ xmake run
+```
+
+If we only want to generate xmake.lua file, we can run:
+
+```bash
+$ xmake f -y
+```
+
+If you want to known more information please see [Scan source codes and build project without makefile](http://tboox.org/2017/01/07/build-without-makefile/)
 
 ## Backers
 
