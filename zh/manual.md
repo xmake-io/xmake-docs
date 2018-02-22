@@ -1119,7 +1119,7 @@ target("test")
 
 覆盖target目标的`xmake [p|package}`的打包操作，实现自定义打包过程，如果你想对指定target打包成自己想要的格式，可以通过这个接口自定义它。
 
-这个接口还是挺实用的，例如，编译玩jni后，将生成的so，打包进apk包中。
+这个接口还是挺实用的，例如，编译完jni后，将生成的so，打包进apk包中。
 
 ```lua
 -- 定义一个android app的测试demo
