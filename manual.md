@@ -1517,7 +1517,7 @@ target("demo")
 上面的例子，在编译目标demo的时候，需要先编译test1, test2目标，因为demo会去用到他们
 
 <p class="tip">
-2.1.5版本后，target会自动继承依赖目标中的配置和属性，不再需要额外调用`add_links`, `add_includedirs`和`add_linkdirs`等接口去关联依赖目标了。
+2.1.5版本后，target会自动继承依赖目标中的配置和属性，不再需要额外调用`add_links`, `add_linkdirs`和`add_rpathdirs`等接口去关联依赖目标了。
 </p>
 
 2.1.5版本之后，上述代码可简化为：
@@ -1541,7 +1541,7 @@ target("demo")
 target("library1")
     set_kind("static")
     add_files("*.c")
-    add_headers("inc1/*.h")
+    add_headers("inc1/*.h") -- 此处的头文件相关目录也会被继承
 
 target("library2")
     set_kind("static")
@@ -1561,6 +1561,10 @@ add_deps("dep1", "dep2", {inherit = false})
 ```
 
 通过显示设置inherit配置，来告诉xmake，这两个依赖的配置是否需要被继承，如果不设置，默认就是启用继承的。
+
+<p class="warning">
+需要注意的是`add_includedirs()`不会被依赖继承，因为子目录的头文件搜索路径是私有的，反而污染父目标搜索路径，只有`add_headers`指定的导出头文件所在目录才会被继承。
+</p>
 
 ##### target:add_links
 
