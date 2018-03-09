@@ -83,6 +83,7 @@ $ xmake f --menu
 * Golang
 * Rust
 * Dlang
+* Cuda
 
 ## Builtin Plugins
 

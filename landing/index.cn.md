@@ -83,6 +83,7 @@ $ xmake f --menu
 * Golang
 * Rust
 * Dlang
+* Cuda
 
 ## 内置插件
 

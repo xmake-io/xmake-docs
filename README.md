@@ -409,6 +409,7 @@ $ xmake
 | [--gc](#-gc)                 | Set `golang` compiler                        |
 | [--dc](#-dc)                 | Set `dlang` compiler                         |
 | [--rc](#-rc)                 | Set `rust` compiler                          |
+| [--cu](#-cu)                 | Set `cuda` compiler                          |
 | [--ld](#-ld)                 | Set `c/c++/objc/asm` linker                  |
 | [--sh](#-sh)                 | Set `c/c++/objc/asm` shared library linker   |
 | [--ar](#-ar)                 | Set `c/c++/objc/asm` static library archiver |
@@ -422,6 +423,9 @@ $ xmake
 | [--rc-ld](#-rc-ld)           | Set `rust` linker                            |
 | [--rc-sh](#-rc-sh)           | Set `rust` shared library linker             |
 | [--rc-ar](#-rc-ar)           | Set `rust` static library archiver           |
+| [--cu-ld](#-cu-ld)           | Set `cuda` linker                            |
+| [--cu-sh](#-cu-sh)           | Set `cuda` shared library linker             |
+| [--cu-ar](#-cu-ar)           | Set `cuda` static library archiver           |
 | [--asflags](#-asflags)       | Set `asm` assembler option                   |
 | [--cflags](#-cflags)         | Set `c` compiler option                      |
 | [--cxflags](#-cxflags)       | Set `c/c++` compiler option                  |
@@ -433,6 +437,7 @@ $ xmake
 | [--gcflags](#-gcflags)       | Set `golang` compiler option                 |
 | [--dcflags](#-dcflags)       | Set `dlang` compiler option                  |
 | [--rcflags](#-rcflags)       | Set `rust` compiler option                   |
+| [--cuflags](#-cuflags)       | Set `cuda` compiler option                   |
 | [--ldflags](#-ldflags)       | Set  linker option                           |
 | [--shflags](#-shflags)       | Set  shared library linker option            |
 | [--arflags](#-arflags)       | Set  static library archiver option          |

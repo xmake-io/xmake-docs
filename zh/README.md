@@ -435,6 +435,7 @@ $ xmake
 | [--gc](#-gc)                 | 设置`golang`编译器               |
 | [--dc](#-dc)                 | 设置`dlang`编译器                |
 | [--rc](#-rc)                 | 设置`rust`编译器                 |
+| [--cu](#-cu)                 | 设置`cuda`编译器                 |
 | [--ld](#-ld)                 | 设置`c/c++/objc/asm`链接器       |
 | [--sh](#-sh)                 | 设置`c/c++/objc/asm`共享库链接器 |
 | [--ar](#-ar)                 | 设置`c/c++/objc/asm`静态库归档器 |
@@ -448,6 +449,9 @@ $ xmake
 | [--rc-ld](#-rc-ld)           | 设置`rust`链接器                 |
 | [--rc-sh](#-rc-sh)           | 设置`rust`共享库链接器           |
 | [--rc-ar](#-rc-ar)           | 设置`rust`静态库归档器           |
+| [--cu-ld](#-cu-ld)           | 设置`cuda`链接器                 |
+| [--cu-sh](#-cu-sh)           | 设置`cuda`共享库链接器           |
+| [--cu-ar](#-cu-ar)           | 设置`cuda`静态库归档器           |
 | [--asflags](#-asflags)       | 设置`asm`汇编编译选项            |
 | [--cflags](#-cflags)         | 设置`c`编译选项                  |
 | [--cxflags](#-cxflags)       | 设置`c/c++`编译选项              |
@@ -459,6 +463,7 @@ $ xmake
 | [--gcflags](#-gcflags)       | 设置`golang`编译选项             |
 | [--dcflags](#-dcflags)       | 设置`dlang`编译选项              |
 | [--rcflags](#-rcflags)       | 设置`rust`编译选项               |
+| [--cuflags](#-cuflags)       | 设置`cuda`编译选项               |
 | [--ldflags](#-ldflags)       | 设置链接选项                     |
 | [--shflags](#-shflags)       | 设置共享库链接选项               |
 | [--arflags](#-arflags)       | 设置静态库归档选项               |
