@@ -201,7 +201,7 @@ target("test")
 * 邮箱：[waruqi@gmail.com](mailto:waruqi@gmail.com)
 * 主页：[tboox.org](http://www.tboox.org/cn)
 * 社区：[Reddit论坛](https://www.reddit.com/r/tboox/)
-* 聊天：[![Join the chat at https://gitter.im/tboox/tboox](https://badges.gitter.im/tboox/tboox.svg)](https://gitter.im/tboox/tboox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+* 聊天：[Gitter聊天室](https://gitter.im/tboox/tboox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 * 源码：[Github](https://github.com/tboox/xmake), [Gitee](https://gitee.com/tboox/xmake)
 * QQ群：343118190
 * 微信公众号：tboox-os

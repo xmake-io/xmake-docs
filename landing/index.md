@@ -200,6 +200,6 @@ Some projects using xmake:
 
 * Email：[waruqi@gmail.com](mailto:waruqi@gmail.com)
 * Homepage：[tboox.org](http://www.tboox.org)
-* Community：[forum on reddit](https://www.reddit.com/r/tboox/)
-* ChatRoom：[![Join the chat at https://gitter.im/tboox/tboox](https://badges.gitter.im/tboox/tboox.svg)](https://gitter.im/tboox/tboox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+* Community：[Forum on reddit](https://www.reddit.com/r/tboox/)
+* ChatRoom：[Chat on gitter](https://gitter.im/tboox/tboox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 * Source Code：[Github](https://github.com/tboox/xmake), [Gitee](https://gitee.com/tboox/xmake)
