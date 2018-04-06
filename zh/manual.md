@@ -2238,9 +2238,9 @@ set_tools {
 }
 ```
 
-<pre class="tip">
+<p class="tip">
 每次设置都会覆盖当前target目标下之前的那次设置，不同target之间不会被覆盖，互相独立，如果在根域设置，会影响所有子target。
-</pre>
+</p>
 
 或者可以使用[add_tools](#targetadd_tools)来设置：
 
