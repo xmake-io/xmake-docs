@@ -549,6 +549,8 @@ target("test2")
 | [add_vectorexts](#targetadd_vectorexts)       | Add vector extensions                                  | >= 1.0.1                    |
 | [add_frameworks](#targetadd_frameworks)       | Add frameworks                                         | >= 2.1.1                    |
 | [add_frameworkdirs](#targetadd_frameworkdirs) | Add framework search directories                       | >= 2.1.5                    |
+| [set_tools](#targetset_tools)                 | Set toolchains                                         | >= 2.1.10                   |
+| [add_tools](#targetadd_tools)                 | Add toolchains                                         | >= 2.1.10                   |
 
 ##### target
 
@@ -2187,6 +2189,78 @@ target("test")
     add_frameworks("MyFramework")
     add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
 ```
+
+##### target:set_tools
+
+###### Set toolchains 
+
+对于`add_files("*.c")`添加的源码文件，默认都是会调用系统最匹配的编译工具去编译，或者通过`xmake f --cc=clang`命令手动去修改，不过这些都是全局影响所有target目标的。
+
+如果有些特殊需求，需要对当前工程下某个特定的target目标单独指定不同的编译器、链接器或者特定版本的编译器，这个时候此接口就可以排上用途了，例如：
+
+```lua
+target("test1")
+    add_files("*.c")
+
+target("test2")
+    add_files("*.c")
+    set_tools("cc", "$(projectdir)/tools/bin/clang-5.0")
+```
+
+上述描述仅对test2目标的编译器进行特殊设置，使用特定的clang-5.0编译器来编译test2，而test1还是使用默认设置。
+
+对于同时设置多个编译器类型，可以这么写：
+
+```lua
+set_tools {
+    cc = path.join(os.projectdir(), "tools/bin/clang-5.0"),
+    mm = path.join(os.projectdir(), "tools/bin/clang-5.0"),
+}
+```
+
+<pre class="tip">
+每次设置都会覆盖当前target目标下之前的那次设置，不同target之间不会被覆盖，互相独立，如果在根域设置，会影响所有子target。
+</pre>
+
+或者可以使用[add_tools](#targetadd_tools)来设置：
+
+```lua
+add_tools("cc", "$(projectdir)/tools/bin/clang-5.0")
+add_tools("mm", "$(projectdir)/tools/bin/clang-5.0")
+```
+
+前一个参数是key，用于指定工具类型，目前支持的有（编译器、链接器、归档器）：
+
+| 工具类型     | 描述                                 |
+| ------------ | ------------------------------------ |
+| cc           | c编译器                              |
+| cxx          | c++编译器                            |
+| mm           | objc编译器                           |
+| mxx          | objc++编译器                         |
+| gc           | go编译器                             |
+| as           | 汇编器                               |
+| sc           | swift编译器                          |
+| rc           | rust编译器                           |
+| dc           | dlang编译器                          |
+| ld           | c/c++/asm/objc等通用可执行程序链接器 |
+| sh           | c/c++/asm/objc等通用动态库链接器     |
+| ar           | c/c++/asm/objc等通用静态库归档器     |
+| dc-ld        | dlang可执行链接器, rc-ld/gc-ld等类似 |
+| dc-sh        | dlang动态库链接器, rc-sh/gc-sh等类似 |
+
+对于一些编译器文件名不规则，导致xmake无法正常识别处理为已知的编译器名的情况下，我们也可以加一个工具名提示，例如：
+
+```lua
+add_tools("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
+```
+
+上述描述设置mipscc.exe作为c编译器，并且提示xmake作为gcc的传参处理方式进行编译。
+
+##### target:add_tools
+
+###### Add toolchains
+
+类似[set_tools](#targetset_tools)，区别就是此接口可以多次调用，去添加多个工具，而[set_tools](#targetset_tools)每次设置都会覆盖之前的设置。
 
 #### Configuration Option
 
