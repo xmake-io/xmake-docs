@@ -549,8 +549,8 @@ target("test2")
 | [add_vectorexts](#targetadd_vectorexts)       | Add vector extensions                                  | >= 1.0.1                    |
 | [add_frameworks](#targetadd_frameworks)       | Add frameworks                                         | >= 2.1.1                    |
 | [add_frameworkdirs](#targetadd_frameworkdirs) | Add framework search directories                       | >= 2.1.5                    |
-| [set_tools](#targetset_tools)                 | Set toolchains                                         | >= 2.1.10                   |
-| [add_tools](#targetadd_tools)                 | Add toolchains                                         | >= 2.1.10                   |
+| [set_tools](#targetset_tools)                 | Set toolchains                                         | >= 2.2.1                   |
+| [add_tools](#targetadd_tools)                 | Add toolchains                                         | >= 2.2.1                   |
 
 ##### target
 
@@ -2332,7 +2332,7 @@ option("test2")
 | [add_gcflags](#targetadd_gcflags)                     | 添加go编译选项                               | >= 2.1.1 |
 | [add_dcflags](#targetadd_dcflags)                     | 添加dlang编译选项                            | >= 2.1.1 |
 | [add_rcflags](#targetadd_rcflags)                     | 添加rust编译选项                             | >= 2.1.1 |
-| [add_cuflags](#targetadd_cuflags)                     | 添加cuda编译选项                             | >= 2.1.10 |
+| [add_cuflags](#targetadd_cuflags)                     | 添加cuda编译选项                             | >= 2.2.1 |
 | [add_ldflags](#targetadd_ldflags)                     | 添加链接选项                                 | >= 2.1.1 |
 | [add_arflags](#targetadd_arflags)                     | 添加静态库归档选项                           | >= 2.1.1 |
 | [add_shflags](#targetadd_shflags)                     | 添加动态库链接选项                           | >= 2.0.1 |
