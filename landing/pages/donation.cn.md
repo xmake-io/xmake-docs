@@ -25,6 +25,7 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 <a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
 
+| 2018.04.29 | 清春 | 支付宝 | ¥180 | |
 | 2018.02.18 | 氧烷 | 支付宝 | ¥16.66 | xmake，赞👍 |
 | 2017.11.19 | sytru | 支付宝 | ¥10 | 感谢作者，让写c/c++有了写脚本的感觉。非常愉悦的使用体验，希望不要消失。|
 | 2017.11.16 | 琪峻 | 支付宝 | ¥15 | 感谢好用的xmake |
