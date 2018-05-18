@@ -42,6 +42,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 ## Supporters 
 
+| 2018.05.17 | 匿名 | wechat | ¥10 | 加油xmake |
 | 2018.04.29 | 清春 | alipay | ¥180 | |
 | 2018.02.18 | 氧烷 | alipay | ¥16.66 | xmake，赞👍 |
 | 2017.11.19 | sytru | alipay | ¥10 | 感谢作者，让写c/c++有了写脚本的感觉。非常愉悦的使用体验，希望不要消失。|
