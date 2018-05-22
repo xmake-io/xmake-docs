@@ -1410,9 +1410,10 @@ target("test")
 
 那么，选项中`add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")`的$(prefix)会自动被替换成新的前缀值。
 
+
 ##### target:set_config_header
 
-###### Set auto-generated config header file (new)
+###### 设置自动生成的配置头文件路径和前缀
 
 此接口是[set_config_h](#targetset_config_h)和[set_config_h_prefix](#targetset_config_h_prefix)的升级版本，2.1.5之后支持。
 
@@ -1434,12 +1435,23 @@ target("test")
 
 如果不设置前缀，将会自动根据target名生成一个唯一字串。
 
+2.1.8 之后版本，支持针对每个局部配置文件，单独设置版本号，优先于全局的[set_version](#set_version)，例如：
+
+```lua
+    set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG", version = "2.1.8", build = "%Y%m%d%H%M"})
+```
+
+###### 通过内置的检测规则生成配置
+
 当这个target中通过下面的这些接口，对这个target添加了相关的选项依赖、包依赖、接口依赖后，如果某依赖被启用，那么对应的一些宏定义配置，会自动写入被设置的`config.h`文件中去。
 
 * [add_options](#targetadd_options)
 * [add_packages](#targetadd_packages)
+* [add_cfunc](#targetadd_cfunc)
 * [add_cfuncs](#targetadd_cfuncs)
 * [add_cxxfuncs](#targetadd_cxxfuncs) 
+
+###### 定制化检测和生成配置头文件
 
 这些接口，其实底层都用到了[option](#option)选项中的一些检测设置，例如：
 
@@ -1450,7 +1462,7 @@ option("wchar")
     add_ctypes("wchar_t")
 
     -- 如果检测通过，自动生成 TB_CONFIG_TYPE_HAVE_WCHAR的宏开关到config.h
-    add_defines_h_if_ok("$(prefix)_TYPE_HAVE_WCHAR")
+    add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")
 
 target("test")
 
@@ -1461,10 +1473,34 @@ target("test")
     add_options("wchar")
 ```
 
-2.1.8 之后版本，支持针对每个局部配置文件，单独设置版本号，优先于全局的[set_version](#set_version)，例如：
+甚至我们可以在`xmake.lua`中自己定义个function，针对option进行封装，提供更加定制化的检测和生成config.h的过程
+
+例如：这里有个需求，我们想批量检测一些头文件，如果存在则在config.h里面输出`HAVE_LIMITS_H`这样的宏开关，我们可以这么写
 
 ```lua
-    set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG", version = "2.1.8", build = "%Y%m%d%H%M"})
+function add_checking_to_config(...)
+
+    -- 批量定义option检测规则，仅检测include文件
+    local options = {}
+    for _, header in ipairs({...}) do 
+        local define = header:upper():gsub("[%./]", "_")
+        option(define)
+            add_cincludes(header)
+            add_defines_h("HAVE_" .. define) -- 生成 HAVE_LIMITS_H 这样的宏开关到config.h 
+        option_end()
+        table.insert(options, define)
+    end
+
+    -- 定义个内置__config空目标，仅用于关联设置automatedconfig.h，以及对应的options检测规则
+    -- 因为set_config_header在全局设置，会影响所有target，对每个target都会检测生成一次宏开关
+    target("__config")
+        set_kind("phony")
+        set_config_header("includes/automatedconfig.h")
+        add_options(options)
+end
+
+-- 添加一些头文件检测
+add_checking_to_config("arpa/inet.h", "limits.h", "fcntl.h", "xxxx.h")
 ```
 
 ##### target:set_pcheader
