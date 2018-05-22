@@ -1986,8 +1986,7 @@ add_shflags("xxx")
 target("demo")
     
     -- 设置和启用config.h
-    set_config_h("$(buildir)/config.h")
-    set_config_h_prefix("TEST")
+    set_config_header("$(buildir)/config.h", {prefix = "TEST"})
 
     -- 仅通过参数一设置模块名前缀
     add_cfunc("libc",       nil,        nil,        {"sys/select.h"},   "select")
