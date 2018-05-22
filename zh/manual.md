@@ -1515,6 +1515,7 @@ function add_checking_to_config(...)
         set_kind("phony")
         set_config_header("includes/automatedconfig.h")
         add_options(options)
+    target_end()
 end
 
 -- 添加一些头文件检测
