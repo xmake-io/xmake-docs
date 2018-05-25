@@ -74,22 +74,21 @@ docute.init({
     }),
     function valine(context) {
       context.registerComponent('content:end', {
-        template: '<div class="markdown-body content"><h2 id="comments">Comments</h2><div id="valine_thread"></div></div>',
+        template: '<div class="markdown-body content"><h2 id="comments">Comments</h2><div id="gitment_thread"></div></div>',
         mounted() {
           this.init()
         },
         methods: {
           init() {
-            var valine = new Valine();
-            valine.init({
-              el: '#valine_thread',
-              appId: 'RD4nYKDcOrU4XBWJRB2H4g6D-gzGzoHsz',
-              appKey: 'I6DiXvhBgTfKKcJ68D1zQXsr',
-              notify:true,
-              placeholder: 'Welcome to read xmake online documents!',
-              lang: 'en',
-              avatar:'mm' 
+             var gitment = new Gitment({
+              owner: 'waruqi',
+              repo: 'xmake.io',
+              oauth: {
+                client_id: 'cb53dd42b1b654202a55',
+                client_secret: '8a9a0e7feadc575b8bba9770cd9454d7423028ac',
+              },
             })
+            gitment.render('gitment_thread')
           }
         }
       })
