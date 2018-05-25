@@ -74,21 +74,22 @@ docute.init({
     }),
     function valine(context) {
       context.registerComponent('content:end', {
-        template: '<div class="markdown-body content"><h2 id="comments">Comments</h2><div id="gitment_thread"></div></div>',
+        template: '<div class="markdown-body content"><h2 id="comments">Comments</h2><div id="gitalk_thread"></div></div>',
         mounted() {
           this.init()
         },
         methods: {
           init() {
-             var gitment = new Gitment({
-              owner: 'waruqi',
+            const gitalk = new Gitalk({
+              clientID: 'cb53dd42b1b654202a55',
+              clientSecret: '8a9a0e7feadc575b8bba9770cd9454d7423028ac',
               repo: 'xmake-docs',
-              oauth: {
-                client_id: 'cb53dd42b1b654202a55',
-                client_secret: '8a9a0e7feadc575b8bba9770cd9454d7423028ac',
-              },
+              owner: 'waruqi',
+              admin: ['waruqi'],
+              id: location.pathname,      
+              distractionFreeMode: false  
             })
-            gitment.render('gitment_thread')
+            gitalk.render('gitalk_thread')
           }
         }
       })
