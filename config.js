@@ -82,7 +82,7 @@ docute.init({
           init() {
              var gitment = new Gitment({
               owner: 'waruqi',
-              repo: 'xmake.io',
+              repo: 'xmake-docs',
               oauth: {
                 client_id: 'cb53dd42b1b654202a55',
                 client_secret: '8a9a0e7feadc575b8bba9770cd9454d7423028ac',
