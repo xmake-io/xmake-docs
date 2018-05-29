@@ -3706,7 +3706,52 @@ target("kcs")
 
 用法跟[wdk.umdf.binary](#wdk-umdf-binary)和[wdk.kmdf.binary](#wdk-kmdf-binary)类似。
 
+###### wdk.tracewpp
+
+用于启用tracewpp预处理源文件：
+
+```lua
+target("nonpnp")
+
+    -- add rules
+    add_rules("wdk.kmdf.driver")
+
+    -- add flags for rule: wdk.tracewpp
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
+
+    -- add files
+    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.rc")
+```
+
 更多WDK规则描述见：[#159](https://github.com/tboox/xmake/issues/159)
+
+###### win.sdk.application
+
+编译生成winsdk应用程序。
+
+```lua
+-- add rules
+add_rules("mode.debug", "mode.release")
+
+-- define target
+target("usbview")
+
+    -- windows application
+    add_rules("win.sdk.application")
+
+    -- add files
+    add_files("*.c", "*.rc")
+    add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
+```
+
+###### wdk.sdk.dotnet
+
+用于指定某些c++源文件作为c++.net来编译。
+
+```lua
+add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
+```
 
 ##### rule
 
