@@ -549,8 +549,10 @@ target("test2")
 | [add_vectorexts](#targetadd_vectorexts)       | Add vector extensions                                  | >= 1.0.1                    |
 | [add_frameworks](#targetadd_frameworks)       | Add frameworks                                         | >= 2.1.1                    |
 | [add_frameworkdirs](#targetadd_frameworkdirs) | Add framework search directories                       | >= 2.1.5                    |
-| [set_tools](#targetset_tools)                 | Set toolchains                                         | >= 2.2.1                   |
-| [add_tools](#targetadd_tools)                 | Add toolchains                                         | >= 2.2.1                   |
+| [set_tools](#targetset_tools)                 | Set toolchains                                         | >= 2.2.1                    |
+| [add_tools](#targetadd_tools)                 | Add toolchains                                         | >= 2.2.1                    |
+| [set_values](#targetset_values)               | Set custom configuartion values                        | >= 2.2.1                    |
+| [add_values](#targetadd_values)               | Add custom configuartion values                        | >= 2.2.1                    |
 
 ##### target
 
@@ -2298,6 +2300,41 @@ add_tools("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 
 类似[set_tools](#targetset_tools)，区别就是此接口可以多次调用，去添加多个工具，而[set_tools](#targetset_tools)每次设置都会覆盖之前的设置。
 
+##### target:set_values
+
+###### Set custom configuration values
+
+给target设置一些扩展的配置值，这些配置没有像`set_ldflags`这种内置的api可用，通过第一个参数传入一个配置名，来扩展配置。
+一般用于传入配置参数给自定义rule中的脚本使用，例如：
+
+```lua
+rule("markdown")
+    on_build_file(function (target, sourcefile)
+        -- compile .markdown with flags
+        local flags = target:values("markdown.flags")
+        if flags then
+            -- ..
+        end
+    end)
+
+target("test")
+    add_files("src/*.md", {rule = "markdown"})
+    set_values("markdown.flags", "xxx", "xxx")
+```
+
+上述代码例子中，可以看出，在target应用markdown规则的时候，通过set_values去设置一些flags值，提供给markdown规则去处理。
+在规则脚本中可以通过`target:values("markdown.flags")`获取到target中设置的扩展flags值。
+
+<p class="tip">
+具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](#内建规则)
+</p>
+
+##### target:add_values
+
+###### Add custom configuration values
+
+用法跟[target:set_values](#targetset_tools)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
+
 #### Configuration Option
 
 定义和设置选项开关，每个`option`对应一个选项，可用于自定义编译配置选项、开关设置。
@@ -3282,7 +3319,7 @@ task.run("hello", {color="red"}, arg1, arg2, arg3)
 
 #### Custom Rule
 
-在2.1.9版本之后，xmake不仅原生内置支持多种语言文件的构建，而且还可以通过自定义构建规则，让用户自己来实现复杂的未知文件构建。
+在2.2.1版本之后，xmake不仅原生内置支持多种语言文件的构建，而且还可以通过自定义构建规则，让用户自己来实现复杂的未知文件构建。
 
 我们可以通过预先设置规则支持的文件后缀，来扩展其他文件的构建支持：
 
@@ -3290,7 +3327,7 @@ task.run("hello", {color="red"}, arg1, arg2, arg3)
 -- 定义一个markdown文件的构建规则
 rule("markdown")
     set_extensions(".md", ".markdown")
-    on_build(function (target, sourcefile)
+    on_build_file(function (target, sourcefile)
         os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 
@@ -3313,35 +3350,11 @@ target("test")
     add_files("src/test/*.md.in", {rule = "markdown"})
 ```
 
+一个target可以叠加应用多个rules去更加定制化实现自己的构建行为，甚至支持不同的构建环境。
+
 <p class="tips">
 通过`add_files("*.md", {rule = "markdown"})`方式指定的规则，优先级高于`add_rules("markdown")`设置的规则。
 </p>
-
-我们还可以实现规则的级联构建，例如在构建man规则后，继续调用markdown规则，实现级联构建：
-
-```lua
-rule("man")
-    add_imports("core.project.rule")
-    on_build(function (target, sourcefile)
-        rule.build("markdown", target, sourcefile)
-    end)
-```
-
-对于有些文件，需要支持多文件构建生成单一对象的模式，可以通过[on_build_all](#ruleon_build_all)来实现：
-
-```lua
-rule("man")
-    on_build_all(function (target, sourcefiles)
-        -- build some source files
-        for _, sourcefile in ipairs(sourcefiles) do
-            -- ...
-        end
-    end)
-
-target("test")
-    -- ...
-    add_files("src/test/*.doc.in", {rule = "man"})
-```
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
@@ -3353,12 +3366,328 @@ target("test")
 | [on_package](#ruleon_package)                   | 自定义打包脚本                               | >= 2.1.9 |
 | [on_install](#ruleon_install)                   | 自定义安装脚本                               | >= 2.1.9 |
 | [on_uninstall](#ruleon_uninstall)               | 自定义卸载脚本                               | >= 2.1.9 |
-| [on_build_all](#ruleon_build_all)               | 自定义编译脚本, 实现多文件构建               | >= 2.1.9 |
-| [on_clean_all](#ruleon_clean_all)               | 自定义清理脚本，实现多文件清理               | >= 2.1.9 |
-| [on_package_all](#ruleon_package_all)           | 自定义打包脚本，实现多文件打包               | >= 2.1.9 |
-| [on_install_all](#ruleon_install_all)           | 自定义安装脚本，实现多文件安装               | >= 2.1.9 |
-| [on_uninstall_all](#ruleon_uninstall_all)       | 自定义卸载脚本，实现多文件卸载               | >= 2.1.9 |
+| [on_build_file](#ruleon_build_file)             | 自定义编译脚本, 实现单文件构建               | >= 2.2.1 |
+| [on_build_files](#ruleon_build_files)           | 自定义编译脚本, 实现多文件构建               | >= 2.2.1 |
+| [before_build](#rulebefore_build)               | 自定义编译前的脚本                           | >= 2.2.1 |
+| [before_clean](#rulebefore_clean)               | 自定义清理前的脚本                           | >= 2.2.1 |
+| [before_package](#rulebefore_package)           | 自定义打包前的脚本                           | >= 2.2.1 |
+| [before_install](#rulebefore_install)           | 自定义安装前的脚本                           | >= 2.2.1 |
+| [before_uninstall](#rulebefore_uninstall)       | 自定义卸载前的脚本                           | >= 2.2.1 |
+| [before_build_file](#rulebefore_build_file)     | 自定义编译前的脚本, 实现单文件构建           | >= 2.2.1 |
+| [before_build_files](#rulebefore_build_files)   | 自定义编译前的脚本, 实现多文件构建           | >= 2.2.1 |
+| [after_build](#ruleafter_build)                 | 自定义编译后的脚本                           | >= 2.2.1 |
+| [after_clean](#ruleafter_clean)                 | 自定义清理后的脚本                           | >= 2.2.1 |
+| [after_package](#ruleafter_package)             | 自定义打包后的脚本                           | >= 2.2.1 |
+| [after_install](#ruleafter_install)             | 自定义安装后的脚本                           | >= 2.2.1 |
+| [after_uninstall](#ruleafter_uninstall)         | 自定义卸载后的脚本                           | >= 2.2.1 |
+| [after_build_file](#ruleafter_build_file)       | 自定义编译后的脚本, 实现单文件构建           | >= 2.2.1 |
+| [after_build_files](#ruleafter_build_files)     | 自定义编译后的脚本, 实现多文件构建           | >= 2.2.1 |
 | [rule_end](#rule_end)                           | 结束定义规则                                 | >= 2.1.9 |
+
+##### 内建规则
+
+自从2.2.1版本后，xmake提供了一些内置规则去简化日常xmake.lua描述，以及一些常用构建环境的支持。
+
+| 规则                                            | 描述                                         | 支持版本 |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [mode.debug](#mode-debug)                       | 调试模式编译规则                             | >= 2.2.1 |
+| [mode.release](#mode-release)                   | 发布模式编译规则                             | >= 2.2.1 |
+| [mode.check](#mode-check)                       | 检测模式编译规则                             | >= 2.2.1 |
+| [mode.profile](#mode-profile)                   | 性能分析模式编译规则                         | >= 2.2.1 |
+| [mode.coverage](#mode-coverage)                 | 覆盖分析编译模式规则                         | >= 2.2.1 |
+| [qt.static](#qt-static)                         | Qt静态库编译规则                             | >= 2.2.1 |
+| [qt.shared](#qt-shared)                         | Qt动态库编译规则                             | >= 2.2.1 |
+| [qt.console](#qt-console)                       | Qt控制台编译规则                             | >= 2.2.1 |
+| [qt.application](#qt-application)               | Qt应用程序编译规则                           | >= 2.2.1 |
+| [wdk.umdf.driver](#wdk-umdf-driver)             | WDK环境umdf驱动编译规则                      | >= 2.2.1 |
+| [wdk.umdf.binary](#wdk-umdf-binary)             | WDK环境umdf驱动应用编译规则                  | >= 2.2.1 |
+| [wdk.kmdf.driver](#wdk-kmdf-driver)             | WDK环境kmdf驱动编译规则                      | >= 2.2.1 |
+| [wdk.kmdf.binary](#wdk-kmdf-binary)             | WDK环境kmdf驱动应用编译规则                  | >= 2.2.1 |
+| [wdk.wdm.driver](#wdk-wdm-driver)               | WDK环境wdm驱动编译规则                       | >= 2.2.1 |
+| [wdk.wdm.binary](#wdk-wdm-binary)               | WDK环境wdm驱动应用编译规则                   | >= 2.2.1 |
+
+###### mode.debug
+
+为当前工程xmake.lua添加debug编译模式的配置规则，例如：
+
+```lua
+add_rules("mode.debug")
+```
+
+相当于：
+
+```lua
+-- the debug mode
+if is_mode("debug") then
+    
+    -- enable the debug symbols
+    set_symbols("debug")
+
+    -- disable optimization
+    set_optimize("none")
+end
+```
+
+我们可以通过：`xmake f -m debug`来切换到此编译模式。
+
+###### mode.release
+
+为当前工程xmake.lua添加release编译模式的配置规则，例如：
+
+```lua
+add_rules("mode.release")
+```
+
+相当于：
+
+```lua
+-- the release mode
+if is_mode("release") then
+
+    -- set the symbols visibility: hidden
+    set_symbols("hidden")
+
+    -- enable fastest optimization
+    set_optimize("fastest")
+
+    -- strip all symbols
+    set_strip("all")
+end
+```
+
+我们可以通过：`xmake f -m release`来切换到此编译模式。
+
+###### mode.check
+
+为当前工程xmake.lua添加check编译模式的配置规则，一般用于内存检测，例如：
+
+```lua
+add_rules("mode.check")
+```
+
+相当于：
+
+```lua
+-- the check mode
+if is_mode("check") then
+
+    -- enable the debug symbols
+    set_symbols("debug")
+
+    -- disable optimization
+    set_optimize("none")
+
+    -- attempt to enable some checkers for pc
+    add_cxflags("-fsanitize=address", "-ftrapv")
+    add_mxflags("-fsanitize=address", "-ftrapv")
+    add_ldflags("-fsanitize=address")
+end
+```
+
+我们可以通过：`xmake f -m check`来切换到此编译模式。
+
+###### mode.profile
+
+为当前工程xmake.lua添加profile编译模式的配置规则，一般用于性能分析，例如：
+
+```lua
+add_rules("mode.profile")
+```
+
+相当于：
+
+```lua
+-- the profile mode
+if is_mode("profile") then
+   
+    -- enable the debug symbols
+    set_symbols("debug")
+
+    -- enable gprof
+    add_cxflags("-pg")
+    add_ldflags("-pg")
+end
+```
+
+我们可以通过：`xmake f -m profile`来切换到此编译模式。
+
+###### mode.coverage
+
+为当前工程xmake.lua添加coverage编译模式的配置规则，一般用于覆盖分析，例如：
+
+```lua
+add_rules("mode.coverage")
+```
+
+相当于：
+
+```lua
+-- the coverage mode
+if is_mode("coverage") then
+    add_cxflags("--coverage")
+    add_mxflags("--coverage")
+    add_ldflags("--coverage")
+end
+```
+
+我们可以通过：`xmake f -m coverage`来切换到此编译模式。
+
+###### qt.static
+
+用于编译生成Qt环境的静态库程序：
+
+```lua
+target("qt_static_library")
+    add_rules("qt.static")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
+```
+
+###### qt.shared
+
+用于编译生成Qt环境的动态库程序：
+
+```lua
+target("qt_shared_library")
+    add_rules("qt.shared")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
+```
+
+###### qt.console
+
+用于编译生成Qt环境的控制台程序：
+
+```lua
+target("qt_console")
+    add_rules("qt.console")
+    add_files("src/*.cpp")
+```
+
+###### qt.application
+
+用于编译生成Qt环境的ui应用程序。
+
+Quick(qml)应用程序：
+
+```lua
+target("qt_quickapp")
+    add_rules("qt.application")
+    add_files("src/*.cpp") 
+    add_files("src/qml.qrc")
+    add_frameworks("QtQuick")
+```
+
+Qt Widgets(ui/moc)应用程序:
+
+```lua
+-- add target
+target("qt_widgetapp")
+    add_rules("qt.application")
+    add_files("src/*.cpp") 
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
+    add_frameworks("QtWidgets")
+```
+
+更多Qt相关描述见：[#160](https://github.com/tboox/xmake/issues/160)
+
+###### wdk.umdf.driver
+
+编译生成windows下基于WDK环境的umdf驱动程序，目前仅支持WDK10环境。
+
+```lua
+-- add target
+target("echo")
+
+    -- add rules
+    add_rules("wdk.umdf.driver")
+
+    -- add files
+    add_files("driver/*.c") 
+    add_files("driver/*.inx")
+
+    -- add includedirs
+    add_includedirs("exe")
+```
+
+###### wdk.umdf.binary
+
+编译生成windows下基于WDK环境的umdf驱动应用程序，目前仅支持WDK10环境。
+
+```lua
+-- add target
+target("app")
+
+    -- add rules
+    add_rules("wdk.umdf.binary")
+
+    -- add files
+    add_files("exe/*.cpp") 
+```
+
+###### wdk.kmdf.driver
+
+编译生成windows下基于WDK环境的kmdf驱动程序，目前仅支持WDK10环境。
+
+```lua
+target("nonpnp")
+
+    -- add rules
+    add_rules("wdk.kmdf.driver")
+
+    -- add flags for rule: wdk.tracewpp
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
+
+    -- add files
+    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.rc")
+```
+
+###### wdk.kmdf.binary
+
+编译生成windows下基于WDK环境的kmdf驱动应用程序，目前仅支持WDK10环境。
+
+```lua
+-- add target
+target("app")
+
+    -- add rules
+    add_rules("wdk.kmdf.binary")
+
+    -- add files
+    add_files("exe/*.c") 
+    add_files("exe/*.inf")
+```
+
+###### wdk.wdm.driver
+
+编译生成windows下基于WDK环境的wdm驱动程序，目前仅支持WDK10环境。
+
+```lua
+-- add target
+target("kcs")
+
+    -- add rules
+    add_rules("wdk.wdm.driver")
+
+    -- add flags for rule: wdk.man
+    add_values("wdk.man.flags", "-prefix Kcs")
+    add_values("wdk.man.resource", "kcsCounters.rc")
+    add_values("wdk.man.header", "kcsCounters.h")
+    add_values("wdk.man.counter_header", "kcsCounters_counters.h")
+    
+    -- add files
+    add_files("*.c", "*.rc", "*.man") 
+```
+
+###### wdk.wdm.binary
+
+编译生成windows下基于WDK环境的wdm驱动应用程序，目前仅支持WDK10环境。
+
+用法跟[wdk.umdf.binary](#wdk-umdf-binary)和[wdk.kmdf.binary](#wdk-kmdf-binary)类似。
+
+更多WDK规则描述见：[#159](https://github.com/tboox/xmake/issues/159)
 
 ##### rule
 
@@ -3367,7 +3696,7 @@ target("test")
 ```lua
 rule("markdown")
     set_extensions(".md", ".markdown")
-    on_build(function (target, sourcefile)
+    on_build_file(function (target, sourcefile)
         os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 ```
@@ -3388,7 +3717,7 @@ rule("markdown")
 -- 定义一个markdown文件的构建规则
 rule("markdown")
     set_extensions(".md", ".markdown")
-    on_build(function (target, sourcefile)
+    on_build_file(function (target, sourcefile)
         os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 
@@ -3407,12 +3736,11 @@ target("test")
 
 ###### 自定义编译脚本
 
-用于实现自定规则的构建脚本，每次处理一个源文件，例如：
+用于实现自定规则的构建脚本，会覆盖被应用的target的默认构建行为，例如：
 
 ```lua
 rule("markdown")
-    on_build(function (target, sourcefile)
-        -- generate sourcefile to sourcefile.html
+    on_build(function (target)
     end)
 ```
 
@@ -3420,63 +3748,66 @@ rule("markdown")
 
 ###### 自定义清理脚本
 
-用于实现自定规则的清理脚本，每次处理一个源文件，例如：
+用于实现自定规则的清理脚本会，覆盖被应用的target的默认清理行为，例如：
 
 ```lua
 rule("markdown")
-    on_clean(function (target, sourcefile)
+    on_clean(function (target)
         -- remove sourcefile.html
     end)
 ```
-
-注：清理的文件可以通过源文件推算出来
 
 ##### rule:on_package
 
 ###### 自定义打包脚本
 
-用于实现自定规则的打包脚本，每次处理一个源文件，例如：
+用于实现自定规则的打包脚本，覆盖被应用的target的默认打包行为, 例如：
 
 ```lua
 rule("markdown")
-    on_package(function (target, sourcefile)
+    on_package(function (target)
         -- package sourcefile.html
     end)
 ```
-
-注：打包的文件可以通过源文件推算出来
 
 ##### rule:on_install
 
 ###### 自定义安装脚本
 
-用于实现自定规则的安装脚本，每次处理一个源文件，例如：
+用于实现自定规则的安装脚本，覆盖被应用的target的默认安装行为, 例如：
 
 ```lua
 rule("markdown")
-    on_install(function (target, sourcefile)
-        -- install sourcefile.html
+    on_install(function (target)
     end)
 ```
-
-注：安装的文件可以通过源文件推算出来
 
 ##### rule:on_uninstall
 
 ###### 自定义卸载脚本
 
-用于实现自定规则的卸载脚本，每次处理一个源文件，例如：
+用于实现自定规则的卸载脚本，覆盖被应用的target的默认卸载行为, 例如：
 
 ```lua
 rule("markdown")
-    on_uninstall(function (target, sourcefile)
-        -- uninstall sourcefile.html
+    on_uninstall(function (target)
     end)
 ```
 
-注：卸载的文件可以通过源文件推算出来
+##### rule:on_build_file
 
-##### rule:on_build_all
+###### 自定义编译脚本，一次处理一个源文件
+
+```lua
+rule("markdown")
+    on_build_file(function (target, sourcefile, opt)
+        print("%%%d: %s", opt.progress, sourcefile)
+    end)
+```
+
+其中第三个参数opt是可选参数，用于获取一些编译过程中的信息状态，例如：opt.progress 为当期的编译进度。
+
+##### rule:on_build_files
 
 ###### 自定义编译脚本，一次处理多个源文件
 
@@ -3488,7 +3819,7 @@ rule("markdown")
 
 ```lua
 rule("markdown")
-    on_build_all(function (target, sourcefiles)
+    on_build_files(function (target, sourcefiles)
         -- build some source files
         for _, sourcefile in ipairs(sourcefiles) do
             -- ...
@@ -3496,29 +3827,123 @@ rule("markdown")
     end)
 ```
 
-##### rule:on_clean_all
+##### rule:before_build
 
-###### 自定义清理脚本，一次处理多个源文件
+###### 自定义编译前脚本
 
-可参考：[on_clean](#ruleon_clean) 和 [on_build_all](#ruleon_build_all)，使用方式类似。
+用于实现自定义target构建前的执行脚本，例如：
 
-##### rule:on_package_all
+```lua
+rule("markdown")
+    before_build(function (target)
+    end)
+```
 
-###### 自定义打包脚本，一次处理多个源文件
+##### rule:before_clean
 
-可参考：[on_package](#ruleon_package) 和 [on_build_all](#ruleon_build_all)，使用方式类似。
+###### 自定义清理前脚本
 
-##### rule:on_install_all
+用于实现自定义target清理前的执行脚本，例如：
 
-###### 自定义安装脚本，一次处理多个源文件
+```lua
+rule("markdown")
+    before_clean(function (target)
+    end)
+```
 
-可参考：[on_install](#ruleon_install) 和 [on_build_all](#ruleon_build_all)，使用方式类似。
+##### rule:before_package
 
-##### rule:on_uninstall_all
+###### 自定义打包前脚本
 
-###### 自定义卸载脚本，一次处理多个源文件
+用于实现自定义target打包前的执行脚本, 例如：
 
-可参考：[on_uninstall](#ruleon_uninstall) 和 [on_build_all](#ruleon_build_all)，使用方式类似。
+```lua
+rule("markdown")
+    before_package(function (target)
+    end)
+```
+
+##### rule:before_install
+
+###### 自定义安装前脚本
+
+用于实现自定义target安装前的执行脚本，例如：
+
+```lua
+rule("markdown")
+    before_install(function (target)
+    end)
+```
+
+##### rule:before_uninstall
+
+###### 自定义卸载前脚本
+
+用于实现自定义target卸载前的执行脚本，例如：
+
+```lua
+rule("markdown")
+    before_uninstall(function (target)
+    end)
+```
+
+##### rule:before_build_file
+
+###### 自定义编译前脚本，一次处理一个源文件
+
+跟[rule:on_build_file](#ruleon_build_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之前，
+一般用于对某些源文件进行编译前的预处理。
+
+##### rule:before_build_files
+
+###### 自定义编译前脚本，一次处理多个源文件
+
+跟[rule:on_build_files](#ruleon_build_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之前，
+一般用于对某些源文件进行编译前的预处理。
+
+##### rule:after_build
+
+###### 自定义编译前脚本
+
+用于实现自定义target构建后的执行脚本，用法跟[rule:before_build](#rulebefore_build)类似。
+
+##### rule:after_clean
+
+###### 自定义清理后脚本
+
+用于实现自定义target清理后的执行脚本，用法跟[rule:before_clean](#rulebefore_clean)类似。
+
+##### rule:after_package
+
+###### 自定义打包后脚本
+
+用于实现自定义target打包后的执行脚本, 用法跟[rule:before_package](#rulebefore_package)类似。
+
+##### rule:after_install
+
+###### 自定义安装后脚本
+
+用于实现自定义target安装后的执行脚本，用法跟[rule:before_install](#rulebefore_install)类似。
+
+##### rule:after_uninstall
+
+###### 自定义卸载后脚本
+
+用于实现自定义target卸载后的执行脚本，用法跟[rule:before_uninstall](#rulebefore_uninstall)类似。
+
+##### rule:after_build_file
+
+###### 自定义编译后脚本，一次处理一个源文件
+
+跟[rule:on_build_file](#ruleon_build_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之后，
+一般用于对某些编译后对象文件进行后期处理。
+
+##### rule:after_build_files
+
+###### 自定义编译后脚本，一次处理多个源文件
+
+跟[rule:on_build_files](#ruleon_build_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之后，
+一般用于对某些编译后对象文件进行后期处理。
 
 ##### rule_end
 
