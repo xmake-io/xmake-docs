@@ -478,11 +478,12 @@ The output files like:
 
 ##### Driver Signing
 
-默认编译禁用签名，可以通过`set_values("wdk.sign.mode", ...)`设置签名模式来启用签名。
+The driver signing is disabled when we compile driver in default case, 
+but we can add `set_values("wdk.sign.mode")` to enable test/release sign.
 
 ###### TestSign
 
-测试签名一般本机调试时候用，可以使用xmake自带的test证书来进行签名，例如：
+We can use test certificate of xmake to do testsign, but please run `$xmake l utils.wdk.testcert` install as admin to install a test certificate first (only once)!
 
 ```lua
 target("msdsm")
@@ -490,12 +491,7 @@ target("msdsm")
     set_values("wdk.sign.mode", "test")
 ```
 
-不过这种情况下，需要用户手动在管理员模式下，执行一遍：`$xmake l utils.wdk.testcert install`，来生成和注册test证书到本机环境。
-这个只需要执行一次就行了，后续就可以正常编译和签名了。
-
-当然也可以使用本机已有的有效证书去签名。
-
-从sha1来选择合适的证书进行签名：
+Or we set a valid certificate thumbprint to do it in local machine.
 
 ```lua
 target("msdsm")
@@ -504,7 +500,7 @@ target("msdsm")
     set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
 ```
 
-从store/company来选择合适的证书进行签名：
+We can also do testsign via setting store/company info.
 
 ```lua
 target("msdsm")
