@@ -292,6 +292,267 @@ target("test")
 
 We use `add_deps` to link a share library to test target.
 
+#### Qt Program
+
+Create an empty project:
+
+```console
+$ xmake create -l c++ -t console_qt test
+$ xmake create -l c++ -t static_qt test
+$ xmake create -l c++ -t shared_qt test
+$ xmake create -l c++ -t quickapp_qt test
+```
+
+xmake will detect Qt SDK automatically and we can also set the SDK directory manually.
+
+```console
+$ xmake f --qt=~/Qt/Qt5.9.1
+```
+
+If you want to known more information, you can see [#160](https://github.com/tboox/xmake/issues/160).
+
+##### Static Library
+
+```lua
+target("qt_static_library")
+    add_rules("qt.static")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
+```
+
+##### Shared Library
+
+```lua
+target("qt_shared_library")
+    add_rules("qt.shared")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
+```
+
+##### Console Program
+
+```lua
+target("qt_console")
+    add_rules("qt.console")
+    add_files("src/*.cpp")
+```
+
+##### Quick Application
+
+```lua
+target("qt_quickapp")
+    add_rules("qt.application")
+    add_files("src/*.cpp") 
+    add_files("src/qml.qrc")
+    add_frameworks("QtQuick")
+```
+
+##### Widgets Application
+
+```lua
+target("qt_widgetapp")
+    add_rules("qt.application")
+    add_files("src/*.cpp") 
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- add files with Q_OBJECT meta (only for qt.moc)
+    add_frameworks("QtWidgets")
+```
+
+#### Cuda Program
+
+Create an empty project:
+
+```console
+$ xmake create -P test -l cuda
+$ cd test
+$ xmake
+```
+
+```lua
+target("cuda_console")
+    set_kind("binary")
+    add_files("src/*.cu")
+
+    -- generate SASS code for each SM architecture
+    for _, sm in ipairs({"30", "35", "37", "50", "52", "60", "61", "70"}) do
+        add_cuflags("-gencode arch=compute_" .. sm .. ",code=sm_" .. sm)
+        add_ldflags("-gencode arch=compute_" .. sm .. ",code=sm_" .. sm)
+    end
+
+    -- generate PTX code from the highest SM architecture to guarantee forward-compatibility
+    sm = "70"
+    add_cuflags("-gencode arch=compute_" .. sm .. ",code=compute_" .. sm)
+    add_ldflags("-gencode arch=compute_" .. sm .. ",code=compute_" .. sm)
+```
+
+xmake will detect Cuda SDK automatically and we can also set the SDK directory manually.
+
+```console
+$ xmake f --cuda=/usr/local/cuda-9.1/ 
+$ xmake
+```
+
+If you want to known more information, you can see [#158](https://github.com/tboox/xmake/issues/158).
+
+#### WDK Driver Program
+
+xmake will detect WDK automatically and we can also set the WDK directory manually.
+
+```console
+$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
+$ xmake
+```
+
+If you want to known more information, you can see [#159](https://github.com/tboox/xmake/issues/159).
+
+##### UMDF Driver Program
+
+```lua
+target("echo")
+    add_rules("wdk.umdf.driver")
+    add_files("driver/*.c") 
+    add_files("driver/*.inx")
+    add_includedirs("exe")
+
+target("app")
+    add_rules("wdk.umdf.binary")
+    add_files("exe/*.cpp") 
+```
+
+##### KMDF Driver Program
+
+```lua
+target("nonpnp")
+    add_rules("wdk.kmdf.driver")
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
+    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.rc")
+
+target("app")
+    add_rules("wdk.kmdf.binary")
+    add_files("exe/*.c") 
+    add_files("exe/*.inf")
+```
+
+##### WDM Driver Program
+
+```lua
+target("kcs")
+    add_rules("wdk.wdm.driver")
+    add_values("wdk.man.flags", "-prefix Kcs")
+    add_values("wdk.man.resource", "kcsCounters.rc")
+    add_values("wdk.man.header", "kcsCounters.h")
+    add_values("wdk.man.counter_header", "kcsCounters_counters.h")
+    add_files("*.c", "*.rc", "*.man") 
+```
+
+```lua
+target("msdsm")
+    add_rules("wdk.wdm.driver")
+    add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
+    add_files("*.c", {rule = "wdk.tracewpp"}) 
+    add_files("*.rc", "*.inf")
+    add_files("*.mof|msdsm.mof")
+    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
+```
+
+##### Package Driver 
+
+We can run the following command to generate a .cab driver package.
+
+```console
+$ xmake [p|package]
+$ xmake [p|package] -o outputdir
+```
+
+The output files like:
+
+```
+  - drivers
+    - sampledsm
+       - debug/x86/sampledsm.cab
+       - release/x64/sampledsm.cab
+       - debug/x86/sampledsm.cab
+       - release/x64/sampledsm.cab
+```
+
+##### Driver Signing
+
+默认编译禁用签名，可以通过`set_values("wdk.sign.mode", ...)`设置签名模式来启用签名。
+
+###### TestSign
+
+测试签名一般本机调试时候用，可以使用xmake自带的test证书来进行签名，例如：
+
+```lua
+target("msdsm")
+    add_rules("wdk.wdm.driver")
+    set_values("wdk.sign.mode", "test")
+```
+
+不过这种情况下，需要用户手动在管理员模式下，执行一遍：`$xmake l utils.wdk.testcert install`，来生成和注册test证书到本机环境。
+这个只需要执行一次就行了，后续就可以正常编译和签名了。
+
+当然也可以使用本机已有的有效证书去签名。
+
+从sha1来选择合适的证书进行签名：
+
+```lua
+target("msdsm")
+    add_rules("wdk.wdm.driver")
+    set_values("wdk.sign.mode", "test")
+    set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
+```
+
+从store/company来选择合适的证书进行签名：
+
+```lua
+target("msdsm")
+    add_rules("wdk.wdm.driver")
+    set_values("wdk.sign.mode", "test")
+    set_values("wdk.sign.store", "PrivateCertStore")
+    set_values("wdk.sign.company", "tboox.org(test)")
+```
+
+###### ReleaseSign
+
+We can set a certificate file for release signing.
+
+```lua
+target("msdsm")
+    add_rules("wdk.wdm.driver")
+    set_values("wdk.sign.mode", "release")
+    set_values("wdk.sign.company", "xxxx")
+    set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
+```
+
+##### Support Low-version System
+
+We can set `wdk.env.winver` to generate a driver package that is compatible with a low version system.
+
+```lua
+set_values("wdk.env.winver", "win10")
+set_values("wdk.env.winver", "win10_rs3")
+set_values("wdk.env.winver", "win81")
+set_values("wdk.env.winver", "win8")
+set_values("wdk.env.winver", "win7")
+set_values("wdk.env.winver", "win7_sp1")
+set_values("wdk.env.winver", "win7_sp2")
+set_values("wdk.env.winver", "win7_sp3")
+```
+
+#### WinSDK Application Program
+
+```lua
+target("usbview")
+    add_rules("win.sdk.application")
+
+    add_files("*.c", "*.rc")
+    add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
+```
+
+If you want to known more information, you can see [#173](https://github.com/tboox/xmake/issues/173).
+
 ## Configuration
 
 Set compilation configuration before building project with command `xmake f|config`.
