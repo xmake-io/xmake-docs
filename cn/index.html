@@ -135,9 +135,21 @@
   <li>Cuda</li>
 </ul>
 
-<h2 id="section-9">内置插件</h2>
+<h2 id="section-9">工程类型</h2>
 
-<h4 id="section-10">宏记录脚本和回放插件</h4>
+<ul>
+  <li>静态库程序</li>
+  <li>动态库类型</li>
+  <li>控制台程序</li>
+  <li>Cuda程序</li>
+  <li>Qt应用程序</li>
+  <li>WDK驱动程序</li>
+  <li>WinSDK应用程序</li>
+</ul>
+
+<h2 id="section-10">内置插件</h2>
+
+<h4 id="section-11">宏记录脚本和回放插件</h4>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake m -b                        <span class="c"># 开始记录</span>
 <span class="gp">$ </span>xmake f -p iphoneos -m debug
@@ -167,7 +179,7 @@
 </code></pre>
 </div>
 
-<h2 id="section-11">更多插件</h2>
+<h2 id="section-12">更多插件</h2>
 
 <p>请到插件仓库进行下载安装: <a href="https://github.com/tboox/xmake-plugins">xmake-plugins</a>.</p>
 
@@ -195,20 +207,11 @@
   <li><a href="https://github.com/luzhlon/xmake.vim">xmake.vim</a> (third-party, thanks <a href="https://github.com/luzhlon">@luzhlon</a>)</li>
 </ul>
 
-<h2 id="section-12">更多例子</h2>
+<h2 id="section-13">更多例子</h2>
 
 <p>Debug和Release模式：</p>
 
-<div class="language-lua highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="n">is_mode</span><span class="p">(</span><span class="s2">"debug"</span><span class="p">)</span> <span class="k">then</span>
-    <span class="n">set_symbols</span><span class="p">(</span><span class="s2">"debug"</span><span class="p">)</span>
-    <span class="n">set_optimize</span><span class="p">(</span><span class="s2">"none"</span><span class="p">)</span>
-<span class="k">end</span>
-
-<span class="k">if</span> <span class="n">is_mode</span><span class="p">(</span><span class="s2">"release"</span><span class="p">)</span> <span class="k">then</span>
-    <span class="n">set_symbols</span><span class="p">(</span><span class="s2">"hidden"</span><span class="p">)</span>
-    <span class="n">set_optimize</span><span class="p">(</span><span class="s2">"fastest"</span><span class="p">)</span>
-    <span class="n">set_strip</span><span class="p">(</span><span class="s2">"all"</span><span class="p">)</span>
-<span class="k">end</span>
+<div class="language-lua highlighter-rouge"><pre class="highlight"><code><span class="n">add_rules</span><span class="p">(</span><span class="s2">"mode.debug"</span><span class="p">,</span> <span class="s2">"mode.release"</span><span class="p">)</span>
 
 <span class="n">target</span><span class="p">(</span><span class="s2">"console"</span><span class="p">)</span>
     <span class="n">set_kind</span><span class="p">(</span><span class="s2">"binary"</span><span class="p">)</span>
@@ -239,7 +242,7 @@
 </code></pre>
 </div>
 
-<h2 id="section-13">项目例子</h2>
+<h2 id="section-14">项目例子</h2>
 
 <p>一些使用xmake的项目：</p>
 
@@ -250,13 +253,13 @@
   <li><a href="https://github.com/vm86/xmake/wiki/%E4%BD%BF%E7%94%A8xmake%E7%9A%84%E5%BC%80%E6%BA%90%E5%BA%93">更多</a></li>
 </ul>
 
-<h2 id="section-14">演示视频</h2>
+<h2 id="section-15">演示视频</h2>
 
 <p><a href="https://asciinema.org/a/133693">
 <img src="https://asciinema.org/a/133693.png" width="60%" />
 </a></p>
 
-<h2 id="section-15">联系方式</h2>
+<h2 id="section-16">联系方式</h2>
 
 <ul>
   <li>邮箱：<a href="mailto:waruqi@gmail.com">waruqi@gmail.com</a></li>

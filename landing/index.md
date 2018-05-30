@@ -85,6 +85,16 @@ $ xmake f --menu
 * Dlang
 * Cuda
 
+## Support Projects
+
+* Static Library
+* Shared Library
+* Console 
+* Cuda Program
+* Qt Application
+* WDK Driver (umdf/kmdf/wdm)
+* WinSDK Application
+
 ## Builtin Plugins
 
 #### Macros script plugin
@@ -142,16 +152,7 @@ Please download and install from the plugins repository [xmake-plugins](https://
 Debug and release modes:
 
 ```lua
-if is_mode("debug") then
-    set_symbols("debug")
-    set_optimize("none")
-end
-
-if is_mode("release") then
-    set_symbols("hidden")
-    set_optimize("fastest")
-    set_strip("all")
-end
+add_rules("mode.debug", "mode.release")
 
 target("console")
     set_kind("binary")

@@ -85,6 +85,16 @@ $ xmake f --menu
 * Dlang
 * Cuda
 
+## 工程类型
+
+* 静态库程序
+* 动态库类型
+* 控制台程序
+* Cuda程序
+* Qt应用程序
+* WDK驱动程序
+* WinSDK应用程序
+
 ## 内置插件
 
 #### 宏记录脚本和回放插件
@@ -142,16 +152,7 @@ $ xmake doxygen [srcdir]
 Debug和Release模式：
 
 ```lua
-if is_mode("debug") then
-    set_symbols("debug")
-    set_optimize("none")
-end
-
-if is_mode("release") then
-    set_symbols("hidden")
-    set_optimize("fastest")
-    set_strip("all")
-end
+add_rules("mode.debug", "mode.release")
 
 target("console")
     set_kind("binary")

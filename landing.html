@@ -135,6 +135,18 @@
   <li>Cuda</li>
 </ul>
 
+<h2 id="support-projects">Support Projects</h2>
+
+<ul>
+  <li>Static Library</li>
+  <li>Shared Library</li>
+  <li>Console</li>
+  <li>Cuda Program</li>
+  <li>Qt Application</li>
+  <li>WDK Driver (umdf/kmdf/wdm)</li>
+  <li>WinSDK Application</li>
+</ul>
+
 <h2 id="builtin-plugins">Builtin Plugins</h2>
 
 <h4 id="macros-script-plugin">Macros script plugin</h4>
@@ -199,16 +211,7 @@
 
 <p>Debug and release modes:</p>
 
-<div class="language-lua highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="n">is_mode</span><span class="p">(</span><span class="s2">"debug"</span><span class="p">)</span> <span class="k">then</span>
-    <span class="n">set_symbols</span><span class="p">(</span><span class="s2">"debug"</span><span class="p">)</span>
-    <span class="n">set_optimize</span><span class="p">(</span><span class="s2">"none"</span><span class="p">)</span>
-<span class="k">end</span>
-
-<span class="k">if</span> <span class="n">is_mode</span><span class="p">(</span><span class="s2">"release"</span><span class="p">)</span> <span class="k">then</span>
-    <span class="n">set_symbols</span><span class="p">(</span><span class="s2">"hidden"</span><span class="p">)</span>
-    <span class="n">set_optimize</span><span class="p">(</span><span class="s2">"fastest"</span><span class="p">)</span>
-    <span class="n">set_strip</span><span class="p">(</span><span class="s2">"all"</span><span class="p">)</span>
-<span class="k">end</span>
+<div class="language-lua highlighter-rouge"><pre class="highlight"><code><span class="n">add_rules</span><span class="p">(</span><span class="s2">"mode.debug"</span><span class="p">,</span> <span class="s2">"mode.release"</span><span class="p">)</span>
 
 <span class="n">target</span><span class="p">(</span><span class="s2">"console"</span><span class="p">)</span>
     <span class="n">set_kind</span><span class="p">(</span><span class="s2">"binary"</span><span class="p">)</span>
