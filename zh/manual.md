@@ -3707,7 +3707,7 @@ target("nonpnp")
 target("nonpnp")
 
     -- add rules
-    add_rules("wdk.kmdf.driver")
+    add_rules("wdk.driver", "wdk.env.kmdf")
 
     -- add flags for rule: wdk.tracewpp
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
