@@ -3592,16 +3592,32 @@ target("qt_widgetapp")
 
 更多Qt相关描述见：[#160](https://github.com/tboox/xmake/issues/160)
 
-###### wdk.umdf.driver
 
-编译生成windows下基于WDK环境的umdf驱动程序，目前仅支持WDK10环境。
+
+###### wdk.env.kmdf
+
+应用WDK下kmdf的编译环境设置，需要配合：`wdk.[driver|binary|static|shared]`等规则来使用。
+
+###### wdk.env.umdf
+
+应用WDK下umdf的编译环境设置，需要配合：`wdk.[driver|binary|static|shared]`等规则来使用。
+
+###### wdk.env.wdm
+
+应用WDK下wdm的编译环境设置，需要配合：`wdk.[driver|binary|static|shared]`等规则来使用。
+
+###### wdk.driver
+
+编译生成windows下基于WDK环境的驱动程序，目前仅支持WDK10环境。
+
+注：需要配合：`wdk.env.[umdf|kmdf|wdm]`等环境规则使用。
 
 ```lua
 -- add target
 target("echo")
 
     -- add rules
-    add_rules("wdk.umdf.driver")
+    add_rules("wdk.driver", "wdk.env.kmdf")
 
     -- add files
     add_files("driver/*.c") 
@@ -3611,81 +3627,60 @@ target("echo")
     add_includedirs("exe")
 ```
 
-###### wdk.umdf.binary
+###### wdk.binary
 
-编译生成windows下基于WDK环境的umdf驱动应用程序，目前仅支持WDK10环境。
+编译生成windows下基于WDK环境的可执行程序，目前仅支持WDK10环境。
+
+注：需要配合：`wdk.env.[umdf|kmdf|wdm]`等环境规则使用。
 
 ```lua
 -- add target
 target("app")
 
     -- add rules
-    add_rules("wdk.umdf.binary")
+    add_rules("wdk.binary", "wdk.env.umdf")
 
     -- add files
     add_files("exe/*.cpp") 
 ```
 
-###### wdk.kmdf.driver
+###### wdk.static
 
-编译生成windows下基于WDK环境的kmdf驱动程序，目前仅支持WDK10环境。
+编译生成windows下基于WDK环境的静态库程序，目前仅支持WDK10环境。
+
+注：需要配合：`wdk.env.[umdf|kmdf|wdm]`等环境规则使用。
 
 ```lua
 target("nonpnp")
 
     -- add rules
-    add_rules("wdk.kmdf.driver")
+    add_rules("wdk.static", "wdk.env.kmdf")
 
     -- add flags for rule: wdk.tracewpp
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
     add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
-    add_files("driver/*.rc")
 ```
 
-###### wdk.kmdf.binary
+###### wdk.shared
 
-编译生成windows下基于WDK环境的kmdf驱动应用程序，目前仅支持WDK10环境。
+编译生成windows下基于WDK环境的动态库程序，目前仅支持WDK10环境。
+
+注：需要配合：`wdk.env.[umdf|kmdf|wdm]`等环境规则使用。
 
 ```lua
--- add target
-target("app")
+target("nonpnp")
 
     -- add rules
-    add_rules("wdk.kmdf.binary")
+    add_rules("wdk.shared", "wdk.env.wdm")
+
+    -- add flags for rule: wdk.tracewpp
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("exe/*.c") 
-    add_files("exe/*.inf")
+    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
 ```
-
-###### wdk.wdm.driver
-
-编译生成windows下基于WDK环境的wdm驱动程序，目前仅支持WDK10环境。
-
-```lua
--- add target
-target("kcs")
-
-    -- add rules
-    add_rules("wdk.wdm.driver")
-
-    -- add flags for rule: wdk.man
-    add_values("wdk.man.flags", "-prefix Kcs")
-    add_values("wdk.man.resource", "kcsCounters.rc")
-    add_values("wdk.man.header", "kcsCounters.h")
-    add_values("wdk.man.counter_header", "kcsCounters_counters.h")
-    
-    -- add files
-    add_files("*.c", "*.rc", "*.man") 
-```
-
-###### wdk.wdm.binary
-
-编译生成windows下基于WDK环境的wdm驱动应用程序，目前仅支持WDK10环境。
-
-用法跟[wdk.umdf.binary](#wdk-umdf-binary)和[wdk.kmdf.binary](#wdk-kmdf-binary)类似。
 
 ###### wdk.tracewpp
 
@@ -3704,6 +3699,8 @@ target("nonpnp")
     add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
     add_files("driver/*.rc")
 ```
+
+更多WDK规则描述见：[#159](https://github.com/tboox/xmake/issues/159)
 
 ###### win.sdk.application
 

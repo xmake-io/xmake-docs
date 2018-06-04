@@ -409,13 +409,13 @@ If you want to known more information, you can see [#159](https://github.com/tbo
 
 ```lua
 target("echo")
-    add_rules("wdk.umdf.driver")
+    add_rules("wdk.driver", "wdk.env.umdf")
     add_files("driver/*.c") 
     add_files("driver/*.inx")
     add_includedirs("exe")
 
 target("app")
-    add_rules("wdk.umdf.binary")
+    add_rules("wdk.binary", "wdk.env.umdf")
     add_files("exe/*.cpp") 
 ```
 
@@ -423,13 +423,13 @@ target("app")
 
 ```lua
 target("nonpnp")
-    add_rules("wdk.kmdf.driver")
+    add_rules("wdk.driver", "wdk.env.kmdf")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
     add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
     add_files("driver/*.rc")
 
 target("app")
-    add_rules("wdk.kmdf.binary")
+    add_rules("wdk.binary", "wdk.env.kmdf")
     add_files("exe/*.c") 
     add_files("exe/*.inf")
 ```
@@ -438,7 +438,7 @@ target("app")
 
 ```lua
 target("kcs")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.man.flags", "-prefix Kcs")
     add_values("wdk.man.resource", "kcsCounters.rc")
     add_values("wdk.man.header", "kcsCounters.h")
@@ -448,7 +448,7 @@ target("kcs")
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
     add_files("*.c", {rule = "wdk.tracewpp"}) 
     add_files("*.rc", "*.inf")
@@ -487,7 +487,7 @@ We can use test certificate of xmake to do testsign, but please run `$xmake l ut
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
 ```
 
@@ -495,7 +495,7 @@ Or we set a valid certificate thumbprint to do it in local machine.
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
 ```
@@ -504,7 +504,7 @@ We can also do testsign via setting store/company info.
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.store", "PrivateCertStore")
     set_values("wdk.sign.company", "tboox.org(test)")
@@ -516,7 +516,7 @@ We can set a certificate file for release signing.
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "release")
     set_values("wdk.sign.company", "xxxx")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
@@ -535,6 +535,13 @@ set_values("wdk.env.winver", "win7")
 set_values("wdk.env.winver", "win7_sp1")
 set_values("wdk.env.winver", "win7_sp2")
 set_values("wdk.env.winver", "win7_sp3")
+```
+
+We can also set windows version for WDK driver program:
+
+```console
+$ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
+$ xmake
 ```
 
 #### WinSDK Application Program

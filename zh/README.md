@@ -427,7 +427,7 @@ $ xmake
 默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：
 
 ```console
-$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
+$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c 
 $ xmake
 ```
 
@@ -437,13 +437,13 @@ $ xmake
 
 ```lua
 target("echo")
-    add_rules("wdk.umdf.driver")
+    add_rules("wdk.driver", "wdk.env.umdf")
     add_files("driver/*.c") 
     add_files("driver/*.inx")
     add_includedirs("exe")
 
 target("app")
-    add_rules("wdk.umdf.binary")
+    add_rules("wdk.binary", "wdk.env.umdf")
     add_files("exe/*.cpp") 
 ```
 
@@ -451,13 +451,13 @@ target("app")
 
 ```lua
 target("nonpnp")
-    add_rules("wdk.kmdf.driver")
+    add_rules("wdk.driver", "wdk.env.kmdf")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
     add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
     add_files("driver/*.rc")
 
 target("app")
-    add_rules("wdk.kmdf.binary")
+    add_rules("wdk.binary", "wdk.env.kmdf")
     add_files("exe/*.c") 
     add_files("exe/*.inf")
 ```
@@ -466,7 +466,7 @@ target("app")
 
 ```lua
 target("kcs")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.man.flags", "-prefix Kcs")
     add_values("wdk.man.resource", "kcsCounters.rc")
     add_values("wdk.man.header", "kcsCounters.h")
@@ -476,7 +476,7 @@ target("kcs")
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
     add_files("*.c", {rule = "wdk.tracewpp"}) 
     add_files("*.rc", "*.inf")
@@ -514,7 +514,7 @@ $ xmake [p|package] -o outputdir
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
 ```
 
@@ -527,7 +527,7 @@ target("msdsm")
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
 ```
@@ -536,7 +536,7 @@ target("msdsm")
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.store", "PrivateCertStore")
     set_values("wdk.sign.company", "tboox.org(test)")
@@ -548,7 +548,7 @@ target("msdsm")
 
 ```lua
 target("msdsm")
-    add_rules("wdk.wdm.driver")
+    add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "release")
     set_values("wdk.sign.company", "xxxx")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
@@ -567,6 +567,13 @@ set_values("wdk.env.winver", "win7")
 set_values("wdk.env.winver", "win7_sp1")
 set_values("wdk.env.winver", "win7_sp2")
 set_values("wdk.env.winver", "win7_sp3")
+```
+
+我们也可以手动指定编译的目标程序支持的windows版本：
+
+```console
+$ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
+$ xmake
 ```
 
 #### WinSDK程序
