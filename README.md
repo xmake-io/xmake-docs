@@ -309,6 +309,12 @@ xmake will detect Qt SDK automatically and we can also set the SDK directory man
 $ xmake f --qt=~/Qt/Qt5.9.1
 ```
 
+If you want to use the MinGW Qt environment on windows, you can set the MinGW platform configuration and specify the SDK path for the MinGW compilation environment, for example:
+
+```console
+$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32 
+```
+
 If you want to known more information, you can see [#160](https://github.com/tboox/xmake/issues/160).
 
 ##### Static Library
@@ -594,15 +600,15 @@ $ xmake f -p android --ndk=~/files/android-ndk-r10e/ [-a armv5te|armv6|armv7-a|a
 $ xmake
 ```
 
-If you want to set the other android toolchains, you can use [--toolchains](#-toolchains) option.
+If you want to set the other android toolchains, you can use [--bin](#-bin) option.
 
 For example:
 
 ```bash
-$ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --toolchains=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
+$ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
 ```
 
-The [--toolchains](#-toolchains) option is used to set `bin` directory of toolchains.
+The [--bin](#-bin) option is used to set `bin` directory of toolchains.
     
 <p class="tip">
 Please attempt to set `--arch=` option if it had failed to check compiler.
@@ -641,28 +647,28 @@ $ xmake
 For linux platform:
 
 ```bash
-$ xmake f -p linux --sdk=/usr/local/arm-linux-gcc/ [--toolchains=/sdk/bin] [--cross=arm-linux-]
+$ xmake f -p linux --sdk=/usr/local/arm-linux-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
 ``` 
 
 Fro other cross platform:
 
 ```bash
-$ xmake f -p cross --sdk=/usr/local/arm-xxx-gcc/ [--toolchains=/sdk/bin] [--cross=arm-linux-]
+$ xmake f -p cross --sdk=/usr/local/arm-xxx-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
 ``` 
 
 For custem cross platform (`is_plat("myplat")`):
 
 ```bash
-$ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/ [--toolchains=/sdk/bin] [--cross=arm-linux-]
+$ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
 ``` 
 
 | Configuration Option         | Description                                  |
 | ---------------------------- | -------------------------------------------- |
 | [--sdk](#-sdk)               | Set the sdk root directory of toolchains     |
-| [--toolchains](#-toolchains) | Set the `bin` directory of toolchains        |
+| [--bin](#-bin)               | Set the `bin` directory of toolchains        |
 | [--cross](#-cross)           | Set the prefix of compilation tools          |
 | [--as](#-as)                 | Set `asm` assembler                          |
 | [--cc](#-cc)                 | Set `c` compiler                             |
@@ -744,16 +750,20 @@ xmake will detect the prefix: arm-linux- and add the include and library search 
 -I/home/toolchains_sdkdir/include -L/home/toolchains_sdkdir/lib
 ```
 
-###### --toolchains
+###### --bin
 
 - Set the `bin` directory of toolchains
 
 We need set it manually if the toolchains /bin directory is in other places, for example:
 
 ```bash
-$ xmake f -p linux --sdk=/home/toolchains_sdkdir --toolchains=/usr/opt/bin
+$ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
 $ xmake
 ```
+
+<p class="tips">
+Before v2.2.1 version, this parameter name is `--toolchains`, exists more ambiguous, so we changed to `--bin=` to set the bin directory.
+</p>
 
 ###### --cross
 
@@ -770,7 +780,7 @@ For example, under the same toolchains directory at the same time, there are two
 If we want to use the `armv7-linux-gcc` compiler, we can run the following command:
 
 ```bash
-$ xmake f -p linux --sdk=/usr/toolsdk --toolchains=/opt/bin --cross=armv7-linux-
+$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 ```
 
 ###### --as

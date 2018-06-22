@@ -337,6 +337,14 @@ $ xmake create -l c++ -t quickapp_qt test
 $ xmake f --qt=~/Qt/Qt5.9.1
 ```
 
+如果想要使用windows下mingw的Qt环境，可以切到mingw的平台配置，并且指定下mingw编译环境的sdk路径即可，例如：
+
+```console
+$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32 
+```
+
+上述指定的mingw sdk用的是Qt下Tools目录自带的环境，当然如果有其他第三方mingw编译环境，也可以手动指定, 具体可以参考：[mingw编译配置](#mingw)。
+
 更多详情可以参考：[#160](https://github.com/tboox/xmake/issues/160)
 
 ##### 静态库程序
@@ -669,21 +677,21 @@ $ xmake
 linux平台的交叉编译：
 
 ```bash
-$ xmake f -p linux --sdk=/usr/local/arm-linux-gcc/ [--toolchains=/sdk/bin] [--cross=arm-linux-]
+$ xmake f -p linux --sdk=/usr/local/arm-linux-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
 ``` 
 
 其他平台的交叉编译：
 
 ```bash
-$ xmake f -p cross --sdk=/usr/local/arm-xxx-gcc/ [--toolchains=/sdk/bin] [--cross=arm-linux-]
+$ xmake f -p cross --sdk=/usr/local/arm-xxx-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
 ``` 
 
 如果不关心实际的平台名，只想交叉编译，可以直接用上面的命令，如果需要通过`is_plat("myplat")`判断自己的平台逻辑，则：
 
 ```bash
-$ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/ [--toolchains=/sdk/bin] [--cross=arm-linux-]
+$ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
 ``` 
 
@@ -692,7 +700,7 @@ $ xmake
 | 参数名                       | 描述                             |
 | ---------------------------- | -------------------------------- |
 | [--sdk](#-sdk)               | 设置交叉工具链的sdk根目录        |
-| [--toolchains](#-toolchains) | 设置工具链bin目录                |
+| [--bin](#-bin)               | 设置工具链bin目录                |
 | [--cross](#-cross)           | 设置交叉工具链工具前缀           |
 | [--as](#-as)                 | 设置`asm`汇编器                  |
 | [--cc](#-cc)                 | 设置`c`编译器                    |
@@ -775,7 +783,7 @@ $ xmake
 
 这些都是xmake自动处理的，不需要手动配置他们。。
 
-###### --toolchains
+###### --bin
 
 - 设置工具链bin目录
 
@@ -784,15 +792,19 @@ $ xmake
 例如：一些特殊的交叉工具链的，编译器bin目录，并不在 `/home/toolchains_sdkdir/bin` 这个位置，而是独立到了 `/usr/opt/bin` 
 
 ```bash
-$ xmake f -p linux --sdk=/home/toolchains_sdkdir --toolchains=/usr/opt/bin
+$ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
 $ xmake
 ```
+
+<p class="tips">
+v2.2.1版本之前，这个参数名是`--toolchains`，比较有歧义，因此新版本中，统一改成`--bin=`来设置bin目录。
+</p>
 
 ###### --cross
 
 - 设置交叉工具链工具前缀
 
-像`aarch64-linux-android-`这种，通常如果你配置了[--sdk](-sdk)或者[--toolchains](-toolchains)的情况下，xmake会去自动检测的，不需要自己手动设置。
+像`aarch64-linux-android-`这种，通常如果你配置了[--sdk](#-sdk)或者[--bin](#-bin)的情况下，xmake会去自动检测的，不需要自己手动设置。
 
 但是对于一些极特殊的工具链，一个目录下同时有多个cross前缀的工具bin混在一起的情况，你需要手动设置这个配置，来区分到底需要选用哪个bin。
 
@@ -807,7 +819,7 @@ $ xmake
 我们现在想要选用armv7的版本，则配置如下：
 
 ```bash
-$ xmake f -p linux --sdk=/usr/toolsdk --toolchains=/opt/bin --cross=armv7-linux-
+$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 ```
 
 ###### --as
