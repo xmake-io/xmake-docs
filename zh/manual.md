@@ -504,6 +504,7 @@ target("test2")
 | [set_options](#targetset_options)             | 设置关联选项                         | >= 1.0.1 |
 | [set_symbols](#targetset_symbols)             | 设置符号信息                         | >= 1.0.1 |
 | [set_basename](#targetset_basename)           | 设置目标文件名                       | >= 2.1.2 |
+| [set_filename](#targetset_filename)           | 设置目标文件全名                     | >= 2.1.2 |
 | [set_warnings](#targetset_warnings)           | 设置警告级别                         | >= 1.0.1 |
 | [set_optimize](#targetset_optimize)           | 设置优化级别                         | >= 1.0.1 |
 | [set_languages](#targetset_languages)         | 设置代码语言标准                     | >= 1.0.1 |
@@ -816,6 +817,14 @@ target("xxx")
 如果还想进一步定制目标文件的目录名，可参考：[set_targetdir](#targetset_targetdir)。
 
 或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#targetafter_build)和[os.mv](#os-mv)。
+
+##### target:set_filename
+
+###### 设置目标文件全名
+
+它跟[set_basename](#targetset_basename)的区别在于，[set_basename](#targetset_basename)设置名字不带后缀跟前缀，例如：`libtest.a`，basename如果改成test2后就变成了`libtest2.a`。
+
+而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把`libtest.a`改成`test.dll`，这个对于[set_basename](#targetset_basename)是做不到的。
 
 ##### target:set_warnings
 

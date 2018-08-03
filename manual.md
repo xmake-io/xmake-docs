@@ -479,7 +479,8 @@ target("test2")
 | [set_default](#targetset_default)             | Mark as default target                                 | >= 2.1.3                    |
 | [set_options](#targetset_options)             | Set configuartion options                              | >= 1.0.1                    |
 | [set_symbols](#targetset_symbols)             | Set symbol info                                        | >= 1.0.1                    |
-| [set_basename](#targetset_basename)           | Set the base name for target file                      | >= 2.1.2                    |
+| [set_basename](#targetset_basename)           | Set the base name of target file                       | >= 2.1.2                    |
+| [set_filename](#targetset_filename)           | Set the full name of target file                       | >= 2.1.2                    |
 | [set_warnings](#targetset_warnings)           | Set compilation warning level                          | >= 1.0.1                    |
 | [set_optimize](#targetset_optimize)           | Set compilation optimization level                     | >= 1.0.1                    |
 | [set_languages](#targetset_languages)         | Set source code language standards                     | >= 1.0.1                    |
@@ -768,7 +769,7 @@ set_symbols("debug", "hidden")
 
 ##### target:set_basename
 
-###### Set the base name for target file
+###### Set the base name of target file
 
 默认情况下，生成的目标文件名基于`target("name")`中配置的值，例如：
 
@@ -797,6 +798,14 @@ target("xxx")
 如果还想进一步定制目标文件的目录名，可参考：[set_targetdir](#targetset_targetdir)。
 
 或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#targetafter_build)和[os.mv](#os-mv)。
+
+##### target:set_filename
+
+###### Set the full name of target file
+
+它跟[set_basename](#targetset_basename)的区别在于，[set_basename](#targetset_basename)设置名字不带后缀跟前缀，例如：`libtest.a`，basename如果改成test2后就变成了`libtest2.a`。
+
+而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把`libtest.a`改成`test.dll`，这个对于[set_basename](#targetset_basename)是做不到的
 
 ##### target:set_warnings
 
