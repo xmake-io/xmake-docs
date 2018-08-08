@@ -25,6 +25,7 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 <a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
 
+| 2018.08.07 | fasiondog | gitee | ¥50 | 感谢您的开源项目! |
 | 2018.06.27 | Kellygod | 支付宝 | ¥30 | 拥抱xmake |
 | 2018.05.17 | 匿名 | 微信 | ¥10 | 加油xmake |
 | 2018.04.29 | 清春 | 支付宝 | ¥180 | |

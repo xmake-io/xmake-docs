@@ -42,6 +42,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 ## Supporters 
 
+| 2018.08.07 | fasiondog | gitee | ¥50 | 感谢您的开源项目! |
 | 2018.06.27 | Kellygod | alipay | ¥30 | 拥抱xmake |
 | 2018.05.17 | 匿名 | wechat | ¥10 | 加油xmake |
 | 2018.04.29 | 清春 | alipay | ¥180 | |
