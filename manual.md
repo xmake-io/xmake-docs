@@ -12,7 +12,7 @@ It's according to the following rules:
 
 | Interfaces            | Description                                                       |
 | --------------------- | ----------------------------------------------------------------- |
-| `is_` + xxx           | Condition interfaces                                              |
+| `is_`/`has_` + xxx    | Condition interfaces                                              |
 | `set_` + xxx          | Set and override the previous settings                            |
 | `add_` + xxx          | Set and append settings                                           |
 | `s` + xxx             | Support multi-parameters, .e.g：`add_files("*.c", "test.cpp")`    |
@@ -28,15 +28,17 @@ It's according to the following rules:
 
 Conditions are generally used to handle some special compilation platforms. 
 
-| Interfaces                | Description                               | Support version |
-| ------------------------- | ----------------------------------------  | --------------- |
-| [is_os](#is_os)           | Is the current compilation target system? | >= 2.0.1        |
-| [is_arch](#is_arch)       | Is the current compilation architecture?  | >= 2.0.1        |
-| [is_plat](#is_plat)       | Is the current compilation platform?      | >= 2.0.1        |
-| [is_host](#is_host)       | Is the current compilation host system?   | >= 2.1.4        |
-| [is_mode](#is_mode)       | Is the current compilation mode?          | >= 2.0.1        |
-| [is_kind](#is_kind)       | Is the current target kind?               | >= 2.0.1        |
-| [is_option](#is_option)   | Is the given options enabled?             | >= 2.0.1        |
+| Interfaces                | Description                               | Support version             |
+| ------------------------- | ----------------------------------------  | --------------------------- |
+| [is_os](#is_os)           | Is the current compilation target system? | >= 2.0.1                    |
+| [is_arch](#is_arch)       | Is the current compilation architecture?  | >= 2.0.1                    |
+| [is_plat](#is_plat)       | Is the current compilation platform?      | >= 2.0.1                    |
+| [is_host](#is_host)       | Is the current compilation host system?   | >= 2.1.4                    |
+| [is_mode](#is_mode)       | Is the current compilation mode?          | >= 2.0.1                    |
+| [is_kind](#is_kind)       | Is the current target kind?               | >= 2.0.1                    |
+| [is_option](#is_option)   | Is the given options enabled?             | >= 2.0.1 < 2.2.2 deprecated |
+| [is_config](#is_config)   | Is the given config values?               | >= 2.2.2                    |
+| [has_config](#has_config) | Is the given configs enabled?             | >= 2.2.2                    |
 
 ##### is_os 
 
@@ -155,7 +157,7 @@ if is_mode("debug") then
     -- enable debug symbols
     set_symbols("debug")
 
-    -- 禁用优化
+    -- disable optimization
     set_optimize("none")
 
 end
@@ -224,6 +226,10 @@ $ xmake
 
 ###### Is the given options enabled
 
+<p class="tips">
+This interface has been deprecated after v2.2.2, please use [has_config](#has_config) instead of it.
+</p>
+
 You can this api to check the custom option configuration command：`xmake f --xxxx=y`
 
 For example, We want to enable the custom option: `xmake f --demo=y` and check it from `xmake.lua`.
@@ -233,6 +239,80 @@ if is_option("demo") then
     add_subdirs("src/demo")
 end
 ```
+
+##### has_config
+
+###### Is the given configs enabled?
+
+This interface is introduced from version 2.2.2 to detect whether a custom or built-in option/configuration exists or is enabled.
+
+For example, the following configuration will be true:
+
+```console
+# enable the given config or option (if be boolean type)
+$ xmake f --test1=y
+$ xmake f --test1=yes
+$ xmake f --test1=true
+
+# set the config value
+$ xmake f --test2=value
+```
+
+```lua
+if has_config("test1", "test2") then
+    add_defines("TEST")
+end
+```
+
+And the following configuration will be false:
+
+```console
+# disable config/option（if be boolean type）
+$ xmake f --test1=n
+$ xmake f --test1=no
+$ xmake f --test1=false
+```
+
+<p class="tips">
+This interface can determine not only the built-in global and local configs, 
+but also the custom options defined through the [option](#option).
+</p>
+
+##### is_config
+
+###### Is the given config values?
+
+This interface is introduced from version 2.2.2 to determine whether the specified configuration is a given value.
+
+For example:
+
+```console
+$ xmake f --test=hello1
+```
+
+```lua
+option("test")
+    set_showmenu("true")
+    set_description("The test config option")
+option_end()
+
+if is_config("test", "hello1", "hello2") then
+    add_defines("HELLO")
+end
+```
+
+Not only that, we can also set pattern matching rules to determine values, such as:
+
+```lua
+if is_config("test", "hello.*") then
+    add_defines("HELLO")
+end
+```
+
+<p class="tips">
+This interface is not only able to determine the custom options defined through the [option](#option), 
+but also to determine the built-in global and local configuration.
+</p>
 
 #### Global Interfaces
 
