@@ -258,44 +258,6 @@ if is_option("demo") then
 end
 ```
 
-##### has_config
-
-###### 判断配置是否启用或者存在
-
-此接口从2.2.2版本开始引入，用于检测自定义或者内置的编译配置是否存在或启用。
-
-例如以下配置情况，都会返回true:
-
-```console
-# 启用某个配置选项（如果是boolean类型配置）
-$ xmake f --test1=y
-$ xmake f --test1=yes
-$ xmake f --test1=true
-
-# 设置某个配置选项的值
-$ xmake f --test2=value
-```
-
-```lua
--- 如果test1或者test2被设置或者启用
-if has_config("test1", "test2") then
-    add_defines("TEST")
-end
-```
-
-而下面的情况则会禁用配置，返回false：
-
-```console
-# 禁用配置（如果是boolean类型配置）
-$ xmake f --test1=n
-$ xmake f --test1=no
-$ xmake f --test1=false
-```
-
-<p class="tips">
-此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](#option)定义的自定义配置选项。
-</p>
-
 ##### is_config
 
 ###### 判断指定配置是否为给定的值
@@ -332,6 +294,44 @@ end
 
 <p class="tips">
 此接口不仅能够判断通过[option](#option)定义的自定义配置选项，同时还能判断内置的全局配置、本地配置。
+</p>
+
+##### has_config
+
+###### 判断配置是否启用或者存在
+
+此接口从2.2.2版本开始引入，用于检测自定义或者内置的编译配置是否存在或启用。
+
+例如以下配置情况，都会返回true:
+
+```console
+# 启用某个配置选项（如果是boolean类型配置）
+$ xmake f --test1=y
+$ xmake f --test1=yes
+$ xmake f --test1=true
+
+# 设置某个配置选项的值
+$ xmake f --test2=value
+```
+
+```lua
+-- 如果test1或者test2被设置或者启用
+if has_config("test1", "test2") then
+    add_defines("TEST")
+end
+```
+
+而下面的情况则会禁用配置，返回false：
+
+```console
+# 禁用配置（如果是boolean类型配置）
+$ xmake f --test1=n
+$ xmake f --test1=no
+$ xmake f --test1=false
+```
+
+<p class="tips">
+此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](#option)定义的自定义配置选项。
 </p>
 
 #### 全局接口

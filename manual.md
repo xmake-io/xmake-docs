@@ -240,6 +240,42 @@ if is_option("demo") then
 end
 ```
 
+##### is_config
+
+###### Is the given config values?
+
+This interface is introduced from version 2.2.2 to determine whether the specified configuration is a given value.
+
+For example:
+
+```console
+$ xmake f --test=hello1
+```
+
+```lua
+option("test")
+    set_showmenu("true")
+    set_description("The test config option")
+option_end()
+
+if is_config("test", "hello1", "hello2") then
+    add_defines("HELLO")
+end
+```
+
+Not only that, we can also set pattern matching rules to determine values, such as:
+
+```lua
+if is_config("test", "hello.*") then
+    add_defines("HELLO")
+end
+```
+
+<p class="tips">
+This interface is not only able to determine the custom options defined through the [option](#option), 
+but also to determine the built-in global and local configuration.
+</p>
+
 ##### has_config
 
 ###### Is the given configs enabled?
@@ -276,42 +312,6 @@ $ xmake f --test1=false
 <p class="tips">
 This interface can determine not only the built-in global and local configs, 
 but also the custom options defined through the [option](#option).
-</p>
-
-##### is_config
-
-###### Is the given config values?
-
-This interface is introduced from version 2.2.2 to determine whether the specified configuration is a given value.
-
-For example:
-
-```console
-$ xmake f --test=hello1
-```
-
-```lua
-option("test")
-    set_showmenu("true")
-    set_description("The test config option")
-option_end()
-
-if is_config("test", "hello1", "hello2") then
-    add_defines("HELLO")
-end
-```
-
-Not only that, we can also set pattern matching rules to determine values, such as:
-
-```lua
-if is_config("test", "hello.*") then
-    add_defines("HELLO")
-end
-```
-
-<p class="tips">
-This interface is not only able to determine the custom options defined through the [option](#option), 
-but also to determine the built-in global and local configuration.
 </p>
 
 #### Global Interfaces
