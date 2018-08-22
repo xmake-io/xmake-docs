@@ -189,7 +189,7 @@ target("test")
 * [tbox](https://github.com/tboox/tbox)
 * [gbox](https://github.com/tboox/gbox)
 * [vm86](https://github.com/tboox/vm86)
-* [更多](https://github.com/vm86/xmake/wiki/%E4%BD%BF%E7%94%A8xmake%E7%9A%84%E5%BC%80%E6%BA%90%E5%BA%93)
+* [更多](https://github.com/tboox/awesome-xmake)
 
 ## 演示视频
 

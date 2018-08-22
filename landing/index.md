@@ -189,7 +189,7 @@ Some projects using xmake:
 * [tbox](https://github.com/tboox/tbox)
 * [gbox](https://github.com/tboox/gbox)
 * [vm86](https://github.com/tboox/vm86)
-* [more](https://github.com/tboox/xmake/wiki/xmake-projects)
+* [more](https://github.com/tboox/awesome-xmake)
 
 ## Example Video
 
