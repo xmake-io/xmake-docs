@@ -7417,9 +7417,10 @@ target("test")
 
 1. 如果指定`{packagedirs = ""}`参数，优先从这个参数指定的路径中查找本地包`*.pkg`
 2. 如果在`xmake/modules`下面存在`detect.packages.find_xxx`脚本，那么尝试调用此脚本来改进查找结果
-3. 如果系统存在`pkg-config`，并且查找的是系统环境的库，则尝试使用`pkg-config`提供的路径和链接信息进行查找
-4. 如果系统存在`homebrew`，并且查找的是系统环境的库，则尝试使用`brew --prefix xxx`提供的信息进行查找
-5. 从参数中指定的pathes路径和一些已知的系统路径`/usr/lib`, `/usr/include`中进行查找
+3. 如果系统存在vcpkg，优先从vcpkg的包管理系统中去获取包
+4. 如果系统存在`pkg-config`，并且查找的是系统环境的库，则尝试使用`pkg-config`提供的路径和链接信息进行查找
+5. 如果系统存在`homebrew`，并且查找的是系统环境的库，则尝试使用`brew --prefix xxx`提供的信息进行查找
+6. 从参数中指定的pathes路径和一些已知的系统路径`/usr/lib`, `/usr/include`中进行查找
 
 这里需要着重说下第二点，通过在`detect.packages.find_xxx`脚本来改进查找结果，很多时候自动的包探测是没法完全探测到包路径的，
 尤其是针对windows平台，没有默认的库目录，也没有包管理app，很多库装的时候，都是自己所处放置在系统目录，或者添加注册表项。

@@ -524,10 +524,9 @@ add_plugindirs("$(projectdir)/plugins")
 
 ###### 添加包目录
 
-通过设置依赖包目录，可以方便的集成一些第三方的依赖库，以tbox工程为例，其包目录如下：
+通过设置依赖包目录，可以方便的集成一些第三方的依赖库，以tbox工程为例，其依赖包如下：
 
 ```
-tbox.pkg
 - base.pkg
 - zlib.pkg
 - polarssl.pkg
@@ -540,7 +539,7 @@ tbox.pkg
 如果要让当前工程识别加载这些包，首先要指定包目录路径，例如：
 
 ```lua
-add_packagedirs("pkg")
+add_packagedirs("packages")
 ```
 
 指定好后，就可以在target作用域中，通过[add_packages](#add_packages)接口，来添加集成包依赖了，例如：
@@ -7440,9 +7439,10 @@ target("test")
 
 1. 如果指定`{packagedirs = ""}`参数，优先从这个参数指定的路径中查找本地包`*.pkg`
 2. 如果在`xmake/modules`下面存在`detect.packages.find_xxx`脚本，那么尝试调用此脚本来改进查找结果
-3. 如果系统存在`pkg-config`，并且查找的是系统环境的库，则尝试使用`pkg-config`提供的路径和链接信息进行查找
-4. 如果系统存在`homebrew`，并且查找的是系统环境的库，则尝试使用`brew --prefix xxx`提供的信息进行查找
-5. 从参数中指定的pathes路径和一些已知的系统路径`/usr/lib`, `/usr/include`中进行查找
+3. 如果系统存在vcpkg，优先从vcpkg的包管理系统中去获取包
+4. 如果系统存在`pkg-config`，并且查找的是系统环境的库，则尝试使用`pkg-config`提供的路径和链接信息进行查找
+5. 如果系统存在`homebrew`，并且查找的是系统环境的库，则尝试使用`brew --prefix xxx`提供的信息进行查找
+6. 从参数中指定的pathes路径和一些已知的系统路径`/usr/lib`, `/usr/include`中进行查找
 
 这里需要着重说下第二点，通过在`detect.packages.find_xxx`脚本来改进查找结果，很多时候自动的包探测是没法完全探测到包路径的，
 尤其是针对windows平台，没有默认的库目录，也没有包管理app，很多库装的时候，都是自己所处放置在系统目录，或者添加注册表项。

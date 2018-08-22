@@ -596,7 +596,7 @@ target("usbview")
 
 更多详情可以参考：[#173](https://github.com/tboox/xmake/issues/173)
 
-## 配置
+## 编译配置
 
 通过`xmake f|config`配置命令，设置构建前的相关配置信息，详细参数选项，请运行: `xmake f --help`。
 
@@ -964,6 +964,152 @@ $ xmake
 $ xmake f -p iphoneos -c
 $ xmake
 ```
+
+## 依赖包管理
+
+#### 本地内置模式
+
+通过在项目中内置依赖包目录以及二进制包文件，可以方便的集成一些第三方的依赖库，这种方式比较简单直接，但是缺点也很明显，不方便管理。
+
+以tbox工程为例，其依赖包如下：
+
+```
+- base.pkg
+- zlib.pkg
+- polarssl.pkg
+- openssl.pkg
+- mysql.pkg
+- pcre.pkg
+- ...
+```
+
+如果要让当前工程识别加载这些包，首先要指定包目录路径，例如：
+
+```lua
+add_packagedirs("packages")
+```
+
+指定好后，就可以在target作用域中，通过[add_packages](https://xmake.io/#/zh/manual?id=targetadd_packages)接口，来添加集成包依赖了，例如：
+
+```lua
+target("tbox")
+    add_packages("zlib", "polarssl", "pcre", "mysql")
+```
+
+那么如何去生成一个*.pkg的包呢，如果是基于xmake的工程，生成方式很简单，只需要：
+
+```console
+$ cd tbox
+$ xmake package
+```
+
+即可在build目录下生成一个tbox.pkg的跨平台包，给第三方项目使用，我也可以直接设置输出目录，编译生成到对方项目中去，例如：
+
+```console
+$ cd tbox
+$ xmake package -o ../test/packages
+```
+
+这样，test工程就可以通过[add_packages](https://xmake.io/#/zh/manual?id=targetadd_packages)和[add_packagedirs](https://xmake.io/#/zh/manual?id=add_packagedirs)去配置和使用tbox.pkg包了。
+
+关于内置包的详细描述，还可以参考下相关文章，这里面有详细介绍：[依赖包的添加和自动检测机制](http://tboox.org/cn/2016/08/06/add-package-and-autocheck/)
+
+#### 系统查找模式
+
+如果觉得上述内置包的管理方式非常不方便，可以通过xmake提供的扩展接口[lib.detect.find_package](https://xmake.io/#/zh/manual?id=detect-find_package)去查找系统已有的依赖包。
+
+目前此接口支持以下一些包管理支持：
+
+* vcpkg
+* homebrew
+* pkg-config
+
+并且通过系统和第三方包管理工具进行依赖包的安装，然后与xmake进行集成使用，例如我们查找一个openssl包：
+
+```lua
+import("lib.detect.find_package")
+
+local package = find_package("openssl")
+```
+
+返回的结果如下：
+
+```lua
+{links = {"ssl", "crypto", "z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
+```
+
+如果查找成功，则返回一个包含所有包信息的table，如果失败返回nil
+
+这里的返回结果可以直接作为`target:add`, `option:add`的参数传入，用于动态增加`target/option`的配置：
+
+```lua
+option("zlib")
+    set_showmenu(true)
+    before_check(function (option)
+        import("lib.detect.find_package")
+        option:add(find_package("zlib"))
+    end)
+```
+
+```lua
+target("test")
+    on_load(function (target)
+        import("lib.detect.find_package")
+        target:add(find_package("zlib"))
+    end)
+```
+
+如果系统上装有`homebrew`, `pkg-config`等第三方工具，那么此接口会尝试使用它们去改进查找结果。
+
+更完整的使用描述，请参考：[lib.detect.find_package](https://xmake.io/#/zh/manual?id=detect-find_package)接口文档。
+
+##### homebrew集成支持
+
+由于homebrew一般都是把包直接装到的系统中去了，因此用户不需要做任何集成工作，`lib.detect.find_package`就已经原生无缝支持。
+
+##### vcpkg集成支持
+
+目前xmake v2.2.2版本已经支持了vcpkg，用户只需要装完vcpkg后，执行`$ vcpkg integrate install`，xmake就能自动从系统中检测到vcpkg的根路径，然后自动适配里面包。
+
+当然，我们也可以手动指定vcpkg的根路径来支持：
+
+```console
+$ xmake f --vcpkg=f:\vcpkg
+```
+
+或者我们可以设置到全局配置中去，避免每次切换配置的时候，重复设置：
+
+```console
+$ xmake g --vcpkg=f:\vcpkg
+```
+
+#### 远程依赖模式
+
+这个是xmake包管理的最终目标，目前还在开发内测中，不是很成熟，不过对于xmake的项目包，支持上基本没啥大问题了。
+
+如果用户想要体验下的话，可以参考下下面的`xmake.lua`例子:
+
+```lua
+add_requires("tboox.tbox ~1.6.0")
+add_requires("zlib >=1.2.11")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("tboox.tbox", "zlib")
+```
+
+然后直接执行编译即可：
+
+```console
+$ xmake 
+```
+
+xmake会去远程拉取相关源码包，然后自动编译安装，最后编译项目，进行依赖包的链接。
+
+我们可以看个演示视频，直观感受下：[远程依赖包使用视频](https://asciinema.org/a/140336)
+
+由于这个特性，还是开发中，暂不完全开放，因此文档就不详细描述了，有兴趣的同学可以关注下相关issues：[Remote package management](https://github.com/tboox/xmake/issues/69) 来持续跟进开发进展。
 
 ## 问答
 
