@@ -556,6 +556,7 @@ target("test2")
 | [target_end](#target_end)                     | End target definition                                  | >= 2.1.1                    |
 | [set_kind](#targetset_kind)                   | Set target kind                                        | >= 1.0.1                    |
 | [set_strip](#targetset_strip)                 | Strip target symbols                                   | >= 1.0.1                    |
+| [set_enabled](#targetset_enabled)             | Enable or disable target                               | >= 2.2.2                    |
 | [set_default](#targetset_default)             | Mark as default target                                 | >= 2.1.3                    |
 | [set_options](#targetset_options)             | Set configuartion options                              | >= 1.0.1                    |
 | [set_symbols](#targetset_symbols)             | Set symbol info                                        | >= 1.0.1                    |
@@ -757,6 +758,12 @@ target("xxxx")
 <p class="tip">
 这个api不一定非得在target之后使用，如果没有target指定，那么将会设置到全局模式。。
 </p>
+
+##### target:set_enabled
+
+###### Enable or disable target
+
+如果设置`set_enabled(false)`，则会直接禁用对应的target，包括target的加载和信息获取，而[set_default](#targetset_default)仅仅只是设置默认不去编译，但是target还是能获取到相关信息的，默认也会被加载。
 
 ##### target:set_default
 
