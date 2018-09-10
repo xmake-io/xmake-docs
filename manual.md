@@ -39,6 +39,7 @@ Conditions are generally used to handle some special compilation platforms.
 | [is_option](#is_option)   | Is the given options enabled?             | >= 2.0.1 < 2.2.2 deprecated |
 | [is_config](#is_config)   | Is the given config values?               | >= 2.2.2                    |
 | [has_config](#has_config) | Is the given configs enabled?             | >= 2.2.2                    |
+| [get_config](#get_config) | Get the configuration value               | >= 2.2.2                    |
 
 ##### is_os 
 
@@ -313,6 +314,18 @@ $ xmake f --test1=false
 This interface can determine not only the built-in global and local configs, 
 but also the custom options defined through the [option](#option).
 </p>
+
+##### get_config
+
+###### Get the configuration value 
+
+This interface is introduced from version 2.2.2 to get the configuration value from the given name.
+
+```lua
+if get_config("myconfig") == "xxx" then
+    add_defines("HELLO")
+end
+```
 
 #### Global Interfaces
 
