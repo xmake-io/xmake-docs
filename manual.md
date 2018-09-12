@@ -39,7 +39,6 @@ Conditions are generally used to handle some special compilation platforms.
 | [is_option](#is_option)   | Is the given options enabled?             | >= 2.0.1 < 2.2.2 deprecated |
 | [is_config](#is_config)   | Is the given config values?               | >= 2.2.2                    |
 | [has_config](#has_config) | Is the given configs enabled?             | >= 2.2.2                    |
-| [get_config](#get_config) | Get the configuration value               | >= 2.2.2                    |
 
 ##### is_os 
 
@@ -315,18 +314,6 @@ This interface can determine not only the built-in global and local configs,
 but also the custom options defined through the [option](#option).
 </p>
 
-##### get_config
-
-###### Get the configuration value 
-
-This interface is introduced from version 2.2.2 to get the configuration value from the given name.
-
-```lua
-if get_config("myconfig") == "xxx" then
-    add_defines("HELLO")
-end
-```
-
 #### Global Interfaces
 
 The global interface affects the whole project description scope and all sub-project files.
@@ -343,6 +330,7 @@ The global interface affects the whole project description scope and all sub-pro
 | [add_moduledirs](#add_moduledirs)     | Add module directories                | >= 2.1.5 |
 | [add_plugindirs](#add_plugindirs)     | Add plugin directories                | >= 2.0.1 |
 | [add_packagedirs](#add_packagedirs)   | Add package directories               | >= 2.0.1 |
+| [get_config](#get_config)             | Get the configuration value           | >= 2.2.2 |
 
 ##### includes
 
@@ -536,6 +524,18 @@ xmake will check these packages automatically and link them if exists, and we ca
 
 ```bash
 $ xmake f --openssl=n
+```
+
+##### get_config
+
+###### Get the configuration value 
+
+This interface is introduced from version 2.2.2 to get the configuration value from the given name.
+
+```lua
+if get_config("myconfig") == "xxx" then
+    add_defines("HELLO")
+end
 ```
 
 #### Project Target

@@ -39,7 +39,6 @@ search: zh
 | [is_option](#is_option)   | 判断选项是否启用              | >= 2.0.1 < 2.2.2 已废弃 |
 | [is_config](#is_config)   | 判断指定配置是否为给定的值    | >= 2.2.2                |
 | [has_config](#has_config) | 判断配置是否启用或者存在      | >= 2.2.2                |
-| [get_config](#get_config) | 获取给的配置值                | >= 2.2.2                |
 
 ##### is_os 
 
@@ -335,17 +334,6 @@ $ xmake f --test1=false
 此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](#option)定义的自定义配置选项。
 </p>
 
-##### get_config
-
-###### 获取给定的配置值
-
-此接口从2.2.2版本开始引入，用于快速获取给定的配置值，可用于描述域。
-
-```lua
-if get_config("myconfig") == "xxx" then
-    add_defines("HELLO")
-end
-```
 
 #### 全局接口
 
@@ -363,6 +351,7 @@ end
 | [add_moduledirs](#add_moduledirs)     | 添加模块目录                  | >= 2.1.5 |
 | [add_plugindirs](#add_plugindirs)     | 添加插件目录                  | >= 2.0.1 | 
 | [add_packagedirs](#add_packagedirs)   | 添加包目录                    | >= 2.0.1 |
+| [get_config](#get_config)             | 获取给的配置值                | >= 2.2.2 |
 
 ##### includes
 
@@ -560,6 +549,18 @@ add_packagedirs("packages")
 ```lua
 target("tbox")
     add_packages("zlib", "polarssl", "pcre", "mysql")
+```
+
+##### get_config
+
+###### 获取给定的配置值
+
+此接口从2.2.2版本开始引入，用于快速获取给定的配置值，可用于描述域。
+
+```lua
+if get_config("myconfig") == "xxx" then
+    add_defines("HELLO")
+end
 ```
 
 #### 工程目标
