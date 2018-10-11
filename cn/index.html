@@ -71,42 +71,50 @@
 
 <h2 id="section-1">简单的工程描述</h2>
 
-<p><img src="/assets/img/index/showcode1.png" width="50%" /></p>
+<p><img src="/assets/img/index/showcode1.png" width="40%" /></p>
 
-<h2 id="section-2">构建工程</h2>
+<h2 id="section-2">包依赖描述</h2>
+
+<p><img src="/assets/img/index/add_require.png" width="70%" /></p>
+
+<h2 id="section-3">构建工程</h2>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake
 </code></pre>
 </div>
 
-<h2 id="section-3">运行目标</h2>
+<h2 id="section-4">运行目标</h2>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake run console
 </code></pre>
 </div>
 
-<h2 id="section-4">调试程序</h2>
+<h2 id="section-5">调试程序</h2>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake run -d console
 </code></pre>
 </div>
 
-<h2 id="section-5">配置平台</h2>
+<h2 id="section-6">配置平台</h2>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake f -p <span class="o">[</span>windows|linux|macosx|android|iphoneos ..] -a <span class="o">[</span>x86|arm64 ..] -m <span class="o">[</span>debug|release]
 <span class="gp">$ </span>xmake
 </code></pre>
 </div>
 
-<h2 id="section-6">图形化菜单配置</h2>
+<h2 id="section-7">图形化菜单配置</h2>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake f --menu
 </code></pre>
 </div>
 
-<p><img src="/assets/img/index/menuconf.gif" width="60%" /></p>
+<p><img src="/assets/img/index/menuconf.png" width="80%" /></p>
 
-<h2 id="section-7">支持平台</h2>
+<h2 id="section-8">包依赖管理</h2>
+
+<p><img src="/assets/img/index/package_manage.png" width="80%" /></p>
+
+<h2 id="section-9">支持平台</h2>
 
 <ul>
   <li>Windows (x86, x64)</li>
@@ -118,7 +126,7 @@
   <li>Mingw (i386, x86_64)</li>
 </ul>
 
-<h2 id="section-8">支持语言</h2>
+<h2 id="section-10">支持语言</h2>
 
 <ul>
   <li>C/C++</li>
@@ -131,7 +139,7 @@
   <li>Cuda</li>
 </ul>
 
-<h2 id="section-9">工程类型</h2>
+<h2 id="section-11">工程类型</h2>
 
 <ul>
   <li>静态库程序</li>
@@ -143,9 +151,9 @@
   <li>WinSDK应用程序</li>
 </ul>
 
-<h2 id="section-10">内置插件</h2>
+<h2 id="section-12">内置插件</h2>
 
-<h4 id="section-11">宏记录脚本和回放插件</h4>
+<h4 id="section-13">宏记录脚本和回放插件</h4>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake m -b                        <span class="c"># 开始记录</span>
 <span class="gp">$ </span>xmake f -p iphoneos -m debug
@@ -175,7 +183,7 @@
 </code></pre>
 </div>
 
-<h2 id="section-12">更多插件</h2>
+<h2 id="section-14">更多插件</h2>
 
 <p>请到插件仓库进行下载安装: <a href="https://github.com/tboox/xmake-plugins">xmake-plugins</a>.</p>
 
@@ -203,7 +211,7 @@
   <li><a href="https://github.com/luzhlon/xmake.vim">xmake.vim</a> (third-party, thanks <a href="https://github.com/luzhlon">@luzhlon</a>)</li>
 </ul>
 
-<h2 id="section-13">更多例子</h2>
+<h2 id="section-15">更多例子</h2>
 
 <p>Debug和Release模式：</p>
 
@@ -238,7 +246,7 @@
 </code></pre>
 </div>
 
-<h2 id="section-14">项目例子</h2>
+<h2 id="section-16">项目例子</h2>
 
 <p>一些使用xmake的项目：</p>
 
@@ -249,13 +257,13 @@
   <li><a href="https://github.com/tboox/awesome-xmake">更多</a></li>
 </ul>
 
-<h2 id="section-15">演示视频</h2>
+<h2 id="section-17">演示视频</h2>
 
 <p><a href="https://asciinema.org/a/133693">
 <img src="https://asciinema.org/a/133693.png" width="60%" />
 </a></p>
 
-<h2 id="section-16">联系方式</h2>
+<h2 id="section-18">联系方式</h2>
 
 <ul>
   <li>邮箱：<a href="mailto:waruqi@gmail.com">waruqi@gmail.com</a></li>

@@ -25,7 +25,11 @@ Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xm
 
 ## 简单的工程描述
 
-<img src="/assets/img/index/showcode1.png" width="50%" />
+<img src="/assets/img/index/showcode1.png" width="40%" />
+
+## 包依赖描述
+
+<img src="/assets/img/index/add_require.png" width="70%" />
 
 ## 构建工程
 
@@ -58,7 +62,11 @@ $ xmake
 $ xmake f --menu
 ```
 
-<img src="/assets/img/index/menuconf.gif" width="60%" />
+<img src="/assets/img/index/menuconf.png" width="80%" />
+
+## 包依赖管理
+
+<img src="/assets/img/index/package_manage.png" width="80%" />
 
 ## 支持平台
 
