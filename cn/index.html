@@ -77,6 +77,8 @@
 
 <p><img src="/assets/img/index/add_require.png" width="70%" /></p>
 
+<p>官方的xmake包管理仓库: <a href="https://github.com/tboox/xmake-repo">xmake-repo</a></p>
+
 <h2 id="section-3">构建工程</h2>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake
@@ -157,6 +159,8 @@
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>xmake m -b                        <span class="c"># 开始记录</span>
 <span class="gp">$ </span>xmake f -p iphoneos -m debug
+<span class="gp">$ </span>xmake 
+<span class="gp">$ </span>xmake f -p android --ndk<span class="o">=</span>~/files/android-ndk-r16b
 <span class="gp">$ </span>xmake
 <span class="gp">$ </span>xmake m -e                        <span class="c"># 结束记录</span>
 <span class="gp">$ </span>xmake m .                         <span class="c"># 回放命令</span>
@@ -220,6 +224,9 @@
 <span class="n">target</span><span class="p">(</span><span class="s2">"console"</span><span class="p">)</span>
     <span class="n">set_kind</span><span class="p">(</span><span class="s2">"binary"</span><span class="p">)</span>
     <span class="n">add_files</span><span class="p">(</span><span class="s2">"src/*.c"</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="n">is_plat</span><span class="p">(</span><span class="s2">"windows"</span><span class="p">,</span> <span class="s2">"mingw"</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">add_defines</span><span class="p">(</span><span class="s2">"XXX"</span><span class="p">)</span>
+    <span class="k">end</span>
 </code></pre>
 </div>
 
