@@ -352,6 +352,7 @@ $ xmake f --test1=false
 | [add_plugindirs](#add_plugindirs)     | 添加插件目录                  | >= 2.0.1 | 
 | [add_packagedirs](#add_packagedirs)   | 添加包目录                    | >= 2.0.1 |
 | [get_config](#get_config)             | 获取给的配置值                | >= 2.2.2 |
+| [set_config](#set_config)             | 设置默认的配置值              | >= 2.2.2 |
 
 ##### includes
 
@@ -563,6 +564,23 @@ if get_config("myconfig") == "xxx" then
 end
 ```
 
+##### set_config
+
+###### 设置给定的默认配置值
+
+此接口从2.2.2版本开始引入，用于快速在xmake.lua中设置一个默认配置值，仅用于描述域。
+
+之前很多配置，包括编译工具链，构建目录等只能通过`$ xmake f --name=value`的方式来配置，如果我们想写死在xmake.lua提供一个默认值，就可以通过下面的方式来配置：
+
+```lua
+set_config("name", "value")
+set_config("buildir", "other/buildir")
+set_config("cc", "gcc")
+set_config("ld", "g++")
+```
+
+不过，我们还是可以通过`$ xmake f --name=value`的方式，去修改xmake.lua中的默认配置。
+
 #### 工程目标
 
 定义和设置子工程模块，每个`target`对应一个子工程，最后会生成一个目标程序，有可能是可执行程序，也有可能是库模块。
@@ -607,6 +625,7 @@ target("test2")
 | [set_headerdir](#targetset_headerdir)         | 设置头文件安装目录                   | >= 1.0.1 |
 | [set_targetdir](#targetset_targetdir)         | 设置生成目标文件目录                 | >= 1.0.1 |
 | [set_objectdir](#targetset_objectdir)         | 设置对象文件生成目录                 | >= 1.0.1 |
+| [set_dependir](#targetset_dependir)           | 设置依赖文件生成目录                 | >= 2.2.2 |
 | [add_imports](#targetadd_imports)             | 为所有自定义脚本预先导入扩展模块     | >= 2.1.7 |
 | [add_rules](#targetadd_rules)                 | 添加规则到目标                       | >= 2.1.9 |
 | [on_load](#targeton_load)                     | 自定义目标加载脚本                   | >= 2.1.5 |
@@ -1065,6 +1084,17 @@ target("test")
 ```lua
 target("test")
     set_objectdir("$(buildir)/.objs")
+```
+
+##### target:set_dependir
+
+###### 设置依赖文件生成目录
+
+设置目标target的编译依赖文件(`.deps`)的输出目录，例如:
+
+```lua
+target("test")
+    set_dependir("$(buildir)/.deps")
 ```
 
 ##### target:add_imports

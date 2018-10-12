@@ -331,6 +331,7 @@ The global interface affects the whole project description scope and all sub-pro
 | [add_plugindirs](#add_plugindirs)     | Add plugin directories                | >= 2.0.1 |
 | [add_packagedirs](#add_packagedirs)   | Add package directories               | >= 2.0.1 |
 | [get_config](#get_config)             | Get the configuration value           | >= 2.2.2 |
+| [set_config](#set_config)             | Set the default configuration value   | >= 2.2.2 |
 
 ##### includes
 
@@ -538,6 +539,24 @@ if get_config("myconfig") == "xxx" then
 end
 ```
 
+##### set_config
+
+###### Set the default configuration value
+
+This interface is introduced from version 2.2.2 to set the default configuration value in xmake.lua.
+
+Many previous configurations, including the build toolchain, build directory, etc. 
+We can only be configured by `$xmake f --name=value`. If we want to write a default value in xmake.lua, we can use the following method:
+
+```lua
+set_config("name", "value")
+set_config("buildir", "other/buildir")
+set_config("cc", "gcc")
+set_config("ld", "g++")
+```
+
+However, we can still modify the default configuration in xmake.lua by `$xmake f --name=value`.
+
 #### Project Target
 
 We can use `target("test")` to define a project target named "test", each target generates an executable program, a static library, or a dynamic library.
@@ -581,6 +600,7 @@ target("test2")
 | [set_headerdir](#targetset_headerdir)         | Set output directories for header files                | >= 1.0.1                    |
 | [set_targetdir](#targetset_targetdir)         | Set output directories for target file                 | >= 1.0.1                    |
 | [set_objectdir](#targetset_objectdir)         | Set output directories for object files                | >= 1.0.1                    |
+| [set_dependir](#targetset_dependir)           | Set output directories for dependent files             | >= 2.2.2                    |
 | [add_imports](#targetadd_imports)             | Add imported modules for the custom script             | >= 2.1.7                    |
 | [add_rules](#targetadd_rules)                 | Add custom compilation rule to target                  | >= 2.1.9                    |
 | [on_load](#targeton_load)                     | Run custom load target configuartion script            | >= 2.1.5                    |
@@ -1043,6 +1063,17 @@ target("test")
 ```lua
 target("test")
     set_objectdir("$(buildir)/.objs")
+```
+
+##### target:set_dependir
+
+###### Set output directories for dependent files
+
+设置目标target的编译依赖文件(`.deps`)的输出目录，例如:
+
+```lua
+target("test")
+    set_dependir("$(buildir)/.deps")
 ```
 
 ##### target:add_imports
