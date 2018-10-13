@@ -353,6 +353,8 @@ $ xmake f --test1=false
 | [add_packagedirs](#add_packagedirs)   | 添加包目录                    | >= 2.0.1 |
 | [get_config](#get_config)             | 获取给的配置值                | >= 2.2.2 |
 | [set_config](#set_config)             | 设置默认的配置值              | >= 2.2.2 |
+| [add_requires](#add_requires)         | 添加需要的依赖包              | >= 2.2.2 |
+| [add_repositories](#add_repositories) | 添加依赖包仓库                | >= 2.2.2 |
 
 ##### includes
 
@@ -580,6 +582,108 @@ set_config("ld", "g++")
 ```
 
 不过，我们还是可以通过`$ xmake f --name=value`的方式，去修改xmake.lua中的默认配置。
+
+##### add_requires
+
+###### 添加需要的依赖包
+
+xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：[http://semver.org/](http://semver.org/)
+
+一些语义版本写法：
+
+```lua
+add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
+add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
+```
+
+目前xmake使用的语义版本解析器是[uael](https://github.com/uael)贡献的[sv](https://github.com/uael/sv)库，里面也有对版本描述写法的详细说明，可以参考下：[版本描述说明](https://github.com/uael/sv#versions)
+
+当然，如果我们对当前的依赖包的版本没有特殊要求，那么可以直接这么写：
+
+```lua
+add_requires("tbox", "libpng", "zlib")
+```
+
+这会使用已知的最新版本包，或者是master分支的源码编译的包，如果当前包有git repo地址，我们也能指定特定分支版本：
+
+```lua
+add_requires("tbox master")
+add_requires("tbox dev")
+```
+
+如果指定的依赖包当前平台不支持，或者编译安装失败了，那么xmake会编译报错，这对于有些必须要依赖某些包才能工作的项目，这是合理的。
+但是如果有些包是可选的依赖，即使没有也可以正常编译使用的话，可以设置为可选包：
+
+```lua
+add_requires("tbox", {optional = true})
+```
+
+默认的设置，xmake会去优先检测系统库是否存在（如果没设置版本要求），如果用户完全不想使用系统库以及第三方包管理提供的库，那么可以设置：
+
+```lua
+add_requires("tbox", {system = false})
+```
+
+如果我们想同时源码调试依赖包，那么可以设置为使用debug版本的包（当然前提是这个包支持debug编译）：
+
+```lua
+add_requires("tbox", {debug = true})
+```
+
+如果当前包还不支持debug编译，可在仓库中提交修改编译规则，对debug进行支持，例如：
+
+```lua
+package("openssl")
+    on_install("linux", "macosx", function (package)
+        os.vrun("./config %s --prefix=\"%s\"", package:debug() and "--debug" or "", package:installdir())
+        os.vrun("make -j4")
+        os.vrun("make install")
+    end)
+```
+
+某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：
+
+```lua
+add_requires("tbox", {config = {small=true}})
+```
+
+传递`--small=true`给tbox包，使得编译安装的tbox包是启用此选项的。
+
+##### add_repositories
+
+###### 添加依赖包仓库
+
+如果需要的包不在官方仓库[xmake-repo](https://github.com/tboox/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。
+但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：[xmake-repo](https://github.com/tboox/xmake-repo)
+
+比如，现在我们有一个一个私有仓库repo：`git@github.com:myrepo/xmake-repo.git`
+
+我们可以通过此接口来添加：
+
+```lua
+add_repositories("my-repo git@github.com:myrepo/xmake-repo.git")
+```
+
+如果我们只是想添加一两个私有包，这个时候特定去建立一个git repo太小题大做了，我们可以直接把包仓库放置项目里面，例如：
+
+```
+projectdir
+  - myrepo
+    - packages
+      - t/tbox/xmake.lua
+      - z/zlib/xmake.lua
+  - src
+    - main.c
+  - xmake.lua
+```
+
+上面myrepo目录就是自己的私有包仓库，内置在自己的项目里面，然后在xmake.lua里面添加一下这个仓库位置：
+
+```lua
+add_repositories("my-repo myrepo")
+```
+
+这个可以参考[benchbox](https://github.com/tboox/benchbox)项目，里面就内置了一个私有仓库。
 
 #### 工程目标
 
@@ -2331,6 +2435,8 @@ target("test")
 用户不再需要自己单独调用[add_links](#targetadd_links)，[add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags)等接口，来配置依赖库链接了。
 
 对于如何设置包搜索目录，可参考：[add_packagedirs](#targetadd_packagedirs) 接口
+
+而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](#add_requires)定义的包。
 
 ##### target:add_languages
 
@@ -4153,6 +4259,48 @@ rule("markdown")
 rule("test")
     -- ..
 rule_end()
+```
+
+#### 库包依赖
+
+仓库依赖包定义描述，`package()`相关接口定义，等有时间会详细说明，敬请期待。。
+
+可先参考官方仓库中现有包描述：[xmake-repo](https://github.com/tboox/xmake-repo)
+
+这里给个比较具有代表性的实例供参考：
+
+```lua
+package("libxml2")
+
+    set_homepage("http://xmlsoft.org/")
+    set_description("The XML C parser and toolkit of Gnome.")
+
+    set_urls("https://github.com/GNOME/libxml2/archive/$(version).zip", {excludes = {"*/result/*", "*/test/*"}})
+
+    add_versions("v2.9.8", "c87793e45e66a7aa19200f861873f75195065de786a21c1b469bdb7bfc1230fb")
+    add_versions("v2.9.7", "31dd4c0e10fa625b47e27fd6a5295d246c883f214da947b9a4a9e13733905ed9")
+
+    if is_plat("macosx", "linux") then
+        add_deps("autoconf", "automake", "libtool", "pkg-config")
+    end
+
+    on_load(function (package)
+        package:addvar("includedirs", "include/libxml2")
+        package:addvar("links", "xml2")
+    end)
+
+    if is_plat("windows") and winos.version():gt("winxp") then
+        on_install("windows", function (package)
+            os.cd("win32")
+            os.vrun("cscript configure.js iso8859x=yes iconv=no compiler=msvc cruntime=/MT debug=%s prefix=\"%s\"", package:debug() and "yes" or "no", package:installdir())
+            os.vrun("nmake /f Makefile.msvc")
+            os.vrun("nmake /f Makefile.msvc install")
+        end)
+    end
+
+    on_install("macosx", "linux", function (package)
+        import("package.tools.autoconf").install(package, {"--disable-dependency-tracking", "--without-python", "--without-lzma"})
+    end)
 ```
 
 #### 平台扩展

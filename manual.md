@@ -332,6 +332,8 @@ The global interface affects the whole project description scope and all sub-pro
 | [add_packagedirs](#add_packagedirs)   | Add package directories               | >= 2.0.1 |
 | [get_config](#get_config)             | Get the configuration value           | >= 2.2.2 |
 | [set_config](#set_config)             | Set the default configuration value   | >= 2.2.2 |
+| [add_requires](#add_requires)         | Add required package dependencies     | >= 2.2.2 |
+| [add_repositories](#add_repositories) | Add 3rd package repositories          | >= 2.2.2 |
 
 ##### includes
 
@@ -556,6 +558,108 @@ set_config("ld", "g++")
 ```
 
 However, we can still modify the default configuration in xmake.lua by `$xmake f --name=value`.
+
+##### add_requires
+
+###### Add required packages dependencies
+
+Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: [http://semver.org/] (http://semver.org/)
+
+Some examples:
+
+```lua
+add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
+add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
+```
+
+The semantic version parser currently used by xmake is the [sv](https://github.com/uael/sv) library contributed by [uael](https://github.com/uael), which also has a description of the version. For detailed instructions, please refer to the following: [Version Description] (https://github.com/uael/sv#versions)
+
+Of course, if we have no special requirements for the current version of the dependency package, then we can write directly:
+
+```lua
+add_requires("tbox", "libpng", "zlib")
+```
+
+This will use the latest version of the package known, or the source code compiled by the master branch. If the current package has a git repo address, we can also specify a specific branch version:
+
+```lua
+add_requires("tbox master")
+add_requires("tbox dev")
+```
+
+If the specified dependency package is not supported by the current platform, or if the compilation and installation fails, then xmake will compile the error, which is reasonable for some projects that must rely on certain packages to work.
+However, if some packages are optional dependencies, they can be set to optional packages even if they are not compiled properly.
+
+```lua
+add_requires("tbox", {optional = true})
+```
+
+With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library provided by the third-party package management, then you can set:
+
+```lua
+add_requires("tbox", {system = false})
+```
+
+If we want to debug the dependencies at the same time, we can set them to use the debug version of the package (provided that this package supports debug compilation):
+
+```lua
+add_requires("tbox", {debug = true})
+```
+
+If the current package does not support debug compilation, you can submit the modified compilation rules in the repository to support the debug, for example:
+
+```lua
+package("openssl")
+    on_install("linux", "macosx", function (package)
+        os.vrun("./config %s --prefix=\"%s\"", package:debug() and "--debug" or "", package:installdir())
+        os.vrun("make -j4")
+        os.vrun("make install")
+    end)
+```
+
+Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:
+
+```lua
+add_requires("tbox", {config = {small=true}})
+```
+
+Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.
+
+##### add_repositories
+
+###### Add 3rd package repositories
+
+If the required package is not in the official repository [xmake-repo](https://github.com/tboox/xmake-repo), we can submit the contribution code to the repository for support.
+But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/tboox/xmake-repo)
+
+For example, now we have a private repository repo:`git@github.com:myrepo/xmake-repo.git`
+
+We can add through this interface:
+
+```lua
+add_repositories("my-repo git@github.com:myrepo/xmake-repo.git")
+```
+
+If we just want to add one or two private packages, this time to build a git repo is too big, we can directly put the package repository into the project, for example:
+
+```
+projectdir
+  - myrepo
+    - packages
+      - t/tbox/xmake.lua
+      - z/zlib/xmake.lua
+  - src
+    - main.c
+  - xmake.lua
+```
+
+The above myrepo directory is your own private package repository, built into your own project, and then add this repository location in xmake.lua:
+
+```lua
+add_repositories("my-repo myrepo")
+```
+
+This can be referred to [benchbox](https://github.com/tboox/benchbox) project, which has a built-in private repository.
 
 #### Project Target
 
@@ -1555,7 +1659,7 @@ target("test")
 
 ##### target:set_config_header
 
-###### 设置自动生成的配置头文件路径和前缀
+###### Set macro prefix in auto-generated config header and prefix
 
 此接口是[set_config_h](#targetset_config_h)和[set_config_h_prefix](#targetset_config_h_prefix)的升级版本，2.1.5之后支持。
 
@@ -1583,7 +1687,7 @@ target("test")
     set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG", version = "2.1.8", build = "%Y%m%d%H%M"})
 ```
 
-###### 通过内置的检测规则生成配置
+###### Generate configuration with built-in detection rules
 
 当这个target中通过下面的这些接口，对这个target添加了相关的选项依赖、包依赖、接口依赖后，如果某依赖被启用，那么对应的一些宏定义配置，会自动写入被设置的`config.h`文件中去。
 
@@ -1593,7 +1697,7 @@ target("test")
 * [add_cfuncs](#targetadd_cfuncs)
 * [add_cxxfuncs](#targetadd_cxxfuncs) 
 
-###### 定制化检测和生成配置头文件
+###### Customize detection and generate configuration header files
 
 这些接口，其实底层都用到了[option](#option)选项中的一些检测设置，例如：
 
@@ -2311,6 +2415,8 @@ target("test")
 用户不再需要自己单独调用[add_links](#targetadd_links)，[add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags)等接口，来配置依赖库链接了。
 
 对于如何设置包搜索目录，可参考：[add_packagedirs](#targetadd_packagedirs) 接口
+
+而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](#add_requires)定义的包。
 
 ##### target:add_languages
 
@@ -4137,6 +4243,48 @@ rule("markdown")
 rule("test")
     -- ..
 rule_end()
+```
+
+#### Remote package dependencies
+
+仓库依赖包定义描述，`package()`相关接口定义，等有时间会详细说明，敬请期待。。
+
+可先参考官方仓库中现有包描述：[xmake-repo](https://github.com/tboox/xmake-repo)
+
+这里给个比较具有代表性的实例供参考：
+
+```lua
+package("libxml2")
+
+    set_homepage("http://xmlsoft.org/")
+    set_description("The XML C parser and toolkit of Gnome.")
+
+    set_urls("https://github.com/GNOME/libxml2/archive/$(version).zip", {excludes = {"*/result/*", "*/test/*"}})
+
+    add_versions("v2.9.8", "c87793e45e66a7aa19200f861873f75195065de786a21c1b469bdb7bfc1230fb")
+    add_versions("v2.9.7", "31dd4c0e10fa625b47e27fd6a5295d246c883f214da947b9a4a9e13733905ed9")
+
+    if is_plat("macosx", "linux") then
+        add_deps("autoconf", "automake", "libtool", "pkg-config")
+    end
+
+    on_load(function (package)
+        package:addvar("includedirs", "include/libxml2")
+        package:addvar("links", "xml2")
+    end)
+
+    if is_plat("windows") and winos.version():gt("winxp") then
+        on_install("windows", function (package)
+            os.cd("win32")
+            os.vrun("cscript configure.js iso8859x=yes iconv=no compiler=msvc cruntime=/MT debug=%s prefix=\"%s\"", package:debug() and "yes" or "no", package:installdir())
+            os.vrun("nmake /f Makefile.msvc")
+            os.vrun("nmake /f Makefile.msvc install")
+        end)
+    end
+
+    on_install("macosx", "linux", function (package)
+        import("package.tools.autoconf").install(package, {"--disable-dependency-tracking", "--without-python", "--without-lzma"})
+    end)
 ```
 
 #### Extension Platforms
