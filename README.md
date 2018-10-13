@@ -1144,7 +1144,7 @@ add_requires("tbox", {config = {small=true}})
 Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.
 ##### Using self-built private package warehouse
 
-If the required package is not in the official repository [xmake-repo] (https://github.com/tboox/xmake-repo), we can submit the contribution code to the repository for support.
+If the required package is not in the official repository [xmake-repo](https://github.com/tboox/xmake-repo), we can submit the contribution code to the repository for support.
 But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/tboox/xmake-repo)
 
 For example, now we have a private repository repo:`git@github.com:myrepo/xmake-repo.git`
