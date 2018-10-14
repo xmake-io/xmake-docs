@@ -1375,7 +1375,9 @@ $ xmake repo -u
 
 ##### 提交包到官方仓库
 
-如果你需要的包，当前的官方仓库不支持，那么可以在本地调通后，贡献提交到官方仓库：[xmake-repo](https://github.com/tboox/xmake-repo)
+目前这个特性刚完成不久，目前官方仓库的包还不是很多，有些包也许还不支持部分平台，不过这并不是太大问题，后期迭代几个版本后，我会不断扩充完善包仓库。
+
+如果你需要的包，当前的官方仓库还没有收录，可以提交issues或者自己可以在本地调通后，贡献提交到官方仓库：[xmake-repo](https://github.com/tboox/xmake-repo)
 
 详细的贡献说明，见：[CONTRIBUTING.md](https://github.com/tboox/xmake-repo/blob/master/CONTRIBUTING.md)
 
