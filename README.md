@@ -1052,18 +1052,17 @@ For more information and progress on package dependency management see the relat
 ##### Currently Supported Features
 
 * Semantic version support, for example: ">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"
-* System library automatic detection support
-* Source code download compilation and automatic link support
-* Binary package download direct installation support
-* Cascading dependency package support
 * Provide multi-warehouse management support such as official package warehouse, self-built private warehouse, project built-in warehouse, etc.
-* You can customize the package description rules and add your own packages.
 * Cross-platform package compilation integration support (packages of different platforms and different architectures can be installed at the same time, fast switching use)
-* Built-in release/debug dependency package support, can be specified to use debug package to achieve source debugging
+* Debug dependency package support, source code debugging
 
 ##### Dependency Package Processing Mechanism
 
 Here we briefly introduce the processing mechanism of the entire dependency package:
+
+<div align="center">
+<img src="/assets/img/index/package_arch.png" width="80%" />
+</div>
 
 1. Priority check for the current system directory, whether there is a specified package under the third-party package management, if there is a matching package, then you do not need to download and install (of course you can also set the system package)
 2. Retrieve the package matching the corresponding version, then download, compile, and install (Note: installed in a specific xmake directory, will not interfere with the system library environment)

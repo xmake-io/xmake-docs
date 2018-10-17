@@ -1121,7 +1121,7 @@ xmake会去远程拉取相关源码包，然后自动编译安装，最后编译
 
 这里我们简单介绍下整个依赖包的处理机制：
 
-<img src="https://xmake.io/assets/img/index/package_arch.png" width="80%" />
+<img src="/assets/img/index/package_arch.png" width="80%" />
 
 1. 优先检测当前系统目录、第三方包管理下有没有存在指定的包，如果有匹配的包，那么就不需要下载安装了 （当然也可以设置不使用系统包）
 2. 检索匹配对应版本的包，然后下载、编译、安装（注：安装在特定xmake目录，不会干扰系统库环境）
