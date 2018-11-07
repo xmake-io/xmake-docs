@@ -2,38 +2,38 @@
 
 ## Installation
 
-#### Master
+### Master
 
-##### via curl
+#### via curl
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
 ```
 
-##### via wget
+#### via wget
 
 ```bash
 bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh -O -)
 ```
 
-##### via powershell
+#### via powershell
 
 ```bash
 Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
 ```
 
-#### Windows
+### Windows
 
 1. Download xmake windows installer from [Releases](https://github.com/tboox/xmake/releases)
 2. Run xmake-[version].exe
 
-#### MacOS
+### MacOS
 
 ```bash
 $ brew install xmake
 ```
 
-#### Linux
+### Linux
 
 On Archlinux:
 
@@ -68,7 +68,7 @@ Or download deb package to install it:
 1. Download xmake `.deb` install package from [Releases](https://github.com/tboox/xmake/releases) 
 2. Run `dpkg -i xmake-xxxx.deb`
 
-#### Compilation
+### Compilation
 
 Compile and install:
 
@@ -112,7 +112,7 @@ $ sudo make uninstall
 
 [![asciicast](https://asciinema.org/a/133693.png)](https://asciinema.org/a/133693)
 
-#### Create Project
+### Create Project
 
 ```bash
 $ xmake create -l c -P ./hello
@@ -151,19 +151,19 @@ Support languages:
     If you want to known more options, please run: `xmake create --help`
 </p>
 
-#### Build Project
+### Build Project
 
 ```bash
 $ xmake
 ```
 
-#### Run Program
+### Run Program
 
 ```bash
 $ xmake run hello
 ```
 
-#### Debug Program
+### Debug Program
 
 ```bash
 $ xmake run -d hello 
@@ -195,7 +195,7 @@ hello`main:
 
 ## Project Examples
 
-#### Executable Program
+### Executable Program
 
 ```lua
 target("test")
@@ -203,7 +203,7 @@ target("test")
     add_files("src/*c")
 ```
 
-#### Static Library Program
+### Static Library Program
 
 ```lua
 target("library")
@@ -218,7 +218,7 @@ target("test")
 
 We use `add_deps` to link a static library to test target.
 
-#### Share Library Program
+### Share Library Program
 
 ```lua
 target("library")
@@ -233,7 +233,7 @@ target("test")
 
 We use `add_deps` to link a share library to test target.
 
-#### Qt Program
+### Qt Program
 
 Create an empty project:
 
@@ -258,7 +258,7 @@ $ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 
 If you want to known more information, you can see [#160](https://github.com/tboox/xmake/issues/160).
 
-##### Static Library
+#### Static Library
 
 ```lua
 target("qt_static_library")
@@ -267,7 +267,7 @@ target("qt_static_library")
     add_frameworks("QtNetwork", "QtGui")
 ```
 
-##### Shared Library
+#### Shared Library
 
 ```lua
 target("qt_shared_library")
@@ -276,7 +276,7 @@ target("qt_shared_library")
     add_frameworks("QtNetwork", "QtGui")
 ```
 
-##### Console Program
+#### Console Program
 
 ```lua
 target("qt_console")
@@ -284,7 +284,7 @@ target("qt_console")
     add_files("src/*.cpp")
 ```
 
-##### Quick Application
+#### Quick Application
 
 ```lua
 target("qt_quickapp")
@@ -294,7 +294,7 @@ target("qt_quickapp")
     add_frameworks("QtQuick")
 ```
 
-##### Widgets Application
+#### Widgets Application
 
 ```lua
 target("qt_widgetapp")
@@ -305,7 +305,7 @@ target("qt_widgetapp")
     add_frameworks("QtWidgets")
 ```
 
-#### Cuda Program
+### Cuda Program
 
 Create an empty project:
 
@@ -341,7 +341,7 @@ $ xmake
 
 If you want to known more information, you can see [#158](https://github.com/tboox/xmake/issues/158).
 
-#### WDK Driver Program
+### WDK Driver Program
 
 xmake will detect WDK automatically and we can also set the WDK directory manually.
 
@@ -352,7 +352,7 @@ $ xmake
 
 If you want to known more information, you can see [#159](https://github.com/tboox/xmake/issues/159).
 
-##### UMDF Driver Program
+#### UMDF Driver Program
 
 ```lua
 target("echo")
@@ -366,7 +366,7 @@ target("app")
     add_files("exe/*.cpp") 
 ```
 
-##### KMDF Driver Program
+#### KMDF Driver Program
 
 ```lua
 target("nonpnp")
@@ -381,7 +381,7 @@ target("app")
     add_files("exe/*.inf")
 ```
 
-##### WDM Driver Program
+#### WDM Driver Program
 
 ```lua
 target("kcs")
@@ -403,7 +403,7 @@ target("msdsm")
     add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
 ```
 
-##### Package Driver 
+#### Package Driver 
 
 We can run the following command to generate a .cab driver package.
 
@@ -423,12 +423,12 @@ The output files like:
        - release/x64/sampledsm.cab
 ```
 
-##### Driver Signing
+#### Driver Signing
 
 The driver signing is disabled when we compile driver in default case, 
 but we can add `set_values("wdk.sign.mode")` to enable test/release sign.
 
-###### TestSign
+##### TestSign
 
 We can use test certificate of xmake to do testsign, but please run `$xmake l utils.wdk.testcert` install as admin to install a test certificate first (only once)!
 
@@ -457,7 +457,7 @@ target("msdsm")
     set_values("wdk.sign.company", "tboox.org(test)")
 ```
 
-###### ReleaseSign
+##### ReleaseSign
 
 We can set a certificate file for release signing.
 
@@ -469,7 +469,7 @@ target("msdsm")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
 ```
 
-##### Support Low-version System
+#### Support Low-version System
 
 We can set `wdk.env.winver` to generate a driver package that is compatible with a low version system.
 
@@ -491,7 +491,7 @@ $ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 ```
 
-#### WinSDK Application Program
+### WinSDK Application Program
 
 ```lua
 target("usbview")
@@ -515,9 +515,9 @@ And if you want to known more options, please run: `xmake f --help`。
     `xmake f -p linux` or `xmake config --plat=linux`.
 </p>
 
-#### Target Platforms
+### Target Platforms
 
-##### Current Host
+#### Current Host
 
 ```bash
 $ xmake
@@ -527,14 +527,14 @@ $ xmake
     XMake will detect the current host platform automatically and build project.
 </p>
 
-##### Linux
+#### Linux
 
 ```bash
 $ xmake f -p linux [-a i386|x86_64]
 $ xmake
 ```
 
-##### Android
+#### Android
 
 ```bash
 $ xmake f -p android --ndk=~/files/android-ndk-r10e/ [-a armv5te|armv6|armv7-a|armv8-a|arm64-v8a]
@@ -555,35 +555,35 @@ The [--bin](#-bin) option is used to set `bin` directory of toolchains.
 Please attempt to set `--arch=` option if it had failed to check compiler.
 </p>
 
-##### iPhoneOS
+#### iPhoneOS
 
 ```bash
 $ xmake f -p iphoneos [-a armv7|armv7s|arm64|i386|x86_64]
 $ xmake
 ```
 
-##### Windows
+#### Windows
 
 ```bash
 $ xmake f -p windows [-a x86|x64]
 $ xmake
 ```
 
-##### Mingw
+#### Mingw
 
 ```bash
 $ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64]
 $ xmake
 ``` 
 
-##### Apple WatchOS
+#### Apple WatchOS
 
 ```bash
 $ xmake f -p watchos [-a i386|armv7k]
 $ xmake
 ```
 
-##### Cross Compilation
+#### Cross Compilation
 
 For linux platform:
 
@@ -657,7 +657,7 @@ $ xmake
 if you want to known more options, please run: `xmake f --help`。
 </p>
 
-###### --sdk
+##### --sdk
 
 - Set the sdk root directory of toolchains
 
@@ -691,7 +691,7 @@ xmake will detect the prefix: arm-linux- and add the include and library search 
 -I/home/toolchains_sdkdir/include -L/home/toolchains_sdkdir/lib
 ```
 
-###### --bin
+##### --bin
 
 - Set the `bin` directory of toolchains
 
@@ -706,7 +706,7 @@ $ xmake
 Before v2.2.1 version, this parameter name is `--toolchains`, exists more ambiguous, so we changed to `--bin=` to set the bin directory.
 </p>
 
-###### --cross
+##### --cross
 
 - Set the prefix of compilation tools
 
@@ -724,7 +724,7 @@ If we want to use the `armv7-linux-gcc` compiler, we can run the following comma
 $ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 ```
 
-###### --as
+##### --as
 
 - Set `asm` assembler
 
@@ -738,7 +738,7 @@ If the 'AS' environment variable exists, it will use the values specified in the
 We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --as=gcc@/home/xxx/asmips.exe` 
 </p>
 
-###### --cc
+##### --cc
 
 - Set c compiler
 
@@ -752,7 +752,7 @@ If the 'CC' environment variable exists, it will use the values specified in the
 We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --cc=gcc@/home/xxx/ccmips.exe` 
 </p>
 
-###### --cxx
+##### --cxx
 
 - Set `c++` compiler
 
@@ -766,7 +766,7 @@ If the 'CXX' environment variable exists, it will use the values specified in th
 We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --cxx=g++@/home/xxx/c++mips.exe` 
 </p>
 
-###### --ld
+##### --ld
 
 - Set `c/c++/objc/asm` linker
 
@@ -780,7 +780,7 @@ If the 'LD' environment variable exists, it will use the values specified in the
 We can set a unknown compiler as like-gcc/clang linker, .e.g `xmake f --ld=g++@/home/xxx/c++mips.exe` 
 </p>
 
-###### --sh
+##### --sh
 
 - Set `c/c++/objc/asm` shared library linker
 
@@ -794,7 +794,7 @@ If the 'SH' environment variable exists, it will use the values specified in the
 We can set a unknown compiler as like-gcc/clang linker, .e.g `xmake f --sh=g++@/home/xxx/c++mips.exe` 
 </p>
 
-###### --ar
+##### --ar
 
 - Set `c/c++/objc/asm` static library archiver
 
@@ -808,7 +808,7 @@ If the 'AR' environment variable exists, it will use the values specified in the
 We can set a unknown compiler as like-ar archiver, .e.g `xmake f --ar=ar@/home/xxx/armips.exe` 
 </p>
 
-#### Global Configuration
+### Global Configuration
 
 You can save to the global configuration for simplfying operation.
 
@@ -829,7 +829,7 @@ $ xmake
     You can use short or long command option, for exmaple: `xmake g` or `xmake global`.<br>
 </p>
 
-#### Clean Configuration
+### Clean Configuration
 
 We can clean all cached configuration and re-configure projecct.
 
@@ -847,7 +847,7 @@ $ xmake
 
 ## Dependency Package Management
 
-#### Local Package Mode
+### Local Package Mode
 
 By including a dependency package directory and a binary package file in the project, it is convenient to integrate some third-party dependency libraries. This method is relatively simple and straightforward, but the disadvantages are also obvious and inconvenient to manage.
 
@@ -894,7 +894,7 @@ In this way, the test project can pass [add_packages](https://xmake.io/#/zh/manu
 
 For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: [Dependency package addition and automatic detection mechanism] (http://tboox.org/cn/2016/08/06/add-package -and-autocheck/)
 
-#### System Search Mode
+### System Search Mode
 
 If you feel that the above built-in package management method is very inconvenient, you can use the extension interface [lib.detect.find_package] provided by xmake (https://xmake.io/#/zh/manual?id=detect-find_package) to find the system. Existing dependencies.
 
@@ -943,11 +943,11 @@ If third-party tools such as `homebrew`, `pkg-config` are installed on the syste
 
 For a more complete description of the usage, please refer to the [lib.detect.find_package](https://xmake.io/#/en/manual?id=detect-find_package) interface documentation.
 
-##### Homebrew Integration Support
+#### Homebrew Integration Support
 
 Since homebrew is generally installed directly into the system, users do not need to do any integration work, `lib.detect.find_package` has been natively seamlessly supported.
 
-##### Vcpkg Integration Support
+#### Vcpkg Integration Support
 
 Currently xmake v2.2.2 version already supports vcpkg, users only need to install vcpkg, execute `$ vcpkg integrate install`, xmake will automatically detect the root path of vcpkg from the system, and then automatically adapt the bread.
 
@@ -963,7 +963,7 @@ Or we can set it to the global configuration to avoid repeating the settings eac
 $ xmake g --vcpkg=f:\vcpkg
 ```
 
-#### Remote dependency mode
+### Remote dependency mode
 
 This has been initially supported after the 2.2.2 version, the usage is much simpler, just set the corresponding dependency package, for example:
 
@@ -990,14 +990,14 @@ xmake will remotely pull the relevant source package, then automatically compile
 
 For more information and progress on package dependency management see the related issues: [Remote package management] (https://github.com/tboox/xmake/issues/69)
 
-##### Currently Supported Features
+#### Currently Supported Features
 
 * Semantic version support, for example: ">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"
 * Provide multi-warehouse management support such as official package warehouse, self-built private warehouse, project built-in warehouse, etc.
 * Cross-platform package compilation integration support (packages of different platforms and different architectures can be installed at the same time, fast switching use)
 * Debug dependency package support, source code debugging
 
-##### Dependency Package Processing Mechanism
+#### Dependency Package Processing Mechanism
 
 Here we briefly introduce the processing mechanism of the entire dependency package:
 
@@ -1009,7 +1009,7 @@ Here we briefly introduce the processing mechanism of the entire dependency pack
 2. Retrieve the package matching the corresponding version, then download, compile, and install (Note: installed in a specific xmake directory, will not interfere with the system library environment)
 3. Compile the project, and finally automatically link the enabled dependencies
 
-##### Semantic Version Settings
+#### Semantic Version Settings
 
 Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: [http://semver.org/] (http://semver.org/)
 
@@ -1035,9 +1035,9 @@ add_requires("tbox master")
 add_requires("tbox dev")
 ```
 
-##### Extra Package Information Settings
+#### Extra Package Information Settings
 
-###### Optional Package Settings
+##### Optional Package Settings
 
 If the specified dependency package is not supported by the current platform, or if the compilation and installation fails, then xmake will compile the error, which is reasonable for some projects that must rely on certain packages to work.
 However, if some packages are optional dependencies, they can be set to optional packages even if they are not compiled properly.
@@ -1046,7 +1046,7 @@ However, if some packages are optional dependencies, they can be set to optional
 add_requires("tbox", {optional = true})
 ```
 
-###### Disable System Library
+##### Disable System Library
 
 With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library provided by the third-party package management, then you can set:
 
@@ -1054,7 +1054,7 @@ With the default settings, xmake will first check to see if the system library e
 add_requires("tbox", {system = false})
 ```
 
-###### Using the debug version of the package
+##### Using the debug version of the package
 
 If we want to debug the dependencies at the same time, we can set them to use the debug version of the package (provided that this package supports debug compilation):
 
@@ -1073,7 +1073,7 @@ package("openssl")
     end)
 ```
 
-###### Passing additional compilation information to the package
+##### Passing additional compilation information to the package
 
 Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:
 
@@ -1082,7 +1082,7 @@ add_requires("tbox", {config = {small=true}})
 ```
 
 Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.
-##### Using self-built private package warehouse
+#### Using self-built private package warehouse
 
 If the required package is not in the official repository [xmake-repo](https://github.com/tboox/xmake-repo), we can submit the contribution code to the repository for support.
 But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/tboox/xmake-repo)
@@ -1152,11 +1152,11 @@ target("test")
     add_packages("libjpeg")
 ```
 
-##### Package Management Command Use
+#### Package Management Command Use
 
 The package management command `$ xmake require` can be used to manually display the download, install, uninstall, retrieve, and view package information.
 
-###### Install the specified package
+##### Install the specified package
 
 ```bash
 $ xmake require tbox
@@ -1182,7 +1182,7 @@ $ xmake require --extra="debug=true,config={small=true}" tbox
 
 Install the debug package and pass the compilation configuration information of `small=true` to the package.
 
-###### Uninstalling the specified package
+##### Uninstalling the specified package
 
 ```bash
 $ xmake require --uninstall tbox
@@ -1190,7 +1190,7 @@ $ xmake require --uninstall tbox
 
 This will completely uninstall the removal package file.
 
-###### Remove the specified package
+##### Remove the specified package
 
 Only unlink specifies the package, it is not detected by the current project, but the package still exists locally. If it is reinstalled, it will be completed very quickly.
 
@@ -1198,13 +1198,13 @@ Only unlink specifies the package, it is not detected by the current project, bu
 $ xmake require --unlink tbox
 ```
 
-###### View package details
+##### View package details
 
 ```bash
 $ xmake require --info tbox
 ```
 
-###### Search for packages in the current warehouse
+##### Search for packages in the current warehouse
 
 ```bash
 $ xmake require --search tbox
@@ -1218,13 +1218,13 @@ $ xmake require --search pcr
 
 Will also search for pcre, pcre2 and other packages.
 
-###### List the currently installed packages
+##### List the currently installed packages
 
 ```bash
 $ xmake require --list
 ```
 
-##### Warehouse Management Command Use
+#### Warehouse Management Command Use
 
 As mentioned above, adding a private repository is available (supporting local path addition):
 
@@ -1250,7 +1250,7 @@ If the remote repository has updates, you can manually perform a warehouse updat
 $ xmake repo -u
 ```
 
-##### Submit the package to the official warehouse
+#### Submit the package to the official warehouse
 
 If you need a package that is not supported by the current official repository, you can commit it to the official repository after local tuning: [xmake-repo](https://github.com/tboox/xmake-repo)
 
