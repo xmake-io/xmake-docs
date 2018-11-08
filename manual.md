@@ -733,6 +733,7 @@ target("test2")
 | [set_pcxxheader](#targetset_pcxxheader)       | Set pre-compiled c++ header file                       | >= 2.1.5                    |
 | [add_deps](#targetadd_deps)                   | Add target dependencies                                | >= 1.0.1                    |
 | [add_links](#targetadd_links)                 | Add link libraries                                     | >= 1.0.1                    |
+| [add_syslinks](#targetadd_syslinks)           | Add system link libraries                              | >= 2.2.3                    |
 | [add_files](#targetadd_files)                 | Add source files                                       | >= 1.0.1                    |
 | [del_files](#targetdel_files)                 | Remove source files                                    | >= 2.1.9                    |
 | [add_headers](#targetadd_headers)             | Add installed header files                             | >= 1.0.1                    |
@@ -1867,6 +1868,23 @@ target("demo")
     -- 添加链接搜索目录
     add_linkdirs("$(buildir)/lib")
 ```
+
+##### target:add_syslinks
+
+###### Add system link libraries
+
+这个接口使用上跟[add_links](#targetadd_links)类似，唯一的区别就是，通过这个接口添加的链接库顺序在所有`add_links`之后。
+
+因此主要用于添加系统库依赖，因为系统库的链接顺序是非常靠后的，例如：
+
+```lua
+add_syslinks("pthread", "m", "dl")
+target("demo")
+    add_links("a", "b")
+    add_linkdirs("$(buildir)/lib")
+```
+
+上面的配置，即使`add_syslinks`被优先提前设置了，但最后的链接顺序依然是：`-la -lb -lpthread -lm -ldl`
 
 ##### target:add_files
 
