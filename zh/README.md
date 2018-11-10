@@ -90,8 +90,16 @@ Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xm
 
 #### Windows
 
+##### 使用安装包
+
 1. 从 [Releases](https://github.com/tboox/xmake/releases) 上下载windows安装包
 2. 运行安装程序 xmake-[version].exe
+
+##### 使用scoop
+
+```bash
+scoop install xmake
+```
 
 #### MacOS
 
