@@ -81,16 +81,18 @@ bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh 
 Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
 ```
 
+#### Windows
+
+##### via installer
+
+1. Download xmake windows installer from [Releases](https://github.com/tboox/xmake/releases)
+2. Run xmake-[version].exe
+
 ##### via scoop
 
 ```bash
 scoop install xmake
 ```
-
-#### Windows
-
-1. Download xmake windows installer from [Releases](https://github.com/tboox/xmake/releases)
-2. Run xmake-[version].exe
 
 #### MacOS
 
