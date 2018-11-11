@@ -175,6 +175,23 @@ Uninstall:
 $ sudo make uninstall
 ```
 
+#### Update
+
+We can run `xmake update` to update xmake version after v2.2.3 and we can also update to the given version:
+
+```bash
+$ xmake update 2.2.4
+```
+
+We can also specify an update to the master/dev branch version:
+
+```bash
+$ xmake update master
+$ xmake update dev
+```
+
+Finally, if we want to uninstall xmake, it is also supported: `xmake update --uninstall`.
+
 ## Quick Start
 
 [![asciicast](https://asciinema.org/a/133693.png)](https://asciinema.org/a/133693)

@@ -1,18 +1,4 @@
----
-nav: zh
-search: zh
----
-
-<p>
-<div align="center">
-  <a href="http://xmake.io/cn">
-    <img width="200" heigth="200" src="http://tboox.org/static/img/xmake/logo256c.png">
-  </a>  
-
-  <h1>xmake</h1>
-
-  <div>
-    <a href="https://travis-ci.org/tboox/xmake">
+xmake">
       <img src="https://img.shields.io/travis/tboox/xmake/master.svg?style=flat-square" alt="travis-ci" />
     </a>
     <a href="https://ci.appveyor.com/project/waruqi/xmake/branch/master">
@@ -202,6 +188,23 @@ $ sudo make install prefix=/usr/local
 ```bash
 $ sudo make uninstall
 ```
+
+#### 更新升级
+
+从v2.2.3版本开始，新增了`xmake update`命令，来快速进行自我更新和升级，默认是升级到最新版本，当然也可以指定升级或者回退到某个版本：
+
+```bash
+$ xmake update 2.2.4
+```
+
+我们也可以指定更新到master/dev分支版本：
+
+```bash
+$ xmake update master
+$ xmake update dev
+```
+
+最后，我们如果要卸载xmake，也是支持的：`xmake update --uninstall`
 
 ## 快速开始
 
