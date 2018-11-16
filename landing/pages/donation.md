@@ -42,6 +42,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 ## Supporters 
 
+| 2018.11.16 | 孙果 | wechat | ¥10 | xmake很好用，加油！|
 | 2018.10.17 | 红红 | wechat | ¥100 | |
 | 2018.10.15 | xtvjxk | alipay | ¥10 | 希望越来越好用 |
 | 2018.08.07 | fasiondog | gitee | ¥50 | 感谢您的开源项目! |

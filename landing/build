@@ -1,0 +1,7 @@
+#!/bin/bash
+jekyll build
+cp -r _site/cn ..
+cp -r _site/pages ..
+cp -r _site/assets/* ../assets/
+cp -r _site/index.html ../landing.html 
+rm -rf _site
