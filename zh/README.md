@@ -1,4 +1,18 @@
-xmake">
+---
+nav: zh
+search: zh
+---
+
+<p>
+<div align="center">
+  <a href="http://xmake.io/cn">
+    <img width="200" heigth="200" src="http://tboox.org/static/img/xmake/logo256c.png">
+  </a>  
+
+  <h1>xmake</h1>
+
+  <div>
+    <a href="https://travis-ci.org/tboox/xmake">
       <img src="https://img.shields.io/travis/tboox/xmake/master.svg?style=flat-square" alt="travis-ci" />
     </a>
     <a href="https://ci.appveyor.com/project/waruqi/xmake/branch/master">
