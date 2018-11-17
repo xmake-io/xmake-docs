@@ -711,93 +711,99 @@ target("test2")
 </p>
 
 
-| 接口                                          | 描述                                 | 支持版本 |
-| --------------------------------------------- | ------------------------------------ | -------- |
-| [target](#target)                             | 定义工程目标                         | >= 1.0.1 |
-| [target_end](#target_end)                     | 结束定义工程目标                     | >= 2.1.1 |
-| [set_kind](#targetset_kind)                   | 设置目标编译类型                     | >= 1.0.1 |
-| [set_strip](#targetset_strip)                 | 设置是否strip信息                    | >= 1.0.1 |
-| [set_enabled](#targetset_enabled)             | 设置是否启用或禁用目标               | >= 2.2.2 |
-| [set_default](#targetset_default)             | 设置是否为默认构建安装目标           | >= 2.1.3 |
-| [set_options](#targetset_options)             | 设置关联选项                         | >= 1.0.1 |
-| [set_symbols](#targetset_symbols)             | 设置符号信息                         | >= 1.0.1 |
-| [set_basename](#targetset_basename)           | 设置目标文件名                       | >= 2.1.2 |
-| [set_filename](#targetset_filename)           | 设置目标文件全名                     | >= 2.1.2 |
-| [set_warnings](#targetset_warnings)           | 设置警告级别                         | >= 1.0.1 |
-| [set_optimize](#targetset_optimize)           | 设置优化级别                         | >= 1.0.1 |
-| [set_languages](#targetset_languages)         | 设置代码语言标准                     | >= 1.0.1 |
-| [set_headerdir](#targetset_headerdir)         | 设置头文件安装目录                   | >= 1.0.1 |
-| [set_targetdir](#targetset_targetdir)         | 设置生成目标文件目录                 | >= 1.0.1 |
-| [set_objectdir](#targetset_objectdir)         | 设置对象文件生成目录                 | >= 1.0.1 |
-| [set_dependir](#targetset_dependir)           | 设置依赖文件生成目录                 | >= 2.2.2 |
-| [add_imports](#targetadd_imports)             | 为所有自定义脚本预先导入扩展模块     | >= 2.1.7 |
-| [add_rules](#targetadd_rules)                 | 添加规则到目标                       | >= 2.1.9 |
-| [on_load](#targeton_load)                     | 自定义目标加载脚本                   | >= 2.1.5 |
-| [on_build](#targeton_build)                   | 自定义编译脚本                       | >= 2.0.1 |
-| [on_clean](#targeton_clean)                   | 自定义清理脚本                       | >= 2.0.1 |
-| [on_package](#targeton_package)               | 自定义打包脚本                       | >= 2.0.1 |
-| [on_install](#targeton_install)               | 自定义安装脚本                       | >= 2.0.1 |
-| [on_uninstall](#targeton_uninstall)           | 自定义卸载脚本                       | >= 2.0.1 |
-| [on_run](#targeton_run)                       | 自定义运行脚本                       | >= 2.0.1 |
-| [before_build](#targetbefore_build)           | 在构建之前执行一些自定义脚本         | >= 2.0.1 |
-| [before_clean](#targetbefore_clean)           | 在清除之前执行一些自定义脚本         | >= 2.0.1 |
-| [before_package](#targetbefore_package)       | 在打包之前执行一些自定义脚本         | >= 2.0.1 |
-| [before_install](#targetbefore_install)       | 在安装之前执行一些自定义脚本         | >= 2.0.1 |
-| [before_uninstall](#targetbefore_uninstall)   | 在卸载之前执行一些自定义脚本         | >= 2.0.1 |
-| [before_run](#targetbefore_run)               | 在运行之前执行一些自定义脚本         | >= 2.0.1 |
-| [after_build](#targetafter_build)             | 在构建之后执行一些自定义脚本         | >= 2.0.1 |
-| [after_clean](#targetafter_clean)             | 在清除之后执行一些自定义脚本         | >= 2.0.1 |
-| [after_package](#targetafter_package)         | 在打包之后执行一些自定义脚本         | >= 2.0.1 |
-| [after_install](#targetafter_install)         | 在安装之后执行一些自定义脚本         | >= 2.0.1 |
-| [after_uninstall](#targetafter_uninstall)     | 在卸载之后执行一些自定义脚本         | >= 2.0.1 |
-| [after_run](#targetafter_run)                 | 在运行之后执行一些自定义脚本         | >= 2.0.1 |
-| [set_config_h](#targetset_config_h)           | 设置自动生成的配置头文件路径         | >= 1.0.1 < 2.1.5 已废弃 |
-| [set_config_h_prefix](#targetset_config_h)    | 设置自动生成的头文件中宏定义命名前缀 | >= 1.0.1 < 2.1.5 已废弃 |
-| [set_config_header](#targetset_config_header) | 设置自动生成的配置头文件路径和前缀   | >= 2.1.5 |
-| [set_pcheader](#targetset_pcheader)           | 设置c预编译头文件                    | >= 2.1.5 |
-| [set_pcxxheader](#targetset_pcxxheader)       | 设置c++预编译头文件                  | >= 2.1.5 |
-| [add_deps](#targetadd_deps)                   | 添加子工程目标依赖                   | >= 1.0.1 |
-| [add_links](#targetadd_links)                 | 添加链接库名                         | >= 1.0.1 |
-| [add_syslinks](#targetadd_syslinks)           | 添加系统链接库名                     | >= 2.2.3 |
-| [add_files](#targetadd_files)                 | 添加源代码文件                       | >= 1.0.1 |
-| [del_files](#targetdel_files)                 | 从前面的源文件列表中删除指定文件     | >= 2.1.9 |
-| [add_headers](#targetadd_headers)             | 添加安装的头文件                     | >= 1.0.1 |
-| [add_linkdirs](#targetadd_linkdirs)           | 添加链接库搜索目录                   | >= 1.0.1 |
-| [add_rpathdirs](#targetadd_rpathdirs)         | 添加运行时候动态链接库搜索目录       | >= 2.1.3 |
-| [add_includedirs](#targetadd_includedirs)     | 添加头文件搜索目录                   | >= 1.0.1 |
-| [add_defines](#targetadd_defines)             | 添加宏定义                           | >= 1.0.1 |
-| [add_undefines](#targetadd_undefines)         | 取消宏定义                           | >= 1.0.1 |
-| [add_defines_h](#targetadd_defines_h)         | 添加宏定义到头文件                   | >= 1.0.1 |
-| [add_undefines_h](#targetadd_undefines_h)     | 取消宏定义到头文件                   | >= 1.0.1 |
-| [add_cflags](#targetadd_cflags)               | 添加c编译选项                        | >= 1.0.1 |
-| [add_cxflags](#targetadd_cxflags)             | 添加c/c++编译选项                    | >= 1.0.1 |
-| [add_cxxflags](#targetadd_cxxflags)           | 添加c++编译选项                      | >= 1.0.1 |
-| [add_mflags](#targetadd_mflags)               | 添加objc编译选项                     | >= 1.0.1 |
-| [add_mxflags](#targetadd_mxflags)             | 添加objc/objc++编译选项              | >= 1.0.1 |
-| [add_mxxflags](#targetadd_mxxflags)           | 添加objc++编译选项                   | >= 1.0.1 |
-| [add_scflags](#targetadd_scflags)             | 添加swift编译选项                    | >= 2.0.1 |
-| [add_asflags](#targetadd_asflags)             | 添加汇编编译选项                     | >= 2.0.1 |
-| [add_gcflags](#targetadd_gcflags)             | 添加go编译选项                       | >= 2.1.1 |
-| [add_dcflags](#targetadd_dcflags)             | 添加dlang编译选项                    | >= 2.1.1 |
-| [add_rcflags](#targetadd_rcflags)             | 添加rust编译选项                     | >= 2.1.1 |
-| [add_cuflags](#targetadd_cuflags)             | 添加cuda编译选项                     | >= 2.2.1 |
-| [add_ldflags](#targetadd_ldflags)             | 添加链接选项                         | >= 1.0.1 |
-| [add_arflags](#targetadd_arflags)             | 添加静态库归档选项                   | >= 1.0.1 |
-| [add_shflags](#targetadd_shflags)             | 添加动态库链接选项                   | >= 1.0.1 |
-| [add_cfunc](#targetadd_cfunc)                 | 添加单个c库函数检测                  | >= 2.0.1 |
-| [add_cxxfunc](#targetadd_cxxfunc)             | 添加单个c++库函数检测                | >= 2.0.1 |
-| [add_cfuncs](#targetadd_cfuncs)               | 添加c库函数检测                      | >= 2.0.1 |
-| [add_cxxfuncs](#targetadd_cxxfuncs)           | 添加c++库函数接口                    | >= 2.0.1 |
-| [add_packages](#targetadd_packages)           | 添加包依赖                           | >= 2.0.1 |
-| [add_options](#targetadd_options)             | 添加关联选项                         | >= 2.0.1 |
-| [add_languages](#targetadd_languages)         | 添加语言标准                         | >= 1.0.1 |
-| [add_vectorexts](#targetadd_vectorexts)       | 添加向量扩展指令                     | >= 1.0.1 |
-| [add_frameworks](#targetadd_frameworks)       | 添加链接框架                         | >= 2.1.1 |
-| [add_frameworkdirs](#targetadd_frameworkdirs) | 添加链接框架的搜索目录               | >= 2.1.5 |
-| [set_tools](#targetset_tools)                 | 设置编译链接工具链                   | >= 2.2.1 |
-| [add_tools](#targetadd_tools)                 | 添加编译链接工具链                   | >= 2.2.1 |
-| [set_values](#targetset_values)               | 设置一些扩展配置值                   | >= 2.2.1 |
-| [add_values](#targetadd_values)               | 添加一些扩展配置值                   | >= 2.2.1 |
+| 接口                                            | 描述                                 | 支持版本 |
+| ---------------------------------------------   | ------------------------------------ | -------- |
+| [target](#target)                               | 定义工程目标                         | >= 1.0.1 |
+| [target_end](#target_end)                       | 结束定义工程目标                     | >= 2.1.1 |
+| [set_kind](#targetset_kind)                     | 设置目标编译类型                     | >= 1.0.1 |
+| [set_strip](#targetset_strip)                   | 设置是否strip信息                    | >= 1.0.1 |
+| [set_enabled](#targetset_enabled)               | 设置是否启用或禁用目标               | >= 2.2.2 |
+| [set_default](#targetset_default)               | 设置是否为默认构建安装目标           | >= 2.1.3 |
+| [set_options](#targetset_options)               | 设置关联选项                         | >= 1.0.1 |
+| [set_symbols](#targetset_symbols)               | 设置符号信息                         | >= 1.0.1 |
+| [set_basename](#targetset_basename)             | 设置目标文件名                       | >= 2.1.2 |
+| [set_filename](#targetset_filename)             | 设置目标文件全名                     | >= 2.1.2 |
+| [set_warnings](#targetset_warnings)             | 设置警告级别                         | >= 1.0.1 |
+| [set_optimize](#targetset_optimize)             | 设置优化级别                         | >= 1.0.1 |
+| [set_languages](#targetset_languages)           | 设置代码语言标准                     | >= 1.0.1 |
+| [set_headerdir](#targetset_headerdir)           | 设置头文件安装目录                   | >= 1.0.1 |
+| [set_targetdir](#targetset_targetdir)           | 设置生成目标文件目录                 | >= 1.0.1 |
+| [set_objectdir](#targetset_objectdir)           | 设置对象文件生成目录                 | >= 1.0.1 |
+| [set_dependir](#targetset_dependir)             | 设置依赖文件生成目录                 | >= 2.2.2 |
+| [add_imports](#targetadd_imports)               | 为所有自定义脚本预先导入扩展模块     | >= 2.1.7 |
+| [add_rules](#targetadd_rules)                   | 添加规则到目标                       | >= 2.1.9 |
+| [on_load](#targeton_load)                       | 自定义目标加载脚本                   | >= 2.1.5 |
+| [on_build](#targeton_build)                     | 自定义编译脚本                       | >= 2.0.1 |
+| [on_build_file](#targeton_build_file)           | 自定义编译脚本, 实现单文件构建       | >= 2.2.3 |
+| [on_build_files](#targeton_build_files)         | 自定义编译脚本, 实现多文件构建       | >= 2.2.3 |
+| [on_clean](#targeton_clean)                     | 自定义清理脚本                       | >= 2.0.1 |
+| [on_package](#targeton_package)                 | 自定义打包脚本                       | >= 2.0.1 |
+| [on_install](#targeton_install)                 | 自定义安装脚本                       | >= 2.0.1 |
+| [on_uninstall](#targeton_uninstall)             | 自定义卸载脚本                       | >= 2.0.1 |
+| [on_run](#targeton_run)                         | 自定义运行脚本                       | >= 2.0.1 |
+| [before_build](#targetbefore_build)             | 在构建之前执行一些自定义脚本         | >= 2.0.1 |
+| [before_build_file](#targetbefore_build_file)   | 自定义编译前的脚本, 实现单文件构建   | >= 2.2.3 |
+| [before_build_files](#targetbefore_build_files) | 自定义编译前的脚本, 实现多文件构建   | >= 2.2.3 |
+| [before_clean](#targetbefore_clean)             | 在清除之前执行一些自定义脚本         | >= 2.0.1 |
+| [before_package](#targetbefore_package)         | 在打包之前执行一些自定义脚本         | >= 2.0.1 |
+| [before_install](#targetbefore_install)         | 在安装之前执行一些自定义脚本         | >= 2.0.1 |
+| [before_uninstall](#targetbefore_uninstall)     | 在卸载之前执行一些自定义脚本         | >= 2.0.1 |
+| [before_run](#targetbefore_run)                 | 在运行之前执行一些自定义脚本         | >= 2.0.1 |
+| [after_build](#targetafter_build)               | 在构建之后执行一些自定义脚本         | >= 2.0.1 |
+| [after_build_file](#targetafter_build_file)     | 自定义编译后的脚本, 实现单文件构建   | >= 2.2.3 |
+| [after_build_files](#targetafter_build_files)   | 自定义编译后的脚本, 实现多文件构建   | >= 2.2.3 |
+| [after_clean](#targetafter_clean)               | 在清除之后执行一些自定义脚本         | >= 2.0.1 |
+| [after_package](#targetafter_package)           | 在打包之后执行一些自定义脚本         | >= 2.0.1 |
+| [after_install](#targetafter_install)           | 在安装之后执行一些自定义脚本         | >= 2.0.1 |
+| [after_uninstall](#targetafter_uninstall)       | 在卸载之后执行一些自定义脚本         | >= 2.0.1 |
+| [after_run](#targetafter_run)                   | 在运行之后执行一些自定义脚本         | >= 2.0.1 |
+| [set_config_h](#targetset_config_h)             | 设置自动生成的配置头文件路径         | >= 1.0.1 < 2.1.5 已废弃 |
+| [set_config_h_prefix](#targetset_config_h)      | 设置自动生成的头文件中宏定义命名前缀 | >= 1.0.1 < 2.1.5 已废弃 |
+| [set_config_header](#targetset_config_header)   | 设置自动生成的配置头文件路径和前缀   | >= 2.1.5 |
+| [set_pcheader](#targetset_pcheader)             | 设置c预编译头文件                    | >= 2.1.5 |
+| [set_pcxxheader](#targetset_pcxxheader)         | 设置c++预编译头文件                  | >= 2.1.5 |
+| [add_deps](#targetadd_deps)                     | 添加子工程目标依赖                   | >= 1.0.1 |
+| [add_links](#targetadd_links)                   | 添加链接库名                         | >= 1.0.1 |
+| [add_syslinks](#targetadd_syslinks)             | 添加系统链接库名                     | >= 2.2.3 |
+| [add_files](#targetadd_files)                   | 添加源代码文件                       | >= 1.0.1 |
+| [del_files](#targetdel_files)                   | 从前面的源文件列表中删除指定文件     | >= 2.1.9 |
+| [add_headers](#targetadd_headers)               | 添加安装的头文件                     | >= 1.0.1 |
+| [add_linkdirs](#targetadd_linkdirs)             | 添加链接库搜索目录                   | >= 1.0.1 |
+| [add_rpathdirs](#targetadd_rpathdirs)           | 添加运行时候动态链接库搜索目录       | >= 2.1.3 |
+| [add_includedirs](#targetadd_includedirs)       | 添加头文件搜索目录                   | >= 1.0.1 |
+| [add_defines](#targetadd_defines)               | 添加宏定义                           | >= 1.0.1 |
+| [add_undefines](#targetadd_undefines)           | 取消宏定义                           | >= 1.0.1 |
+| [add_defines_h](#targetadd_defines_h)           | 添加宏定义到头文件                   | >= 1.0.1 |
+| [add_undefines_h](#targetadd_undefines_h)       | 取消宏定义到头文件                   | >= 1.0.1 |
+| [add_cflags](#targetadd_cflags)                 | 添加c编译选项                        | >= 1.0.1 |
+| [add_cxflags](#targetadd_cxflags)               | 添加c/c++编译选项                    | >= 1.0.1 |
+| [add_cxxflags](#targetadd_cxxflags)             | 添加c++编译选项                      | >= 1.0.1 |
+| [add_mflags](#targetadd_mflags)                 | 添加objc编译选项                     | >= 1.0.1 |
+| [add_mxflags](#targetadd_mxflags)               | 添加objc/objc++编译选项              | >= 1.0.1 |
+| [add_mxxflags](#targetadd_mxxflags)             | 添加objc++编译选项                   | >= 1.0.1 |
+| [add_scflags](#targetadd_scflags)               | 添加swift编译选项                    | >= 2.0.1 |
+| [add_asflags](#targetadd_asflags)               | 添加汇编编译选项                     | >= 2.0.1 |
+| [add_gcflags](#targetadd_gcflags)               | 添加go编译选项                       | >= 2.1.1 |
+| [add_dcflags](#targetadd_dcflags)               | 添加dlang编译选项                    | >= 2.1.1 |
+| [add_rcflags](#targetadd_rcflags)               | 添加rust编译选项                     | >= 2.1.1 |
+| [add_cuflags](#targetadd_cuflags)               | 添加cuda编译选项                     | >= 2.2.1 |
+| [add_ldflags](#targetadd_ldflags)               | 添加链接选项                         | >= 1.0.1 |
+| [add_arflags](#targetadd_arflags)               | 添加静态库归档选项                   | >= 1.0.1 |
+| [add_shflags](#targetadd_shflags)               | 添加动态库链接选项                   | >= 1.0.1 |
+| [add_cfunc](#targetadd_cfunc)                   | 添加单个c库函数检测                  | >= 2.0.1 |
+| [add_cxxfunc](#targetadd_cxxfunc)               | 添加单个c++库函数检测                | >= 2.0.1 |
+| [add_cfuncs](#targetadd_cfuncs)                 | 添加c库函数检测                      | >= 2.0.1 |
+| [add_cxxfuncs](#targetadd_cxxfuncs)             | 添加c++库函数接口                    | >= 2.0.1 |
+| [add_packages](#targetadd_packages)             | 添加包依赖                           | >= 2.0.1 |
+| [add_options](#targetadd_options)               | 添加关联选项                         | >= 2.0.1 |
+| [add_languages](#targetadd_languages)           | 添加语言标准                         | >= 1.0.1 |
+| [add_vectorexts](#targetadd_vectorexts)         | 添加向量扩展指令                     | >= 1.0.1 |
+| [add_frameworks](#targetadd_frameworks)         | 添加链接框架                         | >= 2.1.1 |
+| [add_frameworkdirs](#targetadd_frameworkdirs)   | 添加链接框架的搜索目录               | >= 2.1.5 |
+| [set_tools](#targetset_tools)                   | 设置编译链接工具链                   | >= 2.2.1 |
+| [add_tools](#targetadd_tools)                   | 添加编译链接工具链                   | >= 2.2.1 |
+| [set_values](#targetset_values)                 | 设置一些扩展配置值                   | >= 2.2.1 |
+| [add_values](#targetadd_values)                 | 添加一些扩展配置值                   | >= 2.2.1 |
 
 ##### target
 
@@ -1331,6 +1337,52 @@ target("test")
 <p class="tip">
 一旦对这个target目标设置了自己的build过程，那么xmake默认的构建过程将不再被执行。
 </p>
+
+
+##### target:on_build_file
+
+###### 自定义编译脚本, 实现单文件构建
+
+通过此接口，可以用来hook指定target内置的构建过程，替换每个源文件编译过程：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_build_file(function (target, sourcefile, opt)
+        opt.origin(target, sourcefile, opt)
+    end)
+```
+
+上面代码中的`opt.origin`存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用`opt.origin`就行了。
+
+如果不想重写内置的编译脚本，仅仅只是在编译前后添加一些自己的处理，其实用：[target.before_build_file](#targetbefore_build_file)和[target.after_build_file](#targetafter_build_file)会更加方便，不需要调用`opt.origin`。
+
+##### target:on_build_files
+
+###### 自定义编译脚本, 实现多文件构建
+
+通过此接口，可以用来hook指定target内置的构建过程，替换一批同类型源文件编译过程：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_build_files(function (target, sourcebatch, opt)
+        opt.origin(target, sourcebatch, opt)
+    end)
+```
+
+设置此接口后，对应源文件列表中文件，就不会出现在自定义的[target.on_build_file](#targeton_build_file)了，因为这个是包含关系。
+
+其中sourcebatch描述了这批同类型源文件：
+
+* `sourcebatch.sourcekind`: 获取这批源文件的类型，比如：cc, as, ..
+* `sourcebatch.sourcefiles()`: 获取源文件列表
+* `sourcebatch.objectfiles()`: 获取对象文件列表
+* `sourcebatch.dependfiles()`: 获取对应依赖文件列表，存有源文件中编译依赖信息，例如：xxx.d
+
+上面代码中的`opt.origin`存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用`opt.origin`就行了。
 
 ##### target:on_clean
 
