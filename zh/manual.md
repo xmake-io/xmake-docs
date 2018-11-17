@@ -2593,7 +2593,7 @@ add_tools("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 
 ```lua
 rule("markdown")
-    on_build_file(function (target, sourcefile)
+    on_build_file(function (target, sourcefile, opt)
         -- compile .markdown with flags
         local flags = target:values("markdown.flags")
         if flags then
@@ -3611,7 +3611,7 @@ task.run("hello", {color="red"}, arg1, arg2, arg3)
 -- 定义一个markdown文件的构建规则
 rule("markdown")
     set_extensions(".md", ".markdown")
-    on_build_file(function (target, sourcefile)
+    on_build_file(function (target, sourcefile, opt)
         os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 
@@ -4018,7 +4018,7 @@ add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 ```lua
 rule("markdown")
     set_extensions(".md", ".markdown")
-    on_build_file(function (target, sourcefile)
+    on_build_file(function (target, sourcefile, opt)
         os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 ```
@@ -4039,7 +4039,7 @@ rule("markdown")
 -- 定义一个markdown文件的构建规则
 rule("markdown")
     set_extensions(".md", ".markdown")
-    on_build_file(function (target, sourcefile)
+    on_build_file(function (target, sourcefile, opt)
         os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 
@@ -4141,9 +4141,9 @@ rule("markdown")
 
 ```lua
 rule("markdown")
-    on_build_files(function (target, sourcefiles)
+    on_build_files(function (target, sourcebatch, opt)
         -- build some source files
-        for _, sourcefile in ipairs(sourcefiles) do
+        for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
             -- ...
         end
     end)
