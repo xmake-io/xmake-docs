@@ -1492,6 +1492,35 @@ target("test")
     end)
 ```
 
+##### target:before_build_file
+
+###### Run custom script before building single file
+
+通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之前执行一些自定义脚本：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    before_build_file(function (target, sourcefile, opt)
+    end)
+```
+
+##### target:before_build_files
+
+###### Run custom script before building files
+
+通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之前执行一些自定义脚本：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    before_build_files(function (target, sourcebatch, opt)
+    end)
+```
+
+
 ##### target:before_clean
 
 ###### Run custom script before cleaning target
@@ -1569,6 +1598,34 @@ target("test")
 target("test")
     after_build(function (target)
         os.run("ldid -S %s", target:targetfile())
+    end)
+```
+
+##### target:after_build_file
+
+###### Run custom script after building single file
+
+通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之后执行一些自定义脚本：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    after_build_file(function (target, sourcefile, opt)
+    end)
+```
+
+##### target:after_build_files
+
+###### Run custom script after building files
+
+通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之后执行一些自定义脚本：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    after_build_files(function (target, sourcebatch, opt)
     end)
 ```
 
