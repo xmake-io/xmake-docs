@@ -2189,6 +2189,12 @@ target("test")
 
 指定test程序加载当前执行目录下`lib/*.[so|dylib]`的动态库文件，这将有助于提升程序的可移植性，不用写死绝对路径和相对路径，导致程序和目录切换引起程序加载动态库失败。
 
+<p class="tip">
+需要注意的是，在macos下，要想add_rpathdirs设置生效，需要对dylib做一些预处理，添加`@rpath/xxx`路径设置：
+`$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib`
+我们也可以通过`otool -L libxxx.dylib`查看是否存在带@rpath的路径
+</p>
+
 ##### target:add_includedirs
 
 ###### 添加头文件搜索目录
