@@ -1179,6 +1179,12 @@ We can add the repository with the following command:
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
 ```
 
+Starting with v2.2.3, support for adding repos for specified branches, for example:
+
+```console
+$ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git dev
+```
+
 Or we write directly in xmake.lua:
 
 ```lua

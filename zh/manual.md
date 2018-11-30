@@ -28,17 +28,18 @@ search: zh
 
 条件判断的api，一般用于必须要处理特定平台的编译逻辑的场合。。通常跟lua的if语句配合使用。
 
-| 接口                      | 描述                          | 支持版本                |
-| ------------------------- | ----------------------------- | ----------------------- |
-| [is_os](#is_os)           | 判断当前构建目标的操作系统    | >= 2.0.1                |
-| [is_arch](#is_arch)       | 判断当前编译架构              | >= 2.0.1                |
-| [is_plat](#is_plat)       | 判断当前编译平台              | >= 2.0.1                |
-| [is_host](#is_host)       | 判断当前主机环境操作系统      | >= 2.1.4                |
-| [is_mode](#is_mode)       | 判断当前编译模式              | >= 2.0.1                |
-| [is_kind](#is_kind)       | 判断当前编译类型              | >= 2.0.1                |
-| [is_option](#is_option)   | 判断选项是否启用              | >= 2.0.1 < 2.2.2 已废弃 |
-| [is_config](#is_config)   | 判断指定配置是否为给定的值    | >= 2.2.2                |
-| [has_config](#has_config) | 判断配置是否启用或者存在      | >= 2.2.2                |
+| 接口                        | 描述                          | 支持版本                |
+| -------------------------   | ----------------------------- | ----------------------- |
+| [is_os](#is_os)             | 判断当前构建目标的操作系统    | >= 2.0.1                |
+| [is_arch](#is_arch)         | 判断当前编译架构              | >= 2.0.1                |
+| [is_plat](#is_plat)         | 判断当前编译平台              | >= 2.0.1                |
+| [is_host](#is_host)         | 判断当前主机环境操作系统      | >= 2.1.4                |
+| [is_mode](#is_mode)         | 判断当前编译模式              | >= 2.0.1                |
+| [is_kind](#is_kind)         | 判断当前编译类型              | >= 2.0.1                |
+| [is_option](#is_option)     | 判断选项是否启用              | >= 2.0.1 < 2.2.2 已废弃 |
+| [is_config](#is_config)     | 判断指定配置是否为给定的值    | >= 2.2.2                |
+| [has_config](#has_config)   | 判断配置是否启用或者存在      | >= 2.2.2                |
+| [has_package](#has_package) | 判断依赖包是否被启用或者存在  | >= 2.2.3                |
 
 ##### is_os 
 
@@ -334,6 +335,34 @@ $ xmake f --test1=false
 此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](#option)定义的自定义配置选项。
 </p>
 
+
+##### has_package
+
+###### 判断依赖包是否启用或者存在
+
+此接口从2.2.3版本开始引入，用于检测远程依赖包是否存在或启用，可用于描述域。
+
+一般配合[add_requires](#add_requires)一起使用，例如：
+
+```lua
+add_requires("tbox", {optional = true})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("tbox")
+
+    if has_package("tbox") then
+        add_defines("HAVE_TBOX")
+    end
+```
+
+如果通过`add_requires`添加的可选依赖包，远程下载安装失败，或者当前平台不支持导致实际上没有被正常安装上，那么`has_package`就会返回false，
+表示不存在，然后对其他flags定义甚至源文件编译控制做一些特殊处理。
+
+<p class="tips">
+此接口跟[has_config](#has_config)的区别在于，[has_config](#has_config)用于[option](#option)，而它用于[add_requires](#add_requires)。
+</p>
 
 #### 全局接口
 
@@ -648,6 +677,47 @@ add_requires("tbox", {config = {small=true}})
 ```
 
 传递`--small=true`给tbox包，使得编译安装的tbox包是启用此选项的。
+
+v2.2.3之后，可以通过[option](#option)和[has_config](#has_config)配合，在自己定义配置选项参数中控制是否需要添加某个依赖包：
+
+```lua
+option("luajit")
+    set_default(false)
+    set_showmenu(true)
+    set_category("option")
+    set_description("Enable the luajit runtime engine.")
+option_end()
+
+if has_config("luajit") then
+    add_requires("luajit")
+else
+    add_requires("lua")
+end
+```
+
+我们可以通过`$xmake f --luajit=y`去切换依赖包。
+
+并且我们也新增了group参数，来分组依赖包，同一个组下的所有依赖包，只能有一个生效启用，启用顺序依赖`add_requires`添加的顺序:
+
+```lua
+add_requires("openssl", {group = "ssl", optional = true})
+add_requires("mbedtls", {group = "ssl", optional = true})
+
+target("test")
+    add_packages("openssl", "mbedtls")
+```
+
+例如上面，所以同时依赖两个ssl包，实际上只会启用生效实际安装成功的那一个ssl包，并不会同时链接两个依赖包。
+
+我们还新增了`on_load`参数，在依赖包加载成功后，会被调用，提供用户一个机会去设置一些其他的flags，例如：
+
+```lua
+add_requires("tbox", {on_load = function (package)
+    package:add("defines_h", "PACKAGE_HAVE_TBOX")
+end})
+```
+
+当依赖包tbox生效加载后，添加`PACKAGE_HAVE_TBOX`宏到`config.h`中去。
 
 ##### add_repositories
 
@@ -2569,6 +2639,33 @@ target("test")
 对于如何设置包搜索目录，可参考：[add_packagedirs](#targetadd_packagedirs) 接口
 
 而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](#add_requires)定义的包。
+
+```lua
+add_requires("zlib", "polarssl")
+target("test")
+    add_packages("zlib", "polarssl")
+```
+
+v2.2.3之后，还支持覆写内置的links，控制实际链接的库：
+
+
+```lua
+-- 默认会有 ncurses, panel, form等links
+add_requires("ncurses") 
+
+target("test")
+    
+    -- 显示指定，只使用ncurses一个链接库
+    add_packages("ncurses", {links = "ncurses"})
+```
+
+或者干脆禁用links，只使用头文件：
+
+```lua
+add_requires("lua")
+target("test")
+    add_packages("lua", {links = {}})
+```
 
 ##### target:add_languages
 

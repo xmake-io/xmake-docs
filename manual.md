@@ -28,17 +28,18 @@ It's according to the following rules:
 
 Conditions are generally used to handle some special compilation platforms. 
 
-| Interfaces                | Description                               | Support version             |
-| ------------------------- | ----------------------------------------  | --------------------------- |
-| [is_os](#is_os)           | Is the current compilation target system? | >= 2.0.1                    |
-| [is_arch](#is_arch)       | Is the current compilation architecture?  | >= 2.0.1                    |
-| [is_plat](#is_plat)       | Is the current compilation platform?      | >= 2.0.1                    |
-| [is_host](#is_host)       | Is the current compilation host system?   | >= 2.1.4                    |
-| [is_mode](#is_mode)       | Is the current compilation mode?          | >= 2.0.1                    |
-| [is_kind](#is_kind)       | Is the current target kind?               | >= 2.0.1                    |
-| [is_option](#is_option)   | Is the given options enabled?             | >= 2.0.1 < 2.2.2 deprecated |
-| [is_config](#is_config)   | Is the given config values?               | >= 2.2.2                    |
-| [has_config](#has_config) | Is the given configs enabled?             | >= 2.2.2                    |
+| Interfaces                  | Description                               | Support version             |
+| -------------------------   | ----------------------------------------  | --------------------------- |
+| [is_os](#is_os)             | Is the current compilation target system? | >= 2.0.1                    |
+| [is_arch](#is_arch)         | Is the current compilation architecture?  | >= 2.0.1                    |
+| [is_plat](#is_plat)         | Is the current compilation platform?      | >= 2.0.1                    |
+| [is_host](#is_host)         | Is the current compilation host system?   | >= 2.1.4                    |
+| [is_mode](#is_mode)         | Is the current compilation mode?          | >= 2.0.1                    |
+| [is_kind](#is_kind)         | Is the current target kind?               | >= 2.0.1                    |
+| [is_option](#is_option)     | Is the given options enabled?             | >= 2.0.1 < 2.2.2 deprecated |
+| [is_config](#is_config)     | Is the given config values?               | >= 2.2.2                    |
+| [has_config](#has_config)   | Is the given configs enabled?             | >= 2.2.2                    |
+| [has_package](#has_package) | Is the given dependent package enabled?   | >= 2.2.3                    |
 
 ##### is_os 
 
@@ -312,6 +313,34 @@ $ xmake f --test1=false
 <p class="tips">
 This interface can determine not only the built-in global and local configs, 
 but also the custom options defined through the [option](#option).
+</p>
+
+##### has_package
+
+###### Is the given dependent package enabled?
+
+This interface is introduced from version 2.2.3 to detect whether a dependent package exists or is enabled.
+
+It is usually used to [ add_requires](#add_requires).
+
+```lua
+add_requires("tbox", {optional = true})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("tbox")
+
+    if has_package("tbox") then
+        add_defines("HAVE_TBOX")
+    end
+```
+
+If the remote dependencies are added via the optional add-on package added by `add_requires`, or the current platform does not support the actual installation, then `has_package` will return false.
+Indicates that it does not exist, and then does some special processing for other flags definitions and even source file compilation controls.
+
+<p class="tips">
+The difference between this interface and [has_config](#has_config) is that [has_config](#has_config) is used for [option](#option) and it is used for [add_requires](#add_requires).
 </p>
 
 #### Global Interfaces
@@ -624,6 +653,46 @@ add_requires("tbox", {config = {small=true}})
 ```
 
 Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.
+After v2.2.3, you can control whether you need to add a dependency package in your own definition configuration option parameter by [option](#option) and [has_config](#has_config):
+
+```lua
+option("luajit")
+    set_default(false)
+    set_showmenu(true)
+    set_category("option")
+    set_description("Enable the luajit runtime engine.")
+option_end()
+
+if has_config("luajit") then
+    add_requires("luajit")
+else
+    add_requires("lua")
+end
+```
+
+We can switch dependencies by `$xmake f --luajit=y`.
+
+And we also added the group parameter to group the dependencies, all the dependencies under the same group, only one can be enabled, the order of the order depends on the order added by `add_requires`:
+
+```lua
+add_requires("openssl", {group = "ssl", optional = true})
+add_requires("mbedtls", {group = "ssl", optional = true})
+
+target("test")
+    add_packages("openssl", "mbedtls")
+```
+
+For example, above, so relying on two ssl packages at the same time, in fact only will enable the ssl package that is valid for the actual installation, and will not link two dependent packages at the same time.
+
+We also added the `on_load` parameter, which will be called after the dependency package is loaded successfully, providing the user with a chance to set some other flags, for example:
+
+```lua
+add_requires("tbox", {on_load = function (package)
+    package:add("defines_h", "PACKAGE_HAVE_TBOX")
+end})
+```
+
+After the dependent package tbox is loaded, add the `PACKAGE_HAVE_TBOX` macro to `config.h`.
 
 ##### add_repositories
 
@@ -2549,6 +2618,33 @@ target("test")
 对于如何设置包搜索目录，可参考：[add_packagedirs](#targetadd_packagedirs) 接口
 
 而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](#add_requires)定义的包。
+
+```lua
+add_requires("zlib", "polarssl")
+target("test")
+    add_packages("zlib", "polarssl")
+```
+
+v2.2.3之后，还支持覆写内置的links，控制实际链接的库：
+
+
+```lua
+-- 默认会有 ncurses, panel, form等links
+add_requires("ncurses") 
+
+target("test")
+    
+    -- 显示指定，只使用ncurses一个链接库
+    add_packages("ncurses", {links = "ncurses"})
+```
+
+或者干脆禁用links，只使用头文件：
+
+```lua
+add_requires("lua")
+target("test")
+    add_packages("lua", {links = {}})
+```
 
 ##### target:add_languages
 
