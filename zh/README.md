@@ -657,16 +657,16 @@ $ xmake f -p android --ndk=~/files/android-ndk-r10e/ [-a armv5te|armv6|armv7-a|a
 $ xmake
 ```
 
-如果要手动指定ndk中具体某个工具链，而不是使用默认检测的配置，可以通过[--toolchains](#-toolchains)来设置，例如：
+如果要手动指定ndk中具体某个工具链，而不是使用默认检测的配置，可以通过[--bin](#-bin)来设置，例如：
 
 ```bash
-$ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --toolchains=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
+$ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
 ```
 
-[--toolchains](#-toolchains)主要用于设置选择编译工具的具体bin目录，这个的使用跟[交叉编译](#交叉编译)中的[--toolchains](#-toolchains)的行为是一致的。
+[--bin](#-bin)主要用于设置选择编译工具的具体bin目录，这个的使用跟[交叉编译](#交叉编译)中的[--bin](#-bin)的行为是一致的。
 
 <p class="tip">
-如果手动设置了`toolchains`的bin目录，没有通过检测，可以看下是否`--arch=`参数没有匹配对。
+如果手动设置了bin目录，没有通过检测，可以看下是否`--arch=`参数没有匹配对。
 </p>
 
 ##### iPhoneOS
