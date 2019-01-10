@@ -3388,8 +3388,10 @@ target("test")
 
 ```lua
 option("constexpr")
-    add_cxxsnippet("constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f(5);  static_assert(x == 15);")
+    add_cxxsnippet("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f(5);  static_assert(x == 15);")
 ```
+
+第一个参数设置代码片段的名字作为标示，检测输出信息时候会有显示。
 
 上述代码，实现对c++的constexpr特性的检测，如果检测通过，则启用constexpr选项，当然这里只是个例子。
 
