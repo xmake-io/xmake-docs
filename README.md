@@ -23,12 +23,12 @@ search: en
     <a href="https://aur.archlinux.org/packages/xmake">
       <img src="https://img.shields.io/aur/votes/xmake.svg?style=flat-square" alt="AUR votes" />
     </a>
-    <a href="https://github.com/tboox/xmake/releases">
+    <a href="https://github.com/xmake-io/xmake/releases">
       <img src="https://img.shields.io/github/release/tboox/xmake.svg?style=flat-square" alt="Github All Releases" />
     </a>
   </div>
   <div>
-    <a href="https://github.com/tboox/xmake/blob/master/LICENSE.md">
+    <a href="https://github.com/xmake-io/xmake/blob/master/LICENSE.md">
       <img src="https://img.shields.io/github/license/tboox/xmake.svg?colorB=f48041&style=flat-square" alt="license" />
     </a>
     <a href="https://www.reddit.com/r/tboox/">
@@ -85,7 +85,7 @@ Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xm
 
 ##### via installer
 
-1. Download xmake windows installer from [Releases](https://github.com/tboox/xmake/releases)
+1. Download xmake windows installer from [Releases](https://github.com/xmake-io/xmake/releases)
 2. Run xmake-[version].exe
 
 ##### via scoop
@@ -132,7 +132,7 @@ $ sudo apt install xmake
 
 Or download deb package to install it:
 
-1. Download xmake `.deb` install package from [Releases](https://github.com/tboox/xmake/releases) 
+1. Download xmake `.deb` install package from [Releases](https://github.com/xmake-io/xmake/releases) 
 2. Run `dpkg -i xmake-xxxx.deb`
 
 #### Compilation
@@ -140,7 +140,7 @@ Or download deb package to install it:
 Compile and install:
 
 ```bash
-$ git clone https://github.com/tboox/xmake.git
+$ git clone https://github.com/xmake-io/xmake.git
 $ cd ./xmake
 $ ./scripts/get.sh __local__
 ```
@@ -340,7 +340,7 @@ If you want to use the MinGW Qt environment on windows, you can set the MinGW pl
 $ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32 
 ```
 
-If you want to known more information, you can see [#160](https://github.com/tboox/xmake/issues/160).
+If you want to known more information, you can see [#160](https://github.com/xmake-io/xmake/issues/160).
 
 ##### Static Library
 
@@ -423,7 +423,7 @@ $ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake
 ```
 
-If you want to known more information, you can see [#158](https://github.com/tboox/xmake/issues/158).
+If you want to known more information, you can see [#158](https://github.com/xmake-io/xmake/issues/158).
 
 #### WDK Driver Program
 
@@ -434,7 +434,7 @@ $ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 ```
 
-If you want to known more information, you can see [#159](https://github.com/tboox/xmake/issues/159).
+If you want to known more information, you can see [#159](https://github.com/xmake-io/xmake/issues/159).
 
 ##### UMDF Driver Program
 
@@ -585,7 +585,7 @@ target("usbview")
     add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 ```
 
-If you want to known more information, you can see [#173](https://github.com/tboox/xmake/issues/173).
+If you want to known more information, you can see [#173](https://github.com/xmake-io/xmake/issues/173).
 
 ## Configuration
 
@@ -1072,7 +1072,7 @@ xmake will remotely pull the relevant source package, then automatically compile
 
 <img src="/assets/img/index/package_manage.png" width="80%" />
 
-For more information and progress on package dependency management see the related issues: [Remote package management] (https://github.com/tboox/xmake/issues/69)
+For more information and progress on package dependency management see the related issues: [Remote package management] (https://github.com/xmake-io/xmake/issues/69)
 
 ##### Currently Supported Features
 
@@ -1168,8 +1168,8 @@ add_requires("tbox", {config = {small=true}})
 Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.
 ##### Using self-built private package warehouse
 
-If the required package is not in the official repository [xmake-repo](https://github.com/tboox/xmake-repo), we can submit the contribution code to the repository for support.
-But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/tboox/xmake-repo)
+If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.
+But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 For example, now we have a private repository repo:`git@github.com:myrepo/xmake-repo.git`
 
@@ -1342,9 +1342,9 @@ $ xmake repo -u
 
 ##### Submit the package to the official warehouse
 
-If you need a package that is not supported by the current official repository, you can commit it to the official repository after local tuning: [xmake-repo](https://github.com/tboox/xmake-repo)
+If you need a package that is not supported by the current official repository, you can commit it to the official repository after local tuning: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
-For detailed contribution descriptions, see: [CONTRIBUTING.md](https://github.com/tboox/xmake-repo/blob/master/CONTRIBUTING.md)
+For detailed contribution descriptions, see: [CONTRIBUTING.md](https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md)
 
 ## FAQ
 
@@ -1397,7 +1397,7 @@ For exmaple:
 $ xmake [-v|--verbose] 
 ```
 
-And add `--backtrace` to get the verbose backtrace info, then you can submit these infos to [issues](https://github.com/tboox/xmake/issues).
+And add `--backtrace` to get the verbose backtrace info, then you can submit these infos to [issues](https://github.com/xmake-io/xmake/issues).
 
 ```bash
 $ xmake -v --backtrace

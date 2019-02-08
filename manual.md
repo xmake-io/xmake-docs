@@ -698,8 +698,8 @@ After the dependent package tbox is loaded, add the `PACKAGE_HAVE_TBOX` macro to
 
 ###### Add 3rd package repositories
 
-If the required package is not in the official repository [xmake-repo](https://github.com/tboox/xmake-repo), we can submit the contribution code to the repository for support.
-But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/tboox/xmake-repo)
+If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.
+But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 For example, now we have a private repository repo:`git@github.com:myrepo/xmake-repo.git`
 
@@ -901,7 +901,7 @@ target("test")                   -- add -DDEBUG
 ###### End target definition
 
 <p class="warning">
-Translating ..., help me please! [Edit this page](https://github.com/tboox/xmake/blob/master/docs/manual.md)
+Translating ..., help me please! [Edit this page](https://github.com/xmake-io/xmake/blob/master/docs/manual.md)
 </p>
 
 这是一个可选的api，如果不调用，那么`target("xxx")`之后的所有设置都是针对这个target进行的，除非进入其他`target`, `option`, `task`域。
@@ -4066,7 +4066,7 @@ target("qt_widgetapp")
     add_frameworks("QtWidgets")
 ```
 
-更多Qt相关描述见：[#160](https://github.com/tboox/xmake/issues/160)
+更多Qt相关描述见：[#160](https://github.com/xmake-io/xmake/issues/160)
 
 
 
@@ -4176,7 +4176,7 @@ target("nonpnp")
     add_files("driver/*.rc")
 ```
 
-更多WDK规则描述见：[#159](https://github.com/tboox/xmake/issues/159)
+更多WDK规则描述见：[#159](https://github.com/xmake-io/xmake/issues/159)
 
 ###### win.sdk.application
 
@@ -4205,7 +4205,7 @@ target("usbview")
 add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 ```
 
-更多WDK规则描述见：[#159](https://github.com/tboox/xmake/issues/159)
+更多WDK规则描述见：[#159](https://github.com/xmake-io/xmake/issues/159)
 
 ##### rule
 
@@ -4479,7 +4479,7 @@ rule_end()
 
 仓库依赖包定义描述，`package()`相关接口定义，等有时间会详细说明，敬请期待。。
 
-可先参考官方仓库中现有包描述：[xmake-repo](https://github.com/tboox/xmake-repo)
+可先参考官方仓库中现有包描述：[xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 这里给个比较具有代表性的实例供参考：
 
@@ -4810,19 +4810,19 @@ function main(kind)
 end
 ```
 
-具体实现这里就不介绍了，可以参考xmake源码目录下的`platforms`平台配置代码: [check.lua](https://github.com/tboox/xmake/blob/master/xmake/platforms/macosx/check.lua)
+具体实现这里就不介绍了，可以参考xmake源码目录下的`platforms`平台配置代码: [check.lua](https://github.com/xmake-io/xmake/blob/master/xmake/platforms/macosx/check.lua)
 
 ##### on_install
 
 ###### 设置目标工程在指定平台的安装脚本
 
-具体实现逻辑见xmake源码：[install.lua](https://github.com/tboox/xmake/blob/master/xmake/platforms/macosx/install.lua)
+具体实现逻辑见xmake源码：[install.lua](https://github.com/xmake-io/xmake/blob/master/xmake/platforms/macosx/install.lua)
 
 ##### on_uninstall
 
 ###### 设置目标工程在指定平台的卸载脚本
 
-具体实现逻辑见xmake源码：[uninstall.lua](https://github.com/tboox/xmake/blob/master/xmake/platforms/macosx/uninstall.lua)
+具体实现逻辑见xmake源码：[uninstall.lua](https://github.com/xmake-io/xmake/blob/master/xmake/platforms/macosx/uninstall.lua)
 
 #### Extension Languages
 
@@ -5202,7 +5202,7 @@ import("xxx.xxx", {inherit = true})
 inherit("xxx.xxx")
 ```
 
-使用实例，可以参看xmake的tools目录下的脚本：[clang.lua](#https://github.com/tboox/xmake/blob/master/xmake/tools/clang.lua)
+使用实例，可以参看xmake的tools目录下的脚本：[clang.lua](#https://github.com/xmake-io/xmake/blob/master/xmake/tools/clang.lua)
 
 这个就是clang工具模块继承了gcc的部分实现。
 

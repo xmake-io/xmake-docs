@@ -514,7 +514,7 @@ $ xmake doxygen
 
 ## 更多插件
 
-请到插件仓库进行下载安装: [xmake-plugins](https://github.com/tboox/xmake-plugins).
+请到插件仓库进行下载安装: [xmake-plugins](https://github.com/xmake-io/xmake-plugins).
 
 #### 从app生成ipa包
 

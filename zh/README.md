@@ -24,12 +24,12 @@ search: zh
     <a href="https://aur.archlinux.org/packages/xmake">
       <img src="https://img.shields.io/aur/votes/xmake.svg?style=flat-square" alt="AUR votes" />
     </a>
-    <a href="https://github.com/tboox/xmake/releases">
+    <a href="https://github.com/xmake-io/xmake/releases">
       <img src="https://img.shields.io/github/release/tboox/xmake.svg?style=flat-square" alt="Github All Releases" />
     </a>
   </div>
   <div>
-    <a href="https://github.com/tboox/xmake/blob/master/LICENSE.md">
+    <a href="https://github.com/xmake-io/xmake/blob/master/LICENSE.md">
       <img src="https://img.shields.io/github/license/tboox/xmake.svg?colorB=f48041&style=flat-square" alt="license" />
     </a>
     <a href="https://www.reddit.com/r/tboox/">
@@ -92,7 +92,7 @@ Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xm
 
 ##### 使用安装包
 
-1. 从 [Releases](https://github.com/tboox/xmake/releases) 上下载windows安装包
+1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载windows安装包
 2. 运行安装程序 xmake-[version].exe
 
 ##### 使用scoop
@@ -110,7 +110,7 @@ $ brew install xmake
 
 或者：
 
-1. 从 [Releases](https://github.com/tboox/xmake/releases) 上下载pkg安装包
+1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载pkg安装包
 2. 双击运行
 
 或者安装master版本:
@@ -155,12 +155,12 @@ $ sudo apt-get install xmake
 
 或者下载deb包来安装：
 
-1. 从 [Releases](https://github.com/tboox/xmake/releases) 上下载deb安装包
+1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载deb安装包
 2. 运行: `dpkg -i xmake-xxxx.deb`
 
 在`redhat/centos`上安装：
 
-1. 从 [Releases](https://github.com/tboox/xmake/releases) 上下载rpm安装包
+1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载rpm安装包
 2. 运行: `yum install xmake-xxx.rpm --nogpgcheck`
 
 #### 编译安装
@@ -168,7 +168,7 @@ $ sudo apt-get install xmake
 通过脚本编译安装:
 
 ```bash
-$ git clone https://github.com/tboox/xmake.git
+$ git clone https://github.com/xmake-io/xmake.git
 $ cd ./xmake
 $ ./scripts/get.sh __local__
 ```
@@ -370,7 +370,7 @@ $ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 
 上述指定的mingw sdk用的是Qt下Tools目录自带的环境，当然如果有其他第三方mingw编译环境，也可以手动指定, 具体可以参考：[mingw编译配置](#mingw)。
 
-更多详情可以参考：[#160](https://github.com/tboox/xmake/issues/160)
+更多详情可以参考：[#160](https://github.com/xmake-io/xmake/issues/160)
 
 ##### 静态库程序
 
@@ -453,7 +453,7 @@ $ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake
 ```
 
-更多详情可以参考：[#158](https://github.com/tboox/xmake/issues/158)
+更多详情可以参考：[#158](https://github.com/xmake-io/xmake/issues/158)
 
 #### WDK驱动程序
 
@@ -464,7 +464,7 @@ $ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 ```
 
-更多详情可以参考：[#159](https://github.com/tboox/xmake/issues/159)
+更多详情可以参考：[#159](https://github.com/xmake-io/xmake/issues/159)
 
 ##### umdf驱动程序
 
@@ -619,7 +619,7 @@ target("usbview")
     add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 ```
 
-更多详情可以参考：[#173](https://github.com/tboox/xmake/issues/173)
+更多详情可以参考：[#173](https://github.com/xmake-io/xmake/issues/173)
 
 ## 编译配置
 
@@ -1133,7 +1133,7 @@ xmake会去远程拉取相关源码包，然后自动编译安装，最后编译
 
 <img src="/assets/img/index/package_manage.png" width="80%" />
 
-关于包依赖管理的更多相关信息和进展见相关issues：[Remote package management](https://github.com/tboox/xmake/issues/69) 
+关于包依赖管理的更多相关信息和进展见相关issues：[Remote package management](https://github.com/xmake-io/xmake/issues/69) 
 
 ##### 目前支持的特性
 
@@ -1257,8 +1257,8 @@ add_requires("tbox", {config = {small=true}})
 
 ##### 使用自建私有包仓库
 
-如果需要的包不在官方仓库[xmake-repo](https://github.com/tboox/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。
-但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：[xmake-repo](https://github.com/tboox/xmake-repo)
+如果需要的包不在官方仓库[xmake-repo](https://github.com/xmake-io/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。
+但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：[xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 比如，现在我们有一个一个私有仓库repo：`git@github.com:myrepo/xmake-repo.git`
 
@@ -1433,9 +1433,9 @@ $ xmake repo -u
 
 目前这个特性刚完成不久，目前官方仓库的包还不是很多，有些包也许还不支持部分平台，不过这并不是太大问题，后期迭代几个版本后，我会不断扩充完善包仓库。
 
-如果你需要的包，当前的官方仓库还没有收录，可以提交issues或者自己可以在本地调通后，贡献提交到官方仓库：[xmake-repo](https://github.com/tboox/xmake-repo)
+如果你需要的包，当前的官方仓库还没有收录，可以提交issues或者自己可以在本地调通后，贡献提交到官方仓库：[xmake-repo](https://github.com/xmake-io/xmake-repo)
 
-详细的贡献说明，见：[CONTRIBUTING.md](https://github.com/tboox/xmake-repo/blob/master/CONTRIBUTING.md)
+详细的贡献说明，见：[CONTRIBUTING.md](https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md)
 
 ## 问答
 
@@ -1488,7 +1488,7 @@ $ xmake
 $ xmake [-v|--verbose] 
 ```
 
-并且可以加上 `--backtrace` 选项获取出错时的xmake的调试栈信息, 然后你可以提交这些信息到[issues](https://github.com/tboox/xmake/issues).
+并且可以加上 `--backtrace` 选项获取出错时的xmake的调试栈信息, 然后你可以提交这些信息到[issues](https://github.com/xmake-io/xmake/issues).
 
 ```bash
 $ xmake -v --backtrace

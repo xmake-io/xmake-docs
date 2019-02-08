@@ -31,7 +31,7 @@ Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xm
 
 <img src="/assets/img/index/add_require.png" width="70%" />
 
-官方的xmake包管理仓库: [xmake-repo](https://github.com/tboox/xmake-repo)
+官方的xmake包管理仓库: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 ## 构建工程
 
@@ -137,19 +137,19 @@ $ xmake doxygen [srcdir]
 
 ## 更多插件
 
-请到插件仓库进行下载安装: [xmake-plugins](https://github.com/tboox/xmake-plugins).
+请到插件仓库进行下载安装: [xmake-plugins](https://github.com/xmake-io/xmake-plugins).
 
 ## IDE和编辑器插件
 
-* [xmake-vscode](https://github.com/tboox/xmake-vscode)
+* [xmake-vscode](https://github.com/xmake-io/xmake-vscode)
 
 <img src="https://raw.githubusercontent.com/tboox/xmake-vscode/master/res/problem.gif" width="60%" />
 
-* [xmake-sublime](https://github.com/tboox/xmake-sublime)
+* [xmake-sublime](https://github.com/xmake-io/xmake-sublime)
 
 <img src="https://raw.githubusercontent.com/tboox/xmake-sublime/master/res/problem.gif" width="60%" />
 
-* [xmake-idea](https://github.com/tboox/xmake-idea)
+* [xmake-idea](https://github.com/xmake-io/xmake-idea)
 
 <img src="https://raw.githubusercontent.com/tboox/xmake-idea/master/res/problem.gif" width="60%" />
 
@@ -215,7 +215,7 @@ target("test")
 * 主页：[tboox.org](http://www.tboox.org/cn)
 * 社区：[Reddit论坛](https://www.reddit.com/r/tboox/)
 * 聊天：[Telegram群组](https://t.me/tbooxorg), [Gitter聊天室](https://gitter.im/tboox/tboox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-* 源码：[Github](https://github.com/tboox/xmake), [Gitee](https://gitee.com/tboox/xmake)
+* 源码：[Github](https://github.com/xmake-io/xmake), [Gitee](https://gitee.com/tboox/xmake)
 * QQ群：343118190
 * 微信公众号：tboox-os
  

@@ -723,8 +723,8 @@ end})
 
 ###### 添加依赖包仓库
 
-如果需要的包不在官方仓库[xmake-repo](https://github.com/tboox/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。
-但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：[xmake-repo](https://github.com/tboox/xmake-repo)
+如果需要的包不在官方仓库[xmake-repo](https://github.com/xmake-io/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。
+但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：[xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 比如，现在我们有一个一个私有仓库repo：`git@github.com:myrepo/xmake-repo.git`
 
@@ -4087,7 +4087,7 @@ target("qt_widgetapp")
     add_frameworks("QtWidgets")
 ```
 
-更多Qt相关描述见：[#160](https://github.com/tboox/xmake/issues/160)
+更多Qt相关描述见：[#160](https://github.com/xmake-io/xmake/issues/160)
 
 ###### wdk.env.kmdf
 
@@ -4195,7 +4195,7 @@ target("nonpnp")
     add_files("driver/*.rc")
 ```
 
-更多WDK规则描述见：[#159](https://github.com/tboox/xmake/issues/159)
+更多WDK规则描述见：[#159](https://github.com/xmake-io/xmake/issues/159)
 
 ###### win.sdk.application
 
@@ -4496,7 +4496,7 @@ rule_end()
 
 仓库依赖包定义描述，`package()`相关接口定义，等有时间会详细说明，敬请期待。。
 
-可先参考官方仓库中现有包描述：[xmake-repo](https://github.com/tboox/xmake-repo)
+可先参考官方仓库中现有包描述：[xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 这里给个比较具有代表性的实例供参考：
 
@@ -4827,19 +4827,19 @@ function main(kind)
 end
 ```
 
-具体实现这里就不介绍了，可以参考xmake源码目录下的`platforms`平台配置代码: [check.lua](https://github.com/tboox/xmake/blob/master/xmake/platforms/macosx/check.lua)
+具体实现这里就不介绍了，可以参考xmake源码目录下的`platforms`平台配置代码: [check.lua](https://github.com/xmake-io/xmake/blob/master/xmake/platforms/macosx/check.lua)
 
 ##### on_install
 
 ###### 设置目标工程在指定平台的安装脚本
 
-具体实现逻辑见xmake源码：[install.lua](https://github.com/tboox/xmake/blob/master/xmake/platforms/macosx/install.lua)
+具体实现逻辑见xmake源码：[install.lua](https://github.com/xmake-io/xmake/blob/master/xmake/platforms/macosx/install.lua)
 
 ##### on_uninstall
 
 ###### 设置目标工程在指定平台的卸载脚本
 
-具体实现逻辑见xmake源码：[uninstall.lua](https://github.com/tboox/xmake/blob/master/xmake/platforms/macosx/uninstall.lua)
+具体实现逻辑见xmake源码：[uninstall.lua](https://github.com/xmake-io/xmake/blob/master/xmake/platforms/macosx/uninstall.lua)
 
 #### 语言扩展
 
@@ -5219,7 +5219,7 @@ import("xxx.xxx", {inherit = true})
 inherit("xxx.xxx")
 ```
 
-使用实例，可以参看xmake的tools目录下的脚本：[clang.lua](#https://github.com/tboox/xmake/blob/master/xmake/tools/clang.lua)
+使用实例，可以参看xmake的tools目录下的脚本：[clang.lua](#https://github.com/xmake-io/xmake/blob/master/xmake/tools/clang.lua)
 
 这个就是clang工具模块继承了gcc的部分实现。
 

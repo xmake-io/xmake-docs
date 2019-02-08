@@ -31,7 +31,7 @@ Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xm
 
 <img src="/assets/img/index/add_require.png" width="70%" />
 
-An official xmake package repository: [xmake-repo](https://github.com/tboox/xmake-repo)
+An official xmake package repository: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 ## Build project
 
@@ -137,19 +137,19 @@ $ xmake doxygen [srcdir]
 
 ## More Plugins
 
-Please download and install from the plugins repository [xmake-plugins](https://github.com/tboox/xmake-plugins).
+Please download and install from the plugins repository [xmake-plugins](https://github.com/xmake-io/xmake-plugins).
 
 ## IDE/Editor Integration
 
-* [xmake-vscode](https://github.com/tboox/xmake-vscode)
+* [xmake-vscode](https://github.com/xmake-io/xmake-vscode)
 
 <img src="https://raw.githubusercontent.com/tboox/xmake-vscode/master/res/problem.gif" width="60%" />
 
-* [xmake-sublime](https://github.com/tboox/xmake-sublime)
+* [xmake-sublime](https://github.com/xmake-io/xmake-sublime)
 
 <img src="https://raw.githubusercontent.com/tboox/xmake-sublime/master/res/problem.gif" width="60%" />
 
-* [xmake-idea](https://github.com/tboox/xmake-idea)
+* [xmake-idea](https://github.com/xmake-io/xmake-idea)
 
 <img src="https://raw.githubusercontent.com/tboox/xmake-idea/master/res/problem.gif" width="60%" />
 
@@ -215,4 +215,4 @@ Some projects using xmake:
 * Homepage：[tboox.org](http://www.tboox.org)
 * Community：[/r/tboox on reddit](https://www.reddit.com/r/tboox/)
 * ChatRoom：[Char on telegram](https://t.me/tbooxorg), [Chat on gitter](https://gitter.im/tboox/tboox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-* Source Code：[Github](https://github.com/tboox/xmake), [Gitee](https://gitee.com/tboox/xmake)
+* Source Code：[Github](https://github.com/xmake-io/xmake), [Gitee](https://gitee.com/tboox/xmake)

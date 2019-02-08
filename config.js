@@ -7,7 +7,7 @@ docute.init({
     landing: true,
     repo: 'tboox/xmake',
     twitter: 'waruqi',
-    'edit-link': 'https://github.com/tboox/xmake-docs/blob/master/',
+    'edit-link': 'https://github.com/xmake-io/xmake-docs/blob/master/',
     announcement(route) {
     const info = { type: 'success' }
     if (/\/zh/.test(route.path)) {
@@ -32,7 +32,7 @@ docute.init({
         title: 'Articles', path: 'http://www.tboox.org/category/#xmake'
       },
       {
-        title: 'Feedback', path: 'https://github.com/tboox/xmake/issues'
+        title: 'Feedback', path: 'https://github.com/xmake-io/xmake/issues'
       },
       {
         title: 'Community', path: 'https://www.reddit.com/r/tboox/'
@@ -55,7 +55,7 @@ docute.init({
         title: '文章', path: 'http://www.tboox.org/cn/category/#xmake'
       },
       {
-        title: '反馈', path: 'https://github.com/tboox/xmake/issues'
+        title: '反馈', path: 'https://github.com/xmake-io/xmake/issues'
       },
       {
         title: '社区', path: 'https://www.reddit.com/r/tboox/'
