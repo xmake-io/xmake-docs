@@ -770,7 +770,7 @@ target("test2")
 | [set_warnings](#targetset_warnings)             | Set compilation warning level                          | >= 1.0.1                    |
 | [set_optimize](#targetset_optimize)             | Set compilation optimization level                     | >= 1.0.1                    |
 | [set_languages](#targetset_languages)           | Set source code language standards                     | >= 1.0.1                    |
-| [set_headerdir](#targetset_headerdir)           | Set output directories for header files                | >= 1.0.1                    |
+| [set_headerdir](#targetset_headerdir)           | Set output directories for header files                | >= 1.0.1 < 2.2.5 deprecated |
 | [set_targetdir](#targetset_targetdir)           | Set output directories for target file                 | >= 1.0.1                    |
 | [set_objectdir](#targetset_objectdir)           | Set output directories for object files                | >= 1.0.1                    |
 | [set_dependir](#targetset_dependir)             | Set output directories for dependent files             | >= 2.2.2                    |
@@ -803,7 +803,7 @@ target("test2")
 | [after_run](#targetafter_run)                   | Run custom script after running target                 | >= 2.0.1                    |
 | [set_config_h](#targetset_config_h)             | Set auto-generated config header file                  | >= 1.0.1 < 2.1.5 deprecated |
 | [set_config_h_prefix](#targetset_config_h)      | Set macro prefix in auto-generated config header       | >= 1.0.1 < 2.1.5 deprecated |
-| [set_config_header](#targetset_config_header)   | Set auto-generated config header file (new)            | >= 2.1.5                    |
+| [set_config_header](#targetset_config_header)   | Set auto-generated config header file                  | >= 2.1.5 < 2.2.5 deprecated |
 | [set_pcheader](#targetset_pcheader)             | Set pre-compiled c header file                         | >= 2.1.5                    |
 | [set_pcxxheader](#targetset_pcxxheader)         | Set pre-compiled c++ header file                       | >= 2.1.5                    |
 | [add_deps](#targetadd_deps)                     | Add target dependencies                                | >= 1.0.1                    |
@@ -811,14 +811,14 @@ target("test2")
 | [add_syslinks](#targetadd_syslinks)             | Add system link libraries                              | >= 2.2.3                    |
 | [add_files](#targetadd_files)                   | Add source files                                       | >= 1.0.1                    |
 | [del_files](#targetdel_files)                   | Remove source files                                    | >= 2.1.9                    |
-| [add_headers](#targetadd_headers)               | Add installed header files                             | >= 1.0.1                    |
+| [add_headers](#targetadd_headers)               | Add installed header files                             | >= 1.0.1 < 2.2.5 deprecated |
 | [add_linkdirs](#targetadd_linkdirs)             | Add link search directories                            | >= 1.0.1                    |
 | [add_rpathdirs](#targetadd_rpathdirs)           | Add load search directories for dynamic library        | >= 2.1.3                    |
 | [add_includedirs](#targetadd_includedirs)       | Add include search directories                         | >= 1.0.1                    |
 | [add_defines](#targetadd_defines)               | Add macro definition                                   | >= 1.0.1                    |
 | [add_undefines](#targetadd_undefines)           | Add macro undefinition                                 | >= 1.0.1                    |
-| [add_defines_h](#targetadd_defines_h)           | Add macro definition to auto-generated config header   | >= 1.0.1                    |
-| [add_undefines_h](#targetadd_undefines_h)       | Add macro undefinition to auto-generated config header | >= 1.0.1                    |
+| [add_defines_h](#targetadd_defines_h)           | Add macro definition to auto-generated config header   | >= 1.0.1 < 2.1.5 deprecated |
+| [add_undefines_h](#targetadd_undefines_h)       | Add macro undefinition to auto-generated config header | >= 1.0.1 < 2.1.5 deprecated |
 | [add_cflags](#targetadd_cflags)                 | Add c compilation flags                                | >= 1.0.1                    |
 | [add_cxflags](#targetadd_cxflags)               | Add c/c++ compilation flags                            | >= 1.0.1                    |
 | [add_cxxflags](#targetadd_cxxflags)             | Add c++ compilation flags                              | >= 1.0.1                    |
@@ -849,6 +849,9 @@ target("test2")
 | [set_values](#targetset_values)                 | Set custom configuartion values                        | >= 2.2.1                    |
 | [add_values](#targetadd_values)                 | Add custom configuartion values                        | >= 2.2.1                    |
 | [set_installdir](#targetset_installdir)         | Set the installation directory                         | >= 2.2.5                    |
+| [add_installfiles](#targetadd_installfiles)     | add installation files                                 | >= 2.2.5                    |
+| [add_headerfiles](#targetadd_headerfiles)       | Add header files                                       | >= 2.2.5                    |
+| [add_configfiles](#targetadd_configfiles)       | Add template configuartion files                       | >= 2.2.5                    |
 
 ##### target
 
@@ -1200,6 +1203,10 @@ windows下vs的编译器并不支持按c99的标准来编译c代码，只能支�
 ##### target:set_headerdir
 
 ###### Set output directories for header files
+
+<p class="warning">
+注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
+</p>
 
 设置头文件的输出目录，默认输出到build目录中。
 
@@ -1771,6 +1778,7 @@ target("test")
 ###### Set auto-generated config header file
 
 <p class="warning">
+2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
 </p>
 
@@ -1821,6 +1829,7 @@ target("test")
 ###### Set macro prefix in auto-generated config header
 
 <p class="warning">
+2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
 </p>
 
@@ -1839,6 +1848,11 @@ target("test")
 ##### target:set_config_header
 
 ###### Set macro prefix in auto-generated config header and prefix
+
+<p class="warning">
+2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
+2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
+</p>
 
 此接口是[set_config_h](#targetset_config_h)和[set_config_h_prefix](#targetset_config_h_prefix)的升级版本，2.1.5之后支持。
 
@@ -1959,6 +1973,8 @@ target("test")
 
 ###### Add target dependencies
 
+
+
 添加当前目标的依赖目标，编译的时候，会去优先编译依赖的目标，然后再编译当前目标。。。
 
 ```lua
@@ -1971,34 +1987,14 @@ target("test2")
     set_files("*.c")
 
 target("demo")
-
-    -- 添加依赖目标：test1, test2
     add_deps("test1", "test2")
-
-    -- 链接libtest1.a，libtest2.a
-    add_links("test1", "test2")
 ```
 
 上面的例子，在编译目标demo的时候，需要先编译test1, test2目标，因为demo会去用到他们
 
 <p class="tip">
-2.1.5版本后，target会自动继承依赖目标中的配置和属性，不再需要额外调用`add_links`, `add_linkdirs`和`add_rpathdirs`等接口去关联依赖目标了。
+target会自动继承依赖目标中的配置和属性，不需要额外调用`add_links`, `add_linkdirs`和`add_rpathdirs`等接口去关联依赖目标了。
 </p>
-
-2.1.5版本之后，上述代码可简化为：
-
-```lua
-target("test1")
-    set_kind("static")
-    set_files("*.c")
-
-target("test2")
-    set_kind("static")
-    set_files("*.c")
-
-target("demo")
-    add_deps("test1", "test2") -- 会自动链接依赖目标
-```
 
 并且继承关系是支持级联的，例如：
 
@@ -2006,30 +2002,38 @@ target("demo")
 target("library1")
     set_kind("static")
     add_files("*.c")
-    add_headers("inc1/*.h") -- 此处的头文件相关目录也会被继承
+    add_includedirs("inc") -- 默认私有头文件目录不会被继承
+    add_includedirs("inc1", {public = true}) -- 此处的头文件相关目录也会被继承
 
 target("library2")
     set_kind("static")
     add_deps("library1")
     add_files("*.c")
-    add_headers("inc2/*.h")
 
 target("test")
     set_kind("binary")
     add_deps("library2")
 ```
 
-如果我们还是想以前那样，并不想继承依赖target的任何配置，如何操作呢？这个在2.1.6版本中也对其进行了支持，通过：
+如果我们不想继承依赖target的任何配置，如何操作呢？
 
 ```lua
 add_deps("dep1", "dep2", {inherit = false})
 ```
 
-通过显示设置inherit配置，来告诉xmake，这两个依赖的配置是否需要被继承，如果不设置，默认就是启用继承的。
+通过显式设置inherit配置，来告诉xmake，这两个依赖的配置是否需要被继承，如果不设置，默认就是启用继承的。
 
-<p class="warning">
-需要注意的是`add_includedirs()`不会被依赖继承，因为子目录的头文件搜索路径是私有的，反而污染父目标搜索路径，只有`add_headers`指定的导出头文件所在目录才会被继承。
-</p>
+2.2.5版本之后，可通过 `add_includedirs("inc1", {public = true})`, 设置public为true, 将includedirs的设置公开给其他依赖的子target继承。 
+
+目前对于target的编译链接flags相关接口设置，都是支持继承属性的，可以人为控制是否需要导出给其他target来依赖继承，目前支持的属性有：
+
+| 属性      | 描述                                                             |
+| ----      | ----                                                             |
+| private   | 默认设置，作为当前target的私有配置，不会被依赖的其他target所继承 |
+| public    | 公有配置，当前target，依赖的子target都会被设置                   |
+| interface | 接口设置，仅被依赖的子target所继承设置，当前target不参与         |
+
+对于这块的详细说明，可以看下：https://github.com/xmake-io/xmake/issues/368
 
 ##### target:add_links
 
@@ -2174,6 +2178,10 @@ target("test")
 
 ###### Add installed header files
 
+<p class="warning">
+注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
+</p>
+
 安装指定的头文件到build目录，如果设置了[set_headerdir](#targetset_headerdir)， 则输出到指定目录。
 
 安装规则的语法跟[add_files](#targetadd_files)类似，例如：
@@ -2259,6 +2267,21 @@ target("test")
 
 当然也可以直接通过[add_cxflags](#targetadd_cxflags)或者[add_mxflags](#targetadd_mxflags)等接口来设置，也是可以的。
 
+2.2.5之后，可通过额外的`{public|interface = true}`属性设置，将includedirs导出给依赖的子target，例如：
+
+```lua
+target("test")
+    set_kind("static")
+    add_includedirs("src/include") -- 仅对当前target生效
+    add_includedirs("$(buildir)/include", {public = true})，当前target和子target都会被设置
+
+target("demo")
+    set_kind("binary")
+    add_deps("test")
+```
+
+更多关于这块的说明，见：[add_deps](#targetadd_deps)
+
 <p class="tip">
 如果不想在工程中写死，可以通过：`xmake f --includedirs=xxx`或者`xmake f --cxflags="-I/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
 </p>
@@ -2293,11 +2316,19 @@ add_undefines("DEBUG")
 
 ###### Add macro definition to auto-generated config header
 
+<p class="warning">
+2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
+</p>
+
 添加宏定义到`config.h`配置文件，`config.h`的设置，可参考[set_config_h](#targetset_config_h)接口。
 
 ##### target:add_undefines_h
 
 ###### Add macro undefinition to auto-generated config header
+
+<p class="warning">
+2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
+</p>
 
 在`config.h`配置文件中通过`undef`禁用宏定义，`config.h`的设置，可参考[set_config_h](#targetset_config_h)接口。
 
