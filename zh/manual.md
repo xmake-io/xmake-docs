@@ -877,6 +877,8 @@ target("test2")
 | [set_installdir](#targetset_installdir)         | 设置安装目录                         | >= 2.2.5 |
 | [add_installfiles](#targetadd_installfiles)     | 添加安装文件                         | >= 2.2.5 |
 | [add_headerfiles](#targetadd_headerfiles)       | 添加安装头文件                       | >= 2.2.5 |
+| [set_configdir](#targetset_configdir)           | 设置模板配置文件输出目录             | >= 2.2.5 |
+| [set_configvar](#targetset_configvar)           | 设置模板配置变量                     | >= 2.2.5 |
 | [add_configfiles](#targetadd_configfiles)       | 添加模板配置文件                     | >= 2.2.5 |
 
 ##### target
@@ -2863,8 +2865,260 @@ target("test")
 
 ###### 设置安装目录
 
+2.2.5版本新增接口，用于针对每个target设置不同的默认安装目录，一般用于`xmake install/uninstall`命令。
+
 默认情况下执行`xmake install`会安装到系统`/usr/local`目录，我们除了可以通过`xmake install -o /usr/local`指定其他安装目录外，
 还可以在xmake.lua中针对target设置不同的安装目录来替代默认目录。
+
+除了上述两种方式，我们也可以通过`INSTALLDIR`和`DESTDIR`环境变量设置默认的安装目录。
+
+##### target:add_installfiles
+
+###### 添加安装文件
+
+2.2.5版本新增接口，用于针对每个target设置对应需要安装的文件，一般用于`xmake install/uninstall`命令。
+
+比如我们可以指定安装各种类型的文件到安装目录：
+
+```lua
+target("test")
+    add_installfiles("src/*.h")
+    add_installfiles("doc/*.md")
+```
+
+默认在linux等系统上，我们会安装到`/usr/local/*.h, /usr/local/*.md`，不过我们也可以指定安装到特定子目录：
+
+```lua
+target("test")
+    add_installfiles("src/*.h", {prefixdir = "include"})
+    add_installfiles("doc/*.md", {prefixdir = "share/doc"})
+```
+
+上面的设置，我们会安装到`/usr/local/include/*.h, /usr/local/share/doc/*.md`
+
+我们也可以通过`()`去提取源文件中的子目录来安装，例如：
+
+```lua
+target("test")
+    add_installfiles("src/(tbox/*.h)", {prefixdir = "include"})
+    add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
+```
+
+我们把`src/tbox/*.h`中的文件，提取`tbox/*.h`子目录结构后，在进行安装：`/usr/local/include/tbox/*.h, /usr/local/share/doc/tbox/*.md`
+
+当然，用户也可以通过[set_installdir](#targetset_installdir)接口，来配合使用。
+
+关于此接口的详细说明，见：https://github.com/xmake-io/xmake/issues/318
+
+##### target:add_headerfiles
+
+###### 添加安装头文件
+
+2.2.5版本新增接口，用于针对每个target设置对应需要安装的头文件，一般用于`xmake install/uninstall`命令。
+
+此接口使用方式跟[add_installfiles](#targetadd_installfiles)接口几乎完全一样，都可以用来天剑安装文件，不过此接口仅用于安装头文件。
+因此，使用上比`add_installfiles`简化了不少，默认不设置prefixdir，也会自动将头文件安装到对应的`include`子目录中。
+
+并且此接口对于`xmake project -k vs201x`等插件生成的IDE文件，也会添加对应的头文件进去。
+
+<p class="tips">
+需要注意的是，之前的[add_headers](#targetadd_headers)接口已经被废弃，新版本请用此接口替代，这个老接口在编译过程中也会自动复制头文件到build目录，这个逻辑设计的并不是很好。
+</p>
+
+##### target:set_configdir
+
+###### 设置模板配置文件的输出目录
+
+2.2.5版本新增接口，主要用于[add_configfiles](#targetadd_configfiles)接口设置的模板配置文件的输出目录。
+
+##### target:set_configvar
+
+###### 设置模板配置变量
+
+2.2.5版本新增接口，用于在编译前，添加一些需要预处理的模板配置变量，一般用于[add_configfiles](#targetadd_configfiles)接口。
+
+##### target:add_configfiles
+
+###### 添加模板配置文件
+
+2.2.5版本新增接口，用于在编译前，添加一些需要预处理的配置文件，用于替代[set_config_header](#targetset_config_header)等老接口。
+
+因为此接口更加的通用，不仅用于处理config.h的自动生成和预处理，还可以处理各种文件类型，而`set_config_header`仅用于处理头文件，并且不支持模板变量替换。
+
+先来一个简单的例子：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_configdir("$(buildir)/config")
+    add_configfiles("src/config.h.in")
+```
+
+上面的设置，会在编译前，自动的将`config.h.in`这个头文件配置模板，经过预处理后，生成输出到指定的`build/config/config.h`。
+
+如果`set_configdir`不设置，那么默认输出到`build`目录下。
+
+其中`.in`后缀会被自动识别处理掉，如果想要输出存储为其他文件名，可以通过：
+
+```lua
+add_configfiles("src/config.h", {filename = "myconfig.h"})
+```
+
+的方式，来重命名输出，同样，这个接口跟[add_installfiles](#targetadd_configfiles)类似，也是支持prefixdir和子目录提取设置：
+
+```lua
+add_configfiles("src/*.h.in", {prefixdir = "subdir"})
+add_configfiles("src/(tbox/config.h)") 
+```
+
+这个接口的一个最重要的特性就是，可以在预处理的时候，对里面的一些模板变量进行预处理替换，例如：
+
+config.h.in
+
+```
+#define VAR1 "${VAR1}"
+#define VAR2 "${VAR2}"
+#define HELLO "${HELLO}"
+```
+
+```lua
+set_configvar("VAR1", "1")
+
+target("test")
+    set_kind("binary")
+    add_files("main.c")
+
+    set_configvar("VAR2", 2)
+    add_configfiles("config.h.in", {variables = {hello = "xmake"}})
+    add_configfiles("*.man", {copyonly = true})
+```
+
+通过[set_configvar](#targetset_configvar)接口设置模板变量，裹着通过`{variables = {xxx = ""}}`中设置的变量进行替换处理。
+
+预处理后的文件`config.h`内容为：
+
+```
+#define VAR1 "1"
+#define VAR2 "2"
+#define HELLO "xmake"
+```
+
+而`{copyonly = true}`设置，会强制将`*.man`作为普通文件处理，仅在预处理阶段copy文件，不进行变量替换。
+
+默认的模板变量匹配模式为`${var}`，当然我们也可以设置其他的匹配模式，例如，改为`@var@`匹配规则：
+
+```lua
+target("test")
+    add_configfiles("config.h.in", {pattern = "@(.-)@"})
+```
+
+我们也有提供了一些内置的变量，即使不通过此接口设置，也是可以进行默认变量替换的：
+
+```
+${VERSION} -> 1.6.3
+${VERSION_MAJOR} -> 1
+${VERSION_MINOR} -> 6
+${VERSION_ALTER} -> 3
+${VERSION_BUILD} -> set_version("1.6.3", {build = "%Y%m%d%H%M"}) -> 201902031421
+${PLAT} and ${plat} -> MACOS and macosx
+${ARCH} and ${arch} -> ARM and arm
+${MODE} and ${mode} -> DEBUG/RELEASE and debug/release
+${DEBUG} and ${debug} -> 1 or 0
+${OS} and ${os} -> IOS or ios
+```
+
+例如：
+
+config.h.in
+
+```c
+#define CONFIG_VERSION "${VERSION}"
+#define CONFIG_VERSION_MAJOR ${VERSION_MAJOR}
+#define CONFIG_VERSION_MINOR ${VERSION_MINOR}
+#define CONFIG_VERSION_ALTER ${VERSION_ALTER}
+#define CONFIG_VERSION_BUILD ${VERSION_BUILD}
+```
+
+config.h
+
+```c
+#define CONFIG_VERSION "1.6.3"
+#define CONFIG_VERSION_MAJOR 1
+#define CONFIG_VERSION_MINOR 6
+#define CONFIG_VERSION_ALTER 3
+#define CONFIG_VERSION_BUILD 201902031401
+```
+
+我们还可以对`#define`定义进行一些变量状态控制处理：
+
+config.h.in 
+
+```c
+${define FOO_ENABLE}
+```
+
+```lua
+set_configvar("FOO_ENABLE", 1) -- or pass true
+set_configvar("FOO_STRING", "foo")
+```
+
+通过上面的变量设置后，`${define xxx}`就会替换成：
+
+```c
+#define FOO_ENABLE 1
+#define FOO_STRING "foo"
+```
+
+或者（设置为0禁用的时候）
+
+```c
+/* #undef FOO_ENABLE */
+/* #undef FOO_STRING */
+```
+
+这种方式，对于一些自动检测生成config.h非常有用，比如配合option来做自动检测：
+
+```lua
+option("foo")
+    set_default(true)
+    set_description("Enable Foo")
+    set_configvar("FOO_ENABLE", 1) -- 或者传递true，启用FOO_ENABLE变量
+    set_configvar("FOO_STRING", "foo")
+
+target("test")
+    add_configfiles("config.h.in")
+
+    -- 如果启用foo选项 -> 天剑 FOO_ENABLE 和 FOO_STRING 定义
+    add_options("foo") 
+```
+
+config.h.in
+
+```c
+${define FOO_ENABLE}
+${define FOO_STRING}
+```
+
+config.h
+
+```c
+#define FOO_ENABLE 1
+#define FOO_STRING "foo"
+```
+
+关于option选项检测，以及config.h的自动生成，有一些辅助函数，可以看下：https://github.com/xmake-io/xmake/issues/342
+
+除了`#define`，如果想要对其他非`#define xxx`也做状态切换处理，可以使用 `${default xxx 0}` 模式，设置默认值，例如：
+
+```
+HAVE_SSE2 equ ${default VAR_HAVE_SSE2 0}
+```
+
+通过`set_configvar("HAVE_SSE2", 1)`启用变量后，变为`HAVE_SSE2 equ 1`，如果没有设置变量，则使用默认值：`HAVE_SSE2 equ 0`
+
+关于这个的详细说明，见：https://github.com/xmake-io/xmake/issues/320
+
 
 #### 选项定义
 
