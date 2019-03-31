@@ -1041,7 +1041,7 @@ $ xmake package -o ../test/packages
 
 #### 系统查找模式
 
-如果觉得上述内置包的管理方式非常不方便，可以通过xmake提供的扩展接口[lib.detect.find_package](https://xmake.io/#/zh/manual?id=detect-find_package)去查找系统已有的依赖包。
+如果觉得上述内置包的管理方式非常不方便，可以通过xmake提供的内置接口`find_packages`。
 
 目前此接口支持以下一些包管理支持：
 
@@ -1052,15 +1052,16 @@ $ xmake package -o ../test/packages
 并且通过系统和第三方包管理工具进行依赖包的安装，然后与xmake进行集成使用，例如我们查找一个openssl包：
 
 ```lua
-import("lib.detect.find_package")
-
-local package = find_package("openssl")
+local packages = find_packages("openssl", "zlib")
 ```
 
 返回的结果如下：
 
 ```lua
-{links = {"ssl", "crypto", "z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
+{
+    {links = {"ssl", "crypto"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}},
+    {links = {"z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
+}
 ```
 
 如果查找成功，则返回一个包含所有包信息的table，如果失败返回nil
@@ -1071,26 +1072,24 @@ local package = find_package("openssl")
 option("zlib")
     set_showmenu(true)
     before_check(function (option)
-        import("lib.detect.find_package")
-        option:add(find_package("zlib"))
+        option:add(find_packages("openssl", "zlib"))
     end)
 ```
 
 ```lua
 target("test")
     on_load(function (target)
-        import("lib.detect.find_package")
-        target:add(find_package("zlib"))
+        target:add(find_package("openssl", "zlib"))
     end)
 ```
 
 如果系统上装有`homebrew`, `pkg-config`等第三方工具，那么此接口会尝试使用它们去改进查找结果。
 
-更完整的使用描述，请参考：[lib.detect.find_package](https://xmake.io/#/zh/manual?id=detect-find_package)接口文档。
+更完整的使用描述，请参考：[find_packages](https://xmake.io/#/zh/manual?id=find_packages)接口文档。
 
 ##### homebrew集成支持
 
-由于homebrew一般都是把包直接装到的系统中去了，因此用户不需要做任何集成工作，`lib.detect.find_package`就已经原生无缝支持。
+由于homebrew一般都是把包直接装到的系统中去了，因此用户不需要做任何集成工作，`find_packages`就已经原生无缝支持。
 
 ##### vcpkg集成支持
 

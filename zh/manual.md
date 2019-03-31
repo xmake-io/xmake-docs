@@ -709,15 +709,64 @@ target("test")
 
 例如上面，所以同时依赖两个ssl包，实际上只会启用生效实际安装成功的那一个ssl包，并不会同时链接两个依赖包。
 
-我们还新增了`on_load`参数，在依赖包加载成功后，会被调用，提供用户一个机会去设置一些其他的flags，例如：
+2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等
+
+添加homebrew的依赖包：
 
 ```lua
-add_requires("tbox", {on_load = function (package)
-    package:add("defines_h", "PACKAGE_HAVE_TBOX")
-end})
+add_requires("brew::zlib", {alias = "zlib"}})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("pcre2", "zlib")
 ```
 
-当依赖包tbox生效加载后，添加`PACKAGE_HAVE_TBOX`宏到`config.h`中去。
+添加vcpkg的依赖包：
+
+```lua
+add_requires("vcpkg::zlib", "vcpkg::pcre2")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("vcpkg::zlib", "vcpkg::pcre2")
+```
+
+添加conan的依赖包：
+
+```lua
+add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
+add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+    configs = {options = "OpenSSL:shared=True"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("openssl", "zlib")
+```
+
+执行xmake进行编译后：
+
+```console
+ruki:test_package ruki$ xmake
+checking for the architecture ... x86_64
+checking for the Xcode directory ... /Applications/Xcode.app
+checking for the SDK version of Xcode ... 10.14
+note: try installing these packages (pass -y to skip confirm)?
+  -> CONAN::zlib/1.2.11@conan/stable  (debug)
+  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+please input: y (y/n)
+
+  => installing CONAN::zlib/1.2.11@conan/stable .. ok
+  => installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+
+[  0%]: ccache compiling.release src/main.c
+[100%]: linking.release test
+```
+
+关于这块的更多详情见：https://github.com/xmake-io/xmake/issues/339
 
 ##### add_repositories
 
@@ -5031,6 +5080,7 @@ end)
 | [string](#string)                               | 字符串操作模块                               | 描述域、脚本域             | >= 2.0.1 |
 | [process](#process)                             | 进程操作模块                                 | 脚本域                     | >= 2.0.1 |
 | [coroutine](#coroutine)                         | 协程操作模块                                 | 脚本域                     | >= 2.0.1 |
+| [find_packages](#find_packages)                 | 查找依赖包                                   | 脚本域                     | >= 2.2.5 |
 
 在描述域使用接口调用的实例如下，一般仅用于条件控制：
 
@@ -5607,6 +5657,21 @@ if (errors) raise(errors)
 ```
 
 如果在try块中抛出异常，就会在catch和finally中进行errors信息捕获，具体见：[try-catch](#try-catch-finally)
+
+##### find_packages
+
+###### 查找依赖包
+
+此接口是对[lib.detect.find_package](#detect-find_package)接口的封装，提供多个依赖包的查找支持，例如：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_load(function (target)
+        target:add(find_packages("openssl", "zlib"))
+    end)
+```
 
 ##### os
 
@@ -7933,6 +7998,18 @@ end
 </p>
 
 我们也可以通过`xmake lua lib.detect.find_package openssl` 来快速测试。
+
+2.2.5版本之后，新增了内置接口[find_packages](#find_packages)，可以同时查找多个包，并且不需要通过import导入即可直接使用。
+
+并且此版本之后，支持显式的从指定第三方包管理器中查找包，例如：
+
+```lua
+find_package("brew::pcre2/libpcre2-8")
+```
+
+由于每个第三方包管理器的包名不完全一致，比如pcre2在homebrew中有三个库版本，我们可以通过上面的方式，指定查找对应libpcre2-8版本的库。
+
+另外，对于vcpkg, conan也可以通过加上`vcpkg::`, `conan::`包命名空间来指定查找里面的库。
 
 ###### detect.find_tool
 

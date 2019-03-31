@@ -991,15 +991,16 @@ Currently this interface supports the following package management support:
 And through the system and third-party package management tools for the installation of the dependency package, and then integrated with xmake, for example, we look for an openssl package:
 
 ```lua
-import("lib.detect.find_package")
-
-local package = find_package("openssl")
+local packages = find_packages("openssl", "zlib")
 ```
 
 The returned results are as follows:
 
 ```lua
-{links = {"ssl", "crypto", "z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
+{
+    {links = {"ssl", "crypto"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}},
+    {links = {"z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
+}
 ```
 
 If the search is successful, return a table containing all the package information, if it fails, return nil
@@ -1010,22 +1011,20 @@ The return result here can be directly passed as the parameter of `target:add`, 
 option("zlib")
     set_showmenu(true)
     before_check(function (option)
-        import("lib.detect.find_package")
-        option:add(find_package("zlib"))
+        option:add(find_packages("openssl", "zlib"))
     end)
 ```
 
 ```lua
 target("test")
     on_load(function (target)
-        import("lib.detect.find_package")
-        target:add(find_package("zlib"))
+        target:add(find_packages("openssl", "zlib"))
     end)
 ```
 
 If third-party tools such as `homebrew`, `pkg-config` are installed on the system, then this interface will try to use them to improve the search results.
 
-For a more complete description of the usage, please refer to the [lib.detect.find_package](https://xmake.io/#/en/manual?id=detect-find_package) interface documentation.
+For a more complete description of the usage, please refer to the [find_packages](https://xmake.io/#/en/manual?id=find_packages) interface documentation.
 
 ##### Homebrew Integration Support
 
