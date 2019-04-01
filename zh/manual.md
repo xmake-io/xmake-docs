@@ -391,6 +391,10 @@ target("test")
 
 同时支持子工程文件和目录的添加，用于替代[add_subdirs](#add_subdirs)和[add_subfiles](#add_subfiles)接口。
 
+另外，此接口在2.2.5之后的版本，提供了一些内置的辅助函数，可以直接includes后使用，具体有哪些内置函数可以看下：https://github.com/xmake-io/xmake/tree/master/xmake/includes
+
+关于这块的更加完整的说明，可以看下：[https://github.com/xmake-io/xmake/issues/342](https://github.com/xmake-io/xmake/issues/342)
+
 ##### set_modes
 
 ###### 设置支持的编译模式

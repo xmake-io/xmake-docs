@@ -370,6 +370,10 @@ The global interface affects the whole project description scope and all sub-pro
 
 It is used to replace [add_subdirs](#add_subdirs) and [add_subfiles](#add_subfiles).
 
+In addition, this interface in 2.2.5 and later, provides some built-in helper functions, can be used directly after the use, specifically which built-in functions can be seen: HTTPS://github.com/xmake-io/xmake/tree /master/xmake/include
+
+For a more complete description about this, we can see: [https://github.com/xmake-io/xmake/issues/342](https://github.com/xmake-io/xmake/issues/342 )
+
 ##### set_modes
 
 ###### Set project compilation modes
