@@ -1161,10 +1161,70 @@ package("openssl")
 Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:
 
 ```lua
-add_requires("tbox", {config = {small=true}})
+add_requires("tbox", {configs = {small=true}})
 ```
 
 Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.
+
+##### Install third-party packages
+
+After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, etc.
+
+Add a homebrew dependency package:
+
+```lua
+add_requires("brew::zlib", {alias = "zlib"}})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("pcre2", "zlib")
+```
+
+Add a dependency package for vcpkg:
+
+```lua
+add_requires("vcpkg::zlib", "vcpkg::pcre2")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("vcpkg::zlib", "vcpkg::pcre2")
+```
+
+Add a conan dependency package:
+
+```lua
+add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
+add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+    configs = {options = "OpenSSL:shared=True"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("openssl", "zlib")
+```
+
+After executing xmake to compile:
+
+```console
+ruki:test_package ruki$ xmake
+checking for the architecture ... x86_64
+checking for the Xcode directory ... /Applications/Xcode.app
+checking for the SDK version of Xcode ... 10.14
+note: try installing these packages (pass -y to skip confirm)?
+  -> CONAN::zlib/1.2.11@conan/stable  (debug)
+  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+please input: y (y/n)
+
+  => installing CONAN::zlib/1.2.11@conan/stable .. ok
+  => installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+
+[  0%]: ccache compiling.release src/main.c
+[100%]: linking.release test
+```
+
 ##### Using self-built private package warehouse
 
 If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.

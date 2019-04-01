@@ -1249,10 +1249,69 @@ package("openssl")
 某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：
 
 ```lua
-add_requires("tbox", {config = {small=true}})
+add_requires("tbox", {configs = {small=true}})
 ```
 
 传递`--small=true`给tbox包，使得编译安装的tbox包是启用此选项的。
+
+##### 第三方依赖包安装
+
+2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等
+
+添加homebrew的依赖包：
+
+```lua
+add_requires("brew::zlib", {alias = "zlib"}})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("pcre2", "zlib")
+```
+
+添加vcpkg的依赖包：
+
+```lua
+add_requires("vcpkg::zlib", "vcpkg::pcre2")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("vcpkg::zlib", "vcpkg::pcre2")
+```
+
+添加conan的依赖包：
+
+```lua
+add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
+add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+    configs = {options = "OpenSSL:shared=True"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("openssl", "zlib")
+```
+
+执行xmake进行编译后：
+
+```console
+ruki:test_package ruki$ xmake
+checking for the architecture ... x86_64
+checking for the Xcode directory ... /Applications/Xcode.app
+checking for the SDK version of Xcode ... 10.14
+note: try installing these packages (pass -y to skip confirm)?
+  -> CONAN::zlib/1.2.11@conan/stable  (debug)
+  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+please input: y (y/n)
+
+  => installing CONAN::zlib/1.2.11@conan/stable .. ok
+  => installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+
+[  0%]: ccache compiling.release src/main.c
+[100%]: linking.release test
+```
 
 ##### 使用自建私有包仓库
 
