@@ -24,9 +24,9 @@ It's according to the following rules:
 
 ## Documentation
 
-#### Conditions 
+#### Conditions
 
-Conditions are generally used to handle some special compilation platforms. 
+Conditions are generally used to handle some special compilation platforms.
 
 | Interfaces                  | Description                               | Support version             |
 | -------------------------   | ----------------------------------------  | --------------------------- |
@@ -41,7 +41,7 @@ Conditions are generally used to handle some special compilation platforms.
 | [has_config](#has_config)   | Is the given configs enabled?             | >= 2.2.2                    |
 | [has_package](#has_package) | Is the given dependent package enabled?   | >= 2.2.3                    |
 
-##### is_os 
+##### is_os
 
 ###### Is the current compilation target system
 
@@ -273,7 +273,7 @@ end
 ```
 
 <p class="tips">
-This interface is not only able to determine the custom options defined through the [option](#option), 
+This interface is not only able to determine the custom options defined through the [option](#option),
 but also to determine the built-in global and local configuration.
 </p>
 
@@ -311,7 +311,7 @@ $ xmake f --test1=false
 ```
 
 <p class="tips">
-This interface can determine not only the built-in global and local configs, 
+This interface can determine not only the built-in global and local configs,
 but also the custom options defined through the [option](#option).
 </p>
 
@@ -475,9 +475,9 @@ For example, assume we have the following project directory tree:
 We can add sub-project `tbox` and `demo` directories to the root `xmake.lua`.
 
 ```lua
-add_subdirs("src/tbox") 
-if is_option("demo") then 
-    add_subdirs("src/demo") 
+add_subdirs("src/tbox")
+if is_option("demo") then
+    add_subdirs("src/demo")
 end
 ```
 
@@ -530,7 +530,7 @@ xmake will load all plugins in the given directory.
 
 By setting up a dependency package directory, you can easily integrate some third-party dependent libraries.
 Taking the tbox project as an example, its package directory is as follows:
- 
+
 
 ```
 tbox.pkg
@@ -564,7 +564,7 @@ $ xmake f --openssl=n
 
 ##### get_config
 
-###### Get the configuration value 
+###### Get the configuration value
 
 This interface is introduced from version 2.2.2 to get the configuration value from the given name.
 
@@ -580,7 +580,7 @@ end
 
 This interface is introduced from version 2.2.2 to set the default configuration value in xmake.lua.
 
-Many previous configurations, including the build toolchain, build directory, etc. 
+Many previous configurations, including the build toolchain, build directory, etc.
 We can only be configured by `$xmake f --name=value`. If we want to write a default value in xmake.lua, we can use the following method:
 
 ```lua
@@ -733,7 +733,7 @@ checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
   -> CONAN::zlib/1.2.11@conan/stable  (debug)
-  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+  -> CONAN::OpenSSL/1.0.2n@conan/stable
 please input: y (y/n)
 
   => installing CONAN::zlib/1.2.11@conan/stable .. ok
@@ -946,7 +946,7 @@ add_defines("DEBUG")
 
 target("demo")                   -- add -DDEBUG
     set_kind("binary")
-    add_files("src/demo.c") 
+    add_files("src/demo.c")
 
 target("test")                   -- add -DDEBUG
     set_kind("binary")
@@ -1173,7 +1173,7 @@ The modification of filename is to modify the entire target file name, including
 Set the warning level of the compilation of the current target, generally supporting several levels:
 
 | Value | Description | gcc/clang | msvc |
-| ----- | ---------------------- | ---------- | --------- -------------------- |
+| ----- | ---------------------- | ---------- | ----------------------------- |
 | none | disable all warnings | -w | -W0 |
 | less | Enable fewer warnings | -W1 | -W1 |
 | more | Enable more warnings | -W3 | -W3 |
@@ -1198,7 +1198,7 @@ Set the compile optimization level of the target. If no target is currently set,
 At present, we mainly support several levels:
 
 | Value | Description | gcc/clang | msvc |
-| ---------- | ---------------------- | ---------- | ---- -------- |
+| ---------- | ---------------------- | ---------- | ------------ |
 | none | disable optimization | -O0 | -Od |
 | fast | quick optimization | -O1 | default |
 | faster | faster optimization | -O2 | -Ox |
@@ -1222,8 +1222,7 @@ Set the language standard for target code compilation. If no target exists, it w
 The supported language standards currently have the following main ones:
 
 | Value | Description |
-| ---------- | ----------------
------- |
+| ---------- | ---------------------- |
 | ansi | c language standard: ansi |
 | c89 | c language standard: c89 |
 | gnu89 | c language standard: gnu89 |
@@ -1338,13 +1337,13 @@ target("test")
     on_build(function (target)
         import("core.base.task")
         import("core.project.project")
-        
+
         task.run("xxxx")
     end)
     on_install(function (target)
         import("core.base.task")
         import("core.project.project")
-        
+
         task.run("xxxx")
     end)
 ```
@@ -1381,7 +1380,7 @@ rule("markdown")
 
 target("test")
     set_kind("binary")
-    
+
     -- Make the test target support the construction rules of the markdown file
     add_rules("markdown")
 
@@ -1514,19 +1513,18 @@ target("test")
 
 Some target interfaces are described as follows:
 
-| target interface | description |
-| ----------------------------------- | ------------- -------------------------------------------------- - |
-| target:name() | Get the target name |
-| target:targetfile() | Get the target file path |
-| target:get("kind") | Get the build type of the target
-|
-| target:get("defines") | Get the macro definition of the target |
-| target:get("xxx") | Other target information set by the `set_/add_` interface can be obtained through this interface |
-| target:add("links", "pthread") | Add target settings |
-| target:set("links", "pthread", "z") | Override target settings |
-| target:deps() | Get all dependent targets of the target |
-| target:dep("depname") | Get the specified dependency target |
-| target:sourcebatches() | Get a list of all source files for the target |
+| target interface                    | description                                  |
+| ----------------------------------- | -------------------------------------------- |
+| target:name()                       | Get the target name                          |
+| target:targetfile()                 | Get the target file path                     |
+| target:get("kind")                  | Get the build type of the target             |
+| target:get("defines")               | Get the macro definition of the target       |
+| target:get("xxx")                   | Other target information set by the `set_/add_` interface can be obtained through this interface |
+| target:add("links", "pthread")      | Add target settings                          |
+| target:set("links", "pthread", "z") | Override target settings                     |
+| target:deps()                       | Get all dependent targets of the target      |
+| target:dep("depname")               | Get the specified dependency target          |
+| target:sourcebatches()              | Get a list of all source files for the target |
 
 ##### target:on_package
 
@@ -2133,7 +2131,7 @@ The above configuration, even if `add_syslinks` is set in advance, the final lin
 Source files used to add target projects, even library files, some file types currently supported:
 
 | Supported source file types | Description |
-| ------------------ | ------------------------------ ---- |
+| ------------------ | ---------------------------------- |
 | .c/.cpp/.cc/.cxx | c++ file |
 | .s/.S/.asm | Assembly files |
 | .m/.mm | objc file |
@@ -2558,7 +2556,7 @@ The purpose of this interface is primarily to create a more highly customized ma
 
 ```lua
 target("demo")
-    
+
     -- Set and enable config.h
     set_config_header("$(buildir)/config.h", {prefix = "TEST"})
 
@@ -2603,7 +2601,7 @@ This interface is the interface shared by `target` and `option`, but the interfa
 </p>
 
 | Interface Field | Description | Examples |
-| ------ | ------------------------------------------ ------------------------------- | ------------------ -------------------------------------------------- -------------------------------------------------- ---------- |
+| ------ | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | target | header files, link libraries, and function interfaces are also specified | `add_cfuncs("libc", nil, {"signal.h", "setjmp.h"}, "signal", "setjmp", "sigsetjmp{sigjmp_buf buf ; sigsetjmp(buf, 0);}", "kill")` |
 Option | only specifies the function interface, the header file depends on [add_cincludes] (#targetadd_cincludes) and other independent interfaces | `add_cincludes("setjmp.h")` `add_cfuncs("sigsetjmp")` |
 
@@ -2672,7 +2670,7 @@ Because, in different header files, functions are defined in different ways, suc
 To fully test the success, the grammar requires a certain degree of flexibility. Here are some grammar rules:
 
 | Detection Syntax | Examples |
-| ------------- | ----------------------------------- ------------ |
+| ------------- | ----------------------------------------------- |
 | pure function name | `sigsetjmp` |
 | Single line call | `sigsetjmp((void*)0, 0)` |
 | Function Block Call | `sigsetjmp{sigsetjmp((void*)0, 0);}` |
@@ -2723,7 +2721,7 @@ After v2.2.3, it also supports overwriting built-in links to control the actual 
 add_requires("ncurses")
 
 target("test")
-    
+
     -- Display specified, only use ncurses a link library
     add_packages("ncurses", {links = "ncurses"})
 ```
@@ -3131,7 +3129,7 @@ The `option` field can be repeatedly entered to implement separate settings. If 
 
 
 | Interface | Description | Supported Versions |
-| ------------------------------------------------- ---- | -------------------------------------------- | -------- |
+| ----------------------------------------------------- | -------------------------------------------- | -------- |
 | [option](#option) | Define Options | >= 2.0.1 |
 | [option_end](#option_end) | End Definition Options | >= 2.1.1 |
 | [add_deps](#optionadd_deps) | Add Options Dependencies | >= 2.1.5 |
@@ -3183,7 +3181,7 @@ The `option` field can be repeatedly entered to implement separate settings. If 
 | [add_frameworkdirs](#targetadd_frameworkdirs) | Add Linked Framework | >= 2.1.5 |
 
 | Obsolete Interface | Description | Supported Version |
-| ------------------------------------------------- ---- | -------------------------------------------- | ---------------- |
+| ----------------------------------------------------- | -------------------------------------------- | ---------------- |
 | [add_bindings](#optionadd_bindings) | Add Forward Association Options, Sync Enable and Disable | >= 2.0.1 < 2.1.5 |
 | [add_rbindings](#optionadd_rbindings) | Add reverse association option, sync enable and disable | >= 2.0.1 < 2.1.5 |
 | [add_defines_if_ok](#optionadd_defines_if_ok) | Add macro definitions if the detection option passes | >= 1.0.1 < 2.1.5 |
@@ -3338,7 +3336,7 @@ option("test")
 ```
 
 | Value Type | Description | Configuration |
-| ------ | -------------------------------------- | --- --------------------------------------------|
+| ------ | -------------------------------------- | -----------------------------------------------|
 Boolean | Typically used as a parameter switch, value range: `true/false` | `xmake f --optionname=[y/n/yes/no/true/false]` |
 | string | can be any string, generally used for pattern judgment | `xmake f --optionname=value` |
 
@@ -3368,7 +3366,7 @@ Specify a different source directory path for this `rootdir` option and compile 
 Detection behavior of the option:
 
 | default value | detection behavior |
-| ---------- | -------------------------------------- -------------------------------------------------- ----- |
+| ---------- | --------------------------------------------------------------------------------------------- |
 | No setting | Priority manual configuration modification, disabled by default, otherwise automatic detection, can automatically switch boolean and string type according to the type of value manually passed in |
 | false | switch option, not automatic detection, disabled by default, can be manually configured to modify |
 | true | switch option, not automatic detection, enabled by default, can be manually configured to modify |
@@ -3428,7 +3426,7 @@ Options:
 
     --test1=TEST1
     --test2=TEST2
- 
+
     --demo1=DEMO1
     --demo2=DEMO2
 ```
@@ -3763,7 +3761,7 @@ Xmake can implement custom tasks or plugins. The core of both is the `task` task
 In essence, they are tasks, except that the [set_category](#taskset_category) classification is different.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [task](#task) | Define plugins or tasks | >= 2.0.1 |
 | [task_end](#task_end) | End defining plugins or tasks | >= 2.1.1 |
 | [set_menu](#taskset_menu) | Set Task Menu | >= 2.0.1 |
@@ -3795,7 +3793,7 @@ Since the [set_menu](#taskset_menu) setting menu is not used here, this task can
 target("test")
 
     after_build(function (target)
- 
+
         -- Import task module
         import("core.project.task")
 
@@ -3916,19 +3914,19 @@ Options:
         --profile Print performance data for debugging.
         --version Print the version number and exit.
     -h, --help Print this help message and exit.
-                                           
+
     -F FILE, --file=FILE Read a given xmake.lua file.
     -P PROJECT, --project=PROJECT Change to the given project directory.
                                            Search priority:
                                                1. The Given Command Argument
                                                2. The Envirnoment Variable: XMAKE_PROJECT_DIR
                                                3. The Current Directory
-                                           
+
     -b, --bright Enable bright.
     -d, --dim Enable dim.
     --, --blink Enable blink.
     -r, --reverse Reverse color.
-                                           
+
     -c COLOR, --color=COLOR Set the output color. (default: black)
                                                - red
                                                - blue
@@ -3937,7 +3935,7 @@ Options:
                                                - magenta
                                                - cyan
                                                - white
-                                           
+
     Contents ... The info contents.
 ```
 
@@ -4100,7 +4098,7 @@ rule("markdown")
 
 target("test")
     set_kind("binary")
-    
+
     -- Make the test target support the construction rules of the markdown file
     add_rules("markdown")
 
@@ -4124,7 +4122,7 @@ Rules specified by `add_files("*.md", {rule = "markdown"})`, with a higher prior
 </p>
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [rule](#rule) | Defining Rules | >= 2.1.9 |
 | [add_imports](#ruleadd_imports) | Pre-importing extension modules for all custom scripts | >= 2.1.9 |
 | [set_extensions](#ruleset_extensions) | Setting the file extension type supported by the rule | >= 2.1.9 |
@@ -4156,7 +4154,7 @@ Rules specified by `add_files("*.md", {rule = "markdown"})`, with a higher prior
 sinceAfter the 2.2.1 release, xmake provides some built-in rules to simplify the daily xmake.lua description and support for some common build environments.
 
 | Rules | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [mode.debug](#mode-debug) | Debug Mode Compilation Rules | >= 2.2.1 |
 | [mode.release](#mode-release) | Release Mode Compilation Rules | >= 2.2.1 |
 | [mode.check](#mode-check) | Detection Mode Compilation Rules | >= 2.2.1 |
@@ -4186,7 +4184,7 @@ Equivalent to:
 ```lua
 -- the debug mode
 if is_mode("debug") then
-    
+
     -- enable the debug symbols
     set_symbols("debug")
 
@@ -4266,7 +4264,7 @@ Equivalent to:
 ```lua
 -- the profile mode
 if is_mode("profile") then
-   
+
     -- enable the debug symbols
     set_symbols("debug")
 
@@ -4532,7 +4530,7 @@ rule("markdown")
 
 target("test")
     set_kind("binary")
-    
+
     -- Make the test target support the construction rules of the markdown file
     add_rules("markdown")
 
@@ -4845,7 +4843,7 @@ All built-in variables can also be retrieved via the [val](#val) interface.
 This way of using built-in variables makes the description writing more concise and easy to read. Here are some of the variables built into xmake that can be obtained directly:
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [$(os)](#var-os) | Get the operating system of the current build platform | >= 2.0.1 |
 | [$(host)](#var-host) | Get native operating system | >= 2.0.1 |
 | [$(tmpdir)](#var-tmpdir) | Get Temporary Directory | >= 2.0.1 |
@@ -4993,7 +4991,7 @@ Of course, a small number of read-only built-in interfaces can still be used in 
 </p>
 
 | Interface | Description | Available Domains | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -------------------- | -------- |
+| ----------------------------------------------- | -------------------------------------------- | -------------------------- | -------- |
 | [val](#val) | Get the value of the built-in variable | Script Field | >= 2.1.5 |
 | [import](#import) | Importing Extension Blocks | Script Fields | >= 2.0.1 |
 | [inherit](#inherit) | Import and inherit base class modules | Script Domain | >= 2.0.1 |
@@ -5033,7 +5031,7 @@ The script field and description field mentioned above mainly refer to:
 ```lua
 -- Description field
 target("test")
-    
+
     -- Description field
     set_kind("static")
     add_files("src/*.c")
@@ -5095,7 +5093,7 @@ import("core.base.task") -- 2.1.5 Previously core.project.task
 import("core")
 
 function main()
-    
+
     -- Get parameter options
     print(option.get("version"))
 
@@ -5140,7 +5138,7 @@ To prevent naming conflicts, you can also specify an alias after import:
 import("core.platform.platform", {alias = "p"})
 
 function main()
- 
+
     -- So we can use p to call the plats interface of the platform module to get a list of all the platforms supported by xmake.
     table.dump(p.plats())
 end
@@ -6411,7 +6409,7 @@ The string module is a native module of lua. For details, see: [lua official man
 It has been extended in xmake to add some extension interfaces:
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [string.startswith](#string-startswith) | Determine if the beginning of the string matches | >= 1.0.1 |
 | [string.endswith](#string-endswith) | Determine if the end of the string matches | >= 1.0.1 |
 | [string.split](#string-split) | Split String | >= 1.0.1 |
@@ -6544,7 +6542,7 @@ For specific use, see: [process.open](#process-open)
 ```lua
 -- The second parameter is waiting for a timeout, returning a list of process states
 for _, procinfo in ipairs(process.waitlist(procs, -1)) do
-    
+
     -- For each process: process object, process pid, process end status code
     local proc   = procinfo[1]
     local procid = procinfo[2]
@@ -6566,7 +6564,7 @@ All expansion modules need to be imported through the [import](#import) interfac
 Commonly used to get the value of the xmake command parameter option, often used for plugin development.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [option.get](#option-get) | Get Parameter Option Value | >= 2.0.1 |
 
 ###### option.get
@@ -6602,7 +6600,7 @@ task("hello")
 Used to get the configuration information of xmake global, that is, the value of the parameter option passed in `xmake g|global --xxx=val`.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [global.get](#global-get) | Get the specified configuration value | >= 2.0.1 |
 | [global.load](#global-load) | Load Configuration | >= 2.0.1 |
 | [global.directory](#global-directory) | Get Global Configuration Information Directory | >= 2.0.1 |
@@ -6649,7 +6647,7 @@ The output is as follows:
 Used for task operations, generally used to call other task tasks in custom scripts and plug-in tasks.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [task.run](#task-run) | Run the specified task | >= 2.0.1 |
 
 <p class="tip">
@@ -6717,7 +6715,7 @@ emd
 Linker related operations, often used for plugin development.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [linker.link](#linker-link) | Execute Link | >= 2.0.1 |
 | [linker.linkcmd](#linker-linkcmd) | Get Link Command Line | >= 2.0.1 |
 | [linker.linkargv](#linker-linkargv) | Get Link Command Line List | >= 2.1.5 |
@@ -6830,7 +6828,7 @@ end
 Compiler related operations, often used for plugin development.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [compiler.compile](#compiler-compile) | Execute Compilation | >= 2.0.1 |
 | [compiler.compcmd](#compiler-compcmd) | Get Compiler Command Line | >= 2.0.1 |
 | [compiler.compargv](#compiler-compargv) | Get Compiled Command Line List | >= 2.1.5 |
@@ -7051,7 +7049,7 @@ For specific feature names, refer to [compiler.features](#compiler-features).
 Used to get the configuration information when the project is compiled, that is, the value of the parameter option passed in `xmake f|config --xxx=val`.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [config.get](#config-get) | Get the specified configuration value | >= 2.0.1 |
 | [config.load](#config-load) | Load Configuration | >= 2.0.1 |
 | [config.arch](#config-arch) | Get the schema configuration of the current project | >= 2.0.1 |
@@ -7094,7 +7092,7 @@ function main(...)
 
     -- Load project configuration first
     config.load()
-    
+
     -- Get configuration values
     print(config.get("xxx"))
 end
@@ -7184,7 +7182,7 @@ This module has been migrated to [core.base.task](#core-base-task) since version
 Used to get some description information of the current project, that is, the configuration information defined in the `xmake.lua` project description file, for example: [target](#target), [option](#option), etc.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -------------- |
+| ----------------------------------------------- | -------------------------------------------- | -------------------- |
 | [project.load](#project-load) | Load Project Configuration | >= 2.0.1 (2.1.5 Obsolete) |
 | [project.directory](#project-directory) | Get Project Directory | >= 2.0.1 |
 | [project.target](#project-target) | Get the specified project target object | >= 2.0.1 |
@@ -7321,7 +7319,7 @@ print(project.version())
 Used to obtain information about the compiled language, generally used for the operation of code files.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [language.extensions](#language-extensions) | Get a list of code suffixes for all languages ​​| >= 2.1.1 |
 | [language.targetkinds](#language-targetkinds) | Get a list of target types for all languages ​​| >= 2.1.1 |
 | [language.sourcekinds](#language-sourcekinds) | Get a list of source file types for all languages ​​| >= 2.1.1 |
@@ -7453,7 +7451,7 @@ The result is: `cxx`, which is the `c++` type. For the corresponding list, see: 
 Platform information related operations
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [platform.get](#platform-get) | Get configuration information about the specified platform | >= 2.0.1 |
 
 ###### platform.get
@@ -7478,14 +7476,14 @@ For specific readable platform configuration information, please refer to: [plat
 Environment-related operations, used to enter and leave the terminal environment corresponding to the specified environment variables, generally used for the entry and departure of the `path` environment, especially some build tools that require a specific environment, such as: msvc toolchain.
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | [environment.enter](#environment-enter) | Enter the specified environment | >= 2.0.1 |
 | [environment.leave](#environment-leave) | Leave the specified environment | >= 2.0.1 |
 
 The currently supported environments are:
 
 | Interface | Description | Supported Versions |
-| ----------------------------------------------- | - ------------------------------------------- | ------ -- |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
 | toolchains | Toolchain Execution Environment | >= 2.0.1 |
 
 ###### environment.enter
@@ -7522,7 +7520,7 @@ The interface of this module is spread across multiple module directories, try t
 </p>
 
 | Interface | Description | Supported Versions |
-| ------------------------------------------------- -- | -------------------------------------------- | -------------------- |
+| --------------------------------------------------- | -------------------------------------------- | -------------------- |
 | [detect.find_file](#detect-find_file) | Find Files | >= 2.1.5 |
 | [detect.find_path](#detect-find_path) | Find File Path | >= 2.1.5 |
 | [detect.find_library](#detect-find_library) | Find Library Files | >= 2.1.5 |
@@ -7905,7 +7903,7 @@ function main(opt)
 
         -- not found?
         if #result.links ~= 2 then
-            return 
+            return
         end
 
         -- find include
@@ -8169,7 +8167,7 @@ local ok = has_cfuncs({"sigsetjmp((void*)0, 0)", "setjmp"}, {includes = "setjmp.
 The rules for describing functions are as follows:
 
 | Function Description | Description |
-| ----------------------------------------------- | - ------------ |
+| ----------------------------------------------- | ------------- |
 | `sigsetjmp` | pure function name |
 | `sigsetjmp((void*)0, 0)` | Function Call |
 | `sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}` | function name + {} block |
@@ -8268,7 +8266,7 @@ The verbose is used to echo the detection information. The target is used to app
 This module provides various operational support for http. The currently available interfaces are as follows:
 
 | Interface | Description | Supported version|
-| ------------------------------------------------- -- | -------------------------------------------- | -- ------------------ |
+| --------------------------------------------------- | -------------------------------------------- | -------------------- |
 [http.download](#http-download) | Download http file | >= 2.1.5 |
 
 ###### http.download
@@ -8292,7 +8290,7 @@ In order to ensure security, unless you must use it, try not to use this interfa
 </p>
 
 | Interface | Description | Supported Versions |
-| ------------------------------------------------- -- | -------------------------------------------- | -- ------------------ |
+| --------------------------------------------------- | -------------------------------------------- | -------------------- |
 | [sudo.has](#sudo-has) | Determine if sudo supports | >= 2.1.5 |
 | [sudo.run](#sudo-run) | Quiet running program | >= 2.1.5 |
 | [sudo.runv](#sudo-runv) | Quiet running program with parameter list | >= 2.1.5 |
@@ -8366,7 +8364,7 @@ Currently on Windows, you need to manually install the git package before you ca
 </p>
 
 | Interface | Description | Supported Versions |
-| ------------------------------------------------- -- | -------------------------------------------- | -- ------------------ |
+| --------------------------------------------------- | -------------------------------------------- | -------------------- |
 | [git.clone](#git-clone) | clone codebase | >= 2.1.5 |
 | [git.pull](#git-pull) | Pull the codebase latest commit | >= 2.1.5 |
 | [git.clean](#git-clean) | Clean up the codebase file | >= 2.1.5 |
@@ -8383,7 +8381,7 @@ This interface corresponds to the `git clone` command.
 
 ```lua
 import("devel.git")
- 
+
 git.clone("git@github.com:tboox/xmake.git")
 git.clone("git@github.com:tboox/xmake.git", {depth = 1, branch = "master", outputdir = "/tmp/xmake"})
 ```
@@ -8396,7 +8394,7 @@ This interface corresponds to the `git pull` command.
 
 ```lua
 import("devel.git")
- 
+
 git.pull()
 git.pull({remote = "origin", tags = true, branch = "master", repodir = "/tmp/xmake"})
 ```
@@ -8409,7 +8407,7 @@ This interface corresponds to the `git clean` command.
 
 ```lua
 import("devel.git")
- 
+
 git.clean()
 git.clean({repodir = "/tmp/xmake", force = true})
 ```
@@ -8422,7 +8420,7 @@ This interface corresponds to the `git checkout` command
 
 ```lua
 import("devel.git")
- 
+
 git.checkout("master", {repodir = "/tmp/xmake"})
 git.checkout("v1.0.1", {repodir = "/tmp/xmake"})
 ```
@@ -8435,7 +8433,7 @@ This interface corresponds to the `git ls-remote --refs` command
 
 ```lua
 import("devel.git")
- 
+
 local refs = git.refs(url)
 ```
 
@@ -8447,7 +8445,7 @@ This interface corresponds to the `git ls-remote --tags` command
 
 ```lua
 import("devel.git")
- 
+
 local tags = git.tags(url)
 ```
 
@@ -8459,7 +8457,7 @@ This interface corresponds to the `git ls-remote --heads` command
 
 ```lua
 import("devel.git")
- 
+
 local branches = git.branches(url)
 ```
 
@@ -8468,7 +8466,7 @@ local branches = git.branches(url)
 This module is used to compress and decompress files.
 
 | Interface | Description | Supported Versions |
-| ------------------------------------------------- -- | -------------------------------------------- | -- ------------------ |
+| --------------------------------------------------- | -------------------------------------------- | -------------------- |
 | [archive.extract](#archive-extract)| Extract files | >= 2.1.5 |
 
 ###### archive.extract
