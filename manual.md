@@ -3331,10 +3331,10 @@ option("test")
     set_default("value")
 ```
 
-| Value Type | Description | Configuration |
-| ------ | -------------------------------------- | -----------------------------------------------|
-Boolean | Typically used as a parameter switch, value range: `true/false` | `xmake f --optionname=[y/n/yes/no/true/false]` |
-| string | can be any string, generally used for pattern judgment | `xmake f --optionname=value` |
+| Value Type | Description                                                     | Configuration                                   |
+| ------     | --------------------------------------                          | ----------------------------------------------- |
+| boolean    | Typically used as a parameter switch, value range: `true/false` | `xmake f --optionname=[y/n/yes/no/true/false]`  |
+| string     | can be any string, generally used for pattern judgment          | `xmake f --optionname=value`                    |
 
 If it is an option of the `boolean` value, it can be judged by [is_option](#is_option), and the option is enabled.
 
@@ -3362,11 +3362,11 @@ Specify a different source directory path for this `rootdir` option and compile 
 Detection behavior of the option:
 
 | default value | detection behavior |
-| ---------- | --------------------------------------------------------------------------------------------- |
-| No setting | Priority manual configuration modification, disabled by default, otherwise automatic detection, can automatically switch boolean and string type according to the type of value manually passed in |
-| false | switch option, not automatic detection, disabled by default, can be manually configured to modify |
-| true | switch option, not automatic detection, enabled by default, can be manually configured to modify |
-| string type | no switch state, no automatic detection, can be manually configured and modified, generally used for configuration variable transfer |
+| ----------    | --------------------------------------------------------------------------------------------- |
+| No setting    | Priority manual configuration modification, disabled by default, otherwise automatic detection, can automatically switch boolean and string type according to the type of value manually passed in |
+| false         | switch option, not automatic detection, disabled by default, can be manually configured to modify |
+| true          | switch option, not automatic detection, enabled by default, can be manually configured to modify |
+| string type   | no switch state, no automatic detection, can be manually configured and modified, generally used for configuration variable transfer |
 
 ##### option:set_showmenu
 
