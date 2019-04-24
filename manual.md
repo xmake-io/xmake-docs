@@ -957,10 +957,6 @@ target("test")                   -- add -DDEBUG
 
 ###### End target definition
 
-<p class="warning">
-Translating ..., help me please! [Edit this page](https://github.com/xmake-io/xmake/blob/master/docs/manual.md)
-</p>
-
 This is an optional api. If not called, then all settings after
 `target("xxx")` are made for that target, unless you enter other
 `target`, `option` or `task` scope. If you want to leave the current
@@ -3252,7 +3248,7 @@ After the detection of the dependent small option is completed, the state of the
 
 ##### option:before_check
 
-Execute this script before ###### option detection
+Execute this script before option detection
 
 For example: before testing, find the package by [find_package](#detect-find_package), and add information such as `links`, `includedirs` and `linkdirs` to the option.
 Then start the option detection, and then automatically link to the target after passing.
@@ -3286,7 +3282,7 @@ If the option that test depends on passes, disable the test option.
 
 ##### option:after_check
 
-Execute this script after ###### option detection
+Execute this script after option detection
 
 After the option detection is complete, execute this script for some post-processing, or you can re-disable the option at this time:
 
