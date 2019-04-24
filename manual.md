@@ -24,9 +24,9 @@ It's according to the following rules:
 
 ## Documentation
 
-#### Conditions 
+#### Conditions
 
-Conditions are generally used to handle some special compilation platforms. 
+Conditions are generally used to handle some special compilation platforms.
 
 | Interfaces                  | Description                               | Support version             |
 | -------------------------   | ----------------------------------------  | --------------------------- |
@@ -41,7 +41,7 @@ Conditions are generally used to handle some special compilation platforms.
 | [has_config](#has_config)   | Is the given configs enabled?             | >= 2.2.2                    |
 | [has_package](#has_package) | Is the given dependent package enabled?   | >= 2.2.3                    |
 
-##### is_os 
+##### is_os
 
 ###### Is the current compilation target system
 
@@ -212,13 +212,13 @@ target("test")
 You can switch the target kind by configuration command.
 
 ```bash
-# compile the static library
+# compile as static library
 $ xmake f -k static
 $ xmake
 ```
 
 ```bash
-# compile the shared library
+# compile as shared library
 $ xmake f -k shared
 $ xmake
 ```
@@ -228,12 +228,12 @@ $ xmake
 ###### Is the given options enabled
 
 <p class="tips">
-This interface has been deprecated after v2.2.2, please use [has_config](#has_config) instead of it.
+This interface has been deprecated after v2.2.2, please use [has_config](#has_config) instead.
 </p>
 
-You can this api to check the custom option configuration command：`xmake f --xxxx=y`
+You can use this api to check the custom option configuration command：`xmake f --xxxx=y`
 
-For example, We want to enable the custom option: `xmake f --demo=y` and check it from `xmake.lua`.
+For example, we want to enable the custom option: `xmake f --demo=y` and check it from `xmake.lua`.
 
 ```lua
 if is_option("demo") then
@@ -273,7 +273,7 @@ end
 ```
 
 <p class="tips">
-This interface is not only able to determine the custom options defined through the [option](#option), 
+This interface is not only able to determine the custom options defined through the [option](#option),
 but also to determine the built-in global and local configuration.
 </p>
 
@@ -311,7 +311,7 @@ $ xmake f --test1=false
 ```
 
 <p class="tips">
-This interface can determine not only the built-in global and local configs, 
+This interface can determine not only the built-in global and local configs,
 but also the custom options defined through the [option](#option).
 </p>
 
@@ -340,7 +340,7 @@ If the remote dependencies are added via the optional add-on package added by `a
 Indicates that it does not exist, and then does some special processing for other flags definitions and even source file compilation controls.
 
 <p class="tips">
-The difference between this interface and [has_config](#has_config) is that [has_config](#has_config) is used for [option](#option) and it is used for [add_requires](#add_requires).
+The difference between this interface and [has_config](#has_config) is that [has_config](#has_config) is used for [option](#option) whereas this is used for [add_requires](#add_requires).
 </p>
 
 #### Global Interfaces
@@ -370,15 +370,15 @@ The global interface affects the whole project description scope and all sub-pro
 
 It is used to replace [add_subdirs](#add_subdirs) and [add_subfiles](#add_subfiles).
 
-In addition, this interface in 2.2.5 and later, provides some built-in helper functions, can be used directly after the use, specifically which built-in functions can be seen: HTTPS://github.com/xmake-io/xmake/tree /master/xmake/include
+In addition, in 2.2.5 and later, this interface provides some built-in helper functions, which can be used directly after the include, specifically which built-in functions can be seen at: https://github.com/xmake-io/xmake/tree/master/xmake/includes
 
-For a more complete description about this, we can see: [https://github.com/xmake-io/xmake/issues/342](https://github.com/xmake-io/xmake/issues/342 )
+For a more complete description of this, see: [https://github.com/xmake-io/xmake/issues/342](https://github.com/xmake-io/xmake/issues/342 )
 
 ##### set_modes
 
 ###### Set project compilation modes
 
-This is an optional api, just to make it easy for the plugin to get mode configuration information now.
+This is an optional api, just to make it easy for plugins to get mode configuration information.
 
 ```lua
 set_modes("debug", "release")
@@ -458,9 +458,9 @@ set_xmakever("2.1.0")
 
 ###### Add sub-project directories
 
-This interface will add an sub-project directories to the current `xmake.lua`, it will load the `xmake.lua` file of the sub-directories.
+This interface will add sub-project directories to the current `xmake.lua`, it will load the `xmake.lua` file of the sub-directories.
 
-For example, we have a following project directory tree:
+For example, assume we have the following project directory tree:
 
 ```
 ./tbox
@@ -475,13 +475,13 @@ For example, we have a following project directory tree:
 We can add sub-project `tbox` and `demo` directories to the root `xmake.lua`.
 
 ```lua
-add_subdirs("src/tbox") 
-if is_option("demo") then 
-    add_subdirs("src/demo") 
+add_subdirs("src/tbox")
+if is_option("demo") then
+    add_subdirs("src/demo")
 end
 ```
 
-By default, xmake will compile all the targets, if you only want to compile the specified target, you can do:
+By default, xmake will compile all targets. If you only want to compile a specific target, you can do:
 
 ```bash
 # only build `tbox` target
@@ -492,9 +492,9 @@ $ xmake build tbox
 
 ###### Add sub-project files
 
-`add_subfiles` is simular to [add_subdirs](#add_subdirs).
+`add_subfiles` is similar to [add_subdirs](#add_subdirs).
 
-The only difference is that this interface specifies the path where the 'xmake.lua' file directly, rather than a directory.
+The only difference is that this interface specifies the path to the 'xmake.lua' file directly, rather than a directory.
 
 for example:
 
@@ -506,7 +506,7 @@ add_subfiles("src/tbox/xmake.lua")
 
 ###### Add module directories
 
-The builtin modules are placed in the 'xmake/modules' directory, but for some user-defined modules for a specific project, you can configure additional module directory is specified in the 'xmake.lua`.
+The builtin modules are placed in the 'xmake/modules' directory, but for user-defined modules for a specific project, you can configure additional module directories in the 'xmake.lua` file.
 
 ```lua
 add_moduledirs("$(projectdir)/modules")
@@ -517,7 +517,7 @@ xmake will load the given module in the given directory when calling `import`.
 
 ###### Add plugin directories
 
-The builtin plugins are placed in the 'xmake/plugins' directory, but for some user-defined plugins for a specific project, you can configure additional plugin directory is specified in the 'xmake.lua`.
+The builtin plugins are placed in the 'xmake/plugins' directory, but for user-defined plugins for a specific project, you can configure additional plugin directories in the 'xmake.lua` file.
 
 ```lua
 add_plugindirs("$(projectdir)/plugins")
@@ -528,9 +528,9 @@ xmake will load all plugins in the given directory.
 
 ###### Add package directories
 
-By setting up a dependency package directory, you can easily integrate some third-party dependent libraries, 
-taking the tbox project as an example, and its package directory is as follows:
- 
+By setting up a dependency package directory, you can easily integrate some third-party dependent libraries.
+Taking the tbox project as an example, its package directory is as follows:
+
 
 ```
 tbox.pkg
@@ -556,7 +556,7 @@ target("tbox")
     add_packages("zlib", "polarssl", "pcre", "mysql")
 ```
 
-xmake will check these packages automatically and link them if exists, and we can disable them manually.
+xmake will check these packages automatically and link with them if they exist, and we can disable them manually.
 
 ```bash
 $ xmake f --openssl=n
@@ -564,7 +564,7 @@ $ xmake f --openssl=n
 
 ##### get_config
 
-###### Get the configuration value 
+###### Get the configuration value
 
 This interface is introduced from version 2.2.2 to get the configuration value from the given name.
 
@@ -580,7 +580,7 @@ end
 
 This interface is introduced from version 2.2.2 to set the default configuration value in xmake.lua.
 
-Many previous configurations, including the build toolchain, build directory, etc. 
+Many previous configurations, including the build toolchain, build directory, etc.
 We can only be configured by `$xmake f --name=value`. If we want to write a default value in xmake.lua, we can use the following method:
 
 ```lua
@@ -594,9 +594,9 @@ However, we can still modify the default configuration in xmake.lua by `$xmake f
 
 ##### add_requires
 
-###### Add required packages dependencies
+###### Add package dependencies
 
-Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: [http://semver.org/] (http://semver.org/)
+Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of semantic versioning, see: [http://semver.org/] (http://semver.org/)
 
 Some examples:
 
@@ -607,27 +607,27 @@ add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 
 The semantic version parser currently used by xmake is the [sv](https://github.com/uael/sv) library contributed by [uael](https://github.com/uael), which also has a description of the version. For detailed instructions, please refer to the following: [Version Description] (https://github.com/uael/sv#versions)
 
-Of course, if we have no special requirements for the current version of the dependency package, then we can write directly:
+Of course, if we have no special requirements for the version of the dependency package, we can omit the version:
 
 ```lua
 add_requires("tbox", "libpng", "zlib")
 ```
 
-This will use the latest version of the package known, or the source code compiled by the master branch. If the current package has a git repo address, we can also specify a specific branch version:
+This will use the latest known version of the package, or the source code compiled from the master branch. If the current package has a git repo address we can also specify a specific branch version:
 
 ```lua
 add_requires("tbox master")
 add_requires("tbox dev")
 ```
 
-If the specified dependency package is not supported by the current platform, or if the compilation and installation fails, then xmake will compile the error, which is reasonable for some projects that must rely on certain packages to work.
+If the specified dependency package is not supported by the current platform, or if the compilation and installation fails, then xmake will exit with an error, which is reasonable for some projects that must rely on certain packages to work.
 However, if some packages are optional dependencies, they can be set to optional packages even if they are not compiled properly.
 
 ```lua
 add_requires("tbox", {optional = true})
 ```
 
-With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library provided by the third-party package management, then you can set:
+With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library is provided by a third-party package manager, then you can set:
 
 ```lua
 add_requires("tbox", {system = false})
@@ -676,7 +676,7 @@ end
 
 We can switch dependencies by `$xmake f --luajit=y`.
 
-And we also added the group parameter to group the dependencies, all the dependencies under the same group, only one can be enabled, the order of the order depends on the order added by `add_requires`:
+And we also added the group parameter to group the dependencies, all the dependencies under the same group, only one can be enabled, the order of the dependencies is the same as the order in which they were added by `add_requires`:
 
 ```lua
 add_requires("openssl", {group = "ssl", optional = true})
@@ -686,7 +686,7 @@ target("test")
     add_packages("openssl", "mbedtls")
 ```
 
-After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, etc.
+After version 2.2.5, xmake supports third-party package managers, such as: conan, brew, vcpkg, etc.
 
 Add a homebrew dependency package:
 
@@ -733,7 +733,7 @@ checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
   -> CONAN::zlib/1.2.11@conan/stable  (debug)
-  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+  -> CONAN::OpenSSL/1.0.2n@conan/stable
 please input: y (y/n)
 
   => installing CONAN::zlib/1.2.11@conan/stable .. ok
@@ -946,7 +946,7 @@ add_defines("DEBUG")
 
 target("demo")                   -- add -DDEBUG
     set_kind("binary")
-    add_files("src/demo.c") 
+    add_files("src/demo.c")
 
 target("test")                   -- add -DDEBUG
     set_kind("binary")
@@ -961,9 +961,10 @@ target("test")                   -- add -DDEBUG
 Translating ..., help me please! [Edit this page](https://github.com/xmake-io/xmake/blob/master/docs/manual.md)
 </p>
 
-这是一个可选的api，如果不调用，那么`target("xxx")`之后的所有设置都是针对这个target进行的，除非进入其他`target`, `option`, `task`域。
-
-如果想设置完当前`target`后，显示离开`target`域，进入根域设置，那么可以通过这个api才操作，例如：
+This is an optional api. If not called, then all settings after
+`target("xxx")` are made for that target, unless you enter other
+`target`, `option` or `task` scope. If you want to leave the current
+`target` and enter the root scope setting, then you can use this api. For example:
 
 ```lua
 target("test")
@@ -971,21 +972,22 @@ target("test")
     add_files("src/*.c")
 target_end()
 
--- 此处已在根域
+-- Here we are in the root scope
 -- ...
 ```
 
-如果不调用这个api的话:
+If you don't call this api:
 
 ```lua
 target("test")
     set_kind("static")
     add_files("src/*.c")
 
--- 此处还在上面target域中，之后的设置还是针对test进行的设置
+-- Here we are in the target scope above, the subsequent settings are still
+set for test
 -- ...
 
--- 这个时候才离开test，进入另外一个target域中
+-- Enter another target scope
 target("test2")
     ...
 ```
@@ -994,13 +996,13 @@ target("test2")
 
 ###### Set target kind
 
-设置目标类型，目前支持的类型有：
+Set the target type. Currently supported types are:
 
-| 值     | 描述       |
+| Value | Description |
 | ------ | -----------|
-| binary | 二进制程序 |
-| static | 静态库程序 |
-| shared | 动态库程序 |
+| binary | Binary Program |
+| static | Static library program |
+| shared | dynamic library program |
 
 ```lua
 target("demo")
@@ -1011,14 +1013,14 @@ target("demo")
 
 ###### Strip target symbols
 
-设置当前目标的strip模式，目前支持一下模式：
+Set the current target strip mode, currently supports the mode:
 
-| 值     | 描述                                      |
+| Value | Description |
 | ------ | ----------------------------------------- |
-| debug  | 链接的时候，strip掉调试符号               |
-| all    | 链接的时候，strip掉所有符号，包括调试符号 |
+| debug | When you link, strip off debugging symbols |
+| all | When you link, strip all symbols, including debugging symbols |
 
-这个api一般在release模式下使用，可以生成更小的二进制程序。。
+This api is generally used in release mode and can generate smaller binary programs.
 
 ```lua
 target("xxxx")
@@ -1026,20 +1028,20 @@ target("xxxx")
 ```
 
 <p class="tip">
-这个api不一定非得在target之后使用，如果没有target指定，那么将会设置到全局模式。。
+This api does not have to be used after the target. If no target is specified, it will be set to global mode. .
 </p>
 
 ##### target:set_enabled
 
 ###### Enable or disable target
 
-如果设置`set_enabled(false)`，则会直接禁用对应的target，包括target的加载和信息获取，而[set_default](#targetset_default)仅仅只是设置默认不去编译，但是target还是能获取到相关信息的，默认也会被加载。
+If `set_enabled(false)` is set, the corresponding target will be directly disabled, including target loading and information acquisition, while [set_default](#targetset_default) is just set to not compile by default, but the target can still get related information. , the default will also be loaded.
 
 ##### target:set_default
 
 ###### Mark as default target
 
-这个接口用于设置给定工程目标是否作为默认构建，如果没有调用此接口进行设置，那么这个目标就是默认被构建的，例如：
+This interface is used to set whether the given project target is the default build. If this interface is not called for setting, then this target is built by default, for example:
 
 ```lua
 target("test1")
@@ -1052,28 +1054,28 @@ target("test3")
     ...
 ```
 
-上述代码的三个目标，在执行`xmake`, `xmake install`, `xmake package`, `xmake run`等命令的时候，如果不指定目标名，那么：
+The three goals of the above code, when executing the `xmake`, `xmake install`, `xmake package`, `xmake run` and other commands, if you do not specify the target name, then:
 
-| 目标名 | 行为                             |
+| Target Name | Behavior |
 | ------ | -------------------------------- |
-| test1  | 不会被默认构建、安装、打包和运行 |
-| test2  | 默认构建、安装、打包和运行       |
-| test3  | 默认构建、安装、打包和运行       |
+| test1 | will not be built, installed, packaged, and run by default |
+| test2 | Default build, install, package, and run |
+| test3 | Default build, install, package, and run |
 
-通过上面的例子，可以看到默认目标可以设置多个，运行的时候也会依次运行。
+Through the above example, you can see that the default target can be set more than one, and it will run in turn when running.
 
 <p class="tip">
-    需要注意的是，`xmake uninstall`和`xmake clean`命令不受此接口设置影响，因为用户大部分情况下都是喜欢清除和卸载所有。
+    Note that the `xmake uninstall` and `xmake clean` commands are not affected by this interface setting, as most users prefer to clean and unload all of them.
 </p>
 
-如果不想使用默认的目标，那么可以手动指定需要构建安装的目标：
+If you don't want to use the default target, you can manually specify which targets you need to build the installation:
 
 ```bash
 $ xmake build targetname
 $ xmake install targetname
 ```
 
-如果要强制构建安装所有目标，可以传入`[-a|--all]`参数：
+If you want to force the build to install all targets, you can pass in the `[-a|--all]` parameter:
 
 ```bash
 $ xmake build [-a|--all]
@@ -1084,65 +1086,65 @@ $ xmake install [-a|--all]
 
 ###### Set configuartion options
 
-添加选项依赖，如果通过[option](#option)接口自定义了一些选项，那么只有在指定`target`目标域下，添加此选项，才能进行关联生效。
+Add option dependencies. If you have customized some options through the [option](#option) interface, you can add associations only if you specify this option under the target target field.
 
 ```lua
--- 定义一个hello选项
+-- Define a hello option
 option("hello")
     set_default(false)
     set_showmenu(true)
     add_defines("HELLO_ENABLE")
 
 target("test")
-    -- 如果hello选项被启用了，这个时候就会将-DHELLO_ENABLE宏应用到test目标上去
+    -- If the hello option is enabled, this time the -DHELLO_ENABLE macro will be applied to the test target.
     set_options("hello")
 ```
 
 <p class="warning">
-只有调用`set_options`进行关联生效后，[option](#option) 中定义的一些设置才会影响到此`target`目标，例如：宏定义、链接库、编译选项等等
+Some settings defined in [option](#option) will affect this `target` target only after calling `set_options` for the association to take effect, such as macro definitions, link libraries, compile options, etc.
 </p>
 
 ##### target:set_symbols
 
 ###### Set symbol info
 
-设置目标的符号模式，如果当前没有定义target，那么将会设置到全局状态中，影响所有后续的目标。
+Set the symbol mode of the target. If no target is currently defined, it will be set to the global state, affecting all subsequent targets.
 
-目前主要支持一下几个级别：
+At present, we mainly support several levels:
 
-| 值     | 描述                   |
+| Value | Description |
 | ------ | ---------------------- |
-| debug  | 添加调试符号           |
-| hidden | 设置符号不可见         |
+| debug | Add debug symbols |
+| hidden | set symbol not visible |
 
-这两个值也可以同时被设置，例如：
+These two values ​​can also be set at the same time, for example:
 
 ```lua
--- 添加调试符号, 设置符号不可见
+-- Add debug symbols, set symbols are not visible
 set_symbols("debug", "hidden")
 ```
 
-如果没有调用这个api，默认是禁用调试符号的。。
+If this api is not called, the debug symbol is disabled by default. .
 
 ##### target:set_basename
 
 ###### Set the base name of target file
 
-默认情况下，生成的目标文件名基于`target("name")`中配置的值，例如：
+By default, the generated target file name is based on the value configured in `target("name")`, for example:
 
 ```lua
--- 目标文件名为：libxxx.a
+-- The target file name is: libxxx.a
 target("xxx")
     set_kind("static")
 
--- 目标文件名为：libxxx2.so
+-- The target file name is: libxxx2.so
 target("xxx2")
     set_kind("shared")
 ```
 
-默认的命名方式，基本上可以满足大部分情况下的需求，但是如果有时候想要更加定制化目标文件名
+The default naming method basically meets the needs of most situations, but if you want to customize the target file name sometimes
 
-例如，按编译模式和架构区分目标名，这个时候可以使用这个接口，来设置：
+For example, to distinguish the target name by compile mode and architecture, this time you can use this interface to set:
 
 ```lua
 target("xxx")
@@ -1150,64 +1152,64 @@ target("xxx")
     set_basename("xxx_$(mode)_$(arch)")
 ```
 
-如果这个时候，编译配置为：`xmake f -m debug -a armv7`，那么生成的文件名为：`libxxx_debug_armv7.a`
+if this time, the build configuration is: `xmake f -m debug -a armv7`, then the generated file name is: `libxxx_debug_armv7.a`
 
-如果还想进一步定制目标文件的目录名，可参考：[set_targetdir](#targetset_targetdir)。
+If you want to further customize the directory name of the target file, refer to: [set_targetdir](#targetset_targetdir).
 
-或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#targetafter_build)和[os.mv](#os-mv)。
+Or implement more advanced logic by writing custom scripts, see: [after_build](#targetafter_build) and [os.mv](#os-mv).
 
 ##### target:set_filename
 
 ###### Set the full name of target file
 
-它跟[set_basename](#targetset_basename)的区别在于，[set_basename](#targetset_basename)设置名字不带后缀跟前缀，例如：`libtest.a`，basename如果改成test2后就变成了`libtest2.a`。
+The difference between it and [set_basename](#targetset_basename) is that [set_basename](#targetset_basename) sets the name without a suffix and a prefix, for example: `libtest.a`, if the basename is changed to test2, it becomes `libtest2.a `.
 
-而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把`libtest.a`改成`test.dll`，这个对于[set_basename](#targetset_basename)是做不到的
+The modification of filename is to modify the entire target file name, including the prefix and suffix. For example, you can directly change `libtest.a` to `test.dll`, which is not available for [set_basename](#targetset_basename).
 
 ##### target:set_warnings
 
 ###### Set compilation warning level
 
-设置当前目标的编译的警告级别，一般支持一下几个级别：
+Set the warning level of the compilation of the current target, generally supporting several levels:
 
-| 值    | 描述                   | gcc/clang  | msvc                          |
+| Value | Description | gcc/clang | msvc |
 | ----- | ---------------------- | ---------- | ----------------------------- |
-| none  | 禁用所有警告           | -w         | -W0                           |
-| less  | 启用较少的警告         | -W1        | -W1                           |
-| more  | 启用较多的警告         | -W3        | -W3                           |
-| all   | 启用所有警告           | -Wall      | -W3 (-Wall too more warnings) |
-| error | 将所有警告作为编译错误 | -Werror    | -WX                           |
+| none | disable all warnings | -w | -W0 |
+| less | Enable fewer warnings | -W1 | -W1 |
+| more | Enable more warnings | -W3 | -W3 |
+| all | Enable all warnings | -Wall | -W3 (-Wall too more warnings) |
+| error | Use all warnings as compilation errors | -Werror | -WX |
 
-这个api的参数是可以混合添加的，例如：
+The parameters of this api can be added in combination, for example:
 
 ```lua
--- 启用所有警告，并且作为编译错误处理
+-- Enable all warnings and handle them as compilation errors
 set_warnings("all", "error")
 ```
 
-如果当前没有目标，调用这个api将会设置到全局模式。。
+If there is no target currently, calling this api will set it to global mode. .
 
 ##### target:set_optimize
 
-###### Set compilation optimization level
+###### Set competition optimization level
 
-设置目标的编译优化等级，如果当前没有设置目标，那么将会设置到全局状态中，影响所有后续的目标。
+Set the compile optimization level of the target. If no target is currently set, it will be set to the global state, affecting all subsequent targets.
 
-目前主要支持一下几个级别：
+At present, we mainly support several levels:
 
-| 值         | 描述                   | gcc/clang  | msvc         |
+| Value | Description | gcc/clang | msvc |
 | ---------- | ---------------------- | ---------- | ------------ |
-| none       | 禁用优化               | -O0        | -Od          |
-| fast       | 快速优化               | -O1        | default      |
-| faster     | 更快的优化             | -O2        | -Ox          |
-| fastest    | 最快运行速度的优化     | -O3        | -Ox -fp:fast |
-| smallest   | 最小化代码优化         | -Os        | -O1          |
-| aggressive | 过度优化               | -Ofast     | -Ox -fp:fast |
+| none | disable optimization | -O0 | -Od |
+| fast | quick optimization | -O1 | default |
+| faster | faster optimization | -O2 | -Ox |
+| fastest | Optimization of the fastest running speed | -O3 | -Ox -fp:fast |
+| smallest | Minimize code optimization | -Os | -O1 |
+| aggressive | over-optimization | -Ofast | -Ox -fp:fast |
 
-例如：
+E.g:
 
 ```lua
--- 最快运行速度的优化
+-- Optimization of the fastest running speed
 set_optimize("fastest")
 ```
 
@@ -1215,42 +1217,42 @@ set_optimize("fastest")
 
 ###### Set source code language standards
 
-设置目标代码编译的语言标准，如果当前没有目标存在，将会设置到全局模式中。。。
+Set the language standard for target code compilation. If no target exists, it will be set to global mode. . .
 
-支持的语言标准目前主要有以下几个：
+The supported language standards currently have the following main ones:
 
-| 值         | 描述                   |
+| Value | Description |
 | ---------- | ---------------------- |
-| ansi       | c语言标准: ansi        |
-| c89        | c语言标准: c89         |
-| gnu89      | c语言标准: gnu89       |
-| c99        | c语言标准: c99         |
-| gnu99      | c语言标准: gnu99       |
-| cxx98      | c++语言标准: `c++98`   |
-| gnuxx98    | c++语言标准: `gnu++98` |
-| cxx11      | c++语言标准: `c++11`   |
-| gnuxx11    | c++语言标准: `gnu++11` |
-| cxx14      | c++语言标准: `c++14`   |
-| gnuxx14    | c++语言标准: `gnu++14` |
-| cxx1z      | c++语言标准: `c++1z`   |
-| gnuxx1z    | c++语言标准: `gnu++1z` |
-| cxx17      | c++语言标准: `c++17`   |
-| gnuxx17    | c++语言标准: `gnu++17` |
+| ansi | c language standard: ansi |
+| c89 | c language standard: c89 |
+| gnu89 | c language standard: gnu89 |
+| c99 | c language standard: c99 |
+| gnu99 | c language standard: gnu99 |
+| cxx98 | c++ language standard: `c++98` |
+| gnuxx98 | c++ language standard: `gnu++98` |
+| cxx11 | c++ language standard: `c++11` |
+| gnuxx11 | c++ language standard: `gnu++11` |
+| cxx14 | c++ language standard: `c++14` |
+| gnuxx14 | c++ language standard: `gnu++14` |
+| cxx1z | c++ language standard: `c++1z` |
+| gnuxx1z | c++ language standard: `gnu++1z` |
+| cxx17 | c++ language standard: `c++17` |
+| gnuxx17 | c++ language standard: `gnu++17` |
 
-c标准和c++标准可同时进行设置，例如：
+The c standard and the c++ standard can be set at the same time, for example:
 
 ```lua
--- 设置c代码标准：c99， c++代码标准：c++11
+-- Set c code standard: c99, c++ code standard: c++11
 set_languages("c99", "cxx11")
 ```
 
 <p class="warning">
-并不是设置了指定的标准，编译器就一定会按这个标准来编译，毕竟每个编译器支持的力度不一样，但是xmake会尽最大可能的去适配当前编译工具的支持标准。。。
+Instead of setting the specified standard, the compiler will compile according to this standard. After all, each compiler supports different strengths, but xmake will try to adapt the support standard of the current compiler tool to the greatest extent possible. . .
 <br><br>
-例如：
+E.g:
 <br>
-windows下vs的编译器并不支持按c99的标准来编译c代码，只能支持到c89，但是xmake为了尽可能的支持它，所以在设置c99的标准后，xmake会强制按c++代码模式去编译c代码，从一定程度上解决了windows下编译c99的c代码问题。。
-用户不需要去额外做任何修改。。
+Windows vs compiler does not support compiling c code according to c99 standard, can only support c89, but xmake in order to support it as much as possible, so after setting c99 standard, xmake will force to compile according to c++ code mode c code, to some extent solved the c code problem of compiling c99 under windows. .
+Users do not need to make any additional modifications. .
 </p>
 
 ##### target:set_headerdir
@@ -1258,33 +1260,33 @@ windows下vs的编译器并不支持按c99的标准来编译c代码，只能支�
 ###### Set output directories for header files
 
 <p class="warning">
-注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
+Note that this interface has been deprecated after version 2.2.5, please use [add_headerfiles](#targetadd_headerfiles) instead.
 </p>
 
-设置头文件的输出目录，默认输出到build目录中。
+Set the output directory of the header file, and output it to the build directory by default.
 
 ```lua
 target("test")
     set_headerdir("$(buildir)/include")
 ```
 
-对于需要安装哪些头文件，可参考[add_headers](#targetadd_headers)接口。
+For the header files that need to be installed, refer to the [add_headers](#targetadd_headers) interface.
 
 ##### target:set_targetdir
 
 ###### Set output directories for target files
 
-设置目标程序文件的输出目录，一般情况下，不需要设置，默认会输出在build目录下
+Set the output directory of the target program file. Under normal circumstances, you do not need to set it. The default output will be in the build directory.
 
-而build的目录可以在工程配置的时候，手动修改：
+The build directory can be manually modified during project configuration:
 
 ```bash
-xmake f -o /tmp/build
+Xmake f -o /tmp/build
 ```
 
-修改成`/tmp/build`后，目标文件默认输出到`/tmp/build`下面。
+After modifying to `/tmp/build`, the target file is output to `/tmp/build` by default.
 
-而如果用这个接口去设置，就不需要每次敲命令修改了，例如：
+And if you use this interface to set, you don't need to change the command every time, for example:
 
 ```lua
 target("test")
@@ -1292,14 +1294,14 @@ target("test")
 ```
 
 <p class="tip">
-如果显示设置了`set_targetdir`， 那么优先选择`set_targetdir`指定的目录为目标文件的输出目录。
+If the display sets `set_targetdir`, then the directory specified by `set_targetdir` is preferred as the output directory of the target file.
 </p>
 
 ##### target:set_objectdir
 
 ###### Set output directories for object files
 
-设置目标target的对象文件(`*.o/obj`)的输出目录，例如:
+Set the output directory of the object file (`*.o/obj`) of the target target, for example:
 
 ```lua
 target("test")
@@ -1310,7 +1312,7 @@ target("test")
 
 ###### Set output directories for dependent files
 
-设置目标target的编译依赖文件(`.deps`)的输出目录，例如:
+Set the output directory of the compile dependency file (`.deps`) of the target target, for example:
 
 ```lua
 target("test")
@@ -1319,10 +1321,10 @@ target("test")
 
 ##### target:add_imports
 
-###### Add imported modules for the custom script
+###### Add imports modules for the custom script
 
-通常，我们在[on_build](#targeton_build)等自定义脚本内部，可以通过`import("core.base.task")`的方式导入扩展模块，
-但是对于自定义脚本比较多的情况下，每个自定义脚本都重复导入一遍，非常的繁琐，那么可以通过这个接口，实现预先导入，例如：
+Usually, we can import extension modules via `import("core.base.task")` inside a custom script such as [on_build](#targeton_build).
+However, in the case of a large number of custom scripts, each custom script is repeatedly imported again, which is very cumbersome. Then you can implement pre-import through this interface, for example:
 
 ```lua
 target("test")
@@ -1335,18 +1337,18 @@ target("test")
     on_build(function (target)
         import("core.base.task")
         import("core.project.project")
-        
+
         task.run("xxxx")
     end)
     on_install(function (target)
         import("core.base.task")
         import("core.project.project")
-        
+
         task.run("xxxx")
     end)
 ```
 
-通过此接口可以简化为：
+This interface can be simplified to:
 
 ```lua
 target("test")
@@ -1366,10 +1368,10 @@ target("test")
 
 ###### Add custom compilation rule to target
 
-我们可以通过预先设置规则支持的文件后缀，来扩展其他文件的构建支持：
+We can extend the build support for other files by pre-setting the file suffixes supported by the rules:
 
 ```lua
--- 定义一个markdown文件的构建规则
+-- Define a build rule for a markdown file
 rule("markdown")
     set_extensions(".md", ".markdown")
     on_build(function (target, sourcefile)
@@ -1378,22 +1380,22 @@ rule("markdown")
 
 target("test")
     set_kind("binary")
-    
-    -- 使test目标支持markdown文件的构建规则
+
+    -- Make the test target support the construction rules of the markdown file
     add_rules("markdown")
 
-    -- 添加markdown文件的构建
+    -- Adding a markdown file to build
     add_files("src/*.md")
     add_files("src/*.markdown")
 ```
 
-我们也可以指定应用局部文件到规则，具体使用见：[add_files](#targetadd_files)。
+We can also specify the application of local files to the rules, see: [add_files] (#targetadd_files).
 
 ##### target:on_load
 
 ###### Run custom load target configuartion script
 
-在target初始化加载的时候，将会执行此脚本，在里面可以做一些动态的目标配置，实现更灵活的目标描述定义，例如：
+This script will be executed when the target is initialized and loaded, and some dynamic target configurations can be made to achieve more flexible target description definitions, for example:
 
 ```lua
 target("test")
@@ -1404,26 +1406,26 @@ target("test")
     end)
 ```
 
-可以在`on_load`里面，通过`target:set`, `target:add` 来动态添加各种target属性。
+You can dynamically add various target attributes in `on_load` via `target:set`, `target:add`.
 
 ##### target:on_build
 
 ###### Run custom build target script
 
-覆盖target目标默认的构建行为，实现自定义的编译过程，一般情况下，并不需要这么做，除非确实需要做一些xmake默认没有提供的编译操作。
+Override the target build behavior of the target target, implement a custom compilation process, in general, do not need to do this, unless you really need to do some compiler operations that xmake does not provide by default.
 
-你可以通过下面的方式覆盖它，来自定义编译操作：
+You can override it by following the steps below to customize the compilation:
 
 ```lua
 target("test")
 
-    -- 设置自定义编译脚本
-    on_build(function (target) 
+    -- Set up custom build scripts
+    on_build(function (target)
         print("build it")
     end)
 ```
 
-注：2.1.5版本之后，所有target的自定义脚本都可以针对不同平台和架构，分别处理，例如：
+Note: After version 2.1.5, all target custom scripts can be processed separately for different platforms and architectures, for example:
 
 ```lua
 target("test")
@@ -1432,9 +1434,9 @@ target("test")
     end)
 ```
 
-其中如果第一个参数为字符串，那么就是指定这个脚本需要在哪个`平台|架构`下，才会被执行，并且支持模式匹配，例如`arm*`匹配所有arm架构。
+If the first parameter is a string, then it is specified in which platform_architecture the script needs to be executed, and mode matching is supported, for example, `arm*` matches all arm architectures.
 
-当然也可以只设置平台，不设置架构，这样就是匹配指定平台下，执行脚本：
+Of course, you can also set the platform only, do not set the architecture, this is to match the specified platform, execute the script:
 
 ```lua
 target("test")
@@ -1444,14 +1446,14 @@ target("test")
 ```
 
 <p class="tip">
-一旦对这个target目标设置了自己的build过程，那么xmake默认的构建过程将不再被执行。
+Once the build process is set for this target target, the default build process for xmake will no longer be executed.
 </p>
 
 ##### target:on_build_file
 
 ###### Run custom build single file script
 
-通过此接口，可以用来hook指定target内置的构建过程，替换每个源文件编译过程：
+Through this interface, you can use hook to specify the built-in build process of the target, replacing each source file compilation process:
 
 ```lua
 target("test")
@@ -1462,15 +1464,15 @@ target("test")
     end)
 ```
 
-上面代码中的`opt.origin`存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用`opt.origin`就行了。
+The `opt.origin` in the above code has a built-in build script. If you want to call the built-in build script to compile the source file after hooking, just continue to call `opt.origin`.
 
-如果不想重写内置的编译脚本，仅仅只是在编译前后添加一些自己的处理，其实用：[target.before_build_file](#targetbefore_build_file)和[target.after_build_file](#targetafter_build_file)会更加方便，不需要调用`opt.origin`。
+If you don't want to rewrite the built-in build script, just add some of your own processing before and after compiling. Its utility: [target.before_build_file](#targetbefore_build_file) and [target.after_build_file](#targetafter_build_file) will be more convenient and you don't need to call it. Opt.origin`.
 
 ##### target:on_build_files
 
 ###### Run custom build files script
 
-通过此接口，可以用来hook指定target内置的构建过程，替换一批同类型源文件编译过程：
+Through this interface, you can use hook to specify the built-in build process of the target, and replace a batch of the same type of source file compilation process:
 
 ```lua
 target("test")
@@ -1481,128 +1483,128 @@ target("test")
     end)
 ```
 
-设置此接口后，对应源文件列表中文件，就不会出现在自定义的[target.on_build_file](#targeton_build_file)了，因为这个是包含关系。
+After setting this interface, the corresponding file in the source file list will not appear in the custom [target.on_build_file](#targeton_build_file), because this is an inclusion relationship.
 
-其中sourcebatch描述了这批同类型源文件：
+Where sourcebatch describes the same source files of the same type:
 
-* `sourcebatch.sourcekind`: 获取这批源文件的类型，比如：cc, as, ..
-* `sourcebatch.sourcefiles()`: 获取源文件列表
-* `sourcebatch.objectfiles()`: 获取对象文件列表
-* `sourcebatch.dependfiles()`: 获取对应依赖文件列表，存有源文件中编译依赖信息，例如：xxx.d
+* `sourcebatch.sourcekind`: Get the type of this batch of source files, for example: cc, as, ..
+* `sourcebatch.sourcefiles()`: get the list of source files
+* `sourcebatch.objectfiles()`: get the list of object files
+* `sourcebatch.dependfiles()`: Get the list of corresponding dependent files, compile dependency information in the stored source file, for example: xxx.d
 
-上面代码中的`opt.origin`存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用`opt.origin`就行了。
+The `opt.origin` in the above code has a built-in build script. If you want to call the built-in build script to compile the source file after hooking, just continue to call `opt.origin`.
 
 ##### target:on_clean
 
 ###### Run custom clean files script
 
-覆盖target目标的`xmake [c|clean}`的清理操作，实现自定义清理过程。
+Override the cleanup operation of the target target's `xmake [c|clean}` to implement a custom cleanup process.
 
 ```lua
 target("test")
 
-    -- 设置自定义清理脚本
-    on_clean(function (target) 
+    -- Set up a custom cleanup script
+    on_clean(function (target)
 
-        -- 仅删掉目标文件
+        -- Delete only target files
         os.rm(target:targetfile())
     end)
 ```
 
-一些target接口描述如下：
+Some target interfaces are described as follows:
 
-| target接口                          | 描述                                                             |
-| ----------------------------------- | ---------------------------------------------------------------- |
-| target:name()                       | 获取目标名                                                       |
-| target:targetfile()                 | 获取目标文件路径                                                 |
-| target:get("kind")                  | 获取目标的构建类型                                               |
-| target:get("defines")               | 获取目标的宏定义                                                 |
-| target:get("xxx")                   | 其他通过 `set_/add_`接口设置的target信息，都可以通过此接口来获取 |
-| target:add("links", "pthread")      | 添加目标设置                                                     |
-| target:set("links", "pthread", "z") | 覆写目标设置                                                     |
-| target:deps()                       | 获取目标的所有依赖目标                                           |
-| target:dep("depname")               | 获取指定的依赖目标                                               |
-| target:sourcebatches()              | 获取目标的所有源文件列表                                         |
+| target interface                    | description                                  |
+| ----------------------------------- | -------------------------------------------- |
+| target:name()                       | Get the target name                          |
+| target:targetfile()                 | Get the target file path                     |
+| target:get("kind")                  | Get the build type of the target             |
+| target:get("defines")               | Get the macro definition of the target       |
+| target:get("xxx")                   | Other target information set by the `set_/add_` interface can be obtained through this interface |
+| target:add("links", "pthread")      | Add target settings                          |
+| target:set("links", "pthread", "z") | Override target settings                     |
+| target:deps()                       | Get all dependent targets of the target      |
+| target:dep("depname")               | Get the specified dependency target          |
+| target:sourcebatches()              | Get a list of all source files for the target |
 
 ##### target:on_package
 
-###### Run custom package target script 
+###### Run custom package target script
 
-覆盖target目标的`xmake [p|package}`的打包操作，实现自定义打包过程，如果你想对指定target打包成自己想要的格式，可以通过这个接口自定义它。
+Override the target object's `xmake [p|package}` package operation to implement the custom packaging process. If you want to package the specified target into the format you want, you can customize it through this interface.
 
-这个接口还是挺实用的，例如，编译完jni后，将生成的so，打包进apk包中。
+This interface is quite practical. For example, after compiling jni, the generated so is packaged into the apk package.
 
 ```lua
--- 定义一个android app的测试demo
+-- Define a test demo for an android app
 target("demo")
 
-    -- 生成动态库：libdemo.so
+    -- Generate dynamic libraries: libdemo.so
     set_kind("shared")
 
-    -- 设置对象的输出目录，可选
+    -- Set the output directory of the object, optional
     set_objectdir("$(buildir)/.objs")
 
-    -- 每次编译完的libdemo.so的生成目录，设置为app/libs/armeabi
+    -- Every time you compile the build directory of libdemo.so, set it to app/libs/armeabi
     set_targetdir("libs/armeabi")
 
-    -- 添加jni的代码文件
+    -- Add jni code files
     add_files("jni/*.c")
 
-    -- 设置自定义打包脚本，在使用xmake编译完libdemo.so后，执行xmake p进行打包
-    -- 会自动使用ant将app编译成apk文件
+    -- Set up a custom package script. After compiling libdemo.so with xmake, execute xmake p to package
+    -- will automatically compile the app into an apk file using ant
     --
-    on_package(function (target) 
+    on_package(function (target)
 
-        -- 使用ant编译app成apk文件，输出信息重定向到日志文件
-        os.run("ant debug") 
+        -- Use ant to compile the app into an apk file, and redirect the output to a log file.
+        os.run("ant debug")
     end)
 ```
 
 ##### target:on_install
 
-###### Run custom install target file script 
+###### Run custom install target file script
 
-覆盖target目标的`xmake [i|install}`的安装操作，实现自定义安装过程。
+Override the installation of `xmake [i|install}` of the target target to implement a custom installation process.
 
-例如，将生成的apk包，进行安装。
+For example, the generated apk package will be installed.
 
 ```lua
 target("test")
 
-    -- 设置自定义安装脚本，自动安装apk文件
-    on_install(function (target) 
+    -- Set up a custom installation script to automatically install apk files
+    on_install(function (target)
 
-        -- 使用adb安装打包生成的apk文件
+        -- Use adb to install packaged apk files
         os.run("adb install -r ./bin/Demo-debug.apk")
     end)
 ```
 
 ##### target:on_uninstall
 
-###### Run custom uninstall target file script 
+###### Run custom uninstall target file script
 
-覆盖target目标的`xmake [u|uninstall}`的卸载操作，实现自定义卸载过程。
+Override the uninstallation of `xmake [u|uninstall}` of the target target to implement a custom uninstall process.
 
 ```lua
 target("test")
-    on_uninstall(function (target) 
+    on_uninstall(function (target)
         ...
     end)
 ```
 
 ##### target:on_run
 
-###### Run custom run target script  
+###### Run custom run target script
 
-覆盖target目标的`xmake [r|run}`的运行操作，实现自定义运行过程。
+Override the running operation of the target target's `xmake [r|run}` to implement a custom running process.
 
-例如，运行安装好的apk程序：
+For example, run the installed apk program:
 
 ```lua
 target("test")
 
-    -- 设置自定义运行脚本，自动运行安装好的app程序，并且自动获取设备输出信息
-    on_run(function (target) 
+    -- Set custom run scripts, automatically run the installed app, and automatically get device output information
+    on_run(function (target)
 
         os.run("adb shell am start -n com.demo/com.demo.DemoTest")
         os.run("adb logcat")
@@ -1613,7 +1615,7 @@ target("test")
 
 ###### Run custom script before building target
 
-并不会覆盖默认的构建操作，只是在构建之前增加一些自定义的操作。
+It does not override the default build operation, just add some custom actions before building.
 
 ```lua
 target("test")
@@ -1626,7 +1628,7 @@ target("test")
 
 ###### Run custom script before building single file
 
-通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之前执行一些自定义脚本：
+Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts before each source file compilation process:
 
 ```lua
 target("test")
@@ -1640,7 +1642,7 @@ target("test")
 
 ###### Run custom script before building files
 
-通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之前执行一些自定义脚本：
+Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts before a batch of source files of the same type:
 
 ```lua
 target("test")
@@ -1655,7 +1657,7 @@ target("test")
 
 ###### Run custom script before cleaning target
 
-并不会覆盖默认的清理操作，只是在清理之前增加一些自定义的操作。
+It does not override the default cleanup operation, just add some custom actions before cleaning.
 
 ```lua
 target("test")
@@ -1668,7 +1670,7 @@ target("test")
 
 ###### Run custom script before packaging target
 
-并不会覆盖默认的打包操作，只是在打包之前增加一些自定义的操作。
+It does not override the default packaging operation, just add some custom operations before packaging.
 
 ```lua
 target("test")
@@ -1681,7 +1683,7 @@ target("test")
 
 ###### Run custom script before installing target
 
-并不会覆盖默认的安装操作，只是在安装之前增加一些自定义的操作。
+It does not override the default installation operation, just add some custom actions before installation.
 
 ```lua
 target("test")
@@ -1694,7 +1696,7 @@ target("test")
 
 ###### Run custom script before uninstalling target
 
-并不会覆盖默认的卸载操作，只是在卸载之前增加一些自定义的操作。
+It does not override the default uninstall operation, just add some custom actions before uninstalling.
 
 ```lua
 target("test")
@@ -1707,7 +1709,7 @@ target("test")
 
 ###### Run custom script before running target
 
-并不会覆盖默认的运行操作，只是在运行之前增加一些自定义的操作。
+It does not override the default run operation, just add some custom actions before running.
 
 ```lua
 target("test")
@@ -1720,9 +1722,9 @@ target("test")
 
 ###### Run custom script after building target
 
-并不会覆盖默认的构建操作，只是在构建之后增加一些自定义的操作。
+It does not override the default build operation, just add some custom actions after the build.
 
-例如，对于ios的越狱开发，构建完程序后，需要用`ldid`进行签名操作
+For example, for jailbreak development of ios, after the program is built, you need to use `ldid` for signature operation.
 
 ```lua
 target("test")
@@ -1735,7 +1737,7 @@ target("test")
 
 ###### Run custom script after building single file
 
-通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之后执行一些自定义脚本：
+Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts after each source file compilation process:
 
 ```lua
 target("test")
@@ -1749,7 +1751,7 @@ target("test")
 
 ###### Run custom script after building files
 
-通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之后执行一些自定义脚本：
+Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts after a batch of source files of the same type:
 
 ```lua
 target("test")
@@ -1763,9 +1765,10 @@ target("test")
 
 ###### Run custom script after cleaning target
 
-并不会覆盖默认的清理操作，只是在清理之后增加一些自定义的操作。
+It does not override the default cleanup operation, just add some custom actions after cleanup.
 
-一般可用于清理编译某target自动生成的一些额外的临时文件，这些文件xmake默认的清理规则可能没有清理到，例如：
+Generally used to clean up some extra temporary files automatically generated by a target. The default cleanup rules of these files may not be cleaned up.
+To, for example:
 
 ```lua
 target("test")
@@ -1778,7 +1781,7 @@ target("test")
 
 ###### Run custom script after packaging target
 
-并不会覆盖默认的打包操作，只是在打包之后增加一些自定义的操作。
+It does not override the default packaging operation, just add some custom operations after packaging.
 
 ```lua
 target("test")
@@ -1791,7 +1794,7 @@ target("test")
 
 ###### Run custom script after installing target
 
-并不会覆盖默认的安装操作，只是在安装之后增加一些自定义的操作。
+It does not override the default installation operation, just add some custom actions after installation.
 
 ```lua
 target("test")
@@ -1803,7 +1806,7 @@ target("test")
 
 ###### Run custom script after uninstalling target
 
-并不会覆盖默认的卸载操作，只是在卸载之后增加一些自定义的操作。
+It does not override the default uninstall operation, just add some custom actions after uninstalling.
 
 ```lua
 target("test")
@@ -1816,7 +1819,7 @@ target("test")
 
 ###### Run custom script after running target
 
-并不会覆盖默认的运行操作，只是在运行之后增加一些自定义的操作。
+It does not override the default run operation, just add some custom actions after the run.
 
 ```lua
 target("test")
@@ -1831,49 +1834,49 @@ target("test")
 ###### Set auto-generated config header file
 
 <p class="warning">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
-2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
+After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
+After the 2.1.5 version, this interface has been deprecated, please use [set_config_header](#targetset_config_header).
 </p>
 
-如果你想在xmake配置项目成功后，或者自动检测某个选项通过后，把检测的结果写入配置头文件，那么需要调用这个接口来启用自动生成`config.h`文件。
+If you want to write the result of the test to the configuration header after the xmake configuration project succeeds, or automatically detect an option, you need to call this interface to enable automatic generation of the `config.h` file.
 
-使用方式例如：
+How to use, for example:
 
 ```lua
 target("test")
 
-    -- 启用并设置需要自动生成的config.h文件路径
+    -- Enable and set the path to the config.h file that needs to be automatically generated
     set_config_h("$(buildir)/config.h")
 
-    -- 设置自动检测生成的宏开关的名字前缀
+    -- Set the name prefix of the macro switch generated by automatic detection
     set_config_h_prefix("TB_CONFIG")
 ```
 
-当这个target中通过下面的这些接口，对这个target添加了相关的选项依赖、包依赖、接口依赖后，如果某依赖被启用，那么对应的一些宏定义配置，会自动写入被设置的`config.h`文件中去。
+When the target passes the following interfaces, the related option dependencies, package dependencies, and interface dependencies are added to the target. If a dependency is enabled, the corresponding macro definition configuration will be automatically written to the set `config. Go to the .h` file.
 
 * [add_options](#targetadd_options)
 * [add_packages](#targetadd_packages)
 * [add_cfuncs](#targetadd_cfuncs)
-* [add_cxxfuncs](#targetadd_cxxfuncs) 
+* [add_cxxfuncs](#targetadd_cxxfuncs)
 
-这些接口，其实底层都用到了[option](#option)选项中的一些检测设置，例如：
+These interfaces, in fact, use some of the detection settings in the [option] (#option) option, for example:
 
 ```lua
 option("wchar")
 
-    -- 添加对wchar_t类型的检测
+    -- Add detection of wchar_t type
     add_ctypes("wchar_t")
 
-    -- 如果检测通过，自动生成 TB_CONFIG_TYPE_HAVE_WCHAR的宏开关到config.h
+    -- If the test passes, automatically generate a macro switch of TB_CONFIG_TYPE_HAVE_WCHAR to config.h
     add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")
 
 target("test")
 
-    -- 启用头文件自动生成
+    -- Enable automatic generation of header files
     set_config_h("$(buildir)/config.h")
     set_config_h_prefix("TB_CONFIG")
 
-    -- 添加对wchar选项的依赖关联，只有加上这个关联，wchar选项的检测结果才会写入指定的config.h中去
+    -- Add dependency on the wchar option. Only with this association, the detection result of the wchar option will be written to the specified config.h.
     add_options("wchar")
 ```
 
@@ -1882,20 +1885,20 @@ target("test")
 ###### Set macro prefix in auto-generated config header
 
 <p class="warning">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
-2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
+After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
+After the 2.1.5 version, this interface has been deprecated, please use [set_config_header](#targetset_config_header).
 </p>
 
-具体使用见：[set_config_h](#targetset_config_h)
+For details, see: [set_config_h](#targetset_config_h)
 
-如果设置了：
+If set:
 
 ```lua
 target("test")
     set_config_h_prefix("TB_CONFIG")
 ```
 
-那么，选项中`add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")`的$(prefix)会自动被替换成新的前缀值。
+Then, the $(prefix) of `add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")` in the option is automatically replaced with the new prefix value.
 
 
 ##### target:set_config_header
@@ -1903,31 +1906,31 @@ target("test")
 ###### Set macro prefix in auto-generated config header and prefix
 
 <p class="warning">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
-2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
+After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
+After the 2.1.5 version, this interface has been deprecated, please use [set_config_header](#targetset_config_header).
 </p>
 
-此接口是[set_config_h](#targetset_config_h)和[set_config_h_prefix](#targetset_config_h_prefix)的升级版本，2.1.5之后支持。
+This interface is an upgraded version of [set_config_h](#targetset_config_h) and [set_config_h_prefix](#targetset_config_h_prefix), supported after 2.1.5.
 
-如果你想在xmake配置项目成功后，或者自动检测某个选项通过后，把检测的结果写入配置头文件，那么需要调用这个接口来启用自动生成`config.h`文件。
+If you want to write the result of the test to the configuration header after the xmake configuration project succeeds, or automatically detect an option, you need to call this interface to enable automatic generation of the `config.h` file.
 
-使用方式例如：
+How to use, for example:
 
 ```lua
 target("test")
     set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG"})
 ```
 
-上面的代码，启用并设置需要自动生成的config.h文件路径，并且设置自动检测生成的宏开关的名字前缀：`TB_CONFIG`, 当然这个前缀的设置是可选的。
+The above code, enable and set the path to the config.h file that needs to be automatically generated, and set the name prefix of the macro switch generated by the automatic detection: `TB_CONFIG`, of course, the setting of this prefix is ​​optional.
 
 ```lua
 target("test")
     set_config_header("$(buildir)/config.h")
 ```
 
-如果不设置前缀，将会自动根据target名生成一个唯一字串。
+If you do not set a prefix, it will automatically generate a unique string based on the target name.
 
-2.1.8 之后版本，支持针对每个局部配置文件，单独设置版本号，优先于全局的[set_version](#set_version)，例如：
+After version 2.1.8, the version number is set separately for each local configuration file, which takes precedence over the global [set_version](#set_version), for example:
 
 ```lua
     set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG", version = "2.1.8", build = "%Y%m%d%H%M"})
@@ -1935,64 +1938,64 @@ target("test")
 
 ###### Generate configuration with built-in detection rules
 
-当这个target中通过下面的这些接口，对这个target添加了相关的选项依赖、包依赖、接口依赖后，如果某依赖被启用，那么对应的一些宏定义配置，会自动写入被设置的`config.h`文件中去。
+When the target passes the following interfaces, the related option dependencies, package dependencies, and interface dependencies are added to the target. If a dependency is enabled, the corresponding macro definition configuration will be automatically written to the set `config. Go to the .h` file.
 
 * [add_options](#targetadd_options)
 * [add_packages](#targetadd_packages)
 * [add_cfunc](#targetadd_cfunc)
 * [add_cfuncs](#targetadd_cfuncs)
-* [add_cxxfuncs](#targetadd_cxxfuncs) 
+* [add_cxxfuncs](#targetadd_cxxfuncs)
 
 ###### Customize detection and generate configuration header files
 
-这些接口，其实底层都用到了[option](#option)选项中的一些检测设置，例如：
+These interfaces, in fact, use some of the detection settings in the [option] (#option) option, for example:
 
 ```lua
 option("wchar")
 
-    -- 添加对wchar_t类型的检测
+    -- Add detection of wchar_t type
     add_ctypes("wchar_t")
 
-    -- 如果检测通过，自动生成 TB_CONFIG_TYPE_HAVE_WCHAR的宏开关到config.h
+    -- If the test passes, automatically generate a macro switch of TB_CONFIG_TYPE_HAVE_WCHAR to config.h
     add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")
 
 target("test")
 
-    -- 启用头文件自动生成
+    -- Enable automatic generation of header files
     set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG"})
 
-    -- 添加对wchar选项的依赖关联，只有加上这个关联，wchar选项的检测结果才会写入指定的config.h中去
+    -- Add dependency on the wchar option. Only with this association, the detection result of the wchar option will be written to the specified config.h.
     add_options("wchar")
 ```
 
-甚至我们可以在`xmake.lua`中自己定义个function，针对option进行封装，提供更加定制化的检测和生成config.h的过程
+Even we can define a function in `xmake.lua`, package the option, provide more customized detection and process of generating config.h.
 
-例如：这里有个需求，我们想批量检测一些头文件，如果存在则在config.h里面输出`HAVE_LIMITS_H`这样的宏开关，我们可以这么写
+For example: there is a requirement here, we want to batch check some header files, if there is a macro switch such as `HAVE_LIMITS_H` in config.h, we can write
 
 ```lua
 function add_checking_to_config(...)
 
-    -- 批量定义option检测规则，仅检测include文件
+    -- Batch definition of option detection rules, only include include files
     local options = {}
-    for _, header in ipairs({...}) do 
+    for _, header in ipairs({...}) do
         local define = header:upper():gsub("[%./]", "_")
         option(define)
             add_cincludes(header)
-            add_defines_h("HAVE_" .. define) -- 生成 HAVE_LIMITS_H 这样的宏开关到config.h 
+            add_defines_h("HAVE_" .. define) -- Generate a macro switch like HAVE_LIMITS_H ​​to config.h
         option_end()
         table.insert(options, define)
     end
 
-    -- 定义个内置__config空目标，仅用于关联设置automatedconfig.h，以及对应的options检测规则
-    -- 因为set_config_header在全局设置，会影响所有target，对每个target都会检测生成一次宏开关
+    -- Define a built-in __config empty target, only for association settings automatedconfig.h, and corresponding options detection rules
+    -- Because set_config_header is globally set, it will affect all targets, and each target will detect the generation of a macro switch.
     target("__config")
         set_kind("phony")
-        set_config_header("includes/automatedconfig.h")
+        set_cOnfig_header("includes/automatedconfig.h")
         add_options(options)
     target_end()
 end
 
--- 添加一些头文件检测
+-- Add some header file detection
 add_checking_to_config("arpa/inet.h", "limits.h", "fcntl.h", "xxxx.h")
 ```
 
@@ -2000,9 +2003,9 @@ add_checking_to_config("arpa/inet.h", "limits.h", "fcntl.h", "xxxx.h")
 
 ###### Set pre-compiled c header file
 
-xmake支持通过预编译头文件去加速c程序编译，目前支持的编译器有：gcc, clang和msvc。
+Xmake supports accelerating c program compilation by precompiling header files. Currently supported compilers are: gcc, clang, and msvc.
 
-使用方式如下：
+The usage is as follows:
 
 ```lua
 target("test")
@@ -2013,9 +2016,9 @@ target("test")
 
 ###### Set pre-compiled c++ header file
 
-xmake支持通过预编译头文件去加速c++程序编译，目前支持的编译器有：gcc, clang和msvc。
+Xmake supports precompiled header files to speed up C++ program compilation. Currently supported compilers are: gcc, clang, and msvc.
 
-使用方式如下：
+The usage is as follows:
 
 ```lua
 target("test")
@@ -2028,7 +2031,7 @@ target("test")
 
 
 
-添加当前目标的依赖目标，编译的时候，会去优先编译依赖的目标，然后再编译当前目标。。。
+Add the dependency target of the current target. When compiling, it will first compile the target of the dependency and then compile the current target. . .
 
 ```lua
 target("test1")
@@ -2043,20 +2046,20 @@ target("demo")
     add_deps("test1", "test2")
 ```
 
-上面的例子，在编译目标demo的时候，需要先编译test1, test2目标，因为demo会去用到他们
+In the above example, when compiling the target demo, you need to compile the test1 and test2 targets first, because the demo will use them.
 
 <p class="tip">
-target会自动继承依赖目标中的配置和属性，不需要额外调用`add_links`, `add_linkdirs`和`add_rpathdirs`等接口去关联依赖目标了。
+The target will automatically inherit the configuration and properties in the dependent target. You don't need to call the interfaces `add_links`, `add_linkdirs` and `add_rpathdirs` to associate the dependent targets.
 </p>
 
-并且继承关系是支持级联的，例如：
+And the inheritance relationship is to support cascading, for example:
 
 ```lua
 target("library1")
     set_kind("static")
     add_files("*.c")
-    add_includedirs("inc") -- 默认私有头文件目录不会被继承
-    add_includedirs("inc1", {public = true}) -- 此处的头文件相关目录也会被继承
+    add_includedirs("inc") -- The default private header file directory will not be inherited
+    add_includedirs("inc1", {public = true}) -- The header file related directory here will also be inherited
 
 target("library2")
     set_kind("static")
@@ -2068,39 +2071,39 @@ target("test")
     add_deps("library2")
 ```
 
-如果我们不想继承依赖target的任何配置，如何操作呢？
+If we don't want to inherit any configuration that depends on the target, what should we do?
 
 ```lua
 add_deps("dep1", "dep2", {inherit = false})
 ```
 
-通过显式设置inherit配置，来告诉xmake，这两个依赖的配置是否需要被继承，如果不设置，默认就是启用继承的。
+By explicitly setting the inherit configuration, tell xmake whether the two dependent configurations need to be inherited. If not set, the default is to enable inheritance.
 
-2.2.5版本之后，可通过 `add_includedirs("inc1", {public = true})`, 设置public为true, 将includedirs的设置公开给其他依赖的子target继承。 
+After version 2.2.5, you can set public to true by `add_includedirs("inc1", {public = true})`, and expose the settings of includers to other dependent child targets.
 
-目前对于target的编译链接flags相关接口设置，都是支持继承属性的，可以人为控制是否需要导出给其他target来依赖继承，目前支持的属性有：
+At present, for the target compilation link flags related interface settings, support for inheritance properties, you can artificially control whether you need to export to other targets to rely on inheritance, the currently supported properties are:
 
-| 属性      | 描述                                                             |
-| ----      | ----                                                             |
-| private   | 默认设置，作为当前target的私有配置，不会被依赖的其他target所继承 |
-| public    | 公有配置，当前target，依赖的子target都会被设置                   |
-| interface | 接口设置，仅被依赖的子target所继承设置，当前target不参与         |
+| Attribute | Description |
+| ---- | ---- |
+| private | The default setting, as the private configuration of the current target, will not be inherited by other targets that depend on |
+Public | public configuration, current target, dependent child targets will be set |
+Interface | interface settings, only inherited by the dependent child target, the current target does not participate |
 
-对于这块的详细说明，可以看下：https://github.com/xmake-io/xmake/issues/368
+For a detailed description of this, you can look at it: https://github.com/xmake-io/xmake/issues/368
 
 ##### target:add_links
 
 ###### Add link libraries
 
-为当前目标添加链接库，一般这个要与[add_linkdirs](#targetadd_linkdirs)配对使用。
+Add a link library for the current target, which is usually paired with [add_linkdirs](#targetadd_linkdirs).
 
 ```lua
 target("demo")
 
-    -- 添加对libtest.a的链接，相当于 -ltest 
+    -- Add a link to libtest.a, equivalent to -ltest
     add_links("test")
 
-    -- 添加链接搜索目录
+    -- Add link search directory
     add_linkdirs("$(buildir)/lib")
 ```
 
@@ -2108,9 +2111,9 @@ target("demo")
 
 ###### Add system link libraries
 
-这个接口使用上跟[add_links](#targetadd_links)类似，唯一的区别就是，通过这个接口添加的链接库顺序在所有`add_links`之后。
+This interface is similar to [add_links](#targetadd_links). The only difference is that the link library added through this interface is in the order of all `add_links`.
 
-因此主要用于添加系统库依赖，因为系统库的链接顺序是非常靠后的，例如：
+Therefore, it is mainly used to add system library dependencies, because the link order of the system libraries is very backward, for example:
 
 ```lua
 add_syslinks("pthread", "m", "dl")
@@ -2119,28 +2122,28 @@ target("demo")
     add_linkdirs("$(buildir)/lib")
 ```
 
-上面的配置，即使`add_syslinks`被优先提前设置了，但最后的链接顺序依然是：`-la -lb -lpthread -lm -ldl`
+The above configuration, even if `add_syslinks` is set in advance, the final link order is still: `-la -lb -lpthread -lm -ldl`
 
 ##### target:add_files
 
 ###### Add source files
 
-用于添加目标工程的源文件，甚至库文件，目前支持的一些文件类型：
+Source files used to add target projects, even library files, some file types currently supported:
 
-| 支持的源文件类型   | 描述                               |
+| Supported source file types | Description |
 | ------------------ | ---------------------------------- |
-| .c/.cpp/.cc/.cxx   | c++文件                            |
-| .s/.S/.asm         | 汇编文件                           |
-| .m/.mm             | objc文件                           |
-| .swift             | swift文件                          |
-| .go                | golang文件                         |
-| .o/.obj            | 对象文件                           |
-| .a/.lib            | 静态库文件，会自动合并库到目标程序 |
-| .rc                | msvc的资源文件                     |
+| .c/.cpp/.cc/.cxx | c++ file |
+| .s/.S/.asm | Assembly files |
+| .m/.mm | objc file |
+| .swift | swift file |
+| .go | golang file |
+| .o/.obj | Object File |
+| .a/.lib | Static library files, will automatically merge the library to the target program |
+| .rc | msvc resource file |
 
-其中通配符`*`表示匹配当前目录下文件，而`**`则匹配多级目录下的文件。
+The wildcard `*` indicates that the file in the current directory is matched, and `**` matches the file in the multi-level directory.
 
-例如：
+E.g:
 
 ```lua
 add_files("src/test_*.c")
@@ -2148,41 +2151,41 @@ add_files("src/xxx/**.cpp")
 add_files("src/asm/*.S", "src/objc/**/hello.m")
 ```
 
-`add_files`的使用其实是相当灵活方便的，其匹配模式借鉴了premake的风格，但是又对其进行了改善和增强。
+The use of `add_files` is actually quite flexible and convenient. Its matching mode draws on the style of premake, but it has been improved and enhanced.
 
-使得不仅可以匹配文件，还有可以在添加文件同时，过滤排除指定模式的一批文件。
+This makes it possible to not only match files, but also to filter out a batch of files in the specified mode while adding files.
 
-例如：
+E.g:
 
 ```lua
--- 递归添加src下的所有c文件，但是不包括src/impl/下的所有c文件
+-- Recursively add all c files under src, but not all c files under src/impl/
 add_files("src/**.c|impl/*.c")
 
--- 添加src下的所有cpp文件，但是不包括src/test.cpp、src/hello.cpp以及src下所有带xx_前缀的cpp文件
+-- Add all cpp files under src, but not including src/test.cpp, src/hello.cpp, and all cpp files with xx_ prefix under src
 add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 ```
 
-其中分隔符`|`之后的都是需要排除的文件，这些文件也同样支持匹配模式，并且可以同时添加多个过滤模式，只要中间用`|`分割就行了。。
+The separators after the ``` are all files that need to be excluded. These files also support the matching mode, and you can add multiple filtering modes at the same time, as long as the middle is separated by `|`. .
 
-添加文件的时候支持过滤一些文件的一个好处就是，可以为后续根据不同开关逻辑添加文件提供基础。
+One of the benefits of supporting the filtering of some files when adding files is that they provide the basis for subsequent file additions based on different switching logic.
 
 <p class="tip">
-为了使得描述上更加的精简，`|`之后的过滤描述都是基于起一个模式：`src/*.cpp` 中`*`之前的目录为基础的。
-所以上面的例子后面过滤的都是在src下的文件，这个是要注意的。
+In order to make the description more streamlined, the filter descriptions after `|` are based on a schema: the directory before `*` in `src/*.cpp`.
+So the above example is filtered after the file under src, this is to pay attention to.
 </p>
 
-2.1.6版本之后，对`add_files`进行了改进，支持基于files更细粒度的编译选项控制，例如：
+After version 2.1.6, `add_files` has been improved to support more fine-grained compilation option controls based on files, such as:
 
 ```lua
 target("test")
     add_defines("TEST1")
     add_files("src/*.c")
-    add_files("test/*.c", "test2/test2.c", {defines = "TEST2", languages = "c99", includedirs = ".", cflags = "-O0"})
+    add_files("test/*.c", "test2/test2.c", {defines = "TEST2", languages ​​= "c99", includedirs = ".", cflags = "-O0"})
 ```
 
-可以在`add_files`的最后一个参数，传入一个配置table，去控制指定files的编译选项，里面的配置参数跟target的一致，并且这些文件还会继承target的通用配置`-DTEST1`
+You can pass a configuration table in the last parameter of `add_files` to control the compilation options of the specified files. The configuration parameters are consistent with the target, and these files will also inherit the target's common configuration `-DTEST1`.
 
-2.1.9版本之后，支持添加未知的代码文件，通过设置rule自定义规则，实现这些文件的自定义构建，例如：
+After version 2.1.9, support for adding unknown code files, by setting rule custom rules, to achieve custom build of these files, for example:
 
 ```lua
 target("test")
@@ -2190,9 +2193,9 @@ target("test")
     add_files("src/test/*.md", {rule = "markdown"})
 ```
 
-关于自定义构建规则的使用说明，详细见：[构建规则](#构建规则)。
+For instructions on using custom build rules, see: [Building Rules] (#Building Rules).
 
-并且在2.1.9版本之后，可以通过force参数来强制禁用cxflags,cflags等编译选项的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：
+And after the 2.1.9 version, you can use the force parameter to force the automatic detection of cxflags, cflags and other compile options, directly into the compiler, even if the compiler may not support, it will also be set:
 
 ```lua
 add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
@@ -2202,7 +2205,7 @@ add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 
 ###### Remove source files
 
-通过此接口，可以从前面[add_files](targetadd_files)接口添加的文件列表中，删除指定的文件，例如：
+Through this interface, you can delete the specified file from the list of files added by the [add_files] (targetadd_files) interface, for example:
 
 ```lua
 target("test")
@@ -2210,9 +2213,9 @@ target("test")
     del_files("src/test.c")
 ```
 
-上面的例子，可以从`src`目录下添加除`test.c`以外的所有文件，当然这个也可以通过`add_files("src/*.c|test.c")`来达到相同的目的，但是这种方式更加灵活。
+In the above example, you can add all files except `test.c` from the `src` directory. Of course, this can also be done by `add_files("src/*.c|test.c").To achieve the same purpose, but this way is more flexible.
 
-例如，我们可以条件判断来控制删除哪些文件，并且此接口也支持[add_files](targetadd_files)的匹配模式，过滤模式，进行批量移除。
+For example, we can conditionally determine which files to delete, and this interface also supports the matching mode of [add_files] (targetadd_files), filtering mode, and bulk removal.
 
 ```lua
 target("test")
@@ -2224,23 +2227,23 @@ target("test")
     end
 ```
 
-通过上面的例子，我们可以看出`add_files`和`del_files`是根据调用顺序，进行顺序添加和删除的，并且通过`del_files("src/subdir/*.c|xxx.c")`删除一批文件，
-并且排除`src/subdir/xxx.c`（就是说，不删除这个文件）。
+Through the above example, we can see that `add_files` and `del_files` are added and deleted sequentially according to the calling sequence, and deleted by `del_files("src/subdir/*.c|xxx.c")` Batch file,
+And exclude `src/subdir/xxx.c` (that is, don't delete this file).
 
 ##### target:add_headers
 
 ###### Add installed header files
 
 <p class="warning">
-注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
+Note that this interface has been deprecated after version 2.2.5, please use [add_headerfiles](#targetadd_headerfiles) instead.
 </p>
 
-安装指定的头文件到build目录，如果设置了[set_headerdir](#targetset_headerdir)， 则输出到指定目录。
+Install the specified header file into the build directory. If [set_headerdir](#targetset_headerdir) is set, it will be output to the specified directory.
 
-安装规则的语法跟[add_files](#targetadd_files)类似，例如：
+The syntax of the installation rules is similar to [add_files](#targetadd_files), for example:
 
 ```lua
-    -- 安装tbox目录下所有的头文件（忽略impl目录下的文件），并且按()指定部分作为相对路径，进行安装
+    -- Install all the header files in the tbox directory (ignore the files in the impl directory), and press () to specify the part as a relative path to install
     add_headers("../(tbox/**.h)|**/impl/**.h")
 ```
 
@@ -2248,32 +2251,32 @@ target("test")
 
 ###### Add link search directories
 
-设置链接库的搜索目录，这个接口的使用方式如下：
+Set the search directory of the link library. This interface is used as follows:
 
 ```lua
 target("test")
     add_linkdirs("$(buildir)/lib")
 ```
 
-此接口相当于gcc的`-Lxxx`链接选项。
+This interface is equivalent to gcc's `-Lxxx` link option.
 
-一般他是与[add_links](#targetadd_links)配合使用的，当然也可以直接通过[add_ldflags](#targetadd_ldflags)或者[add_shflags](#targetadd_shflags)接口来添加，也是可以的。
+Generally, it is used together with [add_links](#targetadd_links). Of course, it can also be added directly through the [add_ldflags](#targetadd_ldflags) or [add_shflags](#targetadd_shflags) interface. It is also possible.
 
 <p class="tip">
-如果不想在工程中写死，可以通过：`xmake f --linkdirs=xxx`或者`xmake f --ldflags="-L/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
+If you don't want to write to death in the project, you can set it by: `xmake f --linkdirs=xxx` or `xmake f --ldflags="-L/xxx"`, of course, this manually set directory search priority. higher.
 </p>
 
 ##### target:add_rpathdirs
 
 ###### Add load search directories for dynamic libraries
 
-通过[add_linkdirs](#targetadd_linkdirs)设置动态库的链接搜索目录后，程序被正常链接，但是在linux平台想要正常运行编译后的程序，会报加载动态库失败。
+After [add_linkdirs](#targetadd_linkdirs) sets the link search directory of the dynamic library, the program is normally linked, but in the Linux platform, if you want to run the compiled program normally, it will report that the dynamic library fails to be loaded.
 
-因为没找到动态库的加载目录，想要正常运行依赖动态库的程序，需要设置`LD_LIBRARY_PATH`环境变量，指定需要加载的动态库目录。
+Because the dynamic library's load directory is not found, if you want to run the program that depends on the dynamic library, you need to set the `LD_LIBRARY_PATH` environment variable to specify the dynamic library directory to be loaded.
 
-但是这种方式是全局的，影响太广，更好的方式是通过`-rpath=xxx`的链接器选项，在链接程序的时候设置好需要加载的动态库搜索路径，而xmake对其进行了封装，通过`add_rpathdirs`更好的处理跨平台问题。
+However, this method is global, and the impact is too wide. The better way is to set the dynamic library search path to be loaded when the linker is set by the linker option of `-rpath=xxx`, and xmake does it. Encapsulation, better handling cross-platform issues with `add_rpathdirs`.
 
-具体使用如下：
+The specific use is as follows:
 
 ```lua
 target("test")
@@ -2282,15 +2285,15 @@ target("test")
     add_rpathdirs("$(buildir)/lib")
 ```
 
-只需要在链接的时候，在设置下rpath目录就好了，虽然也可以通过`add_ldflags("-Wl,-rpath=xxx")`达到相同的目的，但是这个接口更加通用。
+Just need to set the rpath directory when linking, although the same purpose can be achieved by `add_ldflags("-Wl,-rpath=xxx")`, but this interface is more general.
 
-内部会对不同平台进行处理，像在macOS下，是不需要`-rpath`设置的，也是可以正常加载运行程序，因此针对这个平台，xmake内部会直接忽略器设置，避免链接报错。
+Internally, different platforms will be processed. For example, under macOS, the `-rpath` setting is not required, and the running program can be loaded normally. Therefore, for this platform, xmake internally ignores the setting directly to avoid link error.
 
-而在为dlang程序进行动态库链接时，xmake会自动处理成`-L-rpath=xxx`来传入dlang的链接器，这样就避免了直接使用`add_ldflags`需要自己判断和处理不同平台和编译器问题。
+When doing dynamic library linking for dlang programs, xmake will automatically process it into `-L-rpath=xxx` to pass in the linker of dlang, thus avoiding the need to directly use `add_ldflags` to determine and handle different platforms and compile. Problem.
 
-2.1.7版本对这个接口进行了改进，支持：`@loader_path`, `@executable_path` 和 `$ORIGIN`的内置变量，来指定程序的加载目录，它们的效果基本上是一样的，主要是为了同时兼容macho, elf。
+The 2.1.7 version has improved this interface, supporting: `@loader_path`, `@executable_path` and `$ORIGIN` built-in variables to specify the program's load directory. Their effects are basically the same, mainly for Also compatible with macho, elf.
 
-例如：
+E.g:
 
 ```lua
 target("test")
@@ -2299,44 +2302,44 @@ target("test")
     add_rpathdirs("@loader_path/lib")
 ```
 
-指定test程序加载当前执行目录下`lib/*.[so|dylib]`的动态库文件，这将有助于提升程序的可移植性，不用写死绝对路径和相对路径，导致程序和目录切换引起程序加载动态库失败。
+Specify the test program to load the dynamic library file of `lib/*.[so|dylib]` in the current execution directory, which will help to improve the portability of the program without writing dead absolute paths and relative paths, resulting in program and directory switching. Causes the program to load the dynamic library failed.
 
 <p class="tip">
-需要注意的是，在macos下，要想add_rpathdirs设置生效，需要对dylib做一些预处理，添加`@rpath/xxx`路径设置：
+It should be noted that under macos, if the add_rpathdirs setting is in effect, you need to do some preprocessing on dylib and add the `@rpath/xxx` path setting:
 `$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib`
-我们也可以通过`otool -L libxxx.dylib`查看是否存在带@rpath的路径
+We can also check if there is a path with @rpath via `otool -L libxxx.dylib`
 </p>
 
 ##### target:add_includedirs
 
 ###### Add include search directories
 
-设置头文件的搜索目录，这个接口的使用方式如下：
+Set the search directory for the header file. This interface is used as follows:
 
 ```lua
 target("test")
     add_includedirs("$(buildir)/include")
 ```
 
-当然也可以直接通过[add_cxflags](#targetadd_cxflags)或者[add_mxflags](#targetadd_mxflags)等接口来设置，也是可以的。
+Of course, it can also be set directly through interfaces such as [add_cxflags] (#targetadd_cxflags) or [add_mxflags] (#targetadd_mxflags), which is also possible.
 
-2.2.5之后，可通过额外的`{public|interface = true}`属性设置，将includedirs导出给依赖的子target，例如：
+After 2.2.5, includedirs can be exported to dependent child targets via the extra `{public|interface = true}` property setting, for example:
 
 ```lua
 target("test")
     set_kind("static")
-    add_includedirs("src/include") -- 仅对当前target生效
-    add_includedirs("$(buildir)/include", {public = true})，当前target和子target都会被设置
+    add_includedirs("src/include") -- only for the current target
+    add_includedirs("$(buildir)/include", {public = true}), the current target and child targets will be set
 
 target("demo")
     set_kind("binary")
     add_deps("test")
 ```
 
-更多关于这块的说明，见：[add_deps](#targetadd_deps)
+For more on this block, see: [add_deps](#targetadd_deps)
 
 <p class="tip">
-如果不想在工程中写死，可以通过：`xmake f --includedirs=xxx`或者`xmake f --cxflags="-I/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
+If you don't want to write to death in the project, you can set it by: `xmake f --includedirs=xxx` or `xmake f --cxflags="-I/xxx"`, of course, this manually set directory search priority. higher.
 </p>
 
 ##### target:add_defines
@@ -2347,7 +2350,7 @@ target("demo")
 add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
 ```
 
-相当于设置了编译选项：
+Equivalent to setting the compile option:
 
 ```
 -DDEBUG -DTEST=0 -DTEST2=\"hello\"
@@ -2361,46 +2364,46 @@ add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
 add_undefines("DEBUG")
 ```
 
-相当于设置了编译选项：`-UDEBUG`
+Equivalent to setting the compile option: `-UDEBUG`
 
-在代码中相当于：`#undef DEBUG`
+In the code is equivalent to: `#undef DEBUG`
 
 ##### target:add_defines_h
 
 ###### Add macro definition to auto-generated config header
 
 <p class="warning">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
+After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
 </p>
 
-添加宏定义到`config.h`配置文件，`config.h`的设置，可参考[set_config_h](#targetset_config_h)接口。
+Add macro definitions to the `config.h` configuration file, `config.h` settings, refer to the [set_config_h](#targetset_config_h) interface.
 
 ##### target:add_undefines_h
 
 ###### Add macro undefinition to auto-generated config header
 
 <p class="warning">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
+After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
 </p>
 
-在`config.h`配置文件中通过`undef`禁用宏定义，`config.h`的设置，可参考[set_config_h](#targetset_config_h)接口。
+Disable the macro definition by `undef` in the `config.h` configuration file. For the setting of `config.h`, refer to the [set_config_h](#targetset_config_h) interface.
 
 ##### target:add_cflags
 
-###### Add c compilation flags 
+###### Add c compilation flags
 
-仅对c代码添加编译选项
+Add compilation options only for c code
 
 ```lua
 add_cflags("-g", "-O2", "-DDEBUG")
 ```
 
 <p class="warning">
-所有选项值都基于gcc的定义为标准，如果其他编译器不兼容（例如：vc），xmake会自动内部将其转换成对应编译器支持的选项值。
-用户无需操心其兼容性，如果其他编译器没有对应的匹配值，那么xmake会自动忽略器设置。
+All option values ​​are based on the definition of gcc as standard. If other compilers are not compatible (for example: vc), xmake will automatically convert it internally to the corresponding option values ​​supported by the compiler.
+Users don't have to worry about compatibility. If other compilers don't have matching values, xmake will automatically ignore the settings.
 </p>
 
-在2.1.9版本之后，可以通过force参数来强制禁用flags的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：
+After version 2.1.9, the force parameter can be used to force the automatic detection of flags to be disabled and passed directly to the compiler. Even if the compiler may not support it, it will be set:
 
 ```lua
 add_cflags("-g", "-O2", {force = true})
@@ -2410,25 +2413,25 @@ add_cflags("-g", "-O2", {force = true})
 
 ###### Add c/c++ compilation flags
 
-同时对c/c++代码添加编译选项
+Add compilation options to c/c++ code at the same time
 
 ##### target:add_cxxflags
 
 ###### Add c++ compilation flags
 
-仅对c++代码添加编译选项
+Add compilation options only to c++ code
 
 ##### target:add_mflags
 
-###### Add objc compilation flags 
+###### Add objc compilation flags
 
-仅对objc代码添加编译选项
+Add compilation options only to objc code
 
 ```lua
 add_mflags("-g", "-O2", "-DDEBUG")
 ```
 
-在2.1.9版本之后，可以通过force参数来强制禁用flags的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：
+After version 2.1.9, the force parameter can be used to force the automatic detection of flags to be disabled and passed directly to the compiler. Even if the compiler may not support it, it will be set:
 
 ```lua
 add_mflags("-g", "-O2", {force = true})
@@ -2438,17 +2441,17 @@ add_mflags("-g", "-O2", {force = true})
 
 ###### Add objc/objc++ compilation flags
 
-同时对objc/objc++代码添加编译选项
+Also add compile options to objc/objc++ code
 
 ```lua
-add_mxflags("-framework CoreFoundation")
+add_mxflAgs("-framework CoreFoundation")
 ```
 
 ##### target:add_mxxflags
 
 ###### Add objc++ compilation flags
 
-仅对objc++代码添加编译选项
+Add compilation options only to objc++ code
 
 ```lua
 add_mxxflags("-framework CoreFoundation")
@@ -2458,7 +2461,7 @@ add_mxxflags("-framework CoreFoundation")
 
 ###### Add swift compilation flags
 
-对swift代码添加编译选项
+Add compilation options to swift code
 
 ```lua
 add_scflags("xxx")
@@ -2468,7 +2471,7 @@ add_scflags("xxx")
 
 ###### Add asm compilation flags
 
-对汇编代码添加编译选项
+Add compilation options to assembly code
 
 ```lua
 add_asflags("xxx")
@@ -2478,7 +2481,7 @@ add_asflags("xxx")
 
 ###### Add go compilation flags
 
-对golang代码添加编译选项
+Add compile options to golang code
 
 ```lua
 add_gcflags("xxx")
@@ -2488,7 +2491,7 @@ add_gcflags("xxx")
 
 ###### Add dlang compilation flags
 
-对dlang代码添加编译选项
+Add compilation options to dlang code
 
 ```lua
 add_dcflags("xxx")
@@ -2496,9 +2499,9 @@ add_dcflags("xxx")
 
 ##### target:add_rcflags
 
-###### Add rust compilation flags
+###### Add MASTER compilation flags
 
-对rust代码添加编译选项
+Add compilation options to the rust code
 
 ```lua
 add_rcflags("xxx")
@@ -2508,7 +2511,7 @@ add_rcflags("xxx")
 
 ###### Add cuda compilation flags
 
-对cuda代码添加编译选项
+Add compilation options to cuda code
 
 ```lua
 add_cuflags("-gencode arch=compute_30,code=sm_30")
@@ -2516,9 +2519,9 @@ add_cuflags("-gencode arch=compute_30,code=sm_30")
 
 ##### target:add_ldflags
 
-###### Add static library link flags  
+###### Add static library link flags
 
-添加静态链接选项
+Add static link option
 
 ```lua
 add_ldflags("-L/xxx", "-lxxx")
@@ -2528,7 +2531,7 @@ add_ldflags("-L/xxx", "-lxxx")
 
 ###### Add archive library flags
 
-影响对静态库的生成
+Affect the generation of static libraries
 
 ```lua
 add_arflags("xxx")
@@ -2537,7 +2540,7 @@ add_arflags("xxx")
 
 ###### Add dynamic library link flags
 
-影响对动态库的生成
+Affect the generation of dynamic libraries
 
 ```lua
 add_shflags("xxx")
@@ -2547,33 +2550,33 @@ add_shflags("xxx")
 
 ###### Add single c function for checking
 
-与[add_cfuncs](#targetadd_cfuncs)类似，只是仅对单个函数接口进行设置，并且仅对`target`域生效，`option`中不存在此接口。
+Similar to [add_cfuncs](#targetadd_cfuncs), only a single function interface is set and only valid for the `target` domain. This interface does not exist in `option`.
 
-此接口的目的主要是为了在`config.h`中更加高度定制化的生成宏开关，例如：
+The purpose of this interface is primarily to create a more highly customized macro switch in `config.h`, for example:
 
 ```lua
 target("demo")
-    
-    -- 设置和启用config.h
+
+    -- Set and enable config.h
     set_config_header("$(buildir)/config.h", {prefix = "TEST"})
 
-    -- 仅通过参数一设置模块名前缀
-    add_cfunc("libc",       nil,        nil,        {"sys/select.h"},   "select")
+    -- Set module name prefix only by parameter one
+    add_cfunc("libc", nil, nil, {"sys/select.h"}, "select")
 
-    -- 通过参数三，设置同时检测链接库：libpthread.a
-    add_cfunc("pthread",    nil,        "pthread",  "pthread.h",        "pthread_create")
+    -- Set the simultaneous detection of the link library via parameter three: libpthread.a
+    add_cfunc("pthread", nil, "pthread", "pthread.h", "pthread_create")
 
-    -- 通过参数二设置接口别名
-    add_cfunc(nil,          "PTHREAD",  nil,        "pthread.h",        "pthread_create")
+    -- Set interface alias by parameter two
+    add_cfunc(nil, "PTHREAD", nil, "pthread.h", "pthread_create")
 ```
 
-生成的结果如下：
+The resulting results are as follows:
 
 ```c
 #ifndef TEST_H
 #define TEST_H
 
-// 宏命名规则：$(prefix)前缀 _ 模块名（如果非nil）_ HAVE _ 接口名或者别名 （大写）
+// Macro naming convention: $(prefix) prefix _ module name (if non-nil) _ HAVE _ interface name or alias (uppercase)
 #define TEST_LIBC_HAVE_SELECT 1
 #define TEST_PTHREAD_HAVE_PTHREAD_CREATE 1
 #define TEST_HAVE_PTHREAD 1
@@ -2581,28 +2584,28 @@ target("demo")
 #endif
 ```
 
-如果要更加灵活的函数检测，可以通过[lib.detect.has_cfuncs](#detect-has_cfuncs)在自定义脚本中实现。
+For more flexible function detection, you can do this in a custom script with [lib.detect.has_cfuncs](#detect-has_cfuncs).
 
 ##### target:add_cxxfunc
 
 ###### Add single c++ function for checking
 
-与[add_cfunc](#targetadd_cfunc)类似，只是检测的函数接口是c++函数。
+Similar to [add_cfunc](#targetadd_cfunc), only the function interface detected is a c++ function.
 
 ##### target:add_cfuncs
 
 ###### Add c functions for checking
 
 <p class="warning">
-此接口是`target`和`option`共用的接口，但是接口行为稍有不同。
+This interface is the interface shared by `target` and `option`, but the interface behavior is slightly different.
 </p>
 
-| 接口域 | 描述                                                                      | 例子                                                                                                                             |
+| Interface Field | Description | Examples |
 | ------ | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| target | 头文件、链接库和函数接口同时指定                                          | `add_cfuncs("libc", nil, {"signal.h", "setjmp.h"}, "signal", "setjmp", "sigsetjmp{sigjmp_buf buf; sigsetjmp(buf, 0);}", "kill")` |
-| option | 仅指定函数接口，头文件依赖[add_cincludes](#targetadd_cincludes)等独立接口 | `add_cincludes("setjmp.h")` `add_cfuncs("sigsetjmp")`                                                                            |
+| target | header files, link libraries, and function interfaces are also specified | `add_cfuncs("libc", nil, {"signal.h", "setjmp.h"}, "signal", "setjmp", "sigsetjmp{sigjmp_buf buf ; sigsetjmp(buf, 0);}", "kill")` |
+Option | only specifies the function interface, the header file depends on [add_cincludes] (#targetadd_cincludes) and other independent interfaces | `add_cincludes("setjmp.h")` `add_cfuncs("sigsetjmp")` |
 
-对于`option`，这个接口的使用很简单，跟[add_cincludes](#targetadd_cincludes)类似，例如：
+For `option`, this interface is very simple to use, similar to [add_cincludes](#targetadd_cincludes), for example:
 
 ```lua
 option("setjmp")
@@ -2615,38 +2618,38 @@ target("test")
     add_options("setjmp")
 ```
 
-此选项检测是否存在`setjmp`的一些接口，如果检测通过那么`test`目标程序将会加上`HAVE_SETJMP`的宏定义。
+This option detects if there are some interfaces of `setjmp`. If the test passes, then the `test` target program will add the macro definition of `HAVE_SETJMP`.
 
 <p class="warning">
-需要注意的是，在`option`中使用此接口检测依赖函数，需要同时使用独立的[add_cincludes](#targetadd_cincludes)增加头文件搜索路径，指定[add_links](#targetadd_links)链接库（可选），否则检测不到指定函数。
+Note that using this interface to detect dependencies in `option` requires adding a separate [add_cincludes](#targetadd_cincludes) header file search path and specifying [add_links](#targetadd_links) link library (optional). Otherwise the specified function is not detected.
 <br><br>
-并且某些头文件接口是通过宏开关分别定义的，那么检测的时候最好通过[add_defines](#targetadd_defines)带上依赖的宏开关。
+And some header file interfaces are defined by macro switches, so it is best to pass the dependent macro switch with [add_defines](#targetadd_defines) when detecting.
 </p>
 
-对于`target`，此接口可以同时设置：依赖的头文件、依赖的链接模块、依赖的函数接口，保证检测环境的完整性，例如：
+For `target`, this interface can be set at the same time: dependent header files, dependent link modules, dependent function interfaces, to ensure the integrity of the detection environment, for example:
 
 ```lua
 target("test")
 
-    -- 添加libc库接口相关检测
-    -- 第一个参数：模块名，用于最后的宏定义前缀生成
-    -- 第二个参数：链接库
-    -- 第三个参数：头文件
-    -- 之后的都是函数接口列表
-    add_cfuncs("libc", nil,         {"signal.h", "setjmp.h"},           "signal", "setjmp", "sigsetjmp{sigjmp_buf buf; sigsetjmp(buf, 0);}", "kill")
+    -- Add libc library interface related detection
+    -- First parameter: module name for the final macro definition prefix generation
+    -- The second parameter: the link library
+    -- The third parameter: header file
+    -- after the list of function interfaces
+    add_cfuncs("libc", nil, {"signal.h", "setjmp.h"}, "signal", "setjmp", "sigsetjmp{sigjmp_buf buf; sigsetjmp(buf, 0);}", "kill")
 
-    -- 添加pthread库接口相关检测，同时指定需要检测`libpthread.a`链接库是否存在
-    add_cfuncs("posix", "pthread",  "pthread.h",                        "pthread_mutex_init",
-                                                                        "pthread_create", 
-                                                                        "pthread_setspecific", 
+    -- Add the pthread library interface related detection, and specify whether you need to detect the existence of the `libpthread.a` link library.
+    add_cfuncs("posix", "pthread", "pthread.h", "pthread_mutex_init",
+                                                                        "pthread_create",
+                                                                        "pthread_setspecific",
                                                                         "pthread_getspecific",
                                                                         "pthread_key_create",
                                                                         "pthread_key_delete")
 ```
 
-设置`test`目标，依赖这些接口，构建时会预先检测他们，并且如果通过[set_config_h](#targetset_config_h)接口设置的自动生成头文件：`config.h`
+Set the `test` target, rely on these interfaces, pre-detect them when building, and automatically generate header files if set via the [set_config_h](#targetset_config_h) interface: `config.h`
 
-那么，检测结果会自动加到对应的`config.h`上去，这也是`option`没有的功能，例如：
+Then, the test result will be automatically added to the corresponding `config.h`, which is also the function that `option` does not have, for example:
 
 ```c
 #define TB_CONFIG_LIBC_HAVE_SIGNAL 1
@@ -2662,47 +2665,47 @@ target("test")
 #define TB_CONFIG_POSIX_HAVE_PTHREAD_KEY_DELETE 1
 ```
 
-由于，不同头文件中，函数的定义方式不完全相同，例如：宏函数、静态内联函数、extern函数等。
+Because, in different header files, functions are defined in different ways, such as macro functions, static inline functions, extern functions, and so on.
 
-要想完全检测成功，检测语法上需要一定程度的灵活性，下面是一些语法规则：
+To fully test the success, the grammar requires a certain degree of flexibility. Here are some grammar rules:
 
-| 检测语法      | 例子                                            |
+| Detection Syntax | Examples |
 | ------------- | ----------------------------------------------- |
-| 纯函数名      | `sigsetjmp`                                     |
-| 单行调用      | `sigsetjmp((void*)0, 0)`                        |
-| 函数块调用    | `sigsetjmp{sigsetjmp((void*)0, 0);}`            |
-| 函数块 + 变量 | `sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}` |
+| pure function name | `sigsetjmp` |
+| Single line call | `sigsetjmp((void*)0, 0)` |
+| Function Block Call | `sigsetjmp{sigsetjmp((void*)0, 0);}` |
+| Function Block + Variable | `sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}` |
 
 ##### target:add_cxxfuncs
 
 ###### Add c++ functions for checking
 
-与[add_cfuncs](#targetadd_cfuncs)类似，只是检测的函数接口是c++函数。
+Similar to [add_cfuncs](#targetadd_cfuncs), only the function interface detected is a c++ function.
 
 ##### target:add_options
 
 ###### Add option dependencies
 
-这个接口跟[set_options](#targetset_options)类似，唯一的区别就是，此处是追加选项，而[set_options](#targetset_options)每次设置会覆盖先前的设置。
+This interface is similar to [set_options](#targetset_options), the only difference is that this is an append option, and [set_options](#targetset_options) overrides the previous settings each time.
 
 ##### target:add_packages
 
 ###### Add package dependencies
 
-在target作用域中，添加集成包依赖，例如：
+In the target scope, add integration package dependencies, for example:
 
 ```lua
 target("test")
     add_packages("zlib", "polarssl", "pcre", "mysql")
 ```
 
-这样，在编译test目标时，如果这个包存在的，将会自动追加包里面的宏定义、头文件搜索路径、链接库目录，也会自动链接包中所有库。
+In this way, when compiling the test target, if the package exists, the macro definition, the header file search path, and the link library directory in the package will be automatically appended, and all the libraries in the package will be automatically linked.
 
-用户不再需要自己单独调用[add_links](#targetadd_links)，[add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags)等接口，来配置依赖库链接了。
+Users no longer need to call the [add_links](#targetadd_links), [add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags) interfaces to configure the dependent library links.
 
-对于如何设置包搜索目录，可参考：[add_packagedirs](#targetadd_packagedirs) 接口
+For how to set up the package search directory, please refer to: [add_packagedirs] (#targetadd_packagedirs) interface
 
-而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](#add_requires)定义的包。
+After v2.2.2, this interface also supports packages defined by [add_requires](#add_requires) in remote dependency management.
 
 ```lua
 add_requires("zlib", "polarssl")
@@ -2710,20 +2713,20 @@ target("test")
     add_packages("zlib", "polarssl")
 ```
 
-v2.2.3之后，还支持覆写内置的links，控制实际链接的库：
+After v2.2.3, it also supports overwriting built-in links to control the actual linked libraries:
 
 
 ```lua
--- 默认会有 ncurses, panel, form等links
-add_requires("ncurses") 
+-- By default, there will be links to ncurses, panel, form, etc.
+add_requires("ncurses")
 
 target("test")
-    
-    -- 显示指定，只使用ncurses一个链接库
+
+    -- Display specified, only use ncurses a link library
     add_packages("ncurses", {links = "ncurses"})
 ```
 
-或者干脆禁用links，只使用头文件：
+Or simply disable links and only use header files:
 
 ```lua
 add_requires("lua")
@@ -2735,13 +2738,13 @@ target("test")
 
 ###### Add language standards
 
-与[set_languages](#targetset_languages)类似，唯一区别是这个接口不会覆盖掉之前的设置，而是追加设置。
+Similar to [set_languages](#targetset_languages), the only difference is that this interface will not overwrite the previous settings, but append settings.
 
 ##### target:add_vectorexts
 
 ###### Add vector extensions
 
-添加扩展指令优化选项，目前支持以下几种扩展指令集：
+Add extended instruction optimization options, currently supports the following extended instruction sets:
 
 ```lua
 add_vectorexts("mmx")
@@ -2751,21 +2754,21 @@ add_vectorexts("sse", "sse2", "sse3", "ssse3")
 ```
 
 <p class="tip">
-如果当前设置的指令集编译器不支持，xmake会自动忽略掉，所以不需要用户手动去判断维护，只需要将你需要的指令集全部设置上就行了。
+If the currently set instruction set compiler does not support it, xmake will automatically ignore it, so you don't need the user to manually determine the maintenance. Just set all the instruction sets you need.
 </p>
 
 ##### target:add_frameworks
 
 ###### Add frameworks
 
-目前主要用于`ios`和`macosx`平台的`objc`和`swift`程序，例如：
+Currently used for the `objc` and `swift` programs of the `ios` and `macosx` platforms, for example:
 
 ```lua
 target("test")
     add_frameworks("Foundation", "CoreFoundation")
 ```
 
-当然也可以使用[add_mxflags](#targetadd_mxflags)和[add_ldflags](#targetadd_ldflags)来设置，不过比较繁琐，不建议这样设置。
+Of course, you can also use [add_mxflags](#targetadd_mxflags) and [add_ldflags](#targetadd_ldflags) to set them up, but it is cumbersome and is not recommended.
 
 ```lua
 target("test")
@@ -2773,13 +2776,13 @@ target("test")
     add_ldflags("-framework Foundation", "-framework CoreFoundation")
 ```
 
-如果不是这两个平台，这些设置将会被忽略。
+If it is not for both platforms, these settings will be ignored.
 
 ##### target:add_frameworkdirs
 
-###### Add framework search directories 
+###### Add framework search directories
 
-对于一些第三方framework，那么仅仅通过[add_frameworks](#targetadd_frameworks)是没法找到的，还需要通过这个接口来添加搜索目录。
+For some third-party frameworks, it is impossible to find them only through [add_frameworks](#targetadd_frameworks). You also need to add a search directory through this interface.
 
 ```lua
 target("test")
@@ -2789,11 +2792,11 @@ target("test")
 
 ##### target:set_tools
 
-###### Set toolchains 
+###### Set toolchains
 
-对于`add_files("*.c")`添加的源码文件，默认都是会调用系统最匹配的编译工具去编译，或者通过`xmake f --cc=clang`命令手动去修改，不过这些都是全局影响所有target目标的。
+For the source files added by `add_files("*.c")`, the default is to call the system's best matching compiler to compile, or manually modify it by `xmake f --cc=clang` command, but these are Globally affects all target targets.
 
-如果有些特殊需求，需要对当前工程下某个特定的target目标单独指定不同的编译器、链接器或者特定版本的编译器，这个时候此接口就可以排上用途了，例如：
+If there are some special requirements, you need to specify a different compiler, linker or specific version of the compiler for a specific target target under the current project. At this time, the interface can be used for purposes. For example:
 
 ```lua
 target("test1")
@@ -2804,9 +2807,9 @@ target("test2")
     set_tools("cc", "$(projectdir)/tools/bin/clang-5.0")
 ```
 
-上述描述仅对test2目标的编译器进行特殊设置，使用特定的clang-5.0编译器来编译test2，而test1还是使用默认设置。
+The above description only makes special settings for the compiler of the test2 target, compiling test2 with a specific clang-5.0 compiler, and test1 still uses the default settings.
 
-对于同时设置多个编译器类型，可以这么写：
+For setting multiple compiler types at the same time, you can write:
 
 ```lua
 set_tools {
@@ -2816,55 +2819,55 @@ set_tools {
 ```
 
 <p class="tip">
-每次设置都会覆盖当前target目标下之前的那次设置，不同target之间不会被覆盖，互相独立，如果在根域设置，会影响所有子target。
+Each setting will override the previous setting under the current target target. Different targets will not be overwritten and independent of each other. If set in the root domain, all child targets will be affected.
 </p>
 
-或者可以使用[add_tools](#targetadd_tools)来设置：
+Or you can use [add_tools](#targetadd_tools) to set:
 
 ```lua
 add_tools("cc", "$(projectdir)/tools/bin/clang-5.0")
 add_tools("mm", "$(projectdir)/tools/bin/clang-5.0")
 ```
 
-前一个参数是key，用于指定工具类型，目前支持的有（编译器、链接器、归档器）：
+The previous parameter is key, which is used to specify the tool type. Currently supported (compiler, linker, archiver):
 
-| 工具类型     | 描述                                 |
+| Tool Type | Description |
 | ------------ | ------------------------------------ |
-| cc           | c编译器                              |
-| cxx          | c++编译器                            |
-| mm           | objc编译器                           |
-| mxx          | objc++编译器                         |
-| gc           | go编译器                             |
-| as           | 汇编器                               |
-| sc           | swift编译器                          |
-| rc           | rust编译器                           |
-| dc           | dlang编译器                          |
-| ld           | c/c++/asm/objc等通用可执行程序链接器 |
-| sh           | c/c++/asm/objc等通用动态库链接器     |
-| ar           | c/c++/asm/objc等通用静态库归档器     |
-| dc-ld        | dlang可执行链接器, rc-ld/gc-ld等类似 |
-| dc-sh        | dlang动态库链接器, rc-sh/gc-sh等类似 |
+| cc | c compiler |
+| cxx | c++ compiler |
+| mm | objc compiler |
+| mxx | objc++ compiler |
+| gc | go compiler |
+| as | assembler |
+| sc | swift compiler |
+| rc | rust compiler |
+| dc | dlang compiler |
+| ld | Common executable program linker such as c/c++/asm/objc |
+| sh | c/c++/asm/objc and other universal dynamic library linker |
+| ar | general static library archiver such as c/c++/asm/objc |
+| dc-ld | dlang executable linker, rc-ld/gc-ld, etc. |
+Dc-sh | dlang dynamic library linker, rc-sh/gc-sh, etc. |
 
-对于一些编译器文件名不规则，导致xmake无法正常识别处理为已知的编译器名的情况下，我们也可以加一个工具名提示，例如：
+For some compiler file names that are irregular, causing xmake to fail to recognize the known compiler name, we can also add a tool name prompt, for example:
 
 ```lua
-add_tools("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
+add_tools("cc", "gcc@$(projectdir)/tools/bin/Mipscc.exe")
 ```
 
-上述描述设置mipscc.exe作为c编译器，并且提示xmake作为gcc的传参处理方式进行编译。
+The above description sets mipscc.exe as the c compiler, and prompts xmake to compile as a pass-through processing method for gcc.
 
 ##### target:add_tools
 
 ###### Add toolchains
 
-类似[set_tools](#targetset_tools)，区别就是此接口可以多次调用，去添加多个工具，而[set_tools](#targetset_tools)每次设置都会覆盖之前的设置。
+Similar to [set_tools](#targetset_tools), the difference is that this interface can be called multiple times to add multiple tools, and [set_tools](#targetset_tools) will overwrite the previous settings each time.
 
 ##### target:set_values
 
 ###### Set custom configuration values
 
-给target设置一些扩展的配置值，这些配置没有像`set_ldflags`这种内置的api可用，通过第一个参数传入一个配置名，来扩展配置。
-一般用于传入配置参数给自定义rule中的脚本使用，例如：
+Set some extended configuration values ​​for the target. These configurations do not have a built-in api like `set_ldflags`. You can extend the configuration by passing in a configuration name with the first argument.
+Generally used to pass configuration parameters to scripts in custom rules, for example:
 
 ```lua
 rule("markdown")
@@ -2881,47 +2884,47 @@ target("test")
     set_values("markdown.flags", "xxx", "xxx")
 ```
 
-上述代码例子中，可以看出，在target应用markdown规则的时候，通过set_values去设置一些flags值，提供给markdown规则去处理。
-在规则脚本中可以通过`target:values("markdown.flags")`获取到target中设置的扩展flags值。
+In the above code example, it can be seen that when the target applies the markdown rule, some flag values ​​are set by set_values ​​and provided to the markdown rule for processing.
+In the rule script, you can get the extended flag value set in the target by `target:values("markdown.flags")`.
 
 <p class="tip">
-具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](#内建规则)
+The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules] (#built-in rules)
 </p>
 
 ##### target:add_values
 
 ###### Add custom configuration values
 
-用法跟[target:set_values](#targetset_tools)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
+Usage is similar to [target:set_values](#targetset_tools), the difference is that this interface is an additional setting, and will not override the settings each time.
 
 ##### target:set_installdir
 
-###### Set the installation directory 
+###### Set the installation directory
 
-默认情况下执行`xmake install`会安装到系统`/usr/local`目录，我们除了可以通过`xmake install -o /usr/local`指定其他安装目录外，
-还可以在xmake.lua中针对target设置不同的安装目录来替代默认目录。
+By default, `xmake install` will be installed to the system `/usr/local` directory. We can specify other installation directories except `xmake install -o /usr/local`.
+You can also set a different installation directory for the target in xmake.lua instead of the default directory.
 
 ##### target:set_configdir
 
 ###### Set the output directory of configuration files
 
-2.2.5版本新增接口，主要用于[add_configfiles](#targetadd_configfiles)接口设置的模板配置文件的输出目录。
+Version 2.2.5 adds a new interface, mainly used for the output directory of the template configuration file set by the [add_configfiles] (#targetadd_configfiles) interface.
 
 ##### target:set_configvar
 
 ###### Set template configuration variable
 
-2.2.5版本新增接口，用于在编译前，添加一些需要预处理的模板配置变量，一般用于[add_configfiles](#targetadd_configfiles)接口。
+2.2.5 version of the new interface, used to add some template configuration variables that need to be pre-compiled before compilation, generally used for [add_configfiles] (#targetadd_configfiles) interface.
 
 ##### target:add_configfiles
 
 ###### Add template configuration files
 
-2.2.5版本新增接口，用于在编译前，添加一些需要预处理的配置文件，用于替代[set_config_header](#targetset_config_header)等老接口。
+2.2.5 version of the new interface, used to add some configuration files that need to be pre-processed before compiling, used to replace the old interface such as [set_config_header] (#targetset_config_header).
 
-因为此接口更加的通用，不仅用于处理config.h的自动生成和预处理，还可以处理各种文件类型，而`set_config_header`仅用于处理头文件，并且不支持模板变量替换。
+Because this interface is more versatile, it is not only used to handle the automatic generation and preprocessing of config.h, but also to handle various file types, while `set_config_header` is only used to process header files and does not support template variable substitution.
 
-先来一个简单的例子：
+Let's start with a simple example:
 
 ```lua
 target("test")
@@ -2931,26 +2934,26 @@ target("test")
     add_configfiles("src/config.h.in")
 ```
 
-上面的设置，会在编译前，自动的将`config.h.in`这个头文件配置模板，经过预处理后，生成输出到指定的`build/config/config.h`。
+The above settings will automatically configure the `config.h.in` header file template before compiling. After preprocessing, it will generate the output to the specified `build/config/config.h`.
 
-如果`set_configdir`不设置，那么默认输出到`build`目录下。
+If `set_configdir` is not set, the default output is in the `build` directory.
 
-其中`.in`后缀会被自动识别处理掉，如果想要输出存储为其他文件名，可以通过：
+The `.in` suffix will be automatically recognized and processed. If you want to store the output as a different file name, you can pass:
 
 ```lua
 add_configfiles("src/config.h", {filename = "myconfig.h"})
 ```
 
-的方式，来重命名输出，同样，这个接口跟[add_installfiles](#targetadd_configfiles)类似，也是支持prefixdir和子目录提取设置：
+The way to rename the output, again, this interface is similar to [add_installfiles](#targetadd_configfiles), which also supports prefixdir and subdirectory extraction settings:
 
 ```lua
 add_configfiles("src/*.h.in", {prefixdir = "subdir"})
-add_configfiles("src/(tbox/config.h)") 
+add_configfiles("src/(tbox/config.h)")
 ```
 
-这个接口的一个最重要的特性就是，可以在预处理的时候，对里面的一些模板变量进行预处理替换，例如：
+One of the most important features of this interface is that it can be preprocessed and replaced with some of the template variables in the preprocessing, for example:
 
-config.h.in
+Config.h.in
 
 ```
 #define VAR1 "${VAR1}"
@@ -2970,9 +2973,9 @@ target("test")
     add_configfiles("*.man", {copyonly = true})
 ```
 
-通过[set_configvar](#targetset_configvar)接口设置模板变量，裹着通过`{variables = {xxx = ""}}`中设置的变量进行替换处理。
+The template variable is set via the [set_configvar](#targetset_configvar) interface, and the substitution is handled by the variable set in `{variables = {xxx = ""}}`.
 
-预处理后的文件`config.h`内容为：
+The preprocessed file `config.h` is:
 
 ```
 #define VAR1 "1"
@@ -2980,16 +2983,16 @@ target("test")
 #define HELLO "xmake"
 ```
 
-而`{copyonly = true}`设置，会强制将`*.man`作为普通文件处理，仅在预处理阶段copy文件，不进行变量替换。
+The `{copyonly = true}` setting will force `*.man` to be treated as a normal file, copying files only during the preprocessing stage, and not replacing variables.
 
-默认的模板变量匹配模式为`${var}`，当然我们也可以设置其他的匹配模式，例如，改为`@var@`匹配规则：
+The default template variable matching mode is `${var}`, of course we can also set other matching modes, for example, to `@var@` matching rules:
 
 ```lua
 target("test")
     add_configfiles("config.h.in", {pattern = "@(.-)@"})
 ```
 
-我们也有提供了一些内置的变量，即使不通过此接口设置，也是可以进行默认变量替换的：
+We also have some built-in variables that can be replaced with default variables even if they are not set through this interface:
 
 ```
 ${VERSION} -> 1.6.3
@@ -3004,9 +3007,9 @@ ${DEBUG} and ${debug} -> 1 or 0
 ${OS} and ${os} -> IOS or ios
 ```
 
-例如：
+E.g:
 
-config.h.in
+Config.h.in
 
 ```c
 #define CONFIG_VERSION "${VERSION}"
@@ -3016,7 +3019,7 @@ config.h.in
 #define CONFIG_VERSION_BUILD ${VERSION_BUILD}
 ```
 
-config.h
+Config.h
 
 ```c
 #define CONFIG_VERSION "1.6.3"
@@ -3026,9 +3029,9 @@ config.h
 #define CONFIG_VERSION_BUILD 201902031401
 ```
 
-我们还可以对`#define`定义进行一些变量状态控制处理：
+We can also perform some variable state control processing on the `#define` definition:
 
-config.h.in 
+Config.h.in
 
 ```c
 ${define FOO_ENABLE}
@@ -3039,160 +3042,160 @@ set_configvar("FOO_ENABLE", 1) -- or pass true
 set_configvar("FOO_STRING", "foo")
 ```
 
-通过上面的变量设置后，`${define xxx}`就会替换成：
+After setting the above variable, `${define xxx}` will be replaced with:
 
 ```c
 #define FOO_ENABLE 1
 #define FOO_STRING "foo"
 ```
 
-或者（设置为0禁用的时候）
+Or (when set to 0 disable)
 
 ```c
 /* #undef FOO_ENABLE */
 /* #undef FOO_STRING */
 ```
 
-这种方式，对于一些自动检测生成config.h非常有用，比如配合option来做自动检测：
+This method is very useful for some automatic detection generation config.h, such as with the option to do automatic detection:
 
 ```lua
 option("foo")
     set_default(true)
     set_description("Enable Foo")
-    set_configvar("FOO_ENABLE", 1) -- 或者传递true，启用FOO_ENABLE变量
+    set_configvar("FOO_ENABLE", 1) -- or pass true to enable the FOO_ENABLE variable
     set_configvar("FOO_STRING", "foo")
 
 target("test")
     add_configfiles("config.h.in")
 
-    -- 如果启用foo选项 -> 天剑 FOO_ENABLE 和 FOO_STRING 定义
-    add_options("foo") 
+    -- If the foo option is enabled -> Tianjian FOO_ENABLE and FOO_STRING definitions
+    add_options("foo")
 ```
 
-config.h.in
+Config.h.in
 
 ```c
 ${define FOO_ENABLE}
 ${define FOO_STRING}
 ```
 
-config.h
+Config.h
 
 ```c
 #define FOO_ENABLE 1
 #define FOO_STRING "foo"
 ```
 
-关于option选项检测，以及config.h的自动生成，有一些辅助函数，可以看下：https://github.com/xmake-io/xmake/issues/342
+Regarding the option option detection, and the automatic generation of config.h, there are some helper functions, you can look at it: https://github.com/xmake-io/xmake/issues/342
 
-除了`#define`，如果想要对其他非`#define xxx`也做状态切换处理，可以使用 `${default xxx 0}` 模式，设置默认值，例如：
+In addition to `#define`, if you want to other non-##defIne xxx` also performs state switching processing. You can use the `${default xxx 0}` mode to set default values, for example:
 
 ```
 HAVE_SSE2 equ ${default VAR_HAVE_SSE2 0}
 ```
 
-通过`set_configvar("HAVE_SSE2", 1)`启用变量后，变为`HAVE_SSE2 equ 1`，如果没有设置变量，则使用默认值：`HAVE_SSE2 equ 0`
+After `set_configvar("HAVE_SSE2", 1)` is enabled, it becomes `HAVE_SSE2 equ 1`. If no variable is set, the default value is used: `HAVE_SSE2 equ 0`
 
-关于这个的详细说明，见：https://github.com/xmake-io/xmake/issues/320
+For a detailed description of this, see: https://github.com/xmake-io/xmake/issues/320
 
 
 #### Configuration Option
 
-定义和设置选项开关，每个`option`对应一个选项，可用于自定义编译配置选项、开关设置。
+Define and set option switches. Each `option` corresponds to an option that can be used to customize the build configuration options and switch settings.
 
 <p class="tip">
-除了`target`以外的所有域接口，例如`option`，`task`等的接口，默认不能放置在外面的全局作用域中的（除非部分跟target共用的接口除外）。
-如果要设置值影响所有`option`，`task`等选项，可以通过匿名全局域来设置。
+All domain interfaces except `target`, such as `option`, `task`, etc., cannot be placed in the outer global scope by default (unless some interfaces are shared with the target).
+If you want to set the value to affect all options such as `option`, `task`, you can set it by anonymous global domain.
 </p>
 
-例如：
+E.g:
 
 ```lua
--- 进入option的匿名全局域，里面的设置会同时影响test和test2选项
+-- Enter the anonymous global domain of the option, the settings inside will affect the test and test2 options.
 option()
     add_defines("DEBUG")
 
 option("test")
-    -- ... 
-    -- 尽量保持缩进，因为这个之后的所有设置，都是针对test选项的
+    -- ...
+    -- Try to keep indented, because all settings after this are for the test option.
 
 option("test2")
-    -- ... 
+    -- ...
 ```
 
 <p class="tip">
-`option`域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用[option_end](#option_end)接口。
+The `option` field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the [option_end](#option_end) interface.
 </p>
 
 
-| 接口                                                  | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------------- | -------------------------------------------- | -------- |
-| [option](#option)                                     | 定义选项                                     | >= 2.0.1 |
-| [option_end](#option_end)                             | 结束定义选项                                 | >= 2.1.1 |
-| [add_deps](#optionadd_deps)                           | 添加选项依赖                                 | >= 2.1.5 |
-| [before_check](#optionbefore_check)                   | 选项检测之前执行此脚本                       | >= 2.1.5 |
-| [on_check](#optionon_check)                           | 自定义选项检测脚本                           | >= 2.1.5 |
-| [after_check](#optionafter_check)                     | 选项检测之后执行此脚本                       | >= 2.1.5 |
-| [set_values](#optionset_values)                       | 设置选项值列表                               | >= 2.1.9 |
-| [set_default](#optionset_default)                     | 设置默认值                                   | >= 2.0.1 |
-| [set_showmenu](#optionset_showmenu)                   | 设置是否启用菜单显示                         | >= 1.0.1 |
-| [set_category](#optionset_category)                   | 设置选项分类，仅用于菜单显示                 | >= 1.0.1 |
-| [set_description](#optionset_description)             | 设置菜单显示描述                             | >= 1.0.1 |
-| [add_links](#optionadd_links)                         | 添加链接库检测                               | >= 1.0.1 |
-| [add_linkdirs](#optionadd_linkdirs)                   | 添加链接库检测需要的搜索目录                 | >= 1.0.1 |
-| [add_rpathdirs](#optionadd_rpathdirs)                 | 添加运行时候动态链接库搜索目录               | >= 2.1.3 |
-| [add_cincludes](#optionadd_cincludes)                 | 添加c头文件检测                              | >= 1.0.1 |
-| [add_cxxincludes](#optionadd_cxxincludes)             | 添加c++头文件检测                            | >= 1.0.1 |
-| [add_ctypes](#optionadd_ctypes)                       | 添加c类型检测                                | >= 1.0.1 |
-| [add_cxxtypes](#optionadd_cxxtypes)                   | 添加c++类型检测                              | >= 1.0.1 |
-| [add_csnippet](#optionadd_csnippet)                   | 添加c代码片段检测                            | >= 2.1.5 |
-| [add_cxxsnippet](#optionadd_cxxsnippet)               | 添加c++代码片段检测                          | >= 2.1.5 |
-| [set_warnings](#targetset_warnings)                   | 设置警告级别                                 | >= 1.0.1 |
-| [set_optimize](#targetset_optimize)                   | 设置优化级别                                 | >= 1.0.1 |
-| [set_languages](#targetset_languages)                 | 设置代码语言标准                             | >= 1.0.1 |
-| [add_includedirs](#targetadd_includedirs)             | 添加头文件搜索目录                           | >= 1.0.1 |
-| [add_defines](#targetadd_defines)                     | 添加宏定义                                   | >= 1.0.1 |
-| [add_undefines](#targetadd_undefines)                 | 取消宏定义                                   | >= 1.0.1 |
-| [add_defines_h](#targetadd_defines_h)                 | 添加宏定义到头文件                           | >= 1.0.1 |
-| [add_undefines_h](#targetadd_undefines_h)             | 取消宏定义到头文件                           | >= 1.0.1 |
-| [add_cflags](#targetadd_cflags)                       | 添加c编译选项                                | >= 1.0.1 |
-| [add_cxflags](#targetadd_cxflags)                     | 添加c/c++编译选项                            | >= 1.0.1 |
-| [add_cxxflags](#targetadd_cxxflags)                   | 添加c++编译选项                              | >= 1.0.1 |
-| [add_mflags](#targetadd_mflags)                       | 添加objc编译选项                             | >= 2.0.1 |
-| [add_mxflags](#targetadd_mxflags)                     | 添加objc/objc++编译选项                      | >= 2.0.1 |
-| [add_mxxflags](#targetadd_mxxflags)                   | 添加objc++编译选项                           | >= 2.0.1 |
-| [add_scflags](#targetadd_scflags)                     | 添加swift编译选项                            | >= 2.1.1 |
-| [add_asflags](#targetadd_asflags)                     | 添加汇编编译选项                             | >= 2.1.1 |
-| [add_gcflags](#targetadd_gcflags)                     | 添加go编译选项                               | >= 2.1.1 |
-| [add_dcflags](#targetadd_dcflags)                     | 添加dlang编译选项                            | >= 2.1.1 |
-| [add_rcflags](#targetadd_rcflags)                     | 添加rust编译选项                             | >= 2.1.1 |
-| [add_cuflags](#targetadd_cuflags)                     | 添加cuda编译选项                             | >= 2.2.1 |
-| [add_ldflags](#targetadd_ldflags)                     | 添加链接选项                                 | >= 2.1.1 |
-| [add_arflags](#targetadd_arflags)                     | 添加静态库归档选项                           | >= 2.1.1 |
-| [add_shflags](#targetadd_shflags)                     | 添加动态库链接选项                           | >= 2.0.1 |
-| [add_cfuncs](#targetadd_cfuncs)                       | 添加c库函数检测                              | >= 1.0.1 |
-| [add_cxxfuncs](#targetadd_cxxfuncs)                   | 添加c++库函数接口                            | >= 1.0.1 |
-| [add_languages](#targetadd_languages)                 | 添加语言标准                                 | >= 2.0.1 |
-| [add_vectorexts](#targetadd_vectorexts)               | 添加向量扩展指令                             | >= 2.0.1 |
-| [add_frameworks](#targetadd_frameworks)               | 添加链接框架                                 | >= 2.1.1 |
-| [add_frameworkdirs](#targetadd_frameworkdirs)         | 添加链接框架                                 | >= 2.1.5 |
+| [option](#option) | Define Options | >= 2.0.1 |
+| [option_end](#option_end) | End Definition Options | >= 2.1.1 |
+| [add_deps](#optionadd_deps) | Add Options Dependencies | >= 2.1.5 |
+| [before_check](#optionbefore_check) | Execute this script before option detection | >= 2.1.5 |
+| [on_check](#optionon_check) | Custom Option Detection Script | >= 2.1.5 |
+| [after_check](#optionafter_check) | Execute this script after option detection | >= 2.1.5 |
+| [set_values](#optionset_values) | Setting the list of option values ​​| >= 2.1.9 |
+| [set_default](#optionset_default) | Set Defaults | >= 2.0.1 |
+| [set_showmenu](#optionset_showmenu) | Set whether to enable menu display | >= 1.0.1 |
+| [set_category](#optionset_category) | Set option categories, only for menu display | >= 1.0.1 |
+| [set_description](#optionset_description) | Settings Menu Display Description | >= 1.0.1 |
+| [add_links](#optionadd_links) | Add Linked Library Detection | >= 1.0.1 |
+| [add_linkdirs](#optionadd_linkdirs) | Add a search directory for link library detection | >= 1.0.1 |
+| [add_rpathdirs](#optionadd_rpathdirs) | Add runtime dynamic link library search directory | >= 2.1.3 |
+| [add_cincludes](#optionadd_cincludes) | Add c header file detection | >= 1.0.1 |
+| [add_cxxincludes](#optionadd_cxxincludes) | Add c++ header file detection | >= 1.0.1 |
+| [add_ctypes](#optionadd_ctypes) | Add c type detection | >= 1.0.1 |
+| [add_cxxtypes](#optionadd_cxxtypes) | Add c++ type detection | >= 1.0.1 |
+| [add_csnippet](#optionadd_csnippet) | Add c-code snippets detection | >= 2.1.5 |
+| [add_cxxsnippet](#optionadd_cxxsnippet) | Add c++ code snippet detection | >= 2.1.5 |
+| [set_warnings](#targetset_warnings) | Setting the warning level | >= 1.0.1 |
+| [set_optimize](#targetset_optimize) | Setting the optimization level | >= 1.0.1 |
+| [set_languages](#targetset_languages) | Setting the Code Language Standard | >= 1.0.1 |
+| [add_includedirs](#targetadd_includedirs) | Add Header Search Directory | >= 1.0.1 |
+| [add_defines](#targetadd_defines) | Add Macro Definition | >= 1.0.1 |
+| [add_undefines](#targetadd_undefines) | Cancel Macro Definition | >= 1.0.1 |
+| [add_defines_h](#targetadd_defines_h) | Add macro definitions to header files | >= 1.0.1 |
+| [add_undefines_h](#targetadd_undefines_h) | Cancel macro definition to header file | >= 1.0.1 |
+| [add_cflags](#targetadd_cflags) | Add c Compile Options | >= 1.0.1 |
+| [add_cxflags](#targetadd_cxflags) | Add c/c++ Compile Options | >= 1.0.1 |
+| [add_cxxflags](#targetadd_cxxflags) | Add c++ Compile Options | >= 1.0.1 |
+| [add_mflags](#targetadd_mflags) | Add objc compile options | >= 2.0.1 |
+| [add_mxflags](#targetadd_mxflags) | Add objc/objc++ Compile Options | >= 2.0.1 |
+| [add_mxxflags](#targetadd_mxxflags) | Add objc++ Compile Options | >= 2.0.1 |
+| [add_scflags](#targetadd_scflags) | Add swift compile options | >= 2.1.1 |
+| [add_asflags](#targetadd_asflags) | Add assembly compile options | >= 2.1.1 |
+| [add_gcflags](#targetadd_gcflags) | Add go compile options | >= 2.1.1 |
+|[add_dcflags](#targetadd_dcflags) | Add dlang compile options | >= 2.1.1 |
+| [add_rcflags](#targetadd_rcflags) | Add rust compile option | >= 2.1.1 |
+| [add_cuflags](#targetadd_cuflags) | Add cuda compile options | >= 2.2.1 |
+| [add_ldflags](#targetadd_ldflags) | Add Link Options | >= 2.1.1 |
+| [add_arflags](#targetadd_arflags) | Add Static Library Archive Options | >= 2.1.1 |
+| [add_shflags](#targetadd_shflags) | Add Dynamic Library Link Options | >= 2.0.1 |
+| [add_cfuncs](#targetadd_cfuncs) | Add c library function detection | >= 1.0.1 |
+| [add_cxxfuncs](#targetadd_cxxfuncs) | Add C++ Library Function Interface | >= 1.0.1 |
+| [add_languages](#targetadd_languages) | Add Language Standards | >= 2.0.1 |
+| [add_vectorexts](#targetadd_vectorexts) | Add Vector Extension Instructions | >= 2.0.1 |
+| [add_frameworks](#targetadd_frameworks) | Add Linked Framework | >= 2.1.1 |
+| [add_frameworkdirs](#targetadd_frameworkdirs) | Add Linked Framework | >= 2.1.5 |
 
-| 废弃接口                                              | 描述                                         | 支持版本         |
+| Obsolete Interface | Description | Supported Version |
 | ----------------------------------------------------- | -------------------------------------------- | ---------------- |
-| [add_bindings](#optionadd_bindings)                   | 添加正向关联选项，同步启用和禁用             | >= 2.0.1 < 2.1.5 |
-| [add_rbindings](#optionadd_rbindings)                 | 添加逆向关联选项，同步启用和禁用             | >= 2.0.1 < 2.1.5 |
-| [add_defines_if_ok](#optionadd_defines_if_ok)         | 如果检测选项通过，则添加宏定义               | >= 1.0.1 < 2.1.5 |
-| [add_defines_h_if_ok](#optionadd_defines_h_if_ok)     | 如果检测选项通过，则添加宏定义到配置头文件   | >= 1.0.1 < 2.1.5 |
-| [add_undefines_if_ok](#optionadd_undefines_if_ok)     | 如果检测选项通过，则取消宏定义               | >= 1.0.1 < 2.1.5 |
-| [add_undefines_h_if_ok](#optionadd_undefines_h_if_ok) | 如果检测选项通过，则在配置头文件中取消宏定义 | >= 1.0.1 < 2.1.5 |
+| [add_bindings](#optionadd_bindings) | Add Forward Association Options, Sync Enable and Disable | >= 2.0.1 < 2.1.5 |
+| [add_rbindings](#optionadd_rbindings) | Add reverse association option, sync enable and disable | >= 2.0.1 < 2.1.5 |
+| [add_defines_if_ok](#optionadd_defines_if_ok) | Add macro definitions if the detection option passes | >= 1.0.1 < 2.1.5 |
+| [add_defines_h_if_ok](#optionadd_defines_h_if_ok) | Add macro definitions to the configuration header if the detection option passes | >= 1.0.1 < 2.1.5 |
+| [add_undefines_if_ok](#optionadd_undefines_if_ok) | Cancel macro definition if detection option passes | >= 1.0.1 < 2.1.5 |
+| [add_undefines_h_if_ok](#optionadd_undefines_h_if_ok) | If the detection option passes, cancel the macro definition in the configuration header file | >= 1.0.1 < 2.1.5 |
 
 ##### option
 
-###### 定义选项
+###### Defining options
 
-定义和设置选项开关，可用于自定义编译配置选项、开关设置。
+Define and set option switches for custom compilation configuration options, switch settings.
 
-例如，定义一个是否启用test的选项：
+For example, define an option to enable test:
 
 ```lua
 option("test")
@@ -3201,32 +3204,32 @@ option("test")
     add_defines("TEST")
 ```
 
-然后关联到指定的target中去：
+Then associate it with the specified target:
 
 ```lua
 target("demo")
     add_options("test")
 ```
 
-这样，一个选项就算定义好了，如果这个选项被启用，那么编译这个target的时候，就会自动加上`-DTEST`的宏定义。
+Thus, if an option is defined, if this option is enabled, the macro definition of `-DTEST` will be automatically added when compiling the target.
 
 ```lua
-# 手动启用这个选项
+# Manually enable this option
 $ xmake f --test=y
 $ xmake
 ```
 
 ##### option_end
 
-###### 结束定义选项
+###### End definition option
 
-这是一个可选api，显示离开选项作用域，用法和[target_end](#target_end)类似。
+This is an optional api that shows the departure option scope, similar to [target_end](#target_end).
 
 ##### option:add_deps
 
-###### 添加选项依赖
+###### Adding options depends
 
-通过设置依赖，可以调整选项的检测顺序，一般用于[on_check](#optionon_check)等检测脚本的调用时机。
+By setting the dependency, you can adjust the detection order of the options, which is generally used when the detection script is called by [on_check](#optionon_check).
 
 ```lua
 option("small")
@@ -3245,14 +3248,14 @@ option("test")
     end)
 ```
 
-当依赖的small选项检测完成后，通过判断small选项的状态，来控制test的选项状态。
+After the detection of the dependent small option is completed, the state of the option of the test is controlled by judging the state of the small option.
 
 ##### option:before_check
 
-###### 选项检测之前执行此脚本
+Execute this script before ###### option detection
 
-例如：在检测之前，通过[find_package](#detect-find_package)来查找包，将`links`, `includedirs`和`linkdirs`等信息添加到option中去，
-然后开始选项检测，通过后就会自动链接到target上。
+For example: before testing, find the package by [find_package](#detect-find_package), and add information such as `links`, `includedirs` and `linkdirs` to the option.
+Then start the option detection, and then automatically link to the target after passing.
 
 ```lua
 option("zlib")
@@ -3264,9 +3267,9 @@ option("zlib")
 
 ##### option:on_check
 
-###### 自定义选项检测脚本
+###### Custom Option Detection Script
 
-此脚本会覆盖内置的选项检测逻辑。
+This script overrides the built-in option detection logic.
 
 ```lua
 option("test")
@@ -3279,13 +3282,13 @@ option("test")
     end)
 ```
 
-如果test依赖的选项通过，则禁用test选项。
+If the option that test depends on passes, disable the test option.
 
 ##### option:after_check
 
-###### 选项检测之后执行此脚本
+Execute this script after ###### option detection
 
-在选项检测完成后，执行此脚本做一些后期处理，也可以在此时重新禁用选项：
+After the option detection is complete, execute this script for some post-processing, or you can re-disable the option at this time:
 
 ```lua
 option("test")
@@ -3298,9 +3301,9 @@ option("test")
 
 ##### option:set_values
 
-###### 设置选项值列表
+###### Setting the list of option values
 
-仅用于`xmake f --menu`的图形菜单配置时，提供选项值列表供用户快速选择使用，例如：
+For the graphical menu configuration of `xmake f --menu` only, a list of option values ​​is provided for quick selection by the user, for example:
 
 ```lua
 option("test")
@@ -3309,79 +3312,78 @@ option("test")
     set_values("a", "b", "c")
 ```
 
-效果图如下：
+The effect chart is as follows:
 
 <img src="/assets/img/manual/option_set_values.png" width="60%" />
 
 ##### option:set_default
 
-###### 设置选项默认值
+###### Setting options defaults
 
-在没有通过`xmake f --option=[y|n}`等命令修改选项值的时候，这个选项本身也是有个默认值的，可以通过这个接口来设置：
+When the option value is not modified by the command `xmake f --option=[y|n}`, the option itself has a default value, which can be set through this interface:
 
 ```lua
 option("test")
-    -- 默认禁用这个选项
+    -- This option is disabled by default
     set_default(false)
 ```
 
-选项的值不仅支持boolean类型，也可以是字符串类型，例如：
+The value of the option supports not only the boolean type but also the string type, for example:
 
 ```lua
 option("test")
     set_default("value")
 ```
 
-| 值类型  | 描述                                   | 配置                                           |
-| ------  | -------------------------------------- | -----------------------------------------------|
-| boolean | 一般用作参数开关，值范围：`true/false` | `xmake f --optionname=[y/n/yes/no/true/false]` |
-| string  | 可以是任意字符串，一般用于模式判断     | `xmake f --optionname=value`                   |
+| Value Type | Description | Configuration |
+| ------ | -------------------------------------- | -----------------------------------------------|
+Boolean | Typically used as a parameter switch, value range: `true/false` | `xmake f --optionname=[y/n/yes/no/true/false]` |
+| string | can be any string, generally used for pattern judgment | `xmake f --optionname=value` |
 
-如果是`boolean`值的选项，可以通过[is_option](#is_option)来进行判断，选项是否被启用。
+If it is an option of the `boolean` value, it can be judged by [is_option](#is_option), and the option is enabled.
 
-如果是`string`类型的选项，可以在内建变量中直接使用，例如：
+If it is an option of type `string`, it can be used directly in built-in variables, for example:
 
 ```lua
--- 定义一个路径配置选项，默认使用临时目录
+-- Define a path configuration option, using the temporary directory by default
 option("rootdir")
-    set_default("$(tmpdir)")
-    set_showmenu(true)
+    set_default("$(tmpdir)")Set_showmenu(true)
 
 target("test")
-    -- 添加指定选项目录中的源文件
+    -- Add source files in the specified options directory
     add_files("$(rootdir)/*.c")
 ```
 
-其中，`$(rootdir)` 就是自定义的选项内建变量，通过手动配置，可以动态修改它的值：
+Among them, `$(rootdir)` is a custom option built-in variable, which can be dynamically modified by manual configuration:
 
 ```bash
 $ xmake f --rootdir=~/projectdir/src
 $ xmake
 ```
 
-给这个`rootdir`选项指定一个其他的源码目录路径，然后编译。
+Specify a different source directory path for this `rootdir` option and compile it.
 
-选项的检测行为：
+Detection behavior of the option:
 
-| default值  | 检测行为                                                                                      |
+| default value | detection behavior |
 | ---------- | --------------------------------------------------------------------------------------------- |
-| 没有设置   | 优先手动配置修改，默认禁用，否则自动检测，可根据手动传入的值类型，自动切换boolean和string类型 |
-| false      | 开关选项，不自动检测，默认禁用，可手动配置修改                                                |
-| true       | 开关选项，不自动检测，默认启用，可手动配置修改                                                |
-| string类型 | 无开关状态，不自动检测，可手动配置修改，一般用于配置变量传递                                  |
+| No setting | Priority manual configuration modification, disabled by default, otherwise automatic detection, can automatically switch boolean and string type according to the type of value manually passed in |
+| false | switch option, not automatic detection, disabled by default, can be manually configured to modify |
+| true | switch option, not automatic detection, enabled by default, can be manually configured to modify |
+| string type | no switch state, no automatic detection, can be manually configured and modified, generally used for configuration variable transfer |
 
 ##### option:set_showmenu
 
-###### 设置是否启用菜单显示
+###### Set whether to enable menu display
 
-如果设置为`true`，那么在`xmake f --help`里面就会出现这个选项，也就能通过`xmake f --optionname=xxx`进行配置，否则只能在`xmake.lua`内部使用，无法手动配置修改。
+If set to `true`, then this option will appear in `xmake f --help`, which can also be configured via `xmake f --optionname=xxx`, otherwise it can only be used inside `xmake.lua` , the modification cannot be configured manually.
 
 ```lua
 option("test")
     set_showmenu(true)
 ```
 
-设置为启用菜单后，执行`xmake f --help`可以看到，帮助菜单里面多了一项：
+After setting the menu to enable, execute `xmake f --help` to see that there is one more item in the help menu:
 
 ```
 Options:
@@ -3392,11 +3394,11 @@ Options:
 
 ##### option:set_category
 
-###### 设置选项分类，仅用于菜单显示
+###### Setting option categories, only for menu display
 
-这个是个可选配置，仅用于在帮助菜单中，进行分类显示选项，同一类别的选项，会在同一个分组里面显示，这样菜单看起来更加的美观。
+This is an optional configuration, only used in the help menu, the classification display options, the same category of options, will be displayed in the same group, so the menu looks more beautiful.
 
-例如：
+E.g:
 
 ```lua
 option("test1")
@@ -3416,7 +3418,7 @@ option("demo2")
     set_category("demo")
 ```
 
-这里四个选项分别归类于两个分组：`test`和`demo`，那么显示的布局类似这样：
+The four options here are grouped into two groups: `test` and `demo`, and the layout shown is similar to this:
 
 ```bash
 Options:
@@ -3424,14 +3426,14 @@ Options:
 
     --test1=TEST1
     --test2=TEST2
- 
+
     --demo1=DEMO1
     --demo2=DEMO2
 ```
 
-这个接口，仅仅是为了调整显示布局，更加美观而已，没其他用途。
+This interface is just to adjust the display layout, more beautiful, no other use.
 
-在2.1.9版本中，可以通过category设置分级路径名`set_category("root/submenu/submenu2")`，来配置`xmake f --menu`的图形菜单界面，例如：
+In version 2.1.9, the hierarchical path name `set_category("root/submenu/submenu2")` can be set via category to configure the graphical menu interface of `xmake f --menu`, for example:
 
 ```lua
 -- 'boolean' option
@@ -3460,7 +3462,7 @@ option("test4")
     set_category("root menu/test4")
 ```
 
-上述配置最后显示的菜单界面路径结构：
+The menu interface path structure finally displayed in the above configuration:
 
 - root menu
   - test1
@@ -3469,15 +3471,15 @@ option("test4")
     - test3
   - test4
 
-效果图如下：
+The effect chart is as follows:
 
 <img src="/assets/img/manual/option_set_category.gif" width="60%" />
 
 ##### option:set_description
 
-###### 设置菜单显示描述
+###### Setting menu display description
 
-设置选项菜单显示时，右边的描述信息，用于帮助用户更加清楚的知道这个选项的用途，例如：
+When the option menu is displayed, the description on the right is used to help the user know more clearly about the purpose of this option, for example:
 
 ```lua
 option("test")
@@ -3486,40 +3488,40 @@ option("test")
     set_description("Enable or disable test")
 ```
 
-生成的菜单内容如下：
+The generated menu contents are as follows:
 
 ```
 Options:
     ...
 
-    --test=TEST                       Enable or disable test (default: false)
+    --test=TEST Enable or disable test (default: false)
 ```
 
-这个接口也支持多行显示，输出更加详细的描述信息，例如：
+This interface also supports multi-line display and outputs more detailed description information, such as:
 
 ```lua
 option("mode")
     set_default("debug")
     set_showmenu(true)
     set_description("Set build mode",
-                    "    - debug",
-                    "    - release",
-                    "    - profile")
+                    " - debug",
+                    " - release",
+                    "-profile")
 ```
 
-生成的菜单内容如下：
+The generated menu contents are as follows:
 
 ```
 Options:
     ...
 
-    --mode=MODE                       Set build mode (default: debug)
+    --mode=MODE Set build mode (default: debug)
                                           - debug
                                           - release
                                           - profile
 ```
 
-看到这个菜单，用户就能清楚地知道，定义的这个`mode`选项的具体用处，以及如何使用了：
+When you see this menu, the user can clearly know the specific use of the defined `mode` option and how to use it:
 
 ```bash
 $ xmake f --mode=release
@@ -3527,61 +3529,61 @@ $ xmake f --mode=release
 
 ##### option:add_bindings
 
-###### 添加正向关联选项，同步启用和禁用
+###### Add forward association option, sync enable and disable
 
 <p class="tip">
-2.1.5版本之后已废弃，请用[add_deps](#optionadd_deps), [on_check](#optionon_check), [after_check](#optionafter_check)等接口代替。
+After the 2.1.5 version has been deprecated, please use [add_deps](#optionadd_deps), [on_check](#optionon_check), [after_check](#optionafter_check) and other interfaces instead.
 </p>
 
-绑定关联选项，例如我想在命令行中配置一个`smallest`的参数：`xmake f --smallest=y`
+Bind association options, for example I want to configure a `smallest` parameter on the command line: `xmake f --smallest=y`
 
-这个时候，需要同时禁用多个其他的选项开关，来禁止编译多个模块，就是这个需求，相当于一个选项 与其他 多个选项之间 是有联动效应的。
+At this time, it is necessary to disable multiple other option switches at the same time to prohibit compiling multiple modules. This is the requirement, which is equivalent to the linkage between one option and other options.
 
-而这个接口就是用来设置需要正向绑定的一些关联选项，例如：
+This interface is used to set some association options that need to be forward bound, for example:
 
 ```lua
--- 定义选项开关: --smallest=y|n
+-- Define option switches: --smallest=y|n
 option("smallest")
 
-    -- 添加正向绑定，如果smallest被启用，下面的所有选项开关也会同步被启用
+    -- Add forward binding. If smallest is enabled, all of the following option switches will also be enabled synchronously.
     add_bindings("nozip", "noxml", "nojson")
 ```
 
 ##### option:add_rbindings
 
-###### 添加逆向关联选项，同步启用和禁用
+###### Add reverse association option, sync enable and disable
 
 <p class="tip">
-2.1.5版本之后已废弃，请用[add_deps](#optionadd_deps), [on_check](#optionon_check), [after_check](#optionafter_check)等接口代替。
+After the 2.1.5 version has been deprecated, please use [add_deps](#optionadd_deps), [on_check](#optionon_check), [after_check](#optionafter_check) and other interfaces instead.
 </p>
 
-逆向绑定关联选项，被关联选项的开关状态是相反的。
+Reverse binding association options, the switch state of the associated option is reversed.
 
 ```lua
--- 定义选项开关: --smallest=y|n
+-- Define option switches: --smallest=y|n
 option("smallest")
 
-    -- 添加反向绑定，如果smallest被启用，下面的所有模块全部禁用
+    -- Add reverse binding, if smallest is enabled, all modules below are disabled
     add_rbindings("xml", "zip", "asio", "regex", "object", "thread", "network", "charset", "database")
     add_rbindings("zlib", "mysql", "sqlite3", "openssl", "polarssl", "pcre2", "pcre", "base")
 ```
 
 <p class="warning">
-需要注意的是，命令行配置是有顺序的，你可以先通过启用smallest禁用所有模块，然后添加其他选项，逐一启用。
+It should be noted that the command line configuration is sequential. You can disable all modules by enabling smallest and then add other options to enable them one by one.
 </p>
 
-例如：
+E.g:
 
 ```bash
--- 禁用所有模块，然后仅仅启用xml和zip模块
+-- disable all modules and then only enable xml and zip modules
 $ xmake f --smallest=y --xml=y --zip=y
 ```
 
 ##### option:add_links
 
-###### 添加链接库检测
+###### Add Link Library Detection
 
-如果指定的链接库检测通过，此选项将被启用，并且对应关联的target会自动加上此链接，例如：
+If the specified link library is passed, this option will be enabled and the associated target will automatically be added to this link, for example:
 
 ```lua
 option("pthread")
@@ -3593,26 +3595,26 @@ target("test")
     add_options("pthread")
 ```
 
-如果检测通过，`test`目标编译的时候就会自动加上：`-L/usr/local/lib -lpthread` 编译选项
+If the test passes, the `test` target will be automatically added when it is compiled: `-L/usr/local/lib -lpthread` compile option
 
 
 ##### option:add_linkdirs
 
-###### 添加链接库检测时候需要的搜索目录
+###### Adding the search directory needed for link library detection
 
-这个是可选的，一般系统库不需要加这个，也能检测通过，如果确实没找到，可以自己追加搜索目录，提高检测通过率。具体使用见：[add_links](#optionadd_links)
+This is optional. Generally, the system library does not need to add this, and it can also pass the test. If it is not found, you can add the search directory yourself to improve the detection pass rate. For details, see: [add_links](#optionadd_links)
 
-##### option:add_rpathdirs
+##### optiOn:add_rpathdirs
 
-###### 添加程序运行时动态库的加载搜索目录
+###### Adding a load search directory for a dynamic library at runtime
 
-在选项通过检测后，会自动添加到对应的target上去，具体使用见：[target.add_rpathdirs](#targetadd_rpathdirs)。
+After the option passes the detection, it will be automatically added to the corresponding target. For details, see: [target.add_rpathdirs](#targetadd_rpathdirs).
 
 ##### option:add_cincludes
 
-###### 添加c头文件检测
+###### Add c header file detection
 
-如果c头文件检测通过，此选项将被启用，例如：
+This option will be enabled if the c header file is passed, for example:
 
 ```lua
 option("pthread")
@@ -3624,21 +3626,21 @@ target("test")
     add_options("pthread")
 ```
 
-此选项检测是否存在`pthread.h`的头文件，如果检测通过那么`test`目标程序将会加上`ENABLE_PTHREAD`的宏定义。
+This option checks if there is a `pthread.h` header file. If the test passes, then the `test` target program will add the macro definition of `ENABLE_PTHREAD`.
 
-如果想要更加灵活的检测，可以通过[lib.detect.has_cincludes](#detect-has_cincludes)在[option.on_check](#optionon_check)中去实现。
+If you want more flexible detection, you can do this in [option.on_check](#optionon_check) via [lib.detect.has_cincludes](#detect-has_cincludes).
 
 ##### option:add_cxxincludes
 
-###### 添加c++头文件检测
+###### Add c++ header file detection
 
-与[add_cincludes](#optionadd_cincludes)类似，只是检测的头文件类型是c++头文件。
+Similar to [add_cincludes](#optionadd_cincludes), except that the detected header file type is a c++ header file.
 
 ##### option:add_ctypes
 
-###### 添加c类型检测 
+###### Add c type detection
 
-如果c类型检测通过，此选项将被启用，例如：
+This option will be enabled if the c type is passed, for example:
 
 ```lua
 option("wchar")
@@ -3650,63 +3652,63 @@ target("test")
     add_options("wchar")
 ```
 
-此选项检测是否存在`wchar_t`的类型，如果检测通过那么`test`目标程序将会加上`HAVE_WCHAR`的宏定义。
+This option checks if there is a type of `wchar_t`. If the test passes, then the `test` target program will add the macro definition of `HAVE_WCHAR`.
 
-如果想要更加灵活的检测，可以通过[lib.detect.has_ctypes](#detect-has_ctypes)在[option.on_check](#optionon_check)中去实现。
+If you want more flexible detection, you can do this in [option.on_check](#optionon_check) via [lib.detect.has_ctypes](#detect-has_ctypes).
 
 ##### option:add_cxxtypes
 
-###### 添加c++类型检测
+###### Adding c++ type detection
 
-与[add_ctypes](#optionadd_ctypes)类似，只是检测的类型是c++类型。
+Similar to [add_ctypes](#optionadd_ctypes), except that the type detected is a c++ type.
 
 ##### option:add_csnippet
 
-###### 添加c代码片段检测
+###### Add c code fragment detection
 
-如果现有的[add_ctypes](#optionadd_ctypes), [add_cfuncs](#optionadd_cfuncs)等不能满足当前的检测需求，
-可以用这个接口实现更加定制化检测一些编译器特性检测，具体见: [add_cxxsnippet](#optionadd_cxxsnippet)。
+If the existing [add_ctypes](#optionadd_ctypes), [add_cfuncs](#optionadd_cfuncs), etc. cannot meet the current detection requirements,
+You can use this interface to implement more custom detection of some compiler feature detection, see: [add_cxxsnippet](#optionadd_cxxsnippet).
 
 ##### option:add_cxxsnippet
 
-###### 添加c++代码片段检测
+###### Adding c++ code snippet detection
 
-可以用这个接口实现更加定制化检测一些编译器特性检测，尤其是c++的各种特性的检测支持，例如：
+This interface can be used to implement more custom detection of some compiler feature detection, especially the detection support of various features of C++, such as:
 
 ```lua
 option("constexpr")
-    add_cxxsnippet("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f(5);  static_assert(x == 15);")
+    add_cxxsnippet("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f (5); static_assert(x == 15);")
 ```
 
-第一个参数设置代码片段的名字作为标示，检测输出信息时候会有显示。
+The first parameter sets the name of the code snippet as a label, and is displayed when the output information is detected.
 
-上述代码，实现对c++的constexpr特性的检测，如果检测通过，则启用constexpr选项，当然这里只是个例子。
+The above code implements the detection of the constexpr feature of C++. If the test passes, the constexpr option is enabled. Of course, this is just an example.
 
-对于编译器特性的检测，有更加方便高效的检测模块，提供更强大的检测支持，具体见：[compiler.has_features](#compiler-has_features)和[detect.check_cxsnippets](#detect-check_cxsnippets)
+For the detection of compiler features, there is a more convenient and efficient detection module, providing more powerful detection support, see: [compiler.has_features] (#compiler-has_features) and [detect.check_cxsnippets] (#detect-check_cxsnippets)
 
-如果想要更加灵活的检测，可以通过[lib.detect.check_cxsnippets](#detect-check_cxsnippets)在[option.on_check](#optionon_check)中去实现。
+If you want more flexible detection, you can do this in [option.on_check](#optionon_check) via [lib.detect.check_cxsnippets](#detect-check_cxsnippets).
 
 ##### option:add_defines_if_ok
 
-###### 如果检测选项通过，则添加宏定义
+###### Add macro definition if the detection option is passed
 
 <p class="tip">
-2.1.5版本之后已废弃，请用[add_defines](#targetadd_defines)接口代替。
+After the 2.1.5 version has been deprecated, please use the [add_defines] (#targetadd_defines) interface instead.
 </p>
 
-检测选项通过后才会被设置，具体使用见[add_cincludes](#optionadd_cincludes)中的例子。
+The detection options will not be set until they are passed. See the example in [add_cincludes](#optionadd_cincludes) for details.
 
 ##### option:add_defines_h_if_ok
 
-###### 如果检测选项通过，则添加宏定义到配置头文件
+###### If the detection option is passed, add the macro definition to the configuration header file.
 
 <p class="tip">
-2.1.5版本之后已废弃，请用[add_defines_h](#targetadd_defines_h)接口代替。
+After the 2.1.5 version has been deprecated, please use the [add_defines_h] (#targetadd_defines_h) interface instead.
 </p>
 
-跟[add_defines_if_ok](#optionadd_defines_if_ok)类似，只是检测通过后，会在`config.h`头文件中自动加上被设置的宏定义。
+Similar to [add_defines_if_ok](#optionadd_defines_if_ok), the macro definitions are automatically added to the `config.h` header file after the test is passed.
 
-例如：
+E.g:
 
 ```lua
 option("pthread")
@@ -3718,214 +3720,214 @@ target("test")
     add_options("pthread")
 ```
 
-通过后，会在`config.h`中加上：
+After passing, it will be added to `config.h`:
 
 ```c
 #define ENABLE_PTHREAD 1
 ```
 
-具体`config.h`如何设置，见：[set_config_h](#targetset_config_h)
+How to set the specific `config.h`, see: [set_config_h](#targetset_config_h)
 
 ##### option:add_undefines_if_ok
 
-###### 如果检测选项通过，则取消宏定义
+###### If the detection option is passed, cancel the macro definition
 
 <p class="tip">
-2.1.5版本之后已废弃，请用[add_undefines](#targetadd_undefines)接口代替。
+After the 2.1.5 version has been deprecated, please use the [add_undefines](#targetadd_undefines) interface instead.
 </p>
 
-跟[add_defines_if_ok](#optionadd_defines_if_ok)类似，只是检测通过后，取消被设置的宏定义。
+Similar to [add_defines_if_ok](#optionadd_defines_if_ok), except that the macro definition is canceled after the pass is detected.
 
 ##### option:add_undefines_h_if_ok
 
-###### 如果检测选项通过，则在配置头文件中取消宏定义
+###### If the detection option is passed, the macro definition is canceled in the configuration header file.
 
 <p class="tip">
-2.1.5版本之后已废弃，请用[add_undefines_h](#targetadd_undefines_h)接口代替。
+Deprecated after version 2.1.5, please use [add_undefines_h](#targetadd_undefines_h) interface instead.
 </p>
 
-跟[add_defines_h_if_ok](#optionadd_defines_h_if_ok)类似，只是检测通过后，会在`config.h`中取消被设置的宏定义。
+Similar to [add_defines_h_if_ok](#optionadd_defines_h_if_ok), the macro definition will be canceled in `config.h` after the test is passed.
 
 ```c
 #undef DEFINED_MACRO
 ```
 
-具体`config.h`如何设置，见：[set_config_h](#targetset_config_h)
+How to set the specific `config.h`, see: [set_config_h](#targetset_config_h)
 
 #### Plugin and Task
 
-xmake可以实现自定义任务或者插件，其两者的核心就是`task`任务，其两者实际上是一样的，xmake的插件都是用`task`实现的。
+Xmake can implement custom tasks or plugins. The core of both is the `task` task. The two are actually the same. The xmake plugins are implemented with `task`.
 
-本质上都是任务，只是[set_category](#taskset_category)分类不同而已。
+In essence, they are tasks, except that the [set_category](#taskset_category) classification is different.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [task](#task)                                   | 定义插件或者任务                             | >= 2.0.1 |
-| [task_end](#task_end)                           | 结束定义插件或任务                           | >= 2.1.1 |
-| [set_menu](#taskset_menu)                       | 设置任务菜单                                 | >= 2.0.1 |
-| [set_category](#taskset_category)               | 设置任务类别                                 | >= 2.0.1 |
-| [on_run](#taskon_run)                           | 设置任务运行脚本                             | >= 2.0.1 |
+| [task](#task) | Define plugins or tasks | >= 2.0.1 |
+| [task_end](#task_end) | End defining plugins or tasks | >= 2.1.1 |
+| [set_menu](#taskset_menu) | Set Task Menu | >= 2.0.1 |
+| [set_category](#taskset_category) | Set Task Category | >= 2.0.1 |
+| [on_run](#taskon_run) | Set Task Run Script | >= 2.0.1 |
 
 ##### task
 
-###### 定义插件或者任务
+###### Defining plugins or tasks
 
-`task`域用于描述一个自定义的任务实现，与[target](#target)和[option](#option)同级。
+The `task` field is used to describe a custom task implementation, in the same level as [target](#target) and [option](#option).
 
-例如，这里定义一个最简单的任务：
+For example, here is a simple task defined:
 
 ```lua
 task("hello")
 
-    -- 设置运行脚本
+    -- Set the run script
     on_run(function ()
         print("hello xmake!")
     end)
 ```
 
-这个任务只需要打印`hello xmake!`，那如何来运行呢？
+This task only needs to print `hello xmake!`, how do you run it?
 
-由于这里没有使用[set_menu](#taskset_menu)设置菜单，因此这个任务只能再`xmake.lua`的自定义脚本或者其他任务内部调用，例如：
+Since the [set_menu](#taskset_menu) setting menu is not used here, this task can only be called inside the custom script of `xmake.lua` or other tasks, for example:
 
 ```lua
 target("test")
 
     after_build(function (target)
- 
-        -- 导入task模块
+
+        -- Import task module
         import("core.project.task")
 
-        -- 运行hello任务
+        -- Run the hello task
         task.run("hello")
     end)
 ```
 
-在构建完`test`目标后运行`hello`任务。
+Run the `hello` task after building the `test` target.
 
 ##### task_end
 
-###### 结束定义插件或任务
+###### End defining plugins or tasks
 
-这是一个可选api，显示离开选项作用域，用法和[target_end](#target_end)类似。
+This is an optional api that shows the departure option scope, similar to [target_end](#target_end).
 
 ##### task:set_menu
 
-###### 设置任务菜单
+###### Setting the task menu
 
-通过设置一个菜单，这个任务就可以开放给用户自己通过命令行手动调用，菜单的设置如下：
+By setting a menu, this task can be opened to the user to manually call through the command line. The menu settings are as follows:
 
 ```lua
 task("echo")
 
-    -- 设置运行脚本
+    -- Set the run script
     on_run(function ()
 
-        -- 导入参数选项模块
+        -- Import parameter option module
         import("core.base.option")
 
-        -- 初始化颜色模式
+        -- Initialize color mode
         local modes = ""
         for _, mode in ipairs({"bright", "dim", "blink", "reverse"}) do
             if option.get(mode) then
-                modes = modes .. " " .. mode 
+                modes = modes .. " " .. mode
             end
         end
 
-        -- 获取参数内容并且显示信息
+        -- Get parameter content and display information
         cprint("${%s%s}%s", option.get("color"), modes, table.concat(option.get("contents") or {}, " "))
     end)
 
-    -- 设置插件的命令行选项，这里没有任何参数选项，仅仅显示插件描述
+    -- Set the command line options for the plugin. There are no parameter options here, just the plugin description.
     set_menu {
-                -- 设置菜单用法
+                -- Settings menu usage
                 usage = "xmake echo [options]"
 
-                -- 设置菜单描述
-            ,   description = "Echo the given info!"
+                -- Setup menu description
+            , description = "Echo the given info!"
 
-                -- 设置菜单选项，如果没有选项，可以设置为{}
-            ,   options = 
+                -- Set menu options, if there are no options, you can set it to {}
+            , options =
                 {
-                    -- 设置k模式作为key-only型bool参数
-                    {'b', "bright",     "k",  nil,       "Enable bright."               }      
-                ,   {'d', "dim",        "k",  nil,       "Enable dim."                  }      
-                ,   {'-', "blink",      "k",  nil,       "Enable blink."                }      
-                ,   {'r', "reverse",    "k",  nil,       "Reverse color."               }      
+                    -- Set k mode as key-only bool parameter
+                    {'b', "bright", "k", nil, "Enable bright." }
+                , {'d', "dim", "k", nil, "Enable dim." }
+                , {'-', "blink", "k", nil, "Enable blink." }
+                , {'r', "reverse", "k", nil, "Reverse color." }
 
-                    -- 菜单显示时，空白一行
-                ,   {}
+                    -- When the menu is displayed, a blank line
+                , {}
 
-                    -- 设置kv作为key-value型参数，并且设置默认值：black
-                ,   {'c', "color",      "kv", "black",   "Set the output color."
-                                                     ,   "    - red"   
-                                                     ,   "    - blue"
-                                                     ,   "    - yellow"
-                                                     ,   "    - green"
-                                                     ,   "    - magenta"
-                                                     ,   "    - cyan" 
-                                                     ,   "    - white"                  }
+                    -- Set kv as the key-value parameter and set the default value: black
+                , {'c', "color", "kv", "black", "Set the output color."
+                                                     , " - red"
+                                                     , " - blue"
+                                                     , " - yellow"
+                                                     , " - green"
+                                                     , " - magenta"
+                                                     , " - cyan"
+                                                     , " - white" }
 
-                    -- 设置`vs`作为values多值型参数，还有`v`单值类型
-                    -- 一般放置在最后，用于获取可变参数列表
-                ,   {}
-                ,   {nil, "contents",   "vs", nil,       "The info contents."           }
+                    -- Set `vs` as a value multivalued parameter and a `v` single value type
+                    -- generally placed last, used to get a list of variable parameters
+                , {}
+                , {nil, "contents", "vs", nil, "The info contents." }
                 }
-            } 
+            }
 ```
 
-定义完这个任务后，执行`xmake --help`，就会多出一个任务项来：
+After defining this task, execute `xmake --help` and you will have one more task item:
 
 ```
 Tasks:
 
     ...
 
-    echo                    Echo the given info!
+    Echo Echo the given info!
 ```
 
-如果通过[set_category](#taskset_category)设置分类为`plugin`，那么这个任务就是一个插件了：
+If the classification is `plugin` by [set_category](#taskset_category), then this task is a plugin:
 
 ```
 Plugins:
 
     ...
 
-    echo                    Echo the given info!
+    Echo Echo the given info!
 ```
 
-想要手动运行这个任务，可以执行：
+To run this task manually, you can execute:
 
 ```bash
 $ xmake echo hello xmake!
 ```
 
-就行了，如果要看这个任务定义的菜单，只需要执行：`xmake echo [-h|--help]`，显示结果如下：
+Just fine, if you want to see the menu defined by this task, you only need to execute: `xmake echo [-h|--help]`, the result is as follows:
 
 ```bash
 Usage: $xmake echo [options]
 
 Echo the given info!
 
-Options: 
-    -v, --verbose                          Print lots of verbose information.
-        --backtrace                        Print backtrace information for debugging.
-        --profile                          Print performance data for debugging.
-        --version                          Print the version number and exit.
-    -h, --help                             Print this help message and exit.
-                                           
-    -F FILE, --file=FILE                   Read a given xmake.lua file.
-    -P PROJECT, --project=PROJECT          Change to the given project directory.
+Options:
+    -v, --verbose Print lots of verbose information.
+        --backtrace Print backtrace information for debugging.
+        --profile Print performance data for debugging.
+        --version Print the version number and exit.
+    -h, --help Print this help message and exit.
+
+    -F FILE, --file=FILE Read a given xmake.lua file.
+    -P PROJECT, --project=PROJECT Change to the given project directory.
                                            Search priority:
                                                1. The Given Command Argument
                                                2. The Envirnoment Variable: XMAKE_PROJECT_DIR
                                                3. The Current Directory
-                                           
-    -b, --bright                           Enable bright.
-    -d, --dim                              Enable dim.
-    --, --blink                            Enable blink.
-    -r, --reverse                          Reverse color.
-                                           
-    -c COLOR, --color=COLOR                Set the output color. (default: black)
+
+    -b, --bright Enable bright.
+    -d, --dim Enable dim.
+    --, --blink Enable blink.
+    -r, --reverse Reverse color.
+
+    -c COLOR, --color=COLOR Set the output color. (default: black)
                                                - red
                                                - blue
                                                - yellow
@@ -3933,58 +3935,58 @@ Options:
                                                - magenta
                                                - cyan
                                                - white
-                                           
-    contents ...                           The info contents.
+
+    Contents ... The info contents.
 ```
 
 <p class="tip">
-其中菜单最开头的部分选项，是xmake内置的常用选项，基本上每个任务都会用到，不需要自己额外定义，简化菜单定义。
+The most part of the menu is the common options built into xmake. Basically, each task will be used. You don't need to define it yourself to simplify the menu definition.
 </p>
 
-下面，我们来实际运行下这个任务，例如我要显示红色的`hello xmake!`，只需要：
+Below, let's actually run this task, for example, I want to display the red `hello xmake!`, only need to:
 
 ```bash
 $ xmake echo -c red hello xmake!
 ```
 
-也可以使用选项全名，并且加上高亮：
+You can also use the full name of the option and highlight it:
 
 ```bash
 $ xmake echo --color=red --bright hello xmake!
 ```
 
-最后面的可变参数列表，在`run`脚本中通过`option.get("contents")`获取，返回的是一个`table`类型的数组。
+The last variable argument list is retrieved by `option.get("contents")` in the `run` script, which returns an array of type `table`.
 
 ##### task:set_category
 
-###### 设置任务类别
+###### Setting task categories
 
-仅仅用于菜单的分组显示，当然插件默认会用`plugin`，内置任务默认会用：`action`，但也仅仅只是个约定。
+It is only used for grouping of menus. Of course, the plugin will use `plugin` by default. The built-in task will use `action` by default, but it is just a convention.
 
 <p class="tips">
-你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为`plugin`，就会显示到xmake的Plugins分组中去。
+You can use any name you define yourself. The same name will be grouped and displayed together. If it is set to `plugin`, it will be displayed in the Plugins group of xmake.
 </p>
 
-例如：
+E.g:
 
 ```lua
-Plugins: 
-    l, lua               Run the lua script.
-    m, macro             Run the given macro.
-       doxygen           Generate the doxygen document.
-       project           Generate the project file.
-       hello             Hello xmake!
-       app2ipa           Generate .ipa file from the given .app
-       echo              Echo the given info!
+plugins:
+    l, lua Run the lua script.
+    m, macro Run the given macro.
+       doxygen Generate the doxygen document.
+       project Generate the project file.
+       hello Hello xmake!
+       app2ipa Generate .ipa file from theGiven .app
+       echo Echo the given info!
 ```
 
-如果没有调用这个接口设置分类，默认使用`Tasks`分组显示，代表普通任务。
+If you do not call this interface to set the classification, the default is to use the `Tasks` group display, which represents the normal task.
 
 ##### task:on_run
 
-###### 设置任务运行脚本
+###### Setting up a task to run a script
 
-可以有两种设置方式，最简单的就是设置内嵌函数：
+There are two ways to set it up. The easiest way is to set the inline function:
 
 ```lua
 task("hello")
@@ -3994,26 +3996,26 @@ task("hello")
     end)
 ```
 
-这种对于小任务很方便，也很简洁，但是对于大型任务就不太适用了，例如插件等，需要复杂的脚本支持。
+This is convenient and small for small tasks, but it is not suitable for large tasks, such as plugins, which require complex scripting support.
 
-这个时候就需要独立的模块文件来设置运行脚本，例如：
+This time you need a separate module file to set up the run script, for example:
 
 ```lua
 task("hello")
     on_run("main")
 ```
 
-这里的`main`设置为脚本运行主入口模块，文件名为`main.lua`，放在定义`task`的`xmake.lua`的同目录下，当然你可以起其他文件名。
+Here the `main` is set to run the main entry module for the script. The file name is `main.lua`, placed in the same directory as `xmake.lua` that defines `task`. Of course, you can use other file names.
 
-目录结构如下：
+The directory structure is as follows:
 
 ```
-projectdir
+Projectdir
     - xmake.lua
     - main.lua
 ```
 
-`main.lua`里面内容如下：
+The contents of `main.lua` are as follows:
 
 ```lua
 function main(...)
@@ -4021,43 +4023,43 @@ function main(...)
 end
 ```
 
-就是一个简单的带`main`主函数的脚本文件，你可以通过[import](#import)导入各种扩展模块，实现复杂功能，例如：
+It's a simple script file with the main function of `main`. You can import various extension modules via [import](#import) to implement complex functions, such as:
 
 ```lua
--- 导入参数选项模块
+-- Import parameter option module
 import("core.base.option")
 
--- 入口函数
+-- Entrance function
 function main(...)
 
-    -- 获取参数内容
+    -- Get the parameter content
     print("color: %s", option.get("color"))
 end
 ```
 
-你也可以在当前目录下，创建多个自定义的模块文件，通过[import](#import)导入后使用，例如：
+You can also create multiple custom module files in the current directory and use them after importing via [import](#import), for example:
 
 ```
-projectdir
+Projectdir
     - xmake.lua
     - main.lua
     - module.lua
 ```
 
-`module.lua`的内容如下：
+The contents of `module.lua` are as follows:
 
 ```lua
--- 定义一个导出接口
+-- Define an export interface
 function hello()
     print("hello xmake!")
 end
 ```
 
 <p class="tip">
-私有接口，通过`_hello`带下滑线前缀命名，这样导入的模块就不会包含此接口，只在模块自身内部使用。
+The private interface is named by the `_hello` with a descending line prefix, so that the imported module will not contain this interface and will only be used inside the module itself.
 </p>
 
-然后在`main.lua`进行调用：
+Then make a call in `main.lua`:
 
 
 ```lua
@@ -4068,26 +4070,26 @@ function main(...)
 end
 ```
 
-更多模块介绍见：[内置模块](#内置模块)和[扩展模块](扩展模块)
+For more modules, see: [Built-in Module] (#Built-in Module) and [Extension Module] (Extension Module)
 
-其中，`main(...)`中参数，是通过`task.run`指定的，例如：
+Among them, the parameter in `main(...)` is specified by `task.run`, for example:
 
 ```lua
 task.run("hello", {color="red"}, arg1, arg2, arg3)
 ```
 
-里面的`arg1, arg2`这些就是传入`hello`任务`main(...)`入口的参数列表，而`{color="red"}`用来指定任务菜单中的参数选项。
+Inside the `arg1, arg2` these are the arguments to the `hello` task `main(...)` entry, and `{color="red"}` to specify the parameter options in the task menu.
 
-更加详细的`task.run`描述，见：[task.run](#task-run)
+For a more detailed description of `task.run`, see: [task.run](#task-run)
 
 #### Custom Rule
 
-在2.2.1版本之后，xmake不仅原生内置支持多种语言文件的构建，而且还可以通过自定义构建规则，让用户自己来实现复杂的未知文件构建。
+After the 2.2.1 release, xmake not only natively supports the construction of multi-language files, but also allows users to implement complex unknown file builds by custom building rules.
 
-我们可以通过预先设置规则支持的文件后缀，来扩展其他文件的构建支持：
+We can extend the build support for other files by pre-setting the file suffixes supported by the rules:
 
 ```lua
--- 定义一个markdown文件的构建规则
+-- Define a build rule for a markdown file
 rule("markdown")
     set_extensions(".md", ".markdown")
     on_build_file(function (target, sourcefile)
@@ -4096,16 +4098,16 @@ rule("markdown")
 
 target("test")
     set_kind("binary")
-    
-    -- 使test目标支持markdown文件的构建规则
+
+    -- Make the test target support the construction rules of the markdown file
     add_rules("markdown")
 
-    -- 添加markdown文件的构建
+    -- Adding a markdown file to build
     add_files("src/*.md")
     add_files("src/*.markdown")
 ```
 
-我们也可以指定某些零散的其他文件作为markdown规则来处理：
+We can also specify some other scattered files to be processed as markdown rules:
 
 ```lua
 target("test")
@@ -4113,76 +4115,76 @@ target("test")
     add_files("src/test/*.md.in", {rule = "markdown"})
 ```
 
-一个target可以叠加应用多个rules去更加定制化实现自己的构建行为，甚至支持不同的构建环境。
+A target can be superimposed to apply multiple rules to more customize its own build behavior, and even support different build environments.
 
 <p class="tips">
-通过`add_files("*.md", {rule = "markdown"})`方式指定的规则，优先级高于`add_rules("markdown")`设置的规则。
+Rules specified by `add_files("*.md", {rule = "markdown"})`, with a higher priority than the rule set by `add_rules("markdown")`.
 </p>
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [rule](#rule)                                   | 定义规则                                     | >= 2.1.9 |
-| [add_imports](#ruleadd_imports)                 | 为所有自定义脚本预先导入扩展模块             | >= 2.1.9 |
-| [set_extensions](#ruleset_extensions)           | 设置规则支持的文件扩展类型                   | >= 2.1.9 |
-| [on_build](#ruleon_build)                       | 自定义编译脚本                               | >= 2.1.9 |
-| [on_clean](#ruleon_clean)                       | 自定义清理脚本                               | >= 2.1.9 |
-| [on_package](#ruleon_package)                   | 自定义打包脚本                               | >= 2.1.9 |
-| [on_install](#ruleon_install)                   | 自定义安装脚本                               | >= 2.1.9 |
-| [on_uninstall](#ruleon_uninstall)               | 自定义卸载脚本                               | >= 2.1.9 |
-| [on_build_file](#ruleon_build_file)             | 自定义编译脚本, 实现单文件构建               | >= 2.2.1 |
-| [on_build_files](#ruleon_build_files)           | 自定义编译脚本, 实现多文件构建               | >= 2.2.1 |
-| [before_build](#rulebefore_build)               | 自定义编译前的脚本                           | >= 2.2.1 |
-| [before_clean](#rulebefore_clean)               | 自定义清理前的脚本                           | >= 2.2.1 |
-| [before_package](#rulebefore_package)           | 自定义打包前的脚本                           | >= 2.2.1 |
-| [before_install](#rulebefore_install)           | 自定义安装前的脚本                           | >= 2.2.1 |
-| [before_uninstall](#rulebefore_uninstall)       | 自定义卸载前的脚本                           | >= 2.2.1 |
-| [before_build_file](#rulebefore_build_file)     | 自定义编译前的脚本, 实现单文件构建           | >= 2.2.1 |
-| [before_build_files](#rulebefore_build_files)   | 自定义编译前的脚本, 实现多文件构建           | >= 2.2.1 |
-| [after_build](#ruleafter_build)                 | 自定义编译后的脚本                           | >= 2.2.1 |
-| [after_clean](#ruleafter_clean)                 | 自定义清理后的脚本                           | >= 2.2.1 |
-| [after_package](#ruleafter_package)             | 自定义打包后的脚本                           | >= 2.2.1 |
-| [after_install](#ruleafter_install)             | 自定义安装后的脚本                           | >= 2.2.1 |
-| [after_uninstall](#ruleafter_uninstall)         | 自定义卸载后的脚本                           | >= 2.2.1 |
-| [after_build_file](#ruleafter_build_file)       | 自定义编译后的脚本, 实现单文件构建           | >= 2.2.1 |
-| [after_build_files](#ruleafter_build_files)     | 自定义编译后的脚本, 实现多文件构建           | >= 2.2.1 |
-| [rule_end](#rule_end)                           | 结束定义规则                                 | >= 2.1.9 |
+| [rule](#rule) | Defining Rules | >= 2.1.9 |
+| [add_imports](#ruleadd_imports) | Pre-importing extension modules for all custom scripts | >= 2.1.9 |
+| [set_extensions](#ruleset_extensions) | Setting the file extension type supported by the rule | >= 2.1.9 |
+| [on_build](#ruleon_build) | Custom Compilation Script | >= 2.1.9 |
+| [on_clean](#ruleon_clean) | Custom Cleanup Script | >= 2.1.9 |
+| [on_package](#ruleon_package) | Custom Package Script | >= 2.1.9 |
+| [on_install](#ruleon_install) | Custom Installation Script | >= 2.1.9 |
+| [on_uninstall](#ruleon_uninstall) | Custom Uninstall Script | >= 2.1.9 |
+| [on_build_file](#ruleon_build_file) | Customize the build script to implement single file build | >= 2.2.1 |
+| [on_build_files](#ruleon_build_files) | Custom Compilation Scripts for Multi-File Construction | >= 2.2.1 |
+| [before_build](#rulebefore_build) | Custom pre-compilation script | >= 2.2.1 |
+| [before_clean](#rulebefore_clean) | Customizing the script before cleanup | >= 2.2.1 |
+| [before_package](#rulebefore_package) | Customizing the script before packaging | >= 2.2.1 |
+| [before_install](#rulebefore_install) | Custom Pre-Installation Scripts | >= 2.2.1 |
+| [before_uninstall](#rulebefore_uninstall) | Customizing the script before uninstalling | >= 2.2.1 |
+[before_build_file](#rulebefore_build_file) | Customize pre-compilation scripts to implement single file builds | >= 2.2.1 |
+[before_build_files](#rulebefore_build_files) | Customizing pre-compilation scripts for multi-file build | >= 2.2.1 |
+| [after_build](#ruleafter_build) | Custom Compiled Scripts | >= 2.2.1 |
+| [after_clean](#ruleafter_clean) | Custom Cleanup Script | >= 2.2.1 |
+| [after_package](#ruleafter_package) | Custom packaged scripts | >= 2.2.1 |
+| [after_install](#ruleafter_install) | Custom Installed Scripts | >= 2.2.1 |
+| [after_uninstall](#ruleafter_uninstall) | Custom Uninstalled Scripts | >= 2.2.1 |
+| [after_build_file](#ruleafter_build_file) | Customize the compiled script to implement single file build | >= 2.2.1 |
+| [after_build_files](#ruleafter_build_files) | Custom Compiled Scripts for Multi-File Construction | >= 2.2.1 |
+| [rule_end](#rule_end) | End Definition Rule | >= 2.1.9 |
 
-##### 内建规则
+##### Built-in rules
 
-自从2.2.1版本后，xmake提供了一些内置规则去简化日常xmake.lua描述，以及一些常用构建环境的支持。
+sinceAfter the 2.2.1 release, xmake provides some built-in rules to simplify the daily xmake.lua description and support for some common build environments.
 
-| 规则                                            | 描述                                         | 支持版本 |
+| Rules | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [mode.debug](#mode-debug)                       | 调试模式编译规则                             | >= 2.2.1 |
-| [mode.release](#mode-release)                   | 发布模式编译规则                             | >= 2.2.1 |
-| [mode.check](#mode-check)                       | 检测模式编译规则                             | >= 2.2.1 |
-| [mode.profile](#mode-profile)                   | 性能分析模式编译规则                         | >= 2.2.1 |
-| [mode.coverage](#mode-coverage)                 | 覆盖分析编译模式规则                         | >= 2.2.1 |
-| [qt.static](#qt-static)                         | Qt静态库编译规则                             | >= 2.2.1 |
-| [qt.shared](#qt-shared)                         | Qt动态库编译规则                             | >= 2.2.1 |
-| [qt.console](#qt-console)                       | Qt控制台编译规则                             | >= 2.2.1 |
-| [qt.application](#qt-application)               | Qt应用程序编译规则                           | >= 2.2.1 |
-| [wdk.umdf.driver](#wdk-umdf-driver)             | WDK环境umdf驱动编译规则                      | >= 2.2.1 |
-| [wdk.umdf.binary](#wdk-umdf-binary)             | WDK环境umdf驱动应用编译规则                  | >= 2.2.1 |
-| [wdk.kmdf.driver](#wdk-kmdf-driver)             | WDK环境kmdf驱动编译规则                      | >= 2.2.1 |
-| [wdk.kmdf.binary](#wdk-kmdf-binary)             | WDK环境kmdf驱动应用编译规则                  | >= 2.2.1 |
-| [wdk.wdm.driver](#wdk-wdm-driver)               | WDK环境wdm驱动编译规则                       | >= 2.2.1 |
-| [wdk.wdm.binary](#wdk-wdm-binary)               | WDK环境wdm驱动应用编译规则                   | >= 2.2.1 |
+| [mode.debug](#mode-debug) | Debug Mode Compilation Rules | >= 2.2.1 |
+| [mode.release](#mode-release) | Release Mode Compilation Rules | >= 2.2.1 |
+| [mode.check](#mode-check) | Detection Mode Compilation Rules | >= 2.2.1 |
+| [mode.profile](#mode-profile) | Performance Analysis Mode Compilation Rules | >= 2.2.1 |
+| [mode.coverage](#mode-coverage) | Coverage Analysis Compilation Mode Rules | >= 2.2.1 |
+| [qt.static](#qt-static) | Qt Static Library Compilation Rules | >= 2.2.1 |
+| [qt.shared](#qt-shared) | Qt Dynamic Library Compilation Rules | >= 2.2.1 |
+| [qt.console](#qt-console) | Qt Console Compilation Rules | >= 2.2.1 |
+| [qt.application](#qt-application) | Qt Application Compilation Rules | >= 2.2.1 |
+| [wdk.umdf.driver](#wdk-umdf-driver) | WDK Environment umdf Driver Compilation Rules | >= 2.2.1 |
+[wdk.umdf.binary](#wdk-umdf-binary) | WDK Environment umdf Driver Application Compilation Rules | >= 2.2.1 |
+| [wdk.kmdf.driver](#wdk-kmdf-driver) | WDK Environment kmdf Driver Compilation Rules | >= 2.2.1 |
+[wdk.kmdf.binary](#wdk-kmdf-binary) | WDK Environment kmdf Driver Application Compilation Rules | >= 2.2.1 |
+| [wdk.wdm.driver](#wdk-wdm-driver) | WDK Environment wdm Driver Compilation Rules | >= 2.2.1 |
+[wdk.wdm.binary](#wdk-wdm-binary) | WDK Environment wdm Driver Application Compilation Rules | >= 2.2.1 |
 
 ###### mode.debug
 
-为当前工程xmake.lua添加debug编译模式的配置规则，例如：
+Add the configuration rules for the debug compilation mode for the current project xmake.lua, for example:
 
 ```lua
 add_rules("mode.debug")
 ```
 
-相当于：
+Equivalent to:
 
 ```lua
 -- the debug mode
 if is_mode("debug") then
-    
+
     -- enable the debug symbols
     set_symbols("debug")
 
@@ -4191,17 +4193,17 @@ if is_mode("debug") then
 end
 ```
 
-我们可以通过：`xmake f -m debug`来切换到此编译模式。
+We can switch to this compilation mode by ``xmake f -m debug`.
 
 ###### mode.release
 
-为当前工程xmake.lua添加release编译模式的配置规则，例如：
+Add the configuration rules for the release compilation mode for the current project xmake.lua, for example:
 
 ```lua
 add_rules("mode.release")
 ```
 
-相当于：
+Equivalent to:
 
 ```lua
 -- the release mode
@@ -4210,7 +4212,7 @@ if is_mode("release") then
     -- set the symbols visibility: hidden
     set_symbols("hidden")
 
-    -- enable fastest optimization
+    -- enable2017 optimization
     set_optimize("fastest")
 
     -- strip all symbols
@@ -4218,17 +4220,17 @@ if is_mode("release") then
 end
 ```
 
-我们可以通过：`xmake f -m release`来切换到此编译模式。
+We can switch to this compilation mode by ``xmake f -m release`.
 
 ###### mode.check
 
-为当前工程xmake.lua添加check编译模式的配置规则，一般用于内存检测，例如：
+Add the check compilation mode configuration rules for the current project xmake.lua, generally used for memory detection, for example:
 
 ```lua
 add_rules("mode.check")
 ```
 
-相当于：
+Equivalent to:
 
 ```lua
 -- the check mode
@@ -4247,22 +4249,22 @@ if is_mode("check") then
 end
 ```
 
-我们可以通过：`xmake f -m check`来切换到此编译模式。
+We can switch to this compilation mode by ``xmake f -m check`.
 
 ###### mode.profile
 
-为当前工程xmake.lua添加profile编译模式的配置规则，一般用于性能分析，例如：
+Add configuration rules for the profile compilation mode for the current project xmake.lua, which is generally used for performance analysis, for example:
 
 ```lua
 add_rules("mode.profile")
 ```
 
-相当于：
+Equivalent to:
 
 ```lua
 -- the profile mode
 if is_mode("profile") then
-   
+
     -- enable the debug symbols
     set_symbols("debug")
 
@@ -4272,17 +4274,17 @@ if is_mode("profile") then
 end
 ```
 
-我们可以通过：`xmake f -m profile`来切换到此编译模式。
+We can switch to this compilation mode by ``xmake f -m profile`.
 
 ###### mode.coverage
 
-为当前工程xmake.lua添加coverage编译模式的配置规则，一般用于覆盖分析，例如：
+Add the configuration rules for the coverage compilation mode for the current project xmake.lua, which is generally used for coverage analysis, for example:
 
 ```lua
 add_rules("mode.coverage")
 ```
 
-相当于：
+Equivalent to:
 
 ```lua
 -- the coverage mode
@@ -4293,11 +4295,11 @@ if is_mode("coverage") then
 end
 ```
 
-我们可以通过：`xmake f -m coverage`来切换到此编译模式。
+We can switch to this compilation mode by ``xmake f -m coverage`.
 
 ###### qt.static
 
-用于编译生成Qt环境的静态库程序：
+A static library program used to compile and generate Qt environments:
 
 ```lua
 target("qt_static_library")
@@ -4308,7 +4310,7 @@ target("qt_static_library")
 
 ###### qt.shared
 
-用于编译生成Qt环境的动态库程序：
+Dynamic library program for compiling and generating Qt environment:
 
 ```lua
 target("qt_shared_library")
@@ -4319,7 +4321,7 @@ target("qt_shared_library")
 
 ###### qt.console
 
-用于编译生成Qt环境的控制台程序：
+A console program for compiling and generating a Qt environment:
 
 ```lua
 target("qt_console")
@@ -4329,51 +4331,51 @@ target("qt_console")
 
 ###### qt.application
 
-用于编译生成Qt环境的ui应用程序。
+Used to compile ui applications that generate Qt environments.
 
-Quick(qml)应用程序：
+Quick(qml) application:
 
 ```lua
 target("qt_quickapp")
     add_rules("qt.application")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/qml.qrc")
     add_frameworks("QtQuick")
 ```
 
-Qt Widgets(ui/moc)应用程序:
+Qt Widgets (ui/moc) application:
 
 ```lua
 -- add target
 target("qt_widgetapp")
     add_rules("qt.application")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
-    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
+    add_files("src/mainwindow.h") -- Add a meta header file with Q_OBJECT
     add_frameworks("QtWidgets")
 ```
 
-更多Qt相关描述见：[#160](https://github.com/xmake-io/xmake/issues/160)
+For more descriptions of Qt, see: [#160](https://github.com/xmake-io/xmake/issues/160)
 
 
 
 ###### wdk.env.kmdf
 
-应用WDK下kmdf的编译环境设置，需要配合：`wdk.[driver|binary|static|shared]`等规则来使用。
+Application of the compilation environment setting of kmdf under WDK, need to cooperate with: `wdk.[driver|binary|static|shared]` and other rules to use.
 
 ###### wdk.env.umdf
 
-应用WDK下umdf的编译环境设置，需要配合：`wdk.[driver|binary|static|shared]`等规则来使用。
+Application of the umdf compiler environment settings under WDK, you need to cooperate with: `wdk.[driver|binary|static|shared]` and other rules to use.
 
 ###### wdk.env.wdm
 
-应用WDK下wdm的编译环境设置，需要配合：`wdk.[driver|binary|static|shared]`等规则来使用。
+Application wdm compiler environment settings under WDK, need to cooperate with: `wdk.[driver|binary|static|shared]` and other rules to use.
 
 ###### wdk.driver
 
-编译生成windows下基于WDK环境的驱动程序，目前仅支持WDK10环境。
+Compile and generate drivers based on the WDK environment under Windows. Currently, only the WDK10 environment is supported.
 
-注：需要配合：`wdk.env.[umdf|kmdf|wdm]`等环境规则使用。
+Note: need to cooperate: `wdk.env.[umdf|kmdf|wdm]`Environmental rules are used.
 
 ```lua
 -- add target
@@ -4383,7 +4385,7 @@ target("echo")
     add_rules("wdk.driver", "wdk.env.kmdf")
 
     -- add files
-    add_files("driver/*.c") 
+    add_files("driver/*.c")
     add_files("driver/*.inx")
 
     -- add includedirs
@@ -4392,9 +4394,9 @@ target("echo")
 
 ###### wdk.binary
 
-编译生成windows下基于WDK环境的可执行程序，目前仅支持WDK10环境。
+Compile and generate executable programs based on WDK environment under Windows. Currently, only WDK10 environment is supported.
 
-注：需要配合：`wdk.env.[umdf|kmdf|wdm]`等环境规则使用。
+Note: It is necessary to cooperate with: environment rules such as `wdk.env.[umdf|kmdf|wdm]`.
 
 ```lua
 -- add target
@@ -4404,14 +4406,14 @@ target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
 
     -- add files
-    add_files("exe/*.cpp") 
+    add_files("exe/*.cpp")
 ```
 
 ###### wdk.static
 
-编译生成windows下基于WDK环境的静态库程序，目前仅支持WDK10环境。
+Compile and generate static library programs based on WDK environment under Windows. Currently, only WDK10 environment is supported.
 
-注：需要配合：`wdk.env.[umdf|kmdf|wdm]`等环境规则使用。
+Note: It is necessary to cooperate with: environment rules such as `wdk.env.[umdf|kmdf|wdm]`.
 
 ```lua
 target("nonpnp")
@@ -4423,14 +4425,14 @@ target("nonpnp")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
 ```
 
 ###### wdk.shared
 
-编译生成windows下基于WDK环境的动态库程序，目前仅支持WDK10环境。
+Compile and generate dynamic library programs based on WDK environment under Windows. Currently, only WDK10 environment is supported.
 
-注：需要配合：`wdk.env.[umdf|kmdf|wdm]`等环境规则使用。
+Note: It is necessary to cooperate with: environment rules such as `wdk.env.[umdf|kmdf|wdm]`.
 
 ```lua
 target("nonpnp")
@@ -4442,12 +4444,12 @@ target("nonpnp")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
 ```
 
 ###### wdk.tracewpp
 
-用于启用tracewpp预处理源文件：
+Used to enable tracewpp to preprocess source files:
 
 ```lua
 target("nonpnp")
@@ -4459,15 +4461,15 @@ target("nonpnp")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
     add_files("driver/*.rc")
 ```
 
-更多WDK规则描述见：[#159](https://github.com/xmake-io/xmake/issues/159)
+For more information on WDK rules, see: [#159] (https://github.com/xmake-io/xmake/issues/159)
 
 ###### win.sdk.application
 
-编译生成winsdk应用程序。
+Compile and generate the winsdk application.
 
 ```lua
 -- add rules
@@ -4486,17 +4488,17 @@ target("usbview")
 
 ###### wdk.sdk.dotnet
 
-用于指定某些c++源文件作为c++.net来编译。
+Used to specify certain c++ source files to be compiled as c++.net.
 
 ```lua
 add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 ```
 
-更多WDK规则描述见：[#159](https://github.com/xmake-io/xmake/issues/159)
+For more information on WDK rules, see: [#159] (https://github.com/xmake-io/xmake/issues/159)
 
 ##### rule
 
-###### 定义规则
+###### Defining rules
 
 ```lua
 rule("markdown")
@@ -4508,18 +4510,18 @@ rule("markdown")
 
 ##### rule:add_imports
 
-###### 为所有自定义脚本预先导入扩展模块
+###### Pre-importing extension modules for all custom scripts
 
-使用方式和说明请见：[target:add_imports](#targetadd_imports)，用法相同。
+For usage and description, please see: [target:add_imports](#targetadd_imports), the usage is the same.
 
 ##### rule:set_extensions
 
-###### 设置规则支持的文件扩展类型
+###### Setting the file extension type supported by the rule
 
-通过设置支持的扩展文件类型，将规则应用于带这些后缀的文件上，例如：
+Apply rules to files with these suffixes by setting the supported extension file types, for example:
 
 ```lua
--- 定义一个markdown文件的构建规则
+-- Define a build rule for a markdown file
 rule("markdown")
     set_extensions(".md", ".markdown")
     on_build_file(function (target, sourcefile, opt)
@@ -4528,20 +4530,20 @@ rule("markdown")
 
 target("test")
     set_kind("binary")
-    
-    -- 使test目标支持markdown文件的构建规则
+
+    -- Make the test target support the construction rules of the markdown file
     add_rules("markdown")
 
-    -- 添加markdown文件的构建
+    -- Adding a markdown file to build
     add_files("src/*.md")
     add_files("src/*.markdown")
 ```
 
 ##### rule:on_build
 
-###### 自定义编译脚本
+###### Custom compilation script
 
-用于实现自定规则的构建脚本，会覆盖被应用的target的默认构建行为，例如：
+The build script used to implement the custom rules overrides the default build behavior of the target being applied, for example:
 
 ```lua
 rule("markdown")
@@ -4551,9 +4553,9 @@ rule("markdown")
 
 ##### rule:on_clean
 
-###### 自定义清理脚本
+###### Custom cleanup script
 
-用于实现自定规则的清理脚本会，覆盖被应用的target的默认清理行为，例如：
+The cleanup script used to implement the custom rules will override the default cleanup behavior of the applied target, for example:
 
 ```lua
 rule("markdown")
@@ -4564,9 +4566,9 @@ rule("markdown")
 
 ##### rule:on_package
 
-###### 自定义打包脚本
+###### Custom packaging script
 
-用于实现自定规则的打包脚本，覆盖被应用的target的默认打包行为, 例如：
+A packaging script for implementing custom rules that overrides the default packaging behavior of the target being applied, for example:
 
 ```lua
 rule("markdown")
@@ -4577,9 +4579,9 @@ rule("markdown")
 
 ##### rule:on_install
 
-###### 自定义安装脚本
+###### Custom installation script
 
-用于实现自定规则的安装脚本，覆盖被应用的target的默认安装行为, 例如：
+An installation script for implementing custom rules that overrides the default installation behavior of the target being applied, for example:
 
 ```lua
 rule("markdown")
@@ -4589,9 +4591,9 @@ rule("markdown")
 
 ##### rule:on_uninstall
 
-###### 自定义卸载脚本
+###### Custom Uninstall Script
 
-用于实现自定规则的卸载脚本，覆盖被应用的target的默认卸载行为, 例如：
+An uninstall script for implementing custom rules that overrides the default uninstall behavior of the target being applied, for example:
 
 ```lua
 rule("markdown")
@@ -4601,7 +4603,7 @@ rule("markdown")
 
 ##### rule:on_build_file
 
-###### 自定义编译脚本，一次处理一个源文件
+###### Customizing the build script to process one source file at a time
 
 ```lua
 rule("markdown")
@@ -4610,17 +4612,17 @@ rule("markdown")
     end)
 ```
 
-其中第三个参数opt是可选参数，用于获取一些编译过程中的信息状态，例如：opt.progress 为当期的编译进度。
+The third parameter opt is an optional parameter, which is used to obtain some information state during the compilation process. For example, opt.progress is the compilation progress of the current period.
 
 ##### rule:on_build_files
 
-###### 自定义编译脚本，一次处理多个源文件
+###### Customizing the build script to process multiple source files at once
 
-大部分的自定义构建规则，每次都是处理单独一个文件，输出一个目标文件，例如：a.c => a.o
+Most of the custom build rules, each time processing a single file, output a target file, for example: a.c => a.o
 
-但是，有些情况下，我们需要同时输入多个源文件一起构建生成一个目标文件，例如：a.c b.c d.c => x.o
+However, in some cases, we need to enter multiple source files together to build an object file, for example: a.c b.c d.c => x.o
 
-对于这种情况，我们可以通过自定义这个脚本来实现：
+For this situation, we can achieve this by customizing this script:
 
 ```lua
 rule("markdown")
@@ -4634,9 +4636,9 @@ rule("markdown")
 
 ##### rule:before_build
 
-###### 自定义编译前脚本
+###### Custom pre-compilation script
 
-用于实现自定义target构建前的执行脚本，例如：
+Used to implement the execution script before the custom target is built, for example:
 
 ```lua
 rule("markdown")
@@ -4646,9 +4648,9 @@ rule("markdown")
 
 ##### rule:before_clean
 
-###### 自定义清理前脚本
+###### Custom pre-cleanup script
 
-用于实现自定义target清理前的执行脚本，例如：
+Used to implement the execution script before the custom target cleanup, for example:
 
 ```lua
 rule("markdown")
@@ -4658,9 +4660,9 @@ rule("markdown")
 
 ##### rule:before_package
 
-###### 自定义打包前脚本
+###### Customizing the pre-package script
 
-用于实现自定义target打包前的执行脚本, 例如：
+Used to implement the execution script before the custom target is packaged, for example:
 
 ```lua
 rule("markdown")
@@ -4670,9 +4672,9 @@ rule("markdown")
 
 ##### rule:before_install
 
-###### 自定义安装前脚本
+###### Custom pre-installation script
 
-用于实现自定义target安装前的执行脚本，例如：
+Used to implement the execution script before the custom target installation, for example:
 
 ```lua
 rule("markdown")
@@ -4682,9 +4684,9 @@ rule("markdown")
 
 ##### rule:before_uninstall
 
-###### 自定义卸载前脚本
+###### Custom pre-uninstall script
 
-用于实现自定义target卸载前的执行脚本，例如：
+Used to implement the execution script before the custom target is uninstalled, for example:
 
 ```lua
 rule("markdown")
@@ -4694,67 +4696,67 @@ rule("markdown")
 
 ##### rule:before_build_file
 
-###### 自定义编译前脚本，一次处理一个源文件
+###### Custom pre-compilation script to process one source file at a time
 
-跟[rule:on_build_file](#ruleon_build_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之前，
-一般用于对某些源文件进行编译前的预处理。
+Similar to [rule:on_build_file](#ruleon_build_file), but the timing of this interface is called before compiling a source file.
+Generally used to preprocess some source files before compiling.
 
 ##### rule:before_build_files
 
-###### 自定义编译前脚本，一次处理多个源文件
+###### Custom pre-compilation script to process multiple source files at once
 
-跟[rule:on_build_files](#ruleon_build_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之前，
-一般用于对某些源文件进行编译前的预处理。
+Similar to [rule:on_build_files](#ruleon_build_files), but the timing of this interface is called before compiling some source files.
+Generally used to preprocess some source files before compiling.
 
 ##### rule:after_build
 
-###### 自定义编译前脚本
+###### Custom pre-compilation script
 
-用于实现自定义target构建后的执行脚本，用法跟[rule:before_build](#rulebefore_build)类似。
+The execution script used to implement the custom target build is similar to [rule:before_build](#rulebefore_build).
 
 ##### rule:after_clean
 
-###### 自定义清理后脚本
+###### Custom Cleanup Script
 
-用于实现自定义target清理后的执行脚本，用法跟[rule:before_clean](#rulebefore_clean)类似。
+The execution script used to implement the custom target cleanup is similar to [rule:before_clean](#rulebefore_clean).
 
 ##### rule:after_package
 
-###### 自定义打包后脚本
+###### Custom packaged script
 
-用于实现自定义target打包后的执行脚本, 用法跟[rule:before_package](#rulebefore_package)类似。
+The execution script used to implement the custom target package is similar to [rule:before_package](#rulebefore_package).
 
 ##### rule:after_install
 
-###### 自定义安装后脚本
+###### Custom Post-Installation Script
 
-用于实现自定义target安装后的执行脚本，用法跟[rule:before_install](#rulebefore_install)类似。
+The execution script used to implement the custom target installation is similar to [rule:before_install](#rulebefore_install).
 
 ##### rule:after_uninstall
 
-###### 自定义卸载后脚本
+###### Custom Uninstallation Script
 
-用于实现自定义target卸载后的执行脚本，用法跟[rule:before_uninstall](#rulebefore_uninstall)类似。
+The execution script used to implement the custom target uninstallation is similar to [rule:before_uninstall](#rulebefore_uninstall).
 
 ##### rule:after_build_file
 
-###### 自定义编译后脚本，一次处理一个源文件
+###### Customizing post-compilation scripts to process one source file at a time
 
-跟[rule:on_build_file](#ruleon_build_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之后，
-一般用于对某些编译后对象文件进行后期处理。
+Similar to [rule:on_build_file](#ruleon_build_file), but the timing of this interface is called after compiling a source file.
+Generally used to post-process some compiled object files.
 
 ##### rule:after_build_files
 
-###### 自定义编译后脚本，一次处理多个源文件
+###### Customizing post-compilation scripts to process multiple source files at once
 
-跟[rule:on_build_files](#ruleon_build_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之后，
-一般用于对某些编译后对象文件进行后期处理。
+Similar to [rule:on_build_files](#ruleon_build_files), but the timing of this interface is called after compiling some source files.
+Generally used to post-process some compiled object files.
 
 ##### rule_end
 
-###### 结束定义规则
+###### End definition rules
 
-这个是可选的，如果想要手动结束rule的定义，可以调用它：
+This is optional. If you want to manually end the rule definition, you can call it:
 
 ```lua
 rule("test")
@@ -4764,11 +4766,11 @@ rule_end()
 
 #### Remote package dependencies
 
-仓库依赖包定义描述，`package()`相关接口定义，等有时间会详细说明，敬请期待。。
+The repository depends on the package definition description, the `package()` related interface definition, etc. There will be time to elaborate, so stay tuned. .
 
-可先参考官方仓库中现有包描述：[xmake-repo](https://github.com/xmake-io/xmake-repo)
+Please refer to the existing package description in the official repository: [xmake-repo] (https://github.com/xmake-io/xmake-repo)
 
-这里给个比较具有代表性的实例供参考：
+Here is a more representative example for reference:
 
 ```lua
 package("libxml2")
@@ -4793,7 +4795,7 @@ package("libxml2")
     if is_plat("windows") and winos.version():gt("winxp") then
         on_install("windows", function (package)
             os.cd("win32")
-            os.vrun("cscript configure.js iso8859x=yes iconv=no compiler=msvc cruntime=/MT debug=%s prefix=\"%s\"", package:debug() and "yes" or "no", package:installdir())
+            os.vrun("cscript configure.js iso8859x=yes iconv=no compiler=msvc cruntime=/MT debug=%s prefix=\"%s\"", package:debug() and "yes" or "no", Package:installdir())
             os.vrun("nmake /f Makefile.msvc")
             os.vrun("nmake /f Makefile.msvc install")
         end)
@@ -4806,57 +4808,57 @@ package("libxml2")
 
 #### Builtin Variables
 
-xmake提供了 `$(varname)` 的语法，来支持内置变量的获取，例如：
+Xmake provides the syntax of `$(varname)` to support the acquisition of built-in variables, for example:
 
 ```lua
 add_cxflags("-I$(buildir)")
 ```
 
-它将会在在实际编译的时候，将内置的 `buildir` 变量转换为实际的构建输出目录：`-I./build`
+It will convert the built-in `buildir` variable to the actual build output directory when compiling: `-I./build`
 
-一般内置变量可用于在传参时快速获取和拼接变量字符串，例如：
+General built-in variables can be used to quickly get and splicing variable strings when passing arguments, for example:
 
 ```lua
 target("test")
 
-    -- 添加工程源码目录下的源文件
+    -- Add source files in the project source directory
     add_files("$(projectdir)/src/*.c")
 
-    -- 添加构建目录下的头文件搜索路径
+    -- Add a header file search path under the build directory
     add_includedirs("$(buildir)/inc")
 ```
 
-也可以在自定义脚本的模块接口中使用，例如：
+It can also be used in the module interface of a custom script, for example:
 
 ```lua
 target("test")
     on_run(function (target)
-        -- 复制当前脚本目录下的头文件到输出目录
+        -- Copy the header file in the current script directory to the output directory
         os.cp("$(scriptdir)/xxx.h", "$(buildir)/inc")
     end)
 ```
 
-所有的内置变量，也可以通过[val](#val)接口，来获取他们的值。
+All built-in variables can also be retrieved via the [val](#val) interface.
 
-这种使用内置变量的方式，使得描述编写更加的简洁易读，下面是一些xmake内置的变量，可以直接获取：
+This way of using built-in variables makes the description writing more concise and easy to read. Here are some of the variables built into xmake that can be obtained directly:
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [$(os)](#var-os)                                | 获取当前编译平台的操作系统                   | >= 2.0.1 |
-| [$(host)](#var-host)                            | 获取本机操作系统                             | >= 2.0.1 |
-| [$(tmpdir)](#var-tmpdir)                        | 获取临时目录                                 | >= 2.0.1 |
-| [$(curdir)](#var-curdir)                        | 获取当前目录                                 | >= 2.0.1 |
-| [$(buildir)](#var-buildir)                      | 获取构建输出目录                             | >= 2.0.1 |
-| [$(scriptdir)](#var-scriptdir)                  | 获取工程描述脚本目录                         | >= 2.1.1 |
-| [$(globaldir)](#var-globaldir)                  | 获取全局配置目录                             | >= 2.0.1 |
-| [$(configdir)](#var-configdir)                  | 获取本地工程配置目录                         | >= 2.0.1 |
-| [$(programdir)](#var-programdir)                | xmake安装脚本目录                            | >= 2.1.5 |
-| [$(projectdir)](#var-projectdir)                | 获取工程根目录                               | >= 2.0.1 |
-| [$(shell)](#var-shell)                          | 执行外部shell命令                            | >= 2.0.1 |
-| [$(env)](#var-env)                              | 获取外部环境变量                             | >= 2.1.5 |
-| [$(reg)](#var-reg)                              | 获取windows注册表配置项的值                  | >= 2.1.5 |
+| [$(os)](#var-os) | Get the operating system of the current build platform | >= 2.0.1 |
+| [$(host)](#var-host) | Get native operating system | >= 2.0.1 |
+| [$(tmpdir)](#var-tmpdir) | Get Temporary Directory | >= 2.0.1 |
+| [$(curdir)](#var-curdir) | Get current directory | >= 2.0.1 |
+| [$(buildir)](#var-buildir) | Get the build output directory | >= 2.0.1 |
+| [$(scriptdir)](#var-scriptdir) | Get Project Description Script Directory | >= 2.1.1 |
+| [$(globaldir)](#var-globaldir) | Get Global Configuration Directory | >= 2.0.1 |
+| [$(configdir)](#var-configdir) | Get Local Project Configuration Directory | >= 2.0.1 |
+| [$(programdir)](#var-programdir) | xmake installation script directory | >= 2.1.5 |
+| [$(projectdir)](#var-projectdir) | Get the project root directory | >= 2.0.1 |
+| [$(shell)](#var-sheLl) | Execute external shell command | >= 2.0.1 |
+| [$(env)](#var-env) | Get external environment variables | >= 2.1.5 |
+| [$(reg)](#var-reg) | Get the value of the windows registry configuration item | >= 2.1.5 |
 
-当然这种变量模式，也是可以扩展的，默认通过`xmake f --var=val`命令，配置的参数都是可以直接获取，例如：
+Of course, this variable mode can also be extended. By default, the `xmake f --var=val` command can be used to directly obtain the parameters. For example:
 
 ```lua
 target("test")
@@ -4864,81 +4866,81 @@ target("test")
 ```
 
 <p class="tip">
-所有`xmake f --xxx=...`配置的参数值，都是可以通过内置变量获取到，例如：`xmake f --arch=x86`对应`$(arch)`，其他的还有`$(plat)`, `$(mode)`等等。
-具体有哪些参数，可以通过：`xmake f -h`才查看。
+All the parameter values ​​of the `xmake f --xxx=...` configuration can be obtained through built-in variables, for example: `xmake f --arch=x86` corresponds to `$(arch)`, others have ` $(plat)`, `$(mode)` and so on.
+What are the specific parameters, you can check it out by `xmake f -h`.
 </p>
 
-既然支持直接从配置选项中获取，那么当然也就能很方便的扩展自定义的选项，来获取自定义的变量了，具体如何自定义选项见：[option](#option)
+Since the support is directly obtained from the configuration options, it is of course convenient to extend the custom options to get the custom variables. For details on how to customize the options, see: [option](#option)
 
 ##### var.$(os)
 
-###### 获取当前编译平台的操作系统
+###### Get the operating system of the current build platform
 
-如果当前编译的是iphoneos，那么这个值就是：`ios`，以此类推。
+If iphoneos is currently compiled, then this value is: `ios`, and so on.
 
 ##### var.$(host)
 
-###### 获取本机操作系统
+###### Get the native operating system
 
-指的是当前本机环境的主机系统，如果你是在macOS上编译，那么系统就是：`macosx`
+Refers to the host system of the current native environment, if you compile on macOS, then the system is: `macosx`
 
 ##### var.$(tmpdir)
 
-###### 获取临时目录
+###### Getting a temporary directory
 
-一般用于临时存放一些非永久性文件。
+Generally used to temporarily store some non-permanent files.
 
 ##### var.$(curdir)
 
-###### 获取当前目录
+###### Get the current directory
 
-一般默认是执行`xmake`命令时的工程根目录，当然如果通过[os.cd](#os-cd)改变了目录的话，这个值也会一起改变。
+The default is the project root directory when the `xmake` command is executed. Of course, if the directory is changed by [os.cd](#os-cd), this value will also change.
 
 ##### var.$(buildir)
 
-###### 获取当前的构建输出目录
+###### Get the current build output directory
 
-默认一般为当前工程根目录下的：`./build`目录，也可以通过执行：`xmake f -o /tmp/build`命令来修改默认的输出目录。
+The default is usually the `./build` directory in the current project root directory. You can also modify the default output directory by executing the `xmake f -o /tmp/build` command.
 
 ##### var.$(scriptdir)
 
-###### 获取当前工程描述脚本的目录
+###### Get the directory of the current project description script
 
-也就是对应`xmake.lua`所在的目录路径。
+That is, the directory path corresponding to `xmake.lua`.
 
 ##### var.$(globaldir)
 
-###### 全局配置目录
+###### Global Configuration Directory
 
-xmake的`xmake g|global`全局配置命令，数据存储的目录路径，在里面可以放置一些自己的插件、平台脚本。
+Xmake's `xmake g|global` global configuration command, directory path for data storage, where you can place some of your own plugins and platform scripts.
 
-默认为：`~/.config`
+The default is: `~/.config`
 
 ##### var.$(configdir)
 
-###### 当前工程配置目录
+###### Current project configuration directory
 
-当前工程的配置存储目录，也就是`xmake f|config`配置命令的存储目录，默认为：`projectdir/.config`
+The current project configuration storage directory, which is the storage directory of the `xmake f|config` configuration command, defaults to: `projectdir/.config`
 
 ##### var.$(programdir)
 
-###### xmake安装脚本目录
+###### xmake installation script directory
 
-也就是`XMAKE_PROGRAM_DIR`环境变量所在目录，我们也可以通过设置这个环境量，来修改xmake的加载脚本，实现版本切换。
+That is, the directory where the `XMAKE_PROGRAM_DIR` environment variable is located. We can also modify the xmake load script by setting this environment amount to implement version switching.
 
 ##### var.$(projectdir)
 
-###### 工程根目录
+###### Project root directory
 
-也就是`xmake -P xxx`命令中指定的目录路径，默认不指定就是`xmake`命令执行时的当前目录，一般用于定位工程文件。
+That is, the directory path specified in the `xmake -P xxx` command, the default is not specified is the current directory when the `xmake` command is executed, which is generally used to locate the project file.
 
 ##### var.$(shell)
 
-###### 执行外部shell命令
+###### Executing external shell commands
 
-除了内置的变量处理，xmake还支持原生shell的运行，来处理一些xmake内置不支持的功能
+In addition to the built-in variable handling, xmake also supports the native shell to handle some of the features that xmake does not support.
 
-例如，现在有个需求，我想用在编译linux程序时，调用`pkg-config`获取到实际的第三方链接库名，可以这么做：
+For example, there is a need now, I want to use the `pkg-config` to get the actual third-party link library name when compiling the Linux program, you can do this:
 
 ```lua
 target("test")
@@ -4948,15 +4950,15 @@ target("test")
     end
 ```
 
-当然，xmake有自己的自动化第三库检测机制，一般情况下不需要这么麻烦，而且lua自身的脚本化已经很不错了。。
+Of course, xmake has its own automated third library detection mechanism, which generally does not need such trouble, and lua's own scripting is very good. .
 
-但是这个例子可以说明，xmake是完全可以通过原生shell，来与一些第三方的工具进行配合使用。。
+But this example shows that xmake can be used with some third-party tools through the native shell. .
 
 ##### var.$(env)
 
-###### 获取外部环境变量
+###### Get external environment variables
 
-例如，可以通过获取环境变量中的路径：
+For example, you can get the path in the environment variable:
 
 ```lua
 target("test")
@@ -4965,9 +4967,9 @@ target("test")
 
 ##### var.$(reg)
 
-###### 获取windows注册表配置项的值 
+###### Get the value of the windows registry configuration item
 
-通过 `regpath; name` 的方式获取注册表中某个项的值：
+Get the value of an item in the registry by `regpath; name`:
 
 ```lua
 print("$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)")
@@ -4975,7 +4977,7 @@ print("$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion
 
 #### Builtin Modules
 
-在自定义脚本、插件脚本、任务脚本、平台扩展、模板扩展等脚本代码中使用，也就是在类似下面的代码块中，可以使用这些模块接口：
+Used in script code such as custom scripts, plug-in scripts, task scripts, platform extensions, template extensions, etc., that is, in code blocks like the following, you can use these module interfaces:
 
 ```lua
 on_run(function (target)
@@ -4984,39 +4986,39 @@ end)
 ```
 
 <p class="warning">
-为了保证外层的描述域尽可能简洁、安全，一般不建议在这个域使用接口和模块操作api，因此大部分模块接口只能在脚本域使用，来实现复杂功能。</br>
-当然少部分只读的内置接口还是可以在描述域使用的，具体见下表：
+In order to ensure that the description field of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br>
+Of course, a small number of read-only built-in interfaces can still be used in the description field, as shown in the following table:
 </p>
 
-| 接口                                            | 描述                                         | 可使用域                   | 支持版本 |
+| Interface | Description | Available Domains | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------------------------- | -------- |
-| [val](#val)                                     | 获取内置变量的值                             | 脚本域                     | >= 2.1.5 |
-| [import](#import)                               | 导入扩展摸块                                 | 脚本域                     | >= 2.0.1 |
-| [inherit](#inherit)                             | 导入并继承基类模块                           | 脚本域                     | >= 2.0.1 |
-| [ifelse](#ifelse)                               | 类似三元条件判断                             | 描述域、脚本域             | >= 2.0.1 |
-| [try-catch-finally](#try-catch-finally)         | 异常捕获                                     | 脚本域                     | >= 2.0.1 |
-| [pairs](#pairs)                                 | 用于遍历字典                                 | 描述域、脚本域             | >= 2.0.1 |
-| [ipairs](#ipairs)                               | 用于遍历数组                                 | 描述域、脚本域             | >= 2.0.1 |
-| [print](#print)                                 | 换行打印终端日志                             | 描述域、脚本域             | >= 2.0.1 |
-| [printf](#printf)                               | 无换行打印终端日志                           | 脚本域                     | >= 2.0.1 |
-| [cprint](#cprint)                               | 换行彩色打印终端日志                         | 脚本域                     | >= 2.0.1 |
-| [cprintf](#cprintf)                             | 无换行彩色打印终端日志                       | 脚本域                     | >= 2.0.1 |
-| [format](#format)                               | 格式化字符串                                 | 描述域、脚本域             | >= 2.0.1 |
-| [vformat](#vformat)                             | 格式化字符串，支持内置变量转义               | 脚本域                     | >= 2.0.1 |
-| [raise](#raise)                                 | 抛出异常中断程序                             | 脚本域                     | >= 2.0.1 |
-| [os](#os)                                       | 系统操作模块                                 | 部分只读操作描述域、脚本域 | >= 2.0.1 |
-| [io](#io)                                       | 文件操作模块                                 | 脚本域                     | >= 2.0.1 |
-| [path](#path)                                   | 路径操作模块                                 | 描述域、脚本域             | >= 2.0.1 |
-| [table](#table)                                 | 数组和字典操作模块                           | 描述域、脚本域             | >= 2.0.1 |
-| [string](#string)                               | 字符串操作模块                               | 描述域、脚本域             | >= 2.0.1 |
-| [process](#process)                             | 进程操作模块                                 | 脚本域                     | >= 2.0.1 |
-| [coroutine](#coroutine)                         | 协程操作模块                                 | 脚本域                     | >= 2.0.1 |
-| [find_packages](#find_packages)                 | 查找依赖包                                   | 脚本域                     | >= 2.2.5 |
+| [val](#val) | Get the value of the built-in variable | Script Field | >= 2.1.5 |
+| [import](#import) | Importing Extension Blocks | Script Fields | >= 2.0.1 |
+| [inherit](#inherit) | Import and inherit base class modules | Script Domain | >= 2.0.1 |
+| [ifelse](#ifelse) | Similar ternary conditional judgment | Description field, script field | >= 2.0.1 |
+| [try-catch-finally](#try-catch-finally) | Exception Capture | Script Field | >= 2.0.1 |
+| [pairs](#pairs) | Used to Traverse the Dictionary | Description Field, Script Field | >= 2.0.1 |
+| [ipairs](#ipairs) | Used to traverse arrays | Description fields, script fields | >= 2.0.1 |
+[print](#print) | Wrap Print Terminal Log | Description Field, Script Field | >= 2.0.1 |
+| [printf](#printf) | No Line Printing Terminal Log | Script Field | >= 2.0.1 |
+[cprint](#cprint) | Wrap Color Print Terminal Log | Script Field | >= 2.0.1 |
+| [cprintf](#cprintf) | No Line Color Print Terminal Log | Script Field | >= 2.0.1 |
+| [format](#format) | Format String | Description Field, Script Field | >= 2.0.1 |
+| [vformat](#vformat) | Format string, support for built-in variable escaping | Script Domain | >= 2.0.1 |
+| [raise](#raise) | Throwing an abort program | Script Field | >= 2.0.1 |
+| [os](#os) | System Operation Module | Partial Read-Only Operation Description Field, Script Field | >= 2.0.1 |
+| [io](#io) | File Manipulation Module | Script Field | >= 2.0.1 |
+| [path](#path) | Path Manipulation Module | Description Field, Script Field |= 2.0.1 |
+| [table](#table) | Array and Dictionary Operations Module | Description Field, Script Field | >= 2.0.1 |
+| [string](#string) | String Manipulation Module | Description Field, Script Field | >= 2.0.1 |
+| [process](#process) | Process Operation Module | Script Field | >= 2.0.1 |
+| [coroutine](#coroutine) | Coroutine Operation Module | Script Field | >= 2.0.1 |
+| [find_packages](#find_packages) | Find Dependency Packages | Script Fields | >= 2.2.5 |
 
-在描述域使用接口调用的实例如下，一般仅用于条件控制：
+An example of using an interface call in a description field is as follows, generally only for conditional control:
 
 ```lua
--- 扫描当前xmake.lua目录下的所有子目录，以每个目录的名字定义一个task任务
+-- Scan all subdirectories under the current xmake.lua directory, defining a task task with the name of each directory
 for _, taskname in ipairs(os.dirs("*"), path.basename) do
     task(taskname)
         on_run(function ()
@@ -5024,28 +5026,28 @@ for _, taskname in ipairs(os.dirs("*"), path.basename) do
 end
 ```
 
-上面所说的脚本域、描述域主要是指：
+The script field and description field mentioned above mainly refer to:
 
 ```lua
--- 描述域
+-- Description field
 target("test")
-    
-    -- 描述域
+
+    -- Description field
     set_kind("static")
     add_files("src/*.c")
 
     on_run(function (target)
-        -- 脚本域
+        -- Script domain
     end)
 
--- 描述域
+-- Description field
 ```
 
 ##### val
 
-###### 获取内置变量的值
+###### Get the value of the built-in variable
 
-[内置变量](#内置变量)可以通过此接口直接获取，而不需要再加`$()`的包裹，使用更加简单，例如：
+[Built-in variables] (#built-in variables) can be obtained directly through this interface, without the need to add a `$()` package, which is much simpler to use, for example:
 
 ```lua
 print(val("host"))
@@ -5053,61 +5055,61 @@ print(val("env PATH"))
 local s = val("shell echo hello")
 ```
 
-而用[vformat](#vformat)就比较繁琐了：
+Using [vformat](#vformat) is cumbersome:
 
 ```lua
 local s = vformat("$(shell echo hello)")
 ```
 
-不过`vformat`支持字符串参数格式化，更加强大， 所以应用场景不同。
+However, `vformat` supports string parameter formatting, which is more powerful, so the application scenario is different.
 
 ##### import
 
-###### 导入扩展摸块
+###### Importing extension blocks
 
-import的主要用于导入xmake的扩展类库以及一些自定义的类库模块，一般用于：
+Import is mainly used to import xmake's extension class library and some custom class library modules, generally used to:
 
-* 自定义脚本([on_build](#targeton_build), [on_run](#targeton_run) ..)
-* 插件开发
-* 模板开发
-* 平台扩展
-* 自定义任务task
+* Custom script ([on_build](#targeton_build), [on_run](#targeton_run) ..)
+* Plugin development
+* Template development
+* Platform extension
+* Custom task task
 
-导入机制如下：
+The import mechanism is as follows:
 
-1. 优先从当前脚本目录下导入
-2. 再从扩展类库中导入
+1. Import from the current script directory first
+2. Import from the extended class library
 
-导入的语法规则：
+Imported grammar rules:
 
-基于`.`的类库路径规则，例如：
+Class library path rules based on `.`, for example:
 
-导入core核心扩展模块
+Import core core extension module
 
 ```lua
 import("core.base.option")
 import("core.project")
-import("core.base.task") -- 2.1.5 以前是 core.project.task
+import("core.base.task") -- 2.1.5 Previously core.project.task
 import("core")
 
 function main()
-    
-    -- 获取参数选项
+
+    -- Get parameter options
     print(option.get("version"))
 
-    -- 运行任务和插件
+    -- Run tasks and plugins
     task.run("hello")
     project.task.run("hello")
     core.base.task.run("hello")
 end
 ```
 
-导入当前目录下的自定义模块：
+Import the custom module in the current directory:
 
-目录结构：
+Directory Structure:
 
 ```
-plugin
+Plugin
   - xmake.lua
   - main.lua
   - modules
@@ -5115,71 +5117,71 @@ plugin
     - hello2.lua
 ```
 
-在main.lua中导入modules
+Import modules in main.lua
 
 ```lua
 import("modules.hello1")
 import("modules.hello2")
 ```
 
-导入后就可以直接使用里面的所有公有接口，私有接口用`_`前缀标示，表明不会被导出，不会被外部调用到。。
+After importing, you can directly use all the public interfaces inside. The private interface is marked with the `_` prefix, indicating that it will not be exported and will not be called externally. .
 
-除了当前目录，我们还可以导入其他指定目录里面的类库，例如：
+In addition to the current directory, we can also import libraries in other specified directories, for example:
 
 ```lua
 import("hello3", {rootdir = "/home/xxx/modules"})
 ```
 
-为了防止命名冲突，导入后还可以指定的别名：
+To prevent naming conflicts, you can also specify an alias after import:
 
 ```lua
 import("core.platform.platform", {alias = "p"})
 
 function main()
- 
-    -- 这样我们就可以使用p来调用platform模块的plats接口，获取所有xmake支持的平台列表了
+
+    -- So we can use p to call the plats interface of the platform module to get a list of all the platforms supported by xmake.
     table.dump(p.plats())
 end
 ```
 
-import不仅可以导入类库，还支持导入的同时作为继承导入，实现模块间的继承关系
+Import can not only import the class library, but also import and import as inheritance, realize the inheritance relationship between modules.
 
 ```lua
 import("xxx.xxx", {inherit = true})
 ```
 
-这样导入的不是这个模块的引用，而是导入的这个模块的所有公有接口本身，这样就会跟当前模块的接口进行合并，实现模块间的继承。
+This is not a reference to the module, but all the public interfaces of the module imported, so that it will be merged with the interface of the current module to achieve inheritance between modules.
 
-2.1.5版本新增两个新属性：`import("xxx.xxx", {try = true, anonymous = true})`
+Version 2.1.5 adds two new properties: `import("xxx.xxx", {try = true, anonymous = true}).
 
-try为true，则导入的模块不存在的话，仅仅返回nil，并不会抛异常后中断xmake.
-anonymous为true，则导入的模块不会引入当前作用域，仅仅在import接口返回导入的对象引用。
+If the try is true, the imported module does not exist, only return nil, and will not interrupt xmake after throwing an exception.
+If anonymous is true, the imported module will not introduce the current scope, only the imported object reference will be returned in the import interface.
 
 ##### inherit
 
-###### 导入并继承基类模块
+###### Import and inherit base class modules
 
-这个等价于[import](#import)接口的`inherit`模式，也就是：
+This is equivalent to the `inherit` mode of the [import](#import) interface, which is:
 
 ```lua
 import("xxx.xxx", {inherit = true})
 ```
 
-用`inherit`接口的话，会更简洁些：
+With the `inherit` interface, it will be more concise:
 
 ```lu
-inherit("xxx.xxx")
+Inherit("xxx.xxx")
 ```
 
-使用实例，可以参看xmake的tools目录下的脚本：[clang.lua](#https://github.com/xmake-io/xmake/blob/master/xmake/tools/clang.lua)
+For an example, see the script in the xmake tools directory: [clang.lua](#https://github.com/xmake-io/xmake/blob/master/xmake/tools/clang.lua)
 
-这个就是clang工具模块继承了gcc的部分实现。
+This is part of the clang tool module that inherits gcc.
 
 ##### ifelse
 
-###### 类似三元条件判断
+###### Similar to the ternary condition judgment
 
-由于lua没有内置的三元运算符，通过封装`ifelse`接口，实现更加简洁的条件选择：
+Since lua does not have a built-in ternary operator, a more concise conditional choice is achieved by encapsulating the `ifelse` interface:
 
 ```lua
 local ok = ifelse(a == 0, "ok", "no")
@@ -5187,26 +5189,26 @@ local ok = ifelse(a == 0, "ok", "no")
 
 ##### try-catch-finally
 
-###### 异常捕获
+###### Exception capture
 
-lua原生并没有提供try-catch的语法来捕获异常处理，但是提供了`pcall/xpcall`等接口，可在保护模式下执行lua函数。
+Lua native does not provide try-catch syntax to catch exception handling, but provides interfaces such as `pcall/xpcall` to execute lua functions in protected mode.
 
-因此，可以通过封装这两个接口，来实现try-catch块的捕获机制。
+Therefore, the capture mechanism of the try-catch block can be implemented by encapsulating these two interfaces.
 
-我们可以先来看下，封装后的try-catch使用方式：
+We can look at the packaged try-catch usage first:
 
 ```lua
 try
 {
-    -- try 代码块
+    -- try code block
     function ()
         error("error message")
     end,
 
-    -- catch 代码块
-    catch 
+    -- catch code block
+    catch
     {
-        -- 发生异常后，被执行
+        -- After an exception occurs, it is executed
         function (errors)
             print(errors)
         end
@@ -5214,67 +5216,67 @@ try
 }
 ```
 
-上面的代码中，在try块内部认为引发了一个异常，并且抛出错误消息，在catch中进行了捕获，并且将错误消息进行输出显示。
+In the above code, an exception is thrown inside the try block, and an error message is thrown, caught in the catch, and the error message is output.
 
-而finally的处理，这个的作用是对于`try{}`代码块，不管是否执行成功，都会执行到finally块中
+And finally processing, this role is for the `try{}` code block, regardless of whether the execution is successful, will be executed into the finally block
 
-也就说，其实上面的实现，完整的支持语法是：`try-catch-finally`模式，其中catch和finally都是可选的，根据自己的实际需求提供
+In other words, in fact, the above implementation, the complete support syntax is: `try-catch-finally` mode, where catch and finally are optional, according to their actual needs.
 
-例如：
+E.g:
 
 ```lua
 try
 {
-    -- try 代码块
+    -- try code block
     function ()
         error("error message")
     end,
 
-    -- catch 代码块
-    catch 
+    -- catch code block
+    catch
     {
-        -- 发生异常后，被执行
+        -- After an exception occurs, it is executed
         function (errors)
             print(errors)
         end
     },
 
-    -- finally 代码块
-    finally 
+    -- finally block
+    finally
     {
-        -- 最后都会执行到这里
+        -- Finally will be executed here
         function (ok, errors)
-            -- 如果try{}中存在异常，ok为true，errors为错误信息，否则为false，errors为try中的返回值
+            -- If there is an exception in try{}, ok is true, errors is the error message, otherwise it is false, and error is the return value in try
         end
     }
 }
 
 ```
 
-或者只有finally块：
+Or only the finally block:
 
 ```lua
 try
 {
-    -- try 代码块
+    -- try code block
     function ()
         return "info"
     end,
 
-    -- finally 代码块
-    finally 
+    -- finally block
+    finally
     {
-        -- 由于此try代码没发生异常，因此ok为true，errors为返回值: "info"
+        -- Since there is no exception in this try code, ok is true and errors is the return value: "info"
         function (ok, errors)
         end
     }
 }
 ```
 
-处理可以在finally中获取try里面的正常返回值，其实在仅有try的情况下，也是可以获取返回值的：
+Processing can get the normal return value in try in finally, in fact, in the case of only try, you can also get the return value:
 
 ```lua
--- 如果没发生异常，result 为返回值："xxxx"，否则为nil
+-- If no exception occurs, result is the return value: "xxxx", otherwise nil
 local result = try
 {
     function ()
@@ -5283,26 +5285,26 @@ local result = try
 }
 ```
 
-在xmake的自定义脚本、插件开发中，也是完全基于此异常捕获机制
+In xmake's custom scripting and plugin development, it is also based entirely on this exception catching mechanism.
 
-这样使得扩展脚本的开发非常的精简可读，省去了繁琐的`if err ~= nil then`返回值判断，在发生错误时，xmake会直接抛出异常进行中断，然后高亮提示详细的错误信息。
+This makes the development of the extended script very succinct and readable, eliminating the cumbersome `if err ~= nil then` return value judgment. When an error occurs, xmake will directly throw an exception to interrupt, and then highlight the detailed error. information.
 
-例如：
+E.g:
 
 ```lua
 target("test")
     set_kind("binary")
     add_files("src/*.c")
 
-    -- 在编译完ios程序后，对目标程序进行ldid签名
+    -- After the ios program is compiled, the target program is ldid signed
     after_build(function (target))
         os.run("ldid -S %s", target:targetfile())
     end
 ```
 
-只需要一行`os.run`就行了，也不需要返回值判断是否运行成功，因为运行失败后，xmake会自动抛异常，中断程序并且提示错误
+Only one line `os.run` is needed, and there is no need to return a value to determine whether it runs successfully. After the operation fails, xmake will automatically throw an exception, interrupt the program and prompt the error.
 
-如果你想在运行失败后，不直接中断xmake，继续往下运行，可以自己加个try快就行了：
+If you want to run xmake without running interrupts directly after running, you can do it yourself.Add a try and you will be fine:
 
 ```lua
 target("test")
@@ -5319,7 +5321,7 @@ target("test")
     end
 ```
 
-如果还想捕获出错信息，可以再加个catch:
+If you want to capture the error message, you can add a catch:
 
 ```lua
 target("test")
@@ -5332,7 +5334,7 @@ target("test")
             function ()
                 os.run("ldid -S %s", target:targetfile())
             end,
-            catch 
+            catch
             {
                 function (errors)
                     print(errors)
@@ -5342,15 +5344,15 @@ target("test")
     end
 ```
 
-不过一般情况下，在xmake中写自定义脚本，是不需要手动加try-catch的，直接调用各种api，出错后让xmake默认的处理程序接管，直接中断就行了。。
+However, in general, write custom scripts in xmake, do not need to manually add try-catch, directly call a variety of api, after the error, let xmake default handler to take over, directly interrupted. .
 
 ##### pairs
 
-###### 用于遍历字典
+###### Used to traverse the dictionary
 
-这个是lua原生的内置api，在xmake中，在原有的行为上对其进行了一些扩展，来简化一些日常的lua遍历代码。
+This is lua's native built-in api. In xmake, it has been extended in its original behavior to simplify some of the daily lua traversal code.
 
-先看下默认的原生写法：
+First look at the default native notation:
 
 ```lua
 local t = {a = "a", b = "b", c = "c", d = "d", e = "e", f = "f"}
@@ -5360,7 +5362,7 @@ for key, val in pairs(t) do
 end
 ```
 
-这对于通常的遍历操作就足够了，但是如果我们相对其中每个遍历出来的元素，获取其大写，我们可以这么写：
+This is sufficient for normal traversal operations, but if we get the uppercase for each of the elements it traverses, we can write:
 
 ```lua
 for key, val in pairs(t, function (v) return v:upper() end) do
@@ -5368,7 +5370,7 @@ for key, val in pairs(t, function (v) return v:upper() end) do
 end
 ```
 
-甚至传入一些参数到第二个`function`中，例如：
+Even pass in some parameters to the second `function`, for example:
 
 ```lua
 for key, val in pairs(t, function (v, a, b) return v:upper() .. a .. b end, "a", "b") do
@@ -5378,11 +5380,11 @@ end
 
 ##### ipairs
 
-###### 用于遍历数组
+###### for traversing arrays
 
-这个是lua原生的内置api，在xmake中，在原有的行为上对其进行了一些扩展，来简化一些日常的lua遍历代码。
+This is lua's native built-in api. In xmake, it has been extended in its original behavior to simplify some of the daily lua traversal code.
 
-先看下默认的原生写法：
+First look at the default native notation:
 
 ```lua
 for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}) do
@@ -5390,7 +5392,7 @@ for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}) do
 end
 ```
 
-扩展写法类似[pairs](#pairs)接口，例如：
+The extension is written like the [pairs](#pairs) interface, for example:
 
 ```lua
 for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}, function (v) return v:upper() end) do
@@ -5402,7 +5404,7 @@ for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}, function (v, a, b) return
 end
 ```
 
-这样可以简化`for`块代码的逻辑，例如我要遍历指定目录，获取其中的文件名，但不包括路径，就可以通过这种扩展方式，简化写法：
+This simplifies the logic of the `for` block code. For example, if I want to traverse the specified directory and get the file name, but not including the path, I can simplify the writing by this extension:
 
 ```lua
 for _, filename in ipairs(os.dirs("*"), path.filename) do
@@ -5412,39 +5414,39 @@ end
 
 ##### print
 
-###### 换行打印终端日志
+###### Wrapping print terminal log
 
-此接口也是lua的原生接口，xmake在原有行为不变的基础上也进行了扩展，同时支持：格式化输出、多变量输出。
+This interface is also the native interface of lua. xmake is also extended based on the original behavior, and supports: formatted output, multivariable output.
 
-先看下原生支持的方式：
+First look at the way native support:
 
 ```lua
 print("hello xmake!")
 print("hello", "xmake!", 123)
 ```
 
-并且同时还支持扩展的格式化写法：
+And also supports extended formatting:
 
 ```lua
 print("hello %s!", "xmake")
 print("hello xmake! %d", 123)
 ```
 
-xmake会同时支持这两种写法，内部会去自动智能检测，选择输出行为。
+Xmake will support both types of writing at the same time, and the internal will automatically detect and select the output behavior.
 
 ##### printf
 
-###### 无换行打印终端日志
+###### No line printing terminal log
 
-类似[print](#print)接口，唯一的区别就是不换行。
+Like the [print](#print) interface, the only difference is that it doesn't wrap.
 
 ##### cprint
 
-###### 换行彩色打印终端日志
+###### Wrap color print terminal log
 
-行为类似[print](#print)，区别就是此接口还支持彩色终端输出，并且支持`emoji`字符输出。
+The behavior is similar to [print](#print), the difference is that this interface also supports color terminal output, and supports `emoji` character output.
 
-例如：
+E.g:
 
 ```lua
     cprint('${bright}hello xmake')
@@ -5455,80 +5457,80 @@ xmake会同时支持这两种写法，内部会去自动智能检测，选择输
     cprint('${cyan}hello ${dim yellow}xmake')
 ```
 
-显示结果如下：
+The results are as follows:
 
 ![cprint_colors](http://tboox.org/static/img/xmake/cprint_colors.png)
 
-跟颜色相关的描述，都放置在 `${  }` 里面，可以同时设置多个不同的属性，例如：
+The color-related descriptions are placed in `${ }`, and you can set several different properties at the same time, for example:
 
 ```
     ${bright red underline onyellow}
 ```
 
-表示：高亮红色，背景黄色，并且带下滑线
+Indicates: highlighted red, background yellow, and with a down line
 
-所有这些描述，都会影响后面一整行字符，如果只想显示部分颜色的文字，可以在结束位置，插入`${clear}`清楚前面颜色描述
+All of these descriptions will affect the entire entire line of characters. If you only want to display partial color text, you can insert `${clear}` at the end position to clear the previous color description.
 
-例如：
+E.g:
 
 ```
     ${red}hello ${clear}xmake
 ```
 
-这样的话，仅仅hello是显示红色，其他还是正常默认黑色显示。
+In this case, only hello is displayed in red, and the others are still normal black display.
 
-其他颜色属于，我这里就不一一介绍，直接贴上xmake代码里面的属性列表吧：
+Other colors belong to, I will not introduce them here, directly paste the list of attributes in the xmake code:
 
 ```lua
-    colors.keys = 
+    colors.keys =
     {
-        -- 属性
-        reset       = 0 -- 重置属性
-    ,   clear       = 0 -- 清楚属性
-    ,   default     = 0 -- 默认属性
-    ,   bright      = 1 -- 高亮
-    ,   dim         = 2 -- 暗色
-    ,   underline   = 4 -- 下划线
-    ,   blink       = 5 -- 闪烁
-    ,   reverse     = 7 -- 反转颜色
-    ,   hidden      = 8 -- 隐藏文字
+        -- Attributes
+        reset = 0 -- reset attribute
+    , clear = 0 -- clear attribute
+    , default = 0 -- default property
+    , bright = 1 -- highlight
+    , dim = 2 -- dark
+    , underline = 4 -- underline
+    , blink = 5 -- flashing
+    , reverse = 7 -- reverse color
+    , hidden = 8 -- hidden text
 
-        -- 前景色 
-    ,   black       = 30
-    ,   red         = 31
-    ,   green       = 32
-    ,   yellow      = 33
-    ,   blue        = 34
-    ,   magenta     = 35 
-    ,   cyan        = 36
-    ,   white       = 37
+        -- Foreground
+    , black = 30
+    , red = 31
+    , green = 32
+    , yellow = 33
+    , blue = 34
+    , magenta = 35
+    , cyan = 36
+    , white = 37
 
-        -- 背景色 
-    ,   onblack     = 40
-    ,   onred       = 41
-    ,   ongreen     = 42
-    ,   onyellow    = 43
-    ,   onblue      = 44
-    ,   onmagenta   = 45
-    ,   oncyan      = 46
-    ,   onwhite     = 47
+        -- Background color
+    , onblack = 40
+    , onred = 41
+    , ongreen = 42
+    , onyellow = 43
+    , onblue = 44
+    , onmagenta = 45
+    , oncyan = 46
+    , onwhite = 47
 ```
 
-除了可以色彩高亮显示外，如果你的终端是在macosx下，lion以上的系统，xmake还可以支持emoji表情的显示哦，对于不支持系统，会
-忽略显示，例如：
+In addition to color highlighting, if your terminal is under macosx, lion above the system, xmake can also support the display of emoji expressions, for systems that do not support
+Ignore the display, for example:
 
 ```lua
     cprint("hello xmake${beer}")
     cprint("hello${ok_hand} xmake")
 ```
 
-上面两行代码，我打印了一个homebrew里面经典的啤酒符号，下面那行打印了一个ok的手势符号，是不是很炫哈。。
+The above two lines of code, I printed a classic beer symbol in the homebrew, the following line printed an ok gesture symbol, is not very dazzling. .
 
 ![cprint_emoji](http://tboox.org/static/img/xmake/cprint_emoji.png)
 
-所有的emoji表情，以及xmake里面对应的key，都可以通过[emoji符号](http://www.emoji-cheat-sheet.com/)里面找到。。
+All emoji emoticons, as well as the corresponding keys in xmake, can be found in [emoji] (http://www.emoji-cheat-sheet.com/). .
 
-2.1.7版本支持24位真彩色输出，如果终端支持的话：
+Version 2.1.7 supports 24-bit true color output, if the terminal supports it:
 
 ```lua
 import("core.base.colors")
@@ -5540,28 +5542,28 @@ if colors.truecolor() then
 end
 ```
 
-xmake对于truecolor的检测支持，是通过`$COLORTERM`环境变量来实现的，如果你的终端支持truecolor，可以手动设置此环境变量，来告诉xmake启用truecolor支持。
+Xmake's detection support for truecolor is implemented by the `$COLORTERM` environment variable. If your terminal supports truecolor, you can manually set this environment variable to tell xmake to enable truecolor support.
 
-可以通过下面的命令来启用和测试：
+It can be enabled and tested with the following command:
 
 ```bash
 $ export COLORTERM=truecolor
 $ xmake --version
 ```
 
-2.1.7版本可通过`COLORTERM=nocolor`来禁用色彩输出。
+The 2.1.7 version can disable color output with `COLORTERM=nocolor`.
 
 ##### cprintf
 
-###### 无换行彩色打印终端日志
+###### No line feed color print terminal log
 
-此接口类似[cprint](#cprint)，区别就是不换行输出。
+This interface is similar to [cprint](#cprint), the difference is that it does not wrap the output.
 
 ##### format
 
-###### 格式化字符串
+###### Formatting a string
 
-如果只是想格式化字符串，不进行输出，可以使用这个接口，此接口跟[string.format](#string-format)接口等价，只是个接口名简化版。
+If you just want to format the string and don't output it, you can use this interface. This interface is equivalent to the [string.format](#string-format) interface, just a simplified version of the interface name.
 
 ```lua
 local s = format("hello %s", xmake)
@@ -5569,9 +5571,9 @@ local s = format("hello %s", xmake)
 
 ##### vformat
 
-###### 格式化字符串，支持内置变量转义
+###### Formatting strings, support for built-in variable escaping
 
-此接口跟[format](#format)接口类似，只是增加对内置变量的获取和转义支持。
+This interface is followed by [format](The #format) interface is similar, but adds support for the acquisition and escaping of built-in variables.
 
 ```lua
 local s = vformat("hello %s $(mode) $(arch) $(env PATH)", xmake)
@@ -5579,21 +5581,21 @@ local s = vformat("hello %s $(mode) $(arch) $(env PATH)", xmake)
 
 ##### raise
 
-###### 抛出异常中断程序
+###### Throwing an abort program
 
-如果想在自定义脚本、插件任务中中断xmake运行，可以使用这个接口抛出异常，如果上层没有显示调用[try-catch](#try-catch-finally)捕获的话，xmake就会中断执行，并且显示出错信息。
+If you want to interrupt xmake running in custom scripts and plug-in tasks, you can use this interface to throw an exception. If the upper layer does not show the call to [try-catch](#try-catch-finally), xmake will be executed. An error message is displayed.
 
 ```lua
 if (errors) raise(errors)
 ```
 
-如果在try块中抛出异常，就会在catch和finally中进行errors信息捕获，具体见：[try-catch](#try-catch-finally)
+If an exception is thrown in the try block, the error information is captured in catch and finally. See: [try-catch](#try-catch-finally)
 
 ##### find_packages
 
-###### 查找依赖包
+###### Finding dependencies
 
-此接口是对[lib.detect.find_package](#detect-find_package)接口的封装，提供多个依赖包的查找支持，例如：
+This interface is a wrapper around the [lib.detect.find_package](#detect-find_package) interface and provides lookup support for multiple dependencies, for example:
 
 ```lua
 target("test")
@@ -5606,97 +5608,97 @@ target("test")
 
 ##### os
 
-系统操作模块，属于内置模块，无需使用[import](#import)导入，可直接脚本域调用其接口。
+The system operation module belongs to the built-in module. It can be called directly by the script field without using [import](#import) import.
 
-此模块也是lua的原生模块，xmake在其基础上进行了扩展，提供更多实用的接口。
+This module is also a native module of lua, and xmake has been extended to provide more practical interfaces.
 
 <p class="tips">
-os模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：`os.cp`, `os.rm`等
+Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os module can be used in the description field. Other interfaces can only be used in the script domain, for example: `os.cp`, `os .rm`etc.
 </p>
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [os.cp](#os-cp)                                 | 复制文件或目录                               | >= 2.0.1 |
-| [os.mv](#os-mv)                                 | 移动重命名文件或目录                         | >= 2.0.1 |
-| [os.rm](#os-rm)                                 | 删除文件或目录树                             | >= 2.0.1 |
-| [os.trycp](#os-trycp)                           | 尝试复制文件或目录                           | >= 2.1.6 |
-| [os.trymv](#os-trymv)                           | 尝试移动重命名文件或目录                     | >= 2.1.6 |
-| [os.tryrm](#os-tryrm)                           | 尝试删除文件或目录树                         | >= 2.1.6 |
-| [os.cd](#os-cd)                                 | 进入指定目录                                 | >= 2.0.1 |
-| [os.rmdir](#os-rmdir)                           | 删除目录树                                   | >= 2.0.1 |
-| [os.mkdir](#os-mkdir)                           | 创建指定目录                                 | >= 2.0.1 |
-| [os.isdir](#os-isdir)                           | 判断目录是否存在                             | >= 2.0.1 |
-| [os.isfile](#os-isfile)                         | 判断文件是否存在                             | >= 2.0.1 |
-| [os.exists](#os-exists)                         | 判断文件或目录是否存在                       | >= 2.0.1 |
-| [os.dirs](#os-dirs)                             | 遍历获取指定目录下的所有目录                 | >= 2.0.1 |
-| [os.files](#os-files)                           | 遍历获取指定目录下的所有文件                 | >= 2.0.1 |
-| [os.filedirs](#os-filedirs)                     | 遍历获取指定目录下的所有文件或目录           | >= 2.0.1 |
-| [os.run](#os-run)                               | 安静运行程序                                 | >= 2.0.1 |
-| [os.runv](#os-runv)                             | 安静运行程序，带参数列表                     | >= 2.1.5 |
-| [os.exec](#os-exec)                             | 回显运行程序                                 | >= 2.0.1 |
-| [os.execv](#os-execv)                           | 回显运行程序，带参数列表                     | >= 2.1.5 |
-| [os.iorun](#os-iorun)                           | 运行并获取程序输出内容                       | >= 2.0.1 |
-| [os.iorunv](#os-iorunv)                         | 运行并获取程序输出内容，带参数列表           | >= 2.1.5 |
-| [os.getenv](#os-getenv)                         | 获取环境变量                                 | >= 2.0.1 |
-| [os.setenv](#os-setenv)                         | 设置环境变量                                 | >= 2.0.1 |
-| [os.tmpdir](#os-tmpdir)                         | 获取临时目录路径                             | >= 2.0.1 |
-| [os.tmpfile](#os-tmpfile)                       | 获取临时文件路径                             | >= 2.0.1 |
-| [os.curdir](#os-curdir)                         | 获取当前目录路径                             | >= 2.0.1 |
-| [os.filesize](#os-filesize)                     | 获取文件大小                                 | >= 2.1.9 |
-| [os.scriptdir](#os-scriptdir)                   | 获取脚本目录路径                             | >= 2.0.1 |
-| [os.programdir](#os-programdir)                 | 获取xmake安装主程序脚本目录                  | >= 2.1.5 |
-| [os.projectdir](#os-projectdir)                 | 获取工程主目录                               | >= 2.1.5 |
-| [os.arch](#os-arch)                             | 获取当前系统架构                             | >= 2.0.1 |
-| [os.host](#os-host)                             | 获取当前主机系统                             | >= 2.0.1 |
+| [os.cp](#os-cp) | Copy files or directories | >= 2.0.1 |
+| [os.mv](#os-mv) | Move Renamed File or Directory | >= 2.0.1 |
+| [os.rm](#os-rm) | Delete files or directory tree | >= 2.0.1 |
+| [os.trycp](#os-trycp) | Try copying files or directories | >= 2.1.6 |
+| [os.trymv](#os-trymv) | Try moving the renamed file or directory | >= 2.1.6 |
+| [os.tryrm](#os-tryrm) | Try deleting a file or directory tree | >= 2.1.6 |
+| [os.cd](#os-cd) | Go to the specified directory | >= 2.0.1 |
+| [os.rmdir](#os-rmdir) | Delete Directory Tree | >= 2.0.1 |
+| [os.mkdir](#os-mkdir) | Create the specified directory | >= 2.0.1 |
+| [os.isdir](#os-isdir) | Determine if the directory exists | >= 2.0.1 |
+| [os.isfile](#os-isfile) | Determine if the file exists | >= 2.0.1 |
+| [os.exists](#os-exists) | Determine if a file or directory exists | >= 2.0.1 |
+| [os.dirs](#os-dirs) | Traversing to get all directories under the specified directory | >= 2.0.1 |
+| [os.files](#os-files) | Traversing to get all the files in the specified directory | >= 2.0.1 |
+| [os.filedirs](#os-filedirs) | Traversing to get all files or directories under the specified directory | >= 2.0.1 |
+| [os.run](#os-run) | Quiet running program | >= 2.0.1 |
+| [os.runv](#os-runv) | Quiet running program with parameter list | >= 2.1.5 |
+| [os.exec](#os-exec) | Evoke Run Program | >= 2.0.1 |
+| [os.execv](#os-execv) | Echo running program with parameter list | >= 2.1.5 |
+| [os.iorun](#os-iorun) | Run and get the program output | >= 2.0.1 |
+| [os.iorunv](#os-iorunv) | Run and get the program output with parameter list | >= 2.1.5 |
+| [os.getenv](#os-getenv) | Get Environment Variables | >= 2.0.1 |
+| [os.setenv](#os-setenv) | Setting environment variables | >= 2.0.1 |
+| [os.tmpdir](#os-tmpdir) | Get Temp directory path | >= 2.0.1 |
+| [os.tmpfile](#os-tmpfile) | Get Temporary File Path | >= 2.0.1 |
+| [os.curdir](#os-curdir) | Get current directory path | >= 2.0.1 |
+| [os.filesize](#os-filesize) | Get File Size | >= 2.1.9 |
+| [os.scriptdir](#os-scriptdir) | Get script directory path | >= 2.0.1 |
+| [os.programdir](#os-programdir) | Get xmake install main program script directory | >= 2.1.5 |
+| [os.projectdir](#os-projectdir) | Get Project Home | |= 2.1.5 |
+| [os.arch](#os-arch) | Get Current System Architecture | >= 2.0.1 |
+| [os.host](#os-host) | Get Current Host System | >= 2.0.1 |
 
 ###### os.cp
 
-- 复制文件或目录
+- Copy files or directories
 
-行为和shell中的`cp`命令类似，支持路径通配符匹配（使用的是lua模式匹配），支持多文件复制，以及内置变量支持。
+The behavior is similar to the `cp` command in the shell, supporting path wildcard matching (using lua pattern matching), support for multi-file copying, and built-in variable support.
 
-例如：
+E.g:
 
 ```lua
 os.cp("$(scriptdir)/*.h", "$(projectdir)/src/test/**.h", "$(buildir)/inc")
 ```
 
-上面的代码将：当前`xmake.lua`目录下的所有头文件、工程源码test目录下的头文件全部复制到`$(buildir)`输出目录中。
+The above code will: all the header files in the current `xmake.lua` directory, the header files in the project source test directory are all copied to the `$(buildir)` output directory.
 
-其中`$(scriptdir)`, `$(projectdir)` 这些变量是xmake的内置变量，具体详情见：[内置变量](#内置变量)的相关文档。
+Among them `$(scriptdir)`, `$(projectdir)` These variables are built-in variables of xmake. For details, see the related documentation of [built-in variables] (#built-in variables).
 
-而`*.h`和`**.h`中的匹配模式，跟[add_files](#targetadd_files)中的类似，前者是单级目录匹配，后者是递归多级目录匹配。
+The matching patterns in `*.h` and `**.h` are similar to those in [add_files](#targetadd_files), the former is a single-level directory matching, and the latter is a recursive multi-level directory matching.
 
-此接口同时支持目录的`递归复制`，例如：
+This interface also supports `recursive replication' of directories, for example:
 
 ```lua
--- 递归复制当前目录到临时目录
+-- Recursively copy the current directory to a temporary directory
 os.cp("$(curdir)/test/", "$(tmpdir)/test")
 ```
 
 <p class="tip">
-尽量使用`os.cp`接口，而不是`os.run("cp ..")`，这样更能保证平台一致性，实现跨平台构建描述。
+Try to use the `os.cp` interface instead of `os.run("cp ..")`, which will ensure platform consistency and cross-platform build description.
 </p>
 
 ###### os.mv
 
-- 移动重命名文件或目录
+- Move to rename a file or directory
 
-跟[os.cp](#os-cp)的使用类似，同样支持多文件移动操作和模式匹配，例如：
+Similar to the use of [os.cp](#os-cp), it also supports multi-file move operations and pattern matching, for example:
 
 ```lua
--- 移动多个文件到临时目录
-os.mv("$(buildir)/test1", "$(buildir)/test2", "$(tmpdir)")
+-- Move multiple files to a temporary directory
+os.mv("$(buildir)/test1","$(buildir)/test2", "$(tmpdir)")
 
--- 文件移动不支持批量操作，也就是文件重命名
+-- File movement does not support bulk operations, which is file renaming
 os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
 ```
 
 ###### os.rm
 
-- 删除文件或目录树
+- Delete files or directory trees
 
-支持递归删除目录，批量删除操作，以及模式匹配和内置变量，例如：
+Support for recursive deletion of directories, bulk delete operations, and pattern matching and built-in variables, such as:
 
 ```lua
 os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
@@ -5704,9 +5706,9 @@ os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
 
 ###### os.trycp
 
-- 尝试复制文件或目录
+- Try copying files or directories
 
-跟[os.cp](#os-cp)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
+Similar to [os.cp](#os-cp), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
 
 ```lua
 if os.trycp("file", "dest/file") then
@@ -5715,9 +5717,9 @@ end
 
 ###### os.trymv
 
-- 尝试移动文件或目录
+- Try moving a file or directory
 
-跟[os.mv](#os-mv)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
+Similar to [os.mv](#os-mv), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
 
 ```lua
 if os.trymv("file", "dest/file") then
@@ -5726,9 +5728,9 @@ end
 
 ###### os.tryrm
 
-- 尝试删除文件或目录
+- Try deleting files or directories
 
-跟[os.rm](#os-rm)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
+Similar to [os.rm](#os-rm), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
 
 ```lua
 if os.tryrm("file") then
@@ -5737,25 +5739,25 @@ end
 
 ###### os.cd
 
-- 进入指定目录
+- Enter the specified directory
 
-这个操作用于目录切换，同样也支持内置变量，但是不支持模式匹配和多目录处理，例如：
+This operation is used for directory switching and also supports built-in variables, but does not support pattern matching and multi-directory processing, for example:
 
 ```lua
--- 进入临时目录
+-- Enter the temporary directory
 os.cd("$(tmpdir)")
 ```
 
-如果要离开进入之前的目录，有多种方式：
+If you want to leave the previous directory, there are several ways:
 
 ```lua
--- 进入上级目录
+-- Enter the parent directory
 os.cd("..")
 
--- 进入先前的目录，相当于：cd -
+-- Enter the previous directory, equivalent to: cd -
 os.cd("-")
 
--- 进入目录前保存之前的目录，用于之后跨级直接切回
+-- Save the previous directory before entering the directory, then use it to cut back directly after the level
 local oldir = os.cd("./src")
 ...
 os.cd(oldir)
@@ -5763,15 +5765,15 @@ os.cd(oldir)
 
 ###### os.rmdir
 
-- 仅删除目录
+- delete only the directory
 
-如果不是目录就无法删除。
+If it is not a directory, it cannot be deleted.
 
 ###### os.mkdir
 
-- 创建目录
+- Create a directory
 
-支持批量创建和内置变量，例如：
+Support for batch creation and built-in variables, such as:
 
 ```lua
 os.mkdir("$(tmpdir)/test", "$(buildir)/inc")
@@ -5779,9 +5781,9 @@ os.mkdir("$(tmpdir)/test", "$(buildir)/inc")
 
 ###### os.isdir
 
-- 判断是否为目录
+- Determine if it is a directory
 
-如果目录不存在，则返回false
+Return false if the directory does not exist
 
 ```lua
 if os.isdir("src") then
@@ -5791,9 +5793,9 @@ end
 
 ###### os.isfile
 
-- 判断是否为文件
+- Determine if it is a file
 
-如果文件不存在，则返回false
+Return false if the file does not exist
 
 ```lua
 if os.isfile("$(buildir)/libxxx.a") then
@@ -5803,17 +5805,17 @@ end
 
 ###### os.exists
 
-- 判断文件或目录是否存在
+- Determine if a file or directory exists
 
-如果文件或目录不存在，则返回false
+Return false if the file or directory does not exist
 
 ```lua
--- 判断目录存在
+-- Judging the existence of the directory
 if os.exists("$(buildir)") then
     -- ...
 end
 
--- 判断文件存在
+-- Judging the existence of the file
 if os.exists("$(buildir)/libxxx.a") then
     -- ...
 end
@@ -5821,12 +5823,12 @@ end
 
 ###### os.dirs
 
-- 遍历获取指定目录下的所有目录
+- Traverse to get all the directories under the specified directory
 
-支持[add_files](#targetadd_files)中的模式匹配，支持递归和非递归模式遍历，返回的结果是一个table数组，如果获取不到，返回空数组，例如：
+Supports pattern matching in [add_files](#targetadd_files), supports recursive and non-recursive mode traversal, and returns a table array. If not, returns an empty array, for example:
 
 ```lua
--- 递归遍历获取所有子目录
+-- Recursive traversal to get all subdirectories
 for _, dir in ipairs(os.dirs("$(buildir)/inc/**")) do
     print(dir)
 end
@@ -5834,12 +5836,12 @@ end
 
 ###### os.files
 
-- 遍历获取指定目录下的所有文件
+- Traverse to get all the files in the specified directory
 
-支持[add_files](#targetadd_files)中的模式匹配，支持递归和非递归模式遍历，返回的结果是一个table数组，如果获取不到，返回空数组，例如：
+Supports pattern matching in [add_files](#targetadd_files), supports recursive and non-recursive mode traversal, and returns a table array. If not, returns an empty array, for example:
 
 ```lua
--- 非递归遍历获取所有子文件
+-- Non-recursive traversal to get all child files
 for _, filepath in ipairs(os.files("$(buildir)/inc/*.h")) do
     print(filepath)
 end
@@ -5847,12 +5849,12 @@ end
 
 ###### os.filedirs
 
-- 遍历获取指定目录下的所有文件和目录
+- Traverse to get all files and directories under the specified directory
 
-支持[add_files](#targetadd_files)中的模式匹配，支持递归和非递归模式遍历，返回的结果是一个table数组，如果获取不到，返回空数组，例如：
+Supports pattern matching in [add_files](#targetadd_files), supports recursive and non-recursive mode traversal, and returns a table array. If not, returns an empty array, for example:
 
 ```lua
--- 递归遍历获取所有子文件和目录
+-- Recursive traversal to get all child files and directories
 for _, filedir in ipairs(os.filedirs("$(buildir)/**")) do
     print(filedir)
 end
@@ -5860,32 +5862,32 @@ end
 
 ###### os.run
 
-- 安静运行原生shell命令
+- Quietly running native shell commands
 
-用于执行第三方的shell命令，但不会回显输出，仅仅在出错后，高亮输出错误信息。
+Used to execute third-party shell commands, but will not echo the output, only after the error, highlight the error message.
 
-此接口支持参数格式化、内置变量，例如：
+This interface supports parameter formatting and built-in variables such as:
 
 ```lua
--- 格式化参数传入
+-- Formatted parameters passed in
 os.run("echo hello %s!", "xmake")
 
--- 列举构建目录文件
+-- List build directory files
 os.run("ls -l $(buildir)")
 ```
 
 <p class="warning">
-使用此接口执行shell命令，容易使构建跨平台性降低，对于`os.run("cp ..")`这种尽量使用`os.cp`代替。<br>
-如果必须使用此接口运行shell程序，请自行使用[config.plat](#config-plat)接口判断平台支持。
+Using this interface to execute shell commands can easily reduce the cross-platform build. For `os.run("cp ..")`, try to use `os.cp` instead. <br>
+If you must use this interface to run the shell program, please use the [config.plat] (#config-plat) interface to determine the platform support.
 </p>
 
-更加高级的进程运行和控制，见[process](#process)模块接口。
+For more advanced process operations and control, see the [process](#process) module interface.
 
 ###### os.runv
 
-- 安静运行原生shell命令，带参数列表
+- Quietly running native shell commands with parameter list
 
-跟[os.run](#os-run)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
+Similar to [os.run](#os-run), just the way to pass parameters is passed through the parameter list, not the string command, for example:
 
 ```lua
 os.runv("echo", {"hello", "xmake!"})
@@ -5893,15 +5895,15 @@ os.runv("echo", {"hello", "xmake!"})
 
 ###### os.exec
 
-- 回显运行原生shell命令
+- Echo running native shell commands
 
-与[os.run](#os-run)接口类似，唯一的不同是，此接口执行shell程序时，是带回显输出的，一般调试的时候用的比较多
+Similar to the [os.run](#os-run) interface, the only difference is that when this interface executes the shell program, it has the output output, which is used in general debugging.
 
 ###### os.execv
 
-- 回显运行原生shell命令，带参数列表
+- Echo running native shell commands with parameter list
 
-跟[os.execv](#os-execv)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
+Similar to [os.execv](#os-execv), just the way to pass parameters is passed through the parameter list, not the string command, for example:
 
 ```lua
 os.execv("echo", {"hello", "xmake!"})
@@ -5909,11 +5911,11 @@ os.execv("echo", {"hello", "xmake!"})
 
 ###### os.iorun
 
-- 安静运行原生shell命令并获取输出内容
+- Quietly running native shell commands and getting output
 
-与[os.run](#os-run)接口类似，唯一的不同是，此接口执行shell程序后，会获取shell程序的执行结果，相当于重定向输出。
+Similar to the [os.run](#os-run) interface, the only difference is that after executing the shell program, this interface will get the execution result of the shell program, which is equivalent to redirecting the output.
 
-可同时获取`stdout`, `stderr`中的内容，例如：
+You can get the contents of `stdout`, `stderr` at the same time, for example:
 
 ```lua
 local outdata, errdata = os.iorun("echo hello xmake!")
@@ -5921,9 +5923,9 @@ local outdata, errdata = os.iorun("echo hello xmake!")
 
 ###### os.iorunv
 
-- 安静运行原生shell命令并获取输出内容，带参数列表
+- Run the native shell command quietly and get the output with a list of parameters
 
-跟[os.iorunv](#os-iorunv)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
+Similar to [os.iorunv](#os-iorunv), just the way to pass arguments is passed through the argument list, not the string command, for example:
 
 ```lua
 local result, errors = os.iorunv("echo", {"hello", "xmake!"})
@@ -5931,7 +5933,7 @@ local result, errors = os.iorunv("echo", {"hello", "xmake!"})
 
 ###### os.getenv
 
-- 获取系统环境变量
+- Get system environment variables
 
 ```lua
 print(os.getenv("PATH"))
@@ -5939,7 +5941,7 @@ print(os.getenv("PATH"))
 
 ###### os.setenv
 
-- 设置系统环境变量
+- Set system environment variables
 
 ```lua
 os.setenv("HOME", "/tmp/")
@@ -5947,15 +5949,15 @@ os.setenv("HOME", "/tmp/")
 
 ###### os.tmpdir
 
-- 获取临时目录
+- Get temporary directory
 
-跟[$(tmpdir)](#var-tmpdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+Consistent with the result of [$(tmpdir)](#var-tmpdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
 ```lua
 print(path.join(os.tmpdir(), "file.txt"))
 ```
 
-等价于：
+Equivalent to:
 
 ```lua
 print("$(tmpdir)/file.txt"))
@@ -5963,21 +5965,21 @@ print("$(tmpdir)/file.txt"))
 
 ###### os.tmpfile
 
-- 获取临时文件路径
+- Get temporary file path
 
-用于获取生成一个临时文件路径，仅仅是个路径，文件需要自己创建。
+Used to get a temporary file path, just a path, the file needs to be created by itself.
 
 ###### os.curdir
 
-- 获取当前目录路径
+- Get the current directory path
 
-跟[$(curdir)](#var-curdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+Consistent with the result of [$(curdir)](#var-curdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
-用法参考：[os.tmpdir](#os-tmpdir)。
+Usage reference: [os.tmpdir] (#os-tmpdir).
 
 ###### os.filesize
 
-- 获取文件大小
+- Get file size
 
 ```lua
 print(os.filesize("/tmp/a"))
@@ -5985,60 +5987,60 @@ print(os.filesize("/tmp/a"))
 
 ###### os.scriptdir
 
-- 获取当前描述脚本的路径
+- Get the path of the current description script
 
-跟[$(scriptdir)](#var-scriptdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+Consistent with the result of [$(scriptdir)](#var-scriptdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
-用法参考：[os.tmpdir](#os-tmpdir)。
+Usage reference: [os.tmpdir] (#os-tmpdir).
 
 ###### os.programdir
 
-- 获取xmake安装主程序脚本目录
+- Get the xmake installation main program script directory
 
-跟[$(programdir)](#var-programdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+Consistent with the result of [$(programdir)](#var-programdir), it is just a direct get returned to a variable, which can be maintained with subsequent strings.
 
 ###### os.projectdir
 
-- 获取工程主目录
+- Get the project home directory
 
-跟[$(projectdir)](#var-projectdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+Consistent with the result of [$(projectdir)](#var-projectdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
 ###### os.arch
 
-- 获取当前系统架构
+- Get current system architecture
 
-也就是当前主机系统的默认架构，例如我在`linux x86_64`上执行xmake进行构建，那么返回值是：`x86_64`
+That is the default architecture of the current host system, for example, I execute xmake on `linux x86_64` to build, then the return value is: `x86_64`
 
 ###### os.host
 
-- 获取当前主机的操作系统
+- Get the operating system of the current host
 
-跟[$(host)](#var-host)结果一致，例如我在`linux x86_64`上执行xmake进行构建，那么返回值是：`linux`
+Consistent with the result of [$(host)](#var-host), for example, if I execute xmake on `linux x86_64` to build, the return value is: `linux`
 
 ##### io
 
-io操作模块，扩展了lua内置的io模块，提供更多易用的接口。
+The io operation module extends lua's built-in io module to provide more easy-to-use interfaces.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [io.open](#io-open)                             | 打开文件用于读写                             | >= 2.0.1 |
-| [io.load](#io-load)                             | 从指定路径文件反序列化加载所有table内容      | >= 2.0.1 |
-| [io.save](#io-save)                             | 序列化保存所有table内容到指定路径文件        | >= 2.0.1 |
-| [io.readfile](#io.readfile)                     | 从指定路径文件读取所有内容                   | >= 2.1.3 |
-| [io.writefile](#io.writefile)                   | 写入所有内容到指定路径文件                   | >= 2.1.3 |
-| [io.gsub](#io-gsub)                             | 全文替换指定路径文件的内容                   | >= 2.0.1 |
-| [io.tail](#io-tail)                             | 读取和显示文件的尾部内容                     | >= 2.0.1 |
-| [io.cat](#io-cat)                               | 读取和显示文件的所有内容                     | >= 2.0.1 |
-| [io.print](#io-print)                           | 带换行格式化输出内容到文件                   | >= 2.0.1 |
-| [io.printf](#io-printf)                         | 无换行格式化输出内容到文件                   | >= 2.0.1 |
+| [io.open](#io-open) | Open file for reading and writing | >= 2.0.1 |
+| [io.load](#io-load) | De-serialize all table contents from the specified path file | >= 2.0.1 |
+| [io.save](#io-save) | Serialize all table contents to the specified path file | >= 2.0.1 |
+| [io.readfile](#io.readfile) | Read everything from the specified path file | >= 2.1.3 |
+| [io.writefile](#io.writefile) | Write everything to the specified path file | >= 2.1.3 |
+| [io.gsub](#io-gsub) | Full text replaces the contents of the specified path file | >= 2.0.1 |
+| [io.tail](#io-tail) | Read and display the tail of the file | >= 2.0.1 |
+| [io.cat](#io-cat) | Read and display all contents of a file | >= 2.0.1 |
+| [io.print](#io-print) | Formatting output with a line feed to a file | >= 2.0.1 |
+| [io.printf](#io-printf) | No line formatted output to file | >= 2.0.1 |
 
 ###### io.open
 
-- 打开文件用于读写
+- Open file for reading and writing
 
-这个是属于lua的原生接口，详细使用可以参看lua的官方文档：[The Complete I/O Model](https://www.lua.org/pil/21.2.html)
+This is a native interface for lua. For detailed usage, see Lua's official documentation: [The Complete I/O Model] (https://www.lua.org/pil/21.2.html)
 
-如果要读取文件所有内容，可以这么写：
+If you want to read all the contents of the file, you can write:
 
 ```lua
 local file = io.open("$(tmpdir)/file.txt", "r")
@@ -6048,59 +6050,59 @@ if file then
 end
 ```
 
-或者可以使用[io.readfile](#io.readfile)更加快速地读取。
+Or you can read it more quickly using [io.readfile](#io.readfile).
 
-如果要写文件，可以这么操作：
+If you want to write a file, you can do this:
 
 ```lua
--- 打开文件：w 为写模式, a 为追加写模式
+-- Open file: w is write mode, a is append write mode
 local file = io.open("xxx.txt", "w")
 if file then
 
-    -- 用原生的lua接口写入数据到文件，不支持格式化，无换行，不支持内置变量
+    -- Write data to file with native lua interface, does not support formatting, no line breaks, does not support built-in variables
     file:write("hello xmake\n")
 
-    -- 用xmake扩展的接口写入数据到文件，支持格式化，无换行，不支持内置变量
+    -- Write data to file with xmake extended interface, support formatting, no line breaks, no built-in variables
     file:writef("hello %s\n", "xmake")
 
-    -- 使用xmake扩展的格式化传参写入一行，带换行符，并且支持内置变量
+    -- Use xmake extended formatted parameters to write to one line, with line breaks, and support for built-in variables
     file:print("hello %s and $(buildir)", "xmake")
 
-    -- 使用xmake扩展的格式化传参写入一行，无换行符，并且支持内置变量
+    -- Write a line using the xmake extended formatted arguments, no line breaks, and support for built-in variables
     file:printf("hello %s and $(buildir) \n", "xmake")
 
-    -- 关闭文件
+    -- Close the file
     file:close()
 end
 ```
 
 ###### io.load
 
--  从指定路径文件反序列化加载所有table内容
+- Load all table contents from the specified path file deserialization
 
-可以从文件中加载序列化好的table内容，一般与[io.save](#io-save)配合使用，例如：
+You can load serialized table contents from a file, generally used with [io.save](#io-save), for example:
 
 ```lua
--- 加载序列化文件的内容到table
+-- Load the contents of the serialized file to the table
 local data = io.load("xxx.txt")
 if data then
 
-    -- 在终端中dump打印整个table中内容，格式化输出
+    -- Dump prints the contents of the entire table in the terminal, formatting the output
     table.dump(data)
 end
 ```
 
 ###### io.save
 
-- 序列化保存所有table内容到指定路径文件 
+- Serialize all table contents to the specified path file
 
-可以序列化存储table内容到指定文件，一般与[io.load](#io-load)配合使用，例如：
+You can serialize the contents of the table to the specified file, generally used in conjunction with [io.load](#io-load), for example:
 
 ```lua
 io.save("xxx.txt", {a = "a", b = "b", c = "c"})
 ```
 
-存储结果为：
+The result of the storage is:
 
 ```
 {
@@ -6112,9 +6114,9 @@ io.save("xxx.txt", {a = "a", b = "b", c = "c"})
 
 ###### io.readfile
 
-- 从指定路径文件读取所有内容
+- Read everything from the specified path file
 
-可在不打开文件的情况下，直接读取整个文件的内容，更加的方便，例如：
+It is more convenient to directly read the contents of the entire file without opening the file, for example:
 
 ```lua
 local data = io.readfile("xxx.txt")
@@ -6122,9 +6124,9 @@ local data = io.readfile("xxx.txt")
 
 ###### io.writefile
 
-- 写入所有内容到指定路径文件
+- Write all content to the specified path file
 
-可在不打开文件的情况下，直接写入整个文件的内容，更加的方便，例如：
+It is more convenient to directly write the contents of the entire file without opening the file, for example:
 
 ```lua
 io.writefile("xxx.txt", "all data")
@@ -6132,31 +6134,31 @@ io.writefile("xxx.txt", "all data")
 
 ###### io.gsub
 
-- 全文替换指定路径文件的内容
+- Full text replaces the contents of the specified path file
 
-类似[string.gsub](#string-gsub)接口，全文模式匹配替换内容，不过这里是直接操作文件，例如：
+Similar to the [string.gsub](#string-gsub) interface, the full-text pattern matches the replacement content, but here is the direct operation file, for example:
 
 ```lua
--- 移除文件所有的空白字符
+-- Remove all whitespace characters from the file
 io.gsub("xxx.txt", "%s+", "")
 ```
 
 ###### io.tail
 
-- 读取和显示文件的尾部内容
+- Read and display the tail content of the file
 
-读取文件尾部指定行数的数据，并显示，类似`cat xxx.txt | tail -n 10`命令，例如：
+Reads the data of the specified number of lines at the end of the file and displays a command like `cat xxx.txt | tail -n 10`, for example:
 
 ```lua
--- 显示文件最后10行内容
+-- Display the last 10 lines of the file
 io.tail("xxx.txt", 10)
 ```
 
 ###### io.cat
 
-- 读取和显示文件的所有内容
+- read and display all contents of the file
 
-读取文件的所有内容并显示，类似`cat xxx.txt`命令，例如：
+Read all the contents of the file and display it, similar to the `cat xxx.txt` command, for example:
 
 ```lua
 io.cat("xxx.txt")
@@ -6164,9 +6166,9 @@ io.cat("xxx.txt")
 
 ###### io.print
 
-- 带换行格式化输出内容到文件
+- Formatted output content to file with newline
 
-直接格式化传参输出一行字符串到文件，并且带换行，例如：
+Directly format the passed parameter to output a line of string to the file with a line break, for example:
 
 ```lua
 io.print("xxx.txt", "hello %s!", "xmake")
@@ -6174,9 +6176,9 @@ io.print("xxx.txt", "hello %s!", "xmake")
 
 ###### io.printf
 
-- 无换行格式化输出内容到文件
+- Formatted output to file without line breaks
 
-直接格式化传参输出一行字符串到文件，不带换行，例如：
+Directly format the passed parameter to output a line of string to the file without a line break, for example:
 
 ```lua
 io.printf("xxx.txt", "hello %s!\n", "xmake")
@@ -6184,39 +6186,39 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 
 ##### path
 
-路径操作模块，实现跨平台的路径操作，这是xmake的一个自定义的模块。
+The path operation module implements cross-platform path operations, which is a custom module of xmake.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [path.join](#path-join)                         | 拼接路径                                     | >= 2.0.1 |
-| [path.translate](#path-translate)               | 转换路径到当前平台的路径风格                 | >= 2.0.1 |
-| [path.basename](#path-basename)                 | 获取路径最后不带后缀的文件名                 | >= 2.0.1 |
-| [path.filename](#path-filename)                 | 获取路径最后带后缀的文件名                   | >= 2.0.1 |
-| [path.extension](#path-extension)               | 获取路径的后缀名                             | >= 2.0.1 |
-| [path.directory](#path-directory)               | 获取路径最后的目录名                         | >= 2.0.1 |
-| [path.relative](#path-relative)                 | 转换成相对路径                               | >= 2.0.1 |
-| [path.absolute](#path-absolute)                 | 转换成绝对路径                               | >= 2.0.1 |
-| [path.is_absolute](#path-is_absolute)           | 判断是否为绝对路径                           | >= 2.0.1 |
+| [path.join](#path-join) | Stitching Path | >= 2.0.1 |
+| [path.translate](#path-translate) | Convert path to the path style of the current platform | >= 2.0.1 |
+| [path.basename](#path-basename) | Get the file name with no suffix at the end | >= 2.0.1 |
+| [path.filename](#path-filename) | Get the file name with the last suffix of the path | >= 2.0.1 |
+| [path.extension](#path-extension) | Get the suffix of the path | >= 2.0.1 |
+| [path.directory](#path-directory) | Get the last directory name of the path | >= 2.0.1 |
+| [path.relative](#path-relative) | Convert to relative path | >= 2.0.1 |
+| [path.absolute](#path-absolute) | Convert to Absolute Path | >= 2.0.1 |
+| [path.is_absolute](#path-is_absolute) | Determine if it is an absolute path | >= 2.0.1 |
 
 ###### path.join
 
-- 拼接路径
+- Stitching path
 
-将多个路径项进行追加拼接，由于`windows/unix`风格的路径差异，使用api来追加路径更加跨平台，例如：
+Adding multiple path items by splicing. Due to the path difference of `windows/unix` style, using api to append paths is more cross-platform, for example:
 
 ```lua
 print(path.join("$(tmpdir)", "dir1", "dir2", "file.txt"))
 ```
 
-上述拼接在unix上相当于：`$(tmpdir)/dir1/dir2/file.txt`，而在windows上相当于：`$(tmpdir)\\dir1\\dir2\\file.txt`
+The above splicing on Unix is ​​equivalent to: `$(tmpdir)/dir1/dir2/file.txt`, and on Windows is equivalent to: `$(tmpdir)\\dir1\\dir2\\file.txt`
 
-如果觉得这样很繁琐，不够清晰简洁，可以使用：[path.translate](path-translate)方式，格式化转换路径字符串到当前平台支持的格式。
+If you find this cumbersome and not clear enough, you can use: [path.translate](path-translate) to format the conversion path string to the format supported by the current platform.
 
 ###### path.translate
 
-- 转换路径到当前平台的路径风格
+- Convert path to the path style of the current platform
 
-格式化转化指定路径字符串到当前平台支持的路径风格，同时支持`windows/unix`格式的路径字符串参数传入，甚至混合传入，例如：
+Formatting converts the specified path string to the path style supported by the current platform, and supports the path string parameter of the `windows/unix` format to be passed in, even mixed, such as:
 
 ```lua
 print(path.translate("$(tmpdir)/dir/file.txt"))
@@ -6224,202 +6226,200 @@ print(path.translate("$(tmpdir)\\dir\\file.txt"))
 print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
 ```
 
-上面这三种不同格式的路径字符串，经过`translate`规范化后，就会变成当前平台支持的格式，并且会去掉冗余的路径分隔符。
+The path strings of the above three different formats, after being standardized by `translate`, will become the format supported by the current platform, and the redundant path separator will be removed.
 
 ###### path.basename
 
-- 获取路径最后不带后缀的文件名
+- Get the file name with no suffix at the end of the path
 
 ```lua
 print(path.basename("$(tmpdir)/dir/file.txt"))
 ```
 
-显示结果为：`file`
+The result is: `file`
 
 ###### path.filename
 
-- 获取路径最后带后缀的文件名
+- Get the file name with the last suffix of the path
 
 ```lua
 print(path.filename("$(tmpdir)/dir/file.txt"))
 ```
 
-显示结果为：`file.txt`
+The result is: `file.txt`
 
 ###### path.extension
 
-- 获取路径的后缀名
+- Get the suffix of the path
 
 ```lua
 print(path.extensione("$(tmpdir)/dir/file.txt"))
 ```
 
-显示结果为：`.txt`
+The result is: `.txt`
 
 ###### path.directory
 
-- 获取路径最后的目录名
-
-```lua
-print(path.directory("$(tmpdir)/dir/file.txt"))
+- Get the last directory name of the path```lua
+Print(path.directory("$(tmpdir)/dir/file.txt"))
 ```
 
-显示结果为：`dir`
+The result is: `dir`
 
 ###### path.relative
 
-- 转换成相对路径
+- Convert to relative path
 
 ```lua
 print(path.relative("$(tmpdir)/dir/file.txt", "$(tmpdir)"))
 ```
 
-显示结果为：`dir/file.txt`
+The result is: `dir/file.txt`
 
-第二个参数是指定相对的根目录，如果不指定，则默认相对当前目录：
+The second parameter is to specify the relative root directory. If not specified, the default is relative to the current directory:
 
 ```lua
 os.cd("$(tmpdir)")
 print(path.relative("$(tmpdir)/dir/file.txt"))
 ```
 
-这样结果是一样的。
+The result is the same.
 
 ###### path.absolute
 
-- 转换成绝对路径
+- Convert to absolute path
 
 ```lua
 print(path.absolute("dir/file.txt", "$(tmpdir)"))
 ```
 
-显示结果为：`$(tmpdir)/dir/file.txt`
+The result is: `$(tmpdir)/dir/file.txt`
 
-第二个参数是指定相对的根目录，如果不指定，则默认相对当前目录：
+The second parameter is to specify the relative root directory. If not specified, the default is relative to the current directory:
 
 ```lua
 os.cd("$(tmpdir)")
 print(path.absolute("dir/file.txt"))
 ```
 
-这样结果是一样的。
+The result is the same.
 
 ###### path.is_absolute
 
-- 判断是否为绝对路径
+- Determine if it is an absolute path
 
 ```lua
 if path.is_absolute("/tmp/file.txt") then
-    -- 如果是绝对路径
+    -- if it is an absolute path
 end
 ```
 
 ##### table
 
-table属于lua原生提供的模块，对于原生接口使用可以参考：[lua官方文档](http://www.lua.org/manual/5.1/manual.html#5.5)
+Table belongs to the module provided by Lua native. For the native interface, you can refer to: [lua official document] (http://www.lua.org/manual/5.1/manual.html#5.5)
 
-xmake中对其进行了扩展，增加了一些扩展接口：
+It has been extended in xmake to add some extension interfaces:
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [table.join](#table-join)                       | 合并多个table并返回                          | >= 2.0.1 |
-| [table.join2](#table-join2)                     | 合并多个table到第一个table                   | >= 2.0.1 |
-| [table.dump](#table-dump)                       | 输出table的所有内容                          | >= 2.0.1 |
-| [table.unique](#table-unique)                   | 对table中的内容进行去重                      | >= 2.0.1 |
-| [table.slice](#table-slice)                     | 获取table的切片                              | >= 2.0.1 |
+| [table.join](#table-join) | Merge multiple tables and return | >= 2.0.1 |
+| [table.join2](#table-join2) | Merge multiple tables into the first table | >= 2.0.1 |
+| [table.dump](#table-dump) | Output all contents of table | >= 2.0.1 |
+| [table.unique](#table-unique) | Deduplicate the contents of the table | >= 2.0.1 |
+| [table.slice](#table-slice) | Get the slice of the table | >= 2.0.1 |
 
 ###### table.join
 
-- 合并多个table并返回
+- Merge multiple tables and return
 
-可以将多个table里面的元素进行合并后，返回到一个新的table中，例如：
+You can merge the elements in multiple tables and return to a new table, for example:
 
 ```lua
 local newtable = table.join({1, 2, 3}, {4, 5, 6}, {7, 8, 9})
 ```
 
-结果为：`{1, 2, 3, 4, 5, 6, 7, 8, 9}`
+The result is: `{1, 2, 3, 4, 5, 6, 7, 8, 9}`
 
-并且它也支持字典的合并：
+And it also supports the merging of dictionaries:
 
 ```lua
 local newtable = table.join({a = "a", b = "b"}, {c = "c"}, {d = "d"})
 ```
 
-结果为：`{a = "a", b = "b", c = "c", d = "d"}`
+The result is: `{a = "a", b = "b", c = "c", d = "d"}`
 
 ###### table.join2
 
-- 合并多个table到第一个table
+- Combine multiple tables into the first table
 
-类似[table.join](#table.join)，唯一的区别是，合并的结果放置在第一个参数中，例如：
+Similar to [table.join](#table.join), the only difference is that the result of the merge is placed in the first argument, for example:
 
 ```lua
 local t = {0, 9}
 table.join2(t, {1, 2, 3})
 ```
 
-结果为：`t = {0, 9, 1, 2, 3}`
+The result is: `t = {0, 9, 1, 2, 3}`
 
 ###### table.dump
 
-- 输出table的所有内容 
+- Output all contents of the table
 
-递归格式化打印table中的所有内容，一般用于调试， 例如：
+Recursively format all the contents of the printed table, generally used for debugging, for example:
 
 ```lua
 table.dump({1, 2, 3})
 ```
 
-结果为：`{1, 2, 3}`
+The result is: `{1, 2, 3}`
 
 ###### table.unique
 
-- 对table中的内容进行去重
+- Deduplicate the contents of the table
 
-去重table的元素，一般用于数组table，例如：
+To de-table elements, generally used in array tables, for example:
 
 ```lua
 local newtable = table.unique({1, 1, 2, 3, 4, 4, 5})
 ```
 
-结果为：`{1, 2, 3, 4, 5}`
+The result is: `{1, 2, 3, 4, 5}`
 
 ###### table.slice
 
-- 获取table的切片
+- Get the slice of the table
 
-用于提取数组table的部分元素，例如：
+Used to extract some elements of an array table, for example:
 
 ```lua
--- 提取第4个元素后面的所有元素，结果：{4, 5, 6, 7, 8, 9}
+-- Extract all elements after the 4th element, resulting in: {4, 5, 6, 7, 8, 9}
 table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4)
 
--- 提取第4-8个元素，结果：{4, 5, 6, 7, 8}
+-- Extract the 4th-8th element and the result: {4, 5, 6, 7, 8}
 table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8)
 
--- 提取第4-8个元素，间隔步长为2，结果：{4, 6, 8}
+-- Extract the 4th-8th element with an interval of 2, resulting in: {4, 6, 8}
 table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 ```
 
 ##### string
 
-字符串模块为lua原生自带的模块，具体使用见：[lua官方手册](http://www.lua.org/manual/5.1/manual.html#5.4)
+The string module is a native module of lua. For details, see: [lua official manual] (http://www.lua.org/manual/5.1/manual.html#5.4)
 
-xmake中对其进行了扩展，增加了一些扩展接口：
+It has been extended in xmake to add some extension interfaces:
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [string.startswith](#string-startswith)         | 判断字符串开头是否匹配                       | >= 1.0.1 |
-| [string.endswith](#string-endswith)             | 判断字符串结尾是否匹配                       | >= 1.0.1 |
-| [string.split](#string-split)                   | 分割字符串                                   | >= 1.0.1 |
-| [string.trim](#string-trim)                     | 去掉字符串左右空白字符                       | >= 1.0.1 |
-| [string.ltrim](#string-ltrim)                   | 去掉字符串左边空白字符                       | >= 1.0.1 |
-| [string.rtrim](#string-rtrim)                   | 去掉字符串右边空白字符                       | >= 1.0.1 |
+| [string.startswith](#string-startswith) | Determine if the beginning of the string matches | >= 1.0.1 |
+| [string.endswith](#string-endswith) | Determine if the end of the string matches | >= 1.0.1 |
+| [string.split](#string-split) | Split String | >= 1.0.1 |
+| [string.trim](#string-trim) | Remove the left and right whitespace characters | >= 1.0.1 |
+| [string.ltrim](#string-ltrim) | Remove the whitespace character to the left of the string | >= 1.0.1 |
+| [string.rtrim](#string-rtrim) | Remove the whitespace character to the right of the string | >= 1.0.1 |
 
 ###### string.startswith
 
-- 判断字符串开头是否匹配
+- Determine if the beginning of the string matches
 
 ```lua
 local s = "hello xmake"
@@ -6430,7 +6430,7 @@ end
 
 ###### string.endswith
 
-- 判断字符串结尾是否匹配
+- Determine if the end of the string matches
 
 ```lua
 local s = "hello xmake"
@@ -6441,151 +6441,151 @@ end
 
 ###### string.split
 
-- 分割字符串
+- Split string
 
-通过指定的分隔符进行字符串分割，分隔符可以是：字符，字符串、模式匹配字符串，例如：
+The string is separated by the specified separator. The separator can be: character, string, pattern matching string, for example:
 
 ```lua
-local s = "hello     xmake!"
+local s = "hello xmake!"
 s:split("%s+")
 ```
 
-根据连续空白字符进行分割，结果为：`hello`, `xmake!`
+Split according to consecutive whitespace characters, the result is: `hello`, `xmake!`
 
 ```lua
 local s = "hello,xmake:123"
 s:split("[,:]")
 ```
 
-上面的代码根据`,`或者`:`字符进行分割，结果为：`hello`, `xmake`, `123`
+The above code is split according to the `, ` or `:` characters. The result is: `hello`, `xmake`, `123`
 
 ###### string.trim
 
-- 去掉字符串左右空白字符
+- Remove the left and right whitespace characters of the string
 
 ```lua
 string.trim("    hello xmake!    ")
 ```
 
-结果为："hello xmake!"
+The result is: "hello xmake!"
 
 ###### string.ltrim
 
-- 去掉字符串左边空白字符
+- Remove the whitespace character to the left of the string
 
 ```lua
 string.ltrim("    hello xmake!    ")
 ```
 
-结果为："hello xmake!    "
+The result is: "hello xmake!    "
 
 ###### string.rtrim
 
-- 去掉字符串右边空白字符
+- Remove the whitespace character to the right of the string
 
 ```lua
 string.rtrim("    hello xmake!    ")
 ```
 
-结果为："    hello xmake!"
+The result is: "    hello xmake!"
 
 ##### process
 
-这个是xmake扩展的进程控制模块，用于更加灵活的控制进程，比起：[os.run](#os-run)系列灵活性更高，也更底层。
+This is the xmake extension's process control module for more flexible control of the process, compared to: [os.run] (#os-run) series is more flexible and lower level.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [process.open](#process-open)                   | 打开进程                                     | >= 2.0.1 |
-| [process.wait](#process-wait)                   | 等待进程结束                                 | >= 2.0.1 |
-| [process.close](#process-close)                 | 关闭进程对象                                 | >= 2.0.1 |
-| [process.waitlist](#process-waitlist)           | 同时等待多个进程                             | >= 2.0.1 |
+| [process.open](#process-open) | Open Process | >= 2.0.1 |
+| [process.wait](#process-wait) | Waiting for the process to end | >= 2.0.1 |
+| [process.close](#process-close) | Close Process Object | >=2.0.1 |
+| [process.waitlist](#process-waitlist) | Waiting for multiple processes at the same time | >= 2.0.1 |
 
 ###### process.open
 
-- 打开进程
+- Open the process
 
-通过路径创建运行一个指定程序，并且返回对应的进程对象：
+Run a specified program through path creation and return the corresponding process object:
 
 ```lua
--- 打开进程，后面两个参数指定需要捕获的stdout, stderr文件路径
+-- Open the process, the last two parameters specify the stdout to be captured, the stderr file path
 local proc = process.open("echo hello xmake!", outfile, errfile)
 if proc then
 
-    -- 等待进程执行完成
+    -- Waiting for the process to complete
     --
-    -- 参数二为等待超时，-1为永久等待，0为尝试获取进程状态
-    -- 返回值waitok为等待状态：1为等待进程正常结束，0为进程还在运行中，-1位等待失败
-    -- 返回值status为，等待进程结束后，进程返回的状态码
+    -- Parameter 2 is waiting for timeout, -1 is permanent waiting, 0 is trying to get process status
+    -- Return value waitok is wait state: 1 is waiting for the process to end normally, 0 is the process is still running, -1 bit is waiting to fail
+    -- The return value status is the status code returned by the process after waiting for the process to end.
     local waitok, status = process.wait(proc, -1)
 
-    -- 释放进程对象
+    -- release process object
     process.close(proc)
 end
 ```
 
 ###### process.wait
 
-- 等待进程结束
+- Waiting for the process to end
 
-具体使用见：[process.open](#process-open)
+For specific use, see: [process.open](#process-open)
 
 ###### process.close
 
-- 关闭进程对象
+- close the process object
 
-具体使用见：[process.open](#process-open)
+For specific use, see: [process.open](#process-open)
 
 ###### process.waitlist
 
-- 同时等待多个进程
+- Waiting for multiple processes at the same time
 
 ```lua
--- 第二个参数是等待超时，返回进程状态列表
+-- The second parameter is waiting for a timeout, returning a list of process states
 for _, procinfo in ipairs(process.waitlist(procs, -1)) do
-    
-    -- 每个进程的：进程对象、进程pid、进程结束状态码
-    local proc      = procinfo[1]
-    local procid    = procinfo[2]
-    local status    = procinfo[3]
+
+    -- For each process: process object, process pid, process end status code
+    local proc   = procinfo[1]
+    local procid = procinfo[2]
+    local status = procinfo[3]
 
 end
 ```
 
 ##### coroutine
 
-协程模块是lua原生自带的模块，具使用见：[lua官方手册](http://www.lua.org/manual/5.1/manual.html#5.2)
+The coroutine module is a native module of lua. For use, see: [lua official manual] (http://www.lua.org/manual/5.1/manual.html#5.2)
 
 #### Extension Modules
 
-所有扩展模块的使用，都需要通过[import](#import)接口，进行导入后才能使用。
+All expansion modules need to be imported through the [import](#import) interface.
 
 ##### core.base.option
 
-一般用于获取xmake命令参数选项的值，常用于插件开发。
+Commonly used to get the value of the xmake command parameter option, often used for plugin development.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [option.get](#option-get)                       | 获取参数选项值                               | >= 2.0.1 |
+| [option.get](#option-get) | Get Parameter Option Value | >= 2.0.1 |
 
 ###### option.get
 
-- 获取参数选项值
+- Get parameter option values
 
-在插件开发中用于获取参数选项值，例如：
+Used to get parameter option values ​​in plugin development, for example:
 
 ```lua
--- 导入选项模块
+-- Import option module
 import("core.base.option")
 
--- 插件入口函数
+-- Plugin entry function
 function main(...)
     print(option.get("info"))
 end
 ```
 
-上面的代码获取hello插件，执行：`xmake hello --info=xxxx` 命令时候传入的`--info=`选项的值，并显示：`xxxx`
+The above code gets the hello plugin and executes: `xmake hello --info=xxxx` The value of the `--info=` option passed in the command, and shows: `xxxx`
 
-对于非main入口的task任务或插件，可以这么使用：
+For task tasks or plugins that are not a main entry, you can use this:
 
 ```lua
 task("hello")
@@ -6597,42 +6597,42 @@ task("hello")
 
 ##### core.base.global
 
-用于获取xmake全局的配置信息，也就是`xmake g|global --xxx=val` 传入的参数选项值。
+Used to get the configuration information of xmake global, that is, the value of the parameter option passed in `xmake g|global --xxx=val`.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [global.get](#global-get)                       | 获取指定配置值                               | >= 2.0.1 |
-| [global.load](#global-load)                     | 加载配置                                     | >= 2.0.1 |
-| [global.directory](#global-directory)           | 获取全局配置信息目录                         | >= 2.0.1 |
-| [global.dump](#global-dump)                     | 打印输出所有全局配置信息                     | >= 2.0.1 |
+| [global.get](#global-get) | Get the specified configuration value | >= 2.0.1 |
+| [global.load](#global-load) | Load Configuration | >= 2.0.1 |
+| [global.directory](#global-directory) | Get Global Configuration Information Directory | >= 2.0.1 |
+| [global.dump](#global-dump) | Print out all global configuration information | >= 2.0.1 |
 
 <p class="tip">
-2.1.5版本之前为`core.project.global`。
+Prior to version 2.1.5, it was `core.project.global`.
 </p>
 
 ###### global.get
 
-- 获取指定配置值
+- Get the specified configuration value
 
-类似[config.get](#config-get)，唯一的区别就是这个是从全局配置中获取。
+Similar to [config.get](#config-get), the only difference is that this is obtained from the global configuration.
 
 ###### global.load
 
-- 加载配置
+- Load configuration
 
-类似[global.get](#global-get)，唯一的区别就是这个是从全局配置中加载。
+Similar to [global.get](#global-get), the only difference is that this is loaded from the global configuration.
 
 ###### global.directory
 
-- 获取全局配置信息目录
+- Get the global configuration information directory
 
-默认为`~/.config`目录。
+The default is the `~/.config` directory.
 
 ###### global.dump
 
-- 打印输出所有全局配置信息
+- Print out all global configuration information
 
-输出结果如下：
+The output is as follows:
 
 ```lua
 {
@@ -6644,21 +6644,21 @@ task("hello")
 
 ##### core.base.task
 
-用于任务操作，一般用于在自定义脚本中、插件任务中，调用运行其他task任务。
+Used for task operations, generally used to call other task tasks in custom scripts and plug-in tasks.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [task.run](#task-run)                           | 运行指定任务                                 | >= 2.0.1 |
+| [task.run](#task-run) | Run the specified task | >= 2.0.1 |
 
 <p class="tip">
-2.1.5版本之前为`core.project.task`。
+Prior to version 2.1.5, it was `core.project.task`.
 </p>
 
 ###### task.run
 
-- 运行指定任务
+- Run the specified task
 
-用于在自定义脚本、插件任务中运行[task](#task)定义的任务或插件，例如：
+Used to run tasks or plugins defined by [task](#task) in custom scripts, plugin tasks, for example:
 
 ```lua
 task("hello")
@@ -6669,15 +6669,15 @@ task("hello")
 target("demo")
     on_clean(function(target)
 
-        -- 导入task模块
+        -- Import task module
         import("core.base.task")
 
-        -- 运行这个hello task
+        -- Run this hello task
         task.run("hello")
     end)
 ```
 
-我们还可以在运行任务时，增加参数传递，例如：
+We can also increase parameter passing when running a task, for example:
 
 ```lua
 task("hello")
@@ -6688,94 +6688,94 @@ task("hello")
 target("demo")
     on_clean(function(target)
 
-        -- 导入task
+        -- Import task
         import("core.base.task")
 
-        -- {} 这个是给第一种选项传参使用，这里置空，这里在最后面传入了两个参数：arg1, arg2
+        -- {} This is used for the first option, which is set to null, where two arguments are passed in the last: arg1, arg2
         task.run("hello", {}, "arg1", "arg2")
     end)
 ```
 
-对于`task.run`的第二个参数，用于传递命令行菜单中的选项，而不是直接传入`function (arg, ...)`函数入口中，例如：
+The second argument to `task.run` is used to pass options from the command line menu instead of passing directly into the `function (arg, ...)` function entry, for example:
 
 ```lua
--- 导入task
+-- Import task
 import("core.base.task")
 
--- 插件入口
+-- Plugin entry
 function main(...)
 
-    -- 运行内置的xmake配置任务，相当于：xmake f|config --plat=iphoneos --arch=armv7
+    -- Run the built-in xmake configuration task, equivalent to: xmake f|config --plat=iphoneos --arch=armv7
     task.run("config", {plat="iphoneos", arch="armv7"})
 emd
 ```
 
 ##### core.tool.linker
 
-链接器相关操作，常用于插件开发。
+Linker related operations, often used for plugin development.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [linker.link](#linker-link)                     | 执行链接                                     | >= 2.0.1 |
-| [linker.linkcmd](#linker-linkcmd)               | 获取链接命令行                               | >= 2.0.1 |
-| [linker.linkargv](#linker-linkargv)             | 获取链接命令行列表                           | >= 2.1.5 |
-| [linker.linkflags](#linker-linkflags)           | 获取链接选项                                 | >= 2.0.1 |
-| [linker.has_flags](#linker-has_flags)           | 判断指定链接选项是否支持                     | >= 2.1.5 |
+| [linker.link](#linker-link) | Execute Link | >= 2.0.1 |
+| [linker.linkcmd](#linker-linkcmd) | Get Link Command Line | >= 2.0.1 |
+| [linker.linkargv](#linker-linkargv) | Get Link Command Line List | >= 2.1.5 |
+| [linker.linkflags](#linker-linkflags) | Get LinksOptions | >= 2.0.1 |
+| [linker.has_flags](#linker-has_flags) | Determine if the specified link option is supported | >= 2.1.5 |
 
 ###### linker.link
 
-- 执行链接
+- Execute link
 
-针对target，链接指定对象文件列表，生成对应的目标文件，例如：
+For the target, link the specified object file list to generate the corresponding target file, for example:
 
 ```lua
 linker.link("binary", "cc", {"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
 ```
 
-其中[target](#target)，为工程目标，这里传入，主要用于获取target特定的链接选项，具体如果获取工程目标对象，见：[core.project.project](#core-project-project)
+Where [target](#target) is the project target, here is passed in, mainly used to get the target-specific link options. For the project target object, see: [core.project.project](#core-project-project )
 
-当然也可以不指定target，例如：
+Of course, you can also not specify the target, for example:
 
 ```lua
 linker.link("binary", "cc", {"a.o", "b.o", "c.o"}, "/tmp/targetfile")
 ```
 
-第一个参数指定链接类型，目前支持：binary, static, shared
-第二个参数告诉链接器，应该作为那种源文件对象进行链接，这些对象源文件使用什么编译器编译的，例如：
+The first parameter specifies the link type and currently supports: binary, static, shared
+The second parameter tells the linker that it should be linked as the source file object, and what compiler source files are compiled with, for example:
 
-| 第二个参数值 | 描述         |
+| Second Parameter Value | Description |
 | ------------ | ------------ |
-| cc           | c编译器      |
-| cxx          | c++编译器    |
-| mm           | objc编译器   |
-| mxx          | objc++编译器 |
-| gc           | go编译器     |
-| as           | 汇编器       |
-| sc           | swift编译器  |
-| rc           | rust编译器   |
-| dc           | dlang编译器  |
+| cc | c compiler |
+| cxx | c++ compiler |
+| mm | objc compiler |
+| mxx | objc++ compiler |
+| gc | go compiler |
+| as | assembler |
+| sc | swift compiler |
+| rc | rust compiler |
+| dc | dlang compiler |
 
-指定不同的编译器类型，链接器会适配最合适的链接器来处理链接，并且如果几种支持混合编译的语言，那么可以同时传入多个编译器类型，指定链接器选择支持这些混合编译语言的链接器进行链接处理：
+Specifying different compiler types, the linker will adapt the most appropriate linker to handle the link, and if several languages ​​support mixed compilation, you can pass in multiple compiler types at the same time, specifying that the linker chooses to support these hybrid compilations. The linker of the language performs link processing:
 
 ```lua
 linker.link("binary", {"cc", "mxx", "sc"}, {"a.o", "b.o", "c.o"}, "/tmp/targetfile")
 ```
 
-上述代码告诉链接器，a, b, c三个对象文件有可能分别是c, objc++, swift代码编译出来的，链接器会从当前系统和工具链中选择最合适的链接器去处理这个链接过程。
+The above code tells the linker that the three object files a, b, c may be c, objc++, compiled by swift code. The linker will select the most suitable linker from the current system and toolchain to handle the link process. .
 
 ###### linker.linkcmd
 
-- 获取链接命令行字符串
+- Get link command line string
 
-直接获取[linker.link](#linker-link)中执行的命令行字符串，相当于：
+Get the command line string executed in [linker.link](#linker-link) directly, which is equivalent to:
 
 ```lua
 local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
 ```
 
-注：后面`{target = target}`扩展参数部分是可选的，如果传递了target对象，那么生成的链接命令，会加上这个target配置对应的链接选项。
+Note: The extension part of ``target = target}` is optional. If the target object is passed, the generated link command will add the link option corresponding to this target configuration.
 
-并且还可以自己传递各种配置，例如：
+And you can also pass various configurations yourself, for example:
 
 ```lua
 local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {config = {linkdirs = "/usr/lib"}})
@@ -6783,23 +6783,23 @@ local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:tar
 
 ###### linker.linkargv
 
-- 获取链接命令行参数列表
+- Get a list of link command line arguments
 
-跟[linker.linkcmd](#linker-linkcmd)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
+A little different from [linker.linkcmd](#linker-linkcmd) is that this interface returns a list of parameters, table representation, more convenient to operate:
 
 ```lua
 local program, argv = linker.linkargv("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
 ```
 
-其中返回的第一个值是主程序名，后面是参数列表，而`os.args(table.join(program, argv))`等价于`linker.linkcmd`。
+The first value returned is the main program name, followed by the parameter list, and `os.args(table.join(program, argv))` is equivalent to `linker.linkcmd`.
 
-我们也可以通过传入返回值给[os.runv](#os-runv)来直接运行它：`os.runv(linker.linkargv(..))`
+We can also run it directly by passing the return value to [os.runv](#os-runv): `os.runv(linker.linkargv(..))`
 
 ###### linker.linkflags
 
-- 获取链接选项
+- Get link options
 
-获取[linker.linkcmd](#linker-linkcmd)中的链接选项字符串部分，不带shellname和对象文件列表，并且是按数组返回，例如：
+Get the link option string part of [linker.linkcmd](#linker-linkcmd) without shellname and object file list, and return by array, for example:
 
 ```lua
 local flags = linker.linkflags("shared", "cc", {target = target})
@@ -6808,14 +6808,14 @@ for _, flag in ipairs(flags) do
 end
 ```
 
-返回的是flags的列表数组。
+The returned array of flags is an array.
 
 ###### linker.has_flags
 
-- 判断指定链接选项是否支持
+- Determine if the specified link option is supported
 
-虽然通过[lib.detect.has_flags](detect-has_flags)也能判断，但是那个接口更加底层，需要指定链接器名称
-而此接口只需要指定target的目标类型，源文件类型，它会自动切换选择当前支持的链接器。
+Although it can be judged by [lib.detect.has_flags](detect-has_flags), but the interface is more low-level, you need to specify the linker name.
+This interface only needs to specify the target type of the target, the source file type, which will automatically switch to select the currently supported linker.
 
 ```lua
 if linker.has_flags(target:targetkind(), target:sourcekinds(), "-L/usr/lib -lpthread") then
@@ -6825,57 +6825,57 @@ end
 
 ##### core.tool.compiler
 
-编译器相关操作，常用于插件开发。
+Compiler related operations, often used for plugin development.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [compiler.compile](#compiler-compile)           | 执行编译                                     | >= 2.0.1 |
-| [compiler.compcmd](#compiler-compcmd)           | 获取编译命令行                               | >= 2.0.1 |
-| [compiler.compargv](#compiler-compargv)         | 获取编译命令行列表                           | >= 2.1.5 |
-| [compiler.compflags](#compiler-compflags)       | 获取编译选项                                 | >= 2.0.1 |
-| [compiler.has_flags](#compiler-has_flags)       | 判断指定编译选项是否支持                     | >= 2.1.5 |
-| [compiler.features](#compiler-features)         | 获取所有编译器特性                           | >= 2.1.5 |
-| [compiler.has_features](#compiler-has_features) | 判断指定编译特性是否支持                     | >= 2.1.5 |
+| [compiler.compile](#compiler-compile) | Execute Compilation | >= 2.0.1 |
+| [compiler.compcmd](#compiler-compcmd) | Get Compiler Command Line | >= 2.0.1 |
+| [compiler.compargv](#compiler-compargv) | Get Compiled Command Line List | >= 2.1.5 |
+| [compiler.compflags](#compiler-compflags) | Get Compilation Options | >= 2.0.1 |
+| [compiler.has_flags](#compiler-has_flags) | Determine if the specified compilation option is supported | >= 2.1.5 |
+| [compiler.features](#compiler-features) | Get all compiler features | >= 2.1.5 |
+| [compiler.has_features](#compiler-has_features) | Determine if the specified compilation feature is supported | >= 2.1.5 |
 
 ###### compiler.compile
 
-- 执行编译
+- Perform compilation
 
-针对target，链接指定对象文件列表，生成对应的目标文件，例如：
+For the target, link the specified object file list to generate the corresponding target file, for example:
 
 ```lua
 compiler.compile("xxx.c", "xxx.o", "xxx.h.d", {target = target})
 ```
 
-其中[target](#target)，为工程目标，这里传入主要用于获取taeget的特定编译选项，具体如果获取工程目标对象，见：[core.project.project](#core-project-project)
+Where [target](#target) is the project target, here is the specific compile option that is mainly used to get the taeget. If you get the project target object, see: [core.project.project](#core-project-project)
 
-而`xxx.h.d`文件用于存储为此源文件的头文件依赖文件列表，最后这两个参数都是可选的，编译的时候可以不传他们：
+The `xxx.h.d` file is used to store the header file dependency file list for this source file. Finally, these two parameters are optional. You can not pass them when compiling:
 
 ```lua
 compiler.compile("xxx.c", "xxx.o")
 ```
 
-来单纯编译一个源文件。
+To simply compile a source file.
 
 ###### compiler.compcmd
 
-- 获取编译命令行
+- Get the compile command line
 
-直接获取[compiler.compile](#compiler-compile)中执行的命令行字符串，相当于：
+Get the command line string executed directly in [compiler.compile](#compiler-compile), which is equivalent to:
 
 ```lua
 local cmdstr = compiler.compcmd("xxx.c", "xxx.o", {target = target})
 ```
 
-注：后面`{target = target}`扩展参数部分是可选的，如果传递了target对象，那么生成的编译命令，会加上这个target配置对应的链接选项。
+Note: The extension part of ``target = target}` is optional. If the target object is passed, the generated compile command will add the link option corresponding to this target configuration.
 
-并且还可以自己传递各种配置，例如：
+And you can also pass various configurations yourself, for example:
 
 ```lua
 local cmdstr = compiler.compcmd("xxx.c", "xxx.o", {config = {includedirs = "/usr/include", defines = "DEBUG"}})
 ```
 
-通过target，我们可以导出指定目标的所有源文件编译命令：
+With target, we can export all source file compilation commands for the specified target:
 
 ```lua
 import("core.project.project")
@@ -6891,9 +6891,9 @@ end
 
 ###### compiler.compargv
 
-- 获取编译命令行列表
+- Get compiled command line list
 
-跟[compiler.compargv](#compiler-compargv)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
+A little different from [compiler.compargv] (#compiler-compargv) is that this interface returns a list of parameters, table representation, more convenient to operate:
 
 ```lua
 local program, argv = compiler.compargv("xxx.c", "xxx.o")
@@ -6901,9 +6901,9 @@ local program, argv = compiler.compargv("xxx.c", "xxx.o")
 
 ###### compiler.compflags
 
-- 获取编译选项
+- Get compilation options
 
-获取[compiler.compcmd](#compiler-compcmd)中的编译选项字符串部分，不带shellname和文件列表，例如：
+Get the compile option string part of [compiler.compcmd](#compiler-compcmd) without shList of ellnames and files, for example:
 
 ```lua
 local flags = compiler.compflags(sourcefile, {target = target})
@@ -6912,22 +6912,22 @@ for _, flag in ipairs(flags) do
 end
 ```
 
-返回的是flags的列表数组。
+The returned array of flags is an array.
 
 ###### compiler.has_flags
 
-- 判断指定编译选项是否支持
+- Determine if the specified compilation option is supported
 
-虽然通过[lib.detect.has_flags](detect-has_flags)也能判断，但是那个接口更加底层，需要指定编译器名称。
-而此接口只需要指定语言类型，它会自动切换选择当前支持的编译器。
+Although it can be judged by [lib.detect.has_flags](detect-has_flags), but the interface is more low-level, you need to specify the compiler name.
+This interface only needs to specify the language type, it will automatically switch to select the currently supported compiler.
 
 ```lua
--- 判断c语言编译器是否支持选项: -g
+-- Determine if the c language compiler supports the option: -g
 if compiler.has_flags("c", "-g") then
     -- ok
 end
 
--- 判断c++语言编译器是否支持选项: -g
+-- Determine if the C++ language compiler supports the option: -g
 if compiler.has_flags("cxx", "-g") then
     -- ok
 end
@@ -6935,105 +6935,105 @@ end
 
 ###### compiler.features
 
-- 获取所有编译器特性
+- Get all compiler features
 
-虽然通过[lib.detect.features](detect-features)也能获取，但是那个接口更加底层，需要指定编译器名称。
-而此接口只需要指定语言类型，它会自动切换选择当前支持的编译器，然后获取当前的编译器特性列表。
+Although it can be obtained by [lib.detect.features](detect-features), but the interface is more low-level, you need to specify the compiler name.
+This interface only needs to specify the language type, it will automatically switch to select the currently supported compiler, and then get the current list of compiler features.
 
 ```lua
--- 获取当前c语言编译器的所有特性
+-- Get all the features of the current c compiler
 local features = compiler.features("c")
 
--- 获取当前c++语言编译器的所有特性，启用c++11标准，否则获取不到新标准的特性
+-- Get all the features of the current C++ language compiler, enable the C++11 standard, otherwise you will not get the new standard features.
 local features = compiler.features("cxx", {cofnig = {cxxflags = "-std=c++11"}})
 
--- 获取当前c++语言编译器的所有特性，传递工程target的所有配置信息
+-- Get all the features of the current C++ language compiler, pass all configuration information of the project target
 local features = compiler.features("cxx", {target = target, config = {defines = "..", includedirs = ".."}})
 ```
 
-所有c编译器特性列表：
+A list of all c compiler features:
 
-| 特性名                |
+| Feature Name |
 | --------------------- |
-| c_static_assert       |
-| c_restrict            |
-| c_variadic_macros     |
+| c_static_assert |
+| c_restrict |
+| c_variadic_macros |
 | c_function_prototypes |
 
-所有c++编译器特性列表：
+A list of all C++ compiler features:
 
-| 特性名                               |
+| Feature Name |
 | ------------------------------------ |
-| cxx_variable_templates               |
-| cxx_relaxed_constexpr                |
-| cxx_aggregate_default_initializers   |
-| cxx_contextual_conversions           |
-| cxx_attribute_deprecated             |
-| cxx_decltype_auto                    |
-| cxx_digit_separators                 |
-| cxx_generic_lambdas                  |
-| cxx_lambda_init_captures             |
-| cxx_binary_literals                  |
-| cxx_return_type_deduction            |
+| cxx_variable_templates |
+| cxx_relaxed_constexpr |
+| cxx_aggregate_default_initializers |
+| cxx_contextual_conversions |
+| cxx_attribute_deprecated |
+| cxx_decltype_auto |
+| cxx_digit_separators |
+| cxx_generic_lambdas |
+| cxx_lambda_init_captures |
+| cxx_binary_literals |
+| cxx_return_type_deduction |
 | cxx_decltype_incomplete_return_types |
-| cxx_reference_qualified_functions    |
-| cxx_alignof                          |
-| cxx_attributes                       |
-| cxx_inheriting_constructors          |
-| cxx_thread_local                     |
-| cxx_alias_templates                  |
-| cxx_delegating_constructors          |
-| cxx_extended_friend_declarations     |
-| cxx_final                            |
-| cxx_nonstatic_member_init            |
-| cxx_override                         |
-| cxx_user_literals                    |
-| cxx_constexpr                        |
-| cxx_defaulted_move_initializers      |
-| cxx_enum_forward_declarations        |
-| cxx_noexcept                         |
-| cxx_nullptr                          |
-| cxx_range_for                        |
-| cxx_unrestricted_unions              |
-| cxx_explicit_conversions             |
-| cxx_lambdas                          |
-| cxx_local_type_template_args         |
-| cxx_raw_string_literals              |
-| cxx_auto_type                        |
-| cxx_defaulted_functions              |
-| cxx_deleted_functions                |
-| cxx_generalized_initializers         |
-| cxx_inline_namespaces                |
-| cxx_sizeof_member                    |
-| cxx_strong_enums                     |
-| cxx_trailing_return_types            |
-| cxx_unicode_literals                 |
-| cxx_uniform_initialization           |
-| cxx_variadic_templates               |
-| cxx_decltype                         |
-| cxx_default_function_template_args   |
-| cxx_long_long_type                   |
-| cxx_right_angle_brackets             |
-| cxx_rvalue_references                |
-| cxx_static_assert                    |
-| cxx_extern_templates                 |
-| cxx_func_identifier                  |
-| cxx_variadic_macros                  |
-| cxx_template_template_parameters     |
+| cxx_reference_qualified_functions |
+| cxx_alignof |
+| cxx_attributes |
+| cxx_inheriting_constructors |
+| cxx_thread_local |
+| cxx_alias_templates |
+| cxx_delegating_constructors |
+| cxx_extended_friend_declarations |
+| cxx_final |
+| cxx_nonstatic_member_init |
+| cxx_override |
+| cxx_user_literals |
+| cxx_constexpr |
+| cxx_defaulted_move_initializers |
+| cxx_enum_forward_declarations |
+| cxx_noexcept |
+| cxx_nullptr |
+| cxx_range_for |
+| cxx_unrestricted_unions |
+| cxx_explicit_conversions |
+| cxx_lambdas |
+| cxx_local_type_template_args |
+| cxx_raw_string_literals |
+| cxx_auto_type |
+| cxx_defaulted_functions |
+| cxx_deleted_functions |
+| cxx_generalized_initializers |
+| cxx_inline_namespaces |
+| cxx_sizeof_member |
+| cxx_strong_enums |
+| cxx_trailing_return_types |
+| cxx_unicode_literals |
+| cxx_uniform_initialization |
+| cxx_variadic_templates |
+| cxx_decltype |
+| cxx_default_function_template_args |
+| cxx_long_long_type |
+| cxx_right_angle_brackets |
+| cxx_rvalue_references |
+| cxx_static_assert |
+| cxx_extern_templates |
+| cxx_func_identifier |
+| cxx_variadic_macros |
+| cxx_template_template_parameters |
 
 ###### compiler.has_features
 
-- 判断指定的编译器特性是否支持
+- Determine if the specified compiler feature is supported
 
-虽然通过[lib.detect.has_features](detect-has-features)也能获取，但是那个接口更加底层，需要指定编译器名称。
-而此接口只需要指定需要检测的特姓名称列表，就能自动切换选择当前支持的编译器，然后判断指定特性在当前的编译器中是否支持。
+Although it can be obtained by [lib.detect.has_features](detect-has-features), but the interface is more low-level, you need to specify the compiler name.
+And this interface only needs to specify the special name list that needs to be detected, it can automatically switch to select the currently supported compiler, and then determine whether the specified feature is supported in the current compiler.
 
 ```lua
 if compiler.has_features("c_static_assert") then
     -- ok
 end
 
-if compiler.has_features({"c_static_assert", "cxx_constexpr"}, {languages = "cxx11"}) then
+if compiler.has_features({"c_static_assert", "cxx_constexpr"}, {languages ​​= "cxx11"}) then
     -- ok
 end
 
@@ -7042,97 +7042,97 @@ if compiler.has_features("cxx_constexpr", {target = target, defines = "..", incl
 end
 ```
 
-具体特性名有哪些，可以参考：[compiler.features](#compiler-features)。
+For specific feature names, refer to [compiler.features](#compiler-features).
 
 ##### core.project.config
 
-用于获取工程编译时候的配置信息，也就是`xmake f|config --xxx=val` 传入的参数选项值。
+Used to get the configuration information when the project is compiled, that is, the value of the parameter option passed in `xmake f|config --xxx=val`.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [config.get](#config-get)                       | 获取指定配置值                               | >= 2.0.1 |
-| [config.load](#config-load)                     | 加载配置                                     | >= 2.0.1 |
-| [config.arch](#config-arch)                     | 获取当前工程的架构配置                       | >= 2.0.1 |
-| [config.plat](#config-plat)                     | 获取当前工程的平台配置                       | >= 2.0.1 |
-| [config.mode](#config-mode)                     | 获取当前工程的编译模式配置                   | >= 2.0.1 |
-| [config.buildir](#config-buildir)               | 获取当前工程的输出目录配置                   | >= 2.0.1 |
-| [config.directory](#config-directory)           | 获取当前工程的配置信息目录                   | >= 2.0.1 |
-| [config.dump](#config-dump)                     | 打印输出当前工程的所有配置信息               | >= 2.0.1 |
+| [config.get](#config-get) | Get the specified configuration value | >= 2.0.1 |
+| [config.load](#config-load) | Load Configuration | >= 2.0.1 |
+| [config.arch](#config-arch) | Get the schema configuration of the current project | >= 2.0.1 |
+| [config.plat](#config-plat) | Get the platform configuration of the current project | >= 2.0.1 |
+| [config.mode](#config-mode) | Get the compilation mode configuration of the current project | >= 2.0.1 |
+| [config.buildir](#config-buildir) | Get the output directory configuration of the current project | >= 2.0.1 |
+| [config.directory](#config-dIrectory) | Get the configuration information directory of the current project | >= 2.0.1 |
+| [config.dump](#config-dump) | Print out all configuration information for the current project | >= 2.0.1 |
 
 ###### config.get
 
-- 获取指定配置值
+- Get the specified configuration value
 
-用于获取`xmake f|config --xxx=val`的配置值，例如：
+Used to get the configuration value of `xmake f|config --xxx=val`, for example:
 
 ```lua
 target("test")
     on_run(function (target)
 
-        -- 导入配置模块
+        -- Import configuration module
         import("core.project.config")
 
-        -- 获取配置值
+        -- Get configuration values
         print(config.get("xxx"))
     end)
 ```
 
 ###### config.load
 
-- 加载配置
+- Load configuration
 
-一般用于插件开发中，插件任务中不像工程的自定义脚本，环境需要自己初始化加载，默认工程配置是没有被加载的，如果要用[config.get](#config-get)接口获取工程配置，那么需要先：
+Generally used in plug-in development, the plug-in task is not like the custom script of the project, the environment needs to be initialized and loaded by itself, the default project configuration is not loaded, if you want to use [config.get](#config-get) interface to get the project Configuration, then you need to:
 
 ```lua
 
--- 导入配置模块
+-- Import configuration module
 import("core.project.config")
 
 function main(...)
 
-    -- 先加载工程配置
+    -- Load project configuration first
     config.load()
-    
-    -- 获取配置值
+
+    -- Get configuration values
     print(config.get("xxx"))
 end
 ```
 
 ###### config.arch
 
-- 获取当前工程的架构配置
+- Get the schema configuration of the current project
 
-也就是获取`xmake f|config --arch=armv7`的平台配置，相当于`config.get("arch")`。
+That is to get the platform configuration of `xmake f|config --arch=armv7`, which is equivalent to `config.get("arch")`.
 
 ###### config.plat
 
-- 获取当前工程的平台配置
+- Get the platform configuration of the current project
 
-也就是获取`xmake f|config --plat=iphoneos`的平台配置，相当于`config.get("plat")`。
+That is to get the platform configuration of `xmake f|config --plat=iphoneos`, which is equivalent to `config.get("plat")`.
 
 ###### config.mode
 
-- 获取当前工程的编译模式配置
+- Get the compilation mode configuration of the current project
 
-也就是获取`xmake f|config --mode=debug`的平台配置，相当于`config.get("mode")`。
+That is to get the platform configuration of `xmake f|config --mode=debug`, which is equivalent to `config.get("mode")`.
 
 ###### config.buildir
 
-- 获取当前工程的输出目录配置
+- Get the output directory configuration of the current project
 
-也就是获取`xmake f|config -o /tmp/output`的平台配置，相当于`config.get("buildir")`。
+That is to get the platform configuration of `xmake f|config -o /tmp/output`, which is equivalent to `config.get("buildir")`.
 
 ###### config.directory
 
-- 获取当前工程的配置信息目录
+- Get the configuration information directory of the current project
 
-获取工程配置的存储目录，默认为：`projectdir/.config`
+Get the storage directory of the project configuration, the default is: `projectdir/.config`
 
 ###### config.dump
 
-- 打印输出当前工程的所有配置信息
+- Print out all configuration information of the current project
 
-输出结果例如：
+The output is for example:
 
 ```lua
 {
@@ -7168,100 +7168,100 @@ end
 ##### core.project.global
 
 <p class="tip">
-此模块自2.1.5版本后迁移至[core.base.global](#core-base-global)。
+This module was migrated to [core.base.global](#core-base-global) since version 2.1.5.
 </p>
 
 ##### core.project.task
 
 <p class="tip">
-此模块自2.1.5版本后迁移至[core.base.task](#core-base-task)。
+This module has been migrated to [core.base.task](#core-base-task) since version 2.1.5.
 </p>
 
 ##### core.project.project
 
-用于获取当前工程的一些描述信息，也就是在`xmake.lua`工程描述文件中定义的配置信息，例如：[target](#target)、[option](#option)等。
+Used to get some description information of the current project, that is, the configuration information defined in the `xmake.lua` project description file, for example: [target](#target), [option](#option), etc.
 
-| 接口                                            | 描述                                         | 支持版本             |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------------------- |
-| [project.load](#project-load)                   | 加载工程配置                                 | >= 2.0.1 (2.1.5废弃) |
-| [project.directory](#project-directory)         | 获取工程目录                                 | >= 2.0.1             |
-| [project.target](#project-target)               | 获取指定工程目标对象                         | >= 2.0.1             |
-| [project.targets](#project-targets)             | 获取工程目标对象列表                         | >= 2.0.1             |
-| [project.option](#project-option)               | 获取指定的选项对象                           | >= 2.1.5             |
-| [project.options](#project-options)             | 获取工程所有的选项对象                       | >= 2.1.5             |
-| [project.name](#project-name)                   | 获取当前工程名                               | >= 2.0.1             |
-| [project.version](#project-version)             | 获取当前工程版本号                           | >= 2.0.1             |
+| [project.load](#project-load) | Load Project Configuration | >= 2.0.1 (2.1.5 Obsolete) |
+| [project.directory](#project-directory) | Get Project Directory | >= 2.0.1 |
+| [project.target](#project-target) | Get the specified project target object | >= 2.0.1 |
+| [project.targets](#project-targets) | Get the list of project target objects | >= 2.0.1 |
+| [project.option](#project-option) | Get the specified option object | >= 2.1.5 |
+| [project.options](#project-options) | Get all option objects for the project | >= 2.1.5 |
+| [project.name](#project-name) | Get current project name | >= 2.0.1 |
+| [project.version](#project-version) | Get current project version number | >= 2.0.1 |
 
 ###### project.load
 
-- 加载工程描述配置
+- Load project description configuration
 
-仅在插件中使用，因为这个时候还没有加载工程配置信息，在工程目标的自定义脚本中，不需要执行此操作，就可以直接访问工程配置。
+It is only used in the plugin, because the project configuration information has not been loaded at this time. In the custom script of the project target, you do not need to perform this operation, you can directly access the project configuration.
 
 ```lua
--- 导入工程模块
+-- Import engineering modules
 import("core.project.project")
 
--- 插件入口
+-- Plugin entry
 function main(...)
 
-    -- 加载工程描述配置
+    -- Load project description configuration
     project.load()
 
-    -- 访问工程描述，例如获取指定工程目标
+    -- access project descriptions, such as getting specified project goals
     local target = project.target("test")
 end
 ```
 
 <p class="tip">
-2.1.5版本后，不在需要，工程加载会自动在合适时机延迟加载。
+After version 2.1.5, if not needed, the project load will automatically load at the appropriate time.
 </p>
 
 ###### project.directory
 
-- 获取工程目录
+- Get the project directory
 
-获取当前工程目录，也就是`xmake -P xxx`中指定的目录，否则为默认当前`xmake`命令执行目录。
+Get the current project directory, which is the directory specified in `xmake -P xxx`, otherwise it is the default current `xmake` command execution directory.
 
 <p class="tip">
-2.1.5版本后，建议使用[os.projectdir](#os-projectdir)来获取。
+After version 2.1.5, it is recommended to use [os.projectdir](#os-projectdir) to get it.
 </p>
 
 ###### project.target
 
-- 获取指定工程目标对象
+- Get the specified project target object
 
-获取和访问指定工程目标配置，例如：
+Get and access the specified project target configuration, for example:
 
 ```lua
 local target = project.target("test")
 if target then
 
-    -- 获取目标文件名
+    -- Get the target file name
     print(target:targetfile())
 
-    -- 获取目标类型，也就是：binary, static, shared
+    -- Get the target type, which is: binary, static, shared
     print(target:targetkind())
 
-    -- 获取目标名
+    -- Get the target name
     print(target:name())
 
-    -- 获取目标源文件
+    -- Get the target source file
     local sourcefiles = target:sourcefiles()
 
-    -- 获取目标安装头文件列表
+    -- Get a list of target installation header files
     local srcheaders, dstheaders = target:headerfiles()
 
-    -- 获取目标依赖
+    -- Get target dependencies
     print(target:get("deps"))
 end
 ```
 
 ###### project.targets
 
-- 获取工程目标对象列表
+- Get a list of project target objects
 
-返回当前工程的所有编译目标，例如：
+Returns all compilation targets for the current project, for example:
 
 ```lua
 for targetname, target in pairs(project.targets())
@@ -7271,9 +7271,9 @@ end
 
 ###### project.option
 
-- 获取指定选项对象
+- Get the specified option object
 
-获取和访问工程中指定的选项对象，例如：
+Get and access the option objects specified in the project, for example:
 
 ```lua
 local option = project.option("test")
@@ -7284,9 +7284,9 @@ end
 
 ###### project.options
 
-- 获取工程所有选项对象
+- Get all project option objects
 
-返回当前工程的所有编译目标，例如：
+Returns all compilation targets for the current project, for example:
 
 ```lua
 for optionname, option in pairs(project.options())
@@ -7296,9 +7296,9 @@ end
 
 ###### project.name
 
-- 获取当前工程名
+- Get the current project name
 
-也就是获取[set_project](#set_project)的工程名配置。
+That is, get the project name configuration of [set_project](#set_project).
 
 ```lua
 print(project.name())
@@ -7306,9 +7306,9 @@ print(project.name())
 
 ###### project.version
 
-- 获取当前工程版本号
+- Get the current project version number
 
-也就是获取[set_version](#set_version)的工程版本配置。
+That is, get [set_version](#set_version) project version configuration.
 
 ```lua
 print(project.version())
@@ -7316,42 +7316,42 @@ print(project.version())
 
 ##### core.language.language
 
-用于获取编译语言相关信息，一般用于代码文件的操作。
+Used to obtain information about the compiled language, generally used for the operation of code files.
 
-| 接口                                              | 描述                                         | 支持版本 |
-| -----------------------------------------------   | -------------------------------------------- | -------- |
-| [language.extensions](#language-extensions)       | 获取所有语言的代码后缀名列表                 | >= 2.1.1 |
-| [language.targetkinds](#language-targetkinds)     | 获取所有语言的目标类型列表                   | >= 2.1.1 |
-| [language.sourcekinds](#language-sourcekinds)     | 获取所有语言的源文件类型列表                 | >= 2.1.1 |
-| [language.sourceflags](#language-sourceflags)     | 加载所有语言的源文件编译选项名列表           | >= 2.1.1 |
-| [language.load](#language-load)                   | 加载指定语言                                 | >= 2.1.1 |
-| [language.load_sk](#language-load_sk)             | 从源文件类型加载指定语言                     | >= 2.1.1 |
-| [language.load_ex](#language-load_ex)             | 从源文件后缀名加载指定语言                   | >= 2.1.1 |
-| [language.sourcekind_of](#language-sourcekind_of) | 获取指定源文件的源文件类型                   | >= 2.1.1 |
+| Interface | Description | Supported Versions |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [language.extensions](#language-extensions) | Get a list of code suffixes for all languages ​​| >= 2.1.1 |
+| [language.targetkinds](#language-targetkinds) | Get a list of target types for all languages ​​| >= 2.1.1 |
+| [language.sourcekinds](#language-sourcekinds) | Get a list of source file types for all languages ​​| >= 2.1.1 |
+| [language.sourceflags](#language-sourceflags) | Load source file compilation option name list for all languages ​​| >= 2.1.1 |
+| [language.load](#language-load) | Load the specified language | >= 2.1.1 |
+| [language.load_sk](#language-load_sk) | Load the specified language from the source file type | >= 2.1.1 |
+| [language.load_ex](#language-load_ex) | Load the specified language from the source file suffix | >= 2.1.1 |
+| [language.sourcekind_of](#language-sourcekind_of) | Get the source file type of the specified source file | >= 2.1.1 |
 
 ###### language.extensions
 
-- 获取所有语言的代码后缀名列表
+- Get a list of code suffixes for all languages
 
-获取结果如下：
+The results are as follows:
 
 ```lua
 {
-     [".c"]      = cc
-,    [".cc"]     = cxx
-,    [".cpp"]    = cxx
-,    [".m"]      = mm
-,    [".mm"]     = mxx
-,    [".swift"]  = sc
-,    [".go"]     = gc
+     [".c"] = cc
+,    [".cc"] = cxx
+,    [".cpp"] = cxx
+,    [".m"] = mm
+,    [".mm"] = mxx
+,    [".swift"] = sc
+,    [".go"] = gc
 }
 ```
 
 ###### language.targetkinds
 
-- 获取所有语言的目标类型列表
+- Get a list of target types in all languages
 
-获取结果如下：
+The results are as follows:
 
 ```lua
 {
@@ -7363,33 +7363,33 @@ print(project.version())
 
 ###### language.sourcekinds
 
-- 获取所有语言的源文件类型列表
+- Get a list of source file types in all languages
 
-获取结果如下：
+The results are as follows:
 
 ```lua
 {
-     cc  = ".c"
+     cc = ".c"
 ,    cxx = {".cc", ".cpp", ".cxx"}
-,    mm  = ".m"
+,    mm = ".m"
 ,    mxx = ".mm"
-,    sc  = ".swift"
-,    gc  = ".go"
-,    rc  = ".rs"
-,    dc  = ".d"
-,    as  = {".s", ".S", ".asm"}
+,    sc = ".swift"
+,    gc = ".go"
+,    rc = ".rs"
+,    dc = ".d"
+,    as = {".s", ".S", ".asm"}
 }
 ```
 
 ###### language.sourceflags
 
-- 加载所有语言的源文件编译选项名列表
+- Load a list of source file compilation option names for all languages
 
-获取结果如下：
+The results are as follows:
 
 ```lua
 {
-     cc  = {"cflags", "cxflags"}
+     cc = {"cflags", "cxflags"}
 ,    cxx = {"cxxflags", "cxflags"}
 ,    ...
 }
@@ -7397,9 +7397,9 @@ print(project.version())
 
 ###### language.load
 
-- 加载指定语言
+- Load the specified language
 
-从语言名称加载具体语言对象，例如：
+Load a specific language object from the language name, for example:
 
 ```lua
 local lang = language.load("c++")
@@ -7410,9 +7410,9 @@ end
 
 ###### language.load_sk
 
-- 从源文件类型加载指定语言
+- Load the specified language from the source file type
 
-从源文件类型：`cc, cxx, mm, mxx, sc, gc, as ..`加载具体语言对象，例如：
+Load specific language objects from the source file type: `cc, cxx, mm, mxx, sc, gc, as ..`, for example:
 
 ```lua
 local lang = language.load_sk("cxx")
@@ -7423,9 +7423,9 @@ end
 
 ###### language.load_ex
 
-- 从源文件后缀名加载指定语言
+- Load the specified language from the source file suffix name
 
-从源文件后缀名：`.cc, .c, .cpp, .mm, .swift, .go  ..`加载具体语言对象，例如：
+Load specific language objects from the source file extension: `.cc, .c, .cpp, .mm, .swift, .go ..`, for example:
 
 ```lua
 local lang = language.load_sk(".cpp")
@@ -7436,117 +7436,117 @@ end
 
 ###### language.sourcekind_of
 
-- 获取指定源文件的源文件类型
+- Get the source file type of the specified source file
 
-也就是从给定的一个源文件路径，获取它是属于那种源文件类型，例如：
+That is, from a given source file path, get the type of source file it belongs to, for example:
 
 ```lua
 print(language.sourcekind_of("/xxxx/test.cpp"))
 ```
 
-显示结果为：`cxx`，也就是`c++`类型，具体对应列表见：[language.sourcekinds](#language-sourcekinds)
+The result is: `cxx`, which is the `c++` type. For the corresponding list, see: [language.sourcekinds](#language-sourcekinds)
 
 ##### core.platform.platform
 
-平台信息相关操作
+Platform information related operations
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [platform.get](#platform-get)                   | 获取指定平台相关配置信息                     | >= 2.0.1 |
+| [platform.get](#platform-get) | Get configuration information about the specified platform | >= 2.0.1 |
 
 ###### platform.get
 
-- 获取指定平台相关配置信息
+- Get configuration information about the specified platform
 
-获取平台配置`xmake.lua`中设置的信息，一般只有在写插件的时候会用到，例如：
+Get the information set in the platform configuration `xmake.lua`, which is generally only used when writing plugins, for example:
 
 ```lua
--- 获取当前平台的所有支持架构
+-- Get all support architectures for the current platform
 print(platform.get("archs"))
 
--- 获取指定iphoneos平台的目标文件格式信息
+-- Get the target file format information of the specified iphoneos platform
 local formats = platform.get("formats", "iphoneos")
 table.dump(formats)
 ```
 
-具体有哪些可读的平台配置信息，可参考：[platform](#platform)
+For specific readable platform configuration information, please refer to: [platform](#platform)
 
 ##### core.platform.environment
 
-环境相关操作，用于进入和离开指定环境变量对应的终端环境，一般用于`path`环境的进入和离开，尤其是一些需要特定环境的构建工具，例如：msvc的工具链。
+Environment-related operations, used to enter and leave the terminal environment corresponding to the specified environment variables, generally used for the entry and departure of the `path` environment, especially some build tools that require a specific environment, such as: msvc toolchain.
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [environment.enter](#environment-enter)         | 进入指定环境                                 | >= 2.0.1 |
-| [environment.leave](#environment-leave)         | 离开指定环境                                 | >= 2.0.1 |
+| [environment.enter](#environment-enter) | Enter the specified environment | >= 2.0.1 |
+| [environment.leave](#environment-leave) | Leave the specified environment | >= 2.0.1 |
 
-目前支持的环境有：
+The currently supported environments are:
 
-| 接口                                            | 描述                                         | 支持版本 |
+| Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| toolchains                                      | 工具链执行环境                               | >= 2.0.1 |
+| toolchains | Toolchain Execution Environment | >= 2.0.1 |
 
 ###### environment.enter
 
-- 进入指定环境
+- Enter the specified environment
 
-进入指定环境，例如msvc有自己的环境变量环境用于运行构建工具，例如：`cl.exe`, `link.exe`这些，这个时候想要在xmake里面运行他们，需要：
+Enter the specified environment, for example, msvc has its own environment variable environment for running build tools, such as: `cl.exe`, `link.exe`, these time you want to run them in xmake, you need:
 
 ```lua
--- 进入工具链环境
+-- Enter the toolchain environment
 environment.enter("toolchains")
 
--- 这个时候运行cl.exe才能正常运行，这个时候的path等环境变量都会进入msvc的环境模式
+-- At this time, run cl.exe to run normally. At this time, environment variables such as path will enter the environment mode of msvc.
 os.run("cl.exe ..")
 
--- 离开工具链环境
+-- leaving the toolchain environment
 environment.leave("toolchains")
 ```
 
-因此为了通用性，默认xmake编译事都会设置这个环境，在linux下基本上内部环境不需要特殊切换，目前仅对windows下msvc进行了处理。
+Therefore, for the sake of versatility, the default xmake compiler will set this environment. Under Linux, basically the internal environment does not need special switching. At present, only msvc under Windows is processed.
 
 ###### environment.leave
 
-- 离开指定环境
+- leaving the designated environment
 
-具体使用见：[environment.enter](#environment-enter)
+For specific use, see: [environment.enter](#environment-enter)
 
 ##### lib.detect
 
-此模块提供了非常强大的探测功能，用于探测程序、编译器、语言特性、依赖包等。
+This module provides very powerful probing capabilities for probing programs, compilers, language features, dependencies, and more.
 
 <p class="tip">
-此模块的接口分散在多个模块目录中，尽量通过导入单个接口来使用，这样效率更高，例如：`import("lib.detect.find_package")`，而不是通过`import("lib.detect")`导入所有来调用。
+The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient, for example: `import("lib.detect.find_package")` instead of `import("lib.detect ") `Import all to call.
 </p>
 
-| 接口                                                | 描述                                         | 支持版本             |
+| Interface | Description | Supported Versions |
 | --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [detect.find_file](#detect-find_file)               | 查找文件                                     | >= 2.1.5             |
-| [detect.find_path](#detect-find_path)               | 查找文件路径                                 | >= 2.1.5             |
-| [detect.find_library](#detect-find_library)         | 查找库文件                                   | >= 2.1.5             |
-| [detect.find_program](#detect-find_program)         | 查找可执行程序                               | >= 2.1.5             |
-| [detect.find_programver](#detect-find_programver)   | 查找可执行程序版本号                         | >= 2.1.5             |
-| [detect.find_package](#detect-find_package)         | 查找包文件，包含库文件和搜索路径             | >= 2.1.5             |
-| [detect.find_tool](#detect-find_tool)               | 查找工具                                     | >= 2.1.5             |
-| [detect.find_toolname](#detect-find_toolname)       | 查找工具名                                   | >= 2.1.5             |
-| [detect.features](#detect-features)                 | 获取指定工具的所有特性                       | >= 2.1.5             |
-| [detect.has_features](#detect-has_features)         | 判断指定特性是否支持                         | >= 2.1.5             |
-| [detect.has_flags](#detect-has_flags)               | 判断指定参数选项是否支持                     | >= 2.1.5             |
-| [detect.has_cfuncs](#detect-has_cfuncs)             | 判断指定c函数是否存在                        | >= 2.1.5             |
-| [detect.has_cxxfuncs](#detect-has_cxxfuncs)         | 判断指定c++函数是否存在                      | >= 2.1.5             |
-| [detect.has_cincludes](#detect-has_cincludes)       | 判断指定c头文件是否存在                      | >= 2.1.5             |
-| [detect.has_cxxincludess](#detect-has_cxxincludes)  | 判断指定c++头文件是否存在                    | >= 2.1.5             |
-| [detect.has_ctypes](#detect-has_ctypes)             | 判断指定c类型是否存在                        | >= 2.1.5             |
-| [detect.has_cxxtypes](#detect-has_cxxtypes)         | 判断指定c++类型是否存在                      | >= 2.1.5             |
-| [detect.check_cxsnippets](#detect-check_cxsnippets) | 检测c/c++代码片段是否能够编译通过            | >= 2.1.5             |
+| [detect.find_file](#detect-find_file) | Find Files | >= 2.1.5 |
+| [detect.find_path](#detect-find_path) | Find File Path | >= 2.1.5 |
+| [detect.find_library](#detect-find_library) | Find Library Files | >= 2.1.5 |
+| [detect.find_program](#detect-find_program) | Find executables | >= 2.1.5 |
+| [detect.find_programver](#detect-find_programver) | Find executable version number | >= 2.1.5 |
+| [detect.find_package](#detect-find_package) | Find package files, including library files and search paths | >= 2.1.5 |
+| [detect.find_tool](#detect-find_tool) | Find Tool | >= 2.1.5 |
+| [detect.find_toolname](#detect-find_toolname) | Find Tool Name | >= 2.1.5 |
+| [detect.features](#detect-features) | Get all the features of the specified tool | >= 2.1.5 |
+| [detect.has_features](#detect-has_features) | Determine if the specified feature is supported | >= 2.1.5 |
+| [detect.has_flags](#detect-has_flags) | Determine if the specified parameter options are supported | >= 2.1.5 |
+| [detect.has_cfuncs](#detect-has_cfuncs) | Determine if the specified c function exists | >= 2.1.5 |
+| [detect.has_cxxfuncs](#detect-has_cxxfuncs) | Determine if the specified c++ function exists | >= 2.1.5 |
+| [detect.has_cincludes](#detect-has_cincludes) | Determine if the specified c header file exists | >= 2.1.5 |
+| [detect.has_cxxincludess](#detect-has_cxxincludes) | Determine if the specified c++ header file exists | >= 2.1.5 |
+| [detect.has_ctypes](#detect-has_ctypes) | Determine if the specified c type exists | >= 2.1.5 |
+| [detect.has_cxxtypes](#detect-has_cxxtypes) | Determine if the specified c++ type exists | >= 2.1.5 |
+| [detect.check_cxsnippets](#detect-check_cxsnippets) | Check if c/c++ code snippets can be compiled by | >= 2.1.5 |
 
 ###### detect.find_file
 
-- 查找文件
+- Find files
 
-这个接口提供了比[os.files](#os-files)更加强大的工程， 可以同时指定多个搜索目录，并且还能对每个目录指定附加的子目录，来模式匹配查找，相当于是[os.files](#os-files)的增强版。
+This interface provides a more powerful project than [os.files](#os-files), which can specify multiple search directories at the same time, and can also specify additional subdirectories for each directory to match the pattern lookup, which is equivalent to [ An enhanced version of os.files](#os-files).
 
-例如：
+E.g:
 
 ```lua
 import("lib.detect.find_file")
@@ -7554,33 +7554,33 @@ import("lib.detect.find_file")
 local file = find_file("ccache", { "/usr/bin", "/usr/local/bin"})
 ```
 
-如果找到，返回的结果是：`/usr/bin/ccache`
+If found, the result returned is: `/usr/bin/ccache`
 
-它同时也支持模式匹配路径，进行递归查找，类似`os.files`：
+It also supports pattern matching paths for recursive lookups, similar to `os.files`:
 
 ```lua
 local file = find_file("test.h", { "/usr/include", "/usr/local/include/**"})
 ```
 
-不仅如此，里面的路径也支持内建变量，来从环境变量和注册表中获取路径进行查找：
+Not only that, but the path inside also supports built-in variables to get the path from the environment variables and the registry to find:
 
 ```lua
 local file = find_file("xxx.h", { "$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)"})
 ```
 
-如果路径规则比较复杂多变，还可以通过自定义脚本来动态生成路径传入：
+If the path rules are more complex, you can also dynamically generate path entries through a custom script:
 
 ```lua
-local file = find_file("xxx.h", { "$(env PATH)", function () return val("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name"):match("\"(.-)\"") end})
+local file = find_file("xxx.h", { "$(env PATH)", function () return val("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name"):match ("\"(.-)\"") end})
 ```
 
-大部分场合下，上面的使用已经满足各种需求了，如果还需要一些扩展功能，可以通过传入第三个参数，自定义一些可选配置，例如：
+In most cases, the above use has met various needs. If you need some extended functions, you can customize some optional configurations by passing in the third parameter, for example:
 
 ```lua
 local file = find_file("test.h", { "/usr", "/usr/local"}, {suffixes = {"/include", "/lib"}})
 ```
 
-通过指定suffixes子目录列表，可以扩展路径列表（第二个参数），使得实际的搜索目录扩展为：
+By specifying a list of suffixes subdirectories, you can extend the list of paths (the second parameter) so that the actual search directory is expanded to:
 
 ```
 /usr/include
@@ -7589,18 +7589,18 @@ local file = find_file("test.h", { "/usr", "/usr/local"}, {suffixes = {"/include
 /usr/local/lib
 ```
 
-并且不用改变路径列表，就能动态切换子目录来搜索文件。
+And without changing the path list, you can dynamically switch subdirectories to search for files.
 
 <p class="tip">
-我们也可以通过`xmake lua`插件来快速调用和测试此接口：`xmake lua lib.detect.find_file test.h /usr/local`
+We can also quickly call and test this interface with the `xmake lua` plugin: `xmake lua lib.detect.find_file test.h /usr/local`
 </p>
 
 ###### detect.find_path
 
-- 查找路径
+- Find the path
 
-这个接口的用法跟[lib.detect.find_file](#detect-find_file)类似，唯一的区别是返回的结果不同。
-此接口查找到传入的文件路径后，返回的是对应的搜索路径，而不是文件路径本身，一般用于查找文件对应的父目录位置。
+The usage of this interface is similar to [lib.detect.find_file](#detect-find_file), the only difference is that the returned results are different.
+After the interface finds the incoming file path, it returns the corresponding search path, not the file path itself. It is generally used to find the parent directory location corresponding to the file.
 
 ```lua
 import("lib.detect.find_path")
@@ -7608,15 +7608,15 @@ import("lib.detect.find_path")
 local p = find_path("include/test.h", { "/usr", "/usr/local"})
 ```
 
-上述代码如果查找成功，则返回：`/usr/local`，如果`test.h`在`/usr/local/include/test.h`的话。
+If the above code is successful, it returns: `/usr/local`, if `test.h` is in `/usr/local/include/test.h`.
 
-还有一个区别就是，这个接口传入不只是文件路径，还可以传入目录路径来查找：
+Another difference is that this interface is passed in not only the file path, but also the directory path to find:
 
 ```lua
 local p = find_path("lib/xxx", { "$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)"})
 ```
 
-同样，此接口也支持模式匹配和后缀子目录：
+Again, this interface also supports pattern matching and suffix subdirectories:
 
 ```lua
 local p = find_path("include/*.h", { "/usr", "/usr/local/**"}, {suffixes = "/subdir"})
@@ -7624,9 +7624,9 @@ local p = find_path("include/*.h", { "/usr", "/usr/local/**"}, {suffixes = "/sub
 
 ###### detect.find_library
 
-- 查找库文件
+- Find library files
 
-此接口用于指定的搜索目录中查找库文件（静态库，动态库），例如：
+This interface is used to find library files (static libraries, dynamic libraries) in the specified search directory, for example:
 
 ```lua
 import("lib.detect.find_library")
@@ -7634,7 +7634,7 @@ import("lib.detect.find_library")
 local library = find_library("crypto", {"/usr/lib", "/usr/local/lib"})
 ```
 
-在macosx上运行，返回的结果如下：
+Running on macosx, the results returned are as follows:
 
 ```lua
 {
@@ -7645,15 +7645,15 @@ local library = find_library("crypto", {"/usr/lib", "/usr/local/lib"})
 }
 ```
 
-如果不指定是否需要静态库还是动态库，那么此接口会自动选择一个存在的库（有可能是静态库、也有可能是动态库）进行返回。
+If you do not specify whether you need a static library or a dynamic library, then this interface will automatically select an existing library (either a static library or a dynamic library) to return.
 
-如果需要强制指定需要查找的库类型，可以指定kind参数为（`static/shared`）：
+If you need to force the library type you need to find, you can specify the kind parameter as (`static/shared`):
 
 ```lua
 local library = find_library("crypto", {"/usr/lib", "/usr/local/lib"}, {kind = "static"})
 ```
 
-此接口也支持suffixes后缀子目录搜索和模式匹配操作：
+This interface also supports suffixes suffix subdirectory search and pattern matching operations:
 
 ```lua
 local library = find_library("cryp*", {"/usr", "/usr/local"}, {suffixes = "/lib"})
@@ -7661,9 +7661,9 @@ local library = find_library("cryp*", {"/usr", "/usr/local"}, {suffixes = "/lib"
 
 ###### detect.find_program
 
-- 查找可执行程序
+- Find executable programs
 
-这个接口比[lib.detect.find_tool](#detect-find_tool)较为原始底层，通过指定的参数目录来查找可执行程序。
+This interface is more primitive than [lib.detect.find_tool](#detect-find_tool), looking for executables through the specified parameter directory.
 
 ```lua
 import("lib.detect.find_program")
@@ -7671,23 +7671,23 @@ import("lib.detect.find_program")
 local program = find_program("ccache")
 ```
 
-上述代码犹如没有传递搜索目录，所以它会尝试直接执行指定程序，如果运行ok，那么直接返回：`ccache`，表示查找成功。
+The above code is like not passing the search directory, so it will try to execute the specified program directly. If it runs ok, it will return directly: `ccache`, indicating that the search is successful.
 
-指定搜索目录，修改尝试运行的检测命令参数（默认是：`ccache --version`）：
-
-```lua
-local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = "--help"}) 
-```
-
-上述代码会尝试运行：`/usr/bin/ccache --help`，如果运行成功，则返回：`/usr/bin/ccache`。
-
-如果`--help`也没法满足需求，有些程序没有`--version/--help`参数，那么可以自定义运行脚本，来运行检测：
+Specify the search directory and modify the test command parameters that are attempted to run (default: `ccache --version`):
 
 ```lua
-local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = function (program) os.run("%s -h", program) end})
+localProgram = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = "--help"})
 ```
 
-同样，搜索路径列表支持内建变量和自定义脚本：
+The above code will try to run: `/usr/bin/ccache --help`, if it runs successfully, it returns: `/usr/bin/ccache`.
+
+If `--help` can't satisfy the requirement, some programs don't have the `--version/--help` parameter, then you can customize the run script to run the test:
+
+```lua
+local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = function (program) os.run("%s -h", program) end })
+```
+
+Similarly, the search path list supports built-in variables and custom scripts:
 
 ```lua
 local program = find_program("ccache", {pathes = {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"}})
@@ -7695,15 +7695,15 @@ local program = find_program("ccache", {pathes = {"$(env PATH)", function () ret
 ```
 
 <p class="tip">
-为了加速频发查找的效率，此接口是默认自带cache的，所以就算频繁查找相同的程序，也不会花太多时间。
-如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
+In order to speed up the efficiency of frequent lookups, this interface comes with a default cache, so even if you frequently find the same program, it will not take too much time.
+If you want to disable the cache, you can clear the local cache by executing `xmake f -c` in the project directory.
 </p>
 
-我们也可以通过`xmake lua lib.detect.find_program ccache` 来快速测试。
+We can also test quickly with `xmake lua lib.detect.find_program ccache`.
 
 ###### detect.find_programver
 
-- 查找可执行程序版本号
+- Find the executable version number
 
 
 ```lua
@@ -7712,48 +7712,48 @@ import("lib.detect.find_programver")
 local programver = find_programver("ccache")
 ```
 
-返回结果为：3.2.2
+The return result is: 3.2.2
 
-默认它会通过`ccache --version`尝试获取版本，如果不存在此参数，可以自己指定其他参数：
+By default it will try to get the version via `ccache --version`. If this parameter doesn't exist, you can specify other parameters yourself:
 
 ```lua
 local version = find_programver("ccache", {command = "-v"})
 ```
 
-甚至自定义版本获取脚本：
+Even the custom version gets the script:
 
 ```lua
 local version = find_programver("ccache", {command = function () return os.iorun("ccache --version") end})
 ```
 
-对于版本号的提取规则，如果内置的匹配模式不满足要求，也可以自定义：
+For the extraction rule of the version number, if the built-in matching mode does not meet the requirements, you can also customize:
 
 ```lua
 local version = find_programver("ccache", {command = "--version", parse = "(%d+%.?%d*%.?%d*.-)%s"})
-local version = find_programver("ccache", {command = "--version", parse = function (output) return output:match("(%d+%.?%d*%.?%d*.-)%s") end})
+local version = find_programver("ccache", {command = "--version", parse = function (output) return output:match("(%d+%.?%d*%.?%d*.-)%s ") end})
 ```
 
 <p class="tip">
-为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
+In order to speed up the efficiency of frequent lookups, this interface is self-contained by default. If you want to disable the cache, you can execute `xmake f -c` in the project directory to clear the local cache.
 </p>
 
-我们也可以通过`xmake lua lib.detect.find_programver ccache` 来快速测试。
+We can also test quickly with `xmake lua lib.detect.find_programver ccache`.
 
 ###### detect.find_package
 
-- 查找包文件
+- Find package files
 
-此接口也是用于查找库文件，但是比[lib.detect.find_library](#detect-find_library)更加上层，也更为强大和简单易用，因为它是以包为力度进行查找。
+This interface is also used to find library files, but it is higher than [lib.detect.find_library](#detect-find_library), and it is more powerful and easy to use, because it is based on the strength of the package.
 
-那怎样算是一个完整的包，它包含：
+So what is a complete package, it contains:
 
-1. 多个静态库或者动态库文件
-2. 库的搜索目录
-3. 头文件的搜索目录
-4. 可选的编译链接选项，例如：`defines`等
-5. 可选的版本号
+1. Multiple static libraries or dynamic library files
+2. Library search directory
+3. Search directory for header files
+4. Optional compile link options, such as `defines`
+5. Optional version number
 
-例如我们查找一个openssl包：
+For example, we look for an openssl package:
 
 ```lua
 import("lib.detect.find_package")
@@ -7761,15 +7761,15 @@ import("lib.detect.find_package")
 local package = find_package("openssl")
 ```
 
-返回的结果如下：
+The returned results are as follows:
 
 ```lua
 {links = {"ssl", "crypto", "z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
 ```
 
-如果查找成功，则返回一个包含所有包信息的table，如果失败返回nil
+If the search is successful, return a table containing all the package information, if it fails, return nil
 
-这里的返回结果可以直接作为`target:add`, `option:add`的参数传入，用于动态增加`target/option`的配置：
+The return result here can be directly passed as the parameter of `target:add`, `option:add`, which is used to dynamically increase the configuration of `target/option`:
 
 ```lua
 option("zlib")
@@ -7788,35 +7788,35 @@ target("test")
     end)
 ```
 
-如果系统上装有`homebrew`, `pkg-config`等第三方工具，那么此接口会尝试使用它们去改进查找结果。
+If third-party tools such as `homebrew`, `pkg-config` are installed on the system, then this interface will try to use them to improve the search results.
 
-我们也可以通过指定版本号，来选择查找指定版本的包（如果这个包获取不到版本信息或者没有匹配版本的包，则返回nil）：
+We can also choose to find the package of the specified version by specifying the version number (if the package does not get the version information or there is no matching version of the package, then return nil):
 
 ```lua
 local package = find_package("openssl", {version = "1.0.1"})
 ```
 
-默认情况下查找的包是根据如下规则匹配平台，架构和模式的：
+The packages that are looked up by default are matched to the platform, architecture, and mode according to the following rules:
 
-1. 如果参数传入指定了`{plat = "iphoneos", arch = "arm64", mode = "release"}`，则优先匹配，例如：`find_package("openssl", {plat = "iphoneos"})`。
-2. 如果是在当前工程环境，存在配置文件，则优先尝试从`config.get("plat")`, `config.get("arch")`和`config.get("mode")`获取平台架构进行匹配。
-3. 最后从`os.host()`和`os.arch()`中进行匹配，也就是当前主机的平台架构环境。
+1. If the parameter passed in specifies `{plat = "iphoneos", arch = "arm64", mode = "release"}`, then match first, for example: `find_package("openssl", {plat = "iphoneos"} )`.
+2. If there is a configuration file in the current project environment, try to get it from `config.get("plat")`, `config.get("arch")` and `config.get("mode")` The platform architecture is matched.
+3. Finally, the matching is done from `os.host()` and `os.arch()`, which is the platform architecture environment of the current host.
 
-如果系统的库目录以及`pkg-config`都不能满足需求，找不到包，那么可以自己手动设置搜索路径：
+If the system's library directory and `pkg-config` are not enough to meet the requirements and the package cannot be found, you can manually set the search path yourself:
 
 ```lua
 local package = find_package("openssl", {linkdirs = {"/usr/lib", "/usr/local/lib"}, includedirs = "/usr/local/include"})
 ```
 
-也可以同时指定需要搜索的链接名，头文件名：
+You can also specify the link name you want to search at the same time, the header file name:
 
 ```lua
 local package = find_package("openssl", {links = {"ssl", "crypto"}, includes = "ssl.h"}})
 ```
 
-甚至可以指定xmake的`packagedir/*.pkg`包目录，用于查找对应的`openssl.pkg`包，一般用于查找内置在工程目录中的本地包。
+You can even specify xmake's `packagedir/*.pkg` package directory to find the corresponding `openssl.pkg` package, which is typically used to find local packages built into the project directory.
 
-例如，tbox工程内置了`pkg/openssl.pkg`本地包载项目中，我们可以通过下面的脚本，传入`{packagedirs = ""}`参数优先查找本地包，如果找不到再去找系统包。
+For example, the tbox project has a built-in `pkg/openssl.pkg` local package project. We can use the following script to pass in the `{packagedirs = ""}` parameter to find the local package first. If it can't find it, go to the system. package.
 
 ```lua
 target("test")
@@ -7826,52 +7826,52 @@ target("test")
     end)
 ```
 
-总结下，现在的查找顺序：
+To summarize, the current search order:
 
-1. 如果指定`{packagedirs = ""}`参数，优先从这个参数指定的路径中查找本地包`*.pkg`
-2. 如果在`xmake/modules`下面存在`detect.packages.find_xxx`脚本，那么尝试调用此脚本来改进查找结果
-3. 如果系统存在vcpkg，优先从vcpkg的包管理系统中去获取包
-4. 如果系统存在`pkg-config`，并且查找的是系统环境的库，则尝试使用`pkg-config`提供的路径和链接信息进行查找
-5. 如果系统存在`homebrew`，并且查找的是系统环境的库，则尝试使用`brew --prefix xxx`提供的信息进行查找
-6. 从参数中指定的pathes路径和一些已知的系统路径`/usr/lib`, `/usr/include`中进行查找
+1. If you specify the `{packagedirs = ""}` parameter, look for the local package `*.pkg` from the path specified by this parameter.
+2. If there is a `detect.packages.find_xxx` script under `xmake/modules`, try calling this script to improve the lookup results.
+3. If vcpkg exists in the system, obtain the package from the vcpkg package management system.
+4. If the system has `pkg-config` and you are looking for a library for the system environment, try to find it using the path and link information provided by `pkg-config`
+5. If the system has `homebrew` and you are looking for a library for the system environment, try to find it using the information provided by `brew --prefix xxx`
+6. Find from the pathes path specified in the parameter and some known system paths `/usr/lib`, `/usr/include`
 
-这里需要着重说下第二点，通过在`detect.packages.find_xxx`脚本来改进查找结果，很多时候自动的包探测是没法完全探测到包路径的，
-尤其是针对windows平台，没有默认的库目录，也没有包管理app，很多库装的时候，都是自己所处放置在系统目录，或者添加注册表项。
+Here we need to focus on the second point, through the `detect.packages.find_xxx` script to improve the search results, many times automatic packet detection is unable to fully detect the package path,
+Especially for the windows platform, there is no default library directory, and there is no package management app. When many libraries are installed, they are placed in the system directory, or add a registry key.
 
-因此查找起来没有统一的规则，这个时候，就可以自定义一个查找脚本，去改进`find_package`的查找机制，对指定包进行更精准的查找。
+Therefore, there is no uniform rule for finding it. At this time, you can customize a search script to improve the lookup mechanism of `find_package` and perform more accurate search for the specified package.
 
-在xmake自带的`xmake/modules/detect/packages`目录下，已经有许多的内置包脚本，来对常用的包进行更好的查找支持。
-当然这不可能满足所有用户的需求，如果用户需要的包还是找不到，那么可以自己定义一个查找脚本，例如：
+In the xmake/modules/detect/packages` directory that comes with xmake, there are already many built-in package scripts for better lookup support for commonly used packages.
+Of course, this is not enough for all users. If the package that the user needs is still not found, then you can define a search script yourself, for example:
 
-查找一个名为`openssl`的包，可以编写一个`find_openssl.lua`的脚本放置在工程目录：
+To find a package named `openssl`, you can write a script for `find_openssl.lua` placed in the project directory:
 
 ```
-projectdir
+Projectdir
  - xmake
    - modules
      - detect/package/find_openssl.lua
 ```
 
-然后在工程的`xmake.lua`文件的开头指定下这个modules的目录：
+Then specify the directory for this module at the beginning of the project's `xmake.lua` file:
 
 ```lua
 add_moduledirs("$(projectdir)/xmake/modules")
 ```
 
-这样xmake就能找到自定义的扩展模块了。
+This way xmake will be able to find custom extensions.
 
-接下来我们看下`find_openssl.lua`的实现：
+Next we look at the implementation of `find_openssl.lua`:
 
 ```lua
 -- imports
 import("lib.detect.find_path")
 import("lib.detect.find_library")
 
--- find openssl 
+-- find openssl
 --
--- @param opt   the package options. e.g. see the options of find_package()
+-- @param opt the package options. e.g. see the options of find_package()
 --
--- @return      see the return value of find_package()
+-- @return see the return value of find_package()
 --
 function main(opt)
 
@@ -7903,7 +7903,7 @@ function main(opt)
 
         -- not found?
         if #result.links ~= 2 then
-            return 
+            return
         end
 
         -- find include
@@ -7911,50 +7911,67 @@ function main(opt)
 
         -- ok
         return result
+        end
     end
-end
 ```
 
-里面对windows平台进行注册表读取，去查找指定的库文件，其底层其实也是调用的[find_library](#detect-find_library)等接口。
+Inside the windows platform to read the registry, to find the
+specified library file, the bottom layer is actually called
+[find_library] (#detect-find_library) and other interfaces.
 
-<p class="tip">
-为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
-也可以通过指定force参数，来禁用cache，强制重新查找：`find_package("openssl", {force = true})`
-</p>
+<p class="tip"> In order to speed up the efficiency of frequent
+lookups, this interface is self-contained by default. If you want to
+disable the cache, you can execute `xmake f -c` in the project
+directory to clear the local cache.  You can also disable the cache by
+specifying the force parameter, forcing a re-find:
+`find_package("openssl", {force = true})` </p>
 
-我们也可以通过`xmake lua lib.detect.find_package openssl` 来快速测试。
+We can also test quickly with `xmake lua lib.detect.find_package
+openssl`.
 
-2.2.5版本之后，新增了内置接口[find_packages](#find_packages)，可以同时查找多个包，并且不需要通过import导入即可直接使用。
+After the 2.2.5 version, the built-in interface [find_packages]
+(#find_packages) has been added, which can find multiple packages at
+the same time, and can be used directly without importing by import.
 
-并且此版本之后，支持显式的从指定第三方包管理器中查找包，例如：
+And after this release, support for explicitly looking for packages
+from a specified third-party package manager, for example:
 
-```lua
-find_package("brew::pcre2/libpcre2-8")
-```
+```lua find_package("brew::pcre2/libpcre2-8") ```
 
-由于每个第三方包管理器的包名不完全一致，比如pcre2在homebrew中有三个库版本，我们可以通过上面的方式，指定查找对应libpcre2-8版本的库。
+Since the package name of each third-party package manager is not
+completely consistent, for example, pcre2 has three library versions
+in homebrew, we can specify the library corresponding to libpcre2-8
+version by the above method.
 
-另外，对于vcpkg, conan也可以通过加上`vcpkg::`, `conan::`包命名空间来指定查找里面的库。
+In addition, for vcpkg, conan can also specify the library inside by
+adding the `vcpkg::`, `conan::` package namespace.
 
 ###### detect.find_tool
 
-- 查找工具
+- Find tool
 
-此接口也是用于查找可执行程序，不过比[lib.detect.find_program](#detect-find_program)更加的高级，功能也更加强大，它对可执行程序进行了封装，提供了工具这个概念：
+This interface is also used to find executable programs, but more
+advanced than [lib.detect.find_program] (#detect-find_program), the
+function is also more powerful, it encapsulates the executable
+program, providing the concept of tools:
 
-* toolname: 工具名，可执行程序的简称，用于标示某个工具，例如：`gcc`, `clang`等
-* program: 可执行程序命令，例如：`xcrun -sdk macosx clang`
+* toolname: tool name, short for executable program, used to mark a
+* tool, for example: `gcc`, `clang`, etc.  program: executable program
+* command, for example: `xcrun -sdk macosx clang`
 
-其对应关系如下：
+The corresponding relationship is as follows:
 
-| toolname  | program                             |
+| toolname | program |
 | --------- | ----------------------------------- |
-| clang     | `xcrun -sdk macosx clang`           |
-| gcc       | `/usr/toolchains/bin/arm-linux-gcc` |
-| link      | `link.exe -lib`                     |
+| clang | `xcrun -sdk macosx clang` |
+| gcc | `/usr/toolchains/bin/arm-linux-gcc` |
+| link | `link.exe -lib` |
 
-[lib.detect.find_program](#detect-find_program)只能通过传入的原始program命令或路径，去判断该程序是否存在。
-而`find_tool`则可以通过更加一致的toolname去查找工具，并且返回对应的program完整命令路径，例如：
+[lib.detect.find_program](#detect-find_program) can only determine
+whether the program exists by passing in the original program command
+or path.  And `find_tool` can find the tool through a more consistent
+toolname, and return the corresponding program complete command path,
+for example:
 
 ```lua
 import("lib.detect.find_tool")
@@ -7962,54 +7979,68 @@ import("lib.detect.find_tool")
 local tool = find_tool("clang")
 ```
 
-返回的结果为：`{name = "clang", program = "clang"}`，这个时候还看不出区别，我们可以手动指定可执行的命令：
+The result returned is: `{name = "clang", program = "clang"}`, at this
+time there is no difference, we can manually specify the executable
+command:
 
 ```lua
 local tool = find_tool("clang", {program = "xcrun -sdk macosx clang"})
 ```
 
-返回的结果为：`{name = "clang", program = "xcrun -sdk macosx clang"}`
+The result returned is: `{name = "clang", program = "xcrun -sdk macosx
+clang"}`
 
-而在macosx下，gcc就是clang，如果我们执行`gcc --version`可以看到就是clang的一个马甲，我们可以通过`find_tool`接口进行智能识别：
+In macosx, gcc is clang. If we execute `gcc --version`, we can see
+that it is a vest of clang. We can intelligently identify it through
+the `find_tool` interface:
 
 ```lua
 local tool = find_tool("gcc")
 ```
 
-返回的结果为：`{name = "clang", program = "gcc"}`
+The result returned is: `{name = "clang", program = "gcc"}`
 
-通过这个结果就可以看的区别来了，工具名实际会被标示为clang，但是可执行的命令用的是gcc。
+The difference can be seen by this result. The tool name will actually
+be marked as clang, but the executable command uses gcc.
 
-我们也可以指定`{version = true}`参数去获取工具的版本，并且指定一个自定义的搜索路径，也支持内建变量和自定义脚本哦： 
+We can also specify the `{version = true}` parameter to get the
+version of the tool, and specify a custom search path. It also
+supports built-in variables and custom scripts:
 
 ```lua
 local tool = find_tool("clang", {version = true, {pathes = {"/usr/bin", "/usr/local/bin", "$(env PATH)", function () return "/usr/xxx/bin" end}})
 ```
 
-返回的结果为：`{name = "clang", program = "/usr/bin/clang", version = "4.0"}`
+The result returned is: `{name = "clang", program = "/usr/bin/clang",
+version = "4.0"}`
 
-这个接口是对`find_program`的上层封装，因此也支持自定义脚本检测：
+This interface is a high-level wrapper around `find_program`, so it
+also supports custom script detection:
 
 ```lua
-local tool = find_tool("clang", {check = "--help"}) 
+local tool = find_tool("clang", {check = "--help"})
 local tool = find_tool("clang", {check = function (tool) os.run("%s -h", tool) end})
 ```
 
-最后总结下，`find_tool`的查找流程：
+Finally, the search process of `find_tool`:
 
-1. 优先通过`{program = "xxx"}`的参数来尝试运行和检测。
-2. 如果在`xmake/modules/detect/tools`下存在`detect.tools.find_xxx`脚本，则调用此脚本进行更加精准的检测。
-3. 尝试从`/usr/bin`，`/usr/local/bin`等系统目录进行检测。
+1. First try to run and detect with the argument of `{program =
+"xxx"}`.  2. If there is a `detect.tools.find_xxx` script in
+`xmake/modules/detect/tools`, call this script for more accurate
+detection.  3. Try to detect from the system directory such as
+`/usr/bin`, `/usr/local/bin`.
 
-我们也可以在工程`xmake.lua`中`add_moduledirs`指定的模块目录中，添加自定义查找脚本，来改进检测机制：
+We can also add a custom lookup script to the module directory
+specified by `add_moduledirs` in the project `xmake.lua` to improve
+the detection mechanism:
 
 ```
 projectdir
-  - xmake/modules
-    - detect/tools/find_xxx.lua
+- xmake/modules
+- detect/tools/find_xxx.lua
 ```
 
-例如我们自定义一个`find_7z.lua`的查找脚本：
+For example, we customize a lookup script for `find_7z.lua`:
 
 ```lua
 import("lib.detect.find_program")
@@ -8034,38 +8065,41 @@ function main(opt)
 end
 ```
 
-将它放置到工程的模块目录下后，执行：`xmake l lib.detect.find_tool 7z`就可以查找到了。
+After placing it in the project's module directory, execute: `xmake l
+lib.detect.find_tool 7z` to find it.
 
-<p class="tip">
-为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
-</p>
+<p class="tip"> In order to speed up the efficiency of frequent
+lookups, this interface is self-contained by default. If you want to
+disable the cache, you can execute `xmake f -c` in the project
+directory to clear the local cache.  </p>
 
-我们也可以通过`xmake lua lib.detect.find_tool clang` 来快速测试。
+We can also test quickly with `xmake lua lib.detect.find_tool clang`.
 
 ###### detect.find_toolname
 
-- 查找工具名
+- Find tool name
 
-通过program命令匹配对应的工具名，例如：
+Match the corresponding tool name with the program command, for
+example:
 
-| program                   | toolname   |
+| program | toolname |
 | ------------------------- | ---------- |
-| `xcrun -sdk macosx clang` | clang      |
-| `/usr/bin/arm-linux-gcc`  | gcc        |
-| `link.exe -lib`           | link       |
-| `gcc-5`                   | gcc        |
-| `arm-android-clang++`     | clangxx    |
-| `pkg-config`              | pkg_config |
+| `xcrun -sdk macosx clang` | clang |
+| `/usr/bin/arm-linux-gcc` | gcc |
+| `link.exe -lib` | link |
+| `gcc-5` | gcc |
+| `arm-android-clang++` | clangxx |
+| `pkg-config` | pkg_config |
 
-toolname相比program，更能唯一标示某个工具，也方便查找和加载对应的脚本`find_xxx.lua`。
+Compared with program, toolname can uniquely mark a tool, and it is also convenient to find and load the corresponding script `find_xxx.lua`.
 
 ###### detect.features
 
-- 获取指定工具的所有特性
+- Get all the features of the specified tool
 
-此接口跟[compiler.features](#compiler-features)类似，区别就是此接口更加的原始，传入的参数是实际的工具名toolname。
+This interface is similar to [compiler.features](#compiler-features). The difference is that this interface is more primitive. The passed argument is the actual tool name toolname.
 
-并且此接口不仅能够获取编译器的特性，任何工具的特性都可以获取，因此更加通用。
+And this interface not only can get the characteristics of the compiler, the characteristics of any tool can be obtained, so it is more versatile.
 
 ```lua
 import("lib.detect.features")
@@ -8075,17 +8109,17 @@ local features = features("clang", {flags = "-O0", program = "xcrun -sdk macosx 
 local features = features("clang", {flags = {"-g", "-O0", "-std=c++11"}})
 ```
 
-通过传入flags，可以改变特性的获取结果，例如一些c++11的特性，默认情况下获取不到，通过启用`-std=c++11`后，就可以获取到了。
+By passing in flags, you can change the result of the feature, for example, some features of C++11, which are not available by default. After enabling `-std=c++11`, you can get it.
 
-所有编译器的特性列表，可以见：[compiler.features](#compiler-features)。
+A list of all compiler features can be found at [compiler.features](#compiler-features).
 
 ###### detect.has_features
 
-- 判断指定特性是否支持
+- Determine if the specified feature is supported
 
-此接口跟[compiler.has_features](#compiler-has_features)类似，但是更加原始，传入的参数是实际的工具名toolname。
+This interface is similar to [compiler.has_features](#compiler-has_features), but more primitive, the passed argument is the actual tool name toolname.
 
-并且此接口不仅能够判断编译器的特性，任何工具的特性都可以判断，因此更加通用。
+And this interface can not only judge the characteristics of the compiler, but the characteristics of any tool can be judged, so it is more versatile.
 
 ```lua
 import("lib.detect.has_features")
@@ -8095,15 +8129,15 @@ local features = has_features("clang", {"cxx_constexpr", "c_static_assert"}, {fl
 local features = has_features("clang", {"cxx_constexpr", "c_static_assert"}, {flags = "-g"})
 ```
 
-如果指定的特性列表存在，则返回实际支持的特性子列表，如果都不支持，则返回nil，我们也可以通过指定flags去改变特性的获取规则。
+If the specified feature list exists, the actual supported feature sublist is returned. If none is supported, nil is returned. We can also change the feature acquisition rule by specifying flags.
 
-所有编译器的特性列表，可以见：[compiler.features](#compiler-features)。
+A list of all compiler features can be found at [compiler.features](#compiler-features).
 
 ###### detect.has_flags
 
-- 判断指定参数选项是否支持
+- Determine if the specified parameter option is supported
 
-此接口跟[compiler.has_flags](#compiler-has_flags)类似，但是更加原始，传入的参数是实际的工具名toolname。
+This interface is similar to [compiler.has_flags](#compiler-has_flags), but more primitive, the passed argument is the actual tool name toolname.
 
 ```lua
 import("lib.detect.has_flags")
@@ -8113,15 +8147,15 @@ local ok = has_flags("clang", {"-g", "-O0"}, {program = "xcrun -sdk macosx clang
 local ok = has_flags("clang", "-g -O0", {toolkind = "cxx"})
 ```
 
-如果检测通过，则返回true。
+Returns true if the test passed.
 
-此接口的检测做了一些优化，除了cache机制外，大部分场合下，会去拉取工具的选项列表（`--help`）直接判断，如果选项列表里获取不到的话，才会通过尝试运行的方式来检测。
+The detection of this interface has been optimized. Except for the cache mechanism, in most cases, the tool's option list (`--help`) will be directly judged. If the option list is not available, it will be tried. The way to run to detect.
 
 ###### detect.has_cfuncs
 
-- 判断指定c函数是否存在
+- Determine if the specified c function exists
 
-此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测函数。
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect functions.
 
 ```lua
 import("lib.detect.has_cfuncs")
@@ -8130,75 +8164,75 @@ local ok = has_cfuncs("setjmp")
 local ok = has_cfuncs({"sigsetjmp((void*)0, 0)", "setjmp"}, {includes = "setjmp.h"})
 ```
 
-对于函数的描述规则如下：
+The rules for describing functions are as follows:
 
-| 函数描述                                        | 说明          |
+| Function Description | Description |
 | ----------------------------------------------- | ------------- |
-| `sigsetjmp`                                     | 纯函数名      |
-| `sigsetjmp((void*)0, 0)`                        | 函数调用      |
-| `sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}` | 函数名 + {}块 |
+| `sigsetjmp` | pure function name |
+| `sigsetjmp((void*)0, 0)` | Function Call |
+| `sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}` | function name + {} block |
 
-在最后的可选参数中，除了可以指定`includes`外，还可以指定其他的一些参数用于控制编译检测的选项条件：
+In the last optional parameter, in addition to specifying `includes`, you can also specify other parameters to control the option conditions for compile detection:
 
 ```lua
 { verbose = false, target = [target|option], includes = .., config = {linkdirs = .., links = .., defines = ..}}
 ```
 
-其中verbose用于回显检测信息，target用于在检测前追加target中的配置信息, 而config用于自定义配置跟target相关的编译选项。
+The verbose is used to echo the detection information, the target is used to append the configuration information in the target before the detection, and the config is used to customize the compilation options related to the target.
 
 ###### detect.has_cxxfuncs
 
-- 判断指定c++函数是否存在
+- Determine if the specified c++ function exists
 
-此接口跟[lib.detect.has_cfuncs](#detect-has_cfuncs)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++函数。
+This interface is similar to [lib.detect.has_cfuncs](#detect-has_cfuncs), please refer to its instructions for use. The only difference is that this interface is used to detect c++ functions.
 
 ###### detect.has_cincludes
 
-- 判断指定c头文件是否存在
+- Determine if the specified c header file exists
 
-此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测头文件。
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect header files.
 
 ```lua
 import("lib.detect.has_cincludes")
 
 local ok = has_cincludes("stdio.h")
 local ok = has_cincludes({"stdio.h", "stdlib.h"}, {target = target})
-local ok = has_cincludes({"stdio.h", "stdlib.h"}, {config = {defines = "_GNU_SOURCE=1", languages = "cxx11"}})
+local ok = has_cincludes({"stdio.h", "stdlib.h"}, {config = {defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
 ```
 
 ###### detect.has_cxxincludes
 
-- 判断指定c++头文件是否存在
+- Determine if the specified c++ header file exists
 
-此接口跟[lib.detect.has_cincludess](#detect-has_cincludes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++头文件。
+This interface is similar to [lib.detect.has_cincludess](#detect-has_cincludes), please refer to its instructions for use. The only difference is that this interface is used to detect c++ header files.
 
 ###### detect.has_ctypes
 
-- 判断指定c类型是否存在
+- Determine if the specified c type exists
 
-此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测函数。
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect functions.
 
 ```lua
 import("lib.detect.has_ctypes")
 
 local ok = has_ctypes("wchar_t")
 local ok = has_ctypes({"char", "wchar_t"}, {includes = "stdio.h"})
-local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, config = {"defines = "_GNU_SOURCE=1", languages = "cxx11"}})
+local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, config = {"defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
 ```
 
 ###### detect.has_cxxtypes
 
-- 判断指定c++类型是否存在
+- Determine if the specified c++ type exists
 
-此接口跟[lib.detect.has_ctypess](#detect-has_ctypes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++类型。
+This interface is similar to [lib.detect.has_ctypess](#detect-has_ctypes). Please refer to its instructions for use. The only difference is that this interface is used to detect c++ types.
 
 ###### detect.check_cxsnippets
 
-- 检测c/c++代码片段是否能够编译通过
+- Check if the c/c++ code snippet can be compiled
 
-通用的c/c++代码片段检测接口，通过传入多个代码片段列表，它会自动生成一个编译文件，然后常识对它进行编译，如果编译通过返回true。
+The generic c/c++ code snippet detection interface, by passing in a list of multiple code snippets, it will automatically generate a compiled file, and then common sense to compile it, if the compilation pass returns true.
 
-对于一些复杂的编译器特性，连[compiler.has_features](#compiler-has_features)都无法检测到的时候，可以通过此接口通过尝试编译来检测它。
+For some complex compiler features, even if [compiler.has_features](#compiler-has_features) can't detect it, you can detect it by trying to compile through this interface.
 
 ```lua
 import("lib.detect.check_cxsnippets")
@@ -8207,39 +8241,39 @@ local ok = check_cxsnippets("void test() {}")
 local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar_t", includes = "stdio.h"})
 ```
 
-此接口是[detect.has_cfuncs](#detect-has_cfuncs), [detect.has_cincludes](#detect-has_cincludes)和[detect.has_ctypes](detect-has_ctypes)等接口的通用版本，也更加底层。
+This interface is a generic version of interfaces such as [detect.has_cfuncs](#detect-has_cfuncs), [detect.has_cincludes](#detect-has_cincludes), and [detect.has_ctypes](detect-has_ctypes), and is also lower level.
 
-因此我们可以用它来检测：types, functions, includes 还有 links，或者是组合起来一起检测。
+So we can use it to detect: types, functions, includes and links, or combine them together to detect.
 
-第一个参数为代码片段列表，一般用于一些自定义特性的检测，如果为空，则可以仅仅检测可选参数中条件，例如：
+The first parameter is a list of code fragments, which are generally used for the detection of some custom features. If it is empty, it can only detect the conditions in the optional parameters, for example:
 
 ```lua
-local ok = check_cxsnippets({}, {types = {"wchar_t", "char*"}, includes = "stdio.h", funcs = {"sigsetjmp", "sigsetjmp((void*)0, 0)"}})
+local ok = check_cxsnippets({}, {types = {"wchar_t", "char*"}, includes = "stdio.h", funcs = {"sigsetjmp", "sigsetjmp((void*)0, 0)"} })
 ```
 
-上面那个调用，会去同时检测types, includes和funcs是否都满足，如果通过返回true。
+The above call will check if the types, includes and funcs are both satisfied, and return true if passed.
 
-还有其他一些可选参数：
+There are other optional parameters:
 
 ```lua
 { verbose = false, target = [target|option], sourcekind = "[cc|cxx]"}
 ```
 
-其中verbose用于回显检测信息，target用于在检测前追加target中的配置信息, sourcekind 用于指定编译器等工具类型，例如传入`cxx`强制作为c++代码来检测。
+The verbose is used to echo the detection information. The target is used to append the configuration information in the target before the detection. The sourcekind is used to specify the tool type such as the compiler. For example, the incoming `cxx` is forced to be detected as c++ code.
 
 ##### net.http
 
-此模块提供http的各种操作支持，目前提供的接口如下：
+This module provides various operational support for http. The currently available interfaces are as follows:
 
-| 接口                                                | 描述                                         | 支持版本             |
+| Interface | Description | Supported version|
 | --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [http.download](#http-download)                     | 下载http文件                                 | >= 2.1.5             |
+[http.download](#http-download) | Download http file | >= 2.1.5 |
 
 ###### http.download
 
-- 下载http文件
+- Download http file
 
-这个接口比较简单，就是单纯的下载文件。
+This interface is relatively simple, is simply download files.
 
 ```lua
 import("net.http")
@@ -8249,27 +8283,27 @@ http.download("http://xmake.io", "/tmp/index.html")
 
 ##### privilege.sudo
 
-此接口用于通过`sudo`来运行命令，并且提供了平台一致性处理，对于一些需要root权限运行的脚本，可以使用此接口。
+This interface is used to run commands via `sudo` and provides platform consistency handling, which can be used for scripts that require root privileges to run.
 
 <p class="warning">
-为了保证安全性，除非必须使用的场合，其他情况下尽量不要使用此接口。
+In order to ensure security, unless you must use it, try not to use this interface in other cases.
 </p>
 
-| 接口                                                | 描述                                         | 支持版本             |
+| Interface | Description | Supported Versions |
 | --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [sudo.has](#sudo-has)                               | 判断sudo是否支持                             | >= 2.1.5             |
-| [sudo.run](#sudo-run)                               | 安静运行程序                                 | >= 2.1.5             |
-| [sudo.runv](#sudo-runv)                             | 安静运行程序，带参数列表                     | >= 2.1.5             |
-| [sudo.exec](#sudo-exec)                             | 回显运行程序                                 | >= 2.1.5             |
-| [sudo.execv](#sudo-execv)                           | 回显运行程序，带参数列表                     | >= 2.1.5             |
-| [sudo.iorun](#sudo-iorun)                           | 运行并获取程序输出内容                       | >= 2.1.5             |
-| [sudo.iorunv](#sudo-iorunv)                         | 运行并获取程序输出内容，带参数列表           | >= 2.1.5             |
+| [sudo.has](#sudo-has) | Determine if sudo supports | >= 2.1.5 |
+| [sudo.run](#sudo-run) | Quiet running program | >= 2.1.5 |
+| [sudo.runv](#sudo-runv) | Quiet running program with parameter list | >= 2.1.5 |
+| [sudo.exec](#sudo-exec) | Evoke Run Program | >= 2.1.5 |
+| [sudo.execv](#sudo-execv) | Echo running program with parameter list | >= 2.1.5 |
+| [sudo.iorun](#sudo-iorun) | Run and get the program output | >= 2.1.5 |
+| [sudo.iorunv](#sudo-iorunv) | Run and get the program output with parameter list | >= 2.1.5 |
 
 ###### sudo.has
 
--  判断sudo是否支持
+- Determine if sudo supports
 
-目前仅在`macosx/linux`下支持sudo，windows上的管理员权限运行暂时还不支持，因此建议使用前可以通过此接口判断支持情况后，针对性处理。
+At present, sudo is supported only under `macosx/linux`. The administrator privilege running on Windows is not supported yet. Therefore, it is recommended to use the interface to judge the support situation before use.
 
 ```lua
 import("privilege.sudo")
@@ -8281,9 +8315,9 @@ end
 
 ###### sudo.run
 
-- 安静运行原生shell命令
+- Quietly running native shell commands
 
-具体用法可参考：[os.run](#os-run)。
+For specific usage, please refer to: [os.run](#os-run).
 
 ```lua
 import("privilege.sudo")
@@ -8293,153 +8327,153 @@ sudo.run("rm /system/file")
 
 ###### sudo.runv
 
-- 安静运行原生shell命令，带参数列表
+- Quietly running native shell commands with parameter list
 
-具体用法可参考：[os.runv](#os-runv)。
+For specific usage, please refer to: [os.runv](#os-runv).
 
 ###### sudo.exec
 
-- 回显运行原生shell命令
+- Echo running native shell commands
 
-具体用法可参考：[os.exec](#os-exec)。
+For specific usage, please refer to: [os.exec](#os-exec).
 
 ###### sudo.execv
 
-- 回显运行原生shell命令，带参数列表
+- Echo running native shell commands with parameter list
 
-具体用法可参考：[os.execv](#os-execv)。
+For specific usage, please refer to: [os.execv](#os-execv).
 
 ###### sudo.iorun
 
-- 安静运行原生shell命令并获取输出内容
+- Quietly running native shell commands and getting output
 
-具体用法可参考：[os.iorun](#os-iorun)。
+For specific usage, please refer to: [os.iorun](#os-iorun).
 
 ###### sudo.iorunv
 
-- 安静运行原生shell命令并获取输出内容，带参数列表
+- Run the native shell command quietly and get the output with a list of parameters
 
-具体用法可参考：[os.iorunv](#os-iorunv)。
+For specific usage, please refer to: [os.iorunv](#os-iorunv).
 
 ##### devel.git
 
-此接口提供了git各种命令的访问接口，相对于直接调用git命令，此模块提供了更加上层易用的封装接口，并且提供对git的自动检测和跨平台处理。
+This interface provides access to various commands of git. Compared to the direct call to git command, this module provides a more easy-to-use package interface and provides automatic detection and cross-platform processing for git.
 
 <p class="tip">
-目前windows上，需要手动安装git包后，才能检测到，后续版本会提供自动集成git功能，用户将不用关心如何安装git，就可以直接使用。
+Currently on Windows, you need to manually install the git package before you can detect it. The subsequent version will provide automatic integration of git function. Users will not need to care about how to install git, they can be used directly.
 </p>
 
-| 接口                                                | 描述                                         | 支持版本             |
+| Interface | Description | Supported Versions |
 | --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [git.clone](#git-clone)                             | clone代码库                                  | >= 2.1.5             |
-| [git.pull](#git-pull)                               | 拉取代码库最新提交                           | >= 2.1.5             |
-| [git.clean](#git-clean)                             | 清理代码库文件                               | >= 2.1.5             |
-| [git.checkout](#git-checkout)                       | 签出指定分支版本                             | >= 2.1.5             |
-| [git.refs](#git-refs)                               | 获取所有引用列表                             | >= 2.1.5             |
-| [git.tags](#git-tags)                               | 获取所有标记列表                             | >= 2.1.5             |
-| [git.branches](#git-branches)                       | 获取所有分支列表                             | >= 2.1.5             |
+| [git.clone](#git-clone) | clone codebase | >= 2.1.5 |
+| [git.pull](#git-pull) | Pull the codebase latest commit | >= 2.1.5 |
+| [git.clean](#git-clean) | Clean up the codebase file | >= 2.1.5 |
+| [git.checkout](#git-checkout) | Check out the specified branch version | >= 2.1.5 |
+| [git.refs](#git-refs) | Get a list of all references | >= 2.1.5 |
+| [git.tags](#git-tags) | Get all tag lists | >= 2.1.5 |
+| [git.branches](#git-branches) | Get a list of all branches | >= 2.1.5 |
 
 ###### git.clone
 
-- clone代码库
+- clone codebase
 
-此接口对应`git clone`命令
+This interface corresponds to the `git clone` command.
 
 ```lua
 import("devel.git")
- 
+
 git.clone("git@github.com:tboox/xmake.git")
 git.clone("git@github.com:tboox/xmake.git", {depth = 1, branch = "master", outputdir = "/tmp/xmake"})
 ```
 
 ###### git.pull
 
-- 拉取代码库最新提交
+- Pull the code base for the latest submission
 
-此接口对应`git pull`命令
+This interface corresponds to the `git pull` command.
 
 ```lua
 import("devel.git")
- 
+
 git.pull()
 git.pull({remote = "origin", tags = true, branch = "master", repodir = "/tmp/xmake"})
 ```
 
 ###### git.clean
 
-- 清理代码库文件
+- Clean up the code base file
 
-此接口对应`git clean`命令
+This interface corresponds to the `git clean` command.
 
 ```lua
 import("devel.git")
- 
+
 git.clean()
 git.clean({repodir = "/tmp/xmake", force = true})
 ```
 
 ###### git.checkout
 
-- 签出指定分支版本
+- Check out the specified branch version
 
-此接口对应`git checkout`命令
+This interface corresponds to the `git checkout` command
 
 ```lua
 import("devel.git")
- 
+
 git.checkout("master", {repodir = "/tmp/xmake"})
 git.checkout("v1.0.1", {repodir = "/tmp/xmake"})
 ```
 
 ###### git.refs
 
-- 获取所有引用列表 
+- Get a list of all references
 
-此接口对应`git ls-remote --refs`命令
+This interface corresponds to the `git ls-remote --refs` command
 
 ```lua
 import("devel.git")
- 
+
 local refs = git.refs(url)
 ```
 
 ###### git.tags
 
-- 获取所有标记列表 
+- Get a list of all tags
 
-此接口对应`git ls-remote --tags`命令
+This interface corresponds to the `git ls-remote --tags` command
 
 ```lua
 import("devel.git")
- 
+
 local tags = git.tags(url)
 ```
 
 ###### git.branches
 
-- 获取所有分支列表 
+- Get a list of all branches
 
-此接口对应`git ls-remote --heads`命令
+This interface corresponds to the `git ls-remote --heads` command
 
 ```lua
 import("devel.git")
- 
+
 local branches = git.branches(url)
 ```
 
 ##### utils.archive
 
-此模块用于压缩和解压缩文件。
+This module is used to compress and decompress files.
 
-| 接口                                                | 描述                                         | 支持版本             |
+| Interface | Description | Supported Versions |
 | --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [archive.extract](#archive-extract)                 | 解压文件                                     | >= 2.1.5             |
+| [archive.extract](#archive-extract)| Extract files | >= 2.1.5 |
 
 ###### archive.extract
 
-- 解压文件
+- unzip files
 
-支持大部分常用压缩文件的解压，它会自动检测系统提供了哪些解压工具，然后适配到最合适的解压器对指定压缩文件进行解压操作。
+Supports the decompression of most commonly used compressed files. It automatically detects which decompression tools are provided by the system, and then adapts them to the most suitable decompressor to decompress the specified compressed files.
 
 ```lua
 import("utils.archive")
