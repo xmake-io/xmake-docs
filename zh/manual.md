@@ -136,9 +136,9 @@ $ xmake f -p other --sdk=...
 ```lua
 -- 如果当前主机环境是windows
 if is_host("windows") then
-    add_includes("C:\\includes")
+    add_includedirs("C:\\includes")
 else
-    add_includes("/usr/includess")
+    add_includedirs("/usr/includess")
 end
 ```
 

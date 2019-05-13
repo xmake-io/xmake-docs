@@ -123,9 +123,9 @@ So, we can use this api to determine the current host operating system.
 
 ```lua
 if is_host("windows") then
-    add_includes("C:\\includes")
+    add_includedirs("C:\\includes")
 else
-    add_includes("/usr/includess")
+    add_includedirs("/usr/includess")
 end
 ```
 
