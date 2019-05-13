@@ -457,6 +457,10 @@ set_xmakever("2.1.0")
 
 ###### Add sub-project directories
 
+<p class="tips">
+For xmake 2.x and above, try to use the [includes](#includes) interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.
+</p>
+
 This interface will add sub-project directories to the current `xmake.lua`, it will load the `xmake.lua` file of the sub-directories.
 
 For example, assume we have the following project directory tree:
@@ -490,6 +494,10 @@ $ xmake build tbox
 ##### add_subfiles
 
 ###### Add sub-project files
+
+<p class="tips">
+For xmake 2.x and above, try to use the [includes](#includes) interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.
+</p>
 
 `add_subfiles` is similar to [add_subdirs](#add_subdirs).
 

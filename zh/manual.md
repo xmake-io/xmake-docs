@@ -478,6 +478,10 @@ set_xmakever("2.1.0")
 
 ###### 添加子工程目录
 
+<p class="tips">
+xmake 2.x以上版本，请尽量使用[includes](#includes)这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。
+</p>
+
 每个子工程对应一个`xmake.lua`的工程描述文件。
 
 虽然一个`xmake.lua`也可以描述多个子工程模块，但是如果工程越来越大，越来越复杂，适当的模块化是很有必要的。。
@@ -518,6 +522,10 @@ $ xmake build tbox
 ##### add_subfiles
 
 ###### 添加子工程文件
+
+<p class="tips">
+xmake 2.x以上版本，请尽量使用[includes](#includes)这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。
+</p>
 
 `add_subfiles`的作用与[add_subdirs](#add_subdirs)类似，唯一的区别就是：这个接口直接指定`xmake.lua`文件所在的路径，而不是目录，例如：
 
