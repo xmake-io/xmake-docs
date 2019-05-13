@@ -100,8 +100,7 @@ end
 
 -- if the current platform is macosx or iphoneos
 if is_plat("macosx", "iphoneos") then
-    add_mxflags("-framework Foundation")
-    add_ldflags("-framework Foundation")
+    add_frameworks("Foundation")
 end
 ```
 
