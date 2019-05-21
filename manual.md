@@ -1181,6 +1181,8 @@ Set the warning level of the compilation of the current target, generally suppor
 | less | Enable fewer warnings | -W1 | -W1 |
 | more | Enable more warnings | -W3 | -W3 |
 | all | Enable all warnings | -Wall | -W3 (-Wall too more warnings) |
+| extra | Enable extra warnings | -Wextra | -W4 |
+| everything | Enable all supported warnings | -Wall -Wextra -Weffc++ / -Weverything | -Wall |
 | error | Use all warnings as compilation errors | -Werror | -WX |
 
 The parameters of this api can be added in combination, for example:

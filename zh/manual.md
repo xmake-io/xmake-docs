@@ -1206,6 +1206,8 @@ target("xxx")
 | less  | 启用较少的警告         | -W1        | -W1                           |
 | more  | 启用较多的警告         | -W3        | -W3                           |
 | all   | 启用所有警告           | -Wall      | -W3 (-Wall too more warnings) |
+| extra | 启用额外的警告 | -Wextra | -W4 |
+| everything | 启用全部支持的警告 | -Wall -Wextra -Weffc++ / -Weverything | -Wall |
 | error | 将所有警告作为编译错误 | -Werror    | -WX                           |
 
 这个api的参数是可以混合添加的，例如：
