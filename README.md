@@ -973,7 +973,7 @@ $ xmake package -o ../test/packages
 
 In this way, the test project can pass [add_packages](https://xmake.io/#/zh/manual?id=targetadd_packages) and [add_packagedirs](https://xmake.io/#/zh/manual?id= add_packagedirs) to configure and use the tbox.pkg package.
 
-For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: [Dependency package addition and automatic detection mechanism] (https://tboox.org/cn/2016/08/06/add-package-and-autocheck/)
+For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: [Dependency package addition and automatic detection mechanism](https://tboox.org/cn/2016/08/06/add-package-and-autocheck/)
 
 #### System Search Mode
 
@@ -1068,7 +1068,7 @@ xmake will remotely pull the relevant source package, then automatically compile
 
 <img src="/assets/img/index/package_manage.png" width="80%" />
 
-For more information and progress on package dependency management see the related issues: [Remote package management] (https://github.com/xmake-io/xmake/issues/69)
+For more information and progress on package dependency management see the related issues: [Remote package management](https://github.com/xmake-io/xmake/issues/69)
 
 ##### Currently Supported Features
 
@@ -1091,7 +1091,7 @@ Here we briefly introduce the processing mechanism of the entire dependency pack
 
 ##### Semantic Version Settings
 
-Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: [https://semver.org/] (https://semver.org/)
+Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: [https://semver.org/](https://semver.org/)
 
 Some semantic versions are written:
 
@@ -1100,7 +1100,7 @@ add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
 add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 ```
 
-The semantic version parser currently used by xmake is the [sv](https://github.com/uael/sv) library contributed by [uael](https://github.com/uael), which also has a description of the version. For detailed instructions, please refer to the following: [Version Description] (https://github.com/uael/sv#versions)
+The semantic version parser currently used by xmake is the [sv](https://github.com/uael/sv) library contributed by [uael](https://github.com/uael), which also has a description of the version. For detailed instructions, please refer to the following: [Version Description](https://github.com/uael/sv#versions)
 
 Of course, if we have no special requirements for the current version of the dependency package, then we can write directly:
 
@@ -1266,7 +1266,7 @@ The above myrepo directory is your own private package repository, built into yo
 add_repositories("my-repo myrepo")
 ```
 
-This can be referred to [benchbox] (https://github.com/tboox/benchbox) project, which has a built-in private repository.
+This can be referred to [benchbox](https://github.com/tboox/benchbox) project, which has a built-in private repository.
 
 We can even build a package without directly building a package description into the project xmake.lua, which is useful for relying on one or two packages, for example:
 
