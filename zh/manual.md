@@ -5538,7 +5538,7 @@ xmake会同时支持这两种写法，内部会去自动智能检测，选择输
 
 显示结果如下：
 
-![cprint_colors](//tboox.org/static/img/xmake/cprint_colors.png)
+![cprint_colors](https://tboox.org/static/img/xmake/cprint_colors.png)
 
 跟颜色相关的描述，都放置在 `${  }` 里面，可以同时设置多个不同的属性，例如：
 
@@ -5605,7 +5605,7 @@ xmake会同时支持这两种写法，内部会去自动智能检测，选择输
 
 上面两行代码，我打印了一个homebrew里面经典的啤酒符号，下面那行打印了一个ok的手势符号，是不是很炫哈。。
 
-![cprint_emoji](//tboox.org/static/img/xmake/cprint_emoji.png)
+![cprint_emoji](https://tboox.org/static/img/xmake/cprint_emoji.png)
 
 所有的emoji表情，以及xmake里面对应的key，都可以通过[emoji符号](http://www.emoji-cheat-sheet.com/)里面找到。。
 
