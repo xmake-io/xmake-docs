@@ -5463,7 +5463,7 @@ E.g:
 
 The results are as follows:
 
-![cprint_colors](//tboox.org/static/img/xmake/cprint_colors.png)
+![cprint_colors](https://tboox.org/static/img/xmake/cprint_colors.png)
 
 The color-related descriptions are placed in `${ }`, and you can set several different properties at the same time, for example:
 
@@ -5530,9 +5530,9 @@ Ignore the display, for example:
 
 The above two lines of code, I printed a classic beer symbol in the homebrew, the following line printed an ok gesture symbol, is not very dazzling. .
 
-![cprint_emoji](//tboox.org/static/img/xmake/cprint_emoji.png)
+![cprint_emoji](https://tboox.org/static/img/xmake/cprint_emoji.png)
 
-All emoji emoticons, as well as the corresponding keys in xmake, can be found in [emoji] (http://www.emoji-cheat-sheet.com/). .
+All emoji emoticons, as well as the corresponding keys in xmake, can be found in [emoji](http://www.emoji-cheat-sheet.com/). .
 
 Version 2.1.7 supports 24-bit true color output, if the terminal supports it:
 
