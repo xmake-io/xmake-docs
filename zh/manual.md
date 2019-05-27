@@ -627,7 +627,7 @@ set_config("ld", "g++")
 
 ###### 添加需要的依赖包
 
-xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：[http://semver.org/](http://semver.org/)
+xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：[https://semver.org/](https://semver.org/)
 
 一些语义版本写法：
 
@@ -5538,7 +5538,7 @@ xmake会同时支持这两种写法，内部会去自动智能检测，选择输
 
 显示结果如下：
 
-![cprint_colors](http://tboox.org/static/img/xmake/cprint_colors.png)
+![cprint_colors](//tboox.org/static/img/xmake/cprint_colors.png)
 
 跟颜色相关的描述，都放置在 `${  }` 里面，可以同时设置多个不同的属性，例如：
 
@@ -5605,7 +5605,7 @@ xmake会同时支持这两种写法，内部会去自动智能检测，选择输
 
 上面两行代码，我打印了一个homebrew里面经典的啤酒符号，下面那行打印了一个ok的手势符号，是不是很炫哈。。
 
-![cprint_emoji](http://tboox.org/static/img/xmake/cprint_emoji.png)
+![cprint_emoji](//tboox.org/static/img/xmake/cprint_emoji.png)
 
 所有的emoji表情，以及xmake里面对应的key，都可以通过[emoji符号](http://www.emoji-cheat-sheet.com/)里面找到。。
 
@@ -6397,7 +6397,7 @@ end
 
 ##### table
 
-table属于lua原生提供的模块，对于原生接口使用可以参考：[lua官方文档](http://www.lua.org/manual/5.1/manual.html#5.5)
+table属于lua原生提供的模块，对于原生接口使用可以参考：[lua官方文档](https://www.lua.org/manual/5.1/manual.html#5.5)
 
 xmake中对其进行了扩展，增加了一些扩展接口：
 
@@ -6485,7 +6485,7 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 
 ##### string
 
-字符串模块为lua原生自带的模块，具体使用见：[lua官方手册](http://www.lua.org/manual/5.1/manual.html#5.4)
+字符串模块为lua原生自带的模块，具体使用见：[lua官方手册](https://www.lua.org/manual/5.1/manual.html#5.4)
 
 xmake中对其进行了扩展，增加了一些扩展接口：
 
@@ -6634,7 +6634,7 @@ end
 
 ##### coroutine
 
-协程模块是lua原生自带的模块，具使用见：[lua官方手册](http://www.lua.org/manual/5.1/manual.html#5.2)
+协程模块是lua原生自带的模块，具使用见：[lua官方手册](https://www.lua.org/manual/5.1/manual.html#5.2)
 
 #### 扩展模块
 
@@ -8331,7 +8331,7 @@ local ok = check_cxsnippets({}, {types = {"wchar_t", "char*"}, includes = "stdio
 ```lua
 import("net.http")
 
-http.download("http://xmake.io", "/tmp/index.html")
+http.download("https://xmake.io", "/tmp/index.html")
 ```
 
 ##### privilege.sudo
