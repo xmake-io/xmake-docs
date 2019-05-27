@@ -4,8 +4,8 @@ search: en
 
 <p>
 <div align="center">
-  <a href="http://xmake.io">
-    <img width="200" heigth="200" src="http://tboox.org/static/img/xmake/logo256c.png">
+  <a href="//xmake.io">
+    <img width="200" heigth="200" src="https://tboox.org/static/img/xmake/logo256c.png">
   </a>  
 
   <h1>xmake</h1>
@@ -40,7 +40,7 @@ search: en
     <a href="https://jq.qq.com/?_wv=1027&k=5hpwWFv">
       <img src="https://img.shields.io/badge/chat-on%20QQ-ff69b4.svg?style=flat-square" alt="QQ" />
     </a>
-    <a href="http://xmake.io/pages/donation.html#donate">
+    <a href="//xmake.io/pages/donation.html#donate">
       <img src="https://img.shields.io/badge/donate-us-orange.svg?style=flat-square" alt="Donate" />
     </a>
   </div>
@@ -973,7 +973,7 @@ $ xmake package -o ../test/packages
 
 In this way, the test project can pass [add_packages](https://xmake.io/#/zh/manual?id=targetadd_packages) and [add_packagedirs](https://xmake.io/#/zh/manual?id= add_packagedirs) to configure and use the tbox.pkg package.
 
-For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: [Dependency package addition and automatic detection mechanism] (http://tboox.org/cn/2016/08/06/add-package -and-autocheck/)
+For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: [Dependency package addition and automatic detection mechanism] (https://tboox.org/cn/2016/08/06/add-package-and-autocheck/)
 
 #### System Search Mode
 
@@ -1091,7 +1091,7 @@ Here we briefly introduce the processing mechanism of the entire dependency pack
 
 ##### Semantic Version Settings
 
-Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: [http://semver.org/] (http://semver.org/)
+Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: [https://semver.org/] (https://semver.org/)
 
 Some semantic versions are written:
 
@@ -1487,7 +1487,7 @@ If we only want to generate xmake.lua file, we can run:
 $ xmake f -y
 ```
 
-If you want to known more information please see [Scan source codes and build project without makefile](http://tboox.org/2017/01/07/build-without-makefile/)
+If you want to known more information please see [Scan source codes and build project without makefile](https://tboox.org/2017/01/07/build-without-makefile/)
 
 ## Backers
 
