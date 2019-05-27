@@ -603,7 +603,7 @@ However, we can still modify the default configuration in xmake.lua by `$xmake f
 
 ###### Add package dependencies
 
-Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of semantic versioning, see: [http://semver.org/] (http://semver.org/)
+Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of semantic versioning, see: [https://semver.org/] (https://semver.org/)
 
 Some examples:
 
@@ -5463,7 +5463,7 @@ E.g:
 
 The results are as follows:
 
-![cprint_colors](http://tboox.org/static/img/xmake/cprint_colors.png)
+![cprint_colors](//tboox.org/static/img/xmake/cprint_colors.png)
 
 The color-related descriptions are placed in `${ }`, and you can set several different properties at the same time, for example:
 
@@ -5530,7 +5530,7 @@ Ignore the display, for example:
 
 The above two lines of code, I printed a classic beer symbol in the homebrew, the following line printed an ok gesture symbol, is not very dazzling. .
 
-![cprint_emoji](http://tboox.org/static/img/xmake/cprint_emoji.png)
+![cprint_emoji](//tboox.org/static/img/xmake/cprint_emoji.png)
 
 All emoji emoticons, as well as the corresponding keys in xmake, can be found in [emoji] (http://www.emoji-cheat-sheet.com/). .
 
@@ -6320,7 +6320,7 @@ end
 
 ##### table
 
-Table belongs to the module provided by Lua native. For the native interface, you can refer to: [lua official document] (http://www.lua.org/manual/5.1/manual.html#5.5)
+Table belongs to the module provided by Lua native. For the native interface, you can refer to: [lua official document] (https://www.lua.org/manual/5.1/manual.html#5.5)
 
 It has been extended in xmake to add some extension interfaces:
 
@@ -6408,7 +6408,7 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 
 ##### string
 
-The string module is a native module of lua. For details, see: [lua official manual] (http://www.lua.org/manual/5.1/manual.html#5.4)
+The string module is a native module of lua. For details, see: [lua official manual] (https://www.lua.org/manual/5.1/manual.html#5.4)
 
 It has been extended in xmake to add some extension interfaces:
 
@@ -6557,7 +6557,7 @@ end
 
 ##### coroutine
 
-The coroutine module is a native module of lua. For use, see: [lua official manual] (http://www.lua.org/manual/5.1/manual.html#5.2)
+The coroutine module is a native module of lua. For use, see: [lua official manual] (https://www.lua.org/manual/5.1/manual.html#5.2)
 
 #### Extension Modules
 
@@ -8282,7 +8282,7 @@ This interface is relatively simple, is simply download files.
 ```lua
 import("net.http")
 
-http.download("http://xmake.io", "/tmp/index.html")
+http.download("https://xmake.io", "/tmp/index.html")
 ```
 
 ##### privilege.sudo
