@@ -5,7 +5,7 @@ search: zh
 
 <p>
 <div align="center">
-  <a href="//xmake.io/cn">
+  <a href="https://xmake.io/cn">
     <img width="200" heigth="200" src="https://tboox.org/static/img/xmake/logo256c.png">
   </a>  
 
@@ -41,7 +41,7 @@ search: zh
     <a href="https://jq.qq.com/?_wv=1027&k=5hpwWFv">
       <img src="https://img.shields.io/badge/chat-on%20QQ-ff69b4.svg?style=flat-square" alt="QQ" />
     </a>
-    <a href="//xmake.io/pages/donation.html#donate">
+    <a href="https://xmake.io/pages/donation.html#donate">
       <img src="https://img.shields.io/badge/donate-us-orange.svg?style=flat-square" alt="Donate" />
     </a>
   </div>
@@ -1032,9 +1032,9 @@ $ cd tbox
 $ xmake package -o ../test/packages
 ```
 
-这样，test工程就可以通过[add_packages](//xmake.io/#/zh/manual?id=targetadd_packages)和[add_packagedirs](//xmake.io/#/zh/manual?id=add_packagedirs)去配置和使用tbox.pkg包了。
+这样，test工程就可以通过[add_packages](https://xmake.io/#/zh/manual?id=targetadd_packages)和[add_packagedirs](https://xmake.io/#/zh/manual?id=add_packagedirs)去配置和使用tbox.pkg包了。
 
-关于内置包的详细描述，还可以参考下相关文章，这里面有详细介绍：[依赖包的添加和自动检测机制](//tboox.org/cn/2016/08/06/add-package-and-autocheck/)
+关于内置包的详细描述，还可以参考下相关文章，这里面有详细介绍：[依赖包的添加和自动检测机制](https://tboox.org/cn/2016/08/06/add-package-and-autocheck/)
 
 #### 系统查找模式
 
@@ -1579,7 +1579,7 @@ $ xmake run
 $ xmake f -y
 ```
 
-更多相关介绍，请参考文章：[xmake新增智能代码扫描编译模式，无需手写任何make文件](//tboox.org/cn/2017/01/07/build-without-makefile/)
+更多相关介绍，请参考文章：[xmake新增智能代码扫描编译模式，无需手写任何make文件](https://tboox.org/cn/2017/01/07/build-without-makefile/)
 
 ## 支持项目
 

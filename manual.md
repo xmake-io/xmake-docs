@@ -603,7 +603,7 @@ However, we can still modify the default configuration in xmake.lua by `$xmake f
 
 ###### Add package dependencies
 
-Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of semantic versioning, see: [https://semver.org/] (https://semver.org/)
+Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of semantic versioning, see: [https://semver.org/](https://semver.org/)
 
 Some examples:
 
@@ -612,7 +612,7 @@ add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
 add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 ```
 
-The semantic version parser currently used by xmake is the [sv](https://github.com/uael/sv) library contributed by [uael](https://github.com/uael), which also has a description of the version. For detailed instructions, please refer to the following: [Version Description] (https://github.com/uael/sv#versions)
+The semantic version parser currently used by xmake is the [sv](https://github.com/uael/sv) library contributed by [uael](https://github.com/uael), which also has a description of the version. For detailed instructions, please refer to the following: [Version Description](https://github.com/uael/sv#versions)
 
 Of course, if we have no special requirements for the version of the dependency package, we can omit the version:
 
@@ -1393,7 +1393,7 @@ target("test")
     add_files("src/*.markdown")
 ```
 
-We can also specify the application of local files to the rules, see: [add_files] (#targetadd_files).
+We can also specify the application of local files to the rules, see: [add_files](#targetadd_files).
 
 ##### target:on_load
 
@@ -1863,7 +1863,7 @@ When the target passes the following interfaces, the related option dependencies
 * [add_cfuncs](#targetadd_cfuncs)
 * [add_cxxfuncs](#targetadd_cxxfuncs)
 
-These interfaces, in fact, use some of the detection settings in the [option] (#option) option, for example:
+These interfaces, in fact, use some of the detection settings in the [option](#option) option, for example:
 
 ```lua
 option("wchar")
@@ -1952,7 +1952,7 @@ When the target passes the following interfaces, the related option dependencies
 
 ###### Customize detection and generate configuration header files
 
-These interfaces, in fact, use some of the detection settings in the [option] (#option) option, for example:
+These interfaces, in fact, use some of the detection settings in the [option](#option) option, for example:
 
 ```lua
 option("wchar")
@@ -2197,7 +2197,7 @@ target("test")
     add_files("src/test/*.md", {rule = "markdown"})
 ```
 
-For instructions on using custom build rules, see: [Building Rules] (#Building Rules).
+For instructions on using custom build rules, see: [Building Rules](#Building Rules).
 
 And after the 2.1.9 version, you can use the force parameter to force the automatic detection of cxflags, cflags and other compile options, directly into the compiler, even if the compiler may not support, it will also be set:
 
@@ -2209,7 +2209,7 @@ add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 
 ###### Remove source files
 
-Through this interface, you can delete the specified file from the list of files added by the [add_files] (targetadd_files) interface, for example:
+Through this interface, you can delete the specified file from the list of files added by the [add_files](targetadd_files) interface, for example:
 
 ```lua
 target("test")
@@ -2219,7 +2219,7 @@ target("test")
 
 In the above example, you can add all files except `test.c` from the `src` directory. Of course, this can also be done by `add_files("src/*.c|test.c").To achieve the same purpose, but this way is more flexible.
 
-For example, we can conditionally determine which files to delete, and this interface also supports the matching mode of [add_files] (targetadd_files), filtering mode, and bulk removal.
+For example, we can conditionally determine which files to delete, and this interface also supports the matching mode of [add_files](targetadd_files), filtering mode, and bulk removal.
 
 ```lua
 target("test")
@@ -2325,7 +2325,7 @@ target("test")
     add_includedirs("$(buildir)/include")
 ```
 
-Of course, it can also be set directly through interfaces such as [add_cxflags] (#targetadd_cxflags) or [add_mxflags] (#targetadd_mxflags), which is also possible.
+Of course, it can also be set directly through interfaces such as [add_cxflags](#targetadd_cxflags) or [add_mxflags](#targetadd_mxflags), which is also possible.
 
 After 2.2.5, includedirs can be exported to dependent child targets via the extra `{public|interface = true}` property setting, for example:
 
@@ -2607,7 +2607,7 @@ This interface is the interface shared by `target` and `option`, but the interfa
 | Interface Field | Description | Examples |
 | ------ | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | target | header files, link libraries, and function interfaces are also specified | `add_cfuncs("libc", nil, {"signal.h", "setjmp.h"}, "signal", "setjmp", "sigsetjmp{sigjmp_buf buf ; sigsetjmp(buf, 0);}", "kill")` |
-Option | only specifies the function interface, the header file depends on [add_cincludes] (#targetadd_cincludes) and other independent interfaces | `add_cincludes("setjmp.h")` `add_cfuncs("sigsetjmp")` |
+Option | only specifies the function interface, the header file depends on [add_cincludes](#targetadd_cincludes) and other independent interfaces | `add_cincludes("setjmp.h")` `add_cfuncs("sigsetjmp")` |
 
 For `option`, this interface is very simple to use, similar to [add_cincludes](#targetadd_cincludes), for example:
 
@@ -2707,7 +2707,7 @@ In this way, when compiling the test target, if the package exists, the macro de
 
 Users no longer need to call the [add_links](#targetadd_links), [add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags) interfaces to configure the dependent library links.
 
-For how to set up the package search directory, please refer to: [add_packagedirs] (#targetadd_packagedirs) interface
+For how to set up the package search directory, please refer to: [add_packagedirs](#targetadd_packagedirs) interface
 
 After v2.2.2, this interface also supports packages defined by [add_requires](#add_requires) in remote dependency management.
 
@@ -2892,7 +2892,7 @@ In the above code example, it can be seen that when the target applies the markd
 In the rule script, you can get the extended flag value set in the target by `target:values("markdown.flags")`.
 
 <p class="tip">
-The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules] (#built-in rules)
+The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](#built-in rules)
 </p>
 
 ##### target:add_values
@@ -2912,19 +2912,19 @@ You can also set a different installation directory for the target in xmake.lua 
 
 ###### Set the output directory of configuration files
 
-Version 2.2.5 adds a new interface, mainly used for the output directory of the template configuration file set by the [add_configfiles] (#targetadd_configfiles) interface.
+Version 2.2.5 adds a new interface, mainly used for the output directory of the template configuration file set by the [add_configfiles](#targetadd_configfiles) interface.
 
 ##### target:set_configvar
 
 ###### Set template configuration variable
 
-2.2.5 version of the new interface, used to add some template configuration variables that need to be pre-compiled before compilation, generally used for [add_configfiles] (#targetadd_configfiles) interface.
+2.2.5 version of the new interface, used to add some template configuration variables that need to be pre-compiled before compilation, generally used for [add_configfiles](#targetadd_configfiles) interface.
 
 ##### target:add_configfiles
 
 ###### Add template configuration files
 
-2.2.5 version of the new interface, used to add some configuration files that need to be pre-processed before compiling, used to replace the old interface such as [set_config_header] (#targetset_config_header).
+2.2.5 version of the new interface, used to add some configuration files that need to be pre-processed before compiling, used to replace the old interface such as [set_config_header](#targetset_config_header).
 
 Because this interface is more versatile, it is not only used to handle the automatic generation and preprocessing of config.h, but also to handle various file types, while `set_config_header` is only used to process header files and does not support template variable substitution.
 
@@ -3688,7 +3688,7 @@ The first parameter sets the name of the code snippet as a label, and is display
 
 The above code implements the detection of the constexpr feature of C++. If the test passes, the constexpr option is enabled. Of course, this is just an example.
 
-For the detection of compiler features, there is a more convenient and efficient detection module, providing more powerful detection support, see: [compiler.has_features] (#compiler-has_features) and [detect.check_cxsnippets] (#detect-check_cxsnippets)
+For the detection of compiler features, there is a more convenient and efficient detection module, providing more powerful detection support, see: [compiler.has_features](#compiler-has_features) and [detect.check_cxsnippets](#detect-check_cxsnippets)
 
 If you want more flexible detection, you can do this in [option.on_check](#optionon_check) via [lib.detect.check_cxsnippets](#detect-check_cxsnippets).
 
@@ -3697,7 +3697,7 @@ If you want more flexible detection, you can do this in [option.on_check](#optio
 ###### Add macro definition if the detection option is passed
 
 <p class="tip">
-After the 2.1.5 version has been deprecated, please use the [add_defines] (#targetadd_defines) interface instead.
+After the 2.1.5 version has been deprecated, please use the [add_defines](#targetadd_defines) interface instead.
 </p>
 
 The detection options will not be set until they are passed. See the example in [add_cincludes](#optionadd_cincludes) for details.
@@ -3707,7 +3707,7 @@ The detection options will not be set until they are passed. See the example in 
 ###### If the detection option is passed, add the macro definition to the configuration header file.
 
 <p class="tip">
-After the 2.1.5 version has been deprecated, please use the [add_defines_h] (#targetadd_defines_h) interface instead.
+After the 2.1.5 version has been deprecated, please use the [add_defines_h](#targetadd_defines_h) interface instead.
 </p>
 
 Similar to [add_defines_if_ok](#optionadd_defines_if_ok), the macro definitions are automatically added to the `config.h` header file after the test is passed.
@@ -4074,7 +4074,7 @@ function main(...)
 end
 ```
 
-For more modules, see: [Built-in Module] (#Built-in Module) and [Extension Module] (Extension Module)
+For more modules, see: [Built-in Module](#Built-in Module) and [Extension Module](Extension Module)
 
 Among them, the parameter in `main(...)` is specified by `task.run`, for example:
 
@@ -4469,7 +4469,7 @@ target("nonpnp")
     add_files("driver/*.rc")
 ```
 
-For more information on WDK rules, see: [#159] (https://github.com/xmake-io/xmake/issues/159)
+For more information on WDK rules, see: [#159](https://github.com/xmake-io/xmake/issues/159)
 
 ###### win.sdk.application
 
@@ -4498,7 +4498,7 @@ Used to specify certain c++ source files to be compiled as c++.net.
 add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 ```
 
-For more information on WDK rules, see: [#159] (https://github.com/xmake-io/xmake/issues/159)
+For more information on WDK rules, see: [#159](https://github.com/xmake-io/xmake/issues/159)
 
 ##### rule
 
@@ -4772,7 +4772,7 @@ rule_end()
 
 The repository depends on the package definition description, the `package()` related interface definition, etc. There will be time to elaborate, so stay tuned. .
 
-Please refer to the existing package description in the official repository: [xmake-repo] (https://github.com/xmake-io/xmake-repo)
+Please refer to the existing package description in the official repository: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 Here is a more representative example for reference:
 
@@ -5051,7 +5051,7 @@ target("test")
 
 ###### Get the value of the built-in variable
 
-[Built-in variables] (#built-in variables) can be obtained directly through this interface, without the need to add a `$()` package, which is much simpler to use, for example:
+[Built-in variables](#built-in variables) can be obtained directly through this interface, without the need to add a `$()` package, which is much simpler to use, for example:
 
 ```lua
 print(val("host"))
@@ -5669,7 +5669,7 @@ os.cp("$(scriptdir)/*.h", "$(projectdir)/src/test/**.h", "$(buildir)/inc")
 
 The above code will: all the header files in the current `xmake.lua` directory, the header files in the project source test directory are all copied to the `$(buildir)` output directory.
 
-Among them `$(scriptdir)`, `$(projectdir)` These variables are built-in variables of xmake. For details, see the related documentation of [built-in variables] (#built-in variables).
+Among them `$(scriptdir)`, `$(projectdir)` These variables are built-in variables of xmake. For details, see the related documentation of [built-in variables](#built-in variables).
 
 The matching patterns in `*.h` and `**.h` are similar to those in [add_files](#targetadd_files), the former is a single-level directory matching, and the latter is a recursive multi-level directory matching.
 
@@ -5882,7 +5882,7 @@ os.run("ls -l $(buildir)")
 
 <p class="warning">
 Using this interface to execute shell commands can easily reduce the cross-platform build. For `os.run("cp ..")`, try to use `os.cp` instead. <br>
-If you must use this interface to run the shell program, please use the [config.plat] (#config-plat) interface to determine the platform support.
+If you must use this interface to run the shell program, please use the [config.plat](#config-plat) interface to determine the platform support.
 </p>
 
 For more advanced process operations and control, see the [process](#process) module interface.
@@ -5979,7 +5979,7 @@ Used to get a temporary file path, just a path, the file needs to be created by 
 
 Consistent with the result of [$(curdir)](#var-curdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
-Usage reference: [os.tmpdir] (#os-tmpdir).
+Usage reference: [os.tmpdir](#os-tmpdir).
 
 ###### os.filesize
 
@@ -5995,7 +5995,7 @@ print(os.filesize("/tmp/a"))
 
 Consistent with the result of [$(scriptdir)](#var-scriptdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
-Usage reference: [os.tmpdir] (#os-tmpdir).
+Usage reference: [os.tmpdir](#os-tmpdir).
 
 ###### os.programdir
 
@@ -6042,7 +6042,7 @@ The io operation module extends lua's built-in io module to provide more easy-to
 
 - Open file for reading and writing
 
-This is a native interface for lua. For detailed usage, see Lua's official documentation: [The Complete I/O Model] (https://www.lua.org/pil/21.2.html)
+This is a native interface for lua. For detailed usage, see Lua's official documentation: [The Complete I/O Model](https://www.lua.org/pil/21.2.html)
 
 If you want to read all the contents of the file, you can write:
 
@@ -6320,7 +6320,7 @@ end
 
 ##### table
 
-Table belongs to the module provided by Lua native. For the native interface, you can refer to: [lua official document] (https://www.lua.org/manual/5.1/manual.html#5.5)
+Table belongs to the module provided by Lua native. For the native interface, you can refer to: [lua official document](https://www.lua.org/manual/5.1/manual.html#5.5)
 
 It has been extended in xmake to add some extension interfaces:
 
@@ -6408,7 +6408,7 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 
 ##### string
 
-The string module is a native module of lua. For details, see: [lua official manual] (https://www.lua.org/manual/5.1/manual.html#5.4)
+The string module is a native module of lua. For details, see: [lua official manual](https://www.lua.org/manual/5.1/manual.html#5.4)
 
 It has been extended in xmake to add some extension interfaces:
 
@@ -6495,7 +6495,7 @@ The result is: "    hello xmake!"
 
 ##### process
 
-This is the xmake extension's process control module for more flexible control of the process, compared to: [os.run] (#os-run) series is more flexible and lower level.
+This is the xmake extension's process control module for more flexible control of the process, compared to: [os.run](#os-run) series is more flexible and lower level.
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
@@ -6557,7 +6557,7 @@ end
 
 ##### coroutine
 
-The coroutine module is a native module of lua. For use, see: [lua official manual] (https://www.lua.org/manual/5.1/manual.html#5.2)
+The coroutine module is a native module of lua. For use, see: [lua official manual](https://www.lua.org/manual/5.1/manual.html#5.2)
 
 #### Extension Modules
 
@@ -6897,7 +6897,7 @@ end
 
 - Get compiled command line list
 
-A little different from [compiler.compargv] (#compiler-compargv) is that this interface returns a list of parameters, table representation, more convenient to operate:
+A little different from [compiler.compargv](#compiler-compargv) is that this interface returns a list of parameters, table representation, more convenient to operate:
 
 ```lua
 local program, argv = compiler.compargv("xxx.c", "xxx.o")
@@ -7921,7 +7921,7 @@ function main(opt)
 
 Inside the windows platform to read the registry, to find the
 specified library file, the bottom layer is actually called
-[find_library] (#detect-find_library) and other interfaces.
+[find_library](#detect-find_library) and other interfaces.
 
 <p class="tip"> In order to speed up the efficiency of frequent
 lookups, this interface is self-contained by default. If you want to
@@ -7955,7 +7955,7 @@ adding the `vcpkg::`, `conan::` package namespace.
 - Find tool
 
 This interface is also used to find executable programs, but more
-advanced than [lib.detect.find_program] (#detect-find_program), the
+advanced than [lib.detect.find_program](#detect-find_program), the
 function is also more powerful, it encapsulates the executable
 program, providing the concept of tools:
 

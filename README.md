@@ -4,7 +4,7 @@ search: en
 
 <p>
 <div align="center">
-  <a href="//xmake.io">
+  <a href="https://xmake.io">
     <img width="200" heigth="200" src="https://tboox.org/static/img/xmake/logo256c.png">
   </a>  
 
@@ -40,7 +40,7 @@ search: en
     <a href="https://jq.qq.com/?_wv=1027&k=5hpwWFv">
       <img src="https://img.shields.io/badge/chat-on%20QQ-ff69b4.svg?style=flat-square" alt="QQ" />
     </a>
-    <a href="//xmake.io/pages/donation.html#donate">
+    <a href="https://xmake.io/pages/donation.html#donate">
       <img src="https://img.shields.io/badge/donate-us-orange.svg?style=flat-square" alt="Donate" />
     </a>
   </div>
