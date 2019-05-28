@@ -11,7 +11,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 ## Paypal
 
-[![Paypal Me](/assets/img/paypal.png)](http://paypal.me/tboox/5)
+[![Paypal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
 
 ## Backers
 
