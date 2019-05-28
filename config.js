@@ -29,7 +29,7 @@ docute.init({
         title: 'Manual', path: '/manual'
       },
       {
-        title: 'Articles', path: 'http://www.tboox.org/category/#xmake'
+        title: 'Articles', path: 'https://www.tboox.org/category/#xmake'
       },
       {
         title: 'Feedback', path: 'https://github.com/xmake-io/xmake/issues'
@@ -52,7 +52,7 @@ docute.init({
         title: '手册', path: '/zh/manual'
       },
       {
-        title: '文章', path: 'http://www.tboox.org/cn/category/#xmake'
+        title: '文章', path: 'https://www.tboox.org/cn/category/#xmake'
       },
       {
         title: '反馈', path: 'https://github.com/xmake-io/xmake/issues'
