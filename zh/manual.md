@@ -779,6 +779,22 @@ please input: y (y/n)
 
 关于这块的更多详情见：https://github.com/xmake-io/xmake/issues/339
 
+添加clib的依赖包：
+
+clib是一款基于源码的依赖包管理器，拉取的依赖包是直接下载对应的库源码，集成到项目中编译，而不是二进制库依赖。
+
+其在xmake中集成也很方便，唯一需要注意的是，还需要自己添加上对应库的源码到xmake.lua，例如：
+
+```lua
+add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
+
+target("xmake-test")
+    set_kind("binary")
+    add_files("clib/bytes/*.c")
+    add_files("src/*.c") 
+    add_packages("bytes")
+```
+
 ##### add_repositories
 
 ###### 添加依赖包仓库

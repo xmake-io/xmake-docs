@@ -752,6 +752,22 @@ please input: y (y/n)
 
 We can see https://github.com/xmake-io/xmake/issues/339 to know more details.
 
+Add a clib dependency package:
+
+Clib is a source-based dependency package manager. The dependent package is downloaded directly to the corresponding library source code, integrated into the project to compile, rather than binary library dependencies.
+
+It is also very convenient to integrate in xmake. The only thing to note is that you need to add the source code of the corresponding library to xmake.lua, for example:
+
+```lua
+add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
+
+target("xmake-test")
+    set_kind("binary")
+    add_files("clib/bytes/*.c")
+    add_files("src/*.c")
+    add_packages("bytes")
+```
+
 ##### add_repositories
 
 ###### Add 3rd package repositories
