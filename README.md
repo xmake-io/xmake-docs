@@ -423,16 +423,16 @@ $ xmake
 ```
 
 ```lua
--- add helper function add_cugencode
-includes('add_cugencode.lua')
+-- add helper function add_cugencodes
+includes('add_cugencodes.lua')
 -- define target
 target("cuda_console")
     set_kind("binary")
     add_files("src/*.cu")
     -- generate SASS code for SM architecture of current host
-    add_cugencode("native")
+    add_cugencodes("native")
     -- generate PTX code for the virtual architecture to guarantee compatibility
-    add_cugencode("compute_30")
+    add_cugencodes("compute_30")
 ```
 
 xmake will detect Cuda SDK automatically and we can also set the SDK directory manually.
