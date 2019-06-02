@@ -8129,7 +8129,8 @@ local devices = find_cudadevices({ min_sm_arch = 35, order_by_flops = true })
 
 The result returned is: `{ { ['$id'] = 0, name = "GeForce GTX 960M", major = 5, minor = 0, ... }, ... }`
 
-The included properties will vary depending on the current CUDA version. Refer to [CUDA Toolkit Documentation](https://docs.nvidia.com/cuda/cuda-runtime-api/structcudaDeviceProp.html#structcudaDeviceProp) and its historical version.
+The included properties will vary depending on the current CUDA version.
+Please refer to [CUDA Toolkit Documentation](https://docs.nvidia.com/cuda/cuda-runtime-api/structcudaDeviceProp.html#structcudaDeviceProp) and its historical version for more information.
 
 ###### detect.features
 
