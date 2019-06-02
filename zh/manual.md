@@ -7632,6 +7632,7 @@ environment.leave("toolchains")
 | [detect.find_package](#detect-find_package)         | 查找包文件，包含库文件和搜索路径             | >= 2.1.5             |
 | [detect.find_tool](#detect-find_tool)               | 查找工具                                     | >= 2.1.5             |
 | [detect.find_toolname](#detect-find_toolname)       | 查找工具名                                   | >= 2.1.5             |
+| [detect.find_cudadevices](#detect-find_cudadevices) | 查找本机的 CUDA 设备                         | >= 2.2.7             |
 | [detect.features](#detect-features)                 | 获取指定工具的所有特性                       | >= 2.1.5             |
 | [detect.has_features](#detect-has_features)         | 判断指定特性是否支持                         | >= 2.1.5             |
 | [detect.has_flags](#detect-has_flags)               | 判断指定参数选项是否支持                     | >= 2.1.5             |
@@ -8161,6 +8162,23 @@ end
 | `pkg-config`              | pkg_config |
 
 toolname相比program，更能唯一标示某个工具，也方便查找和加载对应的脚本`find_xxx.lua`。
+
+###### detect.find_cudadevices
+
+- 查找本机的 CUDA 设备
+
+通过 CUDA Runtime API 枚举本机的 CUDA 设备，并查询其属性。
+
+```lua
+import("lib.detect.find_cudadevices")
+
+local devices = find_cudadevices({ skip_compute_mode_prohibited = true })
+local devices = find_cudadevices({ min_sm_arch = 35, order_by_flops = true })
+```
+
+返回的结果为：`{ { ['$id'] = 0, name = "GeForce GTX 960M", major = 5, minor = 0, ... }, ... }`
+
+包含的属性依据当前 CUDA 版本会有所不同，可以参考 [CUDA 官方文档](https://docs.nvidia.com/cuda/cuda-runtime-api/structcudaDeviceProp.html#structcudaDeviceProp)及其历史版本。
 
 ###### detect.features
 
