@@ -7549,6 +7549,7 @@ The interface of this module is spread across multiple module directories, try t
 | [detect.find_package](#detect-find_package) | Find package files, including library files and search paths | >= 2.1.5 |
 | [detect.find_tool](#detect-find_tool) | Find Tool | >= 2.1.5 |
 | [detect.find_toolname](#detect-find_toolname) | Find Tool Name | >= 2.1.5 |
+| [detect.find_cudadevices](#detect-find_cudadevices) | Find CUDA devices of the host                         | >= 2.2.7             |
 | [detect.features](#detect-features) | Get all the features of the specified tool | >= 2.1.5 |
 | [detect.has_features](#detect-has_features) | Determine if the specified feature is supported | >= 2.1.5 |
 | [detect.has_flags](#detect-has_flags) | Determine if the specified parameter options are supported | >= 2.1.5 |
@@ -8112,6 +8113,24 @@ example:
 | `pkg-config` | pkg_config |
 
 Compared with program, toolname can uniquely mark a tool, and it is also convenient to find and load the corresponding script `find_xxx.lua`.
+
+###### detect.find_cudadevices
+
+- Find CUDA devices of the host
+
+Enumerate CUDA devices through the CUDA Runtime API and query theirs properties.
+
+```lua
+import("lib.detect.find_cudadevices")
+
+local devices = find_cudadevices({ skip_compute_mode_prohibited = true })
+local devices = find_cudadevices({ min_sm_arch = 35, order_by_flops = true })
+```
+
+The result returned is: `{ { ['$id'] = 0, name = "GeForce GTX 960M", major = 5, minor = 0, ... }, ... }`
+
+The included properties will vary depending on the current CUDA version.
+Please refer to [CUDA Toolkit Documentation](https://docs.nvidia.com/cuda/cuda-runtime-api/structcudaDeviceProp.html#structcudaDeviceProp) and its historical version for more information.
 
 ###### detect.features
 

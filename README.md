@@ -222,6 +222,7 @@ Support languages:
 
 * c/c++
 * objc/c++
+* cuda
 * asm
 * swift
 * dlang
@@ -422,20 +423,16 @@ $ xmake
 ```
 
 ```lua
+-- add helper function add_cugencodes
+includes('add_cugencodes.lua')
+-- define target
 target("cuda_console")
     set_kind("binary")
     add_files("src/*.cu")
-
-    -- generate SASS code for each SM architecture
-    for _, sm in ipairs({"30", "35", "37", "50", "52", "60", "61", "70"}) do
-        add_cuflags("-gencode arch=compute_" .. sm .. ",code=sm_" .. sm)
-        add_ldflags("-gencode arch=compute_" .. sm .. ",code=sm_" .. sm)
-    end
-
-    -- generate PTX code from the highest SM architecture to guarantee forward-compatibility
-    sm = "70"
-    add_cuflags("-gencode arch=compute_" .. sm .. ",code=compute_" .. sm)
-    add_ldflags("-gencode arch=compute_" .. sm .. ",code=compute_" .. sm)
+    -- generate SASS code for SM architecture of current host
+    add_cugencodes("native")
+    -- generate PTX code for the virtual architecture to guarantee compatibility
+    add_cugencodes("compute_30")
 ```
 
 xmake will detect Cuda SDK automatically and we can also set the SDK directory manually.
@@ -740,6 +737,7 @@ $ xmake
 | [--rc-ld](#-rc-ld)           | Set `rust` linker                            |
 | [--rc-sh](#-rc-sh)           | Set `rust` shared library linker             |
 | [--rc-ar](#-rc-ar)           | Set `rust` static library archiver           |
+| [--cu-cxx](#-cu-cxx)         | Set `cuda` host compiler                     |
 | [--cu-ld](#-cu-ld)           | Set `cuda` linker                            |
 | [--cu-sh](#-cu-sh)           | Set `cuda` shared library linker             |
 | [--cu-ar](#-cu-ar)           | Set `cuda` static library archiver           |

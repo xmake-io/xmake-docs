@@ -250,6 +250,7 @@ target("hello")
 
 * c/c++
 * objc/c++
+* cuda
 * asm
 * swift
 * dlang
@@ -452,21 +453,18 @@ $ xmake
 ```
 
 ```lua
+-- add helper function add_cugencodes
+includes('add_cugencodes.lua')
+-- define target
 target("cuda_console")
     set_kind("binary")
     add_files("src/*.cu")
-
-    -- generate SASS code for each SM architecture
-    for _, sm in ipairs({"30", "35", "37", "50", "52", "60", "61", "70"}) do
-        add_cuflags("-gencode arch=compute_" .. sm .. ",code=sm_" .. sm)
-        add_ldflags("-gencode arch=compute_" .. sm .. ",code=sm_" .. sm)
-    end
-
-    -- generate PTX code from the highest SM architecture to guarantee forward-compatibility
-    sm = "70"
-    add_cuflags("-gencode arch=compute_" .. sm .. ",code=compute_" .. sm)
-    add_ldflags("-gencode arch=compute_" .. sm .. ",code=compute_" .. sm)
+    -- generate SASS code for SM architecture of current host
+    add_cugencodes("native")
+    -- generate PTX code for the virtual architecture to guarantee compatibility
+    add_cugencodes("compute_30")
 ```
+
 
 默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录：
 
@@ -772,6 +770,7 @@ $ xmake
 | [--rc-ld](#-rc-ld)           | 设置`rust`链接器                 |
 | [--rc-sh](#-rc-sh)           | 设置`rust`共享库链接器           |
 | [--rc-ar](#-rc-ar)           | 设置`rust`静态库归档器           |
+| [--cu-cxx](#-cu-cxx)         | 设置`cuda` host编译器            |
 | [--cu-ld](#-cu-ld)           | 设置`cuda`链接器                 |
 | [--cu-sh](#-cu-sh)           | 设置`cuda`共享库链接器           |
 | [--cu-ar](#-cu-ar)           | 设置`cuda`静态库归档器           |
