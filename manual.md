@@ -6461,23 +6461,42 @@ end
 
 ###### string.split
 
-- Split string
-
-The string is separated by the specified separator. The separator can be: character, string, pattern matching string, for example:
+pattern match and ignore empty string
 
 ```lua
-local s = "hello xmake!"
-s:split("%s+")
+("1\n\n2\n3"):split('\n') => 1, 2, 3
+("abc123123xyz123abc"):split('123') => abc, xyz, abc
+("abc123123xyz123abc"):split('[123]+') => abc, xyz, abc
 ```
 
-Split according to consecutive whitespace characters, the result is: `hello`, `xmake!`
+plain match and ignore empty string
 
 ```lua
-local s = "hello,xmake:123"
-s:split("[,:]")
+("1\n\n2\n3"):split('\n', {plain = true}) => 1, 2, 3
+("abc123123xyz123abc"):split('123', {plain = true}) => abc, xyz, abc
 ```
 
-The above code is split according to the `, ` or `:` characters. The result is: `hello`, `xmake`, `123`
+pattern match and contains empty string
+
+```lua
+("1\n\n2\n3"):split('\n', {strict = true}) => 1, , 2, 3
+("abc123123xyz123abc"):split('123', {strict = true}) => abc, , xyz, abc
+("abc123123xyz123abc"):split('[123]+', {strict = true}) => abc, xyz, abc
+```
+
+plain match and contains empty string
+
+```lua
+("1\n\n2\n3"):split('\n', {plain = true, strict = true}) => 1, , 2, 3
+("abc123123xyz123abc"):split('123', {plain = true, strict = true}) => abc, , xyz, abc
+```
+
+limit split count
+
+```lua
+("1\n\n2\n3"):split('\n', {limit = 2}) => 1, 2\n3
+("1.2.3.4.5"):split('%.', {limit = 3}) => 1, 2, 3.4.5
+```
 
 ###### string.trim
 

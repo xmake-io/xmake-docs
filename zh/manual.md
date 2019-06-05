@@ -6540,21 +6540,44 @@ end
 
 - 分割字符串
 
-通过指定的分隔符进行字符串分割，分隔符可以是：字符，字符串、模式匹配字符串，例如：
+v2.2.7版本对这个接口做了改进，以下是对2.2.7之后版本的使用说明。
+
+按模式匹配分割字符串，忽略空串，例如：
 
 ```lua
-local s = "hello     xmake!"
-s:split("%s+")
+("1\n\n2\n3"):split('\n') => 1, 2, 3
+("abc123123xyz123abc"):split('123') => abc, xyz, abc
+("abc123123xyz123abc"):split('[123]+') => abc, xyz, abc
 ```
 
-根据连续空白字符进行分割，结果为：`hello`, `xmake!`
+按纯文本匹配分割字符串，忽略空串（省去了模式匹配，会提升稍许性能），例如：
 
 ```lua
-local s = "hello,xmake:123"
-s:split("[,:]")
+("1\n\n2\n3"):split('\n', {plain = true}) => 1, 2, 3
+("abc123123xyz123abc"):split('123', {plain = true}) => abc, xyz, abc
 ```
 
-上面的代码根据`,`或者`:`字符进行分割，结果为：`hello`, `xmake`, `123`
+按模式匹配分割字符串，严格匹配，不忽略空串，例如：
+
+```lua
+("1\n\n2\n3"):split('\n', {strict = true}) => 1, , 2, 3
+("abc123123xyz123abc"):split('123', {strict = true}) => abc, , xyz, abc
+("abc123123xyz123abc"):split('[123]+', {strict = true}) => abc, xyz, abc
+```
+
+按纯文本匹配分割字符串，严格匹配，不忽略空串（省去了模式匹配，会提升稍许性能），例如：
+
+```lua
+("1\n\n2\n3"):split('\n', {plain = true, strict = true}) => 1, , 2, 3
+("abc123123xyz123abc"):split('123', {plain = true, strict = true}) => abc, , xyz, abc
+```
+
+限制分割块数
+
+```lua
+("1\n\n2\n3"):split('\n', {limit = 2}) => 1, 2\n3
+("1.2.3.4.5"):split('%.', {limit = 3}) => 1, 2, 3.4.5
+```
 
 ###### string.trim
 
