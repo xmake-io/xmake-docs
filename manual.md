@@ -922,6 +922,8 @@ target("test2")
 | [add_tools](#targetadd_tools)                   | Add toolchains                                         | >= 2.2.1                    |
 | [set_values](#targetset_values)                 | Set custom configuartion values                        | >= 2.2.1                    |
 | [add_values](#targetadd_values)                 | Add custom configuartion values                        | >= 2.2.1                    |
+| [set_rundir](#targetset_rundir)                 | Set run directory                                      | >= 2.2.7                    |
+| [add_runenvs](#targetadd_runenvs)               | Add run environments                                   | >= 2.2.7                    |
 | [set_installdir](#targetset_installdir)         | Set the installation directory                         | >= 2.2.5                    |
 | [add_installfiles](#targetadd_installfiles)     | add installation files                                 | >= 2.2.5                    |
 | [add_headerfiles](#targetadd_headerfiles)       | Add header files                                       | >= 2.2.5                    |
@@ -2916,6 +2918,37 @@ The specific extension configuration name will be different according to differe
 ###### Add custom configuration values
 
 Usage is similar to [target:set_values](#targetset_tools), the difference is that this interface is an additional setting, and will not override the settings each time.
+
+##### target:set_rundir
+
+###### Setting the running directory
+
+This interface is used to set the current running directory of the default running target program. If not set, by default, the target is loaded and run in the directory where the executable file is located.
+
+If the user wants to modify the load directory, one is to customize the run logic by `on_run()`, and to do the switch inside, but just to cut the directory, this is too cumbersome.
+
+Therefore, you can quickly switch settings to the default directory environment through this interface.
+
+```lua
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     set_rundir("$(projectdir)/xxx")
+```
+
+##### target:add_runenvs
+
+###### Adding runtime variables
+
+This interface is used to add environment variables that set the default run target program.
+
+```lua
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_runenvs("PATH", "/tmp/bin", "xxx/bin")
+     add_runenvs("NAME", "value")
+```
 
 ##### target:set_installdir
 

@@ -950,6 +950,8 @@ target("test2")
 | [add_tools](#targetadd_tools)                   | 添加编译链接工具链                   | >= 2.2.1 |
 | [set_values](#targetset_values)                 | 设置一些扩展配置值                   | >= 2.2.1 |
 | [add_values](#targetadd_values)                 | 添加一些扩展配置值                   | >= 2.2.1 |
+| [set_rundir](#targetset_rundir)                 | 设置运行目录                         | >= 2.2.7 |
+| [add_runenvs](#targetadd_runenvs)               | 添加运行环境变量                     | >= 2.2.7 |
 | [set_installdir](#targetset_installdir)         | 设置安装目录                         | >= 2.2.5 |
 | [add_installfiles](#targetadd_installfiles)     | 添加安装文件                         | >= 2.2.5 |
 | [add_headerfiles](#targetadd_headerfiles)       | 添加安装头文件                       | >= 2.2.5 |
@@ -2937,6 +2939,37 @@ target("test")
 ###### 添加一些扩展配置值
 
 用法跟[target:set_values](#targetset_tools)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
+
+##### target:set_rundir
+
+###### 设置运行目录
+
+此接口用于设置默认运行target程序的当前运行目录，如果不设置，默认情况下，target是在可执行文件所在目录加载运行。
+
+如果用户想要修改加载目录，一种是通过`on_run()`的方式自定义运行逻辑，里面去做切换，但仅仅为了切个目录就这么做，太过繁琐。
+
+因此可以通过这个接口快速的对默认执行的目录环境做设置切换。
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_rundir("$(projectdir)/xxx")
+```
+
+##### target:add_runenvs
+
+###### 添加运行环境变量
+
+此接口用于添加设置默认运行target程序的环境变量。
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_runenvs("PATH", "/tmp/bin", "xxx/bin")
+    add_runenvs("NAME", "value")
+```
 
 ##### target:set_installdir
 
