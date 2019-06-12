@@ -1630,14 +1630,6 @@ $ xmake require --uninstall tbox
 
 This will completely uninstall the removal package file.
 
-###### Remove the specified package
-
-Only unlink specifies the package, it is not detected by the current project, but the package still exists locally. If it is reinstalled, it will be completed very quickly.
-
-```console
-$ xmake require --unlink tbox
-```
-
 ###### View package details
 
 ```console

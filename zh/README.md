@@ -1713,14 +1713,6 @@ $ xmake require --uninstall tbox
 
 这会完全卸载删除包文件。
 
-###### 移除指定包
-
-仅仅unlink指定包，不被当前项目检测到，但是包在本地还是存在的，如果重新安装的话，会很快完成。
-
-```console
-$ xmake require --unlink tbox
-```
-
 ###### 查看包详细信息
 
 ```console
