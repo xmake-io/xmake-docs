@@ -851,6 +851,7 @@ target("test2")
 | [add_imports](#targetadd_imports)               | Add imported modules for the custom script             | >= 2.1.7                    |
 | [add_rules](#targetadd_rules)                   | Add custom compilation rule to target                  | >= 2.1.9                    |
 | [on_load](#targeton_load)                       | Run custom load target configuartion script            | >= 2.1.5                    |
+| [on_link](#targeton_link)                       | Run custom link target script                          | >= 2.2.7                    |
 | [on_build](#targeton_build)                     | Run custom build target script                         | >= 2.0.1                    |
 | [on_build_file](#targeton_build_file)           | Run custom build single file script                    | >= 2.2.3                    |
 | [on_build_files](#targeton_build_files)         | Run custom build files script                          | >= 2.2.3                    |
@@ -859,6 +860,7 @@ target("test2")
 | [on_install](#targeton_install)                 | Run custom install target file script                  | >= 2.0.1                    |
 | [on_uninstall](#targeton_uninstall)             | Run custom uninstall target file script                | >= 2.0.1                    |
 | [on_run](#targeton_run)                         | Run custom run target script                           | >= 2.0.1                    |
+| [before_link](#targetbefore_link)               | Run custom script before linking target                | >= 2.2.7                    |
 | [before_build](#targetbefore_build)             | Run custom script before building target               | >= 2.0.1                    |
 | [before_build_file](#targetbefore_build_file)   | Run custom script before building single file          | >= 2.2.3                    |
 | [before_build_files](#targetbefore_build_files) | Run custom script before building files                | >= 2.2.3                    |
@@ -867,6 +869,7 @@ target("test2")
 | [before_install](#targetbefore_install)         | Run custom script before installing target             | >= 2.0.1                    |
 | [before_uninstall](#targetbefore_uninstall)     | Run custom script before uninstalling target           | >= 2.0.1                    |
 | [before_run](#targetbefore_run)                 | Run custom script before running target                | >= 2.0.1                    |
+| [after_link](#targetafter_link)                 | Run custom script after linking target                 | >= 2.2.7                    |
 | [after_build](#targetafter_build)               | Run custom script after building target                | >= 2.0.1                    |
 | [after_build_file](#targetafter_build_file)     | Run custom script after building single file           | >= 2.2.3                    |
 | [after_build_files](#targetafter_build_files)   | Run custom script after building files                 | >= 2.2.3                    |
@@ -1430,6 +1433,19 @@ target("test")
 
 You can dynamically add various target attributes in `on_load` via `target:set`, `target:add`.
 
+##### target:on_link
+
+###### Run custom link target script
+
+This is a new interface after v2.2.7, which is used to customize the link process of the target.
+
+```lua
+target("test")
+    on_link(function (target) 
+        print("link it")
+    end)
+```
+
 ##### target:on_build
 
 ###### Run custom build target script
@@ -1633,6 +1649,19 @@ target("test")
     end)
 ```
 
+##### target:before_link
+
+###### Run custom script before linking target
+
+This is a new interface after v2.2.7 to add custom script before linking target.
+
+```lua
+target("test")
+    before_link(function (target) 
+        print("")
+    end)
+```
+
 ##### target:before_build
 
 ###### Run custom script before building target
@@ -1736,6 +1765,19 @@ It does not override the default run operation, just add some custom actions bef
 ```lua
 target("test")
     before_run(function (target)
+        print("")
+    end)
+```
+
+##### target:after_link
+
+###### Run custom script after linking target
+
+This is a new interface after v2.2.7 to add custom script after linking target.
+
+```lua
+target("test")
+    after_link(function (target) 
         print("")
     end)
 ```

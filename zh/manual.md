@@ -879,6 +879,7 @@ target("test2")
 | [add_imports](#targetadd_imports)               | 为所有自定义脚本预先导入扩展模块     | >= 2.1.7 |
 | [add_rules](#targetadd_rules)                   | 添加规则到目标                       | >= 2.1.9 |
 | [on_load](#targeton_load)                       | 自定义目标加载脚本                   | >= 2.1.5 |
+| [on_link](#targeton_link)                       | 自定义链接脚本                       | >= 2.2.7 |
 | [on_build](#targeton_build)                     | 自定义编译脚本                       | >= 2.0.1 |
 | [on_build_file](#targeton_build_file)           | 自定义编译脚本, 实现单文件构建       | >= 2.2.3 |
 | [on_build_files](#targeton_build_files)         | 自定义编译脚本, 实现多文件构建       | >= 2.2.3 |
@@ -887,6 +888,7 @@ target("test2")
 | [on_install](#targeton_install)                 | 自定义安装脚本                       | >= 2.0.1 |
 | [on_uninstall](#targeton_uninstall)             | 自定义卸载脚本                       | >= 2.0.1 |
 | [on_run](#targeton_run)                         | 自定义运行脚本                       | >= 2.0.1 |
+| [before_link](#targetbefore_link)               | 在链接之前执行一些自定义脚本         | >= 2.2.7 |
 | [before_build](#targetbefore_build)             | 在构建之前执行一些自定义脚本         | >= 2.0.1 |
 | [before_build_file](#targetbefore_build_file)   | 自定义编译前的脚本, 实现单文件构建   | >= 2.2.3 |
 | [before_build_files](#targetbefore_build_files) | 自定义编译前的脚本, 实现多文件构建   | >= 2.2.3 |
@@ -895,6 +897,7 @@ target("test2")
 | [before_install](#targetbefore_install)         | 在安装之前执行一些自定义脚本         | >= 2.0.1 |
 | [before_uninstall](#targetbefore_uninstall)     | 在卸载之前执行一些自定义脚本         | >= 2.0.1 |
 | [before_run](#targetbefore_run)                 | 在运行之前执行一些自定义脚本         | >= 2.0.1 |
+| [after_link](#targetafter_link)                 | 在链接之后执行一些自定义脚本         | >= 2.2.7 |
 | [after_build](#targetafter_build)               | 在构建之后执行一些自定义脚本         | >= 2.0.1 |
 | [after_build_file](#targetafter_build_file)     | 自定义编译后的脚本, 实现单文件构建   | >= 2.2.3 |
 | [after_build_files](#targetafter_build_files)   | 自定义编译后的脚本, 实现多文件构建   | >= 2.2.3 |
@@ -1456,6 +1459,19 @@ target("test")
 
 可以在`on_load`里面，通过`target:set`, `target:add` 来动态添加各种target属性。
 
+##### target:on_link
+
+###### 自定义链接脚本
+
+这个是在v2.2.7之后新加的接口，用于定制化处理target的链接过程。
+
+```lua
+target("test")
+    on_link(function (target) 
+        print("link it")
+    end)
+```
+
 ##### target:on_build
 
 ###### 自定义编译脚本
@@ -1660,6 +1676,19 @@ target("test")
     end)
 ```
 
+##### target:before_link
+
+###### 在链接之前执行一些自定义脚本
+
+这个是在v2.2.7之后新加的接口，用于在链接之前增加一些自定义的操作。
+
+```lua
+target("test")
+    before_link(function (target) 
+        print("")
+    end)
+```
+
 ##### target:before_build
 
 ###### 在构建之前执行一些自定义脚本
@@ -1762,6 +1791,19 @@ target("test")
 ```lua
 target("test")
     before_run(function (target)
+        print("")
+    end)
+```
+
+##### target:after_link
+
+###### 在链接之后执行一些自定义脚本
+
+这个是在v2.2.7之后新加的接口，用于在链接之后增加一些自定义的操作。
+
+```lua
+target("test")
+    after_link(function (target) 
         print("")
     end)
 ```
