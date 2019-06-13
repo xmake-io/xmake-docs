@@ -4105,7 +4105,7 @@ Here the `main` is set to run the main entry module for the script. The file nam
 The directory structure is as follows:
 
 ```
-Projectdir
+projectdir
     - xmake.lua
     - main.lua
 ```
@@ -4216,33 +4216,39 @@ A target can be superimposed to apply multiple rules to more customize its own b
 Rules specified by `add_files("*.md", {rule = "markdown"})`, with a higher priority than the rule set by `add_rules("markdown")`.
 </p>
 
-| Interface | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [rule](#rule) | Defining Rules | >= 2.1.9 |
-| [add_imports](#ruleadd_imports) | Pre-importing extension modules for all custom scripts | >= 2.1.9 |
-| [set_extensions](#ruleset_extensions) | Setting the file extension type supported by the rule | >= 2.1.9 |
-| [on_build](#ruleon_build) | Custom Compilation Script | >= 2.1.9 |
-| [on_clean](#ruleon_clean) | Custom Cleanup Script | >= 2.1.9 |
-| [on_package](#ruleon_package) | Custom Package Script | >= 2.1.9 |
-| [on_install](#ruleon_install) | Custom Installation Script | >= 2.1.9 |
-| [on_uninstall](#ruleon_uninstall) | Custom Uninstall Script | >= 2.1.9 |
-| [on_build_file](#ruleon_build_file) | Customize the build script to implement single file build | >= 2.2.1 |
-| [on_build_files](#ruleon_build_files) | Custom Compilation Scripts for Multi-File Construction | >= 2.2.1 |
-| [before_build](#rulebefore_build) | Custom pre-compilation script | >= 2.2.1 |
-| [before_clean](#rulebefore_clean) | Customizing the script before cleanup | >= 2.2.1 |
-| [before_package](#rulebefore_package) | Customizing the script before packaging | >= 2.2.1 |
-| [before_install](#rulebefore_install) | Custom Pre-Installation Scripts | >= 2.2.1 |
-| [before_uninstall](#rulebefore_uninstall) | Customizing the script before uninstalling | >= 2.2.1 |
-[before_build_file](#rulebefore_build_file) | Customize pre-compilation scripts to implement single file builds | >= 2.2.1 |
-[before_build_files](#rulebefore_build_files) | Customizing pre-compilation scripts for multi-file build | >= 2.2.1 |
-| [after_build](#ruleafter_build) | Custom Compiled Scripts | >= 2.2.1 |
-| [after_clean](#ruleafter_clean) | Custom Cleanup Script | >= 2.2.1 |
-| [after_package](#ruleafter_package) | Custom packaged scripts | >= 2.2.1 |
-| [after_install](#ruleafter_install) | Custom Installed Scripts | >= 2.2.1 |
-| [after_uninstall](#ruleafter_uninstall) | Custom Uninstalled Scripts | >= 2.2.1 |
-| [after_build_file](#ruleafter_build_file) | Customize the compiled script to implement single file build | >= 2.2.1 |
-| [after_build_files](#ruleafter_build_files) | Custom Compiled Scripts for Multi-File Construction | >= 2.2.1 |
-| [rule_end](#rule_end) | End Definition Rule | >= 2.1.9 |
+| Interface                                       | Description                                                    | Supported Versions |
+| ----------------------------------------------- | --------------------------------------------                   | --------           |
+| [rule](#rule)                                   | Defining Rules                                                 | >= 2.1.9           |
+| [add_imports](#ruleadd_imports)                 | Pre-importing extension modules for all custom scripts         | >= 2.1.9           |
+| [set_extensions](#ruleset_extensions)           | Set the file extension type supported by the rule              | >= 2.1.9           |
+| [on_load](#ruleon_load)                         | Custom Load Script                                             | >= 2.2.1           |
+| [on_link](#ruleon_link)                         | Custom Link Script                                             | >= 2.2.7           |
+| [on_build](#ruleon_build)                       | Custom Compilation Script                                      | >= 2.1.9           |
+| [on_clean](#ruleon_clean)                       | Custom Cleanup Script                                          | >= 2.1.9           |
+| [on_package](#ruleon_package)                   | Custom Package Script                                          | >= 2.1.9           |
+| [on_install](#ruleon_install)                   | Custom Installation Script                                     | >= 2.1.9           |
+| [on_uninstall](#ruleon_uninstall)               | Custom Uninstall Script                                        | >= 2.1.9           |
+| [on_build_file](#ruleon_build_file)             | Custom the build script to implement single file build         | >= 2.2.1           |
+| [on_build_files](#ruleon_build_files)           | Custom Compilation Scripts for Multi-File Construction         | >= 2.2.1           |
+| [before_load](#rulebefore_load)                 | Custom pre-load script                                         | >= 2.2.1           |
+| [before_link](#rulebefore_link)                 | Custom pre-link script                                         | >= 2.2.7           |
+| [before_build](#rulebefore_build)               | Custom pre-compilation script                                  | >= 2.2.1           |
+| [before_clean](#rulebefore_clean)               | Custom the script before cleanup                               | >= 2.2.1           |
+| [before_package](#rulebefore_package)           | Custom the script before packaging                             | >= 2.2.1           |
+| [before_install](#rulebefore_install)           | Custom Pre-Installation Scripts                                | >= 2.2.1           |
+| [before_uninstall](#rulebefore_uninstall)       | Custom the script before uninstalling                          | >= 2.2.1           |
+| [before_build_file](#rulebefore_build_file)     | Custom pre-compilation scripts to implement single file builds | >= 2.2.1           |
+| [before_build_files](#rulebefore_build_files)   | Custom pre-compilation scripts for multi-file build            | >= 2.2.1           |
+| [after_load](#ruleafter_load)                   | Custom script after loading                                    | >= 2.2.1           |
+| [after_link](#ruleafter_link)                   | Custom script after linking                                    | >= 2.2.7           |
+| [after_build](#ruleafter_build)                 | Custom script after compilation                                | >= 2.2.1           |
+| [after_clean](#ruleafter_clean)                 | Custom script after cleaning                                   | >= 2.2.1           |
+| [after_package](#ruleafter_package)             | Custom script after packaging                                  | >= 2.2.1           |
+| [after_install](#ruleafter_install)             | Custom script after installing                                 | >= 2.2.1           |
+| [after_uninstall](#ruleafter_uninstall)         | Custom script after uninstalling                               | >= 2.2.1           |
+| [after_build_file](#ruleafter_build_file)       | Custom script after compiling the single file                  | >= 2.2.1           |
+| [after_build_files](#ruleafter_build_files)     | Custom script after compiling the multiple file                | >= 2.2.1           |
+| [rule_end](#rule_end)                           | End Definition Rule                                            | >= 2.1.9           |
 
 ##### Built-in rules
 
@@ -4634,6 +4640,31 @@ target("test")
     add_files("src/*.markdown")
 ```
 
+##### rule:on_load
+
+###### Custom load script
+
+The load script used to implement the custom rules will be executed when the target is loaded. You can customize some target configurations in it, for example:
+
+```lua
+rule("test")
+    on_load(function (target)
+        target:add("defines", "-DTEST")
+    end)
+```
+
+##### rule:on_link
+
+###### Custom link script
+
+The link script used to implement the custom rules overrides the default link behavior of the applied target, for example:
+
+```lua
+rule("test")
+    on_link(function (target)
+    end)
+```
+
 ##### rule:on_build
 
 ###### Custom compilation script
@@ -4729,6 +4760,31 @@ rule("markdown")
     end)
 ```
 
+##### rule:before_load
+
+###### Custom pre-load script
+
+Used to implement the execution script before the custom target is loaded, for example:
+
+```lua
+rule("test")
+    before_load(function (target)
+        target:add("defines", "-DTEST")
+    end)
+```
+
+##### rule:before_link
+
+###### Custom pre-link script
+
+Execution scripts used to implement custom target links, for example:
+
+```lua
+rule("test")
+    before_link(function (target)
+    end)
+```
+
 ##### rule:before_build
 
 ###### Custom pre-compilation script
@@ -4755,7 +4811,7 @@ rule("markdown")
 
 ##### rule:before_package
 
-###### Customizing the pre-package script
+###### Custom the pre-package script
 
 Used to implement the execution script before the custom target is packaged, for example:
 
@@ -4803,46 +4859,58 @@ Generally used to preprocess some source files before compiling.
 Similar to [rule:on_build_files](#ruleon_build_files), but the timing of this interface is called before compiling some source files.
 Generally used to preprocess some source files before compiling.
 
+##### rule:after_load
+
+###### Custom post-loading script
+
+The execution script used to implement the custom target loading is similar to [rule:after_load](#ruleafter_load).
+
+##### rule:after_link
+
+###### Custom post-linking script
+
+The execution script used to implement the custom target link is similar to [rule:after_link](#ruleafter_link).
+
 ##### rule:after_build
 
-###### Custom pre-compilation script
+###### Custom post-compilation script
 
 The execution script used to implement the custom target build is similar to [rule:before_build](#rulebefore_build).
 
 ##### rule:after_clean
 
-###### Custom Cleanup Script
+###### Custom post-cleaning script
 
 The execution script used to implement the custom target cleanup is similar to [rule:before_clean](#rulebefore_clean).
 
 ##### rule:after_package
 
-###### Custom packaged script
+###### Custom post-packaging script
 
 The execution script used to implement the custom target package is similar to [rule:before_package](#rulebefore_package).
 
 ##### rule:after_install
 
-###### Custom Post-Installation Script
+###### Custom post-installation script
 
 The execution script used to implement the custom target installation is similar to [rule:before_install](#rulebefore_install).
 
 ##### rule:after_uninstall
 
-###### Custom Uninstallation Script
+###### Custom post-uninstallation Script
 
 The execution script used to implement the custom target uninstallation is similar to [rule:before_uninstall](#rulebefore_uninstall).
 
 ##### rule:after_build_file
 
-###### Customizing post-compilation scripts to process one source file at a time
+###### Custom post-compilation scripts to process one source file at a time
 
 Similar to [rule:on_build_file](#ruleon_build_file), but the timing of this interface is called after compiling a source file.
 Generally used to post-process some compiled object files.
 
 ##### rule:after_build_files
 
-###### Customizing post-compilation scripts to process multiple source files at once
+###### Custom post-compilation scripts to process multiple source files at once
 
 Similar to [rule:on_build_files](#ruleon_build_files), but the timing of this interface is called after compiling some source files.
 Generally used to post-process some compiled object files.

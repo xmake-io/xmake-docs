@@ -4300,6 +4300,8 @@ target("test")
 | [rule](#rule)                                   | 定义规则                                     | >= 2.1.9 |
 | [add_imports](#ruleadd_imports)                 | 为所有自定义脚本预先导入扩展模块             | >= 2.1.9 |
 | [set_extensions](#ruleset_extensions)           | 设置规则支持的文件扩展类型                   | >= 2.1.9 |
+| [on_load](#ruleon_load)                         | 自定义加载脚本                               | >= 2.2.1 |
+| [on_link](#ruleon_link)                         | 自定义链接脚本                               | >= 2.2.7 |
 | [on_build](#ruleon_build)                       | 自定义编译脚本                               | >= 2.1.9 |
 | [on_clean](#ruleon_clean)                       | 自定义清理脚本                               | >= 2.1.9 |
 | [on_package](#ruleon_package)                   | 自定义打包脚本                               | >= 2.1.9 |
@@ -4307,6 +4309,8 @@ target("test")
 | [on_uninstall](#ruleon_uninstall)               | 自定义卸载脚本                               | >= 2.1.9 |
 | [on_build_file](#ruleon_build_file)             | 自定义编译脚本, 实现单文件构建               | >= 2.2.1 |
 | [on_build_files](#ruleon_build_files)           | 自定义编译脚本, 实现多文件构建               | >= 2.2.1 |
+| [before_load](#rulebefore_load)                 | 自定义加载前的脚本                           | >= 2.2.1 |
+| [before_link](#rulebefore_link)                 | 自定义链接前的脚本                           | >= 2.2.7 |
 | [before_build](#rulebefore_build)               | 自定义编译前的脚本                           | >= 2.2.1 |
 | [before_clean](#rulebefore_clean)               | 自定义清理前的脚本                           | >= 2.2.1 |
 | [before_package](#rulebefore_package)           | 自定义打包前的脚本                           | >= 2.2.1 |
@@ -4314,6 +4318,8 @@ target("test")
 | [before_uninstall](#rulebefore_uninstall)       | 自定义卸载前的脚本                           | >= 2.2.1 |
 | [before_build_file](#rulebefore_build_file)     | 自定义编译前的脚本, 实现单文件构建           | >= 2.2.1 |
 | [before_build_files](#rulebefore_build_files)   | 自定义编译前的脚本, 实现多文件构建           | >= 2.2.1 |
+| [after_load](#ruleafter_load)                   | 自定义加载后的脚本                           | >= 2.2.1 |
+| [after_link](#ruleafter_link)                   | 自定义链接后的脚本                           | >= 2.2.7 |
 | [after_build](#ruleafter_build)                 | 自定义编译后的脚本                           | >= 2.2.1 |
 | [after_clean](#ruleafter_clean)                 | 自定义清理后的脚本                           | >= 2.2.1 |
 | [after_package](#ruleafter_package)             | 自定义打包后的脚本                           | >= 2.2.1 |
@@ -4709,6 +4715,31 @@ target("test")
     add_files("src/*.markdown")
 ```
 
+##### rule:on_load
+
+###### 自定义加载脚本
+
+用于实现自定规则的加载脚本，当加载target的时候，会被执行，可在里面自定义设置一些target配置，例如：
+
+```lua
+rule("test")
+    on_load(function (target)
+        target:add("defines", "-DTEST")
+    end)
+```
+
+##### rule:on_link
+
+###### 自定义链接脚本
+
+用于实现自定规则的链接脚本，会覆盖被应用的target的默认链接行为，例如：
+
+```lua
+rule("test")
+    on_link(function (target)
+    end)
+```
+
 ##### rule:on_build
 
 ###### 自定义编译脚本
@@ -4804,6 +4835,31 @@ rule("markdown")
     end)
 ```
 
+##### rule:before_load
+
+###### 自定义加载前脚本
+
+用于实现自定义target加载前的执行脚本，例如：
+
+```lua
+rule("test")
+    before_load(function (target)
+        target:add("defines", "-DTEST")
+    end)
+```
+
+##### rule:before_link
+
+###### 自定义链接前脚本
+
+用于实现自定义target链接前的执行脚本，例如：
+
+```lua
+rule("test")
+    before_link(function (target)
+    end)
+```
+
 ##### rule:before_build
 
 ###### 自定义编译前脚本
@@ -4878,9 +4934,21 @@ rule("markdown")
 跟[rule:on_build_files](#ruleon_build_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之前，
 一般用于对某些源文件进行编译前的预处理。
 
+##### rule:after_load
+
+###### 自定义加载后脚本
+
+用于实现自定义target加载后的执行脚本，用法跟[rule:before_load](#rulebefore_load)类似。
+
+##### rule:after_link
+
+###### 自定义链接后脚本
+
+用于实现自定义target链接后的执行脚本，用法跟[rule:before_link](#rulebefore_link)类似。
+
 ##### rule:after_build
 
-###### 自定义编译前脚本
+###### 自定义编译后脚本
 
 用于实现自定义target构建后的执行脚本，用法跟[rule:before_build](#rulebefore_build)类似。
 
