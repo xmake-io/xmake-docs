@@ -908,6 +908,7 @@ target("test2")
 | [add_dcflags](#targetadd_dcflags)               | Add dlang compilation flags                            | >= 2.1.1                    |
 | [add_rcflags](#targetadd_rcflags)               | Add rust compilation flags                             | >= 2.1.1                    |
 | [add_cuflags](#targetadd_cuflags)               | Add cuda compilation flags                             | >= 2.1.1                    |
+| [add_culdflags](#targetadd_culdflags)           | Add cuda device-link flags                             | >= 2.2.7                    |
 | [add_ldflags](#targetadd_ldflags)               | Add static library link flags                          | >= 1.0.1                    |
 | [add_arflags](#targetadd_arflags)               | Add archive library flags                              | >= 1.0.1                    |
 | [add_shflags](#targetadd_shflags)               | Add dynamic library link flags                         | >= 1.0.1                    |
@@ -2581,6 +2582,19 @@ Add compilation options to cuda code
 add_cuflags("-gencode arch=compute_30,code=sm_30")
 ```
 
+##### target:add_culdflags
+
+###### Add cuda device link flags
+
+After v2.2.7, cuda default build will use device-link. If you want to set some link flags in this stage, you can set it through this interface.
+The final program link will use ldflags, will not call nvcc, and directly link through c/c++ linker such as gcc/clang.
+
+For a description of device-link, please refer to: https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/
+
+```lua
+add_culdflags("-gencode arch=compute_30,code=sm_30")
+```
+
 ##### target:add_ldflags
 
 ###### Add static library link flags
@@ -3223,57 +3237,58 @@ The `option` field can be repeatedly entered to implement separate settings. If 
 </p>
 
 
-| Interface | Description | Supported Versions |
-| ----------------------------------------------------- | -------------------------------------------- | -------- |
-| [option](#option) | Define Options | >= 2.0.1 |
-| [option_end](#option_end) | End Definition Options | >= 2.1.1 |
-| [add_deps](#optionadd_deps) | Add Options Dependencies | >= 2.1.5 |
-| [before_check](#optionbefore_check) | Execute this script before option detection | >= 2.1.5 |
-| [on_check](#optionon_check) | Custom Option Detection Script | >= 2.1.5 |
-| [after_check](#optionafter_check) | Execute this script after option detection | >= 2.1.5 |
-| [set_values](#optionset_values) | Setting the list of option values ​​| >= 2.1.9 |
-| [set_default](#optionset_default) | Set Defaults | >= 2.0.1 |
-| [set_showmenu](#optionset_showmenu) | Set whether to enable menu display | >= 1.0.1 |
-| [set_category](#optionset_category) | Set option categories, only for menu display | >= 1.0.1 |
-| [set_description](#optionset_description) | Settings Menu Display Description | >= 1.0.1 |
-| [add_links](#optionadd_links) | Add Linked Library Detection | >= 1.0.1 |
-| [add_linkdirs](#optionadd_linkdirs) | Add a search directory for link library detection | >= 1.0.1 |
-| [add_rpathdirs](#optionadd_rpathdirs) | Add runtime dynamic link library search directory | >= 2.1.3 |
-| [add_cincludes](#optionadd_cincludes) | Add c header file detection | >= 1.0.1 |
-| [add_cxxincludes](#optionadd_cxxincludes) | Add c++ header file detection | >= 1.0.1 |
-| [add_ctypes](#optionadd_ctypes) | Add c type detection | >= 1.0.1 |
-| [add_cxxtypes](#optionadd_cxxtypes) | Add c++ type detection | >= 1.0.1 |
-| [add_csnippet](#optionadd_csnippet) | Add c-code snippets detection | >= 2.1.5 |
-| [add_cxxsnippet](#optionadd_cxxsnippet) | Add c++ code snippet detection | >= 2.1.5 |
-| [set_warnings](#targetset_warnings) | Setting the warning level | >= 1.0.1 |
-| [set_optimize](#targetset_optimize) | Setting the optimization level | >= 1.0.1 |
-| [set_languages](#targetset_languages) | Setting the Code Language Standard | >= 1.0.1 |
-| [add_includedirs](#targetadd_includedirs) | Add Header Search Directory | >= 1.0.1 |
-| [add_defines](#targetadd_defines) | Add Macro Definition | >= 1.0.1 |
-| [add_undefines](#targetadd_undefines) | Cancel Macro Definition | >= 1.0.1 |
-| [add_defines_h](#targetadd_defines_h) | Add macro definitions to header files | >= 1.0.1 |
-| [add_undefines_h](#targetadd_undefines_h) | Cancel macro definition to header file | >= 1.0.1 |
-| [add_cflags](#targetadd_cflags) | Add c Compile Options | >= 1.0.1 |
-| [add_cxflags](#targetadd_cxflags) | Add c/c++ Compile Options | >= 1.0.1 |
-| [add_cxxflags](#targetadd_cxxflags) | Add c++ Compile Options | >= 1.0.1 |
-| [add_mflags](#targetadd_mflags) | Add objc compile options | >= 2.0.1 |
-| [add_mxflags](#targetadd_mxflags) | Add objc/objc++ Compile Options | >= 2.0.1 |
-| [add_mxxflags](#targetadd_mxxflags) | Add objc++ Compile Options | >= 2.0.1 |
-| [add_scflags](#targetadd_scflags) | Add swift compile options | >= 2.1.1 |
-| [add_asflags](#targetadd_asflags) | Add assembly compile options | >= 2.1.1 |
-| [add_gcflags](#targetadd_gcflags) | Add go compile options | >= 2.1.1 |
-|[add_dcflags](#targetadd_dcflags) | Add dlang compile options | >= 2.1.1 |
-| [add_rcflags](#targetadd_rcflags) | Add rust compile option | >= 2.1.1 |
-| [add_cuflags](#targetadd_cuflags) | Add cuda compile options | >= 2.2.1 |
-| [add_ldflags](#targetadd_ldflags) | Add Link Options | >= 2.1.1 |
-| [add_arflags](#targetadd_arflags) | Add Static Library Archive Options | >= 2.1.1 |
-| [add_shflags](#targetadd_shflags) | Add Dynamic Library Link Options | >= 2.0.1 |
-| [add_cfuncs](#targetadd_cfuncs) | Add c library function detection | >= 1.0.1 |
-| [add_cxxfuncs](#targetadd_cxxfuncs) | Add C++ Library Function Interface | >= 1.0.1 |
-| [add_languages](#targetadd_languages) | Add Language Standards | >= 2.0.1 |
-| [add_vectorexts](#targetadd_vectorexts) | Add Vector Extension Instructions | >= 2.0.1 |
-| [add_frameworks](#targetadd_frameworks) | Add Linked Framework | >= 2.1.1 |
-| [add_frameworkdirs](#targetadd_frameworkdirs) | Add Linked Framework | >= 2.1.5 |
+| Interface                                             | Description                                       | Supported Versions |
+| ----------------------------------------------------- | --------------------------------------------      | --------           |
+| [option](#option)                                     | Define Options                                    | >= 2.0.1           |
+| [option_end](#option_end)                             | End Definition Options                            | >= 2.1.1           |
+| [add_deps](#optionadd_deps)                           | Add Options Dependencies                          | >= 2.1.5           |
+| [before_check](#optionbefore_check)                   | Execute this script before option detection       | >= 2.1.5           |
+| [on_check](#optionon_check)                           | Custom Option Detection Script                    | >= 2.1.5           |
+| [after_check](#optionafter_check)                     | Execute this script after option detection        | >= 2.1.5           |
+| [set_values](#optionset_values)                       | Setting the list of option values ​​    | >= 2.1.9           |
+| [set_default](#optionset_default)                     | Set Defaults                                      | >= 2.0.1           |
+| [set_showmenu](#optionset_showmenu)                   | Set whether to enable menu display                | >= 1.0.1           |
+| [set_category](#optionset_category)                   | Set option categories, only for menu display      | >= 1.0.1           |
+| [set_description](#optionset_description)             | Settings Menu Display Description                 | >= 1.0.1           |
+| [add_links](#optionadd_links)                         | Add Linked Library Detection                      | >= 1.0.1           |
+| [add_linkdirs](#optionadd_linkdirs)                   | Add a search directory for link library detection | >= 1.0.1           |
+| [add_rpathdirs](#optionadd_rpathdirs)                 | Add runtime dynamic link library search directory | >= 2.1.3           |
+| [add_cincludes](#optionadd_cincludes)                 | Add c header file detection                       | >= 1.0.1           |
+| [add_cxxincludes](#optionadd_cxxincludes)             | Add c++ header file detection                     | >= 1.0.1           |
+| [add_ctypes](#optionadd_ctypes)                       | Add c type detection                              | >= 1.0.1           |
+| [add_cxxtypes](#optionadd_cxxtypes)                   | Add c++ type detection                            | >= 1.0.1           |
+| [add_csnippet](#optionadd_csnippet)                   | Add c-code snippets detection                     | >= 2.1.5           |
+| [add_cxxsnippet](#optionadd_cxxsnippet)               | Add c++ code snippet detection                    | >= 2.1.5           |
+| [set_warnings](#targetset_warnings)                   | Setting the warning level                         | >= 1.0.1           |
+| [set_optimize](#targetset_optimize)                   | Setting the optimization level                    | >= 1.0.1           |
+| [set_languages](#targetset_languages)                 | Setting the Code Language Standard                | >= 1.0.1           |
+| [add_includedirs](#targetadd_includedirs)             | Add Header Search Directory                       | >= 1.0.1           |
+| [add_defines](#targetadd_defines)                     | Add Macro Definition                              | >= 1.0.1           |
+| [add_undefines](#targetadd_undefines)                 | Cancel Macro Definition                           | >= 1.0.1           |
+| [add_defines_h](#targetadd_defines_h)                 | Add macro definitions to header files             | >= 1.0.1           |
+| [add_undefines_h](#targetadd_undefines_h)             | Cancel macro definition to header file            | >= 1.0.1           |
+| [add_cflags](#targetadd_cflags)                       | Add c Compile Options                             | >= 1.0.1           |
+| [add_cxflags](#targetadd_cxflags)                     | Add c/c++ Compile Options                         | >= 1.0.1           |
+| [add_cxxflags](#targetadd_cxxflags)                   | Add c++ Compile Options                           | >= 1.0.1           |
+| [add_mflags](#targetadd_mflags)                       | Add objc compile options                          | >= 2.0.1           |
+| [add_mxflags](#targetadd_mxflags)                     | Add objc/objc++ Compile Options                   | >= 2.0.1           |
+| [add_mxxflags](#targetadd_mxxflags)                   | Add objc++ Compile Options                        | >= 2.0.1           |
+| [add_scflags](#targetadd_scflags)                     | Add swift compile options                         | >= 2.1.1           |
+| [add_asflags](#targetadd_asflags)                     | Add assembly compile options                      | >= 2.1.1           |
+| [add_gcflags](#targetadd_gcflags)                     | Add go compile options                            | >= 2.1.1           |
+| [add_dcflags](#targetadd_dcflags)                     | Add dlang compile options                         | >= 2.1.1           |
+| [add_rcflags](#targetadd_rcflags)                     | Add rust compile option                           | >= 2.1.1           |
+| [add_cuflags](#targetadd_cuflags)                     | Add cuda compile options                          | >= 2.2.1           |
+| [add_culdflags](#targetadd_culdflags)                 | Add cuda device-link options                      | >= 2.2.7           |
+| [add_ldflags](#targetadd_ldflags)                     | Add Link Options                                  | >= 2.1.1           |
+| [add_arflags](#targetadd_arflags)                     | Add Static Library Archive Options                | >= 2.1.1           |
+| [add_shflags](#targetadd_shflags)                     | Add Dynamic Library Link Options                  | >= 2.0.1           |
+| [add_cfuncs](#targetadd_cfuncs)                       | Add c library function detection                  | >= 1.0.1           |
+| [add_cxxfuncs](#targetadd_cxxfuncs)                   | Add C++ Library Function Interface                | >= 1.0.1           |
+| [add_languages](#targetadd_languages)                 | Add Language Standards                            | >= 2.0.1           |
+| [add_vectorexts](#targetadd_vectorexts)               | Add Vector Extension Instructions                 | >= 2.0.1           |
+| [add_frameworks](#targetadd_frameworks)               | Add Linked Framework                              | >= 2.1.1           |
+| [add_frameworkdirs](#targetadd_frameworkdirs)         | Add Linked Framework                              | >= 2.1.5           |
 
 | Obsolete Interface | Description | Supported Version |
 | ----------------------------------------------------- | -------------------------------------------- | ---------------- |

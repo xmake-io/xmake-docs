@@ -936,6 +936,7 @@ target("test2")
 | [add_dcflags](#targetadd_dcflags)               | 添加dlang编译选项                    | >= 2.1.1 |
 | [add_rcflags](#targetadd_rcflags)               | 添加rust编译选项                     | >= 2.1.1 |
 | [add_cuflags](#targetadd_cuflags)               | 添加cuda编译选项                     | >= 2.2.1 |
+| [add_culdflags](#targetadd_culdflags)           | 添加cuda设备链接选项                 | >= 2.2.7 |
 | [add_ldflags](#targetadd_ldflags)               | 添加链接选项                         | >= 1.0.1 |
 | [add_arflags](#targetadd_arflags)               | 添加静态库归档选项                   | >= 1.0.1 |
 | [add_shflags](#targetadd_shflags)               | 添加动态库链接选项                   | >= 1.0.1 |
@@ -2602,6 +2603,19 @@ add_rcflags("xxx")
 add_cuflags("-gencode arch=compute_30,code=sm_30")
 ```
 
+##### target:add_culdflags
+
+###### 添加cuda设备链接选项
+
+v2.2.7之后，cuda默认构建会使用device-link，这个阶段如果要设置一些链接flags，则可以通过这个接口来设置。
+而最终的程序链接，会使用ldflags，不会调用nvcc，直接通过gcc/clang等c/c++链接器来链接。
+
+关于device-link的说明，可以参考：https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/
+
+```lua
+add_culdflags("-gencode arch=compute_30,code=sm_30")
+```
+
 ##### target:add_ldflags
 
 ###### 添加链接选项
@@ -3343,6 +3357,7 @@ option("test2")
 | [add_dcflags](#targetadd_dcflags)                     | 添加dlang编译选项                            | >= 2.1.1 |
 | [add_rcflags](#targetadd_rcflags)                     | 添加rust编译选项                             | >= 2.1.1 |
 | [add_cuflags](#targetadd_cuflags)                     | 添加cuda编译选项                             | >= 2.2.1 |
+| [add_culdflags](#targetadd_culdflags)                 | 添加cuda设备链接选项                         | >= 2.2.7 |
 | [add_ldflags](#targetadd_ldflags)                     | 添加链接选项                                 | >= 2.1.1 |
 | [add_arflags](#targetadd_arflags)                     | 添加静态库归档选项                           | >= 2.1.1 |
 | [add_shflags](#targetadd_shflags)                     | 添加动态库链接选项                           | >= 2.0.1 |
