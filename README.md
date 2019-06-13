@@ -423,8 +423,6 @@ $ xmake
 ```
 
 ```lua
--- add helper function add_cugencodes
-includes('add_cugencodes.lua')
 -- define target
 target("cuda_console")
     set_kind("binary")
@@ -434,6 +432,11 @@ target("cuda_console")
     -- generate PTX code for the virtual architecture to guarantee compatibility
     add_cugencodes("compute_30")
 ```
+
+<p class="tip">
+Starting with v2.2.7, the default build will enable device-link, @see https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/
+If you want to disable device-link, you can set it with `add_values("cuda.devlink", false)`.
+</p>
 
 xmake will detect Cuda SDK automatically and we can also set the SDK directory manually.
 

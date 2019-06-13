@@ -453,8 +453,6 @@ $ xmake
 ```
 
 ```lua
--- add helper function add_cugencodes
-includes('add_cugencodes.lua')
 -- define target
 target("cuda_console")
     set_kind("binary")
@@ -465,6 +463,10 @@ target("cuda_console")
     add_cugencodes("compute_30")
 ```
 
+<p class="tip">
+从v2.2.7版本开始，默认构建会启用device-link，@see https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/
+如果要显示禁用device-link，可以通过`add_values("cuda.devlink", false)` 来设置。
+</p>
 
 默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录：
 
