@@ -774,8 +774,6 @@ $ xmake
 | [--rc-ar](#-rc-ar)           | 设置`rust`静态库归档器           |
 | [--cu-cxx](#-cu-cxx)         | 设置`cuda` host编译器            |
 | [--cu-ld](#-cu-ld)           | 设置`cuda`链接器                 |
-| [--cu-sh](#-cu-sh)           | 设置`cuda`共享库链接器           |
-| [--cu-ar](#-cu-ar)           | 设置`cuda`静态库归档器           |
 | [--asflags](#-asflags)       | 设置`asm`汇编编译选项            |
 | [--cflags](#-cflags)         | 设置`c`编译选项                  |
 | [--cxflags](#-cxflags)       | 设置`c/c++`编译选项              |

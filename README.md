@@ -742,8 +742,6 @@ $ xmake
 | [--rc-ar](#-rc-ar)           | Set `rust` static library archiver           |
 | [--cu-cxx](#-cu-cxx)         | Set `cuda` host compiler                     |
 | [--cu-ld](#-cu-ld)           | Set `cuda` linker                            |
-| [--cu-sh](#-cu-sh)           | Set `cuda` shared library linker             |
-| [--cu-ar](#-cu-ar)           | Set `cuda` static library archiver           |
 | [--asflags](#-asflags)       | Set `asm` assembler option                   |
 | [--cflags](#-cflags)         | Set `c` compiler option                      |
 | [--cxflags](#-cxflags)       | Set `c/c++` compiler option                  |
