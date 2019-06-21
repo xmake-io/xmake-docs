@@ -1,0 +1,8 @@
+- [Plugins](/plugins)
+- [Manual](/manual)
+- [Articles](https://tboox.org/category/#xmake)
+- [Feedback](https://github.com/xmake-io/xmake/issues)
+- [Community](https://www.reddit.com/r/tboox/)
+- Lanuages
+  - [:cn: 中文](/zh/)
+  - [:uk: English](/)
