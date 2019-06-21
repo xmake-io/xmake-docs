@@ -1,5 +1,3 @@
-- [插件](/zh/plugins)
-- [手册](/zh/manual)
 - [文章](https://tboox.org/cn/category/#xmake)
 - [反馈](https://github.com/xmake-io/xmake/issues)
 - [社区](https://www.reddit.com/r/tboox/)
