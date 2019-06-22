@@ -25,12 +25,12 @@
       subMaxLevel: 4,
       alias: {
         <!-- compatible with previous links -->
-        '/home': '/docute/README',
-        '/plugins': '/docute/plugins',
-        '/manual': '/docute/manual',
-        '/zh/': '/docute/zh/README',
-        '/zh/plugins': '/docute/zh/plugins',
-        '/zh/manual': '/docute/zh/manual',
+        '/home': '/old/README',
+        '/plugins': '/old/plugins',
+        '/manual': '/old/manual',
+        '/zh/': '/old/zh/README',
+        '/zh/plugins': '/old/zh/plugins',
+        '/zh/manual': '/old/zh/manual',
         <!-- multi-languages -->
         '/zh-cn/(.*)': '/zh-cn/$1'
       },
@@ -60,7 +60,7 @@
             return editHtml
               + html
               + '\n\n----\n\n'
-              + '<a href="https://xmake.io" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Powered by docsify</a>'
+              + '<a href="https://xmake.io" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Powered by xmake.io</a>'
           })
         }
       ]

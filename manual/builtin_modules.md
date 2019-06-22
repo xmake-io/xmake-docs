@@ -1,0 +1,1598 @@
+
+Used in script code such as custom scripts, plug-in scripts, task scripts, platform extensions, template extensions, etc., that is, in code blocks like the following, you can use these module interfaces:
+
+```lua
+on_run(function (target)
+    print("hello xmake!")
+end)
+```
+
+<p class="warning">
+In order to ensure that the description field of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br>
+Of course, a small number of read-only built-in interfaces can still be used in the description field, as shown in the following table:
+</p>
+
+| Interface | Description | Available Domains | Supported Versions |
+| ----------------------------------------------- | -------------------------------------------- | -------------------------- | -------- |
+| [val](#val) | Get the value of the built-in variable | Script Field | >= 2.1.5 |
+| [import](#import) | Importing Extension Blocks | Script Fields | >= 2.0.1 |
+| [inherit](#inherit) | Import and inherit base class modules | Script Domain | >= 2.0.1 |
+| [ifelse](#ifelse) | Similar ternary conditional judgment | Description field, script field | >= 2.0.1 |
+| [try-catch-finally](#try-catch-finally) | Exception Capture | Script Field | >= 2.0.1 |
+| [pairs](#pairs) | Used to Traverse the Dictionary | Description Field, Script Field | >= 2.0.1 |
+| [ipairs](#ipairs) | Used to traverse arrays | Description fields, script fields | >= 2.0.1 |
+[print](#print) | Wrap Print Terminal Log | Description Field, Script Field | >= 2.0.1 |
+| [printf](#printf) | No Line Printing Terminal Log | Script Field | >= 2.0.1 |
+[cprint](#cprint) | Wrap Color Print Terminal Log | Script Field | >= 2.0.1 |
+| [cprintf](#cprintf) | No Line Color Print Terminal Log | Script Field | >= 2.0.1 |
+| [format](#format) | Format String | Description Field, Script Field | >= 2.0.1 |
+| [vformat](#vformat) | Format string, support for built-in variable escaping | Script Domain | >= 2.0.1 |
+| [raise](#raise) | Throwing an abort program | Script Field | >= 2.0.1 |
+| [os](#os) | System Operation Module | Partial Read-Only Operation Description Field, Script Field | >= 2.0.1 |
+| [io](#io) | File Manipulation Module | Script Field | >= 2.0.1 |
+| [path](#path) | Path Manipulation Module | Description Field, Script Field |= 2.0.1 |
+| [table](#table) | Array and Dictionary Operations Module | Description Field, Script Field | >= 2.0.1 |
+| [string](#string) | String Manipulation Module | Description Field, Script Field | >= 2.0.1 |
+| [process](#process) | Process Operation Module | Script Field | >= 2.0.1 |
+| [coroutine](#coroutine) | Coroutine Operation Module | Script Field | >= 2.0.1 |
+| [find_packages](#find_packages) | Find Dependency Packages | Script Fields | >= 2.2.5 |
+
+An example of using an interface call in a description field is as follows, generally only for conditional control:
+
+```lua
+-- Scan all subdirectories under the current xmake.lua directory, defining a task task with the name of each directory
+for _, taskname in ipairs(os.dirs("*"), path.basename) do
+    task(taskname)
+        on_run(function ()
+        end)
+end
+```
+
+The script field and description field mentioned above mainly refer to:
+
+```lua
+-- Description field
+target("test")
+
+    -- Description field
+    set_kind("static")
+    add_files("src/*.c")
+
+    on_run(function (target)
+        -- Script domain
+    end)
+
+-- Description field
+```
+
+### val
+
+#### Get the value of the built-in variable
+
+[Built-in variables](#built-in variables) can be obtained directly through this interface, without the need to add a `$()` package, which is much simpler to use, for example:
+
+```lua
+print(val("host"))
+print(val("env PATH"))
+local s = val("shell echo hello")
+```
+
+Using [vformat](#vformat) is cumbersome:
+
+```lua
+local s = vformat("$(shell echo hello)")
+```
+
+However, `vformat` supports string parameter formatting, which is more powerful, so the application scenario is different.
+
+### import
+
+#### Importing extension blocks
+
+Import is mainly used to import xmake's extension class library and some custom class library modules, generally used to:
+
+* Custom script ([on_build](#targeton_build), [on_run](#targeton_run) ..)
+* Plugin development
+* Template development
+* Platform extension
+* Custom task task
+
+The import mechanism is as follows:
+
+1. Import from the current script directory first
+2. Import from the extended class library
+
+Imported grammar rules:
+
+Class library path rules based on `.`, for example:
+
+Import core core extension module
+
+```lua
+import("core.base.option")
+import("core.project")
+import("core.base.task") -- 2.1.5 Previously core.project.task
+import("core")
+
+function main()
+
+    -- Get parameter options
+    print(option.get("version"))
+
+    -- Run tasks and plugins
+    task.run("hello")
+    project.task.run("hello")
+    core.base.task.run("hello")
+end
+```
+
+Import the custom module in the current directory:
+
+Directory Structure:
+
+```
+Plugin
+  - xmake.lua
+  - main.lua
+  - modules
+    - hello1.lua
+    - hello2.lua
+```
+
+Import modules in main.lua
+
+```lua
+import("modules.hello1")
+import("modules.hello2")
+```
+
+After importing, you can directly use all the public interfaces inside. The private interface is marked with the `_` prefix, indicating that it will not be exported and will not be called externally. .
+
+In addition to the current directory, we can also import libraries in other specified directories, for example:
+
+```lua
+import("hello3", {rootdir = "/home/xxx/modules"})
+```
+
+To prevent naming conflicts, you can also specify an alias after import:
+
+```lua
+import("core.platform.platform", {alias = "p"})
+
+function main()
+
+    -- So we can use p to call the plats interface of the platform module to get a list of all the platforms supported by xmake.
+    table.dump(p.plats())
+end
+```
+
+Import can not only import the class library, but also import and import as inheritance, realize the inheritance relationship between modules.
+
+```lua
+import("xxx.xxx", {inherit = true})
+```
+
+This is not a reference to the module, but all the public interfaces of the module imported, so that it will be merged with the interface of the current module to achieve inheritance between modules.
+
+Version 2.1.5 adds two new properties: `import("xxx.xxx", {try = true, anonymous = true}).
+
+If the try is true, the imported module does not exist, only return nil, and will not interrupt xmake after throwing an exception.
+If anonymous is true, the imported module will not introduce the current scope, only the imported object reference will be returned in the import interface.
+
+### inherit
+
+#### Import and inherit base class modules
+
+This is equivalent to the `inherit` mode of the [import](#import) interface, which is:
+
+```lua
+import("xxx.xxx", {inherit = true})
+```
+
+With the `inherit` interface, it will be more concise:
+
+```lu
+Inherit("xxx.xxx")
+```
+
+For an example, see the script in the xmake tools directory: [clang.lua](#https://github.com/xmake-io/xmake/blob/master/xmake/tools/clang.lua)
+
+This is part of the clang tool module that inherits gcc.
+
+### ifelse
+
+#### Similar to the ternary condition judgment
+
+Since lua does not have a built-in ternary operator, a more concise conditional choice is achieved by encapsulating the `ifelse` interface:
+
+```lua
+local ok = ifelse(a == 0, "ok", "no")
+```
+
+### try-catch-finally
+
+#### Exception capture
+
+Lua native does not provide try-catch syntax to catch exception handling, but provides interfaces such as `pcall/xpcall` to execute lua functions in protected mode.
+
+Therefore, the capture mechanism of the try-catch block can be implemented by encapsulating these two interfaces.
+
+We can look at the packaged try-catch usage first:
+
+```lua
+try
+{
+    -- try code block
+    function ()
+        error("error message")
+    end,
+
+    -- catch code block
+    catch
+    {
+        -- After an exception occurs, it is executed
+        function (errors)
+            print(errors)
+        end
+    }
+}
+```
+
+In the above code, an exception is thrown inside the try block, and an error message is thrown, caught in the catch, and the error message is output.
+
+And finally processing, this role is for the `try{}` code block, regardless of whether the execution is successful, will be executed into the finally block
+
+In other words, in fact, the above implementation, the complete support syntax is: `try-catch-finally` mode, where catch and finally are optional, according to their actual needs.
+
+E.g:
+
+```lua
+try
+{
+    -- try code block
+    function ()
+        error("error message")
+    end,
+
+    -- catch code block
+    catch
+    {
+        -- After an exception occurs, it is executed
+        function (errors)
+            print(errors)
+        end
+    },
+
+    -- finally block
+    finally
+    {
+        -- Finally will be executed here
+        function (ok, errors)
+            -- If there is an exception in try{}, ok is true, errors is the error message, otherwise it is false, and error is the return value in try
+        end
+    }
+}
+
+```
+
+Or only the finally block:
+
+```lua
+try
+{
+    -- try code block
+    function ()
+        return "info"
+    end,
+
+    -- finally block
+    finally
+    {
+        -- Since there is no exception in this try code, ok is true and errors is the return value: "info"
+        function (ok, errors)
+        end
+    }
+}
+```
+
+Processing can get the normal return value in try in finally, in fact, in the case of only try, you can also get the return value:
+
+```lua
+-- If no exception occurs, result is the return value: "xxxx", otherwise nil
+local result = try
+{
+    function ()
+        return "xxxx"
+    end
+}
+```
+
+In xmake's custom scripting and plugin development, it is also based entirely on this exception catching mechanism.
+
+This makes the development of the extended script very succinct and readable, eliminating the cumbersome `if err ~= nil then` return value judgment. When an error occurs, xmake will directly throw an exception to interrupt, and then highlight the detailed error. information.
+
+E.g:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+
+    -- After the ios program is compiled, the target program is ldid signed
+    after_build(function (target))
+        os.run("ldid -S %s", target:targetfile())
+    end
+```
+
+Only one line `os.run` is needed, and there is no need to return a value to determine whether it runs successfully. After the operation fails, xmake will automatically throw an exception, interrupt the program and prompt the error.
+
+If you want to run xmake without running interrupts directly after running, you can do it yourself.Add a try and you will be fine:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+
+    after_build(function (target))
+        try
+        {
+            function ()
+                os.run("ldid -S %s", target:targetfile())
+            end
+        }
+    end
+```
+
+If you want to capture the error message, you can add a catch:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+
+    after_build(function (target))
+        try
+        {
+            function ()
+                os.run("ldid -S %s", target:targetfile())
+            end,
+            catch
+            {
+                function (errors)
+                    print(errors)
+                end
+            }
+        }
+    end
+```
+
+However, in general, write custom scripts in xmake, do not need to manually add try-catch, directly call a variety of api, after the error, let xmake default handler to take over, directly interrupted. .
+
+### pairs
+
+#### Used to traverse the dictionary
+
+This is lua's native built-in api. In xmake, it has been extended in its original behavior to simplify some of the daily lua traversal code.
+
+First look at the default native notation:
+
+```lua
+local t = {a = "a", b = "b", c = "c", d = "d", e = "e", f = "f"}
+
+for key, val in pairs(t) do
+    print("%s: %s", key, val)
+end
+```
+
+This is sufficient for normal traversal operations, but if we get the uppercase for each of the elements it traverses, we can write:
+
+```lua
+for key, val in pairs(t, function (v) return v:upper() end) do
+     print("%s: %s", key, val)
+end
+```
+
+Even pass in some parameters to the second `function`, for example:
+
+```lua
+for key, val in pairs(t, function (v, a, b) return v:upper() .. a .. b end, "a", "b") do
+     print("%s: %s", key, val)
+end
+```
+
+### ipairs
+
+#### for traversing arrays
+
+This is lua's native built-in api. In xmake, it has been extended in its original behavior to simplify some of the daily lua traversal code.
+
+First look at the default native notation:
+
+```lua
+for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}) do
+     print("%d %s", idx, val)
+end
+```
+
+The extension is written like the [pairs](#pairs) interface, for example:
+
+```lua
+for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}, function (v) return v:upper() end) do
+     print("%d %s", idx, val)
+end
+
+for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}, function (v, a, b) return v:upper() .. a .. b end, "a", "b") do
+     print("%d %s", idx, val)
+end
+```
+
+This simplifies the logic of the `for` block code. For example, if I want to traverse the specified directory and get the file name, but not including the path, I can simplify the writing by this extension:
+
+```lua
+for _, filename in ipairs(os.dirs("*"), path.filename) do
+    -- ...
+end
+```
+
+### print
+
+#### Wrapping print terminal log
+
+This interface is also the native interface of lua. xmake is also extended based on the original behavior, and supports: formatted output, multivariable output.
+
+First look at the way native support:
+
+```lua
+print("hello xmake!")
+print("hello", "xmake!", 123)
+```
+
+And also supports extended formatting:
+
+```lua
+print("hello %s!", "xmake")
+print("hello xmake! %d", 123)
+```
+
+Xmake will support both types of writing at the same time, and the internal will automatically detect and select the output behavior.
+
+### printf
+
+#### No line printing terminal log
+
+Like the [print](#print) interface, the only difference is that it doesn't wrap.
+
+### cprint
+
+#### Wrap color print terminal log
+
+The behavior is similar to [print](#print), the difference is that this interface also supports color terminal output, and supports `emoji` character output.
+
+E.g:
+
+```lua
+    cprint('${bright}hello xmake')
+    cprint('${red}hello xmake')
+    cprint('${bright green}hello ${clear}xmake')
+    cprint('${blue onyellow underline}hello xmake${clear}')
+    cprint('${red}hello ${magenta}xmake')
+    cprint('${cyan}hello ${dim yellow}xmake')
+```
+
+The results are as follows:
+
+![cprint_colors](https://tboox.org/static/img/xmake/cprint_colors.png)
+
+The color-related descriptions are placed in `${ }`, and you can set several different properties at the same time, for example:
+
+```
+    ${bright red underline onyellow}
+```
+
+Indicates: highlighted red, background yellow, and with a down line
+
+All of these descriptions will affect the entire entire line of characters. If you only want to display partial color text, you can insert `${clear}` at the end position to clear the previous color description.
+
+E.g:
+
+```
+    ${red}hello ${clear}xmake
+```
+
+In this case, only hello is displayed in red, and the others are still normal black display.
+
+Other colors belong to, I will not introduce them here, directly paste the list of attributes in the xmake code:
+
+```lua
+    colors.keys =
+    {
+        -- Attributes
+        reset = 0 -- reset attribute
+    , clear = 0 -- clear attribute
+    , default = 0 -- default property
+    , bright = 1 -- highlight
+    , dim = 2 -- dark
+    , underline = 4 -- underline
+    , blink = 5 -- flashing
+    , reverse = 7 -- reverse color
+    , hidden = 8 -- hidden text
+
+        -- Foreground
+    , black = 30
+    , red = 31
+    , green = 32
+    , yellow = 33
+    , blue = 34
+    , magenta = 35
+    , cyan = 36
+    , white = 37
+
+        -- Background color
+    , onblack = 40
+    , onred = 41
+    , ongreen = 42
+    , onyellow = 43
+    , onblue = 44
+    , onmagenta = 45
+    , oncyan = 46
+    , onwhite = 47
+```
+
+In addition to color highlighting, if your terminal is under macosx, lion above the system, xmake can also support the display of emoji expressions, for systems that do not support
+Ignore the display, for example:
+
+```lua
+    cprint("hello xmake${beer}")
+    cprint("hello${ok_hand} xmake")
+```
+
+The above two lines of code, I printed a classic beer symbol in the homebrew, the following line printed an ok gesture symbol, is not very dazzling. .
+
+![cprint_emoji](https://tboox.org/static/img/xmake/cprint_emoji.png)
+
+All emoji emoticons, as well as the corresponding keys in xmake, can be found in [emoji](http://www.emoji-cheat-sheet.com/). .
+
+Version 2.1.7 supports 24-bit true color output, if the terminal supports it:
+
+```lua
+import("core.base.colors")
+if colors.truecolor() then
+    cprint("${255;0;0}hello")
+    cprint("${on;255;0;0}hello${clear} xmake")
+    cprint("${bright 255;0;0 underline}hello")
+    cprint("${bright on;255;0;0 0;255;0}hello${clear} xmake")
+end
+```
+
+Xmake's detection support for truecolor is implemented by the `$COLORTERM` environment variable. If your terminal supports truecolor, you can manually set this environment variable to tell xmake to enable truecolor support.
+
+It can be enabled and tested with the following command:
+
+```bash
+$ export COLORTERM=truecolor
+$ xmake --version
+```
+
+The 2.1.7 version can disable color output with `COLORTERM=nocolor`.
+
+### cprintf
+
+#### No line feed color print terminal log
+
+This interface is similar to [cprint](#cprint), the difference is that it does not wrap the output.
+
+### format
+
+#### Formatting a string
+
+If you just want to format the string and don't output it, you can use this interface. This interface is equivalent to the [string.format](#string-format) interface, just a simplified version of the interface name.
+
+```lua
+local s = format("hello %s", xmake)
+```
+
+### vformat
+
+#### Formatting strings, support for built-in variable escaping
+
+This interface is followed by [format](The #format) interface is similar, but adds support for the acquisition and escaping of built-in variables.
+
+```lua
+local s = vformat("hello %s $(mode) $(arch) $(env PATH)", xmake)
+```
+
+### raise
+
+#### Throwing an abort program
+
+If you want to interrupt xmake running in custom scripts and plug-in tasks, you can use this interface to throw an exception. If the upper layer does not show the call to [try-catch](#try-catch-finally), xmake will be executed. An error message is displayed.
+
+```lua
+if (errors) raise(errors)
+```
+
+If an exception is thrown in the try block, the error information is captured in catch and finally. See: [try-catch](#try-catch-finally)
+
+### find_packages
+
+#### Finding dependencies
+
+This interface is a wrapper around the [lib.detect.find_package](#detect-find_package) interface and provides lookup support for multiple dependencies, for example:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_load(function (target)
+        target:add(find_packages("openssl", "zlib"))
+    end)
+```
+
+### os
+
+The system operation module belongs to the built-in module. It can be called directly by the script field without using [import](#import) import.
+
+This module is also a native module of lua, and xmake has been extended to provide more practical interfaces.
+
+<p class="tips">
+Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os module can be used in the description field. Other interfaces can only be used in the script domain, for example: `os.cp`, `os .rm`etc.
+</p>
+
+| Interface | Description | Supported Versions |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [os.cp](#os-cp) | Copy files or directories | >= 2.0.1 |
+| [os.mv](#os-mv) | Move Renamed File or Directory | >= 2.0.1 |
+| [os.rm](#os-rm) | Delete files or directory tree | >= 2.0.1 |
+| [os.trycp](#os-trycp) | Try copying files or directories | >= 2.1.6 |
+| [os.trymv](#os-trymv) | Try moving the renamed file or directory | >= 2.1.6 |
+| [os.tryrm](#os-tryrm) | Try deleting a file or directory tree | >= 2.1.6 |
+| [os.cd](#os-cd) | Go to the specified directory | >= 2.0.1 |
+| [os.rmdir](#os-rmdir) | Delete Directory Tree | >= 2.0.1 |
+| [os.mkdir](#os-mkdir) | Create the specified directory | >= 2.0.1 |
+| [os.isdir](#os-isdir) | Determine if the directory exists | >= 2.0.1 |
+| [os.isfile](#os-isfile) | Determine if the file exists | >= 2.0.1 |
+| [os.exists](#os-exists) | Determine if a file or directory exists | >= 2.0.1 |
+| [os.dirs](#os-dirs) | Traversing to get all directories under the specified directory | >= 2.0.1 |
+| [os.files](#os-files) | Traversing to get all the files in the specified directory | >= 2.0.1 |
+| [os.filedirs](#os-filedirs) | Traversing to get all files or directories under the specified directory | >= 2.0.1 |
+| [os.run](#os-run) | Quiet running program | >= 2.0.1 |
+| [os.runv](#os-runv) | Quiet running program with parameter list | >= 2.1.5 |
+| [os.exec](#os-exec) | Evoke Run Program | >= 2.0.1 |
+| [os.execv](#os-execv) | Echo running program with parameter list | >= 2.1.5 |
+| [os.iorun](#os-iorun) | Run and get the program output | >= 2.0.1 |
+| [os.iorunv](#os-iorunv) | Run and get the program output with parameter list | >= 2.1.5 |
+| [os.getenv](#os-getenv) | Get Environment Variables | >= 2.0.1 |
+| [os.setenv](#os-setenv) | Setting environment variables | >= 2.0.1 |
+| [os.tmpdir](#os-tmpdir) | Get Temp directory path | >= 2.0.1 |
+| [os.tmpfile](#os-tmpfile) | Get Temporary File Path | >= 2.0.1 |
+| [os.curdir](#os-curdir) | Get current directory path | >= 2.0.1 |
+| [os.filesize](#os-filesize) | Get File Size | >= 2.1.9 |
+| [os.scriptdir](#os-scriptdir) | Get script directory path | >= 2.0.1 |
+| [os.programdir](#os-programdir) | Get xmake install main program script directory | >= 2.1.5 |
+| [os.projectdir](#os-projectdir) | Get Project Home | |= 2.1.5 |
+| [os.arch](#os-arch) | Get Current System Architecture | >= 2.0.1 |
+| [os.host](#os-host) | Get Current Host System | >= 2.0.1 |
+
+#### os.cp
+
+- Copy files or directories
+
+The behavior is similar to the `cp` command in the shell, supporting path wildcard matching (using lua pattern matching), support for multi-file copying, and built-in variable support.
+
+E.g:
+
+```lua
+os.cp("$(scriptdir)/*.h", "$(projectdir)/src/test/**.h", "$(buildir)/inc")
+```
+
+The above code will: all the header files in the current `xmake.lua` directory, the header files in the project source test directory are all copied to the `$(buildir)` output directory.
+
+Among them `$(scriptdir)`, `$(projectdir)` These variables are built-in variables of xmake. For details, see the related documentation of [built-in variables](#built-in variables).
+
+The matching patterns in `*.h` and `**.h` are similar to those in [add_files](#targetadd_files), the former is a single-level directory matching, and the latter is a recursive multi-level directory matching.
+
+This interface also supports `recursive replication' of directories, for example:
+
+```lua
+-- Recursively copy the current directory to a temporary directory
+os.cp("$(curdir)/test/", "$(tmpdir)/test")
+```
+
+<p class="tip">
+Try to use the `os.cp` interface instead of `os.run("cp ..")`, which will ensure platform consistency and cross-platform build description.
+</p>
+
+#### os.mv
+
+- Move to rename a file or directory
+
+Similar to the use of [os.cp](#os-cp), it also supports multi-file move operations and pattern matching, for example:
+
+```lua
+-- Move multiple files to a temporary directory
+os.mv("$(buildir)/test1","$(buildir)/test2", "$(tmpdir)")
+
+-- File movement does not support bulk operations, which is file renaming
+os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
+```
+
+#### os.rm
+
+- Delete files or directory trees
+
+Support for recursive deletion of directories, bulk delete operations, and pattern matching and built-in variables, such as:
+
+```lua
+os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
+```
+
+#### os.trycp
+
+- Try copying files or directories
+
+Similar to [os.cp](#os-cp), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
+
+```lua
+if os.trycp("file", "dest/file") then
+end
+```
+
+#### os.trymv
+
+- Try moving a file or directory
+
+Similar to [os.mv](#os-mv), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
+
+```lua
+if os.trymv("file", "dest/file") then
+end
+```
+
+#### os.tryrm
+
+- Try deleting files or directories
+
+Similar to [os.rm](#os-rm), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
+
+```lua
+if os.tryrm("file") then
+end
+```
+
+#### os.cd
+
+- Enter the specified directory
+
+This operation is used for directory switching and also supports built-in variables, but does not support pattern matching and multi-directory processing, for example:
+
+```lua
+-- Enter the temporary directory
+os.cd("$(tmpdir)")
+```
+
+If you want to leave the previous directory, there are several ways:
+
+```lua
+-- Enter the parent directory
+os.cd("..")
+
+-- Enter the previous directory, equivalent to: cd -
+os.cd("-")
+
+-- Save the previous directory before entering the directory, then use it to cut back directly after the level
+local oldir = os.cd("./src")
+...
+os.cd(oldir)
+```
+
+#### os.rmdir
+
+- delete only the directory
+
+If it is not a directory, it cannot be deleted.
+
+#### os.mkdir
+
+- Create a directory
+
+Support for batch creation and built-in variables, such as:
+
+```lua
+os.mkdir("$(tmpdir)/test", "$(buildir)/inc")
+```
+
+#### os.isdir
+
+- Determine if it is a directory
+
+Return false if the directory does not exist
+
+```lua
+if os.isdir("src") then
+    -- ...
+end
+```
+
+#### os.isfile
+
+- Determine if it is a file
+
+Return false if the file does not exist
+
+```lua
+if os.isfile("$(buildir)/libxxx.a") then
+    -- ...
+end
+```
+
+#### os.exists
+
+- Determine if a file or directory exists
+
+Return false if the file or directory does not exist
+
+```lua
+-- Judging the existence of the directory
+if os.exists("$(buildir)") then
+    -- ...
+end
+
+-- Judging the existence of the file
+if os.exists("$(buildir)/libxxx.a") then
+    -- ...
+end
+```
+
+#### os.dirs
+
+- Traverse to get all the directories under the specified directory
+
+Supports pattern matching in [add_files](#targetadd_files), supports recursive and non-recursive mode traversal, and returns a table array. If not, returns an empty array, for example:
+
+```lua
+-- Recursive traversal to get all subdirectories
+for _, dir in ipairs(os.dirs("$(buildir)/inc/**")) do
+    print(dir)
+end
+```
+
+#### os.files
+
+- Traverse to get all the files in the specified directory
+
+Supports pattern matching in [add_files](#targetadd_files), supports recursive and non-recursive mode traversal, and returns a table array. If not, returns an empty array, for example:
+
+```lua
+-- Non-recursive traversal to get all child files
+for _, filepath in ipairs(os.files("$(buildir)/inc/*.h")) do
+    print(filepath)
+end
+```
+
+#### os.filedirs
+
+- Traverse to get all files and directories under the specified directory
+
+Supports pattern matching in [add_files](#targetadd_files), supports recursive and non-recursive mode traversal, and returns a table array. If not, returns an empty array, for example:
+
+```lua
+-- Recursive traversal to get all child files and directories
+for _, filedir in ipairs(os.filedirs("$(buildir)/**")) do
+    print(filedir)
+end
+```
+
+#### os.run
+
+- Quietly running native shell commands
+
+Used to execute third-party shell commands, but will not echo the output, only after the error, highlight the error message.
+
+This interface supports parameter formatting and built-in variables such as:
+
+```lua
+-- Formatted parameters passed in
+os.run("echo hello %s!", "xmake")
+
+-- List build directory files
+os.run("ls -l $(buildir)")
+```
+
+<p class="warning">
+Using this interface to execute shell commands can easily reduce the cross-platform build. For `os.run("cp ..")`, try to use `os.cp` instead. <br>
+If you must use this interface to run the shell program, please use the [config.plat](#config-plat) interface to determine the platform support.
+</p>
+
+For more advanced process operations and control, see the [process](#process) module interface.
+
+#### os.runv
+
+- Quietly running native shell commands with parameter list
+
+Similar to [os.run](#os-run), just the way to pass parameters is passed through the parameter list, not the string command, for example:
+
+```lua
+os.runv("echo", {"hello", "xmake!"})
+```
+
+#### os.exec
+
+- Echo running native shell commands
+
+Similar to the [os.run](#os-run) interface, the only difference is that when this interface executes the shell program, it has the output output, which is used in general debugging.
+
+#### os.execv
+
+- Echo running native shell commands with parameter list
+
+Similar to [os.execv](#os-execv), just the way to pass parameters is passed through the parameter list, not the string command, for example:
+
+```lua
+os.execv("echo", {"hello", "xmake!"})
+```
+
+#### os.iorun
+
+- Quietly running native shell commands and getting output
+
+Similar to the [os.run](#os-run) interface, the only difference is that after executing the shell program, this interface will get the execution result of the shell program, which is equivalent to redirecting the output.
+
+You can get the contents of `stdout`, `stderr` at the same time, for example:
+
+```lua
+local outdata, errdata = os.iorun("echo hello xmake!")
+```
+
+#### os.iorunv
+
+- Run the native shell command quietly and get the output with a list of parameters
+
+Similar to [os.iorunv](#os-iorunv), just the way to pass arguments is passed through the argument list, not the string command, for example:
+
+```lua
+local result, errors = os.iorunv("echo", {"hello", "xmake!"})
+```
+
+#### os.getenv
+
+- Get system environment variables
+
+```lua
+print(os.getenv("PATH"))
+```
+
+#### os.setenv
+
+- Set system environment variables
+
+```lua
+os.setenv("HOME", "/tmp/")
+```
+
+#### os.tmpdir
+
+- Get temporary directory
+
+Consistent with the result of [$(tmpdir)](#var-tmpdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
+
+```lua
+print(path.join(os.tmpdir(), "file.txt"))
+```
+
+Equivalent to:
+
+```lua
+print("$(tmpdir)/file.txt"))
+```
+
+#### os.tmpfile
+
+- Get temporary file path
+
+Used to get a temporary file path, just a path, the file needs to be created by itself.
+
+#### os.curdir
+
+- Get the current directory path
+
+Consistent with the result of [$(curdir)](#var-curdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
+
+Usage reference: [os.tmpdir](#os-tmpdir).
+
+#### os.filesize
+
+- Get file size
+
+```lua
+print(os.filesize("/tmp/a"))
+```
+
+#### os.scriptdir
+
+- Get the path of the current description script
+
+Consistent with the result of [$(scriptdir)](#var-scriptdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
+
+Usage reference: [os.tmpdir](#os-tmpdir).
+
+#### os.programdir
+
+- Get the xmake installation main program script directory
+
+Consistent with the result of [$(programdir)](#var-programdir), it is just a direct get returned to a variable, which can be maintained with subsequent strings.
+
+#### os.projectdir
+
+- Get the project home directory
+
+Consistent with the result of [$(projectdir)](#var-projectdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
+
+#### os.arch
+
+- Get current system architecture
+
+That is the default architecture of the current host system, for example, I execute xmake on `linux x86_64` to build, then the return value is: `x86_64`
+
+#### os.host
+
+- Get the operating system of the current host
+
+Consistent with the result of [$(host)](#var-host), for example, if I execute xmake on `linux x86_64` to build, the return value is: `linux`
+
+### io
+
+The io operation module extends lua's built-in io module to provide more easy-to-use interfaces.
+
+| Interface | Description | Supported Versions |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [io.open](#io-open) | Open file for reading and writing | >= 2.0.1 |
+| [io.load](#io-load) | De-serialize all table contents from the specified path file | >= 2.0.1 |
+| [io.save](#io-save) | Serialize all table contents to the specified path file | >= 2.0.1 |
+| [io.readfile](#io.readfile) | Read everything from the specified path file | >= 2.1.3 |
+| [io.writefile](#io.writefile) | Write everything to the specified path file | >= 2.1.3 |
+| [io.gsub](#io-gsub) | Full text replaces the contents of the specified path file | >= 2.0.1 |
+| [io.tail](#io-tail) | Read and display the tail of the file | >= 2.0.1 |
+| [io.cat](#io-cat) | Read and display all contents of a file | >= 2.0.1 |
+| [io.print](#io-print) | Formatting output with a line feed to a file | >= 2.0.1 |
+| [io.printf](#io-printf) | No line formatted output to file | >= 2.0.1 |
+
+#### io.open
+
+- Open file for reading and writing
+
+This is a native interface for lua. For detailed usage, see Lua's official documentation: [The Complete I/O Model](https://www.lua.org/pil/21.2.html)
+
+If you want to read all the contents of the file, you can write:
+
+```lua
+local file = io.open("$(tmpdir)/file.txt", "r")
+if file then
+    local data = file:read("*all")
+    file:close()
+end
+```
+
+Or you can read it more quickly using [io.readfile](#io.readfile).
+
+If you want to write a file, you can do this:
+
+```lua
+-- Open file: w is write mode, a is append write mode
+local file = io.open("xxx.txt", "w")
+if file then
+
+    -- Write data to file with native lua interface, does not support formatting, no line breaks, does not support built-in variables
+    file:write("hello xmake\n")
+
+    -- Write data to file with xmake extended interface, support formatting, no line breaks, no built-in variables
+    file:writef("hello %s\n", "xmake")
+
+    -- Use xmake extended formatted parameters to write to one line, with line breaks, and support for built-in variables
+    file:print("hello %s and $(buildir)", "xmake")
+
+    -- Write a line using the xmake extended formatted arguments, no line breaks, and support for built-in variables
+    file:printf("hello %s and $(buildir) \n", "xmake")
+
+    -- Close the file
+    file:close()
+end
+```
+
+#### io.load
+
+- Load all table contents from the specified path file deserialization
+
+You can load serialized table contents from a file, generally used with [io.save](#io-save), for example:
+
+```lua
+-- Load the contents of the serialized file to the table
+local data = io.load("xxx.txt")
+if data then
+
+    -- Dump prints the contents of the entire table in the terminal, formatting the output
+    table.dump(data)
+end
+```
+
+#### io.save
+
+- Serialize all table contents to the specified path file
+
+You can serialize the contents of the table to the specified file, generally used in conjunction with [io.load](#io-load), for example:
+
+```lua
+io.save("xxx.txt", {a = "a", b = "b", c = "c"})
+```
+
+The result of the storage is:
+
+```
+{
+    ["b"] = "b"
+,   ["a"] = "a"
+,   ["c"] = "c"
+}
+```
+
+#### io.readfile
+
+- Read everything from the specified path file
+
+It is more convenient to directly read the contents of the entire file without opening the file, for example:
+
+```lua
+local data = io.readfile("xxx.txt")
+```
+
+#### io.writefile
+
+- Write all content to the specified path file
+
+It is more convenient to directly write the contents of the entire file without opening the file, for example:
+
+```lua
+io.writefile("xxx.txt", "all data")
+```
+
+#### io.gsub
+
+- Full text replaces the contents of the specified path file
+
+Similar to the [string.gsub](#string-gsub) interface, the full-text pattern matches the replacement content, but here is the direct operation file, for example:
+
+```lua
+-- Remove all whitespace characters from the file
+io.gsub("xxx.txt", "%s+", "")
+```
+
+#### io.tail
+
+- Read and display the tail content of the file
+
+Reads the data of the specified number of lines at the end of the file and displays a command like `cat xxx.txt | tail -n 10`, for example:
+
+```lua
+-- Display the last 10 lines of the file
+io.tail("xxx.txt", 10)
+```
+
+#### io.cat
+
+- read and display all contents of the file
+
+Read all the contents of the file and display it, similar to the `cat xxx.txt` command, for example:
+
+```lua
+io.cat("xxx.txt")
+```
+
+#### io.print
+
+- Formatted output content to file with newline
+
+Directly format the passed parameter to output a line of string to the file with a line break, for example:
+
+```lua
+io.print("xxx.txt", "hello %s!", "xmake")
+```
+
+#### io.printf
+
+- Formatted output to file without line breaks
+
+Directly format the passed parameter to output a line of string to the file without a line break, for example:
+
+```lua
+io.printf("xxx.txt", "hello %s!\n", "xmake")
+```
+
+### path
+
+The path operation module implements cross-platform path operations, which is a custom module of xmake.
+
+| Interface | Description | Supported Versions |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [path.join](#path-join) | Stitching Path | >= 2.0.1 |
+| [path.translate](#path-translate) | Convert path to the path style of the current platform | >= 2.0.1 |
+| [path.basename](#path-basename) | Get the file name with no suffix at the end | >= 2.0.1 |
+| [path.filename](#path-filename) | Get the file name with the last suffix of the path | >= 2.0.1 |
+| [path.extension](#path-extension) | Get the suffix of the path | >= 2.0.1 |
+| [path.directory](#path-directory) | Get the last directory name of the path | >= 2.0.1 |
+| [path.relative](#path-relative) | Convert to relative path | >= 2.0.1 |
+| [path.absolute](#path-absolute) | Convert to Absolute Path | >= 2.0.1 |
+| [path.is_absolute](#path-is_absolute) | Determine if it is an absolute path | >= 2.0.1 |
+
+#### path.join
+
+- Stitching path
+
+Adding multiple path items by splicing. Due to the path difference of `windows/unix` style, using api to append paths is more cross-platform, for example:
+
+```lua
+print(path.join("$(tmpdir)", "dir1", "dir2", "file.txt"))
+```
+
+The above splicing on Unix is ​​equivalent to: `$(tmpdir)/dir1/dir2/file.txt`, and on Windows is equivalent to: `$(tmpdir)\\dir1\\dir2\\file.txt`
+
+If you find this cumbersome and not clear enough, you can use: [path.translate](path-translate) to format the conversion path string to the format supported by the current platform.
+
+#### path.translate
+
+- Convert path to the path style of the current platform
+
+Formatting converts the specified path string to the path style supported by the current platform, and supports the path string parameter of the `windows/unix` format to be passed in, even mixed, such as:
+
+```lua
+print(path.translate("$(tmpdir)/dir/file.txt"))
+print(path.translate("$(tmpdir)\\dir\\file.txt"))
+print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
+```
+
+The path strings of the above three different formats, after being standardized by `translate`, will become the format supported by the current platform, and the redundant path separator will be removed.
+
+#### path.basename
+
+- Get the file name with no suffix at the end of the path
+
+```lua
+print(path.basename("$(tmpdir)/dir/file.txt"))
+```
+
+The result is: `file`
+
+#### path.filename
+
+- Get the file name with the last suffix of the path
+
+```lua
+print(path.filename("$(tmpdir)/dir/file.txt"))
+```
+
+The result is: `file.txt`
+
+#### path.extension
+
+- Get the suffix of the path
+
+```lua
+print(path.extensione("$(tmpdir)/dir/file.txt"))
+```
+
+The result is: `.txt`
+
+#### path.directory
+
+- Get the last directory name of the path```lua
+Print(path.directory("$(tmpdir)/dir/file.txt"))
+```
+
+The result is: `dir`
+
+#### path.relative
+
+- Convert to relative path
+
+```lua
+print(path.relative("$(tmpdir)/dir/file.txt", "$(tmpdir)"))
+```
+
+The result is: `dir/file.txt`
+
+The second parameter is to specify the relative root directory. If not specified, the default is relative to the current directory:
+
+```lua
+os.cd("$(tmpdir)")
+print(path.relative("$(tmpdir)/dir/file.txt"))
+```
+
+The result is the same.
+
+#### path.absolute
+
+- Convert to absolute path
+
+```lua
+print(path.absolute("dir/file.txt", "$(tmpdir)"))
+```
+
+The result is: `$(tmpdir)/dir/file.txt`
+
+The second parameter is to specify the relative root directory. If not specified, the default is relative to the current directory:
+
+```lua
+os.cd("$(tmpdir)")
+print(path.absolute("dir/file.txt"))
+```
+
+The result is the same.
+
+#### path.is_absolute
+
+- Determine if it is an absolute path
+
+```lua
+if path.is_absolute("/tmp/file.txt") then
+    -- if it is an absolute path
+end
+```
+
+### table
+
+Table belongs to the module provided by Lua native. For the native interface, you can refer to: [lua official document](https://www.lua.org/manual/5.1/manual.html#5.5)
+
+It has been extended in xmake to add some extension interfaces:
+
+| Interface | Description | Supported Versions |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [table.join](#table-join) | Merge multiple tables and return | >= 2.0.1 |
+| [table.join2](#table-join2) | Merge multiple tables into the first table | >= 2.0.1 |
+| [table.dump](#table-dump) | Output all contents of table | >= 2.0.1 |
+| [table.unique](#table-unique) | Deduplicate the contents of the table | >= 2.0.1 |
+| [table.slice](#table-slice) | Get the slice of the table | >= 2.0.1 |
+
+#### table.join
+
+- Merge multiple tables and return
+
+You can merge the elements in multiple tables and return to a new table, for example:
+
+```lua
+local newtable = table.join({1, 2, 3}, {4, 5, 6}, {7, 8, 9})
+```
+
+The result is: `{1, 2, 3, 4, 5, 6, 7, 8, 9}`
+
+And it also supports the merging of dictionaries:
+
+```lua
+local newtable = table.join({a = "a", b = "b"}, {c = "c"}, {d = "d"})
+```
+
+The result is: `{a = "a", b = "b", c = "c", d = "d"}`
+
+#### table.join2
+
+- Combine multiple tables into the first table
+
+Similar to [table.join](#table.join), the only difference is that the result of the merge is placed in the first argument, for example:
+
+```lua
+local t = {0, 9}
+table.join2(t, {1, 2, 3})
+```
+
+The result is: `t = {0, 9, 1, 2, 3}`
+
+#### table.dump
+
+- Output all contents of the table
+
+Recursively format all the contents of the printed table, generally used for debugging, for example:
+
+```lua
+table.dump({1, 2, 3})
+```
+
+The result is: `{1, 2, 3}`
+
+#### table.unique
+
+- Deduplicate the contents of the table
+
+To de-table elements, generally used in array tables, for example:
+
+```lua
+local newtable = table.unique({1, 1, 2, 3, 4, 4, 5})
+```
+
+The result is: `{1, 2, 3, 4, 5}`
+
+#### table.slice
+
+- Get the slice of the table
+
+Used to extract some elements of an array table, for example:
+
+```lua
+-- Extract all elements after the 4th element, resulting in: {4, 5, 6, 7, 8, 9}
+table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4)
+
+-- Extract the 4th-8th element and the result: {4, 5, 6, 7, 8}
+table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8)
+
+-- Extract the 4th-8th element with an interval of 2, resulting in: {4, 6, 8}
+table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
+```
+
+### string
+
+The string module is a native module of lua. For details, see: [lua official manual](https://www.lua.org/manual/5.1/manual.html#5.4)
+
+It has been extended in xmake to add some extension interfaces:
+
+| Interface | Description | Supported Versions |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [string.startswith](#string-startswith) | Determine if the beginning of the string matches | >= 1.0.1 |
+| [string.endswith](#string-endswith) | Determine if the end of the string matches | >= 1.0.1 |
+| [string.split](#string-split) | Split String | >= 1.0.1 |
+| [string.trim](#string-trim) | Remove the left and right whitespace characters | >= 1.0.1 |
+| [string.ltrim](#string-ltrim) | Remove the whitespace character to the left of the string | >= 1.0.1 |
+| [string.rtrim](#string-rtrim) | Remove the whitespace character to the right of the string | >= 1.0.1 |
+
+#### string.startswith
+
+- Determine if the beginning of the string matches
+
+```lua
+local s = "hello xmake"
+if s:startswith("hello") then
+    print("match")
+end
+```
+
+#### string.endswith
+
+- Determine if the end of the string matches
+
+```lua
+local s = "hello xmake"
+if s:endswith("xmake") then
+    print("match")
+end
+```
+
+#### string.split
+
+pattern match and ignore empty string
+
+```lua
+("1\n\n2\n3"):split('\n') => 1, 2, 3
+("abc123123xyz123abc"):split('123') => abc, xyz, abc
+("abc123123xyz123abc"):split('[123]+') => abc, xyz, abc
+```
+
+plain match and ignore empty string
+
+```lua
+("1\n\n2\n3"):split('\n', {plain = true}) => 1, 2, 3
+("abc123123xyz123abc"):split('123', {plain = true}) => abc, xyz, abc
+```
+
+pattern match and contains empty string
+
+```lua
+("1\n\n2\n3"):split('\n', {strict = true}) => 1, , 2, 3
+("abc123123xyz123abc"):split('123', {strict = true}) => abc, , xyz, abc
+("abc123123xyz123abc"):split('[123]+', {strict = true}) => abc, xyz, abc
+```
+
+plain match and contains empty string
+
+```lua
+("1\n\n2\n3"):split('\n', {plain = true, strict = true}) => 1, , 2, 3
+("abc123123xyz123abc"):split('123', {plain = true, strict = true}) => abc, , xyz, abc
+```
+
+limit split count
+
+```lua
+("1\n\n2\n3"):split('\n', {limit = 2}) => 1, 2\n3
+("1.2.3.4.5"):split('%.', {limit = 3}) => 1, 2, 3.4.5
+```
+
+#### string.trim
+
+- Remove the left and right whitespace characters of the string
+
+```lua
+string.trim("    hello xmake!    ")
+```
+
+The result is: "hello xmake!"
+
+#### string.ltrim
+
+- Remove the whitespace character to the left of the string
+
+```lua
+string.ltrim("    hello xmake!    ")
+```
+
+The result is: "hello xmake!    "
+
+#### string.rtrim
+
+- Remove the whitespace character to the right of the string
+
+```lua
+string.rtrim("    hello xmake!    ")
+```
+
+The result is: "    hello xmake!"
+
+### process
+
+This is the xmake extension's process control module for more flexible control of the process, compared to: [os.run](#os-run) series is more flexible and lower level.
+
+| Interface | Description | Supported Versions |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [process.open](#process-open) | Open Process | >= 2.0.1 |
+| [process.wait](#process-wait) | Waiting for the process to end | >= 2.0.1 |
+| [process.close](#process-close) | Close Process Object | >=2.0.1 |
+| [process.waitlist](#process-waitlist) | Waiting for multiple processes at the same time | >= 2.0.1 |
+
+#### process.open
+
+- Open the process
+
+Run a specified program through path creation and return the corresponding process object:
+
+```lua
+-- Open the process, the last two parameters specify the stdout to be captured, the stderr file path
+local proc = process.open("echo hello xmake!", outfile, errfile)
+if proc then
+
+    -- Waiting for the process to complete
+    --
+    -- Parameter 2 is waiting for timeout, -1 is permanent waiting, 0 is trying to get process status
+    -- Return value waitok is wait state: 1 is waiting for the process to end normally, 0 is the process is still running, -1 bit is waiting to fail
+    -- The return value status is the status code returned by the process after waiting for the process to end.
+    local waitok, status = process.wait(proc, -1)
+
+    -- release process object
+    process.close(proc)
+end
+```
+
+#### process.wait
+
+- Waiting for the process to end
+
+For specific use, see: [process.open](#process-open)
+
+#### process.close
+
+- close the process object
+
+For specific use, see: [process.open](#process-open)
+
+#### process.waitlist
+
+- Waiting for multiple processes at the same time
+
+```lua
+-- The second parameter is waiting for a timeout, returning a list of process states
+for _, procinfo in ipairs(process.waitlist(procs, -1)) do
+
+    -- For each process: process object, process pid, process end status code
+    local proc   = procinfo[1]
+    local procid = procinfo[2]
+    local status = procinfo[3]
+
+end
+```
+
+### coroutine
+
+The coroutine module is a native module of lua. For use, see: [lua official manual](https://www.lua.org/manual/5.1/manual.html#5.2)
+
