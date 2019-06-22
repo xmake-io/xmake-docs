@@ -3,4 +3,4 @@
 - [社区](https://www.reddit.com/r/tboox/)
 - 语言
   - [:uk: English](/)
-  - [:cn: 中文](/zh/)
+  - [:cn: 中文](/zh-cn/)
