@@ -1,3 +1,9 @@
+- About
+  
+  - [Introduction](about/introduction.md)
+  - [Contact](about/contact.md)
+  - [Sponsor](about/sponsor.md)
+ 
 - Getting Started
 
   - [Installation](guide/installation.md)
@@ -28,4 +34,3 @@
   - [Builtin Modules](manual/builtin_modules.md)
   - [Extension Modules](manual/extension_modules.md)
 
-- Sponsor
