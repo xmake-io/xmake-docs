@@ -17,7 +17,7 @@
 - 插件介绍
 
   - [插件开发](zh-cn/plugin/plugin_development.md)
-  - [内置插件](zh--cn/plugin/builtin_plugins.md)
+  - [内置插件](zh-cn/plugin/builtin_plugins.md)
   - [更多插件](zh-cn/plugin/more_plugins.md)
 
 - API手册

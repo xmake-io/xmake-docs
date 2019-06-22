@@ -1,112 +1,7 @@
----
-nav: zh
-search: zh
----
 
-## 插件开发
+## 宏记录和回放
 
-#### 简介
-
-XMake完全支持插件模式，我们可以很方便的扩展实现自己的插件，并且xmake也提供了一些内建的使用插件。
-
-我们可以执行下 `xmake -h` 看下当前支持的插件：
-
-```
-Plugins: 
-    l, lua                                 Run the lua script.
-    m, macro                               Run the given macro.
-       doxygen                             Generate the doxygen document.
-       hello                               Hello xmake!
-       project                             Create the project file.
-```
-
-* lua: 运行lua脚本的插件
-* macro: 这个很实用，宏脚本插件，可以手动录制多条xmake命令并且回放，也可以通过脚本实现一些复杂的宏脚本，这个我们后续会更加详细的介绍
-* doxygen：一键生成doxygen文档的插件
-* hello: 插件demo，仅仅显示一句话：'hello xmake!'
-* project： 生成工程文件的插件，目前仅支持(makefile)，后续还会支持(vs,xcode等工程)的生成
-
-#### 快速开始
-
-接下来我们介绍下本文的重点，一个简单的hello xmake插件的开发，代码如下：
-
-```lua
--- 定义一个名叫hello的插件任务
-task("hello")
-
-    -- 设置类型为插件
-    set_category("plugin")
-
-    -- 插件运行的入口
-    on_run(function ()
-
-        -- 显示hello xmake!
-        print("hello xmake!")
-
-    end)
-
-    -- 设置插件的命令行选项，这里没有任何参数选项，仅仅显示插件描述
-    set_menu {
-                -- usage
-                usage = "xmake hello [options]"
-
-                -- description
-            ,   description = "Hello xmake!"
-
-                -- options
-            ,   options = {}
-            } 
-```
-
-这个插件的文件结构如下：
-
-```
-hello
- - xmake.lua
-
-``` 
-
-现在一个最简单的插件写完了，那怎么让它被xmake检测到呢，有三种方式：
-
-1. 把 hello 这个文件夹放置在 xmake的插件安装目录 `xmake/plugins`，这个里面都是些内建的插件
-2. 把 hello 文件夹放置在 `~/.xmake/plugins` 用户全局目录，这样对当前xmake 全局生效
-3. 把 hello 文件夹放置在任意地方，通过在工程描述文件xmake.lua中调用`add_plugindirs("./hello")` 添加当前的工程的插件搜索目录，这样只对当前工程生效
-
-#### 运行插件
-
-接下来，我们尝试运行下这个插件：
-
-```console
-xmake hello
-```
-
-显示结果：
-
-```
-hello xmake!
-```
-
-最后我们还可以在target自定义的脚本中运行这个插件：
-
-```lua
-target("demo")
-    
-    -- 构建之后运行插件
-    after_build(function (target)
-  
-        -- 导入task模块
-        import("core.project.task")
-
-        -- 运行插件任务
-        task.run("hello")
-    end)
-```
-
-## 内置插件
-
-#### 宏记录和回放
-
-##### 简介
+### 简介
 
 我们可以通过这个插件，快速记录和回放我们平常频繁使用到的一些xmake操作，来简化我们日常的开发工作。
 
@@ -119,7 +14,7 @@ target("demo")
 * 支持宏脚本的删除、显示等管理功能
 * 支持自定义高级宏脚本，以及参数配置
 
-##### 记录操作
+### 记录操作
 
 ```console
 # 开始记录宏
@@ -147,14 +42,14 @@ $ xmake p
 xmake macro --end 
 ```
 
-##### 回放
+### 回放
 
 ```console
 # 回放一个匿名宏
 $ xmake macro .
 ```
 
-##### 命名宏
+### 命名宏
 
 匿名宏的好处就是快速记录，快速回放，如果需要长久保存，就需要给宏取个名字。
 
@@ -165,7 +60,7 @@ $ xmake macro --end macroname
 $ xmake macro macroname
 ```
 
-##### 导入导出宏
+### 导入导出宏
 
 导入指定的宏脚本或者宏目录：
 
@@ -181,7 +76,7 @@ $ xmake macro --export=/xxx/macro.lua macroname
 $ xmake macro --export=/xxx/macrodir
 ```
 
-##### 列举显示宏
+### 列举显示宏
 
 列举所有`xmake`内置的宏脚本：
 
@@ -195,7 +90,7 @@ $ xmake macro --list
 $ xmake macro --show macroname
 ```
 
-##### 自定义宏脚本
+### 自定义宏脚本
 
 我们也可以自己编写个宏脚本 `macro.lua` 然后导入到xmake中去。
 
@@ -232,7 +127,7 @@ $ xmake macro --import=/xxx/macro.lua [macroname]
 $ xmake macro [.|macroname]
 ```
 
-##### 内置的宏脚本
+### 内置的宏脚本
 
 XMake 提供了一些内置的宏脚本，来简化我们的日常开发工作。
 
@@ -242,7 +137,7 @@ XMake 提供了一些内置的宏脚本，来简化我们的日常开发工作�
 $ xmake macro package -p iphoneos 
 ```
 
-##### 高级的宏脚本编写
+### 高级的宏脚本编写
 
 以上面提到的`package`宏为例，我们看下其具体代码，里面通过`import`导入一些扩展模块，实现了复杂的脚本操作。
 
@@ -347,11 +242,11 @@ end
     如果你想要获取更多宏参数选项信息，请运行： `xmake macro --help`
 </p>
 
-#### 运行自定义lua脚本
+## 运行自定义lua脚本
 
 这个跟宏脚本类似，只是省去了导入导出操作，直接指定lua脚本来加载运行，这对于想要快速测试一些接口模块，验证自己的某些思路，都是一个不错的方式。
 
-##### 运行指定的脚本文件
+### 运行指定的脚本文件
 
 我们先写个简单的lua脚本：
 
@@ -371,7 +266,7 @@ $ xmake lua /tmp/test.lua
     当然，你也可以像宏脚本那样，使用`import`接口导入扩展模块，实现复杂的功能。
 </p>
 
-##### 运行内置的脚本命令
+### 运行内置的脚本命令
 
 你可以运行 `xmake lua -l` 来列举所有内置的脚本名，例如：
 
@@ -394,7 +289,7 @@ $ xmake lua cp /tmp/file /tmp/file2
 $ xmake lua versioninfo
 ```
 
-##### 运行交互命令 (REPL)
+### 运行交互命令 (REPL)
 
 有时候在交互模式下，运行命令更加的方便测试和验证一些模块和api，也更加的灵活，不需要再去额外写一个脚本文件来加载。
 
@@ -441,9 +336,9 @@ hello xmake!
 3
 ```
 
-#### 生成IDE工程文件
+## 生成IDE工程文件
 
-##### 简介
+### 简介
 
 XMake跟`cmake`, `premake`等其他一些构建工具的区别在于：
 
@@ -453,13 +348,13 @@ XMake跟`cmake`, `premake`等其他一些构建工具的区别在于：
 
 这样做的一个好处是：插件更加容易扩展，维护也更加独立和方便。
 
-##### 生成Makefile
+### 生成Makefile
 
 ```console
 $ xmake project -k makefile
 ```
 
-##### 生成compiler_commands
+### 生成compiler_commands
 
 导出每个源文件的编译信息，生成基于clang的编译数据库文件，json格式，可用于跟ide，编辑器，静态分析工具进行交互。
 
@@ -481,7 +376,7 @@ $ xmake project -k compile_commands
 
 对于`compile_commands`的详细说明见：[JSONCompilationDatabase](#https://clang.llvm.org/docs/JSONCompilationDatabase.html)
 
-##### 生成VisualStudio工程
+### 生成VisualStudio工程
 
 ```console
 $ xmake project -k [vs2008|vs2013|vs2015|..]
@@ -504,7 +399,7 @@ set_modes("debug", "release")
 
 具体`set_modes`的使用，可以参考对应的接口手册文档。
 
-#### 生成doxygen文档
+## 生成doxygen文档
 
 请先确保本机已安装`doxygen`工具，然后在工程目录下运行：
 
@@ -512,14 +407,3 @@ set_modes("debug", "release")
 $ xmake doxygen
 ```
 
-## 更多插件
-
-请到插件仓库进行下载安装: [xmake-plugins](https://github.com/xmake-io/xmake-plugins).
-
-#### 从app生成ipa包
-
-这仅仅是一个小插件，ios开发的同学，可能会用的到。
-
-```console
-$ xmake app2ipa --icon=/xxx.png /xxx/ios.app -o /xxx.ios.ipa
-```
