@@ -69,7 +69,7 @@ target("test")
 
 #### Get the value of the built-in variable
 
-[Built-in variables](#built-in variables) can be obtained directly through this interface, without the need to add a `$()` package, which is much simpler to use, for example:
+[Built-in variables](/manual/builtin_variables) can be obtained directly through this interface, without the need to add a `$()` package, which is much simpler to use, for example:
 
 ```lua
 print(val("host"))
@@ -91,7 +91,7 @@ However, `vformat` supports string parameter formatting, which is more powerful,
 
 Import is mainly used to import xmake's extension class library and some custom class library modules, generally used to:
 
-* Custom script ([on_build](#targeton_build), [on_run](#targeton_run) ..)
+* Custom script ([on_build](/manual/project_target?id=targeton_build), [on_run](/manual/project_target?id=targeton_run) ..)
 * Plugin development
 * Template development
 * Platform extension
@@ -585,7 +585,7 @@ This interface is similar to [cprint](#cprint), the difference is that it does n
 
 #### Formatting a string
 
-If you just want to format the string and don't output it, you can use this interface. This interface is equivalent to the [string.format](#string-format) interface, just a simplified version of the interface name.
+If you just want to format the string and don't output it, you can use this interface. This interface is equivalent to the [string.format](#stringformat) interface, just a simplified version of the interface name.
 
 ```lua
 local s = format("hello %s", xmake)
@@ -617,7 +617,7 @@ If an exception is thrown in the try block, the error information is captured in
 
 #### Finding dependencies
 
-This interface is a wrapper around the [lib.detect.find_package](#detect-find_package) interface and provides lookup support for multiple dependencies, for example:
+This interface is a wrapper around the [lib.detect.find_package](/manual/extension_modules?id=detectfind_package) interface and provides lookup support for multiple dependencies, for example:
 
 ```lua
 target("test")
@@ -640,38 +640,38 @@ Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os mo
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [os.cp](#os-cp) | Copy files or directories | >= 2.0.1 |
-| [os.mv](#os-mv) | Move Renamed File or Directory | >= 2.0.1 |
-| [os.rm](#os-rm) | Delete files or directory tree | >= 2.0.1 |
-| [os.trycp](#os-trycp) | Try copying files or directories | >= 2.1.6 |
-| [os.trymv](#os-trymv) | Try moving the renamed file or directory | >= 2.1.6 |
-| [os.tryrm](#os-tryrm) | Try deleting a file or directory tree | >= 2.1.6 |
-| [os.cd](#os-cd) | Go to the specified directory | >= 2.0.1 |
-| [os.rmdir](#os-rmdir) | Delete Directory Tree | >= 2.0.1 |
-| [os.mkdir](#os-mkdir) | Create the specified directory | >= 2.0.1 |
-| [os.isdir](#os-isdir) | Determine if the directory exists | >= 2.0.1 |
-| [os.isfile](#os-isfile) | Determine if the file exists | >= 2.0.1 |
-| [os.exists](#os-exists) | Determine if a file or directory exists | >= 2.0.1 |
-| [os.dirs](#os-dirs) | Traversing to get all directories under the specified directory | >= 2.0.1 |
-| [os.files](#os-files) | Traversing to get all the files in the specified directory | >= 2.0.1 |
-| [os.filedirs](#os-filedirs) | Traversing to get all files or directories under the specified directory | >= 2.0.1 |
-| [os.run](#os-run) | Quiet running program | >= 2.0.1 |
-| [os.runv](#os-runv) | Quiet running program with parameter list | >= 2.1.5 |
-| [os.exec](#os-exec) | Evoke Run Program | >= 2.0.1 |
-| [os.execv](#os-execv) | Echo running program with parameter list | >= 2.1.5 |
-| [os.iorun](#os-iorun) | Run and get the program output | >= 2.0.1 |
-| [os.iorunv](#os-iorunv) | Run and get the program output with parameter list | >= 2.1.5 |
-| [os.getenv](#os-getenv) | Get Environment Variables | >= 2.0.1 |
-| [os.setenv](#os-setenv) | Setting environment variables | >= 2.0.1 |
-| [os.tmpdir](#os-tmpdir) | Get Temp directory path | >= 2.0.1 |
-| [os.tmpfile](#os-tmpfile) | Get Temporary File Path | >= 2.0.1 |
-| [os.curdir](#os-curdir) | Get current directory path | >= 2.0.1 |
-| [os.filesize](#os-filesize) | Get File Size | >= 2.1.9 |
-| [os.scriptdir](#os-scriptdir) | Get script directory path | >= 2.0.1 |
-| [os.programdir](#os-programdir) | Get xmake install main program script directory | >= 2.1.5 |
-| [os.projectdir](#os-projectdir) | Get Project Home | |= 2.1.5 |
-| [os.arch](#os-arch) | Get Current System Architecture | >= 2.0.1 |
-| [os.host](#os-host) | Get Current Host System | >= 2.0.1 |
+| [os.cp](#oscp) | Copy files or directories | >= 2.0.1 |
+| [os.mv](#osmv) | Move Renamed File or Directory | >= 2.0.1 |
+| [os.rm](#osrm) | Delete files or directory tree | >= 2.0.1 |
+| [os.trycp](#ostrycp) | Try copying files or directories | >= 2.1.6 |
+| [os.trymv](#ostrymv) | Try moving the renamed file or directory | >= 2.1.6 |
+| [os.tryrm](#ostryrm) | Try deleting a file or directory tree | >= 2.1.6 |
+| [os.cd](#oscd) | Go to the specified directory | >= 2.0.1 |
+| [os.rmdir](#osrmdir) | Delete Directory Tree | >= 2.0.1 |
+| [os.mkdir](#osmkdir) | Create the specified directory | >= 2.0.1 |
+| [os.isdir](#osisdir) | Determine if the directory exists | >= 2.0.1 |
+| [os.isfile](#osisfile) | Determine if the file exists | >= 2.0.1 |
+| [os.exists](#osexists) | Determine if a file or directory exists | >= 2.0.1 |
+| [os.dirs](#osdirs) | Traversing to get all directories under the specified directory | >= 2.0.1 |
+| [os.files](#osfiles) | Traversing to get all the files in the specified directory | >= 2.0.1 |
+| [os.filedirs](#osfiledirs) | Traversing to get all files or directories under the specified directory | >= 2.0.1 |
+| [os.run](#osrun) | Quiet running program | >= 2.0.1 |
+| [os.runv](#osrunv) | Quiet running program with parameter list | >= 2.1.5 |
+| [os.exec](#osexec) | Evoke Run Program | >= 2.0.1 |
+| [os.execv](#osexecv) | Echo running program with parameter list | >= 2.1.5 |
+| [os.iorun](#osiorun) | Run and get the program output | >= 2.0.1 |
+| [os.iorunv](#osiorunv) | Run and get the program output with parameter list | >= 2.1.5 |
+| [os.getenv](#osgetenv) | Get Environment Variables | >= 2.0.1 |
+| [os.setenv](#ossetenv) | Setting environment variables | >= 2.0.1 |
+| [os.tmpdir](#ostmpdir) | Get Temp directory path | >= 2.0.1 |
+| [os.tmpfile](#ostmpfile) | Get Temporary File Path | >= 2.0.1 |
+| [os.curdir](#oscurdir) | Get current directory path | >= 2.0.1 |
+| [os.filesize](#osfilesize) | Get File Size | >= 2.1.9 |
+| [os.scriptdir](#osscriptdir) | Get script directory path | >= 2.0.1 |
+| [os.programdir](#osprogramdir) | Get xmake install main program script directory | >= 2.1.5 |
+| [os.projectdir](#osprojectdir) | Get Project Home | |= 2.1.5 |
+| [os.arch](#osarch) | Get Current System Architecture | >= 2.0.1 |
+| [os.host](#oshost) | Get Current Host System | >= 2.0.1 |
 
 #### os.cp
 
@@ -706,7 +706,7 @@ Try to use the `os.cp` interface instead of `os.run("cp ..")`, which will ensure
 
 - Move to rename a file or directory
 
-Similar to the use of [os.cp](#os-cp), it also supports multi-file move operations and pattern matching, for example:
+Similar to the use of [os.cp](#oscp), it also supports multi-file move operations and pattern matching, for example:
 
 ```lua
 -- Move multiple files to a temporary directory
@@ -730,7 +730,7 @@ os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
 
 - Try copying files or directories
 
-Similar to [os.cp](#os-cp), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
+Similar to [os.cp](#oscp), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
 
 ```lua
 if os.trycp("file", "dest/file") then
@@ -741,7 +741,7 @@ end
 
 - Try moving a file or directory
 
-Similar to [os.mv](#os-mv), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
+Similar to [os.mv](#osmv), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
 
 ```lua
 if os.trymv("file", "dest/file") then
@@ -752,7 +752,7 @@ end
 
 - Try deleting files or directories
 
-Similar to [os.rm](#os-rm), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
+Similar to [os.rm](#osrm), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
 
 ```lua
 if os.tryrm("file") then
@@ -909,7 +909,7 @@ For more advanced process operations and control, see the [process](#process) mo
 
 - Quietly running native shell commands with parameter list
 
-Similar to [os.run](#os-run), just the way to pass parameters is passed through the parameter list, not the string command, for example:
+Similar to [os.run](#osrun), just the way to pass parameters is passed through the parameter list, not the string command, for example:
 
 ```lua
 os.runv("echo", {"hello", "xmake!"})
@@ -919,13 +919,13 @@ os.runv("echo", {"hello", "xmake!"})
 
 - Echo running native shell commands
 
-Similar to the [os.run](#os-run) interface, the only difference is that when this interface executes the shell program, it has the output output, which is used in general debugging.
+Similar to the [os.run](#osrun) interface, the only difference is that when this interface executes the shell program, it has the output output, which is used in general debugging.
 
 #### os.execv
 
 - Echo running native shell commands with parameter list
 
-Similar to [os.execv](#os-execv), just the way to pass parameters is passed through the parameter list, not the string command, for example:
+Similar to [os.execv](#osexecv), just the way to pass parameters is passed through the parameter list, not the string command, for example:
 
 ```lua
 os.execv("echo", {"hello", "xmake!"})
@@ -935,7 +935,7 @@ os.execv("echo", {"hello", "xmake!"})
 
 - Quietly running native shell commands and getting output
 
-Similar to the [os.run](#os-run) interface, the only difference is that after executing the shell program, this interface will get the execution result of the shell program, which is equivalent to redirecting the output.
+Similar to the [os.run](#osrun) interface, the only difference is that after executing the shell program, this interface will get the execution result of the shell program, which is equivalent to redirecting the output.
 
 You can get the contents of `stdout`, `stderr` at the same time, for example:
 
@@ -947,7 +947,7 @@ local outdata, errdata = os.iorun("echo hello xmake!")
 
 - Run the native shell command quietly and get the output with a list of parameters
 
-Similar to [os.iorunv](#os-iorunv), just the way to pass arguments is passed through the argument list, not the string command, for example:
+Similar to [os.iorunv](#osiorunv), just the way to pass arguments is passed through the argument list, not the string command, for example:
 
 ```lua
 local result, errors = os.iorunv("echo", {"hello", "xmake!"})
@@ -997,7 +997,7 @@ Used to get a temporary file path, just a path, the file needs to be created by 
 
 Consistent with the result of [$(curdir)](#var-curdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
-Usage reference: [os.tmpdir](#os-tmpdir).
+Usage reference: [os.tmpdir](#ostmpdir).
 
 #### os.filesize
 
@@ -1013,7 +1013,7 @@ print(os.filesize("/tmp/a"))
 
 Consistent with the result of [$(scriptdir)](#var-scriptdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
-Usage reference: [os.tmpdir](#os-tmpdir).
+Usage reference: [os.tmpdir](#ostmpdir).
 
 #### os.programdir
 
@@ -1045,16 +1045,16 @@ The io operation module extends lua's built-in io module to provide more easy-to
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [io.open](#io-open) | Open file for reading and writing | >= 2.0.1 |
-| [io.load](#io-load) | De-serialize all table contents from the specified path file | >= 2.0.1 |
-| [io.save](#io-save) | Serialize all table contents to the specified path file | >= 2.0.1 |
+| [io.open](#ioopen) | Open file for reading and writing | >= 2.0.1 |
+| [io.load](#ioload) | De-serialize all table contents from the specified path file | >= 2.0.1 |
+| [io.save](#iosave) | Serialize all table contents to the specified path file | >= 2.0.1 |
 | [io.readfile](#io.readfile) | Read everything from the specified path file | >= 2.1.3 |
 | [io.writefile](#io.writefile) | Write everything to the specified path file | >= 2.1.3 |
-| [io.gsub](#io-gsub) | Full text replaces the contents of the specified path file | >= 2.0.1 |
-| [io.tail](#io-tail) | Read and display the tail of the file | >= 2.0.1 |
-| [io.cat](#io-cat) | Read and display all contents of a file | >= 2.0.1 |
-| [io.print](#io-print) | Formatting output with a line feed to a file | >= 2.0.1 |
-| [io.printf](#io-printf) | No line formatted output to file | >= 2.0.1 |
+| [io.gsub](#iogsub) | Full text replaces the contents of the specified path file | >= 2.0.1 |
+| [io.tail](#iotail) | Read and display the tail of the file | >= 2.0.1 |
+| [io.cat](#iocat) | Read and display all contents of a file | >= 2.0.1 |
+| [io.print](#ioprint) | Formatting output with a line feed to a file | >= 2.0.1 |
+| [io.printf](#ioprintf) | No line formatted output to file | >= 2.0.1 |
 
 #### io.open
 
@@ -1102,7 +1102,7 @@ end
 
 - Load all table contents from the specified path file deserialization
 
-You can load serialized table contents from a file, generally used with [io.save](#io-save), for example:
+You can load serialized table contents from a file, generally used with [io.save](#iosave), for example:
 
 ```lua
 -- Load the contents of the serialized file to the table
@@ -1118,7 +1118,7 @@ end
 
 - Serialize all table contents to the specified path file
 
-You can serialize the contents of the table to the specified file, generally used in conjunction with [io.load](#io-load), for example:
+You can serialize the contents of the table to the specified file, generally used in conjunction with [io.load](#ioload), for example:
 
 ```lua
 io.save("xxx.txt", {a = "a", b = "b", c = "c"})
@@ -1158,7 +1158,7 @@ io.writefile("xxx.txt", "all data")
 
 - Full text replaces the contents of the specified path file
 
-Similar to the [string.gsub](#string-gsub) interface, the full-text pattern matches the replacement content, but here is the direct operation file, for example:
+Similar to the [string.gsub](#stringgsub) interface, the full-text pattern matches the replacement content, but here is the direct operation file, for example:
 
 ```lua
 -- Remove all whitespace characters from the file
@@ -1212,16 +1212,16 @@ The path operation module implements cross-platform path operations, which is a 
 
 | Interface                                       | Description                                             | Supported Versions |
 | ----------------------------------------------- | --------------------------------------------            | --------           |
-| [path.join](#path-join)                         | Stitching Path                                          | >= 2.0.1           |
-| [path.translate](#path-translate)               | Convert path to the path style of the current platform  | >= 2.0.1           |
-| [path.basename](#path-basename)                 | Get the file name with no suffix at the end             | >= 2.0.1           |
-| [path.filename](#path-filename)                 | Get the file name with the last suffix of the path      | >= 2.0.1           |
-| [path.extension](#path-extension)               | Get the suffix of the path                              | >= 2.0.1           |
-| [path.directory](#path-directory)               | Get the last directory name of the path                 | >= 2.0.1           |
-| [path.relative](#path-relative)                 | Convert to relative path                                | >= 2.0.1           |
-| [path.absolute](#path-absolute)                 | Convert to Absolute Path                                | >= 2.0.1           |
-| [path.is_absolute](#path-is_absolute)           | Determine if it is an absolute path                     | >= 2.0.1           |
-| [path.splitenv](#path-splitenv)                 | Split a envienment variable value of an array of pathes | >= 2.2.7           |
+| [path.join](#pathjoin)                         | Stitching Path                                          | >= 2.0.1           |
+| [path.translate](#pathtranslate)               | Convert path to the path style of the current platform  | >= 2.0.1           |
+| [path.basename](#pathbasename)                 | Get the file name with no suffix at the end             | >= 2.0.1           |
+| [path.filename](#pathfilename)                 | Get the file name with the last suffix of the path      | >= 2.0.1           |
+| [path.extension](#pathextension)               | Get the suffix of the path                              | >= 2.0.1           |
+| [path.directory](#pathdirectory)               | Get the last directory name of the path                 | >= 2.0.1           |
+| [path.relative](#pathrelative)                 | Convert to relative path                                | >= 2.0.1           |
+| [path.absolute](#pathabsolute)                 | Convert to Absolute Path                                | >= 2.0.1           |
+| [path.is_absolute](#pathis_absolute)           | Determine if it is an absolute path                     | >= 2.0.1           |
+| [path.splitenv](#pathsplitenv)                 | Split a envienment variable value of an array of pathes | >= 2.2.7           |
 
 #### path.join
 
@@ -1337,7 +1337,7 @@ if path.is_absolute("/tmp/file.txt") then
 end
 ```
 
-###### path.splitenv
+#### path.splitenv
 
 - Split a envienment variable value of an array of pathes
 
@@ -1364,10 +1364,10 @@ It has been extended in xmake to add some extension interfaces:
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [table.join](#table-join) | Merge multiple tables and return | >= 2.0.1 |
-| [table.join2](#table-join2) | Merge multiple tables into the first table | >= 2.0.1 |
-| [table.unique](#table-unique) | Deduplicate the contents of the table | >= 2.0.1 |
-| [table.slice](#table-slice) | Get the slice of the table | >= 2.0.1 |
+| [table.join](#tablejoin) | Merge multiple tables and return | >= 2.0.1 |
+| [table.join2](#tablejoin2) | Merge multiple tables into the first table | >= 2.0.1 |
+| [table.unique](#tableunique) | Deduplicate the contents of the table | >= 2.0.1 |
+| [table.slice](#tableslice) | Get the slice of the table | >= 2.0.1 |
 
 #### table.join
 
@@ -1439,12 +1439,12 @@ It has been extended in xmake to add some extension interfaces:
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [string.startswith](#string-startswith) | Determine if the beginning of the string matches | >= 1.0.1 |
-| [string.endswith](#string-endswith) | Determine if the end of the string matches | >= 1.0.1 |
-| [string.split](#string-split) | Split String | >= 1.0.1 |
-| [string.trim](#string-trim) | Remove the left and right whitespace characters | >= 1.0.1 |
-| [string.ltrim](#string-ltrim) | Remove the whitespace character to the left of the string | >= 1.0.1 |
-| [string.rtrim](#string-rtrim) | Remove the whitespace character to the right of the string | >= 1.0.1 |
+| [string.startswith](#stringstartswith) | Determine if the beginning of the string matches | >= 1.0.1 |
+| [string.endswith](#stringendswith) | Determine if the end of the string matches | >= 1.0.1 |
+| [string.split](#stringsplit) | Split String | >= 1.0.1 |
+| [string.trim](#stringtrim) | Remove the left and right whitespace characters | >= 1.0.1 |
+| [string.ltrim](#stringltrim) | Remove the whitespace character to the left of the string | >= 1.0.1 |
+| [string.rtrim](#stringrtrim) | Remove the whitespace character to the right of the string | >= 1.0.1 |
 
 #### string.startswith
 
@@ -1539,14 +1539,14 @@ The result is: "    hello xmake!"
 
 ### process
 
-This is the xmake extension's process control module for more flexible control of the process, compared to: [os.run](#os-run) series is more flexible and lower level.
+This is the xmake extension's process control module for more flexible control of the process, compared to: [os.run](#osrun) series is more flexible and lower level.
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [process.open](#process-open) | Open Process | >= 2.0.1 |
-| [process.wait](#process-wait) | Waiting for the process to end | >= 2.0.1 |
-| [process.close](#process-close) | Close Process Object | >=2.0.1 |
-| [process.waitlist](#process-waitlist) | Waiting for multiple processes at the same time | >= 2.0.1 |
+| [process.open](#processopen) | Open Process | >= 2.0.1 |
+| [process.wait](#processwait) | Waiting for the process to end | >= 2.0.1 |
+| [process.close](#processclose) | Close Process Object | >=2.0.1 |
+| [process.waitlist](#processwaitlist) | Waiting for multiple processes at the same time | >= 2.0.1 |
 
 #### process.open
 
@@ -1575,13 +1575,13 @@ end
 
 - Waiting for the process to end
 
-For specific use, see: [process.open](#process-open)
+For specific use, see: [process.open](#processopen)
 
 #### process.close
 
 - close the process object
 
-For specific use, see: [process.open](#process-open)
+For specific use, see: [process.open](#processopen)
 
 #### process.waitlist
 

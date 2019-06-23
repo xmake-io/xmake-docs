@@ -69,7 +69,7 @@ target("test")
 
 #### 获取内置变量的值
 
-[内置变量](#内置变量)可以通过此接口直接获取，而不需要再加`$()`的包裹，使用更加简单，例如：
+[内置变量](/zh-cn/manual/builtin_variables)可以通过此接口直接获取，而不需要再加`$()`的包裹，使用更加简单，例如：
 
 ```lua
 print(val("host"))
@@ -91,7 +91,7 @@ local s = vformat("$(shell echo hello)")
 
 import的主要用于导入xmake的扩展类库以及一些自定义的类库模块，一般用于：
 
-* 自定义脚本([on_build](#targeton_build), [on_run](#targeton_run) ..)
+* 自定义脚本([on_build](/zh-cn/manual/project_target?id=targeton_build), [on_run](/zh-cn/manual/project_target?id=targeton_run) ..)
 * 插件开发
 * 模板开发
 * 平台扩展
@@ -585,7 +585,7 @@ $ xmake --version
 
 #### 格式化字符串
 
-如果只是想格式化字符串，不进行输出，可以使用这个接口，此接口跟[string.format](#string-format)接口等价，只是个接口名简化版。
+如果只是想格式化字符串，不进行输出，可以使用这个接口，此接口跟[string.format](#stringformat)接口等价，只是个接口名简化版。
 
 ```lua
 local s = format("hello %s", xmake)
@@ -617,7 +617,7 @@ if (errors) raise(errors)
 
 #### 查找依赖包
 
-此接口是对[lib.detect.find_package](#detect-find_package)接口的封装，提供多个依赖包的查找支持，例如：
+此接口是对[lib.detect.find_package](/zh-cn/manual/extension_modules?id=detectfind_package)接口的封装，提供多个依赖包的查找支持，例如：
 
 ```lua
 target("test")
@@ -640,38 +640,38 @@ os模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [os.cp](#os-cp)                                 | 复制文件或目录                               | >= 2.0.1 |
-| [os.mv](#os-mv)                                 | 移动重命名文件或目录                         | >= 2.0.1 |
-| [os.rm](#os-rm)                                 | 删除文件或目录树                             | >= 2.0.1 |
-| [os.trycp](#os-trycp)                           | 尝试复制文件或目录                           | >= 2.1.6 |
-| [os.trymv](#os-trymv)                           | 尝试移动重命名文件或目录                     | >= 2.1.6 |
-| [os.tryrm](#os-tryrm)                           | 尝试删除文件或目录树                         | >= 2.1.6 |
-| [os.cd](#os-cd)                                 | 进入指定目录                                 | >= 2.0.1 |
-| [os.rmdir](#os-rmdir)                           | 删除目录树                                   | >= 2.0.1 |
-| [os.mkdir](#os-mkdir)                           | 创建指定目录                                 | >= 2.0.1 |
-| [os.isdir](#os-isdir)                           | 判断目录是否存在                             | >= 2.0.1 |
-| [os.isfile](#os-isfile)                         | 判断文件是否存在                             | >= 2.0.1 |
-| [os.exists](#os-exists)                         | 判断文件或目录是否存在                       | >= 2.0.1 |
-| [os.dirs](#os-dirs)                             | 遍历获取指定目录下的所有目录                 | >= 2.0.1 |
-| [os.files](#os-files)                           | 遍历获取指定目录下的所有文件                 | >= 2.0.1 |
-| [os.filedirs](#os-filedirs)                     | 遍历获取指定目录下的所有文件或目录           | >= 2.0.1 |
-| [os.run](#os-run)                               | 安静运行程序                                 | >= 2.0.1 |
-| [os.runv](#os-runv)                             | 安静运行程序，带参数列表                     | >= 2.1.5 |
-| [os.exec](#os-exec)                             | 回显运行程序                                 | >= 2.0.1 |
-| [os.execv](#os-execv)                           | 回显运行程序，带参数列表                     | >= 2.1.5 |
-| [os.iorun](#os-iorun)                           | 运行并获取程序输出内容                       | >= 2.0.1 |
-| [os.iorunv](#os-iorunv)                         | 运行并获取程序输出内容，带参数列表           | >= 2.1.5 |
-| [os.getenv](#os-getenv)                         | 获取环境变量                                 | >= 2.0.1 |
-| [os.setenv](#os-setenv)                         | 设置环境变量                                 | >= 2.0.1 |
-| [os.tmpdir](#os-tmpdir)                         | 获取临时目录路径                             | >= 2.0.1 |
-| [os.tmpfile](#os-tmpfile)                       | 获取临时文件路径                             | >= 2.0.1 |
-| [os.curdir](#os-curdir)                         | 获取当前目录路径                             | >= 2.0.1 |
-| [os.filesize](#os-filesize)                     | 获取文件大小                                 | >= 2.1.9 |
-| [os.scriptdir](#os-scriptdir)                   | 获取脚本目录路径                             | >= 2.0.1 |
-| [os.programdir](#os-programdir)                 | 获取xmake安装主程序脚本目录                  | >= 2.1.5 |
-| [os.projectdir](#os-projectdir)                 | 获取工程主目录                               | >= 2.1.5 |
-| [os.arch](#os-arch)                             | 获取当前系统架构                             | >= 2.0.1 |
-| [os.host](#os-host)                             | 获取当前主机系统                             | >= 2.0.1 |
+| [os.cp](#oscp)                                 | 复制文件或目录                               | >= 2.0.1 |
+| [os.mv](#osmv)                                 | 移动重命名文件或目录                         | >= 2.0.1 |
+| [os.rm](#osrm)                                 | 删除文件或目录树                             | >= 2.0.1 |
+| [os.trycp](#ostrycp)                           | 尝试复制文件或目录                           | >= 2.1.6 |
+| [os.trymv](#ostrymv)                           | 尝试移动重命名文件或目录                     | >= 2.1.6 |
+| [os.tryrm](#ostryrm)                           | 尝试删除文件或目录树                         | >= 2.1.6 |
+| [os.cd](#oscd)                                 | 进入指定目录                                 | >= 2.0.1 |
+| [os.rmdir](#osrmdir)                           | 删除目录树                                   | >= 2.0.1 |
+| [os.mkdir](#osmkdir)                           | 创建指定目录                                 | >= 2.0.1 |
+| [os.isdir](#osisdir)                           | 判断目录是否存在                             | >= 2.0.1 |
+| [os.isfile](#osisfile)                         | 判断文件是否存在                             | >= 2.0.1 |
+| [os.exists](#osexists)                         | 判断文件或目录是否存在                       | >= 2.0.1 |
+| [os.dirs](#osdirs)                             | 遍历获取指定目录下的所有目录                 | >= 2.0.1 |
+| [os.files](#osfiles)                           | 遍历获取指定目录下的所有文件                 | >= 2.0.1 |
+| [os.filedirs](#osfiledirs)                     | 遍历获取指定目录下的所有文件或目录           | >= 2.0.1 |
+| [os.run](#osrun)                               | 安静运行程序                                 | >= 2.0.1 |
+| [os.runv](#osrunv)                             | 安静运行程序，带参数列表                     | >= 2.1.5 |
+| [os.exec](#osexec)                             | 回显运行程序                                 | >= 2.0.1 |
+| [os.execv](#osexecv)                           | 回显运行程序，带参数列表                     | >= 2.1.5 |
+| [os.iorun](#osiorun)                           | 运行并获取程序输出内容                       | >= 2.0.1 |
+| [os.iorunv](#osiorunv)                         | 运行并获取程序输出内容，带参数列表           | >= 2.1.5 |
+| [os.getenv](#osgetenv)                         | 获取环境变量                                 | >= 2.0.1 |
+| [os.setenv](#ossetenv)                         | 设置环境变量                                 | >= 2.0.1 |
+| [os.tmpdir](#ostmpdir)                         | 获取临时目录路径                             | >= 2.0.1 |
+| [os.tmpfile](#ostmpfile)                       | 获取临时文件路径                             | >= 2.0.1 |
+| [os.curdir](#oscurdir)                         | 获取当前目录路径                             | >= 2.0.1 |
+| [os.filesize](#osfilesize)                     | 获取文件大小                                 | >= 2.1.9 |
+| [os.scriptdir](#osscriptdir)                   | 获取脚本目录路径                             | >= 2.0.1 |
+| [os.programdir](#osprogramdir)                 | 获取xmake安装主程序脚本目录                  | >= 2.1.5 |
+| [os.projectdir](#osprojectdir)                 | 获取工程主目录                               | >= 2.1.5 |
+| [os.arch](#osarch)                             | 获取当前系统架构                             | >= 2.0.1 |
+| [os.host](#oshost)                             | 获取当前主机系统                             | >= 2.0.1 |
 
 #### os.cp
 
@@ -706,7 +706,7 @@ os.cp("$(curdir)/test/", "$(tmpdir)/test")
 
 - 移动重命名文件或目录
 
-跟[os.cp](#os-cp)的使用类似，同样支持多文件移动操作和模式匹配，例如：
+跟[os.cp](#oscp)的使用类似，同样支持多文件移动操作和模式匹配，例如：
 
 ```lua
 -- 移动多个文件到临时目录
@@ -730,7 +730,7 @@ os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
 
 - 尝试复制文件或目录
 
-跟[os.cp](#os-cp)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
+跟[os.cp](#oscp)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
 
 ```lua
 if os.trycp("file", "dest/file") then
@@ -741,7 +741,7 @@ end
 
 - 尝试移动文件或目录
 
-跟[os.mv](#os-mv)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
+跟[os.mv](#osmv)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
 
 ```lua
 if os.trymv("file", "dest/file") then
@@ -752,7 +752,7 @@ end
 
 - 尝试删除文件或目录
 
-跟[os.rm](#os-rm)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
+跟[os.rm](#osrm)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
 
 ```lua
 if os.tryrm("file") then
@@ -909,7 +909,7 @@ os.run("ls -l $(buildir)")
 
 - 安静运行原生shell命令，带参数列表
 
-跟[os.run](#os-run)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
+跟[os.run](#osrun)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
 
 ```lua
 os.runv("echo", {"hello", "xmake!"})
@@ -919,13 +919,13 @@ os.runv("echo", {"hello", "xmake!"})
 
 - 回显运行原生shell命令
 
-与[os.run](#os-run)接口类似，唯一的不同是，此接口执行shell程序时，是带回显输出的，一般调试的时候用的比较多
+与[os.run](#osrun)接口类似，唯一的不同是，此接口执行shell程序时，是带回显输出的，一般调试的时候用的比较多
 
 #### os.execv
 
 - 回显运行原生shell命令，带参数列表
 
-跟[os.execv](#os-execv)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
+跟[os.execv](#osexecv)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
 
 ```lua
 os.execv("echo", {"hello", "xmake!"})
@@ -935,7 +935,7 @@ os.execv("echo", {"hello", "xmake!"})
 
 - 安静运行原生shell命令并获取输出内容
 
-与[os.run](#os-run)接口类似，唯一的不同是，此接口执行shell程序后，会获取shell程序的执行结果，相当于重定向输出。
+与[os.run](#osrun)接口类似，唯一的不同是，此接口执行shell程序后，会获取shell程序的执行结果，相当于重定向输出。
 
 可同时获取`stdout`, `stderr`中的内容，例如：
 
@@ -947,7 +947,7 @@ local outdata, errdata = os.iorun("echo hello xmake!")
 
 - 安静运行原生shell命令并获取输出内容，带参数列表
 
-跟[os.iorunv](#os-iorunv)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
+跟[os.iorunv](#osiorunv)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
 
 ```lua
 local result, errors = os.iorunv("echo", {"hello", "xmake!"})
@@ -997,7 +997,7 @@ print("$(tmpdir)/file.txt"))
 
 跟[$(curdir)](#var-curdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
-用法参考：[os.tmpdir](#os-tmpdir)。
+用法参考：[os.tmpdir](#ostmpdir)。
 
 #### os.filesize
 
@@ -1013,7 +1013,7 @@ print(os.filesize("/tmp/a"))
 
 跟[$(scriptdir)](#var-scriptdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
-用法参考：[os.tmpdir](#os-tmpdir)。
+用法参考：[os.tmpdir](#ostmpdir)。
 
 #### os.programdir
 
@@ -1045,16 +1045,16 @@ io操作模块，扩展了lua内置的io模块，提供更多易用的接口。
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [io.open](#io-open)                             | 打开文件用于读写                             | >= 2.0.1 |
-| [io.load](#io-load)                             | 从指定路径文件反序列化加载所有table内容      | >= 2.0.1 |
-| [io.save](#io-save)                             | 序列化保存所有table内容到指定路径文件        | >= 2.0.1 |
+| [io.open](#ioopen)                             | 打开文件用于读写                             | >= 2.0.1 |
+| [io.load](#ioload)                             | 从指定路径文件反序列化加载所有table内容      | >= 2.0.1 |
+| [io.save](#iosave)                             | 序列化保存所有table内容到指定路径文件        | >= 2.0.1 |
 | [io.readfile](#io.readfile)                     | 从指定路径文件读取所有内容                   | >= 2.1.3 |
 | [io.writefile](#io.writefile)                   | 写入所有内容到指定路径文件                   | >= 2.1.3 |
-| [io.gsub](#io-gsub)                             | 全文替换指定路径文件的内容                   | >= 2.0.1 |
-| [io.tail](#io-tail)                             | 读取和显示文件的尾部内容                     | >= 2.0.1 |
-| [io.cat](#io-cat)                               | 读取和显示文件的所有内容                     | >= 2.0.1 |
-| [io.print](#io-print)                           | 带换行格式化输出内容到文件                   | >= 2.0.1 |
-| [io.printf](#io-printf)                         | 无换行格式化输出内容到文件                   | >= 2.0.1 |
+| [io.gsub](#iogsub)                             | 全文替换指定路径文件的内容                   | >= 2.0.1 |
+| [io.tail](#iotail)                             | 读取和显示文件的尾部内容                     | >= 2.0.1 |
+| [io.cat](#iocat)                               | 读取和显示文件的所有内容                     | >= 2.0.1 |
+| [io.print](#ioprint)                           | 带换行格式化输出内容到文件                   | >= 2.0.1 |
+| [io.printf](#ioprintf)                         | 无换行格式化输出内容到文件                   | >= 2.0.1 |
 
 #### io.open
 
@@ -1102,7 +1102,7 @@ end
 
 -  从指定路径文件反序列化加载所有table内容
 
-可以从文件中加载序列化好的table内容，一般与[io.save](#io-save)配合使用，例如：
+可以从文件中加载序列化好的table内容，一般与[io.save](#iosave)配合使用，例如：
 
 ```lua
 -- 加载序列化文件的内容到table
@@ -1118,7 +1118,7 @@ end
 
 - 序列化保存所有table内容到指定路径文件 
 
-可以序列化存储table内容到指定文件，一般与[io.load](#io-load)配合使用，例如：
+可以序列化存储table内容到指定文件，一般与[io.load](#ioload)配合使用，例如：
 
 ```lua
 io.save("xxx.txt", {a = "a", b = "b", c = "c"})
@@ -1158,7 +1158,7 @@ io.writefile("xxx.txt", "all data")
 
 - 全文替换指定路径文件的内容
 
-类似[string.gsub](#string-gsub)接口，全文模式匹配替换内容，不过这里是直接操作文件，例如：
+类似[string.gsub](#stringgsub)接口，全文模式匹配替换内容，不过这里是直接操作文件，例如：
 
 ```lua
 -- 移除文件所有的空白字符
@@ -1212,16 +1212,16 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [path.join](#path-join)                         | 拼接路径                                     | >= 2.0.1 |
-| [path.translate](#path-translate)               | 转换路径到当前平台的路径风格                 | >= 2.0.1 |
-| [path.basename](#path-basename)                 | 获取路径最后不带后缀的文件名                 | >= 2.0.1 |
-| [path.filename](#path-filename)                 | 获取路径最后带后缀的文件名                   | >= 2.0.1 |
-| [path.extension](#path-extension)               | 获取路径的后缀名                             | >= 2.0.1 |
-| [path.directory](#path-directory)               | 获取路径最后的目录名                         | >= 2.0.1 |
-| [path.relative](#path-relative)                 | 转换成相对路径                               | >= 2.0.1 |
-| [path.absolute](#path-absolute)                 | 转换成绝对路径                               | >= 2.0.1 |
-| [path.is_absolute](#path-is_absolute)           | 判断是否为绝对路径                           | >= 2.0.1 |
-| [path.splitenv](#path-splitenv)                 | 分割环境变量中的路径                         | >= 2.2.7 |
+| [path.join](#pathjoin)                         | 拼接路径                                     | >= 2.0.1 |
+| [path.translate](#pathtranslate)               | 转换路径到当前平台的路径风格                 | >= 2.0.1 |
+| [path.basename](#pathbasename)                 | 获取路径最后不带后缀的文件名                 | >= 2.0.1 |
+| [path.filename](#pathfilename)                 | 获取路径最后带后缀的文件名                   | >= 2.0.1 |
+| [path.extension](#pathextension)               | 获取路径的后缀名                             | >= 2.0.1 |
+| [path.directory](#pathdirectory)               | 获取路径最后的目录名                         | >= 2.0.1 |
+| [path.relative](#pathrelative)                 | 转换成相对路径                               | >= 2.0.1 |
+| [path.absolute](#pathabsolute)                 | 转换成绝对路径                               | >= 2.0.1 |
+| [path.is_absolute](#pathis_absolute)           | 判断是否为绝对路径                           | >= 2.0.1 |
+| [path.splitenv](#pathsplitenv)                 | 分割环境变量中的路径                         | >= 2.2.7 |
 
 #### path.join
 
@@ -1339,7 +1339,7 @@ if path.is_absolute("/tmp/file.txt") then
 end
 ```
 
-###### path.splitenv
+#### path.splitenv
 
 - 分割环境变量中的路径
 
@@ -1366,10 +1366,10 @@ xmake中对其进行了扩展，增加了一些扩展接口：
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [table.join](#table-join)                       | 合并多个table并返回                          | >= 2.0.1 |
-| [table.join2](#table-join2)                     | 合并多个table到第一个table                   | >= 2.0.1 |
-| [table.unique](#table-unique)                   | 对table中的内容进行去重                      | >= 2.0.1 |
-| [table.slice](#table-slice)                     | 获取table的切片                              | >= 2.0.1 |
+| [table.join](#tablejoin)                       | 合并多个table并返回                          | >= 2.0.1 |
+| [table.join2](#tablejoin2)                     | 合并多个table到第一个table                   | >= 2.0.1 |
+| [table.unique](#tableunique)                   | 对table中的内容进行去重                      | >= 2.0.1 |
+| [table.slice](#tableslice)                     | 获取table的切片                              | >= 2.0.1 |
 
 #### table.join
 
@@ -1441,12 +1441,12 @@ xmake中对其进行了扩展，增加了一些扩展接口：
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [string.startswith](#string-startswith)         | 判断字符串开头是否匹配                       | >= 1.0.1 |
-| [string.endswith](#string-endswith)             | 判断字符串结尾是否匹配                       | >= 1.0.1 |
-| [string.split](#string-split)                   | 分割字符串                                   | >= 1.0.1 |
-| [string.trim](#string-trim)                     | 去掉字符串左右空白字符                       | >= 1.0.1 |
-| [string.ltrim](#string-ltrim)                   | 去掉字符串左边空白字符                       | >= 1.0.1 |
-| [string.rtrim](#string-rtrim)                   | 去掉字符串右边空白字符                       | >= 1.0.1 |
+| [string.startswith](#stringstartswith)         | 判断字符串开头是否匹配                       | >= 1.0.1 |
+| [string.endswith](#stringendswith)             | 判断字符串结尾是否匹配                       | >= 1.0.1 |
+| [string.split](#stringsplit)                   | 分割字符串                                   | >= 1.0.1 |
+| [string.trim](#stringtrim)                     | 去掉字符串左右空白字符                       | >= 1.0.1 |
+| [string.ltrim](#stringltrim)                   | 去掉字符串左边空白字符                       | >= 1.0.1 |
+| [string.rtrim](#stringrtrim)                   | 去掉字符串右边空白字符                       | >= 1.0.1 |
 
 #### string.startswith
 
@@ -1545,14 +1545,14 @@ string.rtrim("    hello xmake!    ")
 
 ### process
 
-这个是xmake扩展的进程控制模块，用于更加灵活的控制进程，比起：[os.run](#os-run)系列灵活性更高，也更底层。
+这个是xmake扩展的进程控制模块，用于更加灵活的控制进程，比起：[os.run](#osrun)系列灵活性更高，也更底层。
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [process.open](#process-open)                   | 打开进程                                     | >= 2.0.1 |
-| [process.wait](#process-wait)                   | 等待进程结束                                 | >= 2.0.1 |
-| [process.close](#process-close)                 | 关闭进程对象                                 | >= 2.0.1 |
-| [process.waitlist](#process-waitlist)           | 同时等待多个进程                             | >= 2.0.1 |
+| [process.open](#processopen)                   | 打开进程                                     | >= 2.0.1 |
+| [process.wait](#processwait)                   | 等待进程结束                                 | >= 2.0.1 |
+| [process.close](#processclose)                 | 关闭进程对象                                 | >= 2.0.1 |
+| [process.waitlist](#processwaitlist)           | 同时等待多个进程                             | >= 2.0.1 |
 
 #### process.open
 
@@ -1581,13 +1581,13 @@ end
 
 - 等待进程结束
 
-具体使用见：[process.open](#process-open)
+具体使用见：[process.open](#processopen)
 
 #### process.close
 
 - 关闭进程对象
 
-具体使用见：[process.open](#process-open)
+具体使用见：[process.open](#processopen)
 
 #### process.waitlist
 
