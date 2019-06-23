@@ -86,22 +86,22 @@ task("echo")
                 usage = "xmake echo [options]"
 
                 -- Setup menu description
-            , description = "Echo the given info!"
+            ,   description = "Echo the given info!"
 
                 -- Set menu options, if there are no options, you can set it to {}
-            , options =
+            ,   options =
                 {
                     -- Set k mode as key-only bool parameter
                     {'b', "bright", "k", nil, "Enable bright." }
-                , {'d', "dim", "k", nil, "Enable dim." }
-                , {'-', "blink", "k", nil, "Enable blink." }
-                , {'r', "reverse", "k", nil, "Reverse color." }
+                ,   {'d', "dim", "k", nil, "Enable dim." }
+                ,   {'-', "blink", "k", nil, "Enable blink." }
+                ,   {'r', "reverse", "k", nil, "Reverse color." }
 
                     -- When the menu is displayed, a blank line
-                , {}
+                ,   {}
 
                     -- Set kv as the key-value parameter and set the default value: black
-                , {'c', "color", "kv", "black", "Set the output color."
+                ,   {'c', "color", "kv", "black", "Set the output color."
                                                      , " - red"
                                                      , " - blue"
                                                      , " - yellow"
@@ -112,8 +112,8 @@ task("echo")
 
                     -- Set `vs` as a value multivalued parameter and a `v` single value type
                     -- generally placed last, used to get a list of variable parameters
-                , {}
-                , {nil, "contents", "vs", nil, "The info contents." }
+                ,   {}
+                ,   {nil, "contents", "vs", nil, "The info contents." }
                 }
             }
 ```
@@ -266,7 +266,7 @@ function main(...)
 end
 ```
 
-It's a simple script file with the main function of `main`. You can import various extension modules via [import](#import) to implement complex functions, such as:
+It's a simple script file with the main function of `main`. You can import various extension modules via [import](/manual/builtin_modules?id=import) to implement complex functions, such as:
 
 ```lua
 -- Import parameter option module
@@ -280,7 +280,7 @@ function main(...)
 end
 ```
 
-You can also create multiple custom module files in the current directory and use them after importing via [import](#import), for example:
+You can also create multiple custom module files in the current directory and use them after importing via [import](/manual/builtin_modules?id=import), for example:
 
 ```
 Projectdir
@@ -313,7 +313,7 @@ function main(...)
 end
 ```
 
-For more modules, see: [Built-in Module](#Built-in Module) and [Extension Module](Extension Module)
+For more modules, see: [Builtin Module](/manual/builtin_modules) and [Extension Module](/manual/extension_modules)
 
 Among them, the parameter in `main(...)` is specified by `task.run`, for example:
 
