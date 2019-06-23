@@ -12,30 +12,30 @@ In order to ensure that the description field of the outer layer is as simple an
 Of course, a small number of read-only built-in interfaces can still be used in the description field, as shown in the following table:
 </p>
 
-| Interface | Description | Available Domains | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------------------------- | -------- |
-| [val](#val) | Get the value of the built-in variable | Script Field | >= 2.1.5 |
-| [import](#import) | Importing Extension Blocks | Script Fields | >= 2.0.1 |
-| [inherit](#inherit) | Import and inherit base class modules | Script Domain | >= 2.0.1 |
-| [ifelse](#ifelse) | Similar ternary conditional judgment | Description field, script field | >= 2.0.1 |
-| [try-catch-finally](#try-catch-finally) | Exception Capture | Script Field | >= 2.0.1 |
-| [pairs](#pairs) | Used to Traverse the Dictionary | Description Field, Script Field | >= 2.0.1 |
-| [ipairs](#ipairs) | Used to traverse arrays | Description fields, script fields | >= 2.0.1 |
-[print](#print) | Wrap Print Terminal Log | Description Field, Script Field | >= 2.0.1 |
-| [printf](#printf) | No Line Printing Terminal Log | Script Field | >= 2.0.1 |
-[cprint](#cprint) | Wrap Color Print Terminal Log | Script Field | >= 2.0.1 |
-| [cprintf](#cprintf) | No Line Color Print Terminal Log | Script Field | >= 2.0.1 |
-| [format](#format) | Format String | Description Field, Script Field | >= 2.0.1 |
-| [vformat](#vformat) | Format string, support for built-in variable escaping | Script Domain | >= 2.0.1 |
-| [raise](#raise) | Throwing an abort program | Script Field | >= 2.0.1 |
-| [os](#os) | System Operation Module | Partial Read-Only Operation Description Field, Script Field | >= 2.0.1 |
-| [io](#io) | File Manipulation Module | Script Field | >= 2.0.1 |
-| [path](#path) | Path Manipulation Module | Description Field, Script Field |= 2.0.1 |
-| [table](#table) | Array and Dictionary Operations Module | Description Field, Script Field | >= 2.0.1 |
-| [string](#string) | String Manipulation Module | Description Field, Script Field | >= 2.0.1 |
-| [process](#process) | Process Operation Module | Script Field | >= 2.0.1 |
-| [coroutine](#coroutine) | Coroutine Operation Module | Script Field | >= 2.0.1 |
-| [find_packages](#find_packages) | Find Dependency Packages | Script Fields | >= 2.2.5 |
+| Interface                                       | Description                                           | Available Domains                                           | Supported Versions |
+| ----------------------------------------------- | --------------------------------------------          | --------------------------                                  | -------- |
+| [val](#val)                                     | Get the value of the built-in variable                | Script Field                                                | >= 2.1.5 |
+| [import](#import)                               | Importing Extension Blocks                            | Script Fields                                               | >= 2.0.1 |
+| [inherit](#inherit)                             | Import and inherit base class modules                 | Script Domain                                               | >= 2.0.1 |
+| [ifelse](#ifelse)                               | Similar ternary conditional judgment                  | Description field, script field                             | >= 2.0.1 |
+| [try-catch-finally](#try-catch-finally)         | Exception Capture                                     | Script Field                                                | >= 2.0.1 |
+| [pairs](#pairs)                                 | Used to Traverse the Dictionary                       | Description Field, Script Field                             | >= 2.0.1 |
+| [ipairs](#ipairs)                               | Used to traverse arrays                               | Description fields, script fields                           | >= 2.0.1 |
+| [print](#print)                                 | Wrap Print Terminal Log                               | Description Field, Script Field                             | >= 2.0.1 |
+| [printf](#printf)                               | No Line Printing Terminal Log                         | Script Field                                                | >= 2.0.1 |
+| [cprint](#cprint)                               | Wrap Color Print Terminal Log                         | Script Field                                                | >= 2.0.1 |
+| [cprintf](#cprintf)                             | No Line Color Print Terminal Log                      | Script Field                                                | >= 2.0.1 |
+| [format](#format)                               | Format String                                         | Description Field, Script Field                             | >= 2.0.1 |
+| [vformat](#vformat)                             | Format string, support for built-in variable escaping | Script Domain                                               | >= 2.0.1 |
+| [raise](#raise)                                 | Throwing an abort program                             | Script Field                                                | >= 2.0.1 |
+| [os](#os)                                       | System Operation Module                               | Partial Read-Only Operation Description Field, Script Field | >= 2.0.1 |
+| [io](#io)                                       | File Manipulation Module                              | Script Field                                                | >= 2.0.1 |
+| [path](#path)                                   | Path Manipulation Module                              | Description Field, Script Field                             | = 2.0.1 |
+| [table](#table)                                 | Array and Dictionary Operations Module                | Description Field, Script Field                             | >= 2.0.1 |
+| [string](#string)                               | String Manipulation Module                            | Description Field, Script Field                             | >= 2.0.1 |
+| [process](#process)                             | Process Operation Module                              | Script Field                                                | >= 2.0.1 |
+| [coroutine](#coroutine)                         | Coroutine Operation Module                            | Script Field                                                | >= 2.0.1 |
+| [find_packages](#find_packages)                 | Find Dependency Packages                              | Script Fields                                               | >= 2.2.5 |
 
 An example of using an interface call in a description field is as follows, generally only for conditional control:
 
@@ -1233,9 +1233,9 @@ Adding multiple path items by splicing. Due to the path difference of `windows/u
 print(path.join("$(tmpdir)", "dir1", "dir2", "file.txt"))
 ```
 
-The above splicing on Unix is ​​equivalent to: `$(tmpdir)/dir1/dir2/file.txt`, and on Windows is equivalent to: `$(tmpdir)\\dir1\\dir2\\file.txt`
+The above splicing on Unix is equivalent to: `$(tmpdir)/dir1/dir2/file.txt`, and on Windows is equivalent to: `$(tmpdir)\\dir1\\dir2\\file.txt`
 
-If you find this cumbersome and not clear enough, you can use: [path.translate](path-translate) to format the conversion path string to the format supported by the current platform.
+If you find this cumbersome and not clear enough, you can use: [path.translate](#pathtranslate) to format the conversion path string to the format supported by the current platform.
 
 #### path.translate
 

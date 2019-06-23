@@ -1,25 +1,25 @@
 
-All expansion modules need to be imported through the [import](#import) interface.
+All expansion modules need to be imported through the [import](/manual/builtin_modules?id=import) interface.
 
 ### core.base.option
 
 Commonly used to get the value of the xmake command parameter option, often used for plugin development.
 
-| Interface | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [option.get](#option-get) | Get Parameter Option Value | >= 2.0.1 |
+| Interface                                       | Description                                  | Supported Versions |
+| ----------------------------------------------- | -------------------------------------------- | --------           |
+| [option.get](#optionget)                        | Get Parameter Option Value                   | >= 2.0.1           |
 
 #### option.get
 
 - Get parameter option values
 
-Used to get parameter option values ​​in plugin development, for example:
+Used to get parameter option values in plugin development, for example:
 
 ```lua
--- Import option module
+-- import option module
 import("core.base.option")
 
--- Plugin entry function
+-- plugin entry function
 function main(...)
     print(option.get("info"))
 end
@@ -43,10 +43,10 @@ Used to get the configuration information of xmake global, that is, the value of
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [global.get](#global-get) | Get the specified configuration value | >= 2.0.1 |
-| [global.load](#global-load) | Load Configuration | >= 2.0.1 |
-| [global.directory](#global-directory) | Get Global Configuration Information Directory | >= 2.0.1 |
-| [global.dump](#global-dump) | Print out all global configuration information | >= 2.0.1 |
+| [global.get](#globalget) | Get the specified configuration value | >= 2.0.1 |
+| [global.load](#globalload) | Load Configuration | >= 2.0.1 |
+| [global.directory](#globaldirectory) | Get Global Configuration Information Directory | >= 2.0.1 |
+| [global.dump](#globaldump) | Print out all global configuration information | >= 2.0.1 |
 
 <p class="tip">
 Prior to version 2.1.5, it was `core.project.global`.
@@ -56,13 +56,13 @@ Prior to version 2.1.5, it was `core.project.global`.
 
 - Get the specified configuration value
 
-Similar to [config.get](#config-get), the only difference is that this is obtained from the global configuration.
+Similar to [config.get](#configget), the only difference is that this is obtained from the global configuration.
 
 #### global.load
 
 - Load configuration
 
-Similar to [global.get](#global-get), the only difference is that this is loaded from the global configuration.
+Similar to [global.get](#globalget), the only difference is that this is loaded from the global configuration.
 
 #### global.directory
 
@@ -90,7 +90,7 @@ Used for task operations, generally used to call other task tasks in custom scri
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [task.run](#task-run) | Run the specified task | >= 2.0.1 |
+| [task.run](#taskrun) | Run the specified task | >= 2.0.1 |
 
 <p class="tip">
 Prior to version 2.1.5, it was `core.project.task`.
@@ -158,11 +158,11 @@ Linker related operations, often used for plugin development.
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [linker.link](#linker-link) | Execute Link | >= 2.0.1 |
-| [linker.linkcmd](#linker-linkcmd) | Get Link Command Line | >= 2.0.1 |
-| [linker.linkargv](#linker-linkargv) | Get Link Command Line List | >= 2.1.5 |
-| [linker.linkflags](#linker-linkflags) | Get LinksOptions | >= 2.0.1 |
-| [linker.has_flags](#linker-has_flags) | Determine if the specified link option is supported | >= 2.1.5 |
+| [linker.link](#linkerlink) | Execute Link | >= 2.0.1 |
+| [linker.linkcmd](#linkerlinkcmd) | Get Link Command Line | >= 2.0.1 |
+| [linker.linkargv](#linkerlinkargv) | Get Link Command Line List | >= 2.1.5 |
+| [linker.linkflags](#linkerlinkflags) | Get LinksOptions | >= 2.0.1 |
+| [linker.has_flags](#linkerhas_flags) | Determine if the specified link option is supported | >= 2.1.5 |
 
 #### linker.link
 
@@ -209,7 +209,7 @@ The above code tells the linker that the three object files a, b, c may be c, ob
 
 - Get link command line string
 
-Get the command line string executed in [linker.link](#linker-link) directly, which is equivalent to:
+Get the command line string executed in [linker.link](#linkerlink) directly, which is equivalent to:
 
 ```lua
 local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
@@ -227,7 +227,7 @@ local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:tar
 
 - Get a list of link command line arguments
 
-A little different from [linker.linkcmd](#linker-linkcmd) is that this interface returns a list of parameters, table representation, more convenient to operate:
+A little different from [linker.linkcmd](#linkerlinkcmd) is that this interface returns a list of parameters, table representation, more convenient to operate:
 
 ```lua
 local program, argv = linker.linkargv("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
@@ -241,7 +241,7 @@ We can also run it directly by passing the return value to [os.runv](#os-runv): 
 
 - Get link options
 
-Get the link option string part of [linker.linkcmd](#linker-linkcmd) without shellname and object file list, and return by array, for example:
+Get the link option string part of [linker.linkcmd](#linkerlinkcmd) without shellname and object file list, and return by array, for example:
 
 ```lua
 local flags = linker.linkflags("shared", "cc", {target = target})
@@ -271,13 +271,13 @@ Compiler related operations, often used for plugin development.
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [compiler.compile](#compiler-compile) | Execute Compilation | >= 2.0.1 |
-| [compiler.compcmd](#compiler-compcmd) | Get Compiler Command Line | >= 2.0.1 |
-| [compiler.compargv](#compiler-compargv) | Get Compiled Command Line List | >= 2.1.5 |
-| [compiler.compflags](#compiler-compflags) | Get Compilation Options | >= 2.0.1 |
-| [compiler.has_flags](#compiler-has_flags) | Determine if the specified compilation option is supported | >= 2.1.5 |
-| [compiler.features](#compiler-features) | Get all compiler features | >= 2.1.5 |
-| [compiler.has_features](#compiler-has_features) | Determine if the specified compilation feature is supported | >= 2.1.5 |
+| [compiler.compile](#compilercompile) | Execute Compilation | >= 2.0.1 |
+| [compiler.compcmd](#compilercompcmd) | Get Compiler Command Line | >= 2.0.1 |
+| [compiler.compargv](#compilercompargv) | Get Compiled Command Line List | >= 2.1.5 |
+| [compiler.compflags](#compilercompflags) | Get Compilation Options | >= 2.0.1 |
+| [compiler.has_flags](#compilerhas_flags) | Determine if the specified compilation option is supported | >= 2.1.5 |
+| [compiler.features](#compilerfeatures) | Get all compiler features | >= 2.1.5 |
+| [compiler.has_features](#compilerhas_features) | Determine if the specified compilation feature is supported | >= 2.1.5 |
 
 #### compiler.compile
 
@@ -303,7 +303,7 @@ To simply compile a source file.
 
 - Get the compile command line
 
-Get the command line string executed directly in [compiler.compile](#compiler-compile), which is equivalent to:
+Get the command line string executed directly in [compiler.compile](#compilercompile), which is equivalent to:
 
 ```lua
 local cmdstr = compiler.compcmd("xxx.c", "xxx.o", {target = target})
@@ -335,7 +335,7 @@ end
 
 - Get compiled command line list
 
-A little different from [compiler.compargv](#compiler-compargv) is that this interface returns a list of parameters, table representation, more convenient to operate:
+A little different from [compiler.compargv](#compilercompargv) is that this interface returns a list of parameters, table representation, more convenient to operate:
 
 ```lua
 local program, argv = compiler.compargv("xxx.c", "xxx.o")
@@ -345,7 +345,7 @@ local program, argv = compiler.compargv("xxx.c", "xxx.o")
 
 - Get compilation options
 
-Get the compile option string part of [compiler.compcmd](#compiler-compcmd) without shList of ellnames and files, for example:
+Get the compile option string part of [compiler.compcmd](#compilercompcmd) without shList of ellnames and files, for example:
 
 ```lua
 local flags = compiler.compflags(sourcefile, {target = target})
@@ -484,7 +484,7 @@ if compiler.has_features("cxx_constexpr", {target = target, defines = "..", incl
 end
 ```
 
-For specific feature names, refer to [compiler.features](#compiler-features).
+For specific feature names, refer to [compiler.features](#compilerfeatures).
 
 ### core.project.config
 
@@ -492,14 +492,14 @@ Used to get the configuration information when the project is compiled, that is,
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [config.get](#config-get) | Get the specified configuration value | >= 2.0.1 |
-| [config.load](#config-load) | Load Configuration | >= 2.0.1 |
-| [config.arch](#config-arch) | Get the schema configuration of the current project | >= 2.0.1 |
-| [config.plat](#config-plat) | Get the platform configuration of the current project | >= 2.0.1 |
-| [config.mode](#config-mode) | Get the compilation mode configuration of the current project | >= 2.0.1 |
-| [config.buildir](#config-buildir) | Get the output directory configuration of the current project | >= 2.0.1 |
-| [config.directory](#config-dIrectory) | Get the configuration information directory of the current project | >= 2.0.1 |
-| [config.dump](#config-dump) | Print out all configuration information for the current project | >= 2.0.1 |
+| [config.get](#configget) | Get the specified configuration value | >= 2.0.1 |
+| [config.load](#configload) | Load Configuration | >= 2.0.1 |
+| [config.arch](#configarch) | Get the schema configuration of the current project | >= 2.0.1 |
+| [config.plat](#configplat) | Get the platform configuration of the current project | >= 2.0.1 |
+| [config.mode](#configmode) | Get the compilation mode configuration of the current project | >= 2.0.1 |
+| [config.buildir](#configbuildir) | Get the output directory configuration of the current project | >= 2.0.1 |
+| [config.directory](#configdIrectory) | Get the configuration information directory of the current project | >= 2.0.1 |
+| [config.dump](#configdump) | Print out all configuration information for the current project | >= 2.0.1 |
 
 #### config.get
 
@@ -523,7 +523,7 @@ target("test")
 
 - Load configuration
 
-Generally used in plug-in development, the plug-in task is not like the custom script of the project, the environment needs to be initialized and loaded by itself, the default project configuration is not loaded, if you want to use [config.get](#config-get) interface to get the project Configuration, then you need to:
+Generally used in plug-in development, the plug-in task is not like the custom script of the project, the environment needs to be initialized and loaded by itself, the default project configuration is not loaded, if you want to use [config.get](#configget) interface to get the project Configuration, then you need to:
 
 ```lua
 
@@ -623,16 +623,16 @@ This module has been migrated to [core.base.task](#core-base-task) since version
 
 Used to get some description information of the current project, that is, the configuration information defined in the `xmake.lua` project description file, for example: [target](#target), [option](#option), etc.
 
-| Interface | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------------------- |
-| [project.load](#project-load) | Load Project Configuration | >= 2.0.1 (2.1.5 Obsolete) |
-| [project.directory](#project-directory) | Get Project Directory | >= 2.0.1 |
-| [project.target](#project-target) | Get the specified project target object | >= 2.0.1 |
-| [project.targets](#project-targets) | Get the list of project target objects | >= 2.0.1 |
-| [project.option](#project-option) | Get the specified option object | >= 2.1.5 |
-| [project.options](#project-options) | Get all option objects for the project | >= 2.1.5 |
-| [project.name](#project-name) | Get current project name | >= 2.0.1 |
-| [project.version](#project-version) | Get current project version number | >= 2.0.1 |
+| Interface                                       | Description                                  | Supported Versions        |
+| ----------------------------------------------- | -------------------------------------------- | --------------------      |
+| [project.load](#projectload)                    | Load Project Configuration                   | >= 2.0.1 (2.1.5 Obsolete) |
+| [project.directory](#projectdirectory)          | Get Project Directory                        | >= 2.0.1                  |
+| [project.target](#projecttarget)                | Get the specified project target object      | >= 2.0.1                  |
+| [project.targets](#projecttargets)              | Get the list of project target objects       | >= 2.0.1                  |
+| [project.option](#projectoption)                | Get the specified option object              | >= 2.1.5                  |
+| [project.options](#projectoptions)              | Get all option objects for the project       | >= 2.1.5                  |
+| [project.name](#projectname)                    | Get current project name                     | >= 2.0.1                  |
+| [project.version](#projectversion)              | Get current project version number           | >= 2.0.1                  |
 
 #### project.load
 
@@ -762,14 +762,14 @@ Used to obtain information about the compiled language, generally used for the o
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [language.extensions](#language-extensions) | Get a list of code suffixes for all languages ​​| >= 2.1.1 |
-| [language.targetkinds](#language-targetkinds) | Get a list of target types for all languages ​​| >= 2.1.1 |
-| [language.sourcekinds](#language-sourcekinds) | Get a list of source file types for all languages ​​| >= 2.1.1 |
-| [language.sourceflags](#language-sourceflags) | Load source file compilation option name list for all languages ​​| >= 2.1.1 |
-| [language.load](#language-load) | Load the specified language | >= 2.1.1 |
-| [language.load_sk](#language-load_sk) | Load the specified language from the source file type | >= 2.1.1 |
-| [language.load_ex](#language-load_ex) | Load the specified language from the source file suffix | >= 2.1.1 |
-| [language.sourcekind_of](#language-sourcekind_of) | Get the source file type of the specified source file | >= 2.1.1 |
+| [language.extensions](#languageextensions) | Get a list of code suffixes for all languages ​​| >= 2.1.1 |
+| [language.targetkinds](#languagetargetkinds) | Get a list of target types for all languages ​​| >= 2.1.1 |
+| [language.sourcekinds](#languagesourcekinds) | Get a list of source file types for all languages ​​| >= 2.1.1 |
+| [language.sourceflags](#languagesourceflags) | Load source file compilation option name list for all languages ​​| >= 2.1.1 |
+| [language.load](#languageload) | Load the specified language | >= 2.1.1 |
+| [language.load_sk](#languageload_sk) | Load the specified language from the source file type | >= 2.1.1 |
+| [language.load_ex](#languageload_ex) | Load the specified language from the source file suffix | >= 2.1.1 |
+| [language.sourcekind_of](#languagesourcekind_of) | Get the source file type of the specified source file | >= 2.1.1 |
 
 #### language.extensions
 
@@ -886,7 +886,7 @@ That is, from a given source file path, get the type of source file it belongs t
 print(language.sourcekind_of("/xxxx/test.cpp"))
 ```
 
-The result is: `cxx`, which is the `c++` type. For the corresponding list, see: [language.sourcekinds](#language-sourcekinds)
+The result is: `cxx`, which is the `c++` type. For the corresponding list, see: [language.sourcekinds](#languagesourcekinds)
 
 ### core.platform.platform
 
@@ -894,7 +894,7 @@ Platform information related operations
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [platform.get](#platform-get) | Get configuration information about the specified platform | >= 2.0.1 |
+| [platform.get](#platformget) | Get configuration information about the specified platform | >= 2.0.1 |
 
 #### platform.get
 
@@ -919,8 +919,8 @@ Environment-related operations, used to enter and leave the terminal environment
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [environment.enter](#environment-enter) | Enter the specified environment | >= 2.0.1 |
-| [environment.leave](#environment-leave) | Leave the specified environment | >= 2.0.1 |
+| [environment.enter](#environmententer) | Enter the specified environment | >= 2.0.1 |
+| [environment.leave](#environmentleave) | Leave the specified environment | >= 2.0.1 |
 
 The currently supported environments are:
 
@@ -951,7 +951,7 @@ Therefore, for the sake of versatility, the default xmake compiler will set this
 
 - leaving the designated environment
 
-For specific use, see: [environment.enter](#environment-enter)
+For specific use, see: [environment.enter](#environmententer)
 
 ### lib.detect
 
@@ -963,25 +963,25 @@ The interface of this module is spread across multiple module directories, try t
 
 | Interface | Description | Supported Versions |
 | --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [detect.find_file](#detect-find_file) | Find Files | >= 2.1.5 |
-| [detect.find_path](#detect-find_path) | Find File Path | >= 2.1.5 |
-| [detect.find_library](#detect-find_library) | Find Library Files | >= 2.1.5 |
-| [detect.find_program](#detect-find_program) | Find executables | >= 2.1.5 |
-| [detect.find_programver](#detect-find_programver) | Find executable version number | >= 2.1.5 |
-| [detect.find_package](#detect-find_package) | Find package files, including library files and search paths | >= 2.1.5 |
-| [detect.find_tool](#detect-find_tool) | Find Tool | >= 2.1.5 |
-| [detect.find_toolname](#detect-find_toolname) | Find Tool Name | >= 2.1.5 |
-| [detect.find_cudadevices](#detect-find_cudadevices) | Find CUDA devices of the host                         | >= 2.2.7             |
-| [detect.features](#detect-features) | Get all the features of the specified tool | >= 2.1.5 |
-| [detect.has_features](#detect-has_features) | Determine if the specified feature is supported | >= 2.1.5 |
-| [detect.has_flags](#detect-has_flags) | Determine if the specified parameter options are supported | >= 2.1.5 |
-| [detect.has_cfuncs](#detect-has_cfuncs) | Determine if the specified c function exists | >= 2.1.5 |
-| [detect.has_cxxfuncs](#detect-has_cxxfuncs) | Determine if the specified c++ function exists | >= 2.1.5 |
-| [detect.has_cincludes](#detect-has_cincludes) | Determine if the specified c header file exists | >= 2.1.5 |
-| [detect.has_cxxincludess](#detect-has_cxxincludes) | Determine if the specified c++ header file exists | >= 2.1.5 |
-| [detect.has_ctypes](#detect-has_ctypes) | Determine if the specified c type exists | >= 2.1.5 |
-| [detect.has_cxxtypes](#detect-has_cxxtypes) | Determine if the specified c++ type exists | >= 2.1.5 |
-| [detect.check_cxsnippets](#detect-check_cxsnippets) | Check if c/c++ code snippets can be compiled by | >= 2.1.5 |
+| [detect.find_file](#detectfind_file) | Find Files | >= 2.1.5 |
+| [detect.find_path](#detectfind_path) | Find File Path | >= 2.1.5 |
+| [detect.find_library](#detectfind_library) | Find Library Files | >= 2.1.5 |
+| [detect.find_program](#detectfind_program) | Find executables | >= 2.1.5 |
+| [detect.find_programver](#detectfind_programver) | Find executable version number | >= 2.1.5 |
+| [detect.find_package](#detectfind_package) | Find package files, including library files and search paths | >= 2.1.5 |
+| [detect.find_tool](#detectfind_tool) | Find Tool | >= 2.1.5 |
+| [detect.find_toolname](#detectfind_toolname) | Find Tool Name | >= 2.1.5 |
+| [detect.find_cudadevices](#detectfind_cudadevices) | Find CUDA devices of the host                         | >= 2.2.7             |
+| [detect.features](#detectfeatures) | Get all the features of the specified tool | >= 2.1.5 |
+| [detect.has_features](#detecthas_features) | Determine if the specified feature is supported | >= 2.1.5 |
+| [detect.has_flags](#detecthas_flags) | Determine if the specified parameter options are supported | >= 2.1.5 |
+| [detect.has_cfuncs](#detecthas_cfuncs) | Determine if the specified c function exists | >= 2.1.5 |
+| [detect.has_cxxfuncs](#detecthas_cxxfuncs) | Determine if the specified c++ function exists | >= 2.1.5 |
+| [detect.has_cincludes](#detecthas_cincludes) | Determine if the specified c header file exists | >= 2.1.5 |
+| [detect.has_cxxincludess](#detecthas_cxxincludes) | Determine if the specified c++ header file exists | >= 2.1.5 |
+| [detect.has_ctypes](#detecthas_ctypes) | Determine if the specified c type exists | >= 2.1.5 |
+| [detect.has_cxxtypes](#detecthas_cxxtypes) | Determine if the specified c++ type exists | >= 2.1.5 |
+| [detect.check_cxsnippets](#detectcheck_cxsnippets) | Check if c/c++ code snippets can be compiled by | >= 2.1.5 |
 
 #### detect.find_file
 
@@ -1042,7 +1042,7 @@ We can also quickly call and test this interface with the `xmake lua` plugin: `x
 
 - Find the path
 
-The usage of this interface is similar to [lib.detect.find_file](#detect-find_file), the only difference is that the returned results are different.
+The usage of this interface is similar to [lib.detect.find_file](#detectfind_file), the only difference is that the returned results are different.
 After the interface finds the incoming file path, it returns the corresponding search path, not the file path itself. It is generally used to find the parent directory location corresponding to the file.
 
 ```lua
@@ -1106,7 +1106,7 @@ local library = find_library("cryp*", {"/usr", "/usr/local"}, {suffixes = "/lib"
 
 - Find executable programs
 
-This interface is more primitive than [lib.detect.find_tool](#detect-find_tool), looking for executables through the specified parameter directory.
+This interface is more primitive than [lib.detect.find_tool](#detectfind_tool), looking for executables through the specified parameter directory.
 
 ```lua
 import("lib.detect.find_program")
@@ -1186,7 +1186,7 @@ We can also test quickly with `xmake lua lib.detect.find_programver ccache`.
 
 - Find package files
 
-This interface is also used to find library files, but it is higher than [lib.detect.find_library](#detect-find_library), and it is more powerful and easy to use, because it is based on the strength of the package.
+This interface is also used to find library files, but it is higher than [lib.detect.find_library](#detectfind_library), and it is more powerful and easy to use, because it is based on the strength of the package.
 
 So what is a complete package, it contains:
 
@@ -1360,7 +1360,7 @@ function main(opt)
 
 Inside the windows platform to read the registry, to find the
 specified library file, the bottom layer is actually called
-[find_library](#detect-find_library) and other interfaces.
+[find_library](#detectfind_library) and other interfaces.
 
 <p class="tip"> In order to speed up the efficiency of frequent
 lookups, this interface is self-contained by default. If you want to
@@ -1394,7 +1394,7 @@ adding the `vcpkg::`, `conan::` package namespace.
 - Find tool
 
 This interface is also used to find executable programs, but more
-advanced than [lib.detect.find_program](#detect-find_program), the
+advanced than [lib.detect.find_program](#detectfind_program), the
 function is also more powerful, it encapsulates the executable
 program, providing the concept of tools:
 
@@ -1410,7 +1410,7 @@ The corresponding relationship is as follows:
 | gcc | `/usr/toolchains/bin/arm-linux-gcc` |
 | link | `link.exe -lib` |
 
-[lib.detect.find_program](#detect-find_program) can only determine
+[lib.detect.find_program](#detectfind_program) can only determine
 whether the program exists by passing in the original program command
 or path.  And `find_tool` can find the tool through a more consistent
 toolname, and return the corresponding program complete command path,
@@ -1558,7 +1558,7 @@ Please refer to [CUDA Toolkit Documentation](https://docs.nvidia.com/cuda/cuda-r
 
 - Get all the features of the specified tool
 
-This interface is similar to [compiler.features](#compiler-features). The difference is that this interface is more primitive. The passed argument is the actual tool name toolname.
+This interface is similar to [compiler.features](#compilerfeatures). The difference is that this interface is more primitive. The passed argument is the actual tool name toolname.
 
 And this interface not only can get the characteristics of the compiler, the characteristics of any tool can be obtained, so it is more versatile.
 
@@ -1572,13 +1572,13 @@ local features = features("clang", {flags = {"-g", "-O0", "-std=c++11"}})
 
 By passing in flags, you can change the result of the feature, for example, some features of C++11, which are not available by default. After enabling `-std=c++11`, you can get it.
 
-A list of all compiler features can be found at [compiler.features](#compiler-features).
+A list of all compiler features can be found at [compiler.features](#compilerfeatures).
 
 #### detect.has_features
 
 - Determine if the specified feature is supported
 
-This interface is similar to [compiler.has_features](#compiler-has_features), but more primitive, the passed argument is the actual tool name toolname.
+This interface is similar to [compiler.has_features](#compilerhas_features), but more primitive, the passed argument is the actual tool name toolname.
 
 And this interface can not only judge the characteristics of the compiler, but the characteristics of any tool can be judged, so it is more versatile.
 
@@ -1592,13 +1592,13 @@ local features = has_features("clang", {"cxx_constexpr", "c_static_assert"}, {fl
 
 If the specified feature list exists, the actual supported feature sublist is returned. If none is supported, nil is returned. We can also change the feature acquisition rule by specifying flags.
 
-A list of all compiler features can be found at [compiler.features](#compiler-features).
+A list of all compiler features can be found at [compiler.features](#compilerfeatures).
 
 #### detect.has_flags
 
 - Determine if the specified parameter option is supported
 
-This interface is similar to [compiler.has_flags](#compiler-has_flags), but more primitive, the passed argument is the actual tool name toolname.
+This interface is similar to [compiler.has_flags](#compilerhas_flags), but more primitive, the passed argument is the actual tool name toolname.
 
 ```lua
 import("lib.detect.has_flags")
@@ -1616,7 +1616,7 @@ The detection of this interface has been optimized. Except for the cache mechani
 
 - Determine if the specified c function exists
 
-This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect functions.
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detectcheck_cxsnippets) and is only used to detect functions.
 
 ```lua
 import("lib.detect.has_cfuncs")
@@ -1645,13 +1645,13 @@ The verbose is used to echo the detection information, the target is used to app
 
 - Determine if the specified c++ function exists
 
-This interface is similar to [lib.detect.has_cfuncs](#detect-has_cfuncs), please refer to its instructions for use. The only difference is that this interface is used to detect c++ functions.
+This interface is similar to [lib.detect.has_cfuncs](#detecthas_cfuncs), please refer to its instructions for use. The only difference is that this interface is used to detect c++ functions.
 
 #### detect.has_cincludes
 
 - Determine if the specified c header file exists
 
-This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect header files.
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detectcheck_cxsnippets) and is only used to detect header files.
 
 ```lua
 import("lib.detect.has_cincludes")
@@ -1665,13 +1665,13 @@ local ok = has_cincludes({"stdio.h", "stdlib.h"}, {config = {defines = "_GNU_SOU
 
 - Determine if the specified c++ header file exists
 
-This interface is similar to [lib.detect.has_cincludess](#detect-has_cincludes), please refer to its instructions for use. The only difference is that this interface is used to detect c++ header files.
+This interface is similar to [lib.detect.has_cincludess](#detecthas_cincludes), please refer to its instructions for use. The only difference is that this interface is used to detect c++ header files.
 
 #### detect.has_ctypes
 
 - Determine if the specified c type exists
 
-This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect functions.
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detectcheck_cxsnippets) and is only used to detect functions.
 
 ```lua
 import("lib.detect.has_ctypes")
@@ -1685,7 +1685,7 @@ local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, config = {
 
 - Determine if the specified c++ type exists
 
-This interface is similar to [lib.detect.has_ctypess](#detect-has_ctypes). Please refer to its instructions for use. The only difference is that this interface is used to detect c++ types.
+This interface is similar to [lib.detect.has_ctypess](#detecthas_ctypes). Please refer to its instructions for use. The only difference is that this interface is used to detect c++ types.
 
 #### detect.check_cxsnippets
 
@@ -1693,7 +1693,7 @@ This interface is similar to [lib.detect.has_ctypess](#detect-has_ctypes). Pleas
 
 The generic c/c++ code snippet detection interface, by passing in a list of multiple code snippets, it will automatically generate a compiled file, and then common sense to compile it, if the compilation pass returns true.
 
-For some complex compiler features, even if [compiler.has_features](#compiler-has_features) can't detect it, you can detect it by trying to compile through this interface.
+For some complex compiler features, even if [compiler.has_features](#compilerhas_features) can't detect it, you can detect it by trying to compile through this interface.
 
 ```lua
 import("lib.detect.check_cxsnippets")
@@ -1702,7 +1702,7 @@ local ok = check_cxsnippets("void test() {}")
 local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar_t", includes = "stdio.h"})
 ```
 
-This interface is a generic version of interfaces such as [detect.has_cfuncs](#detect-has_cfuncs), [detect.has_cincludes](#detect-has_cincludes), and [detect.has_ctypes](detect-has_ctypes), and is also lower level.
+This interface is a generic version of interfaces such as [detect.has_cfuncs](#detecthas_cfuncs), [detect.has_cincludes](#detecthas_cincludes), and [detect.has_ctypes](detect-has_ctypes), and is also lower level.
 
 So we can use it to detect: types, functions, includes and links, or combine them together to detect.
 

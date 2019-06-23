@@ -1,5 +1,5 @@
 
-所有扩展模块的使用，都需要通过[import](#import)接口，进行导入后才能使用。
+所有扩展模块的使用，都需要通过[import](/zh-cn/manual/builtin_modules?id=import)接口，进行导入后才能使用。
 
 ### core.base.option
 
@@ -7,7 +7,7 @@
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [option.get](#option-get)                       | 获取参数选项值                               | >= 2.0.1 |
+| [option.get](#optionget)                       | 获取参数选项值                               | >= 2.0.1 |
 
 #### option.get
 
@@ -43,10 +43,10 @@ task("hello")
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [global.get](#global-get)                       | 获取指定配置值                               | >= 2.0.1 |
-| [global.load](#global-load)                     | 加载配置                                     | >= 2.0.1 |
-| [global.directory](#global-directory)           | 获取全局配置信息目录                         | >= 2.0.1 |
-| [global.dump](#global-dump)                     | 打印输出所有全局配置信息                     | >= 2.0.1 |
+| [global.get](#globalget)                       | 获取指定配置值                               | >= 2.0.1 |
+| [global.load](#globalload)                     | 加载配置                                     | >= 2.0.1 |
+| [global.directory](#globaldirectory)           | 获取全局配置信息目录                         | >= 2.0.1 |
+| [global.dump](#globaldump)                     | 打印输出所有全局配置信息                     | >= 2.0.1 |
 
 <p class="tip">
 2.1.5版本之前为`core.project.global`。
@@ -56,13 +56,13 @@ task("hello")
 
 - 获取指定配置值
 
-类似[config.get](#config-get)，唯一的区别就是这个是从全局配置中获取。
+类似[config.get](#configget)，唯一的区别就是这个是从全局配置中获取。
 
 #### global.load
 
 - 加载配置
 
-类似[global.get](#global-get)，唯一的区别就是这个是从全局配置中加载。
+类似[global.get](#globalget)，唯一的区别就是这个是从全局配置中加载。
 
 #### global.directory
 
@@ -90,7 +90,7 @@ task("hello")
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [task.run](#task-run)                           | 运行指定任务                                 | >= 2.0.1 |
+| [task.run](#taskrun)                           | 运行指定任务                                 | >= 2.0.1 |
 
 <p class="tip">
 2.1.5版本之前为`core.project.task`。
@@ -158,11 +158,11 @@ emd
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [linker.link](#linker-link)                     | 执行链接                                     | >= 2.0.1 |
-| [linker.linkcmd](#linker-linkcmd)               | 获取链接命令行                               | >= 2.0.1 |
-| [linker.linkargv](#linker-linkargv)             | 获取链接命令行列表                           | >= 2.1.5 |
-| [linker.linkflags](#linker-linkflags)           | 获取链接选项                                 | >= 2.0.1 |
-| [linker.has_flags](#linker-has_flags)           | 判断指定链接选项是否支持                     | >= 2.1.5 |
+| [linker.link](#linkerlink)                     | 执行链接                                     | >= 2.0.1 |
+| [linker.linkcmd](#linkerlinkcmd)               | 获取链接命令行                               | >= 2.0.1 |
+| [linker.linkargv](#linkerlinkargv)             | 获取链接命令行列表                           | >= 2.1.5 |
+| [linker.linkflags](#linkerlinkflags)           | 获取链接选项                                 | >= 2.0.1 |
+| [linker.has_flags](#linkerhas_flags)           | 判断指定链接选项是否支持                     | >= 2.1.5 |
 
 #### linker.link
 
@@ -209,7 +209,7 @@ linker.link("binary", {"cc", "mxx", "sc"}, {"a.o", "b.o", "c.o"}, "/tmp/targetfi
 
 - 获取链接命令行字符串
 
-直接获取[linker.link](#linker-link)中执行的命令行字符串，相当于：
+直接获取[linker.link](#linkerlink)中执行的命令行字符串，相当于：
 
 ```lua
 local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
@@ -227,7 +227,7 @@ local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:tar
 
 - 获取链接命令行参数列表
 
-跟[linker.linkcmd](#linker-linkcmd)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
+跟[linker.linkcmd](#linkerlinkcmd)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
 
 ```lua
 local program, argv = linker.linkargv("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
@@ -241,7 +241,7 @@ local program, argv = linker.linkargv("static", "cxx", {"a.o", "b.o", "c.o"}, ta
 
 - 获取链接选项
 
-获取[linker.linkcmd](#linker-linkcmd)中的链接选项字符串部分，不带shellname和对象文件列表，并且是按数组返回，例如：
+获取[linker.linkcmd](#linkerlinkcmd)中的链接选项字符串部分，不带shellname和对象文件列表，并且是按数组返回，例如：
 
 ```lua
 local flags = linker.linkflags("shared", "cc", {target = target})
@@ -271,13 +271,13 @@ end
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [compiler.compile](#compiler-compile)           | 执行编译                                     | >= 2.0.1 |
-| [compiler.compcmd](#compiler-compcmd)           | 获取编译命令行                               | >= 2.0.1 |
-| [compiler.compargv](#compiler-compargv)         | 获取编译命令行列表                           | >= 2.1.5 |
-| [compiler.compflags](#compiler-compflags)       | 获取编译选项                                 | >= 2.0.1 |
-| [compiler.has_flags](#compiler-has_flags)       | 判断指定编译选项是否支持                     | >= 2.1.5 |
-| [compiler.features](#compiler-features)         | 获取所有编译器特性                           | >= 2.1.5 |
-| [compiler.has_features](#compiler-has_features) | 判断指定编译特性是否支持                     | >= 2.1.5 |
+| [compiler.compile](#compilercompile)           | 执行编译                                     | >= 2.0.1 |
+| [compiler.compcmd](#compilercompcmd)           | 获取编译命令行                               | >= 2.0.1 |
+| [compiler.compargv](#compilercompargv)         | 获取编译命令行列表                           | >= 2.1.5 |
+| [compiler.compflags](#compilercompflags)       | 获取编译选项                                 | >= 2.0.1 |
+| [compiler.has_flags](#compilerhas_flags)       | 判断指定编译选项是否支持                     | >= 2.1.5 |
+| [compiler.features](#compilerfeatures)         | 获取所有编译器特性                           | >= 2.1.5 |
+| [compiler.has_features](#compilerhas_features) | 判断指定编译特性是否支持                     | >= 2.1.5 |
 
 #### compiler.compile
 
@@ -303,7 +303,7 @@ compiler.compile("xxx.c", "xxx.o")
 
 - 获取编译命令行
 
-直接获取[compiler.compile](#compiler-compile)中执行的命令行字符串，相当于：
+直接获取[compiler.compile](#compilercompile)中执行的命令行字符串，相当于：
 
 ```lua
 local cmdstr = compiler.compcmd("xxx.c", "xxx.o", {target = target})
@@ -335,7 +335,7 @@ end
 
 - 获取编译命令行列表
 
-跟[compiler.compargv](#compiler-compargv)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
+跟[compiler.compargv](#compilercompargv)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
 
 ```lua
 local program, argv = compiler.compargv("xxx.c", "xxx.o")
@@ -345,7 +345,7 @@ local program, argv = compiler.compargv("xxx.c", "xxx.o")
 
 - 获取编译选项
 
-获取[compiler.compcmd](#compiler-compcmd)中的编译选项字符串部分，不带shellname和文件列表，例如：
+获取[compiler.compcmd](#compilercompcmd)中的编译选项字符串部分，不带shellname和文件列表，例如：
 
 ```lua
 local flags = compiler.compflags(sourcefile, {target = target})
@@ -484,7 +484,7 @@ if compiler.has_features("cxx_constexpr", {target = target, defines = "..", incl
 end
 ```
 
-具体特性名有哪些，可以参考：[compiler.features](#compiler-features)。
+具体特性名有哪些，可以参考：[compiler.features](#compilerfeatures)。
 
 ### core.project.config
 
@@ -492,14 +492,14 @@ end
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [config.get](#config-get)                       | 获取指定配置值                               | >= 2.0.1 |
-| [config.load](#config-load)                     | 加载配置                                     | >= 2.0.1 |
-| [config.arch](#config-arch)                     | 获取当前工程的架构配置                       | >= 2.0.1 |
-| [config.plat](#config-plat)                     | 获取当前工程的平台配置                       | >= 2.0.1 |
-| [config.mode](#config-mode)                     | 获取当前工程的编译模式配置                   | >= 2.0.1 |
-| [config.buildir](#config-buildir)               | 获取当前工程的输出目录配置                   | >= 2.0.1 |
-| [config.directory](#config-directory)           | 获取当前工程的配置信息目录                   | >= 2.0.1 |
-| [config.dump](#config-dump)                     | 打印输出当前工程的所有配置信息               | >= 2.0.1 |
+| [config.get](#configget)                       | 获取指定配置值                               | >= 2.0.1 |
+| [config.load](#configload)                     | 加载配置                                     | >= 2.0.1 |
+| [config.arch](#configarch)                     | 获取当前工程的架构配置                       | >= 2.0.1 |
+| [config.plat](#configplat)                     | 获取当前工程的平台配置                       | >= 2.0.1 |
+| [config.mode](#configmode)                     | 获取当前工程的编译模式配置                   | >= 2.0.1 |
+| [config.buildir](#configbuildir)               | 获取当前工程的输出目录配置                   | >= 2.0.1 |
+| [config.directory](#configdirectory)           | 获取当前工程的配置信息目录                   | >= 2.0.1 |
+| [config.dump](#configdump)                     | 打印输出当前工程的所有配置信息               | >= 2.0.1 |
 
 #### config.get
 
@@ -523,7 +523,7 @@ target("test")
 
 - 加载配置
 
-一般用于插件开发中，插件任务中不像工程的自定义脚本，环境需要自己初始化加载，默认工程配置是没有被加载的，如果要用[config.get](#config-get)接口获取工程配置，那么需要先：
+一般用于插件开发中，插件任务中不像工程的自定义脚本，环境需要自己初始化加载，默认工程配置是没有被加载的，如果要用[config.get](#configget)接口获取工程配置，那么需要先：
 
 ```lua
 
@@ -625,14 +625,14 @@ end
 
 | 接口                                            | 描述                                         | 支持版本             |
 | ----------------------------------------------- | -------------------------------------------- | -------------------- |
-| [project.load](#project-load)                   | 加载工程配置                                 | >= 2.0.1 (2.1.5废弃) |
-| [project.directory](#project-directory)         | 获取工程目录                                 | >= 2.0.1             |
-| [project.target](#project-target)               | 获取指定工程目标对象                         | >= 2.0.1             |
-| [project.targets](#project-targets)             | 获取工程目标对象列表                         | >= 2.0.1             |
-| [project.option](#project-option)               | 获取指定的选项对象                           | >= 2.1.5             |
-| [project.options](#project-options)             | 获取工程所有的选项对象                       | >= 2.1.5             |
-| [project.name](#project-name)                   | 获取当前工程名                               | >= 2.0.1             |
-| [project.version](#project-version)             | 获取当前工程版本号                           | >= 2.0.1             |
+| [project.load](#projectload)                    | 加载工程配置                                 | >= 2.0.1 (2.1.5废弃) |
+| [project.directory](#projectdirectory)          | 获取工程目录                                 | >= 2.0.1             |
+| [project.target](#projecttarget)                | 获取指定工程目标对象                         | >= 2.0.1             |
+| [project.targets](#projecttargets)              | 获取工程目标对象列表                         | >= 2.0.1             |
+| [project.option](#projectoption)                | 获取指定的选项对象                           | >= 2.1.5             |
+| [project.options](#projectoptions)              | 获取工程所有的选项对象                       | >= 2.1.5             |
+| [project.name](#projectname)                    | 获取当前工程名                               | >= 2.0.1             |
+| [project.version](#projectversion)              | 获取当前工程版本号                           | >= 2.0.1             |
 
 #### project.load
 
@@ -768,14 +768,14 @@ print(project.version())
 
 | 接口                                              | 描述                                         | 支持版本 |
 | -----------------------------------------------   | -------------------------------------------- | -------- |
-| [language.extensions](#language-extensions)       | 获取所有语言的代码后缀名列表                 | >= 2.1.1 |
-| [language.targetkinds](#language-targetkinds)     | 获取所有语言的目标类型列表                   | >= 2.1.1 |
-| [language.sourcekinds](#language-sourcekinds)     | 获取所有语言的源文件类型列表                 | >= 2.1.1 |
-| [language.sourceflags](#language-sourceflags)     | 加载所有语言的源文件编译选项名列表           | >= 2.1.1 |
-| [language.load](#language-load)                   | 加载指定语言                                 | >= 2.1.1 |
-| [language.load_sk](#language-load_sk)             | 从源文件类型加载指定语言                     | >= 2.1.1 |
-| [language.load_ex](#language-load_ex)             | 从源文件后缀名加载指定语言                   | >= 2.1.1 |
-| [language.sourcekind_of](#language-sourcekind_of) | 获取指定源文件的源文件类型                   | >= 2.1.1 |
+| [language.extensions](#languageextensions)       | 获取所有语言的代码后缀名列表                 | >= 2.1.1 |
+| [language.targetkinds](#languagetargetkinds)     | 获取所有语言的目标类型列表                   | >= 2.1.1 |
+| [language.sourcekinds](#languagesourcekinds)     | 获取所有语言的源文件类型列表                 | >= 2.1.1 |
+| [language.sourceflags](#languagesourceflags)     | 加载所有语言的源文件编译选项名列表           | >= 2.1.1 |
+| [language.load](#languageload)                   | 加载指定语言                                 | >= 2.1.1 |
+| [language.load_sk](#languageload_sk)             | 从源文件类型加载指定语言                     | >= 2.1.1 |
+| [language.load_ex](#languageload_ex)             | 从源文件后缀名加载指定语言                   | >= 2.1.1 |
+| [language.sourcekind_of](#languagesourcekind_of) | 获取指定源文件的源文件类型                   | >= 2.1.1 |
 
 #### language.extensions
 
@@ -892,7 +892,7 @@ end
 print(language.sourcekind_of("/xxxx/test.cpp"))
 ```
 
-显示结果为：`cxx`，也就是`c++`类型，具体对应列表见：[language.sourcekinds](#language-sourcekinds)
+显示结果为：`cxx`，也就是`c++`类型，具体对应列表见：[language.sourcekinds](#languagesourcekinds)
 
 ### core.platform.platform
 
@@ -900,7 +900,7 @@ print(language.sourcekind_of("/xxxx/test.cpp"))
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [platform.get](#platform-get)                   | 获取指定平台相关配置信息                     | >= 2.0.1 |
+| [platform.get](#platformget)                   | 获取指定平台相关配置信息                     | >= 2.0.1 |
 
 #### platform.get
 
@@ -925,8 +925,8 @@ table.dump(formats)
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [environment.enter](#environment-enter)         | 进入指定环境                                 | >= 2.0.1 |
-| [environment.leave](#environment-leave)         | 离开指定环境                                 | >= 2.0.1 |
+| [environment.enter](#environmententer)         | 进入指定环境                                 | >= 2.0.1 |
+| [environment.leave](#environmentleave)         | 离开指定环境                                 | >= 2.0.1 |
 
 目前支持的环境有：
 
@@ -957,7 +957,7 @@ environment.leave("toolchains")
 
 - 离开指定环境
 
-具体使用见：[environment.enter](#environment-enter)
+具体使用见：[environment.enter](#environmententer)
 
 ### lib.detect
 
@@ -969,25 +969,25 @@ environment.leave("toolchains")
 
 | 接口                                                | 描述                                         | 支持版本             |
 | --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [detect.find_file](#detect-find_file)               | 查找文件                                     | >= 2.1.5             |
-| [detect.find_path](#detect-find_path)               | 查找文件路径                                 | >= 2.1.5             |
-| [detect.find_library](#detect-find_library)         | 查找库文件                                   | >= 2.1.5             |
-| [detect.find_program](#detect-find_program)         | 查找可执行程序                               | >= 2.1.5             |
-| [detect.find_programver](#detect-find_programver)   | 查找可执行程序版本号                         | >= 2.1.5             |
-| [detect.find_package](#detect-find_package)         | 查找包文件，包含库文件和搜索路径             | >= 2.1.5             |
-| [detect.find_tool](#detect-find_tool)               | 查找工具                                     | >= 2.1.5             |
-| [detect.find_toolname](#detect-find_toolname)       | 查找工具名                                   | >= 2.1.5             |
-| [detect.find_cudadevices](#detect-find_cudadevices) | 查找本机的 CUDA 设备                         | >= 2.2.7             |
-| [detect.features](#detect-features)                 | 获取指定工具的所有特性                       | >= 2.1.5             |
-| [detect.has_features](#detect-has_features)         | 判断指定特性是否支持                         | >= 2.1.5             |
-| [detect.has_flags](#detect-has_flags)               | 判断指定参数选项是否支持                     | >= 2.1.5             |
-| [detect.has_cfuncs](#detect-has_cfuncs)             | 判断指定c函数是否存在                        | >= 2.1.5             |
-| [detect.has_cxxfuncs](#detect-has_cxxfuncs)         | 判断指定c++函数是否存在                      | >= 2.1.5             |
-| [detect.has_cincludes](#detect-has_cincludes)       | 判断指定c头文件是否存在                      | >= 2.1.5             |
-| [detect.has_cxxincludess](#detect-has_cxxincludes)  | 判断指定c++头文件是否存在                    | >= 2.1.5             |
-| [detect.has_ctypes](#detect-has_ctypes)             | 判断指定c类型是否存在                        | >= 2.1.5             |
-| [detect.has_cxxtypes](#detect-has_cxxtypes)         | 判断指定c++类型是否存在                      | >= 2.1.5             |
-| [detect.check_cxsnippets](#detect-check_cxsnippets) | 检测c/c++代码片段是否能够编译通过            | >= 2.1.5             |
+| [detect.find_file](#detectfind_file)               | 查找文件                                     | >= 2.1.5             |
+| [detect.find_path](#detectfind_path)               | 查找文件路径                                 | >= 2.1.5             |
+| [detect.find_library](#detectfind_library)         | 查找库文件                                   | >= 2.1.5             |
+| [detect.find_program](#detectfind_program)         | 查找可执行程序                               | >= 2.1.5             |
+| [detect.find_programver](#detectfind_programver)   | 查找可执行程序版本号                         | >= 2.1.5             |
+| [detect.find_package](#detectfind_package)         | 查找包文件，包含库文件和搜索路径             | >= 2.1.5             |
+| [detect.find_tool](#detectfind_tool)               | 查找工具                                     | >= 2.1.5             |
+| [detect.find_toolname](#detectfind_toolname)       | 查找工具名                                   | >= 2.1.5             |
+| [detect.find_cudadevices](#detectfind_cudadevices) | 查找本机的 CUDA 设备                         | >= 2.2.7             |
+| [detect.features](#detectfeatures)                 | 获取指定工具的所有特性                       | >= 2.1.5             |
+| [detect.has_features](#detecthas_features)         | 判断指定特性是否支持                         | >= 2.1.5             |
+| [detect.has_flags](#detecthas_flags)               | 判断指定参数选项是否支持                     | >= 2.1.5             |
+| [detect.has_cfuncs](#detecthas_cfuncs)             | 判断指定c函数是否存在                        | >= 2.1.5             |
+| [detect.has_cxxfuncs](#detecthas_cxxfuncs)         | 判断指定c++函数是否存在                      | >= 2.1.5             |
+| [detect.has_cincludes](#detecthas_cincludes)       | 判断指定c头文件是否存在                      | >= 2.1.5             |
+| [detect.has_cxxincludess](#detecthas_cxxincludes)  | 判断指定c++头文件是否存在                    | >= 2.1.5             |
+| [detect.has_ctypes](#detecthas_ctypes)             | 判断指定c类型是否存在                        | >= 2.1.5             |
+| [detect.has_cxxtypes](#detecthas_cxxtypes)         | 判断指定c++类型是否存在                      | >= 2.1.5             |
+| [detect.check_cxsnippets](#detectcheck_cxsnippets) | 检测c/c++代码片段是否能够编译通过            | >= 2.1.5             |
 
 #### detect.find_file
 
@@ -1048,7 +1048,7 @@ local file = find_file("test.h", { "/usr", "/usr/local"}, {suffixes = {"/include
 
 - 查找路径
 
-这个接口的用法跟[lib.detect.find_file](#detect-find_file)类似，唯一的区别是返回的结果不同。
+这个接口的用法跟[lib.detect.find_file](#detectfind_file)类似，唯一的区别是返回的结果不同。
 此接口查找到传入的文件路径后，返回的是对应的搜索路径，而不是文件路径本身，一般用于查找文件对应的父目录位置。
 
 ```lua
@@ -1112,7 +1112,7 @@ local library = find_library("cryp*", {"/usr", "/usr/local"}, {suffixes = "/lib"
 
 - 查找可执行程序
 
-这个接口比[lib.detect.find_tool](#detect-find_tool)较为原始底层，通过指定的参数目录来查找可执行程序。
+这个接口比[lib.detect.find_tool](#detectfind_tool)较为原始底层，通过指定的参数目录来查找可执行程序。
 
 ```lua
 import("lib.detect.find_program")
@@ -1192,7 +1192,7 @@ local version = find_programver("ccache", {command = "--version", parse = functi
 
 - 查找包文件
 
-此接口也是用于查找库文件，但是比[lib.detect.find_library](#detect-find_library)更加上层，也更为强大和简单易用，因为它是以包为力度进行查找。
+此接口也是用于查找库文件，但是比[lib.detect.find_library](#detectfind_library)更加上层，也更为强大和简单易用，因为它是以包为力度进行查找。
 
 那怎样算是一个完整的包，它包含：
 
@@ -1364,7 +1364,7 @@ function main(opt)
 end
 ```
 
-里面对windows平台进行注册表读取，去查找指定的库文件，其底层其实也是调用的[find_library](#detect-find_library)等接口。
+里面对windows平台进行注册表读取，去查找指定的库文件，其底层其实也是调用的[find_library](#detectfind_library)等接口。
 
 <p class="tip">
 为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
@@ -1389,7 +1389,7 @@ find_package("brew::pcre2/libpcre2-8")
 
 - 查找工具
 
-此接口也是用于查找可执行程序，不过比[lib.detect.find_program](#detect-find_program)更加的高级，功能也更加强大，它对可执行程序进行了封装，提供了工具这个概念：
+此接口也是用于查找可执行程序，不过比[lib.detect.find_program](#detectfind_program)更加的高级，功能也更加强大，它对可执行程序进行了封装，提供了工具这个概念：
 
 * toolname: 工具名，可执行程序的简称，用于标示某个工具，例如：`gcc`, `clang`等
 * program: 可执行程序命令，例如：`xcrun -sdk macosx clang`
@@ -1402,7 +1402,7 @@ find_package("brew::pcre2/libpcre2-8")
 | gcc       | `/usr/toolchains/bin/arm-linux-gcc` |
 | link      | `link.exe -lib`                     |
 
-[lib.detect.find_program](#detect-find_program)只能通过传入的原始program命令或路径，去判断该程序是否存在。
+[lib.detect.find_program](#detectfind_program)只能通过传入的原始program命令或路径，去判断该程序是否存在。
 而`find_tool`则可以通过更加一致的toolname去查找工具，并且返回对应的program完整命令路径，例如：
 
 ```lua
@@ -1529,7 +1529,7 @@ local devices = find_cudadevices({ min_sm_arch = 35, order_by_flops = true })
 
 - 获取指定工具的所有特性
 
-此接口跟[compiler.features](#compiler-features)类似，区别就是此接口更加的原始，传入的参数是实际的工具名toolname。
+此接口跟[compiler.features](#compilerfeatures)类似，区别就是此接口更加的原始，传入的参数是实际的工具名toolname。
 
 并且此接口不仅能够获取编译器的特性，任何工具的特性都可以获取，因此更加通用。
 
@@ -1543,13 +1543,13 @@ local features = features("clang", {flags = {"-g", "-O0", "-std=c++11"}})
 
 通过传入flags，可以改变特性的获取结果，例如一些c++11的特性，默认情况下获取不到，通过启用`-std=c++11`后，就可以获取到了。
 
-所有编译器的特性列表，可以见：[compiler.features](#compiler-features)。
+所有编译器的特性列表，可以见：[compiler.features](#compilerfeatures)。
 
 #### detect.has_features
 
 - 判断指定特性是否支持
 
-此接口跟[compiler.has_features](#compiler-has_features)类似，但是更加原始，传入的参数是实际的工具名toolname。
+此接口跟[compiler.has_features](#compilerhas_features)类似，但是更加原始，传入的参数是实际的工具名toolname。
 
 并且此接口不仅能够判断编译器的特性，任何工具的特性都可以判断，因此更加通用。
 
@@ -1563,13 +1563,13 @@ local features = has_features("clang", {"cxx_constexpr", "c_static_assert"}, {fl
 
 如果指定的特性列表存在，则返回实际支持的特性子列表，如果都不支持，则返回nil，我们也可以通过指定flags去改变特性的获取规则。
 
-所有编译器的特性列表，可以见：[compiler.features](#compiler-features)。
+所有编译器的特性列表，可以见：[compiler.features](#compilerfeatures)。
 
 #### detect.has_flags
 
 - 判断指定参数选项是否支持
 
-此接口跟[compiler.has_flags](#compiler-has_flags)类似，但是更加原始，传入的参数是实际的工具名toolname。
+此接口跟[compiler.has_flags](#compilerhas_flags)类似，但是更加原始，传入的参数是实际的工具名toolname。
 
 ```lua
 import("lib.detect.has_flags")
@@ -1587,7 +1587,7 @@ local ok = has_flags("clang", "-g -O0", {toolkind = "cxx"})
 
 - 判断指定c函数是否存在
 
-此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测函数。
+此接口是[lib.detect.check_cxsnippets](#detectcheck_cxsnippets)的简化版本，仅用于检测函数。
 
 ```lua
 import("lib.detect.has_cfuncs")
@@ -1616,13 +1616,13 @@ local ok = has_cfuncs({"sigsetjmp((void*)0, 0)", "setjmp"}, {includes = "setjmp.
 
 - 判断指定c++函数是否存在
 
-此接口跟[lib.detect.has_cfuncs](#detect-has_cfuncs)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++函数。
+此接口跟[lib.detect.has_cfuncs](#detecthas_cfuncs)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++函数。
 
 #### detect.has_cincludes
 
 - 判断指定c头文件是否存在
 
-此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测头文件。
+此接口是[lib.detect.check_cxsnippets](#detectcheck_cxsnippets)的简化版本，仅用于检测头文件。
 
 ```lua
 import("lib.detect.has_cincludes")
@@ -1636,13 +1636,13 @@ local ok = has_cincludes({"stdio.h", "stdlib.h"}, {config = {defines = "_GNU_SOU
 
 - 判断指定c++头文件是否存在
 
-此接口跟[lib.detect.has_cincludess](#detect-has_cincludes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++头文件。
+此接口跟[lib.detect.has_cincludess](#detecthas_cincludes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++头文件。
 
 #### detect.has_ctypes
 
 - 判断指定c类型是否存在
 
-此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测函数。
+此接口是[lib.detect.check_cxsnippets](#detectcheck_cxsnippets)的简化版本，仅用于检测函数。
 
 ```lua
 import("lib.detect.has_ctypes")
@@ -1656,7 +1656,7 @@ local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, config = {
 
 - 判断指定c++类型是否存在
 
-此接口跟[lib.detect.has_ctypess](#detect-has_ctypes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++类型。
+此接口跟[lib.detect.has_ctypess](#detecthas_ctypes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++类型。
 
 #### detect.check_cxsnippets
 
@@ -1664,7 +1664,7 @@ local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, config = {
 
 通用的c/c++代码片段检测接口，通过传入多个代码片段列表，它会自动生成一个编译文件，然后常识对它进行编译，如果编译通过返回true。
 
-对于一些复杂的编译器特性，连[compiler.has_features](#compiler-has_features)都无法检测到的时候，可以通过此接口通过尝试编译来检测它。
+对于一些复杂的编译器特性，连[compiler.has_features](#compilerhas_features)都无法检测到的时候，可以通过此接口通过尝试编译来检测它。
 
 ```lua
 import("lib.detect.check_cxsnippets")
@@ -1673,7 +1673,7 @@ local ok = check_cxsnippets("void test() {}")
 local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar_t", includes = "stdio.h"})
 ```
 
-此接口是[detect.has_cfuncs](#detect-has_cfuncs), [detect.has_cincludes](#detect-has_cincludes)和[detect.has_ctypes](detect-has_ctypes)等接口的通用版本，也更加底层。
+此接口是[detect.has_cfuncs](#detecthas_cfuncs), [detect.has_cincludes](#detecthas_cincludes)和[detect.has_ctypes](detect-has_ctypes)等接口的通用版本，也更加底层。
 
 因此我们可以用它来检测：types, functions, includes 还有 links，或者是组合起来一起检测。
 
