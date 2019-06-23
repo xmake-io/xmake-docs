@@ -28,6 +28,62 @@ In addition, in 2.2.5 and later, this interface provides some built-in helper fu
 
 For a more complete description of this, see: [https://github.com/xmake-io/xmake/issues/342](https://github.com/xmake-io/xmake/issues/342 )
 
+Examples:
+
+Check links, ctype, includes and features and write macro definitions to the config.h file.
+
+```lua
+includes("check_links.lua")
+includes("check_ctypes.lua")
+includes("check_cfuncs.lua")
+includes("check_features.lua")
+includes("check_csnippets.lua")
+includes("check_cincludes.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("*.c")
+    add_configfiles("config.h.in")
+
+    configvar_check_ctypes("HAS_WCHAR", "wchar_t")
+    configvar_check_cincludes("HAS_STRING_H", "string.h")
+    configvar_check_cincludes("HAS_STRING_AND_STDIO_H", {"string.h", "stdio.h"})
+    configvar_check_ctypes("HAS_WCHAR_AND_FLOAT", {"wchar_t", "float"})
+    configvar_check_links("HAS_PTHREAD", {"pthread", "m", "dl"})
+    configvar_check_csnippets("HAS_STATIC_ASSERT", "_Static_assert(1, \"\");")
+    configvar_check_cfuncs("HAS_SETJMP", "setjmp", {includes = {"signal.h", "setjmp.h"}})
+    configvar_check_features("HAS_CONSTEXPR", "cxx_constexpr")
+    configvar_check_features("HAS_CONSEXPR_AND_STATIC_ASSERT", {"cxx_constexpr", "c_static_assert"}, {languages = "c++11"})
+```
+
+config.h.in
+
+```c
+${define HAS_STRING_H}
+${define HAS_STRING_AND_STDIO_H}
+${define HAS_WCHAR}
+${define HAS_WCHAR_AND_FLOAT}
+${define HAS_PTHREAD}
+${define HAS_STATIC_ASSERT}
+${define HAS_SETJMP}
+${define HAS_CONSTEXPR}
+${define HAS_CONSEXPR_AND_STATIC_ASSERT}
+```
+
+config.h
+
+```c
+/* #undef HAS_STRING_H */
+#define HAS_STRING_AND_STDIO_H 1
+/* #undef HAS_WCHAR */
+/* #undef HAS_WCHAR_AND_FLOAT */
+#define HAS_PTHREAD 1
+#define HAS_STATIC_ASSERT 1
+#define HAS_SETJMP 1
+/* #undef HAS_CONSTEXPR */
+#define HAS_CONSEXPR_AND_STATIC_ASSERT 1
+```
+
 ### set_modes
 
 #### Set project compilation modes
@@ -78,24 +134,13 @@ Set the whole project version, we can set it at the beginning of `xmake.lua`.
 set_version("1.5.1")
 ```
 
-It will add project version info to this file automatically if we call [set_config_header](#targetset_config_header) to set `config.h`.`
-
-For example:
-
-```c
-// version
-#define TB_CONFIG_VERSION "1.5.1"
-#define TB_CONFIG_VERSION_MAJOR 1
-#define TB_CONFIG_VERSION_MINOR 5
-#define TB_CONFIG_VERSION_ALTER 1
-#define TB_CONFIG_VERSION_BUILD 201510220917
-```
-
 We can set build version in v2.1.7 version:
 
 ```lua
 set_version("1.5.1", {build = "%Y%m%d%H%M"})
 ```
+
+We can also add version to the config header files, @see [add_configfiles](/manual/project_target?id=add-template-configuration-files)
 
 ### set_xmakever
 

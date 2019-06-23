@@ -28,6 +28,62 @@
 
 关于这块的更加完整的说明，可以看下：[https://github.com/xmake-io/xmake/issues/342](https://github.com/xmake-io/xmake/issues/342)
 
+例子：
+
+检测links, c/c++ type, includes和编译器特性，并且写入宏定义到config.h
+
+```lua
+includes("check_links.lua")
+includes("check_ctypes.lua")
+includes("check_cfuncs.lua")
+includes("check_features.lua")
+includes("check_csnippets.lua")
+includes("check_cincludes.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("*.c")
+    add_configfiles("config.h.in")
+
+    configvar_check_ctypes("HAS_WCHAR", "wchar_t")
+    configvar_check_cincludes("HAS_STRING_H", "string.h")
+    configvar_check_cincludes("HAS_STRING_AND_STDIO_H", {"string.h", "stdio.h"})
+    configvar_check_ctypes("HAS_WCHAR_AND_FLOAT", {"wchar_t", "float"})
+    configvar_check_links("HAS_PTHREAD", {"pthread", "m", "dl"})
+    configvar_check_csnippets("HAS_STATIC_ASSERT", "_Static_assert(1, \"\");")
+    configvar_check_cfuncs("HAS_SETJMP", "setjmp", {includes = {"signal.h", "setjmp.h"}})
+    configvar_check_features("HAS_CONSTEXPR", "cxx_constexpr")
+    configvar_check_features("HAS_CONSEXPR_AND_STATIC_ASSERT", {"cxx_constexpr", "c_static_assert"}, {languages = "c++11"})
+```
+    
+config.h.in
+
+```c
+${define HAS_STRING_H}
+${define HAS_STRING_AND_STDIO_H}
+${define HAS_WCHAR}
+${define HAS_WCHAR_AND_FLOAT}
+${define HAS_PTHREAD}
+${define HAS_STATIC_ASSERT}
+${define HAS_SETJMP}
+${define HAS_CONSTEXPR}
+${define HAS_CONSEXPR_AND_STATIC_ASSERT}
+```
+
+config.h
+
+```c
+/* #undef HAS_STRING_H */
+#define HAS_STRING_AND_STDIO_H 1
+/* #undef HAS_WCHAR */
+/* #undef HAS_WCHAR_AND_FLOAT */
+#define HAS_PTHREAD 1
+#define HAS_STATIC_ASSERT 1
+#define HAS_SETJMP 1
+/* #undef HAS_CONSTEXPR */
+#define HAS_CONSEXPR_AND_STATIC_ASSERT 1
+```
+
 ### set_modes
 
 #### 设置支持的编译模式
@@ -76,22 +132,13 @@ set_version("1.5.1")
 set_version("1.5.1")
 ```
 
-以tbox为例，如果调用[set_config_header](#targetset_config_header)设置了`config.h`，那么会自动生成如下宏：
-
-```c
-// version
-#define TB_CONFIG_VERSION "1.5.1"
-#define TB_CONFIG_VERSION_MAJOR 1
-#define TB_CONFIG_VERSION_MINOR 5
-#define TB_CONFIG_VERSION_ALTER 1
-#define TB_CONFIG_VERSION_BUILD 201510220917
-```
-
 2.1.7版本支持buildversion的配置：
 
 ```lua
 set_version("1.5.1", {build = "%Y%m%d%H%M"})
 ```
+
+我们也能够添加版本宏定义到头文件，请参考：[add_configfiles](/manual/project_target?id=add-template-configuration-files)
 
 ### set_xmakever
 

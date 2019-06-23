@@ -105,10 +105,6 @@ target("test2")
 | [add_ldflags](#targetadd_ldflags)               | Add static library link flags                          | >= 1.0.1                    |
 | [add_arflags](#targetadd_arflags)               | Add archive library flags                              | >= 1.0.1                    |
 | [add_shflags](#targetadd_shflags)               | Add dynamic library link flags                         | >= 1.0.1                    |
-| [add_cfunc](#targetadd_cfunc)                   | Add single c function for checking                     | >= 2.0.1                    |
-| [add_cxxfunc](#targetadd_cxxfunc)               | Add single c++ function for checking                   | >= 2.0.1                    |
-| [add_cfuncs](#targetadd_cfuncs)                 | Add c functions for checking                           | >= 2.0.1                    |
-| [add_cxxfuncs](#targetadd_cxxfuncs)             | Add c++ functions for checking                         | >= 2.0.1                    |
 | [add_packages](#targetadd_packages)             | Add package dependencies                               | >= 2.0.1                    |
 | [add_options](#targetadd_options)               | Add options dependencies                               | >= 2.0.1                    |
 | [add_languages](#targetadd_languages)           | Add language standards                                 | >= 1.0.1                    |
@@ -374,7 +370,7 @@ if this time, the build configuration is: `xmake f -m debug -a armv7`, then the 
 
 If you want to further customize the directory name of the target file, refer to: [set_targetdir](#targetset_targetdir).
 
-Or implement more advanced logic by writing custom scripts, see: [after_build](#targetafter_build) and [os.mv](#os-mv).
+Or implement more advanced logic by writing custom scripts, see: [after_build](#targetafter_build) and [os.mv](/manual/builtin_modules?id=osmv).
 
 ### target:set_filename
 
@@ -1816,142 +1812,6 @@ Affect the generation of dynamic libraries
 ```lua
 add_shflags("xxx")
 ```
-
-### target:add_cfunc
-
-#### Add single c function for checking
-
-Similar to [add_cfuncs](#targetadd_cfuncs), only a single function interface is set and only valid for the `target` domain. This interface does not exist in `option`.
-
-The purpose of this interface is primarily to create a more highly customized macro switch in `config.h`, for example:
-
-```lua
-target("demo")
-
-    -- Set and enable config.h
-    set_config_header("$(buildir)/config.h", {prefix = "TEST"})
-
-    -- Set module name prefix only by parameter one
-    add_cfunc("libc", nil, nil, {"sys/select.h"}, "select")
-
-    -- Set the simultaneous detection of the link library via parameter three: libpthread.a
-    add_cfunc("pthread", nil, "pthread", "pthread.h", "pthread_create")
-
-    -- Set interface alias by parameter two
-    add_cfunc(nil, "PTHREAD", nil, "pthread.h", "pthread_create")
-```
-
-The resulting results are as follows:
-
-```c
-#ifndef TEST_H
-#define TEST_H
-
-// Macro naming convention: $(prefix) prefix _ module name (if non-nil) _ HAVE _ interface name or alias (uppercase)
-#define TEST_LIBC_HAVE_SELECT 1
-#define TEST_PTHREAD_HAVE_PTHREAD_CREATE 1
-#define TEST_HAVE_PTHREAD 1
-
-#endif
-```
-
-For more flexible function detection, you can do this in a custom script with [lib.detect.has_cfuncs](#detect-has_cfuncs).
-
-### target:add_cxxfunc
-
-#### Add single c++ function for checking
-
-Similar to [add_cfunc](#targetadd_cfunc), only the function interface detected is a c++ function.
-
-### target:add_cfuncs
-
-#### Add c functions for checking
-
-<p class="warn">
-This interface is the interface shared by `target` and `option`, but the interface behavior is slightly different.
-</p>
-
-| Interface Field | Description | Examples |
-| ------ | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| target | header files, link libraries, and function interfaces are also specified | `add_cfuncs("libc", nil, {"signal.h", "setjmp.h"}, "signal", "setjmp", "sigsetjmp{sigjmp_buf buf ; sigsetjmp(buf, 0);}", "kill")` |
-Option | only specifies the function interface, the header file depends on [add_cincludes](#targetadd_cincludes) and other independent interfaces | `add_cincludes("setjmp.h")` `add_cfuncs("sigsetjmp")` |
-
-For `option`, this interface is very simple to use, similar to [add_cincludes](#targetadd_cincludes), for example:
-
-```lua
-option("setjmp")
-    set_default(false)
-    add_cincludes("setjmp.h")
-    add_cfuncs("sigsetjmp", "setjmp")
-    add_defines("HAVE_SETJMP")
-
-target("test")
-    add_options("setjmp")
-```
-
-This option detects if there are some interfaces of `setjmp`. If the test passes, then the `test` target program will add the macro definition of `HAVE_SETJMP`.
-
-<p class="warn">
-Note that using this interface to detect dependencies in `option` requires adding a separate [add_cincludes](#targetadd_cincludes) header file search path and specifying [add_links](#targetadd_links) link library (optional). Otherwise the specified function is not detected.
-<br><br>
-And some header file interfaces are defined by macro switches, so it is best to pass the dependent macro switch with [add_defines](#targetadd_defines) when detecting.
-</p>
-
-For `target`, this interface can be set at the same time: dependent header files, dependent link modules, dependent function interfaces, to ensure the integrity of the detection environment, for example:
-
-```lua
-target("test")
-
-    -- Add libc library interface related detection
-    -- First parameter: module name for the final macro definition prefix generation
-    -- The second parameter: the link library
-    -- The third parameter: header file
-    -- after the list of function interfaces
-    add_cfuncs("libc", nil, {"signal.h", "setjmp.h"}, "signal", "setjmp", "sigsetjmp{sigjmp_buf buf; sigsetjmp(buf, 0);}", "kill")
-
-    -- Add the pthread library interface related detection, and specify whether you need to detect the existence of the `libpthread.a` link library.
-    add_cfuncs("posix", "pthread", "pthread.h", "pthread_mutex_init",
-                                                                        "pthread_create",
-                                                                        "pthread_setspecific",
-                                                                        "pthread_getspecific",
-                                                                        "pthread_key_create",
-                                                                        "pthread_key_delete")
-```
-
-Set the `test` target, rely on these interfaces, pre-detect them when building, and automatically generate header files if set via the [set_config_h](#targetset_config_h) interface: `config.h`
-
-Then, the test result will be automatically added to the corresponding `config.h`, which is also the function that `option` does not have, for example:
-
-```c
-#define TB_CONFIG_LIBC_HAVE_SIGNAL 1
-#define TB_CONFIG_LIBC_HAVE_SETJMP 1
-#define TB_CONFIG_LIBC_HAVE_SIGSETJMP 1
-#define TB_CONFIG_LIBC_HAVE_KILL 1
-
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_MUTEX_INIT 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_CREATE 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_SETSPECIFIC 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_GETSPECIFIC 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_KEY_CREATE 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_KEY_DELETE 1
-```
-
-Because, in different header files, functions are defined in different ways, such as macro functions, static inline functions, extern functions, and so on.
-
-To fully test the success, the grammar requires a certain degree of flexibility. Here are some grammar rules:
-
-| Detection Syntax | Examples |
-| ------------- | ----------------------------------------------- |
-| pure function name | `sigsetjmp` |
-| Single line call | `sigsetjmp((void*)0, 0)` |
-| Function Block Call | `sigsetjmp{sigsetjmp((void*)0, 0);}` |
-| Function Block + Variable | `sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}` |
-
-### target:add_cxxfuncs
-
-#### Add c++ functions for checking
-
-Similar to [add_cfuncs](#targetadd_cfuncs), only the function interface detected is a c++ function.
 
 ### target:add_options
 

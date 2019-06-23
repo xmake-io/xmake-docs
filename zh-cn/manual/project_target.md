@@ -106,10 +106,6 @@ target("test2")
 | [add_ldflags](#targetadd_ldflags)               | 添加链接选项                         | >= 1.0.1 |
 | [add_arflags](#targetadd_arflags)               | 添加静态库归档选项                   | >= 1.0.1 |
 | [add_shflags](#targetadd_shflags)               | 添加动态库链接选项                   | >= 1.0.1 |
-| [add_cfunc](#targetadd_cfunc)                   | 添加单个c库函数检测                  | >= 2.0.1 |
-| [add_cxxfunc](#targetadd_cxxfunc)               | 添加单个c++库函数检测                | >= 2.0.1 |
-| [add_cfuncs](#targetadd_cfuncs)                 | 添加c库函数检测                      | >= 2.0.1 |
-| [add_cxxfuncs](#targetadd_cxxfuncs)             | 添加c++库函数接口                    | >= 2.0.1 |
 | [add_packages](#targetadd_packages)             | 添加包依赖                           | >= 2.0.1 |
 | [add_options](#targetadd_options)               | 添加关联选项                         | >= 2.0.1 |
 | [add_languages](#targetadd_languages)           | 添加语言标准                         | >= 1.0.1 |
@@ -372,7 +368,7 @@ target("xxx")
 
 如果还想进一步定制目标文件的目录名，可参考：[set_targetdir](#targetset_targetdir)。
 
-或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#targetafter_build)和[os.mv](#os-mv)。
+或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#targetafter_build)和[os.mv](/zh-cn/manual/builtin_modules?id=osmv)。
 
 ### target:set_filename
 
@@ -1810,142 +1806,6 @@ add_arflags("xxx")
 ```lua
 add_shflags("xxx")
 ```
-
-### target:add_cfunc
-
-#### 添加单个c库函数检测
-
-与[add_cfuncs](#targetadd_cfuncs)类似，只是仅对单个函数接口进行设置，并且仅对`target`域生效，`option`中不存在此接口。
-
-此接口的目的主要是为了在`config.h`中更加高度定制化的生成宏开关，例如：
-
-```lua
-target("demo")
-    
-    -- 设置和启用config.h
-    set_config_header("$(buildir)/config.h", {prefix = "TEST"})
-
-    -- 仅通过参数一设置模块名前缀
-    add_cfunc("libc",       nil,        nil,        {"sys/select.h"},   "select")
-
-    -- 通过参数三，设置同时检测链接库：libpthread.a
-    add_cfunc("pthread",    nil,        "pthread",  "pthread.h",        "pthread_create")
-
-    -- 通过参数二设置接口别名
-    add_cfunc(nil,          "PTHREAD",  nil,        "pthread.h",        "pthread_create")
-```
-
-生成的结果如下：
-
-```c
-#ifndef TEST_H
-#define TEST_H
-
-// 宏命名规则：$(prefix)前缀 _ 模块名（如果非nil）_ HAVE _ 接口名或者别名 （大写）
-#define TEST_LIBC_HAVE_SELECT 1
-#define TEST_PTHREAD_HAVE_PTHREAD_CREATE 1
-#define TEST_HAVE_PTHREAD 1
-
-#endif
-```
-
-如果要更加灵活的函数检测，可以通过[lib.detect.has_cfuncs](#detect-has_cfuncs)在自定义脚本中实现。
-
-### target:add_cxxfunc
-
-#### 添加单个c++库函数检测
-
-与[add_cfunc](#targetadd_cfunc)类似，只是检测的函数接口是c++函数。
-
-### target:add_cfuncs
-
-#### 添加c库函数检测
-
-<p class="warn">
-此接口是`target`和`option`共用的接口，但是接口行为稍有不同。
-</p>
-
-| 接口域 | 描述                                                                      | 例子                                                                                                                             |
-| ------ | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| target | 头文件、链接库和函数接口同时指定                                          | `add_cfuncs("libc", nil, {"signal.h", "setjmp.h"}, "signal", "setjmp", "sigsetjmp{sigjmp_buf buf; sigsetjmp(buf, 0);}", "kill")` |
-| option | 仅指定函数接口，头文件依赖[add_cincludes](#targetadd_cincludes)等独立接口 | `add_cincludes("setjmp.h")` `add_cfuncs("sigsetjmp")`                                                                            |
-
-对于`option`，这个接口的使用很简单，跟[add_cincludes](#targetadd_cincludes)类似，例如：
-
-```lua
-option("setjmp")
-    set_default(false)
-    add_cincludes("setjmp.h")
-    add_cfuncs("sigsetjmp", "setjmp")
-    add_defines("HAVE_SETJMP")
-
-target("test")
-    add_options("setjmp")
-```
-
-此选项检测是否存在`setjmp`的一些接口，如果检测通过那么`test`目标程序将会加上`HAVE_SETJMP`的宏定义。
-
-<p class="warn">
-需要注意的是，在`option`中使用此接口检测依赖函数，需要同时使用独立的[add_cincludes](#targetadd_cincludes)增加头文件搜索路径，指定[add_links](#targetadd_links)链接库（可选），否则检测不到指定函数。
-<br><br>
-并且某些头文件接口是通过宏开关分别定义的，那么检测的时候最好通过[add_defines](#targetadd_defines)带上依赖的宏开关。
-</p>
-
-对于`target`，此接口可以同时设置：依赖的头文件、依赖的链接模块、依赖的函数接口，保证检测环境的完整性，例如：
-
-```lua
-target("test")
-
-    -- 添加libc库接口相关检测
-    -- 第一个参数：模块名，用于最后的宏定义前缀生成
-    -- 第二个参数：链接库
-    -- 第三个参数：头文件
-    -- 之后的都是函数接口列表
-    add_cfuncs("libc", nil,         {"signal.h", "setjmp.h"},           "signal", "setjmp", "sigsetjmp{sigjmp_buf buf; sigsetjmp(buf, 0);}", "kill")
-
-    -- 添加pthread库接口相关检测，同时指定需要检测`libpthread.a`链接库是否存在
-    add_cfuncs("posix", "pthread",  "pthread.h",                        "pthread_mutex_init",
-                                                                        "pthread_create", 
-                                                                        "pthread_setspecific", 
-                                                                        "pthread_getspecific",
-                                                                        "pthread_key_create",
-                                                                        "pthread_key_delete")
-```
-
-设置`test`目标，依赖这些接口，构建时会预先检测他们，并且如果通过[set_config_h](#targetset_config_h)接口设置的自动生成头文件：`config.h`
-
-那么，检测结果会自动加到对应的`config.h`上去，这也是`option`没有的功能，例如：
-
-```c
-#define TB_CONFIG_LIBC_HAVE_SIGNAL 1
-#define TB_CONFIG_LIBC_HAVE_SETJMP 1
-#define TB_CONFIG_LIBC_HAVE_SIGSETJMP 1
-#define TB_CONFIG_LIBC_HAVE_KILL 1
-
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_MUTEX_INIT 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_CREATE 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_SETSPECIFIC 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_GETSPECIFIC 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_KEY_CREATE 1
-#define TB_CONFIG_POSIX_HAVE_PTHREAD_KEY_DELETE 1
-```
-
-由于，不同头文件中，函数的定义方式不完全相同，例如：宏函数、静态内联函数、extern函数等。
-
-要想完全检测成功，检测语法上需要一定程度的灵活性，下面是一些语法规则：
-
-| 检测语法      | 例子                                            |
-| ------------- | ----------------------------------------------- |
-| 纯函数名      | `sigsetjmp`                                     |
-| 单行调用      | `sigsetjmp((void*)0, 0)`                        |
-| 函数块调用    | `sigsetjmp{sigsetjmp((void*)0, 0);}`            |
-| 函数块 + 变量 | `sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}` |
-
-### target:add_cxxfuncs
-
-#### 添加c++库函数检测
-
-与[add_cfuncs](#targetadd_cfuncs)类似，只是检测的函数接口是c++函数。
 
 ### target:add_options
 
