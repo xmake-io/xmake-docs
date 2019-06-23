@@ -162,7 +162,7 @@ import("core.platform.platform", {alias = "p"})
 function main()
  
     -- 这样我们就可以使用p来调用platform模块的plats接口，获取所有xmake支持的平台列表了
-    table.dump(p.plats())
+    utils.dump(p.plats())
 end
 ```
 
@@ -1110,7 +1110,7 @@ local data = io.load("xxx.txt")
 if data then
 
     -- 在终端中dump打印整个table中内容，格式化输出
-    table.dump(data)
+    utils.dump(data)
 end
 ```
 
@@ -1221,6 +1221,7 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 | [path.relative](#path-relative)                 | 转换成相对路径                               | >= 2.0.1 |
 | [path.absolute](#path-absolute)                 | 转换成绝对路径                               | >= 2.0.1 |
 | [path.is_absolute](#path-is_absolute)           | 判断是否为绝对路径                           | >= 2.0.1 |
+| [path.splitenv](#path-splitenv)                 | 分割环境变量中的路径                         | >= 2.2.7 |
 
 #### path.join
 
@@ -1338,6 +1339,25 @@ if path.is_absolute("/tmp/file.txt") then
 end
 ```
 
+###### path.splitenv
+
+- 分割环境变量中的路径
+
+```lua
+local pathes = path.splitenv(vformat("$(env PATH)"))
+
+-- for windows 
+local pathes = path.splitenv("C:\\Windows;C:\\Windows\\System32")
+-- got { "C:\\Windows", "C:\\Windows\\System32" }
+
+-- for *nix 
+local pathes = path.splitenv("/usr/bin:/usr/local/bin")
+-- got { "/usr/bin", "/usr/local/bin" }
+```
+
+结果为一个包含了输入字符串中路径的数组。
+
+
 ### table
 
 table属于lua原生提供的模块，对于原生接口使用可以参考：[lua官方文档](https://www.lua.org/manual/5.1/manual.html#5.5)
@@ -1348,7 +1368,6 @@ xmake中对其进行了扩展，增加了一些扩展接口：
 | ----------------------------------------------- | -------------------------------------------- | -------- |
 | [table.join](#table-join)                       | 合并多个table并返回                          | >= 2.0.1 |
 | [table.join2](#table-join2)                     | 合并多个table到第一个table                   | >= 2.0.1 |
-| [table.dump](#table-dump)                       | 输出table的所有内容                          | >= 2.0.1 |
 | [table.unique](#table-unique)                   | 对table中的内容进行去重                      | >= 2.0.1 |
 | [table.slice](#table-slice)                     | 获取table的切片                              | >= 2.0.1 |
 
@@ -1384,18 +1403,6 @@ table.join2(t, {1, 2, 3})
 ```
 
 结果为：`t = {0, 9, 1, 2, 3}`
-
-#### table.dump
-
-- 输出table的所有内容 
-
-递归格式化打印table中的所有内容，一般用于调试， 例如：
-
-```lua
-table.dump({1, 2, 3})
-```
-
-结果为：`{1, 2, 3}`
 
 #### table.unique
 

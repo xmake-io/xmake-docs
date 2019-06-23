@@ -162,7 +162,7 @@ import("core.platform.platform", {alias = "p"})
 function main()
 
     -- So we can use p to call the plats interface of the platform module to get a list of all the platforms supported by xmake.
-    table.dump(p.plats())
+    utils.dump(p.plats())
 end
 ```
 
@@ -1110,7 +1110,7 @@ local data = io.load("xxx.txt")
 if data then
 
     -- Dump prints the contents of the entire table in the terminal, formatting the output
-    table.dump(data)
+    utils.dump(data)
 end
 ```
 
@@ -1210,17 +1210,18 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 
 The path operation module implements cross-platform path operations, which is a custom module of xmake.
 
-| Interface | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [path.join](#path-join) | Stitching Path | >= 2.0.1 |
-| [path.translate](#path-translate) | Convert path to the path style of the current platform | >= 2.0.1 |
-| [path.basename](#path-basename) | Get the file name with no suffix at the end | >= 2.0.1 |
-| [path.filename](#path-filename) | Get the file name with the last suffix of the path | >= 2.0.1 |
-| [path.extension](#path-extension) | Get the suffix of the path | >= 2.0.1 |
-| [path.directory](#path-directory) | Get the last directory name of the path | >= 2.0.1 |
-| [path.relative](#path-relative) | Convert to relative path | >= 2.0.1 |
-| [path.absolute](#path-absolute) | Convert to Absolute Path | >= 2.0.1 |
-| [path.is_absolute](#path-is_absolute) | Determine if it is an absolute path | >= 2.0.1 |
+| Interface                                       | Description                                             | Supported Versions |
+| ----------------------------------------------- | --------------------------------------------            | --------           |
+| [path.join](#path-join)                         | Stitching Path                                          | >= 2.0.1           |
+| [path.translate](#path-translate)               | Convert path to the path style of the current platform  | >= 2.0.1           |
+| [path.basename](#path-basename)                 | Get the file name with no suffix at the end             | >= 2.0.1           |
+| [path.filename](#path-filename)                 | Get the file name with the last suffix of the path      | >= 2.0.1           |
+| [path.extension](#path-extension)               | Get the suffix of the path                              | >= 2.0.1           |
+| [path.directory](#path-directory)               | Get the last directory name of the path                 | >= 2.0.1           |
+| [path.relative](#path-relative)                 | Convert to relative path                                | >= 2.0.1           |
+| [path.absolute](#path-absolute)                 | Convert to Absolute Path                                | >= 2.0.1           |
+| [path.is_absolute](#path-is_absolute)           | Determine if it is an absolute path                     | >= 2.0.1           |
+| [path.splitenv](#path-splitenv)                 | Split a envienment variable value of an array of pathes | >= 2.2.7           |
 
 #### path.join
 
@@ -1336,6 +1337,25 @@ if path.is_absolute("/tmp/file.txt") then
 end
 ```
 
+###### path.splitenv
+
+- Split a envienment variable value of an array of pathes
+
+```lua
+local pathes = path.splitenv(vformat("$(env PATH)"))
+
+-- for windows 
+local pathes = path.splitenv("C:\\Windows;C:\\Windows\\System32")
+-- got { "C:\\Windows", "C:\\Windows\\System32" }
+
+-- for *nix 
+local pathes = path.splitenv("/usr/bin:/usr/local/bin")
+-- got { "/usr/bin", "/usr/local/bin" }
+```
+
+The result is an array of strings, each item is a path in the input string.
+
+
 ### table
 
 Table belongs to the module provided by Lua native. For the native interface, you can refer to: [lua official document](https://www.lua.org/manual/5.1/manual.html#5.5)
@@ -1346,7 +1366,6 @@ It has been extended in xmake to add some extension interfaces:
 | ----------------------------------------------- | -------------------------------------------- | -------- |
 | [table.join](#table-join) | Merge multiple tables and return | >= 2.0.1 |
 | [table.join2](#table-join2) | Merge multiple tables into the first table | >= 2.0.1 |
-| [table.dump](#table-dump) | Output all contents of table | >= 2.0.1 |
 | [table.unique](#table-unique) | Deduplicate the contents of the table | >= 2.0.1 |
 | [table.slice](#table-slice) | Get the slice of the table | >= 2.0.1 |
 
@@ -1382,18 +1401,6 @@ table.join2(t, {1, 2, 3})
 ```
 
 The result is: `t = {0, 9, 1, 2, 3}`
-
-#### table.dump
-
-- Output all contents of the table
-
-Recursively format all the contents of the printed table, generally used for debugging, for example:
-
-```lua
-table.dump({1, 2, 3})
-```
-
-The result is: `{1, 2, 3}`
 
 #### table.unique
 

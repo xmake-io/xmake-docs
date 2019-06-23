@@ -156,7 +156,7 @@ target("cuda_console")
 ```
 
 <p class="tip">
-Starting with v2.2.7, the default build will enable device-link, @see https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/
+Starting with v2.2.7, the default build will enable device-link. (see [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/))
 If you want to disable device-link, you can set it with `add_values("cuda.devlink", false)`.
 </p>
 
