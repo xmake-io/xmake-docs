@@ -79,15 +79,6 @@ option("test2")
 | [add_frameworks](#targetadd_frameworks)               | 添加链接框架                                 | >= 2.1.1 |
 | [add_frameworkdirs](#targetadd_frameworkdirs)         | 添加链接框架                                 | >= 2.1.5 |
 
-| 废弃接口                                              | 描述                                         | 支持版本         |
-| ----------------------------------------------------- | -------------------------------------------- | ---------------- |
-| [add_bindings](#optionadd_bindings)                   | 添加正向关联选项，同步启用和禁用             | >= 2.0.1 < 2.1.5 |
-| [add_rbindings](#optionadd_rbindings)                 | 添加逆向关联选项，同步启用和禁用             | >= 2.0.1 < 2.1.5 |
-| [add_defines_if_ok](#optionadd_defines_if_ok)         | 如果检测选项通过，则添加宏定义               | >= 1.0.1 < 2.1.5 |
-| [add_defines_h_if_ok](#optionadd_defines_h_if_ok)     | 如果检测选项通过，则添加宏定义到配置头文件   | >= 1.0.1 < 2.1.5 |
-| [add_undefines_if_ok](#optionadd_undefines_if_ok)     | 如果检测选项通过，则取消宏定义               | >= 1.0.1 < 2.1.5 |
-| [add_undefines_h_if_ok](#optionadd_undefines_h_if_ok) | 如果检测选项通过，则在配置头文件中取消宏定义 | >= 1.0.1 < 2.1.5 |
-
 ### option
 
 #### 定义选项
@@ -427,58 +418,6 @@ Options:
 $ xmake f --mode=release
 ```
 
-### option:add_bindings
-
-#### 添加正向关联选项，同步启用和禁用
-
-<p class="tip">
-2.1.5版本之后已废弃，请用[add_deps](#optionadd_deps), [on_check](#optionon_check), [after_check](#optionafter_check)等接口代替。
-</p>
-
-绑定关联选项，例如我想在命令行中配置一个`smallest`的参数：`xmake f --smallest=y`
-
-这个时候，需要同时禁用多个其他的选项开关，来禁止编译多个模块，就是这个需求，相当于一个选项 与其他 多个选项之间 是有联动效应的。
-
-而这个接口就是用来设置需要正向绑定的一些关联选项，例如：
-
-```lua
--- 定义选项开关: --smallest=y|n
-option("smallest")
-
-    -- 添加正向绑定，如果smallest被启用，下面的所有选项开关也会同步被启用
-    add_bindings("nozip", "noxml", "nojson")
-```
-
-### option:add_rbindings
-
-#### 添加逆向关联选项，同步启用和禁用
-
-<p class="tip">
-2.1.5版本之后已废弃，请用[add_deps](#optionadd_deps), [on_check](#optionon_check), [after_check](#optionafter_check)等接口代替。
-</p>
-
-逆向绑定关联选项，被关联选项的开关状态是相反的。
-
-```lua
--- 定义选项开关: --smallest=y|n
-option("smallest")
-
-    -- 添加反向绑定，如果smallest被启用，下面的所有模块全部禁用
-    add_rbindings("xml", "zip", "asio", "regex", "object", "thread", "network", "charset", "database")
-    add_rbindings("zlib", "mysql", "sqlite3", "openssl", "polarssl", "pcre2", "pcre", "base")
-```
-
-<p class="warn">
-需要注意的是，命令行配置是有顺序的，你可以先通过启用smallest禁用所有模块，然后添加其他选项，逐一启用。
-</p>
-
-例如：
-
-```bash
--- 禁用所有模块，然后仅仅启用xml和zip模块
-$ xmake f --smallest=y --xml=y --zip=y
-```
-
 ### option:add_links
 
 #### 添加链接库检测
@@ -587,70 +526,4 @@ option("constexpr")
 对于编译器特性的检测，有更加方便高效的检测模块，提供更强大的检测支持，具体见：[compiler.has_features](#compiler-has_features)和[detect.check_cxsnippets](#detect-check_cxsnippets)
 
 如果想要更加灵活的检测，可以通过[lib.detect.check_cxsnippets](#detect-check_cxsnippets)在[option.on_check](#optionon_check)中去实现。
-
-### option:add_defines_if_ok
-
-#### 如果检测选项通过，则添加宏定义
-
-<p class="tip">
-2.1.5版本之后已废弃，请用[add_defines](#targetadd_defines)接口代替。
-</p>
-
-检测选项通过后才会被设置，具体使用见[add_cincludes](#optionadd_cincludes)中的例子。
-
-### option:add_defines_h_if_ok
-
-#### 如果检测选项通过，则添加宏定义到配置头文件
-
-<p class="tip">
-2.1.5版本之后已废弃，请用[add_defines_h](#targetadd_defines_h)接口代替。
-</p>
-
-跟[add_defines_if_ok](#optionadd_defines_if_ok)类似，只是检测通过后，会在`config.h`头文件中自动加上被设置的宏定义。
-
-例如：
-
-```lua
-option("pthread")
-    set_default(false)
-    add_cincludes("pthread.h")
-    add_defines_h_if_ok("ENABLE_PTHREAD")
-
-target("test")
-    add_options("pthread")
-```
-
-通过后，会在`config.h`中加上：
-
-```c
-#define ENABLE_PTHREAD 1
-```
-
-具体`config.h`如何设置，见：[set_config_h](#targetset_config_h)
-
-### option:add_undefines_if_ok
-
-#### 如果检测选项通过，则取消宏定义
-
-<p class="tip">
-2.1.5版本之后已废弃，请用[add_undefines](#targetadd_undefines)接口代替。
-</p>
-
-跟[add_defines_if_ok](#optionadd_defines_if_ok)类似，只是检测通过后，取消被设置的宏定义。
-
-### option:add_undefines_h_if_ok
-
-#### 如果检测选项通过，则在配置头文件中取消宏定义
-
-<p class="tip">
-2.1.5版本之后已废弃，请用[add_undefines_h](#targetadd_undefines_h)接口代替。
-</p>
-
-跟[add_defines_h_if_ok](#optionadd_defines_h_if_ok)类似，只是检测通过后，会在`config.h`中取消被设置的宏定义。
-
-```c
-#undef DEFINED_MACRO
-```
-
-具体`config.h`如何设置，见：[set_config_h](#targetset_config_h)
 

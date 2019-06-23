@@ -79,15 +79,6 @@ The `option` field can be repeatedly entered to implement separate settings. If 
 | [add_frameworks](#targetadd_frameworks)               | Add Linked Framework                              | >= 2.1.1           |
 | [add_frameworkdirs](#targetadd_frameworkdirs)         | Add Linked Framework                              | >= 2.1.5           |
 
-| Obsolete Interface | Description | Supported Version |
-| ----------------------------------------------------- | -------------------------------------------- | ---------------- |
-| [add_bindings](#optionadd_bindings) | Add Forward Association Options, Sync Enable and Disable | >= 2.0.1 < 2.1.5 |
-| [add_rbindings](#optionadd_rbindings) | Add reverse association option, sync enable and disable | >= 2.0.1 < 2.1.5 |
-| [add_defines_if_ok](#optionadd_defines_if_ok) | Add macro definitions if the detection option passes | >= 1.0.1 < 2.1.5 |
-| [add_defines_h_if_ok](#optionadd_defines_h_if_ok) | Add macro definitions to the configuration header if the detection option passes | >= 1.0.1 < 2.1.5 |
-| [add_undefines_if_ok](#optionadd_undefines_if_ok) | Cancel macro definition if detection option passes | >= 1.0.1 < 2.1.5 |
-| [add_undefines_h_if_ok](#optionadd_undefines_h_if_ok) | If the detection option passes, cancel the macro definition in the configuration header file | >= 1.0.1 < 2.1.5 |
-
 ### option
 
 #### Defining options
@@ -587,69 +578,4 @@ For the detection of compiler features, there is a more convenient and efficient
 
 If you want more flexible detection, you can do this in [option.on_check](#optionon_check) via [lib.detect.check_cxsnippets](#detect-check_cxsnippets).
 
-### option:add_defines_if_ok
-
-#### Add macro definition if the detection option is passed
-
-<p class="tip">
-After the 2.1.5 version has been deprecated, please use the [add_defines](#targetadd_defines) interface instead.
-</p>
-
-The detection options will not be set until they are passed. See the example in [add_cincludes](#optionadd_cincludes) for details.
-
-### option:add_defines_h_if_ok
-
-#### If the detection option is passed, add the macro definition to the configuration header file.
-
-<p class="tip">
-After the 2.1.5 version has been deprecated, please use the [add_defines_h](#targetadd_defines_h) interface instead.
-</p>
-
-Similar to [add_defines_if_ok](#optionadd_defines_if_ok), the macro definitions are automatically added to the `config.h` header file after the test is passed.
-
-E.g:
-
-```lua
-option("pthread")
-    set_default(false)
-    add_cincludes("pthread.h")
-    add_defines_h_if_ok("ENABLE_PTHREAD")
-
-target("test")
-    add_options("pthread")
-```
-
-After passing, it will be added to `config.h`:
-
-```c
-#define ENABLE_PTHREAD 1
-```
-
-How to set the specific `config.h`, see: [set_config_h](#targetset_config_h)
-
-### option:add_undefines_if_ok
-
-#### If the detection option is passed, cancel the macro definition
-
-<p class="tip">
-After the 2.1.5 version has been deprecated, please use the [add_undefines](#targetadd_undefines) interface instead.
-</p>
-
-Similar to [add_defines_if_ok](#optionadd_defines_if_ok), except that the macro definition is canceled after the pass is detected.
-
-### option:add_undefines_h_if_ok
-
-#### If the detection option is passed, the macro definition is canceled in the configuration header file.
-
-<p class="tip">
-Deprecated after version 2.1.5, please use [add_undefines_h](#targetadd_undefines_h) interface instead.
-</p>
-
-Similar to [add_defines_h_if_ok](#optionadd_defines_h_if_ok), the macro definition will be canceled in `config.h` after the test is passed.
-
-```c
-#undef DEFINED_MACRO
-```
-
-How to set the specific `config.h`, see: [set_config_h](#targetset_config_h)
 

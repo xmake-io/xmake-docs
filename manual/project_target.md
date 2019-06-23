@@ -2230,7 +2230,7 @@ option("foo")
 target("test")
     add_configfiles("config.h.in")
 
-    -- If the foo option is enabled -> Tianjian FOO_ENABLE and FOO_STRING definitions
+    -- If the foo option is enabled -> Add FOO_ENABLE and FOO_STRING definitions
     add_options("foo")
 ```
 
@@ -2250,7 +2250,7 @@ Config.h
 
 Regarding the option option detection, and the automatic generation of config.h, there are some helper functions, you can look at it: https://github.com/xmake-io/xmake/issues/342
 
-In addition to `#define`, if you want to other non-##defIne xxx` also performs state switching processing. You can use the `${default xxx 0}` mode to set default values, for example:
+In addition to `#define`, if you want to other non`#define xxx` also performs state switching processing. You can use the `${default xxx 0}` mode to set default values, for example:
 
 ```
 HAVE_SSE2 equ ${default VAR_HAVE_SSE2 0}
