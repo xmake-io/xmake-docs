@@ -8,6 +8,7 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
   <style>
     nav.app-nav li ul {
       min-width: 100px;
@@ -21,7 +22,6 @@
       name: 'xmake',
       repo: 'https://github.com/xmake-io/xmake',
       auto2top: true,
-      coverpage: true,
       executeScript: true,
       loadSidebar: true,
       loadNavbar: true,
@@ -30,6 +30,8 @@
       notFoundPage: true,
       maxLevel: 6,
       subMaxLevel: 4,
+      onlyCover: true,
+      coverpage: ['/', '/zh-cn/'],
       markdown: {
         renderer: {
           	image: function(href, title) {
@@ -51,15 +53,18 @@
         '/sponsor': '/about/sponsor'
       },
       search: {
-        noData: {
-          '/zh-cn/': '没有结果!',
-          '/': 'No results!'
-        },
+        maxAge: 86400000, 
         paths: 'auto',
         placeholder: {
           '/zh-cn/': '搜索',
-          '/': 'Search'
-        }
+          '/': 'Type to search'
+        },
+        noData: {
+          '/zh-cn/': '找不到结果',
+          '/': 'No Results'
+        },
+        depth: 6,
+        hideOtherSidebarContent: false 
       },
       formatUpdated: '{MM}/{DD} {HH}:{mm}',
       plugins: [
@@ -76,7 +81,7 @@
             return editHtml
               + html
               + '\n\n----\n\n'
-              + '<a href="https://xmake.io" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Powered by xmake.io</a>'
+              + '<a href="https://xmake.io" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Copyright (c) 2015-present xmake.io & tboox.org</a>'
           })
         }
       ]
@@ -87,5 +92,37 @@
   <script src="//unpkg.com/prismjs/components/prism-c.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-lua.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+  <script src="//unpkg.com/docsify-copy-code"></script>
+  <!-- gitalk -->
+  <script src="//unpkg.com/docsify/lib/plugins/gitalk.min.js"></script>
+  <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    const gitalk = new Gitalk({
+      clientID: 'cb53dd42b1b654202a55',
+      clientSecret: '8a9a0e7feadc575b8bba9770cd9454d7423028ac',
+      repo: 'xmake-docs',
+      owner: 'waruqi',
+      admin: ['waruqi'],
+      id: location.pathname,      
+      distractionFreeMode: false  
+    })
+  </script>
+  <!-- gitter -->
+  <script>
+  ((window.gitter = {}).chat = {}).options = {
+    room: 'tboox/tboox'
+  };
+  </script>
+  <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+  <!-- baidu stats -->
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?eb3c91c672a001d78a113bfb8e42017a";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 </body>
 </html>
