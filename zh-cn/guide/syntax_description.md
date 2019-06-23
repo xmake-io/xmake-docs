@@ -79,7 +79,7 @@ target("demo")
 - print
 - os
 
-当然虽然内置lua api提供不多，但xmake还提供了很多扩展api，像描述api就不多说，详细可参考：[API手册](https://xmake.io/#/zh/manual)
+当然虽然内置lua api提供不多，但xmake还提供了很多扩展api，像描述api就不多说，详细可参考：[API手册](/zh-cn/manual)
 
 还有些辅助api，例如：
 
@@ -135,7 +135,7 @@ task("hello")
 
 在此作用域中，不仅可以使用大部分lua的api，还可以使用很多xmake提供的扩展模块，所有扩展模块，通过import来导入
 
-具体可参考：[import模块导入文档](https://xmake.io/#/zh/manual?id=import)
+具体可参考：[import模块导入文档](/zh-cn/manual/builtin_modules?id=import)
 
 这里我们给个简单的例子，在编译完成后，对ios目标程序进行ldid签名：
 

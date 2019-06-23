@@ -79,7 +79,7 @@ The current external scope lating lua built-in apis are:
 - print
 - os
 
-Of course, although the built-in lua api does not provide much, xmake also provides a lot of extension APIs. It is not much to describe the api. For details, please refer to: [API Manual] (https://xmake.io/#/zh/manual)
+Of course, although the built-in lua api does not provide much, xmake also provides a lot of extension APIs. It is not much to describe the api. For details, please refer to: [API Manual](/manual)
 
 There are also some auxiliary apis, for example:
 
@@ -135,7 +135,7 @@ task("hello")
 
 In this scope, not only can you use most lua apis, but you can also use many extension modules provided by xmake. All extension modules are imported through import.
 
-For details, please refer to: [import module document](https://xmake.io/#/zh/manual?id=import)
+For details, please refer to: [import module document](/manual/builtin_modules?id=import)
 
 Here we give a simple example, after the compilation is complete, ldid signature on the ios target program:
 

@@ -21,7 +21,7 @@ If you want the current project to recognize loading these packages, you first n
 add_packagedirs("packages")
 ```
 
-Once specified, you can add integration package dependencies in the target scope via the [add_packages](https://xmake.io/#/zh/manual?id=targetadd_packages) interface, for example:
+Once specified, you can add integration package dependencies in the target scope via the [add_packages](/manual/project_target?id=targetadd_packages) interface, for example:
 
 ```lua
 target("tbox")
@@ -42,13 +42,13 @@ $ cd tbox
 $ xmake package -o ../test/packages
 ```
 
-In this way, the test project can pass [add_packages](https://xmake.io/#/zh/manual?id=targetadd_packages) and [add_packagedirs](https://xmake.io/#/zh/manual?id=add_packagedirs) to configure and use the tbox.pkg package.
+In this way, the test project can pass [add_packages](/manual/project_target?id=targetadd_packages) and [add_packagedirs](/manual/global_interfaces?id=add_packagedirs) to configure and use the tbox.pkg package.
 
 For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: [Dependency package addition and automatic detection mechanism](https://tboox.org/cn/2016/08/06/add-package-and-autocheck/)
 
 ## System Search Mode
 
-If you feel that the above built-in package management method is very inconvenient, you can use the extension interface [lib.detect.find_package](https://xmake.io/#/zh/manual?id=detect-find_package) to find the system. Existing dependencies.
+If you feel that the above built-in package management method is very inconvenient, you can use the extension interface [lib.detect.find_package](/manual/extension_modules?id=detectfind_package) to find the system. Existing dependencies.
 
 Currently this interface supports the following package management support:
 
@@ -92,7 +92,7 @@ target("test")
 
 If third-party tools such as `homebrew`, `pkg-config` are installed on the system, then this interface will try to use them to improve the search results.
 
-For a more complete description of the usage, please refer to the [find_packages](https://xmake.io/#/en/manual?id=find_packages) interface documentation.
+For a more complete description of the usage, please refer to the [find_packages](/manual/builtin_modules?id=find_packages) interface documentation.
 
 ### Homebrew Integration Support
 

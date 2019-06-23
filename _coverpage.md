@@ -4,9 +4,8 @@
 
 > A cross-platform build utility based on Lua
 
-- Simple grammar, get started quickly
-- Cross-platform build, full platform coverage
-- Modern C/C++ build tools, multi-language hybrid compilation support
+- Simple, Fast, Cross-platform 
+- Modern C/C++ build tools, Support multi-language hybrid compilation
 
 [github](https://github.com/xmake-io/xmake/)
-[Getting Started](/guide/installation)
+[Getting Started](/getting_started)

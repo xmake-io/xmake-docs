@@ -21,7 +21,7 @@
 add_packagedirs("packages")
 ```
 
-指定好后，就可以在target作用域中，通过[add_packages](https://xmake.io/#/zh/manual?id=targetadd_packages)接口，来添加集成包依赖了，例如：
+指定好后，就可以在target作用域中，通过[add_packages](/zh-cn/manual/project_target?id=targetadd_packages)接口，来添加集成包依赖了，例如：
 
 ```lua
 target("tbox")
@@ -42,7 +42,7 @@ $ cd tbox
 $ xmake package -o ../test/packages
 ```
 
-这样，test工程就可以通过[add_packages](https://xmake.io/#/zh/manual?id=targetadd_packages)和[add_packagedirs](https://xmake.io/#/zh/manual?id=add_packagedirs)去配置和使用tbox.pkg包了。
+这样，test工程就可以通过[add_packages]((/zh-cn/manual/project_target?id=targetadd_packages)和[add_packagedirs](/zh-cn/manual/global_interfaces?id=add_packagedirs)去配置和使用tbox.pkg包了。
 
 关于内置包的详细描述，还可以参考下相关文章，这里面有详细介绍：[依赖包的添加和自动检测机制](https://tboox.org/cn/2016/08/06/add-package-and-autocheck/)
 
@@ -92,7 +92,7 @@ target("test")
 
 如果系统上装有`homebrew`, `pkg-config`等第三方工具，那么此接口会尝试使用它们去改进查找结果。
 
-更完整的使用描述，请参考：[find_packages](https://xmake.io/#/zh/manual?id=find_packages)接口文档。
+更完整的使用描述，请参考：[find_packages](/zh-cn/manual/builtin_modules?id=find_packages)接口文档。
 
 ##### homebrew集成支持
 
