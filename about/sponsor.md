@@ -28,11 +28,11 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 ## Alipay 
 
-<img src="{{site.baseurl}}/assets/img/alipay.png" alt="alipay" width="256" height="256">
+<img src="/assets/img/alipay.png" alt="alipay" width="256" height="256">
 
 ## Weixin 
 
-<img src="{{site.baseurl}}/assets/img/weixin.png" alt="weixin" width="218" height="218">
+<img src="/assets/img/weixin.png" alt="weixin" width="218" height="218">
 
 ## Supporters 
 
