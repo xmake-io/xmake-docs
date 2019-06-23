@@ -199,7 +199,7 @@ $ xmake
 
 #### Is the given options enabled
 
-<p class="tips">
+<p class="tip">
 This interface has been deprecated after v2.2.2, please use [has_config](#has_config) instead.
 </p>
 
@@ -244,7 +244,7 @@ if is_config("test", "hello.*") then
 end
 ```
 
-<p class="tips">
+<p class="tip">
 This interface is not only able to determine the custom options defined through the [option](#option),
 but also to determine the built-in global and local configuration.
 </p>
@@ -282,7 +282,7 @@ $ xmake f --test1=no
 $ xmake f --test1=false
 ```
 
-<p class="tips">
+<p class="tip">
 This interface can determine not only the built-in global and local configs,
 but also the custom options defined through the [option](#option).
 </p>
@@ -311,6 +311,6 @@ target("test")
 If the remote dependencies are added via the optional add-on package added by `add_requires`, or the current platform does not support the actual installation, then `has_package` will return false.
 Indicates that it does not exist, and then does some special processing for other flags definitions and even source file compilation controls.
 
-<p class="tips">
+<p class="tip">
 The difference between this interface and [has_config](#has_config) is that [has_config](#has_config) is used for [option](#option) whereas this is used for [add_requires](#add_requires).
 </p>

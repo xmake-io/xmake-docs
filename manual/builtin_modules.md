@@ -7,7 +7,7 @@ on_run(function (target)
 end)
 ```
 
-<p class="warning">
+<p class="warn">
 In order to ensure that the description field of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br>
 Of course, a small number of read-only built-in interfaces can still be used in the description field, as shown in the following table:
 </p>
@@ -634,7 +634,7 @@ The system operation module belongs to the built-in module. It can be called dir
 
 This module is also a native module of lua, and xmake has been extended to provide more practical interfaces.
 
-<p class="tips">
+<p class="tip">
 Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os module can be used in the description field. Other interfaces can only be used in the script domain, for example: `os.cp`, `os .rm`etc.
 </p>
 
@@ -898,7 +898,7 @@ os.run("echo hello %s!", "xmake")
 os.run("ls -l $(buildir)")
 ```
 
-<p class="warning">
+<p class="warn">
 Using this interface to execute shell commands can easily reduce the cross-platform build. For `os.run("cp ..")`, try to use `os.cp` instead. <br>
 If you must use this interface to run the shell program, please use the [config.plat](#config-plat) interface to determine the platform support.
 </p>

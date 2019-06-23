@@ -214,7 +214,7 @@ $ xmake
 
 #### 判断选项是否启用
 
-<p class="tips">
+<p class="tip">
 此接口在2.2.2版本之后已经弃用，请使用[has_config](#has_config)来代替。
 </p>
 
@@ -265,7 +265,7 @@ if is_config("test", "hello.*") then
 end
 ```
 
-<p class="tips">
+<p class="tip">
 此接口不仅能够判断通过[option](#option)定义的自定义配置选项，同时还能判断内置的全局配置、本地配置。
 </p>
 
@@ -303,7 +303,7 @@ $ xmake f --test1=no
 $ xmake f --test1=false
 ```
 
-<p class="tips">
+<p class="tip">
 此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](#option)定义的自定义配置选项。
 </p>
 
@@ -332,7 +332,7 @@ target("test")
 如果通过`add_requires`添加的可选依赖包，远程下载安装失败，或者当前平台不支持导致实际上没有被正常安装上，那么`has_package`就会返回false，
 表示不存在，然后对其他flags定义甚至源文件编译控制做一些特殊处理。
 
-<p class="tips">
+<p class="tip">
 此接口跟[has_config](#has_config)的区别在于，[has_config](#has_config)用于[option](#option)，而它用于[add_requires](#add_requires)。
 </p>
 

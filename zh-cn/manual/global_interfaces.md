@@ -112,7 +112,7 @@ set_xmakever("2.1.0")
 
 #### 添加子工程目录
 
-<p class="tips">
+<p class="tip">
 xmake 2.x以上版本，请尽量使用[includes](#includes)这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。
 </p>
 
@@ -157,7 +157,7 @@ $ xmake build tbox
 
 #### 添加子工程文件
 
-<p class="tips">
+<p class="tip">
 xmake 2.x以上版本，请尽量使用[includes](#includes)这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。
 </p>
 

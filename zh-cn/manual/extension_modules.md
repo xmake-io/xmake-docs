@@ -1717,7 +1717,7 @@ http.download("https://xmake.io", "/tmp/index.html")
 
 此接口用于通过`sudo`来运行命令，并且提供了平台一致性处理，对于一些需要root权限运行的脚本，可以使用此接口。
 
-<p class="warning">
+<p class="warn">
 为了保证安全性，除非必须使用的场合，其他情况下尽量不要使用此接口。
 </p>
 

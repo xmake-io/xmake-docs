@@ -467,7 +467,7 @@ option("smallest")
     add_rbindings("zlib", "mysql", "sqlite3", "openssl", "polarssl", "pcre2", "pcre", "base")
 ```
 
-<p class="warning">
+<p class="warn">
 It should be noted that the command line configuration is sequential. You can disable all modules by enabling smallest and then add other options to enable them one by one.
 </p>
 

@@ -32,7 +32,7 @@ target("test")
 
 A target can be superimposed to apply multiple rules to more customize its own build behavior, and even support different build environments.
 
-<p class="tips">
+<p class="tip">
 Rules specified by `add_files("*.md", {rule = "markdown"})`, with a higher priority than the rule set by `add_rules("markdown")`.
 </p>
 

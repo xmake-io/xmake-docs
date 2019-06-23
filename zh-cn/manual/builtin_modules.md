@@ -7,7 +7,7 @@ on_run(function (target)
 end)
 ```
 
-<p class="warning">
+<p class="warn">
 为了保证外层的描述域尽可能简洁、安全，一般不建议在这个域使用接口和模块操作api，因此大部分模块接口只能脚本域使用，来实现复杂功能。</br>
 当然少部分只读的内置接口还是可以在描述域使用的，具体见下表：
 </p>
@@ -634,7 +634,7 @@ target("test")
 
 此模块也是lua的原生模块，xmake在其基础上进行了扩展，提供更多实用的接口。
 
-<p class="tips">
+<p class="tip">
 os模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：`os.cp`, `os.rm`等
 </p>
 
@@ -898,7 +898,7 @@ os.run("echo hello %s!", "xmake")
 os.run("ls -l $(buildir)")
 ```
 
-<p class="warning">
+<p class="warn">
 使用此接口执行shell命令，容易使构建跨平台性降低，对于`os.run("cp ..")`这种尽量使用`os.cp`代替。<br>
 如果必须使用此接口运行shell程序，请自行使用[config.plat](#config-plat)接口判断平台支持。
 </p>

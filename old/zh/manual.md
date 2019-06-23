@@ -241,7 +241,7 @@ $ xmake
 
 ###### 判断选项是否启用
 
-<p class="tips">
+<p class="tip">
 此接口在2.2.2版本之后已经弃用，请使用[has_config](#has_config)来代替。
 </p>
 
@@ -292,7 +292,7 @@ if is_config("test", "hello.*") then
 end
 ```
 
-<p class="tips">
+<p class="tip">
 此接口不仅能够判断通过[option](#option)定义的自定义配置选项，同时还能判断内置的全局配置、本地配置。
 </p>
 
@@ -330,7 +330,7 @@ $ xmake f --test1=no
 $ xmake f --test1=false
 ```
 
-<p class="tips">
+<p class="tip">
 此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](#option)定义的自定义配置选项。
 </p>
 
@@ -359,7 +359,7 @@ target("test")
 如果通过`add_requires`添加的可选依赖包，远程下载安装失败，或者当前平台不支持导致实际上没有被正常安装上，那么`has_package`就会返回false，
 表示不存在，然后对其他flags定义甚至源文件编译控制做一些特殊处理。
 
-<p class="tips">
+<p class="tip">
 此接口跟[has_config](#has_config)的区别在于，[has_config](#has_config)用于[option](#option)，而它用于[add_requires](#add_requires)。
 </p>
 
@@ -478,7 +478,7 @@ set_xmakever("2.1.0")
 
 ###### 添加子工程目录
 
-<p class="tips">
+<p class="tip">
 xmake 2.x以上版本，请尽量使用[includes](#includes)这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。
 </p>
 
@@ -523,7 +523,7 @@ $ xmake build tbox
 
 ###### 添加子工程文件
 
-<p class="tips">
+<p class="tip">
 xmake 2.x以上版本，请尽量使用[includes](#includes)这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。
 </p>
 
@@ -1150,7 +1150,7 @@ target("test")
     set_options("hello")
 ```
 
-<p class="warning">
+<p class="warn">
 只有调用`set_options`进行关联生效后，[option](#option) 中定义的一些设置才会影响到此`target`目标，例如：宏定义、链接库、编译选项等等
 </p>
 
@@ -1298,7 +1298,7 @@ c标准和c++标准可同时进行设置，例如：
 set_languages("c99", "cxx11")
 ```
 
-<p class="warning">
+<p class="warn">
 并不是设置了指定的标准，编译器就一定会按这个标准来编译，毕竟每个编译器支持的力度不一样，但是xmake会尽最大可能的去适配当前编译工具的支持标准。。。
 <br><br>
 例如：
@@ -1311,7 +1311,7 @@ windows下vs的编译器并不支持按c99的标准来编译c代码，只能支�
 
 ###### 设置头文件安装目录
 
-<p class="warning">
+<p class="warn">
 注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
 </p>
 
@@ -1922,7 +1922,7 @@ target("test")
 
 ###### 设置自动生成的配置头文件路径
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
 </p>
@@ -1973,7 +1973,7 @@ target("test")
 
 ###### 设置自动生成的头文件中宏定义命名前缀
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
 </p>
@@ -1993,7 +1993,7 @@ target("test")
 
 ###### 设置自动生成的配置头文件路径和前缀
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 </p>
 
@@ -2319,7 +2319,7 @@ target("test")
 
 ###### 添加安装的头文件
 
-<p class="warning">
+<p class="warn">
 注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
 </p>
 
@@ -2457,7 +2457,7 @@ add_undefines("DEBUG")
 
 ###### 添加宏定义到头文件
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 </p>
 
@@ -2467,7 +2467,7 @@ add_undefines("DEBUG")
 
 ###### 取消宏定义到头文件
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 </p>
 
@@ -2483,7 +2483,7 @@ add_undefines("DEBUG")
 add_cflags("-g", "-O2", "-DDEBUG")
 ```
 
-<p class="warning">
+<p class="warn">
 所有选项值都基于gcc的定义为标准，如果其他编译器不兼容（例如：vc），xmake会自动内部将其转换成对应编译器支持的选项值。
 用户无需操心其兼容性，如果其他编译器没有对应的匹配值，那么xmake会自动忽略器设置。
 </p>
@@ -2695,7 +2695,7 @@ target("demo")
 
 ###### 添加c库函数检测
 
-<p class="warning">
+<p class="warn">
 此接口是`target`和`option`共用的接口，但是接口行为稍有不同。
 </p>
 
@@ -2719,7 +2719,7 @@ target("test")
 
 此选项检测是否存在`setjmp`的一些接口，如果检测通过那么`test`目标程序将会加上`HAVE_SETJMP`的宏定义。
 
-<p class="warning">
+<p class="warn">
 需要注意的是，在`option`中使用此接口检测依赖函数，需要同时使用独立的[add_cincludes](#targetadd_cincludes)增加头文件搜索路径，指定[add_links](#targetadd_links)链接库（可选），否则检测不到指定函数。
 <br><br>
 并且某些头文件接口是通过宏开关分别定义的，那么检测的时候最好通过[add_defines](#targetadd_defines)带上依赖的宏开关。
@@ -3087,7 +3087,7 @@ target("test")
 
 并且此接口对于`xmake project -k vs201x`等插件生成的IDE文件，也会添加对应的头文件进去。
 
-<p class="tips">
+<p class="tip">
 需要注意的是，之前的[add_headers](#targetadd_headers)接口已经被废弃，新版本请用此接口替代，这个老接口在编译过程中也会自动复制头文件到build目录，这个逻辑设计的并不是很好。
 </p>
 
@@ -3757,7 +3757,7 @@ option("smallest")
     add_rbindings("zlib", "mysql", "sqlite3", "openssl", "polarssl", "pcre2", "pcre", "base")
 ```
 
-<p class="warning">
+<p class="warn">
 需要注意的是，命令行配置是有顺序的，你可以先通过启用smallest禁用所有模块，然后添加其他选项，逐一启用。
 </p>
 
@@ -4152,7 +4152,7 @@ $ xmake echo --color=red --bright hello xmake!
 
 仅仅用于菜单的分组显示，当然插件默认会用`plugin`，内置任务默认会用：`action`，但也仅仅只是个约定。
 
-<p class="tips">
+<p class="tip">
 你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为`plugin`，就会显示到xmake的Plugins分组中去。
 </p>
 
@@ -4306,7 +4306,7 @@ target("test")
 
 一个target可以叠加应用多个rules去更加定制化实现自己的构建行为，甚至支持不同的构建环境。
 
-<p class="tips">
+<p class="tip">
 通过`add_files("*.md", {rule = "markdown"})`方式指定的规则，优先级高于`add_rules("markdown")`设置的规则。
 </p>
 
@@ -5238,7 +5238,7 @@ on_run(function (target)
 end)
 ```
 
-<p class="warning">
+<p class="warn">
 为了保证外层的描述域尽可能简洁、安全，一般不建议在这个域使用接口和模块操作api，因此大部分模块接口只能脚本域使用，来实现复杂功能。</br>
 当然少部分只读的内置接口还是可以在描述域使用的，具体见下表：
 </p>
@@ -5865,7 +5865,7 @@ target("test")
 
 此模块也是lua的原生模块，xmake在其基础上进行了扩展，提供更多实用的接口。
 
-<p class="tips">
+<p class="tip">
 os模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：`os.cp`, `os.rm`等
 </p>
 
@@ -6129,7 +6129,7 @@ os.run("echo hello %s!", "xmake")
 os.run("ls -l $(buildir)")
 ```
 
-<p class="warning">
+<p class="warn">
 使用此接口执行shell命令，容易使构建跨平台性降低，对于`os.run("cp ..")`这种尽量使用`os.cp`代替。<br>
 如果必须使用此接口运行shell程序，请自行使用[config.plat](#config-plat)接口判断平台支持。
 </p>
@@ -8553,7 +8553,7 @@ http.download("https://xmake.io", "/tmp/index.html")
 
 此接口用于通过`sudo`来运行命令，并且提供了平台一致性处理，对于一些需要root权限运行的脚本，可以使用此接口。
 
-<p class="warning">
+<p class="warn">
 为了保证安全性，除非必须使用的场合，其他情况下尽量不要使用此接口。
 </p>
 

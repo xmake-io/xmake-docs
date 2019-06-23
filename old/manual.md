@@ -226,7 +226,7 @@ $ xmake
 
 ###### Is the given options enabled
 
-<p class="tips">
+<p class="tip">
 This interface has been deprecated after v2.2.2, please use [has_config](#has_config) instead.
 </p>
 
@@ -271,7 +271,7 @@ if is_config("test", "hello.*") then
 end
 ```
 
-<p class="tips">
+<p class="tip">
 This interface is not only able to determine the custom options defined through the [option](#option),
 but also to determine the built-in global and local configuration.
 </p>
@@ -309,7 +309,7 @@ $ xmake f --test1=no
 $ xmake f --test1=false
 ```
 
-<p class="tips">
+<p class="tip">
 This interface can determine not only the built-in global and local configs,
 but also the custom options defined through the [option](#option).
 </p>
@@ -338,7 +338,7 @@ target("test")
 If the remote dependencies are added via the optional add-on package added by `add_requires`, or the current platform does not support the actual installation, then `has_package` will return false.
 Indicates that it does not exist, and then does some special processing for other flags definitions and even source file compilation controls.
 
-<p class="tips">
+<p class="tip">
 The difference between this interface and [has_config](#has_config) is that [has_config](#has_config) is used for [option](#option) whereas this is used for [add_requires](#add_requires).
 </p>
 
@@ -457,7 +457,7 @@ set_xmakever("2.1.0")
 
 ###### Add sub-project directories
 
-<p class="tips">
+<p class="tip">
 For xmake 2.x and above, try to use the [includes](#includes) interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.
 </p>
 
@@ -495,7 +495,7 @@ $ xmake build tbox
 
 ###### Add sub-project files
 
-<p class="tips">
+<p class="tip">
 For xmake 2.x and above, try to use the [includes](#includes) interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.
 </p>
 
@@ -1125,7 +1125,7 @@ target("test")
     set_options("hello")
 ```
 
-<p class="warning">
+<p class="warn">
 Some settings defined in [option](#option) will affect this `target` target only after calling `set_options` for the association to take effect, such as macro definitions, link libraries, compile options, etc.
 </p>
 
@@ -1272,7 +1272,7 @@ The c standard and the c++ standard can be set at the same time, for example:
 set_languages("c99", "cxx11")
 ```
 
-<p class="warning">
+<p class="warn">
 Instead of setting the specified standard, the compiler will compile according to this standard. After all, each compiler supports different strengths, but xmake will try to adapt the support standard of the current compiler tool to the greatest extent possible. . .
 <br><br>
 E.g:
@@ -1285,7 +1285,7 @@ Users do not need to make any additional modifications. .
 
 ###### Set output directories for header files
 
-<p class="warning">
+<p class="warn">
 Note that this interface has been deprecated after version 2.2.5, please use [add_headerfiles](#targetadd_headerfiles) instead.
 </p>
 
@@ -1898,7 +1898,7 @@ target("test")
 
 ###### Set auto-generated config header file
 
-<p class="warning">
+<p class="warn">
 After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
 After the 2.1.5 version, this interface has been deprecated, please use [set_config_header](#targetset_config_header).
 </p>
@@ -1949,7 +1949,7 @@ target("test")
 
 ###### Set macro prefix in auto-generated config header
 
-<p class="warning">
+<p class="warn">
 After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
 After the 2.1.5 version, this interface has been deprecated, please use [set_config_header](#targetset_config_header).
 </p>
@@ -1970,7 +1970,7 @@ Then, the $(prefix) of `add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")` in the optio
 
 ###### Set macro prefix in auto-generated config header and prefix
 
-<p class="warning">
+<p class="warn">
 After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
 After the 2.1.5 version, this interface has been deprecated, please use [set_config_header](#targetset_config_header).
 </p>
@@ -2299,7 +2299,7 @@ And exclude `src/subdir/xxx.c` (that is, don't delete this file).
 
 ###### Add installed header files
 
-<p class="warning">
+<p class="warn">
 Note that this interface has been deprecated after version 2.2.5, please use [add_headerfiles](#targetadd_headerfiles) instead.
 </p>
 
@@ -2437,7 +2437,7 @@ In the code is equivalent to: `#undef DEBUG`
 
 ###### Add macro definition to auto-generated config header
 
-<p class="warning">
+<p class="warn">
 After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
 </p>
 
@@ -2447,7 +2447,7 @@ Add macro definitions to the `config.h` configuration file, `config.h` settings,
 
 ###### Add macro undefinition to auto-generated config header
 
-<p class="warning">
+<p class="warn">
 After the 2.2.5 version, this interface has been deprecated, please use [add_configfiles](#targetadd_configfiles).
 </p>
 
@@ -2463,7 +2463,7 @@ Add compilation options only for c code
 add_cflags("-g", "-O2", "-DDEBUG")
 ```
 
-<p class="warning">
+<p class="warn">
 All option values ​​are based on the definition of gcc as standard. If other compilers are not compatible (for example: vc), xmake will automatically convert it internally to the corresponding option values ​​supported by the compiler.
 Users don't have to worry about compatibility. If other compilers don't have matching values, xmake will automatically ignore the settings.
 </p>
@@ -2674,7 +2674,7 @@ Similar to [add_cfunc](#targetadd_cfunc), only the function interface detected i
 
 ###### Add c functions for checking
 
-<p class="warning">
+<p class="warn">
 This interface is the interface shared by `target` and `option`, but the interface behavior is slightly different.
 </p>
 
@@ -2698,7 +2698,7 @@ target("test")
 
 This option detects if there are some interfaces of `setjmp`. If the test passes, then the `test` target program will add the macro definition of `HAVE_SETJMP`.
 
-<p class="warning">
+<p class="warn">
 Note that using this interface to detect dependencies in `option` requires adding a separate [add_cincludes](#targetadd_cincludes) header file search path and specifying [add_links](#targetadd_links) link library (optional). Otherwise the specified function is not detected.
 <br><br>
 And some header file interfaces are defined by macro switches, so it is best to pass the dependent macro switch with [add_defines](#targetadd_defines) when detecting.
@@ -3678,7 +3678,7 @@ option("smallest")
     add_rbindings("zlib", "mysql", "sqlite3", "openssl", "polarssl", "pcre2", "pcre", "base")
 ```
 
-<p class="warning">
+<p class="warn">
 It should be noted that the command line configuration is sequential. You can disable all modules by enabling smallest and then add other options to enable them one by one.
 </p>
 
@@ -4073,7 +4073,7 @@ The last variable argument list is retrieved by `option.get("contents")` in the 
 
 It is only used for grouping of menus. Of course, the plugin will use `plugin` by default. The built-in task will use `action` by default, but it is just a convention.
 
-<p class="tips">
+<p class="tip">
 You can use any name you define yourself. The same name will be grouped and displayed together. If it is set to `plugin`, it will be displayed in the Plugins group of xmake.
 </p>
 
@@ -4227,7 +4227,7 @@ target("test")
 
 A target can be superimposed to apply multiple rules to more customize its own build behavior, and even support different build environments.
 
-<p class="tips">
+<p class="tip">
 Rules specified by `add_files("*.md", {rule = "markdown"})`, with a higher priority than the rule set by `add_rules("markdown")`.
 </p>
 
@@ -5163,7 +5163,7 @@ on_run(function (target)
 end)
 ```
 
-<p class="warning">
+<p class="warn">
 In order to ensure that the description field of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br>
 Of course, a small number of read-only built-in interfaces can still be used in the description field, as shown in the following table:
 </p>
@@ -5790,7 +5790,7 @@ The system operation module belongs to the built-in module. It can be called dir
 
 This module is also a native module of lua, and xmake has been extended to provide more practical interfaces.
 
-<p class="tips">
+<p class="tip">
 Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os module can be used in the description field. Other interfaces can only be used in the script domain, for example: `os.cp`, `os .rm`etc.
 </p>
 
@@ -6054,7 +6054,7 @@ os.run("echo hello %s!", "xmake")
 os.run("ls -l $(buildir)")
 ```
 
-<p class="warning">
+<p class="warn">
 Using this interface to execute shell commands can easily reduce the cross-platform build. For `os.run("cp ..")`, try to use `os.cp` instead. <br>
 If you must use this interface to run the shell program, please use the [config.plat](#config-plat) interface to determine the platform support.
 </p>
@@ -8501,7 +8501,7 @@ http.download("https://xmake.io", "/tmp/index.html")
 
 This interface is used to run commands via `sudo` and provides platform consistency handling, which can be used for scripts that require root privileges to run.
 
-<p class="warning">
+<p class="warn">
 In order to ensure security, unless you must use it, try not to use this interface in other cases.
 </p>
 

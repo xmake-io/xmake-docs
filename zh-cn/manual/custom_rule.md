@@ -32,7 +32,7 @@ target("test")
 
 一个target可以叠加应用多个rules去更加定制化实现自己的构建行为，甚至支持不同的构建环境。
 
-<p class="tips">
+<p class="tip">
 通过`add_files("*.md", {rule = "markdown"})`方式指定的规则，优先级高于`add_rules("markdown")`设置的规则。
 </p>
 

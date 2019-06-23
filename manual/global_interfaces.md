@@ -112,7 +112,7 @@ set_xmakever("2.1.0")
 
 #### Add sub-project directories
 
-<p class="tips">
+<p class="tip">
 For xmake 2.x and above, try to use the [includes](#includes) interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.
 </p>
 
@@ -150,7 +150,7 @@ $ xmake build tbox
 
 #### Add sub-project files
 
-<p class="tips">
+<p class="tip">
 For xmake 2.x and above, try to use the [includes](#includes) interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.
 </p>
 

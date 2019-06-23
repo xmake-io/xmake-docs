@@ -206,7 +206,7 @@ The last variable argument list is retrieved by `option.get("contents")` in the 
 
 It is only used for grouping of menus. Of course, the plugin will use `plugin` by default. The built-in task will use `action` by default, but it is just a convention.
 
-<p class="tips">
+<p class="tip">
 You can use any name you define yourself. The same name will be grouped and displayed together. If it is set to `plugin`, it will be displayed in the Plugins group of xmake.
 </p>
 

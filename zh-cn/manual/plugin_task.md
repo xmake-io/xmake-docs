@@ -206,7 +206,7 @@ $ xmake echo --color=red --bright hello xmake!
 
 仅仅用于菜单的分组显示，当然插件默认会用`plugin`，内置任务默认会用：`action`，但也仅仅只是个约定。
 
-<p class="tips">
+<p class="tip">
 你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为`plugin`，就会显示到xmake的Plugins分组中去。
 </p>
 

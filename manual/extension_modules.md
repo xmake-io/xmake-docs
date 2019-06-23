@@ -1746,7 +1746,7 @@ http.download("https://xmake.io", "/tmp/index.html")
 
 This interface is used to run commands via `sudo` and provides platform consistency handling, which can be used for scripts that require root privileges to run.
 
-<p class="warning">
+<p class="warn">
 In order to ensure security, unless you must use it, try not to use this interface in other cases.
 </p>
 

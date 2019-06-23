@@ -316,7 +316,7 @@ target("test")
     set_options("hello")
 ```
 
-<p class="warning">
+<p class="warn">
 只有调用`set_options`进行关联生效后，[option](#option) 中定义的一些设置才会影响到此`target`目标，例如：宏定义、链接库、编译选项等等
 </p>
 
@@ -464,7 +464,7 @@ c标准和c++标准可同时进行设置，例如：
 set_languages("c99", "cxx11")
 ```
 
-<p class="warning">
+<p class="warn">
 并不是设置了指定的标准，编译器就一定会按这个标准来编译，毕竟每个编译器支持的力度不一样，但是xmake会尽最大可能的去适配当前编译工具的支持标准。。。
 <br><br>
 例如：
@@ -477,7 +477,7 @@ windows下vs的编译器并不支持按c99的标准来编译c代码，只能支�
 
 #### 设置头文件安装目录
 
-<p class="warning">
+<p class="warn">
 注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
 </p>
 
@@ -1088,7 +1088,7 @@ target("test")
 
 #### 设置自动生成的配置头文件路径
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
 </p>
@@ -1139,7 +1139,7 @@ target("test")
 
 #### 设置自动生成的头文件中宏定义命名前缀
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
 </p>
@@ -1159,7 +1159,7 @@ target("test")
 
 #### 设置自动生成的配置头文件路径和前缀
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 </p>
 
@@ -1485,7 +1485,7 @@ target("test")
 
 #### 添加安装的头文件
 
-<p class="warning">
+<p class="warn">
 注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
 </p>
 
@@ -1623,7 +1623,7 @@ add_undefines("DEBUG")
 
 #### 添加宏定义到头文件
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 </p>
 
@@ -1633,7 +1633,7 @@ add_undefines("DEBUG")
 
 #### 取消宏定义到头文件
 
-<p class="warning">
+<p class="warn">
 2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
 </p>
 
@@ -1649,7 +1649,7 @@ add_undefines("DEBUG")
 add_cflags("-g", "-O2", "-DDEBUG")
 ```
 
-<p class="warning">
+<p class="warn">
 所有选项值都基于gcc的定义为标准，如果其他编译器不兼容（例如：vc），xmake会自动内部将其转换成对应编译器支持的选项值。
 用户无需操心其兼容性，如果其他编译器没有对应的匹配值，那么xmake会自动忽略器设置。
 </p>
@@ -1861,7 +1861,7 @@ target("demo")
 
 #### 添加c库函数检测
 
-<p class="warning">
+<p class="warn">
 此接口是`target`和`option`共用的接口，但是接口行为稍有不同。
 </p>
 
@@ -1885,7 +1885,7 @@ target("test")
 
 此选项检测是否存在`setjmp`的一些接口，如果检测通过那么`test`目标程序将会加上`HAVE_SETJMP`的宏定义。
 
-<p class="warning">
+<p class="warn">
 需要注意的是，在`option`中使用此接口检测依赖函数，需要同时使用独立的[add_cincludes](#targetadd_cincludes)增加头文件搜索路径，指定[add_links](#targetadd_links)链接库（可选），否则检测不到指定函数。
 <br><br>
 并且某些头文件接口是通过宏开关分别定义的，那么检测的时候最好通过[add_defines](#targetadd_defines)带上依赖的宏开关。
@@ -2253,7 +2253,7 @@ target("test")
 
 并且此接口对于`xmake project -k vs201x`等插件生成的IDE文件，也会添加对应的头文件进去。
 
-<p class="tips">
+<p class="tip">
 需要注意的是，之前的[add_headers](#targetadd_headers)接口已经被废弃，新版本请用此接口替代，这个老接口在编译过程中也会自动复制头文件到build目录，这个逻辑设计的并不是很好。
 </p>
 

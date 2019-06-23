@@ -447,7 +447,7 @@ hello xmake!
 
 XMake跟`cmake`, `premake`等其他一些构建工具的区别在于：
 
-<p class="warning">
+<p class="warn">
 `xmake`默认是直接构建运行的，生成第三方的IDE的工程文件仅仅作为`插件`来提供。
 </p>
 
