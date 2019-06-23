@@ -1,7 +1,3 @@
----
-nav: zh
-search: zh
----
 
 <p>
 <div align="center">

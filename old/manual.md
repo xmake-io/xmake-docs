@@ -1,6 +1,3 @@
----
-search: en
----
 
 ## Specification
 

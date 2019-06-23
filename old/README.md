@@ -1,6 +1,3 @@
----
-search: en
----
 
 <p>
 <div align="center">
