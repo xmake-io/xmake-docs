@@ -4,6 +4,7 @@
   - [Contact](about/contact.md)
   - [Sponsor](about/sponsor.md)
   - [Changelog](about/changelog.md)
+  - [Awesome xmake](about/awesome.md)
  
 - Getting Started
 

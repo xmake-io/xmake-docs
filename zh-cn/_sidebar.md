@@ -4,6 +4,7 @@
   - [联系](zh-cn/about/contact.md)
   - [赞助](zh-cn/about/sponsor.md)
   - [更新日志](zh-cn/about/changelog.md)
+  - [Awesome xmake](zh-cn/about/awesome.md)
  
 - 快速入门
 
