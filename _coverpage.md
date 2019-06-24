@@ -7,5 +7,5 @@
 - Simple, Fast, Cross-platform 
 - Modern C/C++ build tools, Support multi-language hybrid compilation
 
-[github](https://github.com/xmake-io/xmake/)
+[Github](https://github.com/xmake-io/xmake/)
 [Getting Started](/getting_started)
