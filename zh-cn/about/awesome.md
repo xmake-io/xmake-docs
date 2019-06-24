@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://xmake.io/#/zh-cn/">
-    <img width="200" heigth="200" src="/static/img/logo.svg">
+    <img width="200" heigth="200" src="/assets/img/logo.svg">
   </a>  
 
   <h1>awesome-xmake</h1>
