@@ -124,5 +124,11 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
+  <!-- pwa -->
+  <script>
+    if (typeof navigator.serviceWorker !== 'undefined') {
+      navigator.serviceWorker.register('sw.js')
+    }
+  </script>
 </body>
 </html>
