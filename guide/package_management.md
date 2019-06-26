@@ -1,7 +1,7 @@
 
 ## Local Package Mode
 
-By including a dependency package directory and a binary package file in the project, it is convenient to integrate some third-party dependency libraries. This method is relatively simple and straightforward, but the disadvantages are also obvious and inconvenient to manage.
+By including a dependency package directory and some binary library files in the project, it is convenient to integrate some third-party dependency libraries. This method is relatively simple and straightforward, but the disadvantages are also obvious and inconvenient to manage.
 
 Take the tbox project as an example. The dependency package is as follows:
 
@@ -92,6 +92,12 @@ target("test")
 
 If third-party tools such as `homebrew`, `pkg-config` are installed on the system, then this interface will try to use them to improve the search results.
 
+Another, we can also find packages from the given package manager. For example:
+
+```lua
+find_packages("brew::pcre2/libpcre2-8", "vcpkg::zlib")
+```
+
 For a more complete description of the usage, please refer to the [find_packages](/manual/builtin_modules?id=find_packages) interface documentation.
 
 ### Homebrew Integration Support
@@ -144,7 +150,7 @@ For more information and progress on package dependency management see the relat
 ### Currently Supported Features
 
 * Semantic version support, for example: ">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"
-* Provide multi-warehouse management support such as official package warehouse, self-built private warehouse, project built-in warehouse, etc.
+* Provide multi-repository management support such as official package repository, self-built private repository, project built-in repository, etc.
 * Cross-platform package compilation integration support (packages of different platforms and different architectures can be installed at the same time, fast switching use)
 * Debug dependency package support, source code debugging
 
@@ -236,9 +242,9 @@ Pass `--small=true` to the tbox package so that compiling the installed tbox pac
 
 ### Install third-party packages
 
-After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, etc.
+After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib and etc.
 
-Add a homebrew dependency package:
+#### Add a homebrew dependency package
 
 ```lua
 add_requires("brew::zlib", {alias = "zlib"}})
@@ -250,7 +256,7 @@ target("test")
     add_packages("pcre2", "zlib")
 ```
 
-Add a dependency package for vcpkg:
+#### Add a vcpkg dependency package
 
 ```lua
 add_requires("vcpkg::zlib", "vcpkg::pcre2")
@@ -261,7 +267,7 @@ target("test")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 ```
 
-Add a conan dependency package:
+#### Add a conan dependency package
 
 ```lua
 add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
@@ -293,7 +299,23 @@ please input: y (y/n)
 [100%]: linking.release test
 ```
 
-### Using self-built private package warehouse
+#### Add a clib dependency package
+
+Clib is a source-based dependency package manager. The dependent package is downloaded directly to the corresponding library source code, integrated into the project to compile, rather than binary library dependencies.
+
+It is also very convenient to integrate in xmake. The only thing to note is that you need to add the source code of the corresponding library to xmake.lua, for example:
+
+```lua
+add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
+
+target("test")
+    set_kind("binary")
+    add_files("clib/bytes/*.c")
+    add_files("src/*.c")
+    add_packages("bytes")
+```
+
+### Using self-built private package repository
 
 If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.
 But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/xmake-io/xmake-repo)
@@ -369,7 +391,7 @@ target("test")
     add_packages("libjpeg")
 ```
 
-### Package Management Command Use
+### Package Management Command 
 
 The package management command `$ xmake require` can be used to manually display the download, install, uninstall, retrieve, and view package information.
 
@@ -399,7 +421,7 @@ $ xmake require --extra="debug=true,config={small=true}" tbox
 
 Install the debug package and pass the compilation configuration information of `small=true` to the package.
 
-#### Uninstalling the specified package
+#### Uninstall the specified package
 
 ```console
 $ xmake require --uninstall tbox
@@ -407,13 +429,13 @@ $ xmake require --uninstall tbox
 
 This will completely uninstall the removal package file.
 
-#### View package details
+#### Show package information
 
 ```console
 $ xmake require --info tbox
 ```
 
-#### Search for packages in the current warehouse
+#### Search for packages in the current repository
 
 ```console
 $ xmake require --search tbox
@@ -433,7 +455,7 @@ Will also search for pcre, pcre2 and other packages.
 $ xmake require --list
 ```
 
-### Warehouse Management Command Use
+### Repository Management Command 
 
 As mentioned above, adding a private repository is available (supporting local path addition):
 
@@ -447,19 +469,19 @@ We can also remove a repository that has already been installed:
 $ xmake repo --remove myrepo
 ```
 
-Or view all the added warehouses:
+Or view all the added repositories:
 
 ```console
 $ xmake repo --list
 ```
 
-If the remote repository has updates, you can manually perform a warehouse update to get more and the latest packages:
+If the remote repository has updates, you can manually perform a repository update to get more and the latest packages:
 
 ```console
 $ xmake repo -u
 ```
 
-### Submit the package to the official warehouse
+### Submit package to the official repository
 
 If you need a package that is not supported by the current official repository, you can commit it to the official repository after local tuning: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
