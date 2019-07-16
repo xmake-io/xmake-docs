@@ -392,7 +392,7 @@ v2.2.8以上版本，提供了新版本的vs工程生成插件扩展，跟之前
 $ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
 ```
 
-![](/static/img/manual/qt_vs.png)
+![](/assets/img/manual/qt_vs.png)
 
 #### 使用vs内置编译机制
 

@@ -362,7 +362,7 @@ The specific use is similar to the old version:
 $ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
 ```
 
-![](/static/img/manual/qt_vs.png)
+![](/assets/img/manual/qt_vs.png)
 
 #### Using vs built-in compilation mechanism
 
