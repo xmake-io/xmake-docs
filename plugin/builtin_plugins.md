@@ -366,6 +366,8 @@ $ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
 
 #### Using vs built-in compilation mechanism
 
+>! It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.
+
 ```bash
 $ xmake project -k [vs2008|vs2013|vs2015|..]
 ```
