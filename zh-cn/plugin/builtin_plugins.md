@@ -378,6 +378,24 @@ $ xmake project -k compile_commands
 
 ### 生成VisualStudio工程
 
+#### 使用xmake集成编译
+
+v2.2.8以上版本，提供了新版本的vs工程生成插件扩展，跟之前的生成vs的插件处理模式上有很大的不同，之前生成的vs工程是吧所有文件的编译展开后，转交给vs来处理编译。
+
+但是这种模式，对xmake的rules是没法支持的。因为xmake的rules里面用了很多的`on_build`此类自定义脚本，无法展开，所以像qt， wdk此类的项目就没法支持导出到vs里面进行编译了。
+
+因此，为了解决这个问题，新版本的vs生成插件通过在vs下直接调用xmake命令，去执行编译操作，并且对intellsence和定义跳转，还有断点调试也做了支持。
+
+具体使用方式跟老版本类似：
+
+```console
+$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
+```
+
+![](/static/img/manual/qt_vs.png)
+
+#### 使用vs内置编译机制
+
 ```console
 $ xmake project -k [vs2008|vs2013|vs2015|..]
 ```
@@ -394,10 +412,8 @@ $ xmake project -k vs2017 -m "debug,release"
 
 ```lua
 -- 配置当前的工程，支持哪些编译模式
-set_modes("debug", "release")
+add_rules("mode.debug", "mode.release")
 ```
-
-具体`set_modes`的使用，可以参考对应的接口手册文档。
 
 ## 生成doxygen文档
 

@@ -348,6 +348,24 @@ Please see [JSONCompilationDatabase](#https://clang.llvm.org/docs/JSONCompilatio
 
 ### Generate VisualStudio Project
 
+#### Compile with xmake integration
+
+v2.2.8 or later, provides a new version of the vs project generation plugin extension, which is very different from the previous plugin processing mode for generating vs. The previously generated vs project is the compilation of all files and then transferred to vs. To handle compilation.
+
+But this mode, there is no way to support the rules of xmake. Because xmake's rules use a lot of custom scripts like `on_build`, they can't be expanded, so projects like qt, wdk can't support exporting to vs. compile.
+
+Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellsence and definition jumps, as well as breakpoint debugging.
+
+The specific use is similar to the old version:
+
+```console
+$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
+```
+
+![](/static/img/manual/qt_vs.png)
+
+#### Using vs built-in compilation mechanism
+
 ```bash
 $ xmake project -k [vs2008|vs2013|vs2015|..]
 ```
