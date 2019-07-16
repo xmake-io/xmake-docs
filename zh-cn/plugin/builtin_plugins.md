@@ -396,7 +396,7 @@ $ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
 
 #### 使用vs内置编译机制
 
->! 建议尽量使用上文提到的v2.2.8之后提供的新版的vs生成插件，支持更加完善，此处的生成方式不支持xmake的rules，以及对qt等工程的生成。
+!> 建议尽量使用上文提到的v2.2.8之后提供的新版的vs生成插件，支持更加完善，此处的生成方式不支持xmake的rules，以及对qt等工程的生成。
 
 ```console
 $ xmake project -k [vs2008|vs2013|vs2015|..]
