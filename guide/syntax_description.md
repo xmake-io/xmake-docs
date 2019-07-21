@@ -108,7 +108,7 @@ local var1 = 0
 -- global variables that affect all subsmake.lua included after includes()
 var2 = 1
 
-Includes("src")
+includes("src")
 ```
 
 ### Internal Scope
@@ -146,7 +146,7 @@ target("iosdemo")
     after_build(function (target)
 
         -- Execute signature, if it fails, automatically interrupt, giving a highlight error message
-        Os.run("ldid -S$(projectdir)/entitlements.plist %s", target:targetfile())
+        os.run("ldid -S$(projectdir)/entitlements.plist %s", target:targetfile())
     end)
 ```
 
