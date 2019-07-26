@@ -1,127 +1,4 @@
 
-## Local Package Mode
-
-By including a dependency package directory and some binary library files in the project, it is convenient to integrate some third-party dependency libraries. This method is relatively simple and straightforward, but the disadvantages are also obvious and inconvenient to manage.
-
-Take the tbox project as an example. The dependency package is as follows:
-
-```
-- base.pkg
-- zlib.pkg
-- polarssl.pkg
-- openssl.pkg
-- mysql.pkg
-- pcre.pkg
-- ...
-```
-
-If you want the current project to recognize loading these packages, you first need to specify the package directory path, for example:
-
-```lua
-add_packagedirs("packages")
-```
-
-Once specified, you can add integration package dependencies in the target scope via the [add_packages](/manual/project_target?id=targetadd_packages) interface, for example:
-
-```lua
-target("tbox")
-    add_packages("zlib", "polarssl", "pcre", "mysql")
-```
-
-So how to generate a *.pkg package, if it is based on xmake project, the generation method is very simple, only need:
-
-```console
-$ cd tbox
-$ xmake package
-```
-
-You can generate a tbox.pkg cross-platform package in the build directory for use by third-party projects. I can also directly set the output directory and compile and generate it into the other project, for example:
-
-```console
-$ cd tbox
-$ xmake package -o ../test/packages
-```
-
-In this way, the test project can pass [add_packages](/manual/project_target?id=targetadd_packages) and [add_packagedirs](/manual/global_interfaces?id=add_packagedirs) to configure and use the tbox.pkg package.
-
-For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: [Dependency package addition and automatic detection mechanism](https://tboox.org/cn/2016/08/06/add-package-and-autocheck/)
-
-## System Search Mode
-
-If you feel that the above built-in package management method is very inconvenient, you can use the extension interface [lib.detect.find_package](/manual/extension_modules?id=detectfind_package) to find the system. Existing dependencies.
-
-Currently this interface supports the following package management support:
-
-* vcpkg
-* homebrew
-* pkg-config
-
-And through the system and third-party package management tools for the installation of the dependency package, and then integrated with xmake, for example, we look for an openssl package:
-
-```lua
-local packages = find_packages("openssl", "zlib")
-```
-
-The returned results are as follows:
-
-```lua
-{
-    {links = {"ssl", "crypto"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}},
-    {links = {"z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
-}
-```
-
-If the search is successful, return a table containing all the package information, if it fails, return nil
-
-The return result here can be directly passed as the parameter of `target:add`, `option:add`, which is used to dynamically increase the configuration of `target/option`:
-
-```lua
-option("zlib")
-    set_showmenu(true)
-    before_check(function (option)
-        option:add(find_packages("openssl", "zlib"))
-    end)
-```
-
-```lua
-target("test")
-    on_load(function (target)
-        target:add(find_packages("openssl", "zlib"))
-    end)
-```
-
-If third-party tools such as `homebrew`, `pkg-config` are installed on the system, then this interface will try to use them to improve the search results.
-
-Another, we can also find packages from the given package manager. For example:
-
-```lua
-find_packages("brew::pcre2/libpcre2-8", "vcpkg::zlib")
-```
-
-For a more complete description of the usage, please refer to the [find_packages](/manual/builtin_modules?id=find_packages) interface documentation.
-
-### Homebrew Integration Support
-
-Since homebrew is generally installed directly into the system, users do not need to do any integration work, `lib.detect.find_package` has been natively seamlessly supported.
-
-### Vcpkg Integration Support
-
-Currently xmake v2.2.2 version already supports vcpkg, users only need to install vcpkg, execute `$ vcpkg integrate install`, xmake will automatically detect the root path of vcpkg from the system, and then automatically adapt the bread.
-
-Of course, we can also manually specify the root path of vcpkg to support:
-
-```console
-$ xmake f --vcpkg=f:\vcpkg
-```
-
-Or we can set it to the global configuration to avoid repeating the settings each time we switch configurations:
-
-```console
-$ xmake g --vcpkg=f:\vcpkg
-```
-
-## Remote dependency mode
-
 This has been initially supported after the 2.2.2 version, the usage is much simpler, just set the corresponding dependency package, for example:
 
 ```lua
@@ -147,14 +24,14 @@ xmake will remotely pull the relevant source package, then automatically compile
 
 For more information and progress on package dependency management see the related issues: [Remote package management](https://github.com/xmake-io/xmake/issues/69)
 
-### Currently Supported Features
+## Currently Supported Features
 
 * Semantic version support, for example: ">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"
 * Provide multi-repository management support such as official package repository, self-built private repository, project built-in repository, etc.
 * Cross-platform package compilation integration support (packages of different platforms and different architectures can be installed at the same time, fast switching use)
 * Debug dependency package support, source code debugging
 
-### Dependency Package Processing Mechanism
+## Dependency Package Processing Mechanism
 
 Here we briefly introduce the processing mechanism of the entire dependency package:
 
@@ -166,7 +43,7 @@ Here we briefly introduce the processing mechanism of the entire dependency pack
 2. Retrieve the package matching the corresponding version, then download, compile, and install (Note: installed in a specific xmake directory, will not interfere with the system library environment)
 3. Compile the project, and finally automatically link the enabled dependencies
 
-### Semantic Version Settings
+## Semantic Version Settings
 
 Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: [https://semver.org/](https://semver.org/)
 
@@ -192,9 +69,9 @@ add_requires("tbox master")
 add_requires("tbox dev")
 ```
 
-### Extra Package Information Settings
+## Extra Package Information Settings
 
-#### Optional Package Settings
+### Optional Package Settings
 
 If the specified dependency package is not supported by the current platform, or if the compilation and installation fails, then xmake will compile the error, which is reasonable for some projects that must rely on certain packages to work.
 However, if some packages are optional dependencies, they can be set to optional packages even if they are not compiled properly.
@@ -203,7 +80,7 @@ However, if some packages are optional dependencies, they can be set to optional
 add_requires("tbox", {optional = true})
 ```
 
-#### Disable System Library
+### Disable System Library
 
 With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library provided by the third-party package management, then you can set:
 
@@ -211,7 +88,7 @@ With the default settings, xmake will first check to see if the system library e
 add_requires("tbox", {system = false})
 ```
 
-#### Using the debug version of the package
+### Using the debug version of the package
 
 If we want to debug the dependencies at the same time, we can set them to use the debug version of the package (provided that this package supports debug compilation):
 
@@ -230,7 +107,7 @@ package("openssl")
     end)
 ```
 
-#### Passing additional compilation information to the package
+### Passing additional compilation information to the package
 
 Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:
 
@@ -240,11 +117,11 @@ add_requires("tbox", {configs = {small=true}})
 
 Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.
 
-### Install third-party packages
+## Install third-party packages
 
 After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib and etc.
 
-#### Add a homebrew dependency package
+### Add a homebrew dependency package
 
 ```lua
 add_requires("brew::zlib", {alias = "zlib"}})
@@ -256,7 +133,7 @@ target("test")
     add_packages("pcre2", "zlib")
 ```
 
-#### Add a vcpkg dependency package
+### Add a vcpkg dependency package
 
 ```lua
 add_requires("vcpkg::zlib", "vcpkg::pcre2")
@@ -267,7 +144,7 @@ target("test")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 ```
 
-#### Add a conan dependency package
+### Add a conan dependency package
 
 ```lua
 add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
@@ -299,7 +176,7 @@ please input: y (y/n)
 [100%]: linking.release test
 ```
 
-#### Add a clib dependency package
+### Add a clib dependency package
 
 Clib is a source-based dependency package manager. The dependent package is downloaded directly to the corresponding library source code, integrated into the project to compile, rather than binary library dependencies.
 
@@ -315,7 +192,7 @@ target("test")
     add_packages("bytes")
 ```
 
-### Using self-built private package repository
+## Using self-built private package repository
 
 If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.
 But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/xmake-io/xmake-repo)
@@ -391,11 +268,11 @@ target("test")
     add_packages("libjpeg")
 ```
 
-### Package Management Command 
+## Package Management Command 
 
 The package management command `$ xmake require` can be used to manually display the download, install, uninstall, retrieve, and view package information.
 
-#### Install the specified package
+### Install the specified package
 
 ```console
 $ xmake require tbox
@@ -421,7 +298,7 @@ $ xmake require --extra="debug=true,config={small=true}" tbox
 
 Install the debug package and pass the compilation configuration information of `small=true` to the package.
 
-#### Uninstall the specified package
+### Uninstall the specified package
 
 ```console
 $ xmake require --uninstall tbox
@@ -429,13 +306,13 @@ $ xmake require --uninstall tbox
 
 This will completely uninstall the removal package file.
 
-#### Show package information
+### Show package information
 
 ```console
 $ xmake require --info tbox
 ```
 
-#### Search for packages in the current repository
+### Search for packages in the current repository
 
 ```console
 $ xmake require --search tbox
@@ -449,13 +326,13 @@ $ xmake require --search pcr
 
 Will also search for pcre, pcre2 and other packages.
 
-#### List the currently installed packages
+### List the currently installed packages
 
 ```console
 $ xmake require --list
 ```
 
-### Repository Management Command 
+## Repository Management Command 
 
 As mentioned above, adding a private repository is available (supporting local path addition):
 
@@ -481,7 +358,7 @@ If the remote repository has updates, you can manually perform a repository upda
 $ xmake repo -u
 ```
 
-### Submit package to the official repository
+## Submit package to the official repository
 
 If you need a package that is not supported by the current official repository, you can commit it to the official repository after local tuning: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 

@@ -13,8 +13,13 @@
   - [Project Examples](guide/project_examples.md)
   - [Configuration](guide/configuration.md)
   - [Syntax Description](guide/syntax_description.md)
-  - [Package Management](guide/package_management.md)
   - [FAQ](guide/faq.md)
+
+- Package Management
+
+  - [Local Package](package/local_package.md)
+  - [System Package](package/system_package.md)
+  - [Remote Package](package/remote_package.md)
 
 - Plugin
 

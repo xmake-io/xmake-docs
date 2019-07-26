@@ -13,8 +13,13 @@
   - [工程例子](zh-cn/guide/project_examples.md)
   - [配置说明](zh-cn/guide/configuration.md)
   - [语法描述](zh-cn/guide/syntax_description.md)
-  - [包依赖管理](zh-cn/guide/package_management.md)
   - [问答](zh-cn/guide/faq.md)
+
+- 包依赖管理
+
+  - [使用本地包](zh-cn/package/local_package.md)
+  - [使用系统包](zh-cn/package/system_package.md)
+  - [使用远程包](zh-cn/package/remote_package.md)
 
 - 插件介绍
 
