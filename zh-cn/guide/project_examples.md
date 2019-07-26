@@ -339,13 +339,37 @@ target("usbview")
 
 ## MFC程序
 
+### MFC静态库
+
 ```lua
 target("test")
-    add_rules("win.sdk.mfc")
+    add_rules("win.sdk.mfc.static")
     add_files("src/*.c")
 ```
 
-更多详情可以参考：[#201](https://github.com/xmake-io/xmake/issues/201)
+### MFC动态库
+
+```lua
+target("test")
+    add_rules("win.sdk.mfc.shared")
+    add_files("src/*.c")
+```
+
+### MFC应用程序（静态链接）
+
+```lua
+target("test")
+    add_rules("win.sdk.mfc.static_app")
+    add_files("src/*.c")
+```
+
+### MFC应用程序（动态链接）
+
+```lua
+target("test")
+    add_rules("win.sdk.mfc.shared_app")
+    add_files("src/*.c")
+```
 
 ## Protobuf程序
 

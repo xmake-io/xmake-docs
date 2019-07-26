@@ -333,13 +333,37 @@ If you want to known more information, you can see [#173](https://github.com/xma
 
 ## MFC Application Program
 
+### MFC Static Library
+
 ```lua
 target("test")
-     add_rules("win.sdk.mfc")
-     add_files("src/*.c")
+    add_rules("win.sdk.mfc.static")
+    add_files("src/*.c")
 ```
 
-For more details, please refer to: [#201](https://github.com/xmake-io/xmake/issues/201)
+### MFC Shared Library
+
+```lua
+target("test")
+    add_rules("win.sdk.mfc.shared")
+    add_files("src/*.c")
+```
+
+### MFC Application (Static)
+
+```lua
+target("test")
+    add_rules("win.sdk.mfc.static_app")
+    add_files("src/*.c")
+```
+
+### MFC Application (Shared)
+
+```lua
+target("test")
+    add_rules("win.sdk.mfc.shared_app")
+    add_files("src/*.c")
+```
 
 ## Protobuf program
 
@@ -353,7 +377,7 @@ target("console_c")
      add_packages("protobuf-c")
 
      add_files("src/*.c")
-     add_files("src/*.proto", {rules = "protobuf.c"})
+     add_files("src/*.proto", {rules = "protobuf-c"})
 ```
 
 ### Using the C++ library
@@ -368,7 +392,7 @@ target("console_c++")
      add_packages("protobuf-cpp")
 
      add_files("src/*.cpp")
-     add_files("src/*.proto", {rules = "protobuf.cpp"})
+     add_files("src/*.proto", {rules = "protobuf-cpp"})
 ```
 
 ## Lex&Yacc Program
