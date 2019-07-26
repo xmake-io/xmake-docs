@@ -331,3 +331,51 @@ target("usbview")
 
 If you want to known more information, you can see [#173](https://github.com/xmake-io/xmake/issues/173).
 
+## MFC Application Program
+
+```lua
+target("test")
+     add_rules("win.sdk.mfc")
+     add_files("src/*.c")
+```
+
+For more details, please refer to: [#201](https://github.com/xmake-io/xmake/issues/201)
+
+## Protobuf program
+
+### Using c library
+
+```lua
+add_requires("protobuf-c")
+
+target("console_c")
+     set_kind("binary")
+     add_packages("protobuf-c")
+
+     add_files("src/*.c")
+     add_files("src/*.proto", {rules = "protobuf.c"})
+```
+
+### Using the C++ library
+
+```lua
+add_requires("protobuf-cpp")
+
+target("console_c++")
+     set_kind("binary")
+     set_languages("c++11")
+
+     add_packages("protobuf-cpp")
+
+     add_files("src/*.cpp")
+     add_files("src/*.proto", {rules = "protobuf.cpp"})
+```
+
+## Lex&Yacc Program
+
+```lua
+target("calc")
+     set_kind("binary")
+     add_rules("lex", "yacc")
+     add_files("src/*.l", "src/*.y")
+```

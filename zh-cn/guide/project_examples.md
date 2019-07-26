@@ -337,3 +337,51 @@ target("usbview")
 
 更多详情可以参考：[#173](https://github.com/xmake-io/xmake/issues/173)
 
+## MFC程序
+
+```lua
+target("test")
+    add_rules("win.sdk.mfc")
+    add_files("src/*.c")
+```
+
+更多详情可以参考：[#201](https://github.com/xmake-io/xmake/issues/201)
+
+## Protobuf程序
+
+### 使用c库
+
+```lua
+add_requires("protobuf-c")
+
+target("console_c")
+    set_kind("binary")
+    add_packages("protobuf-c")
+
+    add_files("src/*.c")
+    add_files("src/*.proto", {rules = "protobuf.c"})
+```
+
+### 使用c++库
+
+```lua
+add_requires("protobuf-cpp")
+
+target("console_c++")
+    set_kind("binary")
+    set_languages("c++11")
+
+    add_packages("protobuf-cpp")
+
+    add_files("src/*.cpp")
+    add_files("src/*.proto", {rules = "protobuf.cpp"})
+```
+
+## Lex&Yacc程序
+
+```lua
+target("calc")
+    set_kind("binary")
+    add_rules("lex", "yacc")
+    add_files("src/*.l", "src/*.y")
+```
