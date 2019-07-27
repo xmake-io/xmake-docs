@@ -503,7 +503,7 @@ add_versions("3.23.0", "b7711a1800a071674c2bf76898ae8584fc6c9643cfe933cfc1bc5436
 add_urls("https://gitlab.gnome.org/GNOME/libxml2.git")
 ```
 
-如果设置的多个镜像地址对应的源码包sha256是不同的，我们可以通过alias的方式来分别设置：
+如果设置的多个镜像地址对应的源码包sha256是不同的，我们可以通过alias的方式来分别设置
 
 ```lua
 add_urls("https://ffmpeg.org/releases/ffmpeg-$(version).tar.bz2", {alias = "home"})
