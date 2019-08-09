@@ -815,7 +815,7 @@ end)
 
 ```lua
 add_requires("xxx", {configs = {vs_runtime = "MT"}})
-``
+```
 
 Normally, packages installed by built-in tool scripts such as `import("package.tools.autoconf").install` are automatically processed internally by vs_runtime.
 

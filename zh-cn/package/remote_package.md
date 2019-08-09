@@ -844,7 +844,7 @@ end)
 
 ```lua
 add_requires("xxx", {configs = {vs_runtime = "MT"}})
-``
+```
 
 通常情况下，通过`import("package.tools.autoconf").install`等内置工具脚本安装的包，内部都对vs_runtime自动处理过了。
 
