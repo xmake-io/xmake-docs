@@ -9,6 +9,129 @@ target("test")
     add_files("src/*.c")
 ```
 
+## 配置域
+
+xmake.lua采用二八原则实现了描述域、脚本域两层分离式配置。
+
+什么是二八原则呢，简单来说，大部分项目的配置，80%的情况下，都是些基础的常规配置，比如：`add_cxflags`, `add_links`等，
+只有剩下不到20%的地方才需要额外做些复杂来满足一些特殊的配置需求。
+
+而这剩余的20%的配置通常比较复杂，如果直接充斥在整个xmake.lua里面，会把整个项目的配置整个很混乱，非常不可读。
+
+因此，xmake通过描述域、脚本域两种不同的配置方式，来隔离80%的简单配置以及20%的复杂配置，使得整个xmake.lua看起来非常的清晰直观，可读性和可维护性都达到最佳。
+
+### 描述域
+
+对于刚入门的新手用户，或者仅仅是维护一些简单的小项目，通过完全在描述配置就已经完全满足需求了，那什么是描述域呢？它长这样：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("DEBUG")
+    add_links("pthread", "m", "dl")
+```
+
+一眼望去，其实就是个 `set_xxx`/`add_xxx`的配置集，对于新手，完全可以不把它当做lua脚本，仅仅作为普通的，但有一些基础规则的配置文件就行了。
+
+如果因为，看着有括号，还是像脚本语言的函数调用，那我们也可以这么写（是否带括号看个人喜好）：
+
+```lua
+target "test"
+    set_kind    "binary"
+    add_files   "src/*.c"
+    add_defines "DEBUG"
+    add_links   "pthread", "m", "dl"
+```
+
+这是不是看着更像配置文件了？其实描述域就是配置文件，类似像json等key/values的配置而已，所以即使完全不会lua的新手，也是能很快上手的。
+
+而且，对于通常的项目，仅通过`set_xxx/add_xxx`去配置各种项目设置，已经完全满足需求了。
+
+这也就是开头说的：80%的情况下，可以用最简单的配置规则去简化项目的配置，提高可读性和可维护性，这样对用户和开发者都会非常的友好，也更加直观。
+
+如果我们要针对不同平台，架构做一些条件判断怎么办？没关系，描述域除了基础配置，也是支持条件判断，以及for循环的：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("DEBUG")
+    if is_plat("linux", "macosx") then
+        add_links("pthread", "m", "dl")
+    end
+```
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("DEBUG")
+    for _, name in ipairs({"pthread", "m", "dl"}) do
+        add_links(name)
+    end
+```
+
+这是不是看着有点像lua了？虽说，平常可以把它当做普通配置问题，但是xmake毕竟基于lua，所以描述域还是支持lua的基础语言特性的。
+
+!> 不过需要注意的是，描述域虽然支持lua的脚本语法，但在描述域尽量不要写太复杂的lua脚本，比如一些耗时的函数调用和for循环
+
+并且在描述域，主要目的是为了设置配置项，因此xmake并没有完全开放所有的模块接口，很多接口在描述域是被禁止调用的，
+即使开放出来的一些可调用接口，也是完全只读的，不耗时的安全接口，比如：`os.getenv()`等读取一些常规的系统信息，用于配置逻辑的控制。
+
+!> 另外需要注意一点，xmake.lua是会被多次解析的，用于在不同阶段解析不同的配置域：比如：`option()`, `target()`等域。
+
+因此，不要想着在xmake.lua的描述域，写复杂的lua脚本，也不要在描述域调用print去显示信息，因为会被执行多遍，记住：会被执行多遍！！！
+
+### 脚本域
+
+限制描述域写复杂的lua，各种lua模块和接口都用不了？怎么办？这个时候就是脚本域出场的时候了。
+
+如果用户已经完全熟悉了xmake的描述域配置，并且感觉有些满足不了项目上的一些特殊配置维护了，那么我们可以在脚本域做更加复杂的配置逻辑：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_load(function (target)
+        if is_plat("linux", "macosx") then
+            target:add("links", "pthread", "m", "dl")
+        end
+    end)
+    after_build(function (target)
+        import("core.project.config")
+        local targetfile = target:targetfile()
+        os.cp(targetfile, path.join(config.buildir(), path.filename(targetfile)))
+        print("build %s", targetfile)
+    end)
+```
+
+只要是类似：`on_xxx`, `after_xxx`, `before_xxx`等字样的function body内部的脚本，都属于脚本域。
+
+在脚本域中，用户可以干任何事，xmake提供了import接口可以导入xmake内置的各种lua模块，也可以导入用户提供的lua脚本。
+
+我们可以在脚本域实现你想实现的任意功能，甚至写个独立项目出来都是可以的。
+
+对于一些脚本片段，不是很臃肿的话，像上面这么内置写写就足够了，如果需要实现更加复杂的脚本，不想充斥在一个xmake.lua里面，可以把脚本分离到独立的lua文件中去维护。
+
+例如：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_load("modules.test.load")
+    on_install("modules.test.install")
+```
+
+我们可以吧自定义的脚本放置到xmake.lua对应目录下，`modules/test/load.lua`和`modules/test/install.lua`中独立维护。
+
+这些独立的lua脚本里面，我们还可以通过import导入各种内置模块和自定义模块进来使用，就跟平常写lua, java没啥区别。
+
+而对于脚本的域的不同阶段，`on_load`主要用于target加载时候，做一些动态化的配置，这里不像描述域，只会执行一遍哦!!!
+
+其他阶段，还有很多，比如：`on/after/before`_`build/install/package/run`等，具体看下后面的target api手册部分吧，这里就不细说了。
+
 ## 作用域
 
 xmake的描述语法是按作用域划分的，主要分为：
@@ -225,6 +348,8 @@ add_files("*.c")
 因此，适当的进行缩进，有助于更好的维护xmake.lua
 
 最后附上，tbox的[xmake.lua](https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua)描述，仅供参考。。
+
+## 配置结构
 
 ## 语法简化
 
