@@ -62,7 +62,7 @@ $ xmake -v --backtrace
 $ xmake [-w|--warning] 
 ```
 
-## 怎样基于源码自动生成xmake.lua
+## 怎样基于源码自动生成xmake.lua？
 
 如果你想临时写一两个测试代码、或者手上有一些移植过来的零散源码想要快速编译运行，可以不用专门xmake.lua，直接运行：
 
@@ -86,3 +86,10 @@ $ xmake f -y
 
 更多相关介绍，请参考文章：[xmake新增智能代码扫描编译模式，无需手写任何make文件](https://tboox.org/cn/2017/01/07/build-without-makefile/)
 
+## 为什么xmake.lua会被执行多遍？
+
+xmake.lua里面分描述域和脚本域，在描述域里面会对各种配置域进行分阶段多次解析，有可能会执行多遍，因此不要在描述域写复杂的脚本。
+
+如果要写各种复杂脚本，请在脚本域内进行配置，`target/on_load`的脚本域里面同样可以灵活配置各种target相关设置，并且提供更强大的lua脚本模块支持。
+
+更多细节见：[描述语法说明](/zh-cn/guide/syntax_description)

@@ -9,7 +9,7 @@ target("test")
     add_files("src/*.c")
 ```
 
-## 配置域
+## 配置分离
 
 xmake.lua采用二八原则实现了描述域、脚本域两层分离式配置。
 
@@ -126,11 +126,69 @@ target("test")
 
 我们可以吧自定义的脚本放置到xmake.lua对应目录下，`modules/test/load.lua`和`modules/test/install.lua`中独立维护。
 
-这些独立的lua脚本里面，我们还可以通过import导入各种内置模块和自定义模块进来使用，就跟平常写lua, java没啥区别。
+这些独立的lua脚本里面，我们还可以通过[import](/zh-cn/manual/builtin_modules?id=import)导入各种内置模块和自定义模块进来使用，就跟平常写lua, java没啥区别。
 
 而对于脚本的域的不同阶段，`on_load`主要用于target加载时候，做一些动态化的配置，这里不像描述域，只会执行一遍哦!!!
 
 其他阶段，还有很多，比如：`on/after/before`_`build/install/package/run`等，具体看下后面的target api手册部分吧，这里就不细说了。
+
+## 配置类型
+
+在描述域配置中，分配置域和配置项，配置域里面可以通过`set_xxx`/`add_xxx`的接口，配置各种配置项。
+
+```lua
+target("test1")
+    set_kind("binary")
+    add_files("src/*.c")
+
+target("test2")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
+像上述配置中，target就属于配置域，它下面的所有`set_xx`/`add_xxx`接口配置都属于配置项，对这个target局部生效。
+
+我们可以把它理解成局部作用域，类似c里面的block块：
+
+```
+target("test1")
+{
+    set_kind("binary")
+    add_files("src/*.c")
+}
+target("test2")
+{
+    set_kind("binary")
+    add_files("src/*.c")
+}
+```
+
+不过，为了简化写法，xmake约定每个新定义的target域开始，上一个配置域就自动结束了，当然，如果这样用户觉得有困扰，也可以手动配置离开域：
+
+
+```lua
+target("test1")
+    set_kind("binary")
+    add_files("src/*.c")
+target_end()
+
+target("test2")
+    set_kind("binary")
+    add_files("src/*.c")
+target_end()
+```
+
+### 配置域
+
+目前提供的配置域有：`target()`, `option()`, `task()`, `package()`
+
+每个域的详细说明，见：[API手册](/zh-cn/manual/project_target)
+
+### 配置项
+
+只要是带有`set_xxx`和`add_xxx`字样的配置，都属于配置项，一个配置域里面可以设置多个配置项。
+
+关于配置项的规范说明，见：[接口规范](/zh-cn/manual/specification)
 
 ## 作用域
 
@@ -202,7 +260,7 @@ target("demo")
 - print
 - os
 
-当然虽然内置lua api提供不多，但xmake还提供了很多扩展api，像描述api就不多说，详细可参考：[API手册](/zh-cn/manual)
+当然虽然内置lua api提供不多，但xmake还提供了很多扩展api，像描述api就不多说，详细可参考：[API手册](/zh-cn/manual/builtin_modules)
 
 还有些辅助api，例如：
 
@@ -349,7 +407,65 @@ add_files("*.c")
 
 最后附上，tbox的[xmake.lua](https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua)描述，仅供参考。。
 
-## 配置结构
+## 多级配置
+
+在脚本域我们可以通过import导入各种丰富的扩展模块来使用，而在描述域我们可以通过[includes](/#/zh-cn/manual/global_interfaces?id=includes)接口，来引入项目子目录下的xmake.lua配置。
+
+记住：xmake的includes是按照tree结构来处理配置关系的，子目录下的xmake.lua里面的target配置会继承父xmake.lua中的根域配置，例如：
+
+目前有如下项目结构：
+
+```
+projectdir
+    - xmake.lua
+    - src
+      - xmake.lua
+```
+
+`projectdir/xmake.lua`是项目的根xmake.lua配置，而`src/xmake.lua`是项目的子配置。
+
+`projectdir/xmake.lua`内容：
+
+```lua
+add_defines("ROOT")
+
+target("test1")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("TEST1")
+
+target("test2")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("TEST2")
+
+includes("src")
+```
+
+里面全局根域配置了`add_defines("ROOT")`，会影响下面的所有target配置，包括includes里面子xmake.lua中的所有target配置，所以这个是全局总配置。
+
+而在test1/test2里面的`add_defines("TEST1")`和`add_defines("TEST2")`属于局部配置，只对当前target生效。
+
+`src/xmake.lua`内容：
+
+```lua
+add_defines("ROOT2")
+
+target("test3")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("TEST3")
+```
+
+在`src/xmake.lua`子配置中，也有个全局根域，配置了`add_defines("ROOT2")`，这个属于子配置根域，只对当前子xmake.lua里面所有target生效，也会对下级includes里面的子xmake.lua中target生效，因为之前说了，xmake是tree状结构的配置继承关系。
+
+所以，这几个target的最终配置结果依次是：
+
+```
+target("test1"): -DROOT -DTEST1
+target("test2"): -DROOT -DTEST2
+target("test3"): -DROOT -DROOT2 -DTEST3
+```
 
 ## 语法简化
 

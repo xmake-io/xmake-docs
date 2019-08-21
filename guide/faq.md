@@ -60,7 +60,7 @@ $ xmake -v --backtrace
 $ xmake [-w|--warning] 
 ```
 
-## How to scan source code and generate xmake.lua automaticlly
+## How to scan source code and generate xmake.lua automaticlly?
 
 You only need run the following command:
 
@@ -84,3 +84,10 @@ $ xmake f -y
 
 If you want to known more information please see [Scan source codes and build project without makefile](https://tboox.org/2017/01/07/build-without-makefile/)
 
+## Why is xmake.lua being executed multiple times?
+
+Xmake.lua is divided into description fields and script fields. In the description field, various configuration fields are parsed multiple times in stages, and it is possible to execute multiple times. Therefore, do not write complex scripts in the description field.
+
+If you want to write a variety of complex scripts, please configure them in the script domain. The script domain of `target/on_load` can also flexibly configure various target related settings and provide more powerful lua script module support.
+
+See: [Description of Syntax Description](/guide/syntax_description) for more details.
