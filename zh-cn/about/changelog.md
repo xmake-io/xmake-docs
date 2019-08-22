@@ -1,4 +1,23 @@
 
+## v2.2.8 (未发布)
+
+### 新特性
+
+* 添加protobuf c/c++构建规则
+* [#468](https://github.com/xmake-io/xmake/pull/468): 添加对 Windows 的 UTF-8 支持
+* [#472](https://github.com/xmake-io/xmake/pull/472): 添加`xmake project -k vsxmake201x`去更好的支持vs工程的生成，内部直接调用xmake来编译
+* [#487](https://github.com/xmake-io/xmake/issues/487): 通过`xmake --files="src/*.c"`支持指定一批文件进行编译。
+* 针对io模块增加文件锁接口
+* [#513](https://github.com/xmake-io/xmake/issues/513): 增加对android/termux终端的支持，可在android设备上执行xmake来构建项目
+* [#517](https://github.com/xmake-io/xmake/issues/517): 为target增加`add_cleanfiles`接口，实现快速定制化清理文件
+* [#537](https://github.com/xmake-io/xmake/pull/537): 添加`set_runenv`接口去覆盖写入系统envs
+
+### 改进
+
+* [#257](https://github.com/xmake-io/xmake/issues/257): 锁定当前正在构建的工程，避免其他xmake进度同时对其操作
+* 尝试采用/dev/shm作为os.tmpdir去改善构建过程中临时文件的读写效率
+* [#542](https://github.com/xmake-io/xmake/pull/542): 改进vs系列工具链的unicode输出问题
+
 ## v2.2.7
 
 ### 新特性
