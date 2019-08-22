@@ -354,6 +354,18 @@ XMake跟`cmake`, `premake`等其他一些构建工具的区别在于：
 $ xmake project -k makefile
 ```
 
+### 生成CMakelists.txt
+
+```console
+$ xmake project -k cmakelists
+```
+
+### 生成compiler_flags
+
+```console
+$ xmake project -k compiler_flags
+```
+
 ### 生成compiler_commands
 
 导出每个源文件的编译信息，生成基于clang的编译数据库文件，json格式，可用于跟ide，编辑器，静态分析工具进行交互。

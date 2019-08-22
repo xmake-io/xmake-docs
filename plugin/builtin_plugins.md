@@ -324,6 +324,18 @@ If you want to cancel multiline input, please input character `q`, for example:
 $ xmake project -k makefile
 ```
 
+### Generate CMakelists.txt
+
+```console
+$ xmake project -k cmakelists
+```
+
+### Generate compiler_flags
+
+```console
+$ xmake project -k compiler_flags
+```
+
 ### Generate compiler_commands
 
 We can export the compilation commands info of all source files and it is JSON compilation database format.
