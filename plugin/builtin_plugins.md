@@ -1,4 +1,185 @@
 
+
+## Generate IDE Project Files
+
+### Generate Makefile
+
+```bash
+$ xmake project -k makefile
+```
+
+### Generate CMakelists.txt
+
+```console
+$ xmake project -k cmakelists
+```
+
+### Generate compiler_flags
+
+```console
+$ xmake project -k compiler_flags
+```
+
+### Generate compiler_commands
+
+We can export the compilation commands info of all source files and it is JSON compilation database format.
+
+```console
+$ xmake project -k compile_commands
+```
+
+The the content of the output file:
+
+```
+[
+  { "directory": "/home/user/llvm/build",
+    "command": "/usr/bin/clang++ -Irelative -DSOMEDEF=\"With spaces, quotes and \\-es.\" -c -o file.o file.cc",
+    "file": "file.cc" },
+  ...
+]
+
+```
+
+Please see [JSONCompilationDatabase](#https://clang.llvm.org/docs/JSONCompilationDatabase.html) if need known more info about `compile_commands`.
+
+### Generate VisualStudio Project
+
+#### Compile with xmake integration
+
+v2.2.8 or later, provides a new version of the vs project generation plugin extension, which is very different from the previous plugin processing mode for generating vs. The previously generated vs project is the compilation of all files and then transferred to vs. To handle compilation.
+
+But this mode, there is no way to support the rules of xmake. Because xmake's rules use a lot of custom scripts like `on_build`, they can't be expanded, so projects like qt, wdk can't support exporting to vs. compile.
+
+Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellsence and definition jumps, as well as breakpoint debugging.
+
+The specific use is similar to the old version:
+
+```console
+$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
+```
+
+![](/assets/img/manual/qt_vs.png)
+
+In addition, the vsxmake plugin will additionally generate a custom configuration property page for easy and flexible modification and appending some xmake compilation configuration in the vs., and even switch to other cross toolchains in the configuration to achieve the vs. vs. Cross-compilation of other platforms such as android, linux.
+
+![](/assets/img/manual/property_page_vsxmake.png)
+
+#### Using vs built-in compilation mechanism
+
+!> It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.
+
+```bash
+$ xmake project -k [vs2008|vs2013|vs2015|..]
+```
+
+v2.1.2 or later, it supports multi-mode and multi-architecture generation for vs201x project.
+
+For example:
+
+```bash
+$ xmake project -k vs2017 -m "debug,release"
+```
+
+It will generate four project configurations: `debug|x86`, `debug|x64`, `release|x86`, `release|x64`.
+
+Or you can set modes to `xmake.lua`:
+
+```lua
+set_modes("debug", "release")
+```
+
+Then, we run the following command:
+
+```bash
+$ xmake project -k vs2017
+```
+
+The effect is same.
+
+## Run the Custom Lua Script
+
+### Run the given script
+
+Write a simple lua script:
+
+```lua
+function main()
+    print("hello xmake!")
+end
+```
+
+Run this lua script.
+
+```bash
+$ xmake lua /tmp/test.lua
+```
+
+<p class="tip">
+    You can also use `import` api to write a more advance lua script. 
+</p>
+
+### Run the builtin script
+
+You can run `xmake lua -l` to list all builtin script name, for example:
+
+```bash
+$ xmake lua -l
+scripts:
+    cat
+    cp
+    echo
+    versioninfo
+    ...
+```
+
+And run them:
+
+```bash
+$ xmake lua cat ~/file.txt
+$ xmake lua echo "hello xmake"
+$ xmake lua cp /tmp/file /tmp/file2
+$ xmake lua versioninfo
+```
+
+### Run interactive commands (REPL) 
+
+Enter interactive mode:
+
+```bash
+$ xmake lua
+> 1 + 2
+3
+
+> a = 1
+> a
+1
+
+> for _, v in pairs({1, 2, 3}) do
+>> print(v)
+>> end
+1
+2
+3
+```
+
+And we can `import` modules:
+
+```bash
+> task = import("core.project.task")
+> task.run("hello")
+hello xmake!
+```
+
+If you want to cancel multiline input, please input character `q`, for example:
+
+```bash
+> for _, v in ipairs({1, 2}) do
+>> print(v)
+>> q             <--  cancel multiline and clear previous input
+> 1 + 2
+3
+```
+
 ## Macros Recording and Playback 
 
 ### Introduction
@@ -231,182 +412,6 @@ end
 <p class="tip">
     If you want to known more options, please run: `xmake macro --help`
 </p>
-
-## Run the Custom Lua Script
-
-### Run the given script
-
-Write a simple lua script:
-
-```lua
-function main()
-    print("hello xmake!")
-end
-```
-
-Run this lua script.
-
-```bash
-$ xmake lua /tmp/test.lua
-```
-
-<p class="tip">
-    You can also use `import` api to write a more advance lua script. 
-</p>
-
-### Run the builtin script
-
-You can run `xmake lua -l` to list all builtin script name, for example:
-
-```bash
-$ xmake lua -l
-scripts:
-    cat
-    cp
-    echo
-    versioninfo
-    ...
-```
-
-And run them:
-
-```bash
-$ xmake lua cat ~/file.txt
-$ xmake lua echo "hello xmake"
-$ xmake lua cp /tmp/file /tmp/file2
-$ xmake lua versioninfo
-```
-
-### Run interactive commands (REPL) 
-
-Enter interactive mode:
-
-```bash
-$ xmake lua
-> 1 + 2
-3
-
-> a = 1
-> a
-1
-
-> for _, v in pairs({1, 2, 3}) do
->> print(v)
->> end
-1
-2
-3
-```
-
-And we can `import` modules:
-
-```bash
-> task = import("core.project.task")
-> task.run("hello")
-hello xmake!
-```
-
-If you want to cancel multiline input, please input character `q`, for example:
-
-```bash
-> for _, v in ipairs({1, 2}) do
->> print(v)
->> q             <--  cancel multiline and clear previous input
-> 1 + 2
-3
-```
-
-## Generate IDE Project Files
-
-### Generate Makefile
-
-```bash
-$ xmake project -k makefile
-```
-
-### Generate CMakelists.txt
-
-```console
-$ xmake project -k cmakelists
-```
-
-### Generate compiler_flags
-
-```console
-$ xmake project -k compiler_flags
-```
-
-### Generate compiler_commands
-
-We can export the compilation commands info of all source files and it is JSON compilation database format.
-
-```console
-$ xmake project -k compile_commands
-```
-
-The the content of the output file:
-
-```
-[
-  { "directory": "/home/user/llvm/build",
-    "command": "/usr/bin/clang++ -Irelative -DSOMEDEF=\"With spaces, quotes and \\-es.\" -c -o file.o file.cc",
-    "file": "file.cc" },
-  ...
-]
-
-```
-
-Please see [JSONCompilationDatabase](#https://clang.llvm.org/docs/JSONCompilationDatabase.html) if need known more info about `compile_commands`.
-
-### Generate VisualStudio Project
-
-#### Compile with xmake integration
-
-v2.2.8 or later, provides a new version of the vs project generation plugin extension, which is very different from the previous plugin processing mode for generating vs. The previously generated vs project is the compilation of all files and then transferred to vs. To handle compilation.
-
-But this mode, there is no way to support the rules of xmake. Because xmake's rules use a lot of custom scripts like `on_build`, they can't be expanded, so projects like qt, wdk can't support exporting to vs. compile.
-
-Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellsence and definition jumps, as well as breakpoint debugging.
-
-The specific use is similar to the old version:
-
-```console
-$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
-```
-
-![](/assets/img/manual/qt_vs.png)
-
-#### Using vs built-in compilation mechanism
-
-!> It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.
-
-```bash
-$ xmake project -k [vs2008|vs2013|vs2015|..]
-```
-
-v2.1.2 or later, it supports multi-mode and multi-architecture generation for vs201x project.
-
-For example:
-
-```bash
-$ xmake project -k vs2017 -m "debug,release"
-```
-
-It will generate four project configurations: `debug|x86`, `debug|x64`, `release|x86`, `release|x64`.
-
-Or you can set modes to `xmake.lua`:
-
-```lua
-set_modes("debug", "release")
-```
-
-Then, we run the following command:
-
-```bash
-$ xmake project -k vs2017
-```
-
-The effect is same.
 
 ## Generate Doxygen Document
 
