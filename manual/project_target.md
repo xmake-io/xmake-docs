@@ -117,6 +117,7 @@ target("test2")
 | [add_values](#targetadd_values)                 | Add custom configuartion values                        | >= 2.2.1                    |
 | [set_rundir](#targetset_rundir)                 | Set run directory                                      | >= 2.2.7                    |
 | [add_runenvs](#targetadd_runenvs)               | Add run environments                                   | >= 2.2.7                    |
+| [set_runenv](#targetset_runenv)                 | Set run environment                                    | >= 2.2.8                    |
 | [set_installdir](#targetset_installdir)         | Set the installation directory                         | >= 2.2.5                    |
 | [add_installfiles](#targetadd_installfiles)     | add installation files                                 | >= 2.2.5                    |
 | [add_headerfiles](#targetadd_headerfiles)       | Add header files                                       | >= 2.2.5                    |
@@ -2047,16 +2048,34 @@ target("test")
 
 ### target:add_runenvs
 
-#### Adding runtime variables
+#### Adding runtime environment variables
 
-This interface is used to add environment variables that set the default run target program.
+This interface is used to add an environment variable that sets the default running target program. Unlike [set_runenv](#targetset_runenv), this interface appends the value in the existing system env and does not overwrite it.
+
+Therefore, for PATH, it is very convenient to append values through this interface, and this interface supports multi-value settings, so it is usually used to set multi-value env with path sep. .
 
 ```lua
 target("test")
-     set_kind("binary")
-     add_files("src/*.c")
-     add_runenvs("PATH", "/tmp/bin", "xxx/bin")
-     add_runenvs("NAME", "value")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_runenvs("PATH", "/tmp/bin", "xxx/bin")
+    add_runenvs("LD_LIBRARY_PATH", "/tmp/lib", "xxx/lib")
+```
+
+### target:set_runenv
+
+#### Setting the runtime environment variable
+
+This interface differs from [add_runenvs](#targetadd_runenvs) in that `set_runenv` is an override setting for an environment variable that overrides the env value of the original system environment, and this interface is singular and cannot pass multiple parameters.
+
+So, if you want to override the env that sets the multipath in PATH, you need to splicing yourself:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_runenv("PATH", path.joinenv("/tmp/bin", "xxx/bin"))
+    set_runenv("NAME", "value")
 ```
 
 ### target:set_installdir

@@ -118,6 +118,7 @@ target("test2")
 | [add_values](#targetadd_values)                 | 添加一些扩展配置值                   | >= 2.2.1 |
 | [set_rundir](#targetset_rundir)                 | 设置运行目录                         | >= 2.2.7 |
 | [add_runenvs](#targetadd_runenvs)               | 添加运行环境变量                     | >= 2.2.7 |
+| [set_runenv](#targetset_runenv)                 | 设置运行环境变量                     | >= 2.2.8 |
 | [set_installdir](#targetset_installdir)         | 设置安装目录                         | >= 2.2.5 |
 | [add_installfiles](#targetadd_installfiles)     | 添加安装文件                         | >= 2.2.5 |
 | [add_headerfiles](#targetadd_headerfiles)       | 添加安装头文件                       | >= 2.2.5 |
@@ -2043,14 +2044,32 @@ target("test")
 
 #### 添加运行环境变量
 
-此接口用于添加设置默认运行target程序的环境变量。
+此接口用于添加设置默认运行target程序的环境变量，跟[set_runenv](#targetset_runenv)不同的是，此接口是对已有系统env中的值进行追加，并不会覆盖。
+
+所以，对于PATH这种，通过此接口追加值是非常方便的，而且此接口支持多值设置，所以通常就是用来设置带有path sep的多值env。。
 
 ```lua
 target("test")
     set_kind("binary")
     add_files("src/*.c")
     add_runenvs("PATH", "/tmp/bin", "xxx/bin")
-    add_runenvs("NAME", "value")
+    add_runenvs("LD_LIBRARY_PATH", "/tmp/lib", "xxx/lib")
+```
+
+### target:set_runenv
+
+#### 设置运行环境变量
+
+此接口跟[add_runenvs](#targetadd_runenvs)不同的是，`set_runenv`是对某个环境变量的覆盖设置，会覆盖原有系统环境的env值，并且此接口是单数设置，不能传递多参。
+
+所以，如果要覆盖设置PATH这中多路径的env，需要自己去拼接：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_runenv("PATH", path.joinenv("/tmp/bin", "xxx/bin"))
+    set_runenv("NAME", "value")
 ```
 
 ### target:set_installdir
