@@ -358,7 +358,7 @@ If the remote repository has updates, you can manually perform a repository upda
 $ xmake repo -u
 ```
 
-## Adding packages to the official repository
+## Submit packages to the official repository
 
 ### Package structure in repository
 
