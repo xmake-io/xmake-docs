@@ -1,11 +1,11 @@
 
-## v2.2.8 (unreleased)
+## v2.2.8
 
 ### New features
 
 * Add protobuf c/c++ rules
 * [#468](https://github.com/xmake-io/xmake/pull/468): Add utf-8 support for io module on windows
-* [#472](https://github.com/xmake-io/xmake/pull/472): Add `xmake project -k vsxmake201x` plugin to support call xmake from vs/msbuild
+* [#472](https://github.com/xmake-io/xmake/pull/472): Add `xmake project -k vsxmake` plugin to support call xmake from vs/msbuild
 * [#487](https://github.com/xmake-io/xmake/issues/487): Support to build the selected files for the given target
 * Add filelock for io
 * [#513](https://github.com/xmake-io/xmake/issues/513): Support for android/termux
@@ -17,6 +17,11 @@
 * [#257](https://github.com/xmake-io/xmake/issues/257): Lock the whole project to avoid other process to access.
 * Attempt to enable /dev/shm for the os.tmpdir
 * [#542](https://github.com/xmake-io/xmake/pull/542): Improve vs unicode output for link/cl
+* Improve binary bitcode lua scripts in the program directory
+
+### Bugs fixed
+
+* [#549](https://github.com/xmake-io/xmake/issues/549): Fix error caused by the new vsDevCmd.bat of vs2019
 
 ## v2.2.7
 

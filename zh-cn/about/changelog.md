@@ -1,5 +1,5 @@
 
-## v2.2.8 (未发布)
+## v2.2.8
 
 ### 新特性
 
@@ -17,6 +17,11 @@
 * [#257](https://github.com/xmake-io/xmake/issues/257): 锁定当前正在构建的工程，避免其他xmake进程同时对其操作
 * 尝试采用/dev/shm作为os.tmpdir去改善构建过程中临时文件的读写效率
 * [#542](https://github.com/xmake-io/xmake/pull/542): 改进vs系列工具链的unicode输出问题
+* 对于安装的lua脚本，启用lua字节码存储，减少安装包大小（<2.4M），提高运行加载效率。
+
+### Bugs修复
+
+* [#549](https://github.com/xmake-io/xmake/issues/549): 修复新版vs2019下检测环境会卡死的问题
 
 ## v2.2.7
 
