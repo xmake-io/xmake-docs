@@ -55,7 +55,13 @@ Therefore, in order to solve this problem, the new version of the vs. build plug
 The specific use is similar to the old version:
 
 ```console
-$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
+$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug;release"
+```
+
+If no version is specified, xmake will automatically detect the current version of vs to generate:
+
+```bash
+$ xmake project -k vsxmake -m "debug;release"
 ```
 
 ![](/assets/img/manual/qt_vs.png)

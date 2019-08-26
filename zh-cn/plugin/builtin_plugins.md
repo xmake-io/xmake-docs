@@ -64,7 +64,13 @@ v2.2.8以上版本，提供了新版本的vs工程生成插件扩展，跟之前
 具体使用方式跟老版本类似：
 
 ```console
-$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug,release"
+$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug;release"
+```
+
+如果没指明版本，那么xmake会自动探测当前已有的vs版本来生成：
+
+```bash
+$ xmake project -k vsxmake -m "debug;release"
 ```
 
 ![](/assets/img/manual/qt_vs.png)
