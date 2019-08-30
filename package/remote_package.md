@@ -144,6 +144,18 @@ target("test")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 ```
 
+We can also add a package alias name to simplify the use of `add_packages`:
+
+```lua
+add_requires("vcpkg::zlib", {alias = "zlib"})
+add_requires("vcpkg::pcre2", {alias = "pcre2"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("zlib", "pcre2")
+```
+
 ### Add a conan dependency package
 
 ```lua
