@@ -41,6 +41,20 @@ We use `add_deps` to link a share library to test target.
 
 Create an empty project:
 
+v2.2.9 or higher:
+
+```console
+$ xmake create -l c++ -t qt.console test
+$ xmake create -l c++ -t qt.static test
+$ xmake create -l c++ -t qt.shared test
+$ xmake create -l c++ -t qt.quickapp test
+$ xmake create -l c++ -t qt.widgetapp test
+```
+
+For more project templates see: `xmake create --help`
+
+Older version of v2.2.8:
+
 ```console
 $ xmake create -l c++ -t console_qt test
 $ xmake create -l c++ -t static_qt test

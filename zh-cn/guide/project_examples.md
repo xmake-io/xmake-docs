@@ -41,6 +41,20 @@ target("test")
 
 创建一个空工程：
 
+v2.2.9以上版本：
+
+```console
+$ xmake create -l c++ -t qt.console test
+$ xmake create -l c++ -t qt.static test
+$ xmake create -l c++ -t qt.shared test
+$ xmake create -l c++ -t qt.quickapp test
+$ xmake create -l c++ -t qt.widgetapp test
+```
+
+更多工程模板见：`xmake create --help`
+
+v2.2.8以前老版本：
+
 ```console
 $ xmake create -l c++ -t console_qt test
 $ xmake create -l c++ -t static_qt test
