@@ -1831,7 +1831,7 @@ target("test")
 
 对于如何设置包搜索目录，可参考：[add_packagedirs](/zh-cn/manual/global_interfaces?id=add_packagedirs) 接口
 
-而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](#add_requires)定义的包。
+而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](/zh-cn/manual/global_interfaces?id=add_requires)定义的包。
 
 ```lua
 add_requires("zlib", "polarssl")

@@ -1837,7 +1837,7 @@ Users no longer need to call the [add_links](#targetadd_links), [add_includedirs
 
 For how to set up the package search directory, please refer to: [add_packagedirs](/manual/global_interfaces?id=add_packagedirs) interface
 
-After v2.2.2, this interface also supports packages defined by [add_requires](#add_requires) in remote dependency management.
+After v2.2.2, this interface also supports packages defined by [add_requires](/manual/global_interfaces?id=add_requires) in remote dependency management.
 
 ```lua
 add_requires("zlib", "polarssl")
