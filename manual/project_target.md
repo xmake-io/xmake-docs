@@ -1835,7 +1835,7 @@ In this way, when compiling the test target, if the package exists, the macro de
 
 Users no longer need to call the [add_links](#targetadd_links), [add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags) interfaces to configure the dependent library links.
 
-For how to set up the package search directory, please refer to: [add_packagedirs](#targetadd_packagedirs) interface
+For how to set up the package search directory, please refer to: [add_packagedirs](/manual/global_interfaces?id=add_packagedirs) interface
 
 After v2.2.2, this interface also supports packages defined by [add_requires](#add_requires) in remote dependency management.
 

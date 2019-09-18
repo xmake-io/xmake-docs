@@ -1829,7 +1829,7 @@ target("test")
 
 用户不再需要自己单独调用[add_links](#targetadd_links)，[add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags)等接口，来配置依赖库链接了。
 
-对于如何设置包搜索目录，可参考：[add_packagedirs](#targetadd_packagedirs) 接口
+对于如何设置包搜索目录，可参考：[add_packagedirs](/zh-cn/manual/global_interfaces?id=add_packagedirs) 接口
 
 而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](#add_requires)定义的包。
 
