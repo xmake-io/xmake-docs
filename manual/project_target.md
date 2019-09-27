@@ -2085,6 +2085,59 @@ target("test")
 By default, `xmake install` will be installed to the system `/usr/local` directory. We can specify other installation directories except `xmake install -o /usr/local`.
 You can also set a different installation directory for the target in xmake.lua instead of the default directory.
 
+### target:add_installfiles
+
+#### Add installation files
+
+2.2.5 version of the new interface, used to set the corresponding file for each target, generally used for the `xmake install/uninstall` command.
+
+For example, we can specify to install various types of files to the installation directory:
+
+```lua
+target("test")
+    add_installfiles("src/*.h")
+    add_installfiles("doc/*.md")
+```
+
+By default on Linux and other systems, we will install to `/usr/local/*.h, /usr/local/*.md`, but we can also specify to install to a specific subdirectory:
+
+```lua
+target("test")
+    add_installfiles("src/*.h", {prefixdir = "include"})
+    add_installfiles("doc/*.md", {prefixdir = "share/doc"})
+```
+
+The above settings, we will install to `/usr/local/include/*.h, /usr/local/share/doc/*.md`
+
+We can also install by subdirectory in the source file by `()`, for example:
+
+```lua
+target("test")
+    add_installfiles("src/(tbox/*.h)", {prefixdir = "include"})
+    add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
+```
+
+We extract the `trc/*.h` subdirectory structure from the files in `src/tbox/*.h` and install it: `/usr/local/include/tbox/*.h, /usr/local /share/doc/tbox/*.md`
+
+Of course, users can also use the [set_installdir](#targetset_installdir) interface.
+
+For a detailed description of this interface, see: https://github.com/xmake-io/xmake/issues/318
+
+### target:add_headerfiles
+
+#### Add header files
+
+2.2.5 version of the new interface, used to set the corresponding header file for each target, generally used for the `xmake install/uninstall` command.
+
+This interface is used in almost the same way as the [add_installfiles](#targetadd_installfiles) interface. It can be used as a Tianjian installation file, but this interface is only used to install header files.
+Therefore, it is much easier to use than `add_installfiles`. By default, prefixfix is not set, and the header files are automatically installed into the corresponding `include` subdirectory.
+
+And this interface for the `xmake project -k vs201x` and other plug-in generated IDE files, will also add the corresponding header file into it.
+
+<p class="tip">
+It should be noted that the previous [add_headers](#targetadd_headers) interface has been deprecated. Please replace this with the new version. This old interface will automatically copy the header files to the build directory during the compilation process. This logic is not designed. well.
+</p>
+
 ### target:set_configdir
 
 #### Set the output directory of configuration files
