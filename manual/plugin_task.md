@@ -162,7 +162,7 @@ Options:
     -P PROJECT, --project=PROJECT Change to the given project directory.
                                            Search priority:
                                                1. The Given Command Argument
-                                               2. The Envirnoment Variable: XMAKE_PROJECT_DIR
+                                               2. The Environment Variable: XMAKE_PROJECT_DIR
                                                3. The Current Directory
 
     -b, --bright Enable bright.

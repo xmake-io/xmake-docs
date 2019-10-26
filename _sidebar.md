@@ -24,7 +24,7 @@
 - Plugin
 
   - [Plugin Development](plugin/plugin_development.md)
-  - [Bultin Plugins](plugin/builtin_plugins.md)
+  - [Builtin Plugins](plugin/builtin_plugins.md)
   - [More Plugins](plugin/more_plugins.md)
 
 - API Manual

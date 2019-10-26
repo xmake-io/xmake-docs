@@ -4,7 +4,7 @@ Set compilation configuration before building project with command `xmake f|conf
 And if you want to known more options, please run: `xmake f --help`。
 
 <p class="tip">
-    You can use short or long command option, for exmaple: <br>
+    You can use short or long command option, for example: <br>
     `xmake f` or `xmake config`.<br>
     `xmake f -p linux` or `xmake config --plat=linux`.
 </p>
@@ -91,9 +91,9 @@ Fro other cross platform:
 ```bash
 $ xmake f -p cross --sdk=/usr/local/arm-xxx-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
-``` 
+```
 
-For custem cross platform (`is_plat("myplat")`):
+For custom cross platform (`is_plat("myplat")`):
 
 ```bash
 $ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
@@ -319,12 +319,12 @@ $ xmake
 ```
 
 <p class="tip">
-    You can use short or long command option, for exmaple: `xmake g` or `xmake global`.<br>
+    You can use short or long command option, for example: `xmake g` or `xmake global`.<br>
 </p>
 
 ## Clean Configuration
 
-We can clean all cached configuration and re-configure projecct.
+We can clean all cached configuration and re-configure project.
 
 ```bash
 $ xmake f -c

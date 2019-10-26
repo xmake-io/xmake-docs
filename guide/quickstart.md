@@ -81,6 +81,6 @@ hello`main:
 ```
 
 <p class="tip">
-    You can also use short command option, for exmaple: `xmake r` or `xmake run`
+    You can also use short command option, for example: `xmake r` or `xmake run`
 </p>
 

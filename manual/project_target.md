@@ -30,7 +30,7 @@ target("test2")
 | [set_strip](#targetset_strip)                   | Strip target symbols                                   | >= 1.0.1                    |
 | [set_enabled](#targetset_enabled)               | Enable or disable target                               | >= 2.2.2                    |
 | [set_default](#targetset_default)               | Mark as default target                                 | >= 2.1.3                    |
-| [set_options](#targetset_options)               | Set configuartion options                              | >= 1.0.1                    |
+| [set_options](#targetset_options)               | Set configuration options                              | >= 1.0.1                    |
 | [set_symbols](#targetset_symbols)               | Set symbol info                                        | >= 1.0.1                    |
 | [set_basename](#targetset_basename)             | Set the base name of target file                       | >= 2.1.2                    |
 | [set_filename](#targetset_filename)             | Set the full name of target file                       | >= 2.1.2                    |
@@ -43,7 +43,7 @@ target("test2")
 | [set_dependir](#targetset_dependir)             | Set output directories for dependent files             | >= 2.2.2                    |
 | [add_imports](#targetadd_imports)               | Add imported modules for the custom script             | >= 2.1.7                    |
 | [add_rules](#targetadd_rules)                   | Add custom compilation rule to target                  | >= 2.1.9                    |
-| [on_load](#targeton_load)                       | Run custom load target configuartion script            | >= 2.1.5                    |
+| [on_load](#targeton_load)                       | Run custom load target configuration script            | >= 2.1.5                    |
 | [on_link](#targeton_link)                       | Run custom link target script                          | >= 2.2.7                    |
 | [on_build](#targeton_build)                     | Run custom build target script                         | >= 2.0.1                    |
 | [on_build_file](#targeton_build_file)           | Run custom build single file script                    | >= 2.2.3                    |
@@ -113,17 +113,17 @@ target("test2")
 | [add_frameworkdirs](#targetadd_frameworkdirs)   | Add framework search directories                       | >= 2.1.5                    |
 | [set_tools](#targetset_tools)                   | Set toolchains                                         | >= 2.2.1                    |
 | [add_tools](#targetadd_tools)                   | Add toolchains                                         | >= 2.2.1                    |
-| [set_values](#targetset_values)                 | Set custom configuartion values                        | >= 2.2.1                    |
-| [add_values](#targetadd_values)                 | Add custom configuartion values                        | >= 2.2.1                    |
+| [set_values](#targetset_values)                 | Set custom configuration values                        | >= 2.2.1                    |
+| [add_values](#targetadd_values)                 | Add custom configuration values                        | >= 2.2.1                    |
 | [set_rundir](#targetset_rundir)                 | Set run directory                                      | >= 2.2.7                    |
 | [add_runenvs](#targetadd_runenvs)               | Add run environments                                   | >= 2.2.7                    |
 | [set_runenv](#targetset_runenv)                 | Set run environment                                    | >= 2.2.8                    |
 | [set_installdir](#targetset_installdir)         | Set the installation directory                         | >= 2.2.5                    |
 | [add_installfiles](#targetadd_installfiles)     | add installation files                                 | >= 2.2.5                    |
 | [add_headerfiles](#targetadd_headerfiles)       | Add header files                                       | >= 2.2.5                    |
-| [set_configdir](#targetset_configdir)           | Set the output directory of configuartion files        | >= 2.2.5                    |
-| [set_configvar](#targetset_configvar)           | Set template configuartion variable                    | >= 2.2.5                    |
-| [add_configfiles](#targetadd_configfiles)       | Add template configuartion files                       | >= 2.2.5                    |
+| [set_configdir](#targetset_configdir)           | Set the output directory of configuration files        | >= 2.2.5                    |
+| [set_configvar](#targetset_configvar)           | Set template configuration variable                    | >= 2.2.5                    |
+| [add_configfiles](#targetadd_configfiles)       | Add template configuration files                       | >= 2.2.5                    |
 
 ### target
 
@@ -137,10 +137,10 @@ target("test")
     add_files("src/*.c")
 ```
 
-And we can call `target("demo")` repeatly to enter the target scope for modifying it's configuartion.
+And we can call `target("demo")` repeatedly to enter the target scope for modifying it's configuration.
 
 ```lua
--- defines target: demo and enter it's scope to set configuartion
+-- defines target: demo and enter it's scope to set configuration
 target("demo")
     set_kind("binary")
     add_files("src/demo.c")
@@ -155,7 +155,7 @@ target("demo")
 ```
 
 <p class="tip">
-All configuartion in root scope affects all targets, but does not affect the configuartion of `option()`.
+All configuration in root scope affects all targets, but does not affect the configuration of `option()`.
 </p>
 
 For example:
@@ -299,7 +299,7 @@ $ xmake install [-a|--all]
 
 ### target:set_options
 
-#### Set configuartion options
+#### Set configuration options
 
 Add option dependencies. If you have customized some options through the [option](#option) interface, you can add associations only if you specify this option under the target target field.
 
@@ -609,7 +609,7 @@ We can also specify the application of local files to the rules, see: [add_files
 
 ### target:on_load
 
-#### Run custom load target configuartion script
+#### Run custom load target configuration script
 
 This script will be executed when the target is initialized and loaded, and some dynamic target configurations can be made to achieve more flexible target description definitions, for example:
 
