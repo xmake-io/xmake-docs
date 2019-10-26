@@ -11,9 +11,9 @@ Get the help info of the configuration command.
 
 ```bash
 $ xmake f [-h|--help]
-``` 
+```
 
-Get the help info of the givent action or plugin command.
+Get the help info of the given action or plugin command.
 
 ```bash
 $ xmake [action|plugin] [-h|--help]
@@ -42,7 +42,7 @@ $ xmake
 
 If it fails again, please add `-v` or `--verbose` options to get more verbose info.
 
-For exmaple: 
+For example:
 
 ```hash
 $ xmake [-v|--verbose] 
@@ -60,7 +60,7 @@ $ xmake -v --backtrace
 $ xmake [-w|--warning] 
 ```
 
-## How to scan source code and generate xmake.lua automaticlly?
+## How to scan source code and generate xmake.lua automatically?
 
 You only need run the following command:
 
@@ -68,7 +68,7 @@ You only need run the following command:
 $ xmake
 ```
 
-xmake will scan all source code in current directory and build it automaticlly. 
+xmake will scan all source code in current directory and build it automatically.
 
 And we can run it directly.
 

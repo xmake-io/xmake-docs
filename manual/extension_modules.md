@@ -149,7 +149,7 @@ function main(...)
 
     -- Run the built-in xmake configuration task, equivalent to: xmake f|config --plat=iphoneos --arch=armv7
     task.run("config", {plat="iphoneos", arch="armv7"})
-emd
+end
 ```
 
 ### core.tool.linker
@@ -289,7 +289,7 @@ For the target, link the specified object file list to generate the correspondin
 compiler.compile("xxx.c", "xxx.o", "xxx.h.d", {target = target})
 ```
 
-Where [target](#target) is the project target, here is the specific compile option that is mainly used to get the taeget. If you get the project target object, see: [core.project.project](#core-project-project)
+Where [target](#target) is the project target, here is the specific compile option that is mainly used to get the target. If you get the project target object, see: [core.project.project](#core-project-project)
 
 The `xxx.h.d` file is used to store the header file dependency file list for this source file. Finally, these two parameters are optional. You can not pass them when compiling:
 
@@ -870,7 +870,7 @@ end
 Load specific language objects from the source file extension: `.cc, .c, .cpp, .mm, .swift, .go ..`, for example:
 
 ```lua
-local lang = language.load_sk(".cpp")
+local lang = language.load_ex(".cpp")
 if lang then
     print(lang:name())
 end

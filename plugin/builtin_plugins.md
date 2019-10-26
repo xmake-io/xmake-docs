@@ -50,7 +50,7 @@ v2.2.8 or later, provides a new version of the vs project generation plugin exte
 
 But this mode, there is no way to support the rules of xmake. Because xmake's rules use a lot of custom scripts like `on_build`, they can't be expanded, so projects like qt, wdk can't support exporting to vs. compile.
 
-Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellsence and definition jumps, as well as breakpoint debugging.
+Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellisense and definition jumps, as well as breakpoint debugging.
 
 The specific use is similar to the old version:
 
@@ -192,7 +192,7 @@ If you want to cancel multiline input, please input character `q`, for example:
 
 We can record and playback our xmake commands and save as macro quickly using this plugin.
 
-And we can run this macro to simplify our jobs repeatly.
+And we can run this macro to simplify our jobs repeatably.
 
 ### Record Commands
 

@@ -320,7 +320,7 @@ Of course, if we have no special requirements for the version of the dependency 
 add_requires("tbox", "libpng", "zlib")
 ```
 
-This will use the latest known version of the package, or the source code compiled from the master branch. If the current package has a git repo address we can also specify a specific branch version:
+This will use the latest known version of the package, or the source code compiled from the master branch. If the current package has a git repository address we can also specify a specific branch version:
 
 ```lua
 add_requires("tbox master")
@@ -483,7 +483,7 @@ We can add through this interface:
 add_repositories("my-repo git@github.com:myrepo/xmake-repo.git")
 ```
 
-If we just want to add one or two private packages, this time to build a git repo is too big, we can directly put the package repository into the project, for example:
+If we just want to add one or two private packages, this time to build a git repository is too big, we can directly put the package repository into the project, for example:
 
 ```
 projectdir
