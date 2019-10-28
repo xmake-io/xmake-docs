@@ -19,6 +19,8 @@ bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh 
 Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
 ```
 
+!> 如果ps脚本执行提示失败，可以尝试在管理员模式下执行
+
 ## Windows
 
 ### 使用安装包
