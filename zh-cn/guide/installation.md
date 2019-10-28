@@ -71,6 +71,8 @@ $ yaourt xmake
 
 ### 安装
 
+!> 切记，xmake不建议在root下安装，所以尽量不要在root下拉取源码编译安装！
+
 ```bash
 $ git clone --recursive https://github.com/xmake-io/xmake.git
 $ cd ./xmake
@@ -107,9 +109,18 @@ $ ./scripts/get.sh __uninstall__
 $ ./scripts/get.sh __local__ __install_only__
 ```
 
+### root下安装
+
+xmake不推荐root下安装使用，因为这很不安全，如果用户非要root下装，装完后，如果提示xmake运行不了，请根据提示传递`--root`参数，或者设置`XMAKE_ROOT=y`环境变量强行启用下，前提是：用户需要随时注意root下误操作系统文件文件的风险。
+
+### 依赖问题
+
+1. 如果遇到readline相关问题，请装下readline-devel或者libreadline-dev依赖，这个是可选的，仅仅`xmake lua`命令执行REPL时候才需要。
+2. 如果想要提速编译，可以装下ccache，xmake会自动检测并使用，这也是可选的。
+
 ## 其他安装方式 
 
-!> 这种也是源码编译安装，但是安装路径会直接写入`/usr/`下，需要root权限，因此除非特殊情况，不推荐这种安装方式，建议采用上文提供的`./get.sh __local__`方式来安装。
+!> 这种也是源码编译安装，但是安装路径会直接写入`/usr/`下，需要root权限，因此除非特殊情况，不推荐这种安装方式，建议采用上文提供的`./get.sh __local__`方式来安装，这两种安装方式的安装路径是不同的，不要混用。
 
 通过make进行编译安装:
 
