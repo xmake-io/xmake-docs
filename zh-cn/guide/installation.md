@@ -62,59 +62,54 @@ $ bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts
 $ yaourt xmake
 ```
 
-在ubuntu上安装：
-
-```bash
-$ sudo add-apt-repository ppa:tboox/xmake
-$ sudo apt-get update
-$ sudo apt-get install xmake
-```
-
-或者手动添加包源：
-
-```
-deb http://ppa.launchpad.net/tboox/xmake/ubuntu yakkety main 
-deb-src http://ppa.launchpad.net/tboox/xmake/ubuntu yakkety main 
-```
-
-然后执行：
-
-```bash
-$ sudo apt-get update
-$ sudo apt-get install xmake
-```
-
 或者下载deb包来安装：
 
 1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载deb安装包
 2. 运行: `dpkg -i xmake-xxxx.deb`
 
-在`redhat/centos`上安装：
+## 源码编译安装
 
-1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载rpm安装包
-2. 运行: `yum install xmake-xxx.rpm --nogpgcheck`
+### 安装
 
-## 编译安装
+```bash
+$ git clone --recursive https://github.com/xmake-io/xmake.git
+$ cd ./xmake
+$ ./scripts/get.sh __local__
+$ source ~/.xmake/profile
+```
 
-通过脚本编译安装:
+如果觉得github的源太慢，可以通过gitee的镜像源拉取：`clone --recursive https://gitee.com/tboox/xmake.git`
+
+!> 由于目前xmake源码通过git submodule维护依赖，所以clone的时候需要加上`--recursive`参数同时拉取所有submodules代码，请不要直接下载tar.gz源码，因为github不会自动打包submodules里面的代码。
+
+如果git clone的时候忘记加`--recursive`，那么也可以执行`git submodule update --init`来拉取所有submodules，例如：
 
 ```bash
 $ git clone https://github.com/xmake-io/xmake.git
 $ cd ./xmake
+$ git submodule update --init
 $ ./scripts/get.sh __local__
 ```
 
-仅仅安装和更新xmake的lua脚本:
+!> `./get.sh __local__`是安装到`~/.local/xmake`下，然后通过`source ~/.xmake/profile`方式来加载的，所以安装完，当前终端如果执行xmake失败，提示找不到，就手动执行下 `source ~/.xmake/profile`，而下次打开终端就不需要了。
+
+### 卸载
+
+```bash
+$ ./scripts/get.sh __uninstall__
+```
+
+### 仅仅更新安装lua脚本
+
+这个开发者本地调试xmake源码才需要：
 
 ```bash
 $ ./scripts/get.sh __local__ __install_only__
 ```
 
-卸载:
+## 其他安装方式 
 
-```bash
-$ ./scripts/get.sh __uninstall__
-```
+!> 这种也是源码编译安装，但是安装路径会直接写入`/usr/`下，需要root权限，因此除非特殊情况，不推荐这种安装方式，建议采用上文提供的`./get.sh __local__`方式来安装。
 
 通过make进行编译安装:
 
@@ -147,6 +142,19 @@ $ xmake update 2.2.4
 ```bash
 $ xmake update master
 $ xmake update dev
+```
+
+从指定git源更新
+
+```bash
+$ xmake update github:xmake-io/xmake#master
+$ xmake update gitee:tboox/xmake#dev # gitee镜像
+```
+
+如果xmake/core没动过，仅仅更新xmake的lua脚本改动，可以加`-s/--scriptonly`快速更新lua脚本
+
+```bash
+$ xmake update -s dev
 ```
 
 最后，我们如果要卸载xmake，也是支持的：`xmake update --uninstall`
