@@ -18,6 +18,8 @@ bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh 
 Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
 ```
 
+!> If the ps script execution prompt fails, you can try to execute in administrator mode.
+
 ## Windows
 
 ### via installer
