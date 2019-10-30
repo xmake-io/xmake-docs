@@ -52,6 +52,10 @@ Or download deb package to install it:
 1. Download xmake `.deb` install package from [Releases](https://github.com/xmake-io/xmake/releases) 
 2. Run `dpkg -i xmake-xxxx.deb`
 
+## Termux
+
+Under the termux of Android, usually only need to execute the above one-click installation script. If it fails, you can refer to the following to pull the source code to compile and install.
+
 ## Source compilation and installation
  
 ### Installation

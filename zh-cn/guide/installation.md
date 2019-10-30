@@ -69,6 +69,10 @@ $ yaourt xmake
 1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载deb安装包
 2. 运行: `dpkg -i xmake-xxxx.deb`
 
+## Termux
+
+Android的termux下，通常只需要执行上面的一键安装脚本即可，如果失败，可参考下文自己拉取源码编译安装。
+
 ## 源码编译安装
 
 ### 安装
