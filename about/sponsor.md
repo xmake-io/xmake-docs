@@ -38,6 +38,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2019.10.31 | 刘*                                   | alipay  | ¥100   | xmake非常好用，期待持续更新，加油!                                      |
 | 2019.10.05 | 1m188                                 | alipay  | ¥50    | 相比cmake写起来要简单清晰一些                                           |
 | 2019.09.15 | ryan                                  | wechat  | ¥100   |                                                                         |
 | 2019.06.19 | 匿名                                  | wechat  | ¥10    | 比cmake好用                                                             |
