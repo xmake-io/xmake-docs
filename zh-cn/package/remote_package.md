@@ -139,10 +139,65 @@ package("openssl")
 某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：
 
 ```lua
-add_requires("tbox", {configs = {small=true}})
+add_requires("tbox", {configs = {small = true}})
 ```
 
 传递`--small=true`给tbox包，使得编译安装的tbox包是启用此选项的。
+
+我们可以通过在工程目录中执行：`xmake require --info tbox` 来获取指定包所有的可配置参数列表和取值说明。
+
+比如：
+
+```console
+xmake require --info spdlog
+    require(spdlog): 
+      -> requires:
+         -> plat: macosx
+         -> arch: x86_64
+         -> configs:
+            -> header_only: true
+            -> shared: false
+            -> vs_runtime: MT
+            -> debug: false
+            -> fmt_external: true
+            -> noexcept: false
+      -> configs:
+         -> header_only: Use header only (default: true)
+         -> fmt_external: Use external fmt library instead of bundled (default: false)
+         -> noexcept: Compile with -fno-exceptions. Call abort() on any spdlog exceptions (default: false)
+      -> configs (builtin):
+         -> debug: Enable debug symbols. (default: false)
+         -> shared: Enable shared library. (default: false)
+         -> cflags: Set the C compiler flags.
+         -> cxflags: Set the C/C++ compiler flags.
+         -> cxxflags: Set the C++ compiler flags.
+         -> asflags: Set the assembler flags.
+         -> vs_runtime: Set vs compiler runtime. (default: MT)
+            -> values: {"MT","MD"}
+```
+
+其中，configs里面就是spdlog包自身提供的可配置参数，而下面带有builtin的configs部分，是所有包都会有的内置配置参数。
+最上面requires部分，是项目当前配置值。
+
+!> `vs_runtime`是用于msvc下vs runtime的设置，v2.2.9版本中，还支持所有static依赖包的自动继承，也就是说spdlog如果设置了MD，那么它依赖的fmt包也会自动继承设置MD。
+
+可以看到，我们已经能够很方便的定制化获取需要的包，但是每个包自身也许有很多依赖，如果这些依赖也要各种定制化配置，怎么办？
+
+还是拿`spdlog->fmt`为例，对于`vs_runtime`这种可以自动继承配置，因为它是内置配置项，很多私有配置就没法处理了。
+
+这个时候，我们可以通过在外层项目xmake.lua提前通过`add_requires`添加fmt包（这个时候你可以设置各种自己的配置），
+确保spdlog在在安装之前，fmt已经通过`add_requires`的配置完成了安装，那么在安装spdlog的时候，就会自动检测到，并直接使用，不会在内部继续安装fmt依赖。
+
+例如：
+
+```lua
+add_requires("fmt", {system = false, configs = {cxflags = "-fPIC"}})
+add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags = "-fPIC"}})
+```
+
+我们的项目需要spdlog启用fPIC编译，那么它的fmt依赖包也需要启用，那么我们可以在spdlog的上面优先添加fmt包，也设置上fPIC提前安装掉即可。
+
+通过这种方式，spdlog对应内部的fmt依赖包，我们也可以在上层通过`add_requires`灵活的设置各种复杂的自定义配置。
 
 ## 第三方依赖包安装
 
