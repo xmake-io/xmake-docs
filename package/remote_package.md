@@ -117,6 +117,61 @@ add_requires("tbox", {configs = {small=true}})
 
 Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.
 
+We can get a list of all configurable parameters and descriptions of the specified package by executing `xmake require --info tbox` in the project directory.
+
+such as:
+
+```console
+xmake require --info spdlog
+    require(spdlog):
+      -> requires:
+         -> plat: macosx
+         -> arch: x86_64
+         -> configs:
+            -> header_only: true
+            -> shared: false
+            -> vs_runtime: MT
+            -> debug: false
+            -> fmt_external: true
+            -> noexcept: false
+      -> configs:
+         -> header_only: Use header only (default: true)
+         -> fmt_external: Use external fmt library instead of bundled (default: false)
+         -> noexcept: Compile with -fno-exceptions. Call abort() on any spdlog exceptions (default: false)
+      -> configs (builtin):
+         -> debug: Enable debug symbols. (default: false)
+         -> shared: Enable shared library. (default: false)
+         -> cflags: Set the C compiler flags.
+         -> cxflags: Set the C/C++ compiler flags.
+         -> cxxflags: Set the C++ compiler flags.
+         -> asflags: Set the assembler flags.
+         -> vs_runtime: Set vs compiler runtime. (default: MT)
+            -> values: {"MT","MD"}
+```
+
+Among them, configs is the configurable parameters provided by the spdlog package itself, and the configs part with builtin below is the built-in configuration parameters that all packages will have.
+The top required section is the current configuration value of the project.
+
+!> `vs_runtime` is the setting for vs runtime under msvc. In v2.2.9, it also supports automatic inheritance of all static dependencies. That is to say, if spdlog is set to MD, then the fmt package it depends on will also inherit automatically. Set the MD.
+
+It can be seen that we have been able to customize the required packages very conveniently, but each package may have a lot of dependencies. If these dependencies are also customized, what should I do?
+
+Or take `spdlog->fmt` as an example. For `vs_runtime` this can automatically inherit the configuration, because it is a built-in configuration item, many private configurations can not be processed.
+
+At this time, we can add the fmt package by `add_requires` in advance in the outer project xmake.lua (this time you can set various configuration of your own).
+Make sure that spdlog has been installed by `add_requires` before installation. If spdlog is installed, it will be detected automatically and used directly. It will not continue to install fmt dependencies internally.
+
+e.g:
+
+```lua
+add_requires("fmt", {system = false, configs = {cxflags = "-fPIC"}})
+add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags = "-fPIC"}})
+```
+
+Our project requires spdlog to enable fPIC compilation, then its fmt dependency package also needs to be enabled, then we can add the fmt package first on the spdlog, and also set the fPIC to install it in advance.
+
+In this way, spdlog corresponds to the internal fmt dependency package, we can also flexibly set various complex custom configurations in the upper layer through `add_requires`.
+
 ## Install third-party packages
 
 After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib and etc.
