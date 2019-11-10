@@ -1,5 +1,7 @@
 ## Master
 
+!> Note! xmake is not recommended to install under root!
+
 ### via curl
 
 ```bash
@@ -65,7 +67,8 @@ Under the termux of Android, usually only need to execute the above one-click in
 ```bash
 $ git clone --recursive https://github.com/xmake-io/xmake.git
 $ cd ./xmake
-$ ./scripts/get.sh __local__
+$ make build
+$ ./scripts/get.sh __local__ __install_only__
 $ source ~/.xmake/profile
 ```
 
@@ -84,7 +87,8 @@ If you forget to add `--recursive` when git clone, you can also execute `git sub
 $ git clone https://github.com/xmake-io/xmake.git
 $ cd ./xmake
 $ git submodule update --init
-$ ./scripts/get.sh __local__
+$ make build
+$ ./scripts/get.sh __local__ __install_only__
 ```
 
 !> `./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.

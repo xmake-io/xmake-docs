@@ -1,6 +1,8 @@
 
 ## Master版本
 
+!> 切记，xmake不建议在root下安装和使用，所以尽量不要在root下拉取源码编译安装！
+
 ### 使用curl
 
 ```bash
@@ -77,12 +79,13 @@ Android的termux下，通常只需要执行上面的一键安装脚本即可，�
 
 ### 安装
 
-!> 切记，xmake不建议在root下安装，所以尽量不要在root下拉取源码编译安装！
+!> 切记，xmake不建议在root下安装和使用，所以尽量不要在root下拉取源码编译安装！
 
 ```bash
 $ git clone --recursive https://github.com/xmake-io/xmake.git
 $ cd ./xmake
-$ ./scripts/get.sh __local__
+$ make build
+$ ./scripts/get.sh __local__ __install_only__
 $ source ~/.xmake/profile
 ```
 
@@ -96,7 +99,8 @@ $ source ~/.xmake/profile
 $ git clone https://github.com/xmake-io/xmake.git
 $ cd ./xmake
 $ git submodule update --init
-$ ./scripts/get.sh __local__
+$ make build
+$ ./scripts/get.sh __local__ __install_only__
 ```
 
 !> `./get.sh __local__`是安装到`~/.local/xmake`下，然后通过`source ~/.xmake/profile`方式来加载的，所以安装完，当前终端如果执行xmake失败，提示找不到，就手动执行下 `source ~/.xmake/profile`，而下次打开终端就不需要了。
