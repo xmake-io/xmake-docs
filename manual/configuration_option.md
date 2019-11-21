@@ -235,12 +235,13 @@ If it is an option of the `boolean` value, it can be judged by [is_option](#is_o
 If it is an option of type `string`, it can be used directly in built-in variables, for example:
 
 ```lua
--- Define a path configuration option, using the temporary directory by default
+-- define a path configuration option, using the temporary directory by default
 option("rootdir")
-    set_default("$(tmpdir)")Set_showmenu(true)
+    set_default("$(tmpdir)")
+    set_showmenu(true)
 
 target("test")
-    -- Add source files in the specified options directory
+    -- add source files in the specified options directory
     add_files("$(rootdir)/*.c")
 ```
 
