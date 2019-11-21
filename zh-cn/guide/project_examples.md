@@ -44,11 +44,11 @@ target("test")
 v2.2.9以上版本：
 
 ```console
-$ xmake create -l c++ -t qt.console test
-$ xmake create -l c++ -t qt.static test
-$ xmake create -l c++ -t qt.shared test
-$ xmake create -l c++ -t qt.quickapp test
-$ xmake create -l c++ -t qt.widgetapp test
+$ xmake create -t qt.console test
+$ xmake create -t qt.static test
+$ xmake create -t qt.shared test
+$ xmake create -t qt.quickapp test
+$ xmake create -t qt.widgetapp test
 ```
 
 更多工程模板见：`xmake create --help`
@@ -106,6 +106,17 @@ target("qt_console")
 
 ### Quick应用程序
 
+v2.2.9以上版本：
+
+```lua
+target("qt_quickapp")
+    add_rules("qt.quickapp")
+    add_files("src/*.cpp") 
+    add_files("src/qml.qrc")
+```
+
+!> 新版本提供了`qt.quickapp`规则，内置了QtQuick的内建规则，使用更加简单，下面老版本的`qt.application`还是支持的，向下兼容：
+
 ```lua
 target("qt_quickapp")
     add_rules("qt.application")
@@ -114,7 +125,21 @@ target("qt_quickapp")
     add_frameworks("QtQuick")
 ```
 
+!> 如果使用的自己编译的static版本QT SDK，那么需要切换到`add_rules("qt.quickapp_static")`静态规则才行，因为链接的库是不同的，需要做静态链接。
+
 ### Widgets应用程序
+
+v2.2.9以上版本：
+
+```lua
+target("qt_widgetapp")
+    add_rules("qt.widgetapp")
+    add_files("src/*.cpp") 
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
+```
+
+!> 新版本提供了`qt.widgetapp`规则，内置了QtWidgets的内建规则，使用更加简单，下面老版本的`qt.application`还是支持的，向下兼容：
 
 ```lua
 target("qt_widgetapp")
@@ -124,6 +149,8 @@ target("qt_widgetapp")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
     add_frameworks("QtWidgets")
 ```
+
+!> 如果使用的自己编译的static版本QT SDK，那么需要切换到`add_rules("qt.widgetapp_static")`静态规则才行，因为链接的库是不同的，需要做静态链接。
 
 ### Android应用程序
 

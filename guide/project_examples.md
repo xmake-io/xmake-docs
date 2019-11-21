@@ -44,11 +44,11 @@ Create an empty project:
 v2.2.9 or higher:
 
 ```console
-$ xmake create -l c++ -t qt.console test
-$ xmake create -l c++ -t qt.static test
-$ xmake create -l c++ -t qt.shared test
-$ xmake create -l c++ -t qt.quickapp test
-$ xmake create -l c++ -t qt.widgetapp test
+$ xmake create -t qt.console test
+$ xmake create -t qt.static test
+$ xmake create -t qt.shared test
+$ xmake create -t qt.quickapp test
+$ xmake create -t qt.widgetapp test
 ```
 
 For more project templates see: `xmake create --help`
@@ -104,6 +104,17 @@ target("qt_console")
 
 ### Quick Application
 
+v2.2.9 or higher:
+
+```lua
+target("qt_quickapp")
+    add_rules("qt.quickapp")
+    add_files("src/*.cpp")
+    add_files("src/qml.qrc")
+```
+
+!> The new version provides the `qt.quickapp` rule, built-in QtQuick built-in rules, the use of simpler, the following version of the `qt.application` is still supported, backward compatible:
+
 ```lua
 target("qt_quickapp")
     add_rules("qt.application")
@@ -112,7 +123,22 @@ target("qt_quickapp")
     add_frameworks("QtQuick")
 ```
 
+!> If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.quickapp_static")` static rule, 
+because the linked libraries are different and need to be statically linked.
+
 ### Widgets Application
+
+v2.2.9 or higher:
+
+```lua
+target("qt_widgetapp")
+    add_rules("qt.widgetapp")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- add files with Q_OBJECT meta (only for qt.moc)
+```
+
+!> The new version provides the `qt.widgetapp` rule, built-in QtWidgets built-in rules, the use of simpler, the following version of the `qt.application` is still supported, backward compatible:
 
 ```lua
 target("qt_widgetapp")
@@ -122,6 +148,9 @@ target("qt_widgetapp")
     add_files("src/mainwindow.h")  -- add files with Q_OBJECT meta (only for qt.moc)
     add_frameworks("QtWidgets")
 ```
+
+!> If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.widgetapp_static")` static rule, 
+because the linked libraries are different and need to be statically linked.
 
 ### Android Application
 
