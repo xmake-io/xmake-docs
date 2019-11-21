@@ -127,6 +127,31 @@ target("qt_quickapp")
 
 !> 如果使用的自己编译的static版本QT SDK，那么需要切换到`add_rules("qt.quickapp_static")`静态规则才行，因为链接的库是不同的，需要做静态链接。
 
+接下来，我们尝试编译下，通常，如果是使用Qt的安装包默认安装，也没有修改安装路径，那么大部分情况下都是可以自动检测到QT SDK的根路径，例如：
+
+```bash
+$ xmake
+checking for the architecture ... x86_64
+checking for the Xcode directory ... /Applications/Xcode.app
+checking for the SDK version of Xcode ... 10.15
+checking for the Qt SDK directory ... /Users/ruki/Qt5.13.2/5.13.2/clang_64
+checking for the Qt SDK version ... 5.13.2
+[  0%]: ccache compiling.release src/main.cpp
+[ 49%]: compiling.qt.qrc src/qml.qrc
+[100%]: linking.release test
+build ok!
+```
+
+然后我们继续运行下它：
+
+```bash
+$ xmake run
+```
+
+效果如下：
+
+![](/assets/img/guide/qt_quickapp.png)
+
 ### Widgets应用程序
 
 v2.2.9以上版本：
@@ -151,6 +176,11 @@ target("qt_widgetapp")
 ```
 
 !> 如果使用的自己编译的static版本QT SDK，那么需要切换到`add_rules("qt.widgetapp_static")`静态规则才行，因为链接的库是不同的，需要做静态链接。
+
+
+运行效果如下：
+
+![](/assets/img/guide/qt_widgetapp.png)
 
 ### Android应用程序
 

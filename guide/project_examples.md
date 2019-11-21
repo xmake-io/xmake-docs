@@ -126,6 +126,31 @@ target("qt_quickapp")
 !> If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.quickapp_static")` static rule, 
 because the linked libraries are different and need to be statically linked.
 
+Next, we try to compile, usually, if you use the Qt installation package to install by default, and do not modify the installation path, then in most cases you can automatically detect the root path of the QT SDK, for example:
+
+```bash
+$ xmake
+checking for the architecture ... x86_64
+checking for the Xcode directory ... /Applications/Xcode.app
+checking for the SDK version of Xcode ... 10.15
+checking for the Qt SDK directory ... /Users/ruki/Qt5.13.2/5.13.2/clang_64
+checking for the Qt SDK version ... 5.13.2
+[0%]: ccache compiling.release src/main.cpp
+[49%]: compiling.qt.qrc src/qml.qrc
+[100%]: linking.release test
+Build ok!
+```
+
+Then we continue to run it:
+
+```bash
+$ xmake run
+```
+
+The effect is as follows:
+
+![](/assets/img/guide/qt_quickapp.png)
+
 ### Widgets Application
 
 v2.2.9 or higher:
@@ -151,6 +176,10 @@ target("qt_widgetapp")
 
 !> If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.widgetapp_static")` static rule, 
 because the linked libraries are different and need to be statically linked.
+
+The effect is as follows:
+
+![](/assets/img/guide/qt_widgetapp.png)
 
 ### Android Application
 
