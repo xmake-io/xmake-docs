@@ -7,6 +7,10 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 [![Paypal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
 
+## Bitcoin
+
+[17HDrR4boKQp5b1qxJrErrd2miiWVykx6X](https://www.blockchain.com/btc/payment_request?address=17HDrR4boKQp5b1qxJrErrd2miiWVykx6X)
+
 ## Backers
 
 <a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
