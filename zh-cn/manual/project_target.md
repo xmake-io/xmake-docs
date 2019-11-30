@@ -103,6 +103,7 @@ target("test2")
 | [add_rcflags](#targetadd_rcflags)               | 添加rust编译选项                     | >= 2.1.1 |
 | [add_cuflags](#targetadd_cuflags)               | 添加cuda编译选项                     | >= 2.2.1 |
 | [add_culdflags](#targetadd_culdflags)           | 添加cuda设备链接选项                 | >= 2.2.7 |
+| [add_cugencodes](#targetadd_cugencodes)         | 添加cuda设备的gencode设置            | >= 2.2.7 |
 | [add_ldflags](#targetadd_ldflags)               | 添加链接选项                         | >= 1.0.1 |
 | [add_arflags](#targetadd_arflags)               | 添加静态库归档选项                   | >= 1.0.1 |
 | [add_shflags](#targetadd_shflags)               | 添加动态库链接选项                   | >= 1.0.1 |
@@ -1777,6 +1778,53 @@ v2.2.7之后，cuda默认构建会使用device-link，这个阶段如果要设�
 
 ```lua
 add_culdflags("-gencode arch=compute_30,code=sm_30")
+```
+
+### target:add_cugencodes
+
+#### 添加cuda设备的gencode设置
+
+`add_cugencodes()`接口其实就是对`add_cuflags("-gencode arch=compute_xx,code=compute_xx")`编译flags设置的简化封装，其内部参数值对应的实际flags映射关系如下：
+
+```lua
+- compute_xx                   --> `-gencode arch=compute_xx,code=compute_xx`
+- sm_xx                        --> `-gencode arch=compute_xx,code=sm_xx`
+- sm_xx,sm_yy                  --> `-gencode arch=compute_xx,code=[sm_xx,sm_yy]`
+- compute_xx,sm_yy             --> `-gencode arch=compute_xx,code=sm_yy`
+- compute_xx,sm_yy,sm_zz       --> `-gencode arch=compute_xx,code=[sm_yy,sm_zz]`
+- native                       --> match the fastest cuda device on current host,
+                                   eg. for a Tesla P100, `-gencode arch=compute_60,code=sm_60` will be added,
+                                   if no available device is found, no `-gencode` flags will be added
+```
+
+例如：
+
+```lua
+add_cugencodes("sm_30")
+```
+
+就等价为
+
+```lua
+add_cuflags("-gencode arch=compute_30,code=sm_30")
+add_culdflags("-gencode arch=compute_30,code=sm_30")
+```
+
+是不是上面的更加精简些，这其实就是个用于简化设置的辅助接口。
+
+而如果我们设置了native值，那么xmake会自动探测当前主机的cuda设备，然后快速匹配到它对应的gencode设置，自动追加到整个构建过程中。
+
+例如，如果我们主机目前的GPU是Tesla P100，并且能够被xmake自动检测到，那么下面的设置：
+
+```lua
+add_cugencodes("native")
+```
+
+等价于：
+
+
+```lua
+add_cugencodes("sm_60")
 ```
 
 ### target:add_ldflags

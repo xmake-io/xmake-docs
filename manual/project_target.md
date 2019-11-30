@@ -102,6 +102,7 @@ target("test2")
 | [add_rcflags](#targetadd_rcflags)               | Add rust compilation flags                             | >= 2.1.1                    |
 | [add_cuflags](#targetadd_cuflags)               | Add cuda compilation flags                             | >= 2.1.1                    |
 | [add_culdflags](#targetadd_culdflags)           | Add cuda device-link flags                             | >= 2.2.7                    |
+| [add_cugencodes](#targetadd_cugencodes)         | Add cuda device gencode flags                          | >= 2.2.7                    |
 | [add_ldflags](#targetadd_ldflags)               | Add static library link flags                          | >= 1.0.1                    |
 | [add_arflags](#targetadd_arflags)               | Add archive library flags                              | >= 1.0.1                    |
 | [add_shflags](#targetadd_shflags)               | Add dynamic library link flags                         | >= 1.0.1                    |
@@ -1783,6 +1784,53 @@ For a description of device-link, please refer to: https://devblogs.nvidia.com/s
 
 ```lua
 add_culdflags("-gencode arch=compute_30,code=sm_30")
+```
+
+### target:add_cugencodes
+
+#### Add gencode settings for cuda devices
+
+The `add_cugencodes()` interface is actually a simplified encapsulation of `add_cuflags("-gencode arch=compute_xx, code=compute_xx")` compilation flags settings. The actual flags mapping relationship corresponding to the internal parameter values ​​is as follows:
+
+```lua
+- compute_xx                   --> `-gencode arch=compute_xx,code=compute_xx`
+- sm_xx                        --> `-gencode arch=compute_xx,code=sm_xx`
+- sm_xx,sm_yy                  --> `-gencode arch=compute_xx,code=[sm_xx,sm_yy]`
+- compute_xx,sm_yy             --> `-gencode arch=compute_xx,code=sm_yy`
+- compute_xx,sm_yy,sm_zz       --> `-gencode arch=compute_xx,code=[sm_yy,sm_zz]`
+- native                       --> match the fastest cuda device on current host,
+                                   eg. for a Tesla P100, `-gencode arch=compute_60,code=sm_60` will be added,
+                                   if no available device is found, no `-gencode` flags will be added
+```
+
+E.g:
+
+```lua
+add_cugencodes("sm_30")
+```
+
+Is equivalent to
+
+```lua
+add_cuflags("-gencode arch=compute_30,code=sm_30")
+add_culdflags("-gencode arch=compute_30,code=sm_30")
+```
+
+Is it more streamlined? This is actually an auxiliary interface for simplifying the setup.
+
+And if we set the native value, then xmake will automatically detect the cuda device of the current host, and then quickly match its corresponding gencode setting, and automatically append it to the entire build process.
+
+For example, if our host's current GPU is Tesla P100, and it can be automatically detected by xmake, then the following settings:
+
+```lua
+add_cugencodes("native")
+```
+
+Equivalent to:
+
+
+```lua
+add_cugencodes("sm_60")
 ```
 
 ### target:add_ldflags
