@@ -35,19 +35,19 @@ This way of using built-in variables makes the description writing more concise 
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [$(os)](#var-os) | Get the operating system of the current build platform | >= 2.0.1 |
-| [$(host)](#var-host) | Get native operating system | >= 2.0.1 |
-| [$(tmpdir)](#var-tmpdir) | Get Temporary Directory | >= 2.0.1 |
-| [$(curdir)](#var-curdir) | Get current directory | >= 2.0.1 |
-| [$(buildir)](#var-buildir) | Get the build output directory | >= 2.0.1 |
-| [$(scriptdir)](#var-scriptdir) | Get Project Description Script Directory | >= 2.1.1 |
-| [$(globaldir)](#var-globaldir) | Get Global Configuration Directory | >= 2.0.1 |
-| [$(configdir)](#var-configdir) | Get Local Project Configuration Directory | >= 2.0.1 |
-| [$(programdir)](#var-programdir) | xmake installation script directory | >= 2.1.5 |
-| [$(projectdir)](#var-projectdir) | Get the project root directory | >= 2.0.1 |
-| [$(shell)](#var-sheLl) | Execute external shell command | >= 2.0.1 |
-| [$(env)](#var-env) | Get external environment variables | >= 2.1.5 |
-| [$(reg)](#var-reg) | Get the value of the windows registry configuration item | >= 2.1.5 |
+| [$(os)](#varos) | Get the operating system of the current build platform | >= 2.0.1 |
+| [$(host)](#varhost) | Get native operating system | >= 2.0.1 |
+| [$(tmpdir)](#vartmpdir) | Get Temporary Directory | >= 2.0.1 |
+| [$(curdir)](#varcurdir) | Get current directory | >= 2.0.1 |
+| [$(buildir)](#varbuildir) | Get the build output directory | >= 2.0.1 |
+| [$(scriptdir)](#varscriptdir) | Get Project Description Script Directory | >= 2.1.1 |
+| [$(globaldir)](#varglobaldir) | Get Global Configuration Directory | >= 2.0.1 |
+| [$(configdir)](#varconfigdir) | Get Local Project Configuration Directory | >= 2.0.1 |
+| [$(programdir)](#varprogramdir) | xmake installation script directory | >= 2.1.5 |
+| [$(projectdir)](#varprojectdir) | Get the project root directory | >= 2.0.1 |
+| [$(shell)](#varsheLl) | Execute external shell command | >= 2.0.1 |
+| [$(env)](#varenv) | Get external environment variables | >= 2.1.5 |
+| [$(reg)](#varreg) | Get the value of the windows registry configuration item | >= 2.1.5 |
 
 Of course, this variable mode can also be extended. By default, the `xmake f --var=val` command can be used to directly obtain the parameters. For example:
 
