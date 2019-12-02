@@ -35,19 +35,19 @@ target("test")
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [$(os)](#var-os)                                | 获取当前编译平台的操作系统                   | >= 2.0.1 |
-| [$(host)](#var-host)                            | 获取本机操作系统                             | >= 2.0.1 |
-| [$(tmpdir)](#var-tmpdir)                        | 获取临时目录                                 | >= 2.0.1 |
-| [$(curdir)](#var-curdir)                        | 获取当前目录                                 | >= 2.0.1 |
-| [$(buildir)](#var-buildir)                      | 获取构建输出目录                             | >= 2.0.1 |
-| [$(scriptdir)](#var-scriptdir)                  | 获取工程描述脚本目录                         | >= 2.1.1 |
-| [$(globaldir)](#var-globaldir)                  | 获取全局配置目录                             | >= 2.0.1 |
-| [$(configdir)](#var-configdir)                  | 获取本地工程配置目录                         | >= 2.0.1 |
-| [$(programdir)](#var-programdir)                | xmake安装脚本目录                            | >= 2.1.5 |
-| [$(projectdir)](#var-projectdir)                | 获取工程根目录                               | >= 2.0.1 |
-| [$(shell)](#var-shell)                          | 执行外部shell命令                            | >= 2.0.1 |
-| [$(env)](#var-env)                              | 获取外部环境变量                             | >= 2.1.5 |
-| [$(reg)](#var-reg)                              | 获取windows注册表配置项的值                  | >= 2.1.5 |
+| [$(os)](#varos)                                 | 获取当前编译平台的操作系统                   | >= 2.0.1 |
+| [$(host)](#varhost)                             | 获取本机操作系统                             | >= 2.0.1 |
+| [$(tmpdir)](#vartmpdir)                         | 获取临时目录                                 | >= 2.0.1 |
+| [$(curdir)](#varcurdir)                         | 获取当前目录                                 | >= 2.0.1 |
+| [$(buildir)](#varbuildir)                       | 获取构建输出目录                             | >= 2.0.1 |
+| [$(scriptdir)](#varscriptdir)                   | 获取工程描述脚本目录                         | >= 2.1.1 |
+| [$(globaldir)](#varglobaldir)                   | 获取全局配置目录                             | >= 2.0.1 |
+| [$(configdir)](#varconfigdir)                   | 获取本地工程配置目录                         | >= 2.0.1 |
+| [$(programdir)](#varprogramdir)                 | xmake安装脚本目录                            | >= 2.1.5 |
+| [$(projectdir)](#varprojectdir)                 | 获取工程根目录                               | >= 2.0.1 |
+| [$(shell)](#varshell)                           | 执行外部shell命令                            | >= 2.0.1 |
+| [$(env)](#varenv)                               | 获取外部环境变量                             | >= 2.1.5 |
+| [$(reg)](#varreg)                               | 获取windows注册表配置项的值                  | >= 2.1.5 |
 
 当然这种变量模式，也是可以扩展的，默认通过`xmake f --var=val`命令，配置的参数都是可以直接获取，例如：
 
