@@ -45,7 +45,7 @@ This way of using built-in variables makes the description writing more concise 
 | [$(configdir)](#varconfigdir) | Get Local Project Configuration Directory | >= 2.0.1 |
 | [$(programdir)](#varprogramdir) | xmake installation script directory | >= 2.1.5 |
 | [$(projectdir)](#varprojectdir) | Get the project root directory | >= 2.0.1 |
-| [$(shell)](#varsheLl) | Execute external shell command | >= 2.0.1 |
+| [$(shell)](#varshell) | Execute external shell command | >= 2.0.1 |
 | [$(env)](#varenv) | Get external environment variables | >= 2.1.5 |
 | [$(reg)](#varreg) | Get the value of the windows registry configuration item | >= 2.1.5 |
 
