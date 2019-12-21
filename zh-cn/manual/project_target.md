@@ -113,8 +113,7 @@ target("test2")
 | [add_vectorexts](#targetadd_vectorexts)         | 添加向量扩展指令                     | >= 1.0.1 |
 | [add_frameworks](#targetadd_frameworks)         | 添加链接框架                         | >= 2.1.1 |
 | [add_frameworkdirs](#targetadd_frameworkdirs)   | 添加链接框架的搜索目录               | >= 2.1.5 |
-| [set_tools](#targetset_tools)                   | 设置编译链接工具链                   | >= 2.2.1 |
-| [add_tools](#targetadd_tools)                   | 添加编译链接工具链                   | >= 2.2.1 |
+| [set_toolchain](#targetset_toolchain)           | 设置编译链接工具链                   | >= 2.2.9 |
 | [set_values](#targetset_values)                 | 设置一些扩展配置值                   | >= 2.2.1 |
 | [add_values](#targetadd_values)                 | 添加一些扩展配置值                   | >= 2.2.1 |
 | [set_rundir](#targetset_rundir)                 | 设置运行目录                         | >= 2.2.7 |
@@ -1964,7 +1963,7 @@ target("test")
     add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
 ```
 
-### target:set_tools
+### target:set_toolchain
 
 #### 设置编译链接工具链
 
@@ -1978,30 +1977,14 @@ target("test1")
 
 target("test2")
     add_files("*.c")
-    set_tools("cc", "$(projectdir)/tools/bin/clang-5.0")
+    set_toolchain("cc", "$(projectdir)/tools/bin/clang-5.0")
 ```
 
 上述描述仅对test2目标的编译器进行特殊设置，使用特定的clang-5.0编译器来编译test2，而test1还是使用默认设置。
 
-对于同时设置多个编译器类型，可以这么写：
-
-```lua
-set_tools {
-    cc = path.join(os.projectdir(), "tools/bin/clang-5.0"),
-    mm = path.join(os.projectdir(), "tools/bin/clang-5.0"),
-}
-```
-
 <p class="tip">
 每次设置都会覆盖当前target目标下之前的那次设置，不同target之间不会被覆盖，互相独立，如果在根域设置，会影响所有子target。
 </p>
-
-或者可以使用[add_tools](#targetadd_tools)来设置：
-
-```lua
-add_tools("cc", "$(projectdir)/tools/bin/clang-5.0")
-add_tools("mm", "$(projectdir)/tools/bin/clang-5.0")
-```
 
 前一个参数是key，用于指定工具类型，目前支持的有（编译器、链接器、归档器）：
 
@@ -2025,16 +2008,10 @@ add_tools("mm", "$(projectdir)/tools/bin/clang-5.0")
 对于一些编译器文件名不规则，导致xmake无法正常识别处理为已知的编译器名的情况下，我们也可以加一个工具名提示，例如：
 
 ```lua
-add_tools("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
+set_toolchain("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 ```
 
 上述描述设置mipscc.exe作为c编译器，并且提示xmake作为gcc的传参处理方式进行编译。
-
-### target:add_tools
-
-#### 添加编译链接工具链
-
-类似[set_tools](#targetset_tools)，区别就是此接口可以多次调用，去添加多个工具，而[set_tools](#targetset_tools)每次设置都会覆盖之前的设置。
 
 ### target:set_values
 
@@ -2069,7 +2046,7 @@ target("test")
 
 #### 添加一些扩展配置值
 
-用法跟[target:set_values](#targetset_tools)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
+用法跟[target:set_values](#targetset_values)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
 
 ### target:set_rundir
 
