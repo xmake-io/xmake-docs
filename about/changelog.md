@@ -1,4 +1,33 @@
 
+## v2.2.9
+
+### New features
+
+* [#569](https://github.com/xmake-io/xmake/pull/569): Add c++ modules build rules
+* Add `xmake project -k xmakefile` generator
+* [620](https://github.com/xmake-io/xmake/issues/620): Add global `~/.xmakerc.lua` for all projects.
+* [593](https://github.com/xmake-io/xmake/pull/593): Add `core.base.socket` module.
+
+### Change
+
+* [#563](https://github.com/xmake-io/xmake/pull/563): Separate build rules for specific language files from action/build 
+* [#570](https://github.com/xmake-io/xmake/issues/570): Add `qt.widgetapp` and `qt.quickapp` rules
+* [#576](https://github.com/xmake-io/xmake/issues/576): Uses `set_toolchain` instead of `add_tools` and `set_tools`
+* Improve `xmake create` action
+* [#589](https://github.com/xmake-io/xmake/issues/589): Improve the default build jobs number to optimize build speed
+* [#598](https://github.com/xmake-io/xmake/issues/598): Improve find_package to support .tbd libraries on macOS
+* [#615](https://github.com/xmake-io/xmake/issues/615): Support to install and use other archs and ios conan packages
+* [#629](https://github.com/xmake-io/xmake/issues/629): Improve hash.uuid and implement uuid v4
+* [#639](https://github.com/xmake-io/xmake/issues/639): Improve to parse argument options to support -jN
+
+### Bugs fixed
+
+* [#567](https://github.com/xmake-io/xmake/issues/567): Fix out of memory for serialize 
+* [#566](https://github.com/xmake-io/xmake/issues/566): Fix link order problem with remote packages 
+* [#565](https://github.com/xmake-io/xmake/issues/565): Fix run path for vcpkg packages
+* [#597](https://github.com/xmake-io/xmake/issues/597): Fix run `xmake require` command too slowly
+* [#634](https://github.com/xmake-io/xmake/issues/634): Fix mode.coverage rule and check flags
+
 ## v2.2.8
 
 ### New features
