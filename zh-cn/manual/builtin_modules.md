@@ -915,6 +915,12 @@ os.run("ls -l $(buildir)")
 os.runv("echo", {"hello", "xmake!"})
 ```
 
+另外，此接口也支持envs参数设置：
+
+```lua
+os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+```
+
 #### os.exec
 
 - 回显运行原生shell命令
@@ -925,11 +931,23 @@ os.runv("echo", {"hello", "xmake!"})
 
 - 回显运行原生shell命令，带参数列表
 
-跟[os.execv](#osexecv)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
+跟[os.exec](#osexec)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
 
 ```lua
 os.execv("echo", {"hello", "xmake!"})
 ```
+
+另外，此接口还支持一个可选的参数，用于传递设置：重定向输出，执行环境变量设置，例如：
+
+```lua
+os.execv("echo", {"hello", "xmake!"}, {stdout = outfile, stderr = errfile, envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+```
+
+其中，stdout和stderr参数用于传递重定向输出和错误输出，可以直接传入文件路径，也可以传入io.open打开的文件对象。
+
+另外，如果想在这次执行中临时设置和改写一些环境变量，可以传递envs参数，里面的环境变量设置会替换已有的设置，但是不影响外层的执行环境，只影响当前命令。
+
+我们也可以通过`os.getenvs()`接口获取当前所有的环境变量，然后改写部分后传入envs参数。
 
 #### os.iorun
 
@@ -947,10 +965,16 @@ local outdata, errdata = os.iorun("echo hello xmake!")
 
 - 安静运行原生shell命令并获取输出内容，带参数列表
 
-跟[os.iorunv](#osiorunv)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
+跟[os.iorun](#osiorun)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
 
 ```lua
-local result, errors = os.iorunv("echo", {"hello", "xmake!"})
+local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"})
+```
+
+另外，此接口也支持envs参数设置：
+
+```lua
+local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
 ```
 
 #### os.getenv
@@ -1549,10 +1573,9 @@ string.rtrim("    hello xmake!    ")
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [process.open](#processopen)                   | 打开进程                                     | >= 2.0.1 |
-| [process.wait](#processwait)                   | 等待进程结束                                 | >= 2.0.1 |
-| [process.close](#processclose)                 | 关闭进程对象                                 | >= 2.0.1 |
-| [process.waitlist](#processwaitlist)           | 同时等待多个进程                             | >= 2.0.1 |
+| [process.open](#processopen)                    | 打开进程                                     | >= 2.0.1 |
+| [process.openv](#processopenv)                  | 打开进程，传递参数列表                       | >= 2.0.1 |
+| [process.waitlist](#processwaitlist)            | 同时等待多个进程                             | >= 2.0.1 |
 
 #### process.open
 
@@ -1562,32 +1585,36 @@ string.rtrim("    hello xmake!    ")
 
 ```lua
 -- 打开进程，后面两个参数指定需要捕获的stdout, stderr文件路径
-local proc = process.open("echo hello xmake!", outfile, errfile)
+local proc = process.open("echo hello xmake!", {outpath = "/tmp/out", errpath = "/tmp/err", envs = {"PATH=xxx", "XXX=yyy"}}) 
 if proc then
 
     -- 等待进程执行完成
     --
-    -- 参数二为等待超时，-1为永久等待，0为尝试获取进程状态
+    -- 参数一为等待超时，-1为永久等待，0为尝试获取进程状态
     -- 返回值waitok为等待状态：1为等待进程正常结束，0为进程还在运行中，-1位等待失败
     -- 返回值status为，等待进程结束后，进程返回的状态码
-    local waitok, status = process.wait(proc, -1)
+    local waitok, status = proc:wait(-1)
 
     -- 释放进程对象
-    process.close(proc)
+    proc:close()
 end
 ```
 
-#### process.wait
+上面的open参数中，outpath, errpath参数指定需要捕获的stdout, stderr文件路径。
 
-- 等待进程结束
+另外，如果想在这次执行中临时设置和改写一些环境变量，可以传递envs参数，里面的环境变量设置会替换已有的设置，但是不影响外层的执行环境，只影响当前命令。
 
-具体使用见：[process.open](#processopen)
+我们也可以通过`os.getenvs()`接口获取当前所有的环境变量，然后改写部分后传入envs参数。
 
-#### process.close
+#### process.openv
 
-- 关闭进程对象
+- 打开进程，传递参数列表 
 
-具体使用见：[process.open](#processopen)
+此接口和[process.open](#processopen)用法基本相似，唯一的不同是，这里传递一个带参数列表的命令来执行，而不是传递命令字符串，这样会省去不必要的转义，传入的参数更加可靠，兼容性和效率也更好。
+
+```lua
+local proc = process.openv("echo", {"hello", "xmake!"})
+```
 
 #### process.waitlist
 

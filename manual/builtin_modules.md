@@ -925,10 +925,12 @@ Similar to the [os.run](#osrun) interface, the only difference is that when this
 
 - Echo running native shell commands with parameter list
 
-Similar to [os.execv](#osexecv), just the way to pass parameters is passed through the parameter list, not the string command, for example:
+Similar to [os.exec](#osexec), just the way to pass parameters is passed through the parameter list, not the string command, for example:
 
 ```lua
 os.execv("echo", {"hello", "xmake!"})
+os.execv("echo", {"hello", "xmake!"}, {stdout = "/tmp/out", stderr = io.open("/tmp/err", 'w')})
+os.execv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 ```
 
 #### os.iorun
@@ -947,10 +949,11 @@ local outdata, errdata = os.iorun("echo hello xmake!")
 
 - Run the native shell command quietly and get the output with a list of parameters
 
-Similar to [os.iorunv](#osiorunv), just the way to pass arguments is passed through the argument list, not the string command, for example:
+Similar to [os.iorun](#osiorun), just the way to pass arguments is passed through the argument list, not the string command, for example:
 
 ```lua
-local result, errors = os.iorunv("echo", {"hello", "xmake!"})
+local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"})
+local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 ```
 
 #### os.getenv
@@ -1283,7 +1286,9 @@ The result is: `.txt`
 
 #### path.directory
 
-- Get the last directory name of the path```lua
+- Get the last directory name of the path
+
+```lua
 Print(path.directory("$(tmpdir)/dir/file.txt"))
 ```
 
@@ -1541,12 +1546,11 @@ The result is: "    hello xmake!"
 
 This is the xmake extension's process control module for more flexible control of the process, compared to: [os.run](#osrun) series is more flexible and lower level.
 
-| Interface | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [process.open](#processopen) | Open Process | >= 2.0.1 |
-| [process.wait](#processwait) | Waiting for the process to end | >= 2.0.1 |
-| [process.close](#processclose) | Close Process Object | >=2.0.1 |
-| [process.waitlist](#processwaitlist) | Waiting for multiple processes at the same time | >= 2.0.1 |
+| Interface                                       | Description                                     | Supported Versions |
+| ----------------------------------------------- | --------------------------------------------    | --------           |
+| [process.open](#processopen)                    | Open Process                                    | >= 2.0.1           |
+| [process.openv](#processopenv)                  | Open Process with arguments list                | >= 2.0.1           |
+| [process.waitlist](#processwaitlist)            | Waiting for multiple processes at the same time | >= 2.0.1           |
 
 #### process.open
 
@@ -1556,32 +1560,36 @@ Run a specified program through path creation and return the corresponding proce
 
 ```lua
 -- Open the process, the last two parameters specify the stdout to be captured, the stderr file path
-local proc = process.open("echo hello xmake!", outfile, errfile)
+local proc = process.open("echo hello xmake!", {outpath = "", errpath = ""})
 if proc then
 
     -- Waiting for the process to complete
     --
-    -- Parameter 2 is waiting for timeout, -1 is permanent waiting, 0 is trying to get process status
+    -- Parameter 1 is waiting for timeout, -1 is permanent waiting, 0 is trying to get process status
     -- Return value waitok is wait state: 1 is waiting for the process to end normally, 0 is the process is still running, -1 bit is waiting to fail
     -- The return value status is the status code returned by the process after waiting for the process to end.
-    local waitok, status = process.wait(proc, -1)
+    local waitok, status = proc:wait(-1)
 
     -- release process object
-    process.close(proc)
+    proc:close()
 end
 ```
 
-#### process.wait
+In the open parameter above, the outpath and errpath parameters specify the stdout and stderr file paths to be captured.
 
-- Waiting for the process to end
+In addition, if you want to temporarily set and rewrite some environment variables during this execution, you can pass the envs parameter. The environment variable settings inside will replace the existing settings, but they will not affect the outer execution environment, only the current command.
 
-For specific use, see: [process.open](#processopen)
+We can also get all current environment variables through the `os.getenvs()` interface, and then pass the envs parameter after rewriting part.
 
-#### process.close
+#### process.openv
 
-- close the process object
+- Open the process and pass the parameter list
 
-For specific use, see: [process.open](#processopen)
+This interface is basically similar to [process.open](#processopen). The only difference is that you pass a command with a parameter list to execute instead of passing a command string. This will save unnecessary escaping. The input parameters are more reliable, and the compatibility and efficiency are better.
+
+`` `lua
+local proc = process.openv("echo", {"hello", "xmake!"})
+`` `
 
 #### process.waitlist
 
