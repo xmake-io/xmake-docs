@@ -14,6 +14,12 @@ target("test")
     add_files("src/*c")
 ```
 
+For a complete example, execute the following command to create:
+
+```bash
+xmake create -l c -t console test
+```
+
 ## Static Library Program
 
 ```lua
@@ -29,6 +35,12 @@ target("test")
 
 We use `add_deps` to link a static library to test target.
 
+For a complete example, execute the following command to create:
+
+```bash
+xmake create -l c -t static test
+```
+
 ## Share Library Program
 
 ```lua
@@ -43,6 +55,12 @@ target("test")
 ```
 
 We use `add_deps` to link a share library to test target.
+
+For a complete example, execute the following command to create:
+
+```bash
+xmake create -l c -t shared test
+```
 
 ## Qt Program
 
@@ -258,6 +276,8 @@ $ xmake
 ```
 
 If you want to known more information, you can see [#159](https://github.com/xmake-io/xmake/issues/159).
+
+And see [WDK examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/wdk)
 
 ### UMDF Driver Program
 

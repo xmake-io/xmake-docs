@@ -14,6 +14,12 @@ target("test")
     add_files("src/*c")
 ```
 
+完整例子请执行下面的命令来创建：
+
+```bash
+xmake create -l c -t console test
+```
+
 ## 静态库程序
 
 ```lua
@@ -29,6 +35,12 @@ target("test")
 
 通过`add_deps`将一个静态库自动链接到test可执行程序。
 
+完整例子请执行下面的命令来创建：
+
+```bash
+xmake create -l c -t static test
+```
+
 ## 动态库程序
 
 ```lua
@@ -43,6 +55,12 @@ target("test")
 ```
 
 通过`add_deps`将一个动态库自动链接到test可执行程序。
+
+完整例子请执行下面的命令来创建：
+
+```bash
+xmake create -l c -t shared test
+```
 
 ## Qt程序
 
@@ -259,6 +277,8 @@ $ xmake
 ```
 
 更多详情可以参考：[#159](https://github.com/xmake-io/xmake/issues/159)
+
+相关完整工程example见：[WDK examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/wdk)
 
 ### umdf驱动程序
 
