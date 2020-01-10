@@ -12,7 +12,7 @@ xmake create --help
 
 ```lua
 target("test")
-    set_kind("binary")\b
+    set_kind("binary")
     add_files("src/*c")
 ```
 
