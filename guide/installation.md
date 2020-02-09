@@ -2,22 +2,22 @@
 
 !> Note! xmake is not recommended to install under root!
 
-### via curl
+#### via curl
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
+bash <(curl -fsSL https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.sh)
 ```
 
-### via wget
+#### via wget
 
 ```bash
-bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh -O -)
+bash <(wget https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.sh -O -)
 ```
 
-### via powershell
+#### via powershell
 
 ```bash
-Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
+Invoke-Expression (Invoke-Webrequest 'https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.ps1' -UseBasicParsing).Content
 ```
 
 !> If the ps script execution prompt fails, you can try to execute in administrator mode.

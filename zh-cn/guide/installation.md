@@ -3,22 +3,22 @@
 
 !> 切记，xmake不建议在root下安装和使用，所以尽量不要在root下拉取源码编译安装！
 
-### 使用curl
+#### 使用curl
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
+bash <(curl -fsSL https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.sh)
 ```
 
-### 使用wget
+#### 使用wget
 
 ```bash
-bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh -O -)
+bash <(wget https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.sh -O -)
 ```
 
-### 使用powershell
+#### 使用powershell
 
 ```bash
-Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
+Invoke-Expression (Invoke-Webrequest 'https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.ps1' -UseBasicParsing).Content
 ```
 
 !> 如果ps脚本执行提示失败，可以尝试在管理员模式下执行
