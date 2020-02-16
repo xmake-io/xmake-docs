@@ -60,19 +60,19 @@ so that any developer can quickly pick it up and enjoy the productivity boost wh
 #### via curl
 
 ```bash
-bash <(curl -fsSL https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.sh)
+bash <(curl -fsSL https://cdn.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.sh)
 ```
 
 #### via wget
 
 ```bash
-bash <(wget https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.sh -O -)
+bash <(wget https://cdn.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.sh -O -)
 ```
 
 #### via powershell
 
 ```bash
-Invoke-Expression (Invoke-Webrequest 'https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.ps1' -UseBasicParsing).Content
+Invoke-Expression (Invoke-Webrequest 'https://cdn.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.ps1' -UseBasicParsing).Content
 ```
 
 #### Windows
