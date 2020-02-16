@@ -63,22 +63,22 @@ xmake的目标是开发者更加关注于项目本身开发，简化项目的描
 
 #### Master版本
 
-##### 使用curl
+#### 使用curl
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
+bash <(curl -fsSL https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.sh)
 ```
 
-##### 使用wget
+#### 使用wget
 
 ```bash
-bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh -O -)
+bash <(wget https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.sh -O -)
 ```
 
-##### 使用powershell
+#### 使用powershell
 
 ```bash
-Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
+Invoke-Expression (Invoke-Webrequest 'https://cdn.jsdelivr.net/gh/xmake-io/xmake/scripts/get.ps1' -UseBasicParsing).Content
 ```
 
 #### Windows
