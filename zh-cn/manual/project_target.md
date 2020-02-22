@@ -2152,7 +2152,7 @@ target("test")
 
 2.2.5版本新增接口，用于针对每个target设置对应需要安装的头文件，一般用于`xmake install/uninstall`命令。
 
-此接口使用方式跟[add_installfiles](#targetadd_installfiles)接口几乎完全一样，都可以用来天剑安装文件，不过此接口仅用于安装头文件。
+此接口使用方式跟[add_installfiles](#targetadd_installfiles)接口几乎完全一样，都可以用来添加安装文件，不过此接口仅用于安装头文件。
 因此，使用上比`add_installfiles`简化了不少，默认不设置prefixdir，也会自动将头文件安装到对应的`include`子目录中。
 
 并且此接口对于`xmake project -k vs201x`等插件生成的IDE文件，也会添加对应的头文件进去。
@@ -2325,7 +2325,7 @@ option("foo")
 target("test")
     add_configfiles("config.h.in")
 
-    -- 如果启用foo选项 -> 天剑 FOO_ENABLE 和 FOO_STRING 定义
+    -- 如果启用foo选项 -> 添加 FOO_ENABLE 和 FOO_STRING 定义
     add_options("foo") 
 ```
 
