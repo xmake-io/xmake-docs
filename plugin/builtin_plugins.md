@@ -14,6 +14,14 @@ $ xmake project -k makefile
 $ xmake project -k cmakelists
 ```
 
+### Generate build.ninja
+
+!> Only supported in versions above 2.3.0
+
+```console
+$ xmake project -k ninja
+```
+
 ### Generate compiler_flags
 
 ```console

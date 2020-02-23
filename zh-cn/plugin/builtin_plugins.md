@@ -23,6 +23,14 @@ $ xmake project -k makefile
 $ xmake project -k cmakelists
 ```
 
+### 生成build.ninja
+
+!> 2.3.0以上版本才支持
+
+```console
+$ xmake project -k ninja
+```
+
 ### 生成compiler_flags
 
 ```console
