@@ -13,6 +13,7 @@
   - [Project Examples](guide/project_examples.md)
   - [Configuration](guide/configuration.md)
   - [Syntax Description](guide/syntax_description.md)
+  - [Other Features](guide/other_features.md)
   - [FAQ](guide/faq.md)
 
 - Package Management
