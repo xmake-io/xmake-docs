@@ -25,7 +25,7 @@ $ xmake project -k cmakelists
 
 ### 生成build.ninja
 
-!> 2.3.0以上版本才支持
+!> 2.3.1以上版本才支持
 
 ```console
 $ xmake project -k ninja

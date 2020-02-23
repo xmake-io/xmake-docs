@@ -1,7 +1,7 @@
 
 ## Try building with another build system
 
-xmake v2.3.0 and above directly interface with other third-party build systems. Even if other projects do not use xmake.lua for maintenance, xmake can directly call other build tools to complete the compilation.
+xmake v2.3.1 and above directly interface with other third-party build systems. Even if other projects do not use xmake.lua for maintenance, xmake can directly call other build tools to complete the compilation.
 
 Then the user can directly use a third-party build tool to compile, so why use xmake to call it? The main benefits are:
 

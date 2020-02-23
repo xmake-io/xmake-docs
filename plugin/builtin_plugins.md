@@ -16,7 +16,7 @@ $ xmake project -k cmakelists
 
 ### Generate build.ninja
 
-!> Only supported in versions above 2.3.0
+!> Only supported in versions above 2.3.1
 
 ```console
 $ xmake project -k ninja
