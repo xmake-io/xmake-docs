@@ -1,4 +1,29 @@
 
+## v2.3.1
+
+### 新特性
+
+* [#675](https://github.com/xmake-io/xmake/issues/675): 支持通过设置强制将`*.c`作为c++代码编译, `add_files("*.c", {sourcekind = "cxx"})`。
+* [#681](https://github.com/xmake-io/xmake/issues/681): 支持在msys/cygwin上编译xmake，以及添加msys/cygwin编译平台
+* 添加socket/pipe模块，并且支持在协程中同时调度process/socket/pipe
+* [#192](https://github.com/xmake-io/xmake/issues/192): 尝试构建带有第三方构建系统的项目，还支持autotools项目的交叉编译
+* 启用gcc/clang的编译错误色彩高亮输出
+* [#588](https://github.com/xmake-io/xmake/issues/588): 改进工程生成插件`xmake project -k ninja`，增加对build.ninja生成支持
+
+### 改进
+
+* [#665](https://github.com/xmake-io/xmake/issues/665): 支持 *nix style 的参数输入，感谢[@OpportunityLiu](https://github.com/OpportunityLiu)的贡献
+* [#673](https://github.com/xmake-io/xmake/pull/673): 改进tab命令补全，增加对参数values的补全支持
+* [#680](https://github.com/xmake-io/xmake/issues/680): 优化get.sh安装脚本，添加国内镜像源，加速下载
+* 改进process调度器
+* [#651](https://github.com/xmake-io/xmake/issues/651): 改进os/io模块系统操作错误提示
+
+### Bugs修复
+
+* 修复增量编译检测依赖文件的一些问题
+* 修复log输出导致xmake-vscode插件解析编译错误信息失败问题
+* [#684](https://github.com/xmake-io/xmake/issues/684): 修复windows下android ndk的一些linker错误
+
 ## v2.2.9
 
 ### 新特性

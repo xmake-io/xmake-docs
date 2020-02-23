@@ -1,4 +1,29 @@
 
+## v2.3.1
+
+### New features
+
+* [#675](https://github.com/xmake-io/xmake/issues/675): Support to compile `*.c` as c++, `add_files("*.c", {sourcekind = "cxx"})`.
+* [#681](https://github.com/xmake-io/xmake/issues/681): Support compile xmake on msys/cygwin and add msys/cygwin platform
+* Add socket/pipe io modules and support to schedule socket/process/pipe in coroutine
+* [#192](https://github.com/xmake-io/xmake/issues/192): Try building project with the third-party buildsystem
+* Enable color diagnostics output for gcc/clang
+* [#588](https://github.com/xmake-io/xmake/issues/588): Improve project generator, `xmake project -k ninja`, support for build.ninja
+
+### Change
+
+* [#665](https://github.com/xmake-io/xmake/issues/665): Support to parse *nix style command options, thanks [@OpportunityLiu](https://github.com/OpportunityLiu)
+* [#673](https://github.com/xmake-io/xmake/pull/673): Improve tab complete to support argument values
+* [#680](https://github.com/xmake-io/xmake/issues/680): Improve get.sh scripts and add download mirrors
+* Improve process scheduler
+* [#651](https://github.com/xmake-io/xmake/issues/651): Improve os/io module syserrors tips
+
+### Bugs fixed
+
+* Fix incremental compilation for checking the dependent file 
+* Fix log output for parsing xmake-vscode/problem info
+* [#684](https://github.com/xmake-io/xmake/issues/684): Fix linker errors for android ndk on windows
+
 ## v2.2.9
 
 ### New features
