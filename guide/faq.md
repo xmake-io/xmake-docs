@@ -48,10 +48,10 @@ For example:
 $ xmake [-v|--verbose] 
 ```
 
-And add `--backtrace` to get the verbose backtrace info, then you can submit these infos to [issues](https://github.com/xmake-io/xmake/issues).
+And add `-D` to get the verbose backtrace and diagnosis info, then you can submit these infos to [issues](https://github.com/xmake-io/xmake/issues).
 
 ```bash
-$ xmake -v --backtrace
+$ xmake -v -D
 ```
 
 ## How to see verbose compiling warnings?

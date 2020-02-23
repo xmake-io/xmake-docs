@@ -48,10 +48,10 @@ $ xmake
 $ xmake [-v|--verbose] 
 ```
 
-并且可以加上 `--backtrace` 选项获取出错时的xmake的调试栈信息, 然后你可以提交这些信息到[issues](https://github.com/xmake-io/xmake/issues).
+并且可以加上 `-D` 选项获取出错时的xmake的调试栈信息和其他更详细的诊断信息, 然后你可以提交这些信息到[issues](https://github.com/xmake-io/xmake/issues).
 
 ```bash
-$ xmake -v --backtrace
+$ xmake -v -D
 ```
 
 ## 怎样看实时编译警告信息?
