@@ -9,7 +9,9 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 ## Bitcoin
 
-[17HDrR4boKQp5b1qxJrErrd2miiWVykx6X](https://www.blockchain.com/btc/payment_request?address=17HDrR4boKQp5b1qxJrErrd2miiWVykx6X)
+```
+bc1qstzyehpjsryh8qwj8kf95js4cjcj3p670s5j9fyd3gkj946qdt7qx0xjpa
+```
 
 ## Backers
 

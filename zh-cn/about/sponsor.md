@@ -17,7 +17,9 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 ## Bitcoin
 
-[17HDrR4boKQp5b1qxJrErrd2miiWVykx6X](https://www.blockchain.com/btc/payment_request?address=17HDrR4boKQp5b1qxJrErrd2miiWVykx6X)
+```
+bc1qstzyehpjsryh8qwj8kf95js4cjcj3p670s5j9fyd3gkj946qdt7qx0xjpa
+```
 
 ## 支持者
 
