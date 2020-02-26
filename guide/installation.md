@@ -35,10 +35,24 @@ Invoke-Expression (Invoke-Webrequest 'https://cdn.jsdelivr.net/gh/xmake-io/xmake
 scoop install xmake
 ```
 
+## Msys/Mingw
+
+### mingw64
+
+```bash
+pacman -Sy mingw-w64-x86_x64-xmake
+```
+
+### mingw32
+
+```bash
+pacman -Sy mingw-w64-i686-xmake
+```
+
 ## MacOS
 
 ```bash
-$ brew install xmake
+brew install xmake
 ```
 
 ## Linux
@@ -46,7 +60,7 @@ $ brew install xmake
 On Archlinux:
 
 ```bash
-$ yaourt xmake
+yaourt xmake
 ```
 
 Or download deb package to install it:
@@ -65,11 +79,11 @@ Under the termux of Android, usually only need to execute the above one-click in
 !> Note! xmake is not recommended to install under root!
 
 ```bash
-$ git clone --recursive https://github.com/xmake-io/xmake.git
-$ cd ./xmake
-$ make build
-$ ./scripts/get.sh __local__ __install_only__
-$ source ~/.xmake/profile
+git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake
+make build
+./scripts/get.sh __local__ __install_only__
+source ~/.xmake/profile
 ```
 
 If you think the source of github is too slow, you can pull it through the mirror source of gitee or gitlab: 
@@ -84,11 +98,11 @@ git clone --recursive https://gitlab.com/tboox/xmake.git
 If you forget to add `--recursive` when git clone, you can also execute `git submodule update --init` to pull all submodules, for example:
 
 ```bash
-$ git clone https://github.com/xmake-io/xmake.git
-$ cd ./xmake
-$ git submodule update --init
-$ make build
-$ ./scripts/get.sh __local__ __install_only__
+git clone https://github.com/xmake-io/xmake.git
+cd ./xmake
+git submodule update --init
+make build
+./scripts/get.sh __local__ __install_only__
 ```
 
 !> `./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.
@@ -96,7 +110,7 @@ $ ./scripts/get.sh __local__ __install_only__
 ### Uninstall
 
 ```bash
-$ ./scripts/get.sh __uninstall__
+./scripts/get.sh __uninstall__
 ```
 
 ### Only update the lua script
@@ -104,7 +118,7 @@ $ ./scripts/get.sh __uninstall__
 This developer needs to debug the xmake source locally:
 
 ```bash
-$ ./scripts/get.sh __local__ __install_only__
+./scripts/get.sh __local__ __install_only__
 ```
 
 ### Root installation
@@ -123,19 +137,19 @@ Xmake is not recommended for root installation, because this is very insecure. I
 Compile and install via make:
 
 ```bash
-$ make build; sudo make install
+make build; sudo make install
 ```
 
 Install to other specified directories:
 
 ```bash
-$ sudo make install prefix=/usr/local
+sudo make install prefix=/usr/local
 ```
 
 Uninstall:
 
 ```bash
-$ sudo make uninstall
+sudo make uninstall
 ```
 
 ## Update Upgrade
@@ -143,27 +157,27 @@ $ sudo make uninstall
 Starting with v2.2.3, the `xmake update` command has been added to quickly update and upgrade itself. The default is to upgrade to the latest version. Of course, you can also specify to upgrade or roll back to a version:
 
 ```bash
-$ xmake update 2.2.4
+xmake update 2.2.4
 ```
 
 We can also specify an update to the master/dev branch version:
 
 ```bash
-$ xmake update master
-$ xmake update dev
+xmake update master
+xmake update dev
 ```
 
 Update from the specified git source
 
 ```bash
-$ xmake update github:xmake-io/xmake#master
-$ xmake update gitee:tboox/xmake#dev # gitee mirror
+xmake update github:xmake-io/xmake#master
+xmake update gitee:tboox/xmake#dev # gitee mirror
 ```
 
 If just update the xaake lua script changes, you can add `-s/--scriptonly` to quickly update the lua script.
 
 ```bash
-$ xmake update -s dev
+xmake update -s dev
 ```
 
 Finally, if we want to uninstall xmake, it is also supported: `xmake update --uninstall`

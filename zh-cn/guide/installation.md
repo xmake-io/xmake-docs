@@ -36,11 +36,27 @@ Invoke-Expression (Invoke-Webrequest 'https://cdn.jsdelivr.net/gh/xmake-io/xmake
 scoop install xmake
 ```
 
+## Msys/Mingw
+
+现在msys/pacman官方仓库已经收录xmake软件包，可直接通过pacman安装。
+
+### mingw64
+
+```bash
+pacman -Sy mingw-w64-x86_x64-xmake
+```
+
+### mingw32
+
+```bash
+pacman -Sy mingw-w64-i686-xmake
+```
+
 ## MacOS
 
 ```bash
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-$ brew install xmake
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew install xmake
 ```
 
 或者：
@@ -52,10 +68,10 @@ $ brew install xmake
 
 ```bash
 # 使用homebrew安装master版本
-$ brew install xmake --HEAD
+brew install xmake --HEAD
 
 # 或者直接调用shell下载安装
-$ bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
 ```
 
 ## Linux
@@ -63,7 +79,7 @@ $ bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts
 在archlinux上安装：
 
 ```bash
-$ yaourt xmake
+yaourt xmake
 ```
 
 或者下载deb包来安装：
@@ -82,11 +98,11 @@ Android的termux下，通常只需要执行上面的一键安装脚本即可，�
 !> 切记，xmake不建议在root下安装和使用，所以尽量不要在root下拉取源码编译安装！
 
 ```bash
-$ git clone --recursive https://github.com/xmake-io/xmake.git
-$ cd ./xmake
-$ make build
-$ ./scripts/get.sh __local__ __install_only__
-$ source ~/.xmake/profile
+git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake
+make build
+./scripts/get.sh __local__ __install_only__
+source ~/.xmake/profile
 ```
 
 如果觉得github的源太慢，可以通过gitee的镜像源拉取：`clone --recursive https://gitee.com/tboox/xmake.git`
@@ -96,11 +112,11 @@ $ source ~/.xmake/profile
 如果git clone的时候忘记加`--recursive`，那么也可以执行`git submodule update --init`来拉取所有submodules，例如：
 
 ```bash
-$ git clone https://github.com/xmake-io/xmake.git
-$ cd ./xmake
-$ git submodule update --init
-$ make build
-$ ./scripts/get.sh __local__ __install_only__
+git clone https://github.com/xmake-io/xmake.git
+cd ./xmake
+git submodule update --init
+make build
+./scripts/get.sh __local__ __install_only__
 ```
 
 !> `./get.sh __local__`是安装到`~/.local/xmake`下，然后通过`source ~/.xmake/profile`方式来加载的，所以安装完，当前终端如果执行xmake失败，提示找不到，就手动执行下 `source ~/.xmake/profile`，而下次打开终端就不需要了。
@@ -108,7 +124,7 @@ $ ./scripts/get.sh __local__ __install_only__
 ### 卸载
 
 ```bash
-$ ./scripts/get.sh __uninstall__
+./scripts/get.sh __uninstall__
 ```
 
 ### 仅仅更新安装lua脚本
@@ -116,7 +132,7 @@ $ ./scripts/get.sh __uninstall__
 这个开发者本地调试xmake源码才需要：
 
 ```bash
-$ ./scripts/get.sh __local__ __install_only__
+./scripts/get.sh __local__ __install_only__
 ```
 
 ### root下安装
@@ -135,19 +151,19 @@ xmake不推荐root下安装使用，因为这很不安全，如果用户非要ro
 通过make进行编译安装:
 
 ```bash
-$ make build; sudo make install
+make build; sudo make install
 ```
 
 安装到其他指定目录:
 
 ```bash
-$ sudo make install prefix=/usr/local
+sudo make install prefix=/usr/local
 ```
 
 卸载:
 
 ```bash
-$ sudo make uninstall
+sudo make uninstall
 ```
 
 ## 更新升级
@@ -155,27 +171,27 @@ $ sudo make uninstall
 从v2.2.3版本开始，新增了`xmake update`命令，来快速进行自我更新和升级，默认是升级到最新版本，当然也可以指定升级或者回退到某个版本：
 
 ```bash
-$ xmake update 2.2.4
+xmake update 2.2.4
 ```
 
 我们也可以指定更新到master/dev分支版本：
 
 ```bash
-$ xmake update master
-$ xmake update dev
+xmake update master
+xmake update dev
 ```
 
 从指定git源更新
 
 ```bash
-$ xmake update github:xmake-io/xmake#master
-$ xmake update gitee:tboox/xmake#dev # gitee镜像
+xmake update github:xmake-io/xmake#master
+xmake update gitee:tboox/xmake#dev # gitee镜像
 ```
 
 如果xmake/core没动过，仅仅更新xmake的lua脚本改动，可以加`-s/--scriptonly`快速更新lua脚本
 
 ```bash
-$ xmake update -s dev
+xmake update -s dev
 ```
 
 最后，我们如果要卸载xmake，也是支持的：`xmake update --uninstall`
