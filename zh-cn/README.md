@@ -66,19 +66,19 @@ xmake的目标是开发者更加关注于项目本身开发，简化项目的描
 #### 使用curl
 
 ```bash
-bash <(curl -fsSL https://cdn.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.sh)
+bash <(curl -fsSL https://xmake.io/shget.text)
 ```
 
 #### 使用wget
 
 ```bash
-bash <(wget https://cdn.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.sh -O -)
+bash <(wget https://xmake.io/shget.text -O -)
 ```
 
 #### 使用powershell
 
-```bash
-Invoke-Expression (Invoke-Webrequest 'https://cdn.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.ps1' -UseBasicParsing).Content
+```powershell
+Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
 ```
 
 #### Windows
@@ -113,7 +113,7 @@ $ brew install xmake
 $ brew install xmake --HEAD
 
 # 或者直接调用shell下载安装
-$ bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
+$ bash <(curl -fsSL https://xmake.io/shget.text)
 ```
 
 #### Linux
@@ -460,7 +460,7 @@ target("cuda_console")
 ```
 
 <p class="tip">
-从v2.2.7版本开始，默认构建会启用device-link，@see https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/
+从v2.2.7版本开始，默认构建会启用device-link。（参见 [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/)）
 如果要显示禁用device-link，可以通过`add_values("cuda.devlink", false)` 来设置。
 </p>
 

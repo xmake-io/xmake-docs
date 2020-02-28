@@ -60,19 +60,19 @@ so that any developer can quickly pick it up and enjoy the productivity boost wh
 #### via curl
 
 ```bash
-bash <(curl -fsSL https://cdn.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.sh)
+bash <(curl -fsSL https://xmake.io/shget.text)
 ```
 
 #### via wget
 
 ```bash
-bash <(wget https://cdn.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.sh -O -)
+bash <(wget https://xmake.io/shget.text -O -)
 ```
 
 #### via powershell
 
-```bash
-Invoke-Expression (Invoke-Webrequest 'https://cdn.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.ps1' -UseBasicParsing).Content
+```powershell
+Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
 ```
 
 #### Windows
@@ -431,7 +431,7 @@ target("cuda_console")
 ```
 
 <p class="tip">
-Starting with v2.2.7, the default build will enable device-link, @see https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/
+Starting with v2.2.7, the default build will enable device-link. (see [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/))
 If you want to disable device-link, you can set it with `add_values("cuda.devlink", false)`.
 </p>
 
