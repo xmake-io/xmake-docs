@@ -6,13 +6,13 @@
 #### 使用curl
 
 ```bash
-bash <(curl -fsSL https://xmake.io/get.sh)
+bash <(curl -fsSL https://xmake.io/shget.text)
 ```
 
 #### 使用wget
 
 ```bash
-bash <(wget https://xmake.io/get.sh -O -)
+bash <(wget https://xmake.io/shget.text -O -)
 ```
 
 #### 使用powershell

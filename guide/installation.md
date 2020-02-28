@@ -5,13 +5,13 @@
 #### via curl
 
 ```bash
-bash <(curl -fsSL https://xmake.io/get.sh)
+bash <(curl -fsSL https://xmake.io/shget.text)
 ```
 
 #### via wget
 
 ```bash
-bash <(wget https://xmake.io/get.sh -O -)
+bash <(wget https://xmake.io/shget.text -O -)
 ```
 
 #### via powershell
