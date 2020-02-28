@@ -3,13 +3,13 @@
 #### via curl
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
+bash <(curl -fsSL https://xmake.io/shget.text)
 ```
 
 #### via wget
 
 ```bash
-bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh -O -)
+bash <(wget https://xmake.io/shget.text -O -)
 ```
 
 #### via powershell

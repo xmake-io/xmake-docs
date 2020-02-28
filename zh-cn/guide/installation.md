@@ -71,7 +71,7 @@ brew install xmake
 brew install xmake --HEAD
 
 # 或者直接调用shell下载安装
-bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
+bash <(curl -fsSL https://xmake.io/shget.text)
 ```
 
 ## Linux
