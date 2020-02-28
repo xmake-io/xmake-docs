@@ -17,8 +17,8 @@ bash <(wget https://xmake.io/get.sh -O -)
 
 #### 使用powershell
 
-```bash
-Invoke-Expression (Invoke-Webrequest 'https://xmake.io/get.ps1' -UseBasicParsing).Content
+```powershell
+Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
 ```
 
 !> 如果ps脚本执行提示失败，可以尝试在管理员模式下执行

@@ -16,8 +16,8 @@ bash <(wget https://xmake.io/get.sh -O -)
 
 #### via powershell
 
-```bash
-Invoke-Expression (Invoke-Webrequest 'https://xmake.io/get.ps1' -UseBasicParsing).Content
+```powershell
+Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
 ```
 
 !> If the ps script execution prompt fails, you can try to execute in administrator mode.

@@ -14,8 +14,8 @@ bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh 
 
 #### via powershell
 
-```bash
-Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
+```powershell
+Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
 ```
 
 ## Simple description
