@@ -478,7 +478,7 @@ target("console_c")
      add_packages("protobuf-c")
 
      add_files("src/*.c")
-     add_files("src/*.proto", {rules = "protobuf-c"})
+     add_files("src/*.proto", {rules = "protobuf.c"})
 ```
 
 ### Using the C++ library
@@ -493,7 +493,7 @@ target("console_c++")
      add_packages("protobuf-cpp")
 
      add_files("src/*.cpp")
-     add_files("src/*.proto", {rules = "protobuf-cpp"})
+     add_files("src/*.proto", {rules = "protobuf.cpp"})
 ```
 
 ## Lex&Yacc Program
