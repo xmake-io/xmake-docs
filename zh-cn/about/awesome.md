@@ -99,6 +99,21 @@
 * [mobula](https://github.com/ldust/mobula)
 * [hikyuu](https://github.com/fasiondog/hikyuu): Hikyuu Quant Framework 基于C++/Python的开源量化交易研究框架
 * [userver](https://github.com/dreamtraveler/userver): A c++ game server framework based on libuv
+* [co](https://github.com/idealvin/co): An elegant and efficient C++ basic library for Linux, Windows and Mac.
+* [lcui-router-app](https://github.com/lc-ui/lcui-router-app): A simple application for LCUI Router
+* [lcui-router](https://github.com/lc-soft/lcui-router): A router for control view switching and status in the LCUI applications, it inspired by the Vue Router.
+* [aoc2019](https://github.com/wrren/aoc2019): Advent of Code 2019 Solutions
+* [FengEngine](https://github.com/libyyu/FengEngine)
+* [dnn](https://github.com/garraGH/dnn): Framework for deep neural network using c++/cuda/opengl
+* [UWPFlow](https://github.com/OpportunityLiu/UWPFlow): UW Continuation Power Flow 
+* [cgraph](https://github.com/liurunzhan/cgraph): A C LIBRARY FOR GRAPH ANALYSIS
+* [shadowssh_rule_c](https://github.com/ChanthMiao/shadowssh_rule_c): the calculation lib example of shadowssh
+* [rc](https://github.com/lumpyzhu/rc): rc is rust in c++
+* [Re.Write.Down](https://github.com/MidAutumnMoon/Re.Write.Down): A Markup Language and it's C++ compiler.
+* [Sound_THUMB](https://github.com/Yunoinsky/Sound_THUMB): 这是一个THUMB的增强现实有音乐元素的美少女/美少年的抽卡氪金手游
+* [ttp](https://github.com/codehz/ttp): Minimal HTTP library (pure)
+* [ctxco](https://github.com/codehz/ctxco): Minimal (and intuitive to use) coroutine implement in c
+* [moosey](https://github.com/cheereaque/moosey): Moosey is an open-source RDBMS written in modern C++
 
 ## 文章
 
