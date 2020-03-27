@@ -29,7 +29,7 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     add_defines("DEBUG")
-    add_links("pthread", "m", "dl")
+    add_syslinks("pthread")
 ```
 
 一眼望去，其实就是个 `set_xxx`/`add_xxx`的配置集，对于新手，完全可以不把它当做lua脚本，仅仅作为普通的，但有一些基础规则的配置文件就行了。
@@ -38,10 +38,10 @@ target("test")
 
 ```lua
 target "test"
-    set_kind    "binary"
-    add_files   "src/*.c"
-    add_defines "DEBUG"
-    add_links   "pthread", "m", "dl"
+    set_kind "binary"
+    add_files "src/*.c"
+    add_defines "DEBUG"
+    add_syslinks "pthread"
 ```
 
 这是不是看着更像配置文件了？其实描述域就是配置文件，类似像json等key/values的配置而已，所以即使完全不会lua的新手，也是能很快上手的。

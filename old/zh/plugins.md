@@ -122,7 +122,7 @@ target("demo")
 $ xmake macro --begin
 
 # 执行一些xmake命令
-$ xmake f -p android --ndk=/xxx/ndk -a armv7-a
+$ xmake f -p android --ndk=/xxx/ndk -a arm64-v8a
 $ xmake p
 $ xmake f -p mingw --sdk=/mingwsdk
 $ xmake p
@@ -197,7 +197,7 @@ $ xmake macro --show macroname
 
 ```lua
 function main()
-    os.exec("xmake f -p android --ndk=/xxx/ndk -a armv7-a")
+    os.exec("xmake f -p android --ndk=/xxx/ndk -a arm64-v8a")
     os.exec("xmake p")
     os.exec("xmake f -p mingw --sdk=/mingwsdk")
     os.exec("xmake p")

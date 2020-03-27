@@ -115,7 +115,7 @@ And we can run this macro to simplify our jobs repeatly.
 $ xmake macro --begin
 
 # run some xmake commands
-$ xmake f -p android --ndk=/xxx/ndk -a armv7-a
+$ xmake f -p android --ndk=/xxx/ndk -a arm64-v8a
 $ xmake p
 $ xmake f -p mingw --sdk=/mingwsdk
 $ xmake p
@@ -188,7 +188,7 @@ Create and write a `macro.lua` script first.
 
 ```lua
 function main()
-    os.exec("xmake f -p android --ndk=/xxx/ndk -a armv7-a")
+    os.exec("xmake f -p android --ndk=/xxx/ndk -a arm64-v8a")
     os.exec("xmake p")
     os.exec("xmake f -p mingw --sdk=/mingwsdk")
     os.exec("xmake p")

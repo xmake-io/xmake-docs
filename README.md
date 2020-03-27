@@ -404,7 +404,7 @@ Then install to the device:
 ```console
 $ xmake install
 installing appdemo ...
-installing build/android/armv7-a/release/appdemo.apk ..
+installing build/android/release/appdemo.apk ..
 success
 install ok!👌
 ```
@@ -640,7 +640,7 @@ $ xmake
 ##### Android
 
 ```bash
-$ xmake f -p android --ndk=~/files/android-ndk-r10e/ [-a armv5te|armv6|armv7-a|armv8-a|arm64-v8a]
+$ xmake f -p android --ndk=~/files/android-ndk-r10e/ [-a armeabi-v7a|arm64-v8a]
 $ xmake
 ```
 

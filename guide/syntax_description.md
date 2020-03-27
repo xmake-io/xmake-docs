@@ -29,7 +29,7 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     add_defines("DEBUG")
-    add_links("pthread", "m", "dl")
+    add_syslinks("pthread")
 ```
 
 At first glance, it is actually a configuration set of `set_xxx`/`add_xxx`. for the novice, you can not use it as a lua script, just as an ordinary, but there are some basic rules configuration files.
@@ -41,7 +41,7 @@ target "test"
     set_kind "binary"
     add_files "src/*.c"
     add_defines "DEBUG"
-    add_links "pthread", "m", "dl"
+    add_syslinks "pthread"
 ```
 
 Is this looking more like a profile? In fact, the description field is a configuration file, similar to the configuration of keys/values such as json, so even if you are not a newcomer to lua, you can quickly get started.

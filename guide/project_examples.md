@@ -228,7 +228,7 @@ Then install to the device:
 ```console
 $ xmake install
 installing appdemo ...
-installing build/android/armv7-a/release/appdemo.apk ..
+installing build/android/release/appdemo.apk ..
 success
 install ok!👌
 ```

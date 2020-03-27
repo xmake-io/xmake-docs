@@ -229,7 +229,7 @@ $ xmake
 ```console
 $ xmake install
 installing appdemo ...
-installing build/android/armv7-a/release/appdemo.apk ..
+installing build/android/release/appdemo.apk ..
 Success
 install ok!👌
 ```
