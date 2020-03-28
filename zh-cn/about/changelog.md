@@ -1,3 +1,26 @@
+## v2.3.2
+
+### 新特性
+
+* 添加powershell色彩主题用于powershell终端下背景色显示
+* 添加`xmake --dry-run -v`命令去空运行构建，仅仅为了查看详细的构建命令
+* [#712](https://github.com/xmake-io/xmake/issues/712): 添加sdcc平台，并且支持sdcc编译器
+
+### 改进
+
+* [#589](https://github.com/xmake-io/xmake/issues/589): 改进优化构建速度，支持跨目标间并行编译和link，编译速度和ninja基本持平
+* 改进ninja/cmake工程文件生成器插件
+* [#728](https://github.com/xmake-io/xmake/issues/728): 改进os.cp支持保留源目录结构层级的递归复制
+* [#732](https://github.com/xmake-io/xmake/issues/732): 改进find_package支持查找homebrew/cmake安装的包
+* [#695](https://github.com/xmake-io/xmake/issues/695): 改进采用android ndk最新的abi命名
+
+### Bugs修复
+
+* 修复windows下link error显示问题
+* [#718](https://github.com/xmake-io/xmake/issues/718): 修复依赖包下载在多镜像时一定概率缓存失效问题
+* [#722](https://github.com/xmake-io/xmake/issues/722): 修复无效的包依赖导致安装死循环问题
+* [#719](https://github.com/xmake-io/xmake/issues/719): 修复windows下主进程收到ctrlc后，.bat子进程没能立即退出的问题
+* [#720](https://github.com/xmake-io/xmake/issues/720): 修复compile_commands生成器的路径转义问题
 
 ## v2.3.1
 
