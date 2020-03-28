@@ -1,4 +1,28 @@
 
+## v2.3.2
+
+### New features
+
+* Add powershell theme for powershell terminal
+* Add `xmake --dry-run -v` to dry run building target and only show verbose build command.
+* [#712](https://github.com/xmake-io/xmake/issues/712): Add sdcc platform and support sdcc compiler
+
+### Change
+
+* [#589](https://github.com/xmake-io/xmake/issues/589): Improve and optimize build speed, supports parallel compilation and linking across targets
+* Improve the ninja/cmake generator
+* [#728](https://github.com/xmake-io/xmake/issues/728): Improve os.cp to support reserve source directory structure
+* [#732](https://github.com/xmake-io/xmake/issues/732): Improve find_package to support `homebrew/cmake` pacakges
+* [#695](https://github.com/xmake-io/xmake/issues/695): Improve android abi
+
+### Bugs fixed
+
+* Fix the link errors output issues for msvc
+* [#718](https://github.com/xmake-io/xmake/issues/718): Fix download cache bug for package
+* [#722](https://github.com/xmake-io/xmake/issues/722): Fix invalid package deps
+* [#719](https://github.com/xmake-io/xmake/issues/719): Fix process exit bug
+* [#720](https://github.com/xmake-io/xmake/issues/720): Fix compile_commands generator
+
 ## v2.3.1
 
 ### New features
