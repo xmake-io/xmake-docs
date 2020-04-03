@@ -335,11 +335,43 @@ At present, we mainly support several levels:
 These two values can also be set at the same time, for example:
 
 ```lua
--- Add debug symbols, set symbols are not visible
+-- add debug symbols, set symbols are not visible
 set_symbols("debug", "hidden")
 ```
 
 If this api is not called, the debug symbol is disabled by default. .
+
+!> In v2.3.3 and above, you can automatically generate independent debugging symbols by setting at the same time with `set_strip("all")`. For example, for iOS programs, it is a .dSYM file, for Android and other programs, it is .sym Symbol file.
+
+If target sets both of the following settings, symbol file generation will be enabled
+
+```lua
+target("test")
+    set_symbols("debug")
+    set_strip("all")
+```
+
+For the built-in release mode, symbol generation is not enabled by default, it is just the strip targetfile. If you want to enable it, you only need to enable the debug symbol, because mode.release internally has strip enabled by default.
+
+```lua
+add_rules("mode.release")
+target("test")
+    set_symbols("debug")
+```
+
+The ios program will generate a .dSYM file, and then Strip itself symbol
+
+```console
+[62%]: linking.release libtest.dylib
+[62%]: generating.release test.dSYM
+```
+
+The android program will generate a .sym file (actually a symbolic so/binary program), and then strip itself
+
+```console
+[62%]: linking.release libtest.so
+[62%]: generating.release test.sym
+```
 
 ### target:set_basename
 

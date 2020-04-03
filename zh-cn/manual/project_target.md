@@ -339,6 +339,38 @@ set_symbols("debug", "hidden")
 
 如果没有调用这个api，默认是禁用调试符号的。。
 
+!> 在v2.3.3以上版本，通过跟`set_strip("all")`配合同时设置，可以自动生成独立的调试符号，例如对于ios程序，就是.dSYM文件，对于android等其他程序，就是.sym符号文件。
+
+如果target同时设置了下面两个设置，就会启用符号文件生成
+
+```lua
+target("test")
+    set_symbols("debug")
+    set_strip("all")
+```
+
+对于内置的release模式，默认不启用符号生成，仅仅只是strip targetfile，如果要启用，只需要再额外开启debug符号就行，因为mode.release内部默认已经启用了strip了。
+
+```lua
+add_rules("mode.release")
+target("test")
+    set_symbols("debug")
+```
+
+ios程序会生成.dSYM文件，然后同时Strip自身符号
+
+```console
+[ 62%]: linking.release libtest.dylib
+[ 62%]: generating.release test.dSYM
+```
+
+android程序会生成.sym文件（其实就是带符号的so/binary程序），然后同时Strip自身符号
+
+```console
+[ 62%]: linking.release libtest.so
+[ 62%]: generating.release test.sym
+```
+
 ### target:set_basename
 
 #### 设置目标文件名
