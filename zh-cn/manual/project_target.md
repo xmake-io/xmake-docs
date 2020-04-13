@@ -72,9 +72,6 @@ target("test2")
 | [after_install](#targetafter_install)           | 在安装之后执行一些自定义脚本         | >= 2.0.1 |
 | [after_uninstall](#targetafter_uninstall)       | 在卸载之后执行一些自定义脚本         | >= 2.0.1 |
 | [after_run](#targetafter_run)                   | 在运行之后执行一些自定义脚本         | >= 2.0.1 |
-| [set_config_h](#targetset_config_h)             | 设置自动生成的配置头文件路径         | >= 1.0.1 < 2.1.5 已废弃 |
-| [set_config_h_prefix](#targetset_config_h)      | 设置自动生成的头文件中宏定义命名前缀 | >= 1.0.1 < 2.1.5 已废弃 |
-| [set_config_header](#targetset_config_header)   | 设置自动生成的配置头文件路径和前缀   | >= 2.1.5 < 2.2.5 已废弃 |
 | [set_pcheader](#targetset_pcheader)             | 设置c预编译头文件                    | >= 2.1.5 |
 | [set_pcxxheader](#targetset_pcxxheader)         | 设置c++预编译头文件                  | >= 2.1.5 |
 | [add_deps](#targetadd_deps)                     | 添加子工程目标依赖                   | >= 1.0.1 |
@@ -88,8 +85,6 @@ target("test2")
 | [add_includedirs](#targetadd_includedirs)       | 添加头文件搜索目录                   | >= 1.0.1 |
 | [add_defines](#targetadd_defines)               | 添加宏定义                           | >= 1.0.1 |
 | [add_undefines](#targetadd_undefines)           | 取消宏定义                           | >= 1.0.1 |
-| [add_defines_h](#targetadd_defines_h)           | 添加宏定义到头文件                   | >= 1.0.1 |
-| [add_undefines_h](#targetadd_undefines_h)       | 取消宏定义到头文件                   | >= 1.0.1 |
 | [add_cflags](#targetadd_cflags)                 | 添加c编译选项                        | >= 1.0.1 |
 | [add_cxflags](#targetadd_cxflags)               | 添加c/c++编译选项                    | >= 1.0.1 |
 | [add_cxxflags](#targetadd_cxxflags)             | 添加c++编译选项                      | >= 1.0.1 |
@@ -1113,174 +1108,6 @@ target("test")
     end)
 ```
 
-### target:set_config_h
-
-#### 设置自动生成的配置头文件路径
-
-<p class="warn">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
-2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
-</p>
-
-如果你想在xmake配置项目成功后，或者自动检测某个选项通过后，把检测的结果写入配置头文件，那么需要调用这个接口来启用自动生成`config.h`文件。
-
-使用方式例如：
-
-```lua
-target("test")
-
-    -- 启用并设置需要自动生成的config.h文件路径
-    set_config_h("$(buildir)/config.h")
-
-    -- 设置自动检测生成的宏开关的名字前缀
-    set_config_h_prefix("TB_CONFIG")
-```
-
-当这个target中通过下面的这些接口，对这个target添加了相关的选项依赖、包依赖、接口依赖后，如果某依赖被启用，那么对应的一些宏定义配置，会自动写入被设置的`config.h`文件中去。
-
-* [add_options](#targetadd_options)
-* [add_packages](#targetadd_packages)
-* [add_cfuncs](#targetadd_cfuncs)
-* [add_cxxfuncs](#targetadd_cxxfuncs) 
-
-这些接口，其实底层都用到了[option](#option)选项中的一些检测设置，例如：
-
-```lua
-option("wchar")
-
-    -- 添加对wchar_t类型的检测
-    add_ctypes("wchar_t")
-
-    -- 如果检测通过，自动生成 TB_CONFIG_TYPE_HAVE_WCHAR的宏开关到config.h
-    add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")
-
-target("test")
-
-    -- 启用头文件自动生成
-    set_config_h("$(buildir)/config.h")
-    set_config_h_prefix("TB_CONFIG")
-
-    -- 添加对wchar选项的依赖关联，只有加上这个关联，wchar选项的检测结果才会写入指定的config.h中去
-    add_options("wchar")
-```
-
-### target:set_config_h_prefix
-
-#### 设置自动生成的头文件中宏定义命名前缀
-
-<p class="warn">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
-2.1.5版本之后，此接口已废弃，请使用[set_config_header](#targetset_config_header)。
-</p>
-
-具体使用见：[set_config_h](#targetset_config_h)
-
-如果设置了：
-
-```lua
-target("test")
-    set_config_h_prefix("TB_CONFIG")
-```
-
-那么，选项中`add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")`的$(prefix)会自动被替换成新的前缀值。
-
-### target:set_config_header
-
-#### 设置自动生成的配置头文件路径和前缀
-
-<p class="warn">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
-</p>
-
-此接口是[set_config_h](#targetset_config_h)和[set_config_h_prefix](#targetset_config_h_prefix)的升级版本，2.1.5之后支持。
-
-如果你想在xmake配置项目成功后，或者自动检测某个选项通过后，把检测的结果写入配置头文件，那么需要调用这个接口来启用自动生成`config.h`文件。
-
-使用方式例如：
-
-```lua
-target("test")
-    set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG"})
-```
-
-上面的代码，启用并设置需要自动生成的config.h文件路径，并且设置自动检测生成的宏开关的名字前缀：`TB_CONFIG`, 当然这个前缀的设置是可选的。
-
-```lua
-target("test")
-    set_config_header("$(buildir)/config.h")
-```
-
-如果不设置前缀，将会自动根据target名生成一个唯一字串。
-
-2.1.8 之后版本，支持针对每个局部配置文件，单独设置版本号，优先于全局的[set_version](#set_version)，例如：
-
-```lua
-    set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG", version = "2.1.8", build = "%Y%m%d%H%M"})
-```
-
-#### 通过内置的检测规则生成配置
-
-当这个target中通过下面的这些接口，对这个target添加了相关的选项依赖、包依赖、接口依赖后，如果某依赖被启用，那么对应的一些宏定义配置，会自动写入被设置的`config.h`文件中去。
-
-* [add_options](#targetadd_options)
-* [add_packages](#targetadd_packages)
-* [add_cfunc](#targetadd_cfunc)
-* [add_cfuncs](#targetadd_cfuncs)
-* [add_cxxfuncs](#targetadd_cxxfuncs) 
-
-#### 定制化检测和生成配置头文件
-
-这些接口，其实底层都用到了[option](#option)选项中的一些检测设置，例如：
-
-```lua
-option("wchar")
-
-    -- 添加对wchar_t类型的检测
-    add_ctypes("wchar_t")
-
-    -- 如果检测通过，自动生成 TB_CONFIG_TYPE_HAVE_WCHAR的宏开关到config.h
-    add_defines_h("$(prefix)_TYPE_HAVE_WCHAR")
-
-target("test")
-
-    -- 启用头文件自动生成
-    set_config_header("$(buildir)/config.h", {prefix = "TB_CONFIG"})
-
-    -- 添加对wchar选项的依赖关联，只有加上这个关联，wchar选项的检测结果才会写入指定的config.h中去
-    add_options("wchar")
-```
-
-甚至我们可以在`xmake.lua`中自己定义个function，针对option进行封装，提供更加定制化的检测和生成config.h的过程
-
-例如：这里有个需求，我们想批量检测一些头文件，如果存在则在config.h里面输出`HAVE_LIMITS_H`这样的宏开关，我们可以这么写
-
-```lua
-function add_checking_to_config(...)
-
-    -- 批量定义option检测规则，仅检测include文件
-    local options = {}
-    for _, header in ipairs({...}) do 
-        local define = header:upper():gsub("[%./]", "_")
-        option(define)
-            add_cincludes(header)
-            add_defines_h("HAVE_" .. define) -- 生成 HAVE_LIMITS_H 这样的宏开关到config.h 
-        option_end()
-        table.insert(options, define)
-    end
-
-    -- 定义个内置__config空目标，仅用于关联设置automatedconfig.h，以及对应的options检测规则
-    -- 因为set_config_header在全局设置，会影响所有target，对每个target都会检测生成一次宏开关
-    target("__config")
-        set_kind("phony")
-        set_config_header("includes/automatedconfig.h")
-        add_options(options)
-    target_end()
-end
-
--- 添加一些头文件检测
-add_checking_to_config("arpa/inet.h", "limits.h", "fcntl.h", "xxxx.h")
-```
-
 ### target:set_pcheader
 
 #### 设置c预编译头文件
@@ -1647,26 +1474,6 @@ add_undefines("DEBUG")
 相当于设置了编译选项：`-UDEBUG`
 
 在代码中相当于：`#undef DEBUG`
-
-### target:add_defines_h
-
-#### 添加宏定义到头文件
-
-<p class="warn">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
-</p>
-
-添加宏定义到`config.h`配置文件，`config.h`的设置，可参考[set_config_h](#targetset_config_h)接口。
-
-### target:add_undefines_h
-
-#### 取消宏定义到头文件
-
-<p class="warn">
-2.2.5版本之后，此接口已废弃，请使用[add_configfiles](#targetadd_configfiles)。
-</p>
-
-在`config.h`配置文件中通过`undef`禁用宏定义，`config.h`的设置，可参考[set_config_h](#targetset_config_h)接口。
 
 ### target:add_cflags
 
@@ -2209,9 +2016,7 @@ target("test")
 
 #### 添加模板配置文件
 
-2.2.5版本新增接口，用于在编译前，添加一些需要预处理的配置文件，用于替代[set_config_header](#targetset_config_header)等老接口。
-
-因为此接口更加的通用，不仅用于处理config.h的自动生成和预处理，还可以处理各种文件类型，而`set_config_header`仅用于处理头文件，并且不支持模板变量替换。
+2.2.5版本新增接口，用于在编译前，添加一些需要预处理的配置文件。
 
 先来一个简单的例子：
 
