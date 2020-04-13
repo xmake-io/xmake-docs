@@ -38,7 +38,6 @@ target("test2")
 | [set_warnings](#targetset_warnings)             | 设置警告级别                         | >= 1.0.1 |
 | [set_optimize](#targetset_optimize)             | 设置优化级别                         | >= 1.0.1 |
 | [set_languages](#targetset_languages)           | 设置代码语言标准                     | >= 1.0.1 |
-| [set_headerdir](#targetset_headerdir)           | 设置头文件安装目录                   | >= 1.0.1 < 2.2.5 已废弃 |
 | [set_targetdir](#targetset_targetdir)           | 设置生成目标文件目录                 | >= 1.0.1 |
 | [set_objectdir](#targetset_objectdir)           | 设置对象文件生成目录                 | >= 1.0.1 |
 | [set_dependir](#targetset_dependir)             | 设置依赖文件生成目录                 | >= 2.2.2 |
@@ -79,7 +78,6 @@ target("test2")
 | [add_syslinks](#targetadd_syslinks)             | 添加系统链接库名                     | >= 2.2.3 |
 | [add_files](#targetadd_files)                   | 添加源代码文件                       | >= 1.0.1 |
 | [del_files](#targetdel_files)                   | 从前面的源文件列表中删除指定文件     | >= 2.1.9 |
-| [add_headers](#targetadd_headers)               | 添加安装的头文件                     | >= 1.0.1 < 2.2.5 已废弃 |
 | [add_linkdirs](#targetadd_linkdirs)             | 添加链接库搜索目录                   | >= 1.0.1 |
 | [add_rpathdirs](#targetadd_rpathdirs)           | 添加运行时候动态链接库搜索目录       | >= 2.1.3 |
 | [add_includedirs](#targetadd_includedirs)       | 添加头文件搜索目录                   | >= 1.0.1 |
@@ -496,23 +494,6 @@ set_languages("c99", "cxx11")
 windows下vs的编译器并不支持按c99的标准来编译c代码，只能支持到c89，但是xmake为了尽可能的支持它，所以在设置c99的标准后，xmake会强制按c++代码模式去编译c代码，从一定程度上解决了windows下编译c99的c代码问题。。
 用户不需要去额外做任何修改。。
 </p>
-
-### target:set_headerdir
-
-#### 设置头文件安装目录
-
-<p class="warn">
-注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
-</p>
-
-设置头文件的输出目录，默认输出到build目录中。
-
-```lua
-target("test")
-    set_headerdir("$(buildir)/include")
-```
-
-对于需要安装哪些头文件，可参考[add_headers](#targetadd_headers)接口。
 
 ### target:set_targetdir
 
@@ -1337,23 +1318,6 @@ target("test")
 通过上面的例子，我们可以看出`add_files`和`del_files`是根据调用顺序，进行顺序添加和删除的，并且通过`del_files("src/subdir/*.c|xxx.c")`删除一批文件，
 并且排除`src/subdir/xxx.c`（就是说，不删除这个文件）。
 
-### target:add_headers
-
-#### 添加安装的头文件
-
-<p class="warn">
-注，2.2.5版本之后，此接口已废弃，请使用[add_headerfiles](#targetadd_headerfiles)代替。
-</p>
-
-安装指定的头文件到build目录，如果设置了[set_headerdir](#targetset_headerdir)， 则输出到指定目录。
-
-安装规则的语法跟[add_files](#targetadd_files)类似，例如：
-
-```lua
-    -- 安装tbox目录下所有的头文件（忽略impl目录下的文件），并且按()指定部分作为相对路径，进行安装
-    add_headers("../(tbox/**.h)|**/impl/**.h")
-```
-
 ### target:add_linkdirs
 
 #### 添加链接库搜索目录
@@ -1971,7 +1935,7 @@ target("test")
 
 上面的设置，我们会安装到`/usr/local/include/*.h, /usr/local/share/doc/*.md`
 
-我们也可以通过`()`去提取源文件中的子目录来安装，例如：
+注：默认安装不会保留目录结构，会完全展开，当然我们也可以通过`()`去提取源文件中的子目录结构来安装，例如：
 
 ```lua
 target("test")
@@ -1996,9 +1960,12 @@ target("test")
 
 并且此接口对于`xmake project -k vs201x`等插件生成的IDE文件，也会添加对应的头文件进去。
 
-<p class="tip">
-需要注意的是，之前的[add_headers](#targetadd_headers)接口已经被废弃，新版本请用此接口替代，这个老接口在编译过程中也会自动复制头文件到build目录，这个逻辑设计的并不是很好。
-</p>
+我注：默认安装不会保留目录结构，会完全展开，当然们也可以通过`()`去提取源文件中的子目录结构来安装，例如：
+
+```lua
+target("test")
+    add_headerfiles("src/(tbox/*.h)", {prefixdir = "include"})
+```
 
 ### target:set_configdir
 

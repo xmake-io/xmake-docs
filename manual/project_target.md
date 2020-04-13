@@ -37,7 +37,6 @@ target("test2")
 | [set_warnings](#targetset_warnings)             | Set compilation warning level                          | >= 1.0.1                    |
 | [set_optimize](#targetset_optimize)             | Set compilation optimization level                     | >= 1.0.1                    |
 | [set_languages](#targetset_languages)           | Set source code language standards                     | >= 1.0.1                    |
-| [set_headerdir](#targetset_headerdir)           | Set output directories for header files                | >= 1.0.1 < 2.2.5 deprecated |
 | [set_targetdir](#targetset_targetdir)           | Set output directories for target file                 | >= 1.0.1                    |
 | [set_objectdir](#targetset_objectdir)           | Set output directories for object files                | >= 1.0.1                    |
 | [set_dependir](#targetset_dependir)             | Set output directories for dependent files             | >= 2.2.2                    |
@@ -78,7 +77,6 @@ target("test2")
 | [add_syslinks](#targetadd_syslinks)             | Add system link libraries                              | >= 2.2.3                    |
 | [add_files](#targetadd_files)                   | Add source files                                       | >= 1.0.1                    |
 | [del_files](#targetdel_files)                   | Remove source files                                    | >= 2.1.9                    |
-| [add_headers](#targetadd_headers)               | Add installed header files                             | >= 1.0.1 < 2.2.5 deprecated |
 | [add_linkdirs](#targetadd_linkdirs)             | Add link search directories                            | >= 1.0.1                    |
 | [add_rpathdirs](#targetadd_rpathdirs)           | Add load search directories for dynamic library        | >= 2.1.3                    |
 | [add_includedirs](#targetadd_includedirs)       | Add include search directories                         | >= 1.0.1                    |
@@ -497,23 +495,6 @@ E.g:
 Windows vs compiler does not support compiling c code according to c99 standard, can only support c89, but xmake in order to support it as much as possible, so after setting c99 standard, xmake will force to compile according to c++ code mode c code, to some extent solved the c code problem of compiling c99 under windows. .
 Users do not need to make any additional modifications. .
 </p>
-
-### target:set_headerdir
-
-#### Set output directories for header files
-
-<p class="warn">
-Note that this interface has been deprecated after version 2.2.5, please use [add_headerfiles](#targetadd_headerfiles) instead.
-</p>
-
-Set the output directory of the header file, and output it to the build directory by default.
-
-```lua
-target("test")
-    set_headerdir("$(buildir)/include")
-```
-
-For the header files that need to be installed, refer to the [add_headers](#targetadd_headers) interface.
 
 ### target:set_targetdir
 
@@ -1341,23 +1322,6 @@ target("test")
 Through the above example, we can see that `add_files` and `del_files` are added and deleted sequentially according to the calling sequence, and deleted by `del_files("src/subdir/*.c|xxx.c")` Batch file,
 And exclude `src/subdir/xxx.c` (that is, don't delete this file).
 
-### target:add_headers
-
-#### Add installed header files
-
-<p class="warn">
-Note that this interface has been deprecated after version 2.2.5, please use [add_headerfiles](#targetadd_headerfiles) instead.
-</p>
-
-Install the specified header file into the build directory. If [set_headerdir](#targetset_headerdir) is set, it will be output to the specified directory.
-
-The syntax of the installation rules is similar to [add_files](#targetadd_files), for example:
-
-```lua
-    -- Install all the header files in the tbox directory (ignore the files in the impl directory), and press () to specify the part as a relative path to install
-    add_headers("../(tbox/**.h)|**/impl/**.h")
-```
-
 ### target:add_linkdirs
 
 #### Add link search directories
@@ -1976,7 +1940,7 @@ target("test")
     add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
 ```
 
-We extract the `trc/*.h` subdirectory structure from the files in `src/tbox/*.h` and install it: `/usr/local/include/tbox/*.h, /usr/local /share/doc/tbox/*.md`
+We extract the `src/*.h` subdirectory structure from the files in `src/tbox/*.h` and install it: `/usr/local/include/tbox/*.h, /usr/local /share/doc/tbox/*.md`
 
 Of course, users can also use the [set_installdir](#targetset_installdir) interface.
 
@@ -1993,9 +1957,12 @@ Therefore, it is much easier to use than `add_installfiles`. By default, prefixf
 
 And this interface for the `xmake project -k vs201x` and other plug-in generated IDE files, will also add the corresponding header file into it.
 
-<p class="tip">
-It should be noted that the previous [add_headers](#targetadd_headers) interface has been deprecated. Please replace this with the new version. This old interface will automatically copy the header files to the build directory during the compilation process. This logic is not designed. well.
-</p>
+We can also install by subdirectory in the source file by `()`, for example:
+
+```lua
+target("test")
+    add_headerfiles("src/(tbox/*.h)", {prefixdir = "include"})
+```
 
 ### target:set_configdir
 
