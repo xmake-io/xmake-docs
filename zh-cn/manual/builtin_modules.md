@@ -17,7 +17,6 @@ end)
 | [val](#val)                                     | 获取内置变量的值                             | 脚本域                     | >= 2.1.5 |
 | [import](#import)                               | 导入扩展摸块                                 | 脚本域                     | >= 2.0.1 |
 | [inherit](#inherit)                             | 导入并继承基类模块                           | 脚本域                     | >= 2.0.1 |
-| [ifelse](#ifelse)                               | 类似三元条件判断                             | 描述域、脚本域             | >= 2.0.1 |
 | [try-catch-finally](#try-catch-finally)         | 异常捕获                                     | 脚本域                     | >= 2.0.1 |
 | [pairs](#pairs)                                 | 用于遍历字典                                 | 描述域、脚本域             | >= 2.0.1 |
 | [ipairs](#ipairs)                               | 用于遍历数组                                 | 描述域、脚本域             | >= 2.0.1 |
@@ -198,16 +197,6 @@ inherit("xxx.xxx")
 使用实例，可以参看xmake的tools目录下的脚本：[clang.lua](#https://github.com/xmake-io/xmake/blob/master/xmake/tools/clang.lua)
 
 这个就是clang工具模块继承了gcc的部分实现。
-
-### ifelse
-
-#### 类似三元条件判断
-
-由于lua没有内置的三元运算符，通过封装`ifelse`接口，实现更加简洁的条件选择：
-
-```lua
-local ok = ifelse(a == 0, "ok", "no")
-```
 
 ### try-catch-finally
 

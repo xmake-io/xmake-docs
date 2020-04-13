@@ -17,7 +17,6 @@ Of course, a small number of read-only built-in interfaces can still be used in 
 | [val](#val)                                     | Get the value of the built-in variable                | Script Field                                                | >= 2.1.5 |
 | [import](#import)                               | Importing Extension Blocks                            | Script Fields                                               | >= 2.0.1 |
 | [inherit](#inherit)                             | Import and inherit base class modules                 | Script Domain                                               | >= 2.0.1 |
-| [ifelse](#ifelse)                               | Similar ternary conditional judgment                  | Description field, script field                             | >= 2.0.1 |
 | [try-catch-finally](#try-catch-finally)         | Exception Capture                                     | Script Field                                                | >= 2.0.1 |
 | [pairs](#pairs)                                 | Used to Traverse the Dictionary                       | Description Field, Script Field                             | >= 2.0.1 |
 | [ipairs](#ipairs)                               | Used to traverse arrays                               | Description fields, script fields                           | >= 2.0.1 |
@@ -198,16 +197,6 @@ Inherit("xxx.xxx")
 For an example, see the script in the xmake tools directory: [clang.lua](#https://github.com/xmake-io/xmake/blob/master/xmake/tools/clang.lua)
 
 This is part of the clang tool module that inherits gcc.
-
-### ifelse
-
-#### Similar to the ternary condition judgment
-
-Since lua does not have a built-in ternary operator, a more concise conditional choice is achieved by encapsulating the `ifelse` interface:
-
-```lua
-local ok = ifelse(a == 0, "ok", "no")
-```
 
 ### try-catch-finally
 
