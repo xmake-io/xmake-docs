@@ -165,6 +165,8 @@ $ xmake f -p android --trybuild=ndkbuild [--ndk =]
 $ xmake
 ```
 
+We also provided [xmake-gradle](https://github.com/xmake-io/xmake-gradle) to build jni library in gradle, you can see [Uses xmake to build JNI in Gradle](https://xmake.io/#/plugin/more_plugins?id=gradle-plugin-jni)
+
 ## Automatically generate xmake.lua
 
 we need not write any make-like file (xmake.lua, makefile.am, cmakelist.txt, etc.) and also build it directly.

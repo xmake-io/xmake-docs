@@ -165,6 +165,8 @@ $ xmake f -p android --trybuild=ndkbuild [--ndk=]
 $ xmake
 ```
 
+如果觉得命令行编译jni比较麻烦，xmake也提供了相关的gradle集成插件[xmake-gradle](https://github.com/xmake-io/xmake-gradle)，可以无缝集成xmake进行jni库的编译集成，具体详情见：[使用xmake-gradle插件构建JNI程序](https://xmake.io/#/zh-cn/plugin/more_plugins?id=gradle%e6%8f%92%e4%bb%b6%ef%bc%88jni%ef%bc%89)
+
 ## 自动扫描源码生成xmake.lua
 
 对于一份工程源码，可以不用编写makefile，也不用编写各种make相关的工程描述文件（例如：xmake.lua，makefile.am, cmakelist.txt等）
