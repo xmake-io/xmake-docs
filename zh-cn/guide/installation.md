@@ -43,7 +43,7 @@ scoop install xmake
 ### mingw64
 
 ```bash
-pacman -Sy mingw-w64-x86_x64-xmake
+pacman -Sy mingw-w64-x86_64-xmake
 ```
 
 ### mingw32

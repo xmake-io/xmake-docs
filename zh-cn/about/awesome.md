@@ -62,6 +62,7 @@
 * [xmake-sublime](https://github.com/xmake-io/xmake-sublime): Sublime Text 2/3 编辑器插件
 * [xmake-idea](https://github.com/xmake-io/xmake-idea): Intellij-IDEA/CLion/Android Studio等IDE插件
 * [xmake.vim](https://github.com/luzhlon/xmake.vim): 第三方vim插件, 感谢[@luzhlon](https://github.com/luzhlon)
+* [xmake-gradle](https://github.com/xmake-io/xmake-gradle): 一个无缝集成xmake的gradle开发插件
 
 ## 项目
 
@@ -114,6 +115,12 @@
 * [ttp](https://github.com/codehz/ttp): Minimal HTTP library (pure)
 * [ctxco](https://github.com/codehz/ctxco): Minimal (and intuitive to use) coroutine implement in c
 * [moosey](https://github.com/cheereaque/moosey): Moosey is an open-source RDBMS written in modern C++
+* [zsign](https://github.com/zhlynn/zsign): Maybe is the most quickly codesign alternative for iOS12+ in the world, cross-platform ( Linux & macOS ).
+* [chimney-c](https://github.com/Evan2698/chimney-c)
+* [ElementZero](https://github.com/Element-0/ElementZero): Run windows version of BDS in linux with Mod support
+* [Gobang](https://github.com/Leopard-C/Gobang): 五子棋游戏，游戏双方联网对战
+* [SakuraEngine](https://github.com/SaeruHikari/SakuraEngine): 跨平台的现代游戏引擎
+* [TensorIR](https://github.com/zhangxp1998/TensorIR)
 
 ## 文章
 
