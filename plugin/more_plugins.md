@@ -23,7 +23,7 @@
 
 ```
 plugins {
-  id 'org.tboox.gradle-xmake-plugin' version '1.0.7'
+  id 'org.tboox.gradle-xmake-plugin' version '1.0.9'
 }
 ```
 
@@ -37,7 +37,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath 'org.tboox:gradle-xmake-plugin:1.0.7'
+    classpath 'org.tboox:gradle-xmake-plugin:1.0.9'
   }
   repositories {
     mavenCentral()
