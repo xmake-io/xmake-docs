@@ -1,3 +1,19 @@
+## v2.3.3
+
+### 新特性
+
+* [#727](https://github.com/xmake-io/xmake/issues/727): 支持为android, ios程序生成.so/.dSYM符号文件
+* [#687](https://github.com/xmake-io/xmake/issues/687): 支持编译生成objc/bundle程序
+* [#743](https://github.com/xmake-io/xmake/issues/743): 支持编译生成objc/framework程序
+* 支持编译bundle, framework程序，以及mac, ios应用程序，并新增一些工程模板
+* 支持对ios应用程序打包生成ipa文件，以及代码签名支持
+* 增加一些ipa打包、安装、重签名等辅助工具
+* 添加xmake.cli规则来支持开发带有xmake/core引擎的lua扩展程序
+
+### 改进
+
+* [#750](https://github.com/xmake-io/xmake/issues/750): 改进qt.widgetapp规则，支持qt私有槽
+
 ## v2.3.2
 
 ### 新特性

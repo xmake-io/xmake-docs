@@ -1,3 +1,17 @@
+## v2.3.3
+
+### New features
+
+* [#727](https://github.com/xmake-io/xmake/issues/727): Strip and generate debug symbols file (.so/.dSYM) for android/ios program
+* [#687](https://github.com/xmake-io/xmake/issues/687): Support to generate objc/bundle program.
+* [#743](https://github.com/xmake-io/xmake/issues/743): Support to generate objc/framework program.
+* Support to compile bundle, framework, mac application and ios application, and all some project templates
+* Support generate ios *.ipa file and codesign
+* Add xmake.cli rule to develop lua program with xmake core engine
+
+### Change
+
+* [#750](https://github.com/xmake-io/xmake/issues/750): Improve qt.widgetapp rule to support private slot
 
 ## v2.3.2
 
