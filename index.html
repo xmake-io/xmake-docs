@@ -57,7 +57,12 @@
         '/zh/plugins': '/old/zh/plugins',
         '/zh/manual': '/old/zh/manual',
         <!-- multi-languages -->
-        '/zh-cn/(.*)': '/zh-cn/$1',
+        '/zh-cn/(^[^_].*$)': '/zh-cn/$1',
+        <!-- optimize fallback -->
+        '/(?!zh-cn).*/_navbar.md': '/_navbar.md',
+        '/(?!zh-cn).*/_sidebar.md': '/_sidebar.md',
+        '/zh-cn/.*/_navbar.md': '/zh-cn/_navbar.md',
+        '/zh-cn/.*/_sidebar.md': '/zh-cn/_sidebar.md',
         <!-- others -->
         '/sponsor': '/about/sponsor'
       },
