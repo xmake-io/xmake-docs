@@ -117,6 +117,7 @@ target("test2")
 | [set_configdir](#targetset_configdir)           | Set the output directory of configuration files        | >= 2.2.5                    |
 | [set_configvar](#targetset_configvar)           | Set template configuration variable                    | >= 2.2.5                    |
 | [add_configfiles](#targetadd_configfiles)       | Add template configuration files                       | >= 2.2.5                    |
+| [set_policy](#targetset_policy)                 | Set build policy                                       | >= 2.3.4                    |
 
 ### target
 
@@ -2156,3 +2157,129 @@ After `set_configvar("HAVE_SSE2", 1)` is enabled, it becomes `HAVE_SSE2 equ 1`. 
 
 For a detailed description of this, see: https://github.com/xmake-io/xmake/issues/320
 
+### target:set_policy
+
+#### Set build policy
+
+Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users' habits and needs.
+
+Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy, which is open to users to a certain degree of configurability.
+
+The usage is as follows:
+
+```lua
+set_policy("check.auto_ignore_flags", false)
+```
+
+You only need to set this configuration in the project root domain to disable the automatic detection and ignore mechanism of flags. In addition, set_policy can also take effect locally for a specific target.
+
+```lua
+target ("test")
+    set_policy ("check.auto_ignore_flags", false)
+```
+
+!> In addition, if the set policy name is invalid, xmake will also have a warning prompt.
+
+Some of the currently supported strategy configurations are as follows:
+
+| Policy configuration name           | Description                           | Default value | Supported version |
+| ----------------------------------- | ------------- ----------------------- | --------      | --------          |
+| check.auto_ignore_flags             | Automatically detect and ignore flags | true          | > = 2.3.4         |
+| check.auto_map_flags                | Automatically map flags               | true          | > = 2.3.4         |
+| build.across_targets_in_parallel    | Parallel build across targets         | true          | > = 2.3.4         |
+
+If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:
+
+```bash
+$ xmake l core.project.policy.policies
+{ 
+  "check.auto_map_flags" = { 
+    type = "boolean",
+    description = "Enable map gcc flags to the current compiler and linker automatically.",
+    default = true 
+  },
+  "build.across_targets_in_parallel" = { 
+    type = "boolean",
+    description = "Enable compile the source files for each target in parallel.",
+    default = true 
+  },
+  "check.auto_ignore_flags" = { 
+    type = "boolean",
+    description = "Enable check and ignore unsupported flags automatically.",
+    default = true 
+  } 
+}
+```
+
+##### check.auto_ignore_flags
+
+By default, xmake will automatically detect all the original flags set by the `add_cxflags` and` add_ldflags` interfaces. If the current compiler and linker do not support them, they will be automatically ignored.
+
+This is usually very useful. Like some optional compilation flags, it can be compiled normally even if it is not supported, but it is forced to set up. When compiling, other users may have a certain degree of difference due to the different support of the compiler. The compilation failed.
+
+However, because automatic detection does not guarantee 100% reliability, sometimes there will be a certain degree of misjudgment, so some users do not like this setting (especially for cross-compilation tool chains, which are more likely to fail).
+
+At present, if the detection fails in v2.3.4, there will be a warning prompt to prevent users from lying inexplicably, for example:
+
+```bash
+warning: add_ldflags("-static") is ignored, please pass `{force = true}` or call `set_policy("check.auto_ignore_flags", false)` if you want to set it.
+```
+
+According to the prompt, we can analyze and judge ourselves whether it is necessary to set this flags. One way is to pass:
+
+```lua
+add_ldflags("-static", {force = true})
+```
+
+To display the mandatory settings, skip automatic detection, which is an effective and fast way to deal with occasional flags failure, but for cross-compilation, if a bunch of flags settings cannot be detected, each set force Too tedious.
+
+At this time, we can use `set_policy` to directly disable the default automatic detection behavior for a target or the entire project:
+
+```lua
+set_policy("check.auto_ignore_flags", false)
+target("test")
+    add_ldflags("-static")
+```
+
+Then we can set various original flags at will, xmake will not automatically detect and ignore them.
+
+##### check.auto_map_flags
+
+This is another intelligent analysis and processing of flags by xmake. Usually, the configuration set by xmake built-in APIs like `add_links`,` add_defines` is cross-platform, and different compiler platforms will automatically process them into corresponding Original flags.
+
+However, in some cases, users still need to set the original compilation link flags by add_cxflags, add_ldflags, these flags are not good cross compiler
+
+Take `-O0` compiler optimization flags. Although` set_optimize` is used to implement cross-compiler configuration, what if the user directly sets `add_cxflags ("-O0 ")`? It can be processed normally under gcc / clang, but it is not supported under msvc
+
+Maybe we can use `if is_plat () then` to process by platform, but it is very cumbersome, so xmake has built-in automatic mapping function of flags.
+
+Based on the popularity of gcc flags, xmake uses gcc's flags naming convention to automatically map it according to different compilations, for example:
+
+```lua
+add_cxflags("-O0")
+```
+
+This line setting is still `-O0` under gcc/clang, but if it is currently msvc compiler, it will be automatically mapped to msvc corresponding to` -Od` compilation option to disable optimization.
+
+Throughout the process, users are completely unaware, and can execute xmake directly to compile across compilers.
+
+!> Of course, the current implementation of automatic mapping is not very mature. There is no 100% coverage of all gcc flags, so there are still many flags that are not mapped.
+
+Some users do not like this automatic mapping behavior, so we can completely disable this default behavior through the following settings:
+
+```bash
+set_policy("check.auto_map_flags", false)
+```
+
+##### build.across_targets_in_parallel
+
+This strategy is also enabled by default and is mainly used to perform parallel builds between targets. In versions prior to v2.3.3, parallel builds can only target all source files within a single target.
+For cross-target compilation, you must wait until the previous target is fully linked before you can execute the compilation of the next target, which will affect the compilation speed to a certain extent.
+
+However, the source files of each target can be completely parallelized, and finally the link process is executed together. Versions after v2.3.3 through this optimization, the construction speed is increased by 30%.
+
+Of course, if the build source files in some special targets depend on previous targets (especially in the case of some custom rules, although rarely encountered), we can also disable this optimization behavior through the following settings:
+
+```bash
+set_policy("build.across_targets_in_parallel", false)
+```

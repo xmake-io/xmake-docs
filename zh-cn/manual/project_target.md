@@ -118,6 +118,7 @@ target("test2")
 | [set_configdir](#targetset_configdir)           | 设置模板配置文件输出目录             | >= 2.2.5 |
 | [set_configvar](#targetset_configvar)           | 设置模板配置变量                     | >= 2.2.5 |
 | [add_configfiles](#targetadd_configfiles)       | 添加模板配置文件                     | >= 2.2.5 |
+| [set_policy](#targetset_policy)                 | 设置构建行为策略                     | >= 2.3.4 |
 
 ### target
 
@@ -2159,3 +2160,129 @@ HAVE_SSE2 equ ${default VAR_HAVE_SSE2 0}
 
 关于这个的详细说明，见：https://github.com/xmake-io/xmake/issues/320
 
+### target:set_policy
+
+#### 设置构建行为策略
+
+xmake有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。
+
+因此，从v2.3.4开始，xmake提供默认构建策略的修改设置，开放给用户一定程度上的可配置性。
+
+使用方式如下：
+
+```lua
+set_policy("check.auto_ignore_flags", false)
+```
+
+只需要在项目根域设置这个配置，就可以禁用flags的自动检测和忽略机制，另外`set_policy`也可以针对某个特定的target局部生效。
+
+```lua
+target("test")
+    set_policy("check.auto_ignore_flags", false)
+```
+
+!> 另外，如果设置的策略名是无效的，xmake也会有警告提示。
+
+目前支持的一些策略配置如下：
+
+| 策略配置名                          | 描述                                 | 默认值   | 支持版本 |
+| ----------------------------------- | ------------------------------------ | -------- | -------- |
+| check.auto_ignore_flags             | 自动检测和忽略flags                  | true     | >= 2.3.4 |
+| check.auto_map_flags                | 自动映射flags                        | true     | >= 2.3.4 |
+| build.across_targets_in_parallel    | 跨target间并行构建                   | true     | >= 2.3.4 |
+
+如果要获取当前xmake支持的所有策略配置列表和描述，可以执行下面的命令：
+
+```bash
+$ xmake l core.project.policy.policies
+{ 
+  "check.auto_map_flags" = { 
+    type = "boolean",
+    description = "Enable map gcc flags to the current compiler and linker automatically.",
+    default = true 
+  },
+  "build.across_targets_in_parallel" = { 
+    type = "boolean",
+    description = "Enable compile the source files for each target in parallel.",
+    default = true 
+  },
+  "check.auto_ignore_flags" = { 
+    type = "boolean",
+    description = "Enable check and ignore unsupported flags automatically.",
+    default = true 
+  } 
+}
+```
+
+##### check.auto_ignore_flags
+
+xmake默认会对所有`add_cxflags`, `add_ldflags`接口设置的原始flags进行自动检测，如果检测当前编译器和链接器不支持它们，就会自动忽略。
+
+这通常是很有用的，像一些可选的编译flags，即使不支持也能正常编译，但是强行设置上去，其他用户在编译的时候，有可能会因为编译器的支持力度不同，出现一定程度的编译失败。
+
+但，由于自动检测并不保证100%可靠，有时候会有一定程度的误判，所以某些用户并不喜欢这个设定（尤其是针对交叉编译工具链，更容易出现失败）。
+
+目前，v2.3.4版本如果检测失败，会有警告提示避免用户莫名躺坑，例如：
+
+```bash
+warning: add_ldflags("-static") is ignored, please pass `{force = true}` or call `set_policy("check.auto_ignore_flags", false)` if you want to set it.
+```
+
+根据提示，我们可以自己分析判断，是否需要强制设置这个flags，一种就是通过：
+
+```lua
+add_ldflags("-static", {force = true})
+```
+
+来显示的强制设置上它，跳过自动检测，这对于偶尔的flags失败，是很有效快捷的处理方式，但是对于交叉编译时候，一堆的flags设置检测不过的情况下，每个都设置force太过于繁琐。
+
+这个时候，我们就可以通过`set_policy`来对某个target或者整个project直接禁用默认的自动检测行为：
+
+```lua
+set_policy("check.auto_ignore_flags", false)
+target("test")
+    add_ldflags("-static")
+```
+
+然后我们就可以随意设置各种原始flags，xmake不会去自动检测和忽略他们了。
+
+##### check.auto_map_flags
+
+这是xmake的另外一个对flags的智能分析处理，通常像`add_links`, `add_defines`这种xmake内置的api去设置的配置，是具有跨平台特性的，不同编译器平台会自动处理成对应的原始flags。
+
+但是，有些情况，用户还是需要自己通过add_cxflags, add_ldflags设置原始的编译链接flags，这些flags并不能很好的跨编译器
+
+就拿`-O0`的编译优化flags来说，虽然有`set_optimize`来实现跨编译器配置，但如果用户直接设置`add_cxflags("-O0")`呢？gcc/clang下可以正常处理，但是msvc下就不支持了
+
+也许我们能通过`if is_plat() then`来分平台处理，但很繁琐，因此xmake内置了flags的自动映射功能。
+
+基于gcc flags的普及性，xmake采用gcc的flags命名规范，对其根据不同的编译实现自动映射，例如：
+
+```lua
+add_cxflags("-O0")
+```
+
+这一行设置，在gcc/clang下还是`-O0`，但如果当前是msvc编译器，那边会自动映射为msvc对应`-Od`编译选项来禁用优化。
+
+整个过程，用户是完全无感知的，直接执行xmake就可以跨编译器完成编译。
+
+!> 当然，目前的自动映射实现还不是很成熟，没有100%覆盖所有gcc的flags，所以还是有不少flags是没去映射的。
+
+也有部分用户并不喜欢这种自动映射行为，那么我们可以通过下面的设置完全禁用这个默认的行为：
+
+```bash
+set_policy("check.auto_map_flags", false)
+```
+
+##### build.across_targets_in_parallel
+
+这个策略也是默认开启的，主要用于跨target间执行并行构建，v2.3.3之前的版本，并行构建只能针对单个target内部的所有源文件，
+跨target的编译，必须要要等先前的target完全link成功，才能执行下一个target的编译，这在一定程度上会影响编译速度。
+
+然而每个target的源文件是可以完全并行化处理的，最终在一起执行link过程，v2.3.3之后的版本通过这个优化，构建速度提升了30%。
+
+当然，如果有些特殊的target里面的构建源文件要依赖先前的target（尤其是一些自定义rules的情况，虽然很少遇到），我们也可以通过下面的设置禁用这个优化行为：
+
+```bash
+set_policy("build.across_targets_in_parallel", false)
+```
