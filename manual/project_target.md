@@ -2182,11 +2182,11 @@ target ("test")
 
 Some of the currently supported strategy configurations are as follows:
 
-| Policy configuration name                                           | Description                           | Default value | Supported version |
-| -----------------------------------                                 | ------------- ----------------------- | --------      | --------          |
-| [check.auto_ignore_flags](checkauto_ignore_flags)                   | Automatically detect and ignore flags | true          | > = 2.3.4         |
-| [check.auto_map_flags](checkauto_map_flags)                         | Automatically map flags               | true          | > = 2.3.4         |
-| [build.across_targets_in_parallel](buildacross_targets_in_parallel) | Parallel build across targets         | true          | > = 2.3.4         |
+| Policy configuration name                                            | Description                           | Default value | Supported version |
+| -----------------------------------                                  | ------------- ----------------------- | --------      | --------          |
+| [check.auto_ignore_flags](#checkauto_ignore_flags)                   | Automatically detect and ignore flags | true          | > = 2.3.4         |
+| [check.auto_map_flags](#checkauto_map_flags)                         | Automatically map flags               | true          | > = 2.3.4         |
+| [build.across_targets_in_parallel](#buildacross_targets_in_parallel) | Parallel build across targets         | true          | > = 2.3.4         |
 
 If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:
 
