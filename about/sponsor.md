@@ -44,6 +44,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2020.05.15 | Russell Haley                         | Paypal  | $10CAD |                                                                         |
 | 2020.04.10 | C*g                                   | wechat  | ¥20    | 拒绝白嫖，支持一下                                                      |
 | 2020.04.07 | *子                                   | wechat  | ¥10    | 感谢你创造了xmake                                                       |
 | 2019.10.31 | 刘*                                   | alipay  | ¥100   | xmake非常好用，期待持续更新，加油!                                      |
