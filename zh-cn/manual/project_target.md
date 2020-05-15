@@ -2185,11 +2185,11 @@ target("test")
 
 目前支持的一些策略配置如下：
 
-| 策略配置名                          | 描述                                 | 默认值   | 支持版本 |
-| ----------------------------------- | ------------------------------------ | -------- | -------- |
-| check.auto_ignore_flags             | 自动检测和忽略flags                  | true     | >= 2.3.4 |
-| check.auto_map_flags                | 自动映射flags                        | true     | >= 2.3.4 |
-| build.across_targets_in_parallel    | 跨target间并行构建                   | true     | >= 2.3.4 |
+| 策略配置名                                                          | 描述                                 | 默认值   | 支持版本 |
+| -----------------------------------                                 | ------------------------------------ | -------- | -------- |
+| [check.auto_ignore_flags](checkauto_ignore_flags)                   | 自动检测和忽略flags                  | true     | >= 2.3.4 |
+| [check.auto_map_flags](checkauto_map_flags)                         | 自动映射flags                        | true     | >= 2.3.4 |
+| [build.across_targets_in_parallel](buildacross_targets_in_parallel) | 跨target间并行构建                   | true     | >= 2.3.4 |
 
 如果要获取当前xmake支持的所有策略配置列表和描述，可以执行下面的命令：
 
