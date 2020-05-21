@@ -27,6 +27,7 @@ bc1qstzyehpjsryh8qwj8kf95js4cjcj3p670s5j9fyd3gkj946qdt7qx0xjpa
 
 | 日期       | 支持者                                | 渠道     | 金额   | 评价                                                                    |
 |--          | --                                    | --       | --     | --                                                                      |
+| 2020.05.20 | Russell Haley                         | Paypal   | $10CAD |                                                                         |
 | 2020.05.15 | Russell Haley                         | Paypal   | $10CAD |                                                                         |
 | 2020.04.10 | C*g                                   | 微信     | ¥20    | 拒绝白嫖，支持一下                                                      |
 | 2020.04.07 | *子                                   | 微信     | ¥10    | 感谢你创造了xmake                                                       |
