@@ -89,6 +89,10 @@ yaourt xmake
 1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载deb安装包
 2. 运行: `dpkg -i xmake-xxxx.deb`
 
+## FreeBSD
+
+见下文源码编译安装，并使用gmake来代替make。
+
 ## Termux (Android)
 
 ```bash

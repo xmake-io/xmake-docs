@@ -70,6 +70,10 @@ Or download deb package to install it:
 1. Download xmake `.deb` install package from [Releases](https://github.com/xmake-io/xmake/releases) 
 2. Run `dpkg -i xmake-xxxx.deb`
 
+## FreeBSD
+
+We need [source compilation and installation](#source-compilation-and-installation) and use `gmake` instead of make.
+
 ## Termux (Android)
 
 ```bash
