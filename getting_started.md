@@ -1,3 +1,8 @@
+## Sponsor
+
+🙏 The xmake projects is a personal open source projects, their development need your help. If you would like to support the development of xmake, welcome to donate to us.
+
+👉 [Sponsor Page](https://xmake.io/#/about/sponsor)
 
 ## Installation
 

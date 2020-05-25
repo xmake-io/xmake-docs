@@ -7,6 +7,10 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 [![Paypal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
 
+## Github Sponsor
+
+[Become a sponsor to waruqi](https://github.com/sponsors/waruqi)
+
 ## Bitcoin
 
 ```

@@ -15,6 +15,10 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 [![Paypal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
 
+## Github Sponsor
+
+[Become a sponsor to waruqi](https://github.com/sponsors/waruqi)
+
 ## Bitcoin
 
 ```
