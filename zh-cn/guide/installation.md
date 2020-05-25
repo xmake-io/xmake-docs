@@ -28,7 +28,9 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 ### 使用安装包
 
 1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载windows安装包
-2. 运行安装程序 xmake-[version].exe
+2. 运行安装程序 xmake-[version].[win32|win64].exe
+
+!> releases下面xmake-[version].[win32|win64].zip的包是不带安装程序的，可直接解压使用，绿色无依赖，不过需要自己添加PATH环境变量。
 
 ### 使用scoop
 

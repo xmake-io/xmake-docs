@@ -27,7 +27,9 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 ### via installer
 
 1. Download xmake windows installer from [Releases](https://github.com/xmake-io/xmake/releases)
-2. Run xmake-[version].exe
+2. Run xmake-[version].[win32|win64].exe
+
+!> Releases/xmake-[version].[win32|win64].zip has not installer, we need unzip it and add PATH environment variables by ourself.
 
 ### via scoop
 
