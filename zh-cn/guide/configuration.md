@@ -609,6 +609,81 @@ $ xmake f -p linux --sdk=/user/toolsdk --ar=armv7-linux-ar
 也就是说，在指定链接器为`armips.exe`的同时，告诉xmake，它跟ar用法和参数选项基本相同。
 </p>
 
+## 工具链配置
+
+上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入`--ldflags/--includedirs`等场景就比较繁琐了, 
+因此xmake也内置了一些常用工具链，可以省去交叉编译工具链复杂的配置过程，只需要执行：
+
+```bash
+$ xmake f --toolchain=gnu-rm --sdk=/xxx/
+$ xmake
+```
+
+就可以快速切换的指定的交叉编译工具链，如果这个工具链需要追加一些特定的flags设置，也会自动设置好，简化配置。
+
+其中，gnu-rm就是内置的GNU Arm Embedded Toolchain。
+
+比如，我们也可以快速从gcc工具链整体切换到clang或者llvm工具链，不在需要`xmake f --cc=clang --cxx=clang --ld=clang++`等挨个配置了。
+
+```bash
+$ xmake f --toolchain=clang
+$ xmake
+```
+
+或者
+
+```bash
+$ xmake f --toolchain=llvm --sdk=/xxx/llvm
+$ xmake
+```
+
+具体xmake支持哪些工具链，可以通过下面的命令查看：
+
+```bash
+$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+```
+
+另外，我们也可以在xmake.lua中自定义toolchain，然后通过`set_toolchains`指定进去，例如：
+
+```lua
+toolchain("myclang")
+    set_kind("standalone")
+    set_toolsets("cc", "clang")
+    set_toolsets("cxx", "clang", "clang++")
+    set_toolsets("ld", "clang++", "clang")
+    set_toolsets("sh", "clang++", "clang")
+    set_toolsets("ar", "ar")
+    set_toolsets("ex", "ar")
+    set_toolsets("strip", "strip")
+    set_toolsets("mm", "clang")
+    set_toolsets("mxx", "clang", "clang++")
+    set_toolsets("as", "clang")
+
+    -- ...
+```
+
+关于这块的详情介绍，可以到[自定义工具链](/zh-cn/manual/custom_toolchain)章节查看
+
+更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
+
 ## 全局配置
 
 我们也可以将一些常用配置保存到全局配置中，来简化频繁地输入：
