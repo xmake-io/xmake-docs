@@ -42,3 +42,7 @@
   - [内置模块](zh-cn/manual/builtin_modules.md)
   - [扩展模块](zh-cn/manual/extension_modules.md)
 
+- 主题风格
+
+  - [切换主题](zh-cn/theme/switch_theme.md)
+  - [内置主题](zh-cn/theme/builtin_themes.md)

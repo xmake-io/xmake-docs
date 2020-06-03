@@ -42,3 +42,8 @@
   - [Builtin Modules](manual/builtin_modules.md)
   - [Extension Modules](manual/extension_modules.md)
 
+- Theme Style
+
+  - [Switch Theme](theme/switch_theme.md)
+  - [Builtin Theme](theme/builtin_themes.md)
+
