@@ -235,75 +235,32 @@ $ xmake f -p linux --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --l
 $ xmake f -p linux --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread"
 ```
 
-### MingW工具链
-
-使用mingw工具链编译，其实也是交叉编译，但是由于这个比较常用，xmake专门增加了一个mingw的平台来快速处理使用mingw工具链的编译。
-
-因此，xmake对mingw的工具链检测会更加完善，在macos下，基本上连sdk路径都不需要配置，也能直接检测到，只需要切到mingw平台编译即可。
-
-```bash
-$ xmake f -p mingw
-$ xmake -v
-configure
-{
-    ld = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++
-    ndk_stdcxx = true
-    plat = mingw
-    mingw = /usr/local/opt/mingw-w64
-    buildir = build
-    arch = x86_64
-    xcode = /Applications/Xcode.app
-    mode = release
-    cxx = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc
-    cross = x86_64-w64-mingw32-
-    theme = default
-    kind = static
-    ccache = true
-    host = macosx
-    clean = true
-    bin = /usr/local/opt/mingw-w64/bin
-}
-[  0%]: ccache compiling.release src/main.cpp
-/usr/local/bin/ccache /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc -c -fvisibility=hidden -O3 -m64 -o build/.objs/test/mingw/x86_64/release/src/main.cpp.obj src/main.cpp
-[100%]: linking.release test.exe
-/usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++ -o build/mingw/x86_64/release/test.exe build/.objs/test/mingw/x86_64/release/src/main.cpp.obj -s -fvisibility=hidden -m64
-build ok!
-```
-
-这里我们追加了`-v`参数，看了下详细的编译命令和检测到的mingw工具链配置值，其中cross被自动检测为：`x86_64-w64-mingw32-`，bin目录也被自动检测到了，还有编译器和链接器也是。
-
-尽管在linux/win上还没法自动检测到sdk路径，我们也可以手动指定sdk路径，需要注意的是，xmake为mingw专门提供了一个`--mingw=`参数用来指定mingw的工具链根目录，其效果跟`--sdk=`是一样的，但是它可以作为全局配置被设置。
-
-```bash
-$ xmake g --mingw=/home/mingwsdk
-$ xmake f -p mingw
-$ xmake
-```
-
-我们通过`xmake g/global`命令设置`--mingw`根目录到全局配置后，之后每次编译和切换编译平台，就不用额外指定mingw工具链路径了，方便使用。
-
-另外，其他的工具链配置参数用法，跟上文描述的没什么区别，像`--cross`, `--bin=`等都可以根据实际的环境需要，自己控制是否需要额外追加配置来适配自己的mingw工具链。
-
-### LLVM工具链
-
-llvm的工具链比较标准，只需要设置sdk配置路径即可使用：
-
-```bash
-$ xmake f -p cross --sdk="C:\Program Files\LLVM"
-$ xmake
-```
-
 ### 项目描述设置
 
-#### set_toolchain
+#### set_toolchains
 
-如果觉得每次通过命令行配置比较繁琐，有些配置可以通过在xmake.lua预先配置好，来简化命令配置，比如编译器的指定，就可以通过`set_toolchain`来对每个target单独设置。
+这对某个特定的target单独切换设置不同的工具链，和set_toolsets不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。
+
+这也是推荐做法，因为像gcc/clang等大部分编译工具链，编译器和链接器都是配套使用的，要切就得整体切，单独零散的切换设置会很繁琐。
+
+比如我们切换test目标到clang+yasm两个工具链：
 
 ```lua
 target("test")
     set_kind("binary")
-    set_toolchain("cxx", "clang")
-    set_toolchain("ld", "clang++")
+    add_files("src/*.c")
+    set_toolchains("clang", "yasm")
+```
+
+#### set_toolsets
+
+如果觉得每次通过命令行配置比较繁琐，有些配置可以通过在xmake.lua预先配置好，来简化命令配置，比如编译器的指定，就可以通过`set_toolsets`来对每个target单独设置。
+
+```lua
+target("test")
+    set_kind("binary")
+    set_toolsets("cxx", "clang")
+    set_toolsets("ld", "clang++")
 ```
 
 强制test目标的编译器和链接器使用clang编译器，或者指定交叉编译工具链中的编译器名或者路径。
@@ -356,7 +313,7 @@ end
 
 -- for sunos platform
 if is_plat("sunos") then
-     add_files("src/unix/no-proctitle.c")
+    add_files("src/unix/no-proctitle.c")
     add_files("src/unix/sunos.c")
     add_defines("__EXTENSIONS_", "_XOPEN_SOURCE=600")
     add_headerfiles("(include/uv-sunos.h)")
@@ -379,7 +336,151 @@ $ xmake
 
 只要设置了`--sdk=`等参数，就会启用linux平台的交叉编译模式。
 
-### 交叉编译参数说明
+### 常用工具链配置
+
+!> 此特性需要v2.3.4以上版本才支持
+
+上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入`--ldflags/--includedirs`等场景就比较繁琐了, 
+因此xmake也内置了一些常用工具链，可以省去交叉编译工具链复杂的配置过程，只需要执行：
+
+```bash
+$ xmake f --toolchain=gnu-rm --sdk=/xxx/
+$ xmake
+```
+
+就可以快速切换的指定的交叉编译工具链，如果这个工具链需要追加一些特定的flags设置，也会自动设置好，简化配置。
+
+其中，gnu-rm就是内置的GNU Arm Embedded Toolchain。
+
+比如，我们也可以快速从gcc工具链整体切换到clang或者llvm工具链，不再需要`xmake f --cc=clang --cxx=clang --ld=clang++`等挨个配置了。
+
+```bash
+$ xmake f --toolchain=clang
+$ xmake
+```
+
+或者
+
+```bash
+$ xmake f --toolchain=llvm --sdk=/xxx/llvm
+$ xmake
+```
+
+具体xmake支持哪些工具链，可以通过下面的命令查看：
+
+```bash
+$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+```
+
+另外，我们也可以在xmake.lua中自定义toolchain，然后通过`xmake f --toolchain=myclang`指定切换，例如：
+
+```lua
+toolchain("myclang")
+    set_kind("standalone")
+    set_toolsets("cc", "clang")
+    set_toolsets("cxx", "clang", "clang++")
+    set_toolsets("ld", "clang++", "clang")
+    set_toolsets("sh", "clang++", "clang")
+    set_toolsets("ar", "ar")
+    set_toolsets("ex", "ar")
+    set_toolsets("strip", "strip")
+    set_toolsets("mm", "clang")
+    set_toolsets("mxx", "clang", "clang++")
+    set_toolsets("as", "clang")
+
+    -- ...
+```
+
+关于这块的详情介绍，可以到[自定义工具链](/zh-cn/manual/custom_toolchain)章节查看
+
+更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
+
+#### MingW工具链
+
+使用mingw工具链编译，其实也是交叉编译，但是由于这个比较常用，xmake专门增加了一个mingw的平台来快速处理使用mingw工具链的编译。
+
+因此，xmake对mingw的工具链检测会更加完善，在macos下，基本上连sdk路径都不需要配置，也能直接检测到，只需要切到mingw平台编译即可。
+
+```bash
+$ xmake f -p mingw
+$ xmake -v
+configure
+{
+    ld = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++
+    ndk_stdcxx = true
+    plat = mingw
+    mingw = /usr/local/opt/mingw-w64
+    buildir = build
+    arch = x86_64
+    xcode = /Applications/Xcode.app
+    mode = release
+    cxx = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc
+    cross = x86_64-w64-mingw32-
+    theme = default
+    kind = static
+    ccache = true
+    host = macosx
+    clean = true
+    bin = /usr/local/opt/mingw-w64/bin
+}
+[  0%]: ccache compiling.release src/main.cpp
+/usr/local/bin/ccache /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc -c -fvisibility=hidden -O3 -m64 -o build/.objs/test/mingw/x86_64/release/src/main.cpp.obj src/main.cpp
+[100%]: linking.release test.exe
+/usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++ -o build/mingw/x86_64/release/test.exe build/.objs/test/mingw/x86_64/release/src/main.cpp.obj -s -fvisibility=hidden -m64
+build ok!
+```
+
+这里我们追加了`-v`参数，看了下详细的编译命令和检测到的mingw工具链配置值，其中cross被自动检测为：`x86_64-w64-mingw32-`，bin目录也被自动检测到了，还有编译器和链接器也是。
+
+尽管在linux/win上还没法自动检测到sdk路径，我们也可以手动指定sdk路径，需要注意的是，xmake为mingw专门提供了一个`--mingw=`参数用来指定mingw的工具链根目录，其效果跟`--sdk=`是一样的，但是它可以作为全局配置被设置。
+
+```bash
+$ xmake g --mingw=/home/mingwsdk
+$ xmake f -p mingw
+$ xmake
+```
+
+我们通过`xmake g/global`命令设置`--mingw`根目录到全局配置后，之后每次编译和切换编译平台，就不用额外指定mingw工具链路径了，方便使用。
+
+另外，其他的工具链配置参数用法，跟上文描述的没什么区别，像`--cross`, `--bin=`等都可以根据实际的环境需要，自己控制是否需要额外追加配置来适配自己的mingw工具链。
+
+#### LLVM工具链
+
+llvm工具链下载地址：https://releases.llvm.org/
+
+```bash
+$ xmake f -p cross --toolchain=llvm --sdk="C:\Program Files\LLVM"
+$ xmake
+```
+
+#### GNU-RM工具链
+
+工具链地址：https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#
+
+```bash
+$ xmake f -p cross --toolchain=gnu-rm --sdk=/xxx/cc-arm-none-eabi-9-2019-q4-major
+$ xmake
+```
+
+### 通用交叉编译配置
 
 | 参数名                       | 描述                             |
 | ---------------------------- | -------------------------------- |
@@ -608,83 +709,6 @@ $ xmake f -p linux --sdk=/user/toolsdk --ar=armv7-linux-ar
 这个时候我们可以通过：`xmake f --ar=ar@/home/xxx/armips.exe` 设置armips.exe链接器作为类ar的使用方式来编译。
 也就是说，在指定链接器为`armips.exe`的同时，告诉xmake，它跟ar用法和参数选项基本相同。
 </p>
-
-## 工具链配置
-
-!> 此特性需要v2.3.4以上版本才支持
-
-上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入`--ldflags/--includedirs`等场景就比较繁琐了, 
-因此xmake也内置了一些常用工具链，可以省去交叉编译工具链复杂的配置过程，只需要执行：
-
-```bash
-$ xmake f --toolchain=gnu-rm --sdk=/xxx/
-$ xmake
-```
-
-就可以快速切换的指定的交叉编译工具链，如果这个工具链需要追加一些特定的flags设置，也会自动设置好，简化配置。
-
-其中，gnu-rm就是内置的GNU Arm Embedded Toolchain。
-
-比如，我们也可以快速从gcc工具链整体切换到clang或者llvm工具链，不再需要`xmake f --cc=clang --cxx=clang --ld=clang++`等挨个配置了。
-
-```bash
-$ xmake f --toolchain=clang
-$ xmake
-```
-
-或者
-
-```bash
-$ xmake f --toolchain=llvm --sdk=/xxx/llvm
-$ xmake
-```
-
-具体xmake支持哪些工具链，可以通过下面的命令查看：
-
-```bash
-$ xmake show -l toolchains
-xcode         Xcode IDE
-vs            VisualStudio IDE
-yasm          The Yasm Modular Assembler
-clang         A C language family frontend for LLVM
-go            Go Programming Language Compiler
-dlang         D Programming Language Compiler
-sdcc          Small Device C Compiler
-cuda          CUDA Toolkit
-ndk           Android NDK
-rust          Rust Programming Language Compiler
-llvm          A collection of modular and reusable compiler and toolchain technologies
-cross         Common cross compilation toolchain
-nasm          NASM Assembler
-gcc           GNU Compiler Collection
-mingw         Minimalist GNU for Windows
-gnu-rm        GNU Arm Embedded Toolchain
-envs          Environment variables toolchain
-fasm          Flat Assembler
-```
-
-另外，我们也可以在xmake.lua中自定义toolchain，然后通过`xmake f --toolchain=myclang`指定切换，例如：
-
-```lua
-toolchain("myclang")
-    set_kind("standalone")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
-
-    -- ...
-```
-
-关于这块的详情介绍，可以到[自定义工具链](/zh-cn/manual/custom_toolchain)章节查看
-
-更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
 
 ## 全局配置
 

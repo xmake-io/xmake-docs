@@ -239,75 +239,32 @@ e.g:
 $ xmake f -p linux --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread"
 ```
 
-### MingW Toolchain
-
-Compiling with the mingw toolchain is actually cross-compilation, but because this is more commonly used, xmake specifically adds a mingw platform to quickly handle compilation using the mingw toolchain.
-
-Therefore, xmake's toolchain detection for mingw will be more perfect. Under macos, basically even the sdk path does not need to be configured, and can be directly detected, only need to switch to the mingw platform to compile.
-
-```bash
-$ xmake f -p mingw
-$ xmake -v
-configure
-{
-    ld = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++
-    ndk_stdcxx = true
-    plat = mingw
-    mingw = /usr/local/opt/mingw-w64
-    buildir = build
-    arch = x86_64
-    xcode = /Applications/Xcode.app
-    mode = release
-    cxx = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc
-    cross = x86_64-w64-mingw32-
-    theme = default
-    kind = static
-    ccache = true
-    host = macosx
-    clean = true
-    bin = /usr/local/opt/mingw-w64/bin
-}
-[  0%]: ccache compiling.release src/main.cpp
-/usr/local/bin/ccache /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc -c -fvisibility=hidden -O3 -m64 -o build/.objs/test/mingw/x86_64/release/src/main.cpp.obj src/main.cpp
-[100%]: linking.release test.exe
-/usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++ -o build/mingw/x86_64/release/test.exe build/.objs/test/mingw/x86_64/release/src/main.cpp.obj -s -fvisibility=hidden -m64
-build ok!
-```
-
-Here we have added the `-v` parameter and looked at the detailed compile commands and detected mingw toolchain configuration values, where cross is automatically detected as:` x86_64-w64-mingw32-`, and the bin directory is also automatically detected , As well as compilers and linkers.
-
-Although it is not possible to automatically detect the sdk path on linux/win, we can also manually specify the sdk path. It should be noted that xmake specifically provides a `--mingw =` parameter for mingw to specify the tool chain root of mingw The directory has the same effect as `--sdk =`, but it can be set as a global configuration.
-
-```bash
-$ xmake g --mingw=/home/mingwsdk
-$ xmake f -p mingw
-$ xmake
-```
-
-After setting the `--mingw` root directory to the global configuration through the` xmake g/global` command, after each compilation and switching of the compilation platform, there is no need to specify an additional mingw toolchain path, which is convenient for use.
-
-In addition, the usage of other tool chain configuration parameters is the same as that described above. For example, `--cross`,` --bin=`, etc. can be adjusted according to the actual needs of the environment. Own mingw tool chain.
-
-### LLVM Toolchain
-
-The tool chain of llvm is relatively standard, only need to set the sdk configuration path to use:
-
-```bash
-$ xmake f -p cross --sdk="C:\Program Files\LLVM"
-$ xmake
-```
-
 ### Project description settings
 
-#### set_toolchain
+#### set_toolchains
 
-If you feel that it is more complicated to configure through the command line each time, some configurations can be pre-configured in xmake.lua to simplify the command configuration. For example, the specification of the compiler can be set individually for each target through set_toolchain.
+This sets up different tool chains for a specific target individually. Unlike set_toolsets, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.
+
+This is also a recommended practice, because most compiler tool chains like gcc/clang, the compiler and the linker are used together. To cut it, you have to cut it as a whole. Separate and scattered switch settings will be cumbersome.
+
+For example, we switch the test target to two tool chains of clang+yasm:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("clang", "yasm")
+```
+
+#### set_toolsets
+
+If you feel that it is more complicated to configure through the command line each time, some configurations can be pre-configured in xmake.lua to simplify the command configuration. For example, the specification of the compiler can be set individually for each target through set_toolsets.
 
 ```lua
 target("test")
     set_kind("binary")
-    set_toolchain("cxx", "clang")
-    set_toolchain("ld", "clang++")
+    set_toolsets("cxx", "clang")
+    set_toolsets("ld", "clang++")
 ```
 
 Force the compiler and linker of the test target to use the clang compiler, or specify the compiler name or path in the cross-compilation tool chain.
@@ -360,7 +317,7 @@ end
 
 -- for sunos platform
 if is_plat("sunos") then
-     add_files("src/unix/no-proctitle.c")
+    add_files("src/unix/no-proctitle.c")
     add_files("src/unix/sunos.c")
     add_defines("__EXTENSIONS_", "_XOPEN_SOURCE=600")
     add_headerfiles("(include/uv-sunos.h)")
@@ -383,7 +340,151 @@ $ xmake
 
 As long as the `--sdk=` and other parameters are set, the cross-compilation mode of the Linux platform will be enabled.
 
-### Cross Compilation Arguments
+### Toolchain configuration
+
+!> This feature requires v2.3.4 or later to support
+
+The above describes the general cross-compilation toolchain configuration. If some specific toolchains need to be imported into additional scenarios such as `--ldflags/--includedirs`, it is more cumbersome
+Therefore, xmake also has some common tool chains built-in, which can save the complicated configuration process of cross-compilation tool chain, and only need to execute:
+
+```bash
+$ xmake f --toolchain=gnu-rm --sdk=/xxx/
+$ xmake
+```
+
+You can quickly switch the designated cross-compilation tool chain. If this tool chain needs to add some specific flags settings, it will be automatically set up to simplify configuration.
+
+Among them, gnu-rm is the built-in GNU Arm Embedded Toolchain.
+
+For example, we can also quickly switch from the entire gcc tool chain to the clang or llvm tool chain, no longer need to make `xmake f --cc=clang --cxx=clang --ld=clang++` one by one.
+
+```bash
+$ xmake f --toolchain=clang
+$ xmake
+```
+
+or
+
+```bash
+$ xmake f --toolchain=llvm --sdk=/xxx/llvm
+$ xmake
+```
+
+The specific tool chains supported by xmake can be viewed with the following command:
+
+```bash
+$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+```
+
+In addition, we can also customize the toolchain in xmake.lua, and then specify the switch through `xmake f --toolchain=myclang`, for example:
+
+```lua
+toolchain("myclang")
+    set_kind("standalone")
+    set_toolsets("cc", "clang")
+    set_toolsets("cxx", "clang", "clang++")
+    set_toolsets("ld", "clang++", "clang")
+    set_toolsets("sh", "clang++", "clang")
+    set_toolsets("ar", "ar")
+    set_toolsets("ex", "ar")
+    set_toolsets("strip", "strip")
+    set_toolsets("mm", "clang")
+    set_toolsets("mxx", "clang", "clang++")
+    set_toolsets("as", "clang")
+
+    - ...
+```
+
+For details about this piece, you can go to the [Custom Toolchain](/manual/custom_toolchain).
+
+For more details, please see: [#780](https://github.com/xmake-io/xmake/issues/780)
+
+#### MingW Toolchain
+
+Compiling with the mingw toolchain is actually cross-compilation, but because this is more commonly used, xmake specifically adds a mingw platform to quickly handle compilation using the mingw toolchain.
+
+Therefore, xmake's toolchain detection for mingw will be more perfect. Under macos, basically even the sdk path does not need to be configured, and can be directly detected, only need to switch to the mingw platform to compile.
+
+```bash
+$ xmake f -p mingw
+$ xmake -v
+configure
+{
+    ld = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++
+    ndk_stdcxx = true
+    plat = mingw
+    mingw = /usr/local/opt/mingw-w64
+    buildir = build
+    arch = x86_64
+    xcode = /Applications/Xcode.app
+    mode = release
+    cxx = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc
+    cross = x86_64-w64-mingw32-
+    theme = default
+    kind = static
+    ccache = true
+    host = macosx
+    clean = true
+    bin = /usr/local/opt/mingw-w64/bin
+}
+[  0%]: ccache compiling.release src/main.cpp
+/usr/local/bin/ccache /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc -c -fvisibility=hidden -O3 -m64 -o build/.objs/test/mingw/x86_64/release/src/main.cpp.obj src/main.cpp
+[100%]: linking.release test.exe
+/usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++ -o build/mingw/x86_64/release/test.exe build/.objs/test/mingw/x86_64/release/src/main.cpp.obj -s -fvisibility=hidden -m64
+build ok!
+```
+
+Here we have added the `-v` parameter and looked at the detailed compile commands and detected mingw toolchain configuration values, where cross is automatically detected as:` x86_64-w64-mingw32-`, and the bin directory is also automatically detected , As well as compilers and linkers.
+
+Although it is not possible to automatically detect the sdk path on linux/win, we can also manually specify the sdk path. It should be noted that xmake specifically provides a `--mingw =` parameter for mingw to specify the tool chain root of mingw The directory has the same effect as `--sdk =`, but it can be set as a global configuration.
+
+```bash
+$ xmake g --mingw=/home/mingwsdk
+$ xmake f -p mingw
+$ xmake
+```
+
+After setting the `--mingw` root directory to the global configuration through the` xmake g/global` command, after each compilation and switching of the compilation platform, there is no need to specify an additional mingw toolchain path, which is convenient for use.
+
+In addition, the usage of other tool chain configuration parameters is the same as that described above. For example, `--cross`,` --bin=`, etc. can be adjusted according to the actual needs of the environment. Own mingw tool chain.
+
+#### LLVM Toolchain
+
+The tool chain of llvm is relatively standard, only need to set the sdk configuration path to use:
+
+```bash
+$ xmake f -p cross --toolchain=llvm --sdk="C:\Program Files\LLVM"
+$ xmake
+```
+
+#### GNU-RM Toolchain
+
+toolchain downlaod url: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#
+
+```bash
+$ xmake f -p cross --toolchain=gnu-rm --sdk=/xxx/cc-arm-none-eabi-9-2019-q4-major
+$ xmake
+```
+
+### Common Cross-compilation configuration
 
 | Configuration Option         | Description                                  |
 | ---------------------------- | -------------------------------------------- |
@@ -585,83 +686,6 @@ If the 'AR' environment variable exists, it will use the values specified in the
 <p class="tip">
 We can set a unknown compiler as like-ar archiver, .e.g `xmake f --ar=ar@/home/xxx/armips.exe` 
 </p>
-
-## Toolchain configuration
-
-!> This feature requires v2.3.4 or later to support
-
-The above describes the general cross-compilation toolchain configuration. If some specific toolchains need to be imported into additional scenarios such as `--ldflags/--includedirs`, it is more cumbersome
-Therefore, xmake also has some common tool chains built-in, which can save the complicated configuration process of cross-compilation tool chain, and only need to execute:
-
-```bash
-$ xmake f --toolchain=gnu-rm --sdk=/xxx/
-$ xmake
-```
-
-You can quickly switch the designated cross-compilation tool chain. If this tool chain needs to add some specific flags settings, it will be automatically set up to simplify configuration.
-
-Among them, gnu-rm is the built-in GNU Arm Embedded Toolchain.
-
-For example, we can also quickly switch from the entire gcc tool chain to the clang or llvm tool chain, no longer need to make `xmake f --cc=clang --cxx=clang --ld=clang++` one by one.
-
-```bash
-$ xmake f --toolchain=clang
-$ xmake
-```
-
-or
-
-```bash
-$ xmake f --toolchain=llvm --sdk=/xxx/llvm
-$ xmake
-```
-
-The specific tool chains supported by xmake can be viewed with the following command:
-
-```bash
-$ xmake show -l toolchains
-xcode         Xcode IDE
-vs            VisualStudio IDE
-yasm          The Yasm Modular Assembler
-clang         A C language family frontend for LLVM
-go            Go Programming Language Compiler
-dlang         D Programming Language Compiler
-sdcc          Small Device C Compiler
-cuda          CUDA Toolkit
-ndk           Android NDK
-rust          Rust Programming Language Compiler
-llvm          A collection of modular and reusable compiler and toolchain technologies
-cross         Common cross compilation toolchain
-nasm          NASM Assembler
-gcc           GNU Compiler Collection
-mingw         Minimalist GNU for Windows
-gnu-rm        GNU Arm Embedded Toolchain
-envs          Environment variables toolchain
-fasm          Flat Assembler
-```
-
-In addition, we can also customize the toolchain in xmake.lua, and then specify the switch through `xmake f --toolchain=myclang`, for example:
-
-```lua
-toolchain("myclang")
-    set_kind("standalone")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
-
-    - ...
-```
-
-For details about this piece, you can go to the [Custom Toolchain](/manual/custom_toolchain).
-
-For more details, please see: [#780](https://github.com/xmake-io/xmake/issues/780)
 
 ## Global Configuration
 
