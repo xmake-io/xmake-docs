@@ -48,36 +48,34 @@ The `option` field can be repeatedly entered to implement separate settings. If 
 | [add_cxxtypes](#optionadd_cxxtypes)                   | Add c++ type detection                            | >= 1.0.1           |
 | [add_csnippet](#optionadd_csnippet)                   | Add c-code snippets detection                     | >= 2.1.5           |
 | [add_cxxsnippet](#optionadd_cxxsnippet)               | Add c++ code snippet detection                    | >= 2.1.5           |
-| [set_warnings](#targetset_warnings)                   | Setting the warning level                         | >= 1.0.1           |
-| [set_optimize](#targetset_optimize)                   | Setting the optimization level                    | >= 1.0.1           |
-| [set_languages](#targetset_languages)                 | Setting the Code Language Standard                | >= 1.0.1           |
-| [add_includedirs](#targetadd_includedirs)             | Add Header Search Directory                       | >= 1.0.1           |
-| [add_defines](#targetadd_defines)                     | Add Macro Definition                              | >= 1.0.1           |
-| [add_undefines](#targetadd_undefines)                 | Cancel Macro Definition                           | >= 1.0.1           |
-| [add_defines_h](#targetadd_defines_h)                 | Add macro definitions to header files             | >= 1.0.1           |
-| [add_undefines_h](#targetadd_undefines_h)             | Cancel macro definition to header file            | >= 1.0.1           |
-| [add_cflags](#targetadd_cflags)                       | Add c Compile Options                             | >= 1.0.1           |
-| [add_cxflags](#targetadd_cxflags)                     | Add c/c++ Compile Options                         | >= 1.0.1           |
-| [add_cxxflags](#targetadd_cxxflags)                   | Add c++ Compile Options                           | >= 1.0.1           |
-| [add_mflags](#targetadd_mflags)                       | Add objc compile options                          | >= 2.0.1           |
-| [add_mxflags](#targetadd_mxflags)                     | Add objc/objc++ Compile Options                   | >= 2.0.1           |
-| [add_mxxflags](#targetadd_mxxflags)                   | Add objc++ Compile Options                        | >= 2.0.1           |
-| [add_scflags](#targetadd_scflags)                     | Add swift compile options                         | >= 2.1.1           |
-| [add_asflags](#targetadd_asflags)                     | Add assembly compile options                      | >= 2.1.1           |
-| [add_gcflags](#targetadd_gcflags)                     | Add go compile options                            | >= 2.1.1           |
-| [add_dcflags](#targetadd_dcflags)                     | Add dlang compile options                         | >= 2.1.1           |
-| [add_rcflags](#targetadd_rcflags)                     | Add rust compile option                           | >= 2.1.1           |
-| [add_cuflags](#targetadd_cuflags)                     | Add cuda compile options                          | >= 2.2.1           |
-| [add_culdflags](#targetadd_culdflags)                 | Add cuda device-link options                      | >= 2.2.7           |
-| [add_ldflags](#targetadd_ldflags)                     | Add Link Options                                  | >= 2.1.1           |
-| [add_arflags](#targetadd_arflags)                     | Add Static Library Archive Options                | >= 2.1.1           |
-| [add_shflags](#targetadd_shflags)                     | Add Dynamic Library Link Options                  | >= 2.0.1           |
-| [add_cfuncs](#targetadd_cfuncs)                       | Add c library function detection                  | >= 1.0.1           |
-| [add_cxxfuncs](#targetadd_cxxfuncs)                   | Add C++ Library Function Interface                | >= 1.0.1           |
-| [add_languages](#targetadd_languages)                 | Add Language Standards                            | >= 2.0.1           |
-| [add_vectorexts](#targetadd_vectorexts)               | Add Vector Extension Instructions                 | >= 2.0.1           |
-| [add_frameworks](#targetadd_frameworks)               | Add Linked Framework                              | >= 2.1.1           |
-| [add_frameworkdirs](#targetadd_frameworkdirs)         | Add Linked Framework                              | >= 2.1.5           |
+| [set_warnings](/manual/project_target?id=targetset_warnings)                   | Setting the warning level                         | >= 1.0.1           |
+| [set_optimize](/manual/project_target?id=targetset_optimize)                   | Setting the optimization level                    | >= 1.0.1           |
+| [set_languages](/manual/project_target?id=targetset_languages)                 | Setting the Code Language Standard                | >= 1.0.1           |
+| [add_includedirs](/manual/project_target?id=targetadd_includedirs)             | Add Header Search Directory                       | >= 1.0.1           |
+| [add_defines](/manual/project_target?id=targetadd_defines)                     | Add Macro Definition                              | >= 1.0.1           |
+| [add_undefines](/manual/project_target?id=targetadd_undefines)                 | Cancel Macro Definition                           | >= 1.0.1           |
+| [add_defines_h](/manual/project_target?id=targetadd_defines_h)                 | Add macro definitions to header files             | >= 1.0.1           |
+| [add_undefines_h](/manual/project_target?id=targetadd_undefines_h)             | Cancel macro definition to header file            | >= 1.0.1           |
+| [add_cflags](/manual/project_target?id=targetadd_cflags)                       | Add c Compile Options                             | >= 1.0.1           |
+| [add_cxflags](/manual/project_target?id=targetadd_cxflags)                     | Add c/c++ Compile Options                         | >= 1.0.1           |
+| [add_cxxflags](/manual/project_target?id=targetadd_cxxflags)                   | Add c++ Compile Options                           | >= 1.0.1           |
+| [add_mflags](/manual/project_target?id=targetadd_mflags)                       | Add objc compile options                          | >= 2.0.1           |
+| [add_mxflags](/manual/project_target?id=targetadd_mxflags)                     | Add objc/objc++ Compile Options                   | >= 2.0.1           |
+| [add_mxxflags](/manual/project_target?id=targetadd_mxxflags)                   | Add objc++ Compile Options                        | >= 2.0.1           |
+| [add_scflags](/manual/project_target?id=targetadd_scflags)                     | Add swift compile options                         | >= 2.1.1           |
+| [add_asflags](/manual/project_target?id=targetadd_asflags)                     | Add assembly compile options                      | >= 2.1.1           |
+| [add_gcflags](/manual/project_target?id=targetadd_gcflags)                     | Add go compile options                            | >= 2.1.1           |
+| [add_dcflags](/manual/project_target?id=targetadd_dcflags)                     | Add dlang compile options                         | >= 2.1.1           |
+| [add_rcflags](/manual/project_target?id=targetadd_rcflags)                     | Add rust compile option                           | >= 2.1.1           |
+| [add_cuflags](/manual/project_target?id=targetadd_cuflags)                     | Add cuda compile options                          | >= 2.2.1           |
+| [add_culdflags](/manual/project_target?id=targetadd_culdflags)                 | Add cuda device-link options                      | >= 2.2.7           |
+| [add_ldflags](/manual/project_target?id=targetadd_ldflags)                     | Add Link Options                                  | >= 2.1.1           |
+| [add_arflags](/manual/project_target?id=targetadd_arflags)                     | Add Static Library Archive Options                | >= 2.1.1           |
+| [add_shflags](/manual/project_target?id=targetadd_shflags)                     | Add Dynamic Library Link Options                  | >= 2.0.1           |
+| [add_languages](/manual/project_target?id=targetadd_languages)                 | Add Language Standards                            | >= 2.0.1           |
+| [add_vectorexts](/manual/project_target?id=targetadd_vectorexts)               | Add Vector Extension Instructions                 | >= 2.0.1           |
+| [add_frameworks](/manual/project_target?id=targetadd_frameworks)               | Add Linked Framework                              | >= 2.1.1           |
+| [add_frameworkdirs](/manual/project_target?id=targetadd_frameworkdirs)         | Add Linked Framework                              | >= 2.1.5           |
 
 ### option
 
@@ -113,7 +111,7 @@ $ xmake
 
 #### End definition option
 
-This is an optional api that shows the departure option scope, similar to [target_end](#target_end).
+This is an optional api that shows the departure option scope, similar to [target_end](/manual/project_target?id=target_end).
 
 ### option:add_deps
 
@@ -499,7 +497,7 @@ This is optional. Generally, the system library does not need to add this, and i
 
 #### Adding a load search directory for a dynamic library at runtime
 
-After the option passes the detection, it will be automatically added to the corresponding target. For details, see: [target.add_rpathdirs](#targetadd_rpathdirs).
+After the option passes the detection, it will be automatically added to the corresponding target. For details, see: [target.add_rpathdirs](/manual/project_target?id=targetadd_rpathdirs).
 
 ### option:add_cincludes
 
