@@ -403,18 +403,18 @@ As long as the `--sdk=` and other parameters are set, the cross-compilation mode
 | [--ld](#-ld)                 | Set `c/c++/objc/asm` linker                  |
 | [--sh](#-sh)                 | Set `c/c++/objc/asm` shared library linker   |
 | [--ar](#-ar)                 | Set `c/c++/objc/asm` static library archiver |
-| [--sc-ld](#-sc-ld)           | Set `swift` linker                           |
-| [--sc-sh](#-sc-sh)           | Set `swift` shared library linker            |
-| [--gc-ld](#-gc-ld)           | Set `golang` linker                          |
-| [--gc-ar](#-gc-ar)           | Set `golang` static library archiver         |
-| [--dc-ld](#-dc-ld)           | Set `dlang` linker                           |
-| [--dc-sh](#-dc-sh)           | Set `dlang` shared library linker            |
-| [--dc-ar](#-dc-ar)           | Set `dlang` static library archiver          |
-| [--rc-ld](#-rc-ld)           | Set `rust` linker                            |
-| [--rc-sh](#-rc-sh)           | Set `rust` shared library linker             |
-| [--rc-ar](#-rc-ar)           | Set `rust` static library archiver           |
-| [--cu-cxx](#-cu-cxx)         | Set `cuda` host compiler                     |
-| [--cu-ld](#-cu-ld)           | Set `cuda` linker                            |
+| [--scld](#-scld)             | Set `swift` linker                           |
+| [--scsh](#-scsh)             | Set `swift` shared library linker            |
+| [--gcld](#-gcld)             | Set `golang` linker                          |
+| [--gcar](#-gcar)             | Set `golang` static library archiver         |
+| [--dcld](#-dcld)             | Set `dlang` linker                           |
+| [--dcsh](#-dcsh)             | Set `dlang` shared library linker            |
+| [--dcar](#-dcar)             | Set `dlang` static library archiver          |
+| [--rcld](#-rcld)             | Set `rust` linker                            |
+| [--rcsh](#-rcsh)             | Set `rust` shared library linker             |
+| [--rcar](#-rcar)             | Set `rust` static library archiver           |
+| [--cu-ccbin](#-cu-ccbin)     | Set `cuda` host compiler                     |
+| [--culd](#-culd)             | Set `cuda` linker                            |
 | [--asflags](#-asflags)       | Set `asm` assembler option                   |
 | [--cflags](#-cflags)         | Set `c` compiler option                      |
 | [--cxflags](#-cxflags)       | Set `c/c++` compiler option                  |

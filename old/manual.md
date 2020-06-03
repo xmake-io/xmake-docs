@@ -2920,8 +2920,8 @@ The previous parameter is key, which is used to specify the tool type. Currently
 | ld | Common executable program linker such as c/c++/asm/objc |
 | sh | c/c++/asm/objc and other universal dynamic library linker |
 | ar | general static library archiver such as c/c++/asm/objc |
-| dc-ld | dlang executable linker, rc-ld/gc-ld, etc. |
-Dc-sh | dlang dynamic library linker, rc-sh/gc-sh, etc. |
+| dcld | dlang executable linker, rcld/gcld, etc. |
+Dc-sh | dlang dynamic library linker, rcsh/gcsh, etc. |
 
 For some compiler file names that are irregular, causing xmake to fail to recognize the known compiler name, we can also add a tool name prompt, for example:
 
@@ -7569,9 +7569,9 @@ The results are as follows:
 
 ```lua
 {
-     binary = {"ld", "gc-ld", "dc-ld"}
-,    static = {"ar", "gc-ar", "dc-ar"}
-,    shared = {"sh", "dc-sh"}
+     binary = {"ld", "gcld", "dcld"}
+,    static = {"ar", "gcar", "dcar"}
+,    shared = {"sh", "dcsh"}
 }
 ```
 

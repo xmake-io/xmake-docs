@@ -803,9 +803,9 @@ print(project.version())
 
 ```lua
 {
-     binary = {"ld", "gc-ld", "dc-ld"}
-,    static = {"ar", "gc-ar", "dc-ar"}
-,    shared = {"sh", "dc-sh"}
+     binary = {"ld", "gcld", "dcld"}
+,    static = {"ar", "gcar", "dcar"}
+,    shared = {"sh", "dcsh"}
 }
 ```
 
