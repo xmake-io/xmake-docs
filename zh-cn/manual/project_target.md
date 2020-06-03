@@ -106,7 +106,8 @@ target("test2")
 | [add_vectorexts](#targetadd_vectorexts)         | 添加向量扩展指令                     | >= 1.0.1 |
 | [add_frameworks](#targetadd_frameworks)         | 添加链接框架                         | >= 2.1.1 |
 | [add_frameworkdirs](#targetadd_frameworkdirs)   | 添加链接框架的搜索目录               | >= 2.1.5 |
-| [set_toolchain](#targetset_toolchain)           | 设置编译链接工具链                   | >= 2.2.9 |
+| [set_toolsets](#targetset_toolsets)             | 设置工具集                           | >= 2.3.4 |
+| [set_toolchains](#targetset_toolchains)         | 设置工具链                           | >= 2.3.4 |
 | [set_values](#targetset_values)                 | 设置一些扩展配置值                   | >= 2.2.1 |
 | [add_values](#targetadd_values)                 | 添加一些扩展配置值                   | >= 2.2.1 |
 | [set_rundir](#targetset_rundir)                 | 设置运行目录                         | >= 2.2.7 |
@@ -1767,9 +1768,15 @@ target("test")
     add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
 ```
 
-### target:set_toolchain
+### target:set_toolsets
 
-#### 设置编译链接工具链
+#### 设置工具集
+
+针对特定target单独设置切换某个编译器，链接器，不过我们更推荐使用[set_toolchains](#targetset_toolchains)对某个target进行整体工具链的切换。
+
+与set_toolchains相比，此接口只切换工具链某个特定的编译器或者链接器。
+
+!> 2.3.4以上版本才支持此接口，2.3.4之前的set_toolchain/set_tool接口会逐步弃用，采用此新接口，用法相同。
 
 对于`add_files("*.c")`添加的源码文件，默认都是会调用系统最匹配的编译工具去编译，或者通过`xmake f --cc=clang`命令手动去修改，不过这些都是全局影响所有target目标的。
 
@@ -1781,7 +1788,7 @@ target("test1")
 
 target("test2")
     add_files("*.c")
-    set_toolchain("cc", "$(projectdir)/tools/bin/clang-5.0")
+    set_toolsets("cc", "$(projectdir)/tools/bin/clang-5.0")
 ```
 
 上述描述仅对test2目标的编译器进行特殊设置，使用特定的clang-5.0编译器来编译test2，而test1还是使用默认设置。
@@ -1812,10 +1819,81 @@ target("test2")
 对于一些编译器文件名不规则，导致xmake无法正常识别处理为已知的编译器名的情况下，我们也可以加一个工具名提示，例如：
 
 ```lua
-set_toolchain("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
+set_toolsets("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 ```
 
 上述描述设置mipscc.exe作为c编译器，并且提示xmake作为gcc的传参处理方式进行编译。
+
+### target:set_toolchains
+
+#### 设置工具链
+
+这对某个特定的target单独切换设置不同的工具链，和set_toolsets不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。
+
+这也是推荐做法，因为像gcc/clang等大部分编译工具链，编译器和链接器都是配套使用的，要切就得整体切，单独零散的切换设置会很繁琐。
+
+比如我们切换test目标到clang+yasm两个工具链：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("clang", "yasm")
+```
+
+只需要指定工具链名字即可，具体xmake支持哪些工具链，可以通过下面的命令查看：
+
+```bash
+$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+```
+
+当然，我们也可以通过命令行全局切换到其他工具链：
+
+```bash
+$ xmake f --toolchain=clang
+$ xmake
+```
+
+另外，我们也可以在xmake.lua中自定义toolchain，然后通过`set_toolchains`指定进去，例如：
+
+```lua
+toolchain("myclang")
+    set_kind("standalone")
+    set_toolsets("cc", "clang")
+    set_toolsets("cxx", "clang", "clang++")
+    set_toolsets("ld", "clang++", "clang")
+    set_toolsets("sh", "clang++", "clang")
+    set_toolsets("ar", "ar")
+    set_toolsets("ex", "ar")
+    set_toolsets("strip", "strip")
+    set_toolsets("mm", "clang")
+    set_toolsets("mxx", "clang", "clang++")
+    set_toolsets("as", "clang")
+
+    -- ...
+```
+
+关于这块的详情介绍，可以到[自定义工具链](/zh-cn/manual/custom_toolchain)章节查看
+
+更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
 
 ### target:set_values
 

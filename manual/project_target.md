@@ -105,7 +105,8 @@ target("test2")
 | [add_vectorexts](#targetadd_vectorexts)         | Add vector extensions                                  | >= 1.0.1                    |
 | [add_frameworks](#targetadd_frameworks)         | Add frameworks                                         | >= 2.1.1                    |
 | [add_frameworkdirs](#targetadd_frameworkdirs)   | Add framework search directories                       | >= 2.1.5                    |
-| [set_toolchain](#targetset_toolchain)           | Set toolchains                                         | >= 2.2.9                    |
+| [set_toolsets](#targetset_toolsets)             | Set toolsets                                           | >= 2.3.4                    |
+| [set_toolchains](#targetset_toolchains)         | Set toolchains                                         | >= 2.3.4                    |
 | [set_values](#targetset_values)                 | Set custom configuration values                        | >= 2.2.1                    |
 | [add_values](#targetadd_values)                 | Add custom configuration values                        | >= 2.2.1                    |
 | [set_rundir](#targetset_rundir)                 | Set run directory                                      | >= 2.2.7                    |
@@ -1770,9 +1771,15 @@ target("test")
     add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
 ```
 
-### target:set_toolchain
+### target:set_toolsets
 
-#### Set toolchains
+#### Set toolsets
+
+Separate settings for a specific target to switch a compiler, linker, but we recommend using [set_toolchains](#targetset_toolchains) to switch the overall tool chain of a target.
+
+Compared with set_toolchains, this interface only switches a specific compiler or linker of the toolchain.
+
+!> This interface is only supported in versions above 2.3.4. The set_toolchain/set_tool interface before 2.3.4 will be gradually deprecated. The new interface is adopted and the usage is the same.
 
 For the source files added by `add_files("*.c")`, the default is to call the system's best matching compiler to compile, or manually modify it by `xmake f --cc=clang` command, but these are Globally affects all target targets.
 
@@ -1784,7 +1791,7 @@ target("test1")
 
 target("test2")
     add_files("*.c")
-    set_toolchain("cc", "$(projectdir)/tools/bin/clang-5.0")
+    set_toolsets("cc", "$(projectdir)/tools/bin/clang-5.0")
 ```
 
 The above description only makes special settings for the compiler of the test2 target, compiling test2 with a specific clang-5.0 compiler, and test1 still uses the default settings.
@@ -1795,28 +1802,99 @@ Each setting will override the previous setting under the current target target.
 
 The previous parameter is key, which is used to specify the tool type. Currently supported (compiler, linker, archiver):
 
-| Tool Type | Description |
-| ------------ | ------------------------------------ |
-| cc | c compiler |
-| cxx | c++ compiler |
-| mm | objc compiler |
-| mxx | objc++ compiler |
-| gc | go compiler |
-| as | assembler |
-| sc | swift compiler |
-| rc | rust compiler |
-| dc | dlang compiler |
-| ld | Common executable program linker such as c/c++/asm/objc |
-| sh | c/c++/asm/objc and other universal dynamic library linker |
-| ar | general static library archiver such as c/c++/asm/objc |
-| dc-ld | dlang executable linker, rc-ld/gc-ld, etc. |
-Dc-sh | dlang dynamic library linker, rc-sh/gc-sh, etc. |
+| Tool Type    | Description                                               |
+| ------------ | ------------------------------------                      |
+| cc           | c compiler                                                |
+| cxx          | c++ compiler                                              |
+| mm           | objc compiler                                             |
+| mxx          | objc++ compiler                                           |
+| gc           | go compiler                                               |
+| as           | assembler                                                 |
+| sc           | swift compiler                                            |
+| rc           | rust compiler                                             |
+| dc           | dlang compiler                                            |
+| ld           | Common executable program linker such as c/c++/asm/objc   |
+| sh           | c/c++/asm/objc and other universal dynamic library linker |
+| ar           | general static library archiver such as c/c++/asm/objc    |
+| dcld         | dlang executable linker, rcld/gcld, etc.                  |
+| dcsh         | dlang dynamic library linker, rcsh/gcsh, etc.             |
 
 For some compiler file names that are irregular, causing xmake to fail to recognize the known compiler name, we can also add a tool name prompt, for example:
 
 ```lua
-set_toolchain("cc", "gcc@$(projectdir)/tools/bin/Mipscc.exe")
+set_toolsets("cc", "gcc@$(projectdir)/tools/bin/Mipscc.exe")
 ```
+
+### target:set_toolchains
+
+#### Set up the toolchain
+
+This sets up different tool chains for a specific target individually. Unlike set_toolsets, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.
+
+This is also a recommended practice, because most compiler tool chains like gcc/clang, the compiler and the linker are used together. To cut it, you have to cut it as a whole. Separate and scattered switch settings will be cumbersome.
+
+For example, we switch the test target to two tool chains of clang+yasm:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("clang", "yasm")
+```
+
+You only need to specify the name of the toolchain. Specific toolchains supported by xmake can be viewed by the following command:
+
+```bash
+$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+```
+
+Of course, we can also switch to other tool chains globally through the command line:
+
+```bash
+$ xmake f --toolchain=clang
+$ xmake
+```
+
+In addition, we can also customize toolchain in xmake.lua, and then specify it through `set_toolchains`, for example:
+
+```lua
+toolchain("myclang")
+    set_kind("standalone")
+    set_toolsets("cc", "clang")
+    set_toolsets("cxx", "clang", "clang++")
+    set_toolsets("ld", "clang++", "clang")
+    set_toolsets("sh", "clang++", "clang")
+    set_toolsets("ar", "ar")
+    set_toolsets("ex", "ar")
+    set_toolsets("strip", "strip")
+    set_toolsets("mm", "clang")
+    set_toolsets("mxx", "clang", "clang++")
+    set_toolsets("as", "clang")
+
+    - ...
+```
+
+For details about this piece, you can go to the [Custom Toolchain](/manual/custom_toolchain).
+
+For more details, please see: [#780](https://github.com/xmake-io/xmake/issues/780)
 
 ### target:set_values
 

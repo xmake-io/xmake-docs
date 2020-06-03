@@ -37,6 +37,7 @@
   - [Configuration Option](manual/configuration_option.md)
   - [Plugin and Task](manual/plugin_task.md)
   - [Custom Rule](manual/custom_rule.md)
+  - [Custom Toolchain](manual/custom_toolchain.md)
   - [Package Dependencies](manual/package_dependencies.md)
   - [Builtin Variables](manual/builtin_variables.md)
   - [Builtin Modules](manual/builtin_modules.md)
