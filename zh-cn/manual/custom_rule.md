@@ -78,9 +78,16 @@ target("test")
 | ----------------------------------------------- | -------------------------------------------- | -------- |
 | [mode.debug](#mode-debug)                       | 调试模式编译规则                             | >= 2.2.1 |
 | [mode.release](#mode-release)                   | 发布模式编译规则                             | >= 2.2.1 |
+| [mode.releasedbg](#mode-releasedbg)             | 发布模式编译规则（带调试符号）               | >= 2.3.4 |
+| [mode.minsizerel](#mode-minsizerel)             | 发布模式编译规则（最小编译）                 | >= 2.3.4 |
 | [mode.check](#mode-check)                       | 检测模式编译规则                             | >= 2.2.1 |
 | [mode.profile](#mode-profile)                   | 性能分析模式编译规则                         | >= 2.2.1 |
 | [mode.coverage](#mode-coverage)                 | 覆盖分析编译模式规则                         | >= 2.2.1 |
+| [mode.valgrind](#mode-valgrind)                 | Valgrind分析检测模式规则                     | >= 2.3.3 |
+| [mode.asan](#mode-asan)                         | AddressSanitizer分析检测模式规则             | >= 2.3.3 |
+| [mode.tsan](#mode-tsan)                         | ThreadSanitizer分析检测模式规则              | >= 2.3.3 |
+| [mode.lsan](#mode-lsan)                         | LeakSanitizer分析检测模式规则                | >= 2.3.3 |
+| [mode.ubsan](#mode-ubsan)                       | UndefinedBehaviorSanitizer分析检测模式规则   | >= 2.3.3 |
 | [qt.static](#qt-static)                         | Qt静态库编译规则                             | >= 2.2.1 |
 | [qt.shared](#qt-shared)                         | Qt动态库编译规则                             | >= 2.2.1 |
 | [qt.console](#qt-console)                       | Qt控制台编译规则                             | >= 2.2.1 |
@@ -103,13 +110,8 @@ add_rules("mode.debug")
 相当于：
 
 ```lua
--- the debug mode
 if is_mode("debug") then
-    
-    -- enable the debug symbols
     set_symbols("debug")
-
-    -- disable optimization
     set_optimize("none")
 end
 ```
@@ -124,24 +126,63 @@ end
 add_rules("mode.release")
 ```
 
+!> 此模式默认不会带调试符号。
+
 相当于：
 
 ```lua
--- the release mode
 if is_mode("release") then
-
-    -- set the symbols visibility: hidden
     set_symbols("hidden")
-
-    -- enable fastest optimization
     set_optimize("fastest")
-
-    -- strip all symbols
     set_strip("all")
 end
 ```
 
 我们可以通过：`xmake f -m release`来切换到此编译模式。
+
+#### mode.releasedbg
+
+为当前工程xmake.lua添加releasedbg编译模式的配置规则，例如：
+
+```lua
+add_rules("mode.releasedbg")
+```
+
+!> 与release模式相比，此模式还会额外开启调试符号，这通常是非常有用的。
+
+相当于：
+
+```lua
+if is_mode("releasedbg") then
+    set_symbols("debug")
+    set_optimize("fastest")
+    set_strip("all")
+end
+```
+
+我们可以通过：`xmake f -m releasedbg`来切换到此编译模式。
+
+#### mode.minsizerel
+
+为当前工程xmake.lua添加minsizerel编译模式的配置规则，例如：
+
+```lua
+add_rules("mode.minsizerel")
+```
+
+!> 与release模式相比，此模式更加倾向于最小代码编译优化，而不是速度优先。
+
+相当于：
+
+```lua
+if is_mode("minsizerel") then
+    set_symbols("hidden")
+    set_optimize("smallest")
+    set_strip("all")
+end
+```
+
+我们可以通过：`xmake f -m minsizerel`来切换到此编译模式。
 
 #### mode.check
 
@@ -154,16 +195,9 @@ add_rules("mode.check")
 相当于：
 
 ```lua
--- the check mode
 if is_mode("check") then
-
-    -- enable the debug symbols
     set_symbols("debug")
-
-    -- disable optimization
     set_optimize("none")
-
-    -- attempt to enable some checkers for pc
     add_cxflags("-fsanitize=address", "-ftrapv")
     add_mxflags("-fsanitize=address", "-ftrapv")
     add_ldflags("-fsanitize=address")
@@ -183,13 +217,8 @@ add_rules("mode.profile")
 相当于：
 
 ```lua
--- the profile mode
 if is_mode("profile") then
-   
-    -- enable the debug symbols
     set_symbols("debug")
-
-    -- enable gprof
     add_cxflags("-pg")
     add_ldflags("-pg")
 end
@@ -208,7 +237,6 @@ add_rules("mode.coverage")
 相当于：
 
 ```lua
--- the coverage mode
 if is_mode("coverage") then
     add_cxflags("--coverage")
     add_mxflags("--coverage")
@@ -217,6 +245,56 @@ end
 ```
 
 我们可以通过：`xmake f -m coverage`来切换到此编译模式。
+
+#### mode.valgrind
+
+此模式提供valgrind内存分析检测支持。
+
+```lua
+add_rules("mode.valgrind")
+```
+
+我们可以通过：`xmake f -m valgrind`来切换到此编译模式。
+
+#### mode.asan
+
+此模式提供AddressSanitizer内存分析检测支持。
+
+```lua
+add_rules("mode.asan")
+```
+
+我们可以通过：`xmake f -m asan`来切换到此编译模式。
+
+#### mode.tsan
+
+此模式提供ThreadSanitizer内存分析检测支持。
+
+```lua
+add_rules("mode.tsan")
+```
+
+我们可以通过：`xmake f -m tsan`来切换到此编译模式。
+
+#### mode.lsan
+
+此模式提供LeakSanitizer内存分析检测支持。
+
+```lua
+add_rules("mode.lsan")
+```
+
+我们可以通过：`xmake f -m lsan`来切换到此编译模式。
+
+#### mode.ubsan
+
+此模式提供UndefinedBehaviorSanitizer内存分析检测支持。
+
+```lua
+add_rules("mode.ubsan")
+```
+
+我们可以通过：`xmake f -m ubsan`来切换到此编译模式。
 
 #### qt.static
 

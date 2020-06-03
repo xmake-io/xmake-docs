@@ -74,23 +74,30 @@ Rules specified by `add_files("*.md", {rule = "markdown"})`, with a higher prior
 
 sinceAfter the 2.2.1 release, xmake provides some built-in rules to simplify the daily xmake.lua description and support for some common build environments.
 
-| Rules | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [mode.debug](#mode-debug) | Debug Mode Compilation Rules | >= 2.2.1 |
-| [mode.release](#mode-release) | Release Mode Compilation Rules | >= 2.2.1 |
-| [mode.check](#mode-check) | Detection Mode Compilation Rules | >= 2.2.1 |
-| [mode.profile](#mode-profile) | Performance Analysis Mode Compilation Rules | >= 2.2.1 |
-| [mode.coverage](#mode-coverage) | Coverage Analysis Compilation Mode Rules | >= 2.2.1 |
-| [qt.static](#qt-static) | Qt Static Library Compilation Rules | >= 2.2.1 |
-| [qt.shared](#qt-shared) | Qt Dynamic Library Compilation Rules | >= 2.2.1 |
-| [qt.console](#qt-console) | Qt Console Compilation Rules | >= 2.2.1 |
-| [qt.application](#qt-application) | Qt Application Compilation Rules | >= 2.2.1 |
-| [wdk.umdf.driver](#wdk-umdf-driver) | WDK Environment umdf Driver Compilation Rules | >= 2.2.1 |
-[wdk.umdf.binary](#wdk-umdf-binary) | WDK Environment umdf Driver Application Compilation Rules | >= 2.2.1 |
-| [wdk.kmdf.driver](#wdk-kmdf-driver) | WDK Environment kmdf Driver Compilation Rules | >= 2.2.1 |
-[wdk.kmdf.binary](#wdk-kmdf-binary) | WDK Environment kmdf Driver Application Compilation Rules | >= 2.2.1 |
-| [wdk.wdm.driver](#wdk-wdm-driver) | WDK Environment wdm Driver Compilation Rules | >= 2.2.1 |
-[wdk.wdm.binary](#wdk-wdm-binary) | WDK Environment wdm Driver Application Compilation Rules | >= 2.2.1 |
+| Rules                                           | Description                                              | Supported Versions |
+| ----------------------------------------------- | --------------------------------------------             | -------- |
+| [mode.debug](#mode-debug)                       | Debug Mode Compilation Rule                              | >= 2.2.1 |
+| [mode.release](#mode-release)                   | Release Mode Compilation Rule                            | >= 2.2.1 |
+| [mode.releasedbg](#mode-releasedbg)             | Release Mode Compilation Rule (With Debug Symbols)       | >= 2.3.4 |
+| [mode.minsizerel](#mode-minsizerel)             | Release Mode Compilation Rule (With Minimum Size)        | >= 2.3.4 |
+| [mode.check](#mode-check)                       | Detection Mode Compilation Rule                          | >= 2.2.1 |
+| [mode.profile](#mode-profile)                   | Performance Analysis Mode Compilation Rule               | >= 2.2.1 |
+| [mode.coverage](#mode-coverage)                 | Coverage Analysis Compilation Mode Rule                  | >= 2.2.1 |
+| [mode.valgrind](#mode-valgrind)                 | Valgrind Rule                                            | >= 2.3.3 |
+| [mode.asan](#mode-asan)                         | AddressSanitizer Rule                                    | >= 2.3.3 |
+| [mode.tsan](#mode-tsan)                         | ThreadSanitizer Rule                                     | >= 2.3.3 |
+| [mode.lsan](#mode-lsan)                         | LeakSanitizer Rule                                       | >= 2.3.3 |
+| [mode.ubsan](#mode-ubsan)                       | UndefinedBehaviorSanitizer Rule                          | >= 2.3.3 |
+| [qt.static](#qt-static)                         | Qt Static Library Compilation Rule                       | >= 2.2.1 |
+| [qt.shared](#qt-shared)                         | Qt Dynamic Library Compilation Rule                      | >= 2.2.1 |
+| [qt.console](#qt-console)                       | Qt Console Compilation Rule                              | >= 2.2.1 |
+| [qt.application](#qt-application)               | Qt Application Compilation Rule                          | >= 2.2.1 |
+| [wdk.umdf.driver](#wdk-umdf-driver)             | WDK Environment umdf Driver Compilation Rule             | >= 2.2.1 |
+| [wdk.umdf.binary](#wdk-umdf-binary)             | WDK Environment umdf Driver Application Compilation Rule | >= 2.2.1 |
+| [wdk.kmdf.driver](#wdk-kmdf-driver)             | WDK Environment kmdf Driver Compilation Rule             | >= 2.2.1 |
+| [wdk.kmdf.binary](#wdk-kmdf-binary)             | WDK Environment kmdf Driver Application Compilation Rule | >= 2.2.1 |
+| [wdk.wdm.driver](#wdk-wdm-driver)               | WDK Environment wdm Driver Compilation Rule              | >= 2.2.1 |
+| [wdk.wdm.binary](#wdk-wdm-binary)               | WDK Environment wdm Driver Application Compilation Rule  | >= 2.2.1 |
 
 #### mode.debug
 
@@ -103,18 +110,13 @@ add_rules("mode.debug")
 Equivalent to:
 
 ```lua
--- the debug mode
 if is_mode("debug") then
-
-    -- enable the debug symbols
     set_symbols("debug")
-
-    -- disable optimization
     set_optimize("none")
 end
 ```
 
-We can switch to this compilation mode by ``xmake f -m debug`.
+We can switch to this compilation mode by `xmake f -m debug`.
 
 #### mode.release
 
@@ -127,21 +129,58 @@ add_rules("mode.release")
 Equivalent to:
 
 ```lua
--- the release mode
 if is_mode("release") then
-
-    -- set the symbols visibility: hidden
     set_symbols("hidden")
-
-    -- enable2017 optimization
     set_optimize("fastest")
-
-    -- strip all symbols
     set_strip("all")
 end
 ```
 
-We can switch to this compilation mode by ``xmake f -m release`.
+We can switch to this compilation mode by `xmake f -m release`.
+
+#### mode.releasedbg
+
+Add the configuration rules for the releasedbg compilation mode for the current project xmake.lua, for example:
+
+```lua
+add_rules("mode.releasedbg")
+```
+
+!> Compared with the release mode, this mode will also enable additional debugging symbols, which is usually very useful.
+
+Equivalent to:
+
+```lua
+if is_mode("releasedbg") then
+    set_symbols("debug")
+    set_optimize("fastest")
+    set_strip("all")
+end
+```
+
+We can switch to this compilation mode by `xmake f -m releasedbg`.
+
+#### mode.minsizerel
+
+Add the configuration rules for the minsizerel compilation mode for the current project xmake.lua, for example:
+
+```lua
+add_rules("mode.minsizerel")
+```
+
+!> Compared with the release mode, this mode is more inclined to the minimum code compilation optimization, rather than speed priority.
+
+相当于：
+
+```lua
+if is_mode("minsizerel") then
+    set_symbols("hidden")
+    set_optimize("smallest")
+    set_strip("all")
+end
+```
+
+We can switch to this compilation mode by `xmake f -m minsizerel`.
 
 #### mode.check
 
@@ -154,23 +193,16 @@ add_rules("mode.check")
 Equivalent to:
 
 ```lua
--- the check mode
 if is_mode("check") then
-
-    -- enable the debug symbols
     set_symbols("debug")
-
-    -- disable optimization
     set_optimize("none")
-
-    -- attempt to enable some checkers for pc
     add_cxflags("-fsanitize=address", "-ftrapv")
     add_mxflags("-fsanitize=address", "-ftrapv")
     add_ldflags("-fsanitize=address")
 end
 ```
 
-We can switch to this compilation mode by ``xmake f -m check`.
+We can switch to this compilation mode by `xmake f -m check`.
 
 #### mode.profile
 
@@ -183,19 +215,14 @@ add_rules("mode.profile")
 Equivalent to:
 
 ```lua
--- the profile mode
 if is_mode("profile") then
-
-    -- enable the debug symbols
     set_symbols("debug")
-
-    -- enable gprof
     add_cxflags("-pg")
     add_ldflags("-pg")
 end
 ```
 
-We can switch to this compilation mode by ``xmake f -m profile`.
+We can switch to this compilation mode by `xmake f -m profile`.
 
 #### mode.coverage
 
@@ -208,7 +235,6 @@ add_rules("mode.coverage")
 Equivalent to:
 
 ```lua
--- the coverage mode
 if is_mode("coverage") then
     add_cxflags("--coverage")
     add_mxflags("--coverage")
@@ -216,7 +242,57 @@ if is_mode("coverage") then
 end
 ```
 
-We can switch to this compilation mode by ``xmake f -m coverage`.
+We can switch to this compilation mode by `xmake f -m coverage`.
+
+#### mode.valgrind
+
+This mode provides valgrind memory analysis and detection support.
+
+```lua
+add_rules("mode.valgrind")
+```
+
+We can switch to this compilation mode by: `xmake f -m valgrind`.
+
+#### mode.asan
+
+This mode provides AddressSanitizer memory analysis and detection support.
+
+```lua
+add_rules("mode.asan")
+```
+
+We can switch to this compilation mode by: `xmake f -m asan`.
+
+#### mode.tsan
+
+This mode provides ThreadSanitizer memory analysis and detection support.
+
+```lua
+add_rules("mode.tsan")
+```
+
+We can switch to this compilation mode by: `xmake f -m tsan`.
+
+#### mode.lsan
+
+This mode provides LeakSanitizer memory analysis and detection support.
+
+```lua
+add_rules("mode.lsan")
+```
+
+We can switch to this compilation mode by: `xmake f -m lsan`.
+
+#### mode.ubsan
+
+This mode provides UndefinedBehaviorSanitizer memory analysis and detection support.
+
+```lua
+add_rules("mode.ubsan")
+```
+
+We can switch to this compilation mode by: `xmake f -m ubsan`.
 
 #### qt.static
 
