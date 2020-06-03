@@ -194,6 +194,113 @@ If you want to cancel multiline input, please input character `q`, for example:
 3
 ```
 
+## Show specified information and list
+
+### Show basic information about xmake itself and the current project
+
+```bash
+$ xmake show
+The information of xmake:
+    version: 2.3.3+202006011009
+    host: macosx/x86_64
+    programdir: /Users/ruki/.local/share/xmake
+    programfile: /Users/ruki/.local/bin/xmake
+    globaldir: /Users/ruki/.xmake
+    tmpdir: /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/200603
+    workingdir: /Users/ruki/projects/personal/tbox
+    packagedir: /Users/ruki/.xmake/packages
+    packagedir(cache): /Users/ruki/.xmake/cache/packages/2006
+
+The information of project: tbox
+    version: 1.6.5
+    plat: macosx
+    arch: x86_64
+    mode: release
+    buildir: build
+    configdir: /Users/ruki/projects/personal/tbox/.xmake/macosx/x86_64
+    projectdir: /Users/ruki/projects/personal/tbox
+    projectfile: /Users/ruki/projects/personal/tbox/xmake.lua
+```
+
+### Show toolchains list
+
+```bash
+$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+```
+
+### Show the information of the given target
+
+```bash
+$ xmake show --target=tbox
+The information of target(tbox):
+    kind: static
+    targetfile: build/macosx/x86_64/release/libtbox.a
+    rules: mode.release, mode.debug, mode.profile, mode.coverage
+    options: info, float, wchar, exception, force-utf8, deprecated, xml, zip, hash, regex, coroutine, object, charset, database
+    packages: mbedtls, polarssl, openssl, pcre2, pcre, zlib, mysql, sqlite3
+    links: pthread
+    syslinks: pthread, dl, m, c
+    cxflags: -Wno-error=deprecated-declarations, -fno-strict-aliasing, -Wno-error=expansion-to-defined, -fno-stack-protector
+    defines: __tb_small__, __tb_prefix__="tbox"
+    mxflags: -Wno-error=deprecated-declarations, -fno-strict-aliasing, -Wno-error=expansion-to-defined
+    headerfiles: src/(tbox/**.h)|**/impl/**.h, src/(tbox/prefix/**/prefix.S), src/(tbox/math/impl/*.h), src/(tbox/utils/impl/*.h), build/macosx/x86_64/release/tbox.config.h
+    includedirs: src, build/macosx/x86_64/release
+    at: /Users/ruki/projects/personal/tbox/src/tbox/xmake.lua
+    sourcebatch(cc): with rule(c.build)
+      -> src/tbox/string/static_string.c
+         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o
+         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o.d
+      -> src/tbox/platform/sched.c
+         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o
+         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o.d
+      -> src/tbox/stream/stream.c
+         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o
+         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o.d
+      -> src/tbox/utils/base32.c
+         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o
+         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o.d
+```
+
+### Show builtin compilation modes list
+
+```bash
+$ xmake show -l modes
+```
+
+### Show builtin compilation rules list
+
+```bash
+$ xmake show -l rules
+```
+
+### Show other information
+
+It is still being perfected, see: https://github.com/xmake-io/xmake/issues/798
+
+Or run
+
+```bash
+$ xmake show --help
+```
+
 ## Macros Recording and Playback 
 
 ### Introduction
