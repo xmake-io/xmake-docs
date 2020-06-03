@@ -242,7 +242,7 @@ toolchain("myclang")
 
 ### toolchain_end
 
-#### 结束定义规则
+#### 结束定义工具链
 
 这个是可选的，如果想要手动结束toolchain的定义，可以调用它：
 
