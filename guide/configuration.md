@@ -586,6 +586,83 @@ If the 'AR' environment variable exists, it will use the values specified in the
 We can set a unknown compiler as like-ar archiver, .e.g `xmake f --ar=ar@/home/xxx/armips.exe` 
 </p>
 
+## Toolchain configuration
+
+!> This feature requires v2.3.4 or later to support
+
+The above describes the general cross-compilation toolchain configuration. If some specific toolchains need to be imported into additional scenarios such as `--ldflags/--includedirs`, it is more cumbersome
+Therefore, xmake also has some common tool chains built-in, which can save the complicated configuration process of cross-compilation tool chain, and only need to execute:
+
+```bash
+$ xmake f --toolchain=gnu-rm --sdk=/xxx/
+$ xmake
+```
+
+You can quickly switch the designated cross-compilation tool chain. If this tool chain needs to add some specific flags settings, it will be automatically set up to simplify configuration.
+
+Among them, gnu-rm is the built-in GNU Arm Embedded Toolchain.
+
+For example, we can also quickly switch from the entire gcc tool chain to the clang or llvm tool chain, no longer need to make `xmake f --cc=clang --cxx=clang --ld=clang++` one by one.
+
+```bash
+$ xmake f --toolchain=clang
+$ xmake
+```
+
+or
+
+```bash
+$ xmake f --toolchain=llvm --sdk=/xxx/llvm
+$ xmake
+```
+
+The specific tool chains supported by xmake can be viewed with the following command:
+
+```bash
+$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+```
+
+In addition, we can also customize the toolchain in xmake.lua, and then specify the switch through `xmake f --toolchain=myclang`, for example:
+
+```lua
+toolchain("myclang")
+    set_kind("standalone")
+    set_toolsets("cc", "clang")
+    set_toolsets("cxx", "clang", "clang++")
+    set_toolsets("ld", "clang++", "clang")
+    set_toolsets("sh", "clang++", "clang")
+    set_toolsets("ar", "ar")
+    set_toolsets("ex", "ar")
+    set_toolsets("strip", "strip")
+    set_toolsets("mm", "clang")
+    set_toolsets("mxx", "clang", "clang++")
+    set_toolsets("as", "clang")
+
+    - ...
+```
+
+For details about this piece, you can go to the [Custom Toolchain](/manual/custom_toolchain).
+
+For more details, please see: [#780](https://github.com/xmake-io/xmake/issues/780)
+
 ## Global Configuration
 
 You can save to the global configuration for simplfying operation.

@@ -611,6 +611,8 @@ $ xmake f -p linux --sdk=/user/toolsdk --ar=armv7-linux-ar
 
 ## 工具链配置
 
+!> 此特性需要v2.3.4以上版本才支持
+
 上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入`--ldflags/--includedirs`等场景就比较繁琐了, 
 因此xmake也内置了一些常用工具链，可以省去交叉编译工具链复杂的配置过程，只需要执行：
 
@@ -623,7 +625,7 @@ $ xmake
 
 其中，gnu-rm就是内置的GNU Arm Embedded Toolchain。
 
-比如，我们也可以快速从gcc工具链整体切换到clang或者llvm工具链，不在需要`xmake f --cc=clang --cxx=clang --ld=clang++`等挨个配置了。
+比如，我们也可以快速从gcc工具链整体切换到clang或者llvm工具链，不再需要`xmake f --cc=clang --cxx=clang --ld=clang++`等挨个配置了。
 
 ```bash
 $ xmake f --toolchain=clang
@@ -661,7 +663,7 @@ envs          Environment variables toolchain
 fasm          Flat Assembler
 ```
 
-另外，我们也可以在xmake.lua中自定义toolchain，然后通过`set_toolchains`指定进去，例如：
+另外，我们也可以在xmake.lua中自定义toolchain，然后通过`xmake f --toolchain=myclang`指定切换，例如：
 
 ```lua
 toolchain("myclang")
