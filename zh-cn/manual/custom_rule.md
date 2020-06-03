@@ -91,7 +91,10 @@ target("test")
 | [qt.static](#qt-static)                         | Qt静态库编译规则                             | >= 2.2.1 |
 | [qt.shared](#qt-shared)                         | Qt动态库编译规则                             | >= 2.2.1 |
 | [qt.console](#qt-console)                       | Qt控制台编译规则                             | >= 2.2.1 |
-| [qt.application](#qt-application)               | Qt应用程序编译规则                           | >= 2.2.1 |
+| [qt.quickapp](#qt-quickapp)                     | Qt QuickApp应用程序编译规则                  | >= 2.2.3 |
+| [qt.quickapp_static](#qt-quickapp_static)       | Qt QuickApp应用程序编译规则（静态链接）      | >= 2.2.3 |
+| [qt.widgetapp](#qt-widgetapp)                   | Qt WidgetApp应用程序编译规则                 | >= 2.2.3 |
+| [qt.widgetapp_static](#qt-widgetapp_static)     | Qt WidgetApp应用程序编译规则（静态链接）     | >= 2.2.3 |
 | [wdk.umdf.driver](#wdk-umdf-driver)             | WDK环境umdf驱动编译规则                      | >= 2.2.1 |
 | [wdk.umdf.binary](#wdk-umdf-binary)             | WDK环境umdf驱动应用编译规则                  | >= 2.2.1 |
 | [wdk.kmdf.driver](#wdk-kmdf-driver)             | WDK环境kmdf驱动编译规则                      | >= 2.2.1 |
@@ -301,7 +304,7 @@ add_rules("mode.ubsan")
 用于编译生成Qt环境的静态库程序：
 
 ```lua
-target("qt_static_library")
+target("test")
     add_rules("qt.static")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
@@ -312,7 +315,7 @@ target("qt_static_library")
 用于编译生成Qt环境的动态库程序：
 
 ```lua
-target("qt_shared_library")
+target("test")
     add_rules("qt.shared")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
@@ -323,35 +326,61 @@ target("qt_shared_library")
 用于编译生成Qt环境的控制台程序：
 
 ```lua
-target("qt_console")
+target("test")
     add_rules("qt.console")
     add_files("src/*.cpp")
 ```
 
-#### qt.application
+#### qt.quickapp
 
-用于编译生成Qt环境的ui应用程序。
+用于编译生成Qt环境的Quick(qml) ui应用程序。
 
-Quick(qml)应用程序：
 
 ```lua
-target("qt_quickapp")
-    add_rules("qt.application")
+target("test")
+    add_rules("qt.quickapp")
     add_files("src/*.cpp") 
     add_files("src/qml.qrc")
-    add_frameworks("QtQuick")
 ```
 
-Qt Widgets(ui/moc)应用程序:
+#### qt.quickapp_static
+
+用于编译生成Qt环境的Quick(qml) ui应用程序（静态链接版本）。
+
+!> 需要切换到静态库版本Qt SDK
+
 
 ```lua
--- add target
-target("qt_widgetapp")
-    add_rules("qt.application")
+target("test")
+    add_rules("qt.quickapp_static")
+    add_files("src/*.cpp") 
+    add_files("src/qml.qrc")
+```
+
+#### qt.widgetapp 
+
+用于编译Qt Widgets(ui/moc)应用程序
+
+```lua
+target("test")
+    add_rules("qt.widgetapp")
     add_files("src/*.cpp") 
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
-    add_frameworks("QtWidgets")
+```
+
+#### qt.widgetapp_static 
+
+用于编译Qt Widgets(ui/moc)应用程序（静态库版本）
+
+!> 需要切换到静态库版本Qt SDK
+
+```lua
+target("test")
+    add_rules("qt.widgetapp_static")
+    add_files("src/*.cpp") 
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 ```
 
 更多Qt相关描述见：[#160](https://github.com/xmake-io/xmake/issues/160)

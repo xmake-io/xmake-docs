@@ -91,7 +91,10 @@ sinceAfter the 2.2.1 release, xmake provides some built-in rules to simplify the
 | [qt.static](#qt-static)                         | Qt Static Library Compilation Rule                       | >= 2.2.1 |
 | [qt.shared](#qt-shared)                         | Qt Dynamic Library Compilation Rule                      | >= 2.2.1 |
 | [qt.console](#qt-console)                       | Qt Console Compilation Rule                              | >= 2.2.1 |
-| [qt.application](#qt-application)               | Qt Application Compilation Rule                          | >= 2.2.1 |
+| [qt.quickapp](#qt-quickapp)                     | Qt QuickApp Compilation Rule                             | >= 2.2.3 |
+| [qt.quickapp_static](#qt-quickapp_static)       | Qt QuickApp Compilation Rule (static link)               | >= 2.2.3 |
+| [qt.widgetapp](#qt-widgetapp)                   | Qt WidgetApp Compilation Rule                            | >= 2.2.3 |
+| [qt.widgetapp_static](#qt-widgetapp_static)     | Qt WidgetApp Compilation Rule（static link）             | >= 2.2.3 |
 | [wdk.umdf.driver](#wdk-umdf-driver)             | WDK Environment umdf Driver Compilation Rule             | >= 2.2.1 |
 | [wdk.umdf.binary](#wdk-umdf-binary)             | WDK Environment umdf Driver Application Compilation Rule | >= 2.2.1 |
 | [wdk.kmdf.driver](#wdk-kmdf-driver)             | WDK Environment kmdf Driver Compilation Rule             | >= 2.2.1 |
@@ -299,7 +302,7 @@ We can switch to this compilation mode by: `xmake f -m ubsan`.
 A static library program used to compile and generate Qt environments:
 
 ```lua
-target("qt_static_library")
+target("test")
     add_rules("qt.static")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
@@ -310,7 +313,7 @@ target("qt_static_library")
 Dynamic library program for compiling and generating Qt environment:
 
 ```lua
-target("qt_shared_library")
+target("test")
     add_rules("qt.shared")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
@@ -321,40 +324,64 @@ target("qt_shared_library")
 A console program for compiling and generating a Qt environment:
 
 ```lua
-target("qt_console")
+target("test")
     add_rules("qt.console")
     add_files("src/*.cpp")
 ```
 
-#### qt.application
+#### qt.quickapp
 
-Used to compile ui applications that generate Qt environments.
+Quick(qml) ui application for compiling and generating Qt environment.
 
-Quick(qml) application:
 
 ```lua
-target("qt_quickapp")
-    add_rules("qt.application")
-    add_files("src/*.cpp")
-    add_files("src/qml.qrc")
-    add_frameworks("QtQuick")
+target("test")
+    add_rules("qt.quickapp")
+    add_files("src/*.cpp")
+    add_files("src/qml.qrc")
 ```
 
-Qt Widgets (ui/moc) application:
+#### qt.quickapp_static
+
+Quick(qml) ui application (statically linked version) for compiling and generating Qt environment.
+
+!> Need to switch to static library version Qt SDK
+
 
 ```lua
--- add target
-target("qt_widgetapp")
-    add_rules("qt.application")
-    add_files("src/*.cpp")
-    add_files("src/mainwindow.ui")
-    add_files("src/mainwindow.h") -- Add a meta header file with Q_OBJECT
-    add_frameworks("QtWidgets")
+target("test")
+    add_rules("qt.quickapp_static")
+    add_files("src/*.cpp")
+    add_files("src/qml.qrc")
+```
+
+#### qt.widgetapp
+
+Used to compile Qt Widgets (ui/moc) applications
+
+```lua
+target("test")
+    add_rules("qt.widgetapp")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h") -- add meta header files with Q_OBJECT
+```
+
+#### qt.widgetapp_static
+
+Used to compile Qt Widgets (ui/moc) applications (static library version)
+
+!> Need to switch to static library version Qt SDK
+
+```lua
+target("test")
+    add_rules("qt.widgetapp_static")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h") -- add meta header files with Q_OBJECT
 ```
 
 For more descriptions of Qt, see: [#160](https://github.com/xmake-io/xmake/issues/160)
-
-
 
 #### wdk.env.kmdf
 
