@@ -95,12 +95,21 @@ target("test")
 | [qt.quickapp_static](#qt-quickapp_static)       | Qt QuickApp应用程序编译规则（静态链接）      | >= 2.2.3 |
 | [qt.widgetapp](#qt-widgetapp)                   | Qt WidgetApp应用程序编译规则                 | >= 2.2.3 |
 | [qt.widgetapp_static](#qt-widgetapp_static)     | Qt WidgetApp应用程序编译规则（静态链接）     | >= 2.2.3 |
+| [xcode.bundle](#xcode-bundle)                   | Xcode Bundle编译规则                         | >= 2.3.3 |
+| [xcode.framework](#xcode-framework)             | Xcode Framework编译规则                      | >= 2.3.3 |
+| [xcode.application](#xcode-application)         | Xcode iOS/MacOS App编译规则                  | >= 2.3.3 |
 | [wdk.umdf.driver](#wdk-umdf-driver)             | WDK环境umdf驱动编译规则                      | >= 2.2.1 |
 | [wdk.umdf.binary](#wdk-umdf-binary)             | WDK环境umdf驱动应用编译规则                  | >= 2.2.1 |
 | [wdk.kmdf.driver](#wdk-kmdf-driver)             | WDK环境kmdf驱动编译规则                      | >= 2.2.1 |
 | [wdk.kmdf.binary](#wdk-kmdf-binary)             | WDK环境kmdf驱动应用编译规则                  | >= 2.2.1 |
 | [wdk.wdm.driver](#wdk-wdm-driver)               | WDK环境wdm驱动编译规则                       | >= 2.2.1 |
 | [wdk.wdm.binary](#wdk-wdm-binary)               | WDK环境wdm驱动应用编译规则                   | >= 2.2.1 |
+
+我们可以通过运行以下命令，查看完整的内置规则列表：
+
+```bash
+$ xmake show -l rules
+```
 
 #### mode.debug
 
@@ -384,6 +393,39 @@ target("test")
 ```
 
 更多Qt相关描述见：[#160](https://github.com/xmake-io/xmake/issues/160)
+
+#### xcode.bundle
+
+用于编译生成ios/macos bundle程序
+
+```lua
+target("test")
+    add_rules("xcode.bundle")
+    add_files("src/*.m")
+    add_files("src/Info.plist")
+```
+
+#### xcode.framework
+
+用于编译生成ios/macos framework程序
+
+```lua
+target("test")
+    add_rules("xcode.framework")
+    add_files("src/*.m")
+    add_files("src/Info.plist")
+```
+
+#### xcode.application
+
+用于编译生成ios/macos应用程序
+
+```lua
+target("test")
+    add_rules("xcode.application")
+    add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
+    add_files("src/Info.plist")
+```
 
 #### wdk.env.kmdf
 

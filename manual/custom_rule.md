@@ -95,12 +95,21 @@ sinceAfter the 2.2.1 release, xmake provides some built-in rules to simplify the
 | [qt.quickapp_static](#qt-quickapp_static)       | Qt QuickApp Compilation Rule (static link)               | >= 2.2.3 |
 | [qt.widgetapp](#qt-widgetapp)                   | Qt WidgetApp Compilation Rule                            | >= 2.2.3 |
 | [qt.widgetapp_static](#qt-widgetapp_static)     | Qt WidgetApp Compilation Rule（static link）             | >= 2.2.3 |
+| [xcode.bundle](#xcode-bundle)                   | Xcode Bundle Compilation Rule                            | >= 2.3.3 |
+| [xcode.framework](#xcode-framework)             | Xcode Framework Compilation Rule                         | >= 2.3.3 |
+| [xcode.application](#xcode-application)         | Xcode iOS/MacOS App Compilation Rule                     | >= 2.3.3 |
 | [wdk.umdf.driver](#wdk-umdf-driver)             | WDK Environment umdf Driver Compilation Rule             | >= 2.2.1 |
 | [wdk.umdf.binary](#wdk-umdf-binary)             | WDK Environment umdf Driver Application Compilation Rule | >= 2.2.1 |
 | [wdk.kmdf.driver](#wdk-kmdf-driver)             | WDK Environment kmdf Driver Compilation Rule             | >= 2.2.1 |
 | [wdk.kmdf.binary](#wdk-kmdf-binary)             | WDK Environment kmdf Driver Application Compilation Rule | >= 2.2.1 |
 | [wdk.wdm.driver](#wdk-wdm-driver)               | WDK Environment wdm Driver Compilation Rule              | >= 2.2.1 |
 | [wdk.wdm.binary](#wdk-wdm-binary)               | WDK Environment wdm Driver Application Compilation Rule  | >= 2.2.1 |
+
+We can view the complete list of built-in rules by running the following command:
+
+```bash
+$ xmake show -l rules
+```
 
 #### mode.debug
 
@@ -382,6 +391,39 @@ target("test")
 ```
 
 For more descriptions of Qt, see: [#160](https://github.com/xmake-io/xmake/issues/160)
+
+#### xcode.bundle
+
+Used to compile and generate ios/macos bundle program
+
+```lua
+target("test")
+     add_rules("xcode.bundle")
+     add_files("src/*.m")
+     add_files("src/Info.plist")
+```
+
+#### xcode.framework
+
+Used to compile and generate ios/macos framework program
+
+```lua
+target("test")
+     add_rules("xcode.framework")
+     add_files("src/*.m")
+     add_files("src/Info.plist")
+```
+
+#### xcode.application
+
+Used to compile and generate ios/macos applications
+
+```lua
+target("test")
+     add_rules("xcode.application")
+     add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
+     add_files("src/Info.plist")
+```
 
 #### wdk.env.kmdf
 
