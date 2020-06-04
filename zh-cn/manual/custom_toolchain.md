@@ -8,17 +8,17 @@ toolchain("myclang")
     -- mark as standalone toolchain
     set_kind("standalone")
         
-    -- set toolsets
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
+    -- set toolset
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 
     add_defines("MYCLANG")
 
@@ -78,7 +78,7 @@ $ xmake show -l toolchains
 | -----------------------------------------------                              | -------------------------------------------- | -------- |
 | [toolchain](#toolchain)                                                      | 定义工具链                                   | >= 2.3.4 |
 | [set_kind](#toolchainset_kind)                                               | 设置工具链类型                               | >= 2.3.4 |
-| [set_toolsets](#toolchainset_toolsets)                                       | 设置工具集                                   | >= 2.3.4 |
+| [set_toolset](#toolchainset_toolset)                                       | 设置工具集                                   | >= 2.3.4 |
 | [set_sdkdir](#toolchainset_sdkdir)                                           | 设置工具链sdk目录路径                        | >= 2.3.4 |
 | [set_bindir](#toolchainset_bindir)                                           | 设置工具链bin目录路径                        | >= 2.3.4 |
 | [on_check](#toolchainon_check)                                               | 检测工具链                                   | >= 2.3.4 |
@@ -115,8 +115,8 @@ $ xmake show -l toolchains
 
 ```lua
 toolchain("myclang")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
 toolchain_end()
 ```
 
@@ -132,7 +132,7 @@ toolchain_end()
 
 !> 只要记住，存在完整编译环境的工具链，都设置为standalone就行了
 
-### toolchain:set_toolsets
+### toolchain:set_toolset
 
 #### 设置工具集
 
@@ -141,19 +141,19 @@ toolchain_end()
 ```lua
 toolchain("myclang")
     set_kind("standalone")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 ```
 
-关于这个接口的详情，可以看下：[target.set_toolsets](/zh-cn/manual/project_target?id=targetset_toolsets)
+关于这个接口的详情，可以看下：[target.set_toolset](/zh-cn/manual/project_target?id=targetset_toolset)
 
 ### toolchain:set_sdkdir
 
@@ -165,7 +165,7 @@ toolchain("myclang")
 toolchain("myclang")
     set_kind("standalone")
     set_sdkdir("/tmp/sdkdir")
-    set_toolsets("cc", "clang")
+    set_toolset("cc", "clang")
 ```
 
 ### toolchain:set_bindir
@@ -178,7 +178,7 @@ toolchain("myclang")
 toolchain("myclang")
     set_kind("standalone")
     set_bindir("/tmp/sdkdir/bin")
-    set_toolsets("cc", "clang")
+    set_toolset("cc", "clang")
 ```
 
 ### toolchain:on_check
@@ -207,9 +207,9 @@ toolchain("myclang")
     set_kind("standalone")
     on_load(function (toolchain)
         
-        -- set toolsets
-        toolchain:set("toolsets", "cc", "clang")
-        toolchain:set("toolsets", "ld", "clang++")
+        -- set toolset
+        toolchain:set("toolset", "cc", "clang")
+        toolchain:set("toolset", "ld", "clang++")
         -- ..
 
         -- get march

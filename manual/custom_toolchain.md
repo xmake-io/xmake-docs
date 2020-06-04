@@ -8,17 +8,17 @@ toolchain("myclang")
     -- mark as standalone toolchain
     set_kind("standalone")
         
-    -- set toolsets
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
+    -- set toolset
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 
     add_defines("MYCLANG")
 
@@ -78,7 +78,7 @@ The following is a list of interfaces currently supported by the custom toolchai
 | -----------------------------------------------                        | - ------------------------------------------- | ------ -          |
 | [toolchain](#toolchain)                                                | Define Toolchain                              | >= 2.3.4          |
 | [set_kind](#toolchainset_kind)                                         | Set toolchain type                            | >= 2.3.4          |
-| [set_toolsets](#toolchainset_toolsets)                                 | Set toolset                                   | >= 2.3.4          |
+| [set_toolset](#toolchainset_toolset)                                 | Set toolset                                   | >= 2.3.4          |
 | [set_sdkdir](#toolchainset_sdkdir)                                     | Set toolchain sdk directory path              | >= 2.3.4          |
 | [set_bindir](#toolchainset_bindir)                                     | Set toolchain bin directory path              | >= 2.3.4          |
 | [on_check](#toolchainon_check)                                         | Check toolchain                               | >= 2.3.4          |
@@ -115,8 +115,8 @@ It can be defined in the user project xmake.lua, or it can be independently defi
 
 ```lua
 toolchain("myclang")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
 toolchain_end()
 ```
 
@@ -132,7 +132,7 @@ However, local toolchains such as yasm/nasm belong to the extension of additiona
 
 !> Just remember that the toolchain with a complete compilation environment is set to standalone
 
-### toolchain:set_toolsets
+### toolchain:set_toolset
 
 #### Set Tool Set
 
@@ -141,19 +141,19 @@ Used to set the name and path of each individual tool, for example:
 ```lua
 toolchain("myclang")
     set_kind("standalone")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 ```
 
-For details about this interface, you can see: [target.set_toolsets](/manual/project_target?id=targetset_toolsets)
+For details about this interface, you can see: [target.set_toolset](/manual/project_target?id=targetset_toolset)
 
 ### toolchain:set_sdkdir
 
@@ -165,7 +165,7 @@ Usually we can configure the sdk directory through `xmake f --toolchain=myclang 
 toolchain("myclang")
     set_kind("standalone")
     set_sdkdir("/tmp/sdkdir")
-    set_toolsets("cc", "clang")
+    set_toolset("cc", "clang")
 ```
 
 ### toolchain:set_bindir
@@ -178,7 +178,7 @@ Normally, we can configure the SDK directory through `xmake f --toolchain=myclan
 toolchain("myclang")
     set_kind("standalone")
     set_bindir("/tmp/sdkdir/bin")
-    set_toolsets("cc", "clang")
+    set_toolset("cc", "clang")
 ```
 
 ### toolchain:on_check
@@ -207,9 +207,9 @@ toolchain("myclang")
     set_kind("standalone")
     on_load(function (toolchain)
         
-        - set toolsets
-        toolchain:set("toolsets", "cc", "clang")
-        toolchain:set("toolsets", "ld", "clang++")
+        - set toolset
+        toolchain:set("toolset", "cc", "clang")
+        toolchain:set("toolset", "ld", "clang++")
         - ..
 
         - get march

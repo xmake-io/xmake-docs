@@ -106,7 +106,7 @@ target("test2")
 | [add_vectorexts](#targetadd_vectorexts)         | 添加向量扩展指令                     | >= 1.0.1 |
 | [add_frameworks](#targetadd_frameworks)         | 添加链接框架                         | >= 2.1.1 |
 | [add_frameworkdirs](#targetadd_frameworkdirs)   | 添加链接框架的搜索目录               | >= 2.1.5 |
-| [set_toolsets](#targetset_toolsets)             | 设置工具集                           | >= 2.3.4 |
+| [set_toolset](#targetset_toolset)             | 设置工具集                           | >= 2.3.4 |
 | [set_toolchains](#targetset_toolchains)         | 设置工具链                           | >= 2.3.4 |
 | [set_values](#targetset_values)                 | 设置一些扩展配置值                   | >= 2.2.1 |
 | [add_values](#targetadd_values)                 | 添加一些扩展配置值                   | >= 2.2.1 |
@@ -1768,7 +1768,7 @@ target("test")
     add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
 ```
 
-### target:set_toolsets
+### target:set_toolset
 
 #### 设置工具集
 
@@ -1788,7 +1788,7 @@ target("test1")
 
 target("test2")
     add_files("*.c")
-    set_toolsets("cc", "$(projectdir)/tools/bin/clang-5.0")
+    set_toolset("cc", "$(projectdir)/tools/bin/clang-5.0")
 ```
 
 上述描述仅对test2目标的编译器进行特殊设置，使用特定的clang-5.0编译器来编译test2，而test1还是使用默认设置。
@@ -1819,7 +1819,7 @@ target("test2")
 对于一些编译器文件名不规则，导致xmake无法正常识别处理为已知的编译器名的情况下，我们也可以加一个工具名提示，例如：
 
 ```lua
-set_toolsets("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
+set_toolset("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 ```
 
 上述描述设置mipscc.exe作为c编译器，并且提示xmake作为gcc的传参处理方式进行编译。
@@ -1828,7 +1828,7 @@ set_toolsets("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 
 #### 设置工具链
 
-这对某个特定的target单独切换设置不同的工具链，和set_toolsets不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。
+这对某个特定的target单独切换设置不同的工具链，和set_toolset不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。
 
 这也是推荐做法，因为像gcc/clang等大部分编译工具链，编译器和链接器都是配套使用的，要切就得整体切，单独零散的切换设置会很繁琐。
 
@@ -1877,16 +1877,16 @@ $ xmake
 ```lua
 toolchain("myclang")
     set_kind("standalone")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 
     -- ...
 ```

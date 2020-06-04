@@ -239,7 +239,7 @@ $ xmake f -p linux --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-l
 
 #### set_toolchains
 
-这对某个特定的target单独切换设置不同的工具链，和set_toolsets不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。
+这对某个特定的target单独切换设置不同的工具链，和set_toolset不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。
 
 这也是推荐做法，因为像gcc/clang等大部分编译工具链，编译器和链接器都是配套使用的，要切就得整体切，单独零散的切换设置会很繁琐。
 
@@ -252,15 +252,15 @@ target("test")
     set_toolchains("clang", "yasm")
 ```
 
-#### set_toolsets
+#### set_toolset
 
-如果觉得每次通过命令行配置比较繁琐，有些配置可以通过在xmake.lua预先配置好，来简化命令配置，比如编译器的指定，就可以通过`set_toolsets`来对每个target单独设置。
+如果觉得每次通过命令行配置比较繁琐，有些配置可以通过在xmake.lua预先配置好，来简化命令配置，比如编译器的指定，就可以通过`set_toolset`来对每个target单独设置。
 
 ```lua
 target("test")
     set_kind("binary")
-    set_toolsets("cxx", "clang")
-    set_toolsets("ld", "clang++")
+    set_toolset("cxx", "clang")
+    set_toolset("ld", "clang++")
 ```
 
 强制test目标的编译器和链接器使用clang编译器，或者指定交叉编译工具链中的编译器名或者路径。
@@ -397,16 +397,16 @@ fasm          Flat Assembler
 ```lua
 toolchain("myclang")
     set_kind("standalone")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 
     -- ...
 ```

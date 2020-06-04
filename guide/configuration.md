@@ -243,7 +243,7 @@ $ xmake f -p linux --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-l
 
 #### set_toolchains
 
-This sets up different tool chains for a specific target individually. Unlike set_toolsets, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.
+This sets up different tool chains for a specific target individually. Unlike set_toolset, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.
 
 This is also a recommended practice, because most compiler tool chains like gcc/clang, the compiler and the linker are used together. To cut it, you have to cut it as a whole. Separate and scattered switch settings will be cumbersome.
 
@@ -256,15 +256,15 @@ target("test")
     set_toolchains("clang", "yasm")
 ```
 
-#### set_toolsets
+#### set_toolset
 
-If you feel that it is more complicated to configure through the command line each time, some configurations can be pre-configured in xmake.lua to simplify the command configuration. For example, the specification of the compiler can be set individually for each target through set_toolsets.
+If you feel that it is more complicated to configure through the command line each time, some configurations can be pre-configured in xmake.lua to simplify the command configuration. For example, the specification of the compiler can be set individually for each target through set_toolset.
 
 ```lua
 target("test")
     set_kind("binary")
-    set_toolsets("cxx", "clang")
-    set_toolsets("ld", "clang++")
+    set_toolset("cxx", "clang")
+    set_toolset("ld", "clang++")
 ```
 
 Force the compiler and linker of the test target to use the clang compiler, or specify the compiler name or path in the cross-compilation tool chain.
@@ -401,16 +401,16 @@ In addition, we can also customize the toolchain in xmake.lua, and then specify 
 ```lua
 toolchain("myclang")
     set_kind("standalone")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 
     - ...
 ```

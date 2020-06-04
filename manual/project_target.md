@@ -105,7 +105,7 @@ target("test2")
 | [add_vectorexts](#targetadd_vectorexts)         | Add vector extensions                                  | >= 1.0.1                    |
 | [add_frameworks](#targetadd_frameworks)         | Add frameworks                                         | >= 2.1.1                    |
 | [add_frameworkdirs](#targetadd_frameworkdirs)   | Add framework search directories                       | >= 2.1.5                    |
-| [set_toolsets](#targetset_toolsets)             | Set toolsets                                           | >= 2.3.4                    |
+| [set_toolset](#targetset_toolset)             | Set toolset                                           | >= 2.3.4                    |
 | [set_toolchains](#targetset_toolchains)         | Set toolchains                                         | >= 2.3.4                    |
 | [set_values](#targetset_values)                 | Set custom configuration values                        | >= 2.2.1                    |
 | [add_values](#targetadd_values)                 | Add custom configuration values                        | >= 2.2.1                    |
@@ -1771,9 +1771,9 @@ target("test")
     add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
 ```
 
-### target:set_toolsets
+### target:set_toolset
 
-#### Set toolsets
+#### Set toolset
 
 Separate settings for a specific target to switch a compiler, linker, but we recommend using [set_toolchains](#targetset_toolchains) to switch the overall tool chain of a target.
 
@@ -1791,7 +1791,7 @@ target("test1")
 
 target("test2")
     add_files("*.c")
-    set_toolsets("cc", "$(projectdir)/tools/bin/clang-5.0")
+    set_toolset("cc", "$(projectdir)/tools/bin/clang-5.0")
 ```
 
 The above description only makes special settings for the compiler of the test2 target, compiling test2 with a specific clang-5.0 compiler, and test1 still uses the default settings.
@@ -1822,14 +1822,14 @@ The previous parameter is key, which is used to specify the tool type. Currently
 For some compiler file names that are irregular, causing xmake to fail to recognize the known compiler name, we can also add a tool name prompt, for example:
 
 ```lua
-set_toolsets("cc", "gcc@$(projectdir)/tools/bin/Mipscc.exe")
+set_toolset("cc", "gcc@$(projectdir)/tools/bin/Mipscc.exe")
 ```
 
 ### target:set_toolchains
 
 #### Set up the toolchain
 
-This sets up different tool chains for a specific target individually. Unlike set_toolsets, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.
+This sets up different tool chains for a specific target individually. Unlike set_toolset, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.
 
 This is also a recommended practice, because most compiler tool chains like gcc/clang, the compiler and the linker are used together. To cut it, you have to cut it as a whole. Separate and scattered switch settings will be cumbersome.
 
@@ -1878,16 +1878,16 @@ In addition, we can also customize toolchain in xmake.lua, and then specify it t
 ```lua
 toolchain("myclang")
     set_kind("standalone")
-    set_toolsets("cc", "clang")
-    set_toolsets("cxx", "clang", "clang++")
-    set_toolsets("ld", "clang++", "clang")
-    set_toolsets("sh", "clang++", "clang")
-    set_toolsets("ar", "ar")
-    set_toolsets("ex", "ar")
-    set_toolsets("strip", "strip")
-    set_toolsets("mm", "clang")
-    set_toolsets("mxx", "clang", "clang++")
-    set_toolsets("as", "clang")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 
     - ...
 ```
