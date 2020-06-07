@@ -1,3 +1,29 @@
+## v2.3.4
+
+### New features
+
+* [#630](https://github.com/xmake-io/xmake/issues/630): Support *BSD system, e.g. FreeBSD, ..
+* Add wprint builtin api to show warnings
+* [#784](https://github.com/xmake-io/xmake/issues/784): Add `set_policy()` to set and modify some builtin policies
+* [#780](https://github.com/xmake-io/xmake/issues/780): Add set_toolchains/set_toolsets for target and improve to detect cross-compilation toolchains
+* [#798](https://github.com/xmake-io/xmake/issues/798): Add `xmake show` plugin to show some builtin configuration values and infos
+* [#797](https://github.com/xmake-io/xmake/issues/797): Add ninja theme style, e.g. `xmake g --theme=ninja`
+* [#816](https://github.com/xmake-io/xmake/issues/816): Add mode.releasedbg and mode.minsizerel rules
+* [#819](https://github.com/xmake-io/xmake/issues/819): Support ansi/vt100 terminal control
+
+### Change
+
+* [#771](https://github.com/xmake-io/xmake/issues/771): Check includedirs, linkdirs and frameworkdirs
+* [#774](https://github.com/xmake-io/xmake/issues/774): Support ltui windows resize for `xmake f --menu`
+* [#782](https://github.com/xmake-io/xmake/issues/782): Add check flags failed tips for add_cxflags, ..
+* [#808](https://github.com/xmake-io/xmake/issues/808): Support add_frameworks for cmakelists
+* [#820](https://github.com/xmake-io/xmake/issues/820): Support independent working/build directory
+
+### Bug fixed
+
+* [#786](https://github.com/xmake-io/xmake/issues/786): Fix check header file deps
+* [#810](https://github.com/xmake-io/xmake/issues/810): Fix strip debug bug for linux
+
 ## v2.3.3
 
 ### New features

@@ -1,3 +1,29 @@
+## v2.3.4
+
+### 新特性
+
+* [#630](https://github.com/xmake-io/xmake/issues/630): 支持*BSD系统，例如：FreeBSD, ..
+* 添加wprint接口去显示警告信息
+* [#784](https://github.com/xmake-io/xmake/issues/784): 添加`set_policy()`去设置修改一些内置的策略，比如：禁用自动flags检测和映射
+* [#780](https://github.com/xmake-io/xmake/issues/780): 针对target添加set_toolchains/set_toolsets实现更完善的工具链设置，并且实现platform和toolchains分离
+* [#798](https://github.com/xmake-io/xmake/issues/798): 添加`xmake show`插件去显示xmake内置的各种信息
+* [#797](https://github.com/xmake-io/xmake/issues/797): 添加ninja主题风格，显示ninja风格的构建进度条，`xmake g --theme=ninja`
+* [#816](https://github.com/xmake-io/xmake/issues/816): 添加mode.releasedbg和mode.minsizerel编译模式规则
+* [#819](https://github.com/xmake-io/xmake/issues/819): 支持ansi/vt100终端字符控制
+
+### 改进
+
+* [#771](https://github.com/xmake-io/xmake/issues/771): 检测includedirs,linkdirs和frameworkdirs的输入有效性
+* [#774](https://github.com/xmake-io/xmake/issues/774): `xmake f --menu`可视化配置菜单支持窗口大小Resize调整
+* [#782](https://github.com/xmake-io/xmake/issues/782): 添加add_cxflags等配置flags自动检测失败提示
+* [#808](https://github.com/xmake-io/xmake/issues/808): 生成cmakelists插件增加对add_frameworks的支持
+* [#820](https://github.com/xmake-io/xmake/issues/820): 支持独立的工作目录和构建目录，保持项目目录完全干净
+
+### Bugs修复
+
+* [#786](https://github.com/xmake-io/xmake/issues/786): 修复头文件依赖检测
+* [#810](https://github.com/xmake-io/xmake/issues/810): 修复linux下gcc strip debug符号问题
+
 ## v2.3.3
 
 ### 新特性
