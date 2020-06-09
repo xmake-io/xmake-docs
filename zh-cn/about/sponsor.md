@@ -31,6 +31,8 @@ bc1qstzyehpjsryh8qwj8kf95js4cjcj3p670s5j9fyd3gkj946qdt7qx0xjpa
 
 | 日期       | 支持者                                | 渠道     | 金额   | 评价                                                                    |
 |--          | --                                    | --       | --     | --                                                                      |
+| 2020.06.09 | w*;                                   | 微信     | $50    | 我用过最舒心的工具                                                      |
+| 2020.06.09 | 凌风                                  | 支付宝   | $0.01  |                                                                         |
 | 2020.05.25 | 魔之左手                              | 微信     | $100   |                                                                         |
 | 2020.05.20 | Russell Haley                         | Paypal   | $10CAD |                                                                         |
 | 2020.05.15 | Russell Haley                         | Paypal   | $10CAD |                                                                         |

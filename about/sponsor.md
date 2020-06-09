@@ -48,6 +48,8 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2020.06.09 | w*;                                   | wechat  | $50    | 我用过最舒心的工具                                                      |
+| 2020.06.09 | 凌风                                  | alipay  | $0.01  |                                                                         |
 | 2020.05.25 | 魔之左手                              | wechat  | $100   |                                                                         |
 | 2020.05.20 | Russell Haley                         | Paypal  | $10CAD |                                                                         |
 | 2020.05.15 | Russell Haley                         | Paypal  | $10CAD |                                                                         |
