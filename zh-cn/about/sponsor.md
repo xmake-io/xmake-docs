@@ -17,7 +17,7 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 ## Github Sponsor
 
-[Become a sponsor to waruqi](https://github.com/sponsors/waruqi)
+<iframe src="https://github.com/sponsors/waruqi/card" title="Sponsor waruqi" height="130" width="600" style="border: 0;"></iframe>
 
 ## Bitcoin
 

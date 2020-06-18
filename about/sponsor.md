@@ -9,7 +9,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 ## Github Sponsor
 
-[Become a sponsor to waruqi](https://github.com/sponsors/waruqi)
+<iframe src="https://github.com/sponsors/waruqi/card" title="Sponsor waruqi" height="130" width="600" style="border: 0;"></iframe>
 
 ## Bitcoin
 
