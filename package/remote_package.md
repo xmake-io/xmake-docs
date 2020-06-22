@@ -282,6 +282,7 @@ Or we write directly in xmake.lua:
 
 ```lua
 add_repositories("my-repo git@github.com:myrepo/xmake-repo.git")
+add_repositories("my-repo git@github.com:myrepo/xmake-repo.git dev")
 ```
 
 If we just want to add one or two private packages, this time to build a git repo is too big, we can directly put the package repository into the project, for example:

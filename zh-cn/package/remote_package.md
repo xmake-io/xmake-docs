@@ -296,13 +296,21 @@ target("test")
 我们可以通过下面的命令进行仓库添加：
 
 ```console
-$ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
+$ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git [branch]
 ```
+
+!> [branch]是可选的，我们也可以切换到指定repo分支
 
 或者我们直接写在xmake.lua中：
 
 ```lua
 add_repositories("my-repo git@github.com:myrepo/xmake-repo.git")
+```
+
+同样，我们也可以切换到指定repo分支
+
+```lua
+add_repositories("my-repo git@github.com:myrepo/xmake-repo.git dev")
 ```
 
 如果我们只是想添加一两个私有包，这个时候特定去建立一个git repo太小题大做了，我们可以直接把包仓库放置项目里面，例如：
