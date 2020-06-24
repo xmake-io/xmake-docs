@@ -48,6 +48,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2020.06.24 | *三                                   | wechat  | $10    | xmake很好用                                                             |
 | 2020.06.13 | Ronald                                | alipay  | $10    | 方便、专业、谢谢                                                        |
 | 2020.06.13 | c*o                                   | wechat  | $100   |                                                                         |
 | 2020.06.09 | w*;                                   | wechat  | $50    | 我用过最舒心的工具                                                      |
