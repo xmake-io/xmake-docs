@@ -106,7 +106,7 @@ target("test2")
 | [add_vectorexts](#targetadd_vectorexts)         | 添加向量扩展指令                     | >= 1.0.1 |
 | [add_frameworks](#targetadd_frameworks)         | 添加链接框架                         | >= 2.1.1 |
 | [add_frameworkdirs](#targetadd_frameworkdirs)   | 添加链接框架的搜索目录               | >= 2.1.5 |
-| [set_toolset](#targetset_toolset)             | 设置工具集                           | >= 2.3.4 |
+| [set_toolset](#targetset_toolset)               | 设置工具集                           | >= 2.3.4 |
 | [set_toolchains](#targetset_toolchains)         | 设置工具链                           | >= 2.3.4 |
 | [set_values](#targetset_values)                 | 设置一些扩展配置值                   | >= 2.2.1 |
 | [add_values](#targetadd_values)                 | 添加一些扩展配置值                   | >= 2.2.1 |
@@ -120,6 +120,8 @@ target("test2")
 | [set_configvar](#targetset_configvar)           | 设置模板配置变量                     | >= 2.2.5 |
 | [add_configfiles](#targetadd_configfiles)       | 添加模板配置文件                     | >= 2.2.5 |
 | [set_policy](#targetset_policy)                 | 设置构建行为策略                     | >= 2.3.4 |
+| [set_plat](#targetset_plat)                     | 设置指定目标的编译平台               | >= 2.3.5 |
+| [set_arch](#targetset_arch)                     | 设置指定目标的编译架构               | >= 2.3.5 |
 
 ### target
 
@@ -1894,6 +1896,66 @@ toolchain("myclang")
 关于这块的详情介绍，可以到[自定义工具链](/zh-cn/manual/custom_toolchain)章节查看
 
 更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
+
+2.3.5版本开始，新增对toolchains平台和架构的单独设置和切换，比如：
+
+```lua
+target("test")
+    set_toolchains("xcode", {plat = os.host(), arch = os.arch()})
+```
+
+如果当前是在交叉编译模式，那么这个test还是会强制切到xcode的本地编译工具链和对应的pc平台上去，这对于想要同时支持部分target使用主机工具链，部分target使用交叉编译工具链时候，非常有用。
+
+但是，这还不是特别方便，尤其是跨平台编译时候，不同平台的pc工具链都是不同的，有msvc, xcode, clang等，还需要判断平台来指定。
+
+因此，我们可以直接使用[set_plat](#targetset_plat)和[set_arch](#targetset_arch)接口，直接设置特定target到主机平台，就可以内部自动选择host工具链了，例如：
+
+```lua
+target("test")
+    set_plat(os.host())
+    set_arch(os.arch())
+```
+
+这块的应用场景和example可以看下：https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua
+
+luajit里面就需要同时编译host平台的minilua/buildvm来生成jit相关代码，然后开始针对性编译luajit自身到不同的交叉工具链。
+
+关于这块详情，可以参考：https://github.com/xmake-io/xmake/pull/857
+
+### target:set_plat
+
+#### 设置指定目标的编译平台
+
+通常配合[set_arch](#target_setarch)使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。
+
+一般用于需要同时编译host平台目标、交叉编译目标的场景，更多详情见：[set_toolchains](#target_settoolchains)
+
+例如：
+
+```console
+$ xmake f -p android --ndk=/xxx
+```
+
+即使正在使用android ndk编译android平台目标，但是其依赖的host目标，还是会切换到主机平台，使用xcode, msvc等host工具链来编译。
+
+```lua
+target("host")
+    set_kind("binary")
+    set_plat(os.host())
+    set_arch(os.arch())
+    add_files("src/host/*.c")
+
+target("test")
+    set_kind("binary")
+    add_deps("host")
+    add_files("src/test/*.c")
+```
+
+### target:set_arch
+
+#### 设置指定目标的编译架构
+
+详情见：[set_plat](#targetset_plat)
 
 ### target:set_values
 
