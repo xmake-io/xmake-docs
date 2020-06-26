@@ -444,6 +444,8 @@ v2.2.3开始，支持添加指定分支的repo，例如：
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git dev
 ```
 
+!> 我们也可以添加本地仓库路径，即使没有git也是可以支持的，用于在本地快速的调试repo中的包。
+
 我们也可以移除已安装的某个仓库：
 
 ```console
@@ -504,7 +506,7 @@ $ xmake g --help
 
 `--proxy`参数指定代理协议和地址，具体语法可以参考curl的，通常可以支持http, https, socks5等协议，但实际支持力度依赖curl, wget和git，比如wget就不支持socks5协议。
 
-我们可以可以通过下面的参数指定哪些host走代理，如果没设置，默认全局走代理。
+我们可以通过下面的参数指定哪些host走代理，如果没设置，默认全局走代理。
 
 ```console
 --proxy_hosts=PROXY_HOSTS    Only enable proxy for the given hosts list, it will enable all if be unset,
@@ -530,7 +532,7 @@ $ xmake g --help
                                        end
 ```
 
-!> 如果有proxy_hosts优先走hosts配置，没有的话可以才走pac配置。
+!> 如果有proxy_hosts优先走hosts配置，没有的话才走pac配置。
 
 pac的默认路径：~/.xmake/pac.lua，如果--proxy被设置，并且这个文件存在，就会自动走pac，如果不存在，也没hosts，那就全局生效代理。
 
@@ -553,6 +555,8 @@ end
 如果返回true，那么这个url和host就是走的代理，不返回或者返回false，就是不走代理。
 
 这块的具体详情见：https://github.com/xmake-io/xmake/issues/854
+
+!> 另外，除了依赖包下载，其他涉及网络下载的命令也都支持代理，比如：`xmake update`
 
 ## 添加包到仓库
 
