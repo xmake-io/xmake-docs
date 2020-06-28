@@ -1,3 +1,27 @@
+## v2.3.5
+
+### New features
+
+* Add `xmake show -l envs` to show all builtin envirnoment variables
+* [#861](https://github.com/xmake-io/xmake/issues/861): Support search local package file to install remote package
+* [#854](https://github.com/xmake-io/xmake/issues/854): Support global proxy settings for curl, wget and git
+
+### Change
+
+* [#828](https://github.com/xmake-io/xmake/issues/828): Support to import sub-directory files for protobuf rules
+* [#835](https://github.com/xmake-io/xmake/issues/835): Improve mode.minsizerel to add /GL flags for msvc
+* [#828](https://github.com/xmake-io/xmake/issues/828): Support multi-level directories for protobuf/import
+* [#838](https://github.com/xmake-io/xmake/issues/838#issuecomment-643570920): Support to override builtin-rules for `add_files("src/*.c", {rules = {"xx", override = true}})`
+* [#847](https://github.com/xmake-io/xmake/issues/847): Support to parse include deps for rc file
+* Improve msvc tool chain, remove the dependence of global environment variables
+* [#857](https://github.com/xmake-io/xmake/pull/857): Improved `set_toolchains()` when cross-compilation is supported, specific target can be switched to host toolchain and compiled at the same time
+
+### Bugs fixed
+
+* Fix the progress bug for theme
+* [#829](https://github.com/xmake-io/xmake/issues/829): Fix invalid sysroot path for macOS
+* [#832](https://github.com/xmake-io/xmake/issues/832): Fix find_packages bug for the debug mode
+
 ## v2.3.4
 
 ### New features

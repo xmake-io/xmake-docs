@@ -1,3 +1,27 @@
+## v2.3.5
+
+### 新特性
+
+* 添加`xmake show -l envs`去显示xmake内置的环境变量列表
+* [#861](https://github.com/xmake-io/xmake/issues/861): 支持从指定目录搜索本地包去直接安装远程依赖包
+* [#854](https://github.com/xmake-io/xmake/issues/854): 针对wget, curl和git支持全局代理设置
+
+### 改进
+
+* [#828](https://github.com/xmake-io/xmake/issues/828): 针对protobuf规则增加导入子目录proto文件支持
+* [#835](https://github.com/xmake-io/xmake/issues/835): 改进mode.minsizerel模式，针对msvc增加/GL支持，进一步优化目标程序大小
+* [#828](https://github.com/xmake-io/xmake/issues/828): protobuf规则支持import多级子目录
+* [#838](https://github.com/xmake-io/xmake/issues/838#issuecomment-643570920): 支持完全重写内置的构建规则，`add_files("src/*.c", {rules = {"xx", override = true}})`
+* [#847](https://github.com/xmake-io/xmake/issues/847): 支持rc文件的头文件依赖解析
+* 改进msvc工具链，去除全局环境变量的依赖
+* [#857](https://github.com/xmake-io/xmake/pull/857): 改进`set_toolchains()`支持交叉编译的时候，特定target可以切换到host工具链同时编译
+
+### Bugs修复
+
+* 修复进度字符显示
+* [#829](https://github.com/xmake-io/xmake/issues/829): 修复由于macOS大小写不敏感系统导致的sysroot无效路径问题
+* [#832](https://github.com/xmake-io/xmake/issues/832): 修复find_packages在debug模式下找不到的问题
+
 ## v2.3.4
 
 ### 新特性
