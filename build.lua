@@ -35,9 +35,9 @@ function main()
             sitemap:print([[
 <url>
   <loc>%s</loc>
-  <lastmod>2020-07-10T01:37:22+00:00</lastmod>
+  <lastmod>%s</lastmod>
 </url>
-]], url)
+]], url, mtime(markdown))
         end
     end
     sitemap:print("</urlset>")
