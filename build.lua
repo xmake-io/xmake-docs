@@ -25,10 +25,10 @@ function main()
             if basename == "README" then
                 basename = ""
             end
-            local url = path.join(siteroot, '#')
+            local url = siteroot .. '/#'
             local dir = path.directory(markdown)
             if dir ~= '.' then
-                url = path.join(url, dir)
+                url = url .. '/' .. dir
             end
             url = url .. '/' .. basename
             print("build %s => %s, %s", markdown, url, mtime(markdown))
