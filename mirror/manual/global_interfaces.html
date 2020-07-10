@@ -1,0 +1,389 @@
+<p>The global interface affects the whole project description scope and all sub-project files.</p>
+<table>
+<thead>
+<tr>
+<th>Interfaces</th>
+<th>Description</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#includes">includes</a></td>
+<td>Add sub-project files and directories</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#set_modes">set_modes</a></td>
+<td>Set project compilation modes</td>
+<td>&gt;= 2.1.2</td>
+</tr>
+<tr>
+<td><a href="#set_project">set_project</a></td>
+<td>Set project name</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#set_version">set_version</a></td>
+<td>Set project version</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#set_xmakever">set_xmakever</a></td>
+<td>Set minimal xmake version</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#add_subdirs">add_subdirs</a></td>
+<td>Add sub-project directories</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#add_subfiles">add_subfiles</a></td>
+<td>Add sub-project files</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#add_moduledirs">add_moduledirs</a></td>
+<td>Add module directories</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#add_plugindirs">add_plugindirs</a></td>
+<td>Add plugin directories</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#add_packagedirs">add_packagedirs</a></td>
+<td>Add package directories</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#get_config">get_config</a></td>
+<td>Get the configuration value</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#set_config">set_config</a></td>
+<td>Set the default configuration value</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#add_requires">add_requires</a></td>
+<td>Add required package dependencies</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#add_repositories">add_repositories</a></td>
+<td>Add 3rd package repositories</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="includes">includes</h3>
+<h4 id="add-sub-project-files-and-directories">Add sub-project files and directories</h4>
+<p>It is used to replace <a href="#add_subdirs">add_subdirs</a> and <a href="#add_subfiles">add_subfiles</a>.</p>
+<p>In addition, in 2.2.5 and later, this interface provides some built-in helper functions, which can be used directly after the include, specifically which built-in functions can be seen at: <a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">https://github.com/xmake-io/xmake/tree/master/xmake/includes</a></p>
+<p>For a more complete description of this, see: <a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
+<p>Examples:</p>
+<p>Check links, ctype, includes and features and write macro definitions to the config.h file.</p>
+<pre><code class="lang-lua">includes(&quot;check_links.lua&quot;)
+includes(&quot;check_ctypes.lua&quot;)
+includes(&quot;check_cfuncs.lua&quot;)
+includes(&quot;check_features.lua&quot;)
+includes(&quot;check_csnippets.lua&quot;)
+includes(&quot;check_cincludes.lua&quot;)
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;*.c&quot;)
+    add_configfiles(&quot;config.h.in&quot;)
+
+    configvar_check_ctypes(&quot;HAS_WCHAR&quot;, &quot;wchar_t&quot;)
+    configvar_check_cincludes(&quot;HAS_STRING_H&quot;, &quot;string.h&quot;)
+    configvar_check_cincludes(&quot;HAS_STRING_AND_STDIO_H&quot;, {&quot;string.h&quot;, &quot;stdio.h&quot;})
+    configvar_check_ctypes(&quot;HAS_WCHAR_AND_FLOAT&quot;, {&quot;wchar_t&quot;, &quot;float&quot;})
+    configvar_check_links(&quot;HAS_PTHREAD&quot;, {&quot;pthread&quot;, &quot;m&quot;, &quot;dl&quot;})
+    configvar_check_csnippets(&quot;HAS_STATIC_ASSERT&quot;, &quot;_Static_assert(1, \&quot;\&quot;);&quot;)
+    configvar_check_cfuncs(&quot;HAS_SETJMP&quot;, &quot;setjmp&quot;, {includes = {&quot;signal.h&quot;, &quot;setjmp.h&quot;}})
+    configvar_check_features(&quot;HAS_CONSTEXPR&quot;, &quot;cxx_constexpr&quot;)
+    configvar_check_features(&quot;HAS_CONSEXPR_AND_STATIC_ASSERT&quot;, {&quot;cxx_constexpr&quot;, &quot;c_static_assert&quot;}, {languages = &quot;c++11&quot;})
+</code></pre>
+<p>config.h.in</p>
+<pre><code class="lang-c">${define HAS_STRING_H}
+${define HAS_STRING_AND_STDIO_H}
+${define HAS_WCHAR}
+${define HAS_WCHAR_AND_FLOAT}
+${define HAS_PTHREAD}
+${define HAS_STATIC_ASSERT}
+${define HAS_SETJMP}
+${define HAS_CONSTEXPR}
+${define HAS_CONSEXPR_AND_STATIC_ASSERT}
+</code></pre>
+<p>config.h</p>
+<pre><code class="lang-c">/* #undef HAS_STRING_H */
+#define HAS_STRING_AND_STDIO_H 1
+/* #undef HAS_WCHAR */
+/* #undef HAS_WCHAR_AND_FLOAT */
+#define HAS_PTHREAD 1
+#define HAS_STATIC_ASSERT 1
+#define HAS_SETJMP 1
+/* #undef HAS_CONSTEXPR */
+#define HAS_CONSEXPR_AND_STATIC_ASSERT 1
+</code></pre>
+<h3 id="set_modes">set_modes</h3>
+<h4 id="set-project-compilation-modes">Set project compilation modes</h4>
+<p>This is an optional api, just to make it easy for plugins to get mode configuration information.</p>
+<pre><code class="lang-lua">set_modes(&quot;debug&quot;, &quot;release&quot;)
+</code></pre>
+<p>If you set this configuration, you need not set them manually when generating vs201x project.</p>
+<pre><code class="lang-bash">$ xmake project -k vs2017
+</code></pre>
+<p>Otherwise, you need to run:</p>
+<pre><code class="lang-bash">$ xmake project -k vs2017 -m &quot;debug,release&quot;
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>If you do not set this configuration, <a href="#is_mode">is_mode</a> can also be used normally.<br>&lt;/p&gt;
+
+</p>
+<h3 id="set_project">set_project</h3>
+<h4 id="set-project-name">Set project name</h4>
+<p>Set the whole project name, we can set it at the beginning of <code>xmake.lua</code>.</p>
+<pre><code class="lang-lua">-- set project name
+set_project(&quot;tbox&quot;)
+
+-- set project version
+set_version(&quot;1.5.1&quot;)
+</code></pre>
+<h3 id="set_version">set_version</h3>
+<h4 id="set-project-version">Set project version</h4>
+<p>Set the whole project version, we can set it at the beginning of <code>xmake.lua</code>.</p>
+<pre><code class="lang-lua">set_version(&quot;1.5.1&quot;)
+</code></pre>
+<p>We can set build version in v2.1.7 version:</p>
+<pre><code class="lang-lua">set_version(&quot;1.5.1&quot;, {build = &quot;%Y%m%d%H%M&quot;})
+</code></pre>
+<p>We can also add version to the config header files, @see <a href="/manual/project_target?id=add-template-configuration-files">add_configfiles</a></p>
+<h3 id="set_xmakever">set_xmakever</h3>
+<h4 id="set-minimal-xmake-version">Set minimal xmake version</h4>
+<p>If the current xmake version less than the required version, it will prompt an error.</p>
+<pre><code class="lang-lua">-- the current xmake version must be larger than 2.1.0
+set_xmakever(&quot;2.1.0&quot;)
+</code></pre>
+<h3 id="add_subdirs">add_subdirs</h3>
+<h4 id="add-sub-project-directories">Add sub-project directories</h4>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>For xmake 2.x and above, try to use the <a href="#includes">includes</a> interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.<br>&lt;/p&gt;
+
+</p>
+<p>This interface will add sub-project directories to the current <code>xmake.lua</code>, it will load the <code>xmake.lua</code> file of the sub-directories.</p>
+<p>For example, assume we have the following project directory tree:</p>
+<pre><code>./tbox
+├── src
+│   ├── demo
+│   │   └── xmake.lua
+│   └── tbox
+│       └── xmake.lua
+└── xmake.lua
+`
+</code></pre><p>We can add sub-project <code>tbox</code> and <code>demo</code> directories to the root <code>xmake.lua</code>.</p>
+<pre><code class="lang-lua">add_subdirs(&quot;src/tbox&quot;)
+if is_option(&quot;demo&quot;) then
+    add_subdirs(&quot;src/demo&quot;)
+end
+</code></pre>
+<p>By default, xmake will compile all targets. If you only want to compile a specific target, you can do:</p>
+<pre><code class="lang-bash"># only build `tbox` target
+$ xmake build tbox
+</code></pre>
+<h3 id="add_subfiles">add_subfiles</h3>
+<h4 id="add-sub-project-files">Add sub-project files</h4>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>For xmake 2.x and above, try to use the <a href="#includes">includes</a> interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.<br>&lt;/p&gt;
+
+</p>
+<p><code>add_subfiles</code> is similar to <a href="#add_subdirs">add_subdirs</a>.</p>
+<p>The only difference is that this interface specifies the path to the &#39;xmake.lua&#39; file directly, rather than a directory.</p>
+<p>for example:</p>
+<pre><code class="lang-lua">add_subfiles(&quot;src/tbox/xmake.lua&quot;)
+</code></pre>
+<h3 id="add_moduledirs">add_moduledirs</h3>
+<h4 id="add-module-directories">Add module directories</h4>
+<p>The builtin modules are placed in the &#39;xmake/modules&#39; directory, but for user-defined modules for a specific project, you can configure additional module directories in the &#39;xmake.lua` file.</p>
+<pre><code class="lang-lua">add_moduledirs(&quot;$(projectdir)/modules&quot;)
+</code></pre>
+<p>xmake will load the given module in the given directory when calling <code>import</code>.</p>
+<h3 id="add_plugindirs">add_plugindirs</h3>
+<h4 id="add-plugin-directories">Add plugin directories</h4>
+<p>The builtin plugins are placed in the &#39;xmake/plugins&#39; directory, but for user-defined plugins for a specific project, you can configure additional plugin directories in the &#39;xmake.lua` file.</p>
+<pre><code class="lang-lua">add_plugindirs(&quot;$(projectdir)/plugins&quot;)
+</code></pre>
+<p>xmake will load all plugins in the given directory.</p>
+<h3 id="add_packagedirs">add_packagedirs</h3>
+<h4 id="add-package-directories">Add package directories</h4>
+<p>By setting up a dependency package directory, you can easily integrate some third-party dependent libraries.<br>Taking the tbox project as an example, its package directory is as follows:</p>
+<pre><code>tbox.pkg
+- base.pkg
+- zlib.pkg
+- polarssl.pkg
+- openssl.pkg
+- mysql.pkg
+- pcre.pkg
+- ...
+</code></pre><p>If you want the current project to load these packages, first specify the package directory path, for example:</p>
+<pre><code class="lang-lua">add_packagedirs(&quot;pkg&quot;)
+</code></pre>
+<p>Then, please add these packages to the given target by <a href="#add_packages">add_packages</a>:</p>
+<pre><code class="lang-lua">target(&quot;tbox&quot;)
+    add_packages(&quot;zlib&quot;, &quot;polarssl&quot;, &quot;pcre&quot;, &quot;mysql&quot;)
+</code></pre>
+<p>xmake will check these packages automatically and link with them if they exist, and we can disable them manually.</p>
+<pre><code class="lang-bash">$ xmake f --openssl=n
+</code></pre>
+<h3 id="get_config">get_config</h3>
+<h4 id="get-the-configuration-value">Get the configuration value</h4>
+<p>This interface is introduced from version 2.2.2 to get the configuration value from the given name.</p>
+<pre><code class="lang-lua">if get_config(&quot;myconfig&quot;) == &quot;xxx&quot; then
+    add_defines(&quot;HELLO&quot;)
+end
+</code></pre>
+<h3 id="set_config">set_config</h3>
+<h4 id="set-the-default-configuration-value">Set the default configuration value</h4>
+<p>This interface is introduced from version 2.2.2 to set the default configuration value in xmake.lua.</p>
+<p>Many previous configurations, including the build toolchain, build directory, etc.<br>We can only be configured by <code>$xmake f --name=value</code>. If we want to write a default value in xmake.lua, we can use the following method:</p>
+<pre><code class="lang-lua">set_config(&quot;name&quot;, &quot;value&quot;)
+set_config(&quot;buildir&quot;, &quot;other/buildir&quot;)
+set_config(&quot;cc&quot;, &quot;gcc&quot;)
+set_config(&quot;ld&quot;, &quot;g++&quot;)
+</code></pre>
+<p>However, we can still modify the default configuration in xmake.lua by <code>$xmake f --name=value</code>.</p>
+<h3 id="add_requires">add_requires</h3>
+<h4 id="add-package-dependencies">Add package dependencies</h4>
+<p>Xmake&#39;s dependency package management fully supports semantic version selection, for example: &quot;~1.6.1&quot;. For a detailed description of semantic versioning, see: <a href="https://semver.org/">https://semver.org/</a></p>
+<p>Some examples:</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox 1.6.*&quot;, &quot;pcre 1.3.x&quot;, &quot;libpng ^1.18&quot;)
+add_requires(&quot;libpng ~1.16&quot;, &quot;zlib 1.1.2 || &gt;=1.2.11 &lt;1.3.0&quot;)
+</code></pre>
+<p>The semantic version parser currently used by xmake is the <a href="https://github.com/uael/sv">sv</a> library contributed by <a href="https://github.com/uael">uael</a>, which also has a description of the version. For detailed instructions, please refer to the following: <a href="https://github.com/uael/sv#versions">Version Description</a></p>
+<p>Of course, if we have no special requirements for the version of the dependency package, we can omit the version:</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, &quot;libpng&quot;, &quot;zlib&quot;)
+</code></pre>
+<p>This will use the latest known version of the package, or the source code compiled from the master branch. If the current package has a git repository address we can also specify a specific branch version:</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox master&quot;)
+add_requires(&quot;tbox dev&quot;)
+</code></pre>
+<p>If the specified dependency package is not supported by the current platform, or if the compilation and installation fails, then xmake will exit with an error, which is reasonable for some projects that must rely on certain packages to work.<br>However, if some packages are optional dependencies, they can be set to optional packages even if they are not compiled properly.</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {optional = true})
+</code></pre>
+<p>With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library is provided by a third-party package manager, then you can set:</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {system = false})
+</code></pre>
+<p>If we want to debug the dependencies at the same time, we can set them to use the debug version of the package (provided that this package supports debug compilation):</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {debug = true})
+</code></pre>
+<p>If the current package does not support debug compilation, you can submit the modified compilation rules in the repository to support the debug, for example:</p>
+<pre><code class="lang-lua">package(&quot;openssl&quot;)
+    on_install(&quot;linux&quot;, &quot;macosx&quot;, function (package)
+        os.vrun(&quot;./config %s --prefix=\&quot;%s\&quot;&quot;, package:debug() and &quot;--debug&quot; or &quot;&quot;, package:installdir())
+        os.vrun(&quot;make -j4&quot;)
+        os.vrun(&quot;make install&quot;)
+    end)
+</code></pre>
+<p>Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {config = {small=true}})
+</code></pre>
+<p>Pass <code>--small=true</code> to the tbox package so that compiling the installed tbox package is enabled.<br>After v2.2.3, you can control whether you need to add a dependency package in your own definition configuration option parameter by <a href="#option">option</a> and <a href="#has_config">has_config</a>:</p>
+<pre><code class="lang-lua">option(&quot;luajit&quot;)
+    set_default(false)
+    set_showmenu(true)
+    set_category(&quot;option&quot;)
+    set_description(&quot;Enable the luajit runtime engine.&quot;)
+option_end()
+
+if has_config(&quot;luajit&quot;) then
+    add_requires(&quot;luajit&quot;)
+else
+    add_requires(&quot;lua&quot;)
+end
+</code></pre>
+<p>We can switch dependencies by <code>$xmake f --luajit=y</code>.</p>
+<p>And we also added the group parameter to group the dependencies, all the dependencies under the same group, only one can be enabled, the order of the dependencies is the same as the order in which they were added by <code>add_requires</code>:</p>
+<pre><code class="lang-lua">add_requires(&quot;openssl&quot;, {group = &quot;ssl&quot;, optional = true})
+add_requires(&quot;mbedtls&quot;, {group = &quot;ssl&quot;, optional = true})
+
+target(&quot;test&quot;)
+    add_packages(&quot;openssl&quot;, &quot;mbedtls&quot;)
+</code></pre>
+<p>After version 2.2.5, xmake supports third-party package managers, such as: conan, brew, vcpkg, etc.</p>
+<p>Add a homebrew dependency package:</p>
+<pre><code class="lang-lua">add_requires(&quot;brew::zlib&quot;, {alias = &quot;zlib&quot;}})
+add_requires(&quot;brew::pcre2/libpcre2-8&quot;, {alias = &quot;pcre2&quot;}})
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;)
+    add_packages(&quot;pcre2&quot;, &quot;zlib&quot;)
+</code></pre>
+<p>Add a dependency package for vcpkg:</p>
+<pre><code class="lang-lua">add_requires(&quot;vcpkg::zlib&quot;, &quot;vcpkg::pcre2&quot;)
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;)
+    add_packages(&quot;vcpkg::zlib&quot;, &quot;vcpkg::pcre2&quot;)
+</code></pre>
+<p>Add a conan dependency package:</p>
+<pre><code class="lang-lua">add_requires(&quot;CONAN::zlib/1.2.11@conan/stable&quot;, {alias = &quot;zlib&quot;, debug = true})
+add_requires(&quot;CONAN::OpenSSL/1.0.2n@conan/stable&quot;, {alias = &quot;openssl&quot;,
+    configs = {options = &quot;OpenSSL:shared=True&quot;}})
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;)
+    add_packages(&quot;openssl&quot;, &quot;zlib&quot;)
+</code></pre>
+<p>After executing xmake to compile:</p>
+<pre><code class="lang-console">ruki:test_package ruki$ xmake
+checking for the architecture ... x86_64
+checking for the Xcode directory ... /Applications/Xcode.app
+checking for the SDK version of Xcode ... 10.14
+note: try installing these packages (pass -y to skip confirm)?
+  -&gt; CONAN::zlib/1.2.11@conan/stable  (debug)
+  -&gt; CONAN::OpenSSL/1.0.2n@conan/stable
+please input: y (y/n)
+
+  =&gt; installing CONAN::zlib/1.2.11@conan/stable .. ok
+  =&gt; installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+
+[  0%]: ccache compiling.release src/main.c
+[100%]: linking.release test
+</code></pre>
+<p>We can see <a href="https://github.com/xmake-io/xmake/issues/339">https://github.com/xmake-io/xmake/issues/339</a> to know more details.</p>
+<p>Add a clib dependency package:</p>
+<p>Clib is a source-based dependency package manager. The dependent package is downloaded directly to the corresponding library source code, integrated into the project to compile, rather than binary library dependencies.</p>
+<p>It is also very convenient to integrate in xmake. The only thing to note is that you need to add the source code of the corresponding library to xmake.lua, for example:</p>
+<pre><code class="lang-lua">add_requires(&quot;clib::clibs/bytes@0.0.4&quot;, {alias = &quot;bytes&quot;})
+
+target(&quot;xmake-test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;clib/bytes/*.c&quot;)
+    add_files(&quot;src/*.c&quot;)
+    add_packages(&quot;bytes&quot;)
+</code></pre>
+<h3 id="add_repositories">add_repositories</h3>
+<h4 id="add-3rd-package-repositories">Add 3rd package repositories</h4>
+<p>If the required package is not in the official repository <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>, we can submit the contribution code to the repository for support.<br>But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
+<p>For example, now we have a private repository repo:<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>
+<p>We can add through this interface:</p>
+<pre><code class="lang-lua">add_repositories(&quot;my-repo git@github.com:myrepo/xmake-repo.git&quot;)
+</code></pre>
+<p>If we just want to add one or two private packages, this time to build a git repository is too big, we can directly put the package repository into the project, for example:</p>
+<pre><code>projectdir
+  - myrepo
+    - packages
+      - t/tbox/xmake.lua
+      - z/zlib/xmake.lua
+  - src
+    - main.c
+  - xmake.lua
+</code></pre><p>The above myrepo directory is your own private package repository, built into your own project, and then add this repository location in xmake.lua:</p>
+<pre><code class="lang-lua">add_repositories(&quot;my-repo myrepo&quot;)
+</code></pre>
+<p>This can be referred to <a href="https://github.com/tboox/benchbox">benchbox</a> project, which has a built-in private repository.</p>

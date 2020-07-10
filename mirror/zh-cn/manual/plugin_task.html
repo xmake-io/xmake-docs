@@ -1,0 +1,265 @@
+<p>xmake可以实现自定义任务或者插件，其两者的核心就是<code>task</code>任务，其两者实际上是一样的，xmake的插件都是用<code>task</code>实现的。</p>
+<p>本质上都是任务，只是<a href="#taskset_category">set_category</a>分类不同而已。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#task">task</a></td>
+<td>定义插件或者任务</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#task_end">task_end</a></td>
+<td>结束定义插件或任务</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#taskset_menu">set_menu</a></td>
+<td>设置任务菜单</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#taskset_category">set_category</a></td>
+<td>设置任务类别</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#taskon_run">on_run</a></td>
+<td>设置任务运行脚本</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="task">task</h3>
+<h4 id="-">定义插件或者任务</h4>
+<p><code>task</code>域用于描述一个自定义的任务实现，与<a href="#target">target</a>和<a href="#option">option</a>同级。</p>
+<p>例如，这里定义一个最简单的任务：</p>
+<pre><code class="lang-lua">task(&quot;hello&quot;)
+
+    -- 设置运行脚本
+    on_run(function ()
+        print(&quot;hello xmake!&quot;)
+    end)
+</code></pre>
+<p>这个任务只需要打印<code>hello xmake!</code>，那如何来运行呢？</p>
+<p>由于这里没有使用<a href="#taskset_menu">set_menu</a>设置菜单，因此这个任务只能再<code>xmake.lua</code>的自定义脚本或者其他任务内部调用，例如：</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+
+    after_build(function (target)
+
+        -- 导入task模块
+        import(&quot;core.project.task&quot;)
+
+        -- 运行hello任务
+        task.run(&quot;hello&quot;)
+    end)
+</code></pre>
+<p>在构建完<code>test</code>目标后运行<code>hello</code>任务。</p>
+<h3 id="task_end">task_end</h3>
+<h4 id="-">结束定义插件或任务</h4>
+<p>这是一个可选api，显示离开选项作用域，用法和<a href="#target_end">target_end</a>类似。</p>
+<h3 id="task-set_menu">task:set_menu</h3>
+<h4 id="-">设置任务菜单</h4>
+<p>通过设置一个菜单，这个任务就可以开放给用户自己通过命令行手动调用，菜单的设置如下：</p>
+<pre><code class="lang-lua">task(&quot;echo&quot;)
+
+    -- 设置运行脚本
+    on_run(function ()
+
+        -- 导入参数选项模块
+        import(&quot;core.base.option&quot;)
+
+        -- 初始化颜色模式
+        local modes = &quot;&quot;
+        for _, mode in ipairs({&quot;bright&quot;, &quot;dim&quot;, &quot;blink&quot;, &quot;reverse&quot;}) do
+            if option.get(mode) then
+                modes = modes .. &quot; &quot; .. mode 
+            end
+        end
+
+        -- 获取参数内容并且显示信息
+        cprint(&quot;${%s%s}%s&quot;, option.get(&quot;color&quot;), modes, table.concat(option.get(&quot;contents&quot;) or {}, &quot; &quot;))
+    end)
+
+    -- 设置插件的命令行选项，这里没有任何参数选项，仅仅显示插件描述
+    set_menu {
+                -- 设置菜单用法
+                usage = &quot;xmake echo [options]&quot;
+
+                -- 设置菜单描述
+            ,   description = &quot;Echo the given info!&quot;
+
+                -- 设置菜单选项，如果没有选项，可以设置为{}
+            ,   options = 
+                {
+                    -- 设置k模式作为key-only型bool参数
+                    {&#39;b&#39;, &quot;bright&quot;,     &quot;k&quot;,  nil,       &quot;Enable bright.&quot;               }      
+                ,   {&#39;d&#39;, &quot;dim&quot;,        &quot;k&quot;,  nil,       &quot;Enable dim.&quot;                  }      
+                ,   {&#39;-&#39;, &quot;blink&quot;,      &quot;k&quot;,  nil,       &quot;Enable blink.&quot;                }      
+                ,   {&#39;r&#39;, &quot;reverse&quot;,    &quot;k&quot;,  nil,       &quot;Reverse color.&quot;               }      
+
+                    -- 菜单显示时，空白一行
+                ,   {}
+
+                    -- 设置kv作为key-value型参数，并且设置默认值：black
+                ,   {&#39;c&#39;, &quot;color&quot;,      &quot;kv&quot;, &quot;black&quot;,   &quot;Set the output color.&quot;
+                                                     ,   &quot;    - red&quot;   
+                                                     ,   &quot;    - blue&quot;
+                                                     ,   &quot;    - yellow&quot;
+                                                     ,   &quot;    - green&quot;
+                                                     ,   &quot;    - magenta&quot;
+                                                     ,   &quot;    - cyan&quot; 
+                                                     ,   &quot;    - white&quot;                  }
+
+                    -- 设置`vs`作为values多值型参数，还有`v`单值类型
+                    -- 一般放置在最后，用于获取可变参数列表
+                ,   {}
+                ,   {nil, &quot;contents&quot;,   &quot;vs&quot;, nil,       &quot;The info contents.&quot;           }
+                }
+            } 
+</code></pre>
+<p>定义完这个任务后，执行<code>xmake --help</code>，就会多出一个任务项来：</p>
+<pre><code>Tasks:
+
+    ...
+
+    echo                    Echo the given info!
+</code></pre><p>如果通过<a href="#taskset_category">set_category</a>设置分类为<code>plugin</code>，那么这个任务就是一个插件了：</p>
+<pre><code>Plugins:
+
+    ...
+
+    echo                    Echo the given info!
+</code></pre><p>想要手动运行这个任务，可以执行：</p>
+<pre><code class="lang-bash">$ xmake echo hello xmake!
+</code></pre>
+<p>就行了，如果要看这个任务定义的菜单，只需要执行：<code>xmake echo [-h|--help]</code>，显示结果如下：</p>
+<pre><code class="lang-bash">Usage: $xmake echo [options]
+
+Echo the given info!
+
+Options: 
+    -v, --verbose                          Print lots of verbose information.
+        --backtrace                        Print backtrace information for debugging.
+        --profile                          Print performance data for debugging.
+        --version                          Print the version number and exit.
+    -h, --help                             Print this help message and exit.
+
+    -F FILE, --file=FILE                   Read a given xmake.lua file.
+    -P PROJECT, --project=PROJECT          Change to the given project directory.
+                                           Search priority:
+                                               1. The Given Command Argument
+                                               2. The Envirnoment Variable: XMAKE_PROJECT_DIR
+                                               3. The Current Directory
+
+    -b, --bright                           Enable bright.
+    -d, --dim                              Enable dim.
+    --, --blink                            Enable blink.
+    -r, --reverse                          Reverse color.
+
+    -c COLOR, --color=COLOR                Set the output color. (default: black)
+                                               - red
+                                               - blue
+                                               - yellow
+                                               - green
+                                               - magenta
+                                               - cyan
+                                               - white
+
+    contents ...                           The info contents.
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>其中菜单最开头的部分选项，是xmake内置的常用选项，基本上每个任务都会用到，不需要自己额外定义，简化菜单定义。<br>&lt;/p&gt;
+
+</p>
+<p>下面，我们来实际运行下这个任务，例如我要显示红色的<code>hello xmake!</code>，只需要：</p>
+<pre><code class="lang-bash">$ xmake echo -c red hello xmake!
+</code></pre>
+<p>也可以使用选项全名，并且加上高亮：</p>
+<pre><code class="lang-bash">$ xmake echo --color=red --bright hello xmake!
+</code></pre>
+<p>最后面的可变参数列表，在<code>run</code>脚本中通过<code>option.get(&quot;contents&quot;)</code>获取，返回的是一个<code>table</code>类型的数组。</p>
+<h3 id="task-set_category">task:set_category</h3>
+<h4 id="-">设置任务类别</h4>
+<p>仅仅用于菜单的分组显示，当然插件默认会用<code>plugin</code>，内置任务默认会用：<code>action</code>，但也仅仅只是个约定。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为<code>plugin</code>，就会显示到xmake的Plugins分组中去。<br>&lt;/p&gt;
+
+</p>
+<p>例如：</p>
+<pre><code class="lang-lua">Plugins: 
+    l, lua               Run the lua script.
+    m, macro             Run the given macro.
+       doxygen           Generate the doxygen document.
+       project           Generate the project file.
+       hello             Hello xmake!
+       app2ipa           Generate .ipa file from the given .app
+       echo              Echo the given info!
+</code></pre>
+<p>如果没有调用这个接口设置分类，默认使用<code>Tasks</code>分组显示，代表普通任务。</p>
+<h3 id="task-on_run">task:on_run</h3>
+<h4 id="-">设置任务运行脚本</h4>
+<p>可以有两种设置方式，最简单的就是设置内嵌函数：</p>
+<pre><code class="lang-lua">task(&quot;hello&quot;)
+
+    on_run(function ()
+        print(&quot;hello xmake!&quot;)
+    end)
+</code></pre>
+<p>这种对于小任务很方便，也很简洁，但是对于大型任务就不太适用了，例如插件等，需要复杂的脚本支持。</p>
+<p>这个时候就需要独立的模块文件来设置运行脚本，例如：</p>
+<pre><code class="lang-lua">task(&quot;hello&quot;)
+    on_run(&quot;main&quot;)
+</code></pre>
+<p>这里的<code>main</code>设置为脚本运行主入口模块，文件名为<code>main.lua</code>，放在定义<code>task</code>的<code>xmake.lua</code>的同目录下，当然你可以起其他文件名。</p>
+<p>目录结构如下：</p>
+<pre><code>projectdir
+    - xmake.lua
+    - main.lua
+</code></pre><p><code>main.lua</code>里面内容如下：</p>
+<pre><code class="lang-lua">function main(...)
+    print(&quot;hello xmake!&quot;)
+end
+</code></pre>
+<p>就是一个简单的带<code>main</code>主函数的脚本文件，你可以通过<a href="/zh-cn/manual/builtin_modules?id=import">import</a>导入各种扩展模块，实现复杂功能，例如：</p>
+<pre><code class="lang-lua">-- 导入参数选项模块
+import(&quot;core.base.option&quot;)
+
+-- 入口函数
+function main(...)
+
+    -- 获取参数内容
+    print(&quot;color: %s&quot;, option.get(&quot;color&quot;))
+end
+</code></pre>
+<p>你也可以在当前目录下，创建多个自定义的模块文件，通过<a href="/zh-cn/manual/builtin_modules?id=import">import</a>导入后使用，例如：</p>
+<pre><code>projectdir
+    - xmake.lua
+    - main.lua
+    - module.lua
+</code></pre><p><code>module.lua</code>的内容如下：</p>
+<pre><code class="lang-lua">-- 定义一个导出接口
+function hello()
+    print(&quot;hello xmake!&quot;)
+end
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>私有接口，通过<code>_hello</code>带下滑线前缀命名，这样导入的模块就不会包含此接口，只在模块自身内部使用。<br>&lt;/p&gt;
+
+</p>
+<p>然后在<code>main.lua</code>进行调用：</p>
+<pre><code class="lang-lua">import(&quot;module&quot;)
+
+function main(...)
+    module.hello()
+end
+</code></pre>
+<p>更多模块介绍见：<a href="/zh-cn/manual/builtin_modules">内置模块</a>和<a href="/zh-cn/manual/extension_modules">扩展模块</a></p>
+<p>其中，<code>main(...)</code>中参数，是通过<code>task.run</code>指定的，例如：</p>
+<pre><code class="lang-lua">task.run(&quot;hello&quot;, {color=&quot;red&quot;}, arg1, arg2, arg3)
+</code></pre>
+<p>里面的<code>arg1, arg2</code>这些就是传入<code>hello</code>任务<code>main(...)</code>入口的参数列表，而<code>{color=&quot;red&quot;}</code>用来指定任务菜单中的参数选项。</p>
+<p>更加详细的<code>task.run</code>描述，见：<a href="#task-run">task.run</a></p>

@@ -1,0 +1,381 @@
+<h2 id="-">插件开发</h2>
+<h4 id="-">简介</h4>
+<p>XMake完全支持插件模式，我们可以很方便的扩展实现自己的插件，并且xmake也提供了一些内建的使用插件。</p>
+<p>我们可以执行下 <code>xmake -h</code> 看下当前支持的插件：</p>
+<pre><code>Plugins: 
+    l, lua                                 Run the lua script.
+    m, macro                               Run the given macro.
+       doxygen                             Generate the doxygen document.
+       hello                               Hello xmake!
+       project                             Create the project file.
+</code></pre><ul>
+<li>lua: 运行lua脚本的插件</li>
+<li>macro: 这个很实用，宏脚本插件，可以手动录制多条xmake命令并且回放，也可以通过脚本实现一些复杂的宏脚本，这个我们后续会更加详细的介绍</li>
+<li>doxygen：一键生成doxygen文档的插件</li>
+<li>hello: 插件demo，仅仅显示一句话：&#39;hello xmake!&#39;</li>
+<li>project： 生成工程文件的插件，目前仅支持(makefile)，后续还会支持(vs,xcode等工程)的生成</li>
+</ul>
+<h4 id="-">快速开始</h4>
+<p>接下来我们介绍下本文的重点，一个简单的hello xmake插件的开发，代码如下：</p>
+<pre><code class="lang-lua">-- 定义一个名叫hello的插件任务
+task(&quot;hello&quot;)
+
+    -- 设置类型为插件
+    set_category(&quot;plugin&quot;)
+
+    -- 插件运行的入口
+    on_run(function ()
+
+        -- 显示hello xmake!
+        print(&quot;hello xmake!&quot;)
+
+    end)
+
+    -- 设置插件的命令行选项，这里没有任何参数选项，仅仅显示插件描述
+    set_menu {
+                -- usage
+                usage = &quot;xmake hello [options]&quot;
+
+                -- description
+            ,   description = &quot;Hello xmake!&quot;
+
+                -- options
+            ,   options = {}
+            } 
+</code></pre>
+<p>这个插件的文件结构如下：</p>
+<pre><code>hello
+ - xmake.lua
+
+</code></pre><p>现在一个最简单的插件写完了，那怎么让它被xmake检测到呢，有三种方式：</p>
+<ol>
+<li>把 hello 这个文件夹放置在 xmake的插件安装目录 <code>xmake/plugins</code>，这个里面都是些内建的插件</li>
+<li>把 hello 文件夹放置在 <code>~/.xmake/plugins</code> 用户全局目录，这样对当前xmake 全局生效</li>
+<li>把 hello 文件夹放置在任意地方，通过在工程描述文件xmake.lua中调用<code>add_plugindirs(&quot;./hello&quot;)</code> 添加当前的工程的插件搜索目录，这样只对当前工程生效</li>
+</ol>
+<h4 id="-">运行插件</h4>
+<p>接下来，我们尝试运行下这个插件：</p>
+<pre><code class="lang-console">xmake hello
+</code></pre>
+<p>显示结果：</p>
+<pre><code>hello xmake!
+</code></pre><p>最后我们还可以在target自定义的脚本中运行这个插件：</p>
+<pre><code class="lang-lua">target(&quot;demo&quot;)
+
+    -- 构建之后运行插件
+    after_build(function (target)
+
+        -- 导入task模块
+        import(&quot;core.project.task&quot;)
+
+        -- 运行插件任务
+        task.run(&quot;hello&quot;)
+    end)
+</code></pre>
+<h2 id="-">内置插件</h2>
+<h4 id="-">宏记录和回放</h4>
+<h5 id="-">简介</h5>
+<p>我们可以通过这个插件，快速记录和回放我们平常频繁使用到的一些xmake操作，来简化我们日常的开发工作。</p>
+<p>它提供了一些功能：</p>
+<ul>
+<li>手动记录和回放多条执行过的xmake命令</li>
+<li>支持快速的匿名宏创建和回放</li>
+<li>支持命名宏的长久记录和重用</li>
+<li>支持宏脚本的批量导入和导出</li>
+<li>支持宏脚本的删除、显示等管理功能</li>
+<li>支持自定义高级宏脚本，以及参数配置</li>
+</ul>
+<h5 id="-">记录操作</h5>
+<pre><code class="lang-console"># 开始记录宏
+$ xmake macro --begin
+
+# 执行一些xmake命令
+$ xmake f -p android --ndk=/xxx/ndk -a arm64-v8a
+$ xmake p
+$ xmake f -p mingw --sdk=/mingwsdk
+$ xmake p
+$ xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin
+$ xmake p
+$ xmake f -p iphoneos -a armv7
+$ xmake p
+$ xmake f -p iphoneos -a arm64
+$ xmake p
+$ xmake f -p iphoneos -a armv7s
+$ xmake p
+$ xmake f -p iphoneos -a i386
+$ xmake p
+$ xmake f -p iphoneos -a x86_64
+$ xmake p
+
+# 结束宏记录，这里不设置宏名字，所以记录的是一个匿名宏
+xmake macro --end 
+</code></pre>
+<h5 id="-">回放</h5>
+<pre><code class="lang-console"># 回放一个匿名宏
+$ xmake macro .
+</code></pre>
+<h5 id="-">命名宏</h5>
+<p>匿名宏的好处就是快速记录，快速回放，如果需要长久保存，就需要给宏取个名字。</p>
+<pre><code class="lang-console">$ xmake macro --begin
+$ ...
+$ xmake macro --end macroname
+$ xmake macro macroname
+</code></pre>
+<h5 id="-">导入导出宏</h5>
+<p>导入指定的宏脚本或者宏目录：</p>
+<pre><code class="lang-console">$ xmake macro --import=/xxx/macro.lua macroname
+$ xmake macro --import=/xxx/macrodir
+</code></pre>
+<p>导出指定的宏到脚本或者目录：</p>
+<pre><code class="lang-console">$ xmake macro --export=/xxx/macro.lua macroname
+$ xmake macro --export=/xxx/macrodir
+</code></pre>
+<h5 id="-">列举显示宏</h5>
+<p>列举所有<code>xmake</code>内置的宏脚本：</p>
+<pre><code class="lang-console">$ xmake macro --list
+</code></pre>
+<p>显示指定的宏脚本内容：</p>
+<pre><code class="lang-console">$ xmake macro --show macroname
+</code></pre>
+<h5 id="-">自定义宏脚本</h5>
+<p>我们也可以自己编写个宏脚本 <code>macro.lua</code> 然后导入到xmake中去。</p>
+<pre><code class="lang-lua">function main()
+    os.exec(&quot;xmake f -p android --ndk=/xxx/ndk -a arm64-v8a&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p mingw --sdk=/mingwsdk&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a armv7&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a arm64&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a armv7s&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a i386&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a x86_64&quot;)
+    os.exec(&quot;xmake p&quot;)  
+end
+</code></pre>
+<p>导入到xmake，并且定义宏名字：</p>
+<pre><code class="lang-console">$ xmake macro --import=/xxx/macro.lua [macroname]
+</code></pre>
+<p>回放这个宏脚本：</p>
+<pre><code class="lang-console">$ xmake macro [.|macroname]
+</code></pre>
+<h5 id="-">内置的宏脚本</h5>
+<p>XMake 提供了一些内置的宏脚本，来简化我们的日常开发工作。</p>
+<p>例如，我们可以使用 <code>package</code> 宏来对<code>iphoneos</code>平台的所有架构，一次性批量构建和打包：</p>
+<pre><code class="lang-console">$ xmake macro package -p iphoneos 
+</code></pre>
+<h5 id="-">高级的宏脚本编写</h5>
+<p>以上面提到的<code>package</code>宏为例，我们看下其具体代码，里面通过<code>import</code>导入一些扩展模块，实现了复杂的脚本操作。</p>
+<pre><code class="lang-lua">-- imports
+import(&quot;core.base.option&quot;)
+import(&quot;core.project.config&quot;)
+import(&quot;core.project.project&quot;)
+import(&quot;core.platform.platform&quot;)
+
+-- the options
+local options =
+{
+    {&#39;p&#39;, &quot;plat&quot;,       &quot;kv&quot;,  os.host(),   &quot;Set the platform.&quot;                                    }
+,   {&#39;f&#39;, &quot;config&quot;,     &quot;kv&quot;,  nil,         &quot;Pass the config arguments to \&quot;xmake config\&quot; ..&quot;     }
+,   {&#39;o&#39;, &quot;outputdir&quot;,  &quot;kv&quot;,  nil,         &quot;Set the output directory of the package.&quot;             }
+}
+
+-- package all
+--
+-- .e.g
+-- xmake m package 
+-- xmake m package -f &quot;-m debug&quot;
+-- xmake m package -p linux
+-- xmake m package -p iphoneos -f &quot;-m debug --xxx ...&quot; -o /tmp/xxx
+-- xmake m package -f \&quot;--mode=debug\&quot;
+--
+function main(argv)
+
+    -- parse arguments
+    local args = option.parse(argv, options, &quot;Package all architectures for the given the platform.&quot;
+                                           , &quot;&quot;
+                                           , &quot;Usage: xmake macro package [options]&quot;)
+
+    -- package all archs
+    local plat = args.plat
+    for _, arch in ipairs(platform.archs(plat)) do
+
+        -- config it
+        os.exec(&quot;xmake f -p %s -a %s %s -c %s&quot;, plat, arch, args.config or &quot;&quot;, ifelse(option.get(&quot;verbose&quot;), &quot;-v&quot;, &quot;&quot;))
+
+        -- package it
+        if args.outputdir then
+            os.exec(&quot;xmake p -o %s %s&quot;, args.outputdir, ifelse(option.get(&quot;verbose&quot;), &quot;-v&quot;, &quot;&quot;))
+        else
+            os.exec(&quot;xmake p %s&quot;, ifelse(option.get(&quot;verbose&quot;), &quot;-v&quot;, &quot;&quot;))
+        end
+    end
+
+    -- package universal for iphoneos, watchos ...
+    if plat == &quot;iphoneos&quot; or plat == &quot;watchos&quot; then
+
+        -- load configure
+        config.load()
+
+        -- load project
+        project.load()
+
+        -- enter the project directory
+        os.cd(project.directory())
+
+        -- the outputdir directory
+        local outputdir = args.outputdir or config.get(&quot;buildir&quot;)
+
+        -- package all targets
+        for _, target in pairs(project.targets()) do
+
+            -- get all modes
+            local modedirs = os.match(format(&quot;%s/%s.pkg/lib/*&quot;, outputdir, target:name()), true)
+            for _, modedir in ipairs(modedirs) do
+
+                -- get mode
+                local mode = path.basename(modedir)
+
+                -- make lipo arguments
+                local lipoargs = nil
+                for _, arch in ipairs(platform.archs(plat)) do
+                    local archfile = format(&quot;%s/%s.pkg/lib/%s/%s/%s/%s&quot;, outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile())) 
+                    if os.isfile(archfile) then
+                        lipoargs = format(&quot;%s -arch %s %s&quot;, lipoargs or &quot;&quot;, arch, archfile) 
+                    end
+                end
+                if lipoargs then
+
+                    -- make full lipo arguments
+                    lipoargs = format(&quot;-create %s -output %s/%s.pkg/lib/%s/%s/universal/%s&quot;, lipoargs, outputdir, target:name(), mode, plat, path.filename(target:targetfile()))
+
+                    -- make universal directory
+                    os.mkdir(format(&quot;%s/%s.pkg/lib/%s/%s/universal&quot;, outputdir, target:name(), mode, plat))
+
+                    -- package all archs
+                    os.execv(&quot;xmake&quot;, {&quot;l&quot;, &quot;lipo&quot;, lipoargs})
+                end
+            end
+        end
+    end
+end
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    如果你想要获取更多宏参数选项信息，请运行： <code>xmake macro --help</code><br>&lt;/p&gt;
+
+</p>
+<h4 id="-lua-">运行自定义lua脚本</h4>
+<p>这个跟宏脚本类似，只是省去了导入导出操作，直接指定lua脚本来加载运行，这对于想要快速测试一些接口模块，验证自己的某些思路，都是一个不错的方式。</p>
+<h5 id="-">运行指定的脚本文件</h5>
+<p>我们先写个简单的lua脚本：</p>
+<pre><code class="lang-lua">function main()
+    print(&quot;hello xmake!&quot;)
+end
+</code></pre>
+<p>然后直接运行它就行了：</p>
+<pre><code class="lang-console">$ xmake lua /tmp/test.lua
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    当然，你也可以像宏脚本那样，使用<code>import</code>接口导入扩展模块，实现复杂的功能。<br>&lt;/p&gt;
+
+</p>
+<h5 id="-">运行内置的脚本命令</h5>
+<p>你可以运行 <code>xmake lua -l</code> 来列举所有内置的脚本名，例如：</p>
+<pre><code class="lang-console">$ xmake lua -l
+scripts:
+    cat
+    cp
+    echo
+    versioninfo
+    ...
+</code></pre>
+<p>并且运行它们：</p>
+<pre><code class="lang-console">$ xmake lua cat ~/file.txt
+$ xmake lua echo &quot;hello xmake&quot;
+$ xmake lua cp /tmp/file /tmp/file2
+$ xmake lua versioninfo
+</code></pre>
+<h5 id="-repl-">运行交互命令 (REPL)</h5>
+<p>有时候在交互模式下，运行命令更加的方便测试和验证一些模块和api，也更加的灵活，不需要再去额外写一个脚本文件来加载。</p>
+<p>我们先看下，如何进入交互模式：</p>
+<pre><code class="lang-console"># 不带任何参数执行，就可以进入
+$ xmake lua
+&gt;
+
+# 进行表达式计算
+&gt; 1 + 2
+3
+
+# 赋值和打印变量值
+&gt; a = 1
+&gt; a
+1
+
+# 多行输入和执行
+&gt; for _, v in pairs({1, 2, 3}) do
+&gt;&gt; print(v)
+&gt;&gt; end
+1
+2
+3
+</code></pre>
+<p>我们也能够通过 <code>import</code> 来导入扩展模块：</p>
+<pre><code class="lang-console">&gt; task = import(&quot;core.project.task&quot;)
+&gt; task.run(&quot;hello&quot;)
+hello xmake!
+</code></pre>
+<p>如果要中途取消多行输入，只需要输入字符：<code>q</code> 就行了</p>
+<pre><code class="lang-console">&gt; for _, v in ipairs({1, 2}) do
+&gt;&gt; print(v)
+&gt;&gt; q             &lt;--  取消多行输入，清空先前的输入数据
+&gt; 1 + 2
+3
+</code></pre>
+<h4 id="-ide-">生成IDE工程文件</h4>
+<h5 id="-">简介</h5>
+<p>XMake跟<code>cmake</code>, <code>premake</code>等其他一些构建工具的区别在于：</p>
+<p>&lt;p class=&quot;warn&quot;&gt;<br><code>xmake</code>默认是直接构建运行的，生成第三方的IDE的工程文件仅仅作为<code>插件</code>来提供。<br>&lt;/p&gt;
+
+</p>
+<p>这样做的一个好处是：插件更加容易扩展，维护也更加独立和方便。</p>
+<h5 id="-makefile">生成Makefile</h5>
+<pre><code class="lang-console">$ xmake project -k makefile
+</code></pre>
+<h5 id="-compiler_commands">生成compiler_commands</h5>
+<p>导出每个源文件的编译信息，生成基于clang的编译数据库文件，json格式，可用于跟ide，编辑器，静态分析工具进行交互。</p>
+<pre><code class="lang-console">$ xmake project -k compile_commands
+</code></pre>
+<p>输出的内容格式如下：</p>
+<pre><code>[
+  { &quot;directory&quot;: &quot;/home/user/llvm/build&quot;,
+    &quot;command&quot;: &quot;/usr/bin/clang++ -Irelative -DSOMEDEF=\&quot;With spaces, quotes and \\-es.\&quot; -c -o file.o file.cc&quot;,
+    &quot;file&quot;: &quot;file.cc&quot; },
+  ...
+]
+
+</code></pre><p>对于<code>compile_commands</code>的详细说明见：<a href="#https://clang.llvm.org/docs/JSONCompilationDatabase.html">JSONCompilationDatabase</a></p>
+<h5 id="-visualstudio-">生成VisualStudio工程</h5>
+<pre><code class="lang-console">$ xmake project -k [vs2008|vs2013|vs2015|..]
+</code></pre>
+<p>v2.1.2以上版本，增强了vs201x版本工程的生成，支持多模式+多架构生成，生成的时候只需要指定：</p>
+<pre><code class="lang-console">$ xmake project -k vs2017 -m &quot;debug,release&quot;
+</code></pre>
+<p>生成后的工程文件，同时支持<code>debug|x86</code>, <code>debug|x64</code>, <code>release|x86</code>, <code>release|x64</code>四种配置模式。</p>
+<p>如果不想每次生成的时候，指定模式，可以把模式配置加到<code>xmake.lua</code>的中，例如：</p>
+<pre><code class="lang-lua">-- 配置当前的工程，支持哪些编译模式
+set_modes(&quot;debug&quot;, &quot;release&quot;)
+</code></pre>
+<p>具体<code>set_modes</code>的使用，可以参考对应的接口手册文档。</p>
+<h4 id="-doxygen-">生成doxygen文档</h4>
+<p>请先确保本机已安装<code>doxygen</code>工具，然后在工程目录下运行：</p>
+<pre><code class="lang-console">$ xmake doxygen
+</code></pre>
+<h2 id="-">更多插件</h2>
+<p>请到插件仓库进行下载安装: <a href="https://github.com/xmake-io/xmake-plugins">xmake-plugins</a>.</p>
+<h4 id="-app-ipa-">从app生成ipa包</h4>
+<p>这仅仅是一个小插件，ios开发的同学，可能会用的到。</p>
+<pre><code class="lang-console">$ xmake app2ipa --icon=/xxx.png /xxx/ios.app -o /xxx.ios.ipa
+</code></pre>

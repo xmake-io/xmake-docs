@@ -1,0 +1,59 @@
+<h2 id="-">用法视频</h2>
+<p><a href="https://asciinema.org/a/133693"><img src="https://asciinema.org/a/133693.png" alt="asciicast"></a></p>
+<h2 id="-">创建工程</h2>
+<p>创建一个名叫<code>hello</code>的<code>c</code>控制台工程：</p>
+<pre><code class="lang-bash">$ xmake create -l c -P ./hello
+</code></pre>
+<p>执行完后，将会生成一个简单工程结构：</p>
+<pre><code>hello
+├── src
+│   └── main.c
+└── xmake.lua
+</code></pre><p>其中<code>xmake.lua</code>是工程描述文件，内容非常简单，告诉xmake添加<code>src</code>目录下的所有<code>.c</code>源文件：</p>
+<pre><code class="lang-lua">target(&quot;hello&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;) 
+</code></pre>
+<p>目前支持的语言如下：</p>
+<ul>
+<li>c/c++</li>
+<li>objc/c++</li>
+<li>cuda</li>
+<li>asm</li>
+<li>swift</li>
+<li>dlang</li>
+<li>golang</li>
+<li>rust</li>
+</ul>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    如果你想了解更多参数选项，请运行: <code>xmake create --help</code><br>&lt;/p&gt;
+
+</p>
+<h2 id="-">构建工程</h2>
+<pre><code class="lang-bash">$ xmake
+</code></pre>
+<h2 id="-">运行程序</h2>
+<pre><code class="lang-bash">$ xmake run hello
+</code></pre>
+<h2 id="-">调试程序</h2>
+<pre><code class="lang-bash">$ xmake run -d hello 
+</code></pre>
+<p>xmake将会使用系统自带的调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。</p>
+<pre><code class="lang-bash">[lldb]$target create &quot;build/hello&quot;
+Current executable set to &#39;build/hello&#39; (x86_64).
+[lldb]$b main
+Breakpoint 1: where = hello`main, address = 0x0000000100000f50
+[lldb]$r
+Process 7509 launched: &#39;/private/tmp/hello/build/hello&#39; (x86_64)
+Process 7509 stopped
+* thread #1: tid = 0x435a2, 0x0000000100000f50 hello`main, queue = &#39;com.apple.main-thread&#39;, stop reason = breakpoint 1.1
+    frame #0: 0x0000000100000f50 hello`main
+hello`main:
+-&gt;  0x100000f50 &lt;+0&gt;:  pushq  %rbp
+    0x100000f51 &lt;+1&gt;:  movq   %rsp, %rbp
+    0x100000f54 &lt;+4&gt;:  leaq   0x2b(%rip), %rdi          ; &quot;hello world!&quot;
+    0x100000f5b &lt;+11&gt;: callq  0x100000f64               ; symbol stub for: puts
+[lldb]$
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    你也可以使用简写的命令行选项，例如: <code>xmake r</code> 或者 <code>xmake run</code><br>&lt;/p&gt;
+
+</p>

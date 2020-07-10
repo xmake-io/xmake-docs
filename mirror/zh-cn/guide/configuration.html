@@ -1,0 +1,622 @@
+<p>通过<code>xmake f|config</code>配置命令，设置构建前的相关配置信息，详细参数选项，请运行: <code>xmake f --help</code>。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    你可以使用命令行缩写来简化输入，也可以使用全名，例如: &lt;br&gt;<br>    <code>xmake f</code> 或者 <code>xmake config</code>.&lt;br&gt;<br>    <code>xmake f -p linux</code> 或者 <code>xmake config --plat=linux</code>.<br>&lt;/p&gt;
+
+</p>
+<h2 id="-">目标平台</h2>
+<h3 id="-">主机平台</h3>
+<pre><code class="lang-bash">$ xmake
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    xmake将会自动探测当前主机平台，默认自动生成对应的目标程序。<br>&lt;/p&gt;
+
+</p>
+<h3 id="linux">Linux</h3>
+<pre><code class="lang-bash">$ xmake f -p linux [-a i386|x86_64]
+$ xmake
+</code></pre>
+<h3 id="android">Android</h3>
+<pre><code class="lang-bash">$ xmake f -p android --ndk=~/files/android-ndk-r10e/ [-a armeabi-v7a|arm64-v8a]
+$ xmake
+</code></pre>
+<p>如果要手动指定ndk中具体某个工具链，而不是使用默认检测的配置，可以通过<a href="#-bin">--bin</a>来设置，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
+</code></pre>
+<p><a href="#-bin">--bin</a>主要用于设置选择编译工具的具体bin目录，这个的使用跟<a href="#交叉编译">交叉编译</a>中的<a href="#-bin">--bin</a>的行为是一致的。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>如果手动设置了bin目录，没有通过检测，可以看下是否<code>--arch=</code>参数没有匹配对。<br>&lt;/p&gt;
+
+</p>
+<h3 id="iphoneos">iPhoneOS</h3>
+<pre><code class="lang-bash">$ xmake f -p iphoneos [-a armv7|armv7s|arm64|i386|x86_64]
+$ xmake
+</code></pre>
+<h3 id="windows">Windows</h3>
+<pre><code class="lang-bash">$ xmake f -p windows [-a x86|x64]
+$ xmake
+</code></pre>
+<h3 id="mingw">Mingw</h3>
+<pre><code class="lang-bash">$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64]
+$ xmake
+</code></pre>
+<h3 id="apple-watchos">Apple WatchOS</h3>
+<pre><code class="lang-bash">$ xmake f -p watchos [-a i386|armv7k]
+$ xmake
+</code></pre>
+<h2 id="-">交叉编译配置</h2>
+<p>通常，如果我们需要在当前pc环境编译生成其他设备上才能运行的目标文件时候，就需要通过对应的交叉编译工具链来编译生成它们，比如在win/macos上编译linux的程序，或者在linux上编译其他嵌入式设备的目标文件等。</p>
+<p>通常的交叉编译工具链都是基于gcc/clang的，大都具有类似如下的结构：</p>
+<pre><code>/home/toolchains_sdkdir
+   - bin
+       - arm-linux-armeabi-gcc
+       - arm-linux-armeabi-ld
+       - ...
+   - lib
+       - libxxx.a
+   - include
+       - xxx.h
+</code></pre><p>每个工具链都有对应的include/lib目录，用于放置一些系统库和头文件，例如libc, stdc++等，而bin目录下放置的就是编译工具链一系列工具。例如：</p>
+<pre><code>arm-linux-armeabi-ar
+arm-linux-armeabi-as
+arm-linux-armeabi-c++
+arm-linux-armeabi-cpp
+arm-linux-armeabi-g++
+arm-linux-armeabi-gcc
+arm-linux-armeabi-ld
+arm-linux-armeabi-nm
+arm-linux-armeabi-strip
+</code></pre><p>其中<code>arm-linux-armeabi-</code>前缀就是cross，通过用来标示目标平台和架构，主要用于跟主机自身的gcc/clang进行区分。</p>
+<p>里面的gcc/g++就是c/c++的编译器，通常也可以作为链接器使用，链接的时候内部会去调用ld来链接，并且自动追加一些c++库。<br>cpp是预处理器，as是汇编器，ar用于生成静态库，strip用于裁剪掉一些符号信息，使得目标程序会更加的小。nm用于查看导出符号列表。</p>
+<h3 id="-">自动探测和编译</h3>
+<p>如果我们的交叉编译工具链是上文的结构，xmake会自动检测识别这个sdk的结构，提取里面的cross，以及include/lib路径位置，用户通常不需要做额外的参数设置，只需要配置好sdk根目录就可以编译了，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p cross --sdk=/home/toolchains_sdkdir
+$ xmake
+</code></pre>
+<p>其中，<code>-p cross</code>用于指定当前的平台是交叉编译平台，<code>--sdk=</code>用于指定交叉工具链的根目录。</p>
+<p>注：我们也可以指定<code>-p linux</code>平台来配置交叉编译，效果是一样的，唯一的区别是额外标识了linux平台名，方便xmake.lua里面通过<code>is_plat(&quot;linux&quot;)</code>来判断平台。</p>
+<p>这个时候，xmake会去自动探测gcc等编译器的前缀名cross：<code>arm-linux-armeabi-</code>，并且编译的时候，也会自动加上<code>链接库</code>和<code>头文件</code>的搜索选项，例如：</p>
+<pre><code>-I/home/toolchains_sdkdir/include 
+-L/home/toolchains_sdkdir/lib
+</code></pre><p>这些都是xmake自动处理的，不需要手动配置他们。</p>
+<h3 id="-">手动配置编译</h3>
+<p>如果上面的自动检测对某些工具链，还无法完全通过编译，就需要用户自己手动设置一些交叉编译相关的配置参数，来调整适应这些特殊的工具链了，下面我会逐一讲解如何配置。</p>
+<h3 id="-bin-">设置工具链bin目录</h3>
+<p>对于不规则工具链目录结构，靠单纯地<a href="https://xmake.io/#/zh-cn/guide/configuration?id=-sdk">--sdk</a>选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。</p>
+<p>例如：一些特殊的交叉工具链的，编译器bin目录，并不在  <code>/home/toolchains_sdkdir/bin</code>  这个位置，而是独立到了  <code>/usr/opt/bin</code></p>
+<p>这个时候，我们可以在设置了sdk参数的基础上追加bin目录的参数设置，来调整工具链的bin目录。</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
+$ xmake
+</code></pre>
+<h3 id="-">设置交叉工具链工具前缀</h3>
+<p>像aarch64-linux-android-这种，通常如果你配置了--sdk或者--bin的情况下，xmake会去自动检测的，不需要自己手动设置。</p>
+<p>但是对于一些极特殊的工具链，一个目录下同时有多个cross前缀的工具bin混在一起的情况，你需要手动设置这个配置，来区分到底需要选用哪个bin。</p>
+<p>例如，toolchains的bin目录下同时存在两个不同的编译器：</p>
+<pre><code>/opt/bin
+  - armv7-linux-gcc 
+  - aarch64-linux-gcc
+</code></pre><p>我们现在想要选用armv7的版本，那么我们可以追加<code>--cross=</code>配置编译工具前缀名，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
+</code></pre>
+<h3 id="-c-c-">设置c/c++编译器</h3>
+<p>如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-clang++
+</code></pre>
+<p>当然，我们也可以指定编译器全路径。</p>
+<p><code>--cc</code>用于指定c编译器名，<code>--cxx</code>用于指定c++编译器名。</p>
+<p>注：如果存在CC/CXX环境变量的话，会优先使用当前环境变量中指定的值。</p>
+<p>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。</p>
+<p>这个时候我们可以通过：</p>
+<pre><code class="lang-bash">xmake f --cxx=clang++@/home/xxx/c++mips.exe
+</code></pre>
+<p>设置c++mips.exe编译器作为类clang++的使用方式来编译。</p>
+<p>也就是说，在指定编译器为<code>c++mips.exe</code>的同时，告诉xmake，它跟clang++用法和参数选项基本相同。</p>
+<h3 id="-c-c-">设置c/c++链接器</h3>
+<p>如果还要继续细分选择链接器，则继续追加相关链接器选项，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
+</code></pre>
+<p>ld指定可执行程序链接器，sh指定共享库程序链接器，ar指定生成静态库的归档器。</p>
+<p>注：如果存在LD/SH/AR环境变量的话，会优先使用当前环境变量中指定的值。</p>
+<h3 id="-">设置头文件和库搜索目录</h3>
+<p>如果sdk里面还有额外的其他include/lib目录不在标准的结构中，导致交叉编译找不到库和头文件，那么我们可以通过<code>--includedirs</code>和<code>--linkdirs</code>来追加搜索路径，然后通过<code>--links</code>添加额外的链接库。</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --linkdirs=/usr/toolsdk/xxx/lib --links=pthread
+</code></pre>
+<p>注：如果要指定多个搜索目录，可以通过<code>:</code>或者<code>;</code>来分割，也就是不同主机平台的路径分隔符，linux/macos下用<code>:</code>，win下用<code>;</code>。</p>
+<h3 id="-">设置编译和链接选项</h3>
+<p>我们也可以根据实际情况通过<code>--cflags</code>, <code>--cxxflags</code>，<code>--ldflags</code>，<code>--shflags</code>和<code>--arflags</code>额外配置一些编译和链接选项。</p>
+<ul>
+<li>cflags: 指定c编译参数</li>
+<li>cxxflags：指定c++编译参数</li>
+<li>cxflags: 指定c/c++编译参数</li>
+<li>asflags: 指定汇编器编译参数</li>
+<li>ldflags: 指定可执行程序链接参数</li>
+<li>shflags: 指定动态库程序链接参数</li>
+<li>arflags: 指定静态库的生成参数</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --cflags=&quot;-DTEST -I/xxx/xxx&quot; --ldflags=&quot;-lpthread&quot;
+</code></pre>
+<h3 id="-">项目描述设置</h3>
+<h4 id="set_toolchains">set_toolchains</h4>
+<p>这对某个特定的target单独切换设置不同的工具链，和set_toolset不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。</p>
+<p>这也是推荐做法，因为像gcc/clang等大部分编译工具链，编译器和链接器都是配套使用的，要切就得整体切，单独零散的切换设置会很繁琐。</p>
+<p>比如我们切换test目标到clang+yasm两个工具链：</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;)
+    set_toolchains(&quot;clang&quot;, &quot;yasm&quot;)
+</code></pre>
+<h4 id="set_toolset">set_toolset</h4>
+<p>如果觉得每次通过命令行配置比较繁琐，有些配置可以通过在xmake.lua预先配置好，来简化命令配置，比如编译器的指定，就可以通过<code>set_toolset</code>来对每个target单独设置。</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    set_toolset(&quot;cxx&quot;, &quot;clang&quot;)
+    set_toolset(&quot;ld&quot;, &quot;clang++&quot;)
+</code></pre>
+<p>强制test目标的编译器和链接器使用clang编译器，或者指定交叉编译工具链中的编译器名或者路径。</p>
+<h4 id="set_config">set_config</h4>
+<p>我们也可以通过<code>set_config</code>来设置在<code>xmake f/config</code>命令中的每个配置参数的默认值，这是个全局api，对每个target都会生效。</p>
+<pre><code class="lang-lua">set_config(&quot;cflags&quot;, &quot;-DTEST&quot;)
+set_config(&quot;sdk&quot;, &quot;/home/xxx/tooksdk&quot;)
+set_config(&quot;cc&quot;, &quot;gcc&quot;)
+set_config(&quot;ld&quot;, &quot;g++&quot;)
+</code></pre>
+<p>不过，我们还是可以通过<code>xmake f --name=value</code>的方式，去修改xmake.lua中的默认配置。</p>
+<h3 id="-">自定义编译平台</h3>
+<p>如果某个交叉工具链编译后目标程序有对应的平台需要指定，并且需要在xmake.lua里面根据不同的交叉编译平台，还需要配置一些额外的编译参数，那么上文的<code>-p cross</code>设置就不能满足需求了。</p>
+<p>其实，<code>-p/--plat=</code>参数也可以设置为其他自定义的值，只需要跟<code>is_plat</code>保持对应关系就可以，所有非内置平台名，都会默认采用交叉编译模式，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/
+$ xmake
+</code></pre>
+<p>我们传入了myplat自定义平台名，作为当前交叉工具链的编译平台，然后xmake.lua里面我们对这个平台，配置下对应的设置：</p>
+<pre><code class="lang-lua">if is_plat(&quot;myplat&quot;) then
+    add_defines(&quot;TEST&quot;)
+end
+</code></pre>
+<p>通过这种方式，xmake就可以很方便的扩展处理各种编译平台，用户可以自己扩展支持freebsd, netbsd, sunos等其他各种平台的交叉编译。</p>
+<p>我摘录一段之前移植libuv写的交叉编译的配置，直观感受下：</p>
+<pre><code class="lang-lua">-- for gragonfly/freebsd/netbsd/openbsd platform
+if is_plat(&quot;gragonfly&quot;, &quot;freebsd&quot;, &quot;netbsd&quot;, &quot;openbsd&quot;) then
+    add_files(&quot;src/unix/bsd-ifaddrs.c&quot;)
+    add_files(&quot;src/unix/freebsd.c&quot;)
+    add_files(&quot;src/unix/kqueue.c&quot;)
+    add_files(&quot;src/unix/posix-hrtime.c&quot;)
+    add_headerfiles(&quot;(include/uv-bsd.h)&quot;)
+end 
+
+-- for sunos platform
+if is_plat(&quot;sunos&quot;) then
+    add_files(&quot;src/unix/no-proctitle.c&quot;)
+    add_files(&quot;src/unix/sunos.c&quot;)
+    add_defines(&quot;__EXTENSIONS_&quot;, &quot;_XOPEN_SOURCE=600&quot;)
+    add_headerfiles(&quot;(include/uv-sunos.h)&quot;)
+end
+</code></pre>
+<p>然后，我们就可以切换这些平台来编译：</p>
+<pre><code class="lang-bash">$ xmake f -p [gragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
+$ xmake
+</code></pre>
+<p>另外，内置的linux平台也是支持交叉编译的哦，如果不想配置其他平台名，统一作为linux平台来交叉编译，也是可以的。</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/local/arm-xxx-gcc/
+$ xmake
+</code></pre>
+<p>只要设置了<code>--sdk=</code>等参数，就会启用linux平台的交叉编译模式。</p>
+<h3 id="-">常用工具链配置</h3>
+<p>!&gt; 此特性需要v2.3.4以上版本才支持</p>
+<p>上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入<code>--ldflags/--includedirs</code>等场景就比较繁琐了,<br>因此xmake也内置了一些常用工具链，可以省去交叉编译工具链复杂的配置过程，只需要执行：</p>
+<pre><code class="lang-bash">$ xmake f --toolchain=gnu-rm --sdk=/xxx/
+$ xmake
+</code></pre>
+<p>就可以快速切换的指定的交叉编译工具链，如果这个工具链需要追加一些特定的flags设置，也会自动设置好，简化配置。</p>
+<p>其中，gnu-rm就是内置的GNU Arm Embedded Toolchain。</p>
+<p>比如，我们也可以快速从gcc工具链整体切换到clang或者llvm工具链，不再需要<code>xmake f --cc=clang --cxx=clang --ld=clang++</code>等挨个配置了。</p>
+<pre><code class="lang-bash">$ xmake f --toolchain=clang
+$ xmake
+</code></pre>
+<p>或者</p>
+<pre><code class="lang-bash">$ xmake f --toolchain=llvm --sdk=/xxx/llvm
+$ xmake
+</code></pre>
+<p>具体xmake支持哪些工具链，可以通过下面的命令查看：</p>
+<pre><code class="lang-bash">$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+</code></pre>
+<h4 id="-">自定义工具链</h4>
+<p>另外，我们也可以在xmake.lua中自定义toolchain，然后通过<code>xmake f --toolchain=myclang</code>指定切换，例如：</p>
+<pre><code class="lang-lua">toolchain(&quot;myclang&quot;)
+    set_kind(&quot;standalone&quot;)
+    set_toolset(&quot;cc&quot;, &quot;clang&quot;)
+    set_toolset(&quot;cxx&quot;, &quot;clang&quot;, &quot;clang++&quot;)
+    set_toolset(&quot;ld&quot;, &quot;clang++&quot;, &quot;clang&quot;)
+    set_toolset(&quot;sh&quot;, &quot;clang++&quot;, &quot;clang&quot;)
+    set_toolset(&quot;ar&quot;, &quot;ar&quot;)
+    set_toolset(&quot;ex&quot;, &quot;ar&quot;)
+    set_toolset(&quot;strip&quot;, &quot;strip&quot;)
+    set_toolset(&quot;mm&quot;, &quot;clang&quot;)
+    set_toolset(&quot;mxx&quot;, &quot;clang&quot;, &quot;clang++&quot;)
+    set_toolset(&quot;as&quot;, &quot;clang&quot;)
+
+    -- ...
+</code></pre>
+<p>关于这块的详情介绍，可以到<a href="/zh-cn/manual/custom_toolchain">自定义工具链</a>章节查看</p>
+<p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/780">#780</a></p>
+<h4 id="mingw-">MingW工具链</h4>
+<p>使用mingw工具链编译，其实也是交叉编译，但是由于这个比较常用，xmake专门增加了一个mingw的平台来快速处理使用mingw工具链的编译。</p>
+<p>因此，xmake对mingw的工具链检测会更加完善，在macos下，基本上连sdk路径都不需要配置，也能直接检测到，只需要切到mingw平台编译即可。</p>
+<pre><code class="lang-bash">$ xmake f -p mingw
+$ xmake -v
+configure
+{
+    ld = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++
+    ndk_stdcxx = true
+    plat = mingw
+    mingw = /usr/local/opt/mingw-w64
+    buildir = build
+    arch = x86_64
+    xcode = /Applications/Xcode.app
+    mode = release
+    cxx = /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc
+    cross = x86_64-w64-mingw32-
+    theme = default
+    kind = static
+    ccache = true
+    host = macosx
+    clean = true
+    bin = /usr/local/opt/mingw-w64/bin
+}
+[  0%]: ccache compiling.release src/main.cpp
+/usr/local/bin/ccache /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc -c -fvisibility=hidden -O3 -m64 -o build/.objs/test/mingw/x86_64/release/src/main.cpp.obj src/main.cpp
+[100%]: linking.release test.exe
+/usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++ -o build/mingw/x86_64/release/test.exe build/.objs/test/mingw/x86_64/release/src/main.cpp.obj -s -fvisibility=hidden -m64
+build ok!
+</code></pre>
+<p>这里我们追加了<code>-v</code>参数，看了下详细的编译命令和检测到的mingw工具链配置值，其中cross被自动检测为：<code>x86_64-w64-mingw32-</code>，bin目录也被自动检测到了，还有编译器和链接器也是。</p>
+<p>尽管在linux/win上还没法自动检测到sdk路径，我们也可以手动指定sdk路径，需要注意的是，xmake为mingw专门提供了一个<code>--mingw=</code>参数用来指定mingw的工具链根目录，其效果跟<code>--sdk=</code>是一样的，但是它可以作为全局配置被设置。</p>
+<pre><code class="lang-bash">$ xmake g --mingw=/home/mingwsdk
+$ xmake f -p mingw
+$ xmake
+</code></pre>
+<p>我们通过<code>xmake g/global</code>命令设置<code>--mingw</code>根目录到全局配置后，之后每次编译和切换编译平台，就不用额外指定mingw工具链路径了，方便使用。</p>
+<p>另外，其他的工具链配置参数用法，跟上文描述的没什么区别，像<code>--cross</code>, <code>--bin=</code>等都可以根据实际的环境需要，自己控制是否需要额外追加配置来适配自己的mingw工具链。</p>
+<h4 id="llvm-">LLVM工具链</h4>
+<p>llvm工具链下载地址：<a href="https://releases.llvm.org/">https://releases.llvm.org/</a></p>
+<pre><code class="lang-bash">$ xmake f -p cross --toolchain=llvm --sdk=&quot;C:\Program Files\LLVM&quot;
+$ xmake
+</code></pre>
+<h4 id="gnu-rm-">GNU-RM工具链</h4>
+<p>工具链地址：<a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#">https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#</a></p>
+<pre><code class="lang-bash">$ xmake f -p cross --toolchain=gnu-rm --sdk=/xxx/cc-arm-none-eabi-9-2019-q4-major
+$ xmake
+</code></pre>
+<h3 id="-">通用交叉编译配置</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#-sdk">--sdk</a></td>
+<td>设置交叉工具链的sdk根目录</td>
+</tr>
+<tr>
+<td><a href="#-bin">--bin</a></td>
+<td>设置工具链bin目录</td>
+</tr>
+<tr>
+<td><a href="#-cross">--cross</a></td>
+<td>设置交叉工具链工具前缀</td>
+</tr>
+<tr>
+<td><a href="#-as">--as</a></td>
+<td>设置<code>asm</code>汇编器</td>
+</tr>
+<tr>
+<td><a href="#-cc">--cc</a></td>
+<td>设置<code>c</code>编译器</td>
+</tr>
+<tr>
+<td><a href="#-cxx">--cxx</a></td>
+<td>设置<code>c++</code>编译器</td>
+</tr>
+<tr>
+<td><a href="#-mm">--mm</a></td>
+<td>设置<code>objc</code>编译器</td>
+</tr>
+<tr>
+<td><a href="#-mxx">--mxx</a></td>
+<td>设置<code>objc++</code>编译器</td>
+</tr>
+<tr>
+<td><a href="#-sc">--sc</a></td>
+<td>设置<code>swift</code>编译器</td>
+</tr>
+<tr>
+<td><a href="#-gc">--gc</a></td>
+<td>设置<code>golang</code>编译器</td>
+</tr>
+<tr>
+<td><a href="#-dc">--dc</a></td>
+<td>设置<code>dlang</code>编译器</td>
+</tr>
+<tr>
+<td><a href="#-rc">--rc</a></td>
+<td>设置<code>rust</code>编译器</td>
+</tr>
+<tr>
+<td><a href="#-cu">--cu</a></td>
+<td>设置<code>cuda</code>编译器</td>
+</tr>
+<tr>
+<td><a href="#-ld">--ld</a></td>
+<td>设置<code>c/c++/objc/asm</code>链接器</td>
+</tr>
+<tr>
+<td><a href="#-sh">--sh</a></td>
+<td>设置<code>c/c++/objc/asm</code>共享库链接器</td>
+</tr>
+<tr>
+<td><a href="#-ar">--ar</a></td>
+<td>设置<code>c/c++/objc/asm</code>静态库归档器</td>
+</tr>
+<tr>
+<td><a href="#-scld">--scld</a></td>
+<td>设置<code>swift</code>链接器</td>
+</tr>
+<tr>
+<td><a href="#-scsh">--scsh</a></td>
+<td>设置<code>swift</code>共享库链接器</td>
+</tr>
+<tr>
+<td><a href="#-gcld">--gcld</a></td>
+<td>设置<code>golang</code>链接器</td>
+</tr>
+<tr>
+<td><a href="#-gcar">--gcar</a></td>
+<td>设置<code>golang</code>静态库归档器</td>
+</tr>
+<tr>
+<td><a href="#-dcld">--dcld</a></td>
+<td>设置<code>dlang</code>链接器</td>
+</tr>
+<tr>
+<td><a href="#-dcsh">--dcsh</a></td>
+<td>设置<code>dlang</code>共享库链接器</td>
+</tr>
+<tr>
+<td><a href="#-dcar">--dcar</a></td>
+<td>设置<code>dlang</code>静态库归档器</td>
+</tr>
+<tr>
+<td><a href="#-rcld">--rcld</a></td>
+<td>设置<code>rust</code>链接器</td>
+</tr>
+<tr>
+<td><a href="#-rcsh">--rcsh</a></td>
+<td>设置<code>rust</code>共享库链接器</td>
+</tr>
+<tr>
+<td><a href="#-rcar">--rcar</a></td>
+<td>设置<code>rust</code>静态库归档器</td>
+</tr>
+<tr>
+<td><a href="#-cu-ccbin">--cu-ccbin</a></td>
+<td>设置<code>cuda</code> host编译器</td>
+</tr>
+<tr>
+<td><a href="#-culd">--culd</a></td>
+<td>设置<code>cuda</code>链接器</td>
+</tr>
+<tr>
+<td><a href="#-asflags">--asflags</a></td>
+<td>设置<code>asm</code>汇编编译选项</td>
+</tr>
+<tr>
+<td><a href="#-cflags">--cflags</a></td>
+<td>设置<code>c</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-cxflags">--cxflags</a></td>
+<td>设置<code>c/c++</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-cxxflags">--cxxflags</a></td>
+<td>设置<code>c++</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-mflags">--mflags</a></td>
+<td>设置<code>objc</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-mxflags">--mxflags</a></td>
+<td>设置<code>objc/c++</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-mxxflags">--mxxflags</a></td>
+<td>设置<code>objc++</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-scflags">--scflags</a></td>
+<td>设置<code>swift</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-gcflags">--gcflags</a></td>
+<td>设置<code>golang</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-dcflags">--dcflags</a></td>
+<td>设置<code>dlang</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-rcflags">--rcflags</a></td>
+<td>设置<code>rust</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-cuflags">--cuflags</a></td>
+<td>设置<code>cuda</code>编译选项</td>
+</tr>
+<tr>
+<td><a href="#-ldflags">--ldflags</a></td>
+<td>设置链接选项</td>
+</tr>
+<tr>
+<td><a href="#-shflags">--shflags</a></td>
+<td>设置共享库链接选项</td>
+</tr>
+<tr>
+<td><a href="#-arflags">--arflags</a></td>
+<td>设置静态库归档选项</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>如果你想要了解更多参数选项，请运行: <code>xmake f --help</code>。<br>&lt;/p&gt;
+
+</p>
+<h4 id="-sdk">--sdk</h4>
+<ul>
+<li>设置交叉工具链的sdk根目录</li>
+</ul>
+<p>大部分情况下，都不需要配置很复杂的toolchains前缀，例如：<code>arm-linux-</code> 什么的</p>
+<p>只要这个工具链的sdk目录满足如下结构（大部分的交叉工具链都是这个结构）：</p>
+<pre><code>/home/toolchains_sdkdir
+   - bin
+       - arm-linux-gcc
+       - arm-linux-ld
+       - ...
+   - lib
+       - libxxx.a
+   - include
+       - xxx.h
+</code></pre><p>那么，使用xmake进行交叉编译的时候，只需要进行如下配置和编译：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/home/toolchains_sdkdir
+$ xmake
+</code></pre>
+<p>这个时候，xmake会去自动探测，gcc等编译器的前缀名：<code>arm-linux-</code>，并且编译的时候，也会自动加上<code>链接库</code>和<code>头文件</code>的搜索选项，例如：</p>
+<pre><code>-I/home/toolchains_sdkdir/include -L/home/toolchains_sdkdir/lib
+</code></pre><p>这些都是xmake自动处理的，不需要手动配置他们。。</p>
+<h4 id="-bin">--bin</h4>
+<ul>
+<li>设置工具链bin目录</li>
+</ul>
+<p>对于不规则工具链目录结构，靠单纯地<a href="#-sdk">--sdk</a>选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。</p>
+<p>例如：一些特殊的交叉工具链的，编译器bin目录，并不在 <code>/home/toolchains_sdkdir/bin</code> 这个位置，而是独立到了 <code>/usr/opt/bin</code> </p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
+$ xmake
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>v2.2.1版本之前，这个参数名是<code>--toolchains</code>，比较有歧义，因此新版本中，统一改成<code>--bin=</code>来设置bin目录。<br>&lt;/p&gt;
+
+</p>
+<h4 id="-cross">--cross</h4>
+<ul>
+<li>设置交叉工具链工具前缀</li>
+</ul>
+<p>像<code>aarch64-linux-android-</code>这种，通常如果你配置了<a href="#-sdk">--sdk</a>或者<a href="#-bin">--bin</a>的情况下，xmake会去自动检测的，不需要自己手动设置。</p>
+<p>但是对于一些极特殊的工具链，一个目录下同时有多个cross前缀的工具bin混在一起的情况，你需要手动设置这个配置，来区分到底需要选用哪个bin。</p>
+<p>例如，toolchains的bin目录下同时存在两个不同的编译器：</p>
+<pre><code>/opt/bin
+ - armv7-linux-gcc
+ - aarch64-linux-gcc
+</code></pre><p>我们现在想要选用armv7的版本，则配置如下：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
+</code></pre>
+<h4 id="-as">--as</h4>
+<ul>
+<li>设置<code>asm</code>汇编器</li>
+</ul>
+<p>如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --as=armv7-linux-as
+</code></pre>
+<p>如果存在<code>AS</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --as=gcc@/home/xxx/asmips.exe</code> 设置ccmips.exe编译器作为类gcc的使用方式来编译。<br>也就是说，在指定编译器为<code>asmips.exe</code>的同时，告诉xmake，它跟gcc用法和参数选项基本相同。<br>&lt;/p&gt;
+
+</p>
+<h4 id="-cc">--cc</h4>
+<ul>
+<li>设置c编译器</li>
+</ul>
+<p>如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang
+</code></pre>
+<p>如果存在<code>CC</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --cc=gcc@/home/xxx/ccmips.exe</code> 设置ccmips.exe编译器作为类gcc的使用方式来编译。<br>也就是说，在指定编译器为<code>ccmips.exe</code>的同时，告诉xmake，它跟gcc用法和参数选项基本相同。<br>&lt;/p&gt;
+
+</p>
+<h4 id="-cxx">--cxx</h4>
+<ul>
+<li>设置<code>c++</code>编译器</li>
+</ul>
+<p>如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --cxx=armv7-linux-clang++
+</code></pre>
+<p>如果存在<code>CXX</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --cxx=clang++@/home/xxx/c++mips.exe</code> 设置c++mips.exe编译器作为类clang++的使用方式来编译。<br>也就是说，在指定编译器为<code>c++mips.exe</code>的同时，告诉xmake，它跟clang++用法和参数选项基本相同。<br>&lt;/p&gt;
+
+</p>
+<h4 id="-ld">--ld</h4>
+<ul>
+<li>设置<code>c/c++/objc/asm</code>链接器</li>
+</ul>
+<p>如果还要继续细分选择链接器，则继续追加相关编译器选项，例如：</p>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++
+</code></pre>
+<p>如果存在<code>LD</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么链接器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --ld=g++@/home/xxx/c++mips.exe</code> 设置c++mips.exe链接器作为类g++的使用方式来编译。<br>也就是说，在指定链接器为<code>c++mips.exe</code>的同时，告诉xmake，它跟g++用法和参数选项基本相同。<br>&lt;/p&gt;
+
+</p>
+<h4 id="-sh">--sh</h4>
+<ul>
+<li>设置<code>c/c++/objc/asm</code>共享库链接器</li>
+</ul>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --sh=armv7-linux-clang++
+</code></pre>
+<p>如果存在<code>SH</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么链接器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --sh=g++@/home/xxx/c++mips.exe</code> 设置c++mips.exe链接器作为类g++的使用方式来编译。<br>也就是说，在指定链接器为<code>c++mips.exe</code>的同时，告诉xmake，它跟g++用法和参数选项基本相同。<br>&lt;/p&gt;
+
+</p>
+<h4 id="-ar">--ar</h4>
+<ul>
+<li>设置<code>c/c++/objc/asm</code>静态库归档器</li>
+</ul>
+<pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --ar=armv7-linux-ar
+</code></pre>
+<p>如果存在<code>AR</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有ar等字样），那么链接器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --ar=ar@/home/xxx/armips.exe</code> 设置armips.exe链接器作为类ar的使用方式来编译。<br>也就是说，在指定链接器为<code>armips.exe</code>的同时，告诉xmake，它跟ar用法和参数选项基本相同。<br>&lt;/p&gt;
+
+</p>
+<h2 id="-">全局配置</h2>
+<p>我们也可以将一些常用配置保存到全局配置中，来简化频繁地输入：</p>
+<p>例如:</p>
+<pre><code class="lang-bash">$ xmake g --ndk=~/files/android-ndk-r10e/
+</code></pre>
+<p>现在，我们重新配置和编译<code>android</code>程序：</p>
+<pre><code class="lang-bash">$ xmake f -p android
+$ xmake
+</code></pre>
+<p>以后，就不需要每次重复配置<code>--ndk=</code>参数了。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    每个命令都有其简写，例如: <code>xmake g</code> 或者 <code>xmake global</code>.&lt;br&gt;<br>&lt;/p&gt;
+
+</p>
+<h2 id="-">清除配置</h2>
+<p>有时候，配置出了问题编译不过，或者需要重新检测各种依赖库和接口，可以加上<code>-c</code>参数，清除缓存的配置，强制重新检测和配置</p>
+<pre><code class="lang-bash">$ xmake f -c
+$ xmake
+</code></pre>
+<p>或者：</p>
+<pre><code class="lang-bash">$ xmake f -p iphoneos -c
+$ xmake
+</code></pre>

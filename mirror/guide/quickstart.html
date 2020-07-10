@@ -1,0 +1,59 @@
+<h2 id="usage-video">Usage Video</h2>
+<p><a href="https://asciinema.org/a/133693"><img src="https://asciinema.org/a/133693.png" alt="asciicast"></a></p>
+<h2 id="create-project">Create Project</h2>
+<pre><code class="lang-bash">$ xmake create -l c -P ./hello
+</code></pre>
+<p>And xmake will generate some files for c language project:</p>
+<pre><code>hello
+├── src
+│   └── main.c
+└── xmake.lua
+</code></pre><p>It is a simple console program only for printing <code>hello xmake!</code></p>
+<p>The content of <code>xmake.lua</code> is very simple:</p>
+<pre><code class="lang-lua">target(&quot;hello&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;) 
+</code></pre>
+<p>Support languages:</p>
+<ul>
+<li>c/c++</li>
+<li>objc/c++</li>
+<li>cuda</li>
+<li>asm</li>
+<li>swift</li>
+<li>dlang</li>
+<li>golang</li>
+<li>rust</li>
+</ul>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    If you want to known more options, please run: <code>xmake create --help</code><br>&lt;/p&gt;
+
+</p>
+<h2 id="build-project">Build Project</h2>
+<pre><code class="lang-bash">$ xmake
+</code></pre>
+<h2 id="run-program">Run Program</h2>
+<pre><code class="lang-bash">$ xmake run hello
+</code></pre>
+<h2 id="debug-program">Debug Program</h2>
+<pre><code class="lang-bash">$ xmake run -d hello 
+</code></pre>
+<p>It will start the debugger (.e.g lldb, gdb, windbg, vsjitdebugger, ollydbg ..) to load our program.</p>
+<pre><code class="lang-bash">[lldb]$target create &quot;build/hello&quot;
+Current executable set to &#39;build/hello&#39; (x86_64).
+[lldb]$b main
+Breakpoint 1: where = hello`main, address = 0x0000000100000f50
+[lldb]$r
+Process 7509 launched: &#39;/private/tmp/hello/build/hello&#39; (x86_64)
+Process 7509 stopped
+* thread #1: tid = 0x435a2, 0x0000000100000f50 hello`main, queue = &#39;com.apple.main-thread&#39;, stop reason = breakpoint 1.1
+    frame #0: 0x0000000100000f50 hello`main
+hello`main:
+-&gt;  0x100000f50 &lt;+0&gt;:  pushq  %rbp
+    0x100000f51 &lt;+1&gt;:  movq   %rsp, %rbp
+    0x100000f54 &lt;+4&gt;:  leaq   0x2b(%rip), %rdi          ; &quot;hello world!&quot;
+    0x100000f5b &lt;+11&gt;: callq  0x100000f64               ; symbol stub for: puts
+[lldb]$
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    You can also use short command option, for example: <code>xmake r</code> or <code>xmake run</code><br>&lt;/p&gt;
+
+</p>

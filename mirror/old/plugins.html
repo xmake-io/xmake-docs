@@ -1,0 +1,360 @@
+<h2 id="plugin-development">Plugin Development</h2>
+<h4 id="introduction">Introduction</h4>
+<p>XMake supports the plugin module and we can develop ourself plugin module conveniently.</p>
+<p>We can run command <code>xmake -h</code> to look over some builtin plugins of xmake</p>
+<pre><code>Plugins: 
+    l, lua                                 Run the lua script.
+    m, macro                               Run the given macro.
+       doxygen                             Generate the doxygen document.
+       hello                               Hello xmake!
+       project                             Create the project file.
+</code></pre><ul>
+<li>lua: Run a given lua script.</li>
+<li>macro: Record and playback some xmake commands repeatly.</li>
+<li>doxygen：Generate doxygen document automatically.</li>
+<li>hello:  The demo plugin and only print: &#39;hello xmake!&#39;</li>
+<li>project：Generate project file for IDE, only generate makefile now and will generate vs, xcode project in the future</li>
+</ul>
+<h4 id="quick-start">Quick Start</h4>
+<p>Now we write a simple plugin demo for printing &#39;hello xmake!&#39;</p>
+<pre><code class="lang-lua">-- define a plugin task 
+task(&quot;hello&quot;)
+
+    -- set the category for showing it in plugin category menu (optional)
+    set_category(&quot;plugin&quot;)
+
+    -- the main entry of the plugin
+    on_run(function ()
+
+        -- print &#39;hello xmake!&#39;
+        print(&quot;hello xmake!&quot;)
+    end)
+
+    -- set the menu options, but we put empty options now.
+    set_menu {
+                -- usage
+                usage = &quot;xmake hello [options]&quot;
+
+                -- description
+            ,   description = &quot;Hello xmake!&quot;
+
+                -- options
+            ,   options = {}
+            }
+</code></pre>
+<p>The file tree of this plugin:</p>
+<pre><code>hello
+ - xmake.lua
+
+</code></pre><p>Now one of the most simple plugin finished, how was it to be xmake detected it, there are three ways:</p>
+<ol>
+<li>Put this plugin directory into xmake/plugins the source codes as the builtin plugin.</li>
+<li>Put this plugin directory into ~/.xmake/plugins as the global user plugin.</li>
+<li>Put this plugin directory to anywhere and call <code>add_plugindirs(&quot;./hello&quot;)</code> in xmake.lua as the local project plugin.</li>
+</ol>
+<h4 id="run-plugin">Run Plugin</h4>
+<p>Next we run this plugin</p>
+<pre><code class="lang-bash">xmake hello
+</code></pre>
+<p>The results is </p>
+<pre><code>hello xmake!
+</code></pre><p>Finally, we can also run this plugin in the custom scripts of <code>xmake.lua</code></p>
+<pre><code class="lang-lua">
+target(&quot;demo&quot;)
+
+    -- run this plugin after building target
+    after_build(function (target)
+
+        -- import task module
+        import(&quot;core.project.task&quot;)
+
+        -- run the plugin task
+        task.run(&quot;hello&quot;)
+    end)
+</code></pre>
+<h2 id="builtin-plugins">Builtin Plugins</h2>
+<h4 id="macros-recording-and-playback">Macros Recording and Playback</h4>
+<h5 id="introduction">Introduction</h5>
+<p>We can record and playback our xmake commands and save as macro quickly using this plugin.</p>
+<p>And we can run this macro to simplify our jobs repeatly.</p>
+<h5 id="record-commands">Record Commands</h5>
+<pre><code class="lang-bash"># begin to record commands
+$ xmake macro --begin
+
+# run some xmake commands
+$ xmake f -p android --ndk=/xxx/ndk -a arm64-v8a
+$ xmake p
+$ xmake f -p mingw --sdk=/mingwsdk
+$ xmake p
+$ xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin
+$ xmake p
+$ xmake f -p iphoneos -a armv7
+$ xmake p
+$ xmake f -p iphoneos -a arm64
+$ xmake p
+$ xmake f -p iphoneos -a armv7s
+$ xmake p
+$ xmake f -p iphoneos -a i386
+$ xmake p
+$ xmake f -p iphoneos -a x86_64
+$ xmake p
+
+# stop to record and  save as anonymous macro
+xmake macro --end 
+</code></pre>
+<h5 id="playback-macro">Playback Macro</h5>
+<pre><code class="lang-bash"># playback the previous anonymous macro
+$ xmake macro .
+</code></pre>
+<h5 id="named-macro">Named Macro</h5>
+<pre><code class="lang-bash">$ xmake macro --begin
+$ ...
+$ xmake macro --end macroname
+$ xmake macro macroname
+</code></pre>
+<h5 id="import-and-export-macro">Import and Export Macro</h5>
+<p>Import the given macro file or directory.</p>
+<pre><code class="lang-bash">$ xmake macro --import=/xxx/macro.lua macroname
+$ xmake macro --import=/xxx/macrodir
+</code></pre>
+<p>Export the given macro to file or directory.</p>
+<pre><code class="lang-bash">$ xmake macro --export=/xxx/macro.lua macroname
+$ xmake macro --export=/xxx/macrodir
+</code></pre>
+<h5 id="list-and-show-macro">List and Show Macro</h5>
+<p>List all builtin macros.</p>
+<pre><code class="lang-bash">$ xmake macro --list
+</code></pre>
+<p>Show the given macro script content.</p>
+<pre><code class="lang-bash">$ xmake macro --show macroname
+</code></pre>
+<h5 id="custom-macro-script">Custom Macro Script</h5>
+<p>Create and write a <code>macro.lua</code> script first.</p>
+<pre><code class="lang-lua">function main()
+    os.exec(&quot;xmake f -p android --ndk=/xxx/ndk -a arm64-v8a&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p mingw --sdk=/mingwsdk&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a armv7&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a arm64&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a armv7s&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a i386&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a x86_64&quot;)
+    os.exec(&quot;xmake p&quot;)  
+end
+</code></pre>
+<p>Import this macro script to xmake.</p>
+<pre><code class="lang-bash">$ xmake macro --import=/xxx/macro.lua [macroname]
+</code></pre>
+<p>Playback this macro script.</p>
+<pre><code class="lang-bash">$ xmake macro [.|macroname]
+</code></pre>
+<h5 id="builtin-macros">Builtin Macros</h5>
+<p>XMake supports some builtins macros to simplify our jobs.</p>
+<p>For example, we use <code>package</code> macro to package all architectures of the iphoneos platform just for once.</p>
+<pre><code class="lang-bash">$ xmake macro package -p iphoneos 
+</code></pre>
+<h5 id="advance-macro-script">Advance Macro Script</h5>
+<p>Let&#39;s see the <code>package</code> macro script:</p>
+<pre><code class="lang-lua">-- imports
+import(&quot;core.base.option&quot;)
+import(&quot;core.project.config&quot;)
+import(&quot;core.project.project&quot;)
+import(&quot;core.platform.platform&quot;)
+
+-- the options
+local options =
+{
+    {&#39;p&#39;, &quot;plat&quot;,       &quot;kv&quot;,  os.host(),   &quot;Set the platform.&quot;                                    }
+,   {&#39;f&#39;, &quot;config&quot;,     &quot;kv&quot;,  nil,         &quot;Pass the config arguments to \&quot;xmake config\&quot; ..&quot;     }
+,   {&#39;o&#39;, &quot;outputdir&quot;,  &quot;kv&quot;,  nil,         &quot;Set the output directory of the package.&quot;             }
+}
+
+-- package all
+--
+-- .e.g
+-- xmake m package 
+-- xmake m package -f &quot;-m debug&quot;
+-- xmake m package -p linux
+-- xmake m package -p iphoneos -f &quot;-m debug --xxx ...&quot; -o /tmp/xxx
+-- xmake m package -f \&quot;--mode=debug\&quot;
+--
+function main(argv)
+
+    -- parse arguments
+    local args = option.parse(argv, options, &quot;Package all architectures for the given the platform.&quot;
+                                           , &quot;&quot;
+                                           , &quot;Usage: xmake macro package [options]&quot;)
+
+    -- package all archs
+    local plat = args.plat
+    for _, arch in ipairs(platform.archs(plat)) do
+
+        -- config it
+        os.exec(&quot;xmake f -p %s -a %s %s -c %s&quot;, plat, arch, args.config or &quot;&quot;, ifelse(option.get(&quot;verbose&quot;), &quot;-v&quot;, &quot;&quot;))
+
+        -- package it
+        if args.outputdir then
+            os.exec(&quot;xmake p -o %s %s&quot;, args.outputdir, ifelse(option.get(&quot;verbose&quot;), &quot;-v&quot;, &quot;&quot;))
+        else
+            os.exec(&quot;xmake p %s&quot;, ifelse(option.get(&quot;verbose&quot;), &quot;-v&quot;, &quot;&quot;))
+        end
+    end
+
+    -- package universal for iphoneos, watchos ...
+    if plat == &quot;iphoneos&quot; or plat == &quot;watchos&quot; then
+
+        -- load configure
+        config.load()
+
+        -- load project
+        project.load()
+
+        -- enter the project directory
+        os.cd(project.directory())
+
+        -- the outputdir directory
+        local outputdir = args.outputdir or config.get(&quot;buildir&quot;)
+
+        -- package all targets
+        for _, target in pairs(project.targets()) do
+
+            -- get all modes
+            local modedirs = os.match(format(&quot;%s/%s.pkg/lib/*&quot;, outputdir, target:name()), true)
+            for _, modedir in ipairs(modedirs) do
+
+                -- get mode
+                local mode = path.basename(modedir)
+
+                -- make lipo arguments
+                local lipoargs = nil
+                for _, arch in ipairs(platform.archs(plat)) do
+                    local archfile = format(&quot;%s/%s.pkg/lib/%s/%s/%s/%s&quot;, outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile())) 
+                    if os.isfile(archfile) then
+                        lipoargs = format(&quot;%s -arch %s %s&quot;, lipoargs or &quot;&quot;, arch, archfile) 
+                    end
+                end
+                if lipoargs then
+
+                    -- make full lipo arguments
+                    lipoargs = format(&quot;-create %s -output %s/%s.pkg/lib/%s/%s/universal/%s&quot;, lipoargs, outputdir, target:name(), mode, plat, path.filename(target:targetfile()))
+
+                    -- make universal directory
+                    os.mkdir(format(&quot;%s/%s.pkg/lib/%s/%s/universal&quot;, outputdir, target:name(), mode, plat))
+
+                    -- package all archs
+                    os.execv(&quot;xmake&quot;, {&quot;l&quot;, &quot;lipo&quot;, lipoargs})
+                end
+            end
+        end
+    end
+end
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    If you want to known more options, please run: <code>xmake macro --help</code><br>&lt;/p&gt;
+
+</p>
+<h4 id="run-the-custom-lua-script">Run the Custom Lua Script</h4>
+<h5 id="run-the-given-script">Run the given script</h5>
+<p>Write a simple lua script:</p>
+<pre><code class="lang-lua">function main()
+    print(&quot;hello xmake!&quot;)
+end
+</code></pre>
+<p>Run this lua script.</p>
+<pre><code class="lang-bash">$ xmake lua /tmp/test.lua
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    You can also use <code>import</code> api to write a more advance lua script.<br>&lt;/p&gt;
+
+</p>
+<h5 id="run-the-builtin-script">Run the builtin script</h5>
+<p>You can run <code>xmake lua -l</code> to list all builtin script name, for example:</p>
+<pre><code class="lang-bash">$ xmake lua -l
+scripts:
+    cat
+    cp
+    echo
+    versioninfo
+    ...
+</code></pre>
+<p>And run them:</p>
+<pre><code class="lang-bash">$ xmake lua cat ~/file.txt
+$ xmake lua echo &quot;hello xmake&quot;
+$ xmake lua cp /tmp/file /tmp/file2
+$ xmake lua versioninfo
+</code></pre>
+<h5 id="run-interactive-commands-repl-">Run interactive commands (REPL)</h5>
+<p>Enter interactive mode:</p>
+<pre><code class="lang-bash">$ xmake lua
+&gt; 1 + 2
+3
+
+&gt; a = 1
+&gt; a
+1
+
+&gt; for _, v in pairs({1, 2, 3}) do
+&gt;&gt; print(v)
+&gt;&gt; end
+1
+2
+3
+</code></pre>
+<p>And we can <code>import</code> modules:</p>
+<pre><code class="lang-bash">&gt; task = import(&quot;core.project.task&quot;)
+&gt; task.run(&quot;hello&quot;)
+hello xmake!
+</code></pre>
+<p>If you want to cancel multiline input, please input character <code>q</code>, for example:</p>
+<pre><code class="lang-bash">&gt; for _, v in ipairs({1, 2}) do
+&gt;&gt; print(v)
+&gt;&gt; q             &lt;--  cancel multiline and clear previous input
+&gt; 1 + 2
+3
+</code></pre>
+<h4 id="generate-ide-project-files">Generate IDE Project Files</h4>
+<h5 id="generate-makefile">Generate Makefile</h5>
+<pre><code class="lang-bash">$ xmake project -k makefile
+</code></pre>
+<h5 id="generate-compiler_commands">Generate compiler_commands</h5>
+<p>We can export the compilation commands info of all source files and it is JSON compilation database format.</p>
+<pre><code class="lang-console">$ xmake project -k compile_commands
+</code></pre>
+<p>The the content of the output file:</p>
+<pre><code>[
+  { &quot;directory&quot;: &quot;/home/user/llvm/build&quot;,
+    &quot;command&quot;: &quot;/usr/bin/clang++ -Irelative -DSOMEDEF=\&quot;With spaces, quotes and \\-es.\&quot; -c -o file.o file.cc&quot;,
+    &quot;file&quot;: &quot;file.cc&quot; },
+  ...
+]
+
+</code></pre><p>Please see <a href="#https://clang.llvm.org/docs/JSONCompilationDatabase.html">JSONCompilationDatabase</a> if need known more info about <code>compile_commands</code>.</p>
+<h5 id="generate-visualstudio-project">Generate VisualStudio Project</h5>
+<pre><code class="lang-bash">$ xmake project -k [vs2008|vs2013|vs2015|..]
+</code></pre>
+<p>v2.1.2 or later, it supports multi-mode and multi-architecture generation for vs201x project.</p>
+<p>For example:</p>
+<pre><code class="lang-bash">$ xmake project -k vs2017 -m &quot;debug,release&quot;
+</code></pre>
+<p>It will generate four project configurations: <code>debug|x86</code>, <code>debug|x64</code>, <code>release|x86</code>, <code>release|x64</code>.</p>
+<p>Or you can set modes to <code>xmake.lua</code>:</p>
+<pre><code class="lang-lua">set_modes(&quot;debug&quot;, &quot;release&quot;)
+</code></pre>
+<p>Then, we run the following command:</p>
+<pre><code class="lang-bash">$ xmake project -k vs2017
+</code></pre>
+<p>The effect is same.</p>
+<h4 id="generate-doxygen-document">Generate Doxygen Document</h4>
+<p>Please ensure that the doxygen tool has been installed first.</p>
+<pre><code class="lang-bash">$ xmake doxygen
+</code></pre>
+<h2 id="more-plugins">More Plugins</h2>
+<p>Please download and install from the plugins repository <a href="https://github.com/xmake-io/xmake-plugins">xmake-plugins</a>.</p>
+<h4 id="convert-app-to-ipa">Convert .app to .ipa</h4>
+<pre><code class="lang-bash">$ xmake app2ipa --icon=/xxx.png /xxx/ios.app -o /xxx.ios.ipa
+</code></pre>

@@ -1,0 +1,135 @@
+<h2 id="ide-editor-integration">IDE/Editor Integration</h2>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake-vscode">xmake-vscode</a></li>
+</ul>
+<p>&lt;img src=&quot;https://raw.githubusercontent.com/xmake-io/xmake-vscode/master/res/problem.gif&quot; width=&quot;650px&quot; /&gt;</p>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake-sublime">xmake-sublime</a></li>
+</ul>
+<p>&lt;img src=&quot;https://raw.githubusercontent.com/xmake-io/xmake-sublime/master/res/problem.gif&quot; width=&quot;650px&quot; /&gt;</p>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake-idea">xmake-idea</a></li>
+</ul>
+<p>&lt;img src=&quot;https://raw.githubusercontent.com/xmake-io/xmake-idea/master/res/problem.gif&quot; width=&quot;650px&quot; /&gt;</p>
+<ul>
+<li><a href="https://github.com/luzhlon/xmake.vim">xmake.vim</a> (third-party, thanks <a href="https://github.com/luzhlon">@luzhlon</a>)</li>
+</ul>
+<h2 id="gradle-plugin-jni-">Gradle Plugin (JNI)</h2>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake-gradle">xmake-gradle</a>: A gradle plugin that integrates xmake seamlessly</li>
+</ul>
+<h3 id="plugins-dsl">plugins DSL</h3>
+<pre><code>plugins {
+  id &#39;org.tboox.gradle-xmake-plugin&#39; version &#39;1.0.9&#39;
+}
+</code></pre><h3 id="legacy-plugin-application">Legacy plugin application</h3>
+<pre><code>buildscript {
+  repositories {
+    maven {
+      url &quot;https://plugins.gradle.org/m2/&quot;
+    }
+  }
+  dependencies {
+    classpath &#39;org.tboox:gradle-xmake-plugin:1.0.9&#39;
+  }
+  repositories {
+    mavenCentral()
+  }
+}
+
+apply plugin: &quot;org.tboox.gradle-xmake-plugin&quot;
+</code></pre><h3 id="simplest-example">Simplest Example</h3>
+<p>We add <code>xmake.lua</code> to <code>projectdir/jni/xmake.lua</code> and enable xmake in build.gradle.</p>
+<h4 id="build-gradle">build.gradle</h4>
+<pre><code>android {
+    externalNativeBuild {
+        xmake {
+            path &quot;jni/xmake.lua&quot;
+        }
+    }
+}
+</code></pre><h4 id="jni">JNI</h4>
+<p>The JNI project structure:</p>
+<pre><code>projectdir
+  - src
+    - main
+      - java
+  - jni
+    - xmake.lua
+    - *.cpp
+</code></pre><p>xmake.lua:</p>
+<pre><code class="lang-lua">add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)
+target(&quot;nativelib&quot;)
+    set_kind(&quot;shared&quot;)
+    add_files(&quot;nativelib.cc&quot;)
+</code></pre>
+<h3 id="more-gradle-configuations">More Gradle Configuations</h3>
+<pre><code>android {
+    defaultConfig {
+        externalNativeBuild {
+            xmake {
+                // append the global cflags (optional)
+                cFlags &quot;-DTEST&quot;
+
+                // append the global cppflags (optional)
+                cppFlags &quot;-DTEST&quot;, &quot;-DTEST2&quot;
+
+                // switch the build mode to `debug` for `xmake f -m debug` (optional)
+                buildMode &quot;debug&quot;
+
+                // set abi filters (optional), e.g. armeabi, armeabi-v7a, arm64-v8a, x86, x86_64
+                // we can also get abiFilters from defaultConfig.ndk.abiFilters
+                abiFilters &quot;armeabi-v7a&quot;, &quot;arm64-v8a&quot;
+            }
+        }
+    }
+
+    externalNativeBuild {
+        xmake {
+            // enable xmake and set xmake.lua project file path
+            path &quot;jni/xmake.lua&quot;
+
+            // enable verbose output (optional), e.g. verbose, warning, normal
+            logLevel &quot;verbose&quot;
+
+            // set c++stl (optional), e.g. c++_static/c++_shared, gnustl_static/gnustl_shared, stlport_static/stlport_shared
+            stl &quot;c++_shared&quot;
+
+            // set the given xmake program path (optional)
+            // program /usr/local/bin/xmake
+
+            // disable stdc++ library (optional)
+            // stdcxx false
+
+            // set the given ndk directory path (optional)
+            // ndk &quot;/Users/ruki/files/android-ndk-r20b/&quot;
+
+            // set sdk version of ndk (optional)
+            // sdkver 21
+        }
+    }
+}
+</code></pre><h3 id="build-jni-and-generate-apk">Build JNI and generate apk</h3>
+<p>The <code>xmakeBuild</code> will be injected to <code>assemble</code> task automatically if the gradle-xmake-plugin has been applied.</p>
+<pre><code class="lang-console">$ ./gradlew app:assembleDebug
+&gt; Task :nativelib:xmakeConfigureForArm64
+&gt; Task :nativelib:xmakeBuildForArm64
+&gt;&gt; xmake build
+[ 50%]: ccache compiling.debug nativelib.cc
+[ 75%]: linking.debug libnativelib.so
+[100%]: build ok!
+&gt;&gt; install artifacts to /Users/ruki/projects/personal/xmake-gradle/nativelib/libs/arm64-v8a
+&gt; Task :nativelib:xmakeConfigureForArmv7
+&gt; Task :nativelib:xmakeBuildForArmv7
+&gt;&gt; xmake build
+[ 50%]: ccache compiling.debug nativelib.cc
+[ 75%]: linking.debug libnativelib.so
+[100%]: build ok!
+&gt;&gt; install artifacts to /Users/ruki/projects/personal/xmake-gradle/nativelib/libs/armeabi-v7a
+&gt; Task :nativelib:preBuild
+&gt; Task :nativelib:assemble
+&gt; Task :app:assembleDebug
+</code></pre>
+<h3 id="force-to-rebuild-jni">Force to rebuild JNI</h3>
+<pre><code class="lang-console">$ ./gradlew nativelib:xmakeRebuild
+</code></pre>

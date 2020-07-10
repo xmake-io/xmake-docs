@@ -1,0 +1,394 @@
+<p>全局接口影响整个工程描述，被调用后，后面被包含进来的所有子<code>xmake.lua</code>都会受影响。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#includes">includes</a></td>
+<td>添加子工程文件和目录</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#set_modes">set_modes</a></td>
+<td>设置支持的编译模式</td>
+<td>&gt;= 2.1.2</td>
+</tr>
+<tr>
+<td><a href="#set_project">set_project</a></td>
+<td>设置工程名</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#set_version">set_version</a></td>
+<td>设置工程版本</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#set_xmakever">set_xmakever</a></td>
+<td>设置最小xmake版本</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#add_subdirs">add_subdirs</a></td>
+<td>添加子工程目录</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#add_subfiles">add_subfiles</a></td>
+<td>添加子工程文件</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#add_moduledirs">add_moduledirs</a></td>
+<td>添加模块目录</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#add_plugindirs">add_plugindirs</a></td>
+<td>添加插件目录</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#add_packagedirs">add_packagedirs</a></td>
+<td>添加包目录</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#get_config">get_config</a></td>
+<td>获取给的配置值</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#set_config">set_config</a></td>
+<td>设置默认的配置值</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#add_requires">add_requires</a></td>
+<td>添加需要的依赖包</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#add_repositories">add_repositories</a></td>
+<td>添加依赖包仓库</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="includes">includes</h3>
+<h4 id="-">添加子工程文件和目录</h4>
+<p>同时支持子工程文件和目录的添加，用于替代<a href="#add_subdirs">add_subdirs</a>和<a href="#add_subfiles">add_subfiles</a>接口。</p>
+<p>另外，此接口在2.2.5之后的版本，提供了一些内置的辅助函数，可以直接includes后使用，具体有哪些内置函数可以看下：<a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">https://github.com/xmake-io/xmake/tree/master/xmake/includes</a></p>
+<p>关于这块的更加完整的说明，可以看下：<a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
+<p>例子：</p>
+<p>检测links, c/c++ type, includes和编译器特性，并且写入宏定义到config.h</p>
+<pre><code class="lang-lua">includes(&quot;check_links.lua&quot;)
+includes(&quot;check_ctypes.lua&quot;)
+includes(&quot;check_cfuncs.lua&quot;)
+includes(&quot;check_features.lua&quot;)
+includes(&quot;check_csnippets.lua&quot;)
+includes(&quot;check_cincludes.lua&quot;)
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;*.c&quot;)
+    add_configfiles(&quot;config.h.in&quot;)
+
+    configvar_check_ctypes(&quot;HAS_WCHAR&quot;, &quot;wchar_t&quot;)
+    configvar_check_cincludes(&quot;HAS_STRING_H&quot;, &quot;string.h&quot;)
+    configvar_check_cincludes(&quot;HAS_STRING_AND_STDIO_H&quot;, {&quot;string.h&quot;, &quot;stdio.h&quot;})
+    configvar_check_ctypes(&quot;HAS_WCHAR_AND_FLOAT&quot;, {&quot;wchar_t&quot;, &quot;float&quot;})
+    configvar_check_links(&quot;HAS_PTHREAD&quot;, {&quot;pthread&quot;, &quot;m&quot;, &quot;dl&quot;})
+    configvar_check_csnippets(&quot;HAS_STATIC_ASSERT&quot;, &quot;_Static_assert(1, \&quot;\&quot;);&quot;)
+    configvar_check_cfuncs(&quot;HAS_SETJMP&quot;, &quot;setjmp&quot;, {includes = {&quot;signal.h&quot;, &quot;setjmp.h&quot;}})
+    configvar_check_features(&quot;HAS_CONSTEXPR&quot;, &quot;cxx_constexpr&quot;)
+    configvar_check_features(&quot;HAS_CONSEXPR_AND_STATIC_ASSERT&quot;, {&quot;cxx_constexpr&quot;, &quot;c_static_assert&quot;}, {languages = &quot;c++11&quot;})
+</code></pre>
+<p>config.h.in</p>
+<pre><code class="lang-c">${define HAS_STRING_H}
+${define HAS_STRING_AND_STDIO_H}
+${define HAS_WCHAR}
+${define HAS_WCHAR_AND_FLOAT}
+${define HAS_PTHREAD}
+${define HAS_STATIC_ASSERT}
+${define HAS_SETJMP}
+${define HAS_CONSTEXPR}
+${define HAS_CONSEXPR_AND_STATIC_ASSERT}
+</code></pre>
+<p>config.h</p>
+<pre><code class="lang-c">/* #undef HAS_STRING_H */
+#define HAS_STRING_AND_STDIO_H 1
+/* #undef HAS_WCHAR */
+/* #undef HAS_WCHAR_AND_FLOAT */
+#define HAS_PTHREAD 1
+#define HAS_STATIC_ASSERT 1
+#define HAS_SETJMP 1
+/* #undef HAS_CONSTEXPR */
+#define HAS_CONSEXPR_AND_STATIC_ASSERT 1
+</code></pre>
+<h3 id="set_modes">set_modes</h3>
+<h4 id="-">设置支持的编译模式</h4>
+<p>这个是可选接口，一般情况下不需要设置，目前仅用于对工程增加更加细致的描述信息，方便vs工程的多模式生成，以及其他xmake插件中获取模式信息。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">set_modes(&quot;debug&quot;, &quot;release&quot;)
+</code></pre>
+<p>如果设置了这个，xmake就知道当前工程支持哪些编译模式，这样生成vs工程文件的时候，只需要：</p>
+<pre><code class="lang-bash">$ xmake project -k vs2017
+</code></pre>
+<p>不再需要额外手动指定需要的编译模式了，此外其他一些想要获取工程信息的插件，也许也会需要这些设置信息。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>当然，对于<a href="#is_mode">is_mode</a>接口，<code>set_modes</code>不是必须的，就算不设置，也是可以通过<code>is_mode</code>正常判断当前的编译模式。<br>&lt;/p&gt;
+
+</p>
+<h3 id="set_project">set_project</h3>
+<h4 id="-">设置工程名</h4>
+<p>设置工程名，在doxygen自动文档生成插件、工程文件生成插件中会用到，一般设置在xmake.lua的最开头，当然放在其他地方也是可以的</p>
+<pre><code class="lang-lua">-- 设置工程名
+set_project(&quot;tbox&quot;)
+
+-- 设置工程版本
+set_version(&quot;1.5.1&quot;)
+</code></pre>
+<h3 id="set_version">set_version</h3>
+<h4 id="-">设置工程版本</h4>
+<p>设置项目版本，可以放在xmake.lua任何地方，一般放在最开头，例如：</p>
+<pre><code class="lang-lua">set_version(&quot;1.5.1&quot;)
+</code></pre>
+<p>2.1.7版本支持buildversion的配置：</p>
+<pre><code class="lang-lua">set_version(&quot;1.5.1&quot;, {build = &quot;%Y%m%d%H%M&quot;})
+</code></pre>
+<p>我们也能够添加版本宏定义到头文件，请参考：<a href="/manual/project_target?id=add-template-configuration-files">add_configfiles</a></p>
+<h3 id="set_xmakever">set_xmakever</h3>
+<h4 id="-xmake-">设置最小xmake版本</h4>
+<p>用于处理xmake版本兼容性问题，如果项目的<code>xmake.lua</code>，通过这个接口设置了最小xmake版本支持，那么用户环境装的xmake低于要求的版本，就会提示错误。</p>
+<p>一般情况下，建议默认对其进行设置，这样对用户比较友好，如果<code>xmake.lua</code>中用到了高版本的api接口，用户那边至少可以知道是否因为版本不对导致的构建失败。</p>
+<p>设置如下：</p>
+<pre><code class="lang-lua">-- 设置最小版本为：2.1.0，低于此版本的xmake编译此工程将会提示版本错误信息
+set_xmakever(&quot;2.1.0&quot;)
+</code></pre>
+<h3 id="add_subdirs">add_subdirs</h3>
+<h4 id="-">添加子工程目录</h4>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>xmake 2.x以上版本，请尽量使用<a href="#includes">includes</a>这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。<br>&lt;/p&gt;
+
+</p>
+<p>每个子工程对应一个<code>xmake.lua</code>的工程描述文件。</p>
+<p>虽然一个<code>xmake.lua</code>也可以描述多个子工程模块，但是如果工程越来越大，越来越复杂，适当的模块化是很有必要的。。</p>
+<p>这就需要<code>add_subdirs</code>了，将每个子模块放到不同目录中，并为其建立一个新的<code>xmake.lua</code>独立去维护它，例如：</p>
+<pre><code>./tbox
+├── src
+│   ├── demo
+│   │   └── xmake.lua (用来描述测试模块)
+│   └── tbox
+│       └── xmake.lua（用来描述libtbox库模块）
+└── xmake.lua（用该描述通用配置信息，以及对子模块的维护）
+`
+</code></pre><p>在<code>tbox/xmake.lua</code>中通过<code>add_subdirs</code>将拥有<code>xmale.lua</code>的子模块的目录，添加进来，就可以了，例如：</p>
+<pre><code class="lang-lua">-- 添加libtbox库模块目录
+add_subdirs(&quot;src/tbox&quot;) 
+
+-- 如果xmake f --demo=y，启用了demo模块，那么包含demo目录
+if is_option(&quot;demo&quot;) then 
+    add_subdirs(&quot;src/demo&quot;) 
+end
+</code></pre>
+<p>默认情况下，xmake会去编译在所有xmake.lua中描述的所有target目标，如果只想编译指定目标，可以执行：</p>
+<pre><code class="lang-bash"># 仅仅编译tbox库模块
+$ xmake build tbox
+</code></pre>
+<p>需要注意的是，每个子<code>xmake.lua</code>中所有的路径设置都是相对于当前这个子<code>xmake.lua</code>所在的目录的，都是相对路径，这样方便维护</p>
+<h3 id="add_subfiles">add_subfiles</h3>
+<h4 id="-">添加子工程文件</h4>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>xmake 2.x以上版本，请尽量使用<a href="#includes">includes</a>这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。<br>&lt;/p&gt;
+
+</p>
+<p><code>add_subfiles</code>的作用与<a href="#add_subdirs">add_subdirs</a>类似，唯一的区别就是：这个接口直接指定<code>xmake.lua</code>文件所在的路径，而不是目录，例如：</p>
+<pre><code class="lang-lua">add_subfiles(&quot;src/tbox/xmake.lua&quot;)
+</code></pre>
+<h3 id="add_moduledirs">add_moduledirs</h3>
+<h4 id="-">添加模块目录</h4>
+<p>xmake内置的扩展模块都在<code>xmake/modules</code>目录下，可通过<a href="#import">import</a>来导入他们，如果自己在工程里面实现了一些扩展模块，<br>可以放置在这个接口指定的目录下，import也就会能找到，并且优先进行导入。</p>
+<p>例如定义一个<code>find_openssl.lua</code>的扩展模块，用于扩展内置的<a href="#detect-find_package">lib.detect.find_package</a>接口，则只需要将它放置在：</p>
+<pre><code>projectdir/xmake/modules/detect/packages/find_openssl.lua
+</code></pre><p>然后在工程<code>xmake.lua</code>下指定这个模块目录，<code>find_package</code>就可以自动找到了：</p>
+<pre><code class="lang-lua">add_moduledirs(&quot;projectdir/xmake/modules&quot;)
+</code></pre>
+<h3 id="add_plugindirs">add_plugindirs</h3>
+<h4 id="-">添加插件目录</h4>
+<p>xmake内置的插件都是放在<code>xmake/plugins</code>目录下，但是对于用户自定义的一些特定工程的插件，如果不想放置在xmake安装目录下，那么可以在<code>xmake.lua</code>中进行配置指定的其他插件路径。</p>
+<pre><code class="lang-lua">-- 将当前工程下的plugins目录设置为自定义插件目录
+add_plugindirs(&quot;$(projectdir)/plugins&quot;)
+</code></pre>
+<p>这样，xmake在编译此工程的时候，也就加载这些插件。</p>
+<h3 id="add_packagedirs">add_packagedirs</h3>
+<h4 id="-">添加包目录</h4>
+<p>通过设置依赖包目录，可以方便的集成一些第三方的依赖库，以tbox工程为例，其依赖包如下：</p>
+<pre><code>- base.pkg
+- zlib.pkg
+- polarssl.pkg
+- openssl.pkg
+- mysql.pkg
+- pcre.pkg
+- ...
+</code></pre><p>如果要让当前工程识别加载这些包，首先要指定包目录路径，例如：</p>
+<pre><code class="lang-lua">add_packagedirs(&quot;packages&quot;)
+</code></pre>
+<p>指定好后，就可以在target作用域中，通过<a href="#add_packages">add_packages</a>接口，来添加集成包依赖了，例如：</p>
+<pre><code class="lang-lua">target(&quot;tbox&quot;)
+    add_packages(&quot;zlib&quot;, &quot;polarssl&quot;, &quot;pcre&quot;, &quot;mysql&quot;)
+</code></pre>
+<h3 id="get_config">get_config</h3>
+<h4 id="-">获取给定的配置值</h4>
+<p>此接口从2.2.2版本开始引入，用于快速获取给定的配置值，可用于描述域。</p>
+<pre><code class="lang-lua">if get_config(&quot;myconfig&quot;) == &quot;xxx&quot; then
+    add_defines(&quot;HELLO&quot;)
+end
+</code></pre>
+<h3 id="set_config">set_config</h3>
+<h4 id="-">设置给定的默认配置值</h4>
+<p>此接口从2.2.2版本开始引入，用于快速在xmake.lua中设置一个默认配置值，仅用于描述域。</p>
+<p>之前很多配置，包括编译工具链，构建目录等只能通过<code>$ xmake f --name=value</code>的方式来配置，如果我们想写死在xmake.lua提供一个默认值，就可以通过下面的方式来配置：</p>
+<pre><code class="lang-lua">set_config(&quot;name&quot;, &quot;value&quot;)
+set_config(&quot;buildir&quot;, &quot;other/buildir&quot;)
+set_config(&quot;cc&quot;, &quot;gcc&quot;)
+set_config(&quot;ld&quot;, &quot;g++&quot;)
+</code></pre>
+<p>不过，我们还是可以通过<code>$ xmake f --name=value</code>的方式，去修改xmake.lua中的默认配置。</p>
+<h3 id="add_requires">add_requires</h3>
+<h4 id="-">添加需要的依赖包</h4>
+<p>xmake的依赖包管理是完全支持语义版本选择的，例如：&quot;~1.6.1&quot;，对于语义版本的具体描述见：<a href="https://semver.org/">https://semver.org/</a></p>
+<p>一些语义版本写法：</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox 1.6.*&quot;, &quot;pcre 1.3.x&quot;, &quot;libpng ^1.18&quot;)
+add_requires(&quot;libpng ~1.16&quot;, &quot;zlib 1.1.2 || &gt;=1.2.11 &lt;1.3.0&quot;)
+</code></pre>
+<p>目前xmake使用的语义版本解析器是<a href="https://github.com/uael">uael</a>贡献的<a href="https://github.com/uael/sv">sv</a>库，里面也有对版本描述写法的详细说明，可以参考下：<a href="https://github.com/uael/sv#versions">版本描述说明</a></p>
+<p>当然，如果我们对当前的依赖包的版本没有特殊要求，那么可以直接这么写：</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, &quot;libpng&quot;, &quot;zlib&quot;)
+</code></pre>
+<p>这会使用已知的最新版本包，或者是master分支的源码编译的包，如果当前包有git repo地址，我们也能指定特定分支版本：</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox master&quot;)
+add_requires(&quot;tbox dev&quot;)
+</code></pre>
+<p>如果指定的依赖包当前平台不支持，或者编译安装失败了，那么xmake会编译报错，这对于有些必须要依赖某些包才能工作的项目，这是合理的。<br>但是如果有些包是可选的依赖，即使没有也可以正常编译使用的话，可以设置为可选包：</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {optional = true})
+</code></pre>
+<p>默认的设置，xmake会去优先检测系统库是否存在（如果没设置版本要求），如果用户完全不想使用系统库以及第三方包管理提供的库，那么可以设置：</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {system = false})
+</code></pre>
+<p>如果我们想同时源码调试依赖包，那么可以设置为使用debug版本的包（当然前提是这个包支持debug编译）：</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {debug = true})
+</code></pre>
+<p>如果当前包还不支持debug编译，可在仓库中提交修改编译规则，对debug进行支持，例如：</p>
+<pre><code class="lang-lua">package(&quot;openssl&quot;)
+    on_install(&quot;linux&quot;, &quot;macosx&quot;, function (package)
+        os.vrun(&quot;./config %s --prefix=\&quot;%s\&quot;&quot;, package:debug() and &quot;--debug&quot; or &quot;&quot;, package:installdir())
+        os.vrun(&quot;make -j4&quot;)
+        os.vrun(&quot;make install&quot;)
+    end)
+</code></pre>
+<p>某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {config = {small=true}})
+</code></pre>
+<p>传递<code>--small=true</code>给tbox包，使得编译安装的tbox包是启用此选项的。</p>
+<p>v2.2.3之后，可以通过<a href="#option">option</a>和<a href="#has_config">has_config</a>配合，在自己定义配置选项参数中控制是否需要添加某个依赖包：</p>
+<pre><code class="lang-lua">option(&quot;luajit&quot;)
+    set_default(false)
+    set_showmenu(true)
+    set_category(&quot;option&quot;)
+    set_description(&quot;Enable the luajit runtime engine.&quot;)
+option_end()
+
+if has_config(&quot;luajit&quot;) then
+    add_requires(&quot;luajit&quot;)
+else
+    add_requires(&quot;lua&quot;)
+end
+</code></pre>
+<p>我们可以通过<code>$xmake f --luajit=y</code>去切换依赖包。</p>
+<p>并且我们也新增了group参数，来分组依赖包，同一个组下的所有依赖包，只能有一个生效启用，启用顺序依赖<code>add_requires</code>添加的顺序:</p>
+<pre><code class="lang-lua">add_requires(&quot;openssl&quot;, {group = &quot;ssl&quot;, optional = true})
+add_requires(&quot;mbedtls&quot;, {group = &quot;ssl&quot;, optional = true})
+
+target(&quot;test&quot;)
+    add_packages(&quot;openssl&quot;, &quot;mbedtls&quot;)
+</code></pre>
+<p>例如上面，所以同时依赖两个ssl包，实际上只会启用生效实际安装成功的那一个ssl包，并不会同时链接两个依赖包。</p>
+<p>2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等</p>
+<p>添加homebrew的依赖包：</p>
+<pre><code class="lang-lua">add_requires(&quot;brew::zlib&quot;, {alias = &quot;zlib&quot;}})
+add_requires(&quot;brew::pcre2/libpcre2-8&quot;, {alias = &quot;pcre2&quot;}})
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;) 
+    add_packages(&quot;pcre2&quot;, &quot;zlib&quot;)
+</code></pre>
+<p>添加vcpkg的依赖包：</p>
+<pre><code class="lang-lua">add_requires(&quot;vcpkg::zlib&quot;, &quot;vcpkg::pcre2&quot;)
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;) 
+    add_packages(&quot;vcpkg::zlib&quot;, &quot;vcpkg::pcre2&quot;)
+</code></pre>
+<p>添加conan的依赖包：</p>
+<pre><code class="lang-lua">add_requires(&quot;CONAN::zlib/1.2.11@conan/stable&quot;, {alias = &quot;zlib&quot;, debug = true})
+add_requires(&quot;CONAN::OpenSSL/1.0.2n@conan/stable&quot;, {alias = &quot;openssl&quot;, 
+    configs = {options = &quot;OpenSSL:shared=True&quot;}})
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;) 
+    add_packages(&quot;openssl&quot;, &quot;zlib&quot;)
+</code></pre>
+<p>执行xmake进行编译后：</p>
+<pre><code class="lang-console">ruki:test_package ruki$ xmake
+checking for the architecture ... x86_64
+checking for the Xcode directory ... /Applications/Xcode.app
+checking for the SDK version of Xcode ... 10.14
+note: try installing these packages (pass -y to skip confirm)?
+  -&gt; CONAN::zlib/1.2.11@conan/stable  (debug)
+  -&gt; CONAN::OpenSSL/1.0.2n@conan/stable  
+please input: y (y/n)
+
+  =&gt; installing CONAN::zlib/1.2.11@conan/stable .. ok
+  =&gt; installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+
+[  0%]: ccache compiling.release src/main.c
+[100%]: linking.release test
+</code></pre>
+<p>关于这块的更多详情见：<a href="https://github.com/xmake-io/xmake/issues/339">https://github.com/xmake-io/xmake/issues/339</a></p>
+<p>添加clib的依赖包：</p>
+<p>clib是一款基于源码的依赖包管理器，拉取的依赖包是直接下载对应的库源码，集成到项目中编译，而不是二进制库依赖。</p>
+<p>其在xmake中集成也很方便，唯一需要注意的是，还需要自己添加上对应库的源码到xmake.lua，例如：</p>
+<pre><code class="lang-lua">add_requires(&quot;clib::clibs/bytes@0.0.4&quot;, {alias = &quot;bytes&quot;})
+
+target(&quot;xmake-test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;clib/bytes/*.c&quot;)
+    add_files(&quot;src/*.c&quot;) 
+    add_packages(&quot;bytes&quot;)
+</code></pre>
+<h3 id="add_repositories">add_repositories</h3>
+<h4 id="-">添加依赖包仓库</h4>
+<p>如果需要的包不在官方仓库<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>中，我们可以提交贡献代码到仓库进行支持。<br>但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
+<p>比如，现在我们有一个一个私有仓库repo：<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>
+<p>我们可以通过此接口来添加：</p>
+<pre><code class="lang-lua">add_repositories(&quot;my-repo git@github.com:myrepo/xmake-repo.git&quot;)
+</code></pre>
+<p>如果我们只是想添加一两个私有包，这个时候特定去建立一个git repo太小题大做了，我们可以直接把包仓库放置项目里面，例如：</p>
+<pre><code>projectdir
+  - myrepo
+    - packages
+      - t/tbox/xmake.lua
+      - z/zlib/xmake.lua
+  - src
+    - main.c
+  - xmake.lua
+</code></pre><p>上面myrepo目录就是自己的私有包仓库，内置在自己的项目里面，然后在xmake.lua里面添加一下这个仓库位置：</p>
+<pre><code class="lang-lua">add_repositories(&quot;my-repo myrepo&quot;)
+</code></pre>
+<p>这个可以参考<a href="https://github.com/tboox/benchbox">benchbox</a>项目，里面就内置了一个私有仓库。</p>

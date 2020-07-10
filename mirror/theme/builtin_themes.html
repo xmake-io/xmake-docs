@@ -1,0 +1,31 @@
+<h2 id="default-theme">Default theme</h2>
+<p>This is the default display theme after we install xmake. Theme name: default, which will provide color output by default, suitable for some dark background terminals.</p>
+<p>&lt;img src=&quot;/assets/img/theme/default.png&quot; width=&quot;60%&quot; /&gt;</p>
+<p>We can also switch back to the default theme with the following command:</p>
+<pre><code class="lang-bash">$ xmake g --theme=default
+</code></pre>
+<h2 id="ninja-theme">Ninja Theme</h2>
+<p>This is the theme provided by the version after v2.3.4. The construction progress style is similar to ninja. It uses a single-line progress bar, and the progress is no longer rolled back.</p>
+<p>The configuration of the default theme is the same except that the progress is displayed differently.</p>
+<pre><code class="lang-bash">$ xmake g --theme=ninja
+</code></pre>
+<p>&lt;img src=&quot;/assets/img/theme/ninja.png&quot; width=&quot;60%&quot; /&gt;</p>
+<h2 id="emoji-theme">Emoji Theme</h2>
+<p>This theme part output uses emoji characters instead of the previous color output.</p>
+<pre><code class="lang-bash">$ xmake g --theme=emoji
+</code></pre>
+<p>&lt;img src=&quot;/assets/img/theme/emoji.png&quot; width=&quot;60%&quot; /&gt;</p>
+<h2 id="dark-theme">Dark Theme</h2>
+<p>This theme is mainly for some terminal backgrounds with a light color system (such as light yellow, etc.), which causes some warning outputs (the default is also yellow) to be invisible, so the theme color is changed to a dark system to improve visibility.</p>
+<pre><code class="lang-bash">$ xmake g --theme=dark
+</code></pre>
+<h2 id="plain-theme">Plain Theme</h2>
+<p>In fact, this theme is to completely disable color and emoji output, mainly to deal with the problem of garbled display caused by some terminals that do not support colors code, and it is also the most simple theme style.</p>
+<p>!&gt; Some win terminals may not support colors, you can set this theme to solve the problem of garbled display</p>
+<pre><code class="lang-bash">$ xmake g --theme=plain
+</code></pre>
+<h2 id="powershell-theme">Powershell theme</h2>
+<p>The background of the powershell terminal under win is blue, and its palette configuration seems to be changed. The magenta color is actually displayed as the background blue, which is very strange, resulting in the local output of xmake&#39;s default output will be invisible Overlapped)</p>
+<p>Therefore, this theme is to better adapt the display output under the powershell terminal.</p>
+<pre><code class="lang-bash">$ xmake g --theme=powershell
+</code></pre>

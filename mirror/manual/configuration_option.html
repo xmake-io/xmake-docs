@@ -1,0 +1,641 @@
+<p>Define and set option switches. Each <code>option</code> corresponds to an option that can be used to customize the build configuration options and switch settings.</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>All domain interfaces except <code>target</code>, such as <code>option</code>, <code>task</code>, etc., cannot be placed in the outer global scope by default (unless some interfaces are shared with the target).<br>If you want to set the value to affect all options such as <code>option</code>, <code>task</code>, you can set it by anonymous global domain.<br>&lt;/p&gt;
+
+</p>
+<p>E.g:</p>
+<pre><code class="lang-lua">-- Enter the anonymous global domain of the option, the settings inside will affect the test and test2 options.
+option()
+    add_defines(&quot;DEBUG&quot;)
+
+option(&quot;test&quot;)
+    -- ...
+    -- Try to keep indented, because all settings after this are for the test option.
+
+option(&quot;test2&quot;)
+    -- ...
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>The <code>option</code> field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the <a href="#option_end">option_end</a> interface.<br>&lt;/p&gt;
+
+
+</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#option">option</a></td>
+<td>Define Options</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#option_end">option_end</a></td>
+<td>End Definition Options</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#optionadd_deps">add_deps</a></td>
+<td>Add Options Dependencies</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#optionbefore_check">before_check</a></td>
+<td>Execute this script before option detection</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#optionon_check">on_check</a></td>
+<td>Custom Option Detection Script</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#optionafter_check">after_check</a></td>
+<td>Execute this script after option detection</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#optionset_values">set_values</a></td>
+<td>Setting the list of option values ​​</td>
+<td>&gt;= 2.1.9</td>
+</tr>
+<tr>
+<td><a href="#optionset_default">set_default</a></td>
+<td>Set Defaults</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionset_showmenu">set_showmenu</a></td>
+<td>Set whether to enable menu display</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionset_category">set_category</a></td>
+<td>Set option categories, only for menu display</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionset_description">set_description</a></td>
+<td>Settings Menu Display Description</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionadd_links">add_links</a></td>
+<td>Add Linked Library Detection</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionadd_linkdirs">add_linkdirs</a></td>
+<td>Add a search directory for link library detection</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionadd_rpathdirs">add_rpathdirs</a></td>
+<td>Add runtime dynamic link library search directory</td>
+<td>&gt;= 2.1.3</td>
+</tr>
+<tr>
+<td><a href="#optionadd_cincludes">add_cincludes</a></td>
+<td>Add c header file detection</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionadd_cxxincludes">add_cxxincludes</a></td>
+<td>Add c++ header file detection</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionadd_ctypes">add_ctypes</a></td>
+<td>Add c type detection</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionadd_cxxtypes">add_cxxtypes</a></td>
+<td>Add c++ type detection</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#optionadd_csnippet">add_csnippet</a></td>
+<td>Add c-code snippets detection</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#optionadd_cxxsnippet">add_cxxsnippet</a></td>
+<td>Add c++ code snippet detection</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetset_warnings">set_warnings</a></td>
+<td>Setting the warning level</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetset_optimize">set_optimize</a></td>
+<td>Setting the optimization level</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetset_languages">set_languages</a></td>
+<td>Setting the Code Language Standard</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_includedirs">add_includedirs</a></td>
+<td>Add Header Search Directory</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_defines">add_defines</a></td>
+<td>Add Macro Definition</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_undefines">add_undefines</a></td>
+<td>Cancel Macro Definition</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_defines_h">add_defines_h</a></td>
+<td>Add macro definitions to header files</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_undefines_h">add_undefines_h</a></td>
+<td>Cancel macro definition to header file</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_cflags">add_cflags</a></td>
+<td>Add c Compile Options</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_cxflags">add_cxflags</a></td>
+<td>Add c/c++ Compile Options</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_cxxflags">add_cxxflags</a></td>
+<td>Add c++ Compile Options</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_mflags">add_mflags</a></td>
+<td>Add objc compile options</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_mxflags">add_mxflags</a></td>
+<td>Add objc/objc++ Compile Options</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_mxxflags">add_mxxflags</a></td>
+<td>Add objc++ Compile Options</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_scflags">add_scflags</a></td>
+<td>Add swift compile options</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_asflags">add_asflags</a></td>
+<td>Add assembly compile options</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_gcflags">add_gcflags</a></td>
+<td>Add go compile options</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_dcflags">add_dcflags</a></td>
+<td>Add dlang compile options</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_rcflags">add_rcflags</a></td>
+<td>Add rust compile option</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_cuflags">add_cuflags</a></td>
+<td>Add cuda compile options</td>
+<td>&gt;= 2.2.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_culdflags">add_culdflags</a></td>
+<td>Add cuda device-link options</td>
+<td>&gt;= 2.2.7</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_ldflags">add_ldflags</a></td>
+<td>Add Link Options</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_arflags">add_arflags</a></td>
+<td>Add Static Library Archive Options</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_shflags">add_shflags</a></td>
+<td>Add Dynamic Library Link Options</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_languages">add_languages</a></td>
+<td>Add Language Standards</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_vectorexts">add_vectorexts</a></td>
+<td>Add Vector Extension Instructions</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_frameworks">add_frameworks</a></td>
+<td>Add Linked Framework</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="/manual/project_target?id=targetadd_frameworkdirs">add_frameworkdirs</a></td>
+<td>Add Linked Framework</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<h3 id="option">option</h3>
+<h4 id="defining-options">Defining options</h4>
+<p>Define and set option switches for custom compilation configuration options, switch settings.</p>
+<p>For example, define an option to enable test:</p>
+<pre><code class="lang-lua">option(&quot;test&quot;)
+    set_default(false)
+    set_showmenu(true)
+    add_defines(&quot;TEST&quot;)
+</code></pre>
+<p>Then associate it with the specified target:</p>
+<pre><code class="lang-lua">target(&quot;demo&quot;)
+    add_options(&quot;test&quot;)
+</code></pre>
+<p>Thus, if an option is defined, if this option is enabled, the macro definition of <code>-DTEST</code> will be automatically added when compiling the target.</p>
+<pre><code class="lang-lua"># Manually enable this option
+$ xmake f --test=y
+$ xmake
+</code></pre>
+<h3 id="option_end">option_end</h3>
+<h4 id="end-definition-option">End definition option</h4>
+<p>This is an optional api that shows the departure option scope, similar to <a href="/manual/project_target?id=target_end">target_end</a>.</p>
+<h3 id="option-add_deps">option:add_deps</h3>
+<h4 id="adding-options-depends">Adding options depends</h4>
+<p>By setting the dependency, you can adjust the detection order of the options, which is generally used when the detection script is called by <a href="#optionon_check">on_check</a>.</p>
+<pre><code class="lang-lua">option(&quot;small&quot;)
+    set_default(true)
+    on_check(function (option)
+        -- ...
+    end)
+
+option(&quot;test&quot;)
+    add_deps(&quot;small&quot;)
+    set_default(true)
+    on_check(function (option)
+        if option:dep(&quot;small&quot;):enabled() then
+            option:enable(false)
+        end
+    end)
+</code></pre>
+<p>After the detection of the dependent small option is completed, the state of the option of the test is controlled by judging the state of the small option.</p>
+<h3 id="option-before_check">option:before_check</h3>
+<p>Execute this script before option detection</p>
+<p>For example: before testing, find the package by <a href="#detect-find_package">find_package</a>, and add information such as <code>links</code>, <code>includedirs</code> and <code>linkdirs</code> to the option.<br>Then start the option detection, and then automatically link to the target after passing.</p>
+<pre><code class="lang-lua">option(&quot;zlib&quot;)
+    before_check(function (option)
+        import(&quot;lib.detect.find_package&quot;)
+        option:add(find_package(&quot;zlib&quot;))
+    end)
+</code></pre>
+<h3 id="option-on_check">option:on_check</h3>
+<h4 id="custom-option-detection-script">Custom Option Detection Script</h4>
+<p>This script overrides the built-in option detection logic.</p>
+<pre><code class="lang-lua">option(&quot;test&quot;)
+    add_deps(&quot;small&quot;)
+    set_default(true)
+    on_check(function (option)
+        if option:dep(&quot;small&quot;):enabled() then
+            option:enable(false)
+        end
+    end)
+</code></pre>
+<p>If the option that test depends on passes, disable the test option.</p>
+<h3 id="option-after_check">option:after_check</h3>
+<p>Execute this script after option detection</p>
+<p>After the option detection is complete, execute this script for some post-processing, or you can re-disable the option at this time:</p>
+<pre><code class="lang-lua">option(&quot;test&quot;)
+    add_deps(&quot;small&quot;)
+    add_links(&quot;pthread&quot;)
+    after_check(function (option)
+        option:enable(false)
+    end)
+</code></pre>
+<h3 id="option-set_values">option:set_values</h3>
+<h4 id="setting-the-list-of-option-values">Setting the list of option values</h4>
+<p>For the graphical menu configuration of <code>xmake f --menu</code> only, a list of option values ​​is provided for quick selection by the user, for example:</p>
+<pre><code class="lang-lua">option(&quot;test&quot;)
+    set_default(&quot;b&quot;)
+    set_showmenu(true)
+    set_values(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+</code></pre>
+<p>The effect chart is as follows:</p>
+<p>&lt;img src=&quot;/assets/img/manual/option_set_values.png&quot; width=&quot;60%&quot; /&gt;</p>
+<h3 id="option-set_default">option:set_default</h3>
+<h4 id="setting-options-defaults">Setting options defaults</h4>
+<p>When the option value is not modified by the command <code>xmake f --option=[y|n}</code>, the option itself has a default value, which can be set through this interface:</p>
+<pre><code class="lang-lua">option(&quot;test&quot;)
+    -- This option is disabled by default
+    set_default(false)
+</code></pre>
+<p>The value of the option supports not only the boolean type but also the string type, for example:</p>
+<pre><code class="lang-lua">option(&quot;test&quot;)
+    set_default(&quot;value&quot;)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Value Type</th>
+<th>Description</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolean</td>
+<td>Typically used as a parameter switch, value range: <code>true/false</code></td>
+<td><code>xmake f --optionname=[y/n/yes/no/true/false]</code></td>
+</tr>
+<tr>
+<td>string</td>
+<td>can be any string, generally used for pattern judgment</td>
+<td><code>xmake f --optionname=value</code></td>
+</tr>
+</tbody>
+</table>
+<p>If it is an option of the <code>boolean</code> value, it can be judged by <a href="#is_option">is_option</a>, and the option is enabled.</p>
+<p>If it is an option of type <code>string</code>, it can be used directly in built-in variables, for example:</p>
+<pre><code class="lang-lua">-- define a path configuration option, using the temporary directory by default
+option(&quot;rootdir&quot;)
+    set_default(&quot;$(tmpdir)&quot;)
+    set_showmenu(true)
+
+target(&quot;test&quot;)
+    -- add source files in the specified options directory
+    add_files(&quot;$(rootdir)/*.c&quot;)
+</code></pre>
+<p>Among them, <code>$(rootdir)</code> is a custom option built-in variable, which can be dynamically modified by manual configuration:</p>
+<pre><code class="lang-bash">$ xmake f --rootdir=~/projectdir/src
+$ xmake
+</code></pre>
+<p>Specify a different source directory path for this <code>rootdir</code> option and compile it.</p>
+<p>Detection behavior of the option:</p>
+<table>
+<thead>
+<tr>
+<th>default value</th>
+<th>detection behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No setting</td>
+<td>Priority manual configuration modification, disabled by default, otherwise automatic detection, can automatically switch boolean and string type according to the type of value manually passed in</td>
+</tr>
+<tr>
+<td>false</td>
+<td>switch option, not automatic detection, disabled by default, can be manually configured to modify</td>
+</tr>
+<tr>
+<td>true</td>
+<td>switch option, not automatic detection, enabled by default, can be manually configured to modify</td>
+</tr>
+<tr>
+<td>string type</td>
+<td>no switch state, no automatic detection, can be manually configured and modified, generally used for configuration variable transfer</td>
+</tr>
+</tbody>
+</table>
+<h3 id="option-set_showmenu">option:set_showmenu</h3>
+<h4 id="set-whether-to-enable-menu-display">Set whether to enable menu display</h4>
+<p>If set to <code>true</code>, then this option will appear in <code>xmake f --help</code>, which can also be configured via <code>xmake f --optionname=xxx</code>, otherwise it can only be used inside <code>xmake.lua</code> , the modification cannot be configured manually.</p>
+<pre><code class="lang-lua">option(&quot;test&quot;)
+    set_showmenu(true)
+</code></pre>
+<p>After setting the menu to enable, execute <code>xmake f --help</code> to see that there is one more item in the help menu:</p>
+<pre><code>Options:
+    ...
+
+    --test=TEST
+</code></pre><h3 id="option-set_category">option:set_category</h3>
+<h4 id="setting-option-categories-only-for-menu-display">Setting option categories, only for menu display</h4>
+<p>This is an optional configuration, only used in the help menu, the classification display options, the same category of options, will be displayed in the same group, so the menu looks more beautiful.</p>
+<p>E.g:</p>
+<pre><code class="lang-lua">option(&quot;test1&quot;)
+    set_showmenu(true)
+    set_category(&quot;test&quot;)
+
+option(&quot;test2&quot;)
+    set_showmenu(true)
+    set_category(&quot;test&quot;)
+
+option(&quot;demo1&quot;)
+    set_showmenu(true)
+    set_category(&quot;demo&quot;)
+
+option(&quot;demo2&quot;)
+    set_showmenu(true)
+    set_category(&quot;demo&quot;)
+</code></pre>
+<p>The four options here are grouped into two groups: <code>test</code> and <code>demo</code>, and the layout shown is similar to this:</p>
+<pre><code class="lang-bash">Options:
+    ...
+
+    --test1=TEST1
+    --test2=TEST2
+
+    --demo1=DEMO1
+    --demo2=DEMO2
+</code></pre>
+<p>This interface is just to adjust the display layout, more beautiful, no other use.</p>
+<p>In version 2.1.9, the hierarchical path name <code>set_category(&quot;root/submenu/submenu2&quot;)</code> can be set via category to configure the graphical menu interface of <code>xmake f --menu</code>, for example:</p>
+<pre><code class="lang-lua">-- &#39;boolean&#39; option
+option(&quot;test1&quot;)
+    set_default(true)
+    set_showmenu(true)
+    set_category(&quot;root menu/test1&quot;)
+
+-- &#39;choice&#39; option with values: &quot;a&quot;, &quot;b&quot;, &quot;c&quot;
+option(&quot;test2&quot;)
+    set_default(&quot;a&quot;)
+    set_values(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+    set_showmenu(true)
+    set_category(&quot;root menu/test2&quot;)
+
+-- &#39;string&#39; option
+option(&quot;test3&quot;)
+    set_default(&quot;xx&quot;)
+    set_showmenu(true)
+    set_category(&quot;root menu/test3/test3&quot;)
+
+-- &#39;number&#39; option
+option(&quot;test4&quot;)
+    set_default(6)
+    set_showmenu(true)
+    set_category(&quot;root menu/test4&quot;)
+</code></pre>
+<p>The menu interface path structure finally displayed in the above configuration:</p>
+<ul>
+<li>root menu<ul>
+<li>test1</li>
+<li>test2</li>
+<li>test3<ul>
+<li>test3</li>
+</ul>
+</li>
+<li>test4</li>
+</ul>
+</li>
+</ul>
+<p>The effect chart is as follows:</p>
+<p>&lt;img src=&quot;/assets/img/manual/option_set_category.gif&quot; width=&quot;60%&quot; /&gt;</p>
+<h3 id="option-set_description">option:set_description</h3>
+<h4 id="setting-menu-display-description">Setting menu display description</h4>
+<p>When the option menu is displayed, the description on the right is used to help the user know more clearly about the purpose of this option, for example:</p>
+<pre><code class="lang-lua">option(&quot;test&quot;)
+    set_default(false)
+    set_showmenu(true)
+    set_description(&quot;Enable or disable test&quot;)
+</code></pre>
+<p>The generated menu contents are as follows:</p>
+<pre><code>Options:
+    ...
+
+    --test=TEST Enable or disable test (default: false)
+</code></pre><p>This interface also supports multi-line display and outputs more detailed description information, such as:</p>
+<pre><code class="lang-lua">option(&quot;mode&quot;)
+    set_default(&quot;debug&quot;)
+    set_showmenu(true)
+    set_description(&quot;Set build mode&quot;,
+                    &quot; - debug&quot;,
+                    &quot; - release&quot;,
+                    &quot;-profile&quot;)
+</code></pre>
+<p>The generated menu contents are as follows:</p>
+<pre><code>Options:
+    ...
+
+    --mode=MODE Set build mode (default: debug)
+                                          - debug
+                                          - release
+                                          - profile
+</code></pre><p>When you see this menu, the user can clearly know the specific use of the defined <code>mode</code> option and how to use it:</p>
+<pre><code class="lang-bash">$ xmake f --mode=release
+</code></pre>
+<h3 id="option-add_bindings">option:add_bindings</h3>
+<h4 id="add-forward-association-option-sync-enable-and-disable">Add forward association option, sync enable and disable</h4>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>After the 2.1.5 version has been deprecated, please use <a href="#optionadd_deps">add_deps</a>, <a href="#optionon_check">on_check</a>, <a href="#optionafter_check">after_check</a> and other interfaces instead.<br>&lt;/p&gt;
+
+</p>
+<p>Bind association options, for example I want to configure a <code>smallest</code> parameter on the command line: <code>xmake f --smallest=y</code></p>
+<p>At this time, it is necessary to disable multiple other option switches at the same time to prohibit compiling multiple modules. This is the requirement, which is equivalent to the linkage between one option and other options.</p>
+<p>This interface is used to set some association options that need to be forward bound, for example:</p>
+<pre><code class="lang-lua">-- Define option switches: --smallest=y|n
+option(&quot;smallest&quot;)
+
+    -- Add forward binding. If smallest is enabled, all of the following option switches will also be enabled synchronously.
+    add_bindings(&quot;nozip&quot;, &quot;noxml&quot;, &quot;nojson&quot;)
+</code></pre>
+<h3 id="option-add_rbindings">option:add_rbindings</h3>
+<h4 id="add-reverse-association-option-sync-enable-and-disable">Add reverse association option, sync enable and disable</h4>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>After the 2.1.5 version has been deprecated, please use <a href="#optionadd_deps">add_deps</a>, <a href="#optionon_check">on_check</a>, <a href="#optionafter_check">after_check</a> and other interfaces instead.<br>&lt;/p&gt;
+
+</p>
+<p>Reverse binding association options, the switch state of the associated option is reversed.</p>
+<pre><code class="lang-lua">-- Define option switches: --smallest=y|n
+option(&quot;smallest&quot;)
+
+    -- Add reverse binding, if smallest is enabled, all modules below are disabled
+    add_rbindings(&quot;xml&quot;, &quot;zip&quot;, &quot;asio&quot;, &quot;regex&quot;, &quot;object&quot;, &quot;thread&quot;, &quot;network&quot;, &quot;charset&quot;, &quot;database&quot;)
+    add_rbindings(&quot;zlib&quot;, &quot;mysql&quot;, &quot;sqlite3&quot;, &quot;openssl&quot;, &quot;polarssl&quot;, &quot;pcre2&quot;, &quot;pcre&quot;, &quot;base&quot;)
+</code></pre>
+<p>&lt;p class=&quot;warn&quot;&gt;<br>It should be noted that the command line configuration is sequential. You can disable all modules by enabling smallest and then add other options to enable them one by one.<br>&lt;/p&gt;
+
+</p>
+<p>E.g:</p>
+<pre><code class="lang-bash">-- disable all modules and then only enable xml and zip modules
+$ xmake f --smallest=y --xml=y --zip=y
+</code></pre>
+<h3 id="option-add_links">option:add_links</h3>
+<h4 id="add-link-library-detection">Add Link Library Detection</h4>
+<p>If the specified link library is passed, this option will be enabled and the associated target will automatically be added to this link, for example:</p>
+<pre><code class="lang-lua">option(&quot;pthread&quot;)
+    set_default(false)
+    add_links(&quot;pthread&quot;)
+    add_linkdirs(&quot;/usr/local/lib&quot;)
+
+target(&quot;test&quot;)
+    add_options(&quot;pthread&quot;)
+</code></pre>
+<p>If the test passes, the <code>test</code> target will be automatically added when it is compiled: <code>-L/usr/local/lib -lpthread</code> compile option</p>
+<h3 id="option-add_linkdirs">option:add_linkdirs</h3>
+<h4 id="adding-the-search-directory-needed-for-link-library-detection">Adding the search directory needed for link library detection</h4>
+<p>This is optional. Generally, the system library does not need to add this, and it can also pass the test. If it is not found, you can add the search directory yourself to improve the detection pass rate. For details, see: <a href="#optionadd_links">add_links</a></p>
+<h3 id="option-add_rpathdirs">optiOn:add_rpathdirs</h3>
+<h4 id="adding-a-load-search-directory-for-a-dynamic-library-at-runtime">Adding a load search directory for a dynamic library at runtime</h4>
+<p>After the option passes the detection, it will be automatically added to the corresponding target. For details, see: <a href="/manual/project_target?id=targetadd_rpathdirs">target.add_rpathdirs</a>.</p>
+<h3 id="option-add_cincludes">option:add_cincludes</h3>
+<h4 id="add-c-header-file-detection">Add c header file detection</h4>
+<p>This option will be enabled if the c header file is passed, for example:</p>
+<pre><code class="lang-lua">option(&quot;pthread&quot;)
+    set_default(false)
+    add_cincludes(&quot;pthread.h&quot;)
+    add_defines(&quot;ENABLE_PTHREAD&quot;)
+
+target(&quot;test&quot;)
+    add_options(&quot;pthread&quot;)
+</code></pre>
+<p>This option checks if there is a <code>pthread.h</code> header file. If the test passes, then the <code>test</code> target program will add the macro definition of <code>ENABLE_PTHREAD</code>.</p>
+<p>If you want more flexible detection, you can do this in <a href="#optionon_check">option.on_check</a> via <a href="#detect-has_cincludes">lib.detect.has_cincludes</a>.</p>
+<h3 id="option-add_cxxincludes">option:add_cxxincludes</h3>
+<h4 id="add-c-header-file-detection">Add c++ header file detection</h4>
+<p>Similar to <a href="#optionadd_cincludes">add_cincludes</a>, except that the detected header file type is a c++ header file.</p>
+<h3 id="option-add_ctypes">option:add_ctypes</h3>
+<h4 id="add-c-type-detection">Add c type detection</h4>
+<p>This option will be enabled if the c type is passed, for example:</p>
+<pre><code class="lang-lua">option(&quot;wchar&quot;)
+    set_default(false)
+    add_cincludes(&quot;wchar_t&quot;)
+    add_defines(&quot;HAVE_WCHAR&quot;)
+
+target(&quot;test&quot;)
+    add_options(&quot;wchar&quot;)
+</code></pre>
+<p>This option checks if there is a type of <code>wchar_t</code>. If the test passes, then the <code>test</code> target program will add the macro definition of <code>HAVE_WCHAR</code>.</p>
+<p>If you want more flexible detection, you can do this in <a href="#optionon_check">option.on_check</a> via <a href="#detect-has_ctypes">lib.detect.has_ctypes</a>.</p>
+<h3 id="option-add_cxxtypes">option:add_cxxtypes</h3>
+<h4 id="adding-c-type-detection">Adding c++ type detection</h4>
+<p>Similar to <a href="#optionadd_ctypes">add_ctypes</a>, except that the type detected is a c++ type.</p>
+<h3 id="option-add_csnippet">option:add_csnippet</h3>
+<h4 id="add-c-code-fragment-detection">Add c code fragment detection</h4>
+<p>If the existing <a href="#optionadd_ctypes">add_ctypes</a>, <a href="#optionadd_cfuncs">add_cfuncs</a>, etc. cannot meet the current detection requirements,<br>You can use this interface to implement more custom detection of some compiler feature detection, see: <a href="#optionadd_cxxsnippet">add_cxxsnippet</a>.</p>
+<h3 id="option-add_cxxsnippet">option:add_cxxsnippet</h3>
+<h4 id="adding-c-code-snippet-detection">Adding c++ code snippet detection</h4>
+<p>This interface can be used to implement more custom detection of some compiler feature detection, especially the detection support of various features of C++, such as:</p>
+<pre><code class="lang-lua">option(&quot;constexpr&quot;)
+    add_cxxsnippet(&quot;constexpr&quot;, &quot;constexpr int f(int x) { int sum=0; for (int i=0; i&lt;=x; ++i) sum += i; return sum; } constexpr int x = f (5); static_assert(x == 15);&quot;)
+</code></pre>
+<p>The first parameter sets the name of the code snippet as a label, and is displayed when the output information is detected.</p>
+<p>The above code implements the detection of the constexpr feature of C++. If the test passes, the constexpr option is enabled. Of course, this is just an example.</p>
+<p>For the detection of compiler features, there is a more convenient and efficient detection module, providing more powerful detection support, see: <a href="#compiler-has_features">compiler.has_features</a> and <a href="#detect-check_cxsnippets">detect.check_cxsnippets</a></p>
+<p>If you want more flexible detection, you can do this in <a href="#optionon_check">option.on_check</a> via <a href="#detect-check_cxsnippets">lib.detect.check_cxsnippets</a>.</p>

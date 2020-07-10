@@ -1,0 +1,26 @@
+<p>By including a dependency package directory and some binary library files in the project, it is convenient to integrate some third-party dependency libraries. This method is relatively simple and straightforward, but the disadvantages are also obvious and inconvenient to manage.</p>
+<p>Take the tbox project as an example. The dependency package is as follows:</p>
+<pre><code>- base.pkg
+- zlib.pkg
+- polarssl.pkg
+- openssl.pkg
+- mysql.pkg
+- pcre.pkg
+- ...
+</code></pre><p>If you want the current project to recognize loading these packages, you first need to specify the package directory path, for example:</p>
+<pre><code class="lang-lua">add_packagedirs(&quot;packages&quot;)
+</code></pre>
+<p>Once specified, you can add integration package dependencies in the target scope via the <a href="/manual/project_target?id=targetadd_packages">add_packages</a> interface, for example:</p>
+<pre><code class="lang-lua">target(&quot;tbox&quot;)
+    add_packages(&quot;zlib&quot;, &quot;polarssl&quot;, &quot;pcre&quot;, &quot;mysql&quot;)
+</code></pre>
+<p>So how to generate a *.pkg package, if it is based on xmake project, the generation method is very simple, only need:</p>
+<pre><code class="lang-console">$ cd tbox
+$ xmake package
+</code></pre>
+<p>You can generate a tbox.pkg cross-platform package in the build directory for use by third-party projects. I can also directly set the output directory and compile and generate it into the other project, for example:</p>
+<pre><code class="lang-console">$ cd tbox
+$ xmake package -o ../test/packages
+</code></pre>
+<p>In this way, the test project can pass <a href="/manual/project_target?id=targetadd_packages">add_packages</a> and <a href="/manual/global_interfaces?id=add_packagedirs">add_packagedirs</a> to configure and use the tbox.pkg package.</p>
+<p>For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: <a href="https://tboox.org/cn/2016/08/06/add-package-and-autocheck/">Dependency package addition and automatic detection mechanism</a></p>

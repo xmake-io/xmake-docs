@@ -1,0 +1,160 @@
+<p>Xmake provides the syntax of <code>$(varname)</code> to support the acquisition of built-in variables, for example:</p>
+<pre><code class="lang-lua">add_cxflags(&quot;-I$(buildir)&quot;)
+</code></pre>
+<p>It will convert the built-in <code>buildir</code> variable to the actual build output directory when compiling: <code>-I./build</code></p>
+<p>General built-in variables can be used to quickly get and splicing variable strings when passing arguments, for example:</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+
+    -- Add source files in the project source directory
+    add_files(&quot;$(projectdir)/src/*.c&quot;)
+
+    -- Add a header file search path under the build directory
+    add_includedirs(&quot;$(buildir)/inc&quot;)
+</code></pre>
+<p>It can also be used in the module interface of a custom script, for example:</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+    on_run(function (target)
+        -- Copy the header file in the current script directory to the output directory
+        os.cp(&quot;$(scriptdir)/xxx.h&quot;, &quot;$(buildir)/inc&quot;)
+    end)
+</code></pre>
+<p>All built-in variables can also be retrieved via the <a href="#val">val</a> interface.</p>
+<p>This way of using built-in variables makes the description writing more concise and easy to read. Here are some of the variables built into xmake that can be obtained directly:</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#varos">$(os)</a></td>
+<td>Get the operating system of the current build platform</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varhost">$(host)</a></td>
+<td>Get native operating system</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#vartmpdir">$(tmpdir)</a></td>
+<td>Get Temporary Directory</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varcurdir">$(curdir)</a></td>
+<td>Get current directory</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varbuildir">$(buildir)</a></td>
+<td>Get the build output directory</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varscriptdir">$(scriptdir)</a></td>
+<td>Get Project Description Script Directory</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#varglobaldir">$(globaldir)</a></td>
+<td>Get Global Configuration Directory</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varconfigdir">$(configdir)</a></td>
+<td>Get Local Project Configuration Directory</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varprogramdir">$(programdir)</a></td>
+<td>xmake installation script directory</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#varprojectdir">$(projectdir)</a></td>
+<td>Get the project root directory</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varshell">$(shell)</a></td>
+<td>Execute external shell command</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varenv">$(env)</a></td>
+<td>Get external environment variables</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#varreg">$(reg)</a></td>
+<td>Get the value of the windows registry configuration item</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<p>Of course, this variable mode can also be extended. By default, the <code>xmake f --var=val</code> command can be used to directly obtain the parameters. For example:</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+    add_defines(&quot;-DTEST=$(var)&quot;)
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>All the parameter values ​​of the <code>xmake f --xxx=...</code> configuration can be obtained through built-in variables, for example: <code>xmake f --arch=x86</code> corresponds to <code>$(arch)</code>, others have <code>$(plat)</code>, <code>$(mode)</code> and so on.<br>What are the specific parameters, you can check it out by <code>xmake f -h</code>.<br>&lt;/p&gt;
+
+</p>
+<p>Since the support is directly obtained from the configuration options, it is of course convenient to extend the custom options to get the custom variables. For details on how to customize the options, see: <a href="#option">option</a></p>
+<h3 id="var-os-">var.$(os)</h3>
+<h4 id="get-the-operating-system-of-the-current-build-platform">Get the operating system of the current build platform</h4>
+<p>If iphoneos is currently compiled, then this value is: <code>ios</code>, and so on.</p>
+<h3 id="var-host-">var.$(host)</h3>
+<h4 id="get-the-native-operating-system">Get the native operating system</h4>
+<p>Refers to the host system of the current native environment, if you compile on macOS, then the system is: <code>macosx</code></p>
+<h3 id="var-tmpdir-">var.$(tmpdir)</h3>
+<h4 id="getting-a-temporary-directory">Getting a temporary directory</h4>
+<p>Generally used to temporarily store some non-permanent files.</p>
+<h3 id="var-curdir-">var.$(curdir)</h3>
+<h4 id="get-the-current-directory">Get the current directory</h4>
+<p>The default is the project root directory when the <code>xmake</code> command is executed. Of course, if the directory is changed by <a href="#os-cd">os.cd</a>, this value will also change.</p>
+<h3 id="var-buildir-">var.$(buildir)</h3>
+<h4 id="get-the-current-build-output-directory">Get the current build output directory</h4>
+<p>The default is usually the <code>./build</code> directory in the current project root directory. You can also modify the default output directory by executing the <code>xmake f -o /tmp/build</code> command.</p>
+<h3 id="var-scriptdir-">var.$(scriptdir)</h3>
+<h4 id="get-the-directory-of-the-current-project-description-script">Get the directory of the current project description script</h4>
+<p>That is, the directory path corresponding to <code>xmake.lua</code>.</p>
+<h3 id="var-globaldir-">var.$(globaldir)</h3>
+<h4 id="global-configuration-directory">Global Configuration Directory</h4>
+<p>Xmake&#39;s <code>xmake g|global</code> global configuration command, directory path for data storage, where you can place some of your own plugins and platform scripts.</p>
+<p>The default is: <code>~/.config</code></p>
+<h3 id="var-configdir-">var.$(configdir)</h3>
+<h4 id="current-project-configuration-directory">Current project configuration directory</h4>
+<p>The current project configuration storage directory, which is the storage directory of the <code>xmake f|config</code> configuration command, defaults to: <code>projectdir/.config</code></p>
+<h3 id="var-programdir-">var.$(programdir)</h3>
+<h4 id="xmake-installation-script-directory">xmake installation script directory</h4>
+<p>That is, the directory where the <code>XMAKE_PROGRAM_DIR</code> environment variable is located. We can also modify the xmake load script by setting this environment amount to implement version switching.</p>
+<h3 id="var-projectdir-">var.$(projectdir)</h3>
+<h4 id="project-root-directory">Project root directory</h4>
+<p>That is, the directory path specified in the <code>xmake -P xxx</code> command, the default is not specified is the current directory when the <code>xmake</code> command is executed, which is generally used to locate the project file.</p>
+<h3 id="var-shell-">var.$(shell)</h3>
+<h4 id="executing-external-shell-commands">Executing external shell commands</h4>
+<p>In addition to the built-in variable handling, xmake also supports the native shell to handle some of the features that xmake does not support.</p>
+<p>For example, there is a need now, I want to use the <code>pkg-config</code> to get the actual third-party link library name when compiling the Linux program, you can do this:</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    if is_plat(&quot;linux&quot;) then
+        add_ldflags(&quot;$(shell pkg-config --libs sqlite3)&quot;)
+    end
+</code></pre>
+<p>Of course, xmake has its own automated third library detection mechanism, which generally does not need such trouble, and lua&#39;s own scripting is very good. .</p>
+<p>But this example shows that xmake can be used with some third-party tools through the native shell. .</p>
+<h3 id="var-env-">var.$(env)</h3>
+<h4 id="get-external-environment-variables">Get external environment variables</h4>
+<p>For example, you can get the path in the environment variable:</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+    add_includedirs(&quot;$(env PROGRAMFILES)/OpenSSL/inc&quot;)
+</code></pre>
+<h3 id="var-reg-">var.$(reg)</h3>
+<h4 id="get-the-value-of-the-windows-registry-configuration-item">Get the value of the windows registry configuration item</h4>
+<p>Get the value of an item in the registry by <code>regpath; name</code>:</p>
+<pre><code class="lang-lua">print(&quot;$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)&quot;)
+</code></pre>

@@ -1,0 +1,109 @@
+<h2 id="master">Master</h2>
+<p>!&gt; Note! xmake is not recommended to install under root!</p>
+<h4 id="via-curl">via curl</h4>
+<pre><code class="lang-bash">bash &lt;(curl -fsSL https://xmake.io/shget.text)
+</code></pre>
+<h4 id="via-wget">via wget</h4>
+<pre><code class="lang-bash">bash &lt;(wget https://xmake.io/shget.text -O -)
+</code></pre>
+<h4 id="via-powershell">via powershell</h4>
+<pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
+</code></pre>
+<p>!&gt; If the ps script execution prompt fails, you can try to execute in administrator mode.</p>
+<h2 id="windows">Windows</h2>
+<h3 id="via-installer">via installer</h3>
+<ol>
+<li>Download xmake windows installer from <a href="https://github.com/xmake-io/xmake/releases">Releases</a></li>
+<li>Run xmake-[version].[win32|win64].exe</li>
+</ol>
+<p>!&gt; Releases/xmake-[version].[win32|win64].zip has not installer, we need unzip it and add PATH environment variables by ourself.</p>
+<h3 id="via-scoop">via scoop</h3>
+<pre><code class="lang-bash">scoop install xmake
+</code></pre>
+<h2 id="msys-mingw">Msys/Mingw</h2>
+<h3 id="mingw64">mingw64</h3>
+<pre><code class="lang-bash">pacman -Sy mingw-w64-x86_64-xmake
+</code></pre>
+<h3 id="mingw32">mingw32</h3>
+<pre><code class="lang-bash">pacman -Sy mingw-w64-i686-xmake
+</code></pre>
+<h2 id="macos">MacOS</h2>
+<pre><code class="lang-bash">brew install xmake
+</code></pre>
+<h2 id="linux">Linux</h2>
+<p>On Archlinux:</p>
+<pre><code class="lang-bash">yaourt xmake
+</code></pre>
+<p>Or download deb package to install it:</p>
+<ol>
+<li>Download xmake <code>.deb</code> install package from <a href="https://github.com/xmake-io/xmake/releases">Releases</a> </li>
+<li>Run <code>dpkg -i xmake-xxxx.deb</code></li>
+</ol>
+<h2 id="freebsd">FreeBSD</h2>
+<p>We need <a href="#source-compilation-and-installation">source compilation and installation</a> and use <code>gmake</code> instead of make.</p>
+<h2 id="termux-android-">Termux (Android)</h2>
+<pre><code class="lang-bash">pkg install xmake
+</code></pre>
+<h2 id="source-compilation-and-installation">Source compilation and installation</h2>
+<h3 id="installation">Installation</h3>
+<p>!&gt; Note! xmake is not recommended to install under root!</p>
+<pre><code class="lang-bash">git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake
+make build
+./scripts/get.sh __local__ __install_only__
+source ~/.xmake/profile
+</code></pre>
+<p>If you think the source of github is too slow, you can pull it through the mirror source of gitee or gitlab: </p>
+<pre><code class="lang-bash">git clone --recursive https://gitee.com/tboox/xmake.git
+git clone --recursive https://gitlab.com/tboox/xmake.git
+</code></pre>
+<p>!&gt; Since the current xmake source maintains dependencies via git submodule, it is necessary to add the <code>--recursive</code> parameter to pull all submodules at the same time. Please do not download the tar.gz source directly, because github does not automatically package submodules. Code.</p>
+<p>If you forget to add <code>--recursive</code> when git clone, you can also execute <code>git submodule update --init</code> to pull all submodules, for example:</p>
+<pre><code class="lang-bash">git clone https://github.com/xmake-io/xmake.git
+cd ./xmake
+git submodule update --init
+make build
+./scripts/get.sh __local__ __install_only__
+</code></pre>
+<p>!&gt; <code>./get.sh __local__</code> is installed to <code>~/.local/xmake</code>, and then loaded by <code>source ~/.xmake/profile</code>, so after the installation, the current terminal fails to execute xmake, If the prompt is not found, manually execute <code>source ~/.xmake/profile</code>, and the next time you open the terminal, you don&#39;t need it.</p>
+<h3 id="uninstall">Uninstall</h3>
+<pre><code class="lang-bash">./scripts/get.sh __uninstall__
+</code></pre>
+<h3 id="only-update-the-lua-script">Only update the lua script</h3>
+<p>This developer needs to debug the xmake source locally:</p>
+<pre><code class="lang-bash">./scripts/get.sh __local__ __install_only__
+</code></pre>
+<h3 id="root-installation">Root installation</h3>
+<p>Xmake is not recommended for root installation, because this is very insecure. If the user has to download the root, if the prompt xmake fails to run, please pass the <code>--root</code> parameter as prompted or set <code>XMAKE_ROOT=y</code>. The environment variable is forcibly enabled, provided that the user needs to pay attention to the risk of incorrect operating system file files under root.</p>
+<h3 id="dependency-issues">Dependency issues</h3>
+<ol>
+<li>If you encounter problems with readline, please install readline-devel or libreadline-dev dependencies. This is optional. It is only needed when the <code>xmake lua</code> command executes REPL.</li>
+<li>If you want to speed up compilation, you can install ccache, xmake will automatically detect and use, which is also optional.</li>
+</ol>
+<h2 id="other-installation-methods">Other installation methods</h2>
+<p>!&gt; This is also the source code compilation and installation, but the installation path will be written directly to <code>/usr/</code>, which requires root privileges, so unless special circumstances, this installation method is not recommended, it is recommended to use the <code>./get. Sh __local__</code> way to install, the installation path of the two installation methods is different, do not mix.</p>
+<p>Compile and install via make:</p>
+<pre><code class="lang-bash">make build; sudo make install
+</code></pre>
+<p>Install to other specified directories:</p>
+<pre><code class="lang-bash">sudo make install prefix=/usr/local
+</code></pre>
+<p>Uninstall:</p>
+<pre><code class="lang-bash">sudo make uninstall
+</code></pre>
+<h2 id="update-upgrade">Update Upgrade</h2>
+<p>Starting with v2.2.3, the <code>xmake update</code> command has been added to quickly update and upgrade itself. The default is to upgrade to the latest version. Of course, you can also specify to upgrade or roll back to a version:</p>
+<pre><code class="lang-bash">xmake update 2.2.4
+</code></pre>
+<p>We can also specify an update to the master/dev branch version:</p>
+<pre><code class="lang-bash">xmake update master
+xmake update dev
+</code></pre>
+<p>Update from the specified git source</p>
+<pre><code class="lang-bash">xmake update github:xmake-io/xmake#master
+xmake update gitee:tboox/xmake#dev # gitee mirror
+</code></pre>
+<p>If just update the xaake lua script changes, you can add <code>-s/--scriptonly</code> to quickly update the lua script.</p>
+<pre><code class="lang-bash">xmake update -s dev
+</code></pre>
+<p>Finally, if we want to uninstall xmake, it is also supported: <code>xmake update --uninstall</code></p>

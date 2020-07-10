@@ -1,0 +1,279 @@
+<p>Conditions are generally used to handle some special compilation platforms.</p>
+<table>
+<thead>
+<tr>
+<th>Interfaces</th>
+<th>Description</th>
+<th>Support version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#is_os">is_os</a></td>
+<td>Is the current compilation target system?</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_arch">is_arch</a></td>
+<td>Is the current compilation architecture?</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_plat">is_plat</a></td>
+<td>Is the current compilation platform?</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_host">is_host</a></td>
+<td>Is the current compilation host system?</td>
+<td>&gt;= 2.1.4</td>
+</tr>
+<tr>
+<td><a href="#is_mode">is_mode</a></td>
+<td>Is the current compilation mode?</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_kind">is_kind</a></td>
+<td>Is the current target kind?</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_option">is_option</a></td>
+<td>Is the given options enabled?</td>
+<td>&gt;= 2.0.1 &lt; 2.2.2 deprecated</td>
+</tr>
+<tr>
+<td><a href="#is_config">is_config</a></td>
+<td>Is the given config values?</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#has_config">has_config</a></td>
+<td>Is the given configs enabled?</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#has_package">has_package</a></td>
+<td>Is the given dependent package enabled?</td>
+<td>&gt;= 2.2.3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="is_os">is_os</h3>
+<h4 id="is-the-current-compilation-target-system">Is the current compilation target system</h4>
+<pre><code class="lang-lua">if is_os(&quot;ios&quot;) then
+    add_files(&quot;src/xxx/*.m&quot;)
+end
+</code></pre>
+<p>Support operation systems:</p>
+<ul>
+<li>windows</li>
+<li>linux</li>
+<li>android</li>
+<li>macosx</li>
+<li>ios</li>
+</ul>
+<h3 id="is_arch">is_arch</h3>
+<h4 id="is-the-current-compilation-architecture">Is the current compilation architecture</h4>
+<p>You can this api to check the configuration command: <code>xmake f -a armv7</code></p>
+<pre><code class="lang-lua">-- if the current architecture is x86_64 or i386
+if is_arch(&quot;x86_64&quot;, &quot;i386&quot;) then
+    add_files(&quot;src/xxx/*.c&quot;)
+end
+
+-- if the current architecture is armv7 or arm64 or armv7s or armv7-a
+if is_arch(&quot;armv7&quot;, &quot;arm64&quot;, &quot;armv7s&quot;, &quot;armv7-a&quot;) then
+    -- ...
+end
+</code></pre>
+<p>And you can also use the wildchard: <code>*</code> to check all matched architectures.</p>
+<pre><code class="lang-lua">-- if the current architecture is arm which contains armv7, arm64, armv7s and armv7-a ...
+if is_arch(&quot;arm*&quot;) then
+    -- ...
+end
+</code></pre>
+<h3 id="is_plat">is_plat</h3>
+<h4 id="is-the-current-compilation-platform">Is the current compilation platform</h4>
+<p>You can this api to check the configuration command: <code>xmake f -p iphoneos</code></p>
+<pre><code class="lang-lua">-- if the current platform is android
+if is_plat(&quot;android&quot;) then
+    add_files(&quot;src/xxx/*.c&quot;)
+end
+
+-- if the current platform is macosx or iphoneos
+if is_plat(&quot;macosx&quot;, &quot;iphoneos&quot;) then
+    add_frameworks(&quot;Foundation&quot;)
+end
+</code></pre>
+<p>Support platforms:</p>
+<ul>
+<li>windows</li>
+<li>linux</li>
+<li>macosx</li>
+<li>android</li>
+<li>iphoneos</li>
+<li>watchos</li>
+</ul>
+<h3 id="is_host">is_host</h3>
+<h4 id="is-the-current-compilation-host-system">Is the current compilation host system</h4>
+<p>Some compilation platforms can be built on multiple different operating systems, for example: android ndk (on linux, macOS and windows).</p>
+<p>So, we can use this api to determine the current host operating system.</p>
+<pre><code class="lang-lua">if is_host(&quot;windows&quot;) then
+    add_includedirs(&quot;C:\\includes&quot;)
+else
+    add_includedirs(&quot;/usr/includess&quot;)
+end
+</code></pre>
+<p>Support hosts:</p>
+<ul>
+<li>windows</li>
+<li>linux</li>
+<li>macosx</li>
+</ul>
+<p>We can also get it from <a href="/manual/builtin_variables?id=varhost">$(host)</a> or <a href="/manual/builtin_modules?id=oshost">os.host</a>.</p>
+<h3 id="is_mode">is_mode</h3>
+<h4 id="is-the-current-compilation-mode">Is the current compilation mode</h4>
+<p>You can this api to check the configuration command: <code>xmake f -m debug</code></p>
+<p>The compilation mode is not builtin mode for xmake, so you can set the mode value by yourself.</p>
+<p>We often use these configuration values: <code>debug</code>, <code>release</code>, <code>profile</code>, etc.</p>
+<pre><code class="lang-lua">-- if the current compilation mode is debug?
+if is_mode(&quot;debug&quot;) then
+
+    -- add macro: DEBUG
+    add_defines(&quot;DEBUG&quot;)
+
+    -- enable debug symbols
+    set_symbols(&quot;debug&quot;)
+
+    -- disable optimization
+    set_optimize(&quot;none&quot;)
+
+end
+
+-- if the current compilation mode is release or profile?
+if is_mode(&quot;release&quot;, &quot;profile&quot;) then
+
+    if is_mode(&quot;release&quot;) then
+
+        -- mark symbols visibility as hidden
+        set_symbols(&quot;hidden&quot;)
+
+        -- strip all symbols
+        set_strip(&quot;all&quot;)
+
+        -- fomit frame pointer
+        add_cxflags(&quot;-fomit-frame-pointer&quot;)
+        add_mxflags(&quot;-fomit-frame-pointer&quot;)
+
+    else
+
+        -- enable debug symbols
+        set_symbols(&quot;debug&quot;)
+
+    end
+
+    -- add vectorexts
+    add_vectorexts(&quot;sse2&quot;, &quot;sse3&quot;, &quot;ssse3&quot;, &quot;mmx&quot;)
+end
+</code></pre>
+<h3 id="is_kind">is_kind</h3>
+<h4 id="is-the-current-target-kind">Is the current target kind</h4>
+<p>You can this api to check the configuration command: <code>xmake f -k [static|shared]</code></p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+
+    -- set target kind from the configuration command
+    set_kind(&quot;$(kind)&quot;)
+    add_files(&quot;src/*c&quot;)
+
+    -- compile target for static?
+    if is_kind(&quot;static&quot;) then
+        add_files(&quot;src/xxx.c&quot;)
+    end
+</code></pre>
+<p>You can switch the target kind by configuration command.</p>
+<pre><code class="lang-bash"># compile as static library
+$ xmake f -k static
+$ xmake
+</code></pre>
+<pre><code class="lang-bash"># compile as shared library
+$ xmake f -k shared
+$ xmake
+</code></pre>
+<h3 id="is_option">is_option</h3>
+<h4 id="is-the-given-options-enabled">Is the given options enabled</h4>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>This interface has been deprecated after v2.2.2, please use <a href="#has_config">has_config</a> instead.<br>&lt;/p&gt;
+
+</p>
+<p>You can use this api to check the custom option configuration command：<code>xmake f --xxxx=y</code></p>
+<p>For example, we want to enable the custom option: <code>xmake f --demo=y</code> and check it from <code>xmake.lua</code>.</p>
+<pre><code class="lang-lua">if is_option(&quot;demo&quot;) then
+    add_subdirs(&quot;src/demo&quot;)
+end
+</code></pre>
+<h3 id="is_config">is_config</h3>
+<h4 id="is-the-given-config-values-">Is the given config values?</h4>
+<p>This interface is introduced from version 2.2.2 to determine whether the specified configuration is a given value.</p>
+<p>For example:</p>
+<pre><code class="lang-console">$ xmake f --test=hello1
+</code></pre>
+<pre><code class="lang-lua">option(&quot;test&quot;)
+    set_showmenu(&quot;true&quot;)
+    set_description(&quot;The test config option&quot;)
+option_end()
+
+if is_config(&quot;test&quot;, &quot;hello1&quot;, &quot;hello2&quot;) then
+    add_defines(&quot;HELLO&quot;)
+end
+</code></pre>
+<p>Not only that, we can also set pattern matching rules to determine values, such as:</p>
+<pre><code class="lang-lua">if is_config(&quot;test&quot;, &quot;hello.*&quot;) then
+    add_defines(&quot;HELLO&quot;)
+end
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>This interface is not only able to determine the custom options defined through the <a href="#option">option</a>,<br>but also to determine the built-in global and local configuration.<br>&lt;/p&gt;
+
+</p>
+<h3 id="has_config">has_config</h3>
+<h4 id="is-the-given-configs-enabled-">Is the given configs enabled?</h4>
+<p>This interface is introduced from version 2.2.2 to detect whether a custom or built-in option/configuration exists or is enabled.</p>
+<p>For example, the following configuration will be true:</p>
+<pre><code class="lang-console"># enable the given config or option (if be boolean type)
+$ xmake f --test1=y
+$ xmake f --test1=yes
+$ xmake f --test1=true
+
+# set the config value
+$ xmake f --test2=value
+</code></pre>
+<pre><code class="lang-lua">if has_config(&quot;test1&quot;, &quot;test2&quot;) then
+    add_defines(&quot;TEST&quot;)
+end
+</code></pre>
+<p>And the following configuration will be false:</p>
+<pre><code class="lang-console"># disable config/option（if be boolean type）
+$ xmake f --test1=n
+$ xmake f --test1=no
+$ xmake f --test1=false
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>This interface can determine not only the built-in global and local configs,<br>but also the custom options defined through the <a href="#option">option</a>.<br>&lt;/p&gt;
+
+</p>
+<h3 id="has_package">has_package</h3>
+<h4 id="is-the-given-dependent-package-enabled-">Is the given dependent package enabled?</h4>
+<p>This interface is introduced from version 2.2.3 to detect whether a dependent package exists or is enabled.</p>
+<p>It is usually used to <a href="/zh-cn/manual/global_interfaces?id=add_requires">add_requires</a>.</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {optional = true})
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;)
+    add_packages(&quot;tbox&quot;)
+
+    if has_package(&quot;tbox&quot;) then
+        add_defines(&quot;HAVE_TBOX&quot;)
+    end
+</code></pre>
+<p>If the remote dependencies are added via the optional add-on package added by <code>add_requires</code>, or the current platform does not support the actual installation, then <code>has_package</code> will return false.<br>Indicates that it does not exist, and then does some special processing for other flags definitions and even source file compilation controls.</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>The difference between this interface and <a href="#has_config">has_config</a> is that <a href="#has_config">has_config</a> is used for <a href="#option">option</a> whereas this is used for <a href="#add_requires">add_requires</a>.<br>&lt;/p&gt;
+</p>

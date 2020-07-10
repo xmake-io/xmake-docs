@@ -1,0 +1,410 @@
+<h2 id="-ide-">生成IDE工程文件</h2>
+<h3 id="-">简介</h3>
+<p>XMake跟<code>cmake</code>, <code>premake</code>等其他一些构建工具的区别在于：</p>
+<p>&lt;p class=&quot;warn&quot;&gt;<br><code>xmake</code>默认是直接构建运行的，生成第三方的IDE的工程文件仅仅作为<code>插件</code>来提供。<br>&lt;/p&gt;
+
+</p>
+<p>这样做的一个好处是：插件更加容易扩展，维护也更加独立和方便。</p>
+<h3 id="-makefile">生成Makefile</h3>
+<pre><code class="lang-console">$ xmake project -k makefile
+</code></pre>
+<h3 id="-cmakelists-txt">生成CMakelists.txt</h3>
+<pre><code class="lang-console">$ xmake project -k cmakelists
+</code></pre>
+<h3 id="-build-ninja">生成build.ninja</h3>
+<p>!&gt; 2.3.1以上版本才支持</p>
+<pre><code class="lang-console">$ xmake project -k ninja
+</code></pre>
+<h3 id="-compiler_flags">生成compiler_flags</h3>
+<pre><code class="lang-console">$ xmake project -k compiler_flags
+</code></pre>
+<h3 id="-compiler_commands">生成compiler_commands</h3>
+<p>导出每个源文件的编译信息，生成基于clang的编译数据库文件，json格式，可用于跟ide，编辑器，静态分析工具进行交互。</p>
+<pre><code class="lang-console">$ xmake project -k compile_commands
+</code></pre>
+<p>输出的内容格式如下：</p>
+<pre><code>[
+  { &quot;directory&quot;: &quot;/home/user/llvm/build&quot;,
+    &quot;command&quot;: &quot;/usr/bin/clang++ -Irelative -DSOMEDEF=\&quot;With spaces, quotes and \\-es.\&quot; -c -o file.o file.cc&quot;,
+    &quot;file&quot;: &quot;file.cc&quot; },
+  ...
+]
+
+</code></pre><p>对于<code>compile_commands</code>的详细说明见：<a href="#https://clang.llvm.org/docs/JSONCompilationDatabase.html">JSONCompilationDatabase</a></p>
+<h3 id="-visualstudio-">生成VisualStudio工程</h3>
+<h4 id="-xmake-">使用xmake集成编译</h4>
+<p>v2.2.8以上版本，提供了新版本的vs工程生成插件扩展，跟之前的生成vs的插件处理模式上有很大的不同，之前生成的vs工程是吧所有文件的编译展开后，转交给vs来处理编译。</p>
+<p>但是这种模式，对xmake的rules是没法支持的。因为xmake的rules里面用了很多的<code>on_build</code>此类自定义脚本，无法展开，所以像qt， wdk此类的项目就没法支持导出到vs里面进行编译了。</p>
+<p>因此，为了解决这个问题，新版本的vs生成插件通过在vs下直接调用xmake命令，去执行编译操作，并且对intellsence和定义跳转，还有断点调试也做了支持。</p>
+<p>具体使用方式跟老版本类似：</p>
+<pre><code class="lang-console">$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m &quot;debug;release&quot;
+</code></pre>
+<p>如果没指明版本，那么xmake会自动探测当前已有的vs版本来生成：</p>
+<pre><code class="lang-bash">$ xmake project -k vsxmake -m &quot;debug;release&quot;
+</code></pre>
+<p><img src="/assets/img/manual/qt_vs.png" alt=""></p>
+<p>另外，vsxmake插件还会额外生成一个自定义的配置属性页，用于在vs里面，方便灵活的修改和追加一些xmake编译配置，甚至可以在里面配置切换到其他交叉工具链，实现在vs中对android, linux等其他平台的交叉编译。</p>
+<p><img src="/assets/img/manual/property_page_vsxmake.png" alt=""></p>
+<h4 id="-vs-">使用vs内置编译机制</h4>
+<p>!&gt; 建议尽量使用上文提到的v2.2.8之后提供的新版的vs生成插件，支持更加完善，此处的生成方式不支持xmake的rules，以及对qt等工程的生成。</p>
+<pre><code class="lang-console">$ xmake project -k [vs2008|vs2013|vs2015|..]
+</code></pre>
+<p>v2.1.2以上版本，增强了vs201x版本工程的生成，支持多模式+多架构生成，生成的时候只需要指定：</p>
+<pre><code class="lang-console">$ xmake project -k vs2017 -m &quot;debug,release&quot;
+</code></pre>
+<p>生成后的工程文件，同时支持<code>debug|x86</code>, <code>debug|x64</code>, <code>release|x86</code>, <code>release|x64</code>四种配置模式。</p>
+<p>如果不想每次生成的时候，指定模式，可以把模式配置加到<code>xmake.lua</code>的中，例如：</p>
+<pre><code class="lang-lua">-- 配置当前的工程，支持哪些编译模式
+add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)
+</code></pre>
+<h2 id="-lua-">运行自定义lua脚本</h2>
+<p>这个跟宏脚本类似，只是省去了导入导出操作，直接指定lua脚本来加载运行，这对于想要快速测试一些接口模块，验证自己的某些思路，都是一个不错的方式。</p>
+<h3 id="-">运行指定的脚本文件</h3>
+<p>我们先写个简单的lua脚本：</p>
+<pre><code class="lang-lua">function main()
+    print(&quot;hello xmake!&quot;)
+end
+</code></pre>
+<p>然后直接运行它就行了：</p>
+<pre><code class="lang-console">$ xmake lua /tmp/test.lua
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    当然，你也可以像宏脚本那样，使用<code>import</code>接口导入扩展模块，实现复杂的功能。<br>&lt;/p&gt;
+
+</p>
+<h3 id="-">运行内置的脚本命令</h3>
+<p>你可以运行 <code>xmake lua -l</code> 来列举所有内置的脚本名，例如：</p>
+<pre><code class="lang-console">$ xmake lua -l
+scripts:
+    cat
+    cp
+    echo
+    versioninfo
+    ...
+</code></pre>
+<p>并且运行它们：</p>
+<pre><code class="lang-console">$ xmake lua cat ~/file.txt
+$ xmake lua echo &quot;hello xmake&quot;
+$ xmake lua cp /tmp/file /tmp/file2
+$ xmake lua versioninfo
+</code></pre>
+<h3 id="-repl-">运行交互命令 (REPL)</h3>
+<p>有时候在交互模式下，运行命令更加的方便测试和验证一些模块和api，也更加的灵活，不需要再去额外写一个脚本文件来加载。</p>
+<p>我们先看下，如何进入交互模式：</p>
+<pre><code class="lang-console"># 不带任何参数执行，就可以进入
+$ xmake lua
+&gt;
+
+# 进行表达式计算
+&gt; 1 + 2
+3
+
+# 赋值和打印变量值
+&gt; a = 1
+&gt; a
+1
+
+# 多行输入和执行
+&gt; for _, v in pairs({1, 2, 3}) do
+&gt;&gt; print(v)
+&gt;&gt; end
+1
+2
+3
+</code></pre>
+<p>我们也能够通过 <code>import</code> 来导入扩展模块：</p>
+<pre><code class="lang-console">&gt; task = import(&quot;core.project.task&quot;)
+&gt; task.run(&quot;hello&quot;)
+hello xmake!
+</code></pre>
+<p>如果要中途取消多行输入，只需要输入字符：<code>q</code> 就行了</p>
+<pre><code class="lang-console">&gt; for _, v in ipairs({1, 2}) do
+&gt;&gt; print(v)
+&gt;&gt; q             &lt;--  取消多行输入，清空先前的输入数据
+&gt; 1 + 2
+3
+</code></pre>
+<h2 id="-">显示指定信息和列表</h2>
+<h3 id="-xmake-">显示xmake自身和当前项目的基础信息</h3>
+<pre><code class="lang-bash">$ xmake show
+The information of xmake:
+    version: 2.3.3+202006011009
+    host: macosx/x86_64
+    programdir: /Users/ruki/.local/share/xmake
+    programfile: /Users/ruki/.local/bin/xmake
+    globaldir: /Users/ruki/.xmake
+    tmpdir: /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/200603
+    workingdir: /Users/ruki/projects/personal/tbox
+    packagedir: /Users/ruki/.xmake/packages
+    packagedir(cache): /Users/ruki/.xmake/cache/packages/2006
+
+The information of project: tbox
+    version: 1.6.5
+    plat: macosx
+    arch: x86_64
+    mode: release
+    buildir: build
+    configdir: /Users/ruki/projects/personal/tbox/.xmake/macosx/x86_64
+    projectdir: /Users/ruki/projects/personal/tbox
+    projectfile: /Users/ruki/projects/personal/tbox/xmake.lua
+</code></pre>
+<h3 id="-">显示工具链列表</h3>
+<pre><code class="lang-bash">$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+</code></pre>
+<h3 id="-target-">显示指定target配置信息</h3>
+<pre><code class="lang-bash">$ xmake show --target=tbox
+The information of target(tbox):
+    kind: static
+    targetfile: build/macosx/x86_64/release/libtbox.a
+    rules: mode.release, mode.debug, mode.profile, mode.coverage
+    options: info, float, wchar, exception, force-utf8, deprecated, xml, zip, hash, regex, coroutine, object, charset, database
+    packages: mbedtls, polarssl, openssl, pcre2, pcre, zlib, mysql, sqlite3
+    links: pthread
+    syslinks: pthread, dl, m, c
+    cxflags: -Wno-error=deprecated-declarations, -fno-strict-aliasing, -Wno-error=expansion-to-defined, -fno-stack-protector
+    defines: __tb_small__, __tb_prefix__=&quot;tbox&quot;
+    mxflags: -Wno-error=deprecated-declarations, -fno-strict-aliasing, -Wno-error=expansion-to-defined
+    headerfiles: src/(tbox/**.h)|**/impl/**.h, src/(tbox/prefix/**/prefix.S), src/(tbox/math/impl/*.h), src/(tbox/utils/impl/*.h), build/macosx/x86_64/release/tbox.config.h
+    includedirs: src, build/macosx/x86_64/release
+    at: /Users/ruki/projects/personal/tbox/src/tbox/xmake.lua
+    sourcebatch(cc): with rule(c.build)
+      -&gt; src/tbox/string/static_string.c
+         -&gt; build/.objs/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o
+         -&gt; build/.deps/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o.d
+      -&gt; src/tbox/platform/sched.c
+         -&gt; build/.objs/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o
+         -&gt; build/.deps/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o.d
+      -&gt; src/tbox/stream/stream.c
+         -&gt; build/.objs/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o
+         -&gt; build/.deps/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o.d
+      -&gt; src/tbox/utils/base32.c
+         -&gt; build/.objs/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o
+         -&gt; build/.deps/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o.d
+</code></pre>
+<h3 id="-">显示内置编译模式列表</h3>
+<pre><code class="lang-bash">$ xmake show -l modes
+</code></pre>
+<h3 id="-">显示内置编译规则列表</h3>
+<pre><code class="lang-bash">$ xmake show -l rules
+</code></pre>
+<h3 id="-">显示其他信息</h3>
+<p>还在完善中，详情见：<a href="https://github.com/xmake-io/xmake/issues/798">https://github.com/xmake-io/xmake/issues/798</a></p>
+<p>或者运行：</p>
+<pre><code class="lang-bash">$ xmake show --help
+</code></pre>
+<h2 id="-">宏记录和回放</h2>
+<h3 id="-">简介</h3>
+<p>我们可以通过这个插件，快速记录和回放我们平常频繁使用到的一些xmake操作，来简化我们日常的开发工作。</p>
+<p>它提供了一些功能：</p>
+<ul>
+<li>手动记录和回放多条执行过的xmake命令</li>
+<li>支持快速的匿名宏创建和回放</li>
+<li>支持命名宏的长久记录和重用</li>
+<li>支持宏脚本的批量导入和导出</li>
+<li>支持宏脚本的删除、显示等管理功能</li>
+<li>支持自定义高级宏脚本，以及参数配置</li>
+</ul>
+<h3 id="-">记录操作</h3>
+<pre><code class="lang-console"># 开始记录宏
+$ xmake macro --begin
+
+# 执行一些xmake命令
+$ xmake f -p android --ndk=/xxx/ndk -a arm64-v8a
+$ xmake p
+$ xmake f -p mingw --sdk=/mingwsdk
+$ xmake p
+$ xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin
+$ xmake p
+$ xmake f -p iphoneos -a armv7
+$ xmake p
+$ xmake f -p iphoneos -a arm64
+$ xmake p
+$ xmake f -p iphoneos -a armv7s
+$ xmake p
+$ xmake f -p iphoneos -a i386
+$ xmake p
+$ xmake f -p iphoneos -a x86_64
+$ xmake p
+
+# 结束宏记录，这里不设置宏名字，所以记录的是一个匿名宏
+xmake macro --end 
+</code></pre>
+<h3 id="-">回放</h3>
+<pre><code class="lang-console"># 回放一个匿名宏
+$ xmake macro .
+</code></pre>
+<h3 id="-">命名宏</h3>
+<p>匿名宏的好处就是快速记录，快速回放，如果需要长久保存，就需要给宏取个名字。</p>
+<pre><code class="lang-console">$ xmake macro --begin
+$ ...
+$ xmake macro --end macroname
+$ xmake macro macroname
+</code></pre>
+<h3 id="-">导入导出宏</h3>
+<p>导入指定的宏脚本或者宏目录：</p>
+<pre><code class="lang-console">$ xmake macro --import=/xxx/macro.lua macroname
+$ xmake macro --import=/xxx/macrodir
+</code></pre>
+<p>导出指定的宏到脚本或者目录：</p>
+<pre><code class="lang-console">$ xmake macro --export=/xxx/macro.lua macroname
+$ xmake macro --export=/xxx/macrodir
+</code></pre>
+<h3 id="-">列举显示宏</h3>
+<p>列举所有<code>xmake</code>内置的宏脚本：</p>
+<pre><code class="lang-console">$ xmake macro --list
+</code></pre>
+<p>显示指定的宏脚本内容：</p>
+<pre><code class="lang-console">$ xmake macro --show macroname
+</code></pre>
+<h3 id="-">自定义宏脚本</h3>
+<p>我们也可以自己编写个宏脚本 <code>macro.lua</code> 然后导入到xmake中去。</p>
+<pre><code class="lang-lua">function main()
+    os.exec(&quot;xmake f -p android --ndk=/xxx/ndk -a arm64-v8a&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p mingw --sdk=/mingwsdk&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a armv7&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a arm64&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a armv7s&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a i386&quot;)
+    os.exec(&quot;xmake p&quot;)
+    os.exec(&quot;xmake f -p iphoneos -a x86_64&quot;)
+    os.exec(&quot;xmake p&quot;)  
+end
+</code></pre>
+<p>导入到xmake，并且定义宏名字：</p>
+<pre><code class="lang-console">$ xmake macro --import=/xxx/macro.lua [macroname]
+</code></pre>
+<p>回放这个宏脚本：</p>
+<pre><code class="lang-console">$ xmake macro [.|macroname]
+</code></pre>
+<h3 id="-">内置的宏脚本</h3>
+<p>XMake 提供了一些内置的宏脚本，来简化我们的日常开发工作。</p>
+<p>例如，我们可以使用 <code>package</code> 宏来对<code>iphoneos</code>平台的所有架构，一次性批量构建和打包：</p>
+<pre><code class="lang-console">$ xmake macro package -p iphoneos 
+</code></pre>
+<h3 id="-">高级的宏脚本编写</h3>
+<p>以上面提到的<code>package</code>宏为例，我们看下其具体代码，里面通过<code>import</code>导入一些扩展模块，实现了复杂的脚本操作。</p>
+<pre><code class="lang-lua">-- imports
+import(&quot;core.base.option&quot;)
+import(&quot;core.project.config&quot;)
+import(&quot;core.project.project&quot;)
+import(&quot;core.platform.platform&quot;)
+
+-- the options
+local options =
+{
+    {&#39;p&#39;, &quot;plat&quot;,       &quot;kv&quot;,  os.host(),   &quot;Set the platform.&quot;                                    }
+,   {&#39;f&#39;, &quot;config&quot;,     &quot;kv&quot;,  nil,         &quot;Pass the config arguments to \&quot;xmake config\&quot; ..&quot;     }
+,   {&#39;o&#39;, &quot;outputdir&quot;,  &quot;kv&quot;,  nil,         &quot;Set the output directory of the package.&quot;             }
+}
+
+-- package all
+--
+-- .e.g
+-- xmake m package 
+-- xmake m package -f &quot;-m debug&quot;
+-- xmake m package -p linux
+-- xmake m package -p iphoneos -f &quot;-m debug --xxx ...&quot; -o /tmp/xxx
+-- xmake m package -f \&quot;--mode=debug\&quot;
+--
+function main(argv)
+
+    -- parse arguments
+    local args = option.parse(argv, options, &quot;Package all architectures for the given the platform.&quot;
+                                           , &quot;&quot;
+                                           , &quot;Usage: xmake macro package [options]&quot;)
+
+    -- package all archs
+    local plat = args.plat
+    for _, arch in ipairs(platform.archs(plat)) do
+
+        -- config it
+        os.exec(&quot;xmake f -p %s -a %s %s -c %s&quot;, plat, arch, args.config or &quot;&quot;, (option.get(&quot;verbose&quot;) and &quot;-v&quot; or &quot;&quot;))
+
+        -- package it
+        if args.outputdir then
+            os.exec(&quot;xmake p -o %s %s&quot;, args.outputdir, (option.get(&quot;verbose&quot;) and &quot;-v&quot; or &quot;&quot;))
+        else
+            os.exec(&quot;xmake p %s&quot;, (option.get(&quot;verbose&quot;) and &quot;-v&quot; or &quot;&quot;))
+        end
+    end
+
+    -- package universal for iphoneos, watchos ...
+    if plat == &quot;iphoneos&quot; or plat == &quot;watchos&quot; then
+
+        -- load configure
+        config.load()
+
+        -- load project
+        project.load()
+
+        -- enter the project directory
+        os.cd(project.directory())
+
+        -- the outputdir directory
+        local outputdir = args.outputdir or config.get(&quot;buildir&quot;)
+
+        -- package all targets
+        for _, target in pairs(project.targets()) do
+
+            -- get all modes
+            local modedirs = os.match(format(&quot;%s/%s.pkg/lib/*&quot;, outputdir, target:name()), true)
+            for _, modedir in ipairs(modedirs) do
+
+                -- get mode
+                local mode = path.basename(modedir)
+
+                -- make lipo arguments
+                local lipoargs = nil
+                for _, arch in ipairs(platform.archs(plat)) do
+                    local archfile = format(&quot;%s/%s.pkg/lib/%s/%s/%s/%s&quot;, outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile())) 
+                    if os.isfile(archfile) then
+                        lipoargs = format(&quot;%s -arch %s %s&quot;, lipoargs or &quot;&quot;, arch, archfile) 
+                    end
+                end
+                if lipoargs then
+
+                    -- make full lipo arguments
+                    lipoargs = format(&quot;-create %s -output %s/%s.pkg/lib/%s/%s/universal/%s&quot;, lipoargs, outputdir, target:name(), mode, plat, path.filename(target:targetfile()))
+
+                    -- make universal directory
+                    os.mkdir(format(&quot;%s/%s.pkg/lib/%s/%s/universal&quot;, outputdir, target:name(), mode, plat))
+
+                    -- package all archs
+                    os.execv(&quot;xmake&quot;, {&quot;l&quot;, &quot;lipo&quot;, lipoargs})
+                end
+            end
+        end
+    end
+end
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>    如果你想要获取更多宏参数选项信息，请运行： <code>xmake macro --help</code><br>&lt;/p&gt;
+
+</p>
+<h2 id="-doxygen-">生成doxygen文档</h2>
+<p>请先确保本机已安装<code>doxygen</code>工具，然后在工程目录下运行：</p>
+<pre><code class="lang-console">$ xmake doxygen
+</code></pre>

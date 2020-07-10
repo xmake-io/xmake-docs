@@ -1,0 +1,2124 @@
+<p>All expansion modules need to be imported through the <a href="/manual/builtin_modules?id=import">import</a> interface.</p>
+<h3 id="core-base-option">core.base.option</h3>
+<p>Commonly used to get the value of the xmake command parameter option, often used for plugin development.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#optionget">option.get</a></td>
+<td>Get Parameter Option Value</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="option-get">option.get</h4>
+<ul>
+<li>Get parameter option values</li>
+</ul>
+<p>Used to get parameter option values in plugin development, for example:</p>
+<pre><code class="lang-lua">-- import option module
+import(&quot;core.base.option&quot;)
+
+-- plugin entry function
+function main(...)
+    print(option.get(&quot;info&quot;))
+end
+</code></pre>
+<p>The above code gets the hello plugin and executes: <code>xmake hello --info=xxxx</code> The value of the <code>--info=</code> option passed in the command, and shows: <code>xxxx</code></p>
+<p>For task tasks or plugins that are not a main entry, you can use this:</p>
+<pre><code class="lang-lua">task(&quot;hello&quot;)
+    on_run(function ())
+        import(&quot;core.base.option&quot;)
+        print(option.get(&quot;info&quot;))
+    end)
+</code></pre>
+<h3 id="core-base-global">core.base.global</h3>
+<p>Used to get the configuration information of xmake global, that is, the value of the parameter option passed in <code>xmake g|global --xxx=val</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#globalget">global.get</a></td>
+<td>Get the specified configuration value</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#globalload">global.load</a></td>
+<td>Load Configuration</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#globaldirectory">global.directory</a></td>
+<td>Get Global Configuration Information Directory</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#globaldump">global.dump</a></td>
+<td>Print out all global configuration information</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>Prior to version 2.1.5, it was <code>core.project.global</code>.<br>&lt;/p&gt;
+
+</p>
+<h4 id="global-get">global.get</h4>
+<ul>
+<li>Get the specified configuration value</li>
+</ul>
+<p>Similar to <a href="#configget">config.get</a>, the only difference is that this is obtained from the global configuration.</p>
+<h4 id="global-load">global.load</h4>
+<ul>
+<li>Load configuration</li>
+</ul>
+<p>Similar to <a href="#globalget">global.get</a>, the only difference is that this is loaded from the global configuration.</p>
+<h4 id="global-directory">global.directory</h4>
+<ul>
+<li>Get the global configuration information directory</li>
+</ul>
+<p>The default is the <code>~/.config</code> directory.</p>
+<h4 id="global-dump">global.dump</h4>
+<ul>
+<li>Print out all global configuration information</li>
+</ul>
+<p>The output is as follows:</p>
+<pre><code class="lang-lua">{
+    clean = true
+,   ccache = &quot;ccache&quot;
+,   xcode_dir = &quot;/Applications/Xcode.app&quot;
+}
+</code></pre>
+<h3 id="core-base-task">core.base.task</h3>
+<p>Used for task operations, generally used to call other task tasks in custom scripts and plug-in tasks.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#taskrun">task.run</a></td>
+<td>Run the specified task</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>Prior to version 2.1.5, it was <code>core.project.task</code>.<br>&lt;/p&gt;
+
+</p>
+<h4 id="task-run">task.run</h4>
+<ul>
+<li>Run the specified task</li>
+</ul>
+<p>Used to run tasks or plugins defined by <a href="#task">task</a> in custom scripts, plugin tasks, for example:</p>
+<pre><code class="lang-lua">task(&quot;hello&quot;)
+    on_run(function ()
+        print(&quot;hello xmake!&quot;)
+    end)
+
+target(&quot;demo&quot;)
+    on_clean(function(target)
+
+        -- Import task module
+        import(&quot;core.base.task&quot;)
+
+        -- Run this hello task
+        task.run(&quot;hello&quot;)
+    end)
+</code></pre>
+<p>We can also increase parameter passing when running a task, for example:</p>
+<pre><code class="lang-lua">task(&quot;hello&quot;)
+    on_run(function (arg1, arg2)
+        print(&quot;hello xmake: %s %s!&quot;, arg1, arg2)
+    end)
+
+target(&quot;demo&quot;)
+    on_clean(function(target)
+
+        -- Import task
+        import(&quot;core.base.task&quot;)
+
+        -- {} This is used for the first option, which is set to null, where two arguments are passed in the last: arg1, arg2
+        task.run(&quot;hello&quot;, {}, &quot;arg1&quot;, &quot;arg2&quot;)
+    end)
+</code></pre>
+<p>The second argument to <code>task.run</code> is used to pass options from the command line menu instead of passing directly into the <code>function (arg, ...)</code> function entry, for example:</p>
+<pre><code class="lang-lua">-- Import task
+import(&quot;core.base.task&quot;)
+
+-- Plugin entry
+function main(...)
+
+    -- Run the built-in xmake configuration task, equivalent to: xmake f|config --plat=iphoneos --arch=armv7
+    task.run(&quot;config&quot;, {plat=&quot;iphoneos&quot;, arch=&quot;armv7&quot;})
+end
+</code></pre>
+<h3 id="core-tool-linker">core.tool.linker</h3>
+<p>Linker related operations, often used for plugin development.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#linkerlink">linker.link</a></td>
+<td>Execute Link</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#linkerlinkcmd">linker.linkcmd</a></td>
+<td>Get Link Command Line</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#linkerlinkargv">linker.linkargv</a></td>
+<td>Get Link Command Line List</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#linkerlinkflags">linker.linkflags</a></td>
+<td>Get LinksOptions</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#linkerhas_flags">linker.has_flags</a></td>
+<td>Determine if the specified link option is supported</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<h4 id="linker-link">linker.link</h4>
+<ul>
+<li>Execute link</li>
+</ul>
+<p>For the target, link the specified object file list to generate the corresponding target file, for example:</p>
+<pre><code class="lang-lua">linker.link(&quot;binary&quot;, &quot;cc&quot;, {&quot;a.o&quot;, &quot;b.o&quot;, &quot;c.o&quot;}, target:targetfile(), {target = target})
+</code></pre>
+<p>Where <a href="#target">target</a> is the project target, here is passed in, mainly used to get the target-specific link options. For the project target object, see: <a href="#core-project-project">core.project.project</a></p>
+<p>Of course, you can also not specify the target, for example:</p>
+<pre><code class="lang-lua">linker.link(&quot;binary&quot;, &quot;cc&quot;, {&quot;a.o&quot;, &quot;b.o&quot;, &quot;c.o&quot;}, &quot;/tmp/targetfile&quot;)
+</code></pre>
+<p>The first parameter specifies the link type and currently supports: binary, static, shared<br>The second parameter tells the linker that it should be linked as the source file object, and what compiler source files are compiled with, for example:</p>
+<table>
+<thead>
+<tr>
+<th>Second Parameter Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cc</td>
+<td>c compiler</td>
+</tr>
+<tr>
+<td>cxx</td>
+<td>c++ compiler</td>
+</tr>
+<tr>
+<td>mm</td>
+<td>objc compiler</td>
+</tr>
+<tr>
+<td>mxx</td>
+<td>objc++ compiler</td>
+</tr>
+<tr>
+<td>gc</td>
+<td>go compiler</td>
+</tr>
+<tr>
+<td>as</td>
+<td>assembler</td>
+</tr>
+<tr>
+<td>sc</td>
+<td>swift compiler</td>
+</tr>
+<tr>
+<td>rc</td>
+<td>rust compiler</td>
+</tr>
+<tr>
+<td>dc</td>
+<td>dlang compiler</td>
+</tr>
+</tbody>
+</table>
+<p>Specifying different compiler types, the linker will adapt the most appropriate linker to handle the link, and if several languages ​​support mixed compilation, you can pass in multiple compiler types at the same time, specifying that the linker chooses to support these hybrid compilations. The linker of the language performs link processing:</p>
+<pre><code class="lang-lua">linker.link(&quot;binary&quot;, {&quot;cc&quot;, &quot;mxx&quot;, &quot;sc&quot;}, {&quot;a.o&quot;, &quot;b.o&quot;, &quot;c.o&quot;}, &quot;/tmp/targetfile&quot;)
+</code></pre>
+<p>The above code tells the linker that the three object files a, b, c may be c, objc++, compiled by swift code. The linker will select the most suitable linker from the current system and toolchain to handle the link process. .</p>
+<h4 id="linker-linkcmd">linker.linkcmd</h4>
+<ul>
+<li>Get link command line string</li>
+</ul>
+<p>Get the command line string executed in <a href="#linkerlink">linker.link</a> directly, which is equivalent to:</p>
+<pre><code class="lang-lua">local cmdstr = linker.linkcmd(&quot;static&quot;, &quot;cxx&quot;, {&quot;a.o&quot;, &quot;b.o&quot;, &quot;c.o&quot;}, target:targetfile(), {target = target})
+</code></pre>
+<p>Note: The extension part of <code></code>target = target}` is optional. If the target object is passed, the generated link command will add the link option corresponding to this target configuration.</p>
+<p>And you can also pass various configurations yourself, for example:</p>
+<pre><code class="lang-lua">local cmdstr = linker.linkcmd(&quot;static&quot;, &quot;cxx&quot;, {&quot;a.o&quot;, &quot;b.o&quot;, &quot;c.o&quot;}, target:targetfile(), {config = {linkdirs = &quot;/usr/lib&quot;}})
+</code></pre>
+<h4 id="linker-linkargv">linker.linkargv</h4>
+<ul>
+<li>Get a list of link command line arguments</li>
+</ul>
+<p>A little different from <a href="#linkerlinkcmd">linker.linkcmd</a> is that this interface returns a list of parameters, table representation, more convenient to operate:</p>
+<pre><code class="lang-lua">local program, argv = linker.linkargv(&quot;static&quot;, &quot;cxx&quot;, {&quot;a.o&quot;, &quot;b.o&quot;, &quot;c.o&quot;}, target:targetfile(), {target = target})
+</code></pre>
+<p>The first value returned is the main program name, followed by the parameter list, and <code>os.args(table.join(program, argv))</code> is equivalent to <code>linker.linkcmd</code>.</p>
+<p>We can also run it directly by passing the return value to <a href="#os-runv">os.runv</a>: <code>os.runv(linker.linkargv(..))</code></p>
+<h4 id="linker-linkflags">linker.linkflags</h4>
+<ul>
+<li>Get link options</li>
+</ul>
+<p>Get the link option string part of <a href="#linkerlinkcmd">linker.linkcmd</a> without shellname and object file list, and return by array, for example:</p>
+<pre><code class="lang-lua">local flags = linker.linkflags(&quot;shared&quot;, &quot;cc&quot;, {target = target})
+for _, flag in ipairs(flags) do
+    print(flag)
+end
+</code></pre>
+<p>The returned array of flags is an array.</p>
+<h4 id="linker-has_flags">linker.has_flags</h4>
+<ul>
+<li>Determine if the specified link option is supported</li>
+</ul>
+<p>Although it can be judged by <a href="detect-has_flags">lib.detect.has_flags</a>, but the interface is more low-level, you need to specify the linker name.<br>This interface only needs to specify the target type of the target, the source file type, which will automatically switch to select the currently supported linker.</p>
+<pre><code class="lang-lua">if linker.has_flags(target:targetkind(), target:sourcekinds(), &quot;-L/usr/lib -lpthread&quot;) then
+    -- ok
+end
+</code></pre>
+<h3 id="core-tool-compiler">core.tool.compiler</h3>
+<p>Compiler related operations, often used for plugin development.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#compilercompile">compiler.compile</a></td>
+<td>Execute Compilation</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#compilercompcmd">compiler.compcmd</a></td>
+<td>Get Compiler Command Line</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#compilercompargv">compiler.compargv</a></td>
+<td>Get Compiled Command Line List</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#compilercompflags">compiler.compflags</a></td>
+<td>Get Compilation Options</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#compilerhas_flags">compiler.has_flags</a></td>
+<td>Determine if the specified compilation option is supported</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#compilerfeatures">compiler.features</a></td>
+<td>Get all compiler features</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#compilerhas_features">compiler.has_features</a></td>
+<td>Determine if the specified compilation feature is supported</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<h4 id="compiler-compile">compiler.compile</h4>
+<ul>
+<li>Perform compilation</li>
+</ul>
+<p>For the target, link the specified object file list to generate the corresponding target file, for example:</p>
+<pre><code class="lang-lua">compiler.compile(&quot;xxx.c&quot;, &quot;xxx.o&quot;, &quot;xxx.h.d&quot;, {target = target})
+</code></pre>
+<p>Where <a href="#target">target</a> is the project target, here is the specific compile option that is mainly used to get the target. If you get the project target object, see: <a href="#core-project-project">core.project.project</a></p>
+<p>The <code>xxx.h.d</code> file is used to store the header file dependency file list for this source file. Finally, these two parameters are optional. You can not pass them when compiling:</p>
+<pre><code class="lang-lua">compiler.compile(&quot;xxx.c&quot;, &quot;xxx.o&quot;)
+</code></pre>
+<p>To simply compile a source file.</p>
+<h4 id="compiler-compcmd">compiler.compcmd</h4>
+<ul>
+<li>Get the compile command line</li>
+</ul>
+<p>Get the command line string executed directly in <a href="#compilercompile">compiler.compile</a>, which is equivalent to:</p>
+<pre><code class="lang-lua">local cmdstr = compiler.compcmd(&quot;xxx.c&quot;, &quot;xxx.o&quot;, {target = target})
+</code></pre>
+<p>Note: The extension part of <code></code>target = target}` is optional. If the target object is passed, the generated compile command will add the link option corresponding to this target configuration.</p>
+<p>And you can also pass various configurations yourself, for example:</p>
+<pre><code class="lang-lua">local cmdstr = compiler.compcmd(&quot;xxx.c&quot;, &quot;xxx.o&quot;, {config = {includedirs = &quot;/usr/include&quot;, defines = &quot;DEBUG&quot;}})
+</code></pre>
+<p>With target, we can export all source file compilation commands for the specified target:</p>
+<pre><code class="lang-lua">import(&quot;core.project.project&quot;)
+
+for _, target in pairs(project.targets()) do
+    for sourcekind, sourcebatch in pairs(target:sourcebatches()) do
+        for index, objectfile in ipairs(sourcebatch.objectfiles) do
+            local cmdstr = compiler.compcmd(sourcebatch.sourcefiles[index], objectfile, {target = target})
+        end
+    end
+end
+</code></pre>
+<h4 id="compiler-compargv">compiler.compargv</h4>
+<ul>
+<li>Get compiled command line list</li>
+</ul>
+<p>A little different from <a href="#compilercompargv">compiler.compargv</a> is that this interface returns a list of parameters, table representation, more convenient to operate:</p>
+<pre><code class="lang-lua">local program, argv = compiler.compargv(&quot;xxx.c&quot;, &quot;xxx.o&quot;)
+</code></pre>
+<h4 id="compiler-compflags">compiler.compflags</h4>
+<ul>
+<li>Get compilation options</li>
+</ul>
+<p>Get the compile option string part of <a href="#compilercompcmd">compiler.compcmd</a> without shList of ellnames and files, for example:</p>
+<pre><code class="lang-lua">local flags = compiler.compflags(sourcefile, {target = target})
+for _, flag in ipairs(flags) do
+    print(flag)
+end
+</code></pre>
+<p>The returned array of flags is an array.</p>
+<h4 id="compiler-has_flags">compiler.has_flags</h4>
+<ul>
+<li>Determine if the specified compilation option is supported</li>
+</ul>
+<p>Although it can be judged by <a href="detect-has_flags">lib.detect.has_flags</a>, but the interface is more low-level, you need to specify the compiler name.<br>This interface only needs to specify the language type, it will automatically switch to select the currently supported compiler.</p>
+<pre><code class="lang-lua">-- Determine if the c language compiler supports the option: -g
+if compiler.has_flags(&quot;c&quot;, &quot;-g&quot;) then
+    -- ok
+end
+
+-- Determine if the C++ language compiler supports the option: -g
+if compiler.has_flags(&quot;cxx&quot;, &quot;-g&quot;) then
+    -- ok
+end
+</code></pre>
+<h4 id="compiler-features">compiler.features</h4>
+<ul>
+<li>Get all compiler features</li>
+</ul>
+<p>Although it can be obtained by <a href="detect-features">lib.detect.features</a>, but the interface is more low-level, you need to specify the compiler name.<br>This interface only needs to specify the language type, it will automatically switch to select the currently supported compiler, and then get the current list of compiler features.</p>
+<pre><code class="lang-lua">-- Get all the features of the current c compiler
+local features = compiler.features(&quot;c&quot;)
+
+-- Get all the features of the current C++ language compiler, enable the C++11 standard, otherwise you will not get the new standard features.
+local features = compiler.features(&quot;cxx&quot;, {cofnig = {cxxflags = &quot;-std=c++11&quot;}})
+
+-- Get all the features of the current C++ language compiler, pass all configuration information of the project target
+local features = compiler.features(&quot;cxx&quot;, {target = target, config = {defines = &quot;..&quot;, includedirs = &quot;..&quot;}})
+</code></pre>
+<p>A list of all c compiler features:</p>
+<table>
+<thead>
+<tr>
+<th>Feature Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c_static_assert</td>
+</tr>
+<tr>
+<td>c_restrict</td>
+</tr>
+<tr>
+<td>c_variadic_macros</td>
+</tr>
+<tr>
+<td>c_function_prototypes</td>
+</tr>
+</tbody>
+</table>
+<p>A list of all C++ compiler features:</p>
+<table>
+<thead>
+<tr>
+<th>Feature Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cxx_variable_templates</td>
+</tr>
+<tr>
+<td>cxx_relaxed_constexpr</td>
+</tr>
+<tr>
+<td>cxx_aggregate_default_initializers</td>
+</tr>
+<tr>
+<td>cxx_contextual_conversions</td>
+</tr>
+<tr>
+<td>cxx_attribute_deprecated</td>
+</tr>
+<tr>
+<td>cxx_decltype_auto</td>
+</tr>
+<tr>
+<td>cxx_digit_separators</td>
+</tr>
+<tr>
+<td>cxx_generic_lambdas</td>
+</tr>
+<tr>
+<td>cxx_lambda_init_captures</td>
+</tr>
+<tr>
+<td>cxx_binary_literals</td>
+</tr>
+<tr>
+<td>cxx_return_type_deduction</td>
+</tr>
+<tr>
+<td>cxx_decltype_incomplete_return_types</td>
+</tr>
+<tr>
+<td>cxx_reference_qualified_functions</td>
+</tr>
+<tr>
+<td>cxx_alignof</td>
+</tr>
+<tr>
+<td>cxx_attributes</td>
+</tr>
+<tr>
+<td>cxx_inheriting_constructors</td>
+</tr>
+<tr>
+<td>cxx_thread_local</td>
+</tr>
+<tr>
+<td>cxx_alias_templates</td>
+</tr>
+<tr>
+<td>cxx_delegating_constructors</td>
+</tr>
+<tr>
+<td>cxx_extended_friend_declarations</td>
+</tr>
+<tr>
+<td>cxx_final</td>
+</tr>
+<tr>
+<td>cxx_nonstatic_member_init</td>
+</tr>
+<tr>
+<td>cxx_override</td>
+</tr>
+<tr>
+<td>cxx_user_literals</td>
+</tr>
+<tr>
+<td>cxx_constexpr</td>
+</tr>
+<tr>
+<td>cxx_defaulted_move_initializers</td>
+</tr>
+<tr>
+<td>cxx_enum_forward_declarations</td>
+</tr>
+<tr>
+<td>cxx_noexcept</td>
+</tr>
+<tr>
+<td>cxx_nullptr</td>
+</tr>
+<tr>
+<td>cxx_range_for</td>
+</tr>
+<tr>
+<td>cxx_unrestricted_unions</td>
+</tr>
+<tr>
+<td>cxx_explicit_conversions</td>
+</tr>
+<tr>
+<td>cxx_lambdas</td>
+</tr>
+<tr>
+<td>cxx_local_type_template_args</td>
+</tr>
+<tr>
+<td>cxx_raw_string_literals</td>
+</tr>
+<tr>
+<td>cxx_auto_type</td>
+</tr>
+<tr>
+<td>cxx_defaulted_functions</td>
+</tr>
+<tr>
+<td>cxx_deleted_functions</td>
+</tr>
+<tr>
+<td>cxx_generalized_initializers</td>
+</tr>
+<tr>
+<td>cxx_inline_namespaces</td>
+</tr>
+<tr>
+<td>cxx_sizeof_member</td>
+</tr>
+<tr>
+<td>cxx_strong_enums</td>
+</tr>
+<tr>
+<td>cxx_trailing_return_types</td>
+</tr>
+<tr>
+<td>cxx_unicode_literals</td>
+</tr>
+<tr>
+<td>cxx_uniform_initialization</td>
+</tr>
+<tr>
+<td>cxx_variadic_templates</td>
+</tr>
+<tr>
+<td>cxx_decltype</td>
+</tr>
+<tr>
+<td>cxx_default_function_template_args</td>
+</tr>
+<tr>
+<td>cxx_long_long_type</td>
+</tr>
+<tr>
+<td>cxx_right_angle_brackets</td>
+</tr>
+<tr>
+<td>cxx_rvalue_references</td>
+</tr>
+<tr>
+<td>cxx_static_assert</td>
+</tr>
+<tr>
+<td>cxx_extern_templates</td>
+</tr>
+<tr>
+<td>cxx_func_identifier</td>
+</tr>
+<tr>
+<td>cxx_variadic_macros</td>
+</tr>
+<tr>
+<td>cxx_template_template_parameters</td>
+</tr>
+</tbody>
+</table>
+<h4 id="compiler-has_features">compiler.has_features</h4>
+<ul>
+<li>Determine if the specified compiler feature is supported</li>
+</ul>
+<p>Although it can be obtained by <a href="detect-has-features">lib.detect.has_features</a>, but the interface is more low-level, you need to specify the compiler name.<br>And this interface only needs to specify the special name list that needs to be detected, it can automatically switch to select the currently supported compiler, and then determine whether the specified feature is supported in the current compiler.</p>
+<pre><code class="lang-lua">if compiler.has_features(&quot;c_static_assert&quot;) then
+    -- ok
+end
+
+if compiler.has_features({&quot;c_static_assert&quot;, &quot;cxx_constexpr&quot;}, {languages ​​= &quot;cxx11&quot;}) then
+    -- ok
+end
+
+if compiler.has_features(&quot;cxx_constexpr&quot;, {target = target, defines = &quot;..&quot;, includedirs = &quot;..&quot;}) then
+    -- ok
+end
+</code></pre>
+<p>For specific feature names, refer to <a href="#compilerfeatures">compiler.features</a>.</p>
+<h3 id="core-project-config">core.project.config</h3>
+<p>Used to get the configuration information when the project is compiled, that is, the value of the parameter option passed in <code>xmake f|config --xxx=val</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#configget">config.get</a></td>
+<td>Get the specified configuration value</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#configload">config.load</a></td>
+<td>Load Configuration</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#configarch">config.arch</a></td>
+<td>Get the schema configuration of the current project</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#configplat">config.plat</a></td>
+<td>Get the platform configuration of the current project</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#configmode">config.mode</a></td>
+<td>Get the compilation mode configuration of the current project</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#configbuildir">config.buildir</a></td>
+<td>Get the output directory configuration of the current project</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#configdIrectory">config.directory</a></td>
+<td>Get the configuration information directory of the current project</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#configdump">config.dump</a></td>
+<td>Print out all configuration information for the current project</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="config-get">config.get</h4>
+<ul>
+<li>Get the specified configuration value</li>
+</ul>
+<p>Used to get the configuration value of <code>xmake f|config --xxx=val</code>, for example:</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+    on_run(function (target)
+
+        -- Import configuration module
+        import(&quot;core.project.config&quot;)
+
+        -- Get configuration values
+        print(config.get(&quot;xxx&quot;))
+    end)
+</code></pre>
+<h4 id="config-load">config.load</h4>
+<ul>
+<li>Load configuration</li>
+</ul>
+<p>Generally used in plug-in development, the plug-in task is not like the custom script of the project, the environment needs to be initialized and loaded by itself, the default project configuration is not loaded, if you want to use <a href="#configget">config.get</a> interface to get the project Configuration, then you need to:</p>
+<pre><code class="lang-lua">
+-- Import configuration module
+import(&quot;core.project.config&quot;)
+
+function main(...)
+
+    -- Load project configuration first
+    config.load()
+
+    -- Get configuration values
+    print(config.get(&quot;xxx&quot;))
+end
+</code></pre>
+<h4 id="config-arch">config.arch</h4>
+<ul>
+<li>Get the schema configuration of the current project</li>
+</ul>
+<p>That is to get the platform configuration of <code>xmake f|config --arch=armv7</code>, which is equivalent to <code>config.get(&quot;arch&quot;)</code>.</p>
+<h4 id="config-plat">config.plat</h4>
+<ul>
+<li>Get the platform configuration of the current project</li>
+</ul>
+<p>That is to get the platform configuration of <code>xmake f|config --plat=iphoneos</code>, which is equivalent to <code>config.get(&quot;plat&quot;)</code>.</p>
+<h4 id="config-mode">config.mode</h4>
+<ul>
+<li>Get the compilation mode configuration of the current project</li>
+</ul>
+<p>That is to get the platform configuration of <code>xmake f|config --mode=debug</code>, which is equivalent to <code>config.get(&quot;mode&quot;)</code>.</p>
+<h4 id="config-buildir">config.buildir</h4>
+<ul>
+<li>Get the output directory configuration of the current project</li>
+</ul>
+<p>That is to get the platform configuration of <code>xmake f|config -o /tmp/output</code>, which is equivalent to <code>config.get(&quot;buildir&quot;)</code>.</p>
+<h4 id="config-directory">config.directory</h4>
+<ul>
+<li>Get the configuration information directory of the current project</li>
+</ul>
+<p>Get the storage directory of the project configuration, the default is: <code>projectdir/.config</code></p>
+<h4 id="config-dump">config.dump</h4>
+<ul>
+<li>Print out all configuration information of the current project</li>
+</ul>
+<p>The output is for example:</p>
+<pre><code class="lang-lua">{
+    sh = &quot;xcrun -sdk macosx clang++&quot;
+,   xcode_dir = &quot;/Applications/Xcode.app&quot;
+,   ar = &quot;xcrun -sdk macosx ar&quot;
+,   small = true
+,   object = false
+,   arch = &quot;x86_64&quot;
+,   xcode_sdkver = &quot;10.12&quot;
+,   ex = &quot;xcrun -sdk macosx ar&quot;
+,   cc = &quot;xcrun -sdk macosx clang&quot;
+,   rc = &quot;rustc&quot;
+,   plat = &quot;macosx&quot;
+,   micro = false
+,   host = &quot;macosx&quot;
+,   as = &quot;xcrun -sdk macosx clang&quot;
+,   dc = &quot;dmd&quot;
+,   gc = &quot;go&quot;
+,   openssl = false
+,   ccache = &quot;ccache&quot;
+,   cxx = &quot;xcrun -sdk macosx clang&quot;
+,   sc = &quot;xcrun -sdk macosx swiftc&quot;
+,   mm = &quot;xcrun -sdk macosx clang&quot;
+,   buildir = &quot;build&quot;
+,   mxx = &quot;xcrun -sdk macosx clang++&quot;
+,   ld = &quot;xcrun -sdk macosx clang++&quot;
+,   mode = &quot;release&quot;
+,   kind = &quot;static&quot;
+}
+</code></pre>
+<h3 id="core-project-global">core.project.global</h3>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>This module was migrated to <a href="#core-base-global">core.base.global</a> since version 2.1.5.<br>&lt;/p&gt;
+
+</p>
+<h3 id="core-project-task">core.project.task</h3>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>This module has been migrated to <a href="#core-base-task">core.base.task</a> since version 2.1.5.<br>&lt;/p&gt;
+
+</p>
+<h3 id="core-project-project">core.project.project</h3>
+<p>Used to get some description information of the current project, that is, the configuration information defined in the <code>xmake.lua</code> project description file, for example: <a href="#target">target</a>, <a href="#option">option</a>, etc.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#projectload">project.load</a></td>
+<td>Load Project Configuration</td>
+<td>&gt;= 2.0.1 (2.1.5 Obsolete)</td>
+</tr>
+<tr>
+<td><a href="#projectdirectory">project.directory</a></td>
+<td>Get Project Directory</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#projecttarget">project.target</a></td>
+<td>Get the specified project target object</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#projecttargets">project.targets</a></td>
+<td>Get the list of project target objects</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#projectoption">project.option</a></td>
+<td>Get the specified option object</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#projectoptions">project.options</a></td>
+<td>Get all option objects for the project</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#projectname">project.name</a></td>
+<td>Get current project name</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#projectversion">project.version</a></td>
+<td>Get current project version number</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="project-load">project.load</h4>
+<ul>
+<li>Load project description configuration</li>
+</ul>
+<p>It is only used in the plugin, because the project configuration information has not been loaded at this time. In the custom script of the project target, you do not need to perform this operation, you can directly access the project configuration.</p>
+<pre><code class="lang-lua">-- Import engineering modules
+import(&quot;core.project.project&quot;)
+
+-- Plugin entry
+function main(...)
+
+    -- Load project description configuration
+    project.load()
+
+    -- access project descriptions, such as getting specified project goals
+    local target = project.target(&quot;test&quot;)
+end
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>After version 2.1.5, if not needed, the project load will automatically load at the appropriate time.<br>&lt;/p&gt;
+
+</p>
+<h4 id="project-directory">project.directory</h4>
+<ul>
+<li>Get the project directory</li>
+</ul>
+<p>Get the current project directory, which is the directory specified in <code>xmake -P xxx</code>, otherwise it is the default current <code>xmake</code> command execution directory.</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>After version 2.1.5, it is recommended to use <a href="#os-projectdir">os.projectdir</a> to get it.<br>&lt;/p&gt;
+
+</p>
+<h4 id="project-target">project.target</h4>
+<ul>
+<li>Get the specified project target object</li>
+</ul>
+<p>Get and access the specified project target configuration, for example:</p>
+<pre><code class="lang-lua">local target = project.target(&quot;test&quot;)
+if target then
+
+    -- Get the target file name
+    print(target:targetfile())
+
+    -- Get the target type, which is: binary, static, shared
+    print(target:targetkind())
+
+    -- Get the target name
+    print(target:name())
+
+    -- Get the target source file
+    local sourcefiles = target:sourcefiles()
+
+    -- Get a list of target installation header files
+    local srcheaders, dstheaders = target:headerfiles()
+
+    -- Get target dependencies
+    print(target:get(&quot;deps&quot;))
+end
+</code></pre>
+<h4 id="project-targets">project.targets</h4>
+<ul>
+<li>Get a list of project target objects</li>
+</ul>
+<p>Returns all compilation targets for the current project, for example:</p>
+<pre><code class="lang-lua">for targetname, target in pairs(project.targets())
+    print(target:targetfile())
+end
+</code></pre>
+<h4 id="project-option">project.option</h4>
+<ul>
+<li>Get the specified option object</li>
+</ul>
+<p>Get and access the option objects specified in the project, for example:</p>
+<pre><code class="lang-lua">local option = project.option(&quot;test&quot;)
+if option:enabled() then
+    option:enable(false)
+end
+</code></pre>
+<h4 id="project-options">project.options</h4>
+<ul>
+<li>Get all project option objects</li>
+</ul>
+<p>Returns all compilation targets for the current project, for example:</p>
+<pre><code class="lang-lua">for optionname, option in pairs(project.options())
+    print(option:enabled())
+end
+</code></pre>
+<h4 id="project-name">project.name</h4>
+<ul>
+<li>Get the current project name</li>
+</ul>
+<p>That is, get the project name configuration of <a href="#set_project">set_project</a>.</p>
+<pre><code class="lang-lua">print(project.name())
+</code></pre>
+<h4 id="project-version">project.version</h4>
+<ul>
+<li>Get the current project version number</li>
+</ul>
+<p>That is, get <a href="#set_version">set_version</a> project version configuration.</p>
+<pre><code class="lang-lua">print(project.version())
+</code></pre>
+<h3 id="core-language-language">core.language.language</h3>
+<p>Used to obtain information about the compiled language, generally used for the operation of code files.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#languageextensions">language.extensions</a></td>
+<td>Get a list of code suffixes for all languages ​​</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#languagetargetkinds">language.targetkinds</a></td>
+<td>Get a list of target types for all languages ​​</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#languagesourcekinds">language.sourcekinds</a></td>
+<td>Get a list of source file types for all languages ​​</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#languagesourceflags">language.sourceflags</a></td>
+<td>Load source file compilation option name list for all languages ​​</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#languageload">language.load</a></td>
+<td>Load the specified language</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#languageload_sk">language.load_sk</a></td>
+<td>Load the specified language from the source file type</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#languageload_ex">language.load_ex</a></td>
+<td>Load the specified language from the source file suffix</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#languagesourcekind_of">language.sourcekind_of</a></td>
+<td>Get the source file type of the specified source file</td>
+<td>&gt;= 2.1.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="language-extensions">language.extensions</h4>
+<ul>
+<li>Get a list of code suffixes for all languages</li>
+</ul>
+<p>The results are as follows:</p>
+<pre><code class="lang-lua">{
+     [&quot;.c&quot;] = cc
+,    [&quot;.cc&quot;] = cxx
+,    [&quot;.cpp&quot;] = cxx
+,    [&quot;.m&quot;] = mm
+,    [&quot;.mm&quot;] = mxx
+,    [&quot;.swift&quot;] = sc
+,    [&quot;.go&quot;] = gc
+}
+</code></pre>
+<h4 id="language-targetkinds">language.targetkinds</h4>
+<ul>
+<li>Get a list of target types in all languages</li>
+</ul>
+<p>The results are as follows:</p>
+<pre><code class="lang-lua">{
+     binary = {&quot;ld&quot;, &quot;gcld&quot;, &quot;dcld&quot;}
+,    static = {&quot;ar&quot;, &quot;gcar&quot;, &quot;dcar&quot;}
+,    shared = {&quot;sh&quot;, &quot;dcsh&quot;}
+}
+</code></pre>
+<h4 id="language-sourcekinds">language.sourcekinds</h4>
+<ul>
+<li>Get a list of source file types in all languages</li>
+</ul>
+<p>The results are as follows:</p>
+<pre><code class="lang-lua">{
+     cc = &quot;.c&quot;
+,    cxx = {&quot;.cc&quot;, &quot;.cpp&quot;, &quot;.cxx&quot;}
+,    mm = &quot;.m&quot;
+,    mxx = &quot;.mm&quot;
+,    sc = &quot;.swift&quot;
+,    gc = &quot;.go&quot;
+,    rc = &quot;.rs&quot;
+,    dc = &quot;.d&quot;
+,    as = {&quot;.s&quot;, &quot;.S&quot;, &quot;.asm&quot;}
+}
+</code></pre>
+<h4 id="language-sourceflags">language.sourceflags</h4>
+<ul>
+<li>Load a list of source file compilation option names for all languages</li>
+</ul>
+<p>The results are as follows:</p>
+<pre><code class="lang-lua">{
+     cc = {&quot;cflags&quot;, &quot;cxflags&quot;}
+,    cxx = {&quot;cxxflags&quot;, &quot;cxflags&quot;}
+,    ...
+}
+</code></pre>
+<h4 id="language-load">language.load</h4>
+<ul>
+<li>Load the specified language</li>
+</ul>
+<p>Load a specific language object from the language name, for example:</p>
+<pre><code class="lang-lua">local lang = language.load(&quot;c++&quot;)
+if lang then
+    print(lang:name())
+end
+</code></pre>
+<h4 id="language-load_sk">language.load_sk</h4>
+<ul>
+<li>Load the specified language from the source file type</li>
+</ul>
+<p>Load specific language objects from the source file type: <code>cc, cxx, mm, mxx, sc, gc, as ..</code>, for example:</p>
+<pre><code class="lang-lua">local lang = language.load_sk(&quot;cxx&quot;)
+if lang then
+    print(lang:name())
+end
+</code></pre>
+<h4 id="language-load_ex">language.load_ex</h4>
+<ul>
+<li>Load the specified language from the source file suffix name</li>
+</ul>
+<p>Load specific language objects from the source file extension: <code>.cc, .c, .cpp, .mm, .swift, .go ..</code>, for example:</p>
+<pre><code class="lang-lua">local lang = language.load_ex(&quot;.cpp&quot;)
+if lang then
+    print(lang:name())
+end
+</code></pre>
+<h4 id="language-sourcekind_of">language.sourcekind_of</h4>
+<ul>
+<li>Get the source file type of the specified source file</li>
+</ul>
+<p>That is, from a given source file path, get the type of source file it belongs to, for example:</p>
+<pre><code class="lang-lua">print(language.sourcekind_of(&quot;/xxxx/test.cpp&quot;))
+</code></pre>
+<p>The result is: <code>cxx</code>, which is the <code>c++</code> type. For the corresponding list, see: <a href="#languagesourcekinds">language.sourcekinds</a></p>
+<h3 id="core-platform-platform">core.platform.platform</h3>
+<p>Platform information related operations</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#platformget">platform.get</a></td>
+<td>Get configuration information about the specified platform</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="platform-get">platform.get</h4>
+<ul>
+<li>Get configuration information about the specified platform</li>
+</ul>
+<p>Get the information set in the platform configuration <code>xmake.lua</code>, which is generally only used when writing plugins, for example:</p>
+<pre><code class="lang-lua">-- Get all support architectures for the current platform
+print(platform.get(&quot;archs&quot;))
+
+-- Get the target file format information of the specified iphoneos platform
+local formats = platform.get(&quot;formats&quot;, &quot;iphoneos&quot;)
+table.dump(formats)
+</code></pre>
+<p>For specific readable platform configuration information, please refer to: <a href="#platform">platform</a></p>
+<h3 id="core-platform-environment">core.platform.environment</h3>
+<p>Environment-related operations, used to enter and leave the terminal environment corresponding to the specified environment variables, generally used for the entry and departure of the <code>path</code> environment, especially some build tools that require a specific environment, such as: msvc toolchain.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#environmententer">environment.enter</a></td>
+<td>Enter the specified environment</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#environmentleave">environment.leave</a></td>
+<td>Leave the specified environment</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<p>The currently supported environments are:</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>toolchains</td>
+<td>Toolchain Execution Environment</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="environment-enter">environment.enter</h4>
+<ul>
+<li>Enter the specified environment</li>
+</ul>
+<p>Enter the specified environment, for example, msvc has its own environment variable environment for running build tools, such as: <code>cl.exe</code>, <code>link.exe</code>, these time you want to run them in xmake, you need:</p>
+<pre><code class="lang-lua">-- Enter the toolchain environment
+environment.enter(&quot;toolchains&quot;)
+
+-- At this time, run cl.exe to run normally. At this time, environment variables such as path will enter the environment mode of msvc.
+os.run(&quot;cl.exe ..&quot;)
+
+-- leaving the toolchain environment
+environment.leave(&quot;toolchains&quot;)
+</code></pre>
+<p>Therefore, for the sake of versatility, the default xmake compiler will set this environment. Under Linux, basically the internal environment does not need special switching. At present, only msvc under Windows is processed.</p>
+<h4 id="environment-leave">environment.leave</h4>
+<ul>
+<li>leaving the designated environment</li>
+</ul>
+<p>For specific use, see: <a href="#environmententer">environment.enter</a></p>
+<h3 id="lib-detect">lib.detect</h3>
+<p>This module provides very powerful probing capabilities for probing programs, compilers, language features, dependencies, and more.</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient, for example: <code>import(&quot;lib.detect.find_package&quot;)</code> instead of <code>import(&quot;lib.detect &quot;)</code>Import all to call.<br>&lt;/p&gt;
+
+</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#detectfind_file">detect.find_file</a></td>
+<td>Find Files</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detectfind_path">detect.find_path</a></td>
+<td>Find File Path</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detectfind_library">detect.find_library</a></td>
+<td>Find Library Files</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detectfind_program">detect.find_program</a></td>
+<td>Find executables</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detectfind_programver">detect.find_programver</a></td>
+<td>Find executable version number</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detectfind_package">detect.find_package</a></td>
+<td>Find package files, including library files and search paths</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detectfind_tool">detect.find_tool</a></td>
+<td>Find Tool</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detectfind_toolname">detect.find_toolname</a></td>
+<td>Find Tool Name</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detectfind_cudadevices">detect.find_cudadevices</a></td>
+<td>Find CUDA devices of the host</td>
+<td>&gt;= 2.2.7</td>
+</tr>
+<tr>
+<td><a href="#detectfeatures">detect.features</a></td>
+<td>Get all the features of the specified tool</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detecthas_features">detect.has_features</a></td>
+<td>Determine if the specified feature is supported</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detecthas_flags">detect.has_flags</a></td>
+<td>Determine if the specified parameter options are supported</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detecthas_cfuncs">detect.has_cfuncs</a></td>
+<td>Determine if the specified c function exists</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detecthas_cxxfuncs">detect.has_cxxfuncs</a></td>
+<td>Determine if the specified c++ function exists</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detecthas_cincludes">detect.has_cincludes</a></td>
+<td>Determine if the specified c header file exists</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detecthas_cxxincludes">detect.has_cxxincludess</a></td>
+<td>Determine if the specified c++ header file exists</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detecthas_ctypes">detect.has_ctypes</a></td>
+<td>Determine if the specified c type exists</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detecthas_cxxtypes">detect.has_cxxtypes</a></td>
+<td>Determine if the specified c++ type exists</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#detectcheck_cxsnippets">detect.check_cxsnippets</a></td>
+<td>Check if c/c++ code snippets can be compiled by</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<h4 id="detect-find_file">detect.find_file</h4>
+<ul>
+<li>Find files</li>
+</ul>
+<p>This interface provides a more powerful project than <a href="#os-files">os.files</a>, which can specify multiple search directories at the same time, and can also specify additional subdirectories for each directory to match the pattern lookup, which is equivalent to <a href="#os-files"> An enhanced version of os.files</a>.</p>
+<p>E.g:</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.find_file&quot;)
+
+local file = find_file(&quot;ccache&quot;, { &quot;/usr/bin&quot;, &quot;/usr/local/bin&quot;})
+</code></pre>
+<p>If found, the result returned is: <code>/usr/bin/ccache</code></p>
+<p>It also supports pattern matching paths for recursive lookups, similar to <code>os.files</code>:</p>
+<pre><code class="lang-lua">local file = find_file(&quot;test.h&quot;, { &quot;/usr/include&quot;, &quot;/usr/local/include/**&quot;})
+</code></pre>
+<p>Not only that, but the path inside also supports built-in variables to get the path from the environment variables and the registry to find:</p>
+<pre><code class="lang-lua">local file = find_file(&quot;xxx.h&quot;, { &quot;$(env PATH)&quot;, &quot;$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)&quot;})
+</code></pre>
+<p>If the path rules are more complex, you can also dynamically generate path entries through a custom script:</p>
+<pre><code class="lang-lua">local file = find_file(&quot;xxx.h&quot;, { &quot;$(env PATH)&quot;, function () return val(&quot;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name&quot;):match (&quot;\&quot;(.-)\&quot;&quot;) end})
+</code></pre>
+<p>In most cases, the above use has met various needs. If you need some extended functions, you can customize some optional configurations by passing in the third parameter, for example:</p>
+<pre><code class="lang-lua">local file = find_file(&quot;test.h&quot;, { &quot;/usr&quot;, &quot;/usr/local&quot;}, {suffixes = {&quot;/include&quot;, &quot;/lib&quot;}})
+</code></pre>
+<p>By specifying a list of suffixes subdirectories, you can extend the list of paths (the second parameter) so that the actual search directory is expanded to:</p>
+<pre><code>/usr/include
+/usr/lib
+/usr/local/include
+/usr/local/lib
+</code></pre><p>And without changing the path list, you can dynamically switch subdirectories to search for files.</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>We can also quickly call and test this interface with the <code>xmake lua</code> plugin: <code>xmake lua lib.detect.find_file test.h /usr/local</code><br>&lt;/p&gt;
+
+</p>
+<h4 id="detect-find_path">detect.find_path</h4>
+<ul>
+<li>Find the path</li>
+</ul>
+<p>The usage of this interface is similar to <a href="#detectfind_file">lib.detect.find_file</a>, the only difference is that the returned results are different.<br>After the interface finds the incoming file path, it returns the corresponding search path, not the file path itself. It is generally used to find the parent directory location corresponding to the file.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.find_path&quot;)
+
+local p = find_path(&quot;include/test.h&quot;, { &quot;/usr&quot;, &quot;/usr/local&quot;})
+</code></pre>
+<p>If the above code is successful, it returns: <code>/usr/local</code>, if <code>test.h</code> is in <code>/usr/local/include/test.h</code>.</p>
+<p>Another difference is that this interface is passed in not only the file path, but also the directory path to find:</p>
+<pre><code class="lang-lua">local p = find_path(&quot;lib/xxx&quot;, { &quot;$(env PATH)&quot;, &quot;$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)&quot;})
+</code></pre>
+<p>Again, this interface also supports pattern matching and suffix subdirectories:</p>
+<pre><code class="lang-lua">local p = find_path(&quot;include/*.h&quot;, { &quot;/usr&quot;, &quot;/usr/local/**&quot;}, {suffixes = &quot;/subdir&quot;})
+</code></pre>
+<h4 id="detect-find_library">detect.find_library</h4>
+<ul>
+<li>Find library files</li>
+</ul>
+<p>This interface is used to find library files (static libraries, dynamic libraries) in the specified search directory, for example:</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.find_library&quot;)
+
+local library = find_library(&quot;crypto&quot;, {&quot;/usr/lib&quot;, &quot;/usr/local/lib&quot;})
+</code></pre>
+<p>Running on macosx, the results returned are as follows:</p>
+<pre><code class="lang-lua">{
+    filename = libcrypto.dylib
+,   linkdir = /usr/lib
+,   link = crypto
+,   kind = shared
+}
+</code></pre>
+<p>If you do not specify whether you need a static library or a dynamic library, then this interface will automatically select an existing library (either a static library or a dynamic library) to return.</p>
+<p>If you need to force the library type you need to find, you can specify the kind parameter as (<code>static/shared</code>):</p>
+<pre><code class="lang-lua">local library = find_library(&quot;crypto&quot;, {&quot;/usr/lib&quot;, &quot;/usr/local/lib&quot;}, {kind = &quot;static&quot;})
+</code></pre>
+<p>This interface also supports suffixes suffix subdirectory search and pattern matching operations:</p>
+<pre><code class="lang-lua">local library = find_library(&quot;cryp*&quot;, {&quot;/usr&quot;, &quot;/usr/local&quot;}, {suffixes = &quot;/lib&quot;})
+</code></pre>
+<h4 id="detect-find_program">detect.find_program</h4>
+<ul>
+<li>Find executable programs</li>
+</ul>
+<p>This interface is more primitive than <a href="#detectfind_tool">lib.detect.find_tool</a>, looking for executables through the specified parameter directory.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.find_program&quot;)
+
+local program = find_program(&quot;ccache&quot;)
+</code></pre>
+<p>The above code is like not passing the search directory, so it will try to execute the specified program directly. If it runs ok, it will return directly: <code>ccache</code>, indicating that the search is successful.</p>
+<p>Specify the search directory and modify the test command parameters that are attempted to run (default: <code>ccache --version</code>):</p>
+<pre><code class="lang-lua">localProgram = find_program(&quot;ccache&quot;, {pathes = {&quot;/usr/bin&quot;, &quot;/usr/local/bin&quot;}, check = &quot;--help&quot;})
+</code></pre>
+<p>The above code will try to run: <code>/usr/bin/ccache --help</code>, if it runs successfully, it returns: <code>/usr/bin/ccache</code>.</p>
+<p>If <code>--help</code> can&#39;t satisfy the requirement, some programs don&#39;t have the <code>--version/--help</code> parameter, then you can customize the run script to run the test:</p>
+<pre><code class="lang-lua">local program = find_program(&quot;ccache&quot;, {pathes = {&quot;/usr/bin&quot;, &quot;/usr/local/bin&quot;}, check = function (program) os.run(&quot;%s -h&quot;, program) end })
+</code></pre>
+<p>Similarly, the search path list supports built-in variables and custom scripts:</p>
+<pre><code class="lang-lua">local program = find_program(&quot;ccache&quot;, {pathes = {&quot;$(env PATH)&quot;, &quot;$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)&quot;}})
+local program = find_program(&quot;ccache&quot;, {pathes = {&quot;$(env PATH)&quot;, function () return &quot;/usr/local/bin&quot; end}})
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>In order to speed up the efficiency of frequent lookups, this interface comes with a default cache, so even if you frequently find the same program, it will not take too much time.<br>If you want to disable the cache, you can clear the local cache by executing <code>xmake f -c</code> in the project directory.<br>&lt;/p&gt;
+
+</p>
+<p>We can also test quickly with <code>xmake lua lib.detect.find_program ccache</code>.</p>
+<h4 id="detect-find_programver">detect.find_programver</h4>
+<ul>
+<li>Find the executable version number</li>
+</ul>
+<pre><code class="lang-lua">import(&quot;lib.detect.find_programver&quot;)
+
+local programver = find_programver(&quot;ccache&quot;)
+</code></pre>
+<p>The return result is: 3.2.2</p>
+<p>By default it will try to get the version via <code>ccache --version</code>. If this parameter doesn&#39;t exist, you can specify other parameters yourself:</p>
+<pre><code class="lang-lua">local version = find_programver(&quot;ccache&quot;, {command = &quot;-v&quot;})
+</code></pre>
+<p>Even the custom version gets the script:</p>
+<pre><code class="lang-lua">local version = find_programver(&quot;ccache&quot;, {command = function () return os.iorun(&quot;ccache --version&quot;) end})
+</code></pre>
+<p>For the extraction rule of the version number, if the built-in matching mode does not meet the requirements, you can also customize:</p>
+<pre><code class="lang-lua">local version = find_programver(&quot;ccache&quot;, {command = &quot;--version&quot;, parse = &quot;(%d+%.?%d*%.?%d*.-)%s&quot;})
+local version = find_programver(&quot;ccache&quot;, {command = &quot;--version&quot;, parse = function (output) return output:match(&quot;(%d+%.?%d*%.?%d*.-)%s &quot;) end})
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>In order to speed up the efficiency of frequent lookups, this interface is self-contained by default. If you want to disable the cache, you can execute <code>xmake f -c</code> in the project directory to clear the local cache.<br>&lt;/p&gt;
+
+</p>
+<p>We can also test quickly with <code>xmake lua lib.detect.find_programver ccache</code>.</p>
+<h4 id="detect-find_package">detect.find_package</h4>
+<ul>
+<li>Find package files</li>
+</ul>
+<p>This interface is also used to find library files, but it is higher than <a href="#detectfind_library">lib.detect.find_library</a>, and it is more powerful and easy to use, because it is based on the strength of the package.</p>
+<p>So what is a complete package, it contains:</p>
+<ol>
+<li>Multiple static libraries or dynamic library files</li>
+<li>Library search directory</li>
+<li>Search directory for header files</li>
+<li>Optional compile link options, such as <code>defines</code></li>
+<li>Optional version number</li>
+</ol>
+<p>For example, we look for an openssl package:</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.find_package&quot;)
+
+local package = find_package(&quot;openssl&quot;)
+</code></pre>
+<p>The returned results are as follows:</p>
+<pre><code class="lang-lua">{links = {&quot;ssl&quot;, &quot;crypto&quot;, &quot;z&quot;}, linkdirs = {&quot;/usr/local/lib&quot;}, includedirs = {&quot;/usr/local/include&quot;}}
+</code></pre>
+<p>If the search is successful, return a table containing all the package information, if it fails, return nil</p>
+<p>The return result here can be directly passed as the parameter of <code>target:add</code>, <code>option:add</code>, which is used to dynamically increase the configuration of <code>target/option</code>:</p>
+<pre><code class="lang-lua">option(&quot;zlib&quot;)
+    set_showmenu(true)
+    before_check(function (option)
+        import(&quot;lib.detect.find_package&quot;)
+        option:add(find_package(&quot;zlib&quot;))
+    end)
+</code></pre>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+    on_load(function (target)
+        import(&quot;lib.detect.find_package&quot;)
+        target:add(find_package(&quot;zlib&quot;))
+    end)
+</code></pre>
+<p>If third-party tools such as <code>homebrew</code>, <code>pkg-config</code> are installed on the system, then this interface will try to use them to improve the search results.</p>
+<p>We can also choose to find the package of the specified version by specifying the version number (if the package does not get the version information or there is no matching version of the package, then return nil):</p>
+<pre><code class="lang-lua">local package = find_package(&quot;openssl&quot;, {version = &quot;1.0.1&quot;})
+</code></pre>
+<p>The packages that are looked up by default are matched to the platform, architecture, and mode according to the following rules:</p>
+<ol>
+<li>If the parameter passed in specifies <code>{plat = &quot;iphoneos&quot;, arch = &quot;arm64&quot;, mode = &quot;release&quot;}</code>, then match first, for example: <code>find_package(&quot;openssl&quot;, {plat = &quot;iphoneos&quot;} )</code>.</li>
+<li>If there is a configuration file in the current project environment, try to get it from <code>config.get(&quot;plat&quot;)</code>, <code>config.get(&quot;arch&quot;)</code> and <code>config.get(&quot;mode&quot;)</code> The platform architecture is matched.</li>
+<li>Finally, the matching is done from <code>os.host()</code> and <code>os.arch()</code>, which is the platform architecture environment of the current host.</li>
+</ol>
+<p>If the system&#39;s library directory and <code>pkg-config</code> are not enough to meet the requirements and the package cannot be found, you can manually set the search path yourself:</p>
+<pre><code class="lang-lua">local package = find_package(&quot;openssl&quot;, {linkdirs = {&quot;/usr/lib&quot;, &quot;/usr/local/lib&quot;}, includedirs = &quot;/usr/local/include&quot;})
+</code></pre>
+<p>You can also specify the link name you want to search at the same time, the header file name:</p>
+<pre><code class="lang-lua">local package = find_package(&quot;openssl&quot;, {links = {&quot;ssl&quot;, &quot;crypto&quot;}, includes = &quot;ssl.h&quot;}})
+</code></pre>
+<p>You can even specify xmake&#39;s <code>packagedir/*.pkg</code> package directory to find the corresponding <code>openssl.pkg</code> package, which is typically used to find local packages built into the project directory.</p>
+<p>For example, the tbox project has a built-in <code>pkg/openssl.pkg</code> local package project. We can use the following script to pass in the <code>{packagedirs = &quot;&quot;}</code> parameter to find the local package first. If it can&#39;t find it, go to the system. package.</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+    on_load(function (target)
+        import(&quot;lib.detect.find_package&quot;)
+        target:add(find_package(&quot;openssl&quot;, {packagedirs = path.join(os.projectdir(), &quot;pkg&quot;)}))
+    end)
+</code></pre>
+<p>To summarize, the current search order:</p>
+<ol>
+<li>If you specify the <code>{packagedirs = &quot;&quot;}</code> parameter, look for the local package <code>*.pkg</code> from the path specified by this parameter.</li>
+<li>If there is a <code>detect.packages.find_xxx</code> script under <code>xmake/modules</code>, try calling this script to improve the lookup results.</li>
+<li>If vcpkg exists in the system, obtain the package from the vcpkg package management system.</li>
+<li>If the system has <code>pkg-config</code> and you are looking for a library for the system environment, try to find it using the path and link information provided by <code>pkg-config</code></li>
+<li>If the system has <code>homebrew</code> and you are looking for a library for the system environment, try to find it using the information provided by <code>brew --prefix xxx</code></li>
+<li>Find from the pathes path specified in the parameter and some known system paths <code>/usr/lib</code>, <code>/usr/include</code></li>
+</ol>
+<p>Here we need to focus on the second point, through the <code>detect.packages.find_xxx</code> script to improve the search results, many times automatic packet detection is unable to fully detect the package path,<br>Especially for the windows platform, there is no default library directory, and there is no package management app. When many libraries are installed, they are placed in the system directory, or add a registry key.</p>
+<p>Therefore, there is no uniform rule for finding it. At this time, you can customize a search script to improve the lookup mechanism of <code>find_package</code> and perform more accurate search for the specified package.</p>
+<p>In the xmake/modules/detect/packages` directory that comes with xmake, there are already many built-in package scripts for better lookup support for commonly used packages.<br>Of course, this is not enough for all users. If the package that the user needs is still not found, then you can define a search script yourself, for example:</p>
+<p>To find a package named <code>openssl</code>, you can write a script for <code>find_openssl.lua</code> placed in the project directory:</p>
+<pre><code>Projectdir
+ - xmake
+   - modules
+     - detect/package/find_openssl.lua
+</code></pre><p>Then specify the directory for this module at the beginning of the project&#39;s <code>xmake.lua</code> file:</p>
+<pre><code class="lang-lua">add_moduledirs(&quot;$(projectdir)/xmake/modules&quot;)
+</code></pre>
+<p>This way xmake will be able to find custom extensions.</p>
+<p>Next we look at the implementation of <code>find_openssl.lua</code>:</p>
+<pre><code class="lang-lua">-- imports
+import(&quot;lib.detect.find_path&quot;)
+import(&quot;lib.detect.find_library&quot;)
+
+-- find openssl
+--
+-- @param opt the package options. e.g. see the options of find_package()
+--
+-- @return see the return value of find_package()
+--
+function main(opt)
+
+    -- for windows platform
+    --
+    -- http://www.slproweb.com/products/Win32OpenSSL.html
+    --
+    if opt.plat == &quot;windows&quot; then
+
+        -- init bits
+        local bits = (opt.arch == &quot;x64&quot; and &quot;64&quot; or &quot;32&quot;)
+
+        -- init search pathes
+        local pathes = {&quot;$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\OpenSSL %(&quot; .. bits .. &quot;-bit%)_is1;Inno Setup: App Path)&quot;,
+                        &quot;$(env PROGRAMFILES)/OpenSSL&quot;,
+                        &quot;$(env PROGRAMFILES)/OpenSSL-Win&quot; .. bits,
+                        &quot;C:/OpenSSL&quot;,
+                        &quot;C:/OpenSSL-Win&quot; .. bits}
+
+        -- find library
+        local result = {links = {}, linkdirs = {}, includedirs = {}}
+        for _, name in ipairs({&quot;libssl&quot;, &quot;libcrypto&quot;}) do
+            local linkinfo = find_library(name, pathes, {suffixes = &quot;lib&quot;})
+            if linkinfo then
+                table.insert(result.links, linkinfo.link)
+                table.insert(result.linkdirs, linkinfo.linkdir)
+            end
+        end
+
+        -- not found?
+        if #result.links ~= 2 then
+            return
+        end
+
+        -- find include
+        table.insert(result.includedirs, find_path(&quot;openssl/ssl.h&quot;, pathes, {suffixes = &quot;include&quot;}))
+
+        -- ok
+        return result
+        end
+    end
+</code></pre>
+<p>Inside the windows platform to read the registry, to find the<br>specified library file, the bottom layer is actually called<br><a href="#detectfind_library">find_library</a> and other interfaces.</p>
+<p>&lt;p class=&quot;tip&quot;&gt; In order to speed up the efficiency of frequent<br>lookups, this interface is self-contained by default. If you want to<br>disable the cache, you can execute <code>xmake f -c</code> in the project<br>directory to clear the local cache.  You can also disable the cache by<br>specifying the force parameter, forcing a re-find:<br><code>find_package(&quot;openssl&quot;, {force = true})</code> &lt;/p&gt;
+
+</p>
+<p>We can also test quickly with <code>xmake lua lib.detect.find_package
+openssl</code>.</p>
+<p>After the 2.2.5 version, the built-in interface [find_packages]<br>(#find_packages) has been added, which can find multiple packages at<br>the same time, and can be used directly without importing by import.</p>
+<p>And after this release, support for explicitly looking for packages<br>from a specified third-party package manager, for example:</p>
+<p><code>lua find_package(&quot;brew::pcre2/libpcre2-8&quot;)</code></p>
+<p>Since the package name of each third-party package manager is not<br>completely consistent, for example, pcre2 has three library versions<br>in homebrew, we can specify the library corresponding to libpcre2-8<br>version by the above method.</p>
+<p>In addition, for vcpkg, conan can also specify the library inside by<br>adding the <code>vcpkg::</code>, <code>conan::</code> package namespace.</p>
+<h4 id="detect-find_tool">detect.find_tool</h4>
+<ul>
+<li>Find tool</li>
+</ul>
+<p>This interface is also used to find executable programs, but more<br>advanced than <a href="#detectfind_program">lib.detect.find_program</a>, the<br>function is also more powerful, it encapsulates the executable<br>program, providing the concept of tools:</p>
+<ul>
+<li>toolname: tool name, short for executable program, used to mark a</li>
+<li>tool, for example: <code>gcc</code>, <code>clang</code>, etc.  program: executable program</li>
+<li>command, for example: <code>xcrun -sdk macosx clang</code></li>
+</ul>
+<p>The corresponding relationship is as follows:</p>
+<table>
+<thead>
+<tr>
+<th>toolname</th>
+<th>program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clang</td>
+<td><code>xcrun -sdk macosx clang</code></td>
+</tr>
+<tr>
+<td>gcc</td>
+<td><code>/usr/toolchains/bin/arm-linux-gcc</code></td>
+</tr>
+<tr>
+<td>link</td>
+<td><code>link.exe -lib</code></td>
+</tr>
+</tbody>
+</table>
+<p><a href="#detectfind_program">lib.detect.find_program</a> can only determine<br>whether the program exists by passing in the original program command<br>or path.  And <code>find_tool</code> can find the tool through a more consistent<br>toolname, and return the corresponding program complete command path,<br>for example:</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.find_tool&quot;)
+
+local tool = find_tool(&quot;clang&quot;)
+</code></pre>
+<p>The result returned is: <code>{name = &quot;clang&quot;, program = &quot;clang&quot;}</code>, at this<br>time there is no difference, we can manually specify the executable<br>command:</p>
+<pre><code class="lang-lua">local tool = find_tool(&quot;clang&quot;, {program = &quot;xcrun -sdk macosx clang&quot;})
+</code></pre>
+<p>The result returned is: <code>{name = &quot;clang&quot;, program = &quot;xcrun -sdk macosx
+clang&quot;}</code></p>
+<p>In macosx, gcc is clang. If we execute <code>gcc --version</code>, we can see<br>that it is a vest of clang. We can intelligently identify it through<br>the <code>find_tool</code> interface:</p>
+<pre><code class="lang-lua">local tool = find_tool(&quot;gcc&quot;)
+</code></pre>
+<p>The result returned is: <code>{name = &quot;clang&quot;, program = &quot;gcc&quot;}</code></p>
+<p>The difference can be seen by this result. The tool name will actually<br>be marked as clang, but the executable command uses gcc.</p>
+<p>We can also specify the <code>{version = true}</code> parameter to get the<br>version of the tool, and specify a custom search path. It also<br>supports built-in variables and custom scripts:</p>
+<pre><code class="lang-lua">local tool = find_tool(&quot;clang&quot;, {version = true, {pathes = {&quot;/usr/bin&quot;, &quot;/usr/local/bin&quot;, &quot;$(env PATH)&quot;, function () return &quot;/usr/xxx/bin&quot; end}})
+</code></pre>
+<p>The result returned is: <code>{name = &quot;clang&quot;, program = &quot;/usr/bin/clang&quot;,
+version = &quot;4.0&quot;}</code></p>
+<p>This interface is a high-level wrapper around <code>find_program</code>, so it<br>also supports custom script detection:</p>
+<pre><code class="lang-lua">local tool = find_tool(&quot;clang&quot;, {check = &quot;--help&quot;})
+local tool = find_tool(&quot;clang&quot;, {check = function (tool) os.run(&quot;%s -h&quot;, tool) end})
+</code></pre>
+<p>Finally, the search process of <code>find_tool</code>:</p>
+<ol>
+<li>First try to run and detect with the argument of <code>{program =
+&quot;xxx&quot;}</code>.  2. If there is a <code>detect.tools.find_xxx</code> script in<br><code>xmake/modules/detect/tools</code>, call this script for more accurate<br>detection.  3. Try to detect from the system directory such as<br><code>/usr/bin</code>, <code>/usr/local/bin</code>.</li>
+</ol>
+<p>We can also add a custom lookup script to the module directory<br>specified by <code>add_moduledirs</code> in the project <code>xmake.lua</code> to improve<br>the detection mechanism:</p>
+<pre><code>projectdir
+- xmake/modules
+- detect/tools/find_xxx.lua
+</code></pre><p>For example, we customize a lookup script for <code>find_7z.lua</code>:</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.find_program&quot;)
+import(&quot;lib.detect.find_programver&quot;)
+
+function main(opt)
+
+    -- init options
+    opt = opt or {}
+
+    -- find program
+    local program = find_program(opt.program or &quot;7z&quot;, opt.pathes, opt.check or &quot;--help&quot;)
+
+    -- find program version
+    local version = nil
+    if program and opt and opt.version then
+        version = find_programver(program, &quot;--help&quot;, &quot;(%d+%.?%d*)%s&quot;)
+    end
+
+    -- ok?
+    return program, version
+end
+</code></pre>
+<p>After placing it in the project&#39;s module directory, execute: <code>xmake l
+lib.detect.find_tool 7z</code> to find it.</p>
+<p>&lt;p class=&quot;tip&quot;&gt; In order to speed up the efficiency of frequent<br>lookups, this interface is self-contained by default. If you want to<br>disable the cache, you can execute <code>xmake f -c</code> in the project<br>directory to clear the local cache.  &lt;/p&gt;
+
+</p>
+<p>We can also test quickly with <code>xmake lua lib.detect.find_tool clang</code>.</p>
+<h4 id="detect-find_toolname">detect.find_toolname</h4>
+<ul>
+<li>Find tool name</li>
+</ul>
+<p>Match the corresponding tool name with the program command, for<br>example:</p>
+<table>
+<thead>
+<tr>
+<th>program</th>
+<th>toolname</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>xcrun -sdk macosx clang</code></td>
+<td>clang</td>
+</tr>
+<tr>
+<td><code>/usr/bin/arm-linux-gcc</code></td>
+<td>gcc</td>
+</tr>
+<tr>
+<td><code>link.exe -lib</code></td>
+<td>link</td>
+</tr>
+<tr>
+<td><code>gcc-5</code></td>
+<td>gcc</td>
+</tr>
+<tr>
+<td><code>arm-android-clang++</code></td>
+<td>clangxx</td>
+</tr>
+<tr>
+<td><code>pkg-config</code></td>
+<td>pkg_config</td>
+</tr>
+</tbody>
+</table>
+<p>Compared with program, toolname can uniquely mark a tool, and it is also convenient to find and load the corresponding script <code>find_xxx.lua</code>.</p>
+<h4 id="detect-find_cudadevices">detect.find_cudadevices</h4>
+<ul>
+<li>Find CUDA devices of the host</li>
+</ul>
+<p>Enumerate CUDA devices through the CUDA Runtime API and query theirs properties.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.find_cudadevices&quot;)
+
+local devices = find_cudadevices({ skip_compute_mode_prohibited = true })
+local devices = find_cudadevices({ min_sm_arch = 35, order_by_flops = true })
+</code></pre>
+<p>The result returned is: <code>{ { [&#39;$id&#39;] = 0, name = &quot;GeForce GTX 960M&quot;, major = 5, minor = 0, ... }, ... }</code></p>
+<p>The included properties will vary depending on the current CUDA version.<br>Please refer to <a href="https://docs.nvidia.com/cuda/cuda-runtime-api/structcudaDeviceProp.html#structcudaDeviceProp">CUDA Toolkit Documentation</a> and its historical version for more information.</p>
+<h4 id="detect-features">detect.features</h4>
+<ul>
+<li>Get all the features of the specified tool</li>
+</ul>
+<p>This interface is similar to <a href="#compilerfeatures">compiler.features</a>. The difference is that this interface is more primitive. The passed argument is the actual tool name toolname.</p>
+<p>And this interface not only can get the characteristics of the compiler, the characteristics of any tool can be obtained, so it is more versatile.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.features&quot;)
+
+local features = features(&quot;clang&quot;)
+local features = features(&quot;clang&quot;, {flags = &quot;-O0&quot;, program = &quot;xcrun -sdk macosx clang&quot;})
+local features = features(&quot;clang&quot;, {flags = {&quot;-g&quot;, &quot;-O0&quot;, &quot;-std=c++11&quot;}})
+</code></pre>
+<p>By passing in flags, you can change the result of the feature, for example, some features of C++11, which are not available by default. After enabling <code>-std=c++11</code>, you can get it.</p>
+<p>A list of all compiler features can be found at <a href="#compilerfeatures">compiler.features</a>.</p>
+<h4 id="detect-has_features">detect.has_features</h4>
+<ul>
+<li>Determine if the specified feature is supported</li>
+</ul>
+<p>This interface is similar to <a href="#compilerhas_features">compiler.has_features</a>, but more primitive, the passed argument is the actual tool name toolname.</p>
+<p>And this interface can not only judge the characteristics of the compiler, but the characteristics of any tool can be judged, so it is more versatile.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.has_features&quot;)
+
+local features = has_features(&quot;clang&quot;, &quot;cxx_constexpr&quot;)
+local features = has_features(&quot;clang&quot;, {&quot;cxx_constexpr&quot;, &quot;c_static_assert&quot;}, {flags = {&quot;-g&quot;, &quot;-O0&quot;}, program = &quot;xcrun -sdk macosx clang&quot;})
+local features = has_features(&quot;clang&quot;, {&quot;cxx_constexpr&quot;, &quot;c_static_assert&quot;}, {flags = &quot;-g&quot;})
+</code></pre>
+<p>If the specified feature list exists, the actual supported feature sublist is returned. If none is supported, nil is returned. We can also change the feature acquisition rule by specifying flags.</p>
+<p>A list of all compiler features can be found at <a href="#compilerfeatures">compiler.features</a>.</p>
+<h4 id="detect-has_flags">detect.has_flags</h4>
+<ul>
+<li>Determine if the specified parameter option is supported</li>
+</ul>
+<p>This interface is similar to <a href="#compilerhas_flags">compiler.has_flags</a>, but more primitive, the passed argument is the actual tool name toolname.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.has_flags&quot;)
+
+local ok = has_flags(&quot;clang&quot;, &quot;-g&quot;)
+local ok = has_flags(&quot;clang&quot;, {&quot;-g&quot;, &quot;-O0&quot;}, {program = &quot;xcrun -sdk macosx clang&quot;})
+local ok = has_flags(&quot;clang&quot;, &quot;-g -O0&quot;, {toolkind = &quot;cxx&quot;})
+</code></pre>
+<p>Returns true if the test passed.</p>
+<p>The detection of this interface has been optimized. Except for the cache mechanism, in most cases, the tool&#39;s option list (<code>--help</code>) will be directly judged. If the option list is not available, it will be tried. The way to run to detect.</p>
+<h4 id="detect-has_cfuncs">detect.has_cfuncs</h4>
+<ul>
+<li>Determine if the specified c function exists</li>
+</ul>
+<p>This interface is a simplified version of <a href="#detectcheck_cxsnippets">lib.detect.check_cxsnippets</a> and is only used to detect functions.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.has_cfuncs&quot;)
+
+local ok = has_cfuncs(&quot;setjmp&quot;)
+local ok = has_cfuncs({&quot;sigsetjmp((void*)0, 0)&quot;, &quot;setjmp&quot;}, {includes = &quot;setjmp.h&quot;})
+</code></pre>
+<p>The rules for describing functions are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Function Description</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sigsetjmp</code></td>
+<td>pure function name</td>
+</tr>
+<tr>
+<td><code>sigsetjmp((void*)0, 0)</code></td>
+<td>Function Call</td>
+</tr>
+<tr>
+<td><code>sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}</code></td>
+<td>function name + {} block</td>
+</tr>
+</tbody>
+</table>
+<p>In the last optional parameter, in addition to specifying <code>includes</code>, you can also specify other parameters to control the option conditions for compile detection:</p>
+<pre><code class="lang-lua">{ verbose = false, target = [target|option], includes = .., config = {linkdirs = .., links = .., defines = ..}}
+</code></pre>
+<p>The verbose is used to echo the detection information, the target is used to append the configuration information in the target before the detection, and the config is used to customize the compilation options related to the target.</p>
+<h4 id="detect-has_cxxfuncs">detect.has_cxxfuncs</h4>
+<ul>
+<li>Determine if the specified c++ function exists</li>
+</ul>
+<p>This interface is similar to <a href="#detecthas_cfuncs">lib.detect.has_cfuncs</a>, please refer to its instructions for use. The only difference is that this interface is used to detect c++ functions.</p>
+<h4 id="detect-has_cincludes">detect.has_cincludes</h4>
+<ul>
+<li>Determine if the specified c header file exists</li>
+</ul>
+<p>This interface is a simplified version of <a href="#detectcheck_cxsnippets">lib.detect.check_cxsnippets</a> and is only used to detect header files.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.has_cincludes&quot;)
+
+local ok = has_cincludes(&quot;stdio.h&quot;)
+local ok = has_cincludes({&quot;stdio.h&quot;, &quot;stdlib.h&quot;}, {target = target})
+local ok = has_cincludes({&quot;stdio.h&quot;, &quot;stdlib.h&quot;}, {config = {defines = &quot;_GNU_SOURCE=1&quot;, languages ​​= &quot;cxx11&quot;}})
+</code></pre>
+<h4 id="detect-has_cxxincludes">detect.has_cxxincludes</h4>
+<ul>
+<li>Determine if the specified c++ header file exists</li>
+</ul>
+<p>This interface is similar to <a href="#detecthas_cincludes">lib.detect.has_cincludess</a>, please refer to its instructions for use. The only difference is that this interface is used to detect c++ header files.</p>
+<h4 id="detect-has_ctypes">detect.has_ctypes</h4>
+<ul>
+<li>Determine if the specified c type exists</li>
+</ul>
+<p>This interface is a simplified version of <a href="#detectcheck_cxsnippets">lib.detect.check_cxsnippets</a> and is only used to detect functions.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.has_ctypes&quot;)
+
+local ok = has_ctypes(&quot;wchar_t&quot;)
+local ok = has_ctypes({&quot;char&quot;, &quot;wchar_t&quot;}, {includes = &quot;stdio.h&quot;})
+local ok = has_ctypes(&quot;wchar_t&quot;, {includes = {&quot;stdio.h&quot;, &quot;stdlib.h&quot;}, config = {&quot;defines = &quot;_GNU_SOURCE=1&quot;, languages ​​= &quot;cxx11&quot;}})
+</code></pre>
+<h4 id="detect-has_cxxtypes">detect.has_cxxtypes</h4>
+<ul>
+<li>Determine if the specified c++ type exists</li>
+</ul>
+<p>This interface is similar to <a href="#detecthas_ctypes">lib.detect.has_ctypess</a>. Please refer to its instructions for use. The only difference is that this interface is used to detect c++ types.</p>
+<h4 id="detect-check_cxsnippets">detect.check_cxsnippets</h4>
+<ul>
+<li>Check if the c/c++ code snippet can be compiled</li>
+</ul>
+<p>The generic c/c++ code snippet detection interface, by passing in a list of multiple code snippets, it will automatically generate a compiled file, and then common sense to compile it, if the compilation pass returns true.</p>
+<p>For some complex compiler features, even if <a href="#compilerhas_features">compiler.has_features</a> can&#39;t detect it, you can detect it by trying to compile through this interface.</p>
+<pre><code class="lang-lua">import(&quot;lib.detect.check_cxsnippets&quot;)
+
+local ok = check_cxsnippets(&quot;void test() {}&quot;)
+local ok = check_cxsnippets({&quot;void test(){}&quot;, &quot;#define TEST 1&quot;}, {types = &quot;wchar_t&quot;, includes = &quot;stdio.h&quot;})
+</code></pre>
+<p>This interface is a generic version of interfaces such as <a href="#detecthas_cfuncs">detect.has_cfuncs</a>, <a href="#detecthas_cincludes">detect.has_cincludes</a>, and <a href="detect-has_ctypes">detect.has_ctypes</a>, and is also lower level.</p>
+<p>So we can use it to detect: types, functions, includes and links, or combine them together to detect.</p>
+<p>The first parameter is a list of code fragments, which are generally used for the detection of some custom features. If it is empty, it can only detect the conditions in the optional parameters, for example:</p>
+<pre><code class="lang-lua">local ok = check_cxsnippets({}, {types = {&quot;wchar_t&quot;, &quot;char*&quot;}, includes = &quot;stdio.h&quot;, funcs = {&quot;sigsetjmp&quot;, &quot;sigsetjmp((void*)0, 0)&quot;} })
+</code></pre>
+<p>The above call will check if the types, includes and funcs are both satisfied, and return true if passed.</p>
+<p>There are other optional parameters:</p>
+<pre><code class="lang-lua">{ verbose = false, target = [target|option], sourcekind = &quot;[cc|cxx]&quot;}
+</code></pre>
+<p>The verbose is used to echo the detection information. The target is used to append the configuration information in the target before the detection. The sourcekind is used to specify the tool type such as the compiler. For example, the incoming <code>cxx</code> is forced to be detected as c++ code.</p>
+<h3 id="net-http">net.http</h3>
+<p>This module provides various operational support for http. The currently available interfaces are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><a href="#http-download">http.download</a> | Download http file | &gt;= 2.1.5 |</p>
+<h4 id="http-download">http.download</h4>
+<ul>
+<li>Download http file</li>
+</ul>
+<p>This interface is relatively simple, is simply download files.</p>
+<pre><code class="lang-lua">import(&quot;net.http&quot;)
+
+http.download(&quot;https://xmake.io&quot;, &quot;/tmp/index.html&quot;)
+</code></pre>
+<h3 id="privilege-sudo">privilege.sudo</h3>
+<p>This interface is used to run commands via <code>sudo</code> and provides platform consistency handling, which can be used for scripts that require root privileges to run.</p>
+<p>&lt;p class=&quot;warn&quot;&gt;<br>In order to ensure security, unless you must use it, try not to use this interface in other cases.<br>&lt;/p&gt;
+
+</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#sudo-has">sudo.has</a></td>
+<td>Determine if sudo supports</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#sudo-run">sudo.run</a></td>
+<td>Quiet running program</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#sudo-runv">sudo.runv</a></td>
+<td>Quiet running program with parameter list</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#sudo-exec">sudo.exec</a></td>
+<td>Evoke Run Program</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#sudo-execv">sudo.execv</a></td>
+<td>Echo running program with parameter list</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#sudo-iorun">sudo.iorun</a></td>
+<td>Run and get the program output</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#sudo-iorunv">sudo.iorunv</a></td>
+<td>Run and get the program output with parameter list</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<h4 id="sudo-has">sudo.has</h4>
+<ul>
+<li>Determine if sudo supports</li>
+</ul>
+<p>At present, sudo is supported only under <code>macosx/linux</code>. The administrator privilege running on Windows is not supported yet. Therefore, it is recommended to use the interface to judge the support situation before use.</p>
+<pre><code class="lang-lua">import(&quot;privilege.sudo&quot;)
+
+if sudo.has() then
+    sudo.run(&quot;rm /system/file&quot;)
+end
+</code></pre>
+<h4 id="sudo-run">sudo.run</h4>
+<ul>
+<li>Quietly running native shell commands</li>
+</ul>
+<p>For specific usage, please refer to: <a href="#os-run">os.run</a>.</p>
+<pre><code class="lang-lua">import(&quot;privilege.sudo&quot;)
+
+sudo.run(&quot;rm /system/file&quot;)
+</code></pre>
+<h4 id="sudo-runv">sudo.runv</h4>
+<ul>
+<li>Quietly running native shell commands with parameter list</li>
+</ul>
+<p>For specific usage, please refer to: <a href="#os-runv">os.runv</a>.</p>
+<h4 id="sudo-exec">sudo.exec</h4>
+<ul>
+<li>Echo running native shell commands</li>
+</ul>
+<p>For specific usage, please refer to: <a href="#os-exec">os.exec</a>.</p>
+<h4 id="sudo-execv">sudo.execv</h4>
+<ul>
+<li>Echo running native shell commands with parameter list</li>
+</ul>
+<p>For specific usage, please refer to: <a href="#os-execv">os.execv</a>.</p>
+<h4 id="sudo-iorun">sudo.iorun</h4>
+<ul>
+<li>Quietly running native shell commands and getting output</li>
+</ul>
+<p>For specific usage, please refer to: <a href="#os-iorun">os.iorun</a>.</p>
+<h4 id="sudo-iorunv">sudo.iorunv</h4>
+<ul>
+<li>Run the native shell command quietly and get the output with a list of parameters</li>
+</ul>
+<p>For specific usage, please refer to: <a href="#os-iorunv">os.iorunv</a>.</p>
+<h3 id="devel-git">devel.git</h3>
+<p>This interface provides access to various commands of git. Compared to the direct call to git command, this module provides a more easy-to-use package interface and provides automatic detection and cross-platform processing for git.</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>Currently on Windows, you need to manually install the git package before you can detect it. The subsequent version will provide automatic integration of git function. Users will not need to care about how to install git, they can be used directly.<br>&lt;/p&gt;
+
+</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#git-clone">git.clone</a></td>
+<td>clone codebase</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#git-pull">git.pull</a></td>
+<td>Pull the codebase latest commit</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#git-clean">git.clean</a></td>
+<td>Clean up the codebase file</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#git-checkout">git.checkout</a></td>
+<td>Check out the specified branch version</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#git-refs">git.refs</a></td>
+<td>Get a list of all references</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#git-tags">git.tags</a></td>
+<td>Get all tag lists</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#git-branches">git.branches</a></td>
+<td>Get a list of all branches</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<h4 id="git-clone">git.clone</h4>
+<ul>
+<li>clone codebase</li>
+</ul>
+<p>This interface corresponds to the <code>git clone</code> command.</p>
+<pre><code class="lang-lua">import(&quot;devel.git&quot;)
+
+git.clone(&quot;git@github.com:tboox/xmake.git&quot;)
+git.clone(&quot;git@github.com:tboox/xmake.git&quot;, {depth = 1, branch = &quot;master&quot;, outputdir = &quot;/tmp/xmake&quot;})
+</code></pre>
+<h4 id="git-pull">git.pull</h4>
+<ul>
+<li>Pull the code base for the latest submission</li>
+</ul>
+<p>This interface corresponds to the <code>git pull</code> command.</p>
+<pre><code class="lang-lua">import(&quot;devel.git&quot;)
+
+git.pull()
+git.pull({remote = &quot;origin&quot;, tags = true, branch = &quot;master&quot;, repodir = &quot;/tmp/xmake&quot;})
+</code></pre>
+<h4 id="git-clean">git.clean</h4>
+<ul>
+<li>Clean up the code base file</li>
+</ul>
+<p>This interface corresponds to the <code>git clean</code> command.</p>
+<pre><code class="lang-lua">import(&quot;devel.git&quot;)
+
+git.clean()
+git.clean({repodir = &quot;/tmp/xmake&quot;, force = true})
+</code></pre>
+<h4 id="git-checkout">git.checkout</h4>
+<ul>
+<li>Check out the specified branch version</li>
+</ul>
+<p>This interface corresponds to the <code>git checkout</code> command</p>
+<pre><code class="lang-lua">import(&quot;devel.git&quot;)
+
+git.checkout(&quot;master&quot;, {repodir = &quot;/tmp/xmake&quot;})
+git.checkout(&quot;v1.0.1&quot;, {repodir = &quot;/tmp/xmake&quot;})
+</code></pre>
+<h4 id="git-refs">git.refs</h4>
+<ul>
+<li>Get a list of all references</li>
+</ul>
+<p>This interface corresponds to the <code>git ls-remote --refs</code> command</p>
+<pre><code class="lang-lua">import(&quot;devel.git&quot;)
+
+local refs = git.refs(url)
+</code></pre>
+<h4 id="git-tags">git.tags</h4>
+<ul>
+<li>Get a list of all tags</li>
+</ul>
+<p>This interface corresponds to the <code>git ls-remote --tags</code> command</p>
+<pre><code class="lang-lua">import(&quot;devel.git&quot;)
+
+local tags = git.tags(url)
+</code></pre>
+<h4 id="git-branches">git.branches</h4>
+<ul>
+<li>Get a list of all branches</li>
+</ul>
+<p>This interface corresponds to the <code>git ls-remote --heads</code> command</p>
+<pre><code class="lang-lua">import(&quot;devel.git&quot;)
+
+local branches = git.branches(url)
+</code></pre>
+<h3 id="utils-archive">utils.archive</h3>
+<p>This module is used to compress and decompress files.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#archive-extract">archive.extract</a></td>
+<td>Extract files</td>
+<td>&gt;= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<h4 id="archive-extract">archive.extract</h4>
+<ul>
+<li>unzip files</li>
+</ul>
+<p>Supports the decompression of most commonly used compressed files. It automatically detects which decompression tools are provided by the system, and then adapts them to the most suitable decompressor to decompress the specified compressed files.</p>
+<pre><code class="lang-lua">import(&quot;utils.archive&quot;)
+
+archive.extract(&quot;/tmp/a.zip&quot;, &quot;/tmp/outputdir&quot;)
+archive.extract(&quot;/tmp/a.7z&quot;, &quot;/tmp/outputdir&quot;)
+archive.extract(&quot;/tmp/a.gzip&quot;, &quot;/tmp/outputdir&quot;)
+archive.extract(&quot;/tmp/a.tar.bz2&quot;, &quot;/tmp/outputdir&quot;)
+</code></pre>

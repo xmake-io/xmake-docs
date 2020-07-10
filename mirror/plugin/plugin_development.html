@@ -1,0 +1,73 @@
+<h2 id="introduction">Introduction</h2>
+<p>XMake supports the plugin module and we can develop ourself plugin module conveniently.</p>
+<p>We can run command <code>xmake -h</code> to look over some builtin plugins of xmake</p>
+<pre><code>Plugins: 
+    l, lua                                 Run the lua script.
+    m, macro                               Run the given macro.
+       doxygen                             Generate the doxygen document.
+       hello                               Hello xmake!
+       project                             Create the project file.
+</code></pre><ul>
+<li>lua: Run a given lua script.</li>
+<li>macro: Record and playback some xmake commands repeatably.</li>
+<li>doxygen：Generate doxygen document automatically.</li>
+<li>hello:  The demo plugin and only print: &#39;hello xmake!&#39;</li>
+<li>project：Generate project file for IDE, only generate makefile now and will generate vs, xcode project in the future</li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<p>Now we write a simple plugin demo for printing &#39;hello xmake!&#39;</p>
+<pre><code class="lang-lua">-- define a plugin task 
+task(&quot;hello&quot;)
+
+    -- set the category for showing it in plugin category menu (optional)
+    set_category(&quot;plugin&quot;)
+
+    -- the main entry of the plugin
+    on_run(function ()
+
+        -- print &#39;hello xmake!&#39;
+        print(&quot;hello xmake!&quot;)
+    end)
+
+    -- set the menu options, but we put empty options now.
+    set_menu {
+                -- usage
+                usage = &quot;xmake hello [options]&quot;
+
+                -- description
+            ,   description = &quot;Hello xmake!&quot;
+
+                -- options
+            ,   options = {}
+            }
+</code></pre>
+<p>The file tree of this plugin:</p>
+<pre><code>hello
+ - xmake.lua
+
+</code></pre><p>Now one of the most simple plugin finished, how was it to be xmake detected it, there are three ways:</p>
+<ol>
+<li>Put this plugin directory into xmake/plugins the source codes as the builtin plugin.</li>
+<li>Put this plugin directory into ~/.xmake/plugins as the global user plugin.</li>
+<li>Put this plugin directory to anywhere and call <code>add_plugindirs(&quot;./hello&quot;)</code> in xmake.lua as the local project plugin.</li>
+</ol>
+<h2 id="run-plugin">Run Plugin</h2>
+<p>Next we run this plugin</p>
+<pre><code class="lang-bash">xmake hello
+</code></pre>
+<p>The results is </p>
+<pre><code>hello xmake!
+</code></pre><p>Finally, we can also run this plugin in the custom scripts of <code>xmake.lua</code></p>
+<pre><code class="lang-lua">
+target(&quot;demo&quot;)
+
+    -- run this plugin after building target
+    after_build(function (target)
+
+        -- import task module
+        import(&quot;core.project.task&quot;)
+
+        -- run the plugin task
+        task.run(&quot;hello&quot;)
+    end)
+</code></pre>

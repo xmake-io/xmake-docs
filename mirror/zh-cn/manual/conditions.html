@@ -1,0 +1,298 @@
+<p>条件判断的api，一般用于必须要处理特定平台的编译逻辑的场合。。通常跟lua的if语句配合使用。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#is_os">is_os</a></td>
+<td>判断当前构建目标的操作系统</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_arch">is_arch</a></td>
+<td>判断当前编译架构</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_plat">is_plat</a></td>
+<td>判断当前编译平台</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_host">is_host</a></td>
+<td>判断当前主机环境操作系统</td>
+<td>&gt;= 2.1.4</td>
+</tr>
+<tr>
+<td><a href="#is_mode">is_mode</a></td>
+<td>判断当前编译模式</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_kind">is_kind</a></td>
+<td>判断当前编译类型</td>
+<td>&gt;= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#is_option">is_option</a></td>
+<td>判断选项是否启用</td>
+<td>&gt;= 2.0.1 &lt; 2.2.2 已废弃</td>
+</tr>
+<tr>
+<td><a href="#is_config">is_config</a></td>
+<td>判断指定配置是否为给定的值</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#has_config">has_config</a></td>
+<td>判断配置是否启用或者存在</td>
+<td>&gt;= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#has_package">has_package</a></td>
+<td>判断依赖包是否被启用或者存在</td>
+<td>&gt;= 2.2.3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="is_os">is_os</h3>
+<h4 id="-">判断当前构建目标的操作系统</h4>
+<pre><code class="lang-lua">-- 如果当前操作系统是ios
+if is_os(&quot;ios&quot;) then
+    add_files(&quot;src/xxx/*.m&quot;)
+end
+</code></pre>
+<p>目前支持的操作系统有：</p>
+<ul>
+<li>windows</li>
+<li>linux</li>
+<li>android</li>
+<li>macosx</li>
+<li>ios</li>
+</ul>
+<h3 id="is_arch">is_arch</h3>
+<h4 id="-">判断当前编译架构</h4>
+<p>用于检测编译配置：<code>xmake f -a armv7</code></p>
+<pre><code class="lang-lua">-- 如果当前架构是x86_64或者i386
+if is_arch(&quot;x86_64&quot;, &quot;i386&quot;) then
+    add_files(&quot;src/xxx/*.c&quot;)
+end
+
+-- 如果当前平台是armv7, arm64, armv7s, armv7-a
+if is_arch(&quot;armv7&quot;, &quot;arm64&quot;, &quot;armv7s&quot;, &quot;armv7-a&quot;) then
+    -- ...
+end
+</code></pre>
+<p>如果像上面那样一个个去判断所有arm架构，也许会很繁琐，毕竟每个平台的架构类型很多，xmake提供了类似<a href="#targetadd_files">add_files</a>中的通配符匹配模式，来更加简洁的进行判断：</p>
+<pre><code class="lang-lua">--如果当前平台是arm平台
+if is_arch(&quot;arm*&quot;) then
+    -- ...
+end
+</code></pre>
+<p>用<code>*</code>就可以匹配所有了。。</p>
+<h3 id="is_plat">is_plat</h3>
+<h4 id="-">判断当前编译平台</h4>
+<p>用于检测编译配置：<code>xmake f -p iphoneos</code></p>
+<pre><code class="lang-lua">-- 如果当前平台是android
+if is_plat(&quot;android&quot;) then
+    add_files(&quot;src/xxx/*.c&quot;)
+end
+
+-- 如果当前平台是macosx或者iphoneos
+if is_plat(&quot;macosx&quot;, &quot;iphoneos&quot;) then
+    add_frameworks(&quot;Foundation&quot;)
+end
+</code></pre>
+<p>目前支持的平台有：</p>
+<ul>
+<li>windows</li>
+<li>cross</li>
+<li>linux</li>
+<li>macosx</li>
+<li>android</li>
+<li>iphoneos</li>
+<li>watchos</li>
+</ul>
+<p>当然你也可以自己扩展添加自己的平台，甚至直接指定自己的平台名：</p>
+<pre><code class="lang-bash">$ xmake f -p other --sdk=...
+</code></pre>
+<p>如果指定的平台名不存在，就会自动切到<code>cross</code>平台进行交叉编译，但是缺可以通过<code>is_plat(&quot;other&quot;)</code>来判断自己的平台逻辑。</p>
+<h3 id="is_host">is_host</h3>
+<h4 id="-">判断当前主机环境的操作系统</h4>
+<p>有些编译平台是可以在多个不同的操作系统进行构建的，例如：android的ndk就支持linux,macOS还有windows环境。</p>
+<p>这个时候就可以通过这个接口，区分当前是在哪个系统环境下进行的构建。</p>
+<pre><code class="lang-lua">-- 如果当前主机环境是windows
+if is_host(&quot;windows&quot;) then
+    add_includedirs(&quot;C:\\includes&quot;)
+else
+    add_includedirs(&quot;/usr/includess&quot;)
+end
+</code></pre>
+<p>目前支持的主机环境有：</p>
+<ul>
+<li>windows</li>
+<li>linux</li>
+<li>macosx</li>
+</ul>
+<p>你也可以通过<a href="/zh-cn/manual/builtin_variables?id=varhost">$(host)</a>内置变量或者<a href="/zh-cn/manual/builtin_modules?id=oshost">os.host</a>接口，来进行获取</p>
+<h3 id="is_mode">is_mode</h3>
+<h4 id="-">判断当前编译模式</h4>
+<p>用于检测编译配置：<code>xmake f -m debug</code></p>
+<p>编译模式的类型并不是内置的，可以自由指定，一般指定：<code>debug</code>, <code>release</code>, <code>profile</code> 这些就够用了，当然你也可以在xmake.lua使用其他模式名来判断。</p>
+<pre><code class="lang-lua">-- 如果当前编译模式是debug
+if is_mode(&quot;debug&quot;) then
+
+    -- 添加DEBUG编译宏
+    add_defines(&quot;DEBUG&quot;)
+
+    -- 启用调试符号
+    set_symbols(&quot;debug&quot;)
+
+    -- 禁用优化
+    set_optimize(&quot;none&quot;)
+
+end
+
+-- 如果是release或者profile模式
+if is_mode(&quot;release&quot;, &quot;profile&quot;) then
+
+    -- 如果是release模式
+    if is_mode(&quot;release&quot;) then
+
+        -- 隐藏符号
+        set_symbols(&quot;hidden&quot;)
+
+        -- strip所有符号
+        set_strip(&quot;all&quot;)
+
+        -- 忽略帧指针
+        add_cxflags(&quot;-fomit-frame-pointer&quot;)
+        add_mxflags(&quot;-fomit-frame-pointer&quot;)
+
+    -- 如果是profile模式
+    else
+
+        -- 启用调试符号
+        set_symbols(&quot;debug&quot;)
+
+    end
+
+    -- 添加扩展指令集
+    add_vectorexts(&quot;sse2&quot;, &quot;sse3&quot;, &quot;ssse3&quot;, &quot;mmx&quot;)
+end
+</code></pre>
+<h3 id="is_kind">is_kind</h3>
+<h4 id="-">判断当前编译类型</h4>
+<p>判断当前是否编译的是动态库还是静态库，用于检测编译配置：<code>xmake f -k [static|shared]</code></p>
+<p>一般用于如下场景：</p>
+<pre><code class="lang-lua">target(&quot;test&quot;)
+
+    -- 通过配置设置目标的kind
+    set_kind(&quot;$(kind)&quot;)
+    add_files(&quot;src/*c&quot;)
+
+    -- 如果当前编译的是静态库，那么添加指定文件
+    if is_kind(&quot;static&quot;) then
+        add_files(&quot;src/xxx.c&quot;)
+    end
+</code></pre>
+<p>编译配置的时候，可手动切换，编译类型：</p>
+<pre><code class="lang-bash"># 编译静态库
+$ xmake f -k static
+$ xmake
+</code></pre>
+<pre><code class="lang-bash"># 编译动态库
+$ xmake f -k shared
+$ xmake
+</code></pre>
+<h3 id="is_option">is_option</h3>
+<h4 id="-">判断选项是否启用</h4>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>此接口在2.2.2版本之后已经弃用，请使用<a href="#has_config">has_config</a>来代替。<br>&lt;/p&gt;
+
+</p>
+<p>用于检测自定义的编译配置选型：<code>xmake f --xxxx=y</code></p>
+<p>如果某个自动检测选项、手动设置选项被启用，那么可以通过<code>is_option</code>接口来判断，例如：</p>
+<pre><code class="lang-lua">-- 如果手动启用了xmake f --demo=y 选项
+if is_option(&quot;demo&quot;) then
+
+    -- 编译demo目录下的代码
+    add_subdirs(&quot;src/demo&quot;)
+end
+</code></pre>
+<h3 id="is_config">is_config</h3>
+<h4 id="-">判断指定配置是否为给定的值</h4>
+<p>此接口从2.2.2版本开始引入，用于判断指定配置是否为给定的值，可用于描述域。</p>
+<p>例如：</p>
+<pre><code class="lang-console">$ xmake f --test=hello1
+</code></pre>
+<pre><code class="lang-lua">-- 自定义一个配置选项到命令行菜单
+option(&quot;test&quot;)
+    set_showmenu(&quot;true&quot;)
+    set_description(&quot;The test config option&quot;)
+option_end()
+
+-- 如果自定义的test配置值是hello1或者hello2
+if is_config(&quot;test&quot;, &quot;hello1&quot;, &quot;hello2&quot;) then
+    add_defines(&quot;HELLO&quot;)
+end
+</code></pre>
+<p>不仅如此，我们还可以设置模式匹配规则去判断值，例如：</p>
+<pre><code class="lang-lua">-- 如果自定义的test配置值带有hello前缀
+if is_config(&quot;test&quot;, &quot;hello.*&quot;) then
+    add_defines(&quot;HELLO&quot;)
+end
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>此接口不仅能够判断通过<a href="#option">option</a>定义的自定义配置选项，同时还能判断内置的全局配置、本地配置。<br>&lt;/p&gt;
+
+</p>
+<h3 id="has_config">has_config</h3>
+<h4 id="-">判断配置是否启用或者存在</h4>
+<p>此接口从2.2.2版本开始引入，用于检测自定义或者内置的编译配置是否存在或启用，可用于描述域。</p>
+<p>例如以下配置情况，都会返回true:</p>
+<pre><code class="lang-console"># 启用某个配置选项（如果是boolean类型配置）
+$ xmake f --test1=y
+$ xmake f --test1=yes
+$ xmake f --test1=true
+
+# 设置某个配置选项的值
+$ xmake f --test2=value
+</code></pre>
+<pre><code class="lang-lua">-- 如果test1或者test2被设置或者启用
+if has_config(&quot;test1&quot;, &quot;test2&quot;) then
+    add_defines(&quot;TEST&quot;)
+end
+</code></pre>
+<p>而下面的情况则会禁用配置，返回false：</p>
+<pre><code class="lang-console"># 禁用配置（如果是boolean类型配置）
+$ xmake f --test1=n
+$ xmake f --test1=no
+$ xmake f --test1=false
+</code></pre>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过<a href="#option">option</a>定义的自定义配置选项。<br>&lt;/p&gt;
+
+
+</p>
+<h3 id="has_package">has_package</h3>
+<h4 id="-">判断依赖包是否启用或者存在</h4>
+<p>此接口从2.2.3版本开始引入，用于检测远程依赖包是否存在或启用，可用于描述域。</p>
+<p>一般配合<a href="/zh-cn/manual/global_interfaces?id=add_requires">add_requires</a>一起使用，例如：</p>
+<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {optional = true})
+
+target(&quot;test&quot;)
+    set_kind(&quot;binary&quot;)
+    add_files(&quot;src/*.c&quot;)
+    add_packages(&quot;tbox&quot;)
+
+    if has_package(&quot;tbox&quot;) then
+        add_defines(&quot;HAVE_TBOX&quot;)
+    end
+</code></pre>
+<p>如果通过<code>add_requires</code>添加的可选依赖包，远程下载安装失败，或者当前平台不支持导致实际上没有被正常安装上，那么<code>has_package</code>就会返回false，<br>表示不存在，然后对其他flags定义甚至源文件编译控制做一些特殊处理。</p>
+<p>&lt;p class=&quot;tip&quot;&gt;<br>此接口跟<a href="#has_config">has_config</a>的区别在于，<a href="#has_config">has_config</a>用于<a href="#option">option</a>，而它用于<a href="#add_requires">add_requires</a>。<br>&lt;/p&gt;
+
+</p>
