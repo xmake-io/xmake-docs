@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: /build.lua
+Allow: /
+Sitemap: https://xmake.io/sitemap.xml
