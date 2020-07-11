@@ -44,6 +44,12 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 <img src="/assets/img/weixin.png" alt="weixin" width="218" height="218">
 
+## Afdian
+
+<a href="https://afdian.net/@xmake" target="_blank">
+<img src="/assets/img/afdian-xmake.png" alt="afdian" width="30%" height="30%">
+</a>
+
 ## Supporters 
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
