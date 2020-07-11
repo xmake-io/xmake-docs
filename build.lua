@@ -4,9 +4,45 @@ end
 
 function header(url)
     return format([[
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
 <h2>Note: this is the mirror page, if you want to see the original page, please goto: </h2>
 <a href="%s">%s</a>
-</br>]], url, url)
+</br>
+    ]], url, url)
+end
+
+function tailer()
+    return [[
+</article>
+</body>
+</html>]]
 end
 
 function ads()
@@ -80,6 +116,8 @@ end
 -- we need install https://github.com/cwjohan/markdown-to-html first
 -- npm install markdown-to-html -g
 --
+-- Or use showdown-cli https://github.com/showdownjs/showdown
+--
 function main()
     local siteroot = "https://xmake.io"
     local mirrordir = "mirror"
@@ -125,8 +163,24 @@ function main()
                 f:write(header(rawurl))
                 f:write(ads())
                 f:write(htmldata)
+                f:write(tailer())
                 f:close()
             end
+
+            --[[
+            local tmpfile = os.tmpfile()
+            os.mkdir(path.directory(tmpfile))
+            os.execv("showdown", {"makehtml", "-i", markdown, "-o", tmpfile})
+            local f = io.open(htmlfile, 'w')
+            if f then
+                f:write(header(rawurl))
+                f:write(ads())
+                f:write(io.readfile(tmpfile))
+                f:write(tailer())
+                f:close()
+            end
+            os.rm(tmpfile)]]
+
             print("build %s => %s, %s", markdown, htmlfile, mtime(htmlfile))
             print("url %s -> %s", url, rawurl)
 
