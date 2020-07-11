@@ -32,8 +32,7 @@ function header(url)
 </head>
 <body>
 <article class="markdown-body">
-<h2>Note: this is the mirror page, if you want to see the original page, please goto: </h2>
-<a href="%s">%s</a>
+<h4>This is a mirror page, please see the original page: </h4><a href="%s">%s</a>
 </br>
     ]], url, url)
 end
