@@ -47,7 +47,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 ## Afdian
 
 <a href="https://afdian.net/@xmake" target="_blank">
-<img src="/assets/img/afdian-xmake.png" alt="afdian" width="30%" height="30%">
+<img src="/assets/img/afdian-xmake.png" alt="afdian" width="50%" height="50%">
 </a>
 
 ## Supporters 

@@ -18,7 +18,7 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 ## 爱发电
 
 <a href="https://afdian.net/@xmake" target="_blank">
-<img src="/assets/img/afdian-xmake.png" alt="afdian" width="30%" height="30%">
+<img src="/assets/img/afdian-xmake.png" alt="afdian" width="50%" height="50%">
 </a>
 
 ## Paypal
