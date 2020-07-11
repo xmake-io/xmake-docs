@@ -19,6 +19,11 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 <iframe src="https://github.com/sponsors/waruqi/card" title="Sponsor waruqi" height="130" width="600" style="border: 0;"></iframe>
 
+## 爱发电
+
+
+[![afdian](/assets/img/afdian-xmake.png)](https://afdian.net/@xmake)
+
 ## Bitcoin
 
 ```
