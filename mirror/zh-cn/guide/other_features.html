@@ -147,12 +147,12 @@ $ xmake
 <h3 id="-">实现快速交叉编译</h3>
 <p>众所周知，autotools维护的项目虽然很多都支持交叉编译，但是交叉编译的配置过程很复杂，不同的工具链处理方式还有很多的差异，中途会踩到很多的坑。</p>
 <p>即使跑通了一个工具链的交叉编译，如果切到另外一个工具链环境，可能又要折腾好久，而如果使用xmake，通常只需要两条简单的命令即可：</p>
-<p>!&gt; 目前就autotools对接支持了xmake的交叉编译，后期还会对cmake等其他构建系统加上支持。</p>
+<p>!> 目前就autotools对接支持了xmake的交叉编译，后期还会对cmake等其他构建系统加上支持。</p>
 <h4 id="-android-">交叉编译android平台</h4>
 <pre><code class="lang-bash">$ xmake f -p android --trybuild=autotools [--ndk=xxx]
 $ xmake
 </code></pre>
-<p>!&gt; 其中，--ndk参数配置是可选的，如果用户设置了ANDROID_NDK_HOME环境变量，或者ndk放置在~/Library/Android/sdk/ndk-bundle，xmake都能自动检测到。</p>
+<p>!> 其中，--ndk参数配置是可选的，如果用户设置了ANDROID_NDK_HOME环境变量，或者ndk放置在~/Library/Android/sdk/ndk-bundle，xmake都能自动检测到。</p>
 <p>是不是很简单？如果你觉得这没啥，那么可以对比下直接操作<code>./configure</code>去配置交叉编译，可以看下这篇文档对比下：<a href="https://developer.android.com/ndk/guides/other_build_systems#autoconf">将NDK 与其他编译系统配合使用</a></p>
 <p>说白了，你大概得这样，还不一定一次就能搞定：</p>
 <pre><code class="lang-bash">$ export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
@@ -181,7 +181,7 @@ $ xmake
 <p>关于更多交叉编译的配置细节，请参考文档：<a href="https://xmake.io/#/zh-cn/guide/configuration?id=%e4%ba%a4%e5%8f%89%e7%bc%96%e8%af%91">交叉编译</a>，除了多了一个<code>--trybuild=</code>参数，其他交叉编译配置参数都是完全通用的。</p>
 <h3 id="-">传递用户配置参数</h3>
 <p>我们可以通过<code>--tryconfigs=</code>来传递用户额外的配置参数到对应的第三方构建系统，比如：autotools会传递给<code>./configure</code>，cmake会传递给<code>cmake</code>命令。</p>
-<pre><code class="lang-bash">$ xmake f --trybuild=autotools --tryconfigs=&quot;--enable-shared=no&quot;
+<pre><code class="lang-bash">$ xmake f --trybuild=autotools --tryconfigs="--enable-shared=no"
 $ xmake
 </code></pre>
 <p>比如上述命令，传递<code>--enable-shared=no</code>给<code>./configure</code>，来禁用动态库编译。</p>
@@ -192,7 +192,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f --trybuild=[autotools|cmake|meson|ninja|bazel|make|msbuild|xcodebuild]
 $ xmake
 </code></pre>
-<p>!&gt; 我们还需要确保--trybuild指定的构建工具已经安装能够正常使用。</p>
+<p>!> 我们还需要确保--trybuild指定的构建工具已经安装能够正常使用。</p>
 <h4 id="-android-jni-">构建Android jni程序</h4>
 <p>如果当前项目下存在<code>jni/Android.mk</code>，那么xmake可以直接调用ndk-build来构建jni库。</p>
 <pre><code class="lang-bash">$ xmake f -p android --trybuild=ndkbuild [--ndk=]
@@ -267,29 +267,29 @@ checking for the debugger (dd) ... xcrun -sdk macosx lldb
 checking for the golang compiler (go) ... go
 configure
 {
-    ex = &quot;xcrun -sdk macosx ar&quot;
-,   sh = &quot;xcrun -sdk macosx clang++&quot;
-,   host = &quot;macosx&quot;
-,   ar = &quot;xcrun -sdk macosx ar&quot;
-,   buildir = &quot;build&quot;
-,   as = &quot;xcrun -sdk macosx clang&quot;
-,   plat = &quot;macosx&quot;
-,   xcode_dir = &quot;/Applications/Xcode.app&quot;
-,   arch = &quot;x86_64&quot;
-,   mxx = &quot;xcrun -sdk macosx clang++&quot;
-,   go = &quot;go&quot;
-,   target_minver = &quot;10.12&quot;
-,   ccache = &quot;ccache&quot;
-,   mode = &quot;release&quot;
+    ex = "xcrun -sdk macosx ar"
+,   sh = "xcrun -sdk macosx clang++"
+,   host = "macosx"
+,   ar = "xcrun -sdk macosx ar"
+,   buildir = "build"
+,   as = "xcrun -sdk macosx clang"
+,   plat = "macosx"
+,   xcode_dir = "/Applications/Xcode.app"
+,   arch = "x86_64"
+,   mxx = "xcrun -sdk macosx clang++"
+,   go = "go"
+,   target_minver = "10.12"
+,   ccache = "ccache"
+,   mode = "release"
 ,   clean = true
-,   cxx = &quot;xcrun -sdk macosx clang&quot;
-,   cc = &quot;xcrun -sdk macosx clang&quot;
-,   dd = &quot;xcrun -sdk macosx lldb&quot;
-,   kind = &quot;static&quot;
-,   ld = &quot;xcrun -sdk macosx clang++&quot;
-,   xcode_sdkver = &quot;10.12&quot;
-,   sc = &quot;xcrun -sdk macosx swiftc&quot;
-,   mm = &quot;xcrun -sdk macosx clang&quot;
+,   cxx = "xcrun -sdk macosx clang"
+,   cc = "xcrun -sdk macosx clang"
+,   dd = "xcrun -sdk macosx lldb"
+,   kind = "static"
+,   ld = "xcrun -sdk macosx clang++"
+,   xcode_sdkver = "10.12"
+,   sc = "xcrun -sdk macosx swiftc"
+,   mm = "xcrun -sdk macosx clang"
 }
 configure ok!
 clean ok!
@@ -314,27 +314,27 @@ build ok!👌
 <p>连xmake.lua都没有编写，其实xmake在扫描完成后，会去自动在当前目录下生成一份xmake.lua，下次编译就不需要重新扫描检测了。</p>
 <p>自动生成的xmake.lua内容如下：</p>
 <pre><code class="lang-lua">-- define target
-target(&quot;zlib-1.2&quot;)
+target("zlib-1.2")
 
     -- set kind
-    set_kind(&quot;static&quot;)
+    set_kind("static")
 
     -- add files
-    add_files(&quot;./adler32.c&quot;)
-    add_files(&quot;./compress.c&quot;)
-    add_files(&quot;./crc32.c&quot;)
-    add_files(&quot;./deflate.c&quot;)
-    add_files(&quot;./gzclose.c&quot;)
-    add_files(&quot;./gzlib.c&quot;)
-    add_files(&quot;./gzread.c&quot;)
-    add_files(&quot;./gzwrite.c&quot;)
-    add_files(&quot;./infback.c&quot;)
-    add_files(&quot;./inffast.c&quot;)
-    add_files(&quot;./inflate.c&quot;)
-    add_files(&quot;./inftrees.c&quot;)
-    add_files(&quot;./trees.c&quot;)
-    add_files(&quot;./uncompr.c&quot;)
-    add_files(&quot;./zutil.c&quot;)
+    add_files("./adler32.c")
+    add_files("./compress.c")
+    add_files("./crc32.c")
+    add_files("./deflate.c")
+    add_files("./gzclose.c")
+    add_files("./gzlib.c")
+    add_files("./gzread.c")
+    add_files("./gzwrite.c")
+    add_files("./infback.c")
+    add_files("./inffast.c")
+    add_files("./inflate.c")
+    add_files("./inftrees.c")
+    add_files("./trees.c")
+    add_files("./uncompr.c")
+    add_files("./zutil.c")
 </code></pre>
 <p>也许你会说，像这种开源库，直接<code>configure; make</code>不就好了吗，他们自己也有提供makefile来直接编译的，的确是这样，我这里只是举个例子而已。。</p>
 <p>当然，很多开源库在交叉编译的时候，通过自带的<code>configure</code>，处理起来还是很繁琐的，用xmake进行交叉编译会更方便些。。</p>
@@ -395,27 +395,27 @@ checking for the shared library linker (sh) ... xcrun -sdk iphoneos clang++
 checking for the swift compiler (sc) ... xcrun -sdk iphoneos swiftc
 configure
 {
-    ex = &quot;xcrun -sdk iphoneos ar&quot;
-,   ccache = &quot;ccache&quot;
-,   host = &quot;macosx&quot;
-,   ar = &quot;xcrun -sdk iphoneos ar&quot;
-,   buildir = &quot;build&quot;
-,   as = &quot;/usr/local/share/xmake/tools/utils/gas-preprocessor.pl xcrun -sdk iphoneos clang&quot;
-,   arch = &quot;armv7&quot;
-,   mxx = &quot;xcrun -sdk iphoneos clang++&quot;
-,   cxx = &quot;xcrun -sdk iphoneos clang&quot;
-,   target_minver = &quot;10.1&quot;
-,   xcode_dir = &quot;/Applications/Xcode.app&quot;
+    ex = "xcrun -sdk iphoneos ar"
+,   ccache = "ccache"
+,   host = "macosx"
+,   ar = "xcrun -sdk iphoneos ar"
+,   buildir = "build"
+,   as = "/usr/local/share/xmake/tools/utils/gas-preprocessor.pl xcrun -sdk iphoneos clang"
+,   arch = "armv7"
+,   mxx = "xcrun -sdk iphoneos clang++"
+,   cxx = "xcrun -sdk iphoneos clang"
+,   target_minver = "10.1"
+,   xcode_dir = "/Applications/Xcode.app"
 ,   clean = true
-,   sh = &quot;xcrun -sdk iphoneos clang++&quot;
-,   cc = &quot;xcrun -sdk iphoneos clang&quot;
-,   ld = &quot;xcrun -sdk iphoneos clang++&quot;
-,   mode = &quot;release&quot;
-,   kind = &quot;static&quot;
-,   plat = &quot;iphoneos&quot;
-,   xcode_sdkver = &quot;10.1&quot;
-,   sc = &quot;xcrun -sdk iphoneos swiftc&quot;
-,   mm = &quot;xcrun -sdk iphoneos clang&quot;
+,   sh = "xcrun -sdk iphoneos clang++"
+,   cc = "xcrun -sdk iphoneos clang"
+,   ld = "xcrun -sdk iphoneos clang++"
+,   mode = "release"
+,   kind = "static"
+,   plat = "iphoneos"
+,   xcode_sdkver = "10.1"
+,   sc = "xcrun -sdk iphoneos swiftc"
+,   mm = "xcrun -sdk iphoneos clang"
 }
 configure ok!
 clean ok!
@@ -530,29 +530,29 @@ checking for the debugger (dd) ... xcrun -sdk macosx lldb
 checking for the golang compiler (go) ... go
 configure
 {
-    ex = &quot;xcrun -sdk macosx ar&quot;
-,   sh = &quot;xcrun -sdk macosx clang++&quot;
-,   host = &quot;macosx&quot;
-,   ar = &quot;xcrun -sdk macosx ar&quot;
-,   buildir = &quot;build&quot;
-,   as = &quot;xcrun -sdk macosx clang&quot;
-,   plat = &quot;macosx&quot;
-,   xcode_dir = &quot;/Applications/Xcode.app&quot;
-,   arch = &quot;x86_64&quot;
-,   mxx = &quot;xcrun -sdk macosx clang++&quot;
-,   go = &quot;go&quot;
-,   target_minver = &quot;10.12&quot;
-,   ccache = &quot;ccache&quot;
-,   mode = &quot;release&quot;
+    ex = "xcrun -sdk macosx ar"
+,   sh = "xcrun -sdk macosx clang++"
+,   host = "macosx"
+,   ar = "xcrun -sdk macosx ar"
+,   buildir = "build"
+,   as = "xcrun -sdk macosx clang"
+,   plat = "macosx"
+,   xcode_dir = "/Applications/Xcode.app"
+,   arch = "x86_64"
+,   mxx = "xcrun -sdk macosx clang++"
+,   go = "go"
+,   target_minver = "10.12"
+,   ccache = "ccache"
+,   mode = "release"
 ,   clean = true
-,   cxx = &quot;xcrun -sdk macosx clang&quot;
-,   cc = &quot;xcrun -sdk macosx clang&quot;
-,   dd = &quot;xcrun -sdk macosx lldb&quot;
-,   kind = &quot;static&quot;
-,   ld = &quot;xcrun -sdk macosx clang++&quot;
-,   xcode_sdkver = &quot;10.12&quot;
-,   sc = &quot;xcrun -sdk macosx swiftc&quot;
-,   mm = &quot;xcrun -sdk macosx clang&quot;
+,   cxx = "xcrun -sdk macosx clang"
+,   cc = "xcrun -sdk macosx clang"
+,   dd = "xcrun -sdk macosx lldb"
+,   kind = "static"
+,   ld = "xcrun -sdk macosx clang++"
+,   xcode_sdkver = "10.12"
+,   sc = "xcrun -sdk macosx swiftc"
+,   mm = "xcrun -sdk macosx clang"
 }
 configure ok!
 clean ok!
@@ -660,7 +660,7 @@ target(wrjpgcom): binary
 <li>需要多级目录支持的源码库</li>
 </ol>
 <p>以上这些情况，xmake暂时还没发自动化的智能处理，其中限制1，2还是可以解决的，通过半手动的方式，例如：</p>
-<pre><code class="lang-bash">$ xmake f --cxflags=&quot;&quot; --ldflags=&quot;&quot; --includedirs=&quot;&quot; --linkdirs=&quot;&quot;; xmake
+<pre><code class="lang-bash">$ xmake f --cxflags="" --ldflags="" --includedirs="" --linkdirs=""; xmake
 </code></pre>
 <p>在自动检测编译的时候，手动配置这个源码工程需要的特殊编译选项，就可以直接通过编译了</p>
 <p>而限制3，暂时只能通过删源代码来解决了，就像刚才编译jpeg的代码，其实它的目录下面同时存在了：</p>

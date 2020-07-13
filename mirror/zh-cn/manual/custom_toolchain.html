@@ -92,58 +92,58 @@
 </style>
     <p>在2.3.4版本之后，xmake已经支持在用户的项目xmake.lua中自定义工具链，例如：</p>
 <pre><code class="lang-lua">-- define toolchain
-toolchain(&quot;myclang&quot;)
+toolchain("myclang")
 
     -- mark as standalone toolchain
-    set_kind(&quot;standalone&quot;)
+    set_kind("standalone")
 
     -- set toolset
-    set_toolset(&quot;cc&quot;, &quot;clang&quot;)
-    set_toolset(&quot;cxx&quot;, &quot;clang&quot;, &quot;clang++&quot;)
-    set_toolset(&quot;ld&quot;, &quot;clang++&quot;, &quot;clang&quot;)
-    set_toolset(&quot;sh&quot;, &quot;clang++&quot;, &quot;clang&quot;)
-    set_toolset(&quot;ar&quot;, &quot;ar&quot;)
-    set_toolset(&quot;ex&quot;, &quot;ar&quot;)
-    set_toolset(&quot;strip&quot;, &quot;strip&quot;)
-    set_toolset(&quot;mm&quot;, &quot;clang&quot;)
-    set_toolset(&quot;mxx&quot;, &quot;clang&quot;, &quot;clang++&quot;)
-    set_toolset(&quot;as&quot;, &quot;clang&quot;)
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 
-    add_defines(&quot;MYCLANG&quot;)
+    add_defines("MYCLANG")
 
     -- check toolchain
     on_check(function (toolchain)
-        return import(&quot;lib.detect.find_tool&quot;)(&quot;clang&quot;)
+        return import("lib.detect.find_tool")("clang")
     end)
 
     -- on load
     on_load(function (toolchain)
 
         -- get march
-        local march = is_arch(&quot;x86_64&quot;, &quot;x64&quot;) and &quot;-m64&quot; or &quot;-m32&quot;
+        local march = is_arch("x86_64", "x64") and "-m64" or "-m32"
 
         -- init flags for c/c++
-        toolchain:add(&quot;cxflags&quot;, march)
-        toolchain:add(&quot;ldflags&quot;, march)
-        toolchain:add(&quot;shflags&quot;, march)
-        if not is_plat(&quot;windows&quot;) and os.isdir(&quot;/usr&quot;) then
-            for _, includedir in ipairs({&quot;/usr/local/include&quot;, &quot;/usr/include&quot;}) do
+        toolchain:add("cxflags", march)
+        toolchain:add("ldflags", march)
+        toolchain:add("shflags", march)
+        if not is_plat("windows") and os.isdir("/usr") then
+            for _, includedir in ipairs({"/usr/local/include", "/usr/include"}) do
                 if os.isdir(includedir) then
-                    toolchain:add(&quot;includedirs&quot;, includedir)
+                    toolchain:add("includedirs", includedir)
                 end
             end
-            for _, linkdir in ipairs({&quot;/usr/local/lib&quot;, &quot;/usr/lib&quot;}) do
+            for _, linkdir in ipairs({"/usr/local/lib", "/usr/lib"}) do
                 if os.isdir(linkdir) then
-                    toolchain:add(&quot;linkdirs&quot;, linkdir)
+                    toolchain:add("linkdirs", linkdir)
                 end
             end
         end
 
         -- init flags for objc/c++  (with ldflags and shflags)
-        toolchain:add(&quot;mxflags&quot;, march)
+        toolchain:add("mxflags", march)
 
         -- init flags for asm
-        toolchain:add(&quot;asflags&quot;, march)
+        toolchain:add("asflags", march)
     end)
 </code></pre>
 <p>然后通过下面的命令切到自己定义的工具链就行了：</p>
@@ -166,161 +166,161 @@ toolchain(&quot;myclang&quot;)
 <tr>
 <td><a href="#toolchain">toolchain</a></td>
 <td>定义工具链</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="#toolchainset_kind">set_kind</a></td>
 <td>设置工具链类型</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="#toolchainset_toolset">set_toolset</a></td>
 <td>设置工具集</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="#toolchainset_sdkdir">set_sdkdir</a></td>
 <td>设置工具链sdk目录路径</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="#toolchainset_bindir">set_bindir</a></td>
 <td>设置工具链bin目录路径</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="#toolchainon_check">on_check</a></td>
 <td>检测工具链</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="#toolchainonon_load">on_load</a></td>
 <td>加载工具链</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="#toolchain_end">toolchain_end</a></td>
 <td>结束定义工具链</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_includedirs">add_includedirs</a></td>
 <td>添加头文件搜索目录</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_defines">add_defines</a></td>
 <td>添加宏定义</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_undefines">add_undefines</a></td>
 <td>取消宏定义</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_cflags">add_cflags</a></td>
 <td>添加c编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_cxflags">add_cxflags</a></td>
 <td>添加c/c++编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_cxxflags">add_cxxflags</a></td>
 <td>添加c++编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_mflags">add_mflags</a></td>
 <td>添加objc编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_mxflags">add_mxflags</a></td>
 <td>添加objc/objc++编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_mxxflags">add_mxxflags</a></td>
 <td>添加objc++编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_scflags">add_scflags</a></td>
 <td>添加swift编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_asflags">add_asflags</a></td>
 <td>添加汇编编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_gcflags">add_gcflags</a></td>
 <td>添加go编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_dcflags">add_dcflags</a></td>
 <td>添加dlang编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_rcflags">add_rcflags</a></td>
 <td>添加rust编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_cuflags">add_cuflags</a></td>
 <td>添加cuda编译选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_culdflags">add_culdflags</a></td>
 <td>添加cuda设备链接选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_ldflags">add_ldflags</a></td>
 <td>添加链接选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_arflags">add_arflags</a></td>
 <td>添加静态库归档选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_shflags">add_shflags</a></td>
 <td>添加动态库链接选项</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_languages">add_languages</a></td>
 <td>添加语言标准</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_frameworks">add_frameworks</a></td>
 <td>添加链接框架</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_frameworkdirs">add_frameworkdirs</a></td>
 <td>添加链接框架</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 </tbody>
 </table>
 <h3 id="toolchain">toolchain</h3>
 <h4 id="-">定义工具链</h4>
 <p>可以在用户项目xmake.lua中定义，也可以通过includes独立到单独的xmake.lua去专门定义各种工具链</p>
-<pre><code class="lang-lua">toolchain(&quot;myclang&quot;)
-    set_toolset(&quot;cc&quot;, &quot;clang&quot;)
-    set_toolset(&quot;cxx&quot;, &quot;clang&quot;, &quot;clang++&quot;)
+<pre><code class="lang-lua">toolchain("myclang")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
 toolchain_end()
 </code></pre>
 <h3 id="toolchain-set_kind">toolchain:set_kind</h3>
@@ -328,92 +328,92 @@ toolchain_end()
 <p>目前仅支持设置为<code>standalone</code>类型，表示当前工具链是独立完整的工具链，包括cc/cxx/ld/sh/ar等编译器、归档器、链接器等一整套工具集的配置。</p>
 <p>通常用于某个target被同时设置了多个工具链的情况，但同时只能生效一个独立工具链，通过此配置可以保证生效的工具链存在互斥关系，比如gcc/clang工具链不会同时生效。</p>
 <p>而像yasm/nasm这种局部工具链，属于附加的局部工具链扩展，不用设置standalone，因为clang/yasm两个工具链有可能同时存在。</p>
-<p>!&gt; 只要记住，存在完整编译环境的工具链，都设置为standalone就行了</p>
+<p>!> 只要记住，存在完整编译环境的工具链，都设置为standalone就行了</p>
 <h3 id="toolchain-set_toolset">toolchain:set_toolset</h3>
 <h4 id="-">设置工具集</h4>
 <p>用于设置每个单独工具名和路径，例如：</p>
-<pre><code class="lang-lua">toolchain(&quot;myclang&quot;)
-    set_kind(&quot;standalone&quot;)
-    set_toolset(&quot;cc&quot;, &quot;clang&quot;)
-    set_toolset(&quot;cxx&quot;, &quot;clang&quot;, &quot;clang++&quot;)
-    set_toolset(&quot;ld&quot;, &quot;clang++&quot;, &quot;clang&quot;)
-    set_toolset(&quot;sh&quot;, &quot;clang++&quot;, &quot;clang&quot;)
-    set_toolset(&quot;ar&quot;, &quot;ar&quot;)
-    set_toolset(&quot;ex&quot;, &quot;ar&quot;)
-    set_toolset(&quot;strip&quot;, &quot;strip&quot;)
-    set_toolset(&quot;mm&quot;, &quot;clang&quot;)
-    set_toolset(&quot;mxx&quot;, &quot;clang&quot;, &quot;clang++&quot;)
-    set_toolset(&quot;as&quot;, &quot;clang&quot;)
+<pre><code class="lang-lua">toolchain("myclang")
+    set_kind("standalone")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 </code></pre>
 <p>关于这个接口的详情，可以看下：<a href="/zh-cn/manual/project_target?id=targetset_toolset">target.set_toolset</a></p>
 <h3 id="toolchain-set_sdkdir">toolchain:set_sdkdir</h3>
 <h4 id="-sdk-">设置工具链sdk目录路径</h4>
 <p>通常我们可以通过<code>xmake f --toolchain=myclang --sdk=xxx</code>来配置sdk目录，但是每次配置比较繁琐，我们也可以通过此接口预先配置到xmake.lua中去，方便快速切换使用。</p>
-<pre><code class="lang-lua">toolchain(&quot;myclang&quot;)
-    set_kind(&quot;standalone&quot;)
-    set_sdkdir(&quot;/tmp/sdkdir&quot;)
-    set_toolset(&quot;cc&quot;, &quot;clang&quot;)
+<pre><code class="lang-lua">toolchain("myclang")
+    set_kind("standalone")
+    set_sdkdir("/tmp/sdkdir")
+    set_toolset("cc", "clang")
 </code></pre>
 <h3 id="toolchain-set_bindir">toolchain:set_bindir</h3>
 <h4 id="-bin-">设置工具链bin目录路径</h4>
 <p>通常我们可以通过<code>xmake f --toolchain=myclang --bin=xxx</code>来配置sdk目录，但是每次配置比较繁琐，我们也可以通过此接口预先配置到xmake.lua中去，方便快速切换使用。</p>
-<pre><code class="lang-lua">toolchain(&quot;myclang&quot;)
-    set_kind(&quot;standalone&quot;)
-    set_bindir(&quot;/tmp/sdkdir/bin&quot;)
-    set_toolset(&quot;cc&quot;, &quot;clang&quot;)
+<pre><code class="lang-lua">toolchain("myclang")
+    set_kind("standalone")
+    set_bindir("/tmp/sdkdir/bin")
+    set_toolset("cc", "clang")
 </code></pre>
 <h3 id="toolchain-on_check">toolchain:on_check</h3>
 <h4 id="-">检测工具链</h4>
 <p>用于检测指定工具链所在sdk或者程序在当前系统上是否存在，通常用于多个standalone工具链的情况，进行自动探测和选择有效工具链。</p>
 <p>而对于<code>xmake f --toolchain=myclang</code>手动指定的场景，此检测配置不是必须的，可以省略。</p>
-<pre><code class="lang-lua">toolchain(&quot;myclang&quot;)
+<pre><code class="lang-lua">toolchain("myclang")
     on_check(function (toolchain)
-        return import(&quot;lib.detect.find_tool&quot;)(&quot;clang&quot;)
+        return import("lib.detect.find_tool")("clang")
     end)
 </code></pre>
 <h3 id="toolchain-on_load">toolchain:on_load</h3>
 <h4 id="-">加载工具链</h4>
 <p>对于一些复杂的场景，我们可以在on_load中动态灵活的设置各种工具链配置，比在描述域设置更加灵活，更加强大：</p>
-<pre><code class="lang-lua">toolchain(&quot;myclang&quot;)
-    set_kind(&quot;standalone&quot;)
+<pre><code class="lang-lua">toolchain("myclang")
+    set_kind("standalone")
     on_load(function (toolchain)
 
         -- set toolset
-        toolchain:set(&quot;toolset&quot;, &quot;cc&quot;, &quot;clang&quot;)
-        toolchain:set(&quot;toolset&quot;, &quot;ld&quot;, &quot;clang++&quot;)
+        toolchain:set("toolset", "cc", "clang")
+        toolchain:set("toolset", "ld", "clang++")
         -- ..
 
         -- get march
-        local march = is_arch(&quot;x86_64&quot;, &quot;x64&quot;) and &quot;-m64&quot; or &quot;-m32&quot;
+        local march = is_arch("x86_64", "x64") and "-m64" or "-m32"
 
         -- init flags for c/c++
-        toolchain:add(&quot;cxflags&quot;, march)
-        toolchain:add(&quot;ldflags&quot;, march)
-        toolchain:add(&quot;shflags&quot;, march)
-        if not is_plat(&quot;windows&quot;) and os.isdir(&quot;/usr&quot;) then
-            for _, includedir in ipairs({&quot;/usr/local/include&quot;, &quot;/usr/include&quot;}) do
+        toolchain:add("cxflags", march)
+        toolchain:add("ldflags", march)
+        toolchain:add("shflags", march)
+        if not is_plat("windows") and os.isdir("/usr") then
+            for _, includedir in ipairs({"/usr/local/include", "/usr/include"}) do
                 if os.isdir(includedir) then
-                    toolchain:add(&quot;includedirs&quot;, includedir)
+                    toolchain:add("includedirs", includedir)
                 end
             end
-            for _, linkdir in ipairs({&quot;/usr/local/lib&quot;, &quot;/usr/lib&quot;}) do
+            for _, linkdir in ipairs({"/usr/local/lib", "/usr/lib"}) do
                 if os.isdir(linkdir) then
-                    toolchain:add(&quot;linkdirs&quot;, linkdir)
+                    toolchain:add("linkdirs", linkdir)
                 end
             end
         end
 
         -- init flags for objc/c++  (with ldflags and shflags)
-        toolchain:add(&quot;mxflags&quot;, march)
+        toolchain:add("mxflags", march)
 
         -- init flags for asm
-        toolchain:add(&quot;asflags&quot;, march)
+        toolchain:add("asflags", march)
     end)
 </code></pre>
 <h3 id="toolchain_end">toolchain_end</h3>
 <h4 id="-">结束定义工具链</h4>
 <p>这个是可选的，如果想要手动结束toolchain的定义，可以调用它：</p>
-<pre><code class="lang-lua">toolchain(&quot;myclang&quot;)
+<pre><code class="lang-lua">toolchain("myclang")
     -- ..
 toolchain_end()
 </code></pre>

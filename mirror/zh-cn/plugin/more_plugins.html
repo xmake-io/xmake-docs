@@ -94,15 +94,15 @@
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-vscode">xmake-vscode</a></li>
 </ul>
-<p>&lt;img src=&quot;https://raw.githubusercontent.com/xmake-io/xmake-vscode/master/res/problem.gif&quot; width=&quot;650px&quot; /&gt;</p>
+<p><img src="https://raw.githubusercontent.com/xmake-io/xmake-vscode/master/res/problem.gif" width="650px" /></p>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-sublime">xmake-sublime</a></li>
 </ul>
-<p>&lt;img src=&quot;https://raw.githubusercontent.com/xmake-io/xmake-sublime/master/res/problem.gif&quot; width=&quot;650px&quot; /&gt;</p>
+<p><img src="https://raw.githubusercontent.com/xmake-io/xmake-sublime/master/res/problem.gif" width="650px" /></p>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-idea">xmake-idea</a></li>
 </ul>
-<p>&lt;img src=&quot;https://raw.githubusercontent.com/xmake-io/xmake-idea/master/res/problem.gif&quot; width=&quot;650px&quot; /&gt;</p>
+<p><img src="https://raw.githubusercontent.com/xmake-io/xmake-idea/master/res/problem.gif" width="650px" /></p>
 <ul>
 <li><a href="https://github.com/luzhlon/xmake.vim">xmake.vim</a> (third-party, thanks <a href="https://github.com/luzhlon">@luzhlon</a>)</li>
 </ul>
@@ -118,7 +118,7 @@
 <pre><code>buildscript {
   repositories {
     maven {
-      url &quot;https://plugins.gradle.org/m2/&quot;
+      url "https://plugins.gradle.org/m2/"
     }
   }
   dependencies {
@@ -129,14 +129,14 @@
   }
 }
 
-apply plugin: &quot;org.tboox.gradle-xmake-plugin&quot;
+apply plugin: "org.tboox.gradle-xmake-plugin"
 </code></pre><h3 id="-">最简单的配置示例</h3>
 <p>如果我们添加<code>xmake.lua</code>文件到<code>projectdir/jni/xmake.lua</code>，那么我们只需要在build.gradle中启用生效了xmake指定下对应的JNI工程路径即可。</p>
 <h4 id="build-gradle">build.gradle</h4>
 <pre><code>android {
     externalNativeBuild {
         xmake {
-            path &quot;jni/xmake.lua&quot;
+            path "jni/xmake.lua"
         }
     }
 }
@@ -150,10 +150,10 @@ apply plugin: &quot;org.tboox.gradle-xmake-plugin&quot;
     - xmake.lua
     - *.cpp
 </code></pre><p>xmake.lua:</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)
-target(&quot;nativelib&quot;)
-    set_kind(&quot;shared&quot;)
-    add_files(&quot;nativelib.cc&quot;)
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+target("nativelib")
+    set_kind("shared")
+    add_files("nativelib.cc")
 </code></pre>
 <h3 id="-gradle-">更多Gradle配置说明</h3>
 <pre><code>android {
@@ -161,17 +161,17 @@ target(&quot;nativelib&quot;)
         externalNativeBuild {
             xmake {
                 // 追加设置全局c编译flags
-                cFlags &quot;-DTEST&quot;
+                cFlags "-DTEST"
 
                 // 追加设置全局c++编译flags
-                cppFlags &quot;-DTEST&quot;, &quot;-DTEST2&quot;
+                cppFlags "-DTEST", "-DTEST2"
 
                 // 设置切换编译模式，与`xmake f -m debug`的配置对应，具体模式值根据自己的xmake.lua设置而定
-                buildMode &quot;debug&quot;
+                buildMode "debug"
 
                 // 设置需要编译的abi列表，支持：armeabi, armeabi-v7a, arm64-v8a, x86, x86_64
                 // 如果没有设置的话，我们也支持从defaultConfig.ndk.abiFilters中获取abiFilters
-                abiFilters &quot;armeabi-v7a&quot;, &quot;arm64-v8a&quot;
+                abiFilters "armeabi-v7a", "arm64-v8a"
             }
         }
     }
@@ -179,13 +179,13 @@ target(&quot;nativelib&quot;)
     externalNativeBuild {
         xmake {
             // 设置jni工程中xmake.lua根文件路径，这是必须的，不设置就不会启用jni编译
-            path &quot;jni/xmake.lua&quot;
+            path "jni/xmake.lua"
 
             // 启用详细输出，会显示完整编译命令行参数，其他值：verbose, warning, normal
-            logLevel &quot;verbose&quot;
+            logLevel "verbose"
 
             // 指定c++ stl库，默认不指定会使用c++_static，其他值：c++_static/c++_shared, gnustl_static/gnustl_shared, stlport_static/stlport_shared
-            stl &quot;c++_shared&quot;
+            stl "c++_shared"
 
             // 设置xmake可执行程序路径（通常不用设置）
             // program /usr/local/bin/xmake
@@ -195,7 +195,7 @@ target(&quot;nativelib&quot;)
 
             // 设置其他指定的ndk目录路径 （这是可选的，默认xmake会自动从$ANDROID_NDK_HOME或者`~/Library/Android/sdk/ndk-bundle`中检测）
             // 当然如果用户通过`xmake g --ndk=xxx`配置了全局设置，也会自动从这个里面检测
-            // ndk &quot;/Users/ruki/files/android-ndk-r20b/&quot;
+            // ndk "/Users/ruki/files/android-ndk-r20b/"
 
             // 设置ndk中sdk版本
             // sdkver 21
@@ -205,23 +205,23 @@ target(&quot;nativelib&quot;)
 </code></pre><h3 id="-jni-apk">编译JNI并且生成APK</h3>
 <p>当<code>gradle-xmake-plugin</code>插件被应用生效后，<code>xmakeBuild</code>任务会自动注入到现有的<code>assemble</code>任务中去，自动执行jni库编译和集成。</p>
 <pre><code class="lang-console">$ ./gradlew app:assembleDebug
-&gt; Task :nativelib:xmakeConfigureForArm64
-&gt; Task :nativelib:xmakeBuildForArm64
-&gt;&gt; xmake build
+> Task :nativelib:xmakeConfigureForArm64
+> Task :nativelib:xmakeBuildForArm64
+>> xmake build
 [ 50%]: ccache compiling.debug nativelib.cc
 [ 75%]: linking.debug libnativelib.so
 [100%]: build ok!
-&gt;&gt; install artifacts to /Users/ruki/projects/personal/xmake-gradle/nativelib/libs/arm64-v8a
-&gt; Task :nativelib:xmakeConfigureForArmv7
-&gt; Task :nativelib:xmakeBuildForArmv7
-&gt;&gt; xmake build
+>> install artifacts to /Users/ruki/projects/personal/xmake-gradle/nativelib/libs/arm64-v8a
+> Task :nativelib:xmakeConfigureForArmv7
+> Task :nativelib:xmakeBuildForArmv7
+>> xmake build
 [ 50%]: ccache compiling.debug nativelib.cc
 [ 75%]: linking.debug libnativelib.so
 [100%]: build ok!
-&gt;&gt; install artifacts to /Users/ruki/projects/personal/xmake-gradle/nativelib/libs/armeabi-v7a
-&gt; Task :nativelib:preBuild
-&gt; Task :nativelib:assemble
-&gt; Task :app:assembleDebug
+>> install artifacts to /Users/ruki/projects/personal/xmake-gradle/nativelib/libs/armeabi-v7a
+> Task :nativelib:preBuild
+> Task :nativelib:assemble
+> Task :app:assembleDebug
 </code></pre>
 <h3 id="-jni">强制重建JNI</h3>
 <pre><code class="lang-console">$ ./gradlew nativelib:xmakeRebuild

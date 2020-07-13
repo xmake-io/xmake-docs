@@ -98,7 +98,7 @@
 <pre><code class="lang-console">$ xmake project -k cmakelists
 </code></pre>
 <h3 id="generate-build-ninja">Generate build.ninja</h3>
-<p>!&gt; Only supported in versions above 2.3.1</p>
+<p>!> Only supported in versions above 2.3.1</p>
 <pre><code class="lang-console">$ xmake project -k ninja
 </code></pre>
 <h3 id="generate-compiler_flags">Generate compiler_flags</h3>
@@ -110,9 +110,9 @@
 </code></pre>
 <p>The the content of the output file:</p>
 <pre><code>[
-  { &quot;directory&quot;: &quot;/home/user/llvm/build&quot;,
-    &quot;command&quot;: &quot;/usr/bin/clang++ -Irelative -DSOMEDEF=\&quot;With spaces, quotes and \\-es.\&quot; -c -o file.o file.cc&quot;,
-    &quot;file&quot;: &quot;file.cc&quot; },
+  { "directory": "/home/user/llvm/build",
+    "command": "/usr/bin/clang++ -Irelative -DSOMEDEF=\"With spaces, quotes and \\-es.\" -c -o file.o file.cc",
+    "file": "file.cc" },
   ...
 ]
 
@@ -123,25 +123,25 @@
 <p>But this mode, there is no way to support the rules of xmake. Because xmake&#39;s rules use a lot of custom scripts like <code>on_build</code>, they can&#39;t be expanded, so projects like qt, wdk can&#39;t support exporting to vs. compile.</p>
 <p>Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellisense and definition jumps, as well as breakpoint debugging.</p>
 <p>The specific use is similar to the old version:</p>
-<pre><code class="lang-console">$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m &quot;debug;release&quot;
+<pre><code class="lang-console">$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug;release"
 </code></pre>
 <p>If no version is specified, xmake will automatically detect the current version of vs to generate:</p>
-<pre><code class="lang-bash">$ xmake project -k vsxmake -m &quot;debug;release&quot;
+<pre><code class="lang-bash">$ xmake project -k vsxmake -m "debug;release"
 </code></pre>
 <p><img src="/assets/img/manual/qt_vs.png" alt=""></p>
 <p>In addition, the vsxmake plugin will additionally generate a custom configuration property page for easy and flexible modification and appending some xmake compilation configuration in the vs., and even switch to other cross toolchains in the configuration to achieve the vs. vs. Cross-compilation of other platforms such as android, linux.</p>
 <p><img src="/assets/img/manual/property_page_vsxmake.png" alt=""></p>
 <h4 id="using-vs-built-in-compilation-mechanism">Using vs built-in compilation mechanism</h4>
-<p>!&gt; It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.</p>
+<p>!> It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.</p>
 <pre><code class="lang-bash">$ xmake project -k [vs2008|vs2013|vs2015|..]
 </code></pre>
 <p>v2.1.2 or later, it supports multi-mode and multi-architecture generation for vs201x project.</p>
 <p>For example:</p>
-<pre><code class="lang-bash">$ xmake project -k vs2017 -m &quot;debug,release&quot;
+<pre><code class="lang-bash">$ xmake project -k vs2017 -m "debug,release"
 </code></pre>
 <p>It will generate four project configurations: <code>debug|x86</code>, <code>debug|x64</code>, <code>release|x86</code>, <code>release|x64</code>.</p>
 <p>Or you can set modes to <code>xmake.lua</code>:</p>
-<pre><code class="lang-lua">set_modes(&quot;debug&quot;, &quot;release&quot;)
+<pre><code class="lang-lua">set_modes("debug", "release")
 </code></pre>
 <p>Then, we run the following command:</p>
 <pre><code class="lang-bash">$ xmake project -k vs2017
@@ -151,13 +151,13 @@
 <h3 id="run-the-given-script">Run the given script</h3>
 <p>Write a simple lua script:</p>
 <pre><code class="lang-lua">function main()
-    print(&quot;hello xmake!&quot;)
+    print("hello xmake!")
 end
 </code></pre>
 <p>Run this lua script.</p>
 <pre><code class="lang-bash">$ xmake lua /tmp/test.lua
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>    You can also use <code>import</code> api to write a more advance lua script.<br>&lt;/p&gt;
+<p><p class="tip"><br>    You can also use <code>import</code> api to write a more advance lua script.<br></p>
 
 </p>
 <h3 id="run-the-builtin-script">Run the builtin script</h3>
@@ -172,37 +172,37 @@ scripts:
 </code></pre>
 <p>And run them:</p>
 <pre><code class="lang-bash">$ xmake lua cat ~/file.txt
-$ xmake lua echo &quot;hello xmake&quot;
+$ xmake lua echo "hello xmake"
 $ xmake lua cp /tmp/file /tmp/file2
 $ xmake lua versioninfo
 </code></pre>
 <h3 id="run-interactive-commands-repl-">Run interactive commands (REPL)</h3>
 <p>Enter interactive mode:</p>
 <pre><code class="lang-bash">$ xmake lua
-&gt; 1 + 2
+> 1 + 2
 3
 
-&gt; a = 1
-&gt; a
+> a = 1
+> a
 1
 
-&gt; for _, v in pairs({1, 2, 3}) do
-&gt;&gt; print(v)
-&gt;&gt; end
+> for _, v in pairs({1, 2, 3}) do
+>> print(v)
+>> end
 1
 2
 3
 </code></pre>
 <p>And we can <code>import</code> modules:</p>
-<pre><code class="lang-bash">&gt; task = import(&quot;core.project.task&quot;)
-&gt; task.run(&quot;hello&quot;)
+<pre><code class="lang-bash">> task = import("core.project.task")
+> task.run("hello")
 hello xmake!
 </code></pre>
 <p>If you want to cancel multiline input, please input character <code>q</code>, for example:</p>
-<pre><code class="lang-bash">&gt; for _, v in ipairs({1, 2}) do
-&gt;&gt; print(v)
-&gt;&gt; q             &lt;--  cancel multiline and clear previous input
-&gt; 1 + 2
+<pre><code class="lang-bash">> for _, v in ipairs({1, 2}) do
+>> print(v)
+>> q             <--  cancel multiline and clear previous input
+> 1 + 2
 3
 </code></pre>
 <h2 id="show-specified-information-and-list">Show specified information and list</h2>
@@ -261,24 +261,24 @@ The information of target(tbox):
     links: pthread
     syslinks: pthread, dl, m, c
     cxflags: -Wno-error=deprecated-declarations, -fno-strict-aliasing, -Wno-error=expansion-to-defined, -fno-stack-protector
-    defines: __tb_small__, __tb_prefix__=&quot;tbox&quot;
+    defines: __tb_small__, __tb_prefix__="tbox"
     mxflags: -Wno-error=deprecated-declarations, -fno-strict-aliasing, -Wno-error=expansion-to-defined
     headerfiles: src/(tbox/**.h)|**/impl/**.h, src/(tbox/prefix/**/prefix.S), src/(tbox/math/impl/*.h), src/(tbox/utils/impl/*.h), build/macosx/x86_64/release/tbox.config.h
     includedirs: src, build/macosx/x86_64/release
     at: /Users/ruki/projects/personal/tbox/src/tbox/xmake.lua
     sourcebatch(cc): with rule(c.build)
-      -&gt; src/tbox/string/static_string.c
-         -&gt; build/.objs/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o
-         -&gt; build/.deps/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o.d
-      -&gt; src/tbox/platform/sched.c
-         -&gt; build/.objs/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o
-         -&gt; build/.deps/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o.d
-      -&gt; src/tbox/stream/stream.c
-         -&gt; build/.objs/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o
-         -&gt; build/.deps/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o.d
-      -&gt; src/tbox/utils/base32.c
-         -&gt; build/.objs/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o
-         -&gt; build/.deps/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o.d
+      -> src/tbox/string/static_string.c
+         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o
+         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o.d
+      -> src/tbox/platform/sched.c
+         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o
+         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o.d
+      -> src/tbox/stream/stream.c
+         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o
+         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o.d
+      -> src/tbox/utils/base32.c
+         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o
+         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o.d
 </code></pre>
 <h3 id="show-builtin-compilation-modes-list">Show builtin compilation modes list</h3>
 <pre><code class="lang-bash">$ xmake show -l modes
@@ -349,22 +349,22 @@ $ xmake macro --export=/xxx/macrodir
 <h3 id="custom-macro-script">Custom Macro Script</h3>
 <p>Create and write a <code>macro.lua</code> script first.</p>
 <pre><code class="lang-lua">function main()
-    os.exec(&quot;xmake f -p android --ndk=/xxx/ndk -a arm64-v8a&quot;)
-    os.exec(&quot;xmake p&quot;)
-    os.exec(&quot;xmake f -p mingw --sdk=/mingwsdk&quot;)
-    os.exec(&quot;xmake p&quot;)
-    os.exec(&quot;xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin&quot;)
-    os.exec(&quot;xmake p&quot;)
-    os.exec(&quot;xmake f -p iphoneos -a armv7&quot;)
-    os.exec(&quot;xmake p&quot;)
-    os.exec(&quot;xmake f -p iphoneos -a arm64&quot;)
-    os.exec(&quot;xmake p&quot;)
-    os.exec(&quot;xmake f -p iphoneos -a armv7s&quot;)
-    os.exec(&quot;xmake p&quot;)
-    os.exec(&quot;xmake f -p iphoneos -a i386&quot;)
-    os.exec(&quot;xmake p&quot;)
-    os.exec(&quot;xmake f -p iphoneos -a x86_64&quot;)
-    os.exec(&quot;xmake p&quot;)  
+    os.exec("xmake f -p android --ndk=/xxx/ndk -a arm64-v8a")
+    os.exec("xmake p")
+    os.exec("xmake f -p mingw --sdk=/mingwsdk")
+    os.exec("xmake p")
+    os.exec("xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a armv7")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a arm64")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a armv7s")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a i386")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a x86_64")
+    os.exec("xmake p")  
 end
 </code></pre>
 <p>Import this macro script to xmake.</p>
@@ -381,52 +381,52 @@ end
 <h3 id="advance-macro-script">Advance Macro Script</h3>
 <p>Let&#39;s see the <code>package</code> macro script:</p>
 <pre><code class="lang-lua">-- imports
-import(&quot;core.base.option&quot;)
-import(&quot;core.project.config&quot;)
-import(&quot;core.project.project&quot;)
-import(&quot;core.platform.platform&quot;)
+import("core.base.option")
+import("core.project.config")
+import("core.project.project")
+import("core.platform.platform")
 
 -- the options
 local options =
 {
-    {&#39;p&#39;, &quot;plat&quot;,       &quot;kv&quot;,  os.host(),   &quot;Set the platform.&quot;                                    }
-,   {&#39;f&#39;, &quot;config&quot;,     &quot;kv&quot;,  nil,         &quot;Pass the config arguments to \&quot;xmake config\&quot; ..&quot;     }
-,   {&#39;o&#39;, &quot;outputdir&quot;,  &quot;kv&quot;,  nil,         &quot;Set the output directory of the package.&quot;             }
+    {&#39;p&#39;, "plat",       "kv",  os.host(),   "Set the platform."                                    }
+,   {&#39;f&#39;, "config",     "kv",  nil,         "Pass the config arguments to \"xmake config\" .."     }
+,   {&#39;o&#39;, "outputdir",  "kv",  nil,         "Set the output directory of the package."             }
 }
 
 -- package all
 --
 -- .e.g
 -- xmake m package 
--- xmake m package -f &quot;-m debug&quot;
+-- xmake m package -f "-m debug"
 -- xmake m package -p linux
--- xmake m package -p iphoneos -f &quot;-m debug --xxx ...&quot; -o /tmp/xxx
--- xmake m package -f \&quot;--mode=debug\&quot;
+-- xmake m package -p iphoneos -f "-m debug --xxx ..." -o /tmp/xxx
+-- xmake m package -f \"--mode=debug\"
 --
 function main(argv)
 
     -- parse arguments
-    local args = option.parse(argv, options, &quot;Package all architectures for the given the platform.&quot;
-                                           , &quot;&quot;
-                                           , &quot;Usage: xmake macro package [options]&quot;)
+    local args = option.parse(argv, options, "Package all architectures for the given the platform."
+                                           , ""
+                                           , "Usage: xmake macro package [options]")
 
     -- package all archs
     local plat = args.plat
     for _, arch in ipairs(platform.archs(plat)) do
 
         -- config it
-        os.exec(&quot;xmake f -p %s -a %s %s -c %s&quot;, plat, arch, args.config or &quot;&quot;, (option.get(&quot;verbose&quot;) and &quot;-v&quot; or &quot;&quot;))
+        os.exec("xmake f -p %s -a %s %s -c %s", plat, arch, args.config or "", (option.get("verbose") and "-v" or ""))
 
         -- package it
         if args.outputdir then
-            os.exec(&quot;xmake p -o %s %s&quot;, args.outputdir, (option.get(&quot;verbose&quot;) and &quot;-v&quot; or &quot;&quot;))
+            os.exec("xmake p -o %s %s", args.outputdir, (option.get("verbose") and "-v" or ""))
         else
-            os.exec(&quot;xmake p %s&quot;, (option.get(&quot;verbose&quot;) and &quot;-v&quot; or &quot;&quot;))
+            os.exec("xmake p %s", (option.get("verbose") and "-v" or ""))
         end
     end
 
     -- package universal for iphoneos, watchos ...
-    if plat == &quot;iphoneos&quot; or plat == &quot;watchos&quot; then
+    if plat == "iphoneos" or plat == "watchos" then
 
         -- load configure
         config.load()
@@ -438,13 +438,13 @@ function main(argv)
         os.cd(project.directory())
 
         -- the outputdir directory
-        local outputdir = args.outputdir or config.get(&quot;buildir&quot;)
+        local outputdir = args.outputdir or config.get("buildir")
 
         -- package all targets
         for _, target in pairs(project.targets()) do
 
             -- get all modes
-            local modedirs = os.match(format(&quot;%s/%s.pkg/lib/*&quot;, outputdir, target:name()), true)
+            local modedirs = os.match(format("%s/%s.pkg/lib/*", outputdir, target:name()), true)
             for _, modedir in ipairs(modedirs) do
 
                 -- get mode
@@ -453,28 +453,28 @@ function main(argv)
                 -- make lipo arguments
                 local lipoargs = nil
                 for _, arch in ipairs(platform.archs(plat)) do
-                    local archfile = format(&quot;%s/%s.pkg/lib/%s/%s/%s/%s&quot;, outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile())) 
+                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile())) 
                     if os.isfile(archfile) then
-                        lipoargs = format(&quot;%s -arch %s %s&quot;, lipoargs or &quot;&quot;, arch, archfile) 
+                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile) 
                     end
                 end
                 if lipoargs then
 
                     -- make full lipo arguments
-                    lipoargs = format(&quot;-create %s -output %s/%s.pkg/lib/%s/%s/universal/%s&quot;, lipoargs, outputdir, target:name(), mode, plat, path.filename(target:targetfile()))
+                    lipoargs = format("-create %s -output %s/%s.pkg/lib/%s/%s/universal/%s", lipoargs, outputdir, target:name(), mode, plat, path.filename(target:targetfile()))
 
                     -- make universal directory
-                    os.mkdir(format(&quot;%s/%s.pkg/lib/%s/%s/universal&quot;, outputdir, target:name(), mode, plat))
+                    os.mkdir(format("%s/%s.pkg/lib/%s/%s/universal", outputdir, target:name(), mode, plat))
 
                     -- package all archs
-                    os.execv(&quot;xmake&quot;, {&quot;l&quot;, &quot;lipo&quot;, lipoargs})
+                    os.execv("xmake", {"l", "lipo", lipoargs})
                 end
             end
         end
     end
 end
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>    If you want to known more options, please run: <code>xmake macro --help</code><br>&lt;/p&gt;
+<p><p class="tip"><br>    If you want to known more options, please run: <code>xmake macro --help</code><br></p>
 
 </p>
 <h2 id="generate-doxygen-document">Generate Doxygen Document</h2>

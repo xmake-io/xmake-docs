@@ -93,36 +93,36 @@
     <p>The repository depends on the package definition description, the <code>package()</code> related interface definition, etc. There will be time to elaborate, so stay tuned. .</p>
 <p>Please refer to the existing package description in the official repository: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>Here is a more representative example for reference:</p>
-<pre><code class="lang-lua">package(&quot;libxml2&quot;)
+<pre><code class="lang-lua">package("libxml2")
 
-    set_homepage(&quot;http://xmlsoft.org/&quot;)
-    set_description(&quot;The XML C parser and toolkit of Gnome.&quot;)
+    set_homepage("http://xmlsoft.org/")
+    set_description("The XML C parser and toolkit of Gnome.")
 
-    set_urls(&quot;https://github.com/GNOME/libxml2/archive/$(version).zip&quot;, {excludes = {&quot;*/result/*&quot;, &quot;*/test/*&quot;}})
+    set_urls("https://github.com/GNOME/libxml2/archive/$(version).zip", {excludes = {"*/result/*", "*/test/*"}})
 
-    add_versions(&quot;v2.9.8&quot;, &quot;c87793e45e66a7aa19200f861873f75195065de786a21c1b469bdb7bfc1230fb&quot;)
-    add_versions(&quot;v2.9.7&quot;, &quot;31dd4c0e10fa625b47e27fd6a5295d246c883f214da947b9a4a9e13733905ed9&quot;)
+    add_versions("v2.9.8", "c87793e45e66a7aa19200f861873f75195065de786a21c1b469bdb7bfc1230fb")
+    add_versions("v2.9.7", "31dd4c0e10fa625b47e27fd6a5295d246c883f214da947b9a4a9e13733905ed9")
 
-    if is_plat(&quot;macosx&quot;, &quot;linux&quot;) then
-        add_deps(&quot;autoconf&quot;, &quot;automake&quot;, &quot;libtool&quot;, &quot;pkg-config&quot;)
+    if is_plat("macosx", "linux") then
+        add_deps("autoconf", "automake", "libtool", "pkg-config")
     end
 
     on_load(function (package)
-        package:addvar(&quot;includedirs&quot;, &quot;include/libxml2&quot;)
-        package:addvar(&quot;links&quot;, &quot;xml2&quot;)
+        package:addvar("includedirs", "include/libxml2")
+        package:addvar("links", "xml2")
     end)
 
-    if is_plat(&quot;windows&quot;) and winos.version():gt(&quot;winxp&quot;) then
-        on_install(&quot;windows&quot;, function (package)
-            os.cd(&quot;win32&quot;)
-            os.vrun(&quot;cscript configure.js iso8859x=yes iconv=no compiler=msvc cruntime=/MT debug=%s prefix=\&quot;%s\&quot;&quot;, package:debug() and &quot;yes&quot; or &quot;no&quot;, Package:installdir())
-            os.vrun(&quot;nmake /f Makefile.msvc&quot;)
-            os.vrun(&quot;nmake /f Makefile.msvc install&quot;)
+    if is_plat("windows") and winos.version():gt("winxp") then
+        on_install("windows", function (package)
+            os.cd("win32")
+            os.vrun("cscript configure.js iso8859x=yes iconv=no compiler=msvc cruntime=/MT debug=%s prefix=\"%s\"", package:debug() and "yes" or "no", Package:installdir())
+            os.vrun("nmake /f Makefile.msvc")
+            os.vrun("nmake /f Makefile.msvc install")
         end)
     end
 
-    on_install(&quot;macosx&quot;, &quot;linux&quot;, function (package)
-        import(&quot;package.tools.autoconf&quot;).install(package, {&quot;--disable-dependency-tracking&quot;, &quot;--without-python&quot;, &quot;--without-lzma&quot;})
+    on_install("macosx", "linux", function (package)
+        import("package.tools.autoconf").install(package, {"--disable-dependency-tracking", "--without-python", "--without-lzma"})
     end)
 </code></pre>
 </article>

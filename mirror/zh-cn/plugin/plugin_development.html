@@ -109,26 +109,26 @@
 <h2 id="-">快速开始</h2>
 <p>接下来我们介绍下本文的重点，一个简单的hello xmake插件的开发，代码如下：</p>
 <pre><code class="lang-lua">-- 定义一个名叫hello的插件任务
-task(&quot;hello&quot;)
+task("hello")
 
     -- 设置类型为插件
-    set_category(&quot;plugin&quot;)
+    set_category("plugin")
 
     -- 插件运行的入口
     on_run(function ()
 
         -- 显示hello xmake!
-        print(&quot;hello xmake!&quot;)
+        print("hello xmake!")
 
     end)
 
     -- 设置插件的命令行选项，这里没有任何参数选项，仅仅显示插件描述
     set_menu {
                 -- usage
-                usage = &quot;xmake hello [options]&quot;
+                usage = "xmake hello [options]"
 
                 -- description
-            ,   description = &quot;Hello xmake!&quot;
+            ,   description = "Hello xmake!"
 
                 -- options
             ,   options = {}
@@ -142,7 +142,7 @@ task(&quot;hello&quot;)
 <ol>
 <li>把 hello 这个文件夹放置在 xmake的插件安装目录 <code>xmake/plugins</code>，这个里面都是些内建的插件</li>
 <li>把 hello 文件夹放置在 <code>~/.xmake/plugins</code> 用户全局目录，这样对当前xmake 全局生效</li>
-<li>把 hello 文件夹放置在任意地方，通过在工程描述文件xmake.lua中调用<code>add_plugindirs(&quot;./hello&quot;)</code> 添加当前的工程的插件搜索目录，这样只对当前工程生效</li>
+<li>把 hello 文件夹放置在任意地方，通过在工程描述文件xmake.lua中调用<code>add_plugindirs("./hello")</code> 添加当前的工程的插件搜索目录，这样只对当前工程生效</li>
 </ol>
 <h2 id="-">运行插件</h2>
 <p>接下来，我们尝试运行下这个插件：</p>
@@ -151,16 +151,16 @@ task(&quot;hello&quot;)
 <p>显示结果：</p>
 <pre><code>hello xmake!
 </code></pre><p>最后我们还可以在target自定义的脚本中运行这个插件：</p>
-<pre><code class="lang-lua">target(&quot;demo&quot;)
+<pre><code class="lang-lua">target("demo")
 
     -- 构建之后运行插件
     after_build(function (target)
 
         -- 导入task模块
-        import(&quot;core.project.task&quot;)
+        import("core.project.task")
 
         -- 运行插件任务
-        task.run(&quot;hello&quot;)
+        task.run("hello")
     end)
 </code></pre>
 </article>

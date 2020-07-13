@@ -91,22 +91,22 @@
 }
 </style>
     <p>定义和设置选项开关，每个<code>option</code>对应一个选项，可用于自定义编译配置选项、开关设置。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>除了<code>target</code>以外的所有域接口，例如<code>option</code>，<code>task</code>等的接口，默认不能放置在外面的全局作用域中的（除非部分跟target共用的接口除外）。<br>如果要设置值影响所有<code>option</code>，<code>task</code>等选项，可以通过匿名全局域来设置。<br>&lt;/p&gt;
+<p><p class="tip"><br>除了<code>target</code>以外的所有域接口，例如<code>option</code>，<code>task</code>等的接口，默认不能放置在外面的全局作用域中的（除非部分跟target共用的接口除外）。<br>如果要设置值影响所有<code>option</code>，<code>task</code>等选项，可以通过匿名全局域来设置。<br></p>
 
 </p>
 <p>例如：</p>
 <pre><code class="lang-lua">-- 进入option的匿名全局域，里面的设置会同时影响test和test2选项
 option()
-    add_defines(&quot;DEBUG&quot;)
+    add_defines("DEBUG")
 
-option(&quot;test&quot;)
+option("test")
     -- ... 
     -- 尽量保持缩进，因为这个之后的所有设置，都是针对test选项的
 
-option(&quot;test2&quot;)
+option("test2")
     -- ... 
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br><code>option</code>域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用<a href="#option_end">option_end</a>接口。<br>&lt;/p&gt;
+<p><p class="tip"><br><code>option</code>域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用<a href="#option_end">option_end</a>接口。<br></p>
 
 
 </p>
@@ -122,232 +122,232 @@ option(&quot;test2&quot;)
 <tr>
 <td><a href="#option">option</a></td>
 <td>定义选项</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#option_end">option_end</a></td>
 <td>结束定义选项</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="#optionadd_deps">add_deps</a></td>
 <td>添加选项依赖</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#optionbefore_check">before_check</a></td>
 <td>选项检测之前执行此脚本</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#optionon_check">on_check</a></td>
 <td>自定义选项检测脚本</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#optionafter_check">after_check</a></td>
 <td>选项检测之后执行此脚本</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#optionset_values">set_values</a></td>
 <td>设置选项值列表</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 <tr>
 <td><a href="#optionset_default">set_default</a></td>
 <td>设置默认值</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionset_showmenu">set_showmenu</a></td>
 <td>设置是否启用菜单显示</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionset_category">set_category</a></td>
 <td>设置选项分类，仅用于菜单显示</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionset_description">set_description</a></td>
 <td>设置菜单显示描述</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionadd_links">add_links</a></td>
 <td>添加链接库检测</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionadd_linkdirs">add_linkdirs</a></td>
 <td>添加链接库检测需要的搜索目录</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionadd_rpathdirs">add_rpathdirs</a></td>
 <td>添加运行时候动态链接库搜索目录</td>
-<td>&gt;= 2.1.3</td>
+<td>>= 2.1.3</td>
 </tr>
 <tr>
 <td><a href="#optionadd_cincludes">add_cincludes</a></td>
 <td>添加c头文件检测</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionadd_cxxincludes">add_cxxincludes</a></td>
 <td>添加c++头文件检测</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionadd_ctypes">add_ctypes</a></td>
 <td>添加c类型检测</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionadd_cxxtypes">add_cxxtypes</a></td>
 <td>添加c++类型检测</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="#optionadd_csnippet">add_csnippet</a></td>
 <td>添加c代码片段检测</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#optionadd_cxxsnippet">add_cxxsnippet</a></td>
 <td>添加c++代码片段检测</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetset_warnings">set_warnings</a></td>
 <td>设置警告级别</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetset_optimize">set_optimize</a></td>
 <td>设置优化级别</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetset_languages">set_languages</a></td>
 <td>设置代码语言标准</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_includedirs">add_includedirs</a></td>
 <td>添加头文件搜索目录</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_defines">add_defines</a></td>
 <td>添加宏定义</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_undefines">add_undefines</a></td>
 <td>取消宏定义</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_cflags">add_cflags</a></td>
 <td>添加c编译选项</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_cxflags">add_cxflags</a></td>
 <td>添加c/c++编译选项</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_cxxflags">add_cxxflags</a></td>
 <td>添加c++编译选项</td>
-<td>&gt;= 1.0.1</td>
+<td>>= 1.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_mflags">add_mflags</a></td>
 <td>添加objc编译选项</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_mxflags">add_mxflags</a></td>
 <td>添加objc/objc++编译选项</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_mxxflags">add_mxxflags</a></td>
 <td>添加objc++编译选项</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_scflags">add_scflags</a></td>
 <td>添加swift编译选项</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_asflags">add_asflags</a></td>
 <td>添加汇编编译选项</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_gcflags">add_gcflags</a></td>
 <td>添加go编译选项</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_dcflags">add_dcflags</a></td>
 <td>添加dlang编译选项</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_rcflags">add_rcflags</a></td>
 <td>添加rust编译选项</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_cuflags">add_cuflags</a></td>
 <td>添加cuda编译选项</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_culdflags">add_culdflags</a></td>
 <td>添加cuda设备链接选项</td>
-<td>&gt;= 2.2.7</td>
+<td>>= 2.2.7</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_ldflags">add_ldflags</a></td>
 <td>添加链接选项</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_arflags">add_arflags</a></td>
 <td>添加静态库归档选项</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_shflags">add_shflags</a></td>
 <td>添加动态库链接选项</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_languages">add_languages</a></td>
 <td>添加语言标准</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_vectorexts">add_vectorexts</a></td>
 <td>添加向量扩展指令</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_frameworks">add_frameworks</a></td>
 <td>添加链接框架</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="/zh-cn/manual/project_target?id=targetadd_frameworkdirs">add_frameworkdirs</a></td>
 <td>添加链接框架</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 </tbody>
 </table>
@@ -355,14 +355,14 @@ option(&quot;test2&quot;)
 <h4 id="-">定义选项</h4>
 <p>定义和设置选项开关，可用于自定义编译配置选项、开关设置。</p>
 <p>例如，定义一个是否启用test的选项：</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
+<pre><code class="lang-lua">option("test")
     set_default(false)
     set_showmenu(true)
-    add_defines(&quot;TEST&quot;)
+    add_defines("TEST")
 </code></pre>
 <p>然后关联到指定的target中去：</p>
-<pre><code class="lang-lua">target(&quot;demo&quot;)
-    add_options(&quot;test&quot;)
+<pre><code class="lang-lua">target("demo")
+    add_options("test")
 </code></pre>
 <p>这样，一个选项就算定义好了，如果这个选项被启用，那么编译这个target的时候，就会自动加上<code>-DTEST</code>的宏定义。</p>
 <pre><code class="lang-lua"># 手动启用这个选项
@@ -375,17 +375,17 @@ $ xmake
 <h3 id="option-add_deps">option:add_deps</h3>
 <h4 id="-">添加选项依赖</h4>
 <p>通过设置依赖，可以调整选项的检测顺序，一般用于<a href="#optionon_check">on_check</a>等检测脚本的调用时机。</p>
-<pre><code class="lang-lua">option(&quot;small&quot;)
+<pre><code class="lang-lua">option("small")
     set_default(true)
     on_check(function (option)
         -- ...
     end)
 
-option(&quot;test&quot;)
-    add_deps(&quot;small&quot;)
+option("test")
+    add_deps("small")
     set_default(true)
     on_check(function (option)
-        if option:dep(&quot;small&quot;):enabled() then
+        if option:dep("small"):enabled() then
             option:enable(false)
         end
     end)
@@ -394,20 +394,20 @@ option(&quot;test&quot;)
 <h3 id="option-before_check">option:before_check</h3>
 <h4 id="-">选项检测之前执行此脚本</h4>
 <p>例如：在检测之前，通过<a href="#detect-find_package">find_package</a>来查找包，将<code>links</code>, <code>includedirs</code>和<code>linkdirs</code>等信息添加到option中去，<br>然后开始选项检测，通过后就会自动链接到target上。</p>
-<pre><code class="lang-lua">option(&quot;zlib&quot;)
+<pre><code class="lang-lua">option("zlib")
     before_check(function (option)
-        import(&quot;lib.detect.find_package&quot;)
-        option:add(find_package(&quot;zlib&quot;))
+        import("lib.detect.find_package")
+        option:add(find_package("zlib"))
     end)
 </code></pre>
 <h3 id="option-on_check">option:on_check</h3>
 <h4 id="-">自定义选项检测脚本</h4>
 <p>此脚本会覆盖内置的选项检测逻辑。</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
-    add_deps(&quot;small&quot;)
+<pre><code class="lang-lua">option("test")
+    add_deps("small")
     set_default(true)
     on_check(function (option)
-        if option:dep(&quot;small&quot;):enabled() then
+        if option:dep("small"):enabled() then
             option:enable(false)
         end
     end)
@@ -416,9 +416,9 @@ option(&quot;test&quot;)
 <h3 id="option-after_check">option:after_check</h3>
 <h4 id="-">选项检测之后执行此脚本</h4>
 <p>在选项检测完成后，执行此脚本做一些后期处理，也可以在此时重新禁用选项：</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
-    add_deps(&quot;small&quot;)
-    add_links(&quot;pthread&quot;)
+<pre><code class="lang-lua">option("test")
+    add_deps("small")
+    add_links("pthread")
     after_check(function (option)
         option:enable(false)
     end)
@@ -426,23 +426,23 @@ option(&quot;test&quot;)
 <h3 id="option-set_values">option:set_values</h3>
 <h4 id="-">设置选项值列表</h4>
 <p>仅用于<code>xmake f --menu</code>的图形菜单配置时，提供选项值列表供用户快速选择使用，例如：</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
-    set_default(&quot;b&quot;)
+<pre><code class="lang-lua">option("test")
+    set_default("b")
     set_showmenu(true)
-    set_values(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+    set_values("a", "b", "c")
 </code></pre>
 <p>效果图如下：</p>
-<p>&lt;img src=&quot;/assets/img/manual/option_set_values.png&quot; width=&quot;60%&quot; /&gt;</p>
+<p><img src="/assets/img/manual/option_set_values.png" width="60%" /></p>
 <h3 id="option-set_default">option:set_default</h3>
 <h4 id="-">设置选项默认值</h4>
 <p>在没有通过<code>xmake f --option=[y|n}</code>等命令修改选项值的时候，这个选项本身也是有个默认值的，可以通过这个接口来设置：</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
+<pre><code class="lang-lua">option("test")
     -- 默认禁用这个选项
     set_default(false)
 </code></pre>
 <p>选项的值不仅支持boolean类型，也可以是字符串类型，例如：</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
-    set_default(&quot;value&quot;)
+<pre><code class="lang-lua">option("test")
+    set_default("value")
 </code></pre>
 <table>
 <thead>
@@ -468,13 +468,13 @@ option(&quot;test&quot;)
 <p>如果是<code>boolean</code>值的选项，可以通过<a href="#is_option">is_option</a>来进行判断，选项是否被启用。</p>
 <p>如果是<code>string</code>类型的选项，可以在内建变量中直接使用，例如：</p>
 <pre><code class="lang-lua">-- 定义一个路径配置选项，默认使用临时目录
-option(&quot;rootdir&quot;)
-    set_default(&quot;$(tmpdir)&quot;)
+option("rootdir")
+    set_default("$(tmpdir)")
     set_showmenu(true)
 
-target(&quot;test&quot;)
+target("test")
     -- 添加指定选项目录中的源文件
-    add_files(&quot;$(rootdir)/*.c&quot;)
+    add_files("$(rootdir)/*.c")
 </code></pre>
 <p>其中，<code>$(rootdir)</code> 就是自定义的选项内建变量，通过手动配置，可以动态修改它的值：</p>
 <pre><code class="lang-bash">$ xmake f --rootdir=~/projectdir/src
@@ -511,7 +511,7 @@ $ xmake
 <h3 id="option-set_showmenu">option:set_showmenu</h3>
 <h4 id="-">设置是否启用菜单显示</h4>
 <p>如果设置为<code>true</code>，那么在<code>xmake f --help</code>里面就会出现这个选项，也就能通过<code>xmake f --optionname=xxx</code>进行配置，否则只能在<code>xmake.lua</code>内部使用，无法手动配置修改。</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
+<pre><code class="lang-lua">option("test")
     set_showmenu(true)
 </code></pre>
 <p>设置为启用菜单后，执行<code>xmake f --help</code>可以看到，帮助菜单里面多了一项：</p>
@@ -523,21 +523,21 @@ $ xmake
 <h4 id="-">设置选项分类，仅用于菜单显示</h4>
 <p>这个是个可选配置，仅用于在帮助菜单中，进行分类显示选项，同一类别的选项，会在同一个分组里面显示，这样菜单看起来更加的美观。</p>
 <p>例如：</p>
-<pre><code class="lang-lua">option(&quot;test1&quot;)
+<pre><code class="lang-lua">option("test1")
     set_showmenu(true)
-    set_category(&quot;test&quot;)
+    set_category("test")
 
-option(&quot;test2&quot;)
+option("test2")
     set_showmenu(true)
-    set_category(&quot;test&quot;)
+    set_category("test")
 
-option(&quot;demo1&quot;)
+option("demo1")
     set_showmenu(true)
-    set_category(&quot;demo&quot;)
+    set_category("demo")
 
-option(&quot;demo2&quot;)
+option("demo2")
     set_showmenu(true)
-    set_category(&quot;demo&quot;)
+    set_category("demo")
 </code></pre>
 <p>这里四个选项分别归类于两个分组：<code>test</code>和<code>demo</code>，那么显示的布局类似这样：</p>
 <pre><code class="lang-bash">Options:
@@ -550,31 +550,31 @@ option(&quot;demo2&quot;)
     --demo2=DEMO2
 </code></pre>
 <p>这个接口，仅仅是为了调整显示布局，更加美观而已，没其他用途。</p>
-<p>在2.1.9版本中，可以通过category设置分级路径名<code>set_category(&quot;root/submenu/submenu2&quot;)</code>，来配置<code>xmake f --menu</code>的图形菜单界面，例如：</p>
+<p>在2.1.9版本中，可以通过category设置分级路径名<code>set_category("root/submenu/submenu2")</code>，来配置<code>xmake f --menu</code>的图形菜单界面，例如：</p>
 <pre><code class="lang-lua">-- &#39;boolean&#39; option
-option(&quot;test1&quot;)
+option("test1")
     set_default(true)
     set_showmenu(true)
-    set_category(&quot;root menu/test1&quot;)
+    set_category("root menu/test1")
 
--- &#39;choice&#39; option with values: &quot;a&quot;, &quot;b&quot;, &quot;c&quot;
-option(&quot;test2&quot;)
-    set_default(&quot;a&quot;)
-    set_values(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+-- &#39;choice&#39; option with values: "a", "b", "c"
+option("test2")
+    set_default("a")
+    set_values("a", "b", "c")
     set_showmenu(true)
-    set_category(&quot;root menu/test2&quot;)
+    set_category("root menu/test2")
 
 -- &#39;string&#39; option
-option(&quot;test3&quot;)
-    set_default(&quot;xx&quot;)
+option("test3")
+    set_default("xx")
     set_showmenu(true)
-    set_category(&quot;root menu/test3/test3&quot;)
+    set_category("root menu/test3/test3")
 
 -- &#39;number&#39; option
-option(&quot;test4&quot;)
+option("test4")
     set_default(6)
     set_showmenu(true)
-    set_category(&quot;root menu/test4&quot;)
+    set_category("root menu/test4")
 </code></pre>
 <p>上述配置最后显示的菜单界面路径结构：</p>
 <ul>
@@ -590,14 +590,14 @@ option(&quot;test4&quot;)
 </li>
 </ul>
 <p>效果图如下：</p>
-<p>&lt;img src=&quot;/assets/img/manual/option_set_category.gif&quot; width=&quot;60%&quot; /&gt;</p>
+<p><img src="/assets/img/manual/option_set_category.gif" width="60%" /></p>
 <h3 id="option-set_description">option:set_description</h3>
 <h4 id="-">设置菜单显示描述</h4>
 <p>设置选项菜单显示时，右边的描述信息，用于帮助用户更加清楚的知道这个选项的用途，例如：</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
+<pre><code class="lang-lua">option("test")
     set_default(false)
     set_showmenu(true)
-    set_description(&quot;Enable or disable test&quot;)
+    set_description("Enable or disable test")
 </code></pre>
 <p>生成的菜单内容如下：</p>
 <pre><code>Options:
@@ -605,13 +605,13 @@ option(&quot;test4&quot;)
 
     --test=TEST                       Enable or disable test (default: false)
 </code></pre><p>这个接口也支持多行显示，输出更加详细的描述信息，例如：</p>
-<pre><code class="lang-lua">option(&quot;mode&quot;)
-    set_default(&quot;debug&quot;)
+<pre><code class="lang-lua">option("mode")
+    set_default("debug")
     set_showmenu(true)
-    set_description(&quot;Set build mode&quot;,
-                    &quot;    - debug&quot;,
-                    &quot;    - release&quot;,
-                    &quot;    - profile&quot;)
+    set_description("Set build mode",
+                    "    - debug",
+                    "    - release",
+                    "    - profile")
 </code></pre>
 <p>生成的菜单内容如下：</p>
 <pre><code>Options:
@@ -627,13 +627,13 @@ option(&quot;test4&quot;)
 <h3 id="option-add_links">option:add_links</h3>
 <h4 id="-">添加链接库检测</h4>
 <p>如果指定的链接库检测通过，此选项将被启用，并且对应关联的target会自动加上此链接，例如：</p>
-<pre><code class="lang-lua">option(&quot;pthread&quot;)
+<pre><code class="lang-lua">option("pthread")
     set_default(false)
-    add_links(&quot;pthread&quot;)
-    add_linkdirs(&quot;/usr/local/lib&quot;)
+    add_links("pthread")
+    add_linkdirs("/usr/local/lib")
 
-target(&quot;test&quot;)
-    add_options(&quot;pthread&quot;)
+target("test")
+    add_options("pthread")
 </code></pre>
 <p>如果检测通过，<code>test</code>目标编译的时候就会自动加上：<code>-L/usr/local/lib -lpthread</code> 编译选项</p>
 <h3 id="option-add_linkdirs">option:add_linkdirs</h3>
@@ -645,13 +645,13 @@ target(&quot;test&quot;)
 <h3 id="option-add_cincludes">option:add_cincludes</h3>
 <h4 id="-c-">添加c头文件检测</h4>
 <p>如果c头文件检测通过，此选项将被启用，例如：</p>
-<pre><code class="lang-lua">option(&quot;pthread&quot;)
+<pre><code class="lang-lua">option("pthread")
     set_default(false)
-    add_cincludes(&quot;pthread.h&quot;)
-    add_defines(&quot;ENABLE_PTHREAD&quot;)
+    add_cincludes("pthread.h")
+    add_defines("ENABLE_PTHREAD")
 
-target(&quot;test&quot;)
-    add_options(&quot;pthread&quot;)
+target("test")
+    add_options("pthread")
 </code></pre>
 <p>此选项检测是否存在<code>pthread.h</code>的头文件，如果检测通过那么<code>test</code>目标程序将会加上<code>ENABLE_PTHREAD</code>的宏定义。</p>
 <p>如果想要更加灵活的检测，可以通过<a href="#detect-has_cincludes">lib.detect.has_cincludes</a>在<a href="#optionon_check">option.on_check</a>中去实现。</p>
@@ -661,13 +661,13 @@ target(&quot;test&quot;)
 <h3 id="option-add_ctypes">option:add_ctypes</h3>
 <h4 id="-c-">添加c类型检测</h4>
 <p>如果c类型检测通过，此选项将被启用，例如：</p>
-<pre><code class="lang-lua">option(&quot;wchar&quot;)
+<pre><code class="lang-lua">option("wchar")
     set_default(false)
-    add_cincludes(&quot;wchar_t&quot;)
-    add_defines(&quot;HAVE_WCHAR&quot;)
+    add_cincludes("wchar_t")
+    add_defines("HAVE_WCHAR")
 
-target(&quot;test&quot;)
-    add_options(&quot;wchar&quot;)
+target("test")
+    add_options("wchar")
 </code></pre>
 <p>此选项检测是否存在<code>wchar_t</code>的类型，如果检测通过那么<code>test</code>目标程序将会加上<code>HAVE_WCHAR</code>的宏定义。</p>
 <p>如果想要更加灵活的检测，可以通过<a href="#detect-has_ctypes">lib.detect.has_ctypes</a>在<a href="#optionon_check">option.on_check</a>中去实现。</p>
@@ -680,8 +680,8 @@ target(&quot;test&quot;)
 <h3 id="option-add_cxxsnippet">option:add_cxxsnippet</h3>
 <h4 id="-c-">添加c++代码片段检测</h4>
 <p>可以用这个接口实现更加定制化检测一些编译器特性检测，尤其是c++的各种特性的检测支持，例如：</p>
-<pre><code class="lang-lua">option(&quot;constexpr&quot;)
-    add_cxxsnippet(&quot;constexpr&quot;, &quot;constexpr int f(int x) { int sum=0; for (int i=0; i&lt;=x; ++i) sum += i; return sum; } constexpr int x = f(5);  static_assert(x == 15);&quot;)
+<pre><code class="lang-lua">option("constexpr")
+    add_cxxsnippet("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f(5);  static_assert(x == 15);")
 </code></pre>
 <p>第一个参数设置代码片段的名字作为标示，检测输出信息时候会有显示。</p>
 <p>上述代码，实现对c++的constexpr特性的检测，如果检测通过，则启用constexpr选项，当然这里只是个例子。</p>

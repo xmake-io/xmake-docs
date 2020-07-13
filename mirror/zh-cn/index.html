@@ -99,10 +99,10 @@
 <h2 id="-">安装</h2>
 <h4 id="master-">Master版本</h4>
 <h4 id="-curl">使用curl</h4>
-<pre><code class="lang-bash">bash &lt;(curl -fsSL https://xmake.io/shget.text)
+<pre><code class="lang-bash">bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
 <h4 id="-wget">使用wget</h4>
-<pre><code class="lang-bash">bash &lt;(wget https://xmake.io/shget.text -O -)
+<pre><code class="lang-bash">bash <(wget https://xmake.io/shget.text -O -)
 </code></pre>
 <h4 id="-powershell">使用powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
@@ -117,7 +117,7 @@
 <pre><code class="lang-bash">scoop install xmake
 </code></pre>
 <h4 id="macos">MacOS</h4>
-<pre><code class="lang-bash">$ ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+<pre><code class="lang-bash">$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 $ brew install xmake
 </code></pre>
 <p>或者：</p>
@@ -130,7 +130,7 @@ $ brew install xmake
 $ brew install xmake --HEAD
 
 # 或者直接调用shell下载安装
-$ bash &lt;(curl -fsSL https://xmake.io/shget.text)
+$ bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
 <h4 id="linux">Linux</h4>
 <p>在archlinux上安装：</p>
@@ -200,9 +200,9 @@ $ xmake update dev
 │   └── main.c
 └── xmake.lua
 </code></pre><p>其中<code>xmake.lua</code>是工程描述文件，内容非常简单，告诉xmake添加<code>src</code>目录下的所有<code>.c</code>源文件：</p>
-<pre><code class="lang-lua">target(&quot;hello&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;) 
+<pre><code class="lang-lua">target("hello")
+    set_kind("binary")
+    add_files("src/*.c") 
 </code></pre>
 <p>目前支持的语言如下：</p>
 <ul>
@@ -215,7 +215,7 @@ $ xmake update dev
 <li>golang</li>
 <li>rust</li>
 </ul>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>    如果你想了解更多参数选项，请运行: <code>xmake create --help</code><br>&lt;/p&gt;
+<p><p class="tip"><br>    如果你想了解更多参数选项，请运行: <code>xmake create --help</code><br></p>
 
 </p>
 <h4 id="-">构建工程</h4>
@@ -228,7 +228,7 @@ $ xmake update dev
 <pre><code class="lang-bash">$ xmake run -d hello 
 </code></pre>
 <p>xmake将会使用系统自带的调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。</p>
-<pre><code class="lang-bash">[lldb]$target create &quot;build/hello&quot;
+<pre><code class="lang-bash">[lldb]$target create "build/hello"
 Current executable set to &#39;build/hello&#39; (x86_64).
 [lldb]$b main
 Breakpoint 1: where = hello`main, address = 0x0000000100000f50
@@ -238,41 +238,41 @@ Process 7509 stopped
 * thread #1: tid = 0x435a2, 0x0000000100000f50 hello`main, queue = &#39;com.apple.main-thread&#39;, stop reason = breakpoint 1.1
     frame #0: 0x0000000100000f50 hello`main
 hello`main:
--&gt;  0x100000f50 &lt;+0&gt;:  pushq  %rbp
-    0x100000f51 &lt;+1&gt;:  movq   %rsp, %rbp
-    0x100000f54 &lt;+4&gt;:  leaq   0x2b(%rip), %rdi          ; &quot;hello world!&quot;
-    0x100000f5b &lt;+11&gt;: callq  0x100000f64               ; symbol stub for: puts
+->  0x100000f50 <+0>:  pushq  %rbp
+    0x100000f51 <+1>:  movq   %rsp, %rbp
+    0x100000f54 <+4>:  leaq   0x2b(%rip), %rdi          ; "hello world!"
+    0x100000f5b <+11>: callq  0x100000f64               ; symbol stub for: puts
 [lldb]$
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>    你也可以使用简写的命令行选项，例如: <code>xmake r</code> 或者 <code>xmake run</code><br>&lt;/p&gt;
+<p><p class="tip"><br>    你也可以使用简写的命令行选项，例如: <code>xmake r</code> 或者 <code>xmake run</code><br></p>
 
 </p>
 <h2 id="-">工程实例</h2>
 <h4 id="-">可执行程序</h4>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*c")
 </code></pre>
 <h4 id="-">静态库程序</h4>
-<pre><code class="lang-lua">target(&quot;library&quot;)
-    set_kind(&quot;static&quot;)
-    add_files(&quot;src/library/*.c&quot;)
+<pre><code class="lang-lua">target("library")
+    set_kind("static")
+    add_files("src/library/*.c")
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*c&quot;)
-    add_deps(&quot;library&quot;)
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+    add_deps("library")
 </code></pre>
 <p>通过<code>add_deps</code>将一个静态库自动链接到test可执行程序。</p>
 <h4 id="-">动态库程序</h4>
-<pre><code class="lang-lua">target(&quot;library&quot;)
-    set_kind(&quot;shared&quot;)
-    add_files(&quot;src/library/*.c&quot;)
+<pre><code class="lang-lua">target("library")
+    set_kind("shared")
+    add_files("src/library/*.c")
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*c&quot;)
-    add_deps(&quot;library&quot;)
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+    add_deps("library")
 </code></pre>
 <p>通过<code>add_deps</code>将一个动态库自动链接到test可执行程序。</p>
 <h4 id="qt-">Qt程序</h4>
@@ -291,36 +291,36 @@ $ xmake create -l c++ -t quickapp_qt test
 <p>上述指定的mingw sdk用的是Qt下Tools目录自带的环境，当然如果有其他第三方mingw编译环境，也可以手动指定, 具体可以参考：<a href="#mingw">mingw编译配置</a>。</p>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/160">#160</a></p>
 <h5 id="-">静态库程序</h5>
-<pre><code class="lang-lua">target(&quot;qt_static_library&quot;)
-    add_rules(&quot;qt.static&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_frameworks(&quot;QtNetwork&quot;, &quot;QtGui&quot;)
+<pre><code class="lang-lua">target("qt_static_library")
+    add_rules("qt.static")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
 </code></pre>
 <h5 id="-">动态库程序</h5>
-<pre><code class="lang-lua">target(&quot;qt_shared_library&quot;)
-    add_rules(&quot;qt.shared&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_frameworks(&quot;QtNetwork&quot;, &quot;QtGui&quot;)
+<pre><code class="lang-lua">target("qt_shared_library")
+    add_rules("qt.shared")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
 </code></pre>
 <h5 id="-">控制台程序</h5>
-<pre><code class="lang-lua">target(&quot;qt_console&quot;)
-    add_rules(&quot;qt.console&quot;)
-    add_files(&quot;src/*.cpp&quot;)
+<pre><code class="lang-lua">target("qt_console")
+    add_rules("qt.console")
+    add_files("src/*.cpp")
 </code></pre>
 <h5 id="quick-">Quick应用程序</h5>
-<pre><code class="lang-lua">target(&quot;qt_quickapp&quot;)
-    add_rules(&quot;qt.application&quot;)
-    add_files(&quot;src/*.cpp&quot;) 
-    add_files(&quot;src/qml.qrc&quot;)
-    add_frameworks(&quot;QtQuick&quot;)
+<pre><code class="lang-lua">target("qt_quickapp")
+    add_rules("qt.application")
+    add_files("src/*.cpp") 
+    add_files("src/qml.qrc")
+    add_frameworks("QtQuick")
 </code></pre>
 <h5 id="widgets-">Widgets应用程序</h5>
-<pre><code class="lang-lua">target(&quot;qt_widgetapp&quot;)
-    add_rules(&quot;qt.application&quot;)
-    add_files(&quot;src/*.cpp&quot;) 
-    add_files(&quot;src/mainwindow.ui&quot;)
-    add_files(&quot;src/mainwindow.h&quot;)  -- 添加带有 Q_OBJECT 的meta头文件
-    add_frameworks(&quot;QtWidgets&quot;)
+<pre><code class="lang-lua">target("qt_widgetapp")
+    add_rules("qt.application")
+    add_files("src/*.cpp") 
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
+    add_frameworks("QtWidgets")
 </code></pre>
 <h5 id="android-">Android应用程序</h5>
 <p>2.2.6之后版本，可以直接切到android平台编译Quick/Widgets应用程序，生成apk包，并且可通过<code>xmake install</code>命令安装到设备。</p>
@@ -347,15 +347,15 @@ $ cd test
 $ xmake
 </code></pre>
 <pre><code class="lang-lua">-- define target
-target(&quot;cuda_console&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.cu&quot;)
+target("cuda_console")
+    set_kind("binary")
+    add_files("src/*.cu")
     -- generate SASS code for SM architecture of current host
-    add_cugencodes(&quot;native&quot;)
+    add_cugencodes("native")
     -- generate PTX code for the virtual architecture to guarantee compatibility
-    add_cugencodes(&quot;compute_30&quot;)
+    add_cugencodes("compute_30")
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>从v2.2.7版本开始，默认构建会启用device-link。（参见 <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">Separate Compilation and Linking of CUDA C++ Device Code</a>）<br>如果要显示禁用device-link，可以通过<code>add_values(&quot;cuda.devlink&quot;, false)</code> 来设置。<br>&lt;/p&gt;
+<p><p class="tip"><br>从v2.2.7版本开始，默认构建会启用device-link。（参见 <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">Separate Compilation and Linking of CUDA C++ Device Code</a>）<br>如果要显示禁用device-link，可以通过<code>add_values("cuda.devlink", false)</code> 来设置。<br></p>
 
 </p>
 <p>默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录：</p>
@@ -365,49 +365,49 @@ $ xmake
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/158">#158</a></p>
 <h4 id="wdk-">WDK驱动程序</h4>
 <p>默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：</p>
-<pre><code class="lang-console">$ xmake f --wdk=&quot;G:\Program Files\Windows Kits\10&quot; -c 
+<pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c 
 $ xmake
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
 <h5 id="umdf-">umdf驱动程序</h5>
-<pre><code class="lang-lua">target(&quot;echo&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.umdf&quot;)
-    add_files(&quot;driver/*.c&quot;) 
-    add_files(&quot;driver/*.inx&quot;)
-    add_includedirs(&quot;exe&quot;)
+<pre><code class="lang-lua">target("echo")
+    add_rules("wdk.driver", "wdk.env.umdf")
+    add_files("driver/*.c") 
+    add_files("driver/*.inx")
+    add_includedirs("exe")
 
-target(&quot;app&quot;)
-    add_rules(&quot;wdk.binary&quot;, &quot;wdk.env.umdf&quot;)
-    add_files(&quot;exe/*.cpp&quot;) 
+target("app")
+    add_rules("wdk.binary", "wdk.env.umdf")
+    add_files("exe/*.cpp") 
 </code></pre>
 <h5 id="kmdf-">kmdf驱动程序</h5>
-<pre><code class="lang-lua">target(&quot;nonpnp&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.kmdf&quot;)
-    add_values(&quot;wdk.tracewpp.flags&quot;, &quot;-func:TraceEvents(LEVEL,FLAGS,MSG,...)&quot;, &quot;-func:Hexdump((LEVEL,FLAGS,MSG,...))&quot;)
-    add_files(&quot;driver/*.c&quot;, {rule = &quot;wdk.tracewpp&quot;}) 
-    add_files(&quot;driver/*.rc&quot;)
+<pre><code class="lang-lua">target("nonpnp")
+    add_rules("wdk.driver", "wdk.env.kmdf")
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
+    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.rc")
 
-target(&quot;app&quot;)
-    add_rules(&quot;wdk.binary&quot;, &quot;wdk.env.kmdf&quot;)
-    add_files(&quot;exe/*.c&quot;) 
-    add_files(&quot;exe/*.inf&quot;)
+target("app")
+    add_rules("wdk.binary", "wdk.env.kmdf")
+    add_files("exe/*.c") 
+    add_files("exe/*.inf")
 </code></pre>
 <h5 id="wdm-">wdm驱动程序</h5>
-<pre><code class="lang-lua">target(&quot;kcs&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    add_values(&quot;wdk.man.flags&quot;, &quot;-prefix Kcs&quot;)
-    add_values(&quot;wdk.man.resource&quot;, &quot;kcsCounters.rc&quot;)
-    add_values(&quot;wdk.man.header&quot;, &quot;kcsCounters.h&quot;)
-    add_values(&quot;wdk.man.counter_header&quot;, &quot;kcsCounters_counters.h&quot;)
-    add_files(&quot;*.c&quot;, &quot;*.rc&quot;, &quot;*.man&quot;) 
+<pre><code class="lang-lua">target("kcs")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    add_values("wdk.man.flags", "-prefix Kcs")
+    add_values("wdk.man.resource", "kcsCounters.rc")
+    add_values("wdk.man.header", "kcsCounters.h")
+    add_values("wdk.man.counter_header", "kcsCounters_counters.h")
+    add_files("*.c", "*.rc", "*.man") 
 </code></pre>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    add_values(&quot;wdk.tracewpp.flags&quot;, &quot;-func:TracePrint((LEVEL,FLAGS,MSG,...))&quot;)
-    add_files(&quot;*.c&quot;, {rule = &quot;wdk.tracewpp&quot;}) 
-    add_files(&quot;*.rc&quot;, &quot;*.inf&quot;)
-    add_files(&quot;*.mof|msdsm.mof&quot;)
-    add_files(&quot;msdsm.mof&quot;, {values = {wdk_mof_header = &quot;msdsmwmi.h&quot;}}) 
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
+    add_files("*.c", {rule = "wdk.tracewpp"}) 
+    add_files("*.rc", "*.inf")
+    add_files("*.mof|msdsm.mof")
+    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
 </code></pre>
 <h5 id="-">生成驱动包</h5>
 <p>可以通过以下命令生成.cab驱动包：</p>
@@ -422,69 +422,69 @@ $ xmake [p|package] -o outputdir
        - debug/x86/sampledsm.cab
        - release/x64/sampledsm.cab
 </code></pre><h5 id="-">驱动签名</h5>
-<p>默认编译禁用签名，可以通过<code>set_values(&quot;wdk.sign.mode&quot;, ...)</code>设置签名模式来启用签名。</p>
+<p>默认编译禁用签名，可以通过<code>set_values("wdk.sign.mode", ...)</code>设置签名模式来启用签名。</p>
 <h6 id="-">测试签名</h6>
 <p>测试签名一般本机调试时候用，可以使用xmake自带的test证书来进行签名，例如：</p>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    set_values(&quot;wdk.sign.mode&quot;, &quot;test&quot;)
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    set_values("wdk.sign.mode", "test")
 </code></pre>
 <p>不过这种情况下，需要用户手动在管理员模式下，执行一遍：<code>$xmake l utils.wdk.testcert install</code>，来生成和注册test证书到本机环境。<br>这个只需要执行一次就行了，后续就可以正常编译和签名了。</p>
 <p>当然也可以使用本机已有的有效证书去签名。</p>
 <p>从sha1来选择合适的证书进行签名：</p>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    set_values(&quot;wdk.sign.mode&quot;, &quot;test&quot;)
-    set_values(&quot;wdk.sign.thumbprint&quot;, &quot;032122545DCAA6167B1ADBE5F7FDF07AE2234AAA&quot;)
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    set_values("wdk.sign.mode", "test")
+    set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
 </code></pre>
 <p>从store/company来选择合适的证书进行签名：</p>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    set_values(&quot;wdk.sign.mode&quot;, &quot;test&quot;)
-    set_values(&quot;wdk.sign.store&quot;, &quot;PrivateCertStore&quot;)
-    set_values(&quot;wdk.sign.company&quot;, &quot;tboox.org(test)&quot;)
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    set_values("wdk.sign.mode", "test")
+    set_values("wdk.sign.store", "PrivateCertStore")
+    set_values("wdk.sign.company", "tboox.org(test)")
 </code></pre>
 <h6 id="-">正式签名</h6>
 <p>通过指定对应的正式签名证书文件进行签名：</p>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    set_values(&quot;wdk.sign.mode&quot;, &quot;release&quot;)
-    set_values(&quot;wdk.sign.company&quot;, &quot;xxxx&quot;)
-    set_values(&quot;wdk.sign.certfile&quot;, path.join(os.projectdir(), &quot;xxxx.cer&quot;))
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    set_values("wdk.sign.mode", "release")
+    set_values("wdk.sign.company", "xxxx")
+    set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
 </code></pre>
 <h5 id="-">生成低版本驱动</h5>
 <p>如果想在wdk10环境编译生成win7, win8等低版本系统支持的驱动，可以通过设置<code>wdk.env.winver</code>来切换系统版本：</p>
-<pre><code class="lang-lua">set_values(&quot;wdk.env.winver&quot;, &quot;win10&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win10_rs3&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win81&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win8&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win7&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win7_sp1&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win7_sp2&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win7_sp3&quot;)
+<pre><code class="lang-lua">set_values("wdk.env.winver", "win10")
+set_values("wdk.env.winver", "win10_rs3")
+set_values("wdk.env.winver", "win81")
+set_values("wdk.env.winver", "win8")
+set_values("wdk.env.winver", "win7")
+set_values("wdk.env.winver", "win7_sp1")
+set_values("wdk.env.winver", "win7_sp2")
+set_values("wdk.env.winver", "win7_sp3")
 </code></pre>
 <p>我们也可以手动指定编译的目标程序支持的windows版本：</p>
 <pre><code class="lang-console">$ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 </code></pre>
 <h4 id="winsdk-">WinSDK程序</h4>
-<pre><code class="lang-lua">target(&quot;usbview&quot;)
-    add_rules(&quot;win.sdk.application&quot;)
+<pre><code class="lang-lua">target("usbview")
+    add_rules("win.sdk.application")
 
-    add_files(&quot;*.c&quot;, &quot;*.rc&quot;)
-    add_files(&quot;xmlhelper.cpp&quot;, {rule = &quot;win.sdk.dotnet&quot;})
+    add_files("*.c", "*.rc")
+    add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/173">#173</a></p>
 <h2 id="-">编译配置</h2>
 <p>通过<code>xmake f|config</code>配置命令，设置构建前的相关配置信息，详细参数选项，请运行: <code>xmake f --help</code>。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>    你可以使用命令行缩写来简化输入，也可以使用全名，例如: &lt;br&gt;<br>    <code>xmake f</code> 或者 <code>xmake config</code>.&lt;br&gt;<br>    <code>xmake f -p linux</code> 或者 <code>xmake config --plat=linux</code>.<br>&lt;/p&gt;
+<p><p class="tip"><br>    你可以使用命令行缩写来简化输入，也可以使用全名，例如: <br><br>    <code>xmake f</code> 或者 <code>xmake config</code>.<br><br>    <code>xmake f -p linux</code> 或者 <code>xmake config --plat=linux</code>.<br></p>
 
 </p>
 <h4 id="-">目标平台</h4>
 <h5 id="-">主机平台</h5>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>    xmake将会自动探测当前主机平台，默认自动生成对应的目标程序。<br>&lt;/p&gt;
+<p><p class="tip"><br>    xmake将会自动探测当前主机平台，默认自动生成对应的目标程序。<br></p>
 
 </p>
 <h5 id="linux">Linux</h5>
@@ -499,7 +499,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
 </code></pre>
 <p><a href="#-bin">--bin</a>主要用于设置选择编译工具的具体bin目录，这个的使用跟<a href="#交叉编译">交叉编译</a>中的<a href="#-bin">--bin</a>的行为是一致的。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>如果手动设置了bin目录，没有通过检测，可以看下是否<code>--arch=</code>参数没有匹配对。<br>&lt;/p&gt;
+<p><p class="tip"><br>如果手动设置了bin目录，没有通过检测，可以看下是否<code>--arch=</code>参数没有匹配对。<br></p>
 
 </p>
 <h5 id="iphoneos">iPhoneOS</h5>
@@ -527,7 +527,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p cross --sdk=/usr/local/arm-xxx-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
 </code></pre>
-<p>如果不关心实际的平台名，只想交叉编译，可以直接用上面的命令，如果需要通过<code>is_plat(&quot;myplat&quot;)</code>判断自己的平台逻辑，则：</p>
+<p>如果不关心实际的平台名，只想交叉编译，可以直接用上面的命令，如果需要通过<code>is_plat("myplat")</code>判断自己的平台逻辑，则：</p>
 <pre><code class="lang-bash">$ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
 </code></pre>
@@ -714,7 +714,7 @@ $ xmake
 </tr>
 </tbody>
 </table>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>如果你想要了解更多参数选项，请运行: <code>xmake f --help</code>。<br>&lt;/p&gt;
+<p><p class="tip"><br>如果你想要了解更多参数选项，请运行: <code>xmake f --help</code>。<br></p>
 
 </p>
 <h6 id="-sdk">--sdk</h6>
@@ -748,7 +748,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
 $ xmake
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>v2.2.1版本之前，这个参数名是<code>--toolchains</code>，比较有歧义，因此新版本中，统一改成<code>--bin=</code>来设置bin目录。<br>&lt;/p&gt;
+<p><p class="tip"><br>v2.2.1版本之前，这个参数名是<code>--toolchains</code>，比较有歧义，因此新版本中，统一改成<code>--bin=</code>来设置bin目录。<br></p>
 
 </p>
 <h6 id="-cross">--cross</h6>
@@ -772,7 +772,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --as=armv7-linux-as
 </code></pre>
 <p>如果存在<code>AS</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --as=gcc@/home/xxx/asmips.exe</code> 设置ccmips.exe编译器作为类gcc的使用方式来编译。<br>也就是说，在指定编译器为<code>asmips.exe</code>的同时，告诉xmake，它跟gcc用法和参数选项基本相同。<br>&lt;/p&gt;
+<p><p class="tip"><br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --as=gcc@/home/xxx/asmips.exe</code> 设置ccmips.exe编译器作为类gcc的使用方式来编译。<br>也就是说，在指定编译器为<code>asmips.exe</code>的同时，告诉xmake，它跟gcc用法和参数选项基本相同。<br></p>
 
 </p>
 <h6 id="-cc">--cc</h6>
@@ -783,7 +783,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang
 </code></pre>
 <p>如果存在<code>CC</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --cc=gcc@/home/xxx/ccmips.exe</code> 设置ccmips.exe编译器作为类gcc的使用方式来编译。<br>也就是说，在指定编译器为<code>ccmips.exe</code>的同时，告诉xmake，它跟gcc用法和参数选项基本相同。<br>&lt;/p&gt;
+<p><p class="tip"><br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --cc=gcc@/home/xxx/ccmips.exe</code> 设置ccmips.exe编译器作为类gcc的使用方式来编译。<br>也就是说，在指定编译器为<code>ccmips.exe</code>的同时，告诉xmake，它跟gcc用法和参数选项基本相同。<br></p>
 
 </p>
 <h6 id="-cxx">--cxx</h6>
@@ -794,7 +794,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --cxx=armv7-linux-clang++
 </code></pre>
 <p>如果存在<code>CXX</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --cxx=clang++@/home/xxx/c++mips.exe</code> 设置c++mips.exe编译器作为类clang++的使用方式来编译。<br>也就是说，在指定编译器为<code>c++mips.exe</code>的同时，告诉xmake，它跟clang++用法和参数选项基本相同。<br>&lt;/p&gt;
+<p><p class="tip"><br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --cxx=clang++@/home/xxx/c++mips.exe</code> 设置c++mips.exe编译器作为类clang++的使用方式来编译。<br>也就是说，在指定编译器为<code>c++mips.exe</code>的同时，告诉xmake，它跟clang++用法和参数选项基本相同。<br></p>
 
 </p>
 <h6 id="-ld">--ld</h6>
@@ -805,7 +805,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++
 </code></pre>
 <p>如果存在<code>LD</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么链接器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --ld=g++@/home/xxx/c++mips.exe</code> 设置c++mips.exe链接器作为类g++的使用方式来编译。<br>也就是说，在指定链接器为<code>c++mips.exe</code>的同时，告诉xmake，它跟g++用法和参数选项基本相同。<br>&lt;/p&gt;
+<p><p class="tip"><br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么链接器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --ld=g++@/home/xxx/c++mips.exe</code> 设置c++mips.exe链接器作为类g++的使用方式来编译。<br>也就是说，在指定链接器为<code>c++mips.exe</code>的同时，告诉xmake，它跟g++用法和参数选项基本相同。<br></p>
 
 </p>
 <h6 id="-sh">--sh</h6>
@@ -815,7 +815,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --sh=armv7-linux-clang++
 </code></pre>
 <p>如果存在<code>SH</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么链接器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --sh=g++@/home/xxx/c++mips.exe</code> 设置c++mips.exe链接器作为类g++的使用方式来编译。<br>也就是说，在指定链接器为<code>c++mips.exe</code>的同时，告诉xmake，它跟g++用法和参数选项基本相同。<br>&lt;/p&gt;
+<p><p class="tip"><br>如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么链接器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --sh=g++@/home/xxx/c++mips.exe</code> 设置c++mips.exe链接器作为类g++的使用方式来编译。<br>也就是说，在指定链接器为<code>c++mips.exe</code>的同时，告诉xmake，它跟g++用法和参数选项基本相同。<br></p>
 
 </p>
 <h6 id="-ar">--ar</h6>
@@ -825,7 +825,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --ar=armv7-linux-ar
 </code></pre>
 <p>如果存在<code>AR</code>环境变量的话，会优先使用当前环境变量中指定的值。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>如果指定的编译器名不是那些xmake内置可识别的名字（带有ar等字样），那么链接器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --ar=ar@/home/xxx/armips.exe</code> 设置armips.exe链接器作为类ar的使用方式来编译。<br>也就是说，在指定链接器为<code>armips.exe</code>的同时，告诉xmake，它跟ar用法和参数选项基本相同。<br>&lt;/p&gt;
+<p><p class="tip"><br>如果指定的编译器名不是那些xmake内置可识别的名字（带有ar等字样），那么链接器工具检测就会失败。<br>这个时候我们可以通过：<code>xmake f --ar=ar@/home/xxx/armips.exe</code> 设置armips.exe链接器作为类ar的使用方式来编译。<br>也就是说，在指定链接器为<code>armips.exe</code>的同时，告诉xmake，它跟ar用法和参数选项基本相同。<br></p>
 
 </p>
 <h4 id="-">全局配置</h4>
@@ -838,7 +838,7 @@ $ xmake
 $ xmake
 </code></pre>
 <p>以后，就不需要每次重复配置<code>--ndk=</code>参数了。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>    每个命令都有其简写，例如: <code>xmake g</code> 或者 <code>xmake global</code>.&lt;br&gt;<br>&lt;/p&gt;
+<p><p class="tip"><br>    每个命令都有其简写，例如: <code>xmake g</code> 或者 <code>xmake global</code>.<br><br></p>
 
 </p>
 <h4 id="-">清除配置</h4>
@@ -853,9 +853,9 @@ $ xmake
 <h2 id="-">语法说明</h2>
 <p>xmake的工程描述文件xmake.lua虽然基于lua语法，但是为了使得更加方便简洁得编写项目构建逻辑，xmake对其进行了一层封装，使得编写xmake.lua不会像些makefile那样繁琐</p>
 <p>基本上写个简单的工程构建描述，只需三行就能搞定，例如：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
 </code></pre>
 <h4 id="-">作用域</h4>
 <p>xmake的描述语法是按作用域划分的，主要分为：</p>
@@ -866,11 +866,11 @@ $ xmake
 </ul>
 <p>那哪些属于外部，哪些又属于内部呢，看看下面的注释，就知道个大概了：</p>
 <pre><code class="lang-lua">-- 外部作用域
-target(&quot;test&quot;)
+target("test")
 
     -- 外部作用域
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+    set_kind("binary")
+    add_files("src/*.c")
 
     on_run(function ()
         -- 内部作用域
@@ -881,7 +881,7 @@ target(&quot;test&quot;)
         end)
 
 -- 外部作用域
-task(&quot;hello&quot;)
+task("hello")
 
     -- 外部作用域
     on_run(function ()
@@ -892,15 +892,15 @@ task(&quot;hello&quot;)
 <h5 id="-">外部作用域</h5>
 <p>对于大部分工程来说，并不需要很复杂的工程描述，也不需要自定义脚本支持，只需要简单的 <code>set_xxx</code> 或者 <code>add_xxx</code> 就能满足需求了</p>
 <p>那么根据二八定律，80%的情况下，我们只需要这么写：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;static&quot;)
-    add_files(&quot;src/test/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("static")
+    add_files("src/test/*.c")
 
-target(&quot;demo&quot;)
-    add_deps(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_links(&quot;test&quot;)
-    add_files(&quot;src/demo/*.c&quot;)
+target("demo")
+    add_deps("test")
+    set_kind("binary")
+    add_links("test")
+    add_files("src/demo/*.c")
 </code></pre>
 <p>不需要复杂的api调用，也不需要各种繁琐的变量定义，以及 if 判断 和 for 循环，要的就是简洁可读，一眼看过去，就算不懂lua语法也没关系</p>
 <p>就当做简单的描述语法，看上去有点像函数调用而已，会点编程的基本一看就知道怎么配置。</p>
@@ -918,12 +918,12 @@ target(&quot;demo&quot;)
 <p>还有些辅助api，例如：</p>
 <p>dirs：扫描获取当前指定路径中的所有目录<br>files：扫描获取当前指定路径中的所有文件<br>format: 格式化字符串，string.format的简写版本</p>
 <p>还有变量定义、逻辑操作也是可以使用的，毕竟是基于lua的，该有的基础语法，还是要有的，我们可以通过if来切换编译文件：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;static&quot;)
-    if is_plat(&quot;iphoneos&quot;) then
-        add_files(&quot;src/test/ios/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("static")
+    if is_plat("iphoneos") then
+        add_files("src/test/ios/*.c")
     else
-        add_files(&quot;src/test/*.c&quot;)
+        add_files("src/test/*.c")
     end
 </code></pre>
 <p>需要注意的是，变量定义分全局变量和局部变量，局部变量只对当前xmake.lua有效，不影响子xmake.lua</p>
@@ -933,20 +933,20 @@ local var1 = 0
 -- 全局变量，影响所有之后 includes() 包含的子 xmake.lua 
 var2 = 1
 
-includes(&quot;src&quot;)
+includes("src")
 </code></pre>
 <h5 id="-">内部作用域</h5>
 <p>也称插件、脚本作用域，提供更加复杂、灵活的脚本支持，一般用于编写一些自定义脚本、插件开发、自定义task任务、自定义模块等等</p>
 <p>一般通过<code>function () end</code>包含，并且被传入到<code>on_xxx</code>, <code>before_xxx</code>和<code>after_xxx</code>接口内的，都属于自作用域。</p>
 <p>例如：</p>
 <pre><code class="lang-lua">-- 自定义脚本
-target(&quot;hello&quot;)
+target("hello")
     after_build(function ()
         -- 内部作用域
         end)
 
 -- 自定义任务、插件
-task(&quot;hello&quot;)
+task("hello")
     on_run(function ()
         -- 内部作用域
         end)
@@ -954,13 +954,13 @@ task(&quot;hello&quot;)
 <p>在此作用域中，不仅可以使用大部分lua的api，还可以使用很多xmake提供的扩展模块，所有扩展模块，通过import来导入</p>
 <p>具体可参考：<a href="https://xmake.io/#/zh/manual?id=import">import模块导入文档</a></p>
 <p>这里我们给个简单的例子，在编译完成后，对ios目标程序进行ldid签名：</p>
-<pre><code class="lang-lua">target(&quot;iosdemo&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;*.m&quot;)
+<pre><code class="lang-lua">target("iosdemo")
+    set_kind("binary")
+    add_files("*.m")
     after_build(function (target) 
 
         -- 执行签名，如果失败，自动中断，给出高亮错误信息
-        os.run(&quot;ldid -S$(projectdir)/entitlements.plist %s&quot;, target:targetfile())
+        os.run("ldid -S$(projectdir)/entitlements.plist %s", target:targetfile())
     end)
 </code></pre>
 <p>需要注意的是，在内部作用域中，所有的调用都是启用异常捕获机制的，如果运行出错，会自动中断xmake，并给出错误提示信息</p>
@@ -968,82 +968,82 @@ task(&quot;hello&quot;)
 <h5 id="-">接口作用域</h5>
 <p>在外部作用域中的所有描述api设置，本身也是有作用域之分的，在不同地方调用，影响范围也不相同，例如：</p>
 <pre><code class="lang-lua">-- 全局根作用域，影响所有target，包括includes() 中的子工程target设置
-add_defines(&quot;DEBUG&quot;)
+add_defines("DEBUG")
 
 -- 定义或者进入demo目标作用域（支持多次进入来追加设置）
-target(&quot;demo&quot;)
-    set_kind(&quot;shared&quot;)
-    add_files(&quot;src/*.c&quot;)
+target("demo")
+    set_kind("shared")
+    add_files("src/*.c")
     -- 当前target作用域，仅仅影响当前target
-    add_defines(&quot;DEBUG2&quot;)
+    add_defines("DEBUG2")
 
 -- 选项设置，仅支持局部设置，不受全局api设置所影响
-option(&quot;test&quot;)
+option("test")
     -- 当前选项的局部作用域
     set_default(false)
 
 -- 其他target设置，-DDEBUG 也会被设置上
-target(&quot;demo2&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+target("demo2")
+    set_kind("binary")
+    add_files("src/*.c")
 
 -- 重新进入demo目标作用域
-target(&quot;demo&quot;)
+target("demo")
     -- 追加宏定义，只对当前demo目标有效
-    add_defines(&quot;DEBUG3&quot;)
+    add_defines("DEBUG3")
 </code></pre>
 <p>通常情况下，进入另一个target/option域设置，会自动离开上个target/option域，但是有时候为了比较一些作用域污染情况，我们可以显示离开某个域，例如：</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
+<pre><code class="lang-lua">option("test")
     set_default(false)
 option_end()
 
-target(&quot;demo&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+target("demo")
+    set_kind("binary")
+    add_files("src/*.c")
 target_end()
 </code></pre>
 <p>调用<code>option_end()</code>, <code>target_end()</code>即可显式的离开当前target/option域设置。</p>
 <h5 id="-">作用域缩进</h5>
 <p>xmake.lua里面缩进，只是个编写规范，用于更加清楚的区分，当前的设置 是针对 那个作用域的，虽然就算不缩进，也一样ok，但是可读性上 并不是很好。。</p>
 <p>例如：</p>
-<pre><code class="lang-lua">target(&quot;xxxx&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;*.c&quot;)
+<pre><code class="lang-lua">target("xxxx")
+    set_kind("binary")
+    add_files("*.c")
 </code></pre>
 <p>和</p>
-<pre><code class="lang-lua">target(&quot;xxxx&quot;)
-set_kind(&quot;binary&quot;)
-add_files(&quot;*.c&quot;)
+<pre><code class="lang-lua">target("xxxx")
+set_kind("binary")
+add_files("*.c")
 </code></pre>
 <p>上述两种方式，效果上都是一样的，但是理解上，第一种更加直观，一看就知道<code>add_files</code>仅仅只是针对 target 设置的，并不是全局设置</p>
 <p>因此，适当的进行缩进，有助于更好的维护xmake.lua</p>
 <p>最后附上，tbox的<a href="https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua">xmake.lua</a>描述，仅供参考。。</p>
 <h4 id="-">语法简化</h4>
 <p>xmake.lua的配置域语法，非常灵活，可以在相关域做各种复杂灵活的配置，但是对于许多精简的小块配置，这个时候就稍显冗余了：</p>
-<pre><code class="lang-lua">option(&quot;test1&quot;)
+<pre><code class="lang-lua">option("test1")
     set_default(true)
     set_showmenu(true)
-    set_description(&quot;test1 option&quot;)
+    set_description("test1 option")
 
-option(&quot;test2&quot;)
+option("test2")
     set_default(true)
     set_showmeu(true)
 
-option(&quot;test3&quot;)
-    set_default(&quot;hello&quot;)
+option("test3")
+    set_default("hello")
 </code></pre>
 <p>xmake 2.2.6以上版本，对于上面的这些小块option域设置，我们可以简化下成单行描述：</p>
-<pre><code class="lang-lua">option(&quot;test1&quot;, {default = true, showmenu = true, description = &quot;test1 option&quot;})
-option(&quot;test2&quot;, {default = true, showmenu = true})
-option(&quot;test3&quot;, {default = &quot;hello&quot;})
+<pre><code class="lang-lua">option("test1", {default = true, showmenu = true, description = "test1 option"})
+option("test2", {default = true, showmenu = true})
+option("test3", {default = "hello"})
 </code></pre>
 <p>除了option域，对于其他域也是支持这种简化写法的，例如：</p>
-<pre><code class="lang-lua">target(&quot;demo&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("demo")
+    set_kind("binary")
+    add_files("src/*.c")
 </code></pre>
 <p>简化为：</p>
-<pre><code class="lang-lua">target(&quot;demo&quot;, {kind = &quot;binary&quot;, files = &quot;src/*.c&quot;})
+<pre><code class="lang-lua">target("demo", {kind = "binary", files = "src/*.c"})
 </code></pre>
 <p>当然，如果配置需求比较复杂的，还是原有的多行设置方式更加方便，这个就看自己的需求来评估到底使用哪种方式了。</p>
 <h2 id="-">依赖包管理</h2>
@@ -1058,11 +1058,11 @@ option(&quot;test3&quot;, {default = &quot;hello&quot;})
 - pcre.pkg
 - ...
 </code></pre><p>如果要让当前工程识别加载这些包，首先要指定包目录路径，例如：</p>
-<pre><code class="lang-lua">add_packagedirs(&quot;packages&quot;)
+<pre><code class="lang-lua">add_packagedirs("packages")
 </code></pre>
 <p>指定好后，就可以在target作用域中，通过<a href="https://xmake.io/#/zh/manual?id=targetadd_packages">add_packages</a>接口，来添加集成包依赖了，例如：</p>
-<pre><code class="lang-lua">target(&quot;tbox&quot;)
-    add_packages(&quot;zlib&quot;, &quot;polarssl&quot;, &quot;pcre&quot;, &quot;mysql&quot;)
+<pre><code class="lang-lua">target("tbox")
+    add_packages("zlib", "polarssl", "pcre", "mysql")
 </code></pre>
 <p>那么如何去生成一个*.pkg的包呢，如果是基于xmake的工程，生成方式很简单，只需要：</p>
 <pre><code class="lang-console">$ cd tbox
@@ -1083,25 +1083,25 @@ $ xmake package -o ../test/packages
 <li>pkg-config</li>
 </ul>
 <p>并且通过系统和第三方包管理工具进行依赖包的安装，然后与xmake进行集成使用，例如我们查找一个openssl包：</p>
-<pre><code class="lang-lua">local packages = find_packages(&quot;openssl&quot;, &quot;zlib&quot;)
+<pre><code class="lang-lua">local packages = find_packages("openssl", "zlib")
 </code></pre>
 <p>返回的结果如下：</p>
 <pre><code class="lang-lua">{
-    {links = {&quot;ssl&quot;, &quot;crypto&quot;}, linkdirs = {&quot;/usr/local/lib&quot;}, includedirs = {&quot;/usr/local/include&quot;}},
-    {links = {&quot;z&quot;}, linkdirs = {&quot;/usr/local/lib&quot;}, includedirs = {&quot;/usr/local/include&quot;}}
+    {links = {"ssl", "crypto"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}},
+    {links = {"z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
 }
 </code></pre>
 <p>如果查找成功，则返回一个包含所有包信息的table，如果失败返回nil</p>
 <p>这里的返回结果可以直接作为<code>target:add</code>, <code>option:add</code>的参数传入，用于动态增加<code>target/option</code>的配置：</p>
-<pre><code class="lang-lua">option(&quot;zlib&quot;)
+<pre><code class="lang-lua">option("zlib")
     set_showmenu(true)
     before_check(function (option)
-        option:add(find_packages(&quot;openssl&quot;, &quot;zlib&quot;))
+        option:add(find_packages("openssl", "zlib"))
     end)
 </code></pre>
-<pre><code class="lang-lua">target(&quot;test&quot;)
+<pre><code class="lang-lua">target("test")
     on_load(function (target)
-        target:add(find_package(&quot;openssl&quot;, &quot;zlib&quot;))
+        target:add(find_package("openssl", "zlib"))
     end)
 </code></pre>
 <p>如果系统上装有<code>homebrew</code>, <code>pkg-config</code>等第三方工具，那么此接口会尝试使用它们去改进查找结果。</p>
@@ -1118,30 +1118,30 @@ $ xmake package -o ../test/packages
 </code></pre>
 <h4 id="-">远程依赖模式</h4>
 <p>这个在2.2.2版本后已经初步支持，用法上更加的简单，只需要设置对应的依赖包就行了，例如：</p>
-<pre><code class="lang-lua">add_requires(&quot;tbox 1.6.*&quot;, &quot;libpng ~1.16&quot;, &quot;zlib&quot;)
+<pre><code class="lang-lua">add_requires("tbox 1.6.*", "libpng ~1.16", "zlib")
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;) 
-    add_packages(&quot;tbox&quot;, &quot;libpng&quot;, &quot;zlib&quot;)
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("tbox", "libpng", "zlib")
 </code></pre>
 <p>上面的<code>add_requires</code>用于描述当前项目需要的依赖包，而<code>add_packages</code>用于应用依赖包到test目标，只有设置这个才会自动追加links, linkdirs, includedirs等设置。</p>
 <p>然后直接执行编译即可：</p>
 <pre><code class="lang-console">$ xmake 
 </code></pre>
 <p>xmake会去远程拉取相关源码包，然后自动编译安装，最后编译项目，进行依赖包的链接，具体效果见下图：</p>
-<p>&lt;img src=&quot;/assets/img/index/package_manage.png&quot; width=&quot;80%&quot; /&gt;</p>
+<p><img src="/assets/img/index/package_manage.png" width="80%" /></p>
 <p>关于包依赖管理的更多相关信息和进展见相关issues：<a href="https://github.com/xmake-io/xmake/issues/69">Remote package management</a> </p>
 <h5 id="-">目前支持的特性</h5>
 <ul>
-<li>语义版本支持，例如：&quot;&gt;= 1.1.0 &lt; 1.2&quot;, &quot;~1.6&quot;, &quot;1.2.x&quot;, &quot;1.*&quot;</li>
+<li>语义版本支持，例如：">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"</li>
 <li>提供官方包仓库、自建私有仓库、项目内置仓库等多仓库管理支持</li>
 <li>跨平台包编译集成支持（不同平台、不同架构的包可同时安装，快速切换使用）</li>
 <li>debug依赖包支持，实现源码调试</li>
 </ul>
 <h5 id="-">依赖包处理机制</h5>
 <p>这里我们简单介绍下整个依赖包的处理机制：</p>
-<p>&lt;img src=&quot;/assets/img/index/package_arch.png&quot; width=&quot;80%&quot; /&gt;</p>
+<p><img src="/assets/img/index/package_arch.png" width="80%" /></p>
 <ol>
 <li>优先检测当前系统目录、第三方包管理下有没有存在指定的包，如果有匹配的包，那么就不需要下载安装了 （当然也可以设置不使用系统包）</li>
 <li>检索匹配对应版本的包，然后下载、编译、安装（注：安装在特定xmake目录，不会干扰系统库环境）</li>
@@ -1164,73 +1164,73 @@ $ xmake
 $ xmake
 </code></pre>
 <h5 id="-">语义版本设置</h5>
-<p>xmake的依赖包管理是完全支持语义版本选择的，例如：&quot;~1.6.1&quot;，对于语义版本的具体描述见：<a href="https://semver.org/">https://semver.org/</a></p>
+<p>xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：<a href="https://semver.org/">https://semver.org/</a></p>
 <p>一些语义版本写法：</p>
-<pre><code class="lang-lua">add_requires(&quot;tbox 1.6.*&quot;, &quot;pcre 1.3.x&quot;, &quot;libpng ^1.18&quot;)
-add_requires(&quot;libpng ~1.16&quot;, &quot;zlib 1.1.2 || &gt;=1.2.11 &lt;1.3.0&quot;)
+<pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
+add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 </code></pre>
 <p>目前xmake使用的语义版本解析器是<a href="https://github.com/uael">uael</a>贡献的<a href="https://github.com/uael/sv">sv</a>库，里面也有对版本描述写法的详细说明，可以参考下：<a href="https://github.com/uael/sv#versions">版本描述说明</a></p>
 <p>当然，如果我们对当前的依赖包的版本没有特殊要求，那么可以直接这么写：</p>
-<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, &quot;libpng&quot;, &quot;zlib&quot;)
+<pre><code class="lang-lua">add_requires("tbox", "libpng", "zlib")
 </code></pre>
 <p>这会使用已知的最新版本包，或者是master分支的源码编译的包，如果当前包有git repo地址，我们也能指定特定分支版本：</p>
-<pre><code class="lang-lua">add_requires(&quot;tbox master&quot;)
-add_requires(&quot;tbox dev&quot;)
+<pre><code class="lang-lua">add_requires("tbox master")
+add_requires("tbox dev")
 </code></pre>
 <h5 id="-">额外的包信息设置</h5>
 <h6 id="-">可选包设置</h6>
 <p>如果指定的依赖包当前平台不支持，或者编译安装失败了，那么xmake会编译报错，这对于有些必须要依赖某些包才能工作的项目，这是合理的。<br>但是如果有些包是可选的依赖，即使没有也可以正常编译使用的话，可以设置为可选包：</p>
-<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {optional = true})
+<pre><code class="lang-lua">add_requires("tbox", {optional = true})
 </code></pre>
 <h6 id="-">禁用系统库</h6>
 <p>默认的设置，xmake会去优先检测系统库是否存在（如果没设置版本要求），如果用户完全不想使用系统库以及第三方包管理提供的库，那么可以设置：</p>
-<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {system = false})
+<pre><code class="lang-lua">add_requires("tbox", {system = false})
 </code></pre>
 <h6 id="-">使用调试版本的包</h6>
 <p>如果我们想同时源码调试依赖包，那么可以设置为使用debug版本的包（当然前提是这个包支持debug编译）：</p>
-<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {debug = true})
+<pre><code class="lang-lua">add_requires("tbox", {debug = true})
 </code></pre>
 <p>如果当前包还不支持debug编译，可在仓库中提交修改编译规则，对debug进行支持，例如：</p>
-<pre><code class="lang-lua">package(&quot;openssl&quot;)
-    on_install(&quot;linux&quot;, &quot;macosx&quot;, function (package)
-        os.vrun(&quot;./config %s --prefix=\&quot;%s\&quot;&quot;, package:debug() and &quot;--debug&quot; or &quot;&quot;, package:installdir())
-        os.vrun(&quot;make -j4&quot;)
-        os.vrun(&quot;make install&quot;)
+<pre><code class="lang-lua">package("openssl")
+    on_install("linux", "macosx", function (package)
+        os.vrun("./config %s --prefix=\"%s\"", package:debug() and "--debug" or "", package:installdir())
+        os.vrun("make -j4")
+        os.vrun("make install")
     end)
 </code></pre>
 <h6 id="-">传递额外的编译信息到包</h6>
 <p>某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：</p>
-<pre><code class="lang-lua">add_requires(&quot;tbox&quot;, {configs = {small=true}})
+<pre><code class="lang-lua">add_requires("tbox", {configs = {small=true}})
 </code></pre>
 <p>传递<code>--small=true</code>给tbox包，使得编译安装的tbox包是启用此选项的。</p>
 <h5 id="-">第三方依赖包安装</h5>
 <p>2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等</p>
 <p>添加homebrew的依赖包：</p>
-<pre><code class="lang-lua">add_requires(&quot;brew::zlib&quot;, {alias = &quot;zlib&quot;}})
-add_requires(&quot;brew::pcre2/libpcre2-8&quot;, {alias = &quot;pcre2&quot;}})
+<pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"}})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;) 
-    add_packages(&quot;pcre2&quot;, &quot;zlib&quot;)
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("pcre2", "zlib")
 </code></pre>
 <p>添加vcpkg的依赖包：</p>
-<pre><code class="lang-lua">add_requires(&quot;vcpkg::zlib&quot;, &quot;vcpkg::pcre2&quot;)
+<pre><code class="lang-lua">add_requires("vcpkg::zlib", "vcpkg::pcre2")
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;) 
-    add_packages(&quot;vcpkg::zlib&quot;, &quot;vcpkg::pcre2&quot;)
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("vcpkg::zlib", "vcpkg::pcre2")
 </code></pre>
 <p>添加conan的依赖包：</p>
-<pre><code class="lang-lua">add_requires(&quot;CONAN::zlib/1.2.11@conan/stable&quot;, {alias = &quot;zlib&quot;, debug = true})
-add_requires(&quot;CONAN::OpenSSL/1.0.2n@conan/stable&quot;, {alias = &quot;openssl&quot;, 
-    configs = {options = &quot;OpenSSL:shared=True&quot;}})
+<pre><code class="lang-lua">add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
+add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+    configs = {options = "OpenSSL:shared=True"}})
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;) 
-    add_packages(&quot;openssl&quot;, &quot;zlib&quot;)
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("openssl", "zlib")
 </code></pre>
 <p>执行xmake进行编译后：</p>
 <pre><code class="lang-console">ruki:test_package ruki$ xmake
@@ -1238,12 +1238,12 @@ checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
-  -&gt; CONAN::zlib/1.2.11@conan/stable  (debug)
-  -&gt; CONAN::OpenSSL/1.0.2n@conan/stable  
+  -> CONAN::zlib/1.2.11@conan/stable  (debug)
+  -> CONAN::OpenSSL/1.0.2n@conan/stable  
 please input: y (y/n)
 
-  =&gt; installing CONAN::zlib/1.2.11@conan/stable .. ok
-  =&gt; installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+  => installing CONAN::zlib/1.2.11@conan/stable .. ok
+  => installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
 
 [  0%]: ccache compiling.release src/main.c
 [100%]: linking.release test
@@ -1255,7 +1255,7 @@ please input: y (y/n)
 <pre><code class="lang-console">$ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
 </code></pre>
 <p>或者我们直接写在xmake.lua中：</p>
-<pre><code class="lang-lua">add_repositories(&quot;my-repo git@github.com:myrepo/xmake-repo.git&quot;)
+<pre><code class="lang-lua">add_repositories("my-repo git@github.com:myrepo/xmake-repo.git")
 </code></pre>
 <p>如果我们只是想添加一两个私有包，这个时候特定去建立一个git repo太小题大做了，我们可以直接把包仓库放置项目里面，例如：</p>
 <pre><code>projectdir
@@ -1267,35 +1267,35 @@ please input: y (y/n)
     - main.c
   - xmake.lua
 </code></pre><p>上面myrepo目录就是自己的私有包仓库，内置在自己的项目里面，然后在xmake.lua里面添加一下这个仓库位置：</p>
-<pre><code class="lang-lua">add_repositories(&quot;my-repo myrepo&quot;)
+<pre><code class="lang-lua">add_repositories("my-repo myrepo")
 </code></pre>
 <p>这个可以参考<a href="https://github.com/tboox/benchbox">benchbox</a>项目，里面就内置了一个私有仓库。</p>
 <p>我们甚至可以连仓库也不用建，直接定义包描述到项目xmake.lua中，这对依赖一两个包的情况还是很有用的，例如：</p>
-<pre><code class="lang-lua">package(&quot;libjpeg&quot;)
+<pre><code class="lang-lua">package("libjpeg")
 
-    set_urls(&quot;http://www.ijg.org/files/jpegsrc.$(version).tar.gz&quot;)
+    set_urls("http://www.ijg.org/files/jpegsrc.$(version).tar.gz")
 
-    add_versions(&quot;v9c&quot;, &quot;650250979303a649e21f87b5ccd02672af1ea6954b911342ea491f351ceb7122&quot;)
+    add_versions("v9c", "650250979303a649e21f87b5ccd02672af1ea6954b911342ea491f351ceb7122")
 
-    on_install(&quot;windows&quot;, function (package)
-        os.mv(&quot;jconfig.vc&quot;, &quot;jconfig.h&quot;)
-        os.vrun(&quot;nmake -f makefile.vc&quot;)
-        os.cp(&quot;*.h&quot;, package:installdir(&quot;include&quot;))
-        os.cp(&quot;libjpeg.lib&quot;, package:installdir(&quot;lib&quot;))
+    on_install("windows", function (package)
+        os.mv("jconfig.vc", "jconfig.h")
+        os.vrun("nmake -f makefile.vc")
+        os.cp("*.h", package:installdir("include"))
+        os.cp("libjpeg.lib", package:installdir("lib"))
     end)
 
-    on_install(&quot;macosx&quot;, &quot;linux&quot;, function (package)
-        import(&quot;package.tools.autoconf&quot;).install(package)
+    on_install("macosx", "linux", function (package)
+        import("package.tools.autoconf").install(package)
     end)
 
 package_end()
 
-add_requires(&quot;libjpeg&quot;)
+add_requires("libjpeg")
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;) 
-    add_packages(&quot;libjpeg&quot;)
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("libjpeg")
 </code></pre>
 <h5 id="-">包管理命令使用</h5>
 <p>包管理命令<code>$ xmake require</code> 可用于手动显示的下载编译安装、卸载、检索、查看包信息。</p>
@@ -1303,13 +1303,13 @@ target(&quot;test&quot;)
 <pre><code class="lang-console">$ xmake require tbox
 </code></pre>
 <p>安装指定版本包：</p>
-<pre><code class="lang-console">$ xmake require tbox &quot;~1.6&quot;
+<pre><code class="lang-console">$ xmake require tbox "~1.6"
 </code></pre>
 <p>强制重新下载安装，并且显示详细安装信息：</p>
-<pre><code class="lang-console">$ xmake require -f -v tbox &quot;1.5.x&quot;
+<pre><code class="lang-console">$ xmake require -f -v tbox "1.5.x"
 </code></pre>
 <p>传递额外的设置信息：</p>
-<pre><code class="lang-console">$ xmake require --extra=&quot;debug=true,config={small=true}&quot; tbox
+<pre><code class="lang-console">$ xmake require --extra="debug=true,config={small=true}" tbox
 </code></pre>
 <p>安装debug包，并且传递<code>small=true</code>的编译配置信息到包中去。</p>
 <h6 id="-">卸载指定包</h6>

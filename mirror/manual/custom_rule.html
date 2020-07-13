@@ -93,29 +93,29 @@
     <p>After the 2.2.1 release, xmake not only natively supports the construction of multi-language files, but also allows users to implement complex unknown file builds by custom building rules.</p>
 <p>We can extend the build support for other files by pre-setting the file suffixes supported by the rules:</p>
 <pre><code class="lang-lua">-- Define a build rule for a markdown file
-rule(&quot;markdown&quot;)
-    set_extensions(&quot;.md&quot;, &quot;.markdown&quot;)
+rule("markdown")
+    set_extensions(".md", ".markdown")
     on_build_file(function (target, sourcefile)
-        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. &quot;.html&quot;))
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
+target("test")
+    set_kind("binary")
 
     -- Make the test target support the construction rules of the markdown file
-    add_rules(&quot;markdown&quot;)
+    add_rules("markdown")
 
     -- Adding a markdown file to build
-    add_files(&quot;src/*.md&quot;)
-    add_files(&quot;src/*.markdown&quot;)
+    add_files("src/*.md")
+    add_files("src/*.markdown")
 </code></pre>
 <p>We can also specify some other scattered files to be processed as markdown rules:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
+<pre><code class="lang-lua">target("test")
     -- ...
-    add_files(&quot;src/test/*.md.in&quot;, {rule = &quot;markdown&quot;})
+    add_files("src/test/*.md.in", {rule = "markdown"})
 </code></pre>
 <p>A target can be superimposed to apply multiple rules to more customize its own build behavior, and even support different build environments.</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>Rules specified by <code>add_files(&quot;*.md&quot;, {rule = &quot;markdown&quot;})</code>, with a higher priority than the rule set by <code>add_rules(&quot;markdown&quot;)</code>.<br>&lt;/p&gt;
+<p><p class="tip"><br>Rules specified by <code>add_files("*.md", {rule = "markdown"})</code>, with a higher priority than the rule set by <code>add_rules("markdown")</code>.<br></p>
 
 </p>
 <table>
@@ -130,157 +130,157 @@ target(&quot;test&quot;)
 <tr>
 <td><a href="#rule">rule</a></td>
 <td>Defining Rules</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 <tr>
 <td><a href="#ruleadd_imports">add_imports</a></td>
 <td>Pre-importing extension modules for all custom scripts</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 <tr>
 <td><a href="#ruleset_extensions">set_extensions</a></td>
 <td>Set the file extension type supported by the rule</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 <tr>
 <td><a href="#ruleon_load">on_load</a></td>
 <td>Custom Load Script</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleon_link">on_link</a></td>
 <td>Custom Link Script</td>
-<td>&gt;= 2.2.7</td>
+<td>>= 2.2.7</td>
 </tr>
 <tr>
 <td><a href="#ruleon_build">on_build</a></td>
 <td>Custom Compilation Script</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 <tr>
 <td><a href="#ruleon_clean">on_clean</a></td>
 <td>Custom Cleanup Script</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 <tr>
 <td><a href="#ruleon_package">on_package</a></td>
 <td>Custom Package Script</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 <tr>
 <td><a href="#ruleon_install">on_install</a></td>
 <td>Custom Installation Script</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 <tr>
 <td><a href="#ruleon_uninstall">on_uninstall</a></td>
 <td>Custom Uninstall Script</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 <tr>
 <td><a href="#ruleon_build_file">on_build_file</a></td>
 <td>Custom the build script to implement single file build</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleon_build_files">on_build_files</a></td>
 <td>Custom Compilation Scripts for Multi-File Construction</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#rulebefore_load">before_load</a></td>
 <td>Custom pre-load script</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#rulebefore_link">before_link</a></td>
 <td>Custom pre-link script</td>
-<td>&gt;= 2.2.7</td>
+<td>>= 2.2.7</td>
 </tr>
 <tr>
 <td><a href="#rulebefore_build">before_build</a></td>
 <td>Custom pre-compilation script</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#rulebefore_clean">before_clean</a></td>
 <td>Custom the script before cleanup</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#rulebefore_package">before_package</a></td>
 <td>Custom the script before packaging</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#rulebefore_install">before_install</a></td>
 <td>Custom Pre-Installation Scripts</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#rulebefore_uninstall">before_uninstall</a></td>
 <td>Custom the script before uninstalling</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#rulebefore_build_file">before_build_file</a></td>
 <td>Custom pre-compilation scripts to implement single file builds</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#rulebefore_build_files">before_build_files</a></td>
 <td>Custom pre-compilation scripts for multi-file build</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleafter_load">after_load</a></td>
 <td>Custom script after loading</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleafter_link">after_link</a></td>
 <td>Custom script after linking</td>
-<td>&gt;= 2.2.7</td>
+<td>>= 2.2.7</td>
 </tr>
 <tr>
 <td><a href="#ruleafter_build">after_build</a></td>
 <td>Custom script after compilation</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleafter_clean">after_clean</a></td>
 <td>Custom script after cleaning</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleafter_package">after_package</a></td>
 <td>Custom script after packaging</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleafter_install">after_install</a></td>
 <td>Custom script after installing</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleafter_uninstall">after_uninstall</a></td>
 <td>Custom script after uninstalling</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleafter_build_file">after_build_file</a></td>
 <td>Custom script after compiling the single file</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#ruleafter_build_files">after_build_files</a></td>
 <td>Custom script after compiling the multiple file</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#rule_end">rule_end</a></td>
 <td>End Definition Rule</td>
-<td>&gt;= 2.1.9</td>
+<td>>= 2.1.9</td>
 </tr>
 </tbody>
 </table>
@@ -298,142 +298,142 @@ target(&quot;test&quot;)
 <tr>
 <td><a href="#mode-debug">mode.debug</a></td>
 <td>Debug Mode Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#mode-release">mode.release</a></td>
 <td>Release Mode Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#mode-releasedbg">mode.releasedbg</a></td>
 <td>Release Mode Compilation Rule (With Debug Symbols)</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="#mode-minsizerel">mode.minsizerel</a></td>
 <td>Release Mode Compilation Rule (With Minimum Size)</td>
-<td>&gt;= 2.3.4</td>
+<td>>= 2.3.4</td>
 </tr>
 <tr>
 <td><a href="#mode-check">mode.check</a></td>
 <td>Detection Mode Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#mode-profile">mode.profile</a></td>
 <td>Performance Analysis Mode Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#mode-coverage">mode.coverage</a></td>
 <td>Coverage Analysis Compilation Mode Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#mode-valgrind">mode.valgrind</a></td>
 <td>Valgrind Rule</td>
-<td>&gt;= 2.3.3</td>
+<td>>= 2.3.3</td>
 </tr>
 <tr>
 <td><a href="#mode-asan">mode.asan</a></td>
 <td>AddressSanitizer Rule</td>
-<td>&gt;= 2.3.3</td>
+<td>>= 2.3.3</td>
 </tr>
 <tr>
 <td><a href="#mode-tsan">mode.tsan</a></td>
 <td>ThreadSanitizer Rule</td>
-<td>&gt;= 2.3.3</td>
+<td>>= 2.3.3</td>
 </tr>
 <tr>
 <td><a href="#mode-lsan">mode.lsan</a></td>
 <td>LeakSanitizer Rule</td>
-<td>&gt;= 2.3.3</td>
+<td>>= 2.3.3</td>
 </tr>
 <tr>
 <td><a href="#mode-ubsan">mode.ubsan</a></td>
 <td>UndefinedBehaviorSanitizer Rule</td>
-<td>&gt;= 2.3.3</td>
+<td>>= 2.3.3</td>
 </tr>
 <tr>
 <td><a href="#qt-static">qt.static</a></td>
 <td>Qt Static Library Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#qt-shared">qt.shared</a></td>
 <td>Qt Dynamic Library Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#qt-console">qt.console</a></td>
 <td>Qt Console Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#qt-quickapp">qt.quickapp</a></td>
 <td>Qt QuickApp Compilation Rule</td>
-<td>&gt;= 2.2.3</td>
+<td>>= 2.2.3</td>
 </tr>
 <tr>
 <td><a href="#qt-quickapp_static">qt.quickapp_static</a></td>
 <td>Qt QuickApp Compilation Rule (static link)</td>
-<td>&gt;= 2.2.3</td>
+<td>>= 2.2.3</td>
 </tr>
 <tr>
 <td><a href="#qt-widgetapp">qt.widgetapp</a></td>
 <td>Qt WidgetApp Compilation Rule</td>
-<td>&gt;= 2.2.3</td>
+<td>>= 2.2.3</td>
 </tr>
 <tr>
 <td><a href="#qt-widgetapp_static">qt.widgetapp_static</a></td>
 <td>Qt WidgetApp Compilation Rule（static link）</td>
-<td>&gt;= 2.2.3</td>
+<td>>= 2.2.3</td>
 </tr>
 <tr>
 <td><a href="#xcode-bundle">xcode.bundle</a></td>
 <td>Xcode Bundle Compilation Rule</td>
-<td>&gt;= 2.3.3</td>
+<td>>= 2.3.3</td>
 </tr>
 <tr>
 <td><a href="#xcode-framework">xcode.framework</a></td>
 <td>Xcode Framework Compilation Rule</td>
-<td>&gt;= 2.3.3</td>
+<td>>= 2.3.3</td>
 </tr>
 <tr>
 <td><a href="#xcode-application">xcode.application</a></td>
 <td>Xcode iOS/MacOS App Compilation Rule</td>
-<td>&gt;= 2.3.3</td>
+<td>>= 2.3.3</td>
 </tr>
 <tr>
 <td><a href="#wdk-umdf-driver">wdk.umdf.driver</a></td>
 <td>WDK Environment umdf Driver Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#wdk-umdf-binary">wdk.umdf.binary</a></td>
 <td>WDK Environment umdf Driver Application Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#wdk-kmdf-driver">wdk.kmdf.driver</a></td>
 <td>WDK Environment kmdf Driver Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#wdk-kmdf-binary">wdk.kmdf.binary</a></td>
 <td>WDK Environment kmdf Driver Application Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#wdk-wdm-driver">wdk.wdm.driver</a></td>
 <td>WDK Environment wdm Driver Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 <tr>
 <td><a href="#wdk-wdm-binary">wdk.wdm.binary</a></td>
 <td>WDK Environment wdm Driver Application Compilation Rule</td>
-<td>&gt;= 2.2.1</td>
+<td>>= 2.2.1</td>
 </tr>
 </tbody>
 </table>
@@ -442,189 +442,189 @@ target(&quot;test&quot;)
 </code></pre>
 <h4 id="mode-debug">mode.debug</h4>
 <p>Add the configuration rules for the debug compilation mode for the current project xmake.lua, for example:</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.debug&quot;)
+<pre><code class="lang-lua">add_rules("mode.debug")
 </code></pre>
 <p>Equivalent to:</p>
-<pre><code class="lang-lua">if is_mode(&quot;debug&quot;) then
-    set_symbols(&quot;debug&quot;)
-    set_optimize(&quot;none&quot;)
+<pre><code class="lang-lua">if is_mode("debug") then
+    set_symbols("debug")
+    set_optimize("none")
 end
 </code></pre>
 <p>We can switch to this compilation mode by <code>xmake f -m debug</code>.</p>
 <h4 id="mode-release">mode.release</h4>
 <p>Add the configuration rules for the release compilation mode for the current project xmake.lua, for example:</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.release&quot;)
+<pre><code class="lang-lua">add_rules("mode.release")
 </code></pre>
 <p>Equivalent to:</p>
-<pre><code class="lang-lua">if is_mode(&quot;release&quot;) then
-    set_symbols(&quot;hidden&quot;)
-    set_optimize(&quot;fastest&quot;)
-    set_strip(&quot;all&quot;)
+<pre><code class="lang-lua">if is_mode("release") then
+    set_symbols("hidden")
+    set_optimize("fastest")
+    set_strip("all")
 end
 </code></pre>
 <p>We can switch to this compilation mode by <code>xmake f -m release</code>.</p>
 <h4 id="mode-releasedbg">mode.releasedbg</h4>
 <p>Add the configuration rules for the releasedbg compilation mode for the current project xmake.lua, for example:</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.releasedbg&quot;)
+<pre><code class="lang-lua">add_rules("mode.releasedbg")
 </code></pre>
-<p>!&gt; Compared with the release mode, this mode will also enable additional debugging symbols, which is usually very useful.</p>
+<p>!> Compared with the release mode, this mode will also enable additional debugging symbols, which is usually very useful.</p>
 <p>Equivalent to:</p>
-<pre><code class="lang-lua">if is_mode(&quot;releasedbg&quot;) then
-    set_symbols(&quot;debug&quot;)
-    set_optimize(&quot;fastest&quot;)
-    set_strip(&quot;all&quot;)
+<pre><code class="lang-lua">if is_mode("releasedbg") then
+    set_symbols("debug")
+    set_optimize("fastest")
+    set_strip("all")
 end
 </code></pre>
 <p>We can switch to this compilation mode by <code>xmake f -m releasedbg</code>.</p>
 <h4 id="mode-minsizerel">mode.minsizerel</h4>
 <p>Add the configuration rules for the minsizerel compilation mode for the current project xmake.lua, for example:</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.minsizerel&quot;)
+<pre><code class="lang-lua">add_rules("mode.minsizerel")
 </code></pre>
-<p>!&gt; Compared with the release mode, this mode is more inclined to the minimum code compilation optimization, rather than speed priority.</p>
+<p>!> Compared with the release mode, this mode is more inclined to the minimum code compilation optimization, rather than speed priority.</p>
 <p>相当于：</p>
-<pre><code class="lang-lua">if is_mode(&quot;minsizerel&quot;) then
-    set_symbols(&quot;hidden&quot;)
-    set_optimize(&quot;smallest&quot;)
-    set_strip(&quot;all&quot;)
+<pre><code class="lang-lua">if is_mode("minsizerel") then
+    set_symbols("hidden")
+    set_optimize("smallest")
+    set_strip("all")
 end
 </code></pre>
 <p>We can switch to this compilation mode by <code>xmake f -m minsizerel</code>.</p>
 <h4 id="mode-check">mode.check</h4>
 <p>Add the check compilation mode configuration rules for the current project xmake.lua, generally used for memory detection, for example:</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.check&quot;)
+<pre><code class="lang-lua">add_rules("mode.check")
 </code></pre>
 <p>Equivalent to:</p>
-<pre><code class="lang-lua">if is_mode(&quot;check&quot;) then
-    set_symbols(&quot;debug&quot;)
-    set_optimize(&quot;none&quot;)
-    add_cxflags(&quot;-fsanitize=address&quot;, &quot;-ftrapv&quot;)
-    add_mxflags(&quot;-fsanitize=address&quot;, &quot;-ftrapv&quot;)
-    add_ldflags(&quot;-fsanitize=address&quot;)
+<pre><code class="lang-lua">if is_mode("check") then
+    set_symbols("debug")
+    set_optimize("none")
+    add_cxflags("-fsanitize=address", "-ftrapv")
+    add_mxflags("-fsanitize=address", "-ftrapv")
+    add_ldflags("-fsanitize=address")
 end
 </code></pre>
 <p>We can switch to this compilation mode by <code>xmake f -m check</code>.</p>
 <h4 id="mode-profile">mode.profile</h4>
 <p>Add configuration rules for the profile compilation mode for the current project xmake.lua, which is generally used for performance analysis, for example:</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.profile&quot;)
+<pre><code class="lang-lua">add_rules("mode.profile")
 </code></pre>
 <p>Equivalent to:</p>
-<pre><code class="lang-lua">if is_mode(&quot;profile&quot;) then
-    set_symbols(&quot;debug&quot;)
-    add_cxflags(&quot;-pg&quot;)
-    add_ldflags(&quot;-pg&quot;)
+<pre><code class="lang-lua">if is_mode("profile") then
+    set_symbols("debug")
+    add_cxflags("-pg")
+    add_ldflags("-pg")
 end
 </code></pre>
 <p>We can switch to this compilation mode by <code>xmake f -m profile</code>.</p>
 <h4 id="mode-coverage">mode.coverage</h4>
 <p>Add the configuration rules for the coverage compilation mode for the current project xmake.lua, which is generally used for coverage analysis, for example:</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.coverage&quot;)
+<pre><code class="lang-lua">add_rules("mode.coverage")
 </code></pre>
 <p>Equivalent to:</p>
-<pre><code class="lang-lua">if is_mode(&quot;coverage&quot;) then
-    add_cxflags(&quot;--coverage&quot;)
-    add_mxflags(&quot;--coverage&quot;)
-    add_ldflags(&quot;--coverage&quot;)
+<pre><code class="lang-lua">if is_mode("coverage") then
+    add_cxflags("--coverage")
+    add_mxflags("--coverage")
+    add_ldflags("--coverage")
 end
 </code></pre>
 <p>We can switch to this compilation mode by <code>xmake f -m coverage</code>.</p>
 <h4 id="mode-valgrind">mode.valgrind</h4>
 <p>This mode provides valgrind memory analysis and detection support.</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.valgrind&quot;)
+<pre><code class="lang-lua">add_rules("mode.valgrind")
 </code></pre>
 <p>We can switch to this compilation mode by: <code>xmake f -m valgrind</code>.</p>
 <h4 id="mode-asan">mode.asan</h4>
 <p>This mode provides AddressSanitizer memory analysis and detection support.</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.asan&quot;)
+<pre><code class="lang-lua">add_rules("mode.asan")
 </code></pre>
 <p>We can switch to this compilation mode by: <code>xmake f -m asan</code>.</p>
 <h4 id="mode-tsan">mode.tsan</h4>
 <p>This mode provides ThreadSanitizer memory analysis and detection support.</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.tsan&quot;)
+<pre><code class="lang-lua">add_rules("mode.tsan")
 </code></pre>
 <p>We can switch to this compilation mode by: <code>xmake f -m tsan</code>.</p>
 <h4 id="mode-lsan">mode.lsan</h4>
 <p>This mode provides LeakSanitizer memory analysis and detection support.</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.lsan&quot;)
+<pre><code class="lang-lua">add_rules("mode.lsan")
 </code></pre>
 <p>We can switch to this compilation mode by: <code>xmake f -m lsan</code>.</p>
 <h4 id="mode-ubsan">mode.ubsan</h4>
 <p>This mode provides UndefinedBehaviorSanitizer memory analysis and detection support.</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.ubsan&quot;)
+<pre><code class="lang-lua">add_rules("mode.ubsan")
 </code></pre>
 <p>We can switch to this compilation mode by: <code>xmake f -m ubsan</code>.</p>
 <h4 id="qt-static">qt.static</h4>
 <p>A static library program used to compile and generate Qt environments:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;qt.static&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_frameworks(&quot;QtNetwork&quot;, &quot;QtGui&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.static")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
 </code></pre>
 <h4 id="qt-shared">qt.shared</h4>
 <p>Dynamic library program for compiling and generating Qt environment:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;qt.shared&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_frameworks(&quot;QtNetwork&quot;, &quot;QtGui&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.shared")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
 </code></pre>
 <h4 id="qt-console">qt.console</h4>
 <p>A console program for compiling and generating a Qt environment:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;qt.console&quot;)
-    add_files(&quot;src/*.cpp&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.console")
+    add_files("src/*.cpp")
 </code></pre>
 <h4 id="qt-quickapp">qt.quickapp</h4>
 <p>Quick(qml) ui application for compiling and generating Qt environment.</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;qt.quickapp&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_files(&quot;src/qml.qrc&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.quickapp")
+    add_files("src/*.cpp")
+    add_files("src/qml.qrc")
 </code></pre>
 <h4 id="qt-quickapp_static">qt.quickapp_static</h4>
 <p>Quick(qml) ui application (statically linked version) for compiling and generating Qt environment.</p>
-<p>!&gt; Need to switch to static library version Qt SDK</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;qt.quickapp_static&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_files(&quot;src/qml.qrc&quot;)
+<p>!> Need to switch to static library version Qt SDK</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.quickapp_static")
+    add_files("src/*.cpp")
+    add_files("src/qml.qrc")
 </code></pre>
 <h4 id="qt-widgetapp">qt.widgetapp</h4>
 <p>Used to compile Qt Widgets (ui/moc) applications</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;qt.widgetapp&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_files(&quot;src/mainwindow.ui&quot;)
-    add_files(&quot;src/mainwindow.h&quot;) -- add meta header files with Q_OBJECT
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.widgetapp")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h") -- add meta header files with Q_OBJECT
 </code></pre>
 <h4 id="qt-widgetapp_static">qt.widgetapp_static</h4>
 <p>Used to compile Qt Widgets (ui/moc) applications (static library version)</p>
-<p>!&gt; Need to switch to static library version Qt SDK</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;qt.widgetapp_static&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_files(&quot;src/mainwindow.ui&quot;)
-    add_files(&quot;src/mainwindow.h&quot;) -- add meta header files with Q_OBJECT
+<p>!> Need to switch to static library version Qt SDK</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.widgetapp_static")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h") -- add meta header files with Q_OBJECT
 </code></pre>
 <p>For more descriptions of Qt, see: <a href="https://github.com/xmake-io/xmake/issues/160">#160</a></p>
 <h4 id="xcode-bundle">xcode.bundle</h4>
 <p>Used to compile and generate ios/macos bundle program</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-     add_rules(&quot;xcode.bundle&quot;)
-     add_files(&quot;src/*.m&quot;)
-     add_files(&quot;src/Info.plist&quot;)
+<pre><code class="lang-lua">target("test")
+     add_rules("xcode.bundle")
+     add_files("src/*.m")
+     add_files("src/Info.plist")
 </code></pre>
 <h4 id="xcode-framework">xcode.framework</h4>
 <p>Used to compile and generate ios/macos framework program</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-     add_rules(&quot;xcode.framework&quot;)
-     add_files(&quot;src/*.m&quot;)
-     add_files(&quot;src/Info.plist&quot;)
+<pre><code class="lang-lua">target("test")
+     add_rules("xcode.framework")
+     add_files("src/*.m")
+     add_files("src/Info.plist")
 </code></pre>
 <h4 id="xcode-application">xcode.application</h4>
 <p>Used to compile and generate ios/macos applications</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-     add_rules(&quot;xcode.application&quot;)
-     add_files(&quot;src/*.m&quot;, &quot;src/**.storyboard&quot;, &quot;src/*.xcassets&quot;)
-     add_files(&quot;src/Info.plist&quot;)
+<pre><code class="lang-lua">target("test")
+     add_rules("xcode.application")
+     add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
+     add_files("src/Info.plist")
 </code></pre>
 <h4 id="wdk-env-kmdf">wdk.env.kmdf</h4>
 <p>Application of the compilation environment setting of kmdf under WDK, need to cooperate with: <code>wdk.[driver|binary|static|shared]</code> and other rules to use.</p>
@@ -636,99 +636,99 @@ end
 <p>Compile and generate drivers based on the WDK environment under Windows. Currently, only the WDK10 environment is supported.</p>
 <p>Note: need to cooperate: <code>wdk.env.[umdf|kmdf|wdm]</code>Environmental rules are used.</p>
 <pre><code class="lang-lua">-- add target
-target(&quot;echo&quot;)
+target("echo")
 
     -- add rules
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.kmdf&quot;)
+    add_rules("wdk.driver", "wdk.env.kmdf")
 
     -- add files
-    add_files(&quot;driver/*.c&quot;)
-    add_files(&quot;driver/*.inx&quot;)
+    add_files("driver/*.c")
+    add_files("driver/*.inx")
 
     -- add includedirs
-    add_includedirs(&quot;exe&quot;)
+    add_includedirs("exe")
 </code></pre>
 <h4 id="wdk-binary">wdk.binary</h4>
 <p>Compile and generate executable programs based on WDK environment under Windows. Currently, only WDK10 environment is supported.</p>
 <p>Note: It is necessary to cooperate with: environment rules such as <code>wdk.env.[umdf|kmdf|wdm]</code>.</p>
 <pre><code class="lang-lua">-- add target
-target(&quot;app&quot;)
+target("app")
 
     -- add rules
-    add_rules(&quot;wdk.binary&quot;, &quot;wdk.env.umdf&quot;)
+    add_rules("wdk.binary", "wdk.env.umdf")
 
     -- add files
-    add_files(&quot;exe/*.cpp&quot;)
+    add_files("exe/*.cpp")
 </code></pre>
 <h4 id="wdk-static">wdk.static</h4>
 <p>Compile and generate static library programs based on WDK environment under Windows. Currently, only WDK10 environment is supported.</p>
 <p>Note: It is necessary to cooperate with: environment rules such as <code>wdk.env.[umdf|kmdf|wdm]</code>.</p>
-<pre><code class="lang-lua">target(&quot;nonpnp&quot;)
+<pre><code class="lang-lua">target("nonpnp")
 
     -- add rules
-    add_rules(&quot;wdk.static&quot;, &quot;wdk.env.kmdf&quot;)
+    add_rules("wdk.static", "wdk.env.kmdf")
 
     -- add flags for rule: wdk.tracewpp
-    add_values(&quot;wdk.tracewpp.flags&quot;, &quot;-func:TraceEvents(LEVEL,FLAGS,MSG,...)&quot;, &quot;-func:Hexdump((LEVEL,FLAGS,MSG,...))&quot;)
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files(&quot;driver/*.c&quot;, {rule = &quot;wdk.tracewpp&quot;})
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
 </code></pre>
 <h4 id="wdk-shared">wdk.shared</h4>
 <p>Compile and generate dynamic library programs based on WDK environment under Windows. Currently, only WDK10 environment is supported.</p>
 <p>Note: It is necessary to cooperate with: environment rules such as <code>wdk.env.[umdf|kmdf|wdm]</code>.</p>
-<pre><code class="lang-lua">target(&quot;nonpnp&quot;)
+<pre><code class="lang-lua">target("nonpnp")
 
     -- add rules
-    add_rules(&quot;wdk.shared&quot;, &quot;wdk.env.wdm&quot;)
+    add_rules("wdk.shared", "wdk.env.wdm")
 
     -- add flags for rule: wdk.tracewpp
-    add_values(&quot;wdk.tracewpp.flags&quot;, &quot;-func:TraceEvents(LEVEL,FLAGS,MSG,...)&quot;, &quot;-func:Hexdump((LEVEL,FLAGS,MSG,...))&quot;)
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files(&quot;driver/*.c&quot;, {rule = &quot;wdk.tracewpp&quot;})
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
 </code></pre>
 <h4 id="wdk-tracewpp">wdk.tracewpp</h4>
 <p>Used to enable tracewpp to preprocess source files:</p>
-<pre><code class="lang-lua">target(&quot;nonpnp&quot;)
+<pre><code class="lang-lua">target("nonpnp")
 
     -- add rules
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.kmdf&quot;)
+    add_rules("wdk.driver", "wdk.env.kmdf")
 
     -- add flags for rule: wdk.tracewpp
-    add_values(&quot;wdk.tracewpp.flags&quot;, &quot;-func:TraceEvents(LEVEL,FLAGS,MSG,...)&quot;, &quot;-func:Hexdump((LEVEL,FLAGS,MSG,...))&quot;)
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files(&quot;driver/*.c&quot;, {rule = &quot;wdk.tracewpp&quot;})
-    add_files(&quot;driver/*.rc&quot;)
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
+    add_files("driver/*.rc")
 </code></pre>
 <p>For more information on WDK rules, see: <a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
 <h4 id="win-sdk-application">win.sdk.application</h4>
 <p>Compile and generate the winsdk application.</p>
 <pre><code class="lang-lua">-- add rules
-add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)
+add_rules("mode.debug", "mode.release")
 
 -- define target
-target(&quot;usbview&quot;)
+target("usbview")
 
     -- windows application
-    add_rules(&quot;win.sdk.application&quot;)
+    add_rules("win.sdk.application")
 
     -- add files
-    add_files(&quot;*.c&quot;, &quot;*.rc&quot;)
-    add_files(&quot;xmlhelper.cpp&quot;, {rule = &quot;win.sdk.dotnet&quot;})
+    add_files("*.c", "*.rc")
+    add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 </code></pre>
 <h4 id="wdk-sdk-dotnet">wdk.sdk.dotnet</h4>
 <p>Used to specify certain c++ source files to be compiled as c++.net.</p>
-<pre><code class="lang-lua">add_files(&quot;xmlhelper.cpp&quot;, {rule = &quot;win.sdk.dotnet&quot;})
+<pre><code class="lang-lua">add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 </code></pre>
 <p>For more information on WDK rules, see: <a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
 <h3 id="rule">rule</h3>
 <h4 id="defining-rules">Defining rules</h4>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
-    set_extensions(&quot;.md&quot;, &quot;.markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
+    set_extensions(".md", ".markdown")
     on_build_file(function (target, sourcefile, opt)
-        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. &quot;.html&quot;))
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 </code></pre>
 <h3 id="rule-add_imports">rule:add_imports</h3>
@@ -738,48 +738,48 @@ target(&quot;usbview&quot;)
 <h4 id="setting-the-file-extension-type-supported-by-the-rule">Setting the file extension type supported by the rule</h4>
 <p>Apply rules to files with these suffixes by setting the supported extension file types, for example:</p>
 <pre><code class="lang-lua">-- Define a build rule for a markdown file
-rule(&quot;markdown&quot;)
-    set_extensions(&quot;.md&quot;, &quot;.markdown&quot;)
+rule("markdown")
+    set_extensions(".md", ".markdown")
     on_build_file(function (target, sourcefile, opt)
-        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. &quot;.html&quot;))
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
+target("test")
+    set_kind("binary")
 
     -- Make the test target support the construction rules of the markdown file
-    add_rules(&quot;markdown&quot;)
+    add_rules("markdown")
 
     -- Adding a markdown file to build
-    add_files(&quot;src/*.md&quot;)
-    add_files(&quot;src/*.markdown&quot;)
+    add_files("src/*.md")
+    add_files("src/*.markdown")
 </code></pre>
 <h3 id="rule-on_load">rule:on_load</h3>
 <h4 id="custom-load-script">Custom load script</h4>
 <p>The load script used to implement the custom rules will be executed when the target is loaded. You can customize some target configurations in it, for example:</p>
-<pre><code class="lang-lua">rule(&quot;test&quot;)
+<pre><code class="lang-lua">rule("test")
     on_load(function (target)
-        target:add(&quot;defines&quot;, &quot;-DTEST&quot;)
+        target:add("defines", "-DTEST")
     end)
 </code></pre>
 <h3 id="rule-on_link">rule:on_link</h3>
 <h4 id="custom-link-script">Custom link script</h4>
 <p>The link script used to implement the custom rules overrides the default link behavior of the applied target, for example:</p>
-<pre><code class="lang-lua">rule(&quot;test&quot;)
+<pre><code class="lang-lua">rule("test")
     on_link(function (target)
     end)
 </code></pre>
 <h3 id="rule-on_build">rule:on_build</h3>
 <h4 id="custom-compilation-script">Custom compilation script</h4>
 <p>The build script used to implement the custom rules overrides the default build behavior of the target being applied, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     on_build(function (target)
     end)
 </code></pre>
 <h3 id="rule-on_clean">rule:on_clean</h3>
 <h4 id="custom-cleanup-script">Custom cleanup script</h4>
 <p>The cleanup script used to implement the custom rules will override the default cleanup behavior of the applied target, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     on_clean(function (target)
         -- remove sourcefile.html
     end)
@@ -787,7 +787,7 @@ target(&quot;test&quot;)
 <h3 id="rule-on_package">rule:on_package</h3>
 <h4 id="custom-packaging-script">Custom packaging script</h4>
 <p>A packaging script for implementing custom rules that overrides the default packaging behavior of the target being applied, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     on_package(function (target)
         -- package sourcefile.html
     end)
@@ -795,31 +795,31 @@ target(&quot;test&quot;)
 <h3 id="rule-on_install">rule:on_install</h3>
 <h4 id="custom-installation-script">Custom installation script</h4>
 <p>An installation script for implementing custom rules that overrides the default installation behavior of the target being applied, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     on_install(function (target)
     end)
 </code></pre>
 <h3 id="rule-on_uninstall">rule:on_uninstall</h3>
 <h4 id="custom-uninstall-script">Custom Uninstall Script</h4>
 <p>An uninstall script for implementing custom rules that overrides the default uninstall behavior of the target being applied, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     on_uninstall(function (target)
     end)
 </code></pre>
 <h3 id="rule-on_build_file">rule:on_build_file</h3>
 <h4 id="customizing-the-build-script-to-process-one-source-file-at-a-time">Customizing the build script to process one source file at a time</h4>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     on_build_file(function (target, sourcefile, opt)
-        print(&quot;%%%d: %s&quot;, opt.progress, sourcefile)
+        print("%%%d: %s", opt.progress, sourcefile)
     end)
 </code></pre>
 <p>The third parameter opt is an optional parameter, which is used to obtain some information state during the compilation process. For example, opt.progress is the compilation progress of the current period.</p>
 <h3 id="rule-on_build_files">rule:on_build_files</h3>
 <h4 id="customizing-the-build-script-to-process-multiple-source-files-at-once">Customizing the build script to process multiple source files at once</h4>
-<p>Most of the custom build rules, each time processing a single file, output a target file, for example: a.c =&gt; a.o</p>
-<p>However, in some cases, we need to enter multiple source files together to build an object file, for example: a.c b.c d.c =&gt; x.o</p>
+<p>Most of the custom build rules, each time processing a single file, output a target file, for example: a.c => a.o</p>
+<p>However, in some cases, we need to enter multiple source files together to build an object file, for example: a.c b.c d.c => x.o</p>
 <p>For this situation, we can achieve this by customizing this script:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     on_build_files(function (target, sourcebatch, opt)
         -- build some source files
         for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
@@ -830,50 +830,50 @@ target(&quot;test&quot;)
 <h3 id="rule-before_load">rule:before_load</h3>
 <h4 id="custom-pre-load-script">Custom pre-load script</h4>
 <p>Used to implement the execution script before the custom target is loaded, for example:</p>
-<pre><code class="lang-lua">rule(&quot;test&quot;)
+<pre><code class="lang-lua">rule("test")
     before_load(function (target)
-        target:add(&quot;defines&quot;, &quot;-DTEST&quot;)
+        target:add("defines", "-DTEST")
     end)
 </code></pre>
 <h3 id="rule-before_link">rule:before_link</h3>
 <h4 id="custom-pre-link-script">Custom pre-link script</h4>
 <p>Execution scripts used to implement custom target links, for example:</p>
-<pre><code class="lang-lua">rule(&quot;test&quot;)
+<pre><code class="lang-lua">rule("test")
     before_link(function (target)
     end)
 </code></pre>
 <h3 id="rule-before_build">rule:before_build</h3>
 <h4 id="custom-pre-compilation-script">Custom pre-compilation script</h4>
 <p>Used to implement the execution script before the custom target is built, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     before_build(function (target)
     end)
 </code></pre>
 <h3 id="rule-before_clean">rule:before_clean</h3>
 <h4 id="custom-pre-cleanup-script">Custom pre-cleanup script</h4>
 <p>Used to implement the execution script before the custom target cleanup, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     before_clean(function (target)
     end)
 </code></pre>
 <h3 id="rule-before_package">rule:before_package</h3>
 <h4 id="custom-the-pre-package-script">Custom the pre-package script</h4>
 <p>Used to implement the execution script before the custom target is packaged, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     before_package(function (target)
     end)
 </code></pre>
 <h3 id="rule-before_install">rule:before_install</h3>
 <h4 id="custom-pre-installation-script">Custom pre-installation script</h4>
 <p>Used to implement the execution script before the custom target installation, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     before_install(function (target)
     end)
 </code></pre>
 <h3 id="rule-before_uninstall">rule:before_uninstall</h3>
 <h4 id="custom-pre-uninstall-script">Custom pre-uninstall script</h4>
 <p>Used to implement the execution script before the custom target is uninstalled, for example:</p>
-<pre><code class="lang-lua">rule(&quot;markdown&quot;)
+<pre><code class="lang-lua">rule("markdown")
     before_uninstall(function (target)
     end)
 </code></pre>
@@ -913,7 +913,7 @@ target(&quot;test&quot;)
 <h3 id="rule_end">rule_end</h3>
 <h4 id="end-definition-rules">End definition rules</h4>
 <p>This is optional. If you want to manually end the rule definition, you can call it:</p>
-<pre><code class="lang-lua">rule(&quot;test&quot;)
+<pre><code class="lang-lua">rule("test")
     -- ..
 rule_end()
 </code></pre>

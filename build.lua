@@ -161,6 +161,10 @@ function main()
             if f then
                 f:write(header(rawurl))
                 f:write(ads())
+                htmldata = htmldata:gsub("&%a-;", function (w) 
+                    local maps = {["&lt;"] = "<", ["&gt;"] = ">", ["&quot;"] = "\""}
+                    return maps[w]
+                end)
                 f:write(htmldata)
                 f:write(tailer())
                 f:close()

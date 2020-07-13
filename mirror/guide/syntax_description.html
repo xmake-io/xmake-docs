@@ -92,9 +92,9 @@
 </style>
     <p>xmake&#39;s project description file xmake.lua is based on the lua syntax, but in order to make the project build logic more convenient and concise, xmake encapsulates it, making writing xmake.lua not as cumbersome as some makefiles.</p>
 <p>Basically write a simple project build description, just three lines, for example:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
 </code></pre>
 <h2 id="configuration-separation">Configuration Separation</h2>
 <p>Xmake.lua uses the 28th principle to implement a two-layer separate configuration of the description domain and the script domain.</p>
@@ -103,61 +103,61 @@
 <p>Therefore, xmake isolates 80% of simple configuration and 20% of complex configuration by describing two different configurations of domain and script domain, making the whole xmake.lua look very clear and intuitive, readable and maintainable. Get the best.</p>
 <h3 id="description-scope">Description Scope</h3>
 <p>for beginners who are just getting started, or just to maintain some simple small projects, the requirements are fully met by describing the configuration completely. What is the description domain? It looks like this:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
-    add_defines(&quot;DEBUG&quot;)
-    add_syslinks(&quot;pthread&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("DEBUG")
+    add_syslinks("pthread")
 </code></pre>
 <p>At first glance, it is actually a configuration set of <code>set_xxx</code>/<code>add_xxx</code>. for the novice, you can not use it as a lua script, just as an ordinary, but there are some basic rules configuration files.</p>
 <p>if, by looking, there are parentheses, or function calls like scripting languages, then we can also write this (whether with parentheses to see personal preferences):</p>
-<pre><code class="lang-lua">target &quot;test&quot;
-    set_kind &quot;binary&quot;
-    add_files &quot;src/*.c&quot;
-    add_defines &quot;DEBUG&quot;
-    add_syslinks &quot;pthread&quot;
+<pre><code class="lang-lua">target "test"
+    set_kind "binary"
+    add_files "src/*.c"
+    add_defines "DEBUG"
+    add_syslinks "pthread"
 </code></pre>
 <p>Is this looking more like a profile? In fact, the description field is a configuration file, similar to the configuration of keys/values such as json, so even if you are not a newcomer to lua, you can quickly get started.</p>
 <p>Moreover, for the usual projects, only the various settings of the project are configured by <code>set_xxx/add_xxx</code>, which has fully met the requirements.</p>
 <p>This is what I said at the beginning: 80% of the time, you can use the simplest configuration rules to simplify the configuration of the project, improve readability and maintainability, so that users and developers will be very friendly and more intuitive.</p>
 <p>What if we want to make some conditional judgments for different platforms and architectures? It doesn&#39;t matter, the description field is in addition to the basic configuration, it also supports conditional judgment, as well as the for loop:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
-    add_defines(&quot;DEBUG&quot;)
-    if is_plat(&quot;linux&quot;, &quot;macosx&quot;) then
-        add_links(&quot;pthread&quot;, &quot;m&quot;, &quot;dl&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("DEBUG")
+    if is_plat("linux", "macosx") then
+        add_links("pthread", "m", "dl")
     end
 </code></pre>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
-    add_defines(&quot;DEBUG&quot;)
-    for _, name in ipairs({&quot;pthread&quot;, &quot;m&quot;, &quot;dl&quot;}) do
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("DEBUG")
+    for _, name in ipairs({"pthread", "m", "dl"}) do
         add_links(name)
     end
 </code></pre>
 <p>Is this looking a bit like lua? Although, it can usually be regarded as a common configuration problem, but xmake is based on lua after all, so the description domain still supports the basic language features of lua.</p>
-<p>!&gt; However, it should be noted that although the description field supports lua script syntax, try not to write too complicated lua scripts in the description field, such as some time-consuming function calls and for loops.</p>
+<p>!> However, it should be noted that although the description field supports lua script syntax, try not to write too complicated lua scripts in the description field, such as some time-consuming function calls and for loops.</p>
 <p>And in the description field, the main purpose is to set the configuration item, so xmake does not completely open all module interfaces, many interfaces are forbidden to be called in the description field.<br>Even open callable interfaces are completely read-only, and time-consuming security interfaces such as <code>os.getenv()</code> read some general system information for configuration logic control.</p>
-<p>!&gt; Also note that xmake.lua is parsed multiple times to resolve different configuration fields at different stages: for example: <code>option()</code>, <code>target()</code>, etc.</p>
+<p>!> Also note that xmake.lua is parsed multiple times to resolve different configuration fields at different stages: for example: <code>option()</code>, <code>target()</code>, etc.</p>
 <p>So, don&#39;t think about writing complex lua scripts in the description field of xmake.lua, and don&#39;t call print in the description field to display the information, because it will be executed multiple times, remember: it will be executed multiple times! ! !</p>
 <h3 id="script-scope">Script Scope</h3>
 <p>Restrict the description field to write complex lua, all kinds of lua modules and interfaces are not used? How to do? This time is the time for the script domain to appear.</p>
 <p>if the user is already fully familiar with xmake&#39;s description domain configuration and feels that some of the special configuration maintenance on the project is not met, then we can do more complex configuration logic in the script domain:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
     on_load(function (target)
-        if is_plat(&quot;linux&quot;, &quot;macosx&quot;) then
-            target:add(&quot;links&quot;, &quot;pthread&quot;, &quot;m&quot;, &quot;dl&quot;)
+        if is_plat("linux", "macosx") then
+            target:add("links", "pthread", "m", "dl")
         end
     end)
     after_build(function (target)
-        Import(&quot;core.project.config&quot;)
+        Import("core.project.config")
         Local targetfile = target:targetfile()
         Os.cp(targetfile, path.join(config.buildir(), path.filename(targetfile)))
-        Print(&quot;build %s&quot;, targetfile)
+        Print("build %s", targetfile)
     end)
 </code></pre>
 <p>As long as it is similar: <code>on_xxx</code>, <code>after_xxx</code>, <code>before_xxx</code>, etc. The script inside the function body belongs to the script field.</p>
@@ -165,11 +165,11 @@
 <p>We can implement any function you want to implement in the script domain, even if you write a separate project.</p>
 <p>for some script fragments, it is not very bloated, such as the above built-in writing is enough, if you need to implement more complex scripts, do not want to be filled in a xmake.lua, you can separate the script into a separate lua file for maintenance.</p>
 <p>E.g:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
-    on_load(&quot;modules.test.load&quot;)
-    on_install(&quot;modules.test.install&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_load("modules.test.load")
+    on_install("modules.test.install")
 </code></pre>
 <p>We can place the custom scripts in the corresponding directory of xmake.lua, and maintain them independently in <code>modules/test/load.lua</code> and <code>modules/test/install.lua</code>.</p>
 <p>In these independent lua scripts, we can also import various built-in modules and custom modules through <a href="/zh-cn/manual/builtin_modules?id=import">import</a>, just like to write lua, java is no different. .</p>
@@ -177,35 +177,35 @@
 <p>In other stages, there are many, such as: <code>on/after/before</code>_<code>build/install/package/run</code>, etc. See the target api manual section later, so I won’t go into details here.</p>
 <h2 id="configuration-type">Configuration Type</h2>
 <p>In the description domain configuration, you can configure the configuration fields and configuration items. In the configuration domain, you can configure various configuration items through the interface of <code>set_xxx</code>/<code>add_xxx</code>.</p>
-<pre><code class="lang-lua">target(&quot;test1&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test1")
+    set_kind("binary")
+    add_files("src/*.c")
 
-target(&quot;test2&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+target("test2")
+    set_kind("binary")
+    add_files("src/*.c")
 </code></pre>
 <p>In the above configuration, the target belongs to the configuration domain, and all the <code>set_xx</code>/<code>add_xxx</code> interface configurations below it belong to the configuration item, which is partially effective for this target.</p>
 <p>We can understand it as a local scope, similar to the block block in c:</p>
-<pre><code>target(&quot;test1&quot;)
+<pre><code>target("test1")
 {
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+    set_kind("binary")
+    add_files("src/*.c")
 }
-target(&quot;test2&quot;)
+target("test2")
 {
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+    set_kind("binary")
+    add_files("src/*.c")
 }
 </code></pre><p>However, in order to simplify the writing, xmake stipulates that each newly defined target field starts, and the last configuration field ends automatically. Of course, if the user feels troubled, you can manually configure the leaving domain:</p>
-<pre><code class="lang-lua">target(&quot;test1&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test1")
+    set_kind("binary")
+    add_files("src/*.c")
 target_end()
 
-target(&quot;test2&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+target("test2")
+    set_kind("binary")
+    add_files("src/*.c")
 target_end()
 </code></pre>
 <h3 id="configuration-scope">Configuration Scope</h3>
@@ -223,11 +223,11 @@ target_end()
 </ul>
 <p>Which ones belong to the outside and which ones belong to the inside? if you look at the comments below, you know what it is:</p>
 <pre><code class="lang-lua">-- external scope
-target(&quot;test&quot;)
+target("test")
 
     -- external scope
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+    set_kind("binary")
+    add_files("src/*.c")
 
     on_run(function ()
         -- Internal scope
@@ -238,7 +238,7 @@ target(&quot;test&quot;)
         end)
 
 -- external scope
-task(&quot;hello&quot;)
+task("hello")
 
     -- external scope
     on_run(function ()
@@ -249,15 +249,15 @@ task(&quot;hello&quot;)
 <h3 id="external-scope">external Scope</h3>
 <p>For most projects, you don&#39;t need complicated engineering descriptions, and you don&#39;t need custom scripting support. You just need a simple <code>set_xxx</code> or <code>add_xxx</code> to meet your needs.</p>
 <p>Then according to the 28th law, 80% of the cases, we only need to write:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;static&quot;)
-    add_files(&quot;src/test/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("static")
+    add_files("src/test/*.c")
 
-target(&quot;demo&quot;)
-    add_deps(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_links(&quot;test&quot;)
-    add_files(&quot;src/demo/*.c&quot;)
+target("demo")
+    add_deps("test")
+    set_kind("binary")
+    add_links("test")
+    add_files("src/demo/*.c")
 </code></pre>
 <p>No complicated api calls, no complicated variable definitions, and if judgments and for loops. It&#39;s succinct and readable. At a glance, it doesn&#39;t matter if you don&#39;t understand lua grammar.</p>
 <p>As a simple description of the syntax, it looks a bit like a function call, you will know how to configure it at a basic point of programming.</p>
@@ -279,12 +279,12 @@ target(&quot;demo&quot;)
 <li>format: format string, short version of string.format</li>
 </ul>
 <p>There are also variable definitions and logical operations that can be used. after all, it is based on lua. The basic syntax is still there. We can switch the compiled files by if:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;static&quot;)
-    if is_plat(&quot;iphoneos&quot;) then
-        add_files(&quot;src/test/ios/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("static")
+    if is_plat("iphoneos") then
+        add_files("src/test/ios/*.c")
     else
-        add_files(&quot;src/test/*.c&quot;)
+        add_files("src/test/*.c")
     end
 </code></pre>
 <p>It should be noted that the variable definition is divided into global variables and local variables. The local variables are only valid for the current xmake.lua, and do not affect the child xmake.lua.</p>
@@ -294,20 +294,20 @@ local var1 = 0
 -- global variables that affect all subsmake.lua included after includes()
 var2 = 1
 
-includes(&quot;src&quot;)
+includes("src")
 </code></pre>
 <h3 id="internal-scope">Internal Scope</h3>
 <p>Also known as plug-ins, script scope, provide more complex and flexible script support, generally used to write some custom scripts, plug-in development, custom task tasks, custom modules, etc.</p>
 <p>Usually included by <code>function () end</code>, and passed to the <code>on_xxx</code>, <code>before_xxx</code> and <code>after_xxx</code> interfaces, are all self-scoped.</p>
 <p>E.g:</p>
 <pre><code class="lang-lua">-- custom script
-target(&quot;hello&quot;)
+target("hello")
     after_build(function ()
         -- Internal scope
         end)
 
 -- custom tasks, plugins
-task(&quot;hello&quot;)
+task("hello")
     on_run(function ()
         -- Internal scope
         end)
@@ -315,13 +315,13 @@ task(&quot;hello&quot;)
 <p>In this scope, not only can you use most lua apis, but you can also use many extension modules provided by xmake. All extension modules are imported through import.</p>
 <p>For details, please refer to: <a href="/manual/builtin_modules?id=import">import module document</a></p>
 <p>Here we give a simple example, after the compilation is complete, ldid signature on the ios target program:</p>
-<pre><code class="lang-lua">target(&quot;iosdemo&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;*.m&quot;)
+<pre><code class="lang-lua">target("iosdemo")
+    set_kind("binary")
+    add_files("*.m")
     after_build(function (target)
 
         -- Execute signature, if it fails, automatically interrupt, giving a highlight error message
-        os.run(&quot;ldid -S$(projectdir)/entitlements.plist %s&quot;, target:targetfile())
+        os.run("ldid -S$(projectdir)/entitlements.plist %s", target:targetfile())
     end)
 </code></pre>
 <p>It should be noted that in the internal scope, all calls are enabled with the exception catching mechanism. if the operation is wrong, xmake will be automatically interrupted and an error message will be given.</p>
@@ -329,52 +329,52 @@ task(&quot;hello&quot;)
 <h3 id="interface-scope">Interface Scope</h3>
 <p>All descriptions of api settings in the external scope are also scoped. They are called in different places and have different scopes of influence, for example:</p>
 <pre><code class="lang-lua">-- global root scope, affecting all targets, including subproject target settings in includes()
-add_defines(&quot;DEBUG&quot;)
+add_defines("DEBUG")
 
 -- define or enter the demo target scope (support multiple entry to append settings)
-target(&quot;demo&quot;)
-    set_kind(&quot;shared&quot;)
-    add_files(&quot;src/*.c&quot;)
+target("demo")
+    set_kind("shared")
+    add_files("src/*.c")
     -- the current target scope only affects the current target
-    add_defines(&quot;DEBUG2&quot;)
+    add_defines("DEBUG2")
 
 -- option settings, only local settings are supported, not affected by global api settings
-option(&quot;test&quot;)
+option("test")
     -- local scope of the current option
     set_default(false)
 
 -- other target settings, -DDEBUG will also be set
-target(&quot;demo2&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+target("demo2")
+    set_kind("binary")
+    add_files("src/*.c")
 
 -- re-enter the demo target scope
-target(&quot;demo&quot;)
+target("demo")
     -- append macro definitions, only valid for the current demo target
-    add_defines(&quot;DEBUG3&quot;)
+    add_defines("DEBUG3")
 </code></pre>
 <p>Normally, entering another target/option domain setting will automatically leave the previous target/option field, but sometimes in order to compare some scope pollution, we can show off a domain, for example:</p>
-<pre><code class="lang-lua">option(&quot;test&quot;)
+<pre><code class="lang-lua">option("test")
     set_default(false)
 option_end()
 
-target(&quot;demo&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+target("demo")
+    set_kind("binary")
+    add_files("src/*.c")
 target_end()
 </code></pre>
 <p>Call <code>option_end()</code>, <code>target_end()</code> to explicitly leave the current target/option field setting.</p>
 <h3 id="scope-indentation">Scope Indentation</h3>
 <p>Indentation in xmake.lua is just a specification for more clear distinction. The current setting is for that scope, although it is ok even if it is not indented, but it is not very readable. .</p>
 <p>e.g:</p>
-<pre><code class="lang-lua">target(&quot;xxxx&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;*.c&quot;)
+<pre><code class="lang-lua">target("xxxx")
+    set_kind("binary")
+    add_files("*.c")
 </code></pre>
 <p>with</p>
-<pre><code class="lang-lua">target(&quot;xxxx&quot;)
-set_kind(&quot;binary&quot;)
-add_files(&quot;*.c&quot;)
+<pre><code class="lang-lua">target("xxxx")
+set_kind("binary")
+add_files("*.c")
 </code></pre>
 <p>The above two methods are the same in effect, but in understanding, the first one is more intuitive. At first glance, you know that <code>add_files</code> is only set for target, not global.</p>
 <p>Therefore, proper indentation helps to better maintain xmake.lua</p>
@@ -389,61 +389,61 @@ add_files(&quot;*.c&quot;)
       - xmake.lua
 </code></pre><p><code>projectdir/xmake.lua</code> is the project&#39;s root xmake.lua configuration, and <code>src/xmake.lua</code> is a sub-configuration of the project.</p>
 <p><code>projectdir/xmake.lua</code> content:</p>
-<pre><code class="lang-lua">add_defines(&quot;ROOT&quot;)
+<pre><code class="lang-lua">add_defines("ROOT")
 
-target(&quot;test1&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
-    add_defines(&quot;TEST1&quot;)
+target("test1")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("TEST1")
 
-target(&quot;test2&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
-    add_defines(&quot;TEST2&quot;)
+target("test2")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("TEST2")
 
-Includes(&quot;src&quot;)
+Includes("src")
 </code></pre>
-<p>The global root domain is configured with <code>add_defines(&quot;ROOT&quot;)</code>, which affects all target configurations below, including all target configurations in the sub-xmake.lua of includes, so this is the global total configuration.</p>
-<p>The <code>add_defines(&quot;TEST1&quot;)</code> and <code>add_defines(&quot;TEST2&quot;)</code> in test1/test2 belong to the local configuration and only take effect on the current target.</p>
+<p>The global root domain is configured with <code>add_defines("ROOT")</code>, which affects all target configurations below, including all target configurations in the sub-xmake.lua of includes, so this is the global total configuration.</p>
+<p>The <code>add_defines("TEST1")</code> and <code>add_defines("TEST2")</code> in test1/test2 belong to the local configuration and only take effect on the current target.</p>
 <p><code>src/xmake.lua</code> content:</p>
-<pre><code class="lang-lua">add_defines(&quot;ROOT2&quot;)
+<pre><code class="lang-lua">add_defines("ROOT2")
 
-target(&quot;test3&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
-    add_defines(&quot;TEST3&quot;)
+target("test3")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_defines("TEST3")
 </code></pre>
-<p>In the <code>src/xmake.lua</code> sub-configuration, there is also a global root domain, configured with <code>add_defines(&quot;ROOT2&quot;)</code>, which belongs to the sub-configuration root domain and only takes effect on all targets in the current sub-xmake.lua. For the target xmake.lua in the lower level includes the target, because previously said, xmake is the configuration inheritance relationship of the tree structure.</p>
+<p>In the <code>src/xmake.lua</code> sub-configuration, there is also a global root domain, configured with <code>add_defines("ROOT2")</code>, which belongs to the sub-configuration root domain and only takes effect on all targets in the current sub-xmake.lua. For the target xmake.lua in the lower level includes the target, because previously said, xmake is the configuration inheritance relationship of the tree structure.</p>
 <p>Therefore, the final configuration results of these targets are:</p>
-<pre><code>target(&quot;test1&quot;): -DROOT -DTEST1
-target(&quot;test2&quot;): -DROOT -DTEST2
-target(&quot;test3&quot;): -DROOT -DROOT2 -DTEST3
+<pre><code>target("test1"): -DROOT -DTEST1
+target("test2"): -DROOT -DTEST2
+target("test3"): -DROOT -DROOT2 -DTEST3
 </code></pre><h2 id="syntax-simplification">Syntax simplification</h2>
 <p>The configuration field syntax of xmake.lua is very flexible and can be used in a variety of complex and flexible configurations in the relevant domain, but for many streamlined small block configurations, this time is slightly redundant:</p>
-<pre><code class="lang-lua">option(&quot;test1&quot;)
+<pre><code class="lang-lua">option("test1")
     set_default(true)
     set_showmenu(true)
-    set_description(&quot;test1 option&quot;)
+    set_description("test1 option")
 
-option(&quot;test2&quot;)
+option("test2")
     set_default(true)
     set_showmeu(true)
 
-option(&quot;test3&quot;)
-    set_default(&quot;hello&quot;)
+option("test3")
+    set_default("hello")
 </code></pre>
 <p>xmake 2.2.6 or later, for the above small block option domain settings, we can simplify the description into a single line:</p>
-<pre><code class="lang-lua">option(&quot;test1&quot;, {default = true, showmenu = true, description = &quot;test1 option&quot;})
-option(&quot;test2&quot;, {default = true, showmenu = true})
-option(&quot;test3&quot;, {default = &quot;hello&quot;})
+<pre><code class="lang-lua">option("test1", {default = true, showmenu = true, description = "test1 option"})
+option("test2", {default = true, showmenu = true})
+option("test3", {default = "hello"})
 </code></pre>
 <p>In addition to the option field, this simplified writing is also supported for other domains, such as:</p>
-<pre><code class="lang-lua">target(&quot;demo&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("demo")
+    set_kind("binary")
+    add_files("src/*.c")
 </code></pre>
 <p>Simplified to:</p>
-<pre><code class="lang-lua">target(&quot;demo&quot;, {kind = &quot;binary&quot;, files = &quot;src/*.c&quot;})
+<pre><code class="lang-lua">target("demo", {kind = "binary", files = "src/*.c"})
 </code></pre>
 <p>Of course, if the configuration requirements are more complicated, or the original multi-line setting method is more convenient, this depends on your own needs to evaluate which method is used.</p>
 </article>

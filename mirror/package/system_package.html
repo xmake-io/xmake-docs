@@ -93,25 +93,25 @@
     <h2 id="find-system-package">Find System Package</h2>
 <p>If you feel that the above built-in package management method is very inconvenient, you can use the built-in interface <code>find_packages</code> provided by xmake.</p>
 <p>And through the system and third-party package management tools for the installation of the dependency package, and then integrated with xmake, for example, we look for an openssl package:</p>
-<pre><code class="lang-lua">local packages = find_packages(&quot;openssl&quot;, &quot;zlib&quot;)
+<pre><code class="lang-lua">local packages = find_packages("openssl", "zlib")
 </code></pre>
 <p>The returned results are as follows:</p>
 <pre><code class="lang-lua">{
-    {links = {&quot;ssl&quot;, &quot;crypto&quot;}, linkdirs = {&quot;/usr/local/lib&quot;}, includedirs = {&quot;/usr/local/include&quot;}},
-    {links = {&quot;z&quot;}, linkdirs = {&quot;/usr/local/lib&quot;}, includedirs = {&quot;/usr/local/include&quot;}}
+    {links = {"ssl", "crypto"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}},
+    {links = {"z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
 }
 </code></pre>
 <p>If the search is successful, return a table containing all the package information, if it fails, return nil</p>
 <p>The return result here can be directly passed as the parameter of <code>target:add</code>, <code>option:add</code>, which is used to dynamically increase the configuration of <code>target/option</code>:</p>
-<pre><code class="lang-lua">option(&quot;zlib&quot;)
+<pre><code class="lang-lua">option("zlib")
     set_showmenu(true)
     before_check(function (option)
-        option:add(find_packages(&quot;openssl&quot;, &quot;zlib&quot;))
+        option:add(find_packages("openssl", "zlib"))
     end)
 </code></pre>
-<pre><code class="lang-lua">target(&quot;test&quot;)
+<pre><code class="lang-lua">target("test")
     on_load(function (target)
-        target:add(find_packages(&quot;openssl&quot;, &quot;zlib&quot;))
+        target:add(find_packages("openssl", "zlib"))
     end)
 </code></pre>
 <p>Currently this interface supports the following package management support:</p>
@@ -126,7 +126,7 @@
 <p>Of course, if you feel that integrating third-party dependencies by looking for packages is not enough, you can also directly integrate remote dependencies through <code>add_requires</code>.<br>For details, see the documentation: <a href="/package/remote_package">Using Remote Dependencies</a></p>
 <h2 id="find-homebrew-package">Find homebrew package</h2>
 <p>Alternatively, we can also find the package from the manually specified package manager:</p>
-<pre><code class="lang-lua">find_packages(&quot;brew::pcre2/libpcre2-8&quot;, &quot;brew::x264&quot;)
+<pre><code class="lang-lua">find_packages("brew::pcre2/libpcre2-8", "brew::x264")
 </code></pre>
 <p>We only need to add the <code>brew::</code> prefix, you can explicitly specify the package source from homebrew to find the package, if there are multiple pkgconfig files in <code>brew::pcre2</code>, for example: libpcre2-8.pc, libpcre2-16. Pc, libpcre2-32.pc</p>
 <p>Then we can use <code>brew::pcre2/libpcre2-16</code> to select the link library information specified by the corresponding pkgconfig file.</p>
@@ -140,11 +140,11 @@
 <pre><code class="lang-console">$ xmake g --vcpkg=f:\vcpkg
 </code></pre>
 <p>Then, we can specify the dependency package in vcpkg by using the <code>vcpkg::</code> prefix:</p>
-<pre><code class="lang-lua">find_packages(&quot;vcpkg::zlib&quot;, &quot;vcpkg::openssl&quot;)
+<pre><code class="lang-lua">find_packages("vcpkg::zlib", "vcpkg::openssl")
 </code></pre>
 <h2 id="find-the-conan-package">Find the conan package</h2>
 <p>Xmake v2.2.6 and later versions also support finding the specified package from the conan:</p>
-<pre><code class="lang-lua">find_packages(&quot;conan::OpenSSL/1.0.2n@conan/stable&quot;)
+<pre><code class="lang-lua">find_packages("conan::OpenSSL/1.0.2n@conan/stable")
 </code></pre>
 <h2 id="test-command-for-finding-package">Test command for finding package</h2>
 <p>We can use the following command to quickly detect the package information specified on the system:</p>
@@ -152,14 +152,14 @@
 {
    {
      Links = {
-       &quot;x264&quot;
+       "x264"
      },
      Linkdirs = {
-       &quot;/usr/local/Cellar/x264/r2699/lib&quot;
+       "/usr/local/Cellar/x264/r2699/lib"
      },
-     Version = &quot;0.148.2699 a5e06b9&quot;,
+     Version = "0.148.2699 a5e06b9",
      Includeirs = {
-       &quot;/usr/local/Cellar/x264/r2699/include&quot;
+       "/usr/local/Cellar/x264/r2699/include"
      }
    }
 }
@@ -167,7 +167,7 @@
 <p>We can also add a third-party package manager prefix to test:</p>
 <pre><code class="lang-console">xmake l find_packages conan::OpenSSL/1.0.2n@conan/stable
 </code></pre>
-<p>!&gt; It should be noted that if the find_package command is executed in the project directory with xmake.lua, there will be a cache. If the search fails, the next lookup will also use the cached result. If you want to force a retest every time, Please switch to the non-project directory to execute the above command.</p>
+<p>!> It should be noted that if the find_package command is executed in the project directory with xmake.lua, there will be a cache. If the search fails, the next lookup will also use the cached result. If you want to force a retest every time, Please switch to the non-project directory to execute the above command.</p>
 </article>
 </body>
 </html>

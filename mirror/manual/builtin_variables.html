@@ -91,23 +91,23 @@
 }
 </style>
     <p>Xmake provides the syntax of <code>$(varname)</code> to support the acquisition of built-in variables, for example:</p>
-<pre><code class="lang-lua">add_cxflags(&quot;-I$(buildir)&quot;)
+<pre><code class="lang-lua">add_cxflags("-I$(buildir)")
 </code></pre>
 <p>It will convert the built-in <code>buildir</code> variable to the actual build output directory when compiling: <code>-I./build</code></p>
 <p>General built-in variables can be used to quickly get and splicing variable strings when passing arguments, for example:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
+<pre><code class="lang-lua">target("test")
 
     -- Add source files in the project source directory
-    add_files(&quot;$(projectdir)/src/*.c&quot;)
+    add_files("$(projectdir)/src/*.c")
 
     -- Add a header file search path under the build directory
-    add_includedirs(&quot;$(buildir)/inc&quot;)
+    add_includedirs("$(buildir)/inc")
 </code></pre>
 <p>It can also be used in the module interface of a custom script, for example:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
+<pre><code class="lang-lua">target("test")
     on_run(function (target)
         -- Copy the header file in the current script directory to the output directory
-        os.cp(&quot;$(scriptdir)/xxx.h&quot;, &quot;$(buildir)/inc&quot;)
+        os.cp("$(scriptdir)/xxx.h", "$(buildir)/inc")
     end)
 </code></pre>
 <p>All built-in variables can also be retrieved via the <a href="#val">val</a> interface.</p>
@@ -124,75 +124,75 @@
 <tr>
 <td><a href="#varos">$(os)</a></td>
 <td>Get the operating system of the current build platform</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varhost">$(host)</a></td>
 <td>Get native operating system</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#vartmpdir">$(tmpdir)</a></td>
 <td>Get Temporary Directory</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varcurdir">$(curdir)</a></td>
 <td>Get current directory</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varbuildir">$(buildir)</a></td>
 <td>Get the build output directory</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varscriptdir">$(scriptdir)</a></td>
 <td>Get Project Description Script Directory</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="#varglobaldir">$(globaldir)</a></td>
 <td>Get Global Configuration Directory</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varconfigdir">$(configdir)</a></td>
 <td>Get Local Project Configuration Directory</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varprogramdir">$(programdir)</a></td>
 <td>xmake installation script directory</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#varprojectdir">$(projectdir)</a></td>
 <td>Get the project root directory</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varshell">$(shell)</a></td>
 <td>Execute external shell command</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varenv">$(env)</a></td>
 <td>Get external environment variables</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#varreg">$(reg)</a></td>
 <td>Get the value of the windows registry configuration item</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 </tbody>
 </table>
 <p>Of course, this variable mode can also be extended. By default, the <code>xmake f --var=val</code> command can be used to directly obtain the parameters. For example:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_defines(&quot;-DTEST=$(var)&quot;)
+<pre><code class="lang-lua">target("test")
+    add_defines("-DTEST=$(var)")
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>All the parameter values ​​of the <code>xmake f --xxx=...</code> configuration can be obtained through built-in variables, for example: <code>xmake f --arch=x86</code> corresponds to <code>$(arch)</code>, others have <code>$(plat)</code>, <code>$(mode)</code> and so on.<br>What are the specific parameters, you can check it out by <code>xmake f -h</code>.<br>&lt;/p&gt;
+<p><p class="tip"><br>All the parameter values ​​of the <code>xmake f --xxx=...</code> configuration can be obtained through built-in variables, for example: <code>xmake f --arch=x86</code> corresponds to <code>$(arch)</code>, others have <code>$(plat)</code>, <code>$(mode)</code> and so on.<br>What are the specific parameters, you can check it out by <code>xmake f -h</code>.<br></p>
 
 </p>
 <p>Since the support is directly obtained from the configuration options, it is of course convenient to extend the custom options to get the custom variables. For details on how to customize the options, see: <a href="#option">option</a></p>
@@ -231,10 +231,10 @@
 <h4 id="executing-external-shell-commands">Executing external shell commands</h4>
 <p>In addition to the built-in variable handling, xmake also supports the native shell to handle some of the features that xmake does not support.</p>
 <p>For example, there is a need now, I want to use the <code>pkg-config</code> to get the actual third-party link library name when compiling the Linux program, you can do this:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    if is_plat(&quot;linux&quot;) then
-        add_ldflags(&quot;$(shell pkg-config --libs sqlite3)&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    if is_plat("linux") then
+        add_ldflags("$(shell pkg-config --libs sqlite3)")
     end
 </code></pre>
 <p>Of course, xmake has its own automated third library detection mechanism, which generally does not need such trouble, and lua&#39;s own scripting is very good. .</p>
@@ -242,13 +242,13 @@
 <h3 id="var-env-">var.$(env)</h3>
 <h4 id="get-external-environment-variables">Get external environment variables</h4>
 <p>For example, you can get the path in the environment variable:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_includedirs(&quot;$(env PROGRAMFILES)/OpenSSL/inc&quot;)
+<pre><code class="lang-lua">target("test")
+    add_includedirs("$(env PROGRAMFILES)/OpenSSL/inc")
 </code></pre>
 <h3 id="var-reg-">var.$(reg)</h3>
 <h4 id="get-the-value-of-the-windows-registry-configuration-item">Get the value of the windows registry configuration item</h4>
 <p>Get the value of an item in the registry by <code>regpath; name</code>:</p>
-<pre><code class="lang-lua">print(&quot;$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)&quot;)
+<pre><code class="lang-lua">print("$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)")
 </code></pre>
 </article>
 </body>

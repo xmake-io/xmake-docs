@@ -100,11 +100,11 @@
 - pcre.pkg
 - ...
 </code></pre><p>如果要让当前工程识别加载这些包，首先要指定包目录路径，例如：</p>
-<pre><code class="lang-lua">add_packagedirs(&quot;packages&quot;)
+<pre><code class="lang-lua">add_packagedirs("packages")
 </code></pre>
 <p>指定好后，就可以在target作用域中，通过<a href="/zh-cn/manual/project_target?id=targetadd_packages">add_packages</a>接口，来添加集成包依赖了，例如：</p>
-<pre><code class="lang-lua">target(&quot;tbox&quot;)
-    add_packages(&quot;zlib&quot;, &quot;polarssl&quot;, &quot;pcre&quot;, &quot;mysql&quot;)
+<pre><code class="lang-lua">target("tbox")
+    add_packages("zlib", "polarssl", "pcre", "mysql")
 </code></pre>
 <p>那么如何去生成一个*.pkg的包呢，如果是基于xmake的工程，生成方式很简单，只需要：</p>
 <pre><code class="lang-console">$ cd tbox

@@ -91,23 +91,23 @@
 }
 </style>
     <p>xmake提供了 <code>$(varname)</code> 的语法，来支持内置变量的获取，例如：</p>
-<pre><code class="lang-lua">add_cxflags(&quot;-I$(buildir)&quot;)
+<pre><code class="lang-lua">add_cxflags("-I$(buildir)")
 </code></pre>
 <p>它将会在在实际编译的时候，将内置的 <code>buildir</code> 变量转换为实际的构建输出目录：<code>-I./build</code></p>
 <p>一般内置变量可用于在传参时快速获取和拼接变量字符串，例如：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
+<pre><code class="lang-lua">target("test")
 
     -- 添加工程源码目录下的源文件
-    add_files(&quot;$(projectdir)/src/*.c&quot;)
+    add_files("$(projectdir)/src/*.c")
 
     -- 添加构建目录下的头文件搜索路径
-    add_includedirs(&quot;$(buildir)/inc&quot;)
+    add_includedirs("$(buildir)/inc")
 </code></pre>
 <p>也可以在自定义脚本的模块接口中使用，例如：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
+<pre><code class="lang-lua">target("test")
     on_run(function (target)
         -- 复制当前脚本目录下的头文件到输出目录
-        os.cp(&quot;$(scriptdir)/xxx.h&quot;, &quot;$(buildir)/inc&quot;)
+        os.cp("$(scriptdir)/xxx.h", "$(buildir)/inc")
     end)
 </code></pre>
 <p>所有的内置变量，也可以通过<a href="#val">val</a>接口，来获取他们的值。</p>
@@ -124,75 +124,75 @@
 <tr>
 <td><a href="#varos">$(os)</a></td>
 <td>获取当前编译平台的操作系统</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varhost">$(host)</a></td>
 <td>获取本机操作系统</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#vartmpdir">$(tmpdir)</a></td>
 <td>获取临时目录</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varcurdir">$(curdir)</a></td>
 <td>获取当前目录</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varbuildir">$(buildir)</a></td>
 <td>获取构建输出目录</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varscriptdir">$(scriptdir)</a></td>
 <td>获取工程描述脚本目录</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="#varglobaldir">$(globaldir)</a></td>
 <td>获取全局配置目录</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varconfigdir">$(configdir)</a></td>
 <td>获取本地工程配置目录</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varprogramdir">$(programdir)</a></td>
 <td>xmake安装脚本目录</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#varprojectdir">$(projectdir)</a></td>
 <td>获取工程根目录</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varshell">$(shell)</a></td>
 <td>执行外部shell命令</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#varenv">$(env)</a></td>
 <td>获取外部环境变量</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#varreg">$(reg)</a></td>
 <td>获取windows注册表配置项的值</td>
-<td>&gt;= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 </tbody>
 </table>
 <p>当然这种变量模式，也是可以扩展的，默认通过<code>xmake f --var=val</code>命令，配置的参数都是可以直接获取，例如：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_defines(&quot;-DTEST=$(var)&quot;)
+<pre><code class="lang-lua">target("test")
+    add_defines("-DTEST=$(var)")
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>所有<code>xmake f --xxx=...</code>配置的参数值，都是可以通过内置变量获取到，例如：<code>xmake f --arch=x86</code>对应<code>$(arch)</code>，其他的还有<code>$(plat)</code>, <code>$(mode)</code>等等。<br>具体有哪些参数，可以通过：<code>xmake f -h</code>才查看。<br>&lt;/p&gt;
+<p><p class="tip"><br>所有<code>xmake f --xxx=...</code>配置的参数值，都是可以通过内置变量获取到，例如：<code>xmake f --arch=x86</code>对应<code>$(arch)</code>，其他的还有<code>$(plat)</code>, <code>$(mode)</code>等等。<br>具体有哪些参数，可以通过：<code>xmake f -h</code>才查看。<br></p>
 
 </p>
 <p>既然支持直接从配置选项中获取，那么当然也就能很方便的扩展自定义的选项，来获取自定义的变量了，具体如何自定义选项见：<a href="#option">option</a></p>
@@ -231,10 +231,10 @@
 <h4 id="-shell-">执行外部shell命令</h4>
 <p>除了内置的变量处理，xmake还支持原生shell的运行，来处理一些xmake内置不支持的功能</p>
 <p>例如，现在有个需求，我想用在编译linux程序时，调用<code>pkg-config</code>获取到实际的第三方链接库名，可以这么做：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    if is_plat(&quot;linux&quot;) then
-        add_ldflags(&quot;$(shell pkg-config --libs sqlite3)&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    if is_plat("linux") then
+        add_ldflags("$(shell pkg-config --libs sqlite3)")
     end
 </code></pre>
 <p>当然，xmake有自己的自动化第三库检测机制，一般情况下不需要这么麻烦，而且lua自身的脚本化已经很不错了。。</p>
@@ -242,13 +242,13 @@
 <h3 id="var-env-">var.$(env)</h3>
 <h4 id="-">获取外部环境变量</h4>
 <p>例如，可以通过获取环境变量中的路径：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_includedirs(&quot;$(env PROGRAMFILES)/OpenSSL/inc&quot;)
+<pre><code class="lang-lua">target("test")
+    add_includedirs("$(env PROGRAMFILES)/OpenSSL/inc")
 </code></pre>
 <h3 id="var-reg-">var.$(reg)</h3>
 <h4 id="-windows-">获取windows注册表配置项的值</h4>
 <p>通过 <code>regpath; name</code> 的方式获取注册表中某个项的值：</p>
-<pre><code class="lang-lua">print(&quot;$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)&quot;)
+<pre><code class="lang-lua">print("$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)")
 </code></pre>
 </article>
 </body>

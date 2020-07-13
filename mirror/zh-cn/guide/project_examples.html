@@ -95,36 +95,36 @@
 <pre><code class="lang-bash">xmake create --help
 </code></pre>
 <h2 id="-">可执行程序</h2>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*c")
 </code></pre>
 <p>完整例子请执行下面的命令来创建：</p>
 <pre><code class="lang-bash">xmake create -l c -t console test
 </code></pre>
 <h2 id="-">静态库程序</h2>
-<pre><code class="lang-lua">target(&quot;library&quot;)
-    set_kind(&quot;static&quot;)
-    add_files(&quot;src/library/*.c&quot;)
+<pre><code class="lang-lua">target("library")
+    set_kind("static")
+    add_files("src/library/*.c")
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*c&quot;)
-    add_deps(&quot;library&quot;)
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+    add_deps("library")
 </code></pre>
 <p>通过<code>add_deps</code>将一个静态库自动链接到test可执行程序。</p>
 <p>完整例子请执行下面的命令来创建：</p>
 <pre><code class="lang-bash">xmake create -l c -t static test
 </code></pre>
 <h2 id="-">动态库程序</h2>
-<pre><code class="lang-lua">target(&quot;library&quot;)
-    set_kind(&quot;shared&quot;)
-    add_files(&quot;src/library/*.c&quot;)
+<pre><code class="lang-lua">target("library")
+    set_kind("shared")
+    add_files("src/library/*.c")
 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*c&quot;)
-    add_deps(&quot;library&quot;)
+target("test")
+    set_kind("binary")
+    add_files("src/*c")
+    add_deps("library")
 </code></pre>
 <p>通过<code>add_deps</code>将一个动态库自动链接到test可执行程序。</p>
 <p>完整例子请执行下面的命令来创建：</p>
@@ -155,37 +155,37 @@ $ xmake create -l c++ -t quickapp_qt test
 <p>上述指定的mingw sdk用的是Qt下Tools目录自带的环境，当然如果有其他第三方mingw编译环境，也可以手动指定, 具体可以参考：<a href="#mingw">mingw编译配置</a>。</p>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/160">#160</a></p>
 <h3 id="-">静态库程序</h3>
-<pre><code class="lang-lua">target(&quot;qt_static_library&quot;)
-    add_rules(&quot;qt.static&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_frameworks(&quot;QtNetwork&quot;, &quot;QtGui&quot;)
+<pre><code class="lang-lua">target("qt_static_library")
+    add_rules("qt.static")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
 </code></pre>
 <h3 id="-">动态库程序</h3>
-<pre><code class="lang-lua">target(&quot;qt_shared_library&quot;)
-    add_rules(&quot;qt.shared&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_frameworks(&quot;QtNetwork&quot;, &quot;QtGui&quot;)
+<pre><code class="lang-lua">target("qt_shared_library")
+    add_rules("qt.shared")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
 </code></pre>
 <h3 id="-">控制台程序</h3>
-<pre><code class="lang-lua">target(&quot;qt_console&quot;)
-    add_rules(&quot;qt.console&quot;)
-    add_files(&quot;src/*.cpp&quot;)
+<pre><code class="lang-lua">target("qt_console")
+    add_rules("qt.console")
+    add_files("src/*.cpp")
 </code></pre>
 <h3 id="quick-">Quick应用程序</h3>
 <p>v2.2.9以上版本：</p>
-<pre><code class="lang-lua">target(&quot;qt_quickapp&quot;)
-    add_rules(&quot;qt.quickapp&quot;)
-    add_files(&quot;src/*.cpp&quot;) 
-    add_files(&quot;src/qml.qrc&quot;)
+<pre><code class="lang-lua">target("qt_quickapp")
+    add_rules("qt.quickapp")
+    add_files("src/*.cpp") 
+    add_files("src/qml.qrc")
 </code></pre>
-<p>!&gt; 新版本提供了<code>qt.quickapp</code>规则，内置了QtQuick的内建规则，使用更加简单，下面老版本的<code>qt.application</code>还是支持的，向下兼容：</p>
-<pre><code class="lang-lua">target(&quot;qt_quickapp&quot;)
-    add_rules(&quot;qt.application&quot;)
-    add_files(&quot;src/*.cpp&quot;) 
-    add_files(&quot;src/qml.qrc&quot;)
-    add_frameworks(&quot;QtQuick&quot;)
+<p>!> 新版本提供了<code>qt.quickapp</code>规则，内置了QtQuick的内建规则，使用更加简单，下面老版本的<code>qt.application</code>还是支持的，向下兼容：</p>
+<pre><code class="lang-lua">target("qt_quickapp")
+    add_rules("qt.application")
+    add_files("src/*.cpp") 
+    add_files("src/qml.qrc")
+    add_frameworks("QtQuick")
 </code></pre>
-<p>!&gt; 如果使用的自己编译的static版本QT SDK，那么需要切换到<code>add_rules(&quot;qt.quickapp_static&quot;)</code>静态规则才行，因为链接的库是不同的，需要做静态链接。</p>
+<p>!> 如果使用的自己编译的static版本QT SDK，那么需要切换到<code>add_rules("qt.quickapp_static")</code>静态规则才行，因为链接的库是不同的，需要做静态链接。</p>
 <p>接下来，我们尝试编译下，通常，如果是使用Qt的安装包默认安装，也没有修改安装路径，那么大部分情况下都是可以自动检测到QT SDK的根路径，例如：</p>
 <pre><code class="lang-bash">$ xmake
 checking for the architecture ... x86_64
@@ -205,21 +205,21 @@ build ok!
 <p><img src="/assets/img/guide/qt_quickapp.png" alt=""></p>
 <h3 id="widgets-">Widgets应用程序</h3>
 <p>v2.2.9以上版本：</p>
-<pre><code class="lang-lua">target(&quot;qt_widgetapp&quot;)
-    add_rules(&quot;qt.widgetapp&quot;)
-    add_files(&quot;src/*.cpp&quot;) 
-    add_files(&quot;src/mainwindow.ui&quot;)
-    add_files(&quot;src/mainwindow.h&quot;)  -- 添加带有 Q_OBJECT 的meta头文件
+<pre><code class="lang-lua">target("qt_widgetapp")
+    add_rules("qt.widgetapp")
+    add_files("src/*.cpp") 
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 </code></pre>
-<p>!&gt; 新版本提供了<code>qt.widgetapp</code>规则，内置了QtWidgets的内建规则，使用更加简单，下面老版本的<code>qt.application</code>还是支持的，向下兼容：</p>
-<pre><code class="lang-lua">target(&quot;qt_widgetapp&quot;)
-    add_rules(&quot;qt.application&quot;)
-    add_files(&quot;src/*.cpp&quot;) 
-    add_files(&quot;src/mainwindow.ui&quot;)
-    add_files(&quot;src/mainwindow.h&quot;)  -- 添加带有 Q_OBJECT 的meta头文件
-    add_frameworks(&quot;QtWidgets&quot;)
+<p>!> 新版本提供了<code>qt.widgetapp</code>规则，内置了QtWidgets的内建规则，使用更加简单，下面老版本的<code>qt.application</code>还是支持的，向下兼容：</p>
+<pre><code class="lang-lua">target("qt_widgetapp")
+    add_rules("qt.application")
+    add_files("src/*.cpp") 
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
+    add_frameworks("QtWidgets")
 </code></pre>
-<p>!&gt; 如果使用的自己编译的static版本QT SDK，那么需要切换到<code>add_rules(&quot;qt.widgetapp_static&quot;)</code>静态规则才行，因为链接的库是不同的，需要做静态链接。</p>
+<p>!> 如果使用的自己编译的static版本QT SDK，那么需要切换到<code>add_rules("qt.widgetapp_static")</code>静态规则才行，因为链接的库是不同的，需要做静态链接。</p>
 <p>运行效果如下：</p>
 <p><img src="/assets/img/guide/qt_widgetapp.png" alt=""></p>
 <h3 id="android-">Android应用程序</h3>
@@ -247,15 +247,15 @@ $ cd test
 $ xmake
 </code></pre>
 <pre><code class="lang-lua">-- define target
-target(&quot;cuda_console&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.cu&quot;)
+target("cuda_console")
+    set_kind("binary")
+    add_files("src/*.cu")
     -- generate SASS code for SM architecture of current host
-    add_cugencodes(&quot;native&quot;)
+    add_cugencodes("native")
     -- generate PTX code for the virtual architecture to guarantee compatibility
-    add_cugencodes(&quot;compute_30&quot;)
+    add_cugencodes("compute_30")
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>从v2.2.7版本开始，默认构建会启用device-link。（参见 <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">Separate Compilation and Linking of CUDA C++ Device Code</a>）<br>如果要显示禁用device-link，可以通过<code>add_values(&quot;cuda.devlink&quot;, false)</code> 来设置。<br>&lt;/p&gt;
+<p><p class="tip"><br>从v2.2.7版本开始，默认构建会启用device-link。（参见 <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">Separate Compilation and Linking of CUDA C++ Device Code</a>）<br>如果要显示禁用device-link，可以通过<code>add_values("cuda.devlink", false)</code> 来设置。<br></p>
 
 </p>
 <p>默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录：</p>
@@ -265,50 +265,50 @@ $ xmake
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/158">#158</a></p>
 <h2 id="wdk-">WDK驱动程序</h2>
 <p>默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：</p>
-<pre><code class="lang-console">$ xmake f --wdk=&quot;G:\Program Files\Windows Kits\10&quot; -c 
+<pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c 
 $ xmake
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
 <p>相关完整工程example见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/wdk">WDK examples</a></p>
 <h3 id="umdf-">umdf驱动程序</h3>
-<pre><code class="lang-lua">target(&quot;echo&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.umdf&quot;)
-    add_files(&quot;driver/*.c&quot;) 
-    add_files(&quot;driver/*.inx&quot;)
-    add_includedirs(&quot;exe&quot;)
+<pre><code class="lang-lua">target("echo")
+    add_rules("wdk.driver", "wdk.env.umdf")
+    add_files("driver/*.c") 
+    add_files("driver/*.inx")
+    add_includedirs("exe")
 
-target(&quot;app&quot;)
-    add_rules(&quot;wdk.binary&quot;, &quot;wdk.env.umdf&quot;)
-    add_files(&quot;exe/*.cpp&quot;) 
+target("app")
+    add_rules("wdk.binary", "wdk.env.umdf")
+    add_files("exe/*.cpp") 
 </code></pre>
 <h3 id="kmdf-">kmdf驱动程序</h3>
-<pre><code class="lang-lua">target(&quot;nonpnp&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.kmdf&quot;)
-    add_values(&quot;wdk.tracewpp.flags&quot;, &quot;-func:TraceEvents(LEVEL,FLAGS,MSG,...)&quot;, &quot;-func:Hexdump((LEVEL,FLAGS,MSG,...))&quot;)
-    add_files(&quot;driver/*.c&quot;, {rule = &quot;wdk.tracewpp&quot;}) 
-    add_files(&quot;driver/*.rc&quot;)
+<pre><code class="lang-lua">target("nonpnp")
+    add_rules("wdk.driver", "wdk.env.kmdf")
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
+    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.rc")
 
-target(&quot;app&quot;)
-    add_rules(&quot;wdk.binary&quot;, &quot;wdk.env.kmdf&quot;)
-    add_files(&quot;exe/*.c&quot;) 
-    add_files(&quot;exe/*.inf&quot;)
+target("app")
+    add_rules("wdk.binary", "wdk.env.kmdf")
+    add_files("exe/*.c") 
+    add_files("exe/*.inf")
 </code></pre>
 <h3 id="wdm-">wdm驱动程序</h3>
-<pre><code class="lang-lua">target(&quot;kcs&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    add_values(&quot;wdk.man.flags&quot;, &quot;-prefix Kcs&quot;)
-    add_values(&quot;wdk.man.resource&quot;, &quot;kcsCounters.rc&quot;)
-    add_values(&quot;wdk.man.header&quot;, &quot;kcsCounters.h&quot;)
-    add_values(&quot;wdk.man.counter_header&quot;, &quot;kcsCounters_counters.h&quot;)
-    add_files(&quot;*.c&quot;, &quot;*.rc&quot;, &quot;*.man&quot;) 
+<pre><code class="lang-lua">target("kcs")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    add_values("wdk.man.flags", "-prefix Kcs")
+    add_values("wdk.man.resource", "kcsCounters.rc")
+    add_values("wdk.man.header", "kcsCounters.h")
+    add_values("wdk.man.counter_header", "kcsCounters_counters.h")
+    add_files("*.c", "*.rc", "*.man") 
 </code></pre>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    add_values(&quot;wdk.tracewpp.flags&quot;, &quot;-func:TracePrint((LEVEL,FLAGS,MSG,...))&quot;)
-    add_files(&quot;*.c&quot;, {rule = &quot;wdk.tracewpp&quot;}) 
-    add_files(&quot;*.rc&quot;, &quot;*.inf&quot;)
-    add_files(&quot;*.mof|msdsm.mof&quot;)
-    add_files(&quot;msdsm.mof&quot;, {values = {wdk_mof_header = &quot;msdsmwmi.h&quot;}}) 
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
+    add_files("*.c", {rule = "wdk.tracewpp"}) 
+    add_files("*.rc", "*.inf")
+    add_files("*.mof|msdsm.mof")
+    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
 </code></pre>
 <h3 id="-">生成驱动包</h3>
 <p>可以通过以下命令生成.cab驱动包：</p>
@@ -323,87 +323,87 @@ $ xmake [p|package] -o outputdir
        - debug/x86/sampledsm.cab
        - release/x64/sampledsm.cab
 </code></pre><h3 id="-">驱动签名</h3>
-<p>默认编译禁用签名，可以通过<code>set_values(&quot;wdk.sign.mode&quot;, ...)</code>设置签名模式来启用签名。</p>
+<p>默认编译禁用签名，可以通过<code>set_values("wdk.sign.mode", ...)</code>设置签名模式来启用签名。</p>
 <h4 id="-">测试签名</h4>
 <p>测试签名一般本机调试时候用，可以使用xmake自带的test证书来进行签名，例如：</p>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    set_values(&quot;wdk.sign.mode&quot;, &quot;test&quot;)
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    set_values("wdk.sign.mode", "test")
 </code></pre>
 <p>不过这种情况下，需要用户手动在管理员模式下，执行一遍：<code>$xmake l utils.wdk.testcert install</code>，来生成和注册test证书到本机环境。<br>这个只需要执行一次就行了，后续就可以正常编译和签名了。</p>
 <p>当然也可以使用本机已有的有效证书去签名。</p>
 <p>从sha1来选择合适的证书进行签名：</p>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    set_values(&quot;wdk.sign.mode&quot;, &quot;test&quot;)
-    set_values(&quot;wdk.sign.thumbprint&quot;, &quot;032122545DCAA6167B1ADBE5F7FDF07AE2234AAA&quot;)
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    set_values("wdk.sign.mode", "test")
+    set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
 </code></pre>
 <p>从store/company来选择合适的证书进行签名：</p>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    set_values(&quot;wdk.sign.mode&quot;, &quot;test&quot;)
-    set_values(&quot;wdk.sign.store&quot;, &quot;PrivateCertStore&quot;)
-    set_values(&quot;wdk.sign.company&quot;, &quot;tboox.org(test)&quot;)
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    set_values("wdk.sign.mode", "test")
+    set_values("wdk.sign.store", "PrivateCertStore")
+    set_values("wdk.sign.company", "tboox.org(test)")
 </code></pre>
 <h4 id="-">正式签名</h4>
 <p>通过指定对应的正式签名证书文件进行签名：</p>
-<pre><code class="lang-lua">target(&quot;msdsm&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.wdm&quot;)
-    set_values(&quot;wdk.sign.mode&quot;, &quot;release&quot;)
-    set_values(&quot;wdk.sign.company&quot;, &quot;xxxx&quot;)
-    set_values(&quot;wdk.sign.certfile&quot;, path.join(os.projectdir(), &quot;xxxx.cer&quot;))
+<pre><code class="lang-lua">target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    set_values("wdk.sign.mode", "release")
+    set_values("wdk.sign.company", "xxxx")
+    set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
 </code></pre>
 <h3 id="-">生成低版本驱动</h3>
 <p>如果想在wdk10环境编译生成win7, win8等低版本系统支持的驱动，可以通过设置<code>wdk.env.winver</code>来切换系统版本：</p>
-<pre><code class="lang-lua">set_values(&quot;wdk.env.winver&quot;, &quot;win10&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win10_rs3&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win81&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win8&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win7&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win7_sp1&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win7_sp2&quot;)
-set_values(&quot;wdk.env.winver&quot;, &quot;win7_sp3&quot;)
+<pre><code class="lang-lua">set_values("wdk.env.winver", "win10")
+set_values("wdk.env.winver", "win10_rs3")
+set_values("wdk.env.winver", "win81")
+set_values("wdk.env.winver", "win8")
+set_values("wdk.env.winver", "win7")
+set_values("wdk.env.winver", "win7_sp1")
+set_values("wdk.env.winver", "win7_sp2")
+set_values("wdk.env.winver", "win7_sp3")
 </code></pre>
 <p>我们也可以手动指定编译的目标程序支持的windows版本：</p>
 <pre><code class="lang-console">$ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 </code></pre>
 <h2 id="winsdk-">WinSDK程序</h2>
-<pre><code class="lang-lua">target(&quot;usbview&quot;)
-    add_rules(&quot;win.sdk.application&quot;)
+<pre><code class="lang-lua">target("usbview")
+    add_rules("win.sdk.application")
 
-    add_files(&quot;*.c&quot;, &quot;*.rc&quot;)
-    add_files(&quot;xmlhelper.cpp&quot;, {rule = &quot;win.sdk.dotnet&quot;})
+    add_files("*.c", "*.rc")
+    add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/173">#173</a></p>
 <h2 id="mfc-">MFC程序</h2>
 <h3 id="mfc-">MFC静态库</h3>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;win.sdk.mfc.static&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("win.sdk.mfc.static")
+    add_files("src/*.c")
 </code></pre>
 <h3 id="mfc-">MFC动态库</h3>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;win.sdk.mfc.shared&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("win.sdk.mfc.shared")
+    add_files("src/*.c")
 </code></pre>
 <h3 id="mfc-">MFC应用程序（静态链接）</h3>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;win.sdk.mfc.static_app&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("win.sdk.mfc.static_app")
+    add_files("src/*.c")
 </code></pre>
 <h3 id="mfc-">MFC应用程序（动态链接）</h3>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;win.sdk.mfc.shared_app&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("win.sdk.mfc.shared_app")
+    add_files("src/*.c")
 </code></pre>
 <h2 id="ios-macos-">iOS/MacOS程序</h2>
 <h3 id="app-">App应用程序</h3>
 <p>用于生成<em>.app/</em>.ipa应用程序，同时支持iOS/MacOS。</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;xcode.application&quot;)
-    add_files(&quot;src/*.m&quot;, &quot;src/**.storyboard&quot;, &quot;src/*.xcassets&quot;)
-    add_files(&quot;src/Info.plist&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("xcode.application")
+    add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
+    add_files("src/Info.plist")
 </code></pre>
 <h4 id="-">创建工程</h4>
 <p>我们也可以通过模板工程快速创建：</p>
@@ -431,32 +431,32 @@ $ xmake
 $ xmake
 </code></pre>
 <p>如果每次这么配置签名觉得繁琐的话，可以设置到<code>xmake global</code>全局配置中，也可以在xmake.lua中对每个target单独设置：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;xcode.application&quot;)
-    add_files(&quot;src/*.m&quot;, &quot;src/**.storyboard&quot;, &quot;src/*.xcassets&quot;)
-    add_files(&quot;src/Info.plist&quot;)
-    add_values(&quot;xcode.bundle_identifier&quot;, &quot;org.tboox.test&quot;)
-    add_values(&quot;xcode.codesign_identity&quot;, &quot;Apple Development: xxx@gmail.com (T3NA4MRVPU)&quot;)
-    add_values(&quot;xcode.mobile_provision&quot;, &quot;iOS Team Provisioning Profile: org.tboox.test&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("xcode.application")
+    add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
+    add_files("src/Info.plist")
+    add_values("xcode.bundle_identifier", "org.tboox.test")
+    add_values("xcode.codesign_identity", "Apple Development: xxx@gmail.com (T3NA4MRVPU)")
+    add_values("xcode.mobile_provision", "iOS Team Provisioning Profile: org.tboox.test")
 </code></pre>
 <p>那如何知道我们需要的签名配置呢？一种就是在xcode里面查看，另外xmake也提供了一些辅助工具可以dump出当前可用的所有签名配置：</p>
 <pre><code class="lang-console">$ xmake l private.tools.codesign.dump
 ==================================== codesign identities ====================================
 { 
-  &quot;Apple Development: waruqi@gmail.com (T3NA4MRVPU)&quot; = &quot;AF73C231A0C35335B72761BD3759694739D34EB1&quot; 
+  "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" = "AF73C231A0C35335B72761BD3759694739D34EB1" 
 }
 
 ===================================== mobile provisions =====================================
 { 
-  &quot;iOS Team Provisioning Profile: org.tboox.test&quot; = &quot;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
-&lt;plist version=&quot;1.0&quot;&gt;
-&lt;dict&gt;
-    &lt;key&gt;AppIDName&lt;/key&gt;
-    &lt;string&gt;XC org tboox test5&lt;/string&gt;
-    &lt;key&gt;ApplicationIdentifierPrefix&lt;/key&gt;
-    &lt;array&gt;
-    &lt;string&gt;43AAQM58X3&lt;/string&gt;
+  "iOS Team Provisioning Profile: org.tboox.test" = "<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>AppIDName</key>
+    <string>XC org tboox test5</string>
+    <key>ApplicationIdentifierPrefix</key>
+    <array>
+    <string>43AAQM58X3</string>
 ...
 </code></pre>
 <p>我们也提供了其他辅助工具来对已有的ipa/app程序进行重签名，例如：</p>
@@ -464,8 +464,8 @@ $ xmake
 </code></pre>
 <p>其中，后面的签名参数都是可选的，如果没设置，那么默认会探测使用一个有效的签名：</p>
 <pre><code class="lang-console">$ xmake l utils.ipa.resign test.ipa
-$ xmake l utils.ipa.resign test.app &quot;Apple Development: waruqi@gmail.com (T3NA4MRVPU)&quot;
-$ xmake l utils.ipa.resign test.ipa &quot;Apple Development: waruqi@gmail.com (T3NA4MRVPU)&quot; iOS Team Provisioning Profile: org.tboox.test&quot; org.tboox.test
+$ xmake l utils.ipa.resign test.app "Apple Development: waruqi@gmail.com (T3NA4MRVPU)"
+$ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" iOS Team Provisioning Profile: org.tboox.test" org.tboox.test
 </code></pre>
 <h4 id="-">运行应用程序</h4>
 <p>目前仅支持运行macos程序：</p>
@@ -491,55 +491,55 @@ package ok!
 $ xmake l utils.ipa.install test.ipa
 </code></pre>
 <h4 id="-">卸载</h4>
-<p>!&gt; 目前仅支持macos程序卸载</p>
+<p>!> 目前仅支持macos程序卸载</p>
 <pre><code class="lang-console">$ xmake uninstall
 </code></pre>
 <h3 id="framework-">Framework库程序</h3>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;xcode.framework&quot;)
-    add_files(&quot;src/*.m&quot;)
-    add_files(&quot;src/Info.plist&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("xcode.framework")
+    add_files("src/*.m")
+    add_files("src/Info.plist")
 </code></pre>
 <p>我们也可以通过模板工程快速创建：</p>
 <pre><code class="lang-console">$ xmake create -t xcode.framework -l objc test
 </code></pre>
 <h3 id="bundle-">Bundle程序</h3>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;xcode.bundle&quot;)
-    add_files(&quot;src/*.m&quot;)
-    add_files(&quot;src/Info.plist&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("xcode.bundle")
+    add_files("src/*.m")
+    add_files("src/Info.plist")
 </code></pre>
 <p>我们也可以通过模板工程快速创建：</p>
 <pre><code class="lang-console">$ xmake create -t xcode.bundle -l objc test
 </code></pre>
 <h2 id="protobuf-">Protobuf程序</h2>
 <h3 id="-c-">使用c库</h3>
-<pre><code class="lang-lua">add_requires(&quot;protobuf-c&quot;)
+<pre><code class="lang-lua">add_requires("protobuf-c")
 
-target(&quot;console_c&quot;)
-    set_kind(&quot;binary&quot;)
-    add_packages(&quot;protobuf-c&quot;)
+target("console_c")
+    set_kind("binary")
+    add_packages("protobuf-c")
 
-    add_files(&quot;src/*.c&quot;)
-    add_files(&quot;src/*.proto&quot;, {rules = &quot;protobuf.c&quot;})
+    add_files("src/*.c")
+    add_files("src/*.proto", {rules = "protobuf.c"})
 </code></pre>
 <h3 id="-c-">使用c++库</h3>
-<pre><code class="lang-lua">add_requires(&quot;protobuf-cpp&quot;)
+<pre><code class="lang-lua">add_requires("protobuf-cpp")
 
-target(&quot;console_c++&quot;)
-    set_kind(&quot;binary&quot;)
-    set_languages(&quot;c++11&quot;)
+target("console_c++")
+    set_kind("binary")
+    set_languages("c++11")
 
-    add_packages(&quot;protobuf-cpp&quot;)
+    add_packages("protobuf-cpp")
 
-    add_files(&quot;src/*.cpp&quot;)
-    add_files(&quot;src/*.proto&quot;, {rules = &quot;protobuf.cpp&quot;})
+    add_files("src/*.cpp")
+    add_files("src/*.proto", {rules = "protobuf.cpp"})
 </code></pre>
 <h2 id="lexyacc-">Lex&amp;Yacc程序</h2>
-<pre><code class="lang-lua">target(&quot;calc&quot;)
-    set_kind(&quot;binary&quot;)
-    add_rules(&quot;lex&quot;, &quot;yacc&quot;)
-    add_files(&quot;src/*.l&quot;, &quot;src/*.y&quot;)
+<pre><code class="lang-lua">target("calc")
+    set_kind("binary")
+    add_rules("lex", "yacc")
+    add_files("src/*.l", "src/*.y")
 </code></pre>
 </article>
 </body>

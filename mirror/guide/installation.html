@@ -91,24 +91,24 @@
 }
 </style>
     <h2 id="master">Master</h2>
-<p>!&gt; Note! xmake is not recommended to install under root!</p>
+<p>!> Note! xmake is not recommended to install under root!</p>
 <h4 id="via-curl">via curl</h4>
-<pre><code class="lang-bash">bash &lt;(curl -fsSL https://xmake.io/shget.text)
+<pre><code class="lang-bash">bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
 <h4 id="via-wget">via wget</h4>
-<pre><code class="lang-bash">bash &lt;(wget https://xmake.io/shget.text -O -)
+<pre><code class="lang-bash">bash <(wget https://xmake.io/shget.text -O -)
 </code></pre>
 <h4 id="via-powershell">via powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
 </code></pre>
-<p>!&gt; If the ps script execution prompt fails, you can try to execute in administrator mode.</p>
+<p>!> If the ps script execution prompt fails, you can try to execute in administrator mode.</p>
 <h2 id="windows">Windows</h2>
 <h3 id="via-installer">via installer</h3>
 <ol>
 <li>Download xmake windows installer from <a href="https://github.com/xmake-io/xmake/releases">Releases</a></li>
 <li>Run xmake-[version].[win32|win64].exe</li>
 </ol>
-<p>!&gt; Releases/xmake-[version].[win32|win64].zip has not installer, we need unzip it and add PATH environment variables by ourself.</p>
+<p>!> Releases/xmake-[version].[win32|win64].zip has not installer, we need unzip it and add PATH environment variables by ourself.</p>
 <h3 id="via-scoop">via scoop</h3>
 <pre><code class="lang-bash">scoop install xmake
 </code></pre>
@@ -138,7 +138,7 @@
 </code></pre>
 <h2 id="source-compilation-and-installation">Source compilation and installation</h2>
 <h3 id="installation">Installation</h3>
-<p>!&gt; Note! xmake is not recommended to install under root!</p>
+<p>!> Note! xmake is not recommended to install under root!</p>
 <pre><code class="lang-bash">git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
 make build
@@ -149,7 +149,7 @@ source ~/.xmake/profile
 <pre><code class="lang-bash">git clone --recursive https://gitee.com/tboox/xmake.git
 git clone --recursive https://gitlab.com/tboox/xmake.git
 </code></pre>
-<p>!&gt; Since the current xmake source maintains dependencies via git submodule, it is necessary to add the <code>--recursive</code> parameter to pull all submodules at the same time. Please do not download the tar.gz source directly, because github does not automatically package submodules. Code.</p>
+<p>!> Since the current xmake source maintains dependencies via git submodule, it is necessary to add the <code>--recursive</code> parameter to pull all submodules at the same time. Please do not download the tar.gz source directly, because github does not automatically package submodules. Code.</p>
 <p>If you forget to add <code>--recursive</code> when git clone, you can also execute <code>git submodule update --init</code> to pull all submodules, for example:</p>
 <pre><code class="lang-bash">git clone https://github.com/xmake-io/xmake.git
 cd ./xmake
@@ -157,7 +157,7 @@ git submodule update --init
 make build
 ./scripts/get.sh __local__ __install_only__
 </code></pre>
-<p>!&gt; <code>./get.sh __local__</code> is installed to <code>~/.local/xmake</code>, and then loaded by <code>source ~/.xmake/profile</code>, so after the installation, the current terminal fails to execute xmake, If the prompt is not found, manually execute <code>source ~/.xmake/profile</code>, and the next time you open the terminal, you don&#39;t need it.</p>
+<p>!> <code>./get.sh __local__</code> is installed to <code>~/.local/xmake</code>, and then loaded by <code>source ~/.xmake/profile</code>, so after the installation, the current terminal fails to execute xmake, If the prompt is not found, manually execute <code>source ~/.xmake/profile</code>, and the next time you open the terminal, you don&#39;t need it.</p>
 <h3 id="uninstall">Uninstall</h3>
 <pre><code class="lang-bash">./scripts/get.sh __uninstall__
 </code></pre>
@@ -173,7 +173,7 @@ make build
 <li>If you want to speed up compilation, you can install ccache, xmake will automatically detect and use, which is also optional.</li>
 </ol>
 <h2 id="other-installation-methods">Other installation methods</h2>
-<p>!&gt; This is also the source code compilation and installation, but the installation path will be written directly to <code>/usr/</code>, which requires root privileges, so unless special circumstances, this installation method is not recommended, it is recommended to use the <code>./get. Sh __local__</code> way to install, the installation path of the two installation methods is different, do not mix.</p>
+<p>!> This is also the source code compilation and installation, but the installation path will be written directly to <code>/usr/</code>, which requires root privileges, so unless special circumstances, this installation method is not recommended, it is recommended to use the <code>./get. Sh __local__</code> way to install, the installation path of the two installation methods is different, do not mix.</p>
 <p>Compile and install via make:</p>
 <pre><code class="lang-bash">make build; sudo make install
 </code></pre>

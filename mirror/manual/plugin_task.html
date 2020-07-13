@@ -104,27 +104,27 @@
 <tr>
 <td><a href="#task">task</a></td>
 <td>Define plugins or tasks</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#task_end">task_end</a></td>
 <td>End defining plugins or tasks</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="#taskset_menu">set_menu</a></td>
 <td>Set Task Menu</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#taskset_category">set_category</a></td>
 <td>Set Task Category</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#taskon_run">on_run</a></td>
 <td>Set Task Run Script</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 </tbody>
 </table>
@@ -132,24 +132,24 @@
 <h4 id="defining-plugins-or-tasks">Defining plugins or tasks</h4>
 <p>The <code>task</code> field is used to describe a custom task implementation, in the same level as <a href="#target">target</a> and <a href="#option">option</a>.</p>
 <p>For example, here is a simple task defined:</p>
-<pre><code class="lang-lua">task(&quot;hello&quot;)
+<pre><code class="lang-lua">task("hello")
 
     -- Set the run script
     on_run(function ()
-        print(&quot;hello xmake!&quot;)
+        print("hello xmake!")
     end)
 </code></pre>
 <p>This task only needs to print <code>hello xmake!</code>, how do you run it?</p>
 <p>Since the <a href="#taskset_menu">set_menu</a> setting menu is not used here, this task can only be called inside the custom script of <code>xmake.lua</code> or other tasks, for example:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
+<pre><code class="lang-lua">target("test")
 
     after_build(function (target)
 
         -- Import task module
-        import(&quot;core.project.task&quot;)
+        import("core.project.task")
 
         -- Run the hello task
-        task.run(&quot;hello&quot;)
+        task.run("hello")
     end)
 </code></pre>
 <p>Run the <code>hello</code> task after building the <code>test</code> target.</p>
@@ -159,60 +159,60 @@
 <h3 id="task-set_menu">task:set_menu</h3>
 <h4 id="setting-the-task-menu">Setting the task menu</h4>
 <p>By setting a menu, this task can be opened to the user to manually call through the command line. The menu settings are as follows:</p>
-<pre><code class="lang-lua">task(&quot;echo&quot;)
+<pre><code class="lang-lua">task("echo")
 
     -- Set the run script
     on_run(function ()
 
         -- Import parameter option module
-        import(&quot;core.base.option&quot;)
+        import("core.base.option")
 
         -- Initialize color mode
-        local modes = &quot;&quot;
-        for _, mode in ipairs({&quot;bright&quot;, &quot;dim&quot;, &quot;blink&quot;, &quot;reverse&quot;}) do
+        local modes = ""
+        for _, mode in ipairs({"bright", "dim", "blink", "reverse"}) do
             if option.get(mode) then
-                modes = modes .. &quot; &quot; .. mode
+                modes = modes .. " " .. mode
             end
         end
 
         -- Get parameter content and display information
-        cprint(&quot;${%s%s}%s&quot;, option.get(&quot;color&quot;), modes, table.concat(option.get(&quot;contents&quot;) or {}, &quot; &quot;))
+        cprint("${%s%s}%s", option.get("color"), modes, table.concat(option.get("contents") or {}, " "))
     end)
 
     -- Set the command line options for the plugin. There are no parameter options here, just the plugin description.
     set_menu {
                 -- Settings menu usage
-                usage = &quot;xmake echo [options]&quot;
+                usage = "xmake echo [options]"
 
                 -- Setup menu description
-            ,   description = &quot;Echo the given info!&quot;
+            ,   description = "Echo the given info!"
 
                 -- Set menu options, if there are no options, you can set it to {}
             ,   options =
                 {
                     -- Set k mode as key-only bool parameter
-                    {&#39;b&#39;, &quot;bright&quot;, &quot;k&quot;, nil, &quot;Enable bright.&quot; }
-                ,   {&#39;d&#39;, &quot;dim&quot;, &quot;k&quot;, nil, &quot;Enable dim.&quot; }
-                ,   {&#39;-&#39;, &quot;blink&quot;, &quot;k&quot;, nil, &quot;Enable blink.&quot; }
-                ,   {&#39;r&#39;, &quot;reverse&quot;, &quot;k&quot;, nil, &quot;Reverse color.&quot; }
+                    {&#39;b&#39;, "bright", "k", nil, "Enable bright." }
+                ,   {&#39;d&#39;, "dim", "k", nil, "Enable dim." }
+                ,   {&#39;-&#39;, "blink", "k", nil, "Enable blink." }
+                ,   {&#39;r&#39;, "reverse", "k", nil, "Reverse color." }
 
                     -- When the menu is displayed, a blank line
                 ,   {}
 
                     -- Set kv as the key-value parameter and set the default value: black
-                ,   {&#39;c&#39;, &quot;color&quot;, &quot;kv&quot;, &quot;black&quot;, &quot;Set the output color.&quot;
-                                                     , &quot; - red&quot;
-                                                     , &quot; - blue&quot;
-                                                     , &quot; - yellow&quot;
-                                                     , &quot; - green&quot;
-                                                     , &quot; - magenta&quot;
-                                                     , &quot; - cyan&quot;
-                                                     , &quot; - white&quot; }
+                ,   {&#39;c&#39;, "color", "kv", "black", "Set the output color."
+                                                     , " - red"
+                                                     , " - blue"
+                                                     , " - yellow"
+                                                     , " - green"
+                                                     , " - magenta"
+                                                     , " - cyan"
+                                                     , " - white" }
 
                     -- Set `vs` as a value multivalued parameter and a `v` single value type
                     -- generally placed last, used to get a list of variable parameters
                 ,   {}
-                ,   {nil, &quot;contents&quot;, &quot;vs&quot;, nil, &quot;The info contents.&quot; }
+                ,   {nil, "contents", "vs", nil, "The info contents." }
                 }
             }
 </code></pre>
@@ -266,7 +266,7 @@ Options:
 
     Contents ... The info contents.
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>The most part of the menu is the common options built into xmake. Basically, each task will be used. You don&#39;t need to define it yourself to simplify the menu definition.<br>&lt;/p&gt;
+<p><p class="tip"><br>The most part of the menu is the common options built into xmake. Basically, each task will be used. You don&#39;t need to define it yourself to simplify the menu definition.<br></p>
 
 </p>
 <p>Below, let&#39;s actually run this task, for example, I want to display the red <code>hello xmake!</code>, only need to:</p>
@@ -275,11 +275,11 @@ Options:
 <p>You can also use the full name of the option and highlight it:</p>
 <pre><code class="lang-bash">$ xmake echo --color=red --bright hello xmake!
 </code></pre>
-<p>The last variable argument list is retrieved by <code>option.get(&quot;contents&quot;)</code> in the <code>run</code> script, which returns an array of type <code>table</code>.</p>
+<p>The last variable argument list is retrieved by <code>option.get("contents")</code> in the <code>run</code> script, which returns an array of type <code>table</code>.</p>
 <h3 id="task-set_category">task:set_category</h3>
 <h4 id="setting-task-categories">Setting task categories</h4>
 <p>It is only used for grouping of menus. Of course, the plugin will use <code>plugin</code> by default. The built-in task will use <code>action</code> by default, but it is just a convention.</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>You can use any name you define yourself. The same name will be grouped and displayed together. If it is set to <code>plugin</code>, it will be displayed in the Plugins group of xmake.<br>&lt;/p&gt;
+<p><p class="tip"><br>You can use any name you define yourself. The same name will be grouped and displayed together. If it is set to <code>plugin</code>, it will be displayed in the Plugins group of xmake.<br></p>
 
 </p>
 <p>E.g:</p>
@@ -296,16 +296,16 @@ Options:
 <h3 id="task-on_run">task:on_run</h3>
 <h4 id="setting-up-a-task-to-run-a-script">Setting up a task to run a script</h4>
 <p>There are two ways to set it up. The easiest way is to set the inline function:</p>
-<pre><code class="lang-lua">task(&quot;hello&quot;)
+<pre><code class="lang-lua">task("hello")
 
     on_run(function ()
-        print(&quot;hello xmake!&quot;)
+        print("hello xmake!")
     end)
 </code></pre>
 <p>This is convenient and small for small tasks, but it is not suitable for large tasks, such as plugins, which require complex scripting support.</p>
 <p>This time you need a separate module file to set up the run script, for example:</p>
-<pre><code class="lang-lua">task(&quot;hello&quot;)
-    on_run(&quot;main&quot;)
+<pre><code class="lang-lua">task("hello")
+    on_run("main")
 </code></pre>
 <p>Here the <code>main</code> is set to run the main entry module for the script. The file name is <code>main.lua</code>, placed in the same directory as <code>xmake.lua</code> that defines <code>task</code>. Of course, you can use other file names.</p>
 <p>The directory structure is as follows:</p>
@@ -314,18 +314,18 @@ Options:
     - main.lua
 </code></pre><p>The contents of <code>main.lua</code> are as follows:</p>
 <pre><code class="lang-lua">function main(...)
-    print(&quot;hello xmake!&quot;)
+    print("hello xmake!")
 end
 </code></pre>
 <p>It&#39;s a simple script file with the main function of <code>main</code>. You can import various extension modules via <a href="/manual/builtin_modules?id=import">import</a> to implement complex functions, such as:</p>
 <pre><code class="lang-lua">-- Import parameter option module
-import(&quot;core.base.option&quot;)
+import("core.base.option")
 
 -- Entrance function
 function main(...)
 
     -- Get the parameter content
-    print(&quot;color: %s&quot;, option.get(&quot;color&quot;))
+    print("color: %s", option.get("color"))
 end
 </code></pre>
 <p>You can also create multiple custom module files in the current directory and use them after importing via <a href="/manual/builtin_modules?id=import">import</a>, for example:</p>
@@ -336,14 +336,14 @@ end
 </code></pre><p>The contents of <code>module.lua</code> are as follows:</p>
 <pre><code class="lang-lua">-- Define an export interface
 function hello()
-    print(&quot;hello xmake!&quot;)
+    print("hello xmake!")
 end
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>The private interface is named by the <code>_hello</code> with a descending line prefix, so that the imported module will not contain this interface and will only be used inside the module itself.<br>&lt;/p&gt;
+<p><p class="tip"><br>The private interface is named by the <code>_hello</code> with a descending line prefix, so that the imported module will not contain this interface and will only be used inside the module itself.<br></p>
 
 </p>
 <p>Then make a call in <code>main.lua</code>:</p>
-<pre><code class="lang-lua">import(&quot;module&quot;)
+<pre><code class="lang-lua">import("module")
 
 function main(...)
     module.hello()
@@ -351,9 +351,9 @@ end
 </code></pre>
 <p>For more modules, see: <a href="/manual/builtin_modules">Builtin Module</a> and <a href="/manual/extension_modules">Extension Module</a></p>
 <p>Among them, the parameter in <code>main(...)</code> is specified by <code>task.run</code>, for example:</p>
-<pre><code class="lang-lua">task.run(&quot;hello&quot;, {color=&quot;red&quot;}, arg1, arg2, arg3)
+<pre><code class="lang-lua">task.run("hello", {color="red"}, arg1, arg2, arg3)
 </code></pre>
-<p>Inside the <code>arg1, arg2</code> these are the arguments to the <code>hello</code> task <code>main(...)</code> entry, and <code>{color=&quot;red&quot;}</code> to specify the parameter options in the task menu.</p>
+<p>Inside the <code>arg1, arg2</code> these are the arguments to the <code>hello</code> task <code>main(...)</code> entry, and <code>{color="red"}</code> to specify the parameter options in the task menu.</p>
 <p>For a more detailed description of <code>task.run</code>, see: <a href="#task-run">task.run</a></p>
 </article>
 </body>

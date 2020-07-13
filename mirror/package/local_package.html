@@ -100,11 +100,11 @@
 - pcre.pkg
 - ...
 </code></pre><p>If you want the current project to recognize loading these packages, you first need to specify the package directory path, for example:</p>
-<pre><code class="lang-lua">add_packagedirs(&quot;packages&quot;)
+<pre><code class="lang-lua">add_packagedirs("packages")
 </code></pre>
 <p>Once specified, you can add integration package dependencies in the target scope via the <a href="/manual/project_target?id=targetadd_packages">add_packages</a> interface, for example:</p>
-<pre><code class="lang-lua">target(&quot;tbox&quot;)
-    add_packages(&quot;zlib&quot;, &quot;polarssl&quot;, &quot;pcre&quot;, &quot;mysql&quot;)
+<pre><code class="lang-lua">target("tbox")
+    add_packages("zlib", "polarssl", "pcre", "mysql")
 </code></pre>
 <p>So how to generate a *.pkg package, if it is based on xmake project, the generation method is very simple, only need:</p>
 <pre><code class="lang-console">$ cd tbox

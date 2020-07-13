@@ -104,27 +104,27 @@
 <tr>
 <td><a href="#task">task</a></td>
 <td>定义插件或者任务</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#task_end">task_end</a></td>
 <td>结束定义插件或任务</td>
-<td>&gt;= 2.1.1</td>
+<td>>= 2.1.1</td>
 </tr>
 <tr>
 <td><a href="#taskset_menu">set_menu</a></td>
 <td>设置任务菜单</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#taskset_category">set_category</a></td>
 <td>设置任务类别</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#taskon_run">on_run</a></td>
 <td>设置任务运行脚本</td>
-<td>&gt;= 2.0.1</td>
+<td>>= 2.0.1</td>
 </tr>
 </tbody>
 </table>
@@ -132,24 +132,24 @@
 <h4 id="-">定义插件或者任务</h4>
 <p><code>task</code>域用于描述一个自定义的任务实现，与<a href="#target">target</a>和<a href="#option">option</a>同级。</p>
 <p>例如，这里定义一个最简单的任务：</p>
-<pre><code class="lang-lua">task(&quot;hello&quot;)
+<pre><code class="lang-lua">task("hello")
 
     -- 设置运行脚本
     on_run(function ()
-        print(&quot;hello xmake!&quot;)
+        print("hello xmake!")
     end)
 </code></pre>
 <p>这个任务只需要打印<code>hello xmake!</code>，那如何来运行呢？</p>
 <p>由于这里没有使用<a href="#taskset_menu">set_menu</a>设置菜单，因此这个任务只能再<code>xmake.lua</code>的自定义脚本或者其他任务内部调用，例如：</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
+<pre><code class="lang-lua">target("test")
 
     after_build(function (target)
 
         -- 导入task模块
-        import(&quot;core.project.task&quot;)
+        import("core.project.task")
 
         -- 运行hello任务
-        task.run(&quot;hello&quot;)
+        task.run("hello")
     end)
 </code></pre>
 <p>在构建完<code>test</code>目标后运行<code>hello</code>任务。</p>
@@ -159,60 +159,60 @@
 <h3 id="task-set_menu">task:set_menu</h3>
 <h4 id="-">设置任务菜单</h4>
 <p>通过设置一个菜单，这个任务就可以开放给用户自己通过命令行手动调用，菜单的设置如下：</p>
-<pre><code class="lang-lua">task(&quot;echo&quot;)
+<pre><code class="lang-lua">task("echo")
 
     -- 设置运行脚本
     on_run(function ()
 
         -- 导入参数选项模块
-        import(&quot;core.base.option&quot;)
+        import("core.base.option")
 
         -- 初始化颜色模式
-        local modes = &quot;&quot;
-        for _, mode in ipairs({&quot;bright&quot;, &quot;dim&quot;, &quot;blink&quot;, &quot;reverse&quot;}) do
+        local modes = ""
+        for _, mode in ipairs({"bright", "dim", "blink", "reverse"}) do
             if option.get(mode) then
-                modes = modes .. &quot; &quot; .. mode 
+                modes = modes .. " " .. mode 
             end
         end
 
         -- 获取参数内容并且显示信息
-        cprint(&quot;${%s%s}%s&quot;, option.get(&quot;color&quot;), modes, table.concat(option.get(&quot;contents&quot;) or {}, &quot; &quot;))
+        cprint("${%s%s}%s", option.get("color"), modes, table.concat(option.get("contents") or {}, " "))
     end)
 
     -- 设置插件的命令行选项，这里没有任何参数选项，仅仅显示插件描述
     set_menu {
                 -- 设置菜单用法
-                usage = &quot;xmake echo [options]&quot;
+                usage = "xmake echo [options]"
 
                 -- 设置菜单描述
-            ,   description = &quot;Echo the given info!&quot;
+            ,   description = "Echo the given info!"
 
                 -- 设置菜单选项，如果没有选项，可以设置为{}
             ,   options = 
                 {
                     -- 设置k模式作为key-only型bool参数
-                    {&#39;b&#39;, &quot;bright&quot;,     &quot;k&quot;,  nil,       &quot;Enable bright.&quot;               }      
-                ,   {&#39;d&#39;, &quot;dim&quot;,        &quot;k&quot;,  nil,       &quot;Enable dim.&quot;                  }      
-                ,   {&#39;-&#39;, &quot;blink&quot;,      &quot;k&quot;,  nil,       &quot;Enable blink.&quot;                }      
-                ,   {&#39;r&#39;, &quot;reverse&quot;,    &quot;k&quot;,  nil,       &quot;Reverse color.&quot;               }      
+                    {&#39;b&#39;, "bright",     "k",  nil,       "Enable bright."               }      
+                ,   {&#39;d&#39;, "dim",        "k",  nil,       "Enable dim."                  }      
+                ,   {&#39;-&#39;, "blink",      "k",  nil,       "Enable blink."                }      
+                ,   {&#39;r&#39;, "reverse",    "k",  nil,       "Reverse color."               }      
 
                     -- 菜单显示时，空白一行
                 ,   {}
 
                     -- 设置kv作为key-value型参数，并且设置默认值：black
-                ,   {&#39;c&#39;, &quot;color&quot;,      &quot;kv&quot;, &quot;black&quot;,   &quot;Set the output color.&quot;
-                                                     ,   &quot;    - red&quot;   
-                                                     ,   &quot;    - blue&quot;
-                                                     ,   &quot;    - yellow&quot;
-                                                     ,   &quot;    - green&quot;
-                                                     ,   &quot;    - magenta&quot;
-                                                     ,   &quot;    - cyan&quot; 
-                                                     ,   &quot;    - white&quot;                  }
+                ,   {&#39;c&#39;, "color",      "kv", "black",   "Set the output color."
+                                                     ,   "    - red"   
+                                                     ,   "    - blue"
+                                                     ,   "    - yellow"
+                                                     ,   "    - green"
+                                                     ,   "    - magenta"
+                                                     ,   "    - cyan" 
+                                                     ,   "    - white"                  }
 
                     -- 设置`vs`作为values多值型参数，还有`v`单值类型
                     -- 一般放置在最后，用于获取可变参数列表
                 ,   {}
-                ,   {nil, &quot;contents&quot;,   &quot;vs&quot;, nil,       &quot;The info contents.&quot;           }
+                ,   {nil, "contents",   "vs", nil,       "The info contents."           }
                 }
             } 
 </code></pre>
@@ -266,7 +266,7 @@ Options:
 
     contents ...                           The info contents.
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>其中菜单最开头的部分选项，是xmake内置的常用选项，基本上每个任务都会用到，不需要自己额外定义，简化菜单定义。<br>&lt;/p&gt;
+<p><p class="tip"><br>其中菜单最开头的部分选项，是xmake内置的常用选项，基本上每个任务都会用到，不需要自己额外定义，简化菜单定义。<br></p>
 
 </p>
 <p>下面，我们来实际运行下这个任务，例如我要显示红色的<code>hello xmake!</code>，只需要：</p>
@@ -275,11 +275,11 @@ Options:
 <p>也可以使用选项全名，并且加上高亮：</p>
 <pre><code class="lang-bash">$ xmake echo --color=red --bright hello xmake!
 </code></pre>
-<p>最后面的可变参数列表，在<code>run</code>脚本中通过<code>option.get(&quot;contents&quot;)</code>获取，返回的是一个<code>table</code>类型的数组。</p>
+<p>最后面的可变参数列表，在<code>run</code>脚本中通过<code>option.get("contents")</code>获取，返回的是一个<code>table</code>类型的数组。</p>
 <h3 id="task-set_category">task:set_category</h3>
 <h4 id="-">设置任务类别</h4>
 <p>仅仅用于菜单的分组显示，当然插件默认会用<code>plugin</code>，内置任务默认会用：<code>action</code>，但也仅仅只是个约定。</p>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为<code>plugin</code>，就会显示到xmake的Plugins分组中去。<br>&lt;/p&gt;
+<p><p class="tip"><br>你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为<code>plugin</code>，就会显示到xmake的Plugins分组中去。<br></p>
 
 </p>
 <p>例如：</p>
@@ -296,16 +296,16 @@ Options:
 <h3 id="task-on_run">task:on_run</h3>
 <h4 id="-">设置任务运行脚本</h4>
 <p>可以有两种设置方式，最简单的就是设置内嵌函数：</p>
-<pre><code class="lang-lua">task(&quot;hello&quot;)
+<pre><code class="lang-lua">task("hello")
 
     on_run(function ()
-        print(&quot;hello xmake!&quot;)
+        print("hello xmake!")
     end)
 </code></pre>
 <p>这种对于小任务很方便，也很简洁，但是对于大型任务就不太适用了，例如插件等，需要复杂的脚本支持。</p>
 <p>这个时候就需要独立的模块文件来设置运行脚本，例如：</p>
-<pre><code class="lang-lua">task(&quot;hello&quot;)
-    on_run(&quot;main&quot;)
+<pre><code class="lang-lua">task("hello")
+    on_run("main")
 </code></pre>
 <p>这里的<code>main</code>设置为脚本运行主入口模块，文件名为<code>main.lua</code>，放在定义<code>task</code>的<code>xmake.lua</code>的同目录下，当然你可以起其他文件名。</p>
 <p>目录结构如下：</p>
@@ -314,18 +314,18 @@ Options:
     - main.lua
 </code></pre><p><code>main.lua</code>里面内容如下：</p>
 <pre><code class="lang-lua">function main(...)
-    print(&quot;hello xmake!&quot;)
+    print("hello xmake!")
 end
 </code></pre>
 <p>就是一个简单的带<code>main</code>主函数的脚本文件，你可以通过<a href="/zh-cn/manual/builtin_modules?id=import">import</a>导入各种扩展模块，实现复杂功能，例如：</p>
 <pre><code class="lang-lua">-- 导入参数选项模块
-import(&quot;core.base.option&quot;)
+import("core.base.option")
 
 -- 入口函数
 function main(...)
 
     -- 获取参数内容
-    print(&quot;color: %s&quot;, option.get(&quot;color&quot;))
+    print("color: %s", option.get("color"))
 end
 </code></pre>
 <p>你也可以在当前目录下，创建多个自定义的模块文件，通过<a href="/zh-cn/manual/builtin_modules?id=import">import</a>导入后使用，例如：</p>
@@ -336,14 +336,14 @@ end
 </code></pre><p><code>module.lua</code>的内容如下：</p>
 <pre><code class="lang-lua">-- 定义一个导出接口
 function hello()
-    print(&quot;hello xmake!&quot;)
+    print("hello xmake!")
 end
 </code></pre>
-<p>&lt;p class=&quot;tip&quot;&gt;<br>私有接口，通过<code>_hello</code>带下滑线前缀命名，这样导入的模块就不会包含此接口，只在模块自身内部使用。<br>&lt;/p&gt;
+<p><p class="tip"><br>私有接口，通过<code>_hello</code>带下滑线前缀命名，这样导入的模块就不会包含此接口，只在模块自身内部使用。<br></p>
 
 </p>
 <p>然后在<code>main.lua</code>进行调用：</p>
-<pre><code class="lang-lua">import(&quot;module&quot;)
+<pre><code class="lang-lua">import("module")
 
 function main(...)
     module.hello()
@@ -351,9 +351,9 @@ end
 </code></pre>
 <p>更多模块介绍见：<a href="/zh-cn/manual/builtin_modules">内置模块</a>和<a href="/zh-cn/manual/extension_modules">扩展模块</a></p>
 <p>其中，<code>main(...)</code>中参数，是通过<code>task.run</code>指定的，例如：</p>
-<pre><code class="lang-lua">task.run(&quot;hello&quot;, {color=&quot;red&quot;}, arg1, arg2, arg3)
+<pre><code class="lang-lua">task.run("hello", {color="red"}, arg1, arg2, arg3)
 </code></pre>
-<p>里面的<code>arg1, arg2</code>这些就是传入<code>hello</code>任务<code>main(...)</code>入口的参数列表，而<code>{color=&quot;red&quot;}</code>用来指定任务菜单中的参数选项。</p>
+<p>里面的<code>arg1, arg2</code>这些就是传入<code>hello</code>任务<code>main(...)</code>入口的参数列表，而<code>{color="red"}</code>用来指定任务菜单中的参数选项。</p>
 <p>更加详细的<code>task.run</code>描述，见：<a href="#task-run">task.run</a></p>
 </article>
 </body>

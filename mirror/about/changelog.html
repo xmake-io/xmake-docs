@@ -102,7 +102,7 @@
 <li><a href="https://github.com/xmake-io/xmake/issues/828">#828</a>: Support to import sub-directory files for protobuf rules</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/835">#835</a>: Improve mode.minsizerel to add /GL flags for msvc</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/828">#828</a>: Support multi-level directories for protobuf/import</li>
-<li><a href="https://github.com/xmake-io/xmake/issues/838#issuecomment-643570920">#838</a>: Support to override builtin-rules for <code>add_files(&quot;src/*.c&quot;, {rules = {&quot;xx&quot;, override = true}})</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/838#issuecomment-643570920">#838</a>: Support to override builtin-rules for <code>add_files("src/*.c", {rules = {"xx", override = true}})</code></li>
 <li><a href="https://github.com/xmake-io/xmake/issues/847">#847</a>: Support to parse include deps for rc file</li>
 <li>Improve msvc tool chain, remove the dependence of global environment variables</li>
 <li><a href="https://github.com/xmake-io/xmake/pull/857">#857</a>: Improved <code>set_toolchains()</code> when cross-compilation is supported, specific target can be switched to host toolchain and compiled at the same time</li>
@@ -178,7 +178,7 @@
 <h2 id="v2-3-1">v2.3.1</h2>
 <h3 id="new-features">New features</h3>
 <ul>
-<li><a href="https://github.com/xmake-io/xmake/issues/675">#675</a>: Support to compile <code>*.c</code> as c++, <code>add_files(&quot;*.c&quot;, {sourcekind = &quot;cxx&quot;})</code>.</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/675">#675</a>: Support to compile <code>*.c</code> as c++, <code>add_files("*.c", {sourcekind = "cxx"})</code>.</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/681">#681</a>: Support compile xmake on msys/cygwin and add msys/cygwin platform</li>
 <li>Add socket/pipe io modules and support to schedule socket/process/pipe in coroutine</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/192">#192</a>: Try building project with the third-party buildsystem</li>
@@ -257,7 +257,7 @@
 <li><a href="https://github.com/xmake-io/xmake/issues/440">#440</a>: Add <code>set_rundir()</code> and <code>add_runenvs()</code> api for target/run</li>
 <li><a href="https://github.com/xmake-io/xmake/pull/443">#443</a>: Add tab completion support</li>
 <li>Add <code>on_link</code>, <code>before_link</code> and <code>after_link</code> for rule and target</li>
-<li><a href="https://github.com/xmake-io/xmake/issues/190">#190</a>: Add <code>add_rules(&quot;lex&quot;, &quot;yacc&quot;)</code> rules to support lex/yacc projects</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/190">#190</a>: Add <code>add_rules("lex", "yacc")</code> rules to support lex/yacc projects</li>
 </ul>
 <h3 id="changes">Changes</h3>
 <ul>
@@ -300,7 +300,7 @@
 <li><a href="https://github.com/xmake-io/xmake/issues/318">#318</a>: Add <code>add_installfiles</code> api to target</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/339">#339</a>: Improve <code>add_requires</code> and <code>find_package</code> to integrate the 3rd package manager</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/327">#327</a>: Integrate with Conan package manager </li>
-<li>Add the builtin api <code>find_packages(&quot;pcre2&quot;, &quot;zlib&quot;)</code> to find multiple packages</li>
+<li>Add the builtin api <code>find_packages("pcre2", "zlib")</code> to find multiple packages</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/320">#320</a>: Add template configuration files and replace all variables before building</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/179">#179</a>: Generate CMakelist.txt file for <code>xmake project</code> plugin</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/361">#361</a>: Support vs2019 preview</li>
@@ -318,8 +318,8 @@
 <li><a href="https://github.com/xmake-io/xmake/issues/322">#322</a>: Add <code>option.add_features</code>, <code>option.add_cxxsnippets</code> and <code>option.add_csnippets</code></li>
 <li>Remove some deprecated interfaces of xmake 1.x, e.g. <code>add_option_xxx</code></li>
 <li><a href="https://github.com/xmake-io/xmake/issues/327">#327</a>: Support conan package manager for <code>lib.detect.find_package</code> </li>
-<li>Improve <code>lib.detect.find_package</code> and add builtin <code>find_packages(&quot;zlib 1.x&quot;, &quot;openssl&quot;, {xxx = ...})</code> api</li>
-<li>Mark <code>set_modes()</code> as deprecated, we use <code>add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)</code> instead of it</li>
+<li>Improve <code>lib.detect.find_package</code> and add builtin <code>find_packages("zlib 1.x", "openssl", {xxx = ...})</code> api</li>
+<li>Mark <code>set_modes()</code> as deprecated, we use <code>add_rules("mode.debug", "mode.release")</code> instead of it</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/353">#353</a>: Improve <code>target:set</code>, <code>target:add</code> and add <code>target:del</code> to modify target configuration</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/356">#356</a>: Add <code>qt_add_static_plugins()</code> api to support static Qt sdk</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/351">#351</a>: Support yasm for generating vs201x project</li>
@@ -327,7 +327,7 @@
 </ul>
 <h3 id="bugs-fixed">Bugs fixed</h3>
 <ul>
-<li>Fix cannot call <code>set_optimize()</code> to set optimization flags when exists <code>add_rules(&quot;mode.release&quot;)</code></li>
+<li>Fix cannot call <code>set_optimize()</code> to set optimization flags when exists <code>add_rules("mode.release")</code></li>
 <li><a href="https://github.com/xmake-io/xmake/issues/289">#289</a>: Fix unarchive gzip file failed on windows</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/296">#296</a>: Fix <code>option.add_includedirs</code> for cuda</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/321">#321</a>: Fix find program bug with $PATH envirnoment</li>
@@ -355,7 +355,7 @@
 <li><a href="https://github.com/xmake-io/xmake/issues/269">#269</a>: Clean up the temporary files at last 30 days</li>
 <li>Improve remote package manager</li>
 <li>Support to add packages with only header file</li>
-<li>Support to modify builtin package links, e.g. <code>add_packages(&quot;xxx&quot;, {links = {}})</code></li>
+<li>Support to modify builtin package links, e.g. <code>add_packages("xxx", {links = {}})</code></li>
 </ul>
 <h3 id="bugs-fixed">Bugs fixed</h3>
 <ul>
@@ -369,7 +369,7 @@
 <li>Add <code>set_config</code> to set the default configuration</li>
 <li>Add <code>$xmake --try</code> to try building project using third-party buildsystem</li>
 <li>Add <code>set_enabled(false)</code> to disable target </li>
-<li><a href="https://github.com/xmake-io/xmake/issues/69">#69</a>: Add remote package management, <code>add_requires(&quot;tbox ~1.6.1&quot;)</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/69">#69</a>: Add remote package management, <code>add_requires("tbox ~1.6.1")</code></li>
 <li><a href="https://github.com/xmake-io/xmake/pull/216">#216</a>: Add windows mfc rules</li>
 </ul>
 <h3 id="changes">Changes</h3>
@@ -407,7 +407,7 @@
 <h3 id="changes">Changes</h3>
 <ul>
 <li>Add FAQ to the auto-generated xmake.lua</li>
-<li>Support android NDK &gt;= r14</li>
+<li>Support android NDK >= r14</li>
 <li>Improve warning flags for swiftc</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/167">#167</a>: Improve custom rules</li>
 <li>Improve <code>os.files</code> and <code>os.dirs</code> api</li>
@@ -425,7 +425,7 @@
 <h3 id="new-features">New features</h3>
 <ul>
 <li>Add <code>del_files()</code> api to delete files in the files list</li>
-<li>Add <code>rule()</code>, <code>add_rules()</code> api to implement the custom build rule and improve <code>add_files(&quot;src/*.md&quot;, {rule = &quot;markdown&quot;})</code></li>
+<li>Add <code>rule()</code>, <code>add_rules()</code> api to implement the custom build rule and improve <code>add_files("src/*.md", {rule = "markdown"})</code></li>
 <li>Add <code>os.filesize()</code> api</li>
 <li>Add <code>core.ui.xxx</code> cui components</li>
 <li>Add <code>xmake f --menu</code> to configure project with a menu configuration interface</li>
@@ -439,8 +439,8 @@
 <li><a href="https://github.com/xmake-io/xmake/issues/151">#151</a>: Improve to build the share library for the mingw platform</li>
 <li>Improve to generate makefile plugin</li>
 <li>Improve the checking errors tips</li>
-<li>Improve <code>add_cxflags</code> .., force to set flags without auto checking: <code>add_cxflags(&quot;-DTEST&quot;, {force = true})</code></li>
-<li>Improve <code>add_files</code>, add force block to force to set flags without auto checking: <code>add_files(&quot;src/*.c&quot;, {force = {cxflags = &quot;-DTEST&quot;}})</code></li>
+<li>Improve <code>add_cxflags</code> .., force to set flags without auto checking: <code>add_cxflags("-DTEST", {force = true})</code></li>
+<li>Improve <code>add_files</code>, add force block to force to set flags without auto checking: <code>add_files("src/*.c", {force = {cxflags = "-DTEST"}})</code></li>
 <li>Improve to search the root project directory</li>
 <li>Improve to detect vs environment</li>
 <li>Upgrade luajit to 2.1.0-beta3</li>
@@ -467,7 +467,7 @@
 <li>Add <code>.gitignore</code> file when creating new projects</li>
 <li>Improve to create template project</li>
 <li>Improve to detect toolchains on macosx without xcode</li>
-<li>Improve <code>set_config_header</code> to support <code>set_config_header(&quot;config&quot;, {version = &quot;2.1.8&quot;, build = &quot;%Y%m%d%H%M&quot;})</code></li>
+<li>Improve <code>set_config_header</code> to support <code>set_config_header("config", {version = "2.1.8", build = "%Y%m%d%H%M"})</code></li>
 </ul>
 <h3 id="bugs-fixed">Bugs fixed</h3>
 <ul>
@@ -486,7 +486,7 @@
 <ul>
 <li>Support 24bits truecolors for <code>cprint()</code></li>
 <li>Support <code>@loader_path</code> and <code>$ORIGIN</code> for <code>add_rpathdirs()</code></li>
-<li>Improve <code>set_version(&quot;x.x.x&quot;, {build = &quot;%Y%m%d%H%M&quot;})</code> and add build version</li>
+<li>Improve <code>set_version("x.x.x", {build = "%Y%m%d%H%M"})</code> and add build version</li>
 <li>Move docs directory to xmake-docs repo</li>
 <li>Improve install and uninstall actions and support DESTDIR and PREFIX envirnoment variables</li>
 <li>Optimize to detect flags</li>
@@ -511,7 +511,7 @@
 <ul>
 <li>Improve <code>add_files</code> to configure the compile option of the given files</li>
 <li>Inherit links and linkdirs from the dependent targets and options</li>
-<li>Improve <code>target.add_deps</code> and add inherit config, .e.g <code>add_deps(&quot;test&quot;, {inherit = false})</code></li>
+<li>Improve <code>target.add_deps</code> and add inherit config, .e.g <code>add_deps("test", {inherit = false})</code></li>
 <li>Remove the binary files of <code>tbox.pkg</code></li>
 <li>Use <code>/Zi</code> instead of <code>/ZI</code> for msvc</li>
 </ul>
@@ -528,7 +528,7 @@
 <li><a href="https://github.com/xmake-io/xmake/issues/83">#83</a>: Add user extension modules to detect program, libraries and files.</li>
 <li>Add <code>find_program</code>, <code>find_file</code>, <code>find_library</code>, <code>find_tool</code> and <code>find_package</code> module interfaces.</li>
 <li>Add <code>net.*</code> and <code>devel.*</code> extension modules</li>
-<li>Add <code>val()</code> api to get the value of builtin-variable, .e.g <code>val(&quot;host&quot;)</code>, <code>val(&quot;env PATH&quot;)</code>, <code>val(&quot;shell echo hello&quot;)</code> and <code>val(&quot;reg HKEY_LOCAL_MACHINE\\XX;Value&quot;)</code></li>
+<li>Add <code>val()</code> api to get the value of builtin-variable, .e.g <code>val("host")</code>, <code>val("env PATH")</code>, <code>val("shell echo hello")</code> and <code>val("reg HKEY_LOCAL_MACHINE\\XX;Value")</code></li>
 <li>Support to compile the microsoft resource file (.rc)</li>
 <li>Add <code>has_flags</code>, <code>features</code> and <code>has_features</code> for detect module interfaces.</li>
 <li>Add <code>option.on_check</code>, <code>option.after_check</code> and <code>option.before_check</code> api</li>
@@ -550,7 +550,7 @@
 <li>Improve <code>print</code> interface to dump table</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/111">#111</a>: Add <code>--root</code> common option to allow run xmake command as root</li>
 <li><a href="https://github.com/xmake-io/xmake/pull/113">#113</a>: Privilege manage when running as root, store the root privilege and degrade.</li>
-<li>Improve <code>xxx_script</code> in <code>xmake.lua</code> to support pattern match, .e.g <code>on_build(&quot;iphoneos|arm*&quot;, function (target) end)</code></li>
+<li>Improve <code>xxx_script</code> in <code>xmake.lua</code> to support pattern match, .e.g <code>on_build("iphoneos|arm*", function (target) end)</code></li>
 <li>improve builtin-variables to support to get the value envirnoment and registry</li>
 <li>Improve to detect vstudio sdk and cross toolchains envirnoment</li>
 <li><a href="https://github.com/xmake-io/xmake/issues/71">#71</a>: Improve to detect compiler and linker from env vars</li>
@@ -561,7 +561,7 @@
 <li>Optimize <code>xmake rebuild</code> speed on windows</li>
 <li>Move <code>core.project.task</code> to <code>core.base.task</code></li>
 <li>Move <code>echo</code> and <code>app2ipa</code> plugins to <a href="https://github.com/xmake-io/xmake-plugins">xmake-plugins</a> repo.</li>
-<li>Add new api <code>set_config_header(&quot;config.h&quot;, {prefix = &quot;&quot;})</code> instead of <code>set_config_h</code> and <code>set_config_h_prefix</code></li>
+<li>Add new api <code>set_config_header("config.h", {prefix = ""})</code> instead of <code>set_config_h</code> and <code>set_config_h_prefix</code></li>
 </ul>
 <h3 id="bugs-fixed">Bugs fixed</h3>
 <ul>
@@ -694,7 +694,7 @@
 <h2 id="v2-0-4">v2.0.4</h2>
 <h3 id="new-features">New features</h3>
 <ul>
-<li>Add native shell support for <code>xmake.lua</code>. .e.g <code>add_ldflags(&quot;$(shell pkg-config --libs sqlite3)&quot;)</code></li>
+<li>Add native shell support for <code>xmake.lua</code>. .e.g <code>add_ldflags("$(shell pkg-config --libs sqlite3)")</code></li>
 <li>Enable pdb symbol files for windows</li>
 <li>Add debugger support on windows (vsjitdebugger, ollydbg, windbg ... )</li>
 <li>Add <code>getenv</code> interface for the global scope of <code>xmake.lua</code></li>

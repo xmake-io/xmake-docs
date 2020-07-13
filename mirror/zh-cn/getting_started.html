@@ -95,18 +95,18 @@
 <p>👉 <a href="https://xmake.io/#/zh-cn/about/sponsor">捐助页面</a></p>
 <h2 id="-">安装</h2>
 <h4 id="-curl">使用curl</h4>
-<pre><code class="lang-bash">bash &lt;(curl -fsSL https://xmake.io/shget.text)
+<pre><code class="lang-bash">bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
 <h4 id="-wget">使用wget</h4>
-<pre><code class="lang-bash">bash &lt;(wget https://xmake.io/shget.text -O -)
+<pre><code class="lang-bash">bash <(wget https://xmake.io/shget.text -O -)
 </code></pre>
 <h4 id="-powershell">使用powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
 </code></pre>
 <h2 id="-">简单的工程描述</h2>
-<p>&lt;img src=&quot;https://xmake.io/assets/img/index/showcode1.png&quot; width=&quot;340px&quot; /&gt;</p>
+<p><img src="https://xmake.io/assets/img/index/showcode1.png" width="340px" /></p>
 <h2 id="-">包依赖描述</h2>
-<p>&lt;img src=&quot;https://xmake.io/assets/img/index/add_require.png&quot; width=&quot;600px&quot; /&gt;</p>
+<p><img src="https://xmake.io/assets/img/index/add_require.png" width="600px" /></p>
 <p>官方的xmake包管理仓库: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <h2 id="-">构建工程</h2>
 <pre><code class="lang-bash">$ xmake
@@ -124,7 +124,7 @@ $ xmake
 <h2 id="-">图形化菜单配置</h2>
 <pre><code class="lang-bash">$ xmake f --menu
 </code></pre>
-<p>&lt;img src=&quot;https://xmake.io/assets/img/index/menuconf.png&quot; width=&quot;650px&quot; /&gt;</p>
+<p><img src="https://xmake.io/assets/img/index/menuconf.png" width="650px" /></p>
 <h2 id="-ninja-">跟ninja一样快的构建速度</h2>
 <p>测试工程: <a href="https://github.com/xmake-io/xmake/tree/master/core">xmake-core</a></p>
 <h3 id="-">多任务并行编译测试</h3>
@@ -203,9 +203,9 @@ $ xmake
 </table>
 <h2 id="-">包依赖管理</h2>
 <h3 id="-">下载和编译</h3>
-<p>&lt;img src=&quot;https://xmake.io/assets/img/index/package_manage.png&quot; width=&quot;650px&quot; /&gt;</p>
+<p><img src="https://xmake.io/assets/img/index/package_manage.png" width="650px" /></p>
 <h3 id="-">架构和流程</h3>
-<p>&lt;img src=&quot;https://xmake.io/assets/img/index/package_arch.png&quot; width=&quot;650px&quot; /&gt;</p>
+<p><img src="https://xmake.io/assets/img/index/package_arch.png" width="650px" /></p>
 <h2 id="-">支持平台</h2>
 <ul>
 <li>Windows (x86, x64)</li>
@@ -245,73 +245,73 @@ $ xmake
 </ul>
 <h2 id="-">更多例子</h2>
 <p>Debug和Release模式：</p>
-<pre><code class="lang-lua">add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 
-target(&quot;console&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
-    if is_mode(&quot;debug&quot;) then
-        add_defines(&quot;DEBUG&quot;)
+target("console")
+    set_kind("binary")
+    add_files("src/*.c")
+    if is_mode("debug") then
+        add_defines("DEBUG")
     end
 </code></pre>
 <p>自定义脚本:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
     after_build(function (target)
-        print(&quot;hello: %s&quot;, target:name())
-        os.exec(&quot;echo %s&quot;, target:targetfile())
+        print("hello: %s", target:name())
+        os.exec("echo %s", target:targetfile())
     end)
 </code></pre>
 <p>下载和使用在<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>和第三方包仓库的依赖包：</p>
-<pre><code class="lang-lua">add_requires(&quot;tbox &gt;1.6.1&quot;, &quot;libuv master&quot;, &quot;vcpkg::ffmpeg&quot;, &quot;brew::pcre2/libpcre2-8&quot;)
-add_requires(&quot;conan::OpenSSL/1.0.2n@conan/stable&quot;, {alias = &quot;openssl&quot;, optional = true, debug = true}) 
-target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.c&quot;)
-    add_packages(&quot;tbox&quot;, &quot;libuv&quot;, &quot;vcpkg::ffmpeg&quot;, &quot;brew::pcre2/libpcre2-8&quot;, &quot;openssl&quot;)
+<pre><code class="lang-lua">add_requires("tbox >1.6.1", "libuv master", "vcpkg::ffmpeg", "brew::pcre2/libpcre2-8")
+add_requires("conan::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", optional = true, debug = true}) 
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("tbox", "libuv", "vcpkg::ffmpeg", "brew::pcre2/libpcre2-8", "openssl")
 </code></pre>
 <p>Qt QuickApp应用程序:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    add_rules(&quot;qt.quickapp&quot;)
-    add_files(&quot;src/*.cpp&quot;)
-    add_files(&quot;src/qml.qrc&quot;)
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.quickapp")
+    add_files("src/*.cpp")
+    add_files("src/qml.qrc")
 </code></pre>
 <p>Cuda程序:</p>
-<pre><code class="lang-lua">target(&quot;test&quot;)
-    set_kind(&quot;binary&quot;)
-    add_files(&quot;src/*.cu&quot;)
-    add_cugencodes(&quot;native&quot;)
-    add_cugencodes(&quot;compute_30&quot;)
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.cu")
+    add_cugencodes("native")
+    add_cugencodes("compute_30")
 </code></pre>
 <p>WDK/UMDF驱动程序:</p>
-<pre><code class="lang-lua">target(&quot;echo&quot;)
-    add_rules(&quot;wdk.driver&quot;, &quot;wdk.env.umdf&quot;)
-    add_files(&quot;driver/*.c&quot;) 
-    add_files(&quot;driver/*.inx&quot;)
-    add_includedirs(&quot;exe&quot;)
+<pre><code class="lang-lua">target("echo")
+    add_rules("wdk.driver", "wdk.env.umdf")
+    add_files("driver/*.c") 
+    add_files("driver/*.inx")
+    add_includedirs("exe")
 
-target(&quot;app&quot;)
-    add_rules(&quot;wdk.binary&quot;, &quot;wdk.env.umdf&quot;)
-    add_files(&quot;exe/*.cpp&quot;)
+target("app")
+    add_rules("wdk.binary", "wdk.env.umdf")
+    add_files("exe/*.cpp")
 </code></pre>
 <p>更多WDK驱动程序例子(umdf/kmdf/wdm)，见：<a href="https://xmake.io/#/zh-cn/guide/project_examples?id=wdk%e9%a9%b1%e5%8a%a8%e7%a8%8b%e5%ba%8f">WDK工程例子</a></p>
 <h2 id="-">插件</h2>
 <h4 id="-ide-makefile-vs2002-vs2019-">生成IDE工程文件插件（makefile, vs2002 - vs2019, ...）</h4>
-<pre><code class="lang-bash">$ xmake project -k vsxmake -m &quot;debug;release&quot; # 新版vs工程生成插件（推荐）
-$ xmake project -k vs -m &quot;debug;release&quot;
+<pre><code class="lang-bash">$ xmake project -k vsxmake -m "debug;release" # 新版vs工程生成插件（推荐）
+$ xmake project -k vs -m "debug;release"
 $ xmake project -k cmake
 $ xmake project -k ninja
 $ xmake project -k compile_commands
 </code></pre>
 <h4 id="-lua-">加载自定义lua脚本插件</h4>
 <pre><code class="lang-bash">$ xmake l ./test.lua
-$ xmake l -c &quot;print(&#39;hello xmake!&#39;)&quot;
+$ xmake l -c "print(&#39;hello xmake!&#39;)"
 $ xmake l lib.detect.find_tool gcc
 $ xmake l
-&gt; print(&quot;hello xmake!&quot;)
-&gt; {1, 2, 3}
-&lt; { 
+> print("hello xmake!")
+> {1, 2, 3}
+< { 
     1,
     2,
     3 
@@ -323,15 +323,15 @@ $ xmake l
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-vscode">xmake-vscode</a></li>
 </ul>
-<p>&lt;img src=&quot;https://raw.githubusercontent.com/xmake-io/xmake-vscode/master/res/problem.gif&quot; width=&quot;650px&quot; /&gt;</p>
+<p><img src="https://raw.githubusercontent.com/xmake-io/xmake-vscode/master/res/problem.gif" width="650px" /></p>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-sublime">xmake-sublime</a></li>
 </ul>
-<p>&lt;img src=&quot;https://raw.githubusercontent.com/xmake-io/xmake-sublime/master/res/problem.gif&quot; width=&quot;650px&quot; /&gt;</p>
+<p><img src="https://raw.githubusercontent.com/xmake-io/xmake-sublime/master/res/problem.gif" width="650px" /></p>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-idea">xmake-idea</a></li>
 </ul>
-<p>&lt;img src=&quot;https://raw.githubusercontent.com/xmake-io/xmake-idea/master/res/problem.gif&quot; width=&quot;650px&quot; /&gt;</p>
+<p><img src="https://raw.githubusercontent.com/xmake-io/xmake-idea/master/res/problem.gif" width="650px" /></p>
 <ul>
 <li><p><a href="https://github.com/luzhlon/xmake.vim">xmake.vim</a> (third-party, thanks <a href="https://github.com/luzhlon">@luzhlon</a>)</p>
 </li>
@@ -347,7 +347,7 @@ $ xmake l
 <li><a href="https://github.com/xmake-io/awesome-xmake">更多</a></li>
 </ul>
 <h2 id="-">演示视频</h2>
-<p>&lt;a href=&quot;https://asciinema.org/a/133693&quot;&gt;<br>&lt;img src=&quot;https://asciinema.org/a/133693.png&quot; width=&quot;650px&quot; /&gt;<br>&lt;/a&gt;</p>
+<p><a href="https://asciinema.org/a/133693"><br><img src="https://asciinema.org/a/133693.png" width="650px" /><br></a></p>
 <h2 id="-">联系方式</h2>
 <ul>
 <li>邮箱：<a href="mailto:waruqi@gmail.com">waruqi@gmail.com</a></li>
@@ -359,7 +359,7 @@ $ xmake l
 <li>微信公众号：tboox-os</li>
 </ul>
 <h2 id="-">感谢</h2>
-<p>感谢所有对xmake有所<a href="CONTRIBUTING.md">贡献</a>的人:<br>&lt;a href=&quot;https://github.com/xmake-io/xmake/graphs/contributors&quot;&gt;&lt;img src=&quot;https://opencollective.com/xmake/contributors.svg?width=890&amp;button=false&quot; /&gt;&lt;/a&gt;</p>
+<p>感谢所有对xmake有所<a href="CONTRIBUTING.md">贡献</a>的人:<br><a href="https://github.com/xmake-io/xmake/graphs/contributors"><img src="https://opencollective.com/xmake/contributors.svg?width=890&amp;button=false" /></a></p>
 <ul>
 <li><a href="https://github.com/TitanSnow">TitanSnow</a>: 提供xmake <a href="https://github.com/TitanSnow/ts-xmake-logo">logo</a> 和安装脚本</li>
 <li><a href="https://github.com/uael">uael</a>: 提供语义版本跨平台c库 <a href="https://github.com/uael/sv">sv</a></li>
