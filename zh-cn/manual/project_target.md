@@ -94,6 +94,8 @@ target("test2")
 | [add_gcflags](#targetadd_gcflags)               | 添加go编译选项                       | >= 2.1.1 |
 | [add_dcflags](#targetadd_dcflags)               | 添加dlang编译选项                    | >= 2.1.1 |
 | [add_rcflags](#targetadd_rcflags)               | 添加rust编译选项                     | >= 2.1.1 |
+| [add_fcflags](#targetadd_fcflags)               | 添加fortran编译选项                  | >= 2.3.5 |
+| [add_zcflags](#targetadd_zcflags)               | 添加zig编译选项                      | >= 2.3.5 |
 | [add_cuflags](#targetadd_cuflags)               | 添加cuda编译选项                     | >= 2.2.1 |
 | [add_culdflags](#targetadd_culdflags)           | 添加cuda设备链接选项                 | >= 2.2.7 |
 | [add_cugencodes](#targetadd_cugencodes)         | 添加cuda设备的gencode设置            | >= 2.2.7 |
@@ -1561,6 +1563,26 @@ add_dcflags("xxx")
 
 ```lua
 add_rcflags("xxx")
+```
+
+### target:add_fcflags
+
+#### 添加fortran编译选项
+
+对fortran代码添加编译选项
+
+```lua
+add_fcflags("xxx")
+```
+
+### target:add_zcflags
+
+#### 添加zig编译选项
+
+对zig代码添加编译选项
+
+```lua
+add_zcflags("xxx")
 ```
 
 ### target:add_cuflags

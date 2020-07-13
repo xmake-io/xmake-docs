@@ -93,6 +93,8 @@ target("test2")
 | [add_gcflags](#targetadd_gcflags)               | Add go compilation flags                                  | >= 2.1.1                    |
 | [add_dcflags](#targetadd_dcflags)               | Add dlang compilation flags                               | >= 2.1.1                    |
 | [add_rcflags](#targetadd_rcflags)               | Add rust compilation flags                                | >= 2.1.1                    |
+| [add_fcflags](#targetadd_fcflags)               | Add fortran compilation flags                             | >= 2.3.5                    |
+| [add_zcflags](#targetadd_zcflags)               | Add zig compilation flags                                 | >= 2.3.5                    |
 | [add_cuflags](#targetadd_cuflags)               | Add cuda compilation flags                                | >= 2.1.1                    |
 | [add_culdflags](#targetadd_culdflags)           | Add cuda device-link flags                                | >= 2.2.7                    |
 | [add_cugencodes](#targetadd_cugencodes)         | Add cuda device gencode flags                             | >= 2.2.7                    |
@@ -1558,12 +1560,32 @@ add_dcflags("xxx")
 
 ### target:add_rcflags
 
-#### Add MASTER compilation flags
+#### Add rust compilation flags
 
 Add compilation options to the rust code
 
 ```lua
 add_rcflags("xxx")
+```
+
+### target:add_fcflags
+
+#### Add fortran compilation flags
+
+Add compilation options to the fortran code
+
+```lua
+add_fcflags("xxx")
+```
+
+### target:add_zcflags
+
+#### Add zig compilation flags
+
+Add compilation options to the zig code
+
+```lua
+add_zcflags("xxx")
 ```
 
 ### target:add_cuflags

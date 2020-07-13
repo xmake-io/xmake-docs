@@ -463,6 +463,16 @@ target("test2")
 <td>>= 2.1.1</td>
 </tr>
 <tr>
+<td><a href="#targetadd_fcflags">add_fcflags</a></td>
+<td>添加fortran编译选项</td>
+<td>>= 2.3.5</td>
+</tr>
+<tr>
+<td><a href="#targetadd_zcflags">add_zcflags</a></td>
+<td>添加zig编译选项</td>
+<td>>= 2.3.5</td>
+</tr>
+<tr>
 <td><a href="#targetadd_cuflags">add_cuflags</a></td>
 <td>添加cuda编译选项</td>
 <td>>= 2.2.1</td>
@@ -1810,6 +1820,16 @@ target("demo")
 <h4 id="-rust-">添加rust编译选项</h4>
 <p>对rust代码添加编译选项</p>
 <pre><code class="lang-lua">add_rcflags("xxx")
+</code></pre>
+<h3 id="target-add_fcflags">target:add_fcflags</h3>
+<h4 id="-fortran-">添加fortran编译选项</h4>
+<p>对fortran代码添加编译选项</p>
+<pre><code class="lang-lua">add_fcflags("xxx")
+</code></pre>
+<h3 id="target-add_zcflags">target:add_zcflags</h3>
+<h4 id="-zig-">添加zig编译选项</h4>
+<p>对zig代码添加编译选项</p>
+<pre><code class="lang-lua">add_zcflags("xxx")
 </code></pre>
 <h3 id="target-add_cuflags">target:add_cuflags</h3>
 <h4 id="-cuda-">添加cuda编译选项</h4>

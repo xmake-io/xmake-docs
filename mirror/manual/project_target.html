@@ -462,6 +462,16 @@ target("test2")
 <td>>= 2.1.1</td>
 </tr>
 <tr>
+<td><a href="#targetadd_fcflags">add_fcflags</a></td>
+<td>Add fortran compilation flags</td>
+<td>>= 2.3.5</td>
+</tr>
+<tr>
+<td><a href="#targetadd_zcflags">add_zcflags</a></td>
+<td>Add zig compilation flags</td>
+<td>>= 2.3.5</td>
+</tr>
+<tr>
 <td><a href="#targetadd_cuflags">add_cuflags</a></td>
 <td>Add cuda compilation flags</td>
 <td>>= 2.1.1</td>
@@ -1797,9 +1807,19 @@ target("demo")
 <pre><code class="lang-lua">add_dcflags("xxx")
 </code></pre>
 <h3 id="target-add_rcflags">target:add_rcflags</h3>
-<h4 id="add-master-compilation-flags">Add MASTER compilation flags</h4>
+<h4 id="add-rust-compilation-flags">Add rust compilation flags</h4>
 <p>Add compilation options to the rust code</p>
 <pre><code class="lang-lua">add_rcflags("xxx")
+</code></pre>
+<h3 id="target-add_fcflags">target:add_fcflags</h3>
+<h4 id="add-fortran-compilation-flags">Add fortran compilation flags</h4>
+<p>Add compilation options to the fortran code</p>
+<pre><code class="lang-lua">add_fcflags("xxx")
+</code></pre>
+<h3 id="target-add_zcflags">target:add_zcflags</h3>
+<h4 id="add-zig-compilation-flags">Add zig compilation flags</h4>
+<p>Add compilation options to the zig code</p>
+<pre><code class="lang-lua">add_zcflags("xxx")
 </code></pre>
 <h3 id="target-add_cuflags">target:add_cuflags</h3>
 <h4 id="add-cuda-compilation-flags">Add cuda compilation flags</h4>
