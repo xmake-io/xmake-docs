@@ -671,7 +671,8 @@ The behavior is similar to the `cp` command in the shell, supporting path wildca
 E.g:
 
 ```lua
-os.cp("$(scriptdir)/*.h", "$(projectdir)/src/test/**.h", "$(buildir)/inc")
+os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
+os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 ```
 
 The above code will: all the header files in the current `xmake.lua` directory, the header files in the project source test directory are all copied to the `$(buildir)` output directory.
@@ -687,6 +688,14 @@ This interface also supports `recursive replication' of directories, for example
 os.cp("$(curdir)/test/", "$(tmpdir)/test")
 ```
 
+The copy at the top will expand and copy all files to the specified directory, and lose the source directory hierarchy. If you want to copy according to the directory structure that maintains it, you can set the rootdir parameter:
+
+```lua
+os.cp ("src/**.h", "/tmp/", {rootdir=""src"})
+```
+
+The above script can press the root directory of `src` to copy all sub-files under src in the same directory structure.
+
 <p class="tip">
 Try to use the `os.cp` interface instead of `os.run("cp ..")`, which will ensure platform consistency and cross-platform build description.
 </p>
@@ -699,7 +708,7 @@ Similar to the use of [os.cp](#oscp), it also supports multi-file move operation
 
 ```lua
 -- Move multiple files to a temporary directory
-os.mv("$(buildir)/test1","$(buildir)/test2", "$(tmpdir)")
+os.mv("$(buildir)/test1", "$(tmpdir)")
 
 -- File movement does not support bulk operations, which is file renaming
 os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")

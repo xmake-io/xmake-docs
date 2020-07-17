@@ -671,7 +671,8 @@ os模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是
 例如：
 
 ```lua
-os.cp("$(scriptdir)/*.h", "$(projectdir)/src/test/**.h", "$(buildir)/inc")
+os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
+os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 ```
 
 上面的代码将：当前`xmake.lua`目录下的所有头文件、工程源码test目录下的头文件全部复制到`$(buildir)`输出目录中。
@@ -687,6 +688,14 @@ os.cp("$(scriptdir)/*.h", "$(projectdir)/src/test/**.h", "$(buildir)/inc")
 os.cp("$(curdir)/test/", "$(tmpdir)/test")
 ```
 
+上面的复制，会把所有文件全部展开复制到指定目录，丢失源目录层级，如果要按保持原有的目录结构复制，可以设置rootdir参数：
+
+```lua
+os.cp("src/**.h", "/tmp/", {rootdir = "src"})
+```
+
+上面的脚本可以按`src`根目录，将src下的所有子文件保持目录结构复制过去。
+
 <p class="tip">
 尽量使用`os.cp`接口，而不是`os.run("cp ..")`，这样更能保证平台一致性，实现跨平台构建描述。
 </p>
@@ -698,8 +707,8 @@ os.cp("$(curdir)/test/", "$(tmpdir)/test")
 跟[os.cp](#oscp)的使用类似，同样支持多文件移动操作和模式匹配，例如：
 
 ```lua
--- 移动多个文件到临时目录
-os.mv("$(buildir)/test1", "$(buildir)/test2", "$(tmpdir)")
+-- 移动文件到临时目录
+os.mv("$(buildir)/test1", "$(tmpdir)")
 
 -- 文件移动不支持批量操作，也就是文件重命名
 os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
