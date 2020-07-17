@@ -817,7 +817,8 @@ $ xmake --version
 </ul>
 <p>The behavior is similar to the <code>cp</code> command in the shell, supporting path wildcard matching (using lua pattern matching), support for multi-file copying, and built-in variable support.</p>
 <p>E.g:</p>
-<pre><code class="lang-lua">os.cp("$(scriptdir)/*.h", "$(projectdir)/src/test/**.h", "$(buildir)/inc")
+<pre><code class="lang-lua">os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
+os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 </code></pre>
 <p>The above code will: all the header files in the current <code>xmake.lua</code> directory, the header files in the project source test directory are all copied to the <code>$(buildir)</code> output directory.</p>
 <p>Among them <code>$(scriptdir)</code>, <code>$(projectdir)</code> These variables are built-in variables of xmake. For details, see the related documentation of <a href="#built-in variables">built-in variables</a>.</p>
@@ -826,6 +827,10 @@ $ xmake --version
 <pre><code class="lang-lua">-- Recursively copy the current directory to a temporary directory
 os.cp("$(curdir)/test/", "$(tmpdir)/test")
 </code></pre>
+<p>The copy at the top will expand and copy all files to the specified directory, and lose the source directory hierarchy. If you want to copy according to the directory structure that maintains it, you can set the rootdir parameter:</p>
+<pre><code class="lang-lua">os.cp ("src/**.h", "/tmp/", {rootdir=""src"})
+</code></pre>
+<p>The above script can press the root directory of <code>src</code> to copy all sub-files under src in the same directory structure.</p>
 <p><p class="tip"><br>Try to use the <code>os.cp</code> interface instead of <code>os.run("cp ..")</code>, which will ensure platform consistency and cross-platform build description.<br></p>
 
 </p>
@@ -835,7 +840,7 @@ os.cp("$(curdir)/test/", "$(tmpdir)/test")
 </ul>
 <p>Similar to the use of <a href="#oscp">os.cp</a>, it also supports multi-file move operations and pattern matching, for example:</p>
 <pre><code class="lang-lua">-- Move multiple files to a temporary directory
-os.mv("$(buildir)/test1","$(buildir)/test2", "$(tmpdir)")
+os.mv("$(buildir)/test1", "$(tmpdir)")
 
 -- File movement does not support bulk operations, which is file renaming
 os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
@@ -1039,7 +1044,7 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 <pre><code class="lang-lua">print(path.join(os.tmpdir(), "file.txt"))
 </code></pre>
 <p>Equivalent to:</p>
-<pre><code class="lang-lua">print("$(tmpdir)/file.txt"))
+<pre><code class="lang-lua">print("$(tmpdir)/file.txt")
 </code></pre>
 <h4 id="os-tmpfile">os.tmpfile</h4>
 <ul>

@@ -1004,7 +1004,7 @@ print(path.join(os.tmpdir(), "file.txt"))
 等价于：
 
 ```lua
-print("$(tmpdir)/file.txt"))
+print("$(tmpdir)/file.txt")
 ```
 
 #### os.tmpfile

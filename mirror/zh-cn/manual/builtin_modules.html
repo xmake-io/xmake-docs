@@ -816,7 +816,8 @@ $ xmake --version
 </ul>
 <p>行为和shell中的<code>cp</code>命令类似，支持路径通配符匹配（使用的是lua模式匹配），支持多文件复制，以及内置变量支持。</p>
 <p>例如：</p>
-<pre><code class="lang-lua">os.cp("$(scriptdir)/*.h", "$(projectdir)/src/test/**.h", "$(buildir)/inc")
+<pre><code class="lang-lua">os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
+os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 </code></pre>
 <p>上面的代码将：当前<code>xmake.lua</code>目录下的所有头文件、工程源码test目录下的头文件全部复制到<code>$(buildir)</code>输出目录中。</p>
 <p>其中<code>$(scriptdir)</code>, <code>$(projectdir)</code> 这些变量是xmake的内置变量，具体详情见：<a href="#内置变量">内置变量</a>的相关文档。</p>
@@ -825,6 +826,10 @@ $ xmake --version
 <pre><code class="lang-lua">-- 递归复制当前目录到临时目录
 os.cp("$(curdir)/test/", "$(tmpdir)/test")
 </code></pre>
+<p>上面的复制，会把所有文件全部展开复制到指定目录，丢失源目录层级，如果要按保持原有的目录结构复制，可以设置rootdir参数：</p>
+<pre><code class="lang-lua">os.cp("src/**.h", "/tmp/", {rootdir = "src"})
+</code></pre>
+<p>上面的脚本可以按<code>src</code>根目录，将src下的所有子文件保持目录结构复制过去。</p>
 <p><p class="tip"><br>尽量使用<code>os.cp</code>接口，而不是<code>os.run("cp ..")</code>，这样更能保证平台一致性，实现跨平台构建描述。<br></p>
 
 </p>
@@ -833,8 +838,8 @@ os.cp("$(curdir)/test/", "$(tmpdir)/test")
 <li>移动重命名文件或目录</li>
 </ul>
 <p>跟<a href="#oscp">os.cp</a>的使用类似，同样支持多文件移动操作和模式匹配，例如：</p>
-<pre><code class="lang-lua">-- 移动多个文件到临时目录
-os.mv("$(buildir)/test1", "$(buildir)/test2", "$(tmpdir)")
+<pre><code class="lang-lua">-- 移动文件到临时目录
+os.mv("$(buildir)/test1", "$(tmpdir)")
 
 -- 文件移动不支持批量操作，也就是文件重命名
 os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
@@ -1047,7 +1052,7 @@ os.run("ls -l $(buildir)")
 <pre><code class="lang-lua">print(path.join(os.tmpdir(), "file.txt"))
 </code></pre>
 <p>等价于：</p>
-<pre><code class="lang-lua">print("$(tmpdir)/file.txt"))
+<pre><code class="lang-lua">print("$(tmpdir)/file.txt")
 </code></pre>
 <h4 id="os-tmpfile">os.tmpfile</h4>
 <ul>

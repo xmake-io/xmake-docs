@@ -983,7 +983,7 @@ print(path.join(os.tmpdir(), "file.txt"))
 Equivalent to:
 
 ```lua
-print("$(tmpdir)/file.txt"))
+print("$(tmpdir)/file.txt")
 ```
 
 #### os.tmpfile
