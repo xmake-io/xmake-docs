@@ -109,9 +109,7 @@ Import core core extension module
 
 ```lua
 import("core.base.option")
-import("core.project")
 import("core.base.task")
-import("core")
 
 function main()
 

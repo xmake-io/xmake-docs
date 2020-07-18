@@ -105,13 +105,9 @@ import的主要用于导入xmake的扩展类库以及一些自定义的类库模
 
 基于`.`的类库路径规则，例如：
 
-导入core核心扩展模块
-
 ```lua
 import("core.base.option")
-import("core.project")
 import("core.base.task")
-import("core")
 
 function main()
     
