@@ -110,7 +110,7 @@ Import core core extension module
 ```lua
 import("core.base.option")
 import("core.project")
-import("core.base.task") -- 2.1.5 Previously core.project.task
+import("core.base.task")
 import("core")
 
 function main()
@@ -120,8 +120,6 @@ function main()
 
     -- Run tasks and plugins
     task.run("hello")
-    project.task.run("hello")
-    core.base.task.run("hello")
 end
 ```
 

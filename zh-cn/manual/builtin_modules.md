@@ -110,7 +110,7 @@ import的主要用于导入xmake的扩展类库以及一些自定义的类库模
 ```lua
 import("core.base.option")
 import("core.project")
-import("core.base.task") -- 2.1.5 以前是 core.project.task
+import("core.base.task")
 import("core")
 
 function main()
@@ -120,8 +120,6 @@ function main()
 
     -- 运行任务和插件
     task.run("hello")
-    project.task.run("hello")
-    core.base.task.run("hello")
 end
 ```
 
