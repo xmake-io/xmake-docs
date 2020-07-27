@@ -756,7 +756,7 @@ target("test")
 
 更多例子见：[Go Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/go)
 
-## Dlang项目
+## Dlang程序
 
 创建空工程：
 
@@ -795,7 +795,7 @@ target("test")
 
 更多例子见：[Dlang Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/dlang)
 
-## Rust项目
+## Rust程序
 
 创建空工程：
 
@@ -815,7 +815,7 @@ target("test")
 
 更多例子见：[Rust Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/rust)
 
-## Swift项目
+## Swift程序
 
 创建空工程：
 
@@ -835,7 +835,7 @@ target("test")
 
 更多例子见：[Swift Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/swift)
 
-## Objc项目
+## Objc程序
 
 创建空工程：
 
