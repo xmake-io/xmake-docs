@@ -13,7 +13,7 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 ## Github Sponsor
 
-<iframe src="https://github.com/sponsors/waruqi/card" title="Sponsor waruqi" height="130" width="600" style="border: 0;"></iframe>
+<iframe src="https://github.com/sponsors/waruqi/card" title="Sponsor waruqi" height="160" width="600" style="border: 0;"></iframe>
 
 ## 爱发电
 
@@ -24,12 +24,6 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 ## Paypal
 
 [![Paypal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
-
-## Bitcoin
-
-```
-bc1qstzyehpjsryh8qwj8kf95js4cjcj3p670s5j9fyd3gkj946qdt7qx0xjpa
-```
 
 ## 支持者
 
