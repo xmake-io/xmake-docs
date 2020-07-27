@@ -233,41 +233,6 @@ success
 install ok!👌
 ```
 
-## Cuda Program
-
-Create an empty project:
-
-```console
-$ xmake create -P test -l cuda
-$ cd test
-$ xmake
-```
-
-```lua
--- define target
-target("cuda_console")
-    set_kind("binary")
-    add_files("src/*.cu")
-    -- generate SASS code for SM architecture of current host
-    add_cugencodes("native")
-    -- generate PTX code for the virtual architecture to guarantee compatibility
-    add_cugencodes("compute_30")
-```
-
-<p class="tip">
-Starting with v2.2.7, the default build will enable device-link. (see [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/))
-If you want to disable device-link, you can set it with `add_values("cuda.devlink", false)`.
-</p>
-
-xmake will detect Cuda SDK automatically and we can also set the SDK directory manually.
-
-```console
-$ xmake f --cuda=/usr/local/cuda-9.1/ 
-$ xmake
-```
-
-If you want to known more information, you can see [#158](https://github.com/xmake-io/xmake/issues/158).
-
 ## WDK Driver Program
 
 xmake will detect WDK automatically and we can also set the WDK directory manually.
@@ -675,6 +640,41 @@ target("console_c++")
      add_files("src/*.proto", {rules = "protobuf.cpp"})
 ```
 
+## Cuda Program
+
+Create an empty project:
+
+```console
+$ xmake create -P test -l cuda
+$ cd test
+$ xmake
+```
+
+```lua
+-- define target
+target("cuda_console")
+    set_kind("binary")
+    add_files("src/*.cu")
+    -- generate SASS code for SM architecture of current host
+    add_cugencodes("native")
+    -- generate PTX code for the virtual architecture to guarantee compatibility
+    add_cugencodes("compute_30")
+```
+
+<p class="tip">
+Starting with v2.2.7, the default build will enable device-link. (see [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/))
+If you want to disable device-link, you can set it with `add_values("cuda.devlink", false)`.
+</p>
+
+xmake will detect Cuda SDK automatically and we can also set the SDK directory manually.
+
+```console
+$ xmake f --cuda=/usr/local/cuda-9.1/ 
+$ xmake
+```
+
+If you want to known more information, you can see [#158](https://github.com/xmake-io/xmake/issues/158).
+
 ## Lex&Yacc Program
 
 ```lua
@@ -683,3 +683,169 @@ target("calc")
      add_rules("lex", "yacc")
      add_files("src/*.l", "src/*.y")
 ```
+
+## Fortran Program
+
+After v2.3.6, the gfortran compiler is supported to compile fortran projects. We can quickly create an empty project based on fortran by using the following command:
+
+```console
+$ xmake create -l fortran -t console test
+```
+
+Its xmake.lua content is as follows:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.f90")
+```
+
+More code examples can be viewed here: [Fortran Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/fortran)
+
+## Go Program
+
+xmake also supports the construction of go programs, and also provides command support for creating empty projects:
+
+```console
+$ xmake create -l go -t console test
+```
+
+The content of xmake.lua is as follows:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.go")
+```
+
+In v2.3.6 version, xmake has made some improvements to its build support, and also supports cross compilation of go. For example, we can compile windows programs on macOS and linux:
+
+```console
+$ xmake f -p windows -a x86
+```
+
+In addition, the new version also initially supports the third-party dependency package management of go:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("go::github.com/sirupsen/logrus", {alias = "logrus"})
+add_requires("go::golang.org/x/sys/internal/unsafeheader", {alias = "unsafeheader"})
+if is_plat("windows") then
+    add_requires("go::golang.org/x/sys/windows", {alias = "syshost"})
+else
+    add_requires("go::golang.org/x/sys/unix", {alias = "syshost"})
+end
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.go")
+    add_packages("logrus", "syshost", "unsafeheader")
+```
+
+However, there are still some imperfections. For example, all cascading dependency packages must be manually configured at present, which will be a bit more cumbersome and needs to be improved in the future.
+
+For more examples, see: [Go Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/go)
+
+## Dlang Program
+
+Create an empty project:
+
+```console
+$ xmake create -l dlang -t console test
+```
+
+xmake.lua content:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.d")
+```
+
+Starting from the v2.3.6 version, xmake adds support for dub package management, which can quickly integrate third-party dependency packages of dlang:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("dub::log 0.4.3", {alias = "log"})
+add_requires("dub::dateparser", {alias = "dateparser"})
+add_requires("dub::emsi_containers", {alias = "emsi_containers"})
+add_requires("dub::stdx-allocator", {alias = "stdx-allocator"})
+add_requires("dub::mir-core", {alias = "mir-core"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.d")
+    add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
+```
+
+However, there are still some imperfections. For example, all cascading dependency packages must be manually configured at present, which will be a bit more cumbersome and needs to be improved in the future.
+
+For more examples, see: [Dlang Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/dlang)
+
+## Rust Program
+
+Create an empty project:
+
+```console
+$ xmake create -l rust -t console test
+```
+
+xmake.lua content:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.rs")
+```
+
+For more examples, see: [Rust Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/rust)
+
+## Swift Program
+
+Create an empty project:
+
+```console
+$ xmake create -l swift -t console test
+```
+
+xmake.lua content:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.swift")
+```
+
+For more examples, see: [Swift Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/swift)
+
+## Objc Program
+
+Create an empty project:
+
+```console
+$ xmake create -l objc -t console test
+```
+
+xmake.lua content:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.m")
+```
+
+For more examples, see: [Objc Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/objc++)

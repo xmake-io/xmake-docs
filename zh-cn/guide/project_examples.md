@@ -234,41 +234,6 @@ Success
 install ok!👌
 ```
 
-## Cuda程序
-
-创建一个空工程：
-
-```console
-$ xmake create -P test -l cuda
-$ cd test
-$ xmake
-```
-
-```lua
--- define target
-target("cuda_console")
-    set_kind("binary")
-    add_files("src/*.cu")
-    -- generate SASS code for SM architecture of current host
-    add_cugencodes("native")
-    -- generate PTX code for the virtual architecture to guarantee compatibility
-    add_cugencodes("compute_30")
-```
-
-<p class="tip">
-从v2.2.7版本开始，默认构建会启用device-link。（参见 [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/)）
-如果要显示禁用device-link，可以通过`add_values("cuda.devlink", false)` 来设置。
-</p>
-
-默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录：
-
-```console
-$ xmake f --cuda=/usr/local/cuda-9.1/ 
-$ xmake
-```
-
-更多详情可以参考：[#158](https://github.com/xmake-io/xmake/issues/158)
-
 ## WDK驱动程序
 
 默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：
@@ -680,6 +645,41 @@ target("console_c++")
     add_files("src/*.proto", {rules = "protobuf.cpp"})
 ```
 
+## Cuda程序
+
+创建一个空工程：
+
+```console
+$ xmake create -P test -l cuda
+$ cd test
+$ xmake
+```
+
+```lua
+-- define target
+target("cuda_console")
+    set_kind("binary")
+    add_files("src/*.cu")
+    -- generate SASS code for SM architecture of current host
+    add_cugencodes("native")
+    -- generate PTX code for the virtual architecture to guarantee compatibility
+    add_cugencodes("compute_30")
+```
+
+<p class="tip">
+从v2.2.7版本开始，默认构建会启用device-link。（参见 [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/)）
+如果要显示禁用device-link，可以通过`add_values("cuda.devlink", false)` 来设置。
+</p>
+
+默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录：
+
+```console
+$ xmake f --cuda=/usr/local/cuda-9.1/ 
+$ xmake
+```
+
+更多详情可以参考：[#158](https://github.com/xmake-io/xmake/issues/158)
+
 ## Lex&Yacc程序
 
 ```lua
@@ -688,3 +688,169 @@ target("calc")
     add_rules("lex", "yacc")
     add_files("src/*.l", "src/*.y")
 ```
+
+## Fortran程序
+
+v2.3.6之后版本开始支持gfortran编译器来编译fortran项目，我们可以通过下面的命令，快速创建一个基于fortran的空工程：
+
+```console
+$ xmake create -l fortran -t console test
+```
+
+它的xmake.lua内容如下：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.f90")
+```
+
+更多代码例子可以到这里查看：[Fortran Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/fortran)
+
+## Go程序
+
+xmake也支持go程序的构建，也提供了空工程的创建命令支持:
+
+```console
+$ xmake create -l go -t console test
+```
+
+xmake.lua内容如下:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.go")
+```
+
+v2.3.6版本，xmake对其的构建支持做了一些改进，对go的交叉编译也进行了支持，例如我们可以在macOS和linux上编译windows程序：
+
+```console
+$ xmake f -p windows -a x86
+```
+
+另外，新版本对go的第三方依赖包管理也进行了初步支持：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("go::github.com/sirupsen/logrus", {alias = "logrus"})
+add_requires("go::golang.org/x/sys/internal/unsafeheader", {alias = "unsafeheader"})
+if is_plat("windows") then
+    add_requires("go::golang.org/x/sys/windows", {alias = "syshost"})
+else
+    add_requires("go::golang.org/x/sys/unix", {alias = "syshost"})
+end
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.go")
+    add_packages("logrus", "syshost", "unsafeheader")
+```
+
+不过还有一些不完善的地方，比如目前必须手动配置所有级联依赖包，会稍微繁琐些，后续有待改进。
+
+更多例子见：[Go Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/go)
+
+## Dlang项目
+
+创建空工程：
+
+```console
+$ xmake create -l dlang -t console test
+```
+
+xmake.lua内容：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.d")
+```
+
+v2.3.6版本开始，xmake增加了对dub包管理的支持，可以快速集成dlang的第三方依赖包：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("dub::log 0.4.3", {alias = "log"})
+add_requires("dub::dateparser", {alias = "dateparser"})
+add_requires("dub::emsi_containers", {alias = "emsi_containers"})
+add_requires("dub::stdx-allocator", {alias = "stdx-allocator"})
+add_requires("dub::mir-core", {alias = "mir-core"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.d")
+    add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
+```
+
+不过还有一些不完善的地方，比如目前必须手动配置所有级联依赖包，会稍微繁琐些，后续有待改进。
+
+更多例子见：[Dlang Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/dlang)
+
+## Rust项目
+
+创建空工程：
+
+```console
+$ xmake create -l rust -t console test
+```
+
+xmake.lua内容：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.rs")
+```
+
+更多例子见：[Rust Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/rust)
+
+## Swift项目
+
+创建空工程：
+
+```console
+$ xmake create -l swift -t console test
+```
+
+xmake.lua内容：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.swift")
+```
+
+更多例子见：[Swift Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/swift)
+
+## Objc项目
+
+创建空工程：
+
+```console
+$ xmake create -l objc -t console test
+```
+
+xmake.lua内容：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.m")
+```
+
+更多例子见：[Objc Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/objc++)
