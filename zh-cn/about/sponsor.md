@@ -13,7 +13,7 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 ## Github Sponsor
 
-<iframe src="https://github.com/sponsors/waruqi/card" title="Sponsor waruqi" height="160" width="600" style="border: 0;"></iframe>
+[![Github Sponsor](/assets/img/github_sponsor.png)](https://github.com/sponsors/waruqi)
 
 ## 爱发电
 

@@ -9,7 +9,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 ## Github Sponsor
 
-<iframe src="https://github.com/sponsors/waruqi/card" title="Sponsor waruqi" height="225" width="600" style="border: 0;"></iframe>
+[![Github Sponsor](/assets/img/github_sponsor.png)](https://github.com/sponsors/waruqi)
 
 ## OpenCollective
  
