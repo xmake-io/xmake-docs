@@ -1,3 +1,20 @@
+## v2.3.6
+
+### 新特性
+
+* 添加xcode工程生成器插件，`xmake project -k cmake` （当前采用cmake生成）
+* [#870](https://github.com/xmake-io/xmake/issues/870): 支持gfortran编译器
+* [#887](https://github.com/xmake-io/xmake/pull/887): 支持zig编译器
+* [#893](https://github.com/xmake-io/xmake/issues/893): 添加json模块
+* [#898](https://github.com/xmake-io/xmake/issues/898): 改进golang项目构建，支持交叉编译
+* [#275](https://github.com/xmake-io/xmake/issues/275): 支持go包管理器去集成第三方go依赖包
+* [#581](https://github.com/xmake-io/xmake/issues/581): 支持dub包管理器去集成第三方dlang依赖包
+
+### 改进
+
+* [#868](https://github.com/xmake-io/xmake/issues/868): 支持新的cl.exe的头文件依赖输出文件格式，`/sourceDependencies xxx.json`
+* [#902](https://github.com/xmake-io/xmake/issues/902): 改进交叉编译工具链
+
 ## v2.3.5
 
 ### 新特性

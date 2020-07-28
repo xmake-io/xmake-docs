@@ -849,3 +849,25 @@ target("test")
 ```
 
 For more examples, see: [Objc Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/objc++)
+
+## Zig Program
+
+!> At present, it is still in the experimental support stage and is not perfect. For example, it is not supported on windows, and dynamic library compilation under linux/macOS is not yet supported. Please evaluate and use it yourself.
+
+Create an empty project:
+
+```console
+$ xmake create -l zig -t console test
+```
+
+xmake.lua content:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.zig")
+```
+
+For more examples, see: [Zig Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/zig)

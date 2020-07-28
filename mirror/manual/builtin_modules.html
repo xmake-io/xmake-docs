@@ -288,9 +288,7 @@ local s = val("shell echo hello")
 <p>Class library path rules based on <code>.</code>, for example:</p>
 <p>Import core core extension module</p>
 <pre><code class="lang-lua">import("core.base.option")
-import("core.project")
-import("core.base.task") -- 2.1.5 Previously core.project.task
-import("core")
+import("core.base.task")
 
 function main()
 
@@ -299,8 +297,6 @@ function main()
 
     -- Run tasks and plugins
     task.run("hello")
-    project.task.run("hello")
-    core.base.task.run("hello")
 end
 </code></pre>
 <p>Import the custom module in the current directory:</p>

@@ -854,3 +854,25 @@ target("test")
 ```
 
 更多例子见：[Objc Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/objc++)
+
+## Zig程序
+
+!> 目前还在试验性支持阶段，还很不完善，比如：windows上不支持，linux/macOS下动态库编译还不支持，请自行评估使用。
+
+创建空工程：
+
+```console
+$ xmake create -l zig -t console test
+```
+
+xmake.lua内容：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.zig")
+```
+
+更多例子见：[Zig Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/zig)

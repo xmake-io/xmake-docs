@@ -286,11 +286,8 @@ local s = val("shell echo hello")
 </ol>
 <p>导入的语法规则：</p>
 <p>基于<code>.</code>的类库路径规则，例如：</p>
-<p>导入core核心扩展模块</p>
 <pre><code class="lang-lua">import("core.base.option")
-import("core.project")
-import("core.base.task") -- 2.1.5 以前是 core.project.task
-import("core")
+import("core.base.task")
 
 function main()
 
@@ -299,8 +296,6 @@ function main()
 
     -- 运行任务和插件
     task.run("hello")
-    project.task.run("hello")
-    core.base.task.run("hello")
 end
 </code></pre>
 <p>导入当前目录下的自定义模块：</p>

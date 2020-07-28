@@ -90,7 +90,23 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v2-3-5">v2.3.5</h2>
+    <h2 id="v2-3-6">v2.3.6</h2>
+<h3 id="-">新特性</h3>
+<ul>
+<li>添加xcode工程生成器插件，<code>xmake project -k cmake</code> （当前采用cmake生成）</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/870">#870</a>: 支持gfortran编译器</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/887">#887</a>: 支持zig编译器</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/893">#893</a>: 添加json模块</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/898">#898</a>: 改进golang项目构建，支持交叉编译</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/275">#275</a>: 支持go包管理器去集成第三方go依赖包</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/581">#581</a>: 支持dub包管理器去集成第三方dlang依赖包</li>
+</ul>
+<h3 id="-">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/868">#868</a>: 支持新的cl.exe的头文件依赖输出文件格式，<code>/sourceDependencies xxx.json</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/902">#902</a>: 改进交叉编译工具链</li>
+</ul>
+<h2 id="v2-3-5">v2.3.5</h2>
 <h3 id="-">新特性</h3>
 <ul>
 <li>添加<code>xmake show -l envs</code>去显示xmake内置的环境变量列表</li>

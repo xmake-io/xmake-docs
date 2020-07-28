@@ -1,3 +1,20 @@
+## v2.3.6
+
+### New features
+
+* Add `xmake project -k xcode` generator (use cmake)
+* [#870](https://github.com/xmake-io/xmake/issues/870): Support gfortran compiler
+* [#887](https://github.com/xmake-io/xmake/pull/887): Support zig compiler
+* [#893](https://github.com/xmake-io/xmake/issues/893): Add json module
+* [#898](https://github.com/xmake-io/xmake/issues/898): Support cross-compilation for golang
+* [#275](https://github.com/xmake-io/xmake/issues/275): Support go package manager to install go packages
+* [#581](https://github.com/xmake-io/xmake/issues/581): Support dub package manager to install dlang packages
+
+### Change
+
+* [#868](https://github.com/xmake-io/xmake/issues/868): Support new cl.exe dependency report files, `/sourceDependencies xxx.json`
+* [#902](https://github.com/xmake-io/xmake/issues/902): Improve to detect cross-compilation toolchain
+
 ## v2.3.5
 
 ### New features
