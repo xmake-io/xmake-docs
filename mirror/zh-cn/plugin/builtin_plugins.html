@@ -123,6 +123,11 @@
 ]
 
 </code></pre><p>对于<code>compile_commands</code>的详细说明见：<a href="#https://clang.llvm.org/docs/JSONCompilationDatabase.html">JSONCompilationDatabase</a></p>
+<h3 id="-xcode-">生成Xcode工程文件</h3>
+<p>目前，我们还没有时间去自己实现xcode工程的生成，但不代表不支持，因为xmake支持生成cmakelists.txt文件，而cmake是支持xcode工程文件生成的，在官方还没有实现之前，<br>我们也可以通过cmake变相支持它，xmake会自动内部调用cmake中转下生成结果，对用户而言使用上没啥区别，只需要确保cmake已经安装即可：</p>
+<pre><code class="lang-console">$ xmake project -k xcode
+</code></pre>
+<p>!> 等之后有时间，我们会重新自己实现各更加完善的xcode输出插件，也欢迎大家帮忙贡献。</p>
 <h3 id="-visualstudio-">生成VisualStudio工程</h3>
 <h4 id="-xmake-">使用xmake集成编译</h4>
 <p>v2.2.8以上版本，提供了新版本的vs工程生成插件扩展，跟之前的生成vs的插件处理模式上有很大的不同，之前生成的vs工程是吧所有文件的编译展开后，转交给vs来处理编译。</p>

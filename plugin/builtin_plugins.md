@@ -50,6 +50,17 @@ The the content of the output file:
 
 Please see [JSONCompilationDatabase](#https://clang.llvm.org/docs/JSONCompilationDatabase.html) if need known more info about `compile_commands`.
 
+### Generate Xcode project file
+
+At present, we have no time to implement the generation of xcode projects by ourselves, but it does not mean that it is not supported, because xmake supports the generation of cmakelists.txt files, and cmake supports the generation of xcode project files. Before the official implementation,
+We can also support it in disguise through cmake, xmake will automatically call cmake internally to transfer the generated results, there is no difference in use for users, just make sure that cmake has been installed:
+
+```console
+$ xmake project -k xcode
+```
+
+!> After we have time, we will re-implement each more complete xcode output plugin by ourselves, and welcome everyone to contribute.
+
 ### Generate VisualStudio Project
 
 #### Compile with xmake integration

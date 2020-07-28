@@ -59,6 +59,17 @@ $ xmake project -k compile_commands
 
 对于`compile_commands`的详细说明见：[JSONCompilationDatabase](#https://clang.llvm.org/docs/JSONCompilationDatabase.html)
 
+### 生成Xcode工程文件
+
+目前，我们还没有时间去自己实现xcode工程的生成，但不代表不支持，因为xmake支持生成cmakelists.txt文件，而cmake是支持xcode工程文件生成的，在官方还没有实现之前，
+我们也可以通过cmake变相支持它，xmake会自动内部调用cmake中转下生成结果，对用户而言使用上没啥区别，只需要确保cmake已经安装即可：
+
+```console
+$ xmake project -k xcode
+```
+
+!> 等之后有时间，我们会重新自己实现各更加完善的xcode输出插件，也欢迎大家帮忙贡献。
+
 ### 生成VisualStudio工程
 
 #### 使用xmake集成编译
