@@ -3,6 +3,7 @@
   - [Introduction](about/introduction.md)
   - [Contact](about/contact.md)
   - [Sponsor](about/sponsor.md)
+  - [Technical Support](about/technical_support.md)
   - [Changelog](about/changelog.md)
   - [Awesome xmake](about/awesome.md)
  
