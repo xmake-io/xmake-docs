@@ -95,22 +95,22 @@
 <p>The project focuses on making development and building easier and provides many features (.e.g package, install, plugin, macro, action, option, task ...),<br>so that any developer can quickly pick it up and enjoy the productivity boost when developing and building project.</p>
 <h2 id="installation">Installation</h2>
 <h4 id="master">Master</h4>
-<h4 id="via-curl">via curl</h4>
+<h4 id="viacurl">via curl</h4>
 <pre><code class="lang-bash">bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
-<h4 id="via-wget">via wget</h4>
+<h4 id="viawget">via wget</h4>
 <pre><code class="lang-bash">bash <(wget https://xmake.io/shget.text -O -)
 </code></pre>
-<h4 id="via-powershell">via powershell</h4>
+<h4 id="viapowershell">via powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
 </code></pre>
 <h4 id="windows">Windows</h4>
-<h5 id="via-installer">via installer</h5>
+<h5 id="viainstaller">via installer</h5>
 <ol>
 <li>Download xmake windows installer from <a href="https://github.com/xmake-io/xmake/releases">Releases</a></li>
 <li>Run xmake-[version].exe</li>
 </ol>
-<h5 id="via-scoop">via scoop</h5>
+<h5 id="viascoop">via scoop</h5>
 <pre><code class="lang-bash">scoop install xmake
 </code></pre>
 <h4 id="macos">MacOS</h4>
@@ -167,9 +167,9 @@ $ ./scripts/get.sh __local__
 $ xmake update dev
 </code></pre>
 <p>Finally, if we want to uninstall xmake, it is also supported: <code>xmake update --uninstall</code>.</p>
-<h2 id="quick-start">Quick Start</h2>
+<h2 id="quickstart">Quick Start</h2>
 <p><a href="https://asciinema.org/a/133693"><img src="https://asciinema.org/a/133693.png" alt="asciicast"></a></p>
-<h4 id="create-project">Create Project</h4>
+<h4 id="createproject">Create Project</h4>
 <pre><code class="lang-bash">$ xmake create -l c -P ./hello
 </code></pre>
 <p>And xmake will generate some files for c language project:</p>
@@ -197,13 +197,13 @@ $ xmake update dev
 <p><p class="tip"><br>    If you want to known more options, please run: <code>xmake create --help</code><br></p>
 
 </p>
-<h4 id="build-project">Build Project</h4>
+<h4 id="buildproject">Build Project</h4>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
-<h4 id="run-program">Run Program</h4>
+<h4 id="runprogram">Run Program</h4>
 <pre><code class="lang-bash">$ xmake run hello
 </code></pre>
-<h4 id="debug-program">Debug Program</h4>
+<h4 id="debugprogram">Debug Program</h4>
 <pre><code class="lang-bash">$ xmake run -d hello 
 </code></pre>
 <p>It will start the debugger (.e.g lldb, gdb, windbg, vsjitdebugger, ollydbg ..) to load our program.</p>
@@ -226,13 +226,13 @@ hello`main:
 <p><p class="tip"><br>    You can also use short command option, for exmaple: <code>xmake r</code> or <code>xmake run</code><br></p>
 
 </p>
-<h2 id="project-examples">Project Examples</h2>
-<h4 id="executable-program">Executable Program</h4>
+<h2 id="projectexamples">Project Examples</h2>
+<h4 id="executableprogram">Executable Program</h4>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
     add_files("src/*c")
 </code></pre>
-<h4 id="static-library-program">Static Library Program</h4>
+<h4 id="staticlibraryprogram">Static Library Program</h4>
 <pre><code class="lang-lua">target("library")
     set_kind("static")
     add_files("src/library/*.c")
@@ -243,7 +243,7 @@ target("test")
     add_deps("library")
 </code></pre>
 <p>We use <code>add_deps</code> to link a static library to test target.</p>
-<h4 id="share-library-program">Share Library Program</h4>
+<h4 id="sharelibraryprogram">Share Library Program</h4>
 <pre><code class="lang-lua">target("library")
     set_kind("shared")
     add_files("src/library/*.c")
@@ -254,7 +254,7 @@ target("test")
     add_deps("library")
 </code></pre>
 <p>We use <code>add_deps</code> to link a share library to test target.</p>
-<h4 id="qt-program">Qt Program</h4>
+<h4 id="qtprogram">Qt Program</h4>
 <p>Create an empty project:</p>
 <pre><code class="lang-console">$ xmake create -l c++ -t console_qt test
 $ xmake create -l c++ -t static_qt test
@@ -268,31 +268,31 @@ $ xmake create -l c++ -t quickapp_qt test
 <pre><code class="lang-console">$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32 
 </code></pre>
 <p>If you want to known more information, you can see <a href="https://github.com/xmake-io/xmake/issues/160">#160</a>.</p>
-<h5 id="static-library">Static Library</h5>
+<h5 id="staticlibrary">Static Library</h5>
 <pre><code class="lang-lua">target("qt_static_library")
     add_rules("qt.static")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
 </code></pre>
-<h5 id="shared-library">Shared Library</h5>
+<h5 id="sharedlibrary">Shared Library</h5>
 <pre><code class="lang-lua">target("qt_shared_library")
     add_rules("qt.shared")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
 </code></pre>
-<h5 id="console-program">Console Program</h5>
+<h5 id="consoleprogram">Console Program</h5>
 <pre><code class="lang-lua">target("qt_console")
     add_rules("qt.console")
     add_files("src/*.cpp")
 </code></pre>
-<h5 id="quick-application">Quick Application</h5>
+<h5 id="quickapplication">Quick Application</h5>
 <pre><code class="lang-lua">target("qt_quickapp")
     add_rules("qt.application")
     add_files("src/*.cpp") 
     add_files("src/qml.qrc")
     add_frameworks("QtQuick")
 </code></pre>
-<h5 id="widgets-application">Widgets Application</h5>
+<h5 id="widgetsapplication">Widgets Application</h5>
 <pre><code class="lang-lua">target("qt_widgetapp")
     add_rules("qt.application")
     add_files("src/*.cpp") 
@@ -300,7 +300,7 @@ $ xmake create -l c++ -t quickapp_qt test
     add_files("src/mainwindow.h")  -- add files with Q_OBJECT meta (only for qt.moc)
     add_frameworks("QtWidgets")
 </code></pre>
-<h5 id="android-application">Android Application</h5>
+<h5 id="androidapplication">Android Application</h5>
 <p>After the 2.2.6 version, you can directly switch to the android platform to compile the Quick/Widgets application, generate the apk package, and install it to the device via the <code>xmake install</code> command.</p>
 <pre><code class="lang-console">$ xmake create -t quickapp_qt -l c ++ appdemo
 $ cd appdemo
@@ -318,7 +318,7 @@ installing build/android/release/appdemo.apk ..
 success
 install ok!👌
 </code></pre>
-<h4 id="cuda-program">Cuda Program</h4>
+<h4 id="cudaprogram">Cuda Program</h4>
 <p>Create an empty project:</p>
 <pre><code class="lang-console">$ xmake create -P test -l cuda
 $ cd test
@@ -341,13 +341,13 @@ target("cuda_console")
 $ xmake
 </code></pre>
 <p>If you want to known more information, you can see <a href="https://github.com/xmake-io/xmake/issues/158">#158</a>.</p>
-<h4 id="wdk-driver-program">WDK Driver Program</h4>
+<h4 id="wdkdriverprogram">WDK Driver Program</h4>
 <p>xmake will detect WDK automatically and we can also set the WDK directory manually.</p>
 <pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 </code></pre>
 <p>If you want to known more information, you can see <a href="https://github.com/xmake-io/xmake/issues/159">#159</a>.</p>
-<h5 id="umdf-driver-program">UMDF Driver Program</h5>
+<h5 id="umdfdriverprogram">UMDF Driver Program</h5>
 <pre><code class="lang-lua">target("echo")
     add_rules("wdk.driver", "wdk.env.umdf")
     add_files("driver/*.c") 
@@ -358,7 +358,7 @@ target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
     add_files("exe/*.cpp") 
 </code></pre>
-<h5 id="kmdf-driver-program">KMDF Driver Program</h5>
+<h5 id="kmdfdriverprogram">KMDF Driver Program</h5>
 <pre><code class="lang-lua">target("nonpnp")
     add_rules("wdk.driver", "wdk.env.kmdf")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
@@ -370,7 +370,7 @@ target("app")
     add_files("exe/*.c") 
     add_files("exe/*.inf")
 </code></pre>
-<h5 id="wdm-driver-program">WDM Driver Program</h5>
+<h5 id="wdmdriverprogram">WDM Driver Program</h5>
 <pre><code class="lang-lua">target("kcs")
     add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.man.flags", "-prefix Kcs")
@@ -387,7 +387,7 @@ target("app")
     add_files("*.mof|msdsm.mof")
     add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
 </code></pre>
-<h5 id="package-driver">Package Driver</h5>
+<h5 id="packagedriver">Package Driver</h5>
 <p>We can run the following command to generate a .cab driver package.</p>
 <pre><code class="lang-console">$ xmake [p|package]
 $ xmake [p|package] -o outputdir
@@ -399,7 +399,7 @@ $ xmake [p|package] -o outputdir
        - release/x64/sampledsm.cab
        - debug/x86/sampledsm.cab
        - release/x64/sampledsm.cab
-</code></pre><h5 id="driver-signing">Driver Signing</h5>
+</code></pre><h5 id="driversigning">Driver Signing</h5>
 <p>The driver signing is disabled when we compile driver in default case,<br>but we can add <code>set_values("wdk.sign.mode")</code> to enable test/release sign.</p>
 <h6 id="testsign">TestSign</h6>
 <p>We can use test certificate of xmake to do testsign, but please run <code>$xmake l utils.wdk.testcert</code> install as admin to install a test certificate first (only once)!</p>
@@ -428,7 +428,7 @@ $ xmake [p|package] -o outputdir
     set_values("wdk.sign.company", "xxxx")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
 </code></pre>
-<h5 id="support-low-version-system">Support Low-version System</h5>
+<h5 id="supportlowversionsystem">Support Low-version System</h5>
 <p>We can set <code>wdk.env.winver</code> to generate a driver package that is compatible with a low version system.</p>
 <pre><code class="lang-lua">set_values("wdk.env.winver", "win10")
 set_values("wdk.env.winver", "win10_rs3")
@@ -443,7 +443,7 @@ set_values("wdk.env.winver", "win7_sp3")
 <pre><code class="lang-console">$ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 </code></pre>
-<h4 id="winsdk-application-program">WinSDK Application Program</h4>
+<h4 id="winsdkapplicationprogram">WinSDK Application Program</h4>
 <pre><code class="lang-lua">target("usbview")
     add_rules("win.sdk.application")
 
@@ -457,8 +457,8 @@ $ xmake
 <p><p class="tip"><br>    You can use short or long command option, for exmaple: <br><br>    <code>xmake f</code> or <code>xmake config</code>.<br><br>    <code>xmake f -p linux</code> or <code>xmake config --plat=linux</code>.<br></p>
 
 </p>
-<h4 id="target-platforms">Target Platforms</h4>
-<h5 id="current-host">Current Host</h5>
+<h4 id="targetplatforms">Target Platforms</h4>
+<h5 id="currenthost">Current Host</h5>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
 <p><p class="tip"><br>    XMake will detect the current host platform automatically and build project.<br></p>
@@ -492,11 +492,11 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64]
 $ xmake
 </code></pre>
-<h5 id="apple-watchos">Apple WatchOS</h5>
+<h5 id="applewatchos">Apple WatchOS</h5>
 <pre><code class="lang-bash">$ xmake f -p watchos [-a i386|armv7k]
 $ xmake
 </code></pre>
-<h5 id="cross-compilation">Cross Compilation</h5>
+<h5 id="crosscompilation">Cross Compilation</h5>
 <p>For linux platform:</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/local/arm-linux-gcc/ [--bin=/sdk/bin] [--cross=arm-linux-]
 $ xmake
@@ -694,7 +694,7 @@ $ xmake
 <p><p class="tip"><br>if you want to known more options, please run: <code>xmake f --help</code>。<br></p>
 
 </p>
-<h6 id="-sdk">--sdk</h6>
+<h6 id="sdk">--sdk</h6>
 <ul>
 <li>Set the sdk root directory of toolchains</li>
 </ul>
@@ -715,7 +715,7 @@ $ xmake
 </code></pre>
 <p>xmake will detect the prefix: arm-linux- and add the include and library search directory automatically.</p>
 <pre><code>-I/home/toolchains_sdkdir/include -L/home/toolchains_sdkdir/lib
-</code></pre><h6 id="-bin">--bin</h6>
+</code></pre><h6 id="bin">--bin</h6>
 <ul>
 <li>Set the <code>bin</code> directory of toolchains</li>
 </ul>
@@ -726,7 +726,7 @@ $ xmake
 <p><p class="tip"><br>Before v2.2.1 version, this parameter name is <code>--toolchains</code>, exists more ambiguous, so we changed to <code>--bin=</code> to set the bin directory.<br></p>
 
 </p>
-<h6 id="-cross">--cross</h6>
+<h6 id="cross">--cross</h6>
 <ul>
 <li>Set the prefix of compilation tools</li>
 </ul>
@@ -737,7 +737,7 @@ $ xmake
 </code></pre><p>If we want to use the <code>armv7-linux-gcc</code> compiler, we can run the following command:</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 </code></pre>
-<h6 id="-as">--as</h6>
+<h6 id="as">--as</h6>
 <ul>
 <li>Set <code>asm</code> assembler</li>
 </ul>
@@ -747,7 +747,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang compiler, .e.g <code>xmake f --as=gcc@/home/xxx/asmips.exe</code><br></p>
 
 </p>
-<h6 id="-cc">--cc</h6>
+<h6 id="cc">--cc</h6>
 <ul>
 <li>Set c compiler</li>
 </ul>
@@ -757,7 +757,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang compiler, .e.g <code>xmake f --cc=gcc@/home/xxx/ccmips.exe</code><br></p>
 
 </p>
-<h6 id="-cxx">--cxx</h6>
+<h6 id="cxx">--cxx</h6>
 <ul>
 <li>Set <code>c++</code> compiler</li>
 </ul>
@@ -767,7 +767,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang compiler, .e.g <code>xmake f --cxx=g++@/home/xxx/c++mips.exe</code><br></p>
 
 </p>
-<h6 id="-ld">--ld</h6>
+<h6 id="ld">--ld</h6>
 <ul>
 <li>Set <code>c/c++/objc/asm</code> linker</li>
 </ul>
@@ -777,7 +777,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang linker, .e.g <code>xmake f --ld=g++@/home/xxx/c++mips.exe</code><br></p>
 
 </p>
-<h6 id="-sh">--sh</h6>
+<h6 id="sh">--sh</h6>
 <ul>
 <li>Set <code>c/c++/objc/asm</code> shared library linker</li>
 </ul>
@@ -787,7 +787,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang linker, .e.g <code>xmake f --sh=g++@/home/xxx/c++mips.exe</code><br></p>
 
 </p>
-<h6 id="-ar">--ar</h6>
+<h6 id="ar">--ar</h6>
 <ul>
 <li>Set <code>c/c++/objc/asm</code> static library archiver</li>
 </ul>
@@ -797,7 +797,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-ar archiver, .e.g <code>xmake f --ar=ar@/home/xxx/armips.exe</code><br></p>
 
 </p>
-<h4 id="global-configuration">Global Configuration</h4>
+<h4 id="globalconfiguration">Global Configuration</h4>
 <p>You can save to the global configuration for simplfying operation.</p>
 <p>For example:</p>
 <pre><code class="lang-bash">$ xmake g --ndk=~/files/android-ndk-r10e/
@@ -809,7 +809,7 @@ $ xmake
 <p><p class="tip"><br>    You can use short or long command option, for exmaple: <code>xmake g</code> or <code>xmake global</code>.<br><br></p>
 
 </p>
-<h4 id="clean-configuration">Clean Configuration</h4>
+<h4 id="cleanconfiguration">Clean Configuration</h4>
 <p>We can clean all cached configuration and re-configure projecct.</p>
 <pre><code class="lang-bash">$ xmake f -c
 $ xmake
@@ -818,7 +818,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p iphoneos -c
 $ xmake
 </code></pre>
-<h2 id="syntax-description">Syntax Description</h2>
+<h2 id="syntaxdescription">Syntax Description</h2>
 <p>xmake&#39;s project description file xmake.lua is based on the lua syntax, but in order to make the project build logic more convenient and concise, xmake encapsulates it, making writing xmake.lua not as cumbersome as some makefiles.</p>
 <p>Basically write a simple project build description, just three lines, for example:</p>
 <pre><code class="lang-lua">target("test")
@@ -857,7 +857,7 @@ task("hello")
         end)
 </code></pre>
 <p>Simply put, all within the custom script <code>function () end</code> belongs to the internal scope, which is the script scope, and all other places belong to the external scope. .</p>
-<h5 id="external-scope">external Scope</h5>
+<h5 id="externalscope">external Scope</h5>
 <p>For most projects, you don&#39;t need complicated engineering descriptions, and you don&#39;t need custom scripting support. You just need a simple <code>set_xxx</code> or <code>add_xxx</code> to meet your needs.</p>
 <p>Then according to the 28th law, 80% of the cases, we only need to write:</p>
 <pre><code class="lang-lua">target("test")
@@ -907,7 +907,7 @@ var2 = 1
 
 Includes("src")
 </code></pre>
-<h5 id="internal-scope">Internal Scope</h5>
+<h5 id="internalscope">Internal Scope</h5>
 <p>Also known as plug-ins, script scope, provide more complex and flexible script support, generally used to write some custom scripts, plug-in development, custom task tasks, custom modules, etc.</p>
 <p>Usually included by <code>function () end</code>, and passed to the <code>on_xxx</code>, <code>before_xxx</code> and <code>after_xxx</code> interfaces, are all self-scoped.</p>
 <p>E.g:</p>
@@ -937,7 +937,7 @@ task("hello")
 </code></pre>
 <p>It should be noted that in the internal scope, all calls are enabled with the exception catching mechanism. if the operation is wrong, xmake will be automatically interrupted and an error message will be given.</p>
 <p>Therefore, the script is written without the cumbersome <code>if retval then</code> judgment, and the script logic is more clear.</p>
-<h5 id="interface-scope">Interface Scope</h5>
+<h5 id="interfacescope">Interface Scope</h5>
 <p>All descriptions of api settings in the external scope are also scoped. They are called in different places and have different scopes of influence, for example:</p>
 <pre><code class="lang-lua">-- global root scope, affecting all targets, including subproject target settings in includes()
 add_defines("DEBUG")
@@ -975,7 +975,7 @@ target("demo")
 target_end()
 </code></pre>
 <p>Call <code>option_end()</code>, <code>target_end()</code> to explicitly leave the current target/option field setting.</p>
-<h5 id="scope-indentation">Scope indentation</h5>
+<h5 id="scopeindentation">Scope indentation</h5>
 <p>Indentation in xmake.lua is just a specification for more clear distinction. The current setting is for that scope, although it is ok even if it is not indented, but it is not very readable. .</p>
 <p>e.g:</p>
 <pre><code class="lang-lua">target("xxxx")
@@ -990,7 +990,7 @@ add_files("*.c")
 <p>The above two methods are the same in effect, but in understanding, the first one is more intuitive. At first glance, you know that <code>add_files</code> is only set for target, not global.</p>
 <p>Therefore, proper indentation helps to better maintain xmake.lua</p>
 <p>Finally attached, tbox&#39;s <a href="https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua">xmake.lua</a> description, for reference only. .</p>
-<h4 id="syntax-simplification">Syntax simplification</h4>
+<h4 id="syntaxsimplification">Syntax simplification</h4>
 <p>The configuration field syntax of xmake.lua is very flexible and can be used in a variety of complex and flexible configurations in the relevant domain, but for many streamlined small block configurations, this time is slightly redundant:</p>
 <pre><code class="lang-lua">option("test1")
     set_default(true)
@@ -1018,8 +1018,8 @@ option("test3", {default = "hello"})
 <pre><code class="lang-lua">target("demo", {kind = "binary", files = "src/*.c"})
 </code></pre>
 <p>Of course, if the configuration requirements are more complicated, or the original multi-line setting method is more convenient, this depends on your own needs to evaluate which method is used.</p>
-<h2 id="dependency-package-management">Dependency Package Management</h2>
-<h4 id="local-package-mode">Local Package Mode</h4>
+<h2 id="dependencypackagemanagement">Dependency Package Management</h2>
+<h4 id="localpackagemode">Local Package Mode</h4>
 <p>By including a dependency package directory and a binary package file in the project, it is convenient to integrate some third-party dependency libraries. This method is relatively simple and straightforward, but the disadvantages are also obvious and inconvenient to manage.</p>
 <p>Take the tbox project as an example. The dependency package is as follows:</p>
 <pre><code>- base.pkg
@@ -1046,7 +1046,7 @@ $ xmake package -o ../test/packages
 </code></pre>
 <p>In this way, the test project can pass <a href="https://xmake.io/#/zh/manual?id=targetadd_packages">add_packages</a> and <a href="https://xmake.io/#/zh/manual?id= add_packagedirs">add_packagedirs</a> to configure and use the tbox.pkg package.</p>
 <p>For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: <a href="https://tboox.org/cn/2016/08/06/add-package-and-autocheck/">Dependency package addition and automatic detection mechanism</a></p>
-<h4 id="system-search-mode">System Search Mode</h4>
+<h4 id="systemsearchmode">System Search Mode</h4>
 <p>If you feel that the above built-in package management method is very inconvenient, you can use the extension interface [lib.detect.find_package] provided by xmake (<a href="https://xmake.io/#/zh/manual?id=detect-find_package">https://xmake.io/#/zh/manual?id=detect-find_package</a>) to find the system. Existing dependencies.</p>
 <p>Currently this interface supports the following package management support:</p>
 <ul>
@@ -1078,9 +1078,9 @@ $ xmake package -o ../test/packages
 </code></pre>
 <p>If third-party tools such as <code>homebrew</code>, <code>pkg-config</code> are installed on the system, then this interface will try to use them to improve the search results.</p>
 <p>For a more complete description of the usage, please refer to the <a href="https://xmake.io/#/en/manual?id=find_packages">find_packages</a> interface documentation.</p>
-<h5 id="homebrew-integration-support">Homebrew Integration Support</h5>
+<h5 id="homebrewintegrationsupport">Homebrew Integration Support</h5>
 <p>Since homebrew is generally installed directly into the system, users do not need to do any integration work, <code>lib.detect.find_package</code> has been natively seamlessly supported.</p>
-<h5 id="vcpkg-integration-support">Vcpkg Integration Support</h5>
+<h5 id="vcpkgintegrationsupport">Vcpkg Integration Support</h5>
 <p>Currently xmake v2.2.2 version already supports vcpkg, users only need to install vcpkg, execute <code>$ vcpkg integrate install</code>, xmake will automatically detect the root path of vcpkg from the system, and then automatically adapt the bread.</p>
 <p>Of course, we can also manually specify the root path of vcpkg to support:</p>
 <pre><code class="lang-console">$ xmake f --vcpkg=f:\vcpkg
@@ -1088,7 +1088,7 @@ $ xmake package -o ../test/packages
 <p>Or we can set it to the global configuration to avoid repeating the settings each time we switch configurations:</p>
 <pre><code class="lang-console">$ xmake g --vcpkg=f:\vcpkg
 </code></pre>
-<h4 id="remote-dependency-mode">Remote dependency mode</h4>
+<h4 id="remotedependencymode">Remote dependency mode</h4>
 <p>This has been initially supported after the 2.2.2 version, the usage is much simpler, just set the corresponding dependency package, for example:</p>
 <pre><code class="lang-lua">add_requires("tbox 1.6.*", "libpng ~1.16", "zlib")
 
@@ -1104,14 +1104,14 @@ target("test")
 <p>xmake will remotely pull the relevant source package, then automatically compile and install, finally compile the project, and link the dependency package. The specific effect is shown in the following figure:</p>
 <p><img src="/assets/img/index/package_manage.png" width="80%" /></p>
 <p>For more information and progress on package dependency management see the related issues: <a href="https://github.com/xmake-io/xmake/issues/69">Remote package management</a></p>
-<h5 id="currently-supported-features">Currently Supported Features</h5>
+<h5 id="currentlysupportedfeatures">Currently Supported Features</h5>
 <ul>
 <li>Semantic version support, for example: ">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"</li>
 <li>Provide multi-warehouse management support such as official package warehouse, self-built private warehouse, project built-in warehouse, etc.</li>
 <li>Cross-platform package compilation integration support (packages of different platforms and different architectures can be installed at the same time, fast switching use)</li>
 <li>Debug dependency package support, source code debugging</li>
 </ul>
-<h5 id="dependency-package-processing-mechanism">Dependency Package Processing Mechanism</h5>
+<h5 id="dependencypackageprocessingmechanism">Dependency Package Processing Mechanism</h5>
 <p>Here we briefly introduce the processing mechanism of the entire dependency package:</p>
 <p><div align="center"><br><img src="/assets/img/index/package_arch.png" width="80%" /><br></div>
 
@@ -1121,7 +1121,7 @@ target("test")
 <li>Retrieve the package matching the corresponding version, then download, compile, and install (Note: installed in a specific xmake directory, will not interfere with the system library environment)</li>
 <li>Compile the project, and finally automatically link the enabled dependencies</li>
 </ol>
-<h5 id="semantic-version-settings">Semantic Version Settings</h5>
+<h5 id="semanticversionsettings">Semantic Version Settings</h5>
 <p>Xmake&#39;s dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: <a href="https://semver.org/">https://semver.org/</a></p>
 <p>Some semantic versions are written:</p>
 <pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
@@ -1135,16 +1135,16 @@ add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 <pre><code class="lang-lua">add_requires("tbox master")
 add_requires("tbox dev")
 </code></pre>
-<h5 id="extra-package-information-settings">Extra Package Information Settings</h5>
-<h6 id="optional-package-settings">Optional Package Settings</h6>
+<h5 id="extrapackageinformationsettings">Extra Package Information Settings</h5>
+<h6 id="optionalpackagesettings">Optional Package Settings</h6>
 <p>If the specified dependency package is not supported by the current platform, or if the compilation and installation fails, then xmake will compile the error, which is reasonable for some projects that must rely on certain packages to work.<br>However, if some packages are optional dependencies, they can be set to optional packages even if they are not compiled properly.</p>
 <pre><code class="lang-lua">add_requires("tbox", {optional = true})
 </code></pre>
-<h6 id="disable-system-library">Disable System Library</h6>
+<h6 id="disablesystemlibrary">Disable System Library</h6>
 <p>With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library provided by the third-party package management, then you can set:</p>
 <pre><code class="lang-lua">add_requires("tbox", {system = false})
 </code></pre>
-<h6 id="using-the-debug-version-of-the-package">Using the debug version of the package</h6>
+<h6 id="usingthedebugversionofthepackage">Using the debug version of the package</h6>
 <p>If we want to debug the dependencies at the same time, we can set them to use the debug version of the package (provided that this package supports debug compilation):</p>
 <pre><code class="lang-lua">add_requires("tbox", {debug = true})
 </code></pre>
@@ -1156,12 +1156,12 @@ add_requires("tbox dev")
         os.vrun("make install")
     end)
 </code></pre>
-<h6 id="passing-additional-compilation-information-to-the-package">Passing additional compilation information to the package</h6>
+<h6 id="passingadditionalcompilationinformationtothepackage">Passing additional compilation information to the package</h6>
 <p>Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:</p>
 <pre><code class="lang-lua">add_requires("tbox", {configs = {small=true}})
 </code></pre>
 <p>Pass <code>--small=true</code> to the tbox package so that compiling the installed tbox package is enabled.</p>
-<h5 id="install-third-party-packages">Install third-party packages</h5>
+<h5 id="installthirdpartypackages">Install third-party packages</h5>
 <p>After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, etc.</p>
 <p>Add a homebrew dependency package:</p>
 <pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"}})
@@ -1206,7 +1206,7 @@ please input: y (y/n)
 [  0%]: ccache compiling.release src/main.c
 [100%]: linking.release test
 </code></pre>
-<h5 id="using-self-built-private-package-warehouse">Using self-built private package warehouse</h5>
+<h5 id="usingselfbuiltprivatepackagewarehouse">Using self-built private package warehouse</h5>
 <p>If the required package is not in the official repository <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>, we can submit the contribution code to the repository for support.<br>But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>For example, now we have a private repository repo:<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>
 <p>We can add the repository with the following command:</p>
@@ -1258,9 +1258,9 @@ target("test")
     add_files("src/*.c")
     add_packages("libjpeg")
 </code></pre>
-<h5 id="package-management-command-use">Package Management Command Use</h5>
+<h5 id="packagemanagementcommanduse">Package Management Command Use</h5>
 <p>The package management command <code>$ xmake require</code> can be used to manually display the download, install, uninstall, retrieve, and view package information.</p>
-<h6 id="install-the-specified-package">Install the specified package</h6>
+<h6 id="installthespecifiedpackage">Install the specified package</h6>
 <pre><code class="lang-console">$ xmake require tbox
 </code></pre>
 <p>Install the specified version package:</p>
@@ -1273,24 +1273,24 @@ target("test")
 <pre><code class="lang-console">$ xmake require --extra="debug=true,config={small=true}" tbox
 </code></pre>
 <p>Install the debug package and pass the compilation configuration information of <code>small=true</code> to the package.</p>
-<h6 id="uninstalling-the-specified-package">Uninstalling the specified package</h6>
+<h6 id="uninstallingthespecifiedpackage">Uninstalling the specified package</h6>
 <pre><code class="lang-console">$ xmake require --uninstall tbox
 </code></pre>
 <p>This will completely uninstall the removal package file.</p>
-<h6 id="view-package-details">View package details</h6>
+<h6 id="viewpackagedetails">View package details</h6>
 <pre><code class="lang-console">$ xmake require --info tbox
 </code></pre>
-<h6 id="search-for-packages-in-the-current-warehouse">Search for packages in the current warehouse</h6>
+<h6 id="searchforpackagesinthecurrentwarehouse">Search for packages in the current warehouse</h6>
 <pre><code class="lang-console">$ xmake require --search tbox
 </code></pre>
 <p>This is to support fuzzy search and lua pattern matching search:</p>
 <pre><code class="lang-console">$ xmake require --search pcr
 </code></pre>
 <p>Will also search for pcre, pcre2 and other packages.</p>
-<h6 id="list-the-currently-installed-packages">List the currently installed packages</h6>
+<h6 id="listthecurrentlyinstalledpackages">List the currently installed packages</h6>
 <pre><code class="lang-console">$ xmake require --list
 </code></pre>
-<h5 id="warehouse-management-command-use">Warehouse Management Command Use</h5>
+<h5 id="warehousemanagementcommanduse">Warehouse Management Command Use</h5>
 <p>As mentioned above, adding a private repository is available (supporting local path addition):</p>
 <pre><code class="lang-console">$ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
 </code></pre>
@@ -1303,11 +1303,11 @@ target("test")
 <p>If the remote repository has updates, you can manually perform a warehouse update to get more and the latest packages:</p>
 <pre><code class="lang-console">$ xmake repo -u
 </code></pre>
-<h5 id="submit-the-package-to-the-official-warehouse">Submit the package to the official warehouse</h5>
+<h5 id="submitthepackagetotheofficialwarehouse">Submit the package to the official warehouse</h5>
 <p>If you need a package that is not supported by the current official repository, you can commit it to the official repository after local tuning: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>For detailed contribution descriptions, see: <a href="https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a></p>
 <h2 id="faq">FAQ</h2>
-<h4 id="how-to-get-verbose-command-line-arguments-info-">How to get verbose command-line arguments info?</h4>
+<h4 id="howtogetverbosecommandlineargumentsinfo">How to get verbose command-line arguments info?</h4>
 <p>Get the help info of the main command.</p>
 <pre><code class="lang-bash">$ xmake [-h|--help]
 </code></pre>
@@ -1320,10 +1320,10 @@ target("test")
 <p>For example:</p>
 <pre><code class="lang-bash">$ xmake run --help
 </code></pre>
-<h4 id="how-to-suppress-all-output-info-">How to suppress all output info?</h4>
+<h4 id="howtosuppressalloutputinfo">How to suppress all output info?</h4>
 <pre><code class="lang-bash">$ xmake [-q|--quiet]
 </code></pre>
-<h4 id="how-to-do-if-xmake-fails-">How to do if xmake fails?</h4>
+<h4 id="howtodoifxmakefails">How to do if xmake fails?</h4>
 <p>Please attempt to clean configuration and rebuild it first.</p>
 <pre><code class="lang-bash">$ xmake f -c
 $ xmake
@@ -1335,10 +1335,10 @@ $ xmake
 <p>And add <code>--backtrace</code> to get the verbose backtrace info, then you can submit these infos to <a href="https://github.com/xmake-io/xmake/issues">issues</a>.</p>
 <pre><code class="lang-bash">$ xmake -v --backtrace
 </code></pre>
-<h4 id="how-to-see-verbose-compiling-warnings-">How to see verbose compiling warnings?</h4>
+<h4 id="howtoseeverbosecompilingwarnings">How to see verbose compiling warnings?</h4>
 <pre><code class="lang-bash">$ xmake [-w|--warning] 
 </code></pre>
-<h4 id="how-to-scan-source-code-and-generate-xmake-lua-automaticlly">How to scan source code and generate xmake.lua automaticlly</h4>
+<h4 id="howtoscansourcecodeandgeneratexmakeluaautomaticlly">How to scan source code and generate xmake.lua automaticlly</h4>
 <p>You only need run the following command:</p>
 <pre><code class="lang-bash">$ xmake
 </code></pre>

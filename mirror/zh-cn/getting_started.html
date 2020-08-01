@@ -90,44 +90,44 @@
   line-height: 1;
 }
 </style>
-    <h2 id="-">捐助</h2>
+    <h2 id="">捐助</h2>
 <p>🙏 xmake项目属于个人开源项目，它的发展需要您的帮助，如果您愿意支持xmake项目的开发，欢迎为其捐赠，支持它的发展。</p>
 <p>👉 <a href="https://xmake.io/#/zh-cn/about/sponsor">捐助页面</a></p>
-<h2 id="-">安装</h2>
-<h4 id="-curl">使用curl</h4>
+<h2 id="">安装</h2>
+<h4 id="curl">使用curl</h4>
 <pre><code class="lang-bash">bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
-<h4 id="-wget">使用wget</h4>
+<h4 id="wget">使用wget</h4>
 <pre><code class="lang-bash">bash <(wget https://xmake.io/shget.text -O -)
 </code></pre>
-<h4 id="-powershell">使用powershell</h4>
+<h4 id="powershell">使用powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
 </code></pre>
-<h2 id="-">简单的工程描述</h2>
+<h2 id="">简单的工程描述</h2>
 <p><img src="https://xmake.io/assets/img/index/showcode1.png" width="340px" /></p>
-<h2 id="-">包依赖描述</h2>
+<h2 id="">包依赖描述</h2>
 <p><img src="https://xmake.io/assets/img/index/add_require.png" width="600px" /></p>
 <p>官方的xmake包管理仓库: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
-<h2 id="-">构建工程</h2>
+<h2 id="">构建工程</h2>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
-<h2 id="-">运行目标</h2>
+<h2 id="">运行目标</h2>
 <pre><code class="lang-bash">$ xmake run console
 </code></pre>
-<h2 id="-">调试程序</h2>
+<h2 id="">调试程序</h2>
 <pre><code class="lang-bash">$ xmake run -d console
 </code></pre>
-<h2 id="-">配置平台</h2>
+<h2 id="">配置平台</h2>
 <pre><code class="lang-bash">$ xmake f -p [windows|linux|macosx|android|iphoneos ..] -a [x86|arm64 ..] -m [debug|release]
 $ xmake
 </code></pre>
-<h2 id="-">图形化菜单配置</h2>
+<h2 id="">图形化菜单配置</h2>
 <pre><code class="lang-bash">$ xmake f --menu
 </code></pre>
 <p><img src="https://xmake.io/assets/img/index/menuconf.png" width="650px" /></p>
-<h2 id="-ninja-">跟ninja一样快的构建速度</h2>
+<h2 id="ninja">跟ninja一样快的构建速度</h2>
 <p>测试工程: <a href="https://github.com/xmake-io/xmake/tree/master/core">xmake-core</a></p>
-<h3 id="-">多任务并行编译测试</h3>
+<h3 id="">多任务并行编译测试</h3>
 <table>
 <thead>
 <tr>
@@ -164,7 +164,7 @@ $ xmake
 </tr>
 </tbody>
 </table>
-<h3 id="-">单任务编译测试</h3>
+<h3 id="">单任务编译测试</h3>
 <table>
 <thead>
 <tr>
@@ -201,12 +201,12 @@ $ xmake
 </tr>
 </tbody>
 </table>
-<h2 id="-">包依赖管理</h2>
-<h3 id="-">下载和编译</h3>
+<h2 id="">包依赖管理</h2>
+<h3 id="">下载和编译</h3>
 <p><img src="https://xmake.io/assets/img/index/package_manage.png" width="650px" /></p>
-<h3 id="-">架构和流程</h3>
+<h3 id="">架构和流程</h3>
 <p><img src="https://xmake.io/assets/img/index/package_arch.png" width="650px" /></p>
-<h2 id="-">支持平台</h2>
+<h2 id="">支持平台</h2>
 <ul>
 <li>Windows (x86, x64)</li>
 <li>macOS (i386, x86_64)</li>
@@ -221,7 +221,7 @@ $ xmake
 <li>SDCC (stm8, mcs51, ..)</li>
 <li>Cross (cross-toolchains ..)</li>
 </ul>
-<h2 id="-">支持语言</h2>
+<h2 id="">支持语言</h2>
 <ul>
 <li>C/C++</li>
 <li>Objc/Objc++</li>
@@ -232,7 +232,7 @@ $ xmake
 <li>Dlang</li>
 <li>Cuda</li>
 </ul>
-<h2 id="-">工程类型</h2>
+<h2 id="">工程类型</h2>
 <ul>
 <li>静态库程序</li>
 <li>动态库类型</li>
@@ -243,7 +243,7 @@ $ xmake
 <li>WinSDK应用程序</li>
 <li>MFC应用程序</li>
 </ul>
-<h2 id="-">更多例子</h2>
+<h2 id="">更多例子</h2>
 <p>Debug和Release模式：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 
@@ -296,15 +296,15 @@ target("app")
     add_files("exe/*.cpp")
 </code></pre>
 <p>更多WDK驱动程序例子(umdf/kmdf/wdm)，见：<a href="https://xmake.io/#/zh-cn/guide/project_examples?id=wdk%e9%a9%b1%e5%8a%a8%e7%a8%8b%e5%ba%8f">WDK工程例子</a></p>
-<h2 id="-">插件</h2>
-<h4 id="-ide-makefile-vs2002-vs2019-">生成IDE工程文件插件（makefile, vs2002 - vs2019, ...）</h4>
+<h2 id="">插件</h2>
+<h4 id="idemakefilevs2002vs2019">生成IDE工程文件插件（makefile, vs2002 - vs2019, ...）</h4>
 <pre><code class="lang-bash">$ xmake project -k vsxmake -m "debug;release" # 新版vs工程生成插件（推荐）
 $ xmake project -k vs -m "debug;release"
 $ xmake project -k cmake
 $ xmake project -k ninja
 $ xmake project -k compile_commands
 </code></pre>
-<h4 id="-lua-">加载自定义lua脚本插件</h4>
+<h4 id="lua">加载自定义lua脚本插件</h4>
 <pre><code class="lang-bash">$ xmake l ./test.lua
 $ xmake l -c "print(&#39;hello xmake!&#39;)"
 $ xmake l lib.detect.find_tool gcc
@@ -319,7 +319,7 @@ $ xmake l
 </code></pre>
 <p>更多内置插件见相关文档：<a href="https://xmake.io/#/zh-cn/plugin/builtin_plugins">内置插件文档</a></p>
 <p>其他扩展插件，请到插件仓库进行下载安装: <a href="https://github.com/xmake-io/xmake-plugins">xmake-plugins</a>.</p>
-<h2 id="ide-">IDE和编辑器插件</h2>
+<h2 id="ide">IDE和编辑器插件</h2>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-vscode">xmake-vscode</a></li>
 </ul>
@@ -338,7 +338,7 @@ $ xmake l
 <li><p><a href="https://github.com/xmake-io/xmake-gradle">xmake-gradle</a>: 一个无缝整合xmake的gradle插件</p>
 </li>
 </ul>
-<h2 id="-">项目例子</h2>
+<h2 id="">项目例子</h2>
 <p>一些使用xmake的项目：</p>
 <ul>
 <li><a href="https://github.com/tboox/tbox">tbox</a></li>
@@ -346,9 +346,9 @@ $ xmake l
 <li><a href="https://github.com/tboox/vm86">vm86</a></li>
 <li><a href="https://github.com/xmake-io/awesome-xmake">更多</a></li>
 </ul>
-<h2 id="-">演示视频</h2>
+<h2 id="">演示视频</h2>
 <p><a href="https://asciinema.org/a/133693"><br><img src="https://asciinema.org/a/133693.png" width="650px" /><br></a></p>
-<h2 id="-">联系方式</h2>
+<h2 id="">联系方式</h2>
 <ul>
 <li>邮箱：<a href="mailto:waruqi@gmail.com">waruqi@gmail.com</a></li>
 <li>主页：<a href="https://tboox.org/cn">tboox.org</a></li>
@@ -358,7 +358,7 @@ $ xmake l
 <li>QQ群：343118190(满), 662147501</li>
 <li>微信公众号：tboox-os</li>
 </ul>
-<h2 id="-">感谢</h2>
+<h2 id="">感谢</h2>
 <p>感谢所有对xmake有所<a href="CONTRIBUTING.md">贡献</a>的人:<br><a href="https://github.com/xmake-io/xmake/graphs/contributors"><img src="https://opencollective.com/xmake/contributors.svg?width=890&amp;button=false" /></a></p>
 <ul>
 <li><a href="https://github.com/TitanSnow">TitanSnow</a>: 提供xmake <a href="https://github.com/TitanSnow/ts-xmake-logo">logo</a> 和安装脚本</li>

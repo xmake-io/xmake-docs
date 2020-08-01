@@ -90,7 +90,7 @@
   line-height: 1;
 }
 </style>
-    <h2 id="find-system-package">Find System Package</h2>
+    <h2 id="findsystempackage">Find System Package</h2>
 <p>If you feel that the above built-in package management method is very inconvenient, you can use the built-in interface <code>find_packages</code> provided by xmake.</p>
 <p>And through the system and third-party package management tools for the installation of the dependency package, and then integrated with xmake, for example, we look for an openssl package:</p>
 <pre><code class="lang-lua">local packages = find_packages("openssl", "zlib")
@@ -122,16 +122,16 @@
 <li>pkg-config</li>
 </ul>
 <p>If third-party tools such as <code>homebrew</code>, <code>pkg-config</code> are installed on the system, then this interface will try to use them to improve the search results.</p>
-<p>For a more complete description of the usage, please refer to the <a href="/manual/builtin_modules?id=find_packages">find_packages</a> interface documentation.</p>
-<p>Of course, if you feel that integrating third-party dependencies by looking for packages is not enough, you can also directly integrate remote dependencies through <code>add_requires</code>.<br>For details, see the documentation: <a href="/package/remote_package">Using Remote Dependencies</a></p>
-<h2 id="find-homebrew-package">Find homebrew package</h2>
+<p>For a more complete description of the usage, please refer to the <a href="/mirror/manual/builtin_modules.html#find_packages">find_packages</a> interface documentation.</p>
+<p>Of course, if you feel that integrating third-party dependencies by looking for packages is not enough, you can also directly integrate remote dependencies through <code>add_requires</code>.<br>For details, see the documentation: <a href="/mirror/package/remote_package.html">Using Remote Dependencies</a></p>
+<h2 id="findhomebrewpackage">Find homebrew package</h2>
 <p>Alternatively, we can also find the package from the manually specified package manager:</p>
 <pre><code class="lang-lua">find_packages("brew::pcre2/libpcre2-8", "brew::x264")
 </code></pre>
 <p>We only need to add the <code>brew::</code> prefix, you can explicitly specify the package source from homebrew to find the package, if there are multiple pkgconfig files in <code>brew::pcre2</code>, for example: libpcre2-8.pc, libpcre2-16. Pc, libpcre2-32.pc</p>
 <p>Then we can use <code>brew::pcre2/libpcre2-16</code> to select the link library information specified by the corresponding pkgconfig file.</p>
 <p>Since homebrew is generally installed directly into the system, users do not need to do any integration work, <code>find_packages</code> has been natively seamlessly supported.</p>
-<h2 id="find-vcpkg-package">Find vcpkg package</h2>
+<h2 id="findvcpkgpackage">Find vcpkg package</h2>
 <p>Currently xmake v2.2.2 version has already supported vcpkg, users only need to install vcpkg, execute <code>$ vcpkg integrate install</code>, xmake will automatically detect the root path of vcpkg from the system, and then automatically adapt the bread.</p>
 <p>Of course, we can also manually specify the root path of vcpkg to support:</p>
 <pre><code class="lang-console">$ xmake f --vcpkg=f:\vcpkg
@@ -142,11 +142,11 @@
 <p>Then, we can specify the dependency package in vcpkg by using the <code>vcpkg::</code> prefix:</p>
 <pre><code class="lang-lua">find_packages("vcpkg::zlib", "vcpkg::openssl")
 </code></pre>
-<h2 id="find-the-conan-package">Find the conan package</h2>
+<h2 id="findtheconanpackage">Find the conan package</h2>
 <p>Xmake v2.2.6 and later versions also support finding the specified package from the conan:</p>
 <pre><code class="lang-lua">find_packages("conan::OpenSSL/1.0.2n@conan/stable")
 </code></pre>
-<h2 id="test-command-for-finding-package">Test command for finding package</h2>
+<h2 id="testcommandforfindingpackage">Test command for finding package</h2>
 <p>We can use the following command to quickly detect the package information specified on the system:</p>
 <pre><code class="lang-console">$ xmake l find_packages x264
 {

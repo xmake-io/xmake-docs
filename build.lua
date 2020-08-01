@@ -111,6 +111,34 @@ function ads()
     ]]
 end
 
+-- fix links
+function _fixlinks(htmldata)
+
+    -- <a href="/manual/builtin_modules?id=osmv">os.mv</a>
+    -- => <a href="/mirror/manual/builtin_modules.html#osmv">os.mv</a>
+    htmldata = htmldata:gsub("(href=\"(.-)\")", function(_, href)
+        if href:startswith("/") and not href:startswith("/#/") then
+            local splitinfo = href:split('?', {plain = true})
+            local url = splitinfo[1]
+            href = "/mirror" .. url .. ".html"
+            if splitinfo[2] then
+                local anchor = splitinfo[2]:gsub("id=", "")
+                href = href .. "#" .. anchor
+            end
+            print(" -> fix %s", href)
+        end
+        return "href=\"" .. href .. "\""
+    end)
+
+    -- <h4 id="os-rm">os.rm</h4>
+    -- => <h4 id="osrm">os.rm</h4>
+    htmldata = htmldata:gsub("(id=\"(.-)\")", function(_, id)
+        id = id:gsub("%-", "")
+        return "id=\"" .. id .. "\""
+    end)
+    return htmldata
+end
+
 -- generate mirror files and sitemap.xml
 -- we need install https://github.com/cwjohan/markdown-to-html first
 -- npm install markdown-to-html -g
@@ -165,7 +193,7 @@ function main()
                     local maps = {["&lt;"] = "<", ["&gt;"] = ">", ["&quot;"] = "\""}
                     return maps[w]
                 end)
-                f:write(htmldata)
+                f:write(_fixlinks(htmldata))
                 f:write(tailer())
                 f:close()
             end
@@ -178,7 +206,7 @@ function main()
             if f then
                 f:write(header(rawurl))
                 f:write(ads())
-                f:write(io.readfile(tmpfile))
+                f:write(_fixlinks(io.readfile(tmpfile)))
                 f:write(tailer())
                 f:close()
             end

@@ -102,7 +102,7 @@
 </code></pre><p>如果要让当前工程识别加载这些包，首先要指定包目录路径，例如：</p>
 <pre><code class="lang-lua">add_packagedirs("packages")
 </code></pre>
-<p>指定好后，就可以在target作用域中，通过<a href="/zh-cn/manual/project_target?id=targetadd_packages">add_packages</a>接口，来添加集成包依赖了，例如：</p>
+<p>指定好后，就可以在target作用域中，通过<a href="/mirror/zh-cn/manual/project_target.html#targetadd_packages">add_packages</a>接口，来添加集成包依赖了，例如：</p>
 <pre><code class="lang-lua">target("tbox")
     add_packages("zlib", "polarssl", "pcre", "mysql")
 </code></pre>
@@ -114,7 +114,7 @@ $ xmake package
 <pre><code class="lang-console">$ cd tbox
 $ xmake package -o ../test/packages
 </code></pre>
-<p>这样，test工程就可以通过<a href="(/zh-cn/manual/project_target?id=targetadd_packages">add_packages</a>和<a href="/zh-cn/manual/global_interfaces?id=add_packagedirs">add_packagedirs</a>去配置和使用tbox.pkg包了。</p>
+<p>这样，test工程就可以通过<a href="(/zh-cn/manual/project_target?id=targetadd_packages">add_packages</a>和<a href="/mirror/zh-cn/manual/global_interfaces.html#add_packagedirs">add_packagedirs</a>去配置和使用tbox.pkg包了。</p>
 <p>关于内置包的详细描述，还可以参考下相关文章，这里面有详细介绍：<a href="https://tboox.org/cn/2016/08/06/add-package-and-autocheck/">依赖包的添加和自动检测机制</a></p>
 </article>
 </body>

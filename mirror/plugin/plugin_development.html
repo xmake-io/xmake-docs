@@ -106,7 +106,7 @@
 <li>hello:  The demo plugin and only print: &#39;hello xmake!&#39;</li>
 <li>project：Generate project file for IDE, only generate makefile now and will generate vs, xcode project in the future</li>
 </ul>
-<h2 id="quick-start">Quick Start</h2>
+<h2 id="quickstart">Quick Start</h2>
 <p>Now we write a simple plugin demo for printing &#39;hello xmake!&#39;</p>
 <pre><code class="lang-lua">-- define a plugin task 
 task("hello")
@@ -143,7 +143,7 @@ task("hello")
 <li>Put this plugin directory into ~/.xmake/plugins as the global user plugin.</li>
 <li>Put this plugin directory to anywhere and call <code>add_plugindirs("./hello")</code> in xmake.lua as the local project plugin.</li>
 </ol>
-<h2 id="run-plugin">Run Plugin</h2>
+<h2 id="runplugin">Run Plugin</h2>
 <p>Next we run this plugin</p>
 <pre><code class="lang-bash">xmake hello
 </code></pre>

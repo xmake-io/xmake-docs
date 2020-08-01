@@ -90,7 +90,7 @@
   line-height: 1;
 }
 </style>
-    <h2 id="try-building-with-another-build-system">Try building with another build system</h2>
+    <h2 id="trybuildingwithanotherbuildsystem">Try building with another build system</h2>
 <p>xmake v2.3.1 and above directly interface with other third-party build systems. Even if other projects do not use xmake.lua for maintenance, xmake can directly call other build tools to complete the compilation.</p>
 <p>Then the user can directly use a third-party build tool to compile, so why use xmake to call it? The main benefits are:</p>
 <ol>
@@ -111,7 +111,7 @@
 <li>ndkbuild</li>
 <li>ninja</li>
 </ul>
-<h3 id="automatically-detect-build-system-and-compile">Automatically detect build system and compile</h3>
+<h3 id="automaticallydetectbuildsystemandcompile">Automatically detect build system and compile</h3>
 <p>For example, for a project maintained using cmake, executing xmake directly in the project root directory will automatically trigger a detection mechanism, detect CMakeLists.txt, and then prompt the user if cmake is needed to continue compiling.</p>
 <pre><code class="lang-bash">$ xmake 
 note: CMakeLists.txt found, try building it (pass -y or --confirm=y/n/d to skip confirm)?
@@ -128,7 +128,7 @@ please input: y (y/n)
 output to/Users/ruki/Downloads/libpng-1.6.35/build/artifacts
 build ok!
 </code></pre>
-<h3 id="seamless-using-xmake-command">Seamless using xmake command</h3>
+<h3 id="seamlessusingxmakecommand">Seamless using xmake command</h3>
 <p>Currently supports common commands such as <code>xmake clean</code>,<code>xmake --rebuild</code> and <code>xmake config</code> to seamlessly interface with third-party systems.</p>
 <p>We can directly clean the compiled output files of the cmake maintenance project</p>
 <pre><code class="lang-bash">$ xmake clean
@@ -138,17 +138,17 @@ $ xmake clean --all
 <p>The default <code>xmake</code> is docked with incremental build behavior, but we can also force a quick rebuild:</p>
 <pre><code class="lang-bash">$ xmake --rebuild
 </code></pre>
-<h3 id="manually-switch-the-specified-build-system">Manually switch the specified build system</h3>
+<h3 id="manuallyswitchthespecifiedbuildsystem">Manually switch the specified build system</h3>
 <p>If there are multiple build systems under maintenance in a project, such as the libpng project, which comes with autotools/cmake/makefile and other build system maintenance, xmake defaults to using autotools by default. If you want to force switch to other build systems, you can execute:</p>
 <pre><code class="lang-bash">$ xmake f --trybuild=[autotools|cmake|make|msbuild|..]
 $ xmake
 </code></pre>
 <p>In addition, the <code>--trybuild=</code> parameter is configured to manually specify the default build system, and the subsequent build process will not prompt the user for selection.</p>
-<h3 id="fastly-cross-compile">Fastly cross compile</h3>
+<h3 id="fastlycrosscompile">Fastly cross compile</h3>
 <p>As we all know, although many projects maintained by autotools support cross-compilation, the configuration process of cross-compilation is very complicated. There are still many differences in different toolchain processing methods, and many pits will be stepped in the middle.</p>
 <p>Even if you run through a toolchain&#39;s cross-compilation, if you switch to another toolchain environment, it may take a long time, and if you use xmake, you usually only need two simple commands:</p>
 <p>!> At present autotools supports cross-compilation of xmake, and other build systems such as cmake will be added later.</p>
-<h4 id="cross-compile-android-platform">Cross compile android platform</h4>
+<h4 id="crosscompileandroidplatform">Cross compile android platform</h4>
 <pre><code class="lang-bash">$ xmake f -p android --trybuild=autotools [--ndk=xxx]
 $ xmake
 </code></pre>
@@ -166,58 +166,58 @@ $ export STRIP=$TOOLCHAIN/bin/aarch64-linux-android-strip
 $ ./configure --host aarch64-linux-android
 $ make
 </code></pre>
-<h4 id="cross-compile-iphoneos-platform">Cross compile iphoneos platform</h4>
+<h4 id="crosscompileiphoneosplatform">Cross compile iphoneos platform</h4>
 <pre><code class="lang-bash">$ xmake f -p iphoneos --trybuild=autotools
 $ xmake
 </code></pre>
-<h4 id="cross-compile-mingw-platform">Cross-compile mingw platform</h4>
+<h4 id="crosscompilemingwplatform">Cross-compile mingw platform</h4>
 <pre><code class="lang-bash">$ xmake f -p mingw --trybuild=autotools [--mingw=xxx]
 $ xmake
 </code></pre>
-<h4 id="using-other-cross-compilation-toolchains">Using other cross-compilation toolchains</h4>
+<h4 id="usingothercrosscompilationtoolchains">Using other cross-compilation toolchains</h4>
 <pre><code class="lang-bash">$ xmake f -p cross --trybuild=autotools --sdk=/xxxx
 $ xmake
 </code></pre>
 <p>For more cross compilation configuration details, please refer to the document: <a href="https://xmake.io/#/guide/configuration?id=cross-compilation">Cross Compilation</a>, except for an additional <code>--trybuild=</code> parameter, all other cross-compilation configuration parameters are completely universal.</p>
-<h3 id="passing-user-configuration-parameters">Passing user configuration parameters</h3>
+<h3 id="passinguserconfigurationparameters">Passing user configuration parameters</h3>
 <p>We can use <code>--tryconfigs=</code> to pass additional configuration parameters of the user to the corresponding third-party build system. For example: autotools will be passed to <code>. / Configure</code>, cmake will be passed to the<code>cmake</code> command.</p>
 <pre><code class="lang-bash">$ xmake f --trybuild=autotools --tryconfigs="-enable-shared=no"
 $ xmake
 </code></pre>
 <p>For example, the above command, pass <code>--enable-shared=no</code> to<code>./configure</code> to disable dynamic library compilation.</p>
 <p>In addition, for <code>--cflags</code>,<code>--includedirs</code> and <code>--ldflags</code>, you don&#39;t need to pass<code>--tryconfigs</code>, you can pass the built-in parameters like <code>xmake config --cflags=</code> to pass through.</p>
-<h3 id="examples-of-compiling-other-build-system">Examples of compiling other build system</h3>
-<h4 id="general-compilation">General Compilation</h4>
+<h3 id="examplesofcompilingotherbuildsystem">Examples of compiling other build system</h3>
+<h4 id="generalcompilation">General Compilation</h4>
 <p>In most cases, the compilation method after each docking system is consistent, except for the <code>--trybuild=</code> configuration parameter.</p>
 <pre><code class="lang-bash">$ xmake f --trybuild=[autotools|cmake|meson|ninja|bazel|make|msbuild|xcodebuild]
 $ xmake
 </code></pre>
 <p>!> We also need to make sure that the build tool specified by --trybuild is installed and working properly.</p>
-<h4 id="building-android-jni-programs">Building Android jni programs</h4>
+<h4 id="buildingandroidjniprograms">Building Android jni programs</h4>
 <p>If <code>jni/Android.mk</code> exists in the current project, then xmake can directly call ndk-build to build the jni library.</p>
 <pre><code class="lang-bash">$ xmake f -p android --trybuild=ndkbuild [--ndk =]
 $ xmake
 </code></pre>
 <p>We also provided <a href="https://github.com/xmake-io/xmake-gradle">xmake-gradle</a> to build jni library in gradle, you can see <a href="https://xmake.io/#/plugin/more_plugins?id=gradle-plugin-jni">Uses xmake to build JNI in Gradle</a></p>
-<h2 id="automatically-generate-xmake-lua">Automatically generate xmake.lua</h2>
+<h2 id="automaticallygeneratexmakelua">Automatically generate xmake.lua</h2>
 <p>we need not write any make-like file (xmake.lua, makefile.am, cmakelist.txt, etc.) and also build it directly.</p>
 <p>It will scan all source files and generate xmake.lua automatically for building project.</p>
 <p>And xmake will detect &#39;main&#39; function in source file in order to distinguish between static libraries and executable programs.</p>
 <p>(Currently, only projects with single-level directory are supported)</p>
-<h3 id="used-scenes">Used scenes</h3>
+<h3 id="usedscenes">Used scenes</h3>
 <ol>
 <li>Temporarily quickly compile and run some scattered test code</li>
 <li>Try porting and compiling other open source libraries</li>
 <li>Quickly create a new xmake project based on existing code</li>
 </ol>
-<h3 id="how-to-use-it">How to use it</h3>
+<h3 id="howtouseit">How to use it</h3>
 <p>Execute xmake directly in the directory with the source code (no xmake.lua), and follow the prompts:</p>
 <pre><code class="lang-bash">$ xmake
 note: xmake.lua not found, try generating it (pass -y or --confirm=y/n/d to skip confirm)?
 please input: n (y/n)
 y
 </code></pre>
-<h3 id="compile-open-source-libraries">Compile open source libraries</h3>
+<h3 id="compileopensourcelibraries">Compile open source libraries</h3>
 <p>Although this approach has some limitations, but it is sufficient to complie and run some temporary codes for testing. </p>
 <p>For example, we downloaded a zlib-1.2.10 source and want to compile it.</p>
 <p>We only need to enter the zlib source directory and run the following command:</p>
@@ -333,7 +333,7 @@ target("zlib-1.2")
     add_files("./uncompr.c")
     add_files("./zutil.c")
 </code></pre>
-<h3 id="fastly-compile-and-run-testing-code">Fastly compile and run testing code</h3>
+<h3 id="fastlycompileandruntestingcode">Fastly compile and run testing code</h3>
 <p>For example, I want to write a simple program in the main.c only to echo &#39;hello world!&#39;.</p>
 <p>If we use gcc to compile and run it, need run two commands: </p>
 <pre><code class="lang-bash">gcc ./main.c -o demo
@@ -351,7 +351,7 @@ target("zlib-1.2")
 <pre><code class="lang-bash">xmake run
 </code></pre>
 <p>It&#39;s so easy and convenient.</p>
-<h3 id="multi-language-support">Multi-language support</h3>
+<h3 id="multilanguagesupport">Multi-language support</h3>
 <p>This feature of code detection and real-time compilation not only supports c/c++, also supports objc/swift<br>and it will support golang in future.</p>
 <p>For example, we downloaded a ios open source framework code &#39;fmdb&#39;:</p>
 <pre><code>.
@@ -425,7 +425,7 @@ clean ok!
 [80%]: ccache compiling.release ./FMResultSet.m
 [100%]: archiving.release libFMDB.a
 build ok!👌
-</code></pre><h3 id="compile-multiple-executables-at-the-same-time">Compile multiple executables at the same time</h3>
+</code></pre><h3 id="compilemultipleexecutablesatthesametime">Compile multiple executables at the same time</h3>
 <pre><code class="lang-bash">$ cd jpeg-6b
 $ xmake
 </code></pre>
@@ -647,7 +647,7 @@ target(rdjpgcom): binary
     [+]: ./rdjpgcom.c
 target(wrjpgcom): binary
     [+]: ./wrjpgcom.c
-</code></pre><h4 id="manual-configuration">Manual configuration</h4>
+</code></pre><h4 id="manualconfiguration">Manual configuration</h4>
 <p>we need add them before compiling if the source code requires some special compiler options</p>
 <p>For example:</p>
 <pre><code class="lang-bash">$ xmake f --cxflags="" --ldflags="" --includedirs="" --linkdirs=""; xmake

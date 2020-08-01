@@ -94,7 +94,7 @@
 <p>我们也可以通过：<code>xmake create</code>命令创建各种常用的空工程来快速开始，具体对于这个命令的介绍以及支持的工程模板，可以敲下面的命令查看：</p>
 <pre><code class="lang-bash">xmake create --help
 </code></pre>
-<h2 id="-">可执行程序</h2>
+<h2 id="">可执行程序</h2>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
     add_files("src/*c")
@@ -102,7 +102,7 @@
 <p>完整例子请执行下面的命令来创建：</p>
 <pre><code class="lang-bash">xmake create -l c -t console test
 </code></pre>
-<h2 id="-">静态库程序</h2>
+<h2 id="">静态库程序</h2>
 <pre><code class="lang-lua">target("library")
     set_kind("static")
     add_files("src/library/*.c")
@@ -116,7 +116,7 @@ target("test")
 <p>完整例子请执行下面的命令来创建：</p>
 <pre><code class="lang-bash">xmake create -l c -t static test
 </code></pre>
-<h2 id="-">动态库程序</h2>
+<h2 id="">动态库程序</h2>
 <pre><code class="lang-lua">target("library")
     set_kind("shared")
     add_files("src/library/*.c")
@@ -130,7 +130,7 @@ target("test")
 <p>完整例子请执行下面的命令来创建：</p>
 <pre><code class="lang-bash">xmake create -l c -t shared test
 </code></pre>
-<h2 id="qt-">Qt程序</h2>
+<h2 id="qt">Qt程序</h2>
 <p>创建一个空工程：</p>
 <p>v2.2.9以上版本：</p>
 <pre><code class="lang-console">$ xmake create -t qt.console test
@@ -154,24 +154,24 @@ $ xmake create -l c++ -t quickapp_qt test
 </code></pre>
 <p>上述指定的mingw sdk用的是Qt下Tools目录自带的环境，当然如果有其他第三方mingw编译环境，也可以手动指定, 具体可以参考：<a href="#mingw">mingw编译配置</a>。</p>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/160">#160</a></p>
-<h3 id="-">静态库程序</h3>
+<h3 id="">静态库程序</h3>
 <pre><code class="lang-lua">target("qt_static_library")
     add_rules("qt.static")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
 </code></pre>
-<h3 id="-">动态库程序</h3>
+<h3 id="">动态库程序</h3>
 <pre><code class="lang-lua">target("qt_shared_library")
     add_rules("qt.shared")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
 </code></pre>
-<h3 id="-">控制台程序</h3>
+<h3 id="">控制台程序</h3>
 <pre><code class="lang-lua">target("qt_console")
     add_rules("qt.console")
     add_files("src/*.cpp")
 </code></pre>
-<h3 id="quick-">Quick应用程序</h3>
+<h3 id="quick">Quick应用程序</h3>
 <p>v2.2.9以上版本：</p>
 <pre><code class="lang-lua">target("qt_quickapp")
     add_rules("qt.quickapp")
@@ -203,7 +203,7 @@ build ok!
 </code></pre>
 <p>效果如下：</p>
 <p><img src="/assets/img/guide/qt_quickapp.png" alt=""></p>
-<h3 id="widgets-">Widgets应用程序</h3>
+<h3 id="widgets">Widgets应用程序</h3>
 <p>v2.2.9以上版本：</p>
 <pre><code class="lang-lua">target("qt_widgetapp")
     add_rules("qt.widgetapp")
@@ -222,7 +222,7 @@ build ok!
 <p>!> 如果使用的自己编译的static版本QT SDK，那么需要切换到<code>add_rules("qt.widgetapp_static")</code>静态规则才行，因为链接的库是不同的，需要做静态链接。</p>
 <p>运行效果如下：</p>
 <p><img src="/assets/img/guide/qt_widgetapp.png" alt=""></p>
-<h3 id="android-">Android应用程序</h3>
+<h3 id="android">Android应用程序</h3>
 <p>2.2.6之后版本，可以直接切到android平台编译Quick/Widgets应用程序，生成apk包，并且可通过<code>xmake install</code>命令安装到设备。</p>
 <pre><code class="lang-console">$ xmake create -t quickapp_qt -l c++ appdemo
 $ cd appdemo
@@ -240,14 +240,14 @@ installing build/android/release/appdemo.apk ..
 Success
 install ok!👌
 </code></pre>
-<h2 id="wdk-">WDK驱动程序</h2>
+<h2 id="wdk">WDK驱动程序</h2>
 <p>默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：</p>
 <pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c 
 $ xmake
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
 <p>相关完整工程example见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/wdk">WDK examples</a></p>
-<h3 id="umdf-">umdf驱动程序</h3>
+<h3 id="umdf">umdf驱动程序</h3>
 <pre><code class="lang-lua">target("echo")
     add_rules("wdk.driver", "wdk.env.umdf")
     add_files("driver/*.c") 
@@ -258,7 +258,7 @@ target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
     add_files("exe/*.cpp") 
 </code></pre>
-<h3 id="kmdf-">kmdf驱动程序</h3>
+<h3 id="kmdf">kmdf驱动程序</h3>
 <pre><code class="lang-lua">target("nonpnp")
     add_rules("wdk.driver", "wdk.env.kmdf")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
@@ -270,7 +270,7 @@ target("app")
     add_files("exe/*.c") 
     add_files("exe/*.inf")
 </code></pre>
-<h3 id="wdm-">wdm驱动程序</h3>
+<h3 id="wdm">wdm驱动程序</h3>
 <pre><code class="lang-lua">target("kcs")
     add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.man.flags", "-prefix Kcs")
@@ -287,7 +287,7 @@ target("app")
     add_files("*.mof|msdsm.mof")
     add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
 </code></pre>
-<h3 id="-">生成驱动包</h3>
+<h3 id="">生成驱动包</h3>
 <p>可以通过以下命令生成.cab驱动包：</p>
 <pre><code class="lang-console">$ xmake [p|package]
 $ xmake [p|package] -o outputdir
@@ -299,9 +299,9 @@ $ xmake [p|package] -o outputdir
        - release/x64/sampledsm.cab
        - debug/x86/sampledsm.cab
        - release/x64/sampledsm.cab
-</code></pre><h3 id="-">驱动签名</h3>
+</code></pre><h3 id="">驱动签名</h3>
 <p>默认编译禁用签名，可以通过<code>set_values("wdk.sign.mode", ...)</code>设置签名模式来启用签名。</p>
-<h4 id="-">测试签名</h4>
+<h4 id="">测试签名</h4>
 <p>测试签名一般本机调试时候用，可以使用xmake自带的test证书来进行签名，例如：</p>
 <pre><code class="lang-lua">target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
@@ -322,7 +322,7 @@ $ xmake [p|package] -o outputdir
     set_values("wdk.sign.store", "PrivateCertStore")
     set_values("wdk.sign.company", "tboox.org(test)")
 </code></pre>
-<h4 id="-">正式签名</h4>
+<h4 id="">正式签名</h4>
 <p>通过指定对应的正式签名证书文件进行签名：</p>
 <pre><code class="lang-lua">target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
@@ -330,7 +330,7 @@ $ xmake [p|package] -o outputdir
     set_values("wdk.sign.company", "xxxx")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
 </code></pre>
-<h3 id="-">生成低版本驱动</h3>
+<h3 id="">生成低版本驱动</h3>
 <p>如果想在wdk10环境编译生成win7, win8等低版本系统支持的驱动，可以通过设置<code>wdk.env.winver</code>来切换系统版本：</p>
 <pre><code class="lang-lua">set_values("wdk.env.winver", "win10")
 set_values("wdk.env.winver", "win10_rs3")
@@ -345,7 +345,7 @@ set_values("wdk.env.winver", "win7_sp3")
 <pre><code class="lang-console">$ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 </code></pre>
-<h2 id="winsdk-">WinSDK程序</h2>
+<h2 id="winsdk">WinSDK程序</h2>
 <pre><code class="lang-lua">target("usbview")
     add_rules("win.sdk.application")
 
@@ -353,41 +353,41 @@ $ xmake
     add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/173">#173</a></p>
-<h2 id="mfc-">MFC程序</h2>
-<h3 id="mfc-">MFC静态库</h3>
+<h2 id="mfc">MFC程序</h2>
+<h3 id="mfc">MFC静态库</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("win.sdk.mfc.static")
     add_files("src/*.c")
 </code></pre>
-<h3 id="mfc-">MFC动态库</h3>
+<h3 id="mfc">MFC动态库</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("win.sdk.mfc.shared")
     add_files("src/*.c")
 </code></pre>
-<h3 id="mfc-">MFC应用程序（静态链接）</h3>
+<h3 id="mfc">MFC应用程序（静态链接）</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("win.sdk.mfc.static_app")
     add_files("src/*.c")
 </code></pre>
-<h3 id="mfc-">MFC应用程序（动态链接）</h3>
+<h3 id="mfc">MFC应用程序（动态链接）</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("win.sdk.mfc.shared_app")
     add_files("src/*.c")
 </code></pre>
-<h2 id="ios-macos-">iOS/MacOS程序</h2>
-<h3 id="app-">App应用程序</h3>
+<h2 id="iosmacos">iOS/MacOS程序</h2>
+<h3 id="app">App应用程序</h3>
 <p>用于生成<em>.app/</em>.ipa应用程序，同时支持iOS/MacOS。</p>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.application")
     add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
     add_files("src/Info.plist")
 </code></pre>
-<h4 id="-">创建工程</h4>
+<h4 id="">创建工程</h4>
 <p>我们也可以通过模板工程快速创建：</p>
 <pre><code class="lang-console">$ xmake create -t xcode.macapp -l objc test
 $ xmake create -t xcode.iosapp -l objc test
 </code></pre>
-<h4 id="-">编译</h4>
+<h4 id="">编译</h4>
 <pre><code class="lang-console">$ xmake f -p [iphoneos|macosx]
 $ xmake
 [ 18%]: compiling.xcode.release src/Assets.xcassets
@@ -402,7 +402,7 @@ $ xmake
 [100%]: generating.xcode.release test.app
 [100%]: build ok!
 </code></pre>
-<h4 id="-">配置签名</h4>
+<h4 id="">配置签名</h4>
 <p>对于iOS程序，默认会检测系统先用可用签名来签名app，当然我们也可以手动指定其他签名证书：</p>
 <pre><code class="lang-console">$ xmake f -p iphoneos --xcode_codesign_identity=&#39;Apple Development: xxx@gmail.com (T3NA4MRVPU)&#39; --xcode_mobile_provision=&#39;iOS Team Provisioning Profile: org.tboox.test --xcode_bundle_identifier=org.tboox.test&#39;
 $ xmake
@@ -444,13 +444,13 @@ $ xmake
 $ xmake l utils.ipa.resign test.app "Apple Development: waruqi@gmail.com (T3NA4MRVPU)"
 $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" iOS Team Provisioning Profile: org.tboox.test" org.tboox.test
 </code></pre>
-<h4 id="-">运行应用程序</h4>
+<h4 id="">运行应用程序</h4>
 <p>目前仅支持运行macos程序：</p>
 <pre><code class="lang-console">$ xmake run
 </code></pre>
 <p>效果如下：</p>
 <p><img src="/assets/img/guide/macapp.png" alt=""></p>
-<h4 id="-">生成程序包</h4>
+<h4 id="">生成程序包</h4>
 <p>如果是iOS程序会生成ipa安装包，如果是macos会生成dmg包（dmg包生成暂时还在开发中）。</p>
 <pre><code class="lang-console">$ xmake package
 output: build/iphoneos/release/arm64/test.ipa
@@ -459,7 +459,7 @@ package ok!
 <p>我们也提供了辅助工具，来对指定app程序进行打包：</p>
 <pre><code class="lang-console">$ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 </code></pre>
-<h4 id="-">安装</h4>
+<h4 id="">安装</h4>
 <p>如果是iOS程序会安装ipa到设备，如果是macos会安装app到/Applications目录。</p>
 <pre><code class="lang-console">$ xmake install
 </code></pre>
@@ -467,11 +467,11 @@ package ok!
 <pre><code class="lang-console">$ xmake l utils.ipa.install test.app
 $ xmake l utils.ipa.install test.ipa
 </code></pre>
-<h4 id="-">卸载</h4>
+<h4 id="">卸载</h4>
 <p>!> 目前仅支持macos程序卸载</p>
 <pre><code class="lang-console">$ xmake uninstall
 </code></pre>
-<h3 id="framework-">Framework库程序</h3>
+<h3 id="framework">Framework库程序</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.framework")
     add_files("src/*.m")
@@ -480,7 +480,7 @@ $ xmake l utils.ipa.install test.ipa
 <p>我们也可以通过模板工程快速创建：</p>
 <pre><code class="lang-console">$ xmake create -t xcode.framework -l objc test
 </code></pre>
-<h3 id="bundle-">Bundle程序</h3>
+<h3 id="bundle">Bundle程序</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.bundle")
     add_files("src/*.m")
@@ -489,8 +489,8 @@ $ xmake l utils.ipa.install test.ipa
 <p>我们也可以通过模板工程快速创建：</p>
 <pre><code class="lang-console">$ xmake create -t xcode.bundle -l objc test
 </code></pre>
-<h2 id="protobuf-">Protobuf程序</h2>
-<h3 id="-c-">使用c库</h3>
+<h2 id="protobuf">Protobuf程序</h2>
+<h3 id="c">使用c库</h3>
 <pre><code class="lang-lua">add_requires("protobuf-c")
 
 target("console_c")
@@ -500,7 +500,7 @@ target("console_c")
     add_files("src/*.c")
     add_files("src/*.proto", {rules = "protobuf.c"})
 </code></pre>
-<h3 id="-c-">使用c++库</h3>
+<h3 id="c">使用c++库</h3>
 <pre><code class="lang-lua">add_requires("protobuf-cpp")
 
 target("console_c++")
@@ -512,7 +512,7 @@ target("console_c++")
     add_files("src/*.cpp")
     add_files("src/*.proto", {rules = "protobuf.cpp"})
 </code></pre>
-<h2 id="cuda-">Cuda程序</h2>
+<h2 id="cuda">Cuda程序</h2>
 <p>创建一个空工程：</p>
 <pre><code class="lang-console">$ xmake create -P test -l cuda
 $ cd test
@@ -535,13 +535,13 @@ target("cuda_console")
 $ xmake
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/158">#158</a></p>
-<h2 id="lexyacc-">Lex&amp;Yacc程序</h2>
+<h2 id="lexyacc">Lex&amp;Yacc程序</h2>
 <pre><code class="lang-lua">target("calc")
     set_kind("binary")
     add_rules("lex", "yacc")
     add_files("src/*.l", "src/*.y")
 </code></pre>
-<h2 id="fortran-">Fortran程序</h2>
+<h2 id="fortran">Fortran程序</h2>
 <p>v2.3.6之后版本开始支持gfortran编译器来编译fortran项目，我们可以通过下面的命令，快速创建一个基于fortran的空工程：</p>
 <pre><code class="lang-console">$ xmake create -l fortran -t console test
 </code></pre>
@@ -553,7 +553,7 @@ target("test")
     add_files("src/*.f90")
 </code></pre>
 <p>更多代码例子可以到这里查看：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/fortran">Fortran Examples</a></p>
-<h2 id="go-">Go程序</h2>
+<h2 id="go">Go程序</h2>
 <p>xmake也支持go程序的构建，也提供了空工程的创建命令支持:</p>
 <pre><code class="lang-console">$ xmake create -l go -t console test
 </code></pre>
@@ -585,7 +585,7 @@ target("test")
 </code></pre>
 <p>不过还有一些不完善的地方，比如目前必须手动配置所有级联依赖包，会稍微繁琐些，后续有待改进。</p>
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/go">Go Examples</a></p>
-<h2 id="dlang-">Dlang程序</h2>
+<h2 id="dlang">Dlang程序</h2>
 <p>创建空工程：</p>
 <pre><code class="lang-console">$ xmake create -l dlang -t console test
 </code></pre>
@@ -612,7 +612,7 @@ target("test")
 </code></pre>
 <p>不过还有一些不完善的地方，比如目前必须手动配置所有级联依赖包，会稍微繁琐些，后续有待改进。</p>
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/dlang">Dlang Examples</a></p>
-<h2 id="rust-">Rust程序</h2>
+<h2 id="rust">Rust程序</h2>
 <p>创建空工程：</p>
 <pre><code class="lang-console">$ xmake create -l rust -t console test
 </code></pre>
@@ -624,7 +624,7 @@ target("test")
     add_files("src/*.rs")
 </code></pre>
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/rust">Rust Examples</a></p>
-<h2 id="swift-">Swift程序</h2>
+<h2 id="swift">Swift程序</h2>
 <p>创建空工程：</p>
 <pre><code class="lang-console">$ xmake create -l swift -t console test
 </code></pre>
@@ -636,7 +636,7 @@ target("test")
     add_files("src/*.swift")
 </code></pre>
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/swift">Swift Examples</a></p>
-<h2 id="objc-">Objc程序</h2>
+<h2 id="objc">Objc程序</h2>
 <p>创建空工程：</p>
 <pre><code class="lang-console">$ xmake create -l objc -t console test
 </code></pre>
@@ -648,7 +648,7 @@ target("test")
     add_files("src/*.m")
 </code></pre>
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/objc++">Objc Examples</a></p>
-<h2 id="zig-">Zig程序</h2>
+<h2 id="zig">Zig程序</h2>
 <p>!> 目前还在试验性支持阶段，还很不完善，比如：windows上不支持，linux/macOS下动态库编译还不支持，请自行评估使用。</p>
 <p>创建空工程：</p>
 <pre><code class="lang-console">$ xmake create -l zig -t console test

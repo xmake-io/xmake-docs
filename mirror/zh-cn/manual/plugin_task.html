@@ -129,7 +129,7 @@
 </tbody>
 </table>
 <h3 id="task">task</h3>
-<h4 id="-">定义插件或者任务</h4>
+<h4 id="">定义插件或者任务</h4>
 <p><code>task</code>域用于描述一个自定义的任务实现，与<a href="#target">target</a>和<a href="#option">option</a>同级。</p>
 <p>例如，这里定义一个最简单的任务：</p>
 <pre><code class="lang-lua">task("hello")
@@ -154,10 +154,10 @@
 </code></pre>
 <p>在构建完<code>test</code>目标后运行<code>hello</code>任务。</p>
 <h3 id="task_end">task_end</h3>
-<h4 id="-">结束定义插件或任务</h4>
+<h4 id="">结束定义插件或任务</h4>
 <p>这是一个可选api，显示离开选项作用域，用法和<a href="#target_end">target_end</a>类似。</p>
-<h3 id="task-set_menu">task:set_menu</h3>
-<h4 id="-">设置任务菜单</h4>
+<h3 id="taskset_menu">task:set_menu</h3>
+<h4 id="">设置任务菜单</h4>
 <p>通过设置一个菜单，这个任务就可以开放给用户自己通过命令行手动调用，菜单的设置如下：</p>
 <pre><code class="lang-lua">task("echo")
 
@@ -276,8 +276,8 @@ Options:
 <pre><code class="lang-bash">$ xmake echo --color=red --bright hello xmake!
 </code></pre>
 <p>最后面的可变参数列表，在<code>run</code>脚本中通过<code>option.get("contents")</code>获取，返回的是一个<code>table</code>类型的数组。</p>
-<h3 id="task-set_category">task:set_category</h3>
-<h4 id="-">设置任务类别</h4>
+<h3 id="taskset_category">task:set_category</h3>
+<h4 id="">设置任务类别</h4>
 <p>仅仅用于菜单的分组显示，当然插件默认会用<code>plugin</code>，内置任务默认会用：<code>action</code>，但也仅仅只是个约定。</p>
 <p><p class="tip"><br>你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为<code>plugin</code>，就会显示到xmake的Plugins分组中去。<br></p>
 
@@ -293,8 +293,8 @@ Options:
        echo              Echo the given info!
 </code></pre>
 <p>如果没有调用这个接口设置分类，默认使用<code>Tasks</code>分组显示，代表普通任务。</p>
-<h3 id="task-on_run">task:on_run</h3>
-<h4 id="-">设置任务运行脚本</h4>
+<h3 id="taskon_run">task:on_run</h3>
+<h4 id="">设置任务运行脚本</h4>
 <p>可以有两种设置方式，最简单的就是设置内嵌函数：</p>
 <pre><code class="lang-lua">task("hello")
 
@@ -317,7 +317,7 @@ Options:
     print("hello xmake!")
 end
 </code></pre>
-<p>就是一个简单的带<code>main</code>主函数的脚本文件，你可以通过<a href="/zh-cn/manual/builtin_modules?id=import">import</a>导入各种扩展模块，实现复杂功能，例如：</p>
+<p>就是一个简单的带<code>main</code>主函数的脚本文件，你可以通过<a href="/mirror/zh-cn/manual/builtin_modules.html#import">import</a>导入各种扩展模块，实现复杂功能，例如：</p>
 <pre><code class="lang-lua">-- 导入参数选项模块
 import("core.base.option")
 
@@ -328,7 +328,7 @@ function main(...)
     print("color: %s", option.get("color"))
 end
 </code></pre>
-<p>你也可以在当前目录下，创建多个自定义的模块文件，通过<a href="/zh-cn/manual/builtin_modules?id=import">import</a>导入后使用，例如：</p>
+<p>你也可以在当前目录下，创建多个自定义的模块文件，通过<a href="/mirror/zh-cn/manual/builtin_modules.html#import">import</a>导入后使用，例如：</p>
 <pre><code>projectdir
     - xmake.lua
     - main.lua
@@ -349,7 +349,7 @@ function main(...)
     module.hello()
 end
 </code></pre>
-<p>更多模块介绍见：<a href="/zh-cn/manual/builtin_modules">内置模块</a>和<a href="/zh-cn/manual/extension_modules">扩展模块</a></p>
+<p>更多模块介绍见：<a href="/mirror/zh-cn/manual/builtin_modules.html">内置模块</a>和<a href="/mirror/zh-cn/manual/extension_modules.html">扩展模块</a></p>
 <p>其中，<code>main(...)</code>中参数，是通过<code>task.run</code>指定的，例如：</p>
 <pre><code class="lang-lua">task.run("hello", {color="red"}, arg1, arg2, arg3)
 </code></pre>

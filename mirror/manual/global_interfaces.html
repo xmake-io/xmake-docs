@@ -173,7 +173,7 @@
 </tbody>
 </table>
 <h3 id="includes">includes</h3>
-<h4 id="add-sub-project-files-and-directories">Add sub-project files and directories</h4>
+<h4 id="addsubprojectfilesanddirectories">Add sub-project files and directories</h4>
 <p>It is used to replace <a href="#add_subdirs">add_subdirs</a> and <a href="#add_subfiles">add_subfiles</a>.</p>
 <p>In addition, in 2.2.5 and later, this interface provides some built-in helper functions, which can be used directly after the include, specifically which built-in functions can be seen at: <a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">https://github.com/xmake-io/xmake/tree/master/xmake/includes</a></p>
 <p>For a more complete description of this, see: <a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
@@ -224,7 +224,7 @@ ${define HAS_CONSEXPR_AND_STATIC_ASSERT}
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 </code></pre>
 <h3 id="set_modes">set_modes</h3>
-<h4 id="set-project-compilation-modes">Set project compilation modes</h4>
+<h4 id="setprojectcompilationmodes">Set project compilation modes</h4>
 <p>This is an optional api, just to make it easy for plugins to get mode configuration information.</p>
 <pre><code class="lang-lua">set_modes("debug", "release")
 </code></pre>
@@ -238,7 +238,7 @@ ${define HAS_CONSEXPR_AND_STATIC_ASSERT}
 
 </p>
 <h3 id="set_project">set_project</h3>
-<h4 id="set-project-name">Set project name</h4>
+<h4 id="setprojectname">Set project name</h4>
 <p>Set the whole project name, we can set it at the beginning of <code>xmake.lua</code>.</p>
 <pre><code class="lang-lua">-- set project name
 set_project("tbox")
@@ -247,22 +247,22 @@ set_project("tbox")
 set_version("1.5.1")
 </code></pre>
 <h3 id="set_version">set_version</h3>
-<h4 id="set-project-version">Set project version</h4>
+<h4 id="setprojectversion">Set project version</h4>
 <p>Set the whole project version, we can set it at the beginning of <code>xmake.lua</code>.</p>
 <pre><code class="lang-lua">set_version("1.5.1")
 </code></pre>
 <p>We can set build version in v2.1.7 version:</p>
 <pre><code class="lang-lua">set_version("1.5.1", {build = "%Y%m%d%H%M"})
 </code></pre>
-<p>We can also add version to the config header files, @see <a href="/manual/project_target?id=add-template-configuration-files">add_configfiles</a></p>
+<p>We can also add version to the config header files, @see <a href="/mirror/manual/project_target.html#add-template-configuration-files">add_configfiles</a></p>
 <h3 id="set_xmakever">set_xmakever</h3>
-<h4 id="set-minimal-xmake-version">Set minimal xmake version</h4>
+<h4 id="setminimalxmakeversion">Set minimal xmake version</h4>
 <p>If the current xmake version less than the required version, it will prompt an error.</p>
 <pre><code class="lang-lua">-- the current xmake version must be larger than 2.1.0
 set_xmakever("2.1.0")
 </code></pre>
 <h3 id="add_subdirs">add_subdirs</h3>
-<h4 id="add-sub-project-directories">Add sub-project directories</h4>
+<h4 id="addsubprojectdirectories">Add sub-project directories</h4>
 <p><p class="tip"><br>For xmake 2.x and above, try to use the <a href="#includes">includes</a> interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.<br></p>
 
 </p>
@@ -287,7 +287,7 @@ end
 $ xmake build tbox
 </code></pre>
 <h3 id="add_subfiles">add_subfiles</h3>
-<h4 id="add-sub-project-files">Add sub-project files</h4>
+<h4 id="addsubprojectfiles">Add sub-project files</h4>
 <p><p class="tip"><br>For xmake 2.x and above, try to use the <a href="#includes">includes</a> interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.<br></p>
 
 </p>
@@ -297,19 +297,19 @@ $ xmake build tbox
 <pre><code class="lang-lua">add_subfiles("src/tbox/xmake.lua")
 </code></pre>
 <h3 id="add_moduledirs">add_moduledirs</h3>
-<h4 id="add-module-directories">Add module directories</h4>
+<h4 id="addmoduledirectories">Add module directories</h4>
 <p>The builtin modules are placed in the &#39;xmake/modules&#39; directory, but for user-defined modules for a specific project, you can configure additional module directories in the &#39;xmake.lua` file.</p>
 <pre><code class="lang-lua">add_moduledirs("$(projectdir)/modules")
 </code></pre>
 <p>xmake will load the given module in the given directory when calling <code>import</code>.</p>
 <h3 id="add_plugindirs">add_plugindirs</h3>
-<h4 id="add-plugin-directories">Add plugin directories</h4>
+<h4 id="addplugindirectories">Add plugin directories</h4>
 <p>The builtin plugins are placed in the &#39;xmake/plugins&#39; directory, but for user-defined plugins for a specific project, you can configure additional plugin directories in the &#39;xmake.lua` file.</p>
 <pre><code class="lang-lua">add_plugindirs("$(projectdir)/plugins")
 </code></pre>
 <p>xmake will load all plugins in the given directory.</p>
 <h3 id="add_packagedirs">add_packagedirs</h3>
-<h4 id="add-package-directories">Add package directories</h4>
+<h4 id="addpackagedirectories">Add package directories</h4>
 <p>By setting up a dependency package directory, you can easily integrate some third-party dependent libraries.<br>Taking the tbox project as an example, its package directory is as follows:</p>
 <pre><code>tbox.pkg
 - base.pkg
@@ -330,14 +330,14 @@ $ xmake build tbox
 <pre><code class="lang-bash">$ xmake f --openssl=n
 </code></pre>
 <h3 id="get_config">get_config</h3>
-<h4 id="get-the-configuration-value">Get the configuration value</h4>
+<h4 id="gettheconfigurationvalue">Get the configuration value</h4>
 <p>This interface is introduced from version 2.2.2 to get the configuration value from the given name.</p>
 <pre><code class="lang-lua">if get_config("myconfig") == "xxx" then
     add_defines("HELLO")
 end
 </code></pre>
 <h3 id="set_config">set_config</h3>
-<h4 id="set-the-default-configuration-value">Set the default configuration value</h4>
+<h4 id="setthedefaultconfigurationvalue">Set the default configuration value</h4>
 <p>This interface is introduced from version 2.2.2 to set the default configuration value in xmake.lua.</p>
 <p>Many previous configurations, including the build toolchain, build directory, etc.<br>We can only be configured by <code>$xmake f --name=value</code>. If we want to write a default value in xmake.lua, we can use the following method:</p>
 <pre><code class="lang-lua">set_config("name", "value")
@@ -347,7 +347,7 @@ set_config("ld", "g++")
 </code></pre>
 <p>However, we can still modify the default configuration in xmake.lua by <code>$xmake f --name=value</code>.</p>
 <h3 id="add_requires">add_requires</h3>
-<h4 id="add-package-dependencies">Add package dependencies</h4>
+<h4 id="addpackagedependencies">Add package dependencies</h4>
 <p>Xmake&#39;s dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of semantic versioning, see: <a href="https://semver.org/">https://semver.org/</a></p>
 <p>Some examples:</p>
 <pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
@@ -460,7 +460,7 @@ target("xmake-test")
     add_packages("bytes")
 </code></pre>
 <h3 id="add_repositories">add_repositories</h3>
-<h4 id="add-3rd-package-repositories">Add 3rd package repositories</h4>
+<h4 id="add3rdpackagerepositories">Add 3rd package repositories</h4>
 <p>If the required package is not in the official repository <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>, we can submit the contribution code to the repository for support.<br>But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>For example, now we have a private repository repo:<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>
 <p>We can add through this interface:</p>

@@ -153,7 +153,7 @@
 </tbody>
 </table>
 <h3 id="is_os">is_os</h3>
-<h4 id="-">判断当前构建目标的操作系统</h4>
+<h4 id="">判断当前构建目标的操作系统</h4>
 <pre><code class="lang-lua">-- 如果当前操作系统是ios
 if is_os("ios") then
     add_files("src/xxx/*.m")
@@ -168,7 +168,7 @@ end
 <li>ios</li>
 </ul>
 <h3 id="is_arch">is_arch</h3>
-<h4 id="-">判断当前编译架构</h4>
+<h4 id="">判断当前编译架构</h4>
 <p>用于检测编译配置：<code>xmake f -a armv7</code></p>
 <pre><code class="lang-lua">-- 如果当前架构是x86_64或者i386
 if is_arch("x86_64", "i386") then
@@ -188,7 +188,7 @@ end
 </code></pre>
 <p>用<code>*</code>就可以匹配所有了。。</p>
 <h3 id="is_plat">is_plat</h3>
-<h4 id="-">判断当前编译平台</h4>
+<h4 id="">判断当前编译平台</h4>
 <p>用于检测编译配置：<code>xmake f -p iphoneos</code></p>
 <pre><code class="lang-lua">-- 如果当前平台是android
 if is_plat("android") then
@@ -215,7 +215,7 @@ end
 </code></pre>
 <p>如果指定的平台名不存在，就会自动切到<code>cross</code>平台进行交叉编译，但是缺可以通过<code>is_plat("other")</code>来判断自己的平台逻辑。</p>
 <h3 id="is_host">is_host</h3>
-<h4 id="-">判断当前主机环境的操作系统</h4>
+<h4 id="">判断当前主机环境的操作系统</h4>
 <p>有些编译平台是可以在多个不同的操作系统进行构建的，例如：android的ndk就支持linux,macOS还有windows环境。</p>
 <p>这个时候就可以通过这个接口，区分当前是在哪个系统环境下进行的构建。</p>
 <pre><code class="lang-lua">-- 如果当前主机环境是windows
@@ -231,9 +231,9 @@ end
 <li>linux</li>
 <li>macosx</li>
 </ul>
-<p>你也可以通过<a href="/zh-cn/manual/builtin_variables?id=varhost">$(host)</a>内置变量或者<a href="/zh-cn/manual/builtin_modules?id=oshost">os.host</a>接口，来进行获取</p>
+<p>你也可以通过<a href="/mirror/zh-cn/manual/builtin_variables.html#varhost">$(host)</a>内置变量或者<a href="/mirror/zh-cn/manual/builtin_modules.html#oshost">os.host</a>接口，来进行获取</p>
 <h3 id="is_mode">is_mode</h3>
-<h4 id="-">判断当前编译模式</h4>
+<h4 id="">判断当前编译模式</h4>
 <p>用于检测编译配置：<code>xmake f -m debug</code></p>
 <p>编译模式的类型并不是内置的，可以自由指定，一般指定：<code>debug</code>, <code>release</code>, <code>profile</code> 这些就够用了，当然你也可以在xmake.lua使用其他模式名来判断。</p>
 <pre><code class="lang-lua">-- 如果当前编译模式是debug
@@ -279,7 +279,7 @@ if is_mode("release", "profile") then
 end
 </code></pre>
 <h3 id="is_kind">is_kind</h3>
-<h4 id="-">判断当前编译类型</h4>
+<h4 id="">判断当前编译类型</h4>
 <p>判断当前是否编译的是动态库还是静态库，用于检测编译配置：<code>xmake f -k [static|shared]</code></p>
 <p>一般用于如下场景：</p>
 <pre><code class="lang-lua">target("test")
@@ -303,7 +303,7 @@ $ xmake f -k shared
 $ xmake
 </code></pre>
 <h3 id="is_option">is_option</h3>
-<h4 id="-">判断选项是否启用</h4>
+<h4 id="">判断选项是否启用</h4>
 <p><p class="tip"><br>此接口在2.2.2版本之后已经弃用，请使用<a href="#has_config">has_config</a>来代替。<br></p>
 
 </p>
@@ -317,7 +317,7 @@ if is_option("demo") then
 end
 </code></pre>
 <h3 id="is_config">is_config</h3>
-<h4 id="-">判断指定配置是否为给定的值</h4>
+<h4 id="">判断指定配置是否为给定的值</h4>
 <p>此接口从2.2.2版本开始引入，用于判断指定配置是否为给定的值，可用于描述域。</p>
 <p>例如：</p>
 <pre><code class="lang-console">$ xmake f --test=hello1
@@ -343,7 +343,7 @@ end
 
 </p>
 <h3 id="has_config">has_config</h3>
-<h4 id="-">判断配置是否启用或者存在</h4>
+<h4 id="">判断配置是否启用或者存在</h4>
 <p>此接口从2.2.2版本开始引入，用于检测自定义或者内置的编译配置是否存在或启用，可用于描述域。</p>
 <p>例如以下配置情况，都会返回true:</p>
 <pre><code class="lang-console"># 启用某个配置选项（如果是boolean类型配置）
@@ -370,9 +370,9 @@ $ xmake f --test1=false
 
 </p>
 <h3 id="has_package">has_package</h3>
-<h4 id="-">判断依赖包是否启用或者存在</h4>
+<h4 id="">判断依赖包是否启用或者存在</h4>
 <p>此接口从2.2.3版本开始引入，用于检测远程依赖包是否存在或启用，可用于描述域。</p>
-<p>一般配合<a href="/zh-cn/manual/global_interfaces?id=add_requires">add_requires</a>一起使用，例如：</p>
+<p>一般配合<a href="/mirror/zh-cn/manual/global_interfaces.html#add_requires">add_requires</a>一起使用，例如：</p>
 <pre><code class="lang-lua">add_requires("tbox", {optional = true})
 
 target("test")

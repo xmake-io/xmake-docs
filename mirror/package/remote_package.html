@@ -105,14 +105,14 @@ target("test")
 <p>xmake will remotely pull the relevant source package, then automatically compile and install, finally compile the project, and link the dependency package. The specific effect is shown in the following figure:</p>
 <p><img src="/assets/img/index/package_manage.png" width="80%" /></p>
 <p>For more information and progress on package dependency management see the related issues: <a href="https://github.com/xmake-io/xmake/issues/69">Remote package management</a></p>
-<h2 id="currently-supported-features">Currently Supported Features</h2>
+<h2 id="currentlysupportedfeatures">Currently Supported Features</h2>
 <ul>
 <li>Semantic version support, for example: ">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"</li>
 <li>Provide multi-repository management support such as official package repository, self-built private repository, project built-in repository, etc.</li>
 <li>Cross-platform package compilation integration support (packages of different platforms and different architectures can be installed at the same time, fast switching use)</li>
 <li>Debug dependency package support, source code debugging</li>
 </ul>
-<h2 id="dependency-package-processing-mechanism">Dependency Package Processing Mechanism</h2>
+<h2 id="dependencypackageprocessingmechanism">Dependency Package Processing Mechanism</h2>
 <p>Here we briefly introduce the processing mechanism of the entire dependency package:</p>
 <p><div align="center"><br><img src="/assets/img/index/package_arch.png" width="80%" /><br></div>
 
@@ -122,7 +122,7 @@ target("test")
 <li>Retrieve the package matching the corresponding version, then download, compile, and install (Note: installed in a specific xmake directory, will not interfere with the system library environment)</li>
 <li>Compile the project, and finally automatically link the enabled dependencies</li>
 </ol>
-<h2 id="semantic-version-settings">Semantic Version Settings</h2>
+<h2 id="semanticversionsettings">Semantic Version Settings</h2>
 <p>Xmake&#39;s dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, see: <a href="https://semver.org/">https://semver.org/</a></p>
 <p>Some semantic versions are written:</p>
 <pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
@@ -136,16 +136,16 @@ add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 <pre><code class="lang-lua">add_requires("tbox master")
 add_requires("tbox dev")
 </code></pre>
-<h2 id="extra-package-information-settings">Extra Package Information Settings</h2>
-<h3 id="optional-package-settings">Optional Package Settings</h3>
+<h2 id="extrapackageinformationsettings">Extra Package Information Settings</h2>
+<h3 id="optionalpackagesettings">Optional Package Settings</h3>
 <p>If the specified dependency package is not supported by the current platform, or if the compilation and installation fails, then xmake will compile the error, which is reasonable for some projects that must rely on certain packages to work.<br>However, if some packages are optional dependencies, they can be set to optional packages even if they are not compiled properly.</p>
 <pre><code class="lang-lua">add_requires("tbox", {optional = true})
 </code></pre>
-<h3 id="disable-system-library">Disable System Library</h3>
+<h3 id="disablesystemlibrary">Disable System Library</h3>
 <p>With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library provided by the third-party package management, then you can set:</p>
 <pre><code class="lang-lua">add_requires("tbox", {system = false})
 </code></pre>
-<h3 id="using-the-debug-version-of-the-package">Using the debug version of the package</h3>
+<h3 id="usingthedebugversionofthepackage">Using the debug version of the package</h3>
 <p>If we want to debug the dependencies at the same time, we can set them to use the debug version of the package (provided that this package supports debug compilation):</p>
 <pre><code class="lang-lua">add_requires("tbox", {debug = true})
 </code></pre>
@@ -157,7 +157,7 @@ add_requires("tbox dev")
         os.vrun("make install")
     end)
 </code></pre>
-<h3 id="passing-additional-compilation-information-to-the-package">Passing additional compilation information to the package</h3>
+<h3 id="passingadditionalcompilationinformationtothepackage">Passing additional compilation information to the package</h3>
 <p>Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:</p>
 <pre><code class="lang-lua">add_requires("tbox", {configs = {small=true}})
 </code></pre>
@@ -201,9 +201,9 @@ add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags 
 </code></pre>
 <p>Our project requires spdlog to enable fPIC compilation, then its fmt dependency package also needs to be enabled, then we can add the fmt package first on the spdlog, and also set the fPIC to install it in advance.</p>
 <p>In this way, spdlog corresponds to the internal fmt dependency package, we can also flexibly set various complex custom configurations in the upper layer through <code>add_requires</code>.</p>
-<h2 id="install-third-party-packages">Install third-party packages</h2>
+<h2 id="installthirdpartypackages">Install third-party packages</h2>
 <p>After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib and etc.</p>
-<h3 id="add-a-homebrew-dependency-package">Add a homebrew dependency package</h3>
+<h3 id="addahomebrewdependencypackage">Add a homebrew dependency package</h3>
 <pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"}})
 add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
 
@@ -212,7 +212,7 @@ target("test")
     add_files("src/*.c") 
     add_packages("pcre2", "zlib")
 </code></pre>
-<h3 id="add-a-vcpkg-dependency-package">Add a vcpkg dependency package</h3>
+<h3 id="addavcpkgdependencypackage">Add a vcpkg dependency package</h3>
 <pre><code class="lang-lua">add_requires("vcpkg::zlib", "vcpkg::pcre2")
 
 target("test")
@@ -229,7 +229,7 @@ target("test")
     add_files("src/*.c") 
     add_packages("zlib", "pcre2")
 </code></pre>
-<h3 id="add-a-conan-dependency-package">Add a conan dependency package</h3>
+<h3 id="addaconandependencypackage">Add a conan dependency package</h3>
 <pre><code class="lang-lua">add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
 add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
     configs = {options = "OpenSSL:shared=True"}})
@@ -255,7 +255,7 @@ please input: y (y/n)
 [  0%]: ccache compiling.release src/main.c
 [100%]: linking.release test
 </code></pre>
-<h3 id="add-a-clib-dependency-package">Add a clib dependency package</h3>
+<h3 id="addaclibdependencypackage">Add a clib dependency package</h3>
 <p>Clib is a source-based dependency package manager. The dependent package is downloaded directly to the corresponding library source code, integrated into the project to compile, rather than binary library dependencies.</p>
 <p>It is also very convenient to integrate in xmake. The only thing to note is that you need to add the source code of the corresponding library to xmake.lua, for example:</p>
 <pre><code class="lang-lua">add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
@@ -266,7 +266,7 @@ target("test")
     add_files("src/*.c")
     add_packages("bytes")
 </code></pre>
-<h2 id="using-self-built-private-package-repository">Using self-built private package repository</h2>
+<h2 id="usingselfbuiltprivatepackagerepository">Using self-built private package repository</h2>
 <p>If the required package is not in the official repository <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>, we can submit the contribution code to the repository for support.<br>But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>For example, now we have a private repository repo:<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>
 <p>We can add the repository with the following command:</p>
@@ -319,9 +319,9 @@ target("test")
     add_files("src/*.c")
     add_packages("libjpeg")
 </code></pre>
-<h2 id="package-management-command">Package Management Command</h2>
+<h2 id="packagemanagementcommand">Package Management Command</h2>
 <p>The package management command <code>$ xmake require</code> can be used to manually display the download, install, uninstall, retrieve, and view package information.</p>
-<h3 id="install-the-specified-package">Install the specified package</h3>
+<h3 id="installthespecifiedpackage">Install the specified package</h3>
 <pre><code class="lang-console">$ xmake require tbox
 </code></pre>
 <p>Install the specified version package:</p>
@@ -334,24 +334,24 @@ target("test")
 <pre><code class="lang-console">$ xmake require --extra="debug=true,config={small=true}" tbox
 </code></pre>
 <p>Install the debug package and pass the compilation configuration information of <code>small=true</code> to the package.</p>
-<h3 id="uninstall-the-specified-package">Uninstall the specified package</h3>
+<h3 id="uninstallthespecifiedpackage">Uninstall the specified package</h3>
 <pre><code class="lang-console">$ xmake require --uninstall tbox
 </code></pre>
 <p>This will completely uninstall the removal package file.</p>
-<h3 id="show-package-information">Show package information</h3>
+<h3 id="showpackageinformation">Show package information</h3>
 <pre><code class="lang-console">$ xmake require --info tbox
 </code></pre>
-<h3 id="search-for-packages-in-the-current-repository">Search for packages in the current repository</h3>
+<h3 id="searchforpackagesinthecurrentrepository">Search for packages in the current repository</h3>
 <pre><code class="lang-console">$ xmake require --search tbox
 </code></pre>
 <p>This is to support fuzzy search and lua pattern matching search:</p>
 <pre><code class="lang-console">$ xmake require --search pcr
 </code></pre>
 <p>Will also search for pcre, pcre2 and other packages.</p>
-<h3 id="list-the-currently-installed-packages">List the currently installed packages</h3>
+<h3 id="listthecurrentlyinstalledpackages">List the currently installed packages</h3>
 <pre><code class="lang-console">$ xmake require --list
 </code></pre>
-<h2 id="repository-management-command">Repository Management Command</h2>
+<h2 id="repositorymanagementcommand">Repository Management Command</h2>
 <p>As mentioned above, adding a private repository is available (supporting local path addition):</p>
 <pre><code class="lang-console">$ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
 </code></pre>
@@ -364,9 +364,9 @@ target("test")
 <p>If the remote repository has updates, you can manually perform a repository update to get more and the latest packages:</p>
 <pre><code class="lang-console">$ xmake repo -u
 </code></pre>
-<h2 id="remote-package-download-optimization">Remote package download optimization</h2>
+<h2 id="remotepackagedownloadoptimization">Remote package download optimization</h2>
 <p>If the download package is slow or fails due to an unstable network, we can use the following methods to resolve it.</p>
-<h3 id="manual-download">Manual download</h3>
+<h3 id="manualdownload">Manual download</h3>
 <p>By default, xmake will call curl, wget and other tools to download, users can also manually download with their own downloader (you can also use an agent), put the downloaded package in their own directory, for example: <code>/download/packages/zlib -v1.0.tar.gz</code></p>
 <p>Then use the following command to set the search directory for package download:</p>
 <pre><code class="lang-console">$ xmake g --pkg_searchdirs="/download/packages"
@@ -378,7 +378,7 @@ target("test")
 -> searchnames: zlib-1.2.11.tar.gz
 </code></pre>
 <p>We can see the corresponding search directory and the searched package name.</p>
-<h3 id="proxy-download">Proxy download</h3>
+<h3 id="proxydownload">Proxy download</h3>
 <p>If manual downloading is still troublesome, we can also let xmake go directly to the agent.</p>
 <pre><code class="lang-console">$ xmake g --proxy="socks5://127.0.0.1:1086"
 $ xmake g --help
@@ -421,15 +421,15 @@ end
 </code></pre>
 <p>If it returns true, then the url and host are the proxy to go, not to return or return false, it is not to proxy.</p>
 <p>For specific details of this piece, see: <a href="https://github.com/xmake-io/xmake/issues/854">https://github.com/xmake-io/xmake/issues/854</a></p>
-<h2 id="submit-packages-to-the-official-repository">Submit packages to the official repository</h2>
-<h3 id="package-structure-in-repository">Package structure in repository</h3>
+<h2 id="submitpackagestotheofficialrepository">Submit packages to the official repository</h2>
+<h3 id="packagestructureinrepository">Package structure in repository</h3>
 <p>Before making our own package, we need to understand the structure of the next package repository, whether it is the official package repository or the self-built private package repository, the structure is the same:</p>
 <pre><code>xmake-repo
    - packages
      - t/tbox/xmake.lua
      - z/zlib/xmake.lua
 </code></pre><p>Through the above structure, you can see that each package will have a xmake.lua to describe its installation rules, and according to the <code>z/zlib</code> two-level sub-category storage, convenient for quick retrieval.</p>
-<h3 id="package-description">Package Description</h3>
+<h3 id="packagedescription">Package Description</h3>
 <p>The description rules for the package are basically done in its xmake.lua, which is similar to the xmake.lua description in the project project. The difference is that the description field only supports <code>package()</code>.</p>
 <p>However, in the project xmake.lua, you can also directly add <code>package()</code> to the built-in package description, and even the package warehouse is saved, sometimes it will be more convenient.</p>
 <p>First, let&#39;s take a look at zlib&#39;s description rules first. This rule can be found at <a href="https://github.com/xmake-io/xmake-repo/blob Found under /master/packages/z/zlib/xmake.lua">xmake-repo/z/zlib/xmake.lua</a>.</p>
@@ -581,7 +581,7 @@ end)
 <p>The pcre package needs to do some judgment on the bitwidth to determine the name of the link library for external output. It also needs to add some defines to the dynamic library. This time, it is more flexible when set in on_load.</p>
 <h4 id="on_install">on_install</h4>
 <p>This interface is mainly used to add installation scripts. The preceding string parameters are used to set up supported platforms. Other script fields like <code>on_load</code>, <code>on_test</code> are also supported.</p>
-<h5 id="platform-filtering">Platform Filtering</h5>
+<h5 id="platformfiltering">Platform Filtering</h5>
 <p>The complete filtering syntax is as follows: <code>plat|arch1,arch2@host|arch1,arch2</code></p>
 <p>It looks very complicated, but it is very simple. Each stage is optional and can be partially omitted. Corresponding: `Compile Platform|Compile Architecture@Host Platform|Host Architecture</p>
 <p>If you do not set any platform filtering conditions, then the default full platform support, the script inside is effective for all platforms, for example:</p>
@@ -620,7 +620,7 @@ end)
 -- `android|armeabi-v7a@macosx,linux|x86_64`
 -- `android|armeabi-v7a@linux|x86_64`
 </code></pre>
-<h5 id="compilation-tools">Compilation Tools</h5>
+<h5 id="compilationtools">Compilation Tools</h5>
 <p>We have built-in scripts for installing common build tools for convenient build support for different source code-dependent build toolchains, such as autoconf, cmake, meson, etc.</p>
 <h6 id="xmake">xmake</h6>
 <p>If it is a xmake-based dependency package, then the integration is very simple, xmake has very good built-in integration support, you can directly support it for cross-platform compilation, generally only need to:</p>
@@ -699,11 +699,11 @@ end)
 end)
 </code></pre>
 <p>if the run fails, the test will not pass.</p>
-<h3 id="extended-configuration-parameters">Extended configuration parameters</h3>
+<h3 id="extendedconfigurationparameters">Extended configuration parameters</h3>
 <p>See: <a href="#add_configs">add_configs</a> for details.</p>
-<h3 id="built-in-configuration-parameters">Built-in configuration parameters</h3>
+<h3 id="builtinconfigurationparameters">Built-in configuration parameters</h3>
 <p>In addition to setting some extended configuration parameters via <a href="#add_configs">add_configs</a>, xmake also provides some built-in configuration parameters that can be used.</p>
-<h4 id="enable-debug-package">Enable debug package</h4>
+<h4 id="enabledebugpackage">Enable debug package</h4>
 <pre><code class="lang-lua">add_requires("xxx", {debug = true})
 </code></pre>
 <p>There must be relevant processing in the package description to support:</p>
@@ -715,7 +715,7 @@ end)
     import("package.tools.autoconf").install(package)
 end)
 </code></pre>
-<h4 id="setting-up-the-msvc-runtime-library">Setting up the msvc runtime library</h4>
+<h4 id="settingupthemsvcruntimelibrary">Setting up the msvc runtime library</h4>
 <pre><code class="lang-lua">add_requires("xxx", {configs = {vs_runtime = "MT"}})
 </code></pre>
 <p>Normally, packages installed by built-in tool scripts such as <code>import("package.tools.autoconf").install</code> are automatically processed internally by vs_runtime.</p>
@@ -724,7 +724,7 @@ end)
     io.gsub("build/Makefile.win32.common", "%-MD", "-" .. package:config("vs_runtime"))
 end)
 </code></pre>
-<h3 id="adding-environment-variables">Adding environment variables</h3>
+<h3 id="addingenvironmentvariables">Adding environment variables</h3>
 <p>For some libraries, there are also executable tools. if you need to use these tools in the integration package, you can also set the corresponding PATH environment variable:</p>
 <pre><code class="lang-lua">package("luajit")
     on_load(function (package)
@@ -743,7 +743,7 @@ target("test")
         os.exec("luajit --version")
     end)
 </code></pre>
-<h3 id="installing-binary-packages">Installing binary packages</h3>
+<h3 id="installingbinarypackages">Installing binary packages</h3>
 <p>Xmake also supports direct reference to the binary version package, which is used directly for installation, for example:</p>
 <pre><code class="lang-lua">if is_plat("windows") then
     set_urls("https://www.libsdl.org/release/SDL2-devel-$(version)-VC.zip")
@@ -756,7 +756,7 @@ on_install("windows", function (package)
     os.cp("lib/$(arch)/*.dll", package:installdir("lib"))
 end)
 </code></pre>
-<h3 id="local-test">Local test</h3>
+<h3 id="localtest">Local test</h3>
 <p>If you have added and created a new package in the local xmake-repo repository, you can run the test locally and pass it. If the test passes, you can submit the pr to the official repository and request the merge.</p>
 <p>We can execute the following script to test the specified package:</p>
 <pre><code class="lang-bash">cd xmake-repo
@@ -772,7 +772,7 @@ xmake l scripts/test.lua -v -D --shallow zlib
 xmake l scripts/test.lua -v -D --shallow -p iphoneos -a arm64 zlib
 xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
 </code></pre>
-<h2 id="submit-package-to-the-official-repository">Submit package to the official repository</h2>
+<h2 id="submitpackagetotheofficialrepository">Submit package to the official repository</h2>
 <p>If you need a package that is not supported by the current official repository, you can commit it to the official repository after local tuning: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>For detailed contribution descriptions, see: <a href="https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a></p>
 <p>For how to make your own package, you can look at the above: <a href="#Adding-packages-to-the-official-repository">Adding packages to the official repository</a>.</p>

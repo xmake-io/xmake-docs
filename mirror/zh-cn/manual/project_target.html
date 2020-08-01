@@ -615,7 +615,7 @@ target("test2")
 </tbody>
 </table>
 <h3 id="target">target</h3>
-<h4 id="-">定义工程目标</h4>
+<h4 id="">定义工程目标</h4>
 <p>定义一个新的控制台工程目标，工程名为<code>test</code>，最后生成的目标名也是<code>test</code>。</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -650,7 +650,7 @@ target("test")
     add_files("src/test.c")
 </code></pre>
 <h3 id="target_end">target_end</h3>
-<h4 id="-">结束定义工程目标</h4>
+<h4 id="">结束定义工程目标</h4>
 <p>这是一个可选的api，如果不调用，那么<code>target("xxx")</code>之后的所有设置都是针对这个target进行的，除非进入其他<code>target</code>, <code>option</code>, <code>task</code>域。</p>
 <p>如果想设置完当前<code>target</code>后，显示离开<code>target</code>域，进入根域设置，那么可以通过这个api才操作，例如：</p>
 <pre><code class="lang-lua">target("test")
@@ -673,8 +673,8 @@ target_end()
 target("test2")
     ...
 </code></pre>
-<h3 id="target-set_kind">target:set_kind</h3>
-<h4 id="-">设置目标编译类型</h4>
+<h3 id="targetset_kind">target:set_kind</h3>
+<h4 id="">设置目标编译类型</h4>
 <p>设置目标类型，目前支持的类型有：</p>
 <table>
 <thead>
@@ -701,8 +701,8 @@ target("test2")
 <pre><code class="lang-lua">target("demo")
     set_kind("binary")
 </code></pre>
-<h3 id="target-set_strip">target:set_strip</h3>
-<h4 id="-strip-">设置是否strip信息</h4>
+<h3 id="targetset_strip">target:set_strip</h3>
+<h4 id="strip">设置是否strip信息</h4>
 <p>设置当前目标的strip模式，目前支持一下模式：</p>
 <table>
 <thead>
@@ -729,11 +729,11 @@ target("test2")
 <p><p class="tip"><br>这个api不一定非得在target之后使用，如果没有target指定，那么将会设置到全局模式。。<br></p>
 
 </p>
-<h3 id="target-set_enabled">target:set_enabled</h3>
-<h4 id="-">设置是否启用或禁用目标</h4>
+<h3 id="targetset_enabled">target:set_enabled</h3>
+<h4 id="">设置是否启用或禁用目标</h4>
 <p>如果设置<code>set_enabled(false)</code>，则会直接禁用对应的target，包括target的加载和信息获取，而<a href="#targetset_default">set_default</a>仅仅只是设置默认不去编译，但是target还是能获取到相关信息的，默认也会被加载。</p>
-<h3 id="target-set_default">target:set_default</h3>
-<h4 id="-">设置是否为默认构建安装目标</h4>
+<h3 id="targetset_default">target:set_default</h3>
+<h4 id="">设置是否为默认构建安装目标</h4>
 <p>这个接口用于设置给定工程目标是否作为默认构建，如果没有调用此接口进行设置，那么这个目标就是默认被构建的，例如：</p>
 <pre><code class="lang-lua">target("test1")
     set_default(false)
@@ -779,8 +779,8 @@ $ xmake install targetname
 <pre><code class="lang-bash">$ xmake build [-a|--all]
 $ xmake install [-a|--all]
 </code></pre>
-<h3 id="target-set_options">target:set_options</h3>
-<h4 id="-">设置关联选项</h4>
+<h3 id="targetset_options">target:set_options</h3>
+<h4 id="">设置关联选项</h4>
 <p>添加选项依赖，如果通过<a href="#option">option</a>接口自定义了一些选项，那么只有在指定<code>target</code>目标域下，添加此选项，才能进行关联生效。</p>
 <pre><code class="lang-lua">-- 定义一个hello选项
 option("hello")
@@ -795,8 +795,8 @@ target("test")
 <p><p class="warn"><br>只有调用<code>set_options</code>进行关联生效后，<a href="#option">option</a> 中定义的一些设置才会影响到此<code>target</code>目标，例如：宏定义、链接库、编译选项等等<br></p>
 
 </p>
-<h3 id="target-set_symbols">target:set_symbols</h3>
-<h4 id="-">设置符号信息</h4>
+<h3 id="targetset_symbols">target:set_symbols</h3>
+<h4 id="">设置符号信息</h4>
 <p>设置目标的符号模式，如果当前没有定义target，那么将会设置到全局状态中，影响所有后续的目标。</p>
 <p>目前主要支持一下几个级别：</p>
 <table>
@@ -841,8 +841,8 @@ target("test")
 <pre><code class="lang-console">[ 62%]: linking.release libtest.so
 [ 62%]: generating.release test.sym
 </code></pre>
-<h3 id="target-set_basename">target:set_basename</h3>
-<h4 id="-">设置目标文件名</h4>
+<h3 id="targetset_basename">target:set_basename</h3>
+<h4 id="">设置目标文件名</h4>
 <p>默认情况下，生成的目标文件名基于<code>target("name")</code>中配置的值，例如：</p>
 <pre><code class="lang-lua">-- 目标文件名为：libxxx.a
 target("xxx")
@@ -860,13 +860,13 @@ target("xxx2")
 </code></pre>
 <p>如果这个时候，编译配置为：<code>xmake f -m debug -a armv7</code>，那么生成的文件名为：<code>libxxx_debug_armv7.a</code></p>
 <p>如果还想进一步定制目标文件的目录名，可参考：<a href="#targetset_targetdir">set_targetdir</a>。</p>
-<p>或者通过编写自定义脚本，实现更高级的逻辑，具体见：<a href="#targetafter_build">after_build</a>和<a href="/zh-cn/manual/builtin_modules?id=osmv">os.mv</a>。</p>
-<h3 id="target-set_filename">target:set_filename</h3>
-<h4 id="-">设置目标文件全名</h4>
+<p>或者通过编写自定义脚本，实现更高级的逻辑，具体见：<a href="#targetafter_build">after_build</a>和<a href="/mirror/zh-cn/manual/builtin_modules.html#osmv">os.mv</a>。</p>
+<h3 id="targetset_filename">target:set_filename</h3>
+<h4 id="">设置目标文件全名</h4>
 <p>它跟<a href="#targetset_basename">set_basename</a>的区别在于，<a href="#targetset_basename">set_basename</a>设置名字不带后缀跟前缀，例如：<code>libtest.a</code>，basename如果改成test2后就变成了<code>libtest2.a</code>。</p>
 <p>而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把<code>libtest.a</code>改成<code>test.dll</code>，这个对于<a href="#targetset_basename">set_basename</a>是做不到的。</p>
-<h3 id="target-set_warnings">target:set_warnings</h3>
-<h4 id="-">设置警告级别</h4>
+<h3 id="targetset_warnings">target:set_warnings</h3>
+<h4 id="">设置警告级别</h4>
 <p>设置当前目标的编译的警告级别，一般支持一下几个级别：</p>
 <table>
 <thead>
@@ -921,8 +921,8 @@ target("xxx2")
 set_warnings("all", "error")
 </code></pre>
 <p>如果当前没有目标，调用这个api将会设置到全局模式。。</p>
-<h3 id="target-set_optimize">target:set_optimize</h3>
-<h4 id="-">设置优化级别</h4>
+<h3 id="targetset_optimize">target:set_optimize</h3>
+<h4 id="">设置优化级别</h4>
 <p>设置目标的编译优化等级，如果当前没有设置目标，那么将会设置到全局状态中，影响所有后续的目标。</p>
 <p>目前主要支持一下几个级别：</p>
 <table>
@@ -977,8 +977,8 @@ set_warnings("all", "error")
 <pre><code class="lang-lua">-- 最快运行速度的优化
 set_optimize("fastest")
 </code></pre>
-<h3 id="target-set_languages">target:set_languages</h3>
-<h4 id="-">设置代码语言标准</h4>
+<h3 id="targetset_languages">target:set_languages</h3>
+<h4 id="">设置代码语言标准</h4>
 <p>设置目标代码编译的语言标准，如果当前没有目标存在，将会设置到全局模式中。。。</p>
 <p>支持的语言标准目前主要有以下几个：</p>
 <table>
@@ -1058,8 +1058,8 @@ set_languages("c99", "cxx11")
 <p><p class="warn"><br>并不是设置了指定的标准，编译器就一定会按这个标准来编译，毕竟每个编译器支持的力度不一样，但是xmake会尽最大可能的去适配当前编译工具的支持标准。。。<br><br><br><br>例如：<br><br><br>windows下vs的编译器并不支持按c99的标准来编译c代码，只能支持到c89，但是xmake为了尽可能的支持它，所以在设置c99的标准后，xmake会强制按c++代码模式去编译c代码，从一定程度上解决了windows下编译c99的c代码问题。。<br>用户不需要去额外做任何修改。。<br></p>
 
 </p>
-<h3 id="target-set_targetdir">target:set_targetdir</h3>
-<h4 id="-">设置生成目标文件目录</h4>
+<h3 id="targetset_targetdir">target:set_targetdir</h3>
+<h4 id="">设置生成目标文件目录</h4>
 <p>设置目标程序文件的输出目录，一般情况下，不需要设置，默认会输出在build目录下</p>
 <p>而build的目录可以在工程配置的时候，手动修改：</p>
 <pre><code class="lang-bash">xmake f -o /tmp/build
@@ -1072,20 +1072,20 @@ set_languages("c99", "cxx11")
 <p><p class="tip"><br>如果显示设置了<code>set_targetdir</code>， 那么优先选择<code>set_targetdir</code>指定的目录为目标文件的输出目录。<br></p>
 
 </p>
-<h3 id="target-set_objectdir">target:set_objectdir</h3>
-<h4 id="-">设置对象文件生成目录</h4>
+<h3 id="targetset_objectdir">target:set_objectdir</h3>
+<h4 id="">设置对象文件生成目录</h4>
 <p>设置目标target的对象文件(<code>*.o/obj</code>)的输出目录，例如:</p>
 <pre><code class="lang-lua">target("test")
     set_objectdir("$(buildir)/.objs")
 </code></pre>
-<h3 id="target-set_dependir">target:set_dependir</h3>
-<h4 id="-">设置依赖文件生成目录</h4>
+<h3 id="targetset_dependir">target:set_dependir</h3>
+<h4 id="">设置依赖文件生成目录</h4>
 <p>设置目标target的编译依赖文件(<code>.deps</code>)的输出目录，例如:</p>
 <pre><code class="lang-lua">target("test")
     set_dependir("$(buildir)/.deps")
 </code></pre>
-<h3 id="target-add_imports">target:add_imports</h3>
-<h4 id="-">为自定义脚本预先导入扩展模块</h4>
+<h3 id="targetadd_imports">target:add_imports</h3>
+<h4 id="">为自定义脚本预先导入扩展模块</h4>
 <p>通常，我们在<a href="#targeton_build">on_build</a>等自定义脚本内部，可以通过<code>import("core.base.task")</code>的方式导入扩展模块，<br>但是对于自定义脚本比较多的情况下，每个自定义脚本都重复导入一遍，非常的繁琐，那么可以通过这个接口，实现预先导入，例如：</p>
 <pre><code class="lang-lua">target("test")
     on_load(function (target)
@@ -1120,8 +1120,8 @@ set_languages("c99", "cxx11")
         task.run("xxxx")
     end)
 </code></pre>
-<h3 id="target-add_rules">target:add_rules</h3>
-<h4 id="-">添加规则到目标</h4>
+<h3 id="targetadd_rules">target:add_rules</h3>
+<h4 id="">添加规则到目标</h4>
 <p>我们可以通过预先设置规则支持的文件后缀，来扩展其他文件的构建支持：</p>
 <pre><code class="lang-lua">-- 定义一个markdown文件的构建规则
 rule("markdown")
@@ -1141,8 +1141,8 @@ target("test")
     add_files("src/*.markdown")
 </code></pre>
 <p>我们也可以指定应用局部文件到规则，具体使用见：<a href="#targetadd_files">add_files</a>。</p>
-<h3 id="target-on_load">target:on_load</h3>
-<h4 id="-">自定义目标加载脚本</h4>
+<h3 id="targeton_load">target:on_load</h3>
+<h4 id="">自定义目标加载脚本</h4>
 <p>在target初始化加载的时候，将会执行此脚本，在里面可以做一些动态的目标配置，实现更灵活的目标描述定义，例如：</p>
 <pre><code class="lang-lua">target("test")
     on_load(function (target)
@@ -1152,16 +1152,16 @@ target("test")
     end)
 </code></pre>
 <p>可以在<code>on_load</code>里面，通过<code>target:set</code>, <code>target:add</code> 来动态添加各种target属性。</p>
-<h3 id="target-on_link">target:on_link</h3>
-<h4 id="-">自定义链接脚本</h4>
+<h3 id="targeton_link">target:on_link</h3>
+<h4 id="">自定义链接脚本</h4>
 <p>这个是在v2.2.7之后新加的接口，用于定制化处理target的链接过程。</p>
 <pre><code class="lang-lua">target("test")
     on_link(function (target) 
         print("link it")
     end)
 </code></pre>
-<h3 id="target-on_build">target:on_build</h3>
-<h4 id="-">自定义编译脚本</h4>
+<h3 id="targeton_build">target:on_build</h3>
+<h4 id="">自定义编译脚本</h4>
 <p>覆盖target目标默认的构建行为，实现自定义的编译过程，一般情况下，并不需要这么做，除非确实需要做一些xmake默认没有提供的编译操作。</p>
 <p>你可以通过下面的方式覆盖它，来自定义编译操作：</p>
 <pre><code class="lang-lua">target("test")
@@ -1188,8 +1188,8 @@ target("test")
 
 
 </p>
-<h3 id="target-on_build_file">target:on_build_file</h3>
-<h4 id="-">自定义编译脚本, 实现单文件构建</h4>
+<h3 id="targeton_build_file">target:on_build_file</h3>
+<h4 id="">自定义编译脚本, 实现单文件构建</h4>
 <p>通过此接口，可以用来hook指定target内置的构建过程，替换每个源文件编译过程：</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -1200,8 +1200,8 @@ target("test")
 </code></pre>
 <p>上面代码中的<code>opt.origin</code>存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用<code>opt.origin</code>就行了。</p>
 <p>如果不想重写内置的编译脚本，仅仅只是在编译前后添加一些自己的处理，其实用：<a href="#targetbefore_build_file">target.before_build_file</a>和<a href="#targetafter_build_file">target.after_build_file</a>会更加方便，不需要调用<code>opt.origin</code>。</p>
-<h3 id="target-on_build_files">target:on_build_files</h3>
-<h4 id="-">自定义编译脚本, 实现多文件构建</h4>
+<h3 id="targeton_build_files">target:on_build_files</h3>
+<h4 id="">自定义编译脚本, 实现多文件构建</h4>
 <p>通过此接口，可以用来hook指定target内置的构建过程，替换一批同类型源文件编译过程：</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -1219,8 +1219,8 @@ target("test")
 <li><code>sourcebatch.dependfiles()</code>: 获取对应依赖文件列表，存有源文件中编译依赖信息，例如：xxx.d</li>
 </ul>
 <p>上面代码中的<code>opt.origin</code>存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用<code>opt.origin</code>就行了。</p>
-<h3 id="target-on_clean">target:on_clean</h3>
-<h4 id="-">自定义清理脚本</h4>
+<h3 id="targeton_clean">target:on_clean</h3>
+<h4 id="">自定义清理脚本</h4>
 <p>覆盖target目标的<code>xmake [c|clean}</code>的清理操作，实现自定义清理过程。</p>
 <pre><code class="lang-lua">target("test")
 
@@ -1282,8 +1282,8 @@ target("test")
 </tr>
 </tbody>
 </table>
-<h3 id="target-on_package">target:on_package</h3>
-<h4 id="-">自定义打包脚本</h4>
+<h3 id="targeton_package">target:on_package</h3>
+<h4 id="">自定义打包脚本</h4>
 <p>覆盖target目标的<code>xmake [p|package}</code>的打包操作，实现自定义打包过程，如果你想对指定target打包成自己想要的格式，可以通过这个接口自定义它。</p>
 <p>这个接口还是挺实用的，例如，编译完jni后，将生成的so，打包进apk包中。</p>
 <pre><code class="lang-lua">-- 定义一个android app的测试demo
@@ -1310,8 +1310,8 @@ target("demo")
         os.run("ant debug") 
     end)
 </code></pre>
-<h3 id="target-on_install">target:on_install</h3>
-<h4 id="-">自定义安装脚本</h4>
+<h3 id="targeton_install">target:on_install</h3>
+<h4 id="">自定义安装脚本</h4>
 <p>覆盖target目标的<code>xmake [i|install}</code>的安装操作，实现自定义安装过程。</p>
 <p>例如，将生成的apk包，进行安装。</p>
 <pre><code class="lang-lua">target("test")
@@ -1323,16 +1323,16 @@ target("demo")
         os.run("adb install -r ./bin/Demo-debug.apk")
     end)
 </code></pre>
-<h3 id="target-on_uninstall">target:on_uninstall</h3>
-<h4 id="-">自定义卸载脚本</h4>
+<h3 id="targeton_uninstall">target:on_uninstall</h3>
+<h4 id="">自定义卸载脚本</h4>
 <p>覆盖target目标的<code>xmake [u|uninstall}</code>的卸载操作，实现自定义卸载过程。</p>
 <pre><code class="lang-lua">target("test")
     on_uninstall(function (target) 
         ...
     end)
 </code></pre>
-<h3 id="target-on_run">target:on_run</h3>
-<h4 id="-">自定义运行脚本</h4>
+<h3 id="targeton_run">target:on_run</h3>
+<h4 id="">自定义运行脚本</h4>
 <p>覆盖target目标的<code>xmake [r|run}</code>的运行操作，实现自定义运行过程。</p>
 <p>例如，运行安装好的apk程序：</p>
 <pre><code class="lang-lua">target("test")
@@ -1344,24 +1344,24 @@ target("demo")
         os.run("adb logcat")
     end)
 </code></pre>
-<h3 id="target-before_link">target:before_link</h3>
-<h4 id="-">在链接之前执行一些自定义脚本</h4>
+<h3 id="targetbefore_link">target:before_link</h3>
+<h4 id="">在链接之前执行一些自定义脚本</h4>
 <p>这个是在v2.2.7之后新加的接口，用于在链接之前增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     before_link(function (target) 
         print("")
     end)
 </code></pre>
-<h3 id="target-before_build">target:before_build</h3>
-<h4 id="-">在构建之前执行一些自定义脚本</h4>
+<h3 id="targetbefore_build">target:before_build</h3>
+<h4 id="">在构建之前执行一些自定义脚本</h4>
 <p>并不会覆盖默认的构建操作，只是在构建之前增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     before_build(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-before_build_file">target:before_build_file</h3>
-<h4 id="-">自定义编译前的脚本, 实现单文件构建</h4>
+<h3 id="targetbefore_build_file">target:before_build_file</h3>
+<h4 id="">自定义编译前的脚本, 实现单文件构建</h4>
 <p>通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之前执行一些自定义脚本：</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -1369,8 +1369,8 @@ target("demo")
     before_build_file(function (target, sourcefile, opt)
     end)
 </code></pre>
-<h3 id="target-before_build_files">target:before_build_files</h3>
-<h4 id="-">自定义编译前的脚本, 实现多文件构建</h4>
+<h3 id="targetbefore_build_files">target:before_build_files</h3>
+<h4 id="">自定义编译前的脚本, 实现多文件构建</h4>
 <p>通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之前执行一些自定义脚本：</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -1378,56 +1378,56 @@ target("demo")
     before_build_files(function (target, sourcebatch, opt)
     end)
 </code></pre>
-<h3 id="target-before_clean">target:before_clean</h3>
-<h4 id="-">在清理之前执行一些自定义脚本</h4>
+<h3 id="targetbefore_clean">target:before_clean</h3>
+<h4 id="">在清理之前执行一些自定义脚本</h4>
 <p>并不会覆盖默认的清理操作，只是在清理之前增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     before_clean(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-before_package">target:before_package</h3>
-<h4 id="-">在打包之前执行一些自定义脚本</h4>
+<h3 id="targetbefore_package">target:before_package</h3>
+<h4 id="">在打包之前执行一些自定义脚本</h4>
 <p>并不会覆盖默认的打包操作，只是在打包之前增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     before_package(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-before_install">target:before_install</h3>
-<h4 id="-">在安装之前执行一些自定义脚本</h4>
+<h3 id="targetbefore_install">target:before_install</h3>
+<h4 id="">在安装之前执行一些自定义脚本</h4>
 <p>并不会覆盖默认的安装操作，只是在安装之前增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     before_install(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-before_uninstall">target:before_uninstall</h3>
-<h4 id="-">在卸载之前执行一些自定义脚本</h4>
+<h3 id="targetbefore_uninstall">target:before_uninstall</h3>
+<h4 id="">在卸载之前执行一些自定义脚本</h4>
 <p>并不会覆盖默认的卸载操作，只是在卸载之前增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     before_uninstall(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-before_run">target:before_run</h3>
-<h4 id="-">在运行之前执行一些自定义脚本</h4>
+<h3 id="targetbefore_run">target:before_run</h3>
+<h4 id="">在运行之前执行一些自定义脚本</h4>
 <p>并不会覆盖默认的运行操作，只是在运行之前增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     before_run(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-after_link">target:after_link</h3>
-<h4 id="-">在链接之后执行一些自定义脚本</h4>
+<h3 id="targetafter_link">target:after_link</h3>
+<h4 id="">在链接之后执行一些自定义脚本</h4>
 <p>这个是在v2.2.7之后新加的接口，用于在链接之后增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     after_link(function (target) 
         print("")
     end)
 </code></pre>
-<h3 id="target-after_build">target:after_build</h3>
-<h4 id="-">在构建之后执行一些自定义脚本</h4>
+<h3 id="targetafter_build">target:after_build</h3>
+<h4 id="">在构建之后执行一些自定义脚本</h4>
 <p>并不会覆盖默认的构建操作，只是在构建之后增加一些自定义的操作。</p>
 <p>例如，对于ios的越狱开发，构建完程序后，需要用<code>ldid</code>进行签名操作</p>
 <pre><code class="lang-lua">target("test")
@@ -1435,8 +1435,8 @@ target("demo")
         os.run("ldid -S %s", target:targetfile())
     end)
 </code></pre>
-<h3 id="target-after_build_file">target:after_build_file</h3>
-<h4 id="-">自定义编译前的脚本, 实现单文件构建</h4>
+<h3 id="targetafter_build_file">target:after_build_file</h3>
+<h4 id="">自定义编译前的脚本, 实现单文件构建</h4>
 <p>通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之后执行一些自定义脚本：</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -1444,8 +1444,8 @@ target("demo")
     after_build_file(function (target, sourcefile, opt)
     end)
 </code></pre>
-<h3 id="target-after_build_files">target:after_build_files</h3>
-<h4 id="-">自定义编译前的脚本, 实现多文件构建</h4>
+<h3 id="targetafter_build_files">target:after_build_files</h3>
+<h4 id="">自定义编译前的脚本, 实现多文件构建</h4>
 <p>通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之后执行一些自定义脚本：</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -1453,8 +1453,8 @@ target("demo")
     after_build_files(function (target, sourcebatch, opt)
     end)
 </code></pre>
-<h3 id="target-after_clean">target:after_clean</h3>
-<h4 id="-">在清理之后执行一些自定义脚本</h4>
+<h3 id="targetafter_clean">target:after_clean</h3>
+<h4 id="">在清理之后执行一些自定义脚本</h4>
 <p>并不会覆盖默认的清理操作，只是在清理之后增加一些自定义的操作。</p>
 <p>一般可用于清理编译某target自动生成的一些额外的临时文件，这些文件xmake默认的清理规则可能没有清理到，例如：</p>
 <pre><code class="lang-lua">target("test")
@@ -1462,54 +1462,54 @@ target("demo")
         os.rm("$(buildir)/otherfiles")
     end)
 </code></pre>
-<h3 id="target-after_package">target:after_package</h3>
-<h4 id="-">在打包之后执行一些自定义脚本</h4>
+<h3 id="targetafter_package">target:after_package</h3>
+<h4 id="">在打包之后执行一些自定义脚本</h4>
 <p>并不会覆盖默认的打包操作，只是在打包之后增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     after_package(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-after_install">target:after_install</h3>
-<h4 id="-">在安装之后执行一些自定义脚本</h4>
+<h3 id="targetafter_install">target:after_install</h3>
+<h4 id="">在安装之后执行一些自定义脚本</h4>
 <p>并不会覆盖默认的安装操作，只是在安装之后增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     after_install(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-after_uninstall">target:after_uninstall</h3>
-<h4 id="-">在卸载之后执行一些自定义脚本</h4>
+<h3 id="targetafter_uninstall">target:after_uninstall</h3>
+<h4 id="">在卸载之后执行一些自定义脚本</h4>
 <p>并不会覆盖默认的卸载操作，只是在卸载之后增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     after_uninstall(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-after_run">target:after_run</h3>
-<h4 id="-">在运行之后执行一些自定义脚本</h4>
+<h3 id="targetafter_run">target:after_run</h3>
+<h4 id="">在运行之后执行一些自定义脚本</h4>
 <p>并不会覆盖默认的运行操作，只是在运行之后增加一些自定义的操作。</p>
 <pre><code class="lang-lua">target("test")
     after_run(function (target)
         print("")
     end)
 </code></pre>
-<h3 id="target-set_pcheader">target:set_pcheader</h3>
-<h4 id="-c-">设置c预编译头文件</h4>
+<h3 id="targetset_pcheader">target:set_pcheader</h3>
+<h4 id="c">设置c预编译头文件</h4>
 <p>xmake支持通过预编译头文件去加速c程序编译，目前支持的编译器有：gcc, clang和msvc。</p>
 <p>使用方式如下：</p>
 <pre><code class="lang-lua">target("test")
     set_pcheader("header.h")
 </code></pre>
-<h3 id="target-set_pcxxheader">target:set_pcxxheader</h3>
-<h4 id="-c-">设置c++预编译头文件</h4>
+<h3 id="targetset_pcxxheader">target:set_pcxxheader</h3>
+<h4 id="c">设置c++预编译头文件</h4>
 <p>xmake支持通过预编译头文件去加速c++程序编译，目前支持的编译器有：gcc, clang和msvc。</p>
 <p>使用方式如下：</p>
 <pre><code class="lang-lua">target("test")
     set_pcxxheader("header.h")
 </code></pre>
-<h3 id="target-add_deps">target:add_deps</h3>
-<h4 id="-">添加子工程目标依赖</h4>
+<h3 id="targetadd_deps">target:add_deps</h3>
+<h4 id="">添加子工程目标依赖</h4>
 <p>添加当前目标的依赖目标，编译的时候，会去优先编译依赖的目标，然后再编译当前目标。。。</p>
 <pre><code class="lang-lua">target("test1")
     set_kind("static")
@@ -1571,8 +1571,8 @@ target("test")
 </tbody>
 </table>
 <p>对于这块的详细说明，可以看下：<a href="https://github.com/xmake-io/xmake/issues/368">https://github.com/xmake-io/xmake/issues/368</a></p>
-<h3 id="target-add_links">target:add_links</h3>
-<h4 id="-">添加链接库名</h4>
+<h3 id="targetadd_links">target:add_links</h3>
+<h4 id="">添加链接库名</h4>
 <p>为当前目标添加链接库，一般这个要与<a href="#targetadd_linkdirs">add_linkdirs</a>配对使用。</p>
 <pre><code class="lang-lua">target("demo")
 
@@ -1582,8 +1582,8 @@ target("test")
     -- 添加链接搜索目录
     add_linkdirs("$(buildir)/lib")
 </code></pre>
-<h3 id="target-add_syslinks">target:add_syslinks</h3>
-<h4 id="-">添加系统链接库名</h4>
+<h3 id="targetadd_syslinks">target:add_syslinks</h3>
+<h4 id="">添加系统链接库名</h4>
 <p>这个接口使用上跟<a href="#targetadd_links">add_links</a>类似，唯一的区别就是，通过这个接口添加的链接库顺序在所有<code>add_links</code>之后。</p>
 <p>因此主要用于添加系统库依赖，因为系统库的链接顺序是非常靠后的，例如：</p>
 <pre><code class="lang-lua">add_syslinks("pthread", "m", "dl")
@@ -1592,8 +1592,8 @@ target("demo")
     add_linkdirs("$(buildir)/lib")
 </code></pre>
 <p>上面的配置，即使<code>add_syslinks</code>被优先提前设置了，但最后的链接顺序依然是：<code>-la -lb -lpthread -lm -ldl</code></p>
-<h3 id="target-add_files">target:add_files</h3>
-<h4 id="-">添加源代码文件</h4>
+<h3 id="targetadd_files">target:add_files</h3>
+<h4 id="">添加源代码文件</h4>
 <p>用于添加目标工程的源文件，甚至库文件，目前支持的一些文件类型：</p>
 <table>
 <thead>
@@ -1673,8 +1673,8 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 <p>并且在2.1.9版本之后，可以通过force参数来强制禁用cxflags,cflags等编译选项的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：</p>
 <pre><code class="lang-lua">add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 </code></pre>
-<h3 id="target-del_files">target:del_files</h3>
-<h4 id="-">从前面的源代码文件列表中删除指定文件</h4>
+<h3 id="targetdel_files">target:del_files</h3>
+<h4 id="">从前面的源代码文件列表中删除指定文件</h4>
 <p>通过此接口，可以从前面<a href="targetadd_files">add_files</a>接口添加的文件列表中，删除指定的文件，例如：</p>
 <pre><code class="lang-lua">target("test")
     add_files("src/*.c")
@@ -1691,8 +1691,8 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
     end
 </code></pre>
 <p>通过上面的例子，我们可以看出<code>add_files</code>和<code>del_files</code>是根据调用顺序，进行顺序添加和删除的，并且通过<code>del_files("src/subdir/*.c|xxx.c")</code>删除一批文件，<br>并且排除<code>src/subdir/xxx.c</code>（就是说，不删除这个文件）。</p>
-<h3 id="target-add_linkdirs">target:add_linkdirs</h3>
-<h4 id="-">添加链接库搜索目录</h4>
+<h3 id="targetadd_linkdirs">target:add_linkdirs</h3>
+<h4 id="">添加链接库搜索目录</h4>
 <p>设置链接库的搜索目录，这个接口的使用方式如下：</p>
 <pre><code class="lang-lua">target("test")
     add_linkdirs("$(buildir)/lib")
@@ -1702,8 +1702,8 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 <p><p class="tip"><br>如果不想在工程中写死，可以通过：<code>xmake f --linkdirs=xxx</code>或者<code>xmake f --ldflags="-L/xxx"</code>的方式来设置，当然这种手动设置的目录搜索优先级更高。<br></p>
 
 </p>
-<h3 id="target-add_rpathdirs">target:add_rpathdirs</h3>
-<h4 id="-">添加程序运行时动态库的加载搜索目录</h4>
+<h3 id="targetadd_rpathdirs">target:add_rpathdirs</h3>
+<h4 id="">添加程序运行时动态库的加载搜索目录</h4>
 <p>通过<a href="#targetadd_linkdirs">add_linkdirs</a>设置动态库的链接搜索目录后，程序被正常链接，但是在linux平台想要正常运行编译后的程序，会报加载动态库失败。</p>
 <p>因为没找到动态库的加载目录，想要正常运行依赖动态库的程序，需要设置<code>LD_LIBRARY_PATH</code>环境变量，指定需要加载的动态库目录。</p>
 <p>但是这种方式是全局的，影响太广，更好的方式是通过<code>-rpath=xxx</code>的链接器选项，在链接程序的时候设置好需要加载的动态库搜索路径，而xmake对其进行了封装，通过<code>add_rpathdirs</code>更好的处理跨平台问题。</p>
@@ -1727,8 +1727,8 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 <p><p class="tip"><br>需要注意的是，在macos下，要想add_rpathdirs设置生效，需要对dylib做一些预处理，添加<code>@rpath/xxx</code>路径设置：<br><code>$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib</code><br>我们也可以通过<code>otool -L libxxx.dylib</code>查看是否存在带@rpath的路径<br></p>
 
 </p>
-<h3 id="target-add_includedirs">target:add_includedirs</h3>
-<h4 id="-">添加头文件搜索目录</h4>
+<h3 id="targetadd_includedirs">target:add_includedirs</h3>
+<h4 id="">添加头文件搜索目录</h4>
 <p>设置头文件的搜索目录，这个接口的使用方式如下：</p>
 <pre><code class="lang-lua">target("test")
     add_includedirs("$(buildir)/include")
@@ -1748,20 +1748,20 @@ target("demo")
 <p><p class="tip"><br>如果不想在工程中写死，可以通过：<code>xmake f --includedirs=xxx</code>或者<code>xmake f --cxflags="-I/xxx"</code>的方式来设置，当然这种手动设置的目录搜索优先级更高。<br></p>
 
 </p>
-<h3 id="target-add_defines">target:add_defines</h3>
-<h4 id="-">添加宏定义</h4>
+<h3 id="targetadd_defines">target:add_defines</h3>
+<h4 id="">添加宏定义</h4>
 <pre><code class="lang-lua">add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
 </code></pre>
 <p>相当于设置了编译选项：</p>
 <pre><code>-DDEBUG -DTEST=0 -DTEST2=\"hello\"
-</code></pre><h3 id="target-add_undefines">target:add_undefines</h3>
-<h4 id="-">取消宏定义</h4>
+</code></pre><h3 id="targetadd_undefines">target:add_undefines</h3>
+<h4 id="">取消宏定义</h4>
 <pre><code class="lang-lua">add_undefines("DEBUG")
 </code></pre>
 <p>相当于设置了编译选项：<code>-UDEBUG</code></p>
 <p>在代码中相当于：<code>#undef DEBUG</code></p>
-<h3 id="target-add_cflags">target:add_cflags</h3>
-<h4 id="-c-">添加c编译选项</h4>
+<h3 id="targetadd_cflags">target:add_cflags</h3>
+<h4 id="c">添加c编译选项</h4>
 <p>仅对c代码添加编译选项</p>
 <pre><code class="lang-lua">add_cflags("-g", "-O2", "-DDEBUG")
 </code></pre>
@@ -1772,78 +1772,78 @@ target("demo")
 <p>在2.1.9版本之后，可以通过force参数来强制禁用flags的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：</p>
 <pre><code class="lang-lua">add_cflags("-g", "-O2", {force = true})
 </code></pre>
-<h3 id="target-add_cxflags">target:add_cxflags</h3>
-<h4 id="-c-c-">添加c/c++编译选项</h4>
+<h3 id="targetadd_cxflags">target:add_cxflags</h3>
+<h4 id="cc">添加c/c++编译选项</h4>
 <p>同时对c/c++代码添加编译选项</p>
-<h3 id="target-add_cxxflags">target:add_cxxflags</h3>
-<h4 id="-c-">添加c++编译选项</h4>
+<h3 id="targetadd_cxxflags">target:add_cxxflags</h3>
+<h4 id="c">添加c++编译选项</h4>
 <p>仅对c++代码添加编译选项</p>
-<h3 id="target-add_mflags">target:add_mflags</h3>
-<h4 id="-objc-">添加objc编译选项</h4>
+<h3 id="targetadd_mflags">target:add_mflags</h3>
+<h4 id="objc">添加objc编译选项</h4>
 <p>仅对objc代码添加编译选项</p>
 <pre><code class="lang-lua">add_mflags("-g", "-O2", "-DDEBUG")
 </code></pre>
 <p>在2.1.9版本之后，可以通过force参数来强制禁用flags的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：</p>
 <pre><code class="lang-lua">add_mflags("-g", "-O2", {force = true})
 </code></pre>
-<h3 id="target-add_mxflags">target:add_mxflags</h3>
-<h4 id="-objc-objc-">添加objc/objc++编译选项</h4>
+<h3 id="targetadd_mxflags">target:add_mxflags</h3>
+<h4 id="objcobjc">添加objc/objc++编译选项</h4>
 <p>同时对objc/objc++代码添加编译选项</p>
 <pre><code class="lang-lua">add_mxflags("-framework CoreFoundation")
 </code></pre>
-<h3 id="target-add_mxxflags">target:add_mxxflags</h3>
-<h4 id="-objc-">添加objc++编译选项</h4>
+<h3 id="targetadd_mxxflags">target:add_mxxflags</h3>
+<h4 id="objc">添加objc++编译选项</h4>
 <p>仅对objc++代码添加编译选项</p>
 <pre><code class="lang-lua">add_mxxflags("-framework CoreFoundation")
 </code></pre>
-<h3 id="target-add_scflags">target:add_scflags</h3>
-<h4 id="-swift-">添加swift编译选项</h4>
+<h3 id="targetadd_scflags">target:add_scflags</h3>
+<h4 id="swift">添加swift编译选项</h4>
 <p>对swift代码添加编译选项</p>
 <pre><code class="lang-lua">add_scflags("xxx")
 </code></pre>
-<h3 id="target-add_asflags">target:add_asflags</h3>
-<h4 id="-">添加汇编编译选项</h4>
+<h3 id="targetadd_asflags">target:add_asflags</h3>
+<h4 id="">添加汇编编译选项</h4>
 <p>对汇编代码添加编译选项</p>
 <pre><code class="lang-lua">add_asflags("xxx")
 </code></pre>
-<h3 id="target-add_gcflags">target:add_gcflags</h3>
-<h4 id="-go-">添加go编译选项</h4>
+<h3 id="targetadd_gcflags">target:add_gcflags</h3>
+<h4 id="go">添加go编译选项</h4>
 <p>对golang代码添加编译选项</p>
 <pre><code class="lang-lua">add_gcflags("xxx")
 </code></pre>
-<h3 id="target-add_dcflags">target:add_dcflags</h3>
-<h4 id="-dlang-">添加dlang编译选项</h4>
+<h3 id="targetadd_dcflags">target:add_dcflags</h3>
+<h4 id="dlang">添加dlang编译选项</h4>
 <p>对dlang代码添加编译选项</p>
 <pre><code class="lang-lua">add_dcflags("xxx")
 </code></pre>
-<h3 id="target-add_rcflags">target:add_rcflags</h3>
-<h4 id="-rust-">添加rust编译选项</h4>
+<h3 id="targetadd_rcflags">target:add_rcflags</h3>
+<h4 id="rust">添加rust编译选项</h4>
 <p>对rust代码添加编译选项</p>
 <pre><code class="lang-lua">add_rcflags("xxx")
 </code></pre>
-<h3 id="target-add_fcflags">target:add_fcflags</h3>
-<h4 id="-fortran-">添加fortran编译选项</h4>
+<h3 id="targetadd_fcflags">target:add_fcflags</h3>
+<h4 id="fortran">添加fortran编译选项</h4>
 <p>对fortran代码添加编译选项</p>
 <pre><code class="lang-lua">add_fcflags("xxx")
 </code></pre>
-<h3 id="target-add_zcflags">target:add_zcflags</h3>
-<h4 id="-zig-">添加zig编译选项</h4>
+<h3 id="targetadd_zcflags">target:add_zcflags</h3>
+<h4 id="zig">添加zig编译选项</h4>
 <p>对zig代码添加编译选项</p>
 <pre><code class="lang-lua">add_zcflags("xxx")
 </code></pre>
-<h3 id="target-add_cuflags">target:add_cuflags</h3>
-<h4 id="-cuda-">添加cuda编译选项</h4>
+<h3 id="targetadd_cuflags">target:add_cuflags</h3>
+<h4 id="cuda">添加cuda编译选项</h4>
 <p>对cuda代码添加编译选项</p>
 <pre><code class="lang-lua">add_cuflags("-gencode arch=compute_30,code=sm_30")
 </code></pre>
-<h3 id="target-add_culdflags">target:add_culdflags</h3>
-<h4 id="-cuda-">添加cuda设备链接选项</h4>
+<h3 id="targetadd_culdflags">target:add_culdflags</h3>
+<h4 id="cuda">添加cuda设备链接选项</h4>
 <p>v2.2.7之后，cuda默认构建会使用device-link，这个阶段如果要设置一些链接flags，则可以通过这个接口来设置。<br>而最终的程序链接，会使用ldflags，不会调用nvcc，直接通过gcc/clang等c/c++链接器来链接。</p>
 <p>关于device-link的说明，可以参考：<a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/</a></p>
 <pre><code class="lang-lua">add_culdflags("-gencode arch=compute_30,code=sm_30")
 </code></pre>
-<h3 id="target-add_cugencodes">target:add_cugencodes</h3>
-<h4 id="-cuda-gencode-">添加cuda设备的gencode设置</h4>
+<h3 id="targetadd_cugencodes">target:add_cugencodes</h3>
+<h4 id="cudagencode">添加cuda设备的gencode设置</h4>
 <p><code>add_cugencodes()</code>接口其实就是对<code>add_cuflags("-gencode arch=compute_xx,code=compute_xx")</code>编译flags设置的简化封装，其内部参数值对应的实际flags映射关系如下：</p>
 <pre><code class="lang-lua">- compute_xx                   --> `-gencode arch=compute_xx,code=compute_xx`
 - sm_xx                        --> `-gencode arch=compute_xx,code=sm_xx`
@@ -1869,34 +1869,34 @@ add_culdflags("-gencode arch=compute_30,code=sm_30")
 <p>等价于：</p>
 <pre><code class="lang-lua">add_cugencodes("sm_60")
 </code></pre>
-<h3 id="target-add_ldflags">target:add_ldflags</h3>
-<h4 id="-">添加链接选项</h4>
+<h3 id="targetadd_ldflags">target:add_ldflags</h3>
+<h4 id="">添加链接选项</h4>
 <p>添加静态链接选项</p>
 <pre><code class="lang-lua">add_ldflags("-L/xxx", "-lxxx")
 </code></pre>
-<h3 id="target-add_arflags">target:add_arflags</h3>
-<h4 id="-">添加静态库归档选项</h4>
+<h3 id="targetadd_arflags">target:add_arflags</h3>
+<h4 id="">添加静态库归档选项</h4>
 <p>影响对静态库的生成</p>
 <pre><code class="lang-lua">add_arflags("xxx")
 </code></pre>
-<h3 id="target-add_shflags">target:add_shflags</h3>
-<h4 id="-">添加动态库链接选项</h4>
+<h3 id="targetadd_shflags">target:add_shflags</h3>
+<h4 id="">添加动态库链接选项</h4>
 <p>影响对动态库的生成</p>
 <pre><code class="lang-lua">add_shflags("xxx")
 </code></pre>
-<h3 id="target-add_options">target:add_options</h3>
-<h4 id="-">添加关联选项</h4>
+<h3 id="targetadd_options">target:add_options</h3>
+<h4 id="">添加关联选项</h4>
 <p>这个接口跟<a href="#targetset_options">set_options</a>类似，唯一的区别就是，此处是追加选项，而<a href="#targetset_options">set_options</a>每次设置会覆盖先前的设置。</p>
-<h3 id="target-add_packages">target:add_packages</h3>
-<h4 id="-">添加包依赖</h4>
+<h3 id="targetadd_packages">target:add_packages</h3>
+<h4 id="">添加包依赖</h4>
 <p>在target作用域中，添加集成包依赖，例如：</p>
 <pre><code class="lang-lua">target("test")
     add_packages("zlib", "polarssl", "pcre", "mysql")
 </code></pre>
 <p>这样，在编译test目标时，如果这个包存在的，将会自动追加包里面的宏定义、头文件搜索路径、链接库目录，也会自动链接包中所有库。</p>
 <p>用户不再需要自己单独调用<a href="#targetadd_links">add_links</a>，<a href="#targetadd_includedirs">add_includedirs</a>, <a href="#targetadd_ldflags">add_ldflags</a>等接口，来配置依赖库链接了。</p>
-<p>对于如何设置包搜索目录，可参考：<a href="/zh-cn/manual/global_interfaces?id=add_packagedirs">add_packagedirs</a> 接口</p>
-<p>而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中<a href="/zh-cn/manual/global_interfaces?id=add_requires">add_requires</a>定义的包。</p>
+<p>对于如何设置包搜索目录，可参考：<a href="/mirror/zh-cn/manual/global_interfaces.html#add_packagedirs">add_packagedirs</a> 接口</p>
+<p>而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中<a href="/mirror/zh-cn/manual/global_interfaces.html#add_requires">add_requires</a>定义的包。</p>
 <pre><code class="lang-lua">add_requires("zlib", "polarssl")
 target("test")
     add_packages("zlib", "polarssl")
@@ -1915,11 +1915,11 @@ target("test")
 target("test")
     add_packages("lua", {links = {}})
 </code></pre>
-<h3 id="target-add_languages">target:add_languages</h3>
-<h4 id="-">添加语言标准</h4>
+<h3 id="targetadd_languages">target:add_languages</h3>
+<h4 id="">添加语言标准</h4>
 <p>与<a href="#targetset_languages">set_languages</a>类似，唯一区别是这个接口不会覆盖掉之前的设置，而是追加设置。</p>
-<h3 id="target-add_vectorexts">target:add_vectorexts</h3>
-<h4 id="-">添加向量扩展指令</h4>
+<h3 id="targetadd_vectorexts">target:add_vectorexts</h3>
+<h4 id="">添加向量扩展指令</h4>
 <p>添加扩展指令优化选项，目前支持以下几种扩展指令集：</p>
 <pre><code class="lang-lua">add_vectorexts("mmx")
 add_vectorexts("neon")
@@ -1929,8 +1929,8 @@ add_vectorexts("sse", "sse2", "sse3", "ssse3")
 <p><p class="tip"><br>如果当前设置的指令集编译器不支持，xmake会自动忽略掉，所以不需要用户手动去判断维护，只需要将你需要的指令集全部设置上就行了。<br></p>
 
 </p>
-<h3 id="target-add_frameworks">target:add_frameworks</h3>
-<h4 id="-">添加链接框架</h4>
+<h3 id="targetadd_frameworks">target:add_frameworks</h3>
+<h4 id="">添加链接框架</h4>
 <p>目前主要用于<code>ios</code>和<code>macosx</code>平台的<code>objc</code>和<code>swift</code>程序，例如：</p>
 <pre><code class="lang-lua">target("test")
     add_frameworks("Foundation", "CoreFoundation")
@@ -1941,15 +1941,15 @@ add_vectorexts("sse", "sse2", "sse3", "ssse3")
     add_ldflags("-framework Foundation", "-framework CoreFoundation")
 </code></pre>
 <p>如果不是这两个平台，这些设置将会被忽略。</p>
-<h3 id="target-add_frameworkdirs">target:add_frameworkdirs</h3>
-<h4 id="-">添加链接框架搜索目录</h4>
+<h3 id="targetadd_frameworkdirs">target:add_frameworkdirs</h3>
+<h4 id="">添加链接框架搜索目录</h4>
 <p>对于一些第三方framework，那么仅仅通过<a href="#targetadd_frameworks">add_frameworks</a>是没法找到的，还需要通过这个接口来添加搜索目录。</p>
 <pre><code class="lang-lua">target("test")
     add_frameworks("MyFramework")
     add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
 </code></pre>
-<h3 id="target-set_toolset">target:set_toolset</h3>
-<h4 id="-">设置工具集</h4>
+<h3 id="targetset_toolset">target:set_toolset</h3>
+<h4 id="">设置工具集</h4>
 <p>针对特定target单独设置切换某个编译器，链接器，不过我们更推荐使用<a href="#targetset_toolchains">set_toolchains</a>对某个target进行整体工具链的切换。</p>
 <p>与set_toolchains相比，此接口只切换工具链某个特定的编译器或者链接器。</p>
 <p>!> 2.3.4以上版本才支持此接口，2.3.4之前的set_toolchain/set_tool接口会逐步弃用，采用此新接口，用法相同。</p>
@@ -2053,8 +2053,8 @@ target("test2")
 <pre><code class="lang-lua">set_toolset("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 </code></pre>
 <p>上述描述设置mipscc.exe作为c编译器，并且提示xmake作为gcc的传参处理方式进行编译。</p>
-<h3 id="target-set_toolchains">target:set_toolchains</h3>
-<h4 id="-">设置工具链</h4>
+<h3 id="targetset_toolchains">target:set_toolchains</h3>
+<h4 id="">设置工具链</h4>
 <p>这对某个特定的target单独切换设置不同的工具链，和set_toolset不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。</p>
 <p>这也是推荐做法，因为像gcc/clang等大部分编译工具链，编译器和链接器都是配套使用的，要切就得整体切，单独零散的切换设置会很繁琐。</p>
 <p>比如我们切换test目标到clang+yasm两个工具链：</p>
@@ -2104,7 +2104,7 @@ $ xmake
 
     -- ...
 </code></pre>
-<p>关于这块的详情介绍，可以到<a href="/zh-cn/manual/custom_toolchain">自定义工具链</a>章节查看</p>
+<p>关于这块的详情介绍，可以到<a href="/mirror/zh-cn/manual/custom_toolchain.html">自定义工具链</a>章节查看</p>
 <p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/780">#780</a></p>
 <p>2.3.5版本开始，新增对toolchains平台和架构的单独设置和切换，比如：</p>
 <pre><code class="lang-lua">target("test")
@@ -2120,8 +2120,8 @@ $ xmake
 <p>这块的应用场景和example可以看下：<a href="https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua">https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua</a></p>
 <p>luajit里面就需要同时编译host平台的minilua/buildvm来生成jit相关代码，然后开始针对性编译luajit自身到不同的交叉工具链。</p>
 <p>关于这块详情，可以参考：<a href="https://github.com/xmake-io/xmake/pull/857">https://github.com/xmake-io/xmake/pull/857</a></p>
-<h3 id="target-set_plat">target:set_plat</h3>
-<h4 id="-">设置指定目标的编译平台</h4>
+<h3 id="targetset_plat">target:set_plat</h3>
+<h4 id="">设置指定目标的编译平台</h4>
 <p>通常配合<a href="#target_setarch">set_arch</a>使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。</p>
 <p>一般用于需要同时编译host平台目标、交叉编译目标的场景，更多详情见：<a href="#target_settoolchains">set_toolchains</a></p>
 <p>例如：</p>
@@ -2139,11 +2139,11 @@ target("test")
     add_deps("host")
     add_files("src/test/*.c")
 </code></pre>
-<h3 id="target-set_arch">target:set_arch</h3>
-<h4 id="-">设置指定目标的编译架构</h4>
+<h3 id="targetset_arch">target:set_arch</h3>
+<h4 id="">设置指定目标的编译架构</h4>
 <p>详情见：<a href="#targetset_plat">set_plat</a></p>
-<h3 id="target-set_values">target:set_values</h3>
-<h4 id="-">设置一些扩展配置值</h4>
+<h3 id="targetset_values">target:set_values</h3>
+<h4 id="">设置一些扩展配置值</h4>
 <p>给target设置一些扩展的配置值，这些配置没有像<code>set_ldflags</code>这种内置的api可用，通过第一个参数传入一个配置名，来扩展配置。<br>一般用于传入配置参数给自定义rule中的脚本使用，例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     on_build_file(function (target, sourcefile, opt)
@@ -2162,11 +2162,11 @@ target("test")
 <p><p class="tip"><br>具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：<a href="#内建规则">内建规则</a><br></p>
 
 </p>
-<h3 id="target-add_values">target:add_values</h3>
-<h4 id="-">添加一些扩展配置值</h4>
+<h3 id="targetadd_values">target:add_values</h3>
+<h4 id="">添加一些扩展配置值</h4>
 <p>用法跟<a href="#targetset_values">target:set_values</a>类似，区别就是这个接口是追加设置，而不会每次覆盖设置。</p>
-<h3 id="target-set_rundir">target:set_rundir</h3>
-<h4 id="-">设置运行目录</h4>
+<h3 id="targetset_rundir">target:set_rundir</h3>
+<h4 id="">设置运行目录</h4>
 <p>此接口用于设置默认运行target程序的当前运行目录，如果不设置，默认情况下，target是在可执行文件所在目录加载运行。</p>
 <p>如果用户想要修改加载目录，一种是通过<code>on_run()</code>的方式自定义运行逻辑，里面去做切换，但仅仅为了切个目录就这么做，太过繁琐。</p>
 <p>因此可以通过这个接口快速的对默认执行的目录环境做设置切换。</p>
@@ -2175,8 +2175,8 @@ target("test")
     add_files("src/*.c")
     set_rundir("$(projectdir)/xxx")
 </code></pre>
-<h3 id="target-add_runenvs">target:add_runenvs</h3>
-<h4 id="-">添加运行环境变量</h4>
+<h3 id="targetadd_runenvs">target:add_runenvs</h3>
+<h4 id="">添加运行环境变量</h4>
 <p>此接口用于添加设置默认运行target程序的环境变量，跟<a href="#targetset_runenv">set_runenv</a>不同的是，此接口是对已有系统env中的值进行追加，并不会覆盖。</p>
 <p>所以，对于PATH这种，通过此接口追加值是非常方便的，而且此接口支持多值设置，所以通常就是用来设置带有path sep的多值env。。</p>
 <pre><code class="lang-lua">target("test")
@@ -2185,8 +2185,8 @@ target("test")
     add_runenvs("PATH", "/tmp/bin", "xxx/bin")
     add_runenvs("LD_LIBRARY_PATH", "/tmp/lib", "xxx/lib")
 </code></pre>
-<h3 id="target-set_runenv">target:set_runenv</h3>
-<h4 id="-">设置运行环境变量</h4>
+<h3 id="targetset_runenv">target:set_runenv</h3>
+<h4 id="">设置运行环境变量</h4>
 <p>此接口跟<a href="#targetadd_runenvs">add_runenvs</a>不同的是，<code>set_runenv</code>是对某个环境变量的覆盖设置，会覆盖原有系统环境的env值，并且此接口是单数设置，不能传递多参。</p>
 <p>所以，如果要覆盖设置PATH这中多路径的env，需要自己去拼接：</p>
 <pre><code class="lang-lua">target("test")
@@ -2195,13 +2195,13 @@ target("test")
     set_runenv("PATH", path.joinenv("/tmp/bin", "xxx/bin"))
     set_runenv("NAME", "value")
 </code></pre>
-<h3 id="target-set_installdir">target:set_installdir</h3>
-<h4 id="-">设置安装目录</h4>
+<h3 id="targetset_installdir">target:set_installdir</h3>
+<h4 id="">设置安装目录</h4>
 <p>2.2.5版本新增接口，用于针对每个target设置不同的默认安装目录，一般用于<code>xmake install/uninstall</code>命令。</p>
 <p>默认情况下执行<code>xmake install</code>会安装到系统<code>/usr/local</code>目录，我们除了可以通过<code>xmake install -o /usr/local</code>指定其他安装目录外，<br>还可以在xmake.lua中针对target设置不同的安装目录来替代默认目录。</p>
 <p>除了上述两种方式，我们也可以通过<code>INSTALLDIR</code>和<code>DESTDIR</code>环境变量设置默认的安装目录。</p>
-<h3 id="target-add_installfiles">target:add_installfiles</h3>
-<h4 id="-">添加安装文件</h4>
+<h3 id="targetadd_installfiles">target:add_installfiles</h3>
+<h4 id="">添加安装文件</h4>
 <p>2.2.5版本新增接口，用于针对每个target设置对应需要安装的文件，一般用于<code>xmake install/uninstall</code>命令。</p>
 <p>比如我们可以指定安装各种类型的文件到安装目录：</p>
 <pre><code class="lang-lua">target("test")
@@ -2222,8 +2222,8 @@ target("test")
 <p>我们把<code>src/tbox/*.h</code>中的文件，提取<code>tbox/*.h</code>子目录结构后，在进行安装：<code>/usr/local/include/tbox/*.h, /usr/local/share/doc/tbox/*.md</code></p>
 <p>当然，用户也可以通过<a href="#targetset_installdir">set_installdir</a>接口，来配合使用。</p>
 <p>关于此接口的详细说明，见：<a href="https://github.com/xmake-io/xmake/issues/318">https://github.com/xmake-io/xmake/issues/318</a></p>
-<h3 id="target-add_headerfiles">target:add_headerfiles</h3>
-<h4 id="-">添加安装头文件</h4>
+<h3 id="targetadd_headerfiles">target:add_headerfiles</h3>
+<h4 id="">添加安装头文件</h4>
 <p>2.2.5版本新增接口，用于针对每个target设置对应需要安装的头文件，一般用于<code>xmake install/uninstall</code>命令。</p>
 <p>此接口使用方式跟<a href="#targetadd_installfiles">add_installfiles</a>接口几乎完全一样，都可以用来添加安装文件，不过此接口仅用于安装头文件。<br>因此，使用上比<code>add_installfiles</code>简化了不少，默认不设置prefixdir，也会自动将头文件安装到对应的<code>include</code>子目录中。</p>
 <p>并且此接口对于<code>xmake project -k vs201x</code>等插件生成的IDE文件，也会添加对应的头文件进去。</p>
@@ -2231,14 +2231,14 @@ target("test")
 <pre><code class="lang-lua">target("test")
     add_headerfiles("src/(tbox/*.h)", {prefixdir = "include"})
 </code></pre>
-<h3 id="target-set_configdir">target:set_configdir</h3>
-<h4 id="-">设置模板配置文件的输出目录</h4>
+<h3 id="targetset_configdir">target:set_configdir</h3>
+<h4 id="">设置模板配置文件的输出目录</h4>
 <p>2.2.5版本新增接口，主要用于<a href="#targetadd_configfiles">add_configfiles</a>接口设置的模板配置文件的输出目录。</p>
-<h3 id="target-set_configvar">target:set_configvar</h3>
-<h4 id="-">设置模板配置变量</h4>
+<h3 id="targetset_configvar">target:set_configvar</h3>
+<h4 id="">设置模板配置变量</h4>
 <p>2.2.5版本新增接口，用于在编译前，添加一些需要预处理的模板配置变量，一般用于<a href="#targetadd_configfiles">add_configfiles</a>接口。</p>
-<h3 id="target-add_configfiles">target:add_configfiles</h3>
-<h4 id="-">添加模板配置文件</h4>
+<h3 id="targetadd_configfiles">target:add_configfiles</h3>
+<h4 id="">添加模板配置文件</h4>
 <p>2.2.5版本新增接口，用于在编译前，添加一些需要预处理的配置文件。</p>
 <p>先来一个简单的例子：</p>
 <pre><code class="lang-lua">target("test")
@@ -2348,8 +2348,8 @@ ${define FOO_STRING}
 <pre><code>HAVE_SSE2 equ ${default VAR_HAVE_SSE2 0}
 </code></pre><p>通过<code>set_configvar("HAVE_SSE2", 1)</code>启用变量后，变为<code>HAVE_SSE2 equ 1</code>，如果没有设置变量，则使用默认值：<code>HAVE_SSE2 equ 0</code></p>
 <p>关于这个的详细说明，见：<a href="https://github.com/xmake-io/xmake/issues/320">https://github.com/xmake-io/xmake/issues/320</a></p>
-<h3 id="target-set_policy">target:set_policy</h3>
-<h4 id="-">设置构建行为策略</h4>
+<h3 id="targetset_policy">target:set_policy</h3>
+<h4 id="">设置构建行为策略</h4>
 <p>xmake有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。</p>
 <p>因此，从v2.3.4开始，xmake提供默认构建策略的修改设置，开放给用户一定程度上的可配置性。</p>
 <p>使用方式如下：</p>
@@ -2411,7 +2411,7 @@ ${define FOO_STRING}
   } 
 }
 </code></pre>
-<h5 id="check-auto_ignore_flags">check.auto_ignore_flags</h5>
+<h5 id="checkauto_ignore_flags">check.auto_ignore_flags</h5>
 <p>xmake默认会对所有<code>add_cxflags</code>, <code>add_ldflags</code>接口设置的原始flags进行自动检测，如果检测当前编译器和链接器不支持它们，就会自动忽略。</p>
 <p>这通常是很有用的，像一些可选的编译flags，即使不支持也能正常编译，但是强行设置上去，其他用户在编译的时候，有可能会因为编译器的支持力度不同，出现一定程度的编译失败。</p>
 <p>但，由于自动检测并不保证100%可靠，有时候会有一定程度的误判，所以某些用户并不喜欢这个设定（尤其是针对交叉编译工具链，更容易出现失败）。</p>
@@ -2428,7 +2428,7 @@ target("test")
     add_ldflags("-static")
 </code></pre>
 <p>然后我们就可以随意设置各种原始flags，xmake不会去自动检测和忽略他们了。</p>
-<h5 id="check-auto_map_flags">check.auto_map_flags</h5>
+<h5 id="checkauto_map_flags">check.auto_map_flags</h5>
 <p>这是xmake的另外一个对flags的智能分析处理，通常像<code>add_links</code>, <code>add_defines</code>这种xmake内置的api去设置的配置，是具有跨平台特性的，不同编译器平台会自动处理成对应的原始flags。</p>
 <p>但是，有些情况，用户还是需要自己通过add_cxflags, add_ldflags设置原始的编译链接flags，这些flags并不能很好的跨编译器</p>
 <p>就拿<code>-O0</code>的编译优化flags来说，虽然有<code>set_optimize</code>来实现跨编译器配置，但如果用户直接设置<code>add_cxflags("-O0")</code>呢？gcc/clang下可以正常处理，但是msvc下就不支持了</p>
@@ -2442,7 +2442,7 @@ target("test")
 <p>也有部分用户并不喜欢这种自动映射行为，那么我们可以通过下面的设置完全禁用这个默认的行为：</p>
 <pre><code class="lang-bash">set_policy("check.auto_map_flags", false)
 </code></pre>
-<h5 id="build-across_targets_in_parallel">build.across_targets_in_parallel</h5>
+<h5 id="buildacross_targets_in_parallel">build.across_targets_in_parallel</h5>
 <p>这个策略也是默认开启的，主要用于跨target间执行并行构建，v2.3.3之前的版本，并行构建只能针对单个target内部的所有源文件，<br>跨target的编译，必须要要等先前的target完全link成功，才能执行下一个target的编译，这在一定程度上会影响编译速度。</p>
 <p>然而每个target的源文件是可以完全并行化处理的，最终在一起执行link过程，v2.3.3之后的版本通过这个优化，构建速度提升了30%。</p>
 <p>当然，如果有些特殊的target里面的构建源文件要依赖先前的target（尤其是一些自定义rules的情况，虽然很少遇到），我们也可以通过下面的设置禁用这个优化行为：</p>

@@ -90,7 +90,7 @@
   line-height: 1;
 }
 </style>
-    <h2 id="how-to-get-verbose-command-line-arguments-info-">How to get verbose command-line arguments info?</h2>
+    <h2 id="howtogetverbosecommandlineargumentsinfo">How to get verbose command-line arguments info?</h2>
 <p>Get the help info of the main command.</p>
 <pre><code class="lang-bash">$ xmake [-h|--help]
 </code></pre>
@@ -103,10 +103,10 @@
 <p>For example:</p>
 <pre><code class="lang-bash">$ xmake run --help
 </code></pre>
-<h2 id="how-to-suppress-all-output-info-">How to suppress all output info?</h2>
+<h2 id="howtosuppressalloutputinfo">How to suppress all output info?</h2>
 <pre><code class="lang-bash">$ xmake [-q|--quiet]
 </code></pre>
-<h2 id="how-to-do-if-xmake-fails-">How to do if xmake fails?</h2>
+<h2 id="howtodoifxmakefails">How to do if xmake fails?</h2>
 <p>Please attempt to clean configuration and rebuild it first.</p>
 <pre><code class="lang-bash">$ xmake f -c
 $ xmake
@@ -118,10 +118,10 @@ $ xmake
 <p>And add <code>-D</code> to get the verbose backtrace and diagnosis info, then you can submit these infos to <a href="https://github.com/xmake-io/xmake/issues">issues</a>.</p>
 <pre><code class="lang-bash">$ xmake -v -D
 </code></pre>
-<h2 id="how-to-see-verbose-compiling-warnings-">How to see verbose compiling warnings?</h2>
+<h2 id="howtoseeverbosecompilingwarnings">How to see verbose compiling warnings?</h2>
 <pre><code class="lang-bash">$ xmake [-w|--warning] 
 </code></pre>
-<h2 id="how-to-scan-source-code-and-generate-xmake-lua-automatically-">How to scan source code and generate xmake.lua automatically?</h2>
+<h2 id="howtoscansourcecodeandgeneratexmakeluaautomatically">How to scan source code and generate xmake.lua automatically?</h2>
 <p>You only need run the following command:</p>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
@@ -133,10 +133,10 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -y
 </code></pre>
 <p>If you want to known more information please see <a href="https://tboox.org/2017/01/07/build-without-makefile/">Scan source codes and build project without makefile</a></p>
-<h2 id="why-is-xmake-lua-being-executed-multiple-times-">Why is xmake.lua being executed multiple times?</h2>
+<h2 id="whyisxmakeluabeingexecutedmultipletimes">Why is xmake.lua being executed multiple times?</h2>
 <p>Xmake.lua is divided into description fields and script fields. In the description field, various configuration fields are parsed multiple times in stages, and it is possible to execute multiple times. Therefore, do not write complex scripts in the description field.</p>
 <p>If you want to write a variety of complex scripts, please configure them in the script domain. The script domain of <code>target/on_load</code> can also flexibly configure various target related settings and provide more powerful lua script module support.</p>
-<p>See: <a href="/guide/syntax_description">Description of Syntax Description</a> for more details.</p>
+<p>See: <a href="/mirror/guide/syntax_description.html">Description of Syntax Description</a> for more details.</p>
 </article>
 </body>
 </html>

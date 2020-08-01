@@ -90,8 +90,8 @@
   line-height: 1;
 }
 </style>
-    <p>所有扩展模块的使用，都需要通过<a href="/zh-cn/manual/builtin_modules?id=import">import</a>接口，进行导入后才能使用。</p>
-<h3 id="core-base-option">core.base.option</h3>
+    <p>所有扩展模块的使用，都需要通过<a href="/mirror/zh-cn/manual/builtin_modules.html#import">import</a>接口，进行导入后才能使用。</p>
+<h3 id="corebaseoption">core.base.option</h3>
 <p>一般用于获取xmake命令参数选项的值，常用于插件开发。</p>
 <table>
 <thead>
@@ -109,7 +109,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="option-get">option.get</h4>
+<h4 id="optionget">option.get</h4>
 <ul>
 <li>获取参数选项值</li>
 </ul>
@@ -130,7 +130,7 @@ end
         print(option.get("info"))
     end)
 </code></pre>
-<h3 id="core-base-global">core.base.global</h3>
+<h3 id="corebaseglobal">core.base.global</h3>
 <p>用于获取xmake全局的配置信息，也就是<code>xmake g|global --xxx=val</code> 传入的参数选项值。</p>
 <table>
 <thead>
@@ -166,22 +166,22 @@ end
 <p><p class="tip"><br>2.1.5版本之前为<code>core.project.global</code>。<br></p>
 
 </p>
-<h4 id="global-get">global.get</h4>
+<h4 id="globalget">global.get</h4>
 <ul>
 <li>获取指定配置值</li>
 </ul>
 <p>类似<a href="#configget">config.get</a>，唯一的区别就是这个是从全局配置中获取。</p>
-<h4 id="global-load">global.load</h4>
+<h4 id="globalload">global.load</h4>
 <ul>
 <li>加载配置</li>
 </ul>
 <p>类似<a href="#globalget">global.get</a>，唯一的区别就是这个是从全局配置中加载。</p>
-<h4 id="global-directory">global.directory</h4>
+<h4 id="globaldirectory">global.directory</h4>
 <ul>
 <li>获取全局配置信息目录</li>
 </ul>
 <p>默认为<code>~/.config</code>目录。</p>
-<h4 id="global-dump">global.dump</h4>
+<h4 id="globaldump">global.dump</h4>
 <ul>
 <li>打印输出所有全局配置信息</li>
 </ul>
@@ -192,7 +192,7 @@ end
 ,   xcode_dir = "/Applications/Xcode.app"
 }
 </code></pre>
-<h3 id="core-base-task">core.base.task</h3>
+<h3 id="corebasetask">core.base.task</h3>
 <p>用于任务操作，一般用于在自定义脚本中、插件任务中，调用运行其他task任务。</p>
 <table>
 <thead>
@@ -213,7 +213,7 @@ end
 <p><p class="tip"><br>2.1.5版本之前为<code>core.project.task</code>。<br></p>
 
 </p>
-<h4 id="task-run">task.run</h4>
+<h4 id="taskrun">task.run</h4>
 <ul>
 <li>运行指定任务</li>
 </ul>
@@ -260,7 +260,7 @@ function main(...)
     task.run("config", {plat="iphoneos", arch="armv7"})
 emd
 </code></pre>
-<h3 id="core-tool-linker">core.tool.linker</h3>
+<h3 id="coretoollinker">core.tool.linker</h3>
 <p>链接器相关操作，常用于插件开发。</p>
 <table>
 <thead>
@@ -298,7 +298,7 @@ emd
 </tr>
 </tbody>
 </table>
-<h4 id="linker-link">linker.link</h4>
+<h4 id="linkerlink">linker.link</h4>
 <ul>
 <li>执行链接</li>
 </ul>
@@ -360,7 +360,7 @@ emd
 <pre><code class="lang-lua">linker.link("binary", {"cc", "mxx", "sc"}, {"a.o", "b.o", "c.o"}, "/tmp/targetfile")
 </code></pre>
 <p>上述代码告诉链接器，a, b, c三个对象文件有可能分别是c, objc++, swift代码编译出来的，链接器会从当前系统和工具链中选择最合适的链接器去处理这个链接过程。</p>
-<h4 id="linker-linkcmd">linker.linkcmd</h4>
+<h4 id="linkerlinkcmd">linker.linkcmd</h4>
 <ul>
 <li>获取链接命令行字符串</li>
 </ul>
@@ -371,7 +371,7 @@ emd
 <p>并且还可以自己传递各种配置，例如：</p>
 <pre><code class="lang-lua">local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {config = {linkdirs = "/usr/lib"}})
 </code></pre>
-<h4 id="linker-linkargv">linker.linkargv</h4>
+<h4 id="linkerlinkargv">linker.linkargv</h4>
 <ul>
 <li>获取链接命令行参数列表</li>
 </ul>
@@ -380,7 +380,7 @@ emd
 </code></pre>
 <p>其中返回的第一个值是主程序名，后面是参数列表，而<code>os.args(table.join(program, argv))</code>等价于<code>linker.linkcmd</code>。</p>
 <p>我们也可以通过传入返回值给<a href="#os-runv">os.runv</a>来直接运行它：<code>os.runv(linker.linkargv(..))</code></p>
-<h4 id="linker-linkflags">linker.linkflags</h4>
+<h4 id="linkerlinkflags">linker.linkflags</h4>
 <ul>
 <li>获取链接选项</li>
 </ul>
@@ -391,7 +391,7 @@ for _, flag in ipairs(flags) do
 end
 </code></pre>
 <p>返回的是flags的列表数组。</p>
-<h4 id="linker-has_flags">linker.has_flags</h4>
+<h4 id="linkerhas_flags">linker.has_flags</h4>
 <ul>
 <li>判断指定链接选项是否支持</li>
 </ul>
@@ -400,7 +400,7 @@ end
     -- ok
 end
 </code></pre>
-<h3 id="core-tool-compiler">core.tool.compiler</h3>
+<h3 id="coretoolcompiler">core.tool.compiler</h3>
 <p>编译器相关操作，常用于插件开发。</p>
 <table>
 <thead>
@@ -448,7 +448,7 @@ end
 </tr>
 </tbody>
 </table>
-<h4 id="compiler-compile">compiler.compile</h4>
+<h4 id="compilercompile">compiler.compile</h4>
 <ul>
 <li>执行编译</li>
 </ul>
@@ -460,7 +460,7 @@ end
 <pre><code class="lang-lua">compiler.compile("xxx.c", "xxx.o")
 </code></pre>
 <p>来单纯编译一个源文件。</p>
-<h4 id="compiler-compcmd">compiler.compcmd</h4>
+<h4 id="compilercompcmd">compiler.compcmd</h4>
 <ul>
 <li>获取编译命令行</li>
 </ul>
@@ -482,14 +482,14 @@ for _, target in pairs(project.targets()) do
     end
 end
 </code></pre>
-<h4 id="compiler-compargv">compiler.compargv</h4>
+<h4 id="compilercompargv">compiler.compargv</h4>
 <ul>
 <li>获取编译命令行列表</li>
 </ul>
 <p>跟<a href="#compilercompargv">compiler.compargv</a>稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：</p>
 <pre><code class="lang-lua">local program, argv = compiler.compargv("xxx.c", "xxx.o")
 </code></pre>
-<h4 id="compiler-compflags">compiler.compflags</h4>
+<h4 id="compilercompflags">compiler.compflags</h4>
 <ul>
 <li>获取编译选项</li>
 </ul>
@@ -500,7 +500,7 @@ for _, flag in ipairs(flags) do
 end
 </code></pre>
 <p>返回的是flags的列表数组。</p>
-<h4 id="compiler-has_flags">compiler.has_flags</h4>
+<h4 id="compilerhas_flags">compiler.has_flags</h4>
 <ul>
 <li>判断指定编译选项是否支持</li>
 </ul>
@@ -515,7 +515,7 @@ if compiler.has_flags("cxx", "-g") then
     -- ok
 end
 </code></pre>
-<h4 id="compiler-features">compiler.features</h4>
+<h4 id="compilerfeatures">compiler.features</h4>
 <ul>
 <li>获取所有编译器特性</li>
 </ul>
@@ -729,7 +729,7 @@ local features = compiler.features("cxx", {target = target, config = {defines = 
 </tr>
 </tbody>
 </table>
-<h4 id="compiler-has_features">compiler.has_features</h4>
+<h4 id="compilerhas_features">compiler.has_features</h4>
 <ul>
 <li>判断指定的编译器特性是否支持</li>
 </ul>
@@ -747,7 +747,7 @@ if compiler.has_features("cxx_constexpr", {target = target, defines = "..", incl
 end
 </code></pre>
 <p>具体特性名有哪些，可以参考：<a href="#compilerfeatures">compiler.features</a>。</p>
-<h3 id="core-project-config">core.project.config</h3>
+<h3 id="coreprojectconfig">core.project.config</h3>
 <p>用于获取工程编译时候的配置信息，也就是<code>xmake f|config --xxx=val</code> 传入的参数选项值。</p>
 <table>
 <thead>
@@ -800,7 +800,7 @@ end
 </tr>
 </tbody>
 </table>
-<h4 id="config-get">config.get</h4>
+<h4 id="configget">config.get</h4>
 <ul>
 <li>获取指定配置值</li>
 </ul>
@@ -815,7 +815,7 @@ end
         print(config.get("xxx"))
     end)
 </code></pre>
-<h4 id="config-load">config.load</h4>
+<h4 id="configload">config.load</h4>
 <ul>
 <li>加载配置</li>
 </ul>
@@ -833,32 +833,32 @@ function main(...)
     print(config.get("xxx"))
 end
 </code></pre>
-<h4 id="config-arch">config.arch</h4>
+<h4 id="configarch">config.arch</h4>
 <ul>
 <li>获取当前工程的架构配置</li>
 </ul>
 <p>也就是获取<code>xmake f|config --arch=armv7</code>的平台配置，相当于<code>config.get("arch")</code>。</p>
-<h4 id="config-plat">config.plat</h4>
+<h4 id="configplat">config.plat</h4>
 <ul>
 <li>获取当前工程的平台配置</li>
 </ul>
 <p>也就是获取<code>xmake f|config --plat=iphoneos</code>的平台配置，相当于<code>config.get("plat")</code>。</p>
-<h4 id="config-mode">config.mode</h4>
+<h4 id="configmode">config.mode</h4>
 <ul>
 <li>获取当前工程的编译模式配置</li>
 </ul>
 <p>也就是获取<code>xmake f|config --mode=debug</code>的平台配置，相当于<code>config.get("mode")</code>。</p>
-<h4 id="config-buildir">config.buildir</h4>
+<h4 id="configbuildir">config.buildir</h4>
 <ul>
 <li>获取当前工程的输出目录配置</li>
 </ul>
 <p>也就是获取<code>xmake f|config -o /tmp/output</code>的平台配置，相当于<code>config.get("buildir")</code>。</p>
-<h4 id="config-directory">config.directory</h4>
+<h4 id="configdirectory">config.directory</h4>
 <ul>
 <li>获取当前工程的配置信息目录</li>
 </ul>
 <p>获取工程配置的存储目录，默认为：<code>projectdir/.config</code></p>
-<h4 id="config-dump">config.dump</h4>
+<h4 id="configdump">config.dump</h4>
 <ul>
 <li>打印输出当前工程的所有配置信息</li>
 </ul>
@@ -892,15 +892,15 @@ end
 ,   kind = "static"
 }
 </code></pre>
-<h3 id="core-project-global">core.project.global</h3>
+<h3 id="coreprojectglobal">core.project.global</h3>
 <p><p class="tip"><br>此模块自2.1.5版本后迁移至<a href="#core-base-global">core.base.global</a>。<br></p>
 
 </p>
-<h3 id="core-project-task">core.project.task</h3>
+<h3 id="coreprojecttask">core.project.task</h3>
 <p><p class="tip"><br>此模块自2.1.5版本后迁移至<a href="#core-base-task">core.base.task</a>。<br></p>
 
 </p>
-<h3 id="core-project-project">core.project.project</h3>
+<h3 id="coreprojectproject">core.project.project</h3>
 <p>用于获取当前工程的一些描述信息，也就是在<code>xmake.lua</code>工程描述文件中定义的配置信息，例如：<a href="#target">target</a>、<a href="#option">option</a>等。</p>
 <table>
 <thead>
@@ -953,7 +953,7 @@ end
 </tr>
 </tbody>
 </table>
-<h4 id="project-load">project.load</h4>
+<h4 id="projectload">project.load</h4>
 <ul>
 <li>加载工程描述配置</li>
 </ul>
@@ -974,7 +974,7 @@ end
 <p><p class="tip"><br>2.1.5版本后，不在需要，工程加载会自动在合适时机延迟加载。<br></p>
 
 </p>
-<h4 id="project-directory">project.directory</h4>
+<h4 id="projectdirectory">project.directory</h4>
 <ul>
 <li>获取工程目录</li>
 </ul>
@@ -982,7 +982,7 @@ end
 <p><p class="tip"><br>2.1.5版本后，建议使用<a href="#os-projectdir">os.projectdir</a>来获取。<br></p>
 
 </p>
-<h4 id="project-target">project.target</h4>
+<h4 id="projecttarget">project.target</h4>
 <ul>
 <li>获取指定工程目标对象</li>
 </ul>
@@ -1015,7 +1015,7 @@ if target then
     print(target:get("deps"))
 end
 </code></pre>
-<h4 id="project-targets">project.targets</h4>
+<h4 id="projecttargets">project.targets</h4>
 <ul>
 <li>获取工程目标对象列表</li>
 </ul>
@@ -1024,7 +1024,7 @@ end
     print(target:targetfile())
 end
 </code></pre>
-<h4 id="project-option">project.option</h4>
+<h4 id="projectoption">project.option</h4>
 <ul>
 <li>获取指定选项对象</li>
 </ul>
@@ -1034,7 +1034,7 @@ if option:enabled() then
     option:enable(false)
 end
 </code></pre>
-<h4 id="project-options">project.options</h4>
+<h4 id="projectoptions">project.options</h4>
 <ul>
 <li>获取工程所有选项对象</li>
 </ul>
@@ -1043,21 +1043,21 @@ end
     print(option:enabled())
 end
 </code></pre>
-<h4 id="project-name">project.name</h4>
+<h4 id="projectname">project.name</h4>
 <ul>
 <li>获取当前工程名</li>
 </ul>
 <p>也就是获取<a href="#set_project">set_project</a>的工程名配置。</p>
 <pre><code class="lang-lua">print(project.name())
 </code></pre>
-<h4 id="project-version">project.version</h4>
+<h4 id="projectversion">project.version</h4>
 <ul>
 <li>获取当前工程版本号</li>
 </ul>
 <p>也就是获取<a href="#set_version">set_version</a>的工程版本配置。</p>
 <pre><code class="lang-lua">print(project.version())
 </code></pre>
-<h3 id="core-language-language">core.language.language</h3>
+<h3 id="corelanguagelanguage">core.language.language</h3>
 <p>用于获取编译语言相关信息，一般用于代码文件的操作。</p>
 <table>
 <thead>
@@ -1110,7 +1110,7 @@ end
 </tr>
 </tbody>
 </table>
-<h4 id="language-extensions">language.extensions</h4>
+<h4 id="languageextensions">language.extensions</h4>
 <ul>
 <li>获取所有语言的代码后缀名列表</li>
 </ul>
@@ -1125,7 +1125,7 @@ end
 ,    [".go"]     = gc
 }
 </code></pre>
-<h4 id="language-targetkinds">language.targetkinds</h4>
+<h4 id="languagetargetkinds">language.targetkinds</h4>
 <ul>
 <li>获取所有语言的目标类型列表</li>
 </ul>
@@ -1136,7 +1136,7 @@ end
 ,    shared = {"sh", "dcsh"}
 }
 </code></pre>
-<h4 id="language-sourcekinds">language.sourcekinds</h4>
+<h4 id="languagesourcekinds">language.sourcekinds</h4>
 <ul>
 <li>获取所有语言的源文件类型列表</li>
 </ul>
@@ -1153,7 +1153,7 @@ end
 ,    as  = {".s", ".S", ".asm"}
 }
 </code></pre>
-<h4 id="language-sourceflags">language.sourceflags</h4>
+<h4 id="languagesourceflags">language.sourceflags</h4>
 <ul>
 <li>加载所有语言的源文件编译选项名列表</li>
 </ul>
@@ -1164,7 +1164,7 @@ end
 ,    ...
 }
 </code></pre>
-<h4 id="language-load">language.load</h4>
+<h4 id="languageload">language.load</h4>
 <ul>
 <li>加载指定语言</li>
 </ul>
@@ -1174,7 +1174,7 @@ if lang then
     print(lang:name())
 end
 </code></pre>
-<h4 id="language-load_sk">language.load_sk</h4>
+<h4 id="languageload_sk">language.load_sk</h4>
 <ul>
 <li>从源文件类型加载指定语言</li>
 </ul>
@@ -1184,7 +1184,7 @@ if lang then
     print(lang:name())
 end
 </code></pre>
-<h4 id="language-load_ex">language.load_ex</h4>
+<h4 id="languageload_ex">language.load_ex</h4>
 <ul>
 <li>从源文件后缀名加载指定语言</li>
 </ul>
@@ -1194,7 +1194,7 @@ if lang then
     print(lang:name())
 end
 </code></pre>
-<h4 id="language-sourcekind_of">language.sourcekind_of</h4>
+<h4 id="languagesourcekind_of">language.sourcekind_of</h4>
 <ul>
 <li>获取指定源文件的源文件类型</li>
 </ul>
@@ -1202,7 +1202,7 @@ end
 <pre><code class="lang-lua">print(language.sourcekind_of("/xxxx/test.cpp"))
 </code></pre>
 <p>显示结果为：<code>cxx</code>，也就是<code>c++</code>类型，具体对应列表见：<a href="#languagesourcekinds">language.sourcekinds</a></p>
-<h3 id="core-platform-platform">core.platform.platform</h3>
+<h3 id="coreplatformplatform">core.platform.platform</h3>
 <p>平台信息相关操作</p>
 <table>
 <thead>
@@ -1220,7 +1220,7 @@ end
 </tr>
 </tbody>
 </table>
-<h4 id="platform-get">platform.get</h4>
+<h4 id="platformget">platform.get</h4>
 <ul>
 <li>获取指定平台相关配置信息</li>
 </ul>
@@ -1233,7 +1233,7 @@ local formats = platform.get("formats", "iphoneos")
 table.dump(formats)
 </code></pre>
 <p>具体有哪些可读的平台配置信息，可参考：<a href="#platform">platform</a></p>
-<h3 id="core-platform-environment">core.platform.environment</h3>
+<h3 id="coreplatformenvironment">core.platform.environment</h3>
 <p>环境相关操作，用于进入和离开指定环境变量对应的终端环境，一般用于<code>path</code>环境的进入和离开，尤其是一些需要特定环境的构建工具，例如：msvc的工具链。</p>
 <table>
 <thead>
@@ -1273,7 +1273,7 @@ table.dump(formats)
 </tr>
 </tbody>
 </table>
-<h4 id="environment-enter">environment.enter</h4>
+<h4 id="environmententer">environment.enter</h4>
 <ul>
 <li>进入指定环境</li>
 </ul>
@@ -1288,12 +1288,12 @@ os.run("cl.exe ..")
 environment.leave("toolchains")
 </code></pre>
 <p>因此为了通用性，默认xmake编译事都会设置这个环境，在linux下基本上内部环境不需要特殊切换，目前仅对windows下msvc进行了处理。</p>
-<h4 id="environment-leave">environment.leave</h4>
+<h4 id="environmentleave">environment.leave</h4>
 <ul>
 <li>离开指定环境</li>
 </ul>
 <p>具体使用见：<a href="#environmententer">environment.enter</a></p>
-<h3 id="lib-detect">lib.detect</h3>
+<h3 id="libdetect">lib.detect</h3>
 <p>此模块提供了非常强大的探测功能，用于探测程序、编译器、语言特性、依赖包等。</p>
 <p><p class="tip"><br>此模块的接口分散在多个模块目录中，尽量通过导入单个接口来使用，这样效率更高，例如：<code>import("lib.detect.find_package")</code>，而不是通过<code>import("lib.detect")</code>导入所有来调用。<br></p>
 
@@ -1404,7 +1404,7 @@ environment.leave("toolchains")
 </tr>
 </tbody>
 </table>
-<h4 id="detect-find_file">detect.find_file</h4>
+<h4 id="detectfind_file">detect.find_file</h4>
 <ul>
 <li>查找文件</li>
 </ul>
@@ -1436,7 +1436,7 @@ local file = find_file("ccache", { "/usr/bin", "/usr/local/bin"})
 <p><p class="tip"><br>我们也可以通过<code>xmake lua</code>插件来快速调用和测试此接口：<code>xmake lua lib.detect.find_file test.h /usr/local</code><br></p>
 
 </p>
-<h4 id="detect-find_path">detect.find_path</h4>
+<h4 id="detectfind_path">detect.find_path</h4>
 <ul>
 <li>查找路径</li>
 </ul>
@@ -1452,7 +1452,7 @@ local p = find_path("include/test.h", { "/usr", "/usr/local"})
 <p>同样，此接口也支持模式匹配和后缀子目录：</p>
 <pre><code class="lang-lua">local p = find_path("include/*.h", { "/usr", "/usr/local/**"}, {suffixes = "/subdir"})
 </code></pre>
-<h4 id="detect-find_library">detect.find_library</h4>
+<h4 id="detectfind_library">detect.find_library</h4>
 <ul>
 <li>查找库文件</li>
 </ul>
@@ -1476,7 +1476,7 @@ local library = find_library("crypto", {"/usr/lib", "/usr/local/lib"})
 <p>此接口也支持suffixes后缀子目录搜索和模式匹配操作：</p>
 <pre><code class="lang-lua">local library = find_library("cryp*", {"/usr", "/usr/local"}, {suffixes = "/lib"})
 </code></pre>
-<h4 id="detect-find_program">detect.find_program</h4>
+<h4 id="detectfind_program">detect.find_program</h4>
 <ul>
 <li>查找可执行程序</li>
 </ul>
@@ -1501,7 +1501,7 @@ local program = find_program("ccache", {pathes = {"$(env PATH)", function () ret
 
 </p>
 <p>我们也可以通过<code>xmake lua lib.detect.find_program ccache</code> 来快速测试。</p>
-<h4 id="detect-find_programver">detect.find_programver</h4>
+<h4 id="detectfind_programver">detect.find_programver</h4>
 <ul>
 <li>查找可执行程序版本号</li>
 </ul>
@@ -1524,7 +1524,7 @@ local version = find_programver("ccache", {command = "--version", parse = functi
 
 </p>
 <p>我们也可以通过<code>xmake lua lib.detect.find_programver ccache</code> 来快速测试。</p>
-<h4 id="detect-find_package">detect.find_package</h4>
+<h4 id="detectfind_package">detect.find_package</h4>
 <ul>
 <li>查找包文件</li>
 </ul>
@@ -1668,7 +1668,7 @@ end
 </code></pre>
 <p>由于每个第三方包管理器的包名不完全一致，比如pcre2在homebrew中有三个库版本，我们可以通过上面的方式，指定查找对应libpcre2-8版本的库。</p>
 <p>另外，对于vcpkg, conan也可以通过加上<code>vcpkg::</code>, <code>conan::</code>包命名空间来指定查找里面的库。</p>
-<h4 id="detect-find_tool">detect.find_tool</h4>
+<h4 id="detectfind_tool">detect.find_tool</h4>
 <ul>
 <li>查找工具</li>
 </ul>
@@ -1759,7 +1759,7 @@ end
 
 </p>
 <p>我们也可以通过<code>xmake lua lib.detect.find_tool clang</code> 来快速测试。</p>
-<h4 id="detect-find_toolname">detect.find_toolname</h4>
+<h4 id="detectfind_toolname">detect.find_toolname</h4>
 <ul>
 <li>查找工具名</li>
 </ul>
@@ -1799,7 +1799,7 @@ end
 </tbody>
 </table>
 <p>toolname相比program，更能唯一标示某个工具，也方便查找和加载对应的脚本<code>find_xxx.lua</code>。</p>
-<h4 id="detect-find_cudadevices">detect.find_cudadevices</h4>
+<h4 id="detectfind_cudadevices">detect.find_cudadevices</h4>
 <ul>
 <li>查找本机的 CUDA 设备</li>
 </ul>
@@ -1811,7 +1811,7 @@ local devices = find_cudadevices({ min_sm_arch = 35, order_by_flops = true })
 </code></pre>
 <p>返回的结果为：<code>{ { [&#39;$id&#39;] = 0, name = "GeForce GTX 960M", major = 5, minor = 0, ... }, ... }</code></p>
 <p>包含的属性依据当前 CUDA 版本会有所不同，可以参考 <a href="https://docs.nvidia.com/cuda/cuda-runtime-api/structcudaDeviceProp.html#structcudaDeviceProp">CUDA 官方文档</a>及其历史版本。</p>
-<h4 id="detect-features">detect.features</h4>
+<h4 id="detectfeatures">detect.features</h4>
 <ul>
 <li>获取指定工具的所有特性</li>
 </ul>
@@ -1825,7 +1825,7 @@ local features = features("clang", {flags = {"-g", "-O0", "-std=c++11"}})
 </code></pre>
 <p>通过传入flags，可以改变特性的获取结果，例如一些c++11的特性，默认情况下获取不到，通过启用<code>-std=c++11</code>后，就可以获取到了。</p>
 <p>所有编译器的特性列表，可以见：<a href="#compilerfeatures">compiler.features</a>。</p>
-<h4 id="detect-has_features">detect.has_features</h4>
+<h4 id="detecthas_features">detect.has_features</h4>
 <ul>
 <li>判断指定特性是否支持</li>
 </ul>
@@ -1839,7 +1839,7 @@ local features = has_features("clang", {"cxx_constexpr", "c_static_assert"}, {fl
 </code></pre>
 <p>如果指定的特性列表存在，则返回实际支持的特性子列表，如果都不支持，则返回nil，我们也可以通过指定flags去改变特性的获取规则。</p>
 <p>所有编译器的特性列表，可以见：<a href="#compilerfeatures">compiler.features</a>。</p>
-<h4 id="detect-has_flags">detect.has_flags</h4>
+<h4 id="detecthas_flags">detect.has_flags</h4>
 <ul>
 <li>判断指定参数选项是否支持</li>
 </ul>
@@ -1852,7 +1852,7 @@ local ok = has_flags("clang", "-g -O0", {toolkind = "cxx"})
 </code></pre>
 <p>如果检测通过，则返回true。</p>
 <p>此接口的检测做了一些优化，除了cache机制外，大部分场合下，会去拉取工具的选项列表（<code>--help</code>）直接判断，如果选项列表里获取不到的话，才会通过尝试运行的方式来检测。</p>
-<h4 id="detect-has_cfuncs">detect.has_cfuncs</h4>
+<h4 id="detecthas_cfuncs">detect.has_cfuncs</h4>
 <ul>
 <li>判断指定c函数是否存在</li>
 </ul>
@@ -1889,12 +1889,12 @@ local ok = has_cfuncs({"sigsetjmp((void*)0, 0)", "setjmp"}, {includes = "setjmp.
 <pre><code class="lang-lua">{ verbose = false, target = [target|option], includes = .., config = {linkdirs = .., links = .., defines = ..}}
 </code></pre>
 <p>其中verbose用于回显检测信息，target用于在检测前追加target中的配置信息, 而config用于自定义配置跟target相关的编译选项。</p>
-<h4 id="detect-has_cxxfuncs">detect.has_cxxfuncs</h4>
+<h4 id="detecthas_cxxfuncs">detect.has_cxxfuncs</h4>
 <ul>
 <li>判断指定c++函数是否存在</li>
 </ul>
 <p>此接口跟<a href="#detecthas_cfuncs">lib.detect.has_cfuncs</a>类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++函数。</p>
-<h4 id="detect-has_cincludes">detect.has_cincludes</h4>
+<h4 id="detecthas_cincludes">detect.has_cincludes</h4>
 <ul>
 <li>判断指定c头文件是否存在</li>
 </ul>
@@ -1905,12 +1905,12 @@ local ok = has_cincludes("stdio.h")
 local ok = has_cincludes({"stdio.h", "stdlib.h"}, {target = target})
 local ok = has_cincludes({"stdio.h", "stdlib.h"}, {config = {defines = "_GNU_SOURCE=1", languages = "cxx11"}})
 </code></pre>
-<h4 id="detect-has_cxxincludes">detect.has_cxxincludes</h4>
+<h4 id="detecthas_cxxincludes">detect.has_cxxincludes</h4>
 <ul>
 <li>判断指定c++头文件是否存在</li>
 </ul>
 <p>此接口跟<a href="#detecthas_cincludes">lib.detect.has_cincludess</a>类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++头文件。</p>
-<h4 id="detect-has_ctypes">detect.has_ctypes</h4>
+<h4 id="detecthas_ctypes">detect.has_ctypes</h4>
 <ul>
 <li>判断指定c类型是否存在</li>
 </ul>
@@ -1921,12 +1921,12 @@ local ok = has_ctypes("wchar_t")
 local ok = has_ctypes({"char", "wchar_t"}, {includes = "stdio.h"})
 local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, config = {"defines = "_GNU_SOURCE=1", languages = "cxx11"}})
 </code></pre>
-<h4 id="detect-has_cxxtypes">detect.has_cxxtypes</h4>
+<h4 id="detecthas_cxxtypes">detect.has_cxxtypes</h4>
 <ul>
 <li>判断指定c++类型是否存在</li>
 </ul>
 <p>此接口跟<a href="#detecthas_ctypes">lib.detect.has_ctypess</a>类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++类型。</p>
-<h4 id="detect-check_cxsnippets">detect.check_cxsnippets</h4>
+<h4 id="detectcheck_cxsnippets">detect.check_cxsnippets</h4>
 <ul>
 <li>检测c/c++代码片段是否能够编译通过</li>
 </ul>
@@ -1947,7 +1947,7 @@ local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar
 <pre><code class="lang-lua">{ verbose = false, target = [target|option], sourcekind = "[cc|cxx]"}
 </code></pre>
 <p>其中verbose用于回显检测信息，target用于在检测前追加target中的配置信息, sourcekind 用于指定编译器等工具类型，例如传入<code>cxx</code>强制作为c++代码来检测。</p>
-<h3 id="net-http">net.http</h3>
+<h3 id="nethttp">net.http</h3>
 <p>此模块提供http的各种操作支持，目前提供的接口如下：</p>
 <table>
 <thead>
@@ -1965,7 +1965,7 @@ local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar
 </tr>
 </tbody>
 </table>
-<h4 id="http-download">http.download</h4>
+<h4 id="httpdownload">http.download</h4>
 <ul>
 <li>下载http文件</li>
 </ul>
@@ -1974,7 +1974,7 @@ local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar
 
 http.download("https://xmake.io", "/tmp/index.html")
 </code></pre>
-<h3 id="privilege-sudo">privilege.sudo</h3>
+<h3 id="privilegesudo">privilege.sudo</h3>
 <p>此接口用于通过<code>sudo</code>来运行命令，并且提供了平台一致性处理，对于一些需要root权限运行的脚本，可以使用此接口。</p>
 <p><p class="warn"><br>为了保证安全性，除非必须使用的场合，其他情况下尽量不要使用此接口。<br></p>
 
@@ -2025,7 +2025,7 @@ http.download("https://xmake.io", "/tmp/index.html")
 </tr>
 </tbody>
 </table>
-<h4 id="sudo-has">sudo.has</h4>
+<h4 id="sudohas">sudo.has</h4>
 <ul>
 <li>判断sudo是否支持</li>
 </ul>
@@ -2036,7 +2036,7 @@ if sudo.has() then
     sudo.run("rm /system/file")
 end
 </code></pre>
-<h4 id="sudo-run">sudo.run</h4>
+<h4 id="sudorun">sudo.run</h4>
 <ul>
 <li>安静运行原生shell命令</li>
 </ul>
@@ -2045,32 +2045,32 @@ end
 
 sudo.run("rm /system/file")
 </code></pre>
-<h4 id="sudo-runv">sudo.runv</h4>
+<h4 id="sudorunv">sudo.runv</h4>
 <ul>
 <li>安静运行原生shell命令，带参数列表</li>
 </ul>
 <p>具体用法可参考：<a href="#os-runv">os.runv</a>。</p>
-<h4 id="sudo-exec">sudo.exec</h4>
+<h4 id="sudoexec">sudo.exec</h4>
 <ul>
 <li>回显运行原生shell命令</li>
 </ul>
 <p>具体用法可参考：<a href="#os-exec">os.exec</a>。</p>
-<h4 id="sudo-execv">sudo.execv</h4>
+<h4 id="sudoexecv">sudo.execv</h4>
 <ul>
 <li>回显运行原生shell命令，带参数列表</li>
 </ul>
 <p>具体用法可参考：<a href="#os-execv">os.execv</a>。</p>
-<h4 id="sudo-iorun">sudo.iorun</h4>
+<h4 id="sudoiorun">sudo.iorun</h4>
 <ul>
 <li>安静运行原生shell命令并获取输出内容</li>
 </ul>
 <p>具体用法可参考：<a href="#os-iorun">os.iorun</a>。</p>
-<h4 id="sudo-iorunv">sudo.iorunv</h4>
+<h4 id="sudoiorunv">sudo.iorunv</h4>
 <ul>
 <li>安静运行原生shell命令并获取输出内容，带参数列表</li>
 </ul>
 <p>具体用法可参考：<a href="#os-iorunv">os.iorunv</a>。</p>
-<h3 id="devel-git">devel.git</h3>
+<h3 id="develgit">devel.git</h3>
 <p>此接口提供了git各种命令的访问接口，相对于直接调用git命令，此模块提供了更加上层易用的封装接口，并且提供对git的自动检测和跨平台处理。</p>
 <p><p class="tip"><br>目前windows上，需要手动安装git包后，才能检测到，后续版本会提供自动集成git功能，用户将不用关心如何安装git，就可以直接使用。<br></p>
 
@@ -2121,7 +2121,7 @@ sudo.run("rm /system/file")
 </tr>
 </tbody>
 </table>
-<h4 id="git-clone">git.clone</h4>
+<h4 id="gitclone">git.clone</h4>
 <ul>
 <li>clone代码库</li>
 </ul>
@@ -2131,7 +2131,7 @@ sudo.run("rm /system/file")
 git.clone("git@github.com:tboox/xmake.git")
 git.clone("git@github.com:tboox/xmake.git", {depth = 1, branch = "master", outputdir = "/tmp/xmake"})
 </code></pre>
-<h4 id="git-pull">git.pull</h4>
+<h4 id="gitpull">git.pull</h4>
 <ul>
 <li>拉取代码库最新提交</li>
 </ul>
@@ -2141,7 +2141,7 @@ git.clone("git@github.com:tboox/xmake.git", {depth = 1, branch = "master", outpu
 git.pull()
 git.pull({remote = "origin", tags = true, branch = "master", repodir = "/tmp/xmake"})
 </code></pre>
-<h4 id="git-clean">git.clean</h4>
+<h4 id="gitclean">git.clean</h4>
 <ul>
 <li>清理代码库文件</li>
 </ul>
@@ -2151,7 +2151,7 @@ git.pull({remote = "origin", tags = true, branch = "master", repodir = "/tmp/xma
 git.clean()
 git.clean({repodir = "/tmp/xmake", force = true})
 </code></pre>
-<h4 id="git-checkout">git.checkout</h4>
+<h4 id="gitcheckout">git.checkout</h4>
 <ul>
 <li>签出指定分支版本</li>
 </ul>
@@ -2161,7 +2161,7 @@ git.clean({repodir = "/tmp/xmake", force = true})
 git.checkout("master", {repodir = "/tmp/xmake"})
 git.checkout("v1.0.1", {repodir = "/tmp/xmake"})
 </code></pre>
-<h4 id="git-refs">git.refs</h4>
+<h4 id="gitrefs">git.refs</h4>
 <ul>
 <li>获取所有引用列表 </li>
 </ul>
@@ -2170,7 +2170,7 @@ git.checkout("v1.0.1", {repodir = "/tmp/xmake"})
 
 local refs = git.refs(url)
 </code></pre>
-<h4 id="git-tags">git.tags</h4>
+<h4 id="gittags">git.tags</h4>
 <ul>
 <li>获取所有标记列表 </li>
 </ul>
@@ -2179,7 +2179,7 @@ local refs = git.refs(url)
 
 local tags = git.tags(url)
 </code></pre>
-<h4 id="git-branches">git.branches</h4>
+<h4 id="gitbranches">git.branches</h4>
 <ul>
 <li>获取所有分支列表 </li>
 </ul>
@@ -2188,7 +2188,7 @@ local tags = git.tags(url)
 
 local branches = git.branches(url)
 </code></pre>
-<h3 id="utils-archive">utils.archive</h3>
+<h3 id="utilsarchive">utils.archive</h3>
 <p>此模块用于压缩和解压缩文件。</p>
 <table>
 <thead>
@@ -2206,7 +2206,7 @@ local branches = git.branches(url)
 </tr>
 </tbody>
 </table>
-<h4 id="archive-extract">archive.extract</h4>
+<h4 id="archiveextract">archive.extract</h4>
 <ul>
 <li>解压文件</li>
 </ul>

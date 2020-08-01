@@ -90,21 +90,21 @@
   line-height: 1;
 }
 </style>
-    <h2 id="generate-ide-project-files">Generate IDE Project Files</h2>
-<h3 id="generate-makefile">Generate Makefile</h3>
+    <h2 id="generateideprojectfiles">Generate IDE Project Files</h2>
+<h3 id="generatemakefile">Generate Makefile</h3>
 <pre><code class="lang-bash">$ xmake project -k makefile
 </code></pre>
-<h3 id="generate-cmakelists-txt">Generate CMakelists.txt</h3>
+<h3 id="generatecmakeliststxt">Generate CMakelists.txt</h3>
 <pre><code class="lang-console">$ xmake project -k cmakelists
 </code></pre>
-<h3 id="generate-build-ninja">Generate build.ninja</h3>
+<h3 id="generatebuildninja">Generate build.ninja</h3>
 <p>!> Only supported in versions above 2.3.1</p>
 <pre><code class="lang-console">$ xmake project -k ninja
 </code></pre>
-<h3 id="generate-compiler_flags">Generate compiler_flags</h3>
+<h3 id="generatecompiler_flags">Generate compiler_flags</h3>
 <pre><code class="lang-console">$ xmake project -k compiler_flags
 </code></pre>
-<h3 id="generate-compiler_commands">Generate compiler_commands</h3>
+<h3 id="generatecompiler_commands">Generate compiler_commands</h3>
 <p>We can export the compilation commands info of all source files and it is JSON compilation database format.</p>
 <pre><code class="lang-console">$ xmake project -k compile_commands
 </code></pre>
@@ -117,13 +117,13 @@
 ]
 
 </code></pre><p>Please see <a href="#https://clang.llvm.org/docs/JSONCompilationDatabase.html">JSONCompilationDatabase</a> if need known more info about <code>compile_commands</code>.</p>
-<h3 id="generate-xcode-project-file">Generate Xcode project file</h3>
+<h3 id="generatexcodeprojectfile">Generate Xcode project file</h3>
 <p>At present, we have no time to implement the generation of xcode projects by ourselves, but it does not mean that it is not supported, because xmake supports the generation of cmakelists.txt files, and cmake supports the generation of xcode project files. Before the official implementation,<br>We can also support it in disguise through cmake, xmake will automatically call cmake internally to transfer the generated results, there is no difference in use for users, just make sure that cmake has been installed:</p>
 <pre><code class="lang-console">$ xmake project -k xcode
 </code></pre>
 <p>!> After we have time, we will re-implement each more complete xcode output plugin by ourselves, and welcome everyone to contribute.</p>
-<h3 id="generate-visualstudio-project">Generate VisualStudio Project</h3>
-<h4 id="compile-with-xmake-integration">Compile with xmake integration</h4>
+<h3 id="generatevisualstudioproject">Generate VisualStudio Project</h3>
+<h4 id="compilewithxmakeintegration">Compile with xmake integration</h4>
 <p>v2.2.8 or later, provides a new version of the vs project generation plugin extension, which is very different from the previous plugin processing mode for generating vs. The previously generated vs project is the compilation of all files and then transferred to vs. To handle compilation.</p>
 <p>But this mode, there is no way to support the rules of xmake. Because xmake&#39;s rules use a lot of custom scripts like <code>on_build</code>, they can&#39;t be expanded, so projects like qt, wdk can&#39;t support exporting to vs. compile.</p>
 <p>Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellisense and definition jumps, as well as breakpoint debugging.</p>
@@ -136,7 +136,7 @@
 <p><img src="/assets/img/manual/qt_vs.png" alt=""></p>
 <p>In addition, the vsxmake plugin will additionally generate a custom configuration property page for easy and flexible modification and appending some xmake compilation configuration in the vs., and even switch to other cross toolchains in the configuration to achieve the vs. vs. Cross-compilation of other platforms such as android, linux.</p>
 <p><img src="/assets/img/manual/property_page_vsxmake.png" alt=""></p>
-<h4 id="using-vs-built-in-compilation-mechanism">Using vs built-in compilation mechanism</h4>
+<h4 id="usingvsbuiltincompilationmechanism">Using vs built-in compilation mechanism</h4>
 <p>!> It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.</p>
 <pre><code class="lang-bash">$ xmake project -k [vs2008|vs2013|vs2015|..]
 </code></pre>
@@ -152,8 +152,8 @@
 <pre><code class="lang-bash">$ xmake project -k vs2017
 </code></pre>
 <p>The effect is same.</p>
-<h2 id="run-the-custom-lua-script">Run the Custom Lua Script</h2>
-<h3 id="run-the-given-script">Run the given script</h3>
+<h2 id="runthecustomluascript">Run the Custom Lua Script</h2>
+<h3 id="runthegivenscript">Run the given script</h3>
 <p>Write a simple lua script:</p>
 <pre><code class="lang-lua">function main()
     print("hello xmake!")
@@ -165,7 +165,7 @@ end
 <p><p class="tip"><br>    You can also use <code>import</code> api to write a more advance lua script.<br></p>
 
 </p>
-<h3 id="run-the-builtin-script">Run the builtin script</h3>
+<h3 id="runthebuiltinscript">Run the builtin script</h3>
 <p>You can run <code>xmake lua -l</code> to list all builtin script name, for example:</p>
 <pre><code class="lang-bash">$ xmake lua -l
 scripts:
@@ -181,7 +181,7 @@ $ xmake lua echo "hello xmake"
 $ xmake lua cp /tmp/file /tmp/file2
 $ xmake lua versioninfo
 </code></pre>
-<h3 id="run-interactive-commands-repl-">Run interactive commands (REPL)</h3>
+<h3 id="runinteractivecommandsrepl">Run interactive commands (REPL)</h3>
 <p>Enter interactive mode:</p>
 <pre><code class="lang-bash">$ xmake lua
 > 1 + 2
@@ -210,8 +210,8 @@ hello xmake!
 > 1 + 2
 3
 </code></pre>
-<h2 id="show-specified-information-and-list">Show specified information and list</h2>
-<h3 id="show-basic-information-about-xmake-itself-and-the-current-project">Show basic information about xmake itself and the current project</h3>
+<h2 id="showspecifiedinformationandlist">Show specified information and list</h2>
+<h3 id="showbasicinformationaboutxmakeitselfandthecurrentproject">Show basic information about xmake itself and the current project</h3>
 <pre><code class="lang-bash">$ xmake show
 The information of xmake:
     version: 2.3.3+202006011009
@@ -234,7 +234,7 @@ The information of project: tbox
     projectdir: /Users/ruki/projects/personal/tbox
     projectfile: /Users/ruki/projects/personal/tbox/xmake.lua
 </code></pre>
-<h3 id="show-toolchains-list">Show toolchains list</h3>
+<h3 id="showtoolchainslist">Show toolchains list</h3>
 <pre><code class="lang-bash">$ xmake show -l toolchains
 xcode         Xcode IDE
 vs            VisualStudio IDE
@@ -255,7 +255,7 @@ gnu-rm        GNU Arm Embedded Toolchain
 envs          Environment variables toolchain
 fasm          Flat Assembler
 </code></pre>
-<h3 id="show-the-information-of-the-given-target">Show the information of the given target</h3>
+<h3 id="showtheinformationofthegiventarget">Show the information of the given target</h3>
 <pre><code class="lang-bash">$ xmake show --target=tbox
 The information of target(tbox):
     kind: static
@@ -285,22 +285,22 @@ The information of target(tbox):
          -> build/.objs/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o
          -> build/.deps/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o.d
 </code></pre>
-<h3 id="show-builtin-compilation-modes-list">Show builtin compilation modes list</h3>
+<h3 id="showbuiltincompilationmodeslist">Show builtin compilation modes list</h3>
 <pre><code class="lang-bash">$ xmake show -l modes
 </code></pre>
-<h3 id="show-builtin-compilation-rules-list">Show builtin compilation rules list</h3>
+<h3 id="showbuiltincompilationruleslist">Show builtin compilation rules list</h3>
 <pre><code class="lang-bash">$ xmake show -l rules
 </code></pre>
-<h3 id="show-other-information">Show other information</h3>
+<h3 id="showotherinformation">Show other information</h3>
 <p>It is still being perfected, see: <a href="https://github.com/xmake-io/xmake/issues/798">https://github.com/xmake-io/xmake/issues/798</a></p>
 <p>Or run</p>
 <pre><code class="lang-bash">$ xmake show --help
 </code></pre>
-<h2 id="macros-recording-and-playback">Macros Recording and Playback</h2>
+<h2 id="macrosrecordingandplayback">Macros Recording and Playback</h2>
 <h3 id="introduction">Introduction</h3>
 <p>We can record and playback our xmake commands and save as macro quickly using this plugin.</p>
 <p>And we can run this macro to simplify our jobs repeatably.</p>
-<h3 id="record-commands">Record Commands</h3>
+<h3 id="recordcommands">Record Commands</h3>
 <pre><code class="lang-bash"># begin to record commands
 $ xmake macro --begin
 
@@ -325,17 +325,17 @@ $ xmake p
 # stop to record and  save as anonymous macro
 xmake macro --end 
 </code></pre>
-<h3 id="playback-macro">Playback Macro</h3>
+<h3 id="playbackmacro">Playback Macro</h3>
 <pre><code class="lang-bash"># playback the previous anonymous macro
 $ xmake macro .
 </code></pre>
-<h3 id="named-macro">Named Macro</h3>
+<h3 id="namedmacro">Named Macro</h3>
 <pre><code class="lang-bash">$ xmake macro --begin
 $ ...
 $ xmake macro --end macroname
 $ xmake macro macroname
 </code></pre>
-<h3 id="import-and-export-macro">Import and Export Macro</h3>
+<h3 id="importandexportmacro">Import and Export Macro</h3>
 <p>Import the given macro file or directory.</p>
 <pre><code class="lang-bash">$ xmake macro --import=/xxx/macro.lua macroname
 $ xmake macro --import=/xxx/macrodir
@@ -344,14 +344,14 @@ $ xmake macro --import=/xxx/macrodir
 <pre><code class="lang-bash">$ xmake macro --export=/xxx/macro.lua macroname
 $ xmake macro --export=/xxx/macrodir
 </code></pre>
-<h3 id="list-and-show-macro">List and Show Macro</h3>
+<h3 id="listandshowmacro">List and Show Macro</h3>
 <p>List all builtin macros.</p>
 <pre><code class="lang-bash">$ xmake macro --list
 </code></pre>
 <p>Show the given macro script content.</p>
 <pre><code class="lang-bash">$ xmake macro --show macroname
 </code></pre>
-<h3 id="custom-macro-script">Custom Macro Script</h3>
+<h3 id="custommacroscript">Custom Macro Script</h3>
 <p>Create and write a <code>macro.lua</code> script first.</p>
 <pre><code class="lang-lua">function main()
     os.exec("xmake f -p android --ndk=/xxx/ndk -a arm64-v8a")
@@ -378,12 +378,12 @@ end
 <p>Playback this macro script.</p>
 <pre><code class="lang-bash">$ xmake macro [.|macroname]
 </code></pre>
-<h3 id="builtin-macros">Builtin Macros</h3>
+<h3 id="builtinmacros">Builtin Macros</h3>
 <p>XMake supports some builtins macros to simplify our jobs.</p>
 <p>For example, we use <code>package</code> macro to package all architectures of the iphoneos platform just for once.</p>
 <pre><code class="lang-bash">$ xmake macro package -p iphoneos 
 </code></pre>
-<h3 id="advance-macro-script">Advance Macro Script</h3>
+<h3 id="advancemacroscript">Advance Macro Script</h3>
 <p>Let&#39;s see the <code>package</code> macro script:</p>
 <pre><code class="lang-lua">-- imports
 import("core.base.option")
@@ -482,7 +482,7 @@ end
 <p><p class="tip"><br>    If you want to known more options, please run: <code>xmake macro --help</code><br></p>
 
 </p>
-<h2 id="generate-doxygen-document">Generate Doxygen Document</h2>
+<h2 id="generatedoxygendocument">Generate Doxygen Document</h2>
 <p>Please ensure that the doxygen tool has been installed first.</p>
 <pre><code class="lang-bash">$ xmake doxygen
 </code></pre>

@@ -196,39 +196,39 @@
 
 </p>
 <p>Since the support is directly obtained from the configuration options, it is of course convenient to extend the custom options to get the custom variables. For details on how to customize the options, see: <a href="#option">option</a></p>
-<h3 id="var-os-">var.$(os)</h3>
-<h4 id="get-the-operating-system-of-the-current-build-platform">Get the operating system of the current build platform</h4>
+<h3 id="varos">var.$(os)</h3>
+<h4 id="gettheoperatingsystemofthecurrentbuildplatform">Get the operating system of the current build platform</h4>
 <p>If iphoneos is currently compiled, then this value is: <code>ios</code>, and so on.</p>
-<h3 id="var-host-">var.$(host)</h3>
-<h4 id="get-the-native-operating-system">Get the native operating system</h4>
+<h3 id="varhost">var.$(host)</h3>
+<h4 id="getthenativeoperatingsystem">Get the native operating system</h4>
 <p>Refers to the host system of the current native environment, if you compile on macOS, then the system is: <code>macosx</code></p>
-<h3 id="var-tmpdir-">var.$(tmpdir)</h3>
-<h4 id="getting-a-temporary-directory">Getting a temporary directory</h4>
+<h3 id="vartmpdir">var.$(tmpdir)</h3>
+<h4 id="gettingatemporarydirectory">Getting a temporary directory</h4>
 <p>Generally used to temporarily store some non-permanent files.</p>
-<h3 id="var-curdir-">var.$(curdir)</h3>
-<h4 id="get-the-current-directory">Get the current directory</h4>
+<h3 id="varcurdir">var.$(curdir)</h3>
+<h4 id="getthecurrentdirectory">Get the current directory</h4>
 <p>The default is the project root directory when the <code>xmake</code> command is executed. Of course, if the directory is changed by <a href="#os-cd">os.cd</a>, this value will also change.</p>
-<h3 id="var-buildir-">var.$(buildir)</h3>
-<h4 id="get-the-current-build-output-directory">Get the current build output directory</h4>
+<h3 id="varbuildir">var.$(buildir)</h3>
+<h4 id="getthecurrentbuildoutputdirectory">Get the current build output directory</h4>
 <p>The default is usually the <code>./build</code> directory in the current project root directory. You can also modify the default output directory by executing the <code>xmake f -o /tmp/build</code> command.</p>
-<h3 id="var-scriptdir-">var.$(scriptdir)</h3>
-<h4 id="get-the-directory-of-the-current-project-description-script">Get the directory of the current project description script</h4>
+<h3 id="varscriptdir">var.$(scriptdir)</h3>
+<h4 id="getthedirectoryofthecurrentprojectdescriptionscript">Get the directory of the current project description script</h4>
 <p>That is, the directory path corresponding to <code>xmake.lua</code>.</p>
-<h3 id="var-globaldir-">var.$(globaldir)</h3>
-<h4 id="global-configuration-directory">Global Configuration Directory</h4>
+<h3 id="varglobaldir">var.$(globaldir)</h3>
+<h4 id="globalconfigurationdirectory">Global Configuration Directory</h4>
 <p>Xmake&#39;s <code>xmake g|global</code> global configuration command, directory path for data storage, where you can place some of your own plugins and platform scripts.</p>
 <p>The default is: <code>~/.config</code></p>
-<h3 id="var-configdir-">var.$(configdir)</h3>
-<h4 id="current-project-configuration-directory">Current project configuration directory</h4>
+<h3 id="varconfigdir">var.$(configdir)</h3>
+<h4 id="currentprojectconfigurationdirectory">Current project configuration directory</h4>
 <p>The current project configuration storage directory, which is the storage directory of the <code>xmake f|config</code> configuration command, defaults to: <code>projectdir/.config</code></p>
-<h3 id="var-programdir-">var.$(programdir)</h3>
-<h4 id="xmake-installation-script-directory">xmake installation script directory</h4>
+<h3 id="varprogramdir">var.$(programdir)</h3>
+<h4 id="xmakeinstallationscriptdirectory">xmake installation script directory</h4>
 <p>That is, the directory where the <code>XMAKE_PROGRAM_DIR</code> environment variable is located. We can also modify the xmake load script by setting this environment amount to implement version switching.</p>
-<h3 id="var-projectdir-">var.$(projectdir)</h3>
-<h4 id="project-root-directory">Project root directory</h4>
+<h3 id="varprojectdir">var.$(projectdir)</h3>
+<h4 id="projectrootdirectory">Project root directory</h4>
 <p>That is, the directory path specified in the <code>xmake -P xxx</code> command, the default is not specified is the current directory when the <code>xmake</code> command is executed, which is generally used to locate the project file.</p>
-<h3 id="var-shell-">var.$(shell)</h3>
-<h4 id="executing-external-shell-commands">Executing external shell commands</h4>
+<h3 id="varshell">var.$(shell)</h3>
+<h4 id="executingexternalshellcommands">Executing external shell commands</h4>
 <p>In addition to the built-in variable handling, xmake also supports the native shell to handle some of the features that xmake does not support.</p>
 <p>For example, there is a need now, I want to use the <code>pkg-config</code> to get the actual third-party link library name when compiling the Linux program, you can do this:</p>
 <pre><code class="lang-lua">target("test")
@@ -239,14 +239,14 @@
 </code></pre>
 <p>Of course, xmake has its own automated third library detection mechanism, which generally does not need such trouble, and lua&#39;s own scripting is very good. .</p>
 <p>But this example shows that xmake can be used with some third-party tools through the native shell. .</p>
-<h3 id="var-env-">var.$(env)</h3>
-<h4 id="get-external-environment-variables">Get external environment variables</h4>
+<h3 id="varenv">var.$(env)</h3>
+<h4 id="getexternalenvironmentvariables">Get external environment variables</h4>
 <p>For example, you can get the path in the environment variable:</p>
 <pre><code class="lang-lua">target("test")
     add_includedirs("$(env PROGRAMFILES)/OpenSSL/inc")
 </code></pre>
-<h3 id="var-reg-">var.$(reg)</h3>
-<h4 id="get-the-value-of-the-windows-registry-configuration-item">Get the value of the windows registry configuration item</h4>
+<h3 id="varreg">var.$(reg)</h3>
+<h4 id="getthevalueofthewindowsregistryconfigurationitem">Get the value of the windows registry configuration item</h4>
 <p>Get the value of an item in the registry by <code>regpath; name</code>:</p>
 <pre><code class="lang-lua">print("$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)")
 </code></pre>

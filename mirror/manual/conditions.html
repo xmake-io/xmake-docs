@@ -153,7 +153,7 @@
 </tbody>
 </table>
 <h3 id="is_os">is_os</h3>
-<h4 id="is-the-current-compilation-target-system">Is the current compilation target system</h4>
+<h4 id="isthecurrentcompilationtargetsystem">Is the current compilation target system</h4>
 <pre><code class="lang-lua">if is_os("ios") then
     add_files("src/xxx/*.m")
 end
@@ -167,7 +167,7 @@ end
 <li>ios</li>
 </ul>
 <h3 id="is_arch">is_arch</h3>
-<h4 id="is-the-current-compilation-architecture">Is the current compilation architecture</h4>
+<h4 id="isthecurrentcompilationarchitecture">Is the current compilation architecture</h4>
 <p>You can this api to check the configuration command: <code>xmake f -a armv7</code></p>
 <pre><code class="lang-lua">-- if the current architecture is x86_64 or i386
 if is_arch("x86_64", "i386") then
@@ -186,7 +186,7 @@ if is_arch("arm*") then
 end
 </code></pre>
 <h3 id="is_plat">is_plat</h3>
-<h4 id="is-the-current-compilation-platform">Is the current compilation platform</h4>
+<h4 id="isthecurrentcompilationplatform">Is the current compilation platform</h4>
 <p>You can this api to check the configuration command: <code>xmake f -p iphoneos</code></p>
 <pre><code class="lang-lua">-- if the current platform is android
 if is_plat("android") then
@@ -208,7 +208,7 @@ end
 <li>watchos</li>
 </ul>
 <h3 id="is_host">is_host</h3>
-<h4 id="is-the-current-compilation-host-system">Is the current compilation host system</h4>
+<h4 id="isthecurrentcompilationhostsystem">Is the current compilation host system</h4>
 <p>Some compilation platforms can be built on multiple different operating systems, for example: android ndk (on linux, macOS and windows).</p>
 <p>So, we can use this api to determine the current host operating system.</p>
 <pre><code class="lang-lua">if is_host("windows") then
@@ -223,9 +223,9 @@ end
 <li>linux</li>
 <li>macosx</li>
 </ul>
-<p>We can also get it from <a href="/manual/builtin_variables?id=varhost">$(host)</a> or <a href="/manual/builtin_modules?id=oshost">os.host</a>.</p>
+<p>We can also get it from <a href="/mirror/manual/builtin_variables.html#varhost">$(host)</a> or <a href="/mirror/manual/builtin_modules.html#oshost">os.host</a>.</p>
 <h3 id="is_mode">is_mode</h3>
-<h4 id="is-the-current-compilation-mode">Is the current compilation mode</h4>
+<h4 id="isthecurrentcompilationmode">Is the current compilation mode</h4>
 <p>You can this api to check the configuration command: <code>xmake f -m debug</code></p>
 <p>The compilation mode is not builtin mode for xmake, so you can set the mode value by yourself.</p>
 <p>We often use these configuration values: <code>debug</code>, <code>release</code>, <code>profile</code>, etc.</p>
@@ -270,7 +270,7 @@ if is_mode("release", "profile") then
 end
 </code></pre>
 <h3 id="is_kind">is_kind</h3>
-<h4 id="is-the-current-target-kind">Is the current target kind</h4>
+<h4 id="isthecurrenttargetkind">Is the current target kind</h4>
 <p>You can this api to check the configuration command: <code>xmake f -k [static|shared]</code></p>
 <pre><code class="lang-lua">target("test")
 
@@ -293,7 +293,7 @@ $ xmake f -k shared
 $ xmake
 </code></pre>
 <h3 id="is_option">is_option</h3>
-<h4 id="is-the-given-options-enabled">Is the given options enabled</h4>
+<h4 id="isthegivenoptionsenabled">Is the given options enabled</h4>
 <p><p class="tip"><br>This interface has been deprecated after v2.2.2, please use <a href="#has_config">has_config</a> instead.<br></p>
 
 </p>
@@ -304,7 +304,7 @@ $ xmake
 end
 </code></pre>
 <h3 id="is_config">is_config</h3>
-<h4 id="is-the-given-config-values-">Is the given config values?</h4>
+<h4 id="isthegivenconfigvalues">Is the given config values?</h4>
 <p>This interface is introduced from version 2.2.2 to determine whether the specified configuration is a given value.</p>
 <p>For example:</p>
 <pre><code class="lang-console">$ xmake f --test=hello1
@@ -327,7 +327,7 @@ end
 
 </p>
 <h3 id="has_config">has_config</h3>
-<h4 id="is-the-given-configs-enabled-">Is the given configs enabled?</h4>
+<h4 id="isthegivenconfigsenabled">Is the given configs enabled?</h4>
 <p>This interface is introduced from version 2.2.2 to detect whether a custom or built-in option/configuration exists or is enabled.</p>
 <p>For example, the following configuration will be true:</p>
 <pre><code class="lang-console"># enable the given config or option (if be boolean type)
@@ -352,9 +352,9 @@ $ xmake f --test1=false
 
 </p>
 <h3 id="has_package">has_package</h3>
-<h4 id="is-the-given-dependent-package-enabled-">Is the given dependent package enabled?</h4>
+<h4 id="isthegivendependentpackageenabled">Is the given dependent package enabled?</h4>
 <p>This interface is introduced from version 2.2.3 to detect whether a dependent package exists or is enabled.</p>
-<p>It is usually used to <a href="/zh-cn/manual/global_interfaces?id=add_requires">add_requires</a>.</p>
+<p>It is usually used to <a href="/mirror/zh-cn/manual/global_interfaces.html#add_requires">add_requires</a>.</p>
 <pre><code class="lang-lua">add_requires("tbox", {optional = true})
 
 target("test")

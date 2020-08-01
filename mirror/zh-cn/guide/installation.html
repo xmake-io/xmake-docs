@@ -90,29 +90,29 @@
   line-height: 1;
 }
 </style>
-    <h2 id="master-">Master版本</h2>
+    <h2 id="master">Master版本</h2>
 <p>!> 切记，xmake不建议在root下安装和使用，所以尽量不要在root下拉取源码编译安装！</p>
-<h4 id="-curl">使用curl</h4>
+<h4 id="curl">使用curl</h4>
 <pre><code class="lang-bash">bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
-<h4 id="-wget">使用wget</h4>
+<h4 id="wget">使用wget</h4>
 <pre><code class="lang-bash">bash <(wget https://xmake.io/shget.text -O -)
 </code></pre>
-<h4 id="-powershell">使用powershell</h4>
+<h4 id="powershell">使用powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
 </code></pre>
 <p>!> 如果ps脚本执行提示失败，可以尝试在管理员模式下执行</p>
 <h2 id="windows">Windows</h2>
-<h3 id="-">使用安装包</h3>
+<h3 id="">使用安装包</h3>
 <ol>
 <li>从 <a href="https://github.com/xmake-io/xmake/releases">Releases</a> 上下载windows安装包</li>
 <li>运行安装程序 xmake-[version].[win32|win64].exe</li>
 </ol>
 <p>!> releases下面xmake-[version].[win32|win64].zip的包是不带安装程序的，可直接解压使用，绿色无依赖，不过需要自己添加PATH环境变量。</p>
-<h3 id="-scoop">使用scoop</h3>
+<h3 id="scoop">使用scoop</h3>
 <pre><code class="lang-bash">scoop install xmake
 </code></pre>
-<h2 id="msys-mingw">Msys/Mingw</h2>
+<h2 id="msysmingw">Msys/Mingw</h2>
 <p>现在msys/pacman官方仓库已经收录xmake软件包，可直接通过pacman安装。</p>
 <h3 id="mingw64">mingw64</h3>
 <pre><code class="lang-bash">pacman -Sy mingw-w64-x86_64-xmake
@@ -147,11 +147,11 @@ bash <(curl -fsSL https://xmake.io/shget.text)
 </ol>
 <h2 id="freebsd">FreeBSD</h2>
 <p>见下文源码编译安装，并使用gmake来代替make。</p>
-<h2 id="termux-android-">Termux (Android)</h2>
+<h2 id="termuxandroid">Termux (Android)</h2>
 <pre><code class="lang-bash">pkg install xmake
 </code></pre>
-<h2 id="-">源码编译安装</h2>
-<h3 id="-">安装</h3>
+<h2 id="">源码编译安装</h2>
+<h3 id="">安装</h3>
 <p>!> 切记，xmake不建议在root下安装和使用，所以尽量不要在root下拉取源码编译安装！</p>
 <pre><code class="lang-bash">git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
@@ -169,21 +169,21 @@ make build
 ./scripts/get.sh __local__ __install_only__
 </code></pre>
 <p>!> <code>./get.sh __local__</code>是安装到<code>~/.local/xmake</code>下，然后通过<code>source ~/.xmake/profile</code>方式来加载的，所以安装完，当前终端如果执行xmake失败，提示找不到，就手动执行下 <code>source ~/.xmake/profile</code>，而下次打开终端就不需要了。</p>
-<h3 id="-">卸载</h3>
+<h3 id="">卸载</h3>
 <pre><code class="lang-bash">./scripts/get.sh __uninstall__
 </code></pre>
-<h3 id="-lua-">仅仅更新安装lua脚本</h3>
+<h3 id="lua">仅仅更新安装lua脚本</h3>
 <p>这个开发者本地调试xmake源码才需要：</p>
 <pre><code class="lang-bash">./scripts/get.sh __local__ __install_only__
 </code></pre>
-<h3 id="root-">root下安装</h3>
+<h3 id="root">root下安装</h3>
 <p>xmake不推荐root下安装使用，因为这很不安全，如果用户非要root下装，装完后，如果提示xmake运行不了，请根据提示传递<code>--root</code>参数，或者设置<code>XMAKE_ROOT=y</code>环境变量强行启用下，前提是：用户需要随时注意root下误操作系统文件文件的风险。</p>
-<h3 id="-">依赖问题</h3>
+<h3 id="">依赖问题</h3>
 <ol>
 <li>如果遇到readline相关问题，请装下readline-devel或者libreadline-dev依赖，这个是可选的，仅仅<code>xmake lua</code>命令执行REPL时候才需要。</li>
 <li>如果想要提速编译，可以装下ccache，xmake会自动检测并使用，这也是可选的。</li>
 </ol>
-<h2 id="-">其他安装方式</h2>
+<h2 id="">其他安装方式</h2>
 <p>!> 这种也是源码编译安装，但是安装路径会直接写入<code>/usr/</code>下，需要root权限，因此除非特殊情况，不推荐这种安装方式，建议采用上文提供的<code>./get.sh __local__</code>方式来安装，这两种安装方式的安装路径是不同的，不要混用。</p>
 <p>通过make进行编译安装:</p>
 <pre><code class="lang-bash">make build; sudo make install
@@ -194,7 +194,7 @@ make build
 <p>卸载:</p>
 <pre><code class="lang-bash">sudo make uninstall
 </code></pre>
-<h2 id="-">更新升级</h2>
+<h2 id="">更新升级</h2>
 <p>从v2.2.3版本开始，新增了<code>xmake update</code>命令，来快速进行自我更新和升级，默认是升级到最新版本，当然也可以指定升级或者回退到某个版本：</p>
 <pre><code class="lang-bash">xmake update 2.2.4
 </code></pre>

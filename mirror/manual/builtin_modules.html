@@ -259,8 +259,8 @@ target("test")
 -- Description field
 </code></pre>
 <h3 id="val">val</h3>
-<h4 id="get-the-value-of-the-built-in-variable">Get the value of the built-in variable</h4>
-<p><a href="/manual/builtin_variables">Built-in variables</a> can be obtained directly through this interface, without the need to add a <code>$()</code> package, which is much simpler to use, for example:</p>
+<h4 id="getthevalueofthebuiltinvariable">Get the value of the built-in variable</h4>
+<p><a href="/mirror/manual/builtin_variables.html">Built-in variables</a> can be obtained directly through this interface, without the need to add a <code>$()</code> package, which is much simpler to use, for example:</p>
 <pre><code class="lang-lua">print(val("host"))
 print(val("env PATH"))
 local s = val("shell echo hello")
@@ -270,10 +270,10 @@ local s = val("shell echo hello")
 </code></pre>
 <p>However, <code>vformat</code> supports string parameter formatting, which is more powerful, so the application scenario is different.</p>
 <h3 id="import">import</h3>
-<h4 id="importing-extension-blocks">Importing extension blocks</h4>
+<h4 id="importingextensionblocks">Importing extension blocks</h4>
 <p>Import is mainly used to import xmake&#39;s extension class library and some custom class library modules, generally used to:</p>
 <ul>
-<li>Custom script (<a href="/manual/project_target?id=targeton_build">on_build</a>, <a href="/manual/project_target?id=targeton_run">on_run</a> ..)</li>
+<li>Custom script (<a href="/mirror/manual/project_target.html#targeton_build">on_build</a>, <a href="/mirror/manual/project_target.html#targeton_run">on_run</a> ..)</li>
 <li>Plugin development</li>
 <li>Template development</li>
 <li>Platform extension</li>
@@ -331,7 +331,7 @@ end
 <p>Version 2.1.5 adds two new properties: `import("xxx.xxx", {try = true, anonymous = true}).</p>
 <p>If the try is true, the imported module does not exist, only return nil, and will not interrupt xmake after throwing an exception.<br>If anonymous is true, the imported module will not introduce the current scope, only the imported object reference will be returned in the import interface.</p>
 <h3 id="inherit">inherit</h3>
-<h4 id="import-and-inherit-base-class-modules">Import and inherit base class modules</h4>
+<h4 id="importandinheritbaseclassmodules">Import and inherit base class modules</h4>
 <p>This is equivalent to the <code>inherit</code> mode of the <a href="#import">import</a> interface, which is:</p>
 <pre><code class="lang-lua">import("xxx.xxx", {inherit = true})
 </code></pre>
@@ -340,8 +340,8 @@ end
 </code></pre>
 <p>For an example, see the script in the xmake tools directory: <a href="#https://github.com/xmake-io/xmake/blob/master/xmake/tools/clang.lua">clang.lua</a></p>
 <p>This is part of the clang tool module that inherits gcc.</p>
-<h3 id="try-catch-finally">try-catch-finally</h3>
-<h4 id="exception-capture">Exception capture</h4>
+<h3 id="trycatchfinally">try-catch-finally</h3>
+<h4 id="exceptioncapture">Exception capture</h4>
 <p>Lua native does not provide try-catch syntax to catch exception handling, but provides interfaces such as <code>pcall/xpcall</code> to execute lua functions in protected mode.</p>
 <p>Therefore, the capture mechanism of the try-catch block can be implemented by encapsulating these two interfaces.</p>
 <p>We can look at the packaged try-catch usage first:</p>
@@ -468,7 +468,7 @@ local result = try
 </code></pre>
 <p>However, in general, write custom scripts in xmake, do not need to manually add try-catch, directly call a variety of api, after the error, let xmake default handler to take over, directly interrupted. .</p>
 <h3 id="pairs">pairs</h3>
-<h4 id="used-to-traverse-the-dictionary">Used to traverse the dictionary</h4>
+<h4 id="usedtotraversethedictionary">Used to traverse the dictionary</h4>
 <p>This is lua&#39;s native built-in api. In xmake, it has been extended in its original behavior to simplify some of the daily lua traversal code.</p>
 <p>First look at the default native notation:</p>
 <pre><code class="lang-lua">local t = {a = "a", b = "b", c = "c", d = "d", e = "e", f = "f"}
@@ -488,7 +488,7 @@ end
 end
 </code></pre>
 <h3 id="ipairs">ipairs</h3>
-<h4 id="for-traversing-arrays">for traversing arrays</h4>
+<h4 id="fortraversingarrays">for traversing arrays</h4>
 <p>This is lua&#39;s native built-in api. In xmake, it has been extended in its original behavior to simplify some of the daily lua traversal code.</p>
 <p>First look at the default native notation:</p>
 <pre><code class="lang-lua">for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}) do
@@ -510,7 +510,7 @@ end
 end
 </code></pre>
 <h3 id="print">print</h3>
-<h4 id="wrapping-print-terminal-log">Wrapping print terminal log</h4>
+<h4 id="wrappingprintterminallog">Wrapping print terminal log</h4>
 <p>This interface is also the native interface of lua. xmake is also extended based on the original behavior, and supports: formatted output, multivariable output.</p>
 <p>First look at the way native support:</p>
 <pre><code class="lang-lua">print("hello xmake!")
@@ -522,10 +522,10 @@ print("hello xmake! %d", 123)
 </code></pre>
 <p>Xmake will support both types of writing at the same time, and the internal will automatically detect and select the output behavior.</p>
 <h3 id="printf">printf</h3>
-<h4 id="no-line-printing-terminal-log">No line printing terminal log</h4>
+<h4 id="nolineprintingterminallog">No line printing terminal log</h4>
 <p>Like the <a href="#print">print</a> interface, the only difference is that it doesn&#39;t wrap.</p>
 <h3 id="cprint">cprint</h3>
-<h4 id="wrap-color-print-terminal-log">Wrap color print terminal log</h4>
+<h4 id="wrapcolorprintterminallog">Wrap color print terminal log</h4>
 <p>The behavior is similar to <a href="#print">print</a>, the difference is that this interface also supports color terminal output, and supports <code>emoji</code> character output.</p>
 <p>E.g:</p>
 <pre><code class="lang-lua">    cprint(&#39;${bright}hello xmake&#39;)
@@ -601,27 +601,27 @@ $ xmake --version
 </code></pre>
 <p>The 2.1.7 version can disable color output with <code>COLORTERM=nocolor</code>.</p>
 <h3 id="cprintf">cprintf</h3>
-<h4 id="no-line-feed-color-print-terminal-log">No line feed color print terminal log</h4>
+<h4 id="nolinefeedcolorprintterminallog">No line feed color print terminal log</h4>
 <p>This interface is similar to <a href="#cprint">cprint</a>, the difference is that it does not wrap the output.</p>
 <h3 id="format">format</h3>
-<h4 id="formatting-a-string">Formatting a string</h4>
+<h4 id="formattingastring">Formatting a string</h4>
 <p>If you just want to format the string and don&#39;t output it, you can use this interface. This interface is equivalent to the <a href="#stringformat">string.format</a> interface, just a simplified version of the interface name.</p>
 <pre><code class="lang-lua">local s = format("hello %s", xmake)
 </code></pre>
 <h3 id="vformat">vformat</h3>
-<h4 id="formatting-strings-support-for-built-in-variable-escaping">Formatting strings, support for built-in variable escaping</h4>
+<h4 id="formattingstringssupportforbuiltinvariableescaping">Formatting strings, support for built-in variable escaping</h4>
 <p>This interface is followed by <a href="The #format">format</a> interface is similar, but adds support for the acquisition and escaping of built-in variables.</p>
 <pre><code class="lang-lua">local s = vformat("hello %s $(mode) $(arch) $(env PATH)", xmake)
 </code></pre>
 <h3 id="raise">raise</h3>
-<h4 id="throwing-an-abort-program">Throwing an abort program</h4>
+<h4 id="throwinganabortprogram">Throwing an abort program</h4>
 <p>If you want to interrupt xmake running in custom scripts and plug-in tasks, you can use this interface to throw an exception. If the upper layer does not show the call to <a href="#try-catch-finally">try-catch</a>, xmake will be executed. An error message is displayed.</p>
 <pre><code class="lang-lua">if (errors) raise(errors)
 </code></pre>
 <p>If an exception is thrown in the try block, the error information is captured in catch and finally. See: <a href="#try-catch-finally">try-catch</a></p>
 <h3 id="find_packages">find_packages</h3>
-<h4 id="finding-dependencies">Finding dependencies</h4>
-<p>This interface is a wrapper around the <a href="/manual/extension_modules?id=detectfind_package">lib.detect.find_package</a> interface and provides lookup support for multiple dependencies, for example:</p>
+<h4 id="findingdependencies">Finding dependencies</h4>
+<p>This interface is a wrapper around the <a href="/mirror/manual/extension_modules.html#detectfind_package">lib.detect.find_package</a> interface and provides lookup support for multiple dependencies, for example:</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
     add_files("src/*.c")
@@ -807,7 +807,7 @@ $ xmake --version
 </tr>
 </tbody>
 </table>
-<h4 id="os-cp">os.cp</h4>
+<h4 id="oscp">os.cp</h4>
 <ul>
 <li>Copy files or directories</li>
 </ul>
@@ -830,7 +830,7 @@ os.cp("$(curdir)/test/", "$(tmpdir)/test")
 <p><p class="tip"><br>Try to use the <code>os.cp</code> interface instead of <code>os.run("cp ..")</code>, which will ensure platform consistency and cross-platform build description.<br></p>
 
 </p>
-<h4 id="os-mv">os.mv</h4>
+<h4 id="osmv">os.mv</h4>
 <ul>
 <li>Move to rename a file or directory</li>
 </ul>
@@ -841,14 +841,14 @@ os.mv("$(buildir)/test1", "$(tmpdir)")
 -- File movement does not support bulk operations, which is file renaming
 os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
 </code></pre>
-<h4 id="os-rm">os.rm</h4>
+<h4 id="osrm">os.rm</h4>
 <ul>
 <li>Delete files or directory trees</li>
 </ul>
 <p>Support for recursive deletion of directories, bulk delete operations, and pattern matching and built-in variables, such as:</p>
 <pre><code class="lang-lua">os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
 </code></pre>
-<h4 id="os-trycp">os.trycp</h4>
+<h4 id="ostrycp">os.trycp</h4>
 <ul>
 <li>Try copying files or directories</li>
 </ul>
@@ -856,7 +856,7 @@ os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
 <pre><code class="lang-lua">if os.trycp("file", "dest/file") then
 end
 </code></pre>
-<h4 id="os-trymv">os.trymv</h4>
+<h4 id="ostrymv">os.trymv</h4>
 <ul>
 <li>Try moving a file or directory</li>
 </ul>
@@ -864,7 +864,7 @@ end
 <pre><code class="lang-lua">if os.trymv("file", "dest/file") then
 end
 </code></pre>
-<h4 id="os-tryrm">os.tryrm</h4>
+<h4 id="ostryrm">os.tryrm</h4>
 <ul>
 <li>Try deleting files or directories</li>
 </ul>
@@ -872,7 +872,7 @@ end
 <pre><code class="lang-lua">if os.tryrm("file") then
 end
 </code></pre>
-<h4 id="os-cd">os.cd</h4>
+<h4 id="oscd">os.cd</h4>
 <ul>
 <li>Enter the specified directory</li>
 </ul>
@@ -892,19 +892,19 @@ local oldir = os.cd("./src")
 ...
 os.cd(oldir)
 </code></pre>
-<h4 id="os-rmdir">os.rmdir</h4>
+<h4 id="osrmdir">os.rmdir</h4>
 <ul>
 <li>delete only the directory</li>
 </ul>
 <p>If it is not a directory, it cannot be deleted.</p>
-<h4 id="os-mkdir">os.mkdir</h4>
+<h4 id="osmkdir">os.mkdir</h4>
 <ul>
 <li>Create a directory</li>
 </ul>
 <p>Support for batch creation and built-in variables, such as:</p>
 <pre><code class="lang-lua">os.mkdir("$(tmpdir)/test", "$(buildir)/inc")
 </code></pre>
-<h4 id="os-isdir">os.isdir</h4>
+<h4 id="osisdir">os.isdir</h4>
 <ul>
 <li>Determine if it is a directory</li>
 </ul>
@@ -913,7 +913,7 @@ os.cd(oldir)
     -- ...
 end
 </code></pre>
-<h4 id="os-isfile">os.isfile</h4>
+<h4 id="osisfile">os.isfile</h4>
 <ul>
 <li>Determine if it is a file</li>
 </ul>
@@ -922,7 +922,7 @@ end
     -- ...
 end
 </code></pre>
-<h4 id="os-exists">os.exists</h4>
+<h4 id="osexists">os.exists</h4>
 <ul>
 <li>Determine if a file or directory exists</li>
 </ul>
@@ -937,7 +937,7 @@ if os.exists("$(buildir)/libxxx.a") then
     -- ...
 end
 </code></pre>
-<h4 id="os-dirs">os.dirs</h4>
+<h4 id="osdirs">os.dirs</h4>
 <ul>
 <li>Traverse to get all the directories under the specified directory</li>
 </ul>
@@ -947,7 +947,7 @@ for _, dir in ipairs(os.dirs("$(buildir)/inc/**")) do
     print(dir)
 end
 </code></pre>
-<h4 id="os-files">os.files</h4>
+<h4 id="osfiles">os.files</h4>
 <ul>
 <li>Traverse to get all the files in the specified directory</li>
 </ul>
@@ -957,7 +957,7 @@ for _, filepath in ipairs(os.files("$(buildir)/inc/*.h")) do
     print(filepath)
 end
 </code></pre>
-<h4 id="os-filedirs">os.filedirs</h4>
+<h4 id="osfiledirs">os.filedirs</h4>
 <ul>
 <li>Traverse to get all files and directories under the specified directory</li>
 </ul>
@@ -967,7 +967,7 @@ for _, filedir in ipairs(os.filedirs("$(buildir)/**")) do
     print(filedir)
 end
 </code></pre>
-<h4 id="os-run">os.run</h4>
+<h4 id="osrun">os.run</h4>
 <ul>
 <li>Quietly running native shell commands</li>
 </ul>
@@ -983,19 +983,19 @@ os.run("ls -l $(buildir)")
 
 </p>
 <p>For more advanced process operations and control, see the <a href="#process">process</a> module interface.</p>
-<h4 id="os-runv">os.runv</h4>
+<h4 id="osrunv">os.runv</h4>
 <ul>
 <li>Quietly running native shell commands with parameter list</li>
 </ul>
 <p>Similar to <a href="#osrun">os.run</a>, just the way to pass parameters is passed through the parameter list, not the string command, for example:</p>
 <pre><code class="lang-lua">os.runv("echo", {"hello", "xmake!"})
 </code></pre>
-<h4 id="os-exec">os.exec</h4>
+<h4 id="osexec">os.exec</h4>
 <ul>
 <li>Echo running native shell commands</li>
 </ul>
 <p>Similar to the <a href="#osrun">os.run</a> interface, the only difference is that when this interface executes the shell program, it has the output output, which is used in general debugging.</p>
-<h4 id="os-execv">os.execv</h4>
+<h4 id="osexecv">os.execv</h4>
 <ul>
 <li>Echo running native shell commands with parameter list</li>
 </ul>
@@ -1004,7 +1004,7 @@ os.run("ls -l $(buildir)")
 os.execv("echo", {"hello", "xmake!"}, {stdout = "/tmp/out", stderr = io.open("/tmp/err", &#39;w&#39;)})
 os.execv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 </code></pre>
-<h4 id="os-iorun">os.iorun</h4>
+<h4 id="osiorun">os.iorun</h4>
 <ul>
 <li>Quietly running native shell commands and getting output</li>
 </ul>
@@ -1012,7 +1012,7 @@ os.execv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 <p>You can get the contents of <code>stdout</code>, <code>stderr</code> at the same time, for example:</p>
 <pre><code class="lang-lua">local outdata, errdata = os.iorun("echo hello xmake!")
 </code></pre>
-<h4 id="os-iorunv">os.iorunv</h4>
+<h4 id="osiorunv">os.iorunv</h4>
 <ul>
 <li>Run the native shell command quietly and get the output with a list of parameters</li>
 </ul>
@@ -1020,19 +1020,19 @@ os.execv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 <pre><code class="lang-lua">local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"})
 local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 </code></pre>
-<h4 id="os-getenv">os.getenv</h4>
+<h4 id="osgetenv">os.getenv</h4>
 <ul>
 <li>Get system environment variables</li>
 </ul>
 <pre><code class="lang-lua">print(os.getenv("PATH"))
 </code></pre>
-<h4 id="os-setenv">os.setenv</h4>
+<h4 id="ossetenv">os.setenv</h4>
 <ul>
 <li>Set system environment variables</li>
 </ul>
 <pre><code class="lang-lua">os.setenv("HOME", "/tmp/")
 </code></pre>
-<h4 id="os-tmpdir">os.tmpdir</h4>
+<h4 id="ostmpdir">os.tmpdir</h4>
 <ul>
 <li>Get temporary directory</li>
 </ul>
@@ -1042,45 +1042,45 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 <p>Equivalent to:</p>
 <pre><code class="lang-lua">print("$(tmpdir)/file.txt")
 </code></pre>
-<h4 id="os-tmpfile">os.tmpfile</h4>
+<h4 id="ostmpfile">os.tmpfile</h4>
 <ul>
 <li>Get temporary file path</li>
 </ul>
 <p>Used to get a temporary file path, just a path, the file needs to be created by itself.</p>
-<h4 id="os-curdir">os.curdir</h4>
+<h4 id="oscurdir">os.curdir</h4>
 <ul>
 <li>Get the current directory path</li>
 </ul>
 <p>Consistent with the result of <a href="#var-curdir">$(curdir)</a>, it is just a direct return to return a variable that can be maintained with subsequent strings.</p>
 <p>Usage reference: <a href="#ostmpdir">os.tmpdir</a>.</p>
-<h4 id="os-filesize">os.filesize</h4>
+<h4 id="osfilesize">os.filesize</h4>
 <ul>
 <li>Get file size</li>
 </ul>
 <pre><code class="lang-lua">print(os.filesize("/tmp/a"))
 </code></pre>
-<h4 id="os-scriptdir">os.scriptdir</h4>
+<h4 id="osscriptdir">os.scriptdir</h4>
 <ul>
 <li>Get the path of the current description script</li>
 </ul>
 <p>Consistent with the result of <a href="#var-scriptdir">$(scriptdir)</a>, it is just a direct return to return a variable that can be maintained with subsequent strings.</p>
 <p>Usage reference: <a href="#ostmpdir">os.tmpdir</a>.</p>
-<h4 id="os-programdir">os.programdir</h4>
+<h4 id="osprogramdir">os.programdir</h4>
 <ul>
 <li>Get the xmake installation main program script directory</li>
 </ul>
 <p>Consistent with the result of <a href="#var-programdir">$(programdir)</a>, it is just a direct get returned to a variable, which can be maintained with subsequent strings.</p>
-<h4 id="os-projectdir">os.projectdir</h4>
+<h4 id="osprojectdir">os.projectdir</h4>
 <ul>
 <li>Get the project home directory</li>
 </ul>
 <p>Consistent with the result of <a href="#var-projectdir">$(projectdir)</a>, it is just a direct return to return a variable that can be maintained with subsequent strings.</p>
-<h4 id="os-arch">os.arch</h4>
+<h4 id="osarch">os.arch</h4>
 <ul>
 <li>Get current system architecture</li>
 </ul>
 <p>That is the default architecture of the current host system, for example, I execute xmake on <code>linux x86_64</code> to build, then the return value is: <code>x86_64</code></p>
-<h4 id="os-host">os.host</h4>
+<h4 id="oshost">os.host</h4>
 <ul>
 <li>Get the operating system of the current host</li>
 </ul>
@@ -1148,7 +1148,7 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 </tr>
 </tbody>
 </table>
-<h4 id="io-open">io.open</h4>
+<h4 id="ioopen">io.open</h4>
 <ul>
 <li>Open file for reading and writing</li>
 </ul>
@@ -1182,7 +1182,7 @@ if file then
     file:close()
 end
 </code></pre>
-<h4 id="io-load">io.load</h4>
+<h4 id="ioload">io.load</h4>
 <ul>
 <li>Load all table contents from the specified path file deserialization</li>
 </ul>
@@ -1195,7 +1195,7 @@ if data then
     utils.dump(data)
 end
 </code></pre>
-<h4 id="io-save">io.save</h4>
+<h4 id="iosave">io.save</h4>
 <ul>
 <li>Serialize all table contents to the specified path file</li>
 </ul>
@@ -1208,21 +1208,21 @@ end
 ,   ["a"] = "a"
 ,   ["c"] = "c"
 }
-</code></pre><h4 id="io-readfile">io.readfile</h4>
+</code></pre><h4 id="ioreadfile">io.readfile</h4>
 <ul>
 <li>Read everything from the specified path file</li>
 </ul>
 <p>It is more convenient to directly read the contents of the entire file without opening the file, for example:</p>
 <pre><code class="lang-lua">local data = io.readfile("xxx.txt")
 </code></pre>
-<h4 id="io-writefile">io.writefile</h4>
+<h4 id="iowritefile">io.writefile</h4>
 <ul>
 <li>Write all content to the specified path file</li>
 </ul>
 <p>It is more convenient to directly write the contents of the entire file without opening the file, for example:</p>
 <pre><code class="lang-lua">io.writefile("xxx.txt", "all data")
 </code></pre>
-<h4 id="io-gsub">io.gsub</h4>
+<h4 id="iogsub">io.gsub</h4>
 <ul>
 <li>Full text replaces the contents of the specified path file</li>
 </ul>
@@ -1230,7 +1230,7 @@ end
 <pre><code class="lang-lua">-- Remove all whitespace characters from the file
 io.gsub("xxx.txt", "%s+", "")
 </code></pre>
-<h4 id="io-tail">io.tail</h4>
+<h4 id="iotail">io.tail</h4>
 <ul>
 <li>Read and display the tail content of the file</li>
 </ul>
@@ -1238,21 +1238,21 @@ io.gsub("xxx.txt", "%s+", "")
 <pre><code class="lang-lua">-- Display the last 10 lines of the file
 io.tail("xxx.txt", 10)
 </code></pre>
-<h4 id="io-cat">io.cat</h4>
+<h4 id="iocat">io.cat</h4>
 <ul>
 <li>read and display all contents of the file</li>
 </ul>
 <p>Read all the contents of the file and display it, similar to the <code>cat xxx.txt</code> command, for example:</p>
 <pre><code class="lang-lua">io.cat("xxx.txt")
 </code></pre>
-<h4 id="io-print">io.print</h4>
+<h4 id="ioprint">io.print</h4>
 <ul>
 <li>Formatted output content to file with newline</li>
 </ul>
 <p>Directly format the passed parameter to output a line of string to the file with a line break, for example:</p>
 <pre><code class="lang-lua">io.print("xxx.txt", "hello %s!", "xmake")
 </code></pre>
-<h4 id="io-printf">io.printf</h4>
+<h4 id="ioprintf">io.printf</h4>
 <ul>
 <li>Formatted output to file without line breaks</li>
 </ul>
@@ -1322,7 +1322,7 @@ io.tail("xxx.txt", 10)
 </tr>
 </tbody>
 </table>
-<h4 id="path-join">path.join</h4>
+<h4 id="pathjoin">path.join</h4>
 <ul>
 <li>Stitching path</li>
 </ul>
@@ -1331,7 +1331,7 @@ io.tail("xxx.txt", 10)
 </code></pre>
 <p>The above splicing on Unix is equivalent to: <code>$(tmpdir)/dir1/dir2/file.txt</code>, and on Windows is equivalent to: <code>$(tmpdir)\\dir1\\dir2\\file.txt</code></p>
 <p>If you find this cumbersome and not clear enough, you can use: <a href="#pathtranslate">path.translate</a> to format the conversion path string to the format supported by the current platform.</p>
-<h4 id="path-translate">path.translate</h4>
+<h4 id="pathtranslate">path.translate</h4>
 <ul>
 <li>Convert path to the path style of the current platform</li>
 </ul>
@@ -1341,35 +1341,35 @@ print(path.translate("$(tmpdir)\\dir\\file.txt"))
 print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
 </code></pre>
 <p>The path strings of the above three different formats, after being standardized by <code>translate</code>, will become the format supported by the current platform, and the redundant path separator will be removed.</p>
-<h4 id="path-basename">path.basename</h4>
+<h4 id="pathbasename">path.basename</h4>
 <ul>
 <li>Get the file name with no suffix at the end of the path</li>
 </ul>
 <pre><code class="lang-lua">print(path.basename("$(tmpdir)/dir/file.txt"))
 </code></pre>
 <p>The result is: <code>file</code></p>
-<h4 id="path-filename">path.filename</h4>
+<h4 id="pathfilename">path.filename</h4>
 <ul>
 <li>Get the file name with the last suffix of the path</li>
 </ul>
 <pre><code class="lang-lua">print(path.filename("$(tmpdir)/dir/file.txt"))
 </code></pre>
 <p>The result is: <code>file.txt</code></p>
-<h4 id="path-extension">path.extension</h4>
+<h4 id="pathextension">path.extension</h4>
 <ul>
 <li>Get the suffix of the path</li>
 </ul>
 <pre><code class="lang-lua">print(path.extensione("$(tmpdir)/dir/file.txt"))
 </code></pre>
 <p>The result is: <code>.txt</code></p>
-<h4 id="path-directory">path.directory</h4>
+<h4 id="pathdirectory">path.directory</h4>
 <ul>
 <li>Get the last directory name of the path</li>
 </ul>
 <pre><code class="lang-lua">Print(path.directory("$(tmpdir)/dir/file.txt"))
 </code></pre>
 <p>The result is: <code>dir</code></p>
-<h4 id="path-relative">path.relative</h4>
+<h4 id="pathrelative">path.relative</h4>
 <ul>
 <li>Convert to relative path</li>
 </ul>
@@ -1381,7 +1381,7 @@ print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
 print(path.relative("$(tmpdir)/dir/file.txt"))
 </code></pre>
 <p>The result is the same.</p>
-<h4 id="path-absolute">path.absolute</h4>
+<h4 id="pathabsolute">path.absolute</h4>
 <ul>
 <li>Convert to absolute path</li>
 </ul>
@@ -1393,7 +1393,7 @@ print(path.relative("$(tmpdir)/dir/file.txt"))
 print(path.absolute("dir/file.txt"))
 </code></pre>
 <p>The result is the same.</p>
-<h4 id="path-is_absolute">path.is_absolute</h4>
+<h4 id="pathis_absolute">path.is_absolute</h4>
 <ul>
 <li>Determine if it is an absolute path</li>
 </ul>
@@ -1401,7 +1401,7 @@ print(path.absolute("dir/file.txt"))
     -- if it is an absolute path
 end
 </code></pre>
-<h4 id="path-splitenv">path.splitenv</h4>
+<h4 id="pathsplitenv">path.splitenv</h4>
 <ul>
 <li>Split a envienment variable value of an array of pathes</li>
 </ul>
@@ -1450,7 +1450,7 @@ local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 </tr>
 </tbody>
 </table>
-<h4 id="table-join">table.join</h4>
+<h4 id="tablejoin">table.join</h4>
 <ul>
 <li>Merge multiple tables and return</li>
 </ul>
@@ -1462,7 +1462,7 @@ local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 <pre><code class="lang-lua">local newtable = table.join({a = "a", b = "b"}, {c = "c"}, {d = "d"})
 </code></pre>
 <p>The result is: <code>{a = "a", b = "b", c = "c", d = "d"}</code></p>
-<h4 id="table-join2">table.join2</h4>
+<h4 id="tablejoin2">table.join2</h4>
 <ul>
 <li>Combine multiple tables into the first table</li>
 </ul>
@@ -1471,7 +1471,7 @@ local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 table.join2(t, {1, 2, 3})
 </code></pre>
 <p>The result is: <code>t = {0, 9, 1, 2, 3}</code></p>
-<h4 id="table-unique">table.unique</h4>
+<h4 id="tableunique">table.unique</h4>
 <ul>
 <li>Deduplicate the contents of the table</li>
 </ul>
@@ -1479,7 +1479,7 @@ table.join2(t, {1, 2, 3})
 <pre><code class="lang-lua">local newtable = table.unique({1, 1, 2, 3, 4, 4, 5})
 </code></pre>
 <p>The result is: <code>{1, 2, 3, 4, 5}</code></p>
-<h4 id="table-slice">table.slice</h4>
+<h4 id="tableslice">table.slice</h4>
 <ul>
 <li>Get the slice of the table</li>
 </ul>
@@ -1537,7 +1537,7 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 </tr>
 </tbody>
 </table>
-<h4 id="string-startswith">string.startswith</h4>
+<h4 id="stringstartswith">string.startswith</h4>
 <ul>
 <li>Determine if the beginning of the string matches</li>
 </ul>
@@ -1546,7 +1546,7 @@ if s:startswith("hello") then
     print("match")
 end
 </code></pre>
-<h4 id="string-endswith">string.endswith</h4>
+<h4 id="stringendswith">string.endswith</h4>
 <ul>
 <li>Determine if the end of the string matches</li>
 </ul>
@@ -1555,7 +1555,7 @@ if s:endswith("xmake") then
     print("match")
 end
 </code></pre>
-<h4 id="string-split">string.split</h4>
+<h4 id="stringsplit">string.split</h4>
 <p>pattern match and ignore empty string</p>
 <pre><code class="lang-lua">("1\n\n2\n3"):split(&#39;\n&#39;) => 1, 2, 3
 ("abc123123xyz123abc"):split(&#39;123&#39;) => abc, xyz, abc
@@ -1578,21 +1578,21 @@ end
 <pre><code class="lang-lua">("1\n\n2\n3"):split(&#39;\n&#39;, {limit = 2}) => 1, 2\n3
 ("1.2.3.4.5"):split(&#39;%.&#39;, {limit = 3}) => 1, 2, 3.4.5
 </code></pre>
-<h4 id="string-trim">string.trim</h4>
+<h4 id="stringtrim">string.trim</h4>
 <ul>
 <li>Remove the left and right whitespace characters of the string</li>
 </ul>
 <pre><code class="lang-lua">string.trim("    hello xmake!    ")
 </code></pre>
 <p>The result is: "hello xmake!"</p>
-<h4 id="string-ltrim">string.ltrim</h4>
+<h4 id="stringltrim">string.ltrim</h4>
 <ul>
 <li>Remove the whitespace character to the left of the string</li>
 </ul>
 <pre><code class="lang-lua">string.ltrim("    hello xmake!    ")
 </code></pre>
 <p>The result is: "hello xmake!    "</p>
-<h4 id="string-rtrim">string.rtrim</h4>
+<h4 id="stringrtrim">string.rtrim</h4>
 <ul>
 <li>Remove the whitespace character to the right of the string</li>
 </ul>
@@ -1627,7 +1627,7 @@ end
 </tr>
 </tbody>
 </table>
-<h4 id="process-open">process.open</h4>
+<h4 id="processopen">process.open</h4>
 <ul>
 <li>Open the process</li>
 </ul>
@@ -1650,14 +1650,14 @@ end
 <p>In the open parameter above, the outpath and errpath parameters specify the stdout and stderr file paths to be captured.</p>
 <p>In addition, if you want to temporarily set and rewrite some environment variables during this execution, you can pass the envs parameter. The environment variable settings inside will replace the existing settings, but they will not affect the outer execution environment, only the current command.</p>
 <p>We can also get all current environment variables through the <code>os.getenvs()</code> interface, and then pass the envs parameter after rewriting part.</p>
-<h4 id="process-openv">process.openv</h4>
+<h4 id="processopenv">process.openv</h4>
 <ul>
 <li>Open the process and pass the parameter list</li>
 </ul>
 <p>This interface is basically similar to <a href="#processopen">process.open</a>. The only difference is that you pass a command with a parameter list to execute instead of passing a command string. This will save unnecessary escaping. The input parameters are more reliable, and the compatibility and efficiency are better.</p>
 <p><code>`lua
 local proc = process.openv("echo", {"hello", "xmake!"})</code> `</p>
-<h4 id="process-waitlist">process.waitlist</h4>
+<h4 id="processwaitlist">process.waitlist</h4>
 <ul>
 <li>Waiting for multiple processes at the same time</li>
 </ul>

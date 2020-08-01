@@ -284,7 +284,7 @@ target("test")
 </tr>
 </tbody>
 </table>
-<h3 id="-">内建规则</h3>
+<h3 id="">内建规则</h3>
 <p>自从2.2.1版本后，xmake提供了一些内置规则去简化日常xmake.lua描述，以及一些常用构建环境的支持。</p>
 <table>
 <thead>
@@ -440,7 +440,7 @@ target("test")
 <p>我们可以通过运行以下命令，查看完整的内置规则列表：</p>
 <pre><code class="lang-bash">$ xmake show -l rules
 </code></pre>
-<h4 id="mode-debug">mode.debug</h4>
+<h4 id="modedebug">mode.debug</h4>
 <p>为当前工程xmake.lua添加debug编译模式的配置规则，例如：</p>
 <pre><code class="lang-lua">add_rules("mode.debug")
 </code></pre>
@@ -451,7 +451,7 @@ target("test")
 end
 </code></pre>
 <p>我们可以通过：<code>xmake f -m debug</code>来切换到此编译模式。</p>
-<h4 id="mode-release">mode.release</h4>
+<h4 id="moderelease">mode.release</h4>
 <p>为当前工程xmake.lua添加release编译模式的配置规则，例如：</p>
 <pre><code class="lang-lua">add_rules("mode.release")
 </code></pre>
@@ -464,7 +464,7 @@ end
 end
 </code></pre>
 <p>我们可以通过：<code>xmake f -m release</code>来切换到此编译模式。</p>
-<h4 id="mode-releasedbg">mode.releasedbg</h4>
+<h4 id="modereleasedbg">mode.releasedbg</h4>
 <p>为当前工程xmake.lua添加releasedbg编译模式的配置规则，例如：</p>
 <pre><code class="lang-lua">add_rules("mode.releasedbg")
 </code></pre>
@@ -477,7 +477,7 @@ end
 end
 </code></pre>
 <p>我们可以通过：<code>xmake f -m releasedbg</code>来切换到此编译模式。</p>
-<h4 id="mode-minsizerel">mode.minsizerel</h4>
+<h4 id="modeminsizerel">mode.minsizerel</h4>
 <p>为当前工程xmake.lua添加minsizerel编译模式的配置规则，例如：</p>
 <pre><code class="lang-lua">add_rules("mode.minsizerel")
 </code></pre>
@@ -490,7 +490,7 @@ end
 end
 </code></pre>
 <p>我们可以通过：<code>xmake f -m minsizerel</code>来切换到此编译模式。</p>
-<h4 id="mode-check">mode.check</h4>
+<h4 id="modecheck">mode.check</h4>
 <p>为当前工程xmake.lua添加check编译模式的配置规则，一般用于内存检测，例如：</p>
 <pre><code class="lang-lua">add_rules("mode.check")
 </code></pre>
@@ -504,7 +504,7 @@ end
 end
 </code></pre>
 <p>我们可以通过：<code>xmake f -m check</code>来切换到此编译模式。</p>
-<h4 id="mode-profile">mode.profile</h4>
+<h4 id="modeprofile">mode.profile</h4>
 <p>为当前工程xmake.lua添加profile编译模式的配置规则，一般用于性能分析，例如：</p>
 <pre><code class="lang-lua">add_rules("mode.profile")
 </code></pre>
@@ -516,7 +516,7 @@ end
 end
 </code></pre>
 <p>我们可以通过：<code>xmake f -m profile</code>来切换到此编译模式。</p>
-<h4 id="mode-coverage">mode.coverage</h4>
+<h4 id="modecoverage">mode.coverage</h4>
 <p>为当前工程xmake.lua添加coverage编译模式的配置规则，一般用于覆盖分析，例如：</p>
 <pre><code class="lang-lua">add_rules("mode.coverage")
 </code></pre>
@@ -528,59 +528,59 @@ end
 end
 </code></pre>
 <p>我们可以通过：<code>xmake f -m coverage</code>来切换到此编译模式。</p>
-<h4 id="mode-valgrind">mode.valgrind</h4>
+<h4 id="modevalgrind">mode.valgrind</h4>
 <p>此模式提供valgrind内存分析检测支持。</p>
 <pre><code class="lang-lua">add_rules("mode.valgrind")
 </code></pre>
 <p>我们可以通过：<code>xmake f -m valgrind</code>来切换到此编译模式。</p>
-<h4 id="mode-asan">mode.asan</h4>
+<h4 id="modeasan">mode.asan</h4>
 <p>此模式提供AddressSanitizer内存分析检测支持。</p>
 <pre><code class="lang-lua">add_rules("mode.asan")
 </code></pre>
 <p>我们可以通过：<code>xmake f -m asan</code>来切换到此编译模式。</p>
-<h4 id="mode-tsan">mode.tsan</h4>
+<h4 id="modetsan">mode.tsan</h4>
 <p>此模式提供ThreadSanitizer内存分析检测支持。</p>
 <pre><code class="lang-lua">add_rules("mode.tsan")
 </code></pre>
 <p>我们可以通过：<code>xmake f -m tsan</code>来切换到此编译模式。</p>
-<h4 id="mode-lsan">mode.lsan</h4>
+<h4 id="modelsan">mode.lsan</h4>
 <p>此模式提供LeakSanitizer内存分析检测支持。</p>
 <pre><code class="lang-lua">add_rules("mode.lsan")
 </code></pre>
 <p>我们可以通过：<code>xmake f -m lsan</code>来切换到此编译模式。</p>
-<h4 id="mode-ubsan">mode.ubsan</h4>
+<h4 id="modeubsan">mode.ubsan</h4>
 <p>此模式提供UndefinedBehaviorSanitizer内存分析检测支持。</p>
 <pre><code class="lang-lua">add_rules("mode.ubsan")
 </code></pre>
 <p>我们可以通过：<code>xmake f -m ubsan</code>来切换到此编译模式。</p>
-<h4 id="qt-static">qt.static</h4>
+<h4 id="qtstatic">qt.static</h4>
 <p>用于编译生成Qt环境的静态库程序：</p>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.static")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
 </code></pre>
-<h4 id="qt-shared">qt.shared</h4>
+<h4 id="qtshared">qt.shared</h4>
 <p>用于编译生成Qt环境的动态库程序：</p>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.shared")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
 </code></pre>
-<h4 id="qt-console">qt.console</h4>
+<h4 id="qtconsole">qt.console</h4>
 <p>用于编译生成Qt环境的控制台程序：</p>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.console")
     add_files("src/*.cpp")
 </code></pre>
-<h4 id="qt-quickapp">qt.quickapp</h4>
+<h4 id="qtquickapp">qt.quickapp</h4>
 <p>用于编译生成Qt环境的Quick(qml) ui应用程序。</p>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.quickapp")
     add_files("src/*.cpp") 
     add_files("src/qml.qrc")
 </code></pre>
-<h4 id="qt-quickapp_static">qt.quickapp_static</h4>
+<h4 id="qtquickapp_static">qt.quickapp_static</h4>
 <p>用于编译生成Qt环境的Quick(qml) ui应用程序（静态链接版本）。</p>
 <p>!> 需要切换到静态库版本Qt SDK</p>
 <pre><code class="lang-lua">target("test")
@@ -588,7 +588,7 @@ end
     add_files("src/*.cpp") 
     add_files("src/qml.qrc")
 </code></pre>
-<h4 id="qt-widgetapp">qt.widgetapp</h4>
+<h4 id="qtwidgetapp">qt.widgetapp</h4>
 <p>用于编译Qt Widgets(ui/moc)应用程序</p>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.widgetapp")
@@ -596,7 +596,7 @@ end
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 </code></pre>
-<h4 id="qt-widgetapp_static">qt.widgetapp_static</h4>
+<h4 id="qtwidgetapp_static">qt.widgetapp_static</h4>
 <p>用于编译Qt Widgets(ui/moc)应用程序（静态库版本）</p>
 <p>!> 需要切换到静态库版本Qt SDK</p>
 <pre><code class="lang-lua">target("test")
@@ -606,34 +606,34 @@ end
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 </code></pre>
 <p>更多Qt相关描述见：<a href="https://github.com/xmake-io/xmake/issues/160">#160</a></p>
-<h4 id="xcode-bundle">xcode.bundle</h4>
+<h4 id="xcodebundle">xcode.bundle</h4>
 <p>用于编译生成ios/macos bundle程序</p>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.bundle")
     add_files("src/*.m")
     add_files("src/Info.plist")
 </code></pre>
-<h4 id="xcode-framework">xcode.framework</h4>
+<h4 id="xcodeframework">xcode.framework</h4>
 <p>用于编译生成ios/macos framework程序</p>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.framework")
     add_files("src/*.m")
     add_files("src/Info.plist")
 </code></pre>
-<h4 id="xcode-application">xcode.application</h4>
+<h4 id="xcodeapplication">xcode.application</h4>
 <p>用于编译生成ios/macos应用程序</p>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.application")
     add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
     add_files("src/Info.plist")
 </code></pre>
-<h4 id="wdk-env-kmdf">wdk.env.kmdf</h4>
+<h4 id="wdkenvkmdf">wdk.env.kmdf</h4>
 <p>应用WDK下kmdf的编译环境设置，需要配合：<code>wdk.[driver|binary|static|shared]</code>等规则来使用。</p>
-<h4 id="wdk-env-umdf">wdk.env.umdf</h4>
+<h4 id="wdkenvumdf">wdk.env.umdf</h4>
 <p>应用WDK下umdf的编译环境设置，需要配合：<code>wdk.[driver|binary|static|shared]</code>等规则来使用。</p>
-<h4 id="wdk-env-wdm">wdk.env.wdm</h4>
+<h4 id="wdkenvwdm">wdk.env.wdm</h4>
 <p>应用WDK下wdm的编译环境设置，需要配合：<code>wdk.[driver|binary|static|shared]</code>等规则来使用。</p>
-<h4 id="wdk-driver">wdk.driver</h4>
+<h4 id="wdkdriver">wdk.driver</h4>
 <p>编译生成windows下基于WDK环境的驱动程序，目前仅支持WDK10环境。</p>
 <p>注：需要配合：<code>wdk.env.[umdf|kmdf|wdm]</code>等环境规则使用。</p>
 <pre><code class="lang-lua">-- add target
@@ -649,7 +649,7 @@ target("echo")
     -- add includedirs
     add_includedirs("exe")
 </code></pre>
-<h4 id="wdk-binary">wdk.binary</h4>
+<h4 id="wdkbinary">wdk.binary</h4>
 <p>编译生成windows下基于WDK环境的可执行程序，目前仅支持WDK10环境。</p>
 <p>注：需要配合：<code>wdk.env.[umdf|kmdf|wdm]</code>等环境规则使用。</p>
 <pre><code class="lang-lua">-- add target
@@ -661,7 +661,7 @@ target("app")
     -- add files
     add_files("exe/*.cpp") 
 </code></pre>
-<h4 id="wdk-static">wdk.static</h4>
+<h4 id="wdkstatic">wdk.static</h4>
 <p>编译生成windows下基于WDK环境的静态库程序，目前仅支持WDK10环境。</p>
 <p>注：需要配合：<code>wdk.env.[umdf|kmdf|wdm]</code>等环境规则使用。</p>
 <pre><code class="lang-lua">target("nonpnp")
@@ -675,7 +675,7 @@ target("app")
     -- add files
     add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
 </code></pre>
-<h4 id="wdk-shared">wdk.shared</h4>
+<h4 id="wdkshared">wdk.shared</h4>
 <p>编译生成windows下基于WDK环境的动态库程序，目前仅支持WDK10环境。</p>
 <p>注：需要配合：<code>wdk.env.[umdf|kmdf|wdm]</code>等环境规则使用。</p>
 <pre><code class="lang-lua">target("nonpnp")
@@ -689,7 +689,7 @@ target("app")
     -- add files
     add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
 </code></pre>
-<h4 id="wdk-tracewpp">wdk.tracewpp</h4>
+<h4 id="wdktracewpp">wdk.tracewpp</h4>
 <p>用于启用tracewpp预处理源文件：</p>
 <pre><code class="lang-lua">target("nonpnp")
 
@@ -704,7 +704,7 @@ target("app")
     add_files("driver/*.rc")
 </code></pre>
 <p>更多WDK规则描述见：<a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
-<h4 id="win-sdk-application">win.sdk.application</h4>
+<h4 id="winsdkapplication">win.sdk.application</h4>
 <p>编译生成winsdk应用程序。</p>
 <pre><code class="lang-lua">-- add rules
 add_rules("mode.debug", "mode.release")
@@ -719,23 +719,23 @@ target("usbview")
     add_files("*.c", "*.rc")
     add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 </code></pre>
-<h4 id="wdk-sdk-dotnet">wdk.sdk.dotnet</h4>
+<h4 id="wdksdkdotnet">wdk.sdk.dotnet</h4>
 <p>用于指定某些c++源文件作为c++.net来编译。</p>
 <pre><code class="lang-lua">add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 </code></pre>
 <h3 id="rule">rule</h3>
-<h4 id="-">定义规则</h4>
+<h4 id="">定义规则</h4>
 <pre><code class="lang-lua">rule("markdown")
     set_extensions(".md", ".markdown")
     on_build_file(function (target, sourcefile, opt)
         os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 </code></pre>
-<h3 id="rule-add_imports">rule:add_imports</h3>
-<h4 id="-">为所有自定义脚本预先导入扩展模块</h4>
+<h3 id="ruleadd_imports">rule:add_imports</h3>
+<h4 id="">为所有自定义脚本预先导入扩展模块</h4>
 <p>使用方式和说明请见：<a href="#targetadd_imports">target:add_imports</a>，用法相同。</p>
-<h3 id="rule-set_extensions">rule:set_extensions</h3>
-<h4 id="-">设置规则支持的文件扩展类型</h4>
+<h3 id="ruleset_extensions">rule:set_extensions</h3>
+<h4 id="">设置规则支持的文件扩展类型</h4>
 <p>通过设置支持的扩展文件类型，将规则应用于带这些后缀的文件上，例如：</p>
 <pre><code class="lang-lua">-- 定义一个markdown文件的构建规则
 rule("markdown")
@@ -754,68 +754,68 @@ target("test")
     add_files("src/*.md")
     add_files("src/*.markdown")
 </code></pre>
-<h3 id="rule-on_load">rule:on_load</h3>
-<h4 id="-">自定义加载脚本</h4>
+<h3 id="ruleon_load">rule:on_load</h3>
+<h4 id="">自定义加载脚本</h4>
 <p>用于实现自定规则的加载脚本，当加载target的时候，会被执行，可在里面自定义设置一些target配置，例如：</p>
 <pre><code class="lang-lua">rule("test")
     on_load(function (target)
         target:add("defines", "-DTEST")
     end)
 </code></pre>
-<h3 id="rule-on_link">rule:on_link</h3>
-<h4 id="-">自定义链接脚本</h4>
+<h3 id="ruleon_link">rule:on_link</h3>
+<h4 id="">自定义链接脚本</h4>
 <p>用于实现自定规则的链接脚本，会覆盖被应用的target的默认链接行为，例如：</p>
 <pre><code class="lang-lua">rule("test")
     on_link(function (target)
     end)
 </code></pre>
-<h3 id="rule-on_build">rule:on_build</h3>
-<h4 id="-">自定义编译脚本</h4>
+<h3 id="ruleon_build">rule:on_build</h3>
+<h4 id="">自定义编译脚本</h4>
 <p>用于实现自定规则的构建脚本，会覆盖被应用的target的默认构建行为，例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     on_build(function (target)
     end)
 </code></pre>
-<h3 id="rule-on_clean">rule:on_clean</h3>
-<h4 id="-">自定义清理脚本</h4>
+<h3 id="ruleon_clean">rule:on_clean</h3>
+<h4 id="">自定义清理脚本</h4>
 <p>用于实现自定规则的清理脚本会，覆盖被应用的target的默认清理行为，例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     on_clean(function (target)
         -- remove sourcefile.html
     end)
 </code></pre>
-<h3 id="rule-on_package">rule:on_package</h3>
-<h4 id="-">自定义打包脚本</h4>
+<h3 id="ruleon_package">rule:on_package</h3>
+<h4 id="">自定义打包脚本</h4>
 <p>用于实现自定规则的打包脚本，覆盖被应用的target的默认打包行为, 例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     on_package(function (target)
         -- package sourcefile.html
     end)
 </code></pre>
-<h3 id="rule-on_install">rule:on_install</h3>
-<h4 id="-">自定义安装脚本</h4>
+<h3 id="ruleon_install">rule:on_install</h3>
+<h4 id="">自定义安装脚本</h4>
 <p>用于实现自定规则的安装脚本，覆盖被应用的target的默认安装行为, 例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     on_install(function (target)
     end)
 </code></pre>
-<h3 id="rule-on_uninstall">rule:on_uninstall</h3>
-<h4 id="-">自定义卸载脚本</h4>
+<h3 id="ruleon_uninstall">rule:on_uninstall</h3>
+<h4 id="">自定义卸载脚本</h4>
 <p>用于实现自定规则的卸载脚本，覆盖被应用的target的默认卸载行为, 例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     on_uninstall(function (target)
     end)
 </code></pre>
-<h3 id="rule-on_build_file">rule:on_build_file</h3>
-<h4 id="-">自定义编译脚本，一次处理一个源文件</h4>
+<h3 id="ruleon_build_file">rule:on_build_file</h3>
+<h4 id="">自定义编译脚本，一次处理一个源文件</h4>
 <pre><code class="lang-lua">rule("markdown")
     on_build_file(function (target, sourcefile, opt)
         print("%%%d: %s", opt.progress, sourcefile)
     end)
 </code></pre>
 <p>其中第三个参数opt是可选参数，用于获取一些编译过程中的信息状态，例如：opt.progress 为当期的编译进度。</p>
-<h3 id="rule-on_build_files">rule:on_build_files</h3>
-<h4 id="-">自定义编译脚本，一次处理多个源文件</h4>
+<h3 id="ruleon_build_files">rule:on_build_files</h3>
+<h4 id="">自定义编译脚本，一次处理多个源文件</h4>
 <p>大部分的自定义构建规则，每次都是处理单独一个文件，输出一个目标文件，例如：a.c => a.o</p>
 <p>但是，有些情况下，我们需要同时输入多个源文件一起构建生成一个目标文件，例如：a.c b.c d.c => x.o</p>
 <p>对于这种情况，我们可以通过自定义这个脚本来实现：</p>
@@ -827,91 +827,91 @@ target("test")
         end
     end)
 </code></pre>
-<h3 id="rule-before_load">rule:before_load</h3>
-<h4 id="-">自定义加载前脚本</h4>
+<h3 id="rulebefore_load">rule:before_load</h3>
+<h4 id="">自定义加载前脚本</h4>
 <p>用于实现自定义target加载前的执行脚本，例如：</p>
 <pre><code class="lang-lua">rule("test")
     before_load(function (target)
         target:add("defines", "-DTEST")
     end)
 </code></pre>
-<h3 id="rule-before_link">rule:before_link</h3>
-<h4 id="-">自定义链接前脚本</h4>
+<h3 id="rulebefore_link">rule:before_link</h3>
+<h4 id="">自定义链接前脚本</h4>
 <p>用于实现自定义target链接前的执行脚本，例如：</p>
 <pre><code class="lang-lua">rule("test")
     before_link(function (target)
     end)
 </code></pre>
-<h3 id="rule-before_build">rule:before_build</h3>
-<h4 id="-">自定义编译前脚本</h4>
+<h3 id="rulebefore_build">rule:before_build</h3>
+<h4 id="">自定义编译前脚本</h4>
 <p>用于实现自定义target构建前的执行脚本，例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     before_build(function (target)
     end)
 </code></pre>
-<h3 id="rule-before_clean">rule:before_clean</h3>
-<h4 id="-">自定义清理前脚本</h4>
+<h3 id="rulebefore_clean">rule:before_clean</h3>
+<h4 id="">自定义清理前脚本</h4>
 <p>用于实现自定义target清理前的执行脚本，例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     before_clean(function (target)
     end)
 </code></pre>
-<h3 id="rule-before_package">rule:before_package</h3>
-<h4 id="-">自定义打包前脚本</h4>
+<h3 id="rulebefore_package">rule:before_package</h3>
+<h4 id="">自定义打包前脚本</h4>
 <p>用于实现自定义target打包前的执行脚本, 例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     before_package(function (target)
     end)
 </code></pre>
-<h3 id="rule-before_install">rule:before_install</h3>
-<h4 id="-">自定义安装前脚本</h4>
+<h3 id="rulebefore_install">rule:before_install</h3>
+<h4 id="">自定义安装前脚本</h4>
 <p>用于实现自定义target安装前的执行脚本，例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     before_install(function (target)
     end)
 </code></pre>
-<h3 id="rule-before_uninstall">rule:before_uninstall</h3>
-<h4 id="-">自定义卸载前脚本</h4>
+<h3 id="rulebefore_uninstall">rule:before_uninstall</h3>
+<h4 id="">自定义卸载前脚本</h4>
 <p>用于实现自定义target卸载前的执行脚本，例如：</p>
 <pre><code class="lang-lua">rule("markdown")
     before_uninstall(function (target)
     end)
 </code></pre>
-<h3 id="rule-before_build_file">rule:before_build_file</h3>
-<h4 id="-">自定义编译前脚本，一次处理一个源文件</h4>
+<h3 id="rulebefore_build_file">rule:before_build_file</h3>
+<h4 id="">自定义编译前脚本，一次处理一个源文件</h4>
 <p>跟<a href="#ruleon_build_file">rule:on_build_file</a>用法类似，不过这个接口被调用的时机是在编译某个源文件之前，<br>一般用于对某些源文件进行编译前的预处理。</p>
-<h3 id="rule-before_build_files">rule:before_build_files</h3>
-<h4 id="-">自定义编译前脚本，一次处理多个源文件</h4>
+<h3 id="rulebefore_build_files">rule:before_build_files</h3>
+<h4 id="">自定义编译前脚本，一次处理多个源文件</h4>
 <p>跟<a href="#ruleon_build_files">rule:on_build_files</a>用法类似，不过这个接口被调用的时机是在编译某些源文件之前，<br>一般用于对某些源文件进行编译前的预处理。</p>
-<h3 id="rule-after_load">rule:after_load</h3>
-<h4 id="-">自定义加载后脚本</h4>
+<h3 id="ruleafter_load">rule:after_load</h3>
+<h4 id="">自定义加载后脚本</h4>
 <p>用于实现自定义target加载后的执行脚本，用法跟<a href="#rulebefore_load">rule:before_load</a>类似。</p>
-<h3 id="rule-after_link">rule:after_link</h3>
-<h4 id="-">自定义链接后脚本</h4>
+<h3 id="ruleafter_link">rule:after_link</h3>
+<h4 id="">自定义链接后脚本</h4>
 <p>用于实现自定义target链接后的执行脚本，用法跟<a href="#rulebefore_link">rule:before_link</a>类似。</p>
-<h3 id="rule-after_build">rule:after_build</h3>
-<h4 id="-">自定义编译后脚本</h4>
+<h3 id="ruleafter_build">rule:after_build</h3>
+<h4 id="">自定义编译后脚本</h4>
 <p>用于实现自定义target构建后的执行脚本，用法跟<a href="#rulebefore_build">rule:before_build</a>类似。</p>
-<h3 id="rule-after_clean">rule:after_clean</h3>
-<h4 id="-">自定义清理后脚本</h4>
+<h3 id="ruleafter_clean">rule:after_clean</h3>
+<h4 id="">自定义清理后脚本</h4>
 <p>用于实现自定义target清理后的执行脚本，用法跟<a href="#rulebefore_clean">rule:before_clean</a>类似。</p>
-<h3 id="rule-after_package">rule:after_package</h3>
-<h4 id="-">自定义打包后脚本</h4>
+<h3 id="ruleafter_package">rule:after_package</h3>
+<h4 id="">自定义打包后脚本</h4>
 <p>用于实现自定义target打包后的执行脚本, 用法跟<a href="#rulebefore_package">rule:before_package</a>类似。</p>
-<h3 id="rule-after_install">rule:after_install</h3>
-<h4 id="-">自定义安装后脚本</h4>
+<h3 id="ruleafter_install">rule:after_install</h3>
+<h4 id="">自定义安装后脚本</h4>
 <p>用于实现自定义target安装后的执行脚本，用法跟<a href="#rulebefore_install">rule:before_install</a>类似。</p>
-<h3 id="rule-after_uninstall">rule:after_uninstall</h3>
-<h4 id="-">自定义卸载后脚本</h4>
+<h3 id="ruleafter_uninstall">rule:after_uninstall</h3>
+<h4 id="">自定义卸载后脚本</h4>
 <p>用于实现自定义target卸载后的执行脚本，用法跟<a href="#rulebefore_uninstall">rule:before_uninstall</a>类似。</p>
-<h3 id="rule-after_build_file">rule:after_build_file</h3>
-<h4 id="-">自定义编译后脚本，一次处理一个源文件</h4>
+<h3 id="ruleafter_build_file">rule:after_build_file</h3>
+<h4 id="">自定义编译后脚本，一次处理一个源文件</h4>
 <p>跟<a href="#ruleon_build_file">rule:on_build_file</a>用法类似，不过这个接口被调用的时机是在编译某个源文件之后，<br>一般用于对某些编译后对象文件进行后期处理。</p>
-<h3 id="rule-after_build_files">rule:after_build_files</h3>
-<h4 id="-">自定义编译后脚本，一次处理多个源文件</h4>
+<h3 id="ruleafter_build_files">rule:after_build_files</h3>
+<h4 id="">自定义编译后脚本，一次处理多个源文件</h4>
 <p>跟<a href="#ruleon_build_files">rule:on_build_files</a>用法类似，不过这个接口被调用的时机是在编译某些源文件之后，<br>一般用于对某些编译后对象文件进行后期处理。</p>
 <h3 id="rule_end">rule_end</h3>
-<h4 id="-">结束定义规则</h4>
+<h4 id="">结束定义规则</h4>
 <p>这个是可选的，如果想要手动结束rule的定义，可以调用它：</p>
 <pre><code class="lang-lua">rule("test")
     -- ..

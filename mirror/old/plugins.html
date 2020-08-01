@@ -90,7 +90,7 @@
   line-height: 1;
 }
 </style>
-    <h2 id="plugin-development">Plugin Development</h2>
+    <h2 id="plugindevelopment">Plugin Development</h2>
 <h4 id="introduction">Introduction</h4>
 <p>XMake supports the plugin module and we can develop ourself plugin module conveniently.</p>
 <p>We can run command <code>xmake -h</code> to look over some builtin plugins of xmake</p>
@@ -107,7 +107,7 @@
 <li>hello:  The demo plugin and only print: &#39;hello xmake!&#39;</li>
 <li>project：Generate project file for IDE, only generate makefile now and will generate vs, xcode project in the future</li>
 </ul>
-<h4 id="quick-start">Quick Start</h4>
+<h4 id="quickstart">Quick Start</h4>
 <p>Now we write a simple plugin demo for printing &#39;hello xmake!&#39;</p>
 <pre><code class="lang-lua">-- define a plugin task 
 task("hello")
@@ -144,7 +144,7 @@ task("hello")
 <li>Put this plugin directory into ~/.xmake/plugins as the global user plugin.</li>
 <li>Put this plugin directory to anywhere and call <code>add_plugindirs("./hello")</code> in xmake.lua as the local project plugin.</li>
 </ol>
-<h4 id="run-plugin">Run Plugin</h4>
+<h4 id="runplugin">Run Plugin</h4>
 <p>Next we run this plugin</p>
 <pre><code class="lang-bash">xmake hello
 </code></pre>
@@ -164,12 +164,12 @@ target("demo")
         task.run("hello")
     end)
 </code></pre>
-<h2 id="builtin-plugins">Builtin Plugins</h2>
-<h4 id="macros-recording-and-playback">Macros Recording and Playback</h4>
+<h2 id="builtinplugins">Builtin Plugins</h2>
+<h4 id="macrosrecordingandplayback">Macros Recording and Playback</h4>
 <h5 id="introduction">Introduction</h5>
 <p>We can record and playback our xmake commands and save as macro quickly using this plugin.</p>
 <p>And we can run this macro to simplify our jobs repeatly.</p>
-<h5 id="record-commands">Record Commands</h5>
+<h5 id="recordcommands">Record Commands</h5>
 <pre><code class="lang-bash"># begin to record commands
 $ xmake macro --begin
 
@@ -194,17 +194,17 @@ $ xmake p
 # stop to record and  save as anonymous macro
 xmake macro --end 
 </code></pre>
-<h5 id="playback-macro">Playback Macro</h5>
+<h5 id="playbackmacro">Playback Macro</h5>
 <pre><code class="lang-bash"># playback the previous anonymous macro
 $ xmake macro .
 </code></pre>
-<h5 id="named-macro">Named Macro</h5>
+<h5 id="namedmacro">Named Macro</h5>
 <pre><code class="lang-bash">$ xmake macro --begin
 $ ...
 $ xmake macro --end macroname
 $ xmake macro macroname
 </code></pre>
-<h5 id="import-and-export-macro">Import and Export Macro</h5>
+<h5 id="importandexportmacro">Import and Export Macro</h5>
 <p>Import the given macro file or directory.</p>
 <pre><code class="lang-bash">$ xmake macro --import=/xxx/macro.lua macroname
 $ xmake macro --import=/xxx/macrodir
@@ -213,14 +213,14 @@ $ xmake macro --import=/xxx/macrodir
 <pre><code class="lang-bash">$ xmake macro --export=/xxx/macro.lua macroname
 $ xmake macro --export=/xxx/macrodir
 </code></pre>
-<h5 id="list-and-show-macro">List and Show Macro</h5>
+<h5 id="listandshowmacro">List and Show Macro</h5>
 <p>List all builtin macros.</p>
 <pre><code class="lang-bash">$ xmake macro --list
 </code></pre>
 <p>Show the given macro script content.</p>
 <pre><code class="lang-bash">$ xmake macro --show macroname
 </code></pre>
-<h5 id="custom-macro-script">Custom Macro Script</h5>
+<h5 id="custommacroscript">Custom Macro Script</h5>
 <p>Create and write a <code>macro.lua</code> script first.</p>
 <pre><code class="lang-lua">function main()
     os.exec("xmake f -p android --ndk=/xxx/ndk -a arm64-v8a")
@@ -247,12 +247,12 @@ end
 <p>Playback this macro script.</p>
 <pre><code class="lang-bash">$ xmake macro [.|macroname]
 </code></pre>
-<h5 id="builtin-macros">Builtin Macros</h5>
+<h5 id="builtinmacros">Builtin Macros</h5>
 <p>XMake supports some builtins macros to simplify our jobs.</p>
 <p>For example, we use <code>package</code> macro to package all architectures of the iphoneos platform just for once.</p>
 <pre><code class="lang-bash">$ xmake macro package -p iphoneos 
 </code></pre>
-<h5 id="advance-macro-script">Advance Macro Script</h5>
+<h5 id="advancemacroscript">Advance Macro Script</h5>
 <p>Let&#39;s see the <code>package</code> macro script:</p>
 <pre><code class="lang-lua">-- imports
 import("core.base.option")
@@ -351,8 +351,8 @@ end
 <p><p class="tip"><br>    If you want to known more options, please run: <code>xmake macro --help</code><br></p>
 
 </p>
-<h4 id="run-the-custom-lua-script">Run the Custom Lua Script</h4>
-<h5 id="run-the-given-script">Run the given script</h5>
+<h4 id="runthecustomluascript">Run the Custom Lua Script</h4>
+<h5 id="runthegivenscript">Run the given script</h5>
 <p>Write a simple lua script:</p>
 <pre><code class="lang-lua">function main()
     print("hello xmake!")
@@ -364,7 +364,7 @@ end
 <p><p class="tip"><br>    You can also use <code>import</code> api to write a more advance lua script.<br></p>
 
 </p>
-<h5 id="run-the-builtin-script">Run the builtin script</h5>
+<h5 id="runthebuiltinscript">Run the builtin script</h5>
 <p>You can run <code>xmake lua -l</code> to list all builtin script name, for example:</p>
 <pre><code class="lang-bash">$ xmake lua -l
 scripts:
@@ -380,7 +380,7 @@ $ xmake lua echo "hello xmake"
 $ xmake lua cp /tmp/file /tmp/file2
 $ xmake lua versioninfo
 </code></pre>
-<h5 id="run-interactive-commands-repl-">Run interactive commands (REPL)</h5>
+<h5 id="runinteractivecommandsrepl">Run interactive commands (REPL)</h5>
 <p>Enter interactive mode:</p>
 <pre><code class="lang-bash">$ xmake lua
 > 1 + 2
@@ -409,11 +409,11 @@ hello xmake!
 > 1 + 2
 3
 </code></pre>
-<h4 id="generate-ide-project-files">Generate IDE Project Files</h4>
-<h5 id="generate-makefile">Generate Makefile</h5>
+<h4 id="generateideprojectfiles">Generate IDE Project Files</h4>
+<h5 id="generatemakefile">Generate Makefile</h5>
 <pre><code class="lang-bash">$ xmake project -k makefile
 </code></pre>
-<h5 id="generate-compiler_commands">Generate compiler_commands</h5>
+<h5 id="generatecompiler_commands">Generate compiler_commands</h5>
 <p>We can export the compilation commands info of all source files and it is JSON compilation database format.</p>
 <pre><code class="lang-console">$ xmake project -k compile_commands
 </code></pre>
@@ -426,7 +426,7 @@ hello xmake!
 ]
 
 </code></pre><p>Please see <a href="#https://clang.llvm.org/docs/JSONCompilationDatabase.html">JSONCompilationDatabase</a> if need known more info about <code>compile_commands</code>.</p>
-<h5 id="generate-visualstudio-project">Generate VisualStudio Project</h5>
+<h5 id="generatevisualstudioproject">Generate VisualStudio Project</h5>
 <pre><code class="lang-bash">$ xmake project -k [vs2008|vs2013|vs2015|..]
 </code></pre>
 <p>v2.1.2 or later, it supports multi-mode and multi-architecture generation for vs201x project.</p>
@@ -441,13 +441,13 @@ hello xmake!
 <pre><code class="lang-bash">$ xmake project -k vs2017
 </code></pre>
 <p>The effect is same.</p>
-<h4 id="generate-doxygen-document">Generate Doxygen Document</h4>
+<h4 id="generatedoxygendocument">Generate Doxygen Document</h4>
 <p>Please ensure that the doxygen tool has been installed first.</p>
 <pre><code class="lang-bash">$ xmake doxygen
 </code></pre>
-<h2 id="more-plugins">More Plugins</h2>
+<h2 id="moreplugins">More Plugins</h2>
 <p>Please download and install from the plugins repository <a href="https://github.com/xmake-io/xmake-plugins">xmake-plugins</a>.</p>
-<h4 id="convert-app-to-ipa">Convert .app to .ipa</h4>
+<h4 id="convertapptoipa">Convert .app to .ipa</h4>
 <pre><code class="lang-bash">$ xmake app2ipa --icon=/xxx.png /xxx/ios.app -o /xxx.ios.ipa
 </code></pre>
 </article>

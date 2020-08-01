@@ -94,40 +94,40 @@
 <p>🙏 The xmake projects is a personal open source projects, their development need your help. If you would like to support the development of xmake, welcome to donate to us.</p>
 <p>👉 <a href="https://xmake.io/#/about/sponsor">Sponsor Page</a></p>
 <h2 id="installation">Installation</h2>
-<h4 id="via-curl">via curl</h4>
+<h4 id="viacurl">via curl</h4>
 <pre><code class="lang-bash">bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
-<h4 id="via-wget">via wget</h4>
+<h4 id="viawget">via wget</h4>
 <pre><code class="lang-bash">bash <(wget https://xmake.io/shget.text -O -)
 </code></pre>
-<h4 id="via-powershell">via powershell</h4>
+<h4 id="viapowershell">via powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
 </code></pre>
-<h2 id="simple-description">Simple description</h2>
+<h2 id="simpledescription">Simple description</h2>
 <p><img src="https://xmake.io/assets/img/index/showcode1.png" width="340px" /></p>
-<h2 id="package-dependences">Package dependences</h2>
+<h2 id="packagedependences">Package dependences</h2>
 <p><img src="https://xmake.io/assets/img/index/add_require.png" width="600px" /></p>
 <p>An official xmake package repository: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
-<h2 id="build-project">Build project</h2>
+<h2 id="buildproject">Build project</h2>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
-<h2 id="run-target">Run target</h2>
+<h2 id="runtarget">Run target</h2>
 <pre><code class="lang-bash">$ xmake run console
 </code></pre>
-<h2 id="debug-target">Debug target</h2>
+<h2 id="debugtarget">Debug target</h2>
 <pre><code class="lang-bash">$ xmake run -d console
 </code></pre>
-<h2 id="configure-platform">Configure platform</h2>
+<h2 id="configureplatform">Configure platform</h2>
 <pre><code class="lang-bash">$ xmake f -p [windows|linux|macosx|android|iphoneos ..] -a [x86|arm64 ..] -m [debug|release]
 $ xmake
 </code></pre>
-<h2 id="menu-configuration">Menu configuration</h2>
+<h2 id="menuconfiguration">Menu configuration</h2>
 <pre><code class="lang-bash">$ xmake f --menu
 </code></pre>
 <p><img src="https://xmake.io/assets/img/index/menuconf.png" width="650px" /></p>
-<h2 id="build-as-fast-as-ninja">Build as fast as ninja</h2>
+<h2 id="buildasfastasninja">Build as fast as ninja</h2>
 <p>The test project: <a href="https://github.com/xmake-io/xmake/tree/master/core">xmake-core</a></p>
-<h3 id="multi-task-parallel-compilation">Multi-task parallel compilation</h3>
+<h3 id="multitaskparallelcompilation">Multi-task parallel compilation</h3>
 <table>
 <thead>
 <tr>
@@ -164,7 +164,7 @@ $ xmake
 </tr>
 </tbody>
 </table>
-<h3 id="single-task-compilation">Single task compilation</h3>
+<h3 id="singletaskcompilation">Single task compilation</h3>
 <table>
 <thead>
 <tr>
@@ -201,12 +201,12 @@ $ xmake
 </tr>
 </tbody>
 </table>
-<h2 id="package-management">Package management</h2>
-<h3 id="download-and-build">Download and build</h3>
+<h2 id="packagemanagement">Package management</h2>
+<h3 id="downloadandbuild">Download and build</h3>
 <p><img src="https://xmake.io/assets/img/index/package_manage.png" width="650px" /></p>
-<h3 id="processing-architecture">Processing architecture</h3>
+<h3 id="processingarchitecture">Processing architecture</h3>
 <p><img src="https://xmake.io/assets/img/index/package_arch.png" width="650px" /></p>
-<h2 id="supported-platforms">Supported platforms</h2>
+<h2 id="supportedplatforms">Supported platforms</h2>
 <ul>
 <li>Windows (x86, x64)</li>
 <li>macOS (i386, x86_64)</li>
@@ -221,7 +221,7 @@ $ xmake
 <li>SDCC (stm8, mcs51, ..)</li>
 <li>Cross (cross-toolchains ..)</li>
 </ul>
-<h2 id="supported-languages">Supported Languages</h2>
+<h2 id="supportedlanguages">Supported Languages</h2>
 <ul>
 <li>C</li>
 <li>C++</li>
@@ -233,7 +233,7 @@ $ xmake
 <li>Dlang</li>
 <li>Cuda</li>
 </ul>
-<h2 id="supported-projects">Supported Projects</h2>
+<h2 id="supportedprojects">Supported Projects</h2>
 <ul>
 <li>Static Library</li>
 <li>Shared Library</li>
@@ -244,7 +244,7 @@ $ xmake
 <li>WinSDK Application</li>
 <li>MFC Application</li>
 </ul>
-<h2 id="more-examples">More Examples</h2>
+<h2 id="moreexamples">More Examples</h2>
 <p>Debug and release modes:</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 
@@ -298,14 +298,14 @@ target("app")
 </code></pre>
 <p>More wdk driver program examples (umdf/kmdf/wdm), please see <a href="https://xmake.io/#/guide/project_examples?id=wdk-driver-program">WDK Program Examples</a></p>
 <h2 id="plugins">Plugins</h2>
-<h4 id="generate-ide-project-file-plugin-makefile-vs2002-vs2019-">Generate IDE project file plugin（makefile, vs2002 - vs2019 .. ）</h4>
+<h4 id="generateideprojectfilepluginmakefilevs2002vs2019">Generate IDE project file plugin（makefile, vs2002 - vs2019 .. ）</h4>
 <pre><code class="lang-bash">$ xmake project -k vsxmake -m "debug;release" # New vsproj generator (Recommended)
 $ xmake project -k vs -m "debug;release"
 $ xmake project -k cmake
 $ xmake project -k ninja
 $ xmake project -k compile_commands
 </code></pre>
-<h4 id="run-the-custom-lua-script-plugin">Run the custom lua script plugin</h4>
+<h4 id="runthecustomluascriptplugin">Run the custom lua script plugin</h4>
 <pre><code class="lang-bash">$ xmake l ./test.lua
 $ xmake l -c "print(&#39;hello xmake!&#39;)"
 $ xmake l lib.detect.find_tool gcc
@@ -320,7 +320,7 @@ $ xmake l
 </code></pre>
 <p>More builtin plugins, please see: <a href="https://xmake.io/#/plugin/builtin_plugins">Builtin plugins</a></p>
 <p>Please download and install more other plugins from the plugins repository <a href="https://github.com/xmake-io/xmake-plugins">xmake-plugins</a>.</p>
-<h2 id="ide-editor-integration">IDE/Editor Integration</h2>
+<h2 id="ideeditorintegration">IDE/Editor Integration</h2>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-vscode">xmake-vscode</a></li>
 </ul>
@@ -339,7 +339,7 @@ $ xmake l
 <li><p><a href="https://github.com/xmake-io/xmake-gradle">xmake-gradle</a>: A gradle plugin that integrates xmake seamlessly</p>
 </li>
 </ul>
-<h2 id="project-examples">Project Examples</h2>
+<h2 id="projectexamples">Project Examples</h2>
 <p>Some projects using xmake:</p>
 <ul>
 <li><a href="https://github.com/tboox/tbox">tbox</a></li>
@@ -347,7 +347,7 @@ $ xmake l
 <li><a href="https://github.com/tboox/vm86">vm86</a></li>
 <li><a href="https://github.com/xmake-io/awesome-xmake">more</a></li>
 </ul>
-<h2 id="example-video">Example Video</h2>
+<h2 id="examplevideo">Example Video</h2>
 <p><a href="https://asciinema.org/a/133693"><br><img src="https://asciinema.org/a/133693.png" width="650px" /><br></a></p>
 <h2 id="contacts">Contacts</h2>
 <ul>

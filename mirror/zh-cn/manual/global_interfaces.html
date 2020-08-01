@@ -173,7 +173,7 @@
 </tbody>
 </table>
 <h3 id="includes">includes</h3>
-<h4 id="-">添加子工程文件和目录</h4>
+<h4 id="">添加子工程文件和目录</h4>
 <p>同时支持子工程文件和目录的添加，用于替代<a href="#add_subdirs">add_subdirs</a>和<a href="#add_subfiles">add_subfiles</a>接口。</p>
 <p>另外，此接口在2.2.5之后的版本，提供了一些内置的辅助函数，可以直接includes后使用，具体有哪些内置函数可以看下：<a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">https://github.com/xmake-io/xmake/tree/master/xmake/includes</a></p>
 <p>关于这块的更加完整的说明，可以看下：<a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
@@ -224,7 +224,7 @@ ${define HAS_CONSEXPR_AND_STATIC_ASSERT}
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 </code></pre>
 <h3 id="set_modes">set_modes</h3>
-<h4 id="-">设置支持的编译模式</h4>
+<h4 id="">设置支持的编译模式</h4>
 <p>这个是可选接口，一般情况下不需要设置，目前仅用于对工程增加更加细致的描述信息，方便vs工程的多模式生成，以及其他xmake插件中获取模式信息。</p>
 <p>例如：</p>
 <pre><code class="lang-lua">set_modes("debug", "release")
@@ -237,7 +237,7 @@ ${define HAS_CONSEXPR_AND_STATIC_ASSERT}
 
 </p>
 <h3 id="set_project">set_project</h3>
-<h4 id="-">设置工程名</h4>
+<h4 id="">设置工程名</h4>
 <p>设置工程名，在doxygen自动文档生成插件、工程文件生成插件中会用到，一般设置在xmake.lua的最开头，当然放在其他地方也是可以的</p>
 <pre><code class="lang-lua">-- 设置工程名
 set_project("tbox")
@@ -246,16 +246,16 @@ set_project("tbox")
 set_version("1.5.1")
 </code></pre>
 <h3 id="set_version">set_version</h3>
-<h4 id="-">设置工程版本</h4>
+<h4 id="">设置工程版本</h4>
 <p>设置项目版本，可以放在xmake.lua任何地方，一般放在最开头，例如：</p>
 <pre><code class="lang-lua">set_version("1.5.1")
 </code></pre>
 <p>2.1.7版本支持buildversion的配置：</p>
 <pre><code class="lang-lua">set_version("1.5.1", {build = "%Y%m%d%H%M"})
 </code></pre>
-<p>我们也能够添加版本宏定义到头文件，请参考：<a href="/manual/project_target?id=add-template-configuration-files">add_configfiles</a></p>
+<p>我们也能够添加版本宏定义到头文件，请参考：<a href="/mirror/manual/project_target.html#add-template-configuration-files">add_configfiles</a></p>
 <h3 id="set_xmakever">set_xmakever</h3>
-<h4 id="-xmake-">设置最小xmake版本</h4>
+<h4 id="xmake">设置最小xmake版本</h4>
 <p>用于处理xmake版本兼容性问题，如果项目的<code>xmake.lua</code>，通过这个接口设置了最小xmake版本支持，那么用户环境装的xmake低于要求的版本，就会提示错误。</p>
 <p>一般情况下，建议默认对其进行设置，这样对用户比较友好，如果<code>xmake.lua</code>中用到了高版本的api接口，用户那边至少可以知道是否因为版本不对导致的构建失败。</p>
 <p>设置如下：</p>
@@ -263,7 +263,7 @@ set_version("1.5.1")
 set_xmakever("2.1.0")
 </code></pre>
 <h3 id="add_subdirs">add_subdirs</h3>
-<h4 id="-">添加子工程目录</h4>
+<h4 id="">添加子工程目录</h4>
 <p><p class="tip"><br>xmake 2.x以上版本，请尽量使用<a href="#includes">includes</a>这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。<br></p>
 
 </p>
@@ -293,7 +293,7 @@ $ xmake build tbox
 </code></pre>
 <p>需要注意的是，每个子<code>xmake.lua</code>中所有的路径设置都是相对于当前这个子<code>xmake.lua</code>所在的目录的，都是相对路径，这样方便维护</p>
 <h3 id="add_subfiles">add_subfiles</h3>
-<h4 id="-">添加子工程文件</h4>
+<h4 id="">添加子工程文件</h4>
 <p><p class="tip"><br>xmake 2.x以上版本，请尽量使用<a href="#includes">includes</a>这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。<br></p>
 
 </p>
@@ -301,7 +301,7 @@ $ xmake build tbox
 <pre><code class="lang-lua">add_subfiles("src/tbox/xmake.lua")
 </code></pre>
 <h3 id="add_moduledirs">add_moduledirs</h3>
-<h4 id="-">添加模块目录</h4>
+<h4 id="">添加模块目录</h4>
 <p>xmake内置的扩展模块都在<code>xmake/modules</code>目录下，可通过<a href="#import">import</a>来导入他们，如果自己在工程里面实现了一些扩展模块，<br>可以放置在这个接口指定的目录下，import也就会能找到，并且优先进行导入。</p>
 <p>例如定义一个<code>find_openssl.lua</code>的扩展模块，用于扩展内置的<a href="#detect-find_package">lib.detect.find_package</a>接口，则只需要将它放置在：</p>
 <pre><code>projectdir/xmake/modules/detect/packages/find_openssl.lua
@@ -309,14 +309,14 @@ $ xmake build tbox
 <pre><code class="lang-lua">add_moduledirs("projectdir/xmake/modules")
 </code></pre>
 <h3 id="add_plugindirs">add_plugindirs</h3>
-<h4 id="-">添加插件目录</h4>
+<h4 id="">添加插件目录</h4>
 <p>xmake内置的插件都是放在<code>xmake/plugins</code>目录下，但是对于用户自定义的一些特定工程的插件，如果不想放置在xmake安装目录下，那么可以在<code>xmake.lua</code>中进行配置指定的其他插件路径。</p>
 <pre><code class="lang-lua">-- 将当前工程下的plugins目录设置为自定义插件目录
 add_plugindirs("$(projectdir)/plugins")
 </code></pre>
 <p>这样，xmake在编译此工程的时候，也就加载这些插件。</p>
 <h3 id="add_packagedirs">add_packagedirs</h3>
-<h4 id="-">添加包目录</h4>
+<h4 id="">添加包目录</h4>
 <p>通过设置依赖包目录，可以方便的集成一些第三方的依赖库，以tbox工程为例，其依赖包如下：</p>
 <pre><code>- base.pkg
 - zlib.pkg
@@ -333,14 +333,14 @@ add_plugindirs("$(projectdir)/plugins")
     add_packages("zlib", "polarssl", "pcre", "mysql")
 </code></pre>
 <h3 id="get_config">get_config</h3>
-<h4 id="-">获取给定的配置值</h4>
+<h4 id="">获取给定的配置值</h4>
 <p>此接口从2.2.2版本开始引入，用于快速获取给定的配置值，可用于描述域。</p>
 <pre><code class="lang-lua">if get_config("myconfig") == "xxx" then
     add_defines("HELLO")
 end
 </code></pre>
 <h3 id="set_config">set_config</h3>
-<h4 id="-">设置给定的默认配置值</h4>
+<h4 id="">设置给定的默认配置值</h4>
 <p>此接口从2.2.2版本开始引入，用于快速在xmake.lua中设置一个默认配置值，仅用于描述域。</p>
 <p>之前很多配置，包括编译工具链，构建目录等只能通过<code>$ xmake f --name=value</code>的方式来配置，如果我们想写死在xmake.lua提供一个默认值，就可以通过下面的方式来配置：</p>
 <pre><code class="lang-lua">set_config("name", "value")
@@ -350,7 +350,7 @@ set_config("ld", "g++")
 </code></pre>
 <p>不过，我们还是可以通过<code>$ xmake f --name=value</code>的方式，去修改xmake.lua中的默认配置。</p>
 <h3 id="add_requires">add_requires</h3>
-<h4 id="-">添加需要的依赖包</h4>
+<h4 id="">添加需要的依赖包</h4>
 <p>xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：<a href="https://semver.org/">https://semver.org/</a></p>
 <p>一些语义版本写法：</p>
 <pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
@@ -465,7 +465,7 @@ target("xmake-test")
     add_packages("bytes")
 </code></pre>
 <h3 id="add_repositories">add_repositories</h3>
-<h4 id="-">添加依赖包仓库</h4>
+<h4 id="">添加依赖包仓库</h4>
 <p>如果需要的包不在官方仓库<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>中，我们可以提交贡献代码到仓库进行支持。<br>但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>比如，现在我们有一个一个私有仓库repo：<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>
 <p>我们可以通过此接口来添加：</p>

@@ -95,8 +95,8 @@
 <p><p class="tip"><br>    You can use short or long command option, for example: <br><br>    <code>xmake f</code> or <code>xmake config</code>.<br><br>    <code>xmake f -p linux</code> or <code>xmake config --plat=linux</code>.<br></p>
 
 </p>
-<h2 id="target-platforms">Target Platforms</h2>
-<h3 id="current-host">Current Host</h3>
+<h2 id="targetplatforms">Target Platforms</h2>
+<h3 id="currenthost">Current Host</h3>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
 <p><p class="tip"><br>    XMake will detect the current host platform automatically and build project.<br></p>
@@ -130,11 +130,11 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64]
 $ xmake
 </code></pre>
-<h3 id="apple-watchos">Apple WatchOS</h3>
+<h3 id="applewatchos">Apple WatchOS</h3>
 <pre><code class="lang-bash">$ xmake f -p watchos [-a i386|armv7k]
 $ xmake
 </code></pre>
-<h2 id="cross-compilation">Cross Compilation</h2>
+<h2 id="crosscompilation">Cross Compilation</h2>
 <p>Generally, if we need to compile and generate object files that can be run on other devices in the current pc environment, we need to compile and generate them through the corresponding cross-compilation tool chain, such as compiling linux programs on win/macos, or Compile object files of other embedded devices, etc.</p>
 <p>The usual cross-compilation tool chain is based on gcc/clang, and most of them have a structure similar to the following:</p>
 <pre><code>/home/toolchains_sdkdir
@@ -158,7 +158,7 @@ arm-linux-armeabi-nm
 arm-linux-armeabi-strip
 </code></pre><p>The <code>arm-linux-armeabi-</code> prefix is cross, which is used to mark the target platform and architecture, and is mainly used to distinguish it from the host&#39;s own gcc/clang.</p>
 <p>The gcc/g++ inside is the c/c++ compiler, which can also be used as a linker. When linking, it will internally call ld to link, and automatically add some c++ libraries.<br>Cpp is a preprocessor, as is an assembler, ar is used to generate a static library, and strip is used to crop out some symbol information, making the target program smaller. nm is used to view the list of exported symbols.</p>
-<h3 id="automatic-detection-and-compilation">Automatic detection and compilation</h3>
+<h3 id="automaticdetectionandcompilation">Automatic detection and compilation</h3>
 <p>If our cross-compilation tool chain is the above structure, xmake will automatically detect and identify the structure of the SDK, extract the cross and include/lib path location, users usually do not need to do additional parameter settings, just configure the SDK The root directory can be compiled, for example:</p>
 <pre><code class="lang-bash">$ xmake f -p cross --sdk=/home/toolchains_sdkdir
 $ xmake
@@ -169,16 +169,16 @@ $ xmake
 <pre><code>-I/home/toolchains_sdkdir/include 
 -L/home/toolchains_sdkdir/lib
 </code></pre><p>These are handled automatically by xmake, there is no need to configure them manually.</p>
-<h3 id="manually-configure-and-compile">Manually configure and compile</h3>
+<h3 id="manuallyconfigureandcompile">Manually configure and compile</h3>
 <p>If the above automatic detection fails to completely compile for some tool chains, you need to manually set some configuration parameters related to cross compilation to adjust to these special tool chains. I will explain how to configure them one by one.</p>
-<h3 id="set-toolchain-bin-directory">Set toolchain bin directory</h3>
+<h3 id="settoolchainbindirectory">Set toolchain bin directory</h3>
 <p>For the irregular tool chain directory structure, by simply setting the <a href="https://xmake.io/#/zh-cn/guide/configuration?id=-sdk">--sdk</a> option, it is impossible to completely detect the passing situation Next, you can continue to set the location of the bin directory of the toolchain through this option.</p>
 <p>For example: for some special cross toolchains, the compiler bin directory is not in the <code>/home/toolchains_sdkdir/bin</code> position, but is instead in <code>/usr/opt/bin</code></p>
 <p>At this time, we can add the parameter setting of the bin directory on the basis of setting the sdk parameter to adjust the bin directory of the tool chain.</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
 $ xmake
 </code></pre>
-<h3 id="set-tool-prefix-for-cross-toolchain">Set tool prefix for cross toolchain</h3>
+<h3 id="settoolprefixforcrosstoolchain">Set tool prefix for cross toolchain</h3>
 <p>Like aarch64-linux-android-, usually if you configure --sdk or --bin, xmake will automatically detect it, you don&#39;t need to set it manually.</p>
 <p>But for some very special tool chains, if there are multiple cross prefix tool bins in a directory at the same time, you need to manually set this configuration to distinguish which bin you need to choose.</p>
 <p>For example, there are two different compilers in the bin directory of toolchains:</p>
@@ -188,7 +188,7 @@ $ xmake
 </code></pre><p>We now want to choose the armv7 version, then we can append <code>--cross=</code> to configure the compiler tool prefix name, for example:</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 </code></pre>
-<h3 id="set-the-c-c-compiler">Set the c/c++ compiler</h3>
+<h3 id="setthecccompiler">Set the c/c++ compiler</h3>
 <p>If you want to continue to subdivide and select compilers, continue to add relevant compiler options, for example:</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-clang++
 </code></pre>
@@ -201,18 +201,18 @@ $ xmake
 </code></pre>
 <p>Set the c ++ mips.exe compiler as the clang ++-like way to compile.</p>
 <p>That is to say, while specifying the compiler as <code>c++mips.exe</code>, tell xmake that it is basically the same as clang ++ usage and parameter options.</p>
-<h3 id="set-the-c-c-linker">Set the c/c++ linker</h3>
+<h3 id="setthecclinker">Set the c/c++ linker</h3>
 <p>If you want to continue to subdivide and select the linker, continue to add related linker options, for example:</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
 </code></pre>
 <p>ld specifies the executable program linker, sh specifies the shared library program linker, and ar specifies the archiver that generates the static library.</p>
 <p>Note: If there are ld/sh/ar environment variables, the value specified in the current environment variable will be used first.</p>
-<h3 id="set-header-file-and-library-search-directory">Set header file and library search directory</h3>
+<h3 id="setheaderfileandlibrarysearchdirectory">Set header file and library search directory</h3>
 <p>If there are additional other include/lib directories in the SDK that are not in the standard structure, resulting in cross compilation can not find the library and header files, then we can append the search path through <code>--includedirs</code> and<code>--linkdirs</code>, and then Add additional link libraries via <code>--links</code>.</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --linkdirs=/usr/toolsdk/xxx/lib --links=pthread
 </code></pre>
 <p>Note: If you want to specify multiple search directories, you can use <code>:</code> or <code>;</code> to separate, which is the path separator of different host platforms, use <code>:</code> under linux / macos, and <code>;</code> under win.</p>
-<h3 id="set-compile-and-link-options">Set compile and link options</h3>
+<h3 id="setcompileandlinkoptions">Set compile and link options</h3>
 <p>We can also configure some additional compilation and linking options through <code>--cflags</code>,<code>--cxxflags</code>, <code>--ldflags</code>, <code>--shflags</code> and <code>--arflags</code> according to the actual situation.</p>
 <ul>
 <li>cflags: specify c compilation parameters</li>
@@ -226,7 +226,7 @@ $ xmake
 <p>e.g:</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread"
 </code></pre>
-<h3 id="project-description-settings">Project description settings</h3>
+<h3 id="projectdescriptionsettings">Project description settings</h3>
 <h4 id="set_toolchains">set_toolchains</h4>
 <p>This sets up different tool chains for a specific target individually. Unlike set_toolset, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.</p>
 <p>This is also a recommended practice, because most compiler tool chains like gcc/clang, the compiler and the linker are used together. To cut it, you have to cut it as a whole. Separate and scattered switch settings will be cumbersome.</p>
@@ -252,7 +252,7 @@ set_config("cc", "gcc")
 set_config("ld", "g++")
 </code></pre>
 <p>However, we can still use xmake f --name = value` to modify the default configuration in xmake.lua.</p>
-<h3 id="custom-build-platform">Custom build platform</h3>
+<h3 id="custombuildplatform">Custom build platform</h3>
 <p>If the target program has a corresponding platform to be specified after a cross tool chain is compiled, and it needs to be configured in xmake.lua according to different cross compilation platforms, and some additional compilation parameters need to be configured, then the <code>-p cross</code> setting above Can not meet the demand.</p>
 <p>In fact, the <code>-p/-plat=</code> parameter can also be set to other custom values. You only need to maintain the corresponding relationship with <code>is_plat</code>. All non-built-in platform names will default to cross-compilation mode, for example:</p>
 <pre><code class="lang-bash">$ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/
@@ -291,7 +291,7 @@ $ xmake
 $ xmake
 </code></pre>
 <p>As long as the <code>--sdk=</code> and other parameters are set, the cross-compilation mode of the Linux platform will be enabled.</p>
-<h3 id="toolchain-configuration">Toolchain configuration</h3>
+<h3 id="toolchainconfiguration">Toolchain configuration</h3>
 <p>!> This feature requires v2.3.4 or later to support</p>
 <p>The above describes the general cross-compilation toolchain configuration. If some specific toolchains need to be imported into additional scenarios such as <code>--ldflags/--includedirs</code>, it is more cumbersome<br>Therefore, xmake also has some common tool chains built-in, which can save the complicated configuration process of cross-compilation tool chain, and only need to execute:</p>
 <pre><code class="lang-bash">$ xmake f --toolchain=gnu-rm --sdk=/xxx/
@@ -328,7 +328,7 @@ gnu-rm        GNU Arm Embedded Toolchain
 envs          Environment variables toolchain
 fasm          Flat Assembler
 </code></pre>
-<h4 id="custom-toolchain">Custom toolchain</h4>
+<h4 id="customtoolchain">Custom toolchain</h4>
 <p>In addition, we can also customize the toolchain in xmake.lua, and then specify the switch through <code>xmake f --toolchain=myclang</code>, for example:</p>
 <pre><code class="lang-lua">toolchain("myclang")
     set_kind("standalone")
@@ -345,9 +345,9 @@ fasm          Flat Assembler
 
     - ...
 </code></pre>
-<p>For details about this piece, you can go to the <a href="/manual/custom_toolchain">Custom Toolchain</a>.</p>
+<p>For details about this piece, you can go to the <a href="/mirror/manual/custom_toolchain.html">Custom Toolchain</a>.</p>
 <p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/780">#780</a></p>
-<h4 id="mingw-toolchain">MingW Toolchain</h4>
+<h4 id="mingwtoolchain">MingW Toolchain</h4>
 <p>Compiling with the mingw toolchain is actually cross-compilation, but because this is more commonly used, xmake specifically adds a mingw platform to quickly handle compilation using the mingw toolchain.</p>
 <p>Therefore, xmake&#39;s toolchain detection for mingw will be more perfect. Under macos, basically even the sdk path does not need to be configured, and can be directly detected, only need to switch to the mingw platform to compile.</p>
 <pre><code class="lang-bash">$ xmake f -p mingw
@@ -385,17 +385,17 @@ $ xmake
 </code></pre>
 <p>After setting the <code>--mingw</code> root directory to the global configuration through the<code>xmake g/global</code> command, after each compilation and switching of the compilation platform, there is no need to specify an additional mingw toolchain path, which is convenient for use.</p>
 <p>In addition, the usage of other tool chain configuration parameters is the same as that described above. For example, <code>--cross</code>,<code>--bin=</code>, etc. can be adjusted according to the actual needs of the environment. Own mingw tool chain.</p>
-<h4 id="llvm-toolchain">LLVM Toolchain</h4>
+<h4 id="llvmtoolchain">LLVM Toolchain</h4>
 <p>The tool chain of llvm is relatively standard, only need to set the sdk configuration path to use:</p>
 <pre><code class="lang-bash">$ xmake f -p cross --toolchain=llvm --sdk="C:\Program Files\LLVM"
 $ xmake
 </code></pre>
-<h4 id="gnu-rm-toolchain">GNU-RM Toolchain</h4>
+<h4 id="gnurmtoolchain">GNU-RM Toolchain</h4>
 <p>toolchain downlaod url: <a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#">https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#</a></p>
 <pre><code class="lang-bash">$ xmake f -p cross --toolchain=gnu-rm --sdk=/xxx/cc-arm-none-eabi-9-2019-q4-major
 $ xmake
 </code></pre>
-<h3 id="common-cross-compilation-configuration">Common Cross-compilation configuration</h3>
+<h3 id="commoncrosscompilationconfiguration">Common Cross-compilation configuration</h3>
 <table>
 <thead>
 <tr>
@@ -581,7 +581,7 @@ $ xmake
 <p><p class="tip"><br>if you want to known more options, please run: <code>xmake f --help</code>。<br></p>
 
 </p>
-<h4 id="-sdk">--sdk</h4>
+<h4 id="sdk">--sdk</h4>
 <ul>
 <li>Set the sdk root directory of toolchains</li>
 </ul>
@@ -602,7 +602,7 @@ $ xmake
 </code></pre>
 <p>xmake will detect the prefix: arm-linux- and add the include and library search directory automatically.</p>
 <pre><code>-I/home/toolchains_sdkdir/include -L/home/toolchains_sdkdir/lib
-</code></pre><h4 id="-bin">--bin</h4>
+</code></pre><h4 id="bin">--bin</h4>
 <ul>
 <li>Set the <code>bin</code> directory of toolchains</li>
 </ul>
@@ -613,7 +613,7 @@ $ xmake
 <p><p class="tip"><br>Before v2.2.1 version, this parameter name is <code>--toolchains</code>, exists more ambiguous, so we changed to <code>--bin=</code> to set the bin directory.<br></p>
 
 </p>
-<h4 id="-cross">--cross</h4>
+<h4 id="cross">--cross</h4>
 <ul>
 <li>Set the prefix of compilation tools</li>
 </ul>
@@ -624,7 +624,7 @@ $ xmake
 </code></pre><p>If we want to use the <code>armv7-linux-gcc</code> compiler, we can run the following command:</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 </code></pre>
-<h4 id="-as">--as</h4>
+<h4 id="as">--as</h4>
 <ul>
 <li>Set <code>asm</code> assembler</li>
 </ul>
@@ -634,7 +634,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang compiler, .e.g <code>xmake f --as=gcc@/home/xxx/asmips.exe</code><br></p>
 
 </p>
-<h4 id="-cc">--cc</h4>
+<h4 id="cc">--cc</h4>
 <ul>
 <li>Set c compiler</li>
 </ul>
@@ -644,7 +644,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang compiler, .e.g <code>xmake f --cc=gcc@/home/xxx/ccmips.exe</code><br></p>
 
 </p>
-<h4 id="-cxx">--cxx</h4>
+<h4 id="cxx">--cxx</h4>
 <ul>
 <li>Set <code>c++</code> compiler</li>
 </ul>
@@ -654,7 +654,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang compiler, .e.g <code>xmake f --cxx=g++@/home/xxx/c++mips.exe</code><br></p>
 
 </p>
-<h4 id="-ld">--ld</h4>
+<h4 id="ld">--ld</h4>
 <ul>
 <li>Set <code>c/c++/objc/asm</code> linker</li>
 </ul>
@@ -664,7 +664,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang linker, .e.g <code>xmake f --ld=g++@/home/xxx/c++mips.exe</code><br></p>
 
 </p>
-<h4 id="-sh">--sh</h4>
+<h4 id="sh">--sh</h4>
 <ul>
 <li>Set <code>c/c++/objc/asm</code> shared library linker</li>
 </ul>
@@ -674,7 +674,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-gcc/clang linker, .e.g <code>xmake f --sh=g++@/home/xxx/c++mips.exe</code><br></p>
 
 </p>
-<h4 id="-ar">--ar</h4>
+<h4 id="ar">--ar</h4>
 <ul>
 <li>Set <code>c/c++/objc/asm</code> static library archiver</li>
 </ul>
@@ -684,7 +684,7 @@ $ xmake
 <p><p class="tip"><br>We can set a unknown compiler as like-ar archiver, .e.g <code>xmake f --ar=ar@/home/xxx/armips.exe</code><br></p>
 
 </p>
-<h2 id="global-configuration">Global Configuration</h2>
+<h2 id="globalconfiguration">Global Configuration</h2>
 <p>You can save to the global configuration for simplfying operation.</p>
 <p>For example:</p>
 <pre><code class="lang-bash">$ xmake g --ndk=~/files/android-ndk-r10e/
@@ -696,7 +696,7 @@ $ xmake
 <p><p class="tip"><br>    You can use short or long command option, for example: <code>xmake g</code> or <code>xmake global</code>.<br><br></p>
 
 </p>
-<h2 id="clean-configuration">Clean Configuration</h2>
+<h2 id="cleanconfiguration">Clean Configuration</h2>
 <p>We can clean all cached configuration and re-configure project.</p>
 <pre><code class="lang-bash">$ xmake f -c
 $ xmake

@@ -94,7 +94,7 @@
 <p>We can also use the <code>xmake create</code> command to create various commonly used empty projects to quickly start. For the introduction of this command and the supported project templates, you can type the following command to view:</p>
 <pre><code class="lang-bash">xmake create --help
 </code></pre>
-<h2 id="executable-program">Executable Program</h2>
+<h2 id="executableprogram">Executable Program</h2>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
     add_files("src/*c")
@@ -102,7 +102,7 @@
 <p>For a complete example, execute the following command to create:</p>
 <pre><code class="lang-bash">xmake create -l c -t console test
 </code></pre>
-<h2 id="static-library-program">Static Library Program</h2>
+<h2 id="staticlibraryprogram">Static Library Program</h2>
 <pre><code class="lang-lua">target("library")
     set_kind("static")
     add_files("src/library/*.c")
@@ -116,7 +116,7 @@ target("test")
 <p>For a complete example, execute the following command to create:</p>
 <pre><code class="lang-bash">xmake create -l c -t static test
 </code></pre>
-<h2 id="share-library-program">Share Library Program</h2>
+<h2 id="sharelibraryprogram">Share Library Program</h2>
 <pre><code class="lang-lua">target("library")
     set_kind("shared")
     add_files("src/library/*.c")
@@ -130,7 +130,7 @@ target("test")
 <p>For a complete example, execute the following command to create:</p>
 <pre><code class="lang-bash">xmake create -l c -t shared test
 </code></pre>
-<h2 id="qt-program">Qt Program</h2>
+<h2 id="qtprogram">Qt Program</h2>
 <p>Create an empty project:</p>
 <p>v2.2.9 or higher:</p>
 <pre><code class="lang-console">$ xmake create -t qt.console test
@@ -153,24 +153,24 @@ $ xmake create -l c++ -t quickapp_qt test
 <pre><code class="lang-console">$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32 
 </code></pre>
 <p>If you want to known more information, you can see <a href="https://github.com/xmake-io/xmake/issues/160">#160</a>.</p>
-<h3 id="static-library">Static Library</h3>
+<h3 id="staticlibrary">Static Library</h3>
 <pre><code class="lang-lua">target("qt_static_library")
     add_rules("qt.static")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
 </code></pre>
-<h3 id="shared-library">Shared Library</h3>
+<h3 id="sharedlibrary">Shared Library</h3>
 <pre><code class="lang-lua">target("qt_shared_library")
     add_rules("qt.shared")
     add_files("src/*.cpp")
     add_frameworks("QtNetwork", "QtGui")
 </code></pre>
-<h3 id="console-program">Console Program</h3>
+<h3 id="consoleprogram">Console Program</h3>
 <pre><code class="lang-lua">target("qt_console")
     add_rules("qt.console")
     add_files("src/*.cpp")
 </code></pre>
-<h3 id="quick-application">Quick Application</h3>
+<h3 id="quickapplication">Quick Application</h3>
 <p>v2.2.9 or higher:</p>
 <pre><code class="lang-lua">target("qt_quickapp")
     add_rules("qt.quickapp")
@@ -202,7 +202,7 @@ Build ok!
 </code></pre>
 <p>The effect is as follows:</p>
 <p><img src="/assets/img/guide/qt_quickapp.png" alt=""></p>
-<h3 id="widgets-application">Widgets Application</h3>
+<h3 id="widgetsapplication">Widgets Application</h3>
 <p>v2.2.9 or higher:</p>
 <pre><code class="lang-lua">target("qt_widgetapp")
     add_rules("qt.widgetapp")
@@ -221,7 +221,7 @@ Build ok!
 <p>!> If you are using your own compiled static version of the QT SDK, you need to switch to the <code>add_rules("qt.widgetapp_static")</code> static rule,<br>because the linked libraries are different and need to be statically linked.</p>
 <p>The effect is as follows:</p>
 <p><img src="/assets/img/guide/qt_widgetapp.png" alt=""></p>
-<h3 id="android-application">Android Application</h3>
+<h3 id="androidapplication">Android Application</h3>
 <p>After the 2.2.6 version, you can directly switch to the android platform to compile the Quick/Widgets application, generate the apk package, and install it to the device via the <code>xmake install</code> command.</p>
 <pre><code class="lang-console">$ xmake create -t quickapp_qt -l c ++ appdemo
 $ cd appdemo
@@ -239,14 +239,14 @@ installing build/android/release/appdemo.apk ..
 success
 install ok!👌
 </code></pre>
-<h2 id="wdk-driver-program">WDK Driver Program</h2>
+<h2 id="wdkdriverprogram">WDK Driver Program</h2>
 <p>xmake will detect WDK automatically and we can also set the WDK directory manually.</p>
 <pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 </code></pre>
 <p>If you want to known more information, you can see <a href="https://github.com/xmake-io/xmake/issues/159">#159</a>.</p>
 <p>And see <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/wdk">WDK examples</a></p>
-<h3 id="umdf-driver-program">UMDF Driver Program</h3>
+<h3 id="umdfdriverprogram">UMDF Driver Program</h3>
 <pre><code class="lang-lua">target("echo")
     add_rules("wdk.driver", "wdk.env.umdf")
     add_files("driver/*.c") 
@@ -257,7 +257,7 @@ target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
     add_files("exe/*.cpp") 
 </code></pre>
-<h3 id="kmdf-driver-program">KMDF Driver Program</h3>
+<h3 id="kmdfdriverprogram">KMDF Driver Program</h3>
 <pre><code class="lang-lua">target("nonpnp")
     add_rules("wdk.driver", "wdk.env.kmdf")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
@@ -269,7 +269,7 @@ target("app")
     add_files("exe/*.c") 
     add_files("exe/*.inf")
 </code></pre>
-<h3 id="wdm-driver-program">WDM Driver Program</h3>
+<h3 id="wdmdriverprogram">WDM Driver Program</h3>
 <pre><code class="lang-lua">target("kcs")
     add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.man.flags", "-prefix Kcs")
@@ -286,7 +286,7 @@ target("app")
     add_files("*.mof|msdsm.mof")
     add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
 </code></pre>
-<h3 id="package-driver">Package Driver</h3>
+<h3 id="packagedriver">Package Driver</h3>
 <p>We can run the following command to generate a .cab driver package.</p>
 <pre><code class="lang-console">$ xmake [p|package]
 $ xmake [p|package] -o outputdir
@@ -298,7 +298,7 @@ $ xmake [p|package] -o outputdir
        - release/x64/sampledsm.cab
        - debug/x86/sampledsm.cab
        - release/x64/sampledsm.cab
-</code></pre><h3 id="driver-signing">Driver Signing</h3>
+</code></pre><h3 id="driversigning">Driver Signing</h3>
 <p>The driver signing is disabled when we compile driver in default case,<br>but we can add <code>set_values("wdk.sign.mode")</code> to enable test/release sign.</p>
 <h4 id="testsign">TestSign</h4>
 <p>We can use test certificate of xmake to do testsign, but please run <code>$xmake l utils.wdk.testcert</code> install as admin to install a test certificate first (only once)!</p>
@@ -327,7 +327,7 @@ $ xmake [p|package] -o outputdir
     set_values("wdk.sign.company", "xxxx")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
 </code></pre>
-<h3 id="support-low-version-system">Support Low-version System</h3>
+<h3 id="supportlowversionsystem">Support Low-version System</h3>
 <p>We can set <code>wdk.env.winver</code> to generate a driver package that is compatible with a low version system.</p>
 <pre><code class="lang-lua">set_values("wdk.env.winver", "win10")
 set_values("wdk.env.winver", "win10_rs3")
@@ -342,7 +342,7 @@ set_values("wdk.env.winver", "win7_sp3")
 <pre><code class="lang-console">$ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 </code></pre>
-<h2 id="winsdk-application-program">WinSDK Application Program</h2>
+<h2 id="winsdkapplicationprogram">WinSDK Application Program</h2>
 <pre><code class="lang-lua">target("usbview")
     add_rules("win.sdk.application")
 
@@ -350,28 +350,28 @@ $ xmake
     add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 </code></pre>
 <p>If you want to known more information, you can see <a href="https://github.com/xmake-io/xmake/issues/173">#173</a>.</p>
-<h2 id="mfc-application-program">MFC Application Program</h2>
-<h3 id="mfc-static-library">MFC Static Library</h3>
+<h2 id="mfcapplicationprogram">MFC Application Program</h2>
+<h3 id="mfcstaticlibrary">MFC Static Library</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("win.sdk.mfc.static")
     add_files("src/*.c")
 </code></pre>
-<h3 id="mfc-shared-library">MFC Shared Library</h3>
+<h3 id="mfcsharedlibrary">MFC Shared Library</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("win.sdk.mfc.shared")
     add_files("src/*.c")
 </code></pre>
-<h3 id="mfc-application-static-">MFC Application (Static)</h3>
+<h3 id="mfcapplicationstatic">MFC Application (Static)</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("win.sdk.mfc.static_app")
     add_files("src/*.c")
 </code></pre>
-<h3 id="mfc-application-shared-">MFC Application (Shared)</h3>
+<h3 id="mfcapplicationshared">MFC Application (Shared)</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("win.sdk.mfc.shared_app")
     add_files("src/*.c")
 </code></pre>
-<h2 id="ios-macos-program">iOS/MacOS Program</h2>
+<h2 id="iosmacosprogram">iOS/MacOS Program</h2>
 <h3 id="application">Application</h3>
 <p>Generate <em>.app/</em>.ipa application and supports iOS/MacOS.</p>
 <pre><code class="lang-lua">target("test")
@@ -379,12 +379,12 @@ $ xmake
     add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
     add_files("src/Info.plist")
 </code></pre>
-<h4 id="create-project">Create Project</h4>
+<h4 id="createproject">Create Project</h4>
 <p>We can also quickly create project through template:</p>
 <pre><code class="lang-console">$ xmake create -t xcode.macapp -l objc test
 $ xmake create -t xcode.iosapp -l objc test
 </code></pre>
-<h4 id="build-program">Build Program</h4>
+<h4 id="buildprogram">Build Program</h4>
 <pre><code class="lang-console">$ xmake f -p [iphoneos|macosx]
 $ xmake
 [ 18%]: compiling.xcode.release src/Assets.xcassets
@@ -441,13 +441,13 @@ $ xmake
 $ xmake l utils.ipa.resign test.app "Apple Development: waruqi@gmail.com (T3NA4MRVPU)"
 $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" iOS Team Provisioning Profile: org.tboox.test" org.tboox.test
 </code></pre>
-<h4 id="run-the-application">Run the application</h4>
+<h4 id="runtheapplication">Run the application</h4>
 <p>Currently only supports running macos program:</p>
 <p><code>`console
 $ xmake run</code> `</p>
 <p>The effect is as follows:</p>
 <p><img src="/assets/img/guide/macapp.png" alt=""></p>
-<h4 id="package-program">Package program</h4>
+<h4 id="packageprogram">Package program</h4>
 <p>If it is an iOS program, it will generate an ipa installation package, if it is macos, it will generate a dmg package (dmg package generation is still under development for the time being).</p>
 <pre><code class="lang-console">$ xmake package
 output: build/iphoneos/release/arm64/test.ipa
@@ -468,7 +468,7 @@ $ xmake l utils.ipa.install test.ipa
 <p>!> Currently only the macos program is supported</p>
 <pre><code class="lang-console">$ xmake uninstall
 </code></pre>
-<h3 id="framework-program">Framework Program</h3>
+<h3 id="frameworkprogram">Framework Program</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.framework")
     add_files("src/*.m")
@@ -477,7 +477,7 @@ $ xmake l utils.ipa.install test.ipa
 <p>We can also quickly create project through template:</p>
 <pre><code class="lang-console">$ xmake create -t xcode.framework -l objc test
 </code></pre>
-<h3 id="bundle-program">Bundle Program</h3>
+<h3 id="bundleprogram">Bundle Program</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.bundle")
     add_files("src/*.m")
@@ -486,8 +486,8 @@ $ xmake l utils.ipa.install test.ipa
 <p>We can also quickly create project through template:</p>
 <pre><code class="lang-console">$ xmake create -t xcode.bundle -l objc test
 </code></pre>
-<h2 id="protobuf-program">Protobuf program</h2>
-<h3 id="using-c-library">Using c library</h3>
+<h2 id="protobufprogram">Protobuf program</h2>
+<h3 id="usingclibrary">Using c library</h3>
 <pre><code class="lang-lua">add_requires("protobuf-c")
 
 target("console_c")
@@ -497,7 +497,7 @@ target("console_c")
      add_files("src/*.c")
      add_files("src/*.proto", {rules = "protobuf.c"})
 </code></pre>
-<h3 id="using-the-c-library">Using the C++ library</h3>
+<h3 id="usingtheclibrary">Using the C++ library</h3>
 <pre><code class="lang-lua">add_requires("protobuf-cpp")
 
 target("console_c++")
@@ -509,7 +509,7 @@ target("console_c++")
      add_files("src/*.cpp")
      add_files("src/*.proto", {rules = "protobuf.cpp"})
 </code></pre>
-<h2 id="cuda-program">Cuda Program</h2>
+<h2 id="cudaprogram">Cuda Program</h2>
 <p>Create an empty project:</p>
 <pre><code class="lang-console">$ xmake create -P test -l cuda
 $ cd test
@@ -532,13 +532,13 @@ target("cuda_console")
 $ xmake
 </code></pre>
 <p>If you want to known more information, you can see <a href="https://github.com/xmake-io/xmake/issues/158">#158</a>.</p>
-<h2 id="lexyacc-program">Lex&amp;Yacc Program</h2>
+<h2 id="lexyaccprogram">Lex&amp;Yacc Program</h2>
 <pre><code class="lang-lua">target("calc")
      set_kind("binary")
      add_rules("lex", "yacc")
      add_files("src/*.l", "src/*.y")
 </code></pre>
-<h2 id="fortran-program">Fortran Program</h2>
+<h2 id="fortranprogram">Fortran Program</h2>
 <p>After v2.3.6, the gfortran compiler is supported to compile fortran projects. We can quickly create an empty project based on fortran by using the following command:</p>
 <pre><code class="lang-console">$ xmake create -l fortran -t console test
 </code></pre>
@@ -550,7 +550,7 @@ target("test")
     add_files("src/*.f90")
 </code></pre>
 <p>More code examples can be viewed here: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/fortran">Fortran Examples</a></p>
-<h2 id="go-program">Go Program</h2>
+<h2 id="goprogram">Go Program</h2>
 <p>xmake also supports the construction of go programs, and also provides command support for creating empty projects:</p>
 <pre><code class="lang-console">$ xmake create -l go -t console test
 </code></pre>
@@ -582,7 +582,7 @@ target("test")
 </code></pre>
 <p>However, there are still some imperfections. For example, all cascading dependency packages must be manually configured at present, which will be a bit more cumbersome and needs to be improved in the future.</p>
 <p>For more examples, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/go">Go Examples</a></p>
-<h2 id="dlang-program">Dlang Program</h2>
+<h2 id="dlangprogram">Dlang Program</h2>
 <p>Create an empty project:</p>
 <pre><code class="lang-console">$ xmake create -l dlang -t console test
 </code></pre>
@@ -609,7 +609,7 @@ target("test")
 </code></pre>
 <p>However, there are still some imperfections. For example, all cascading dependency packages must be manually configured at present, which will be a bit more cumbersome and needs to be improved in the future.</p>
 <p>For more examples, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/dlang">Dlang Examples</a></p>
-<h2 id="rust-program">Rust Program</h2>
+<h2 id="rustprogram">Rust Program</h2>
 <p>Create an empty project:</p>
 <pre><code class="lang-console">$ xmake create -l rust -t console test
 </code></pre>
@@ -621,7 +621,7 @@ target("test")
     add_files("src/*.rs")
 </code></pre>
 <p>For more examples, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/rust">Rust Examples</a></p>
-<h2 id="swift-program">Swift Program</h2>
+<h2 id="swiftprogram">Swift Program</h2>
 <p>Create an empty project:</p>
 <pre><code class="lang-console">$ xmake create -l swift -t console test
 </code></pre>
@@ -633,7 +633,7 @@ target("test")
     add_files("src/*.swift")
 </code></pre>
 <p>For more examples, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/swift">Swift Examples</a></p>
-<h2 id="objc-program">Objc Program</h2>
+<h2 id="objcprogram">Objc Program</h2>
 <p>Create an empty project:</p>
 <pre><code class="lang-console">$ xmake create -l objc -t console test
 </code></pre>
@@ -645,7 +645,7 @@ target("test")
     add_files("src/*.m")
 </code></pre>
 <p>For more examples, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/objc++">Objc Examples</a></p>
-<h2 id="zig-program">Zig Program</h2>
+<h2 id="zigprogram">Zig Program</h2>
 <p>!> At present, it is still in the experimental support stage and is not perfect. For example, it is not supported on windows, and dynamic library compilation under linux/macOS is not yet supported. Please evaluate and use it yourself.</p>
 <p>Create an empty project:</p>
 <pre><code class="lang-console">$ xmake create -l zig -t console test

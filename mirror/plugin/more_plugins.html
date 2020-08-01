@@ -90,7 +90,7 @@
   line-height: 1;
 }
 </style>
-    <h2 id="ide-editor-integration">IDE/Editor Integration</h2>
+    <h2 id="ideeditorintegration">IDE/Editor Integration</h2>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-vscode">xmake-vscode</a></li>
 </ul>
@@ -106,15 +106,15 @@
 <ul>
 <li><a href="https://github.com/luzhlon/xmake.vim">xmake.vim</a> (third-party, thanks <a href="https://github.com/luzhlon">@luzhlon</a>)</li>
 </ul>
-<h2 id="gradle-plugin-jni-">Gradle Plugin (JNI)</h2>
+<h2 id="gradlepluginjni">Gradle Plugin (JNI)</h2>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-gradle">xmake-gradle</a>: A gradle plugin that integrates xmake seamlessly</li>
 </ul>
-<h3 id="plugins-dsl">plugins DSL</h3>
+<h3 id="pluginsdsl">plugins DSL</h3>
 <pre><code>plugins {
   id &#39;org.tboox.gradle-xmake-plugin&#39; version &#39;1.0.9&#39;
 }
-</code></pre><h3 id="legacy-plugin-application">Legacy plugin application</h3>
+</code></pre><h3 id="legacypluginapplication">Legacy plugin application</h3>
 <pre><code>buildscript {
   repositories {
     maven {
@@ -130,9 +130,9 @@
 }
 
 apply plugin: "org.tboox.gradle-xmake-plugin"
-</code></pre><h3 id="simplest-example">Simplest Example</h3>
+</code></pre><h3 id="simplestexample">Simplest Example</h3>
 <p>We add <code>xmake.lua</code> to <code>projectdir/jni/xmake.lua</code> and enable xmake in build.gradle.</p>
-<h4 id="build-gradle">build.gradle</h4>
+<h4 id="buildgradle">build.gradle</h4>
 <pre><code>android {
     externalNativeBuild {
         xmake {
@@ -155,7 +155,7 @@ target("nativelib")
     set_kind("shared")
     add_files("nativelib.cc")
 </code></pre>
-<h3 id="more-gradle-configuations">More Gradle Configuations</h3>
+<h3 id="moregradleconfiguations">More Gradle Configuations</h3>
 <pre><code>android {
     defaultConfig {
         externalNativeBuild {
@@ -201,7 +201,7 @@ target("nativelib")
         }
     }
 }
-</code></pre><h3 id="build-jni-and-generate-apk">Build JNI and generate apk</h3>
+</code></pre><h3 id="buildjniandgenerateapk">Build JNI and generate apk</h3>
 <p>The <code>xmakeBuild</code> will be injected to <code>assemble</code> task automatically if the gradle-xmake-plugin has been applied.</p>
 <pre><code class="lang-console">$ ./gradlew app:assembleDebug
 > Task :nativelib:xmakeConfigureForArm64
@@ -222,7 +222,7 @@ target("nativelib")
 > Task :nativelib:assemble
 > Task :app:assembleDebug
 </code></pre>
-<h3 id="force-to-rebuild-jni">Force to rebuild JNI</h3>
+<h3 id="forcetorebuildjni">Force to rebuild JNI</h3>
 <pre><code class="lang-console">$ ./gradlew nativelib:xmakeRebuild
 </code></pre>
 </article>

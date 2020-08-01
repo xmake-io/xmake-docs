@@ -96,12 +96,12 @@
     set_kind("binary")
     add_files("src/*.c")
 </code></pre>
-<h2 id="-">配置分离</h2>
+<h2 id="">配置分离</h2>
 <p>xmake.lua采用二八原则实现了描述域、脚本域两层分离式配置。</p>
 <p>什么是二八原则呢，简单来说，大部分项目的配置，80%的情况下，都是些基础的常规配置，比如：<code>add_cxflags</code>, <code>add_links</code>等，<br>只有剩下不到20%的地方才需要额外做些复杂来满足一些特殊的配置需求。</p>
 <p>而这剩余的20%的配置通常比较复杂，如果直接充斥在整个xmake.lua里面，会把整个项目的配置整个很混乱，非常不可读。</p>
 <p>因此，xmake通过描述域、脚本域两种不同的配置方式，来隔离80%的简单配置以及20%的复杂配置，使得整个xmake.lua看起来非常的清晰直观，可读性和可维护性都达到最佳。</p>
-<h3 id="-">描述域</h3>
+<h3 id="">描述域</h3>
 <p>对于刚入门的新手用户，或者仅仅是维护一些简单的小项目，通过完全在描述配置就已经完全满足需求了，那什么是描述域呢？它长这样：</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -142,7 +142,7 @@
 <p>并且在描述域，主要目的是为了设置配置项，因此xmake并没有完全开放所有的模块接口，很多接口在描述域是被禁止调用的，<br>即使开放出来的一些可调用接口，也是完全只读的，不耗时的安全接口，比如：<code>os.getenv()</code>等读取一些常规的系统信息，用于配置逻辑的控制。</p>
 <p>!> 另外需要注意一点，xmake.lua是会被多次解析的，用于在不同阶段解析不同的配置域：比如：<code>option()</code>, <code>target()</code>等域。</p>
 <p>因此，不要想着在xmake.lua的描述域，写复杂的lua脚本，也不要在描述域调用print去显示信息，因为会被执行多遍，记住：会被执行多遍！！！</p>
-<h3 id="-">脚本域</h3>
+<h3 id="">脚本域</h3>
 <p>限制描述域写复杂的lua，各种lua模块和接口都用不了？怎么办？这个时候就是脚本域出场的时候了。</p>
 <p>如果用户已经完全熟悉了xmake的描述域配置，并且感觉有些满足不了项目上的一些特殊配置维护了，那么我们可以在脚本域做更加复杂的配置逻辑：</p>
 <pre><code class="lang-lua">target("test")
@@ -172,10 +172,10 @@
     on_install("modules.test.install")
 </code></pre>
 <p>我们可以吧自定义的脚本放置到xmake.lua对应目录下，<code>modules/test/load.lua</code>和<code>modules/test/install.lua</code>中独立维护。</p>
-<p>这些独立的lua脚本里面，我们还可以通过<a href="/zh-cn/manual/builtin_modules?id=import">import</a>导入各种内置模块和自定义模块进来使用，就跟平常写lua, java没啥区别。</p>
+<p>这些独立的lua脚本里面，我们还可以通过<a href="/mirror/zh-cn/manual/builtin_modules.html#import">import</a>导入各种内置模块和自定义模块进来使用，就跟平常写lua, java没啥区别。</p>
 <p>而对于脚本的域的不同阶段，<code>on_load</code>主要用于target加载时候，做一些动态化的配置，这里不像描述域，只会执行一遍哦!!!</p>
 <p>其他阶段，还有很多，比如：<code>on/after/before</code>_<code>build/install/package/run</code>等，具体看下后面的target api手册部分吧，这里就不细说了。</p>
-<h2 id="-">配置类型</h2>
+<h2 id="">配置类型</h2>
 <p>在描述域配置中，分配置域和配置项，配置域里面可以通过<code>set_xxx</code>/<code>add_xxx</code>的接口，配置各种配置项。</p>
 <pre><code class="lang-lua">target("test1")
     set_kind("binary")
@@ -208,13 +208,13 @@ target("test2")
     add_files("src/*.c")
 target_end()
 </code></pre>
-<h3 id="-">配置域</h3>
+<h3 id="">配置域</h3>
 <p>目前提供的配置域有：<code>target()</code>, <code>option()</code>, <code>task()</code>, <code>package()</code></p>
-<p>每个域的详细说明，见：<a href="/zh-cn/manual/project_target">API手册</a></p>
-<h3 id="-">配置项</h3>
+<p>每个域的详细说明，见：<a href="/mirror/zh-cn/manual/project_target.html">API手册</a></p>
+<h3 id="">配置项</h3>
 <p>只要是带有<code>set_xxx</code>和<code>add_xxx</code>字样的配置，都属于配置项，一个配置域里面可以设置多个配置项。</p>
-<p>关于配置项的规范说明，见：<a href="/zh-cn/manual/specification">接口规范</a></p>
-<h2 id="-">作用域</h2>
+<p>关于配置项的规范说明，见：<a href="/mirror/zh-cn/manual/specification.html">接口规范</a></p>
+<h2 id="">作用域</h2>
 <p>xmake的描述语法是按作用域划分的，主要分为：</p>
 <ul>
 <li>外部作用域</li>
@@ -246,7 +246,7 @@ task("hello")
         end)
 </code></pre>
 <p>简单的说，就是在自定义脚本<code>function () end</code>之内的都属于内部作用域，也就是脚本作用域，其他地方都是都属于于外部作用域。。</p>
-<h3 id="-">外部作用域</h3>
+<h3 id="">外部作用域</h3>
 <p>对于大部分工程来说，并不需要很复杂的工程描述，也不需要自定义脚本支持，只需要简单的 <code>set_xxx</code> 或者 <code>add_xxx</code> 就能满足需求了</p>
 <p>那么根据二八定律，80%的情况下，我们只需要这么写：</p>
 <pre><code class="lang-lua">target("test")
@@ -271,7 +271,7 @@ target("demo")
 <li>print</li>
 <li>os</li>
 </ul>
-<p>当然虽然内置lua api提供不多，但xmake还提供了很多扩展api，像描述api就不多说，详细可参考：<a href="/zh-cn/manual/builtin_modules">API手册</a></p>
+<p>当然虽然内置lua api提供不多，但xmake还提供了很多扩展api，像描述api就不多说，详细可参考：<a href="/mirror/zh-cn/manual/builtin_modules.html">API手册</a></p>
 <p>还有些辅助api，例如：</p>
 <p>dirs：扫描获取当前指定路径中的所有目录<br>files：扫描获取当前指定路径中的所有文件<br>format: 格式化字符串，string.format的简写版本</p>
 <p>还有变量定义、逻辑操作也是可以使用的，毕竟是基于lua的，该有的基础语法，还是要有的，我们可以通过if来切换编译文件：</p>
@@ -292,7 +292,7 @@ var2 = 1
 
 includes("src")
 </code></pre>
-<h3 id="-">内部作用域</h3>
+<h3 id="">内部作用域</h3>
 <p>也称插件、脚本作用域，提供更加复杂、灵活的脚本支持，一般用于编写一些自定义脚本、插件开发、自定义task任务、自定义模块等等</p>
 <p>一般通过<code>function () end</code>包含，并且被传入到<code>on_xxx</code>, <code>before_xxx</code>和<code>after_xxx</code>接口内的，都属于自作用域。</p>
 <p>例如：</p>
@@ -309,7 +309,7 @@ task("hello")
         end)
 </code></pre>
 <p>在此作用域中，不仅可以使用大部分lua的api，还可以使用很多xmake提供的扩展模块，所有扩展模块，通过import来导入</p>
-<p>具体可参考：<a href="/zh-cn/manual/builtin_modules?id=import">import模块导入文档</a></p>
+<p>具体可参考：<a href="/mirror/zh-cn/manual/builtin_modules.html#import">import模块导入文档</a></p>
 <p>这里我们给个简单的例子，在编译完成后，对ios目标程序进行ldid签名：</p>
 <pre><code class="lang-lua">target("iosdemo")
     set_kind("binary")
@@ -322,7 +322,7 @@ task("hello")
 </code></pre>
 <p>需要注意的是，在内部作用域中，所有的调用都是启用异常捕获机制的，如果运行出错，会自动中断xmake，并给出错误提示信息</p>
 <p>因此，脚本写起来，不需要繁琐的<code>if retval then</code>判断，脚本逻辑更加一目了然</p>
-<h3 id="-">接口作用域</h3>
+<h3 id="">接口作用域</h3>
 <p>在外部作用域中的所有描述api设置，本身也是有作用域之分的，在不同地方调用，影响范围也不相同，例如：</p>
 <pre><code class="lang-lua">-- 全局根作用域，影响所有target，包括includes() 中的子工程target设置
 add_defines("DEBUG")
@@ -360,7 +360,7 @@ target("demo")
 target_end()
 </code></pre>
 <p>调用<code>option_end()</code>, <code>target_end()</code>即可显式的离开当前target/option域设置。</p>
-<h3 id="-">作用域缩进</h3>
+<h3 id="">作用域缩进</h3>
 <p>xmake.lua里面缩进，只是个编写规范，用于更加清楚的区分，当前的设置 是针对 那个作用域的，虽然就算不缩进，也一样ok，但是可读性上 并不是很好。。</p>
 <p>例如：</p>
 <pre><code class="lang-lua">target("xxxx")
@@ -375,7 +375,7 @@ add_files("*.c")
 <p>上述两种方式，效果上都是一样的，但是理解上，第一种更加直观，一看就知道<code>add_files</code>仅仅只是针对 target 设置的，并不是全局设置</p>
 <p>因此，适当的进行缩进，有助于更好的维护xmake.lua</p>
 <p>最后附上，tbox的<a href="https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua">xmake.lua</a>描述，仅供参考。。</p>
-<h2 id="-">多级配置</h2>
+<h2 id="">多级配置</h2>
 <p>在脚本域我们可以通过import导入各种丰富的扩展模块来使用，而在描述域我们可以通过<a href="/#/zh-cn/manual/global_interfaces?id=includes">includes</a>接口，来引入项目子目录下的xmake.lua配置。</p>
 <p>记住：xmake的includes是按照tree结构来处理配置关系的，子目录下的xmake.lua里面的target配置会继承父xmake.lua中的根域配置，例如：</p>
 <p>目前有如下项目结构：</p>
@@ -414,7 +414,7 @@ target("test3")
 <pre><code>target("test1"): -DROOT -DTEST1
 target("test2"): -DROOT -DTEST2
 target("test3"): -DROOT -DROOT2 -DTEST3
-</code></pre><h2 id="-">语法简化</h2>
+</code></pre><h2 id="">语法简化</h2>
 <p>xmake.lua的配置域语法，非常灵活，可以在相关域做各种复杂灵活的配置，但是对于许多精简的小块配置，这个时候就稍显冗余了：</p>
 <pre><code class="lang-lua">option("test1")
     set_default(true)

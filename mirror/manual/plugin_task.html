@@ -129,7 +129,7 @@
 </tbody>
 </table>
 <h3 id="task">task</h3>
-<h4 id="defining-plugins-or-tasks">Defining plugins or tasks</h4>
+<h4 id="definingpluginsortasks">Defining plugins or tasks</h4>
 <p>The <code>task</code> field is used to describe a custom task implementation, in the same level as <a href="#target">target</a> and <a href="#option">option</a>.</p>
 <p>For example, here is a simple task defined:</p>
 <pre><code class="lang-lua">task("hello")
@@ -154,10 +154,10 @@
 </code></pre>
 <p>Run the <code>hello</code> task after building the <code>test</code> target.</p>
 <h3 id="task_end">task_end</h3>
-<h4 id="end-defining-plugins-or-tasks">End defining plugins or tasks</h4>
+<h4 id="enddefiningpluginsortasks">End defining plugins or tasks</h4>
 <p>This is an optional api that shows the departure option scope, similar to <a href="#target_end">target_end</a>.</p>
-<h3 id="task-set_menu">task:set_menu</h3>
-<h4 id="setting-the-task-menu">Setting the task menu</h4>
+<h3 id="taskset_menu">task:set_menu</h3>
+<h4 id="settingthetaskmenu">Setting the task menu</h4>
 <p>By setting a menu, this task can be opened to the user to manually call through the command line. The menu settings are as follows:</p>
 <pre><code class="lang-lua">task("echo")
 
@@ -276,8 +276,8 @@ Options:
 <pre><code class="lang-bash">$ xmake echo --color=red --bright hello xmake!
 </code></pre>
 <p>The last variable argument list is retrieved by <code>option.get("contents")</code> in the <code>run</code> script, which returns an array of type <code>table</code>.</p>
-<h3 id="task-set_category">task:set_category</h3>
-<h4 id="setting-task-categories">Setting task categories</h4>
+<h3 id="taskset_category">task:set_category</h3>
+<h4 id="settingtaskcategories">Setting task categories</h4>
 <p>It is only used for grouping of menus. Of course, the plugin will use <code>plugin</code> by default. The built-in task will use <code>action</code> by default, but it is just a convention.</p>
 <p><p class="tip"><br>You can use any name you define yourself. The same name will be grouped and displayed together. If it is set to <code>plugin</code>, it will be displayed in the Plugins group of xmake.<br></p>
 
@@ -293,8 +293,8 @@ Options:
        echo Echo the given info!
 </code></pre>
 <p>If you do not call this interface to set the classification, the default is to use the <code>Tasks</code> group display, which represents the normal task.</p>
-<h3 id="task-on_run">task:on_run</h3>
-<h4 id="setting-up-a-task-to-run-a-script">Setting up a task to run a script</h4>
+<h3 id="taskon_run">task:on_run</h3>
+<h4 id="settingupatasktorunascript">Setting up a task to run a script</h4>
 <p>There are two ways to set it up. The easiest way is to set the inline function:</p>
 <pre><code class="lang-lua">task("hello")
 
@@ -317,7 +317,7 @@ Options:
     print("hello xmake!")
 end
 </code></pre>
-<p>It&#39;s a simple script file with the main function of <code>main</code>. You can import various extension modules via <a href="/manual/builtin_modules?id=import">import</a> to implement complex functions, such as:</p>
+<p>It&#39;s a simple script file with the main function of <code>main</code>. You can import various extension modules via <a href="/mirror/manual/builtin_modules.html#import">import</a> to implement complex functions, such as:</p>
 <pre><code class="lang-lua">-- Import parameter option module
 import("core.base.option")
 
@@ -328,7 +328,7 @@ function main(...)
     print("color: %s", option.get("color"))
 end
 </code></pre>
-<p>You can also create multiple custom module files in the current directory and use them after importing via <a href="/manual/builtin_modules?id=import">import</a>, for example:</p>
+<p>You can also create multiple custom module files in the current directory and use them after importing via <a href="/mirror/manual/builtin_modules.html#import">import</a>, for example:</p>
 <pre><code>Projectdir
     - xmake.lua
     - main.lua
@@ -349,7 +349,7 @@ function main(...)
     module.hello()
 end
 </code></pre>
-<p>For more modules, see: <a href="/manual/builtin_modules">Builtin Module</a> and <a href="/manual/extension_modules">Extension Module</a></p>
+<p>For more modules, see: <a href="/mirror/manual/builtin_modules.html">Builtin Module</a> and <a href="/mirror/manual/extension_modules.html">Extension Module</a></p>
 <p>Among them, the parameter in <code>main(...)</code> is specified by <code>task.run</code>, for example:</p>
 <pre><code class="lang-lua">task.run("hello", {color="red"}, arg1, arg2, arg3)
 </code></pre>
