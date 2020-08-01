@@ -1834,11 +1834,15 @@ target("test2")
 | sc           | swift编译器                          |
 | rc           | rust编译器                           |
 | dc           | dlang编译器                          |
+| fc           | fortran编译器                        |
+| sc           | swift编译器                          |
+| rust         | rust编译器                           |
+| strip        | strip程序                            |
 | ld           | c/c++/asm/objc等通用可执行程序链接器 |
 | sh           | c/c++/asm/objc等通用动态库链接器     |
 | ar           | c/c++/asm/objc等通用静态库归档器     |
-| dcld        | dlang可执行链接器, rcld/gcld等类似 |
-| dcsh        | dlang动态库链接器, rcsh/gcsh等类似 |
+| dcld         | dlang可执行链接器, rcld/gcld等类似   |
+| dcsh         | dlang动态库链接器, rcsh/gcsh等类似   |
 
 对于一些编译器文件名不规则，导致xmake无法正常识别处理为已知的编译器名的情况下，我们也可以加一个工具名提示，例如：
 

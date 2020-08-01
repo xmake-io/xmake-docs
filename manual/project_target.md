@@ -1826,22 +1826,26 @@ Each setting will override the previous setting under the current target target.
 
 The previous parameter is key, which is used to specify the tool type. Currently supported (compiler, linker, archiver):
 
-| Tool Type    | Description                                               |
-| ------------ | ------------------------------------                      |
-| cc           | c compiler                                                |
-| cxx          | c++ compiler                                              |
-| mm           | objc compiler                                             |
-| mxx          | objc++ compiler                                           |
-| gc           | go compiler                                               |
-| as           | assembler                                                 |
-| sc           | swift compiler                                            |
-| rc           | rust compiler                                             |
-| dc           | dlang compiler                                            |
-| ld           | Common executable program linker such as c/c++/asm/objc   |
-| sh           | c/c++/asm/objc and other universal dynamic library linker |
-| ar           | general static library archiver such as c/c++/asm/objc    |
-| dcld         | dlang executable linker, rcld/gcld, etc.                  |
-| dcsh         | dlang dynamic library linker, rcsh/gcsh, etc.             |
+| Tool Type    | Description                                                |
+| ------------ | ------------------------------------                       |
+| cc           | c compiler                                                 |
+| cxx          | c++ compiler                                               |
+| mm           | objc compiler                                              |
+| mxx          | objc++ compiler                                            |
+| gc           | go compiler                                                |
+| as           | Assembler                                                  |
+| sc           | swift compiler                                             |
+| rc           | rust compiler                                              |
+| dc           | dlang compiler                                             |
+| fc           | fortran compiler                                           |
+| sc           | swift compiler                                             |
+| rust         | rust compiler                                              |
+| strip        | strip program                                              |
+| ld           | c/c++/asm/objc and other general executable program linker |
+| sh           | c/c++/asm/objc and other general dynamic library linkers   |
+| ar           | c/c++/asm/objc and other general static library archivers  |
+| dcld         | dlang executable linker, rcld/gcld and similar             |
+| dcsh         | dlang dynamic library linker, rcsh/gcsh and similar        |
 
 For some compiler file names that are irregular, causing xmake to fail to recognize the known compiler name, we can also add a tool name prompt, for example:
 
