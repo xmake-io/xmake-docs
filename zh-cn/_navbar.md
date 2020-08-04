@@ -1,6 +1,6 @@
 - [文章](https://tboox.org/cn/category/#xmake)
 - [反馈](https://github.com/xmake-io/xmake/issues)
-- [社区](https://www.reddit.com/r/tboox/)
+- [社区](https://www.reddit.com/r/xmake/)
 - 语言
   - [:uk: English](/)
   - [:cn: 中文](/zh-cn/)
