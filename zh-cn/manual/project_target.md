@@ -212,6 +212,7 @@ target("test2")
 
 | 值     | 描述       |
 | ------ | -----------|
+| phony | 假的目标程序 |
 | binary | 二进制程序 |
 | static | 静态库程序 |
 | shared | 动态库程序 |
@@ -219,7 +220,26 @@ target("test2")
 ```lua
 target("demo")
     set_kind("binary")
+    add_files("src/*.c")
 ```
+
+!> 其中，phony是一个特殊的目标程序类型，它不生成任何实际的程序文件，仅仅用于组合其他目标程序的依赖关系。
+
+```lua
+target("test1")
+    set_kind("binary")
+    add_files("src/*.c")
+
+target("test2")
+    set_kind("binary")
+    add_files("src/*.c")
+
+target("demo")
+    set_kind("phony")
+    add_deps("test1", "test2")
+```
+
+比如上述配置，我们就可以在执行 `xmake build demo` 编译的时候，同时编译相关的两个依赖程序：test1和test2。
 
 ### target:set_strip
 

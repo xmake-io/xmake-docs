@@ -674,7 +674,7 @@ target("test2")
 </code></pre>
 <h3 id="targetset_kind">target:set_kind</h3>
 <h4 id="settargetkind">Set target kind</h4>
-<p>Set the target type. Currently supported types are:</p>
+<p>Set the target type, currently supported types are:</p>
 <table>
 <thead>
 <tr>
@@ -684,8 +684,12 @@ target("test2")
 </thead>
 <tbody>
 <tr>
+<td>phony</td>
+<td>Fake target program</td>
+</tr>
+<tr>
 <td>binary</td>
-<td>Binary Program</td>
+<td>binary program</td>
 </tr>
 <tr>
 <td>static</td>
@@ -693,13 +697,28 @@ target("test2")
 </tr>
 <tr>
 <td>shared</td>
-<td>dynamic library program</td>
+<td>Dynamic library program</td>
 </tr>
 </tbody>
 </table>
 <pre><code class="lang-lua">target("demo")
-    set_kind("binary")
+     set_kind("binary")
+     add_files("src/*.c")
 </code></pre>
+<p>!> Among them, phony is a special target program type. It does not generate any actual program files, but is only used to combine the dependencies of other target programs.</p>
+<pre><code class="lang-lua">target("test1")
+     set_kind("binary")
+     add_files("src/*.c")
+
+target("test2")
+     set_kind("binary")
+     add_files("src/*.c")
+
+target("demo")
+     set_kind("phony")
+     add_deps("test1", "test2")
+</code></pre>
+<p>For example, with the above configuration, we can compile two related dependent programs: test1 and test2 when compiling with <code>xmake build demo</code>.</p>
 <h3 id="targetset_strip">target:set_strip</h3>
 <h4 id="striptargetsymbols">Strip target symbols</h4>
 <p>Set the current target strip mode, currently supports the mode:</p>

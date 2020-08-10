@@ -210,18 +210,38 @@ target("test2")
 
 #### Set target kind
 
-Set the target type. Currently supported types are:
+Set the target type, currently supported types are:
 
 | Value | Description |
 | ------ | -----------|
-| binary | Binary Program |
+| phony | Fake target program |
+| binary | binary program |
 | static | Static library program |
-| shared | dynamic library program |
+| shared | Dynamic library program |
 
 ```lua
 target("demo")
-    set_kind("binary")
+     set_kind("binary")
+     add_files("src/*.c")
 ```
+
+!> Among them, phony is a special target program type. It does not generate any actual program files, but is only used to combine the dependencies of other target programs.
+
+```lua
+target("test1")
+     set_kind("binary")
+     add_files("src/*.c")
+
+target("test2")
+     set_kind("binary")
+     add_files("src/*.c")
+
+target("demo")
+     set_kind("phony")
+     add_deps("test1", "test2")
+```
+
+For example, with the above configuration, we can compile two related dependent programs: test1 and test2 when compiling with `xmake build demo`.
 
 ### target:set_strip
 
