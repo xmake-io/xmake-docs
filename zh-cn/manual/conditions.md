@@ -225,9 +225,7 @@ $ xmake
 ```lua
 -- 如果手动启用了xmake f --demo=y 选项
 if is_option("demo") then
-
-    -- 编译demo目录下的代码
-    add_subdirs("src/demo")
+    includes("src/demo")
 end
 ```
 
@@ -246,7 +244,7 @@ $ xmake f --test=hello1
 ```lua
 -- 自定义一个配置选项到命令行菜单
 option("test")
-    set_showmenu("true")
+    set_showmenu(true)
     set_description("The test config option")
 option_end()
 

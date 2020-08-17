@@ -209,7 +209,7 @@ For example, we want to enable the custom option: `xmake f --demo=y` and check i
 
 ```lua
 if is_option("demo") then
-    add_subdirs("src/demo")
+    includes("src/demo")
 end
 ```
 
@@ -227,7 +227,7 @@ $ xmake f --test=hello1
 
 ```lua
 option("test")
-    set_showmenu("true")
+    set_showmenu(true)
     set_description("The test config option")
 option_end()
 

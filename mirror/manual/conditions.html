@@ -300,7 +300,7 @@ $ xmake
 <p>You can use this api to check the custom option configuration command：<code>xmake f --xxxx=y</code></p>
 <p>For example, we want to enable the custom option: <code>xmake f --demo=y</code> and check it from <code>xmake.lua</code>.</p>
 <pre><code class="lang-lua">if is_option("demo") then
-    add_subdirs("src/demo")
+    includes("src/demo")
 end
 </code></pre>
 <h3 id="is_config">is_config</h3>
@@ -310,7 +310,7 @@ end
 <pre><code class="lang-console">$ xmake f --test=hello1
 </code></pre>
 <pre><code class="lang-lua">option("test")
-    set_showmenu("true")
+    set_showmenu(true)
     set_description("The test config option")
 option_end()
 

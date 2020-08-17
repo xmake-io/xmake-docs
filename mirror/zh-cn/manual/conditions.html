@@ -311,9 +311,7 @@ $ xmake
 <p>如果某个自动检测选项、手动设置选项被启用，那么可以通过<code>is_option</code>接口来判断，例如：</p>
 <pre><code class="lang-lua">-- 如果手动启用了xmake f --demo=y 选项
 if is_option("demo") then
-
-    -- 编译demo目录下的代码
-    add_subdirs("src/demo")
+    includes("src/demo")
 end
 </code></pre>
 <h3 id="is_config">is_config</h3>
@@ -324,7 +322,7 @@ end
 </code></pre>
 <pre><code class="lang-lua">-- 自定义一个配置选项到命令行菜单
 option("test")
-    set_showmenu("true")
+    set_showmenu(true)
     set_description("The test config option")
 option_end()
 
