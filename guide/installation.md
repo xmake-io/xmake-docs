@@ -31,6 +31,9 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 
 !> Releases/xmake-[version].[win32|win64].zip has not installer, we need unzip it and add PATH environment variables by ourself.
 
+In addition, the installation package with `xmake-tinyc-xxx.exe`, which integrates the tinyc compiler environment, and comes with libc and winapi header files. By installing this package, you can compile c programs normally without msvc.
+This is very useful for users who want to write some c tests or algorithm codes temporarily, but don't want to install msvc, but the installation package will be slightly larger than 2-3M.
+
 ### via scoop
 
 ```bash

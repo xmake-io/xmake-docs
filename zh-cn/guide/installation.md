@@ -32,6 +32,9 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 
 !> releases下面xmake-[version].[win32|win64].zip的包是不带安装程序的，可直接解压使用，绿色无依赖，不过需要自己添加PATH环境变量。
 
+另外，Releases下面带有 xmake-tinyc 开头的exe安装包，内部集成了 tinyc 编译器环境，自带 libc 和 winapi 头文件，安装这个包，可以实现在没有 msvc 环境下，也能正常编译 c 程序。
+这对于临时想写一些 c 测试或者算法代码，又不想安装 msvc 的用户非常有用，不过安装包会稍微大2-3M，不过也还好。
+
 ### 使用scoop
 
 ```bash
