@@ -33,6 +33,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2020.09.05 | M*x                                   | wechat  | ¥100   |                                                                         |
 | 2020.07.21 | 简单                                  | wechat  | ¥100   |                                                                         |
 | 2020.06.24 | *三                                   | wechat  | ¥10    | xmake很好用                                                             |
 | 2020.06.13 | Ronald                                | alipay  | ¥10    | 方便、专业、谢谢                                                        |
