@@ -2170,6 +2170,77 @@ target("test")
 <p><p class="tip"><br>The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: <a href="#built-in rules">built-in rules</a><br></p>
 
 </p>
+<p>The following is a list of some built-in extended configuration items currently supported by xmake.</p>
+<table>
+<thead>
+<tr>
+<th>Extended configuration name</th>
+<th>Configuration description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fortran.moduledir</td>
+<td>Set the output directory of the fortran module</td>
+</tr>
+<tr>
+<td>ndk.arm_mode</td>
+<td>Set the arm compilation mode of ndk (arm/thumb)</td>
+</tr>
+<tr>
+<td>objc.build.arc</td>
+<td>Set to enable or disable objc&#39;s arc</td>
+</tr>
+<tr>
+<td>objc++.build.arc</td>
+<td>Set to enable or disable arc of objc++</td>
+</tr>
+<tr>
+<td>xcode.bundle_identifier</td>
+<td>Set the Bundle Identifier of the xcode toolchain</td>
+</tr>
+<tr>
+<td>xcode.mobile_provision</td>
+<td>Set the certificate information of the xcode toolchain</td>
+</tr>
+<tr>
+<td>xcode.codesign_identity</td>
+<td>Set the code signing identity of the xcode toolchain</td>
+</tr>
+<tr>
+<td>cuda.build.devlink</td>
+<td>Set to enable or disable cuda&#39;s device link</td>
+</tr>
+<tr>
+<td>wdk.env.winver</td>
+<td>Set the win support version of wdk</td>
+</tr>
+<tr>
+<td>wdk.umdf.sdkver</td>
+<td>Set the umdf sdk version of wdk</td>
+</tr>
+<tr>
+<td>wdk.kmdf.sdkver</td>
+<td>Set the kmdf sdk version of wdk</td>
+</tr>
+<tr>
+<td>wdk.sign.mode</td>
+<td>Set the code signing mode of wdk</td>
+</tr>
+<tr>
+<td>wdk.sign.store</td>
+<td>Set wdk code signing store</td>
+</tr>
+<tr>
+<td>wdk.sign.certfile</td>
+<td>Set wdk code signing certificate file</td>
+</tr>
+<tr>
+<td>wdk.sign.thumbprint</td>
+<td>Set wdk code signing fingerprint</td>
+</tr>
+</tbody>
+</table>
 <h3 id="targetadd_values">target:add_values</h3>
 <h4 id="addcustomconfigurationvalues">Add custom configuration values</h4>
 <p>Usage is similar to <a href="#targetset_values">target:set_values</a>, the difference is that this interface is an additional setting, and will not override the settings each time.</p>

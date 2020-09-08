@@ -2033,6 +2033,26 @@ In the rule script, you can get the extended flag value set in the target by `ta
 The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](#built-in rules)
 </p>
 
+The following is a list of some built-in extended configuration items currently supported by xmake.
+
+| Extended configuration name | Configuration description                              |
+| ---                         | ---                                                    |
+| fortran.moduledir           | Set the output directory of the fortran module         |
+| ndk.arm_mode                | Set the arm compilation mode of ndk (arm/thumb)        |
+| objc.build.arc              | Set to enable or disable objc's arc                    |
+| objc++.build.arc            | Set to enable or disable arc of objc++                 |
+| xcode.bundle_identifier     | Set the Bundle Identifier of the xcode toolchain       |
+| xcode.mobile_provision      | Set the certificate information of the xcode toolchain |
+| xcode.codesign_identity     | Set the code signing identity of the xcode toolchain   |
+| cuda.build.devlink          | Set to enable or disable cuda's device link            |
+| wdk.env.winver              | Set the win support version of wdk                     |
+| wdk.umdf.sdkver             | Set the umdf sdk version of wdk                        |
+| wdk.kmdf.sdkver             | Set the kmdf sdk version of wdk                        |
+| wdk.sign.mode               | Set the code signing mode of wdk                       |
+| wdk.sign.store              | Set wdk code signing store                             |
+| wdk.sign.certfile           | Set wdk code signing certificate file                  |
+| wdk.sign.thumbprint         | Set wdk code signing fingerprint                       |
+
 ### target:add_values
 
 #### Add custom configuration values

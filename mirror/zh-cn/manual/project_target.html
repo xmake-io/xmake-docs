@@ -2181,6 +2181,77 @@ target("test")
 <p><p class="tip"><br>具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：<a href="#内建规则">内建规则</a><br></p>
 
 </p>
+<p>下面是一些 xmake 目前支持的一些内置的扩展配置项列表。</p>
+<table>
+<thead>
+<tr>
+<th>扩展配置名</th>
+<th>配置描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fortran.moduledir</td>
+<td>设置 fortran 模块的输出目录</td>
+</tr>
+<tr>
+<td>ndk.arm_mode</td>
+<td>设置 ndk 的 arm 编译模式（arm/thumb）</td>
+</tr>
+<tr>
+<td>objc.build.arc</td>
+<td>设置启用或禁用 objc 的 arc</td>
+</tr>
+<tr>
+<td>objc++.build.arc</td>
+<td>设置启用或禁用 objc++ 的 arc</td>
+</tr>
+<tr>
+<td>xcode.bundle_identifier</td>
+<td>设置 xcode 工具链的 Bundle Identifier</td>
+</tr>
+<tr>
+<td>xcode.mobile_provision</td>
+<td>设置 xcode 工具链的证书信息</td>
+</tr>
+<tr>
+<td>xcode.codesign_identity</td>
+<td>设置 xcode 工具链的代码签名标识</td>
+</tr>
+<tr>
+<td>cuda.build.devlink</td>
+<td>设置启用或禁用 cuda 的设备链接</td>
+</tr>
+<tr>
+<td>wdk.env.winver</td>
+<td>设置 wdk 的 win 支持版本</td>
+</tr>
+<tr>
+<td>wdk.umdf.sdkver</td>
+<td>设置 wdk 的 umdf sdk 版本</td>
+</tr>
+<tr>
+<td>wdk.kmdf.sdkver</td>
+<td>设置 wdk 的 kmdf sdk 版本</td>
+</tr>
+<tr>
+<td>wdk.sign.mode</td>
+<td>设置 wdk 的代码签名模式</td>
+</tr>
+<tr>
+<td>wdk.sign.store</td>
+<td>设置 wdk 的代码签名 store</td>
+</tr>
+<tr>
+<td>wdk.sign.certfile</td>
+<td>设置 wdk 的代码签名证书文件</td>
+</tr>
+<tr>
+<td>wdk.sign.thumbprint</td>
+<td>设置 wdk 的代码签名指纹</td>
+</tr>
+</tbody>
+</table>
 <h3 id="targetadd_values">target:add_values</h3>
 <h4 id="">添加一些扩展配置值</h4>
 <p>用法跟<a href="#targetset_values">target:set_values</a>类似，区别就是这个接口是追加设置，而不会每次覆盖设置。</p>
