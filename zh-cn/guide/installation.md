@@ -41,6 +41,12 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 scoop install xmake
 ```
 
+### 使用winget
+
+```bash
+winget install xmake
+```
+
 ## Msys/Mingw
 
 现在msys/pacman官方仓库已经收录xmake软件包，可直接通过pacman安装。
@@ -79,18 +85,36 @@ brew install xmake --HEAD
 bash <(curl -fsSL https://xmake.io/shget.text)
 ```
 
-## Linux
-
-在archlinux上安装：
+## Archlinux
 
 ```bash
 yaourt xmake
 ```
 
-或者下载deb包来安装：
+## Ubuntu
+
+### 使用apt安装
+
+```bash
+sudo add-apt-repository ppa:xmake-io/xmake
+sudo apt-get update
+```
+
+### 下载deb包安装
 
 1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载deb安装包
 2. 运行: `dpkg -i xmake-xxxx.deb`
+
+## 其他Linux
+
+先从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载xmake-x.x.x.gz.run自安装包
+
+然后运行这个自安装包。
+
+```bash
+sudo chmod 777 ./xmake-x.x.x.gz.run
+./xmake-x.x.x.gz.run
+```
 
 ## FreeBSD
 

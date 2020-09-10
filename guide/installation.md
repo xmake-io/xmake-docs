@@ -40,6 +40,12 @@ This is very useful for users who want to write some c tests or algorithm codes 
 scoop install xmake
 ```
 
+### via winget
+
+```bash
+winget install xmake
+```
+
 ## Msys/Mingw
 
 ### mingw64
@@ -60,18 +66,36 @@ pacman -Sy mingw-w64-i686-xmake
 brew install xmake
 ```
 
-## Linux
-
-On Archlinux:
+## Archlinux
 
 ```bash
 yaourt xmake
 ```
 
-Or download deb package to install it:
+## Ubuntu
+
+### via apt
+
+```bash
+sudo add-apt-repository ppa:xmake-io/xmake
+sudo apt-get update
+```
+
+### via deb
+
+Download deb package to install it:
 
 1. Download xmake `.deb` install package from [Releases](https://github.com/xmake-io/xmake/releases) 
 2. Run `dpkg -i xmake-xxxx.deb`
+
+## Other Linux
+
+Download xmake `xmake-x.x.x.gz.run` install package from [Releases](https://github.com/xmake-io/xmake/releases) 
+
+```bash
+sudo chmod 777 ./xmake-x.x.x.gz.run
+./xmake-x.x.x.gz.run
+```
 
 ## FreeBSD
 

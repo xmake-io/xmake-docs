@@ -113,6 +113,9 @@
 <h3 id="viascoop">via scoop</h3>
 <pre><code class="lang-bash">scoop install xmake
 </code></pre>
+<h3 id="viawinget">via winget</h3>
+<pre><code class="lang-bash">winget install xmake
+</code></pre>
 <h2 id="msysmingw">Msys/Mingw</h2>
 <h3 id="mingw64">mingw64</h3>
 <pre><code class="lang-bash">pacman -Sy mingw-w64-x86_64-xmake
@@ -123,15 +126,25 @@
 <h2 id="macos">MacOS</h2>
 <pre><code class="lang-bash">brew install xmake
 </code></pre>
-<h2 id="linux">Linux</h2>
-<p>On Archlinux:</p>
+<h2 id="archlinux">Archlinux</h2>
 <pre><code class="lang-bash">yaourt xmake
 </code></pre>
-<p>Or download deb package to install it:</p>
+<h2 id="ubuntu">Ubuntu</h2>
+<h3 id="viaapt">via apt</h3>
+<pre><code class="lang-bash">sudo add-apt-repository ppa:xmake-io/xmake
+sudo apt-get update
+</code></pre>
+<h3 id="viadeb">via deb</h3>
+<p>Download deb package to install it:</p>
 <ol>
 <li>Download xmake <code>.deb</code> install package from <a href="https://github.com/xmake-io/xmake/releases">Releases</a> </li>
 <li>Run <code>dpkg -i xmake-xxxx.deb</code></li>
 </ol>
+<h2 id="otherlinux">Other Linux</h2>
+<p>Download xmake <code>xmake-x.x.x.gz.run</code> install package from <a href="https://github.com/xmake-io/xmake/releases">Releases</a> </p>
+<pre><code class="lang-bash">sudo chmod 777 ./xmake-x.x.x.gz.run
+./xmake-x.x.x.gz.run
+</code></pre>
 <h2 id="freebsd">FreeBSD</h2>
 <p>We need <a href="#source-compilation-and-installation">source compilation and installation</a> and use <code>gmake</code> instead of make.</p>
 <h2 id="termuxandroid">Termux (Android)</h2>

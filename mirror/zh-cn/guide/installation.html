@@ -113,6 +113,9 @@
 <h3 id="scoop">使用scoop</h3>
 <pre><code class="lang-bash">scoop install xmake
 </code></pre>
+<h3 id="winget">使用winget</h3>
+<pre><code class="lang-bash">winget install xmake
+</code></pre>
 <h2 id="msysmingw">Msys/Mingw</h2>
 <p>现在msys/pacman官方仓库已经收录xmake软件包，可直接通过pacman安装。</p>
 <h3 id="mingw64">mingw64</h3>
@@ -137,15 +140,25 @@ brew install xmake --HEAD
 # 或者直接调用shell下载安装
 bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
-<h2 id="linux">Linux</h2>
-<p>在archlinux上安装：</p>
+<h2 id="archlinux">Archlinux</h2>
 <pre><code class="lang-bash">yaourt xmake
 </code></pre>
-<p>或者下载deb包来安装：</p>
+<h2 id="ubuntu">Ubuntu</h2>
+<h3 id="apt">使用apt安装</h3>
+<pre><code class="lang-bash">sudo add-apt-repository ppa:xmake-io/xmake
+sudo apt-get update
+</code></pre>
+<h3 id="deb">下载deb包安装</h3>
 <ol>
 <li>从 <a href="https://github.com/xmake-io/xmake/releases">Releases</a> 上下载deb安装包</li>
 <li>运行: <code>dpkg -i xmake-xxxx.deb</code></li>
 </ol>
+<h2 id="linux">其他Linux</h2>
+<p>先从 <a href="https://github.com/xmake-io/xmake/releases">Releases</a> 上下载xmake-x.x.x.gz.run自安装包</p>
+<p>然后运行这个自安装包。</p>
+<pre><code class="lang-bash">sudo chmod 777 ./xmake-x.x.x.gz.run
+./xmake-x.x.x.gz.run
+</code></pre>
 <h2 id="freebsd">FreeBSD</h2>
 <p>见下文源码编译安装，并使用gmake来代替make。</p>
 <h2 id="termuxandroid">Termux (Android)</h2>
