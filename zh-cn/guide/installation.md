@@ -97,7 +97,8 @@ yaourt xmake
 
 ```bash
 sudo add-apt-repository ppa:xmake-io/xmake
-sudo apt-get update
+sudo apt update
+sudo apt install xmake
 ```
 
 ### 下载deb包安装
