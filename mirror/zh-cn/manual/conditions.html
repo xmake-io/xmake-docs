@@ -232,6 +232,25 @@ end
 <li>macosx</li>
 </ul>
 <p>你也可以通过<a href="/mirror/zh-cn/manual/builtin_variables.html#varhost">$(host)</a>内置变量或者<a href="/mirror/zh-cn/manual/builtin_modules.html#oshost">os.host</a>接口，来进行获取</p>
+<h3 id="is_subhost">is_subhost</h3>
+<h4 id="">判断当前主机的子系统环境</h4>
+<p>目前主要用于 windows 系统上 cygwin, msys2 等子系统环境的探测，如果在 msys2 shell 环境下运行 xmake，那么 <code>is_subhost("windows")</code> 想将会返回 false，而 <code>is_host("windows")</code> 依旧会返回 true。</p>
+<p>目前支持的子系统：</p>
+<ul>
+<li>msys</li>
+<li>cygwin</li>
+</ul>
+<p>配置例子：</p>
+<pre><code class="lang-lua">if is_subhost("msys", "cygwin") then
+    -- 当前在 msys2/cygwin 的 shell 环境下
+end
+</code></pre>
+<p>我们也可以通过执行 <code>xmake l os.subhost</code> 来快速查看当前的子系统平台。</p>
+<p>!> 后期也有可能会支持 linux 和 macos 系统下的其他子系统环境，如果存在话。</p>
+<h3 id="is_subarch">is_subarch</h3>
+<h4 id="">判断当前主机子系统环境下的架构</h4>
+<p>目前主要用于 windows 系统上 cygwin, msys2 等子系统环境下架构的探测，通常在 windows 编译平台采用 msvc 工具链，那边编译架构时 x64，x86。<br>而在 msys/cygwin 子系统环境下，编译架构默认为 x86_64/i386，是有差异的。</p>
+<p>我们也可以通过执行 <code>xmake l os.subarch</code> 来快速查看当前的子系统架构。</p>
 <h3 id="is_mode">is_mode</h3>
 <h4 id="">判断当前编译模式</h4>
 <p>用于检测编译配置：<code>xmake f -m debug</code></p>

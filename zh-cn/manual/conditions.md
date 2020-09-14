@@ -123,6 +123,38 @@ end
 
 你也可以通过[$(host)](/zh-cn/manual/builtin_variables?id=varhost)内置变量或者[os.host](/zh-cn/manual/builtin_modules?id=oshost)接口，来进行获取
 
+### is_subhost
+
+#### 判断当前主机的子系统环境
+
+目前主要用于 windows 系统上 cygwin, msys2 等子系统环境的探测，如果在 msys2 shell 环境下运行 xmake，那么 `is_subhost("windows")` 想将会返回 false，而 `is_host("windows")` 依旧会返回 true。
+
+目前支持的子系统：
+
+* msys
+* cygwin
+
+配置例子：
+
+```lua
+if is_subhost("msys", "cygwin") then
+    -- 当前在 msys2/cygwin 的 shell 环境下
+end
+```
+
+我们也可以通过执行 `xmake l os.subhost` 来快速查看当前的子系统平台。
+
+!> 后期也有可能会支持 linux 和 macos 系统下的其他子系统环境，如果存在话。
+
+### is_subarch
+
+#### 判断当前主机子系统环境下的架构
+
+目前主要用于 windows 系统上 cygwin, msys2 等子系统环境下架构的探测，通常在 windows 编译平台采用 msvc 工具链，那边编译架构时 x64，x86。
+而在 msys/cygwin 子系统环境下，编译架构默认为 x86_64/i386，是有差异的。
+
+我们也可以通过执行 `xmake l os.subarch` 来快速查看当前的子系统架构。
+
 ### is_mode
 
 #### 判断当前编译模式

@@ -110,6 +110,38 @@ Support hosts:
 
 We can also get it from [$(host)](/manual/builtin_variables?id=varhost) or [os.host](/manual/builtin_modules?id=oshost).
 
+### is_subhost
+
+#### Determine the subsystem environment of the current host
+
+At present, it is mainly used for detection of cygwin, msys2 and other subsystem environments on windows systems. If you run xmake in the msys2 shell environment, then `is_subhost("windows")` will return false, and `is_host("windows")` It will still return true.
+
+Currently supported subsystems:
+
+* msys
+* cygwin
+
+Configuration example:
+
+```lua
+if is_subhost("msys", "cygwin") then
+    - Currently in the shell environment of msys2/cygwin
+end
+```
+
+We can also quickly check the current subsystem platform by executing `xmake l os.subhost`.
+
+!> It may also support other subsystem environments under linux and macos systems later, if they exist.
+
+### is_subarch
+
+#### Determine the architecture of the current host subsystem environment
+
+At present, it is mainly used for the detection of the architecture under the subsystem environment such as cygwin and msys2 on the windows system. The msvc tool chain is usually used on the windows compilation platform, and the architecture is x64, x86.
+In the msys/cygwin subsystem environment, the compiler architecture defaults to x86_64/i386, which is different.
+
+We can also quickly view the current subsystem architecture by executing `xmake l os.subarch`.
+
 ### is_mode
 
 #### Is the current compilation mode

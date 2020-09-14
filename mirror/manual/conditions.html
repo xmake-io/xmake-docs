@@ -224,6 +224,25 @@ end
 <li>macosx</li>
 </ul>
 <p>We can also get it from <a href="/mirror/manual/builtin_variables.html#varhost">$(host)</a> or <a href="/mirror/manual/builtin_modules.html#oshost">os.host</a>.</p>
+<h3 id="is_subhost">is_subhost</h3>
+<h4 id="determinethesubsystemenvironmentofthecurrenthost">Determine the subsystem environment of the current host</h4>
+<p>At present, it is mainly used for detection of cygwin, msys2 and other subsystem environments on windows systems. If you run xmake in the msys2 shell environment, then <code>is_subhost("windows")</code> will return false, and <code>is_host("windows")</code> It will still return true.</p>
+<p>Currently supported subsystems:</p>
+<ul>
+<li>msys</li>
+<li>cygwin</li>
+</ul>
+<p>Configuration example:</p>
+<pre><code class="lang-lua">if is_subhost("msys", "cygwin") then
+    - Currently in the shell environment of msys2/cygwin
+end
+</code></pre>
+<p>We can also quickly check the current subsystem platform by executing <code>xmake l os.subhost</code>.</p>
+<p>!> It may also support other subsystem environments under linux and macos systems later, if they exist.</p>
+<h3 id="is_subarch">is_subarch</h3>
+<h4 id="determinethearchitectureofthecurrenthostsubsystemenvironment">Determine the architecture of the current host subsystem environment</h4>
+<p>At present, it is mainly used for the detection of the architecture under the subsystem environment such as cygwin and msys2 on the windows system. The msvc tool chain is usually used on the windows compilation platform, and the architecture is x64, x86.<br>In the msys/cygwin subsystem environment, the compiler architecture defaults to x86_64/i386, which is different.</p>
+<p>We can also quickly view the current subsystem architecture by executing <code>xmake l os.subarch</code>.</p>
 <h3 id="is_mode">is_mode</h3>
 <h4 id="isthecurrentcompilationmode">Is the current compilation mode</h4>
 <p>You can this api to check the configuration command: <code>xmake f -m debug</code></p>
