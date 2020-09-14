@@ -1,3 +1,31 @@
+## v2.3.7
+
+### 新特性
+
+* [#2941](https://github.com/microsoft/winget-pkgs/pull/2941): 支持通过 winget 来安装 xmake
+* 添加 xmake-tinyc 安装包，内置tinyc编译器，支持windows上无msvc环境也可直接编译c代码
+* 添加 tinyc 编译工具链
+* 添加 emcc (emscripten) 编译工具链去编译 asm.js 和 WebAssembly
+* [#947](https://github.com/xmake-io/xmake/issues/947): 通过 `xmake g --network=private` 配置设置私有网络模式，避免远程依赖包下载访问外网导致编译失败
+
+### 改进
+
+* [#907](https://github.com/xmake-io/xmake/issues/907): 改进msvc的链接器优化选项，生成更小的可执行程序
+* 改进ubuntu下Qt环境的支持
+* [#918](https://github.com/xmake-io/xmake/pull/918): 改进cuda11工具链的支持
+* 改进Qt支持，对通过 ubuntu/apt 安装的Qt sdk也进行了探测支持，并且检测效率也优化了下
+* 改进 CMake 工程文件生成器
+* [#931](https://github.com/xmake-io/xmake/issues/931): 改进导出包，支持导出所有依赖包
+* [#930](https://github.com/xmake-io/xmake/issues/930): 如果私有包定义没有版本定义，支持直接尝试下载包
+* [#927](https://github.com/xmake-io/xmake/issues/927): 改进android ndk，支持arm/thumb指令模式切换
+* 改进 trybuild/cmake 支持 Android/Mingw/iPhoneOS/WatchOS 工具链
+
+### Bugs修复
+
+* [#903](https://github.com/xmake-io/xmake/issues/903): 修复vcpkg包安装失败问题
+* [#912](https://github.com/xmake-io/xmake/issues/912): 修复自定义工具链
+* [#914](https://github.com/xmake-io/xmake/issues/914): 修复部分aarch64设备上运行lua出现bad light userdata pointer问题
+
 ## v2.3.6
 
 ### 新特性

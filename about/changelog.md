@@ -1,3 +1,31 @@
+## v2.3.7
+
+### New features
+
+* [#2941](https://github.com/microsoft/winget-pkgs/pull/2941): Add support for winget
+* Add xmake-tinyc installer without msvc compiler for windows
+* Add tinyc compiler toolchain
+* Add emcc compiler toolchain (emscripten) to compiling to asm.js and WebAssembly
+* [#947](https://github.com/xmake-io/xmake/issues/947): Add `xmake g --network=private` to enable the private network
+
+### Change
+
+* [#907](https://github.com/xmake-io/xmake/issues/907): Improve to the linker optimization for msvc
+* Improve to detect qt sdk environment
+* [#918](https://github.com/xmake-io/xmake/pull/918): Improve to support cuda11 toolchains
+* Improve Qt support for ubuntu/apt
+* Improve CMake project generator
+* [#931](https://github.com/xmake-io/xmake/issues/931): Support to export packages with all dependences
+* [#930](https://github.com/xmake-io/xmake/issues/930): Support to download package without version list directly 
+* [#927](https://github.com/xmake-io/xmake/issues/927): Support to switch arm/thumb mode for android ndk
+* Improve trybuild/cmake to support android/mingw/iphoneos/watchos toolchains
+
+### Bugs fixed
+
+* [#903](https://github.com/xmake-io/xmake/issues/903): Fix install vcpkg packages fails
+* [#912](https://github.com/xmake-io/xmake/issues/912): Fix the custom toolchain
+* [#914](https://github.com/xmake-io/xmake/issues/914): Fix bad light userdata pointer for lua on some aarch64 devices
+
 ## v2.3.6
 
 ### New features
