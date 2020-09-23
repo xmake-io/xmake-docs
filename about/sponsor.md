@@ -33,6 +33,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2020.09.22 | Russell Haley                         | Paypal  | $25CAD |                                                                         |
 | 2020.09.13 | Cartesian Technology                  | Paypal  | 5 EUR  |                                                                         |
 | 2020.09.11 | Cartesian Technology                  | Paypal  | 5 EUR  |                                                                         |
 | 2020.09.11 | 复刻回忆                              | alipay  | ¥25    | 加油！                                                                  |
