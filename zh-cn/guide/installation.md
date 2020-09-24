@@ -106,6 +106,13 @@ sudo apt install xmake
 1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载deb安装包
 2. 运行: `dpkg -i xmake-xxxx.deb`
 
+## Fedora/RHEL
+
+```bash
+sudo dnf copr enable waruqi/xmake
+sudo dnf install xmake
+```
+
 ## 其他Linux
 
 先从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载xmake-x.x.x.gz.run自安装包
