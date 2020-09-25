@@ -1,5 +1,5 @@
 
-## Try building with another build system
+## Try building with another build system (TryBuild Mode)
 
 xmake v2.3.1 and above directly interface with other third-party build systems. Even if other projects do not use xmake.lua for maintenance, xmake can directly call other build tools to complete the compilation.
 
@@ -11,9 +11,9 @@ Then the user can directly use a third-party build tool to compile, so why use x
 
 Build systems currently supported:
 
-* autotools (cross-compiling environment for xmake)
+* autotools (support for cross-compiling with xmake)
 * xcodebuild
-* cmake
+* cmake (support for cross-compiling with xmake)
 * make
 * msbuild
 * scons
@@ -79,7 +79,7 @@ As we all know, although many projects maintained by autotools support cross-com
 
 Even if you run through a toolchain's cross-compilation, if you switch to another toolchain environment, it may take a long time, and if you use xmake, you usually only need two simple commands:
 
-!> At present autotools supports cross-compilation of xmake, and other build systems such as cmake will be added later.
+!> At present cmake/autotools supports cross-compilation of xmake.
 
 #### Cross compile android platform
 
@@ -107,24 +107,40 @@ $ ./configure --host aarch64-linux-android
 $ make
 ```
 
+If it is cmake, cross-compilation is not an easy task. For the android platform, this configuration is required.
+
+```bash
+$ cmake \
+     -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
+     -DANDROID_ABI=$ABI \
+     -DANDROID_NATIVE_API_LEVEL=$MINSDKVERSION \
+     $OTHER_ARGS
+```
+
+For the ios platform, I did not find a short-answer configuration method, but found a third-party ios toolchain configuration, which is very complicated: https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake
+
+For mingw, it is another way. I have been tossing about the environment for a long time, which is very tossing.
+
+After using xmake, whether it is cmake or autotools, cross-compilation is very simple, and the configuration method is exactly the same, streamlined and consistent.
+
 #### Cross compile iphoneos platform
 
 ```bash
-$ xmake f -p iphoneos --trybuild=autotools
+$ xmake f -p iphoneos --trybuild=[cmake|autotools]
 $ xmake
 ```
 
 #### Cross-compile mingw platform
 
 ```bash
-$ xmake f -p mingw --trybuild=autotools [--mingw=xxx]
+$ xmake f -p mingw --trybuild=[cmake|autotools] [--mingw=xxx]
 $ xmake
 ```
 
 #### Using other cross-compilation toolchains
 
 ```bash
-$ xmake f -p cross --trybuild=autotools --sdk=/xxxx
+$ xmake f -p cross --trybuild=[cmake|autotools] --sdk=/xxxx
 $ xmake
 ```
 

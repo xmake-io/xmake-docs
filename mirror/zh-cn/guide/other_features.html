@@ -90,7 +90,7 @@
   line-height: 1;
 }
 </style>
-    <h2 id="">尝试使用其他构建系统构建</h2>
+    <h2 id="trybuild">尝试使用其他构建系统构建（TryBuild 模式）</h2>
 <p>xmake v2.3.1以上版本直接对接了其他第三方构建系统，即使其他项目中没有使用xmake.lua来维护，xmake也可以直接调用其他构建工具来完成编译。</p>
 <p>那用户直接调用使用第三方构建工具来编译不就行了，为啥还要用xmake去调用呢？主要有以下好处：</p>
 <ol>
@@ -102,7 +102,7 @@
 <ul>
 <li>autotools（已完全对接xmake的交叉编译环境）</li>
 <li>xcodebuild</li>
-<li>cmake</li>
+<li>cmake（已完全对接xmake的交叉编译环境）</li>
 <li>make</li>
 <li>msbuild</li>
 <li>scons</li>
@@ -145,9 +145,9 @@ $ xmake
 </code></pre>
 <p>另外，配置了<code>--trybuild=</code>参数手动指定了默认的构建系统，后续的build过程就不会额外提示用户选择了。</p>
 <h3 id="">实现快速交叉编译</h3>
-<p>众所周知，autotools维护的项目虽然很多都支持交叉编译，但是交叉编译的配置过程很复杂，不同的工具链处理方式还有很多的差异，中途会踩到很多的坑。</p>
+<p>众所周知，cmake/autotools维护的项目虽然很多都支持交叉编译，但是交叉编译的配置过程很复杂，不同的工具链处理方式还有很多的差异，中途会踩到很多的坑。</p>
 <p>即使跑通了一个工具链的交叉编译，如果切到另外一个工具链环境，可能又要折腾好久，而如果使用xmake，通常只需要两条简单的命令即可：</p>
-<p>!> 目前就autotools对接支持了xmake的交叉编译，后期还会对cmake等其他构建系统加上支持。</p>
+<p>!> 目前cmake/autotools都已对接支持了xmake的交叉编译。</p>
 <h4 id="android">交叉编译android平台</h4>
 <pre><code class="lang-bash">$ xmake f -p android --trybuild=autotools [--ndk=xxx]
 $ xmake
@@ -166,16 +166,26 @@ $ export STRIP=$TOOLCHAIN/bin/aarch64-linux-android-strip
 $ ./configure --host aarch64-linux-android
 $ make
 </code></pre>
+<p>如果是cmake呢，交叉编译也不省事，对于android平台，得这么配置。</p>
+<pre><code class="lang-bash">$ cmake \
+    -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
+    -DANDROID_ABI=$ABI \
+    -DANDROID_NATIVE_API_LEVEL=$MINSDKVERSION \
+    $OTHER_ARGS
+</code></pre>
+<p>而对于 ios 平台，没找到简答的配置方式，就找到个第三方的 ios 工具链配置，很复杂：<a href="https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake">https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake</a></p>
+<p>对于 mingw 又是另外一种方式，我又折腾了半天环境，很是折腾。</p>
+<p>而对接了xmake后，不管是cmake还是autotools，交叉编译都是非常简单的，而且配置方式也完全一样，精简一致。</p>
 <h4 id="iphoneos">交叉编译iphoneos平台</h4>
-<pre><code class="lang-bash">$ xmake f -p iphoneos --trybuild=autotools
+<pre><code class="lang-bash">$ xmake f -p iphoneos --trybuild=[cmake|autotools]
 $ xmake
 </code></pre>
 <h4 id="mingw">交叉编译mingw平台</h4>
-<pre><code class="lang-bash">$ xmake f -p mingw --trybuild=autotools [--mingw=xxx]
+<pre><code class="lang-bash">$ xmake f -p mingw --trybuild=[cmake|autotools] [--mingw=xxx]
 $ xmake
 </code></pre>
 <h4 id="">使用其他交叉编译工具链</h4>
-<pre><code class="lang-bash">$ xmake f -p cross --trybuild=autotools --sdk=/xxxx
+<pre><code class="lang-bash">$ xmake f -p cross --trybuild=[cmake|autotools] --sdk=/xxxx
 $ xmake
 </code></pre>
 <p>关于更多交叉编译的配置细节，请参考文档：<a href="https://xmake.io/#/zh-cn/guide/configuration?id=%e4%ba%a4%e5%8f%89%e7%bc%96%e8%af%91">交叉编译</a>，除了多了一个<code>--trybuild=</code>参数，其他交叉编译配置参数都是完全通用的。</p>

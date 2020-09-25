@@ -91,7 +91,7 @@ find_packages("vcpkg::zlib", "vcpkg::openssl")
 Xmake v2.2.6 and later versions also support finding the specified package from the conan:
 
 ```lua
-find_packages("conan::OpenSSL/1.0.2n@conan/stable")
+find_packages("conan::openssl/1.1.1g")
 ```
 
 ## Test command for finding package

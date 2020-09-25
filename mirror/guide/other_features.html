@@ -90,7 +90,7 @@
   line-height: 1;
 }
 </style>
-    <h2 id="trybuildingwithanotherbuildsystem">Try building with another build system</h2>
+    <h2 id="trybuildingwithanotherbuildsystemtrybuildmode">Try building with another build system (TryBuild Mode)</h2>
 <p>xmake v2.3.1 and above directly interface with other third-party build systems. Even if other projects do not use xmake.lua for maintenance, xmake can directly call other build tools to complete the compilation.</p>
 <p>Then the user can directly use a third-party build tool to compile, so why use xmake to call it? The main benefits are:</p>
 <ol>
@@ -100,9 +100,9 @@
 </ol>
 <p>Build systems currently supported:</p>
 <ul>
-<li>autotools (cross-compiling environment for xmake)</li>
+<li>autotools (support for cross-compiling with xmake)</li>
 <li>xcodebuild</li>
-<li>cmake</li>
+<li>cmake (support for cross-compiling with xmake)</li>
 <li>make</li>
 <li>msbuild</li>
 <li>scons</li>
@@ -147,7 +147,7 @@ $ xmake
 <h3 id="fastlycrosscompile">Fastly cross compile</h3>
 <p>As we all know, although many projects maintained by autotools support cross-compilation, the configuration process of cross-compilation is very complicated. There are still many differences in different toolchain processing methods, and many pits will be stepped in the middle.</p>
 <p>Even if you run through a toolchain&#39;s cross-compilation, if you switch to another toolchain environment, it may take a long time, and if you use xmake, you usually only need two simple commands:</p>
-<p>!> At present autotools supports cross-compilation of xmake, and other build systems such as cmake will be added later.</p>
+<p>!> At present cmake/autotools supports cross-compilation of xmake.</p>
 <h4 id="crosscompileandroidplatform">Cross compile android platform</h4>
 <pre><code class="lang-bash">$ xmake f -p android --trybuild=autotools [--ndk=xxx]
 $ xmake
@@ -166,16 +166,26 @@ $ export STRIP=$TOOLCHAIN/bin/aarch64-linux-android-strip
 $ ./configure --host aarch64-linux-android
 $ make
 </code></pre>
+<p>If it is cmake, cross-compilation is not an easy task. For the android platform, this configuration is required.</p>
+<pre><code class="lang-bash">$ cmake \
+     -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
+     -DANDROID_ABI=$ABI \
+     -DANDROID_NATIVE_API_LEVEL=$MINSDKVERSION \
+     $OTHER_ARGS
+</code></pre>
+<p>For the ios platform, I did not find a short-answer configuration method, but found a third-party ios toolchain configuration, which is very complicated: <a href="https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake">https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake</a></p>
+<p>For mingw, it is another way. I have been tossing about the environment for a long time, which is very tossing.</p>
+<p>After using xmake, whether it is cmake or autotools, cross-compilation is very simple, and the configuration method is exactly the same, streamlined and consistent.</p>
 <h4 id="crosscompileiphoneosplatform">Cross compile iphoneos platform</h4>
-<pre><code class="lang-bash">$ xmake f -p iphoneos --trybuild=autotools
+<pre><code class="lang-bash">$ xmake f -p iphoneos --trybuild=[cmake|autotools]
 $ xmake
 </code></pre>
 <h4 id="crosscompilemingwplatform">Cross-compile mingw platform</h4>
-<pre><code class="lang-bash">$ xmake f -p mingw --trybuild=autotools [--mingw=xxx]
+<pre><code class="lang-bash">$ xmake f -p mingw --trybuild=[cmake|autotools] [--mingw=xxx]
 $ xmake
 </code></pre>
 <h4 id="usingothercrosscompilationtoolchains">Using other cross-compilation toolchains</h4>
-<pre><code class="lang-bash">$ xmake f -p cross --trybuild=autotools --sdk=/xxxx
+<pre><code class="lang-bash">$ xmake f -p cross --trybuild=[cmake|autotools] --sdk=/xxxx
 $ xmake
 </code></pre>
 <p>For more cross compilation configuration details, please refer to the document: <a href="https://xmake.io/#/guide/configuration?id=cross-compilation">Cross Compilation</a>, except for an additional <code>--trybuild=</code> parameter, all other cross-compilation configuration parameters are completely universal.</p>
