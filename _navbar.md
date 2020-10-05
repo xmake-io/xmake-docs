@@ -1,3 +1,4 @@
+- [Sponsor](/about/sponsor.md)
 - [Articles](https://tboox.org/category/#xmake)
 - [Feedback](https://github.com/xmake-io/xmake/issues)
 - [Community](https://www.reddit.com/r/xmake/)
