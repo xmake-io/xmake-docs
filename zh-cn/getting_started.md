@@ -4,6 +4,12 @@
 
 👉 [捐助页面](https://xmake.io/#/zh-cn/about/sponsor)
 
+## 课程（New）
+
+[Xmake 带你轻松构建 C/C++ 项目](https://www.lanqiao.cn/courses/2764) 是我们在实验楼上新推出的一门 xmake 入门和进阶课程（收费），以边学边做实验的方式快速学习 xmake 的使用。
+
+通过此处优惠码购买可享 9 折优惠：`NYFbmf3X`
+
 ## 安装
 
 #### 使用curl
