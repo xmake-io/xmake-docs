@@ -8,8 +8,6 @@ The global interface affects the whole project description scope and all sub-pro
 | [set_project](#set_project)           | Set project name                      | >= 2.0.1 |
 | [set_version](#set_version)           | Set project version                   | >= 2.0.1 |
 | [set_xmakever](#set_xmakever)         | Set minimal xmake version             | >= 2.1.1 |
-| [add_subdirs](#add_subdirs)           | Add sub-project directories           | >= 1.0.1 |
-| [add_subfiles](#add_subfiles)         | Add sub-project files                 | >= 1.0.1 |
 | [add_moduledirs](#add_moduledirs)     | Add module directories                | >= 2.1.5 |
 | [add_plugindirs](#add_plugindirs)     | Add plugin directories                | >= 2.0.1 |
 | [add_packagedirs](#add_packagedirs)   | Add package directories               | >= 2.0.1 |
@@ -22,7 +20,44 @@ The global interface affects the whole project description scope and all sub-pro
 
 #### Add sub-project files and directories
 
-It is used to replace [add_subdirs](#add_subdirs) and [add_subfiles](#add_subfiles).
+We can use this interfaces to add sub-project files (xmake.lua) or directories with xmake.lua.
+
+```
+projectdir
+  - subdirs
+    - xmake.lua
+  - src
+```
+
+Add sub-project directories.
+
+```lua
+includes("subdirs")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
+Or add sub-project files.
+
+```lua
+includes("subdirs/xmake.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
+We can also recursively add multiple project sub-directory files through pattern matching.
+
+```lua
+includes("**/xmake.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
 
 In addition, in 2.2.5 and later, this interface provides some built-in helper functions, which can be used directly after the include, specifically which built-in functions can be seen at: https://github.com/xmake-io/xmake/tree/master/xmake/includes
 
@@ -151,62 +186,6 @@ If the current xmake version less than the required version, it will prompt an e
 ```lua
 -- the current xmake version must be larger than 2.1.0
 set_xmakever("2.1.0")
-```
-
-### add_subdirs
-
-#### Add sub-project directories
-
-<p class="tip">
-For xmake 2.x and above, try to use the [includes](#includes) interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.
-</p>
-
-This interface will add sub-project directories to the current `xmake.lua`, it will load the `xmake.lua` file of the sub-directories.
-
-For example, assume we have the following project directory tree:
-
-```
-./tbox
-├── src
-│   ├── demo
-│   │   └── xmake.lua
-│   └── tbox
-│       └── xmake.lua
-└── xmake.lua
-````
-
-We can add sub-project `tbox` and `demo` directories to the root `xmake.lua`.
-
-```lua
-add_subdirs("src/tbox")
-if is_option("demo") then
-    add_subdirs("src/demo")
-end
-```
-
-By default, xmake will compile all targets. If you only want to compile a specific target, you can do:
-
-```bash
-# only build `tbox` target
-$ xmake build tbox
-```
-
-### add_subfiles
-
-#### Add sub-project files
-
-<p class="tip">
-For xmake 2.x and above, try to use the [includes](#includes) interface, which is a generic version of add_subdirs and add_subfiles, and supports some built-in extensions.
-</p>
-
-`add_subfiles` is similar to [add_subdirs](#add_subdirs).
-
-The only difference is that this interface specifies the path to the 'xmake.lua' file directly, rather than a directory.
-
-for example:
-
-```lua
-add_subfiles("src/tbox/xmake.lua")
 ```
 
 ### add_moduledirs

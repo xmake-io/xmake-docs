@@ -126,16 +126,6 @@
 <td>>= 2.1.1</td>
 </tr>
 <tr>
-<td><a href="#add_subdirs">add_subdirs</a></td>
-<td>添加子工程目录</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#add_subfiles">add_subfiles</a></td>
-<td>添加子工程文件</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
 <td><a href="#add_moduledirs">add_moduledirs</a></td>
 <td>添加模块目录</td>
 <td>>= 2.1.5</td>
@@ -174,7 +164,32 @@
 </table>
 <h3 id="includes">includes</h3>
 <h4 id="">添加子工程文件和目录</h4>
-<p>同时支持子工程文件和目录的添加，用于替代<a href="#add_subdirs">add_subdirs</a>和<a href="#add_subfiles">add_subfiles</a>接口。</p>
+<p>我们能够使用此接口添加工程子文件(xmake.lua)或者带有xmake.lua的工程子目录。</p>
+<pre><code>projectdir
+  - subdirs
+    - xmake.lua
+  - src
+</code></pre><p>添加子工程目录：</p>
+<pre><code class="lang-lua">includes("subdirs")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+</code></pre>
+<p>或者添加子工程文件：</p>
+<pre><code class="lang-lua">includes("subdirs/xmake.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+</code></pre>
+<p>我们也可以通过模式匹配的方式，递归添加多个工程子目录文件：</p>
+<pre><code class="lang-lua">includes("**/xmake.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+</code></pre>
 <p>另外，此接口在2.2.5之后的版本，提供了一些内置的辅助函数，可以直接includes后使用，具体有哪些内置函数可以看下：<a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">https://github.com/xmake-io/xmake/tree/master/xmake/includes</a></p>
 <p>关于这块的更加完整的说明，可以看下：<a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
 <p>例子：</p>
@@ -261,44 +276,6 @@ set_version("1.5.1")
 <p>设置如下：</p>
 <pre><code class="lang-lua">-- 设置最小版本为：2.1.0，低于此版本的xmake编译此工程将会提示版本错误信息
 set_xmakever("2.1.0")
-</code></pre>
-<h3 id="add_subdirs">add_subdirs</h3>
-<h4 id="">添加子工程目录</h4>
-<p><p class="tip"><br>xmake 2.x以上版本，请尽量使用<a href="#includes">includes</a>这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。<br></p>
-
-</p>
-<p>每个子工程对应一个<code>xmake.lua</code>的工程描述文件。</p>
-<p>虽然一个<code>xmake.lua</code>也可以描述多个子工程模块，但是如果工程越来越大，越来越复杂，适当的模块化是很有必要的。。</p>
-<p>这就需要<code>add_subdirs</code>了，将每个子模块放到不同目录中，并为其建立一个新的<code>xmake.lua</code>独立去维护它，例如：</p>
-<pre><code>./tbox
-├── src
-│   ├── demo
-│   │   └── xmake.lua (用来描述测试模块)
-│   └── tbox
-│       └── xmake.lua（用来描述libtbox库模块）
-└── xmake.lua（用该描述通用配置信息，以及对子模块的维护）
-`
-</code></pre><p>在<code>tbox/xmake.lua</code>中通过<code>add_subdirs</code>将拥有<code>xmale.lua</code>的子模块的目录，添加进来，就可以了，例如：</p>
-<pre><code class="lang-lua">-- 添加libtbox库模块目录
-add_subdirs("src/tbox") 
-
--- 如果xmake f --demo=y，启用了demo模块，那么包含demo目录
-if is_option("demo") then 
-    add_subdirs("src/demo") 
-end
-</code></pre>
-<p>默认情况下，xmake会去编译在所有xmake.lua中描述的所有target目标，如果只想编译指定目标，可以执行：</p>
-<pre><code class="lang-bash"># 仅仅编译tbox库模块
-$ xmake build tbox
-</code></pre>
-<p>需要注意的是，每个子<code>xmake.lua</code>中所有的路径设置都是相对于当前这个子<code>xmake.lua</code>所在的目录的，都是相对路径，这样方便维护</p>
-<h3 id="add_subfiles">add_subfiles</h3>
-<h4 id="">添加子工程文件</h4>
-<p><p class="tip"><br>xmake 2.x以上版本，请尽量使用<a href="#includes">includes</a>这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。<br></p>
-
-</p>
-<p><code>add_subfiles</code>的作用与<a href="#add_subdirs">add_subdirs</a>类似，唯一的区别就是：这个接口直接指定<code>xmake.lua</code>文件所在的路径，而不是目录，例如：</p>
-<pre><code class="lang-lua">add_subfiles("src/tbox/xmake.lua")
 </code></pre>
 <h3 id="add_moduledirs">add_moduledirs</h3>
 <h4 id="">添加模块目录</h4>

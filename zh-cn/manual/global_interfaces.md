@@ -8,8 +8,6 @@
 | [set_project](#set_project)           | 设置工程名                    | >= 2.0.1 |
 | [set_version](#set_version)           | 设置工程版本                  | >= 2.0.1 |
 | [set_xmakever](#set_xmakever)         | 设置最小xmake版本             | >= 2.1.1 |
-| [add_subdirs](#add_subdirs)           | 添加子工程目录                | >= 1.0.1 |
-| [add_subfiles](#add_subfiles)         | 添加子工程文件                | >= 1.0.1 |
 | [add_moduledirs](#add_moduledirs)     | 添加模块目录                  | >= 2.1.5 |
 | [add_plugindirs](#add_plugindirs)     | 添加插件目录                  | >= 2.0.1 | 
 | [add_packagedirs](#add_packagedirs)   | 添加包目录                    | >= 2.0.1 |
@@ -22,7 +20,44 @@
 
 #### 添加子工程文件和目录
 
-同时支持子工程文件和目录的添加，用于替代[add_subdirs](#add_subdirs)和[add_subfiles](#add_subfiles)接口。
+我们能够使用此接口添加工程子文件(xmake.lua)或者带有xmake.lua的工程子目录。
+
+```
+projectdir
+  - subdirs
+    - xmake.lua
+  - src
+```
+
+添加子工程目录：
+
+```lua
+includes("subdirs")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
+或者添加子工程文件：
+
+```lua
+includes("subdirs/xmake.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
+我们也可以通过模式匹配的方式，递归添加多个工程子目录文件：
+
+```lua
+includes("**/xmake.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
 
 另外，此接口在2.2.5之后的版本，提供了一些内置的辅助函数，可以直接includes后使用，具体有哪些内置函数可以看下：https://github.com/xmake-io/xmake/tree/master/xmake/includes
 
@@ -153,65 +188,6 @@ set_version("1.5.1", {build = "%Y%m%d%H%M"})
 ```lua
 -- 设置最小版本为：2.1.0，低于此版本的xmake编译此工程将会提示版本错误信息
 set_xmakever("2.1.0")
-```
-
-### add_subdirs
-
-#### 添加子工程目录
-
-<p class="tip">
-xmake 2.x以上版本，请尽量使用[includes](#includes)这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。
-</p>
-
-每个子工程对应一个`xmake.lua`的工程描述文件。
-
-虽然一个`xmake.lua`也可以描述多个子工程模块，但是如果工程越来越大，越来越复杂，适当的模块化是很有必要的。。
-
-这就需要`add_subdirs`了，将每个子模块放到不同目录中，并为其建立一个新的`xmake.lua`独立去维护它，例如：
-
-```
-./tbox
-├── src
-│   ├── demo
-│   │   └── xmake.lua (用来描述测试模块)
-│   └── tbox
-│       └── xmake.lua（用来描述libtbox库模块）
-└── xmake.lua（用该描述通用配置信息，以及对子模块的维护）
-````
-
-在`tbox/xmake.lua`中通过`add_subdirs`将拥有`xmale.lua`的子模块的目录，添加进来，就可以了，例如：
-
-```lua
--- 添加libtbox库模块目录
-add_subdirs("src/tbox") 
-
--- 如果xmake f --demo=y，启用了demo模块，那么包含demo目录
-if is_option("demo") then 
-    add_subdirs("src/demo") 
-end
-```
-
-默认情况下，xmake会去编译在所有xmake.lua中描述的所有target目标，如果只想编译指定目标，可以执行：
-
-```bash
-# 仅仅编译tbox库模块
-$ xmake build tbox
-```
-
-需要注意的是，每个子`xmake.lua`中所有的路径设置都是相对于当前这个子`xmake.lua`所在的目录的，都是相对路径，这样方便维护
-
-### add_subfiles
-
-#### 添加子工程文件
-
-<p class="tip">
-xmake 2.x以上版本，请尽量使用[includes](#includes)这个接口，这个是add_subdirs和add_subfiles的通用版本，并且支持一些内建扩展模块。
-</p>
-
-`add_subfiles`的作用与[add_subdirs](#add_subdirs)类似，唯一的区别就是：这个接口直接指定`xmake.lua`文件所在的路径，而不是目录，例如：
-
-```lua
-add_subfiles("src/tbox/xmake.lua")
 ```
 
 ### add_moduledirs
