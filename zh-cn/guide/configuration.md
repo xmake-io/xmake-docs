@@ -41,9 +41,7 @@ $ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/
 
 [--bin](#-bin)主要用于设置选择编译工具的具体bin目录，这个的使用跟[交叉编译](#交叉编译)中的[--bin](#-bin)的行为是一致的。
 
-<p class="tip">
-如果手动设置了bin目录，没有通过检测，可以看下是否`--arch=`参数没有匹配对。
-</p>
+!> 如果手动设置了bin目录，没有通过检测，可以看下是否`--arch=`参数没有匹配对。
 
 ### iPhoneOS
 
@@ -61,10 +59,12 @@ $ xmake
 
 ### Mingw
 
+xmake 除了支持 Msys2/MingW, MingW for macOS/linux 之外，还支持 llvm-mingw 工具链，可以切换 arm/arm64 架构来编译。
+
 ```bash
-$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64]
+$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64|arm|arm64]
 $ xmake
-``` 
+```
 
 ### Apple WatchOS
 
@@ -72,6 +72,31 @@ $ xmake
 $ xmake f -p watchos [-a i386|armv7k]
 $ xmake
 ```
+
+### Wasm (WebAssembly)
+
+此平台用于编译 WebAssembly 程序（内部会使用emcc工具链），在切换此平台之前，我们需要先进入 Emscripten 工具链环境，确保 emcc 等编译器可用。
+
+```bash
+$ xmake f -p wasm
+$ xmake
+```
+
+xmake 也支持 Qt for wasm 编译，只需要：
+
+```bash
+$ xmake f -p wasm [--qt=~/Qt]
+$ xmake
+```
+
+其中 `--qt` 参数设置是可选的，通常xmake都能检测到qt的sdk路径。
+
+
+需要注意的一点是，Emscripten 和 Qt SDK 的版本是有对应关系的，不匹配的版本，可能会有Qt/Wasm之间的兼容问题。
+
+关于版本对应关系，可以看下：[https://wiki.qt.io/Qt_for_WebAssembly](https://wiki.qt.io/Qt_for_WebAssembly)
+
+更多详情见：[https://github.com/xmake-io/xmake/issues/956](https://github.com/xmake-io/xmake/issues/956)
 
 ## 交叉编译配置
 
@@ -415,7 +440,7 @@ toolchain("myclang")
 
 更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
 
-#### MingW工具链
+#### MingW 工具链
 
 使用mingw工具链编译，其实也是交叉编译，但是由于这个比较常用，xmake专门增加了一个mingw的平台来快速处理使用mingw工具链的编译。
 
@@ -464,7 +489,14 @@ $ xmake
 
 另外，其他的工具链配置参数用法，跟上文描述的没什么区别，像`--cross`, `--bin=`等都可以根据实际的环境需要，自己控制是否需要额外追加配置来适配自己的mingw工具链。
 
-#### LLVM工具链
+xmake 还支持 llvm-mingw 工具链，可以切换到 arm/arm64 架构来编译。
+
+```bash
+$ xmake f --mingw=/xxx/llvm-mingw -a arm64
+$ xmake
+```
+
+#### LLVM 工具链
 
 llvm工具链下载地址：https://releases.llvm.org/
 
@@ -473,12 +505,51 @@ $ xmake f -p cross --toolchain=llvm --sdk="C:\Program Files\LLVM"
 $ xmake
 ```
 
-#### GNU-RM工具链
+#### GNU-RM 工具链
 
 工具链地址：https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#
 
 ```bash
 $ xmake f -p cross --toolchain=gnu-rm --sdk=/xxx/cc-arm-none-eabi-9-2019-q4-major
+$ xmake
+```
+
+#### TinyC 工具链
+
+```bash
+$ xmake f --toolchain=tinyc
+$ xmake
+```
+
+!> Releases目录下，我们还提供了特殊的 xmake-tinyc-vX.X.X.win32.exe 安装包，内置tinyc工具链，无需依赖msvc，也可以编译c代码，开箱即用无依赖。
+
+#### Emcc 工具链
+
+通常只需要切换到 Wasm 平台，里面内置了 emcc 工具链，还会额外调整目标程序的扩展名为 `*.html` 以及输出 `*.wasm`。
+
+```bash
+$ xmake f -p wasm
+$ xmake
+```
+
+不过我们也能够直接切换到 emcc 工具链，但是后缀名不会被修改。
+
+```bash
+$ xmake f --toolchain=emcc
+$ xmake
+```
+
+#### Intel C++ 编译工具链
+
+```bash
+$ xmake f --toolchain=icc
+$ xmake
+```
+
+#### Intel Fortran 编译工具链
+
+```bash
+$ xmake f --toolchain=ifort
 $ xmake
 ```
 

@@ -44,10 +44,8 @@ $ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/
 ```
 
 The [--bin](#-bin) option is used to set `bin` directory of toolchains.
-    
-<p class="tip">
-Please attempt to set `--arch=` option if it had failed to check compiler.
-</p>
+
+!> Please attempt to set `--arch=` option if it had failed to check compiler.
 
 ### iPhoneOS
 
@@ -65,10 +63,37 @@ $ xmake
 
 ### Mingw
 
+In addition to supporting Msys2/MingW, MingW for macOS/linux, xmake also supports the llvm-mingw tool chain, which can switch the arm/arm64 architecture to compile.
+
 ```bash
-$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64]
+$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64|arm|arm64]
 $ xmake
-``` 
+```
+
+### Wasm (WebAssembly)
+
+This platform is used to compile WebAssembly programs (emcc toolchain is used internally). Before switching this platform, we need to enter the Emscripten toolchain environment to ensure that emcc and other compilers are available.
+
+```bash
+$ xmake f -p wasm
+$ xmake
+```
+
+xmake also supports Qt for wasm compilation, you only need:
+
+```bash
+$ xmake f -p wasm [--qt=~/Qt]
+$ xmake
+```
+
+The `--qt` parameter setting is optional, usually xmake can detect the sdk path of qt.
+
+
+One thing to note is that there is a correspondence between the versions of Emscripten and Qt SDK. If the version does not match, there may be compatibility issues between Qt/Wasm.
+
+Regarding the version correspondence, you can see: [https://wiki.qt.io/Qt_for_WebAssembly](https://wiki.qt.io/Qt_for_WebAssembly)
+
+For more details, please see: [https://github.com/xmake-io/xmake/issues/956](https://github.com/xmake-io/xmake/issues/956)
 
 ### Apple WatchOS
 
@@ -468,6 +493,13 @@ After setting the `--mingw` root directory to the global configuration through t
 
 In addition, the usage of other tool chain configuration parameters is the same as that described above. For example, `--cross`,` --bin=`, etc. can be adjusted according to the actual needs of the environment. Own mingw tool chain.
 
+xmake also supports the llvm-mingw tool chain, which can be switched to arm/arm64 architecture to compile.
+
+```bash
+$ xmake f --mingw=/xxx/llvm-mingw -a arm64
+$ xmake
+```
+
 #### LLVM Toolchain
 
 The tool chain of llvm is relatively standard, only need to set the sdk configuration path to use:
@@ -483,6 +515,45 @@ toolchain downlaod url: https://developer.arm.com/tools-and-software/open-source
 
 ```bash
 $ xmake f -p cross --toolchain=gnu-rm --sdk=/xxx/cc-arm-none-eabi-9-2019-q4-major
+$ xmake
+```
+
+#### TinyC Toolchain
+
+```bash
+$ xmake f --toolchain=tinyc
+$ xmake
+```
+
+!> In the Releases directory, we also provide a special xmake-tinyc-vX.X.X.win32.exe installation package, built-in tinyc tool chain, without relying on msvc, you can also compile c code, out of the box use without dependencies.
+
+#### Emcc tool chain
+
+Usually only need to switch to the Wasm platform, which has built-in emcc toolchain, and additionally adjusts the extension of the target program to `*.html` and output `*.wasm`.
+
+```bash
+$ xmake f -p wasm
+$ xmake
+```
+
+However, we can also switch directly to the emcc toolchain, but the suffix name will not be modified.
+
+```bash
+$ xmake f --toolchain=emcc
+$ xmake
+```
+
+#### Intel C++ Compiler Tool Chain
+
+```bash
+$ xmake f --toolchain=icc
+$ xmake
+```
+
+#### Intel Fortran Compilation Tool Chain
+
+```bash
+$ xmake f --toolchain=ifort
 $ xmake
 ```
 

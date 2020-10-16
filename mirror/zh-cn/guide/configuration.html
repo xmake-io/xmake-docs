@@ -113,9 +113,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
 </code></pre>
 <p><a href="#-bin">--bin</a>主要用于设置选择编译工具的具体bin目录，这个的使用跟<a href="#交叉编译">交叉编译</a>中的<a href="#-bin">--bin</a>的行为是一致的。</p>
-<p><p class="tip"><br>如果手动设置了bin目录，没有通过检测，可以看下是否<code>--arch=</code>参数没有匹配对。<br></p>
-
-</p>
+<p>!> 如果手动设置了bin目录，没有通过检测，可以看下是否<code>--arch=</code>参数没有匹配对。</p>
 <h3 id="iphoneos">iPhoneOS</h3>
 <pre><code class="lang-bash">$ xmake f -p iphoneos [-a armv7|armv7s|arm64|i386|x86_64]
 $ xmake
@@ -125,13 +123,27 @@ $ xmake
 $ xmake
 </code></pre>
 <h3 id="mingw">Mingw</h3>
-<pre><code class="lang-bash">$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64]
+<p>xmake 除了支持 Msys2/MingW, MingW for macOS/linux 之外，还支持 llvm-mingw 工具链，可以切换 arm/arm64 架构来编译。</p>
+<pre><code class="lang-bash">$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64|arm|arm64]
 $ xmake
 </code></pre>
 <h3 id="applewatchos">Apple WatchOS</h3>
 <pre><code class="lang-bash">$ xmake f -p watchos [-a i386|armv7k]
 $ xmake
 </code></pre>
+<h3 id="wasmwebassembly">Wasm (WebAssembly)</h3>
+<p>此平台用于编译 WebAssembly 程序（内部会使用emcc工具链），在切换此平台之前，我们需要先进入 Emscripten 工具链环境，确保 emcc 等编译器可用。</p>
+<pre><code class="lang-bash">$ xmake f -p wasm
+$ xmake
+</code></pre>
+<p>xmake 也支持 Qt for wasm 编译，只需要：</p>
+<pre><code class="lang-bash">$ xmake f -p wasm [--qt=~/Qt]
+$ xmake
+</code></pre>
+<p>其中 <code>--qt</code> 参数设置是可选的，通常xmake都能检测到qt的sdk路径。</p>
+<p>需要注意的一点是，Emscripten 和 Qt SDK 的版本是有对应关系的，不匹配的版本，可能会有Qt/Wasm之间的兼容问题。</p>
+<p>关于版本对应关系，可以看下：<a href="https://wiki.qt.io/Qt_for_WebAssembly">https://wiki.qt.io/Qt_for_WebAssembly</a></p>
+<p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/956">https://github.com/xmake-io/xmake/issues/956</a></p>
 <h2 id="">交叉编译配置</h2>
 <p>通常，如果我们需要在当前pc环境编译生成其他设备上才能运行的目标文件时候，就需要通过对应的交叉编译工具链来编译生成它们，比如在win/macos上编译linux的程序，或者在linux上编译其他嵌入式设备的目标文件等。</p>
 <p>通常的交叉编译工具链都是基于gcc/clang的，大都具有类似如下的结构：</p>
@@ -345,7 +357,7 @@ fasm          Flat Assembler
 </code></pre>
 <p>关于这块的详情介绍，可以到<a href="/mirror/zh-cn/manual/custom_toolchain.html">自定义工具链</a>章节查看</p>
 <p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/780">#780</a></p>
-<h4 id="mingw">MingW工具链</h4>
+<h4 id="mingw">MingW 工具链</h4>
 <p>使用mingw工具链编译，其实也是交叉编译，但是由于这个比较常用，xmake专门增加了一个mingw的平台来快速处理使用mingw工具链的编译。</p>
 <p>因此，xmake对mingw的工具链检测会更加完善，在macos下，基本上连sdk路径都不需要配置，也能直接检测到，只需要切到mingw平台编译即可。</p>
 <pre><code class="lang-bash">$ xmake f -p mingw
@@ -383,14 +395,40 @@ $ xmake
 </code></pre>
 <p>我们通过<code>xmake g/global</code>命令设置<code>--mingw</code>根目录到全局配置后，之后每次编译和切换编译平台，就不用额外指定mingw工具链路径了，方便使用。</p>
 <p>另外，其他的工具链配置参数用法，跟上文描述的没什么区别，像<code>--cross</code>, <code>--bin=</code>等都可以根据实际的环境需要，自己控制是否需要额外追加配置来适配自己的mingw工具链。</p>
-<h4 id="llvm">LLVM工具链</h4>
+<p>xmake 还支持 llvm-mingw 工具链，可以切换到 arm/arm64 架构来编译。</p>
+<pre><code class="lang-bash">$ xmake f --mingw=/xxx/llvm-mingw -a arm64
+$ xmake
+</code></pre>
+<h4 id="llvm">LLVM 工具链</h4>
 <p>llvm工具链下载地址：<a href="https://releases.llvm.org/">https://releases.llvm.org/</a></p>
 <pre><code class="lang-bash">$ xmake f -p cross --toolchain=llvm --sdk="C:\Program Files\LLVM"
 $ xmake
 </code></pre>
-<h4 id="gnurm">GNU-RM工具链</h4>
+<h4 id="gnurm">GNU-RM 工具链</h4>
 <p>工具链地址：<a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#">https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#</a></p>
 <pre><code class="lang-bash">$ xmake f -p cross --toolchain=gnu-rm --sdk=/xxx/cc-arm-none-eabi-9-2019-q4-major
+$ xmake
+</code></pre>
+<h4 id="tinyc">TinyC 工具链</h4>
+<pre><code class="lang-bash">$ xmake f --toolchain=tinyc
+$ xmake
+</code></pre>
+<p>!> Releases目录下，我们还提供了特殊的 xmake-tinyc-vX.X.X.win32.exe 安装包，内置tinyc工具链，无需依赖msvc，也可以编译c代码，开箱即用无依赖。</p>
+<h4 id="emcc">Emcc 工具链</h4>
+<p>通常只需要切换到 Wasm 平台，里面内置了 emcc 工具链，还会额外调整目标程序的扩展名为 <code>*.html</code> 以及输出 <code>*.wasm</code>。</p>
+<pre><code class="lang-bash">$ xmake f -p wasm
+$ xmake
+</code></pre>
+<p>不过我们也能够直接切换到 emcc 工具链，但是后缀名不会被修改。</p>
+<pre><code class="lang-bash">$ xmake f --toolchain=emcc
+$ xmake
+</code></pre>
+<h4 id="intelc">Intel C++ 编译工具链</h4>
+<pre><code class="lang-bash">$ xmake f --toolchain=icc
+$ xmake
+</code></pre>
+<h4 id="intelfortran">Intel Fortran 编译工具链</h4>
+<pre><code class="lang-bash">$ xmake f --toolchain=ifort
 $ xmake
 </code></pre>
 <h3 id="">通用交叉编译配置</h3>

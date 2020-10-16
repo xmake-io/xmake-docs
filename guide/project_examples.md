@@ -95,13 +95,16 @@ xmake will detect Qt SDK automatically and we can also set the SDK directory man
 $ xmake f --qt=~/Qt/Qt5.9.1
 ```
 
-If you want to use the MinGW Qt environment on windows, you can set the MinGW platform configuration and specify the SDK path for the MinGW compilation environment, for example:
+The MingW SDK specified above uses the environment that comes with the Tools directory under Qt. Of course, if there are other third-party MingW compilation environments, they can also be specified manually. 
+For details, please refer to: [MingW Configuration](/guide/configuration?id=mingw).
+
+For more details, please refer to: [#160](https://github.com/xmake-io/xmake/issues/160)
+
+In addition, currently xmake also supports Qt/Wasm. For details, see: [Wasm Configuration](/guide/configuration?id=wasm)
 
 ```console
-$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32 
+$ xmake f -p wasm
 ```
-
-If you want to known more information, you can see [#160](https://github.com/xmake-io/xmake/issues/160).
 
 ### Static Library
 
@@ -140,17 +143,7 @@ target("qt_quickapp")
     add_files("src/qml.qrc")
 ```
 
-!> The new version provides the `qt.quickapp` rule, built-in QtQuick built-in rules, the use of simpler, the following version of the `qt.application` is still supported, backward compatible:
-
-```lua
-target("qt_quickapp")
-    add_rules("qt.application")
-    add_files("src/*.cpp") 
-    add_files("src/qml.qrc")
-    add_frameworks("QtQuick")
-```
-
-!> If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.quickapp_static")` static rule, 
+!> If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.quickapp_static")` static rule,
 because the linked libraries are different and need to be statically linked.
 
 Next, we try to compile, usually, if you use the Qt installation package to install by default, and do not modify the installation path, then in most cases you can automatically detect the root path of the QT SDK, for example:
@@ -195,13 +188,13 @@ target("qt_widgetapp")
 ```lua
 target("qt_widgetapp")
     add_rules("qt.application")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- add files with Q_OBJECT meta (only for qt.moc)
     add_frameworks("QtWidgets")
 ```
 
-!> If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.widgetapp_static")` static rule, 
+!> If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.widgetapp_static")` static rule,
 because the linked libraries are different and need to be statically linked.
 
 The effect is as follows:
@@ -251,13 +244,13 @@ And see [WDK examples](https://github.com/xmake-io/xmake/tree/master/tests/proje
 ```lua
 target("echo")
     add_rules("wdk.driver", "wdk.env.umdf")
-    add_files("driver/*.c") 
+    add_files("driver/*.c")
     add_files("driver/*.inx")
     add_includedirs("exe")
 
 target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
-    add_files("exe/*.cpp") 
+    add_files("exe/*.cpp")
 ```
 
 ### KMDF Driver Program
@@ -266,12 +259,12 @@ target("app")
 target("nonpnp")
     add_rules("wdk.driver", "wdk.env.kmdf")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
     add_files("driver/*.rc")
 
 target("app")
     add_rules("wdk.binary", "wdk.env.kmdf")
-    add_files("exe/*.c") 
+    add_files("exe/*.c")
     add_files("exe/*.inf")
 ```
 
@@ -284,20 +277,20 @@ target("kcs")
     add_values("wdk.man.resource", "kcsCounters.rc")
     add_values("wdk.man.header", "kcsCounters.h")
     add_values("wdk.man.counter_header", "kcsCounters_counters.h")
-    add_files("*.c", "*.rc", "*.man") 
+    add_files("*.c", "*.rc", "*.man")
 ```
 
 ```lua
 target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
-    add_files("*.c", {rule = "wdk.tracewpp"}) 
+    add_files("*.c", {rule = "wdk.tracewpp"})
     add_files("*.rc", "*.inf")
     add_files("*.mof|msdsm.mof")
-    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
+    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}})
 ```
 
-### Package Driver 
+### Package Driver
 
 We can run the following command to generate a .cab driver package.
 
@@ -319,7 +312,7 @@ The output files like:
 
 ### Driver Signing
 
-The driver signing is disabled when we compile driver in default case, 
+The driver signing is disabled when we compile driver in default case,
 but we can add `set_values("wdk.sign.mode")` to enable test/release sign.
 
 #### TestSign
@@ -497,12 +490,12 @@ How do we know the signature configuration we need? One is to view it in xcode. 
 ```console
 $ xmake l private.tools.codesign.dump
 ==================================== codesign identities ====================================
-{ 
-  "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" = "AF73C231A0C35335B72761BD3759694739D34EB1" 
+{
+  "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" = "AF73C231A0C35335B72761BD3759694739D34EB1"
 }
 
 ===================================== mobile provisions =====================================
-{ 
+{
   "iOS Team Provisioning Profile: org.tboox.test" = "<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -543,7 +536,7 @@ The effect is as follows:
 
 #### Package program
 
-If it is an iOS program, it will generate an ipa installation package, if it is macos, it will generate a dmg package (dmg package generation is still under development for the time being).
+If it is an iOS program, it will generate an ipa installation package, if it is macOS, it will generate a dmg package (dmg package generation is still under development for the time being).
 
 ```console
 $ xmake package
@@ -661,21 +654,19 @@ target("cuda_console")
     add_cugencodes("compute_30")
 ```
 
-<p class="tip">
-Starting with v2.2.7, the default build will enable device-link. (see [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/))
+!> Starting with v2.2.7, the default build will enable device-link. (see [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/))
 If you want to disable device-link, you can set it with `add_values("cuda.devlink", false)`.
-</p>
 
 xmake will detect Cuda SDK automatically and we can also set the SDK directory manually.
 
 ```console
-$ xmake f --cuda=/usr/local/cuda-9.1/ 
+$ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake
 ```
 
 If you want to known more information, you can see [#158](https://github.com/xmake-io/xmake/issues/158).
 
-## Lex&Yacc Program
+## Lex & Yacc Program
 
 ```lua
 target("calc")
@@ -684,9 +675,24 @@ target("calc")
      add_files("src/*.l", "src/*.y")
 ```
 
+## OpenMP Program
+
+```lua
+add_requires("libomp", {optional = true})
+target("loop")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_rules("c++.openmp")
+    add_packages("libomp")
+```
+
+If it is c code, you need to enable ʻadd_rules("c.openmp")`. If it is c/c++ mixed compilation, then these two rules must be set.
+
 ## Fortran Program
 
 After v2.3.6, the gfortran compiler is supported to compile fortran projects. We can quickly create an empty project based on fortran by using the following command:
+
+After v2.3.8, xmake also supports Intel Fortran Compiler, you only need to switch the toolchain: `xmake f --toolchain=ifort`
 
 ```console
 $ xmake create -l fortran -t console test

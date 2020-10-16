@@ -37,6 +37,7 @@ target("test2")
 | [set_warnings](#targetset_warnings)             | Set compilation warning level                             | >= 1.0.1                    |
 | [set_optimize](#targetset_optimize)             | Set compilation optimization level                        | >= 1.0.1                    |
 | [set_languages](#targetset_languages)           | Set source code language standards                        | >= 1.0.1                    |
+| [set_fpmodels](#targetset_fpmodels)             | Set float-point compilation model                         | >= 2.3.8                    |
 | [set_targetdir](#targetset_targetdir)           | Set output directories for target file                    | >= 1.0.1                    |
 | [set_objectdir](#targetset_objectdir)           | Set output directories for object files                   | >= 1.0.1                    |
 | [set_dependir](#targetset_dependir)             | Set output directories for dependent files                | >= 2.2.2                    |
@@ -488,23 +489,28 @@ Set the language standard for target code compilation. If no target exists, it w
 
 The supported language standards currently have the following main ones:
 
-| Value | Description |
-| ---------- | ---------------------- |
-| ansi | c language standard: ansi |
-| c89 | c language standard: c89 |
-| gnu89 | c language standard: gnu89 |
-| c99 | c language standard: c99 |
-| gnu99 | c language standard: gnu99 |
-| cxx98 | c++ language standard: `c++98` |
-| gnuxx98 | c++ language standard: `gnu++98` |
-| cxx11 | c++ language standard: `c++11` |
-| gnuxx11 | c++ language standard: `gnu++11` |
-| cxx14 | c++ language standard: `c++14` |
-| gnuxx14 | c++ language standard: `gnu++14` |
-| cxx1z | c++ language standard: `c++1z` |
-| gnuxx1z | c++ language standard: `gnu++1z` |
-| cxx17 | c++ language standard: `c++17` |
-| gnuxx17 | c++ language standard: `gnu++17` |
+| Value      | Description                      |
+| ---------- | ----------------------           |
+| ansi       | c language standard: ansi        |
+| c89        | c language standard: c89         |
+| gnu89      | c language standard: gnu89       |
+| c99        | c language standard: c99         |
+| gnu99      | c language standard: gnu99       |
+| c11        | c language standard: c11         |
+| c17        | c language standard: c17         |
+
+| Value      | Description                      |
+| ---------- | ----------------------           |
+| cxx98      | c++ language standard: `c++98`   |
+| gnuxx98    | c++ language standard: `gnu++98` |
+| cxx11      | c++ language standard: `c++11`   |
+| gnuxx11    | c++ language standard: `gnu++11` |
+| cxx14      | c++ language standard: `c++14`   |
+| gnuxx14    | c++ language standard: `gnu++14` |
+| cxx1z      | c++ language standard: `c++1z`   |
+| gnuxx1z    | c++ language standard: `gnu++1z` |
+| cxx17      | c++ language standard: `c++17`   |
+| gnuxx17    | c++ language standard: `gnu++17` |
 
 The c standard and the c++ standard can be set at the same time, for example:
 
@@ -513,14 +519,31 @@ The c standard and the c++ standard can be set at the same time, for example:
 set_languages("c99", "cxx11")
 ```
 
-<p class="warn">
-Instead of setting the specified standard, the compiler will compile according to this standard. After all, each compiler supports different strengths, but xmake will try to adapt the support standard of the current compiler tool to the greatest extent possible. . .
-<br><br>
-E.g:
-<br>
-Windows vs compiler does not support compiling c code according to c99 standard, can only support c89, but xmake in order to support it as much as possible, so after setting c99 standard, xmake will force to compile according to c++ code mode c code, to some extent solved the c code problem of compiling c99 under windows. .
-Users do not need to make any additional modifications. .
-</p>
+It is not that a specified standard is set, and the compiler will compile according to this standard. After all, each compiler supports different strengths, but xmake will try its best to adapt to the support standards of the current compilation tool.
+
+The msvc compiler does not support compiling c code according to the c99 standard, and can only support c89, but xmake supports it as much as possible, so after setting the c99 standard, xmake will force the c++ code mode to compile c code , To a certain extent, it solves the problem of compiling c99 c code under windows. .
+The user does not need to make any additional changes.
+
+However, the latest msvc compilation already supports the c11/c17 standard, and xmake will not do additional special processing.
+
+### target:set_fpmodels
+
+#### Set float-point compilation mode
+
+This interface is used to set the floating-point compilation mode and the compilation abstract settings for mathematical calculation related optimizations. It provides several commonly used levels such as fast, strict, except, precise, etc. Some of them can be set at the same time, and some are conflicting. Effective.
+
+For the description of these levels, you can refer to the Microsoft document: [Specify floating-point behavior](https://docs.microsoft.com/en-us/cpp/build/reference/fp-specify-floating-point-behavior ?view=vs-2019)
+
+Of course, for other compilers such as gcc/icc, xmake will map to different compilation flags.
+
+```lua
+set_fpmodels("fast")
+set_fpmodels("strict")
+set_fpmodels("fast", "except")
+set_fpmodels("precise") - default
+```
+
+For details about this, see: [https://github.com/xmake-io/xmake/issues/981](https://github.com/xmake-io/xmake/issues/981)
 
 ### target:set_targetdir
 
@@ -666,7 +689,7 @@ This is a new interface after v2.2.7, which is used to customize the link proces
 
 ```lua
 target("test")
-    on_link(function (target) 
+    on_link(function (target)
         print("link it")
     end)
 ```
@@ -882,7 +905,7 @@ This is a new interface after v2.2.7 to add custom script before linking target.
 
 ```lua
 target("test")
-    before_link(function (target) 
+    before_link(function (target)
         print("")
     end)
 ```
@@ -1002,7 +1025,7 @@ This is a new interface after v2.2.7 to add custom script after linking target.
 
 ```lua
 target("test")
-    after_link(function (target) 
+    after_link(function (target)
         print("")
     end)
 ```
@@ -2398,22 +2421,22 @@ If you want to get a list and description of all the policy configurations suppo
 
 ```bash
 $ xmake l core.project.policy.policies
-{ 
-  "check.auto_map_flags" = { 
+{
+  "check.auto_map_flags" = {
     type = "boolean",
     description = "Enable map gcc flags to the current compiler and linker automatically.",
-    default = true 
+    default = true
   },
-  "build.across_targets_in_parallel" = { 
+  "build.across_targets_in_parallel" = {
     type = "boolean",
     description = "Enable compile the source files for each target in parallel.",
-    default = true 
+    default = true
   },
-  "check.auto_ignore_flags" = { 
+  "check.auto_ignore_flags" = {
     type = "boolean",
     description = "Enable check and ignore unsupported flags automatically.",
-    default = true 
-  } 
+    default = true
+  }
 }
 ```
 

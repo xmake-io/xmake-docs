@@ -182,6 +182,11 @@ target("test2")
 <td>>= 1.0.1</td>
 </tr>
 <tr>
+<td><a href="#targetset_fpmodels">set_fpmodels</a></td>
+<td>Set float-point compilation model</td>
+<td>>= 2.3.8</td>
+</tr>
+<tr>
 <td><a href="#targetset_targetdir">set_targetdir</a></td>
 <td>Set output directories for target file</td>
 <td>>= 1.0.1</td>
@@ -1028,6 +1033,24 @@ set_optimize("fastest")
 <td>c language standard: gnu99</td>
 </tr>
 <tr>
+<td>c11</td>
+<td>c language standard: c11</td>
+</tr>
+<tr>
+<td>c17</td>
+<td>c language standard: c17</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td>cxx98</td>
 <td>c++ language standard: <code>c++98</code></td>
 </tr>
@@ -1073,9 +1096,20 @@ set_optimize("fastest")
 <pre><code class="lang-lua">-- Set c code standard: c99, c++ code standard: c++11
 set_languages("c99", "cxx11")
 </code></pre>
-<p><p class="warn"><br>Instead of setting the specified standard, the compiler will compile according to this standard. After all, each compiler supports different strengths, but xmake will try to adapt the support standard of the current compiler tool to the greatest extent possible. . .<br><br><br><br>E.g:<br><br><br>Windows vs compiler does not support compiling c code according to c99 standard, can only support c89, but xmake in order to support it as much as possible, so after setting c99 standard, xmake will force to compile according to c++ code mode c code, to some extent solved the c code problem of compiling c99 under windows. .<br>Users do not need to make any additional modifications. .<br></p>
-
-</p>
+<p>It is not that a specified standard is set, and the compiler will compile according to this standard. After all, each compiler supports different strengths, but xmake will try its best to adapt to the support standards of the current compilation tool.</p>
+<p>The msvc compiler does not support compiling c code according to the c99 standard, and can only support c89, but xmake supports it as much as possible, so after setting the c99 standard, xmake will force the c++ code mode to compile c code , To a certain extent, it solves the problem of compiling c99 c code under windows. .<br>The user does not need to make any additional changes.</p>
+<p>However, the latest msvc compilation already supports the c11/c17 standard, and xmake will not do additional special processing.</p>
+<h3 id="targetset_fpmodels">target:set_fpmodels</h3>
+<h4 id="setfloatpointcompilationmode">Set float-point compilation mode</h4>
+<p>This interface is used to set the floating-point compilation mode and the compilation abstract settings for mathematical calculation related optimizations. It provides several commonly used levels such as fast, strict, except, precise, etc. Some of them can be set at the same time, and some are conflicting. Effective.</p>
+<p>For the description of these levels, you can refer to the Microsoft document: <a href="https://docs.microsoft.com/en-us/cpp/build/reference/fp-specify-floating-point-behavior ?view=vs-2019">Specify floating-point behavior</a></p>
+<p>Of course, for other compilers such as gcc/icc, xmake will map to different compilation flags.</p>
+<pre><code class="lang-lua">set_fpmodels("fast")
+set_fpmodels("strict")
+set_fpmodels("fast", "except")
+set_fpmodels("precise") - default
+</code></pre>
+<p>For details about this, see: <a href="https://github.com/xmake-io/xmake/issues/981">https://github.com/xmake-io/xmake/issues/981</a></p>
 <h3 id="targetset_targetdir">target:set_targetdir</h3>
 <h4 id="setoutputdirectoriesfortargetfiles">Set output directories for target files</h4>
 <p>Set the output directory of the target program file. Under normal circumstances, you do not need to set it. The default output will be in the build directory.</p>
@@ -1174,7 +1208,7 @@ target("test")
 <h4 id="runcustomlinktargetscript">Run custom link target script</h4>
 <p>This is a new interface after v2.2.7, which is used to customize the link process of the target.</p>
 <pre><code class="lang-lua">target("test")
-    on_link(function (target) 
+    on_link(function (target)
         print("link it")
     end)
 </code></pre>
@@ -1365,7 +1399,7 @@ target("demo")
 <h4 id="runcustomscriptbeforelinkingtarget">Run custom script before linking target</h4>
 <p>This is a new interface after v2.2.7 to add custom script before linking target.</p>
 <pre><code class="lang-lua">target("test")
-    before_link(function (target) 
+    before_link(function (target)
         print("")
     end)
 </code></pre>
@@ -1439,7 +1473,7 @@ target("demo")
 <h4 id="runcustomscriptafterlinkingtarget">Run custom script after linking target</h4>
 <p>This is a new interface after v2.2.7 to add custom script after linking target.</p>
 <pre><code class="lang-lua">target("test")
-    after_link(function (target) 
+    after_link(function (target)
         print("")
     end)
 </code></pre>
@@ -2470,22 +2504,22 @@ ${define FOO_STRING}
 </table>
 <p>If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:</p>
 <pre><code class="lang-bash">$ xmake l core.project.policy.policies
-{ 
-  "check.auto_map_flags" = { 
+{
+  "check.auto_map_flags" = {
     type = "boolean",
     description = "Enable map gcc flags to the current compiler and linker automatically.",
-    default = true 
+    default = true
   },
-  "build.across_targets_in_parallel" = { 
+  "build.across_targets_in_parallel" = {
     type = "boolean",
     description = "Enable compile the source files for each target in parallel.",
-    default = true 
+    default = true
   },
-  "check.auto_ignore_flags" = { 
+  "check.auto_ignore_flags" = {
     type = "boolean",
     description = "Enable check and ignore unsupported flags automatically.",
-    default = true 
-  } 
+    default = true
+  }
 }
 </code></pre>
 <h5 id="checkauto_ignore_flags">check.auto_ignore_flags</h5>

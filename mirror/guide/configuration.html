@@ -115,9 +115,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
 </code></pre>
 <p>The <a href="#-bin">--bin</a> option is used to set <code>bin</code> directory of toolchains.</p>
-<p><p class="tip"><br>Please attempt to set <code>--arch=</code> option if it had failed to check compiler.<br></p>
-
-</p>
+<p>!> Please attempt to set <code>--arch=</code> option if it had failed to check compiler.</p>
 <h3 id="iphoneos">iPhoneOS</h3>
 <pre><code class="lang-bash">$ xmake f -p iphoneos [-a armv7|armv7s|arm64|i386|x86_64]
 $ xmake
@@ -127,9 +125,23 @@ $ xmake
 $ xmake
 </code></pre>
 <h3 id="mingw">Mingw</h3>
-<pre><code class="lang-bash">$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64]
+<p>In addition to supporting Msys2/MingW, MingW for macOS/linux, xmake also supports the llvm-mingw tool chain, which can switch the arm/arm64 architecture to compile.</p>
+<pre><code class="lang-bash">$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64|arm|arm64]
 $ xmake
 </code></pre>
+<h3 id="wasmwebassembly">Wasm (WebAssembly)</h3>
+<p>This platform is used to compile WebAssembly programs (emcc toolchain is used internally). Before switching this platform, we need to enter the Emscripten toolchain environment to ensure that emcc and other compilers are available.</p>
+<pre><code class="lang-bash">$ xmake f -p wasm
+$ xmake
+</code></pre>
+<p>xmake also supports Qt for wasm compilation, you only need:</p>
+<pre><code class="lang-bash">$ xmake f -p wasm [--qt=~/Qt]
+$ xmake
+</code></pre>
+<p>The <code>--qt</code> parameter setting is optional, usually xmake can detect the sdk path of qt.</p>
+<p>One thing to note is that there is a correspondence between the versions of Emscripten and Qt SDK. If the version does not match, there may be compatibility issues between Qt/Wasm.</p>
+<p>Regarding the version correspondence, you can see: <a href="https://wiki.qt.io/Qt_for_WebAssembly">https://wiki.qt.io/Qt_for_WebAssembly</a></p>
+<p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/956">https://github.com/xmake-io/xmake/issues/956</a></p>
 <h3 id="applewatchos">Apple WatchOS</h3>
 <pre><code class="lang-bash">$ xmake f -p watchos [-a i386|armv7k]
 $ xmake
@@ -385,6 +397,10 @@ $ xmake
 </code></pre>
 <p>After setting the <code>--mingw</code> root directory to the global configuration through the<code>xmake g/global</code> command, after each compilation and switching of the compilation platform, there is no need to specify an additional mingw toolchain path, which is convenient for use.</p>
 <p>In addition, the usage of other tool chain configuration parameters is the same as that described above. For example, <code>--cross</code>,<code>--bin=</code>, etc. can be adjusted according to the actual needs of the environment. Own mingw tool chain.</p>
+<p>xmake also supports the llvm-mingw tool chain, which can be switched to arm/arm64 architecture to compile.</p>
+<pre><code class="lang-bash">$ xmake f --mingw=/xxx/llvm-mingw -a arm64
+$ xmake
+</code></pre>
 <h4 id="llvmtoolchain">LLVM Toolchain</h4>
 <p>The tool chain of llvm is relatively standard, only need to set the sdk configuration path to use:</p>
 <pre><code class="lang-bash">$ xmake f -p cross --toolchain=llvm --sdk="C:\Program Files\LLVM"
@@ -393,6 +409,28 @@ $ xmake
 <h4 id="gnurmtoolchain">GNU-RM Toolchain</h4>
 <p>toolchain downlaod url: <a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#">https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#</a></p>
 <pre><code class="lang-bash">$ xmake f -p cross --toolchain=gnu-rm --sdk=/xxx/cc-arm-none-eabi-9-2019-q4-major
+$ xmake
+</code></pre>
+<h4 id="tinyctoolchain">TinyC Toolchain</h4>
+<pre><code class="lang-bash">$ xmake f --toolchain=tinyc
+$ xmake
+</code></pre>
+<p>!> In the Releases directory, we also provide a special xmake-tinyc-vX.X.X.win32.exe installation package, built-in tinyc tool chain, without relying on msvc, you can also compile c code, out of the box use without dependencies.</p>
+<h4 id="emcctoolchain">Emcc tool chain</h4>
+<p>Usually only need to switch to the Wasm platform, which has built-in emcc toolchain, and additionally adjusts the extension of the target program to <code>*.html</code> and output <code>*.wasm</code>.</p>
+<pre><code class="lang-bash">$ xmake f -p wasm
+$ xmake
+</code></pre>
+<p>However, we can also switch directly to the emcc toolchain, but the suffix name will not be modified.</p>
+<pre><code class="lang-bash">$ xmake f --toolchain=emcc
+$ xmake
+</code></pre>
+<h4 id="intelccompilertoolchain">Intel C++ Compiler Tool Chain</h4>
+<pre><code class="lang-bash">$ xmake f --toolchain=icc
+$ xmake
+</code></pre>
+<h4 id="intelfortrancompilationtoolchain">Intel Fortran Compilation Tool Chain</h4>
+<pre><code class="lang-bash">$ xmake f --toolchain=ifort
 $ xmake
 </code></pre>
 <h3 id="commoncrosscompilationconfiguration">Common Cross-compilation configuration</h3>

@@ -149,11 +149,14 @@ $ xmake create -l c++ -t quickapp_qt test
 <p>默认会自动探测Qt环境，当然也可以指定Qt SDK环境目录：</p>
 <pre><code class="lang-console">$ xmake f --qt=~/Qt/Qt5.9.1
 </code></pre>
-<p>如果想要使用windows下mingw的Qt环境，可以切到mingw的平台配置，并且指定下mingw编译环境的sdk路径即可，例如：</p>
-<pre><code class="lang-console">$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32 
+<p>如果想要使用 windows 下 MingW 的 Qt 环境，可以切到mingw的平台配置，并且指定下mingw编译环境的sdk路径即可，例如：</p>
+<pre><code class="lang-console">$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 </code></pre>
-<p>上述指定的mingw sdk用的是Qt下Tools目录自带的环境，当然如果有其他第三方mingw编译环境，也可以手动指定, 具体可以参考：<a href="#mingw">mingw编译配置</a>。</p>
+<p>上述指定的 MingW SDK 用的是Qt下Tools目录自带的环境，当然如果有其他第三方 MingW 编译环境，也可以手动指定, 具体可以参考：<a href="/mirror/zh-cn/guide/configuration.html#mingw">MingW 编译配置</a>。</p>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/160">#160</a></p>
+<p>另外，当前xmake也支持Qt/Wasm，详情见：<a href="/mirror/zh-cn/guide/configuration.html#wasm">Wasm 配置</a></p>
+<pre><code class="lang-console">$ xmake f -p wasm
+</code></pre>
 <h3 id="">静态库程序</h3>
 <pre><code class="lang-lua">target("qt_static_library")
     add_rules("qt.static")
@@ -175,15 +178,8 @@ $ xmake create -l c++ -t quickapp_qt test
 <p>v2.2.9以上版本：</p>
 <pre><code class="lang-lua">target("qt_quickapp")
     add_rules("qt.quickapp")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/qml.qrc")
-</code></pre>
-<p>!> 新版本提供了<code>qt.quickapp</code>规则，内置了QtQuick的内建规则，使用更加简单，下面老版本的<code>qt.application</code>还是支持的，向下兼容：</p>
-<pre><code class="lang-lua">target("qt_quickapp")
-    add_rules("qt.application")
-    add_files("src/*.cpp") 
-    add_files("src/qml.qrc")
-    add_frameworks("QtQuick")
 </code></pre>
 <p>!> 如果使用的自己编译的static版本QT SDK，那么需要切换到<code>add_rules("qt.quickapp_static")</code>静态规则才行，因为链接的库是不同的，需要做静态链接。</p>
 <p>接下来，我们尝试编译下，通常，如果是使用Qt的安装包默认安装，也没有修改安装路径，那么大部分情况下都是可以自动检测到QT SDK的根路径，例如：</p>
@@ -207,14 +203,14 @@ build ok!
 <p>v2.2.9以上版本：</p>
 <pre><code class="lang-lua">target("qt_widgetapp")
     add_rules("qt.widgetapp")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 </code></pre>
 <p>!> 新版本提供了<code>qt.widgetapp</code>规则，内置了QtWidgets的内建规则，使用更加简单，下面老版本的<code>qt.application</code>还是支持的，向下兼容：</p>
 <pre><code class="lang-lua">target("qt_widgetapp")
     add_rules("qt.application")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
     add_frameworks("QtWidgets")
@@ -226,7 +222,7 @@ build ok!
 <p>2.2.6之后版本，可以直接切到android平台编译Quick/Widgets应用程序，生成apk包，并且可通过<code>xmake install</code>命令安装到设备。</p>
 <pre><code class="lang-console">$ xmake create -t quickapp_qt -l c++ appdemo
 $ cd appdemo
-$ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c 
+$ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c
 $ xmake
 [  0%]: compiling.qt.qrc src/qml.qrc
 [ 50%]: ccache compiling.release src/main.cpp
@@ -242,7 +238,7 @@ install ok!👌
 </code></pre>
 <h2 id="wdk">WDK驱动程序</h2>
 <p>默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：</p>
-<pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c 
+<pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
@@ -250,24 +246,24 @@ $ xmake
 <h3 id="umdf">umdf驱动程序</h3>
 <pre><code class="lang-lua">target("echo")
     add_rules("wdk.driver", "wdk.env.umdf")
-    add_files("driver/*.c") 
+    add_files("driver/*.c")
     add_files("driver/*.inx")
     add_includedirs("exe")
 
 target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
-    add_files("exe/*.cpp") 
+    add_files("exe/*.cpp")
 </code></pre>
 <h3 id="kmdf">kmdf驱动程序</h3>
 <pre><code class="lang-lua">target("nonpnp")
     add_rules("wdk.driver", "wdk.env.kmdf")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
     add_files("driver/*.rc")
 
 target("app")
     add_rules("wdk.binary", "wdk.env.kmdf")
-    add_files("exe/*.c") 
+    add_files("exe/*.c")
     add_files("exe/*.inf")
 </code></pre>
 <h3 id="wdm">wdm驱动程序</h3>
@@ -277,15 +273,15 @@ target("app")
     add_values("wdk.man.resource", "kcsCounters.rc")
     add_values("wdk.man.header", "kcsCounters.h")
     add_values("wdk.man.counter_header", "kcsCounters_counters.h")
-    add_files("*.c", "*.rc", "*.man") 
+    add_files("*.c", "*.rc", "*.man")
 </code></pre>
 <pre><code class="lang-lua">target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
-    add_files("*.c", {rule = "wdk.tracewpp"}) 
+    add_files("*.c", {rule = "wdk.tracewpp"})
     add_files("*.rc", "*.inf")
     add_files("*.mof|msdsm.mof")
-    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
+    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}})
 </code></pre>
 <h3 id="">生成驱动包</h3>
 <p>可以通过以下命令生成.cab驱动包：</p>
@@ -419,12 +415,12 @@ $ xmake
 <p>那如何知道我们需要的签名配置呢？一种就是在xcode里面查看，另外xmake也提供了一些辅助工具可以dump出当前可用的所有签名配置：</p>
 <pre><code class="lang-console">$ xmake l private.tools.codesign.dump
 ==================================== codesign identities ====================================
-{ 
-  "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" = "AF73C231A0C35335B72761BD3759694739D34EB1" 
+{
+  "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" = "AF73C231A0C35335B72761BD3759694739D34EB1"
 }
 
 ===================================== mobile provisions =====================================
-{ 
+{
   "iOS Team Provisioning Profile: org.tboox.test" = "<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -527,22 +523,30 @@ target("cuda_console")
     -- generate PTX code for the virtual architecture to guarantee compatibility
     add_cugencodes("compute_30")
 </code></pre>
-<p><p class="tip"><br>从v2.2.7版本开始，默认构建会启用device-link。（参见 <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">Separate Compilation and Linking of CUDA C++ Device Code</a>）<br>如果要显示禁用device-link，可以通过<code>add_values("cuda.devlink", false)</code> 来设置。<br></p>
-
-</p>
+<p>!> 从v2.2.7版本开始，默认构建会启用device-link。（参见 <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">Separate Compilation and Linking of CUDA C++ Device Code</a>）<br>如果要显示禁用device-link，可以通过<code>add_values("cuda.devlink", false)</code> 来设置。</p>
 <p>默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录：</p>
-<pre><code class="lang-console">$ xmake f --cuda=/usr/local/cuda-9.1/ 
+<pre><code class="lang-console">$ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/158">#158</a></p>
-<h2 id="lexyacc">Lex&amp;Yacc程序</h2>
+<h2 id="lexyacc">Lex &amp; Yacc程序</h2>
 <pre><code class="lang-lua">target("calc")
     set_kind("binary")
     add_rules("lex", "yacc")
     add_files("src/*.l", "src/*.y")
 </code></pre>
+<h2 id="openmp">OpenMP 程序</h2>
+<pre><code class="lang-lua">add_requires("libomp", {optional = true})
+target("loop")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_rules("c++.openmp")
+    add_packages("libomp")
+</code></pre>
+<p>如果是c代码，需要启用 <code>add_rules("c.openmp")</code>，如果是 c/c++ 混合编译，那么这两个规则都要设置。</p>
 <h2 id="fortran">Fortran程序</h2>
 <p>v2.3.6之后版本开始支持gfortran编译器来编译fortran项目，我们可以通过下面的命令，快速创建一个基于fortran的空工程：</p>
+<p>v2.3.8之后，xmake 还支持 Intel Fortran Compiler，只需要切换下工具链即可：<code>xmake f --toolchain=ifort</code></p>
 <pre><code class="lang-console">$ xmake create -l fortran -t console test
 </code></pre>
 <p>它的xmake.lua内容如下：</p>

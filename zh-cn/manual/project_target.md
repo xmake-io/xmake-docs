@@ -38,6 +38,7 @@ target("test2")
 | [set_warnings](#targetset_warnings)             | 设置警告级别                         | >= 1.0.1 |
 | [set_optimize](#targetset_optimize)             | 设置优化级别                         | >= 1.0.1 |
 | [set_languages](#targetset_languages)           | 设置代码语言标准                     | >= 1.0.1 |
+| [set_fpmodels](#targetset_fpmodels)             | 设置float-point编译模式              | >= 2.3.8 |
 | [set_targetdir](#targetset_targetdir)           | 设置生成目标文件目录                 | >= 1.0.1 |
 | [set_objectdir](#targetset_objectdir)           | 设置对象文件生成目录                 | >= 1.0.1 |
 | [set_dependir](#targetset_dependir)             | 设置依赖文件生成目录                 | >= 2.2.2 |
@@ -494,6 +495,11 @@ set_optimize("fastest")
 | gnu89      | c语言标准: gnu89       |
 | c99        | c语言标准: c99         |
 | gnu99      | c语言标准: gnu99       |
+| c11        | c语言标准: c11         |
+| c17        | c语言标准: c17         |
+
+| 值         | 描述                   |
+| ---------- | ---------------------- |
 | cxx98      | c++语言标准: `c++98`   |
 | gnuxx98    | c++语言标准: `gnu++98` |
 | cxx11      | c++语言标准: `c++11`   |
@@ -512,14 +518,31 @@ c标准和c++标准可同时进行设置，例如：
 set_languages("c99", "cxx11")
 ```
 
-<p class="warn">
-并不是设置了指定的标准，编译器就一定会按这个标准来编译，毕竟每个编译器支持的力度不一样，但是xmake会尽最大可能的去适配当前编译工具的支持标准。。。
-<br><br>
-例如：
-<br>
-windows下vs的编译器并不支持按c99的标准来编译c代码，只能支持到c89，但是xmake为了尽可能的支持它，所以在设置c99的标准后，xmake会强制按c++代码模式去编译c代码，从一定程度上解决了windows下编译c99的c代码问题。。
-用户不需要去额外做任何修改。。
-</p>
+并不是设置了指定的标准，编译器就一定会按这个标准来编译，毕竟每个编译器支持的力度不一样，但是xmake会尽最大可能的去适配当前编译工具的支持标准。
+
+msvc 的编译器并不支持按 c99 的标准来编译c代码，只能支持到c89，但是xmake为了尽可能的支持它，所以在设置c99的标准后，xmake会强制按c++代码模式去编译c代码，从一定程度上解决了windows下编译c99的c代码问题。。
+用户不需要去额外做任何修改。
+
+不过最新的 msvc 编译已经支持上了 c11/c17 标准，xmake 也就不会再做额外的特殊处理。
+
+### target:set_fpmodels
+
+#### 设置float-point编译模式
+
+此接口用于设置浮点的编译模式，对数学计算相关优化的编译抽象设置，提供：fast, strict, except, precise 等几种常用的级别，有些可同时设置，有些是有冲突的，最后设置的生效。
+
+关于这些级别的说明，可以参考下微软的文档：[Specify floating-point behavior](https://docs.microsoft.com/en-us/cpp/build/reference/fp-specify-floating-point-behavior?view=vs-2019)
+
+当然，对应gcc/icc等其他编译器，xmake 会映射到不同的编译flags。
+
+```lua
+set_fpmodels("fast")
+set_fpmodels("strict")
+set_fpmodels("fast", "except")
+set_fpmodels("precise") -- default
+```
+
+关于这块详情见：[https://github.com/xmake-io/xmake/issues/981](https://github.com/xmake-io/xmake/issues/981)
 
 ### target:set_targetdir
 
@@ -586,13 +609,13 @@ target("test")
     on_build(function (target)
         import("core.base.task")
         import("core.project.project")
-        
+
         task.run("xxxx")
     end)
     on_install(function (target)
         import("core.base.task")
         import("core.project.project")
-        
+
         task.run("xxxx")
     end)
 ```
@@ -629,7 +652,7 @@ rule("markdown")
 
 target("test")
     set_kind("binary")
-    
+
     -- 使test目标支持markdown文件的构建规则
     add_rules("markdown")
 
@@ -665,7 +688,7 @@ target("test")
 
 ```lua
 target("test")
-    on_link(function (target) 
+    on_link(function (target)
         print("link it")
     end)
 ```
@@ -682,7 +705,7 @@ target("test")
 target("test")
 
     -- 设置自定义编译脚本
-    on_build(function (target) 
+    on_build(function (target)
         print("build it")
     end)
 ```
@@ -767,7 +790,7 @@ target("test")
 target("test")
 
     -- 设置自定义清理脚本
-    on_clean(function (target) 
+    on_clean(function (target)
 
         -- 仅删掉目标文件
         os.rm(target:targetfile())
@@ -816,10 +839,10 @@ target("demo")
     -- 设置自定义打包脚本，在使用xmake编译完libdemo.so后，执行xmake p进行打包
     -- 会自动使用ant将app编译成apk文件
     --
-    on_package(function (target) 
+    on_package(function (target)
 
         -- 使用ant编译app成apk文件，输出信息重定向到日志文件
-        os.run("ant debug") 
+        os.run("ant debug")
     end)
 ```
 
@@ -835,7 +858,7 @@ target("demo")
 target("test")
 
     -- 设置自定义安装脚本，自动安装apk文件
-    on_install(function (target) 
+    on_install(function (target)
 
         -- 使用adb安装打包生成的apk文件
         os.run("adb install -r ./bin/Demo-debug.apk")
@@ -850,7 +873,7 @@ target("test")
 
 ```lua
 target("test")
-    on_uninstall(function (target) 
+    on_uninstall(function (target)
         ...
     end)
 ```
@@ -867,7 +890,7 @@ target("test")
 target("test")
 
     -- 设置自定义运行脚本，自动运行安装好的app程序，并且自动获取设备输出信息
-    on_run(function (target) 
+    on_run(function (target)
 
         os.run("adb shell am start -n com.demo/com.demo.DemoTest")
         os.run("adb logcat")
@@ -882,7 +905,7 @@ target("test")
 
 ```lua
 target("test")
-    before_link(function (target) 
+    before_link(function (target)
         print("")
     end)
 ```
@@ -902,7 +925,7 @@ target("test")
 
 ### target:before_build_file
 
-#### 自定义编译前的脚本, 实现单文件构建 
+#### 自定义编译前的脚本, 实现单文件构建
 
 通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之前执行一些自定义脚本：
 
@@ -916,7 +939,7 @@ target("test")
 
 ### target:before_build_files
 
-#### 自定义编译前的脚本, 实现多文件构建 
+#### 自定义编译前的脚本, 实现多文件构建
 
 通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之前执行一些自定义脚本：
 
@@ -1001,7 +1024,7 @@ target("test")
 
 ```lua
 target("test")
-    after_link(function (target) 
+    after_link(function (target)
         print("")
     end)
 ```
@@ -1023,7 +1046,7 @@ target("test")
 
 ### target:after_build_file
 
-#### 自定义编译前的脚本, 实现单文件构建 
+#### 自定义编译前的脚本, 实现单文件构建
 
 通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之后执行一些自定义脚本：
 
@@ -1037,7 +1060,7 @@ target("test")
 
 ### target:after_build_files
 
-#### 自定义编译前的脚本, 实现多文件构建 
+#### 自定义编译前的脚本, 实现多文件构建
 
 通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之后执行一些自定义脚本：
 
@@ -1193,7 +1216,7 @@ add_deps("dep1", "dep2", {inherit = false})
 
 通过显式设置inherit配置，来告诉xmake，这两个依赖的配置是否需要被继承，如果不设置，默认就是启用继承的。
 
-2.2.5版本之后，可通过 `add_includedirs("inc1", {public = true})`, 设置public为true, 将includedirs的设置公开给其他依赖的子target继承。 
+2.2.5版本之后，可通过 `add_includedirs("inc1", {public = true})`, 设置public为true, 将includedirs的设置公开给其他依赖的子target继承。
 
 目前对于target的编译链接flags相关接口设置，都是支持继承属性的，可以人为控制是否需要导出给其他target来依赖继承，目前支持的属性有：
 
@@ -1214,7 +1237,7 @@ add_deps("dep1", "dep2", {inherit = false})
 ```lua
 target("demo")
 
-    -- 添加对libtest.a的链接，相当于 -ltest 
+    -- 添加对libtest.a的链接，相当于 -ltest
     add_links("test")
 
     -- 添加链接搜索目录
@@ -1467,7 +1490,7 @@ add_undefines("DEBUG")
 
 ### target:add_cflags
 
-#### 添加c编译选项 
+#### 添加c编译选项
 
 仅对c代码添加编译选项
 
@@ -1501,7 +1524,7 @@ add_cflags("-g", "-O2", {force = true})
 
 ### target:add_mflags
 
-#### 添加objc编译选项 
+#### 添加objc编译选项
 
 仅对objc代码添加编译选项
 
@@ -1740,10 +1763,10 @@ v2.2.3之后，还支持覆写内置的links，控制实际链接的库：
 
 ```lua
 -- 默认会有 ncurses, panel, form等links
-add_requires("ncurses") 
+add_requires("ncurses")
 
 target("test")
-    
+
     -- 显示指定，只使用ncurses一个链接库
     add_packages("ncurses", {links = "ncurses"})
 ```
@@ -2216,7 +2239,7 @@ add_configfiles("src/config.h", {filename = "myconfig.h"})
 
 ```lua
 add_configfiles("src/*.h.in", {prefixdir = "subdir"})
-add_configfiles("src/(tbox/config.h)") 
+add_configfiles("src/(tbox/config.h)")
 ```
 
 这个接口的一个最重要的特性就是，可以在预处理的时候，对里面的一些模板变量进行预处理替换，例如：
@@ -2299,7 +2322,7 @@ config.h
 
 我们还可以对`#define`定义进行一些变量状态控制处理：
 
-config.h.in 
+config.h.in
 
 ```c
 ${define FOO_ENABLE}
@@ -2337,7 +2360,7 @@ target("test")
     add_configfiles("config.h.in")
 
     -- 如果启用foo选项 -> 添加 FOO_ENABLE 和 FOO_STRING 定义
-    add_options("foo") 
+    add_options("foo")
 ```
 
 config.h.in
@@ -2401,22 +2424,22 @@ target("test")
 
 ```bash
 $ xmake l core.project.policy.policies
-{ 
-  "check.auto_map_flags" = { 
+{
+  "check.auto_map_flags" = {
     type = "boolean",
     description = "Enable map gcc flags to the current compiler and linker automatically.",
-    default = true 
+    default = true
   },
-  "build.across_targets_in_parallel" = { 
+  "build.across_targets_in_parallel" = {
     type = "boolean",
     description = "Enable compile the source files for each target in parallel.",
-    default = true 
+    default = true
   },
-  "check.auto_ignore_flags" = { 
+  "check.auto_ignore_flags" = {
     type = "boolean",
     description = "Enable check and ignore unsupported flags automatically.",
-    default = true 
-  } 
+    default = true
+  }
 }
 ```
 

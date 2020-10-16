@@ -95,15 +95,21 @@ $ xmake create -l c++ -t quickapp_qt test
 $ xmake f --qt=~/Qt/Qt5.9.1
 ```
 
-如果想要使用windows下mingw的Qt环境，可以切到mingw的平台配置，并且指定下mingw编译环境的sdk路径即可，例如：
+如果想要使用 windows 下 MingW 的 Qt 环境，可以切到mingw的平台配置，并且指定下mingw编译环境的sdk路径即可，例如：
 
 ```console
-$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32 
+$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 ```
 
-上述指定的mingw sdk用的是Qt下Tools目录自带的环境，当然如果有其他第三方mingw编译环境，也可以手动指定, 具体可以参考：[mingw编译配置](#mingw)。
+上述指定的 MingW SDK 用的是Qt下Tools目录自带的环境，当然如果有其他第三方 MingW 编译环境，也可以手动指定, 具体可以参考：[MingW 编译配置](/zh-cn/guide/configuration?id=mingw)。
 
 更多详情可以参考：[#160](https://github.com/xmake-io/xmake/issues/160)
+
+另外，当前xmake也支持Qt/Wasm，详情见：[Wasm 配置](/zh-cn/guide/configuration?id=wasm)
+
+```console
+$ xmake f -p wasm
+```
 
 ### 静态库程序
 
@@ -138,18 +144,8 @@ v2.2.9以上版本：
 ```lua
 target("qt_quickapp")
     add_rules("qt.quickapp")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/qml.qrc")
-```
-
-!> 新版本提供了`qt.quickapp`规则，内置了QtQuick的内建规则，使用更加简单，下面老版本的`qt.application`还是支持的，向下兼容：
-
-```lua
-target("qt_quickapp")
-    add_rules("qt.application")
-    add_files("src/*.cpp") 
-    add_files("src/qml.qrc")
-    add_frameworks("QtQuick")
 ```
 
 !> 如果使用的自己编译的static版本QT SDK，那么需要切换到`add_rules("qt.quickapp_static")`静态规则才行，因为链接的库是不同的，需要做静态链接。
@@ -186,7 +182,7 @@ v2.2.9以上版本：
 ```lua
 target("qt_widgetapp")
     add_rules("qt.widgetapp")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 ```
@@ -196,7 +192,7 @@ target("qt_widgetapp")
 ```lua
 target("qt_widgetapp")
     add_rules("qt.application")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
     add_frameworks("QtWidgets")
@@ -216,7 +212,7 @@ target("qt_widgetapp")
 ```console
 $ xmake create -t quickapp_qt -l c++ appdemo
 $ cd appdemo
-$ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c 
+$ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c
 $ xmake
 [  0%]: compiling.qt.qrc src/qml.qrc
 [ 50%]: ccache compiling.release src/main.cpp
@@ -239,7 +235,7 @@ install ok!👌
 默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：
 
 ```console
-$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c 
+$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 ```
 
@@ -252,13 +248,13 @@ $ xmake
 ```lua
 target("echo")
     add_rules("wdk.driver", "wdk.env.umdf")
-    add_files("driver/*.c") 
+    add_files("driver/*.c")
     add_files("driver/*.inx")
     add_includedirs("exe")
 
 target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
-    add_files("exe/*.cpp") 
+    add_files("exe/*.cpp")
 ```
 
 ### kmdf驱动程序
@@ -267,12 +263,12 @@ target("app")
 target("nonpnp")
     add_rules("wdk.driver", "wdk.env.kmdf")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
     add_files("driver/*.rc")
 
 target("app")
     add_rules("wdk.binary", "wdk.env.kmdf")
-    add_files("exe/*.c") 
+    add_files("exe/*.c")
     add_files("exe/*.inf")
 ```
 
@@ -285,17 +281,17 @@ target("kcs")
     add_values("wdk.man.resource", "kcsCounters.rc")
     add_values("wdk.man.header", "kcsCounters.h")
     add_values("wdk.man.counter_header", "kcsCounters_counters.h")
-    add_files("*.c", "*.rc", "*.man") 
+    add_files("*.c", "*.rc", "*.man")
 ```
 
 ```lua
 target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
-    add_files("*.c", {rule = "wdk.tracewpp"}) 
+    add_files("*.c", {rule = "wdk.tracewpp"})
     add_files("*.rc", "*.inf")
     add_files("*.mof|msdsm.mof")
-    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}}) 
+    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}})
 ```
 
 ### 生成驱动包
@@ -502,12 +498,12 @@ target("test")
 ```console
 $ xmake l private.tools.codesign.dump
 ==================================== codesign identities ====================================
-{ 
-  "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" = "AF73C231A0C35335B72761BD3759694739D34EB1" 
+{
+  "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" = "AF73C231A0C35335B72761BD3759694739D34EB1"
 }
 
 ===================================== mobile provisions =====================================
-{ 
+{
   "iOS Team Provisioning Profile: org.tboox.test" = "<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -666,21 +662,19 @@ target("cuda_console")
     add_cugencodes("compute_30")
 ```
 
-<p class="tip">
-从v2.2.7版本开始，默认构建会启用device-link。（参见 [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/)）
+!> 从v2.2.7版本开始，默认构建会启用device-link。（参见 [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/)）
 如果要显示禁用device-link，可以通过`add_values("cuda.devlink", false)` 来设置。
-</p>
 
 默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录：
 
 ```console
-$ xmake f --cuda=/usr/local/cuda-9.1/ 
+$ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake
 ```
 
 更多详情可以参考：[#158](https://github.com/xmake-io/xmake/issues/158)
 
-## Lex&Yacc程序
+## Lex & Yacc程序
 
 ```lua
 target("calc")
@@ -689,9 +683,24 @@ target("calc")
     add_files("src/*.l", "src/*.y")
 ```
 
+## OpenMP 程序
+
+```lua
+add_requires("libomp", {optional = true})
+target("loop")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_rules("c++.openmp")
+    add_packages("libomp")
+```
+
+如果是c代码，需要启用 `add_rules("c.openmp")`，如果是 c/c++ 混合编译，那么这两个规则都要设置。
+
 ## Fortran程序
 
 v2.3.6之后版本开始支持gfortran编译器来编译fortran项目，我们可以通过下面的命令，快速创建一个基于fortran的空工程：
+
+v2.3.8之后，xmake 还支持 Intel Fortran Compiler，只需要切换下工具链即可：`xmake f --toolchain=ifort`
 
 ```console
 $ xmake create -l fortran -t console test
