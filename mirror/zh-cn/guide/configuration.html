@@ -302,6 +302,9 @@ $ xmake
 </code></pre>
 <p>只要设置了<code>--sdk=</code>等参数，就会启用linux平台的交叉编译模式。</p>
 <h3 id="">常用工具链配置</h3>
+<p>完整的工具链列表，请执行下面的命令查看：</p>
+<pre><code class="lang-bash">$ xmake show -l toolchains
+</code></pre>
 <p>!> 此特性需要v2.3.4以上版本才支持</p>
 <p>上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入<code>--ldflags/--includedirs</code>等场景就比较繁琐了,<br>因此xmake也内置了一些常用工具链，可以省去交叉编译工具链复杂的配置过程，只需要执行：</p>
 <pre><code class="lang-bash">$ xmake f --toolchain=gnu-rm --sdk=/xxx/

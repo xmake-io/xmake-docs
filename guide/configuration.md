@@ -367,6 +367,12 @@ As long as the `--sdk=` and other parameters are set, the cross-compilation mode
 
 ### Toolchain configuration
 
+For a complete list of tool chains, please execute the following command to view:
+
+```bash
+$ xmake show -l toolchains
+```
+
 !> This feature requires v2.3.4 or later to support
 
 The above describes the general cross-compilation toolchain configuration. If some specific toolchains need to be imported into additional scenarios such as `--ldflags/--includedirs`, it is more cumbersome

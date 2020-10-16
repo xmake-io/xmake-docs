@@ -304,6 +304,9 @@ $ xmake
 </code></pre>
 <p>As long as the <code>--sdk=</code> and other parameters are set, the cross-compilation mode of the Linux platform will be enabled.</p>
 <h3 id="toolchainconfiguration">Toolchain configuration</h3>
+<p>For a complete list of tool chains, please execute the following command to view:</p>
+<pre><code class="lang-bash">$ xmake show -l toolchains
+</code></pre>
 <p>!> This feature requires v2.3.4 or later to support</p>
 <p>The above describes the general cross-compilation toolchain configuration. If some specific toolchains need to be imported into additional scenarios such as <code>--ldflags/--includedirs</code>, it is more cumbersome<br>Therefore, xmake also has some common tool chains built-in, which can save the complicated configuration process of cross-compilation tool chain, and only need to execute:</p>
 <pre><code class="lang-bash">$ xmake f --toolchain=gnu-rm --sdk=/xxx/
