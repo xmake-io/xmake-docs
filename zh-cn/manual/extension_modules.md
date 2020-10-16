@@ -607,18 +607,6 @@ end
 }
 ```
 
-### core.project.global
-
-<p class="tip">
-此模块自2.1.5版本后迁移至[core.base.global](#core-base-global)。
-</p>
-
-### core.project.task
-
-<p class="tip">
-此模块自2.1.5版本后迁移至[core.base.task](#core-base-task)。
-</p>
-
 ### core.project.project
 
 用于获取当前工程的一些描述信息，也就是在`xmake.lua`工程描述文件中定义的配置信息，例如：[target](#target)、[option](#option)等。
@@ -894,78 +882,11 @@ print(language.sourcekind_of("/xxxx/test.cpp"))
 
 显示结果为：`cxx`，也就是`c++`类型，具体对应列表见：[language.sourcekinds](#languagesourcekinds)
 
-### core.platform.platform
-
-平台信息相关操作
-
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [platform.get](#platformget)                   | 获取指定平台相关配置信息                     | >= 2.0.1 |
-
-#### platform.get
-
-- 获取指定平台相关配置信息
-
-获取平台配置`xmake.lua`中设置的信息，一般只有在写插件的时候会用到，例如：
-
-```lua
--- 获取当前平台的所有支持架构
-print(platform.get("archs"))
-
--- 获取指定iphoneos平台的目标文件格式信息
-local formats = platform.get("formats", "iphoneos")
-table.dump(formats)
-```
-
-具体有哪些可读的平台配置信息，可参考：[platform](#platform)
-
-### core.platform.environment
-
-环境相关操作，用于进入和离开指定环境变量对应的终端环境，一般用于`path`环境的进入和离开，尤其是一些需要特定环境的构建工具，例如：msvc的工具链。
-
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [environment.enter](#environmententer)         | 进入指定环境                                 | >= 2.0.1 |
-| [environment.leave](#environmentleave)         | 离开指定环境                                 | >= 2.0.1 |
-
-目前支持的环境有：
-
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| toolchains                                      | 工具链执行环境                               | >= 2.0.1 |
-
-#### environment.enter
-
-- 进入指定环境
-
-进入指定环境，例如msvc有自己的环境变量环境用于运行构建工具，例如：`cl.exe`, `link.exe`这些，这个时候想要在xmake里面运行他们，需要：
-
-```lua
--- 进入工具链环境
-environment.enter("toolchains")
-
--- 这个时候运行cl.exe才能正常运行，这个时候的path等环境变量都会进入msvc的环境模式
-os.run("cl.exe ..")
-
--- 离开工具链环境
-environment.leave("toolchains")
-```
-
-因此为了通用性，默认xmake编译事都会设置这个环境，在linux下基本上内部环境不需要特殊切换，目前仅对windows下msvc进行了处理。
-
-#### environment.leave
-
-- 离开指定环境
-
-具体使用见：[environment.enter](#environmententer)
-
 ### lib.detect
 
 此模块提供了非常强大的探测功能，用于探测程序、编译器、语言特性、依赖包等。
 
-<p class="tip">
-此模块的接口分散在多个模块目录中，尽量通过导入单个接口来使用，这样效率更高，例如：`import("lib.detect.find_package")`，而不是通过`import("lib.detect")`导入所有来调用。
-</p>
+!> 此模块的接口分散在多个模块目录中，尽量通过导入单个接口来使用，这样效率更高，例如：`import("lib.detect.find_package")`，而不是通过`import("lib.detect")`导入所有来调用。
 
 | 接口                                                | 描述                                         | 支持版本             |
 | --------------------------------------------------- | -------------------------------------------- | -------------------- |

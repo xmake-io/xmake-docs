@@ -269,15 +269,15 @@ end
 
 Compiler related operations, often used for plugin development.
 
-| Interface | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [compiler.compile](#compilercompile) | Execute Compilation | >= 2.0.1 |
-| [compiler.compcmd](#compilercompcmd) | Get Compiler Command Line | >= 2.0.1 |
-| [compiler.compargv](#compilercompargv) | Get Compiled Command Line List | >= 2.1.5 |
-| [compiler.compflags](#compilercompflags) | Get Compilation Options | >= 2.0.1 |
-| [compiler.has_flags](#compilerhas_flags) | Determine if the specified compilation option is supported | >= 2.1.5 |
-| [compiler.features](#compilerfeatures) | Get all compiler features | >= 2.1.5 |
-| [compiler.has_features](#compilerhas_features) | Determine if the specified compilation feature is supported | >= 2.1.5 |
+| Interface                                       | Description                                                 | Supported Versions |
+| ----------------------------------------------- | --------------------------------------------                | --------           |
+| [compiler.compile](#compilercompile)            | Execute Compilation                                         | >= 2.0.1           |
+| [compiler.compcmd](#compilercompcmd)            | Get Compiler Command Line                                   | >= 2.0.1           |
+| [compiler.compargv](#compilercompargv)          | Get Compiled Command Line List                              | >= 2.1.5           |
+| [compiler.compflags](#compilercompflags)        | Get Compilation Options                                     | >= 2.0.1           |
+| [compiler.has_flags](#compilerhas_flags)        | Determine if the specified compilation option is supported  | >= 2.1.5           |
+| [compiler.features](#compilerfeatures)          | Get all compiler features                                   | >= 2.1.5           |
+| [compiler.has_features](#compilerhas_features)  | Determine if the specified compilation feature is supported | >= 2.1.5           |
 
 #### compiler.compile
 
@@ -607,18 +607,6 @@ The output is for example:
 }
 ```
 
-### core.project.global
-
-<p class="tip">
-This module was migrated to [core.base.global](#core-base-global) since version 2.1.5.
-</p>
-
-### core.project.task
-
-<p class="tip">
-This module has been migrated to [core.base.task](#core-base-task) since version 2.1.5.
-</p>
-
 ### core.project.project
 
 Used to get some description information of the current project, that is, the configuration information defined in the `xmake.lua` project description file, for example: [target](#target), [option](#option), etc.
@@ -888,78 +876,11 @@ print(language.sourcekind_of("/xxxx/test.cpp"))
 
 The result is: `cxx`, which is the `c++` type. For the corresponding list, see: [language.sourcekinds](#languagesourcekinds)
 
-### core.platform.platform
-
-Platform information related operations
-
-| Interface | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [platform.get](#platformget) | Get configuration information about the specified platform | >= 2.0.1 |
-
-#### platform.get
-
-- Get configuration information about the specified platform
-
-Get the information set in the platform configuration `xmake.lua`, which is generally only used when writing plugins, for example:
-
-```lua
--- Get all support architectures for the current platform
-print(platform.get("archs"))
-
--- Get the target file format information of the specified iphoneos platform
-local formats = platform.get("formats", "iphoneos")
-table.dump(formats)
-```
-
-For specific readable platform configuration information, please refer to: [platform](#platform)
-
-### core.platform.environment
-
-Environment-related operations, used to enter and leave the terminal environment corresponding to the specified environment variables, generally used for the entry and departure of the `path` environment, especially some build tools that require a specific environment, such as: msvc toolchain.
-
-| Interface | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [environment.enter](#environmententer) | Enter the specified environment | >= 2.0.1 |
-| [environment.leave](#environmentleave) | Leave the specified environment | >= 2.0.1 |
-
-The currently supported environments are:
-
-| Interface | Description | Supported Versions |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| toolchains | Toolchain Execution Environment | >= 2.0.1 |
-
-#### environment.enter
-
-- Enter the specified environment
-
-Enter the specified environment, for example, msvc has its own environment variable environment for running build tools, such as: `cl.exe`, `link.exe`, these time you want to run them in xmake, you need:
-
-```lua
--- Enter the toolchain environment
-environment.enter("toolchains")
-
--- At this time, run cl.exe to run normally. At this time, environment variables such as path will enter the environment mode of msvc.
-os.run("cl.exe ..")
-
--- leaving the toolchain environment
-environment.leave("toolchains")
-```
-
-Therefore, for the sake of versatility, the default xmake compiler will set this environment. Under Linux, basically the internal environment does not need special switching. At present, only msvc under Windows is processed.
-
-#### environment.leave
-
-- leaving the designated environment
-
-For specific use, see: [environment.enter](#environmententer)
-
 ### lib.detect
 
 This module provides very powerful probing capabilities for probing programs, compilers, language features, dependencies, and more.
 
-<p class="tip">
-The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient, for example: `import("lib.detect.find_package")` instead of `import("lib.detect ") `Import all to call.
-</p>
+!> The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient, for example: `import("lib.detect.find_package")` instead of `import("lib.detect ") `Import all to call.
 
 | Interface | Description | Supported Versions |
 | --------------------------------------------------- | -------------------------------------------- | -------------------- |

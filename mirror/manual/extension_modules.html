@@ -892,14 +892,6 @@ end
 ,   kind = "static"
 }
 </code></pre>
-<h3 id="coreprojectglobal">core.project.global</h3>
-<p><p class="tip"><br>This module was migrated to <a href="#core-base-global">core.base.global</a> since version 2.1.5.<br></p>
-
-</p>
-<h3 id="coreprojecttask">core.project.task</h3>
-<p><p class="tip"><br>This module has been migrated to <a href="#core-base-task">core.base.task</a> since version 2.1.5.<br></p>
-
-</p>
 <h3 id="coreprojectproject">core.project.project</h3>
 <p>Used to get some description information of the current project, that is, the configuration information defined in the <code>xmake.lua</code> project description file, for example: <a href="#target">target</a>, <a href="#option">option</a>, etc.</p>
 <table>
@@ -1196,102 +1188,9 @@ end
 <pre><code class="lang-lua">print(language.sourcekind_of("/xxxx/test.cpp"))
 </code></pre>
 <p>The result is: <code>cxx</code>, which is the <code>c++</code> type. For the corresponding list, see: <a href="#languagesourcekinds">language.sourcekinds</a></p>
-<h3 id="coreplatformplatform">core.platform.platform</h3>
-<p>Platform information related operations</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#platformget">platform.get</a></td>
-<td>Get configuration information about the specified platform</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
-<h4 id="platformget">platform.get</h4>
-<ul>
-<li>Get configuration information about the specified platform</li>
-</ul>
-<p>Get the information set in the platform configuration <code>xmake.lua</code>, which is generally only used when writing plugins, for example:</p>
-<pre><code class="lang-lua">-- Get all support architectures for the current platform
-print(platform.get("archs"))
-
--- Get the target file format information of the specified iphoneos platform
-local formats = platform.get("formats", "iphoneos")
-table.dump(formats)
-</code></pre>
-<p>For specific readable platform configuration information, please refer to: <a href="#platform">platform</a></p>
-<h3 id="coreplatformenvironment">core.platform.environment</h3>
-<p>Environment-related operations, used to enter and leave the terminal environment corresponding to the specified environment variables, generally used for the entry and departure of the <code>path</code> environment, especially some build tools that require a specific environment, such as: msvc toolchain.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#environmententer">environment.enter</a></td>
-<td>Enter the specified environment</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#environmentleave">environment.leave</a></td>
-<td>Leave the specified environment</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
-<p>The currently supported environments are:</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>toolchains</td>
-<td>Toolchain Execution Environment</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
-<h4 id="environmententer">environment.enter</h4>
-<ul>
-<li>Enter the specified environment</li>
-</ul>
-<p>Enter the specified environment, for example, msvc has its own environment variable environment for running build tools, such as: <code>cl.exe</code>, <code>link.exe</code>, these time you want to run them in xmake, you need:</p>
-<pre><code class="lang-lua">-- Enter the toolchain environment
-environment.enter("toolchains")
-
--- At this time, run cl.exe to run normally. At this time, environment variables such as path will enter the environment mode of msvc.
-os.run("cl.exe ..")
-
--- leaving the toolchain environment
-environment.leave("toolchains")
-</code></pre>
-<p>Therefore, for the sake of versatility, the default xmake compiler will set this environment. Under Linux, basically the internal environment does not need special switching. At present, only msvc under Windows is processed.</p>
-<h4 id="environmentleave">environment.leave</h4>
-<ul>
-<li>leaving the designated environment</li>
-</ul>
-<p>For specific use, see: <a href="#environmententer">environment.enter</a></p>
 <h3 id="libdetect">lib.detect</h3>
 <p>This module provides very powerful probing capabilities for probing programs, compilers, language features, dependencies, and more.</p>
-<p><p class="tip"><br>The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient, for example: <code>import("lib.detect.find_package")</code> instead of <code>import("lib.detect ")</code>Import all to call.<br></p>
-
-</p>
+<p>!> The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient, for example: <code>import("lib.detect.find_package")</code> instead of <code>import("lib.detect ")</code>Import all to call.</p>
 <table>
 <thead>
 <tr>
