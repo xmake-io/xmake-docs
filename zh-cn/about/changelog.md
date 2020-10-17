@@ -1,3 +1,29 @@
+## v2.3.8
+
+### 新特性
+
+* [#955](https://github.com/xmake-io/xmake/issues/955): 添加 Zig 空工程模板
+* [#956](https://github.com/xmake-io/xmake/issues/956): 添加 Wasm 编译平台，并且支持 Qt/Wasm SDK
+* 升级luajit到v2.1最新分支版本，并且支持mips64上运行xmake
+* [#972](https://github.com/xmake-io/xmake/issues/972): 添加`depend.on_changed()`去简化依赖文件的处理
+* [#981](https://github.com/xmake-io/xmake/issues/981): 添加`set_fpmodels()`去抽象化设置math/float-point编译优化模式
+* [#980](https://github.com/xmake-io/xmake/issues/980): 添加对 Intel C/C++ 和 Fortran 编译器的全平台支持
+* [#986](https://github.com/xmake-io/xmake/issues/986): 对16.8以上msvc编译器增加 `c11`/`c17` 支持
+* [#979](https://github.com/xmake-io/xmake/issues/979): 添加对OpenMP的跨平台抽象配置。`add_rules("c++.openmp")`
+
+### 改进
+
+* [#958](https://github.com/xmake-io/xmake/issues/958): 改进mingw平台，增加对 llvm-mingw 工具链的支持，以及 arm64/arm 架构的支持
+* 增加 `add_requires("zlib~xxx")` 模式使得能够支持同时安装带有多种配置的同一个包，作为独立包存在
+* [#977](https://github.com/xmake-io/xmake/issues/977): 改进 find_mingw 在 windows 上的探测
+* [#978](https://github.com/xmake-io/xmake/issues/978): 改进工具链的flags顺序
+* 改进XCode工具链，支持macOS/arm64
+
+### Bugs修复
+
+* [#951](https://github.com/xmake-io/xmake/issues/951): 修复 emcc (WebAssembly) 工具链在windows上的支持
+* [#992](https://github.com/xmake-io/xmake/issues/992): 修复文件锁偶尔打开失败问题
+
 ## v2.3.7
 
 ### 新特性

@@ -90,7 +90,32 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v237">v2.3.7</h2>
+    <h2 id="v238">v2.3.8</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/955">#955</a>: Add zig project templates</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/956">#956</a>: Add wasm platform and support Qt/Wasm SDK</li>
+<li>Upgrade luajit vm and support for runing on mips64 device</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/972">#972</a>: Add <code>depend.on_changed()</code> api to simplify adding dependent files</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/981">#981</a>: Add <code>set_fpmodels()</code> for math optimization mode</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/980">#980</a>: Support Intel C/C++ and Fortran Compiler</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/986">#986</a>: Support for <code>c11</code> and <code>c17</code> for MSVC Version 16.8 and Above</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/979">#979</a>: Add Abstraction for OpenMP. <code>add_rules("c++.openmp")</code></li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/958">#958</a>: Improve mingw platform to support llvm-mingw toolchain</li>
+<li>Improve <code>add_requires("zlib~xxx")</code> to support for installing multi-packages at same time</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/977">#977</a>: Improve find_mingw for windows</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/978">#978</a>: Improve toolchain flags order</li>
+<li>Improve Xcode toolchain to support for macOS/arm64</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/951">#951</a>: Fix emcc support for windows</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/992">#992</a>: Fix filelock bug</li>
+</ul>
+<h2 id="v237">v2.3.7</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/microsoft/winget-pkgs/pull/2941">#2941</a>: Add support for winget</li>

@@ -1,3 +1,29 @@
+## v2.3.8
+
+### New features
+
+* [#955](https://github.com/xmake-io/xmake/issues/955): Add zig project templates
+* [#956](https://github.com/xmake-io/xmake/issues/956): Add wasm platform and support Qt/Wasm SDK
+* Upgrade luajit vm and support for runing on mips64 device
+* [#972](https://github.com/xmake-io/xmake/issues/972): Add `depend.on_changed()` api to simplify adding dependent files
+* [#981](https://github.com/xmake-io/xmake/issues/981): Add `set_fpmodels()` for math optimization mode
+* [#980](https://github.com/xmake-io/xmake/issues/980): Support Intel C/C++ and Fortran Compiler
+* [#986](https://github.com/xmake-io/xmake/issues/986): Support for `c11` and `c17` for MSVC Version 16.8 and Above
+* [#979](https://github.com/xmake-io/xmake/issues/979): Add Abstraction for OpenMP. `add_rules("c++.openmp")`
+
+### Change
+
+* [#958](https://github.com/xmake-io/xmake/issues/958): Improve mingw platform to support llvm-mingw toolchain
+* Improve `add_requires("zlib~xxx")` to support for installing multi-packages at same time
+* [#977](https://github.com/xmake-io/xmake/issues/977): Improve find_mingw for windows
+* [#978](https://github.com/xmake-io/xmake/issues/978): Improve toolchain flags order
+* Improve Xcode toolchain to support for macOS/arm64
+
+### Bugs fixed
+
+* [#951](https://github.com/xmake-io/xmake/issues/951): Fix emcc support for windows
+* [#992](https://github.com/xmake-io/xmake/issues/992): Fix filelock bug
+
 ## v2.3.7
 
 ### New features
