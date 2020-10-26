@@ -4,6 +4,7 @@
   - [联系](zh-cn/about/contact.md)
   - [赞助 ❤️](zh-cn/about/sponsor.md)
   - [教程 ✍️](zh-cn/about/course.md)
+  - [周边 🗂️](zh-cn/about/peripheral_items.md)
   - [技术支持](zh-cn/about/technical_support.md)
   - [更新日志](zh-cn/about/changelog.md)
   - [Awesome xmake](zh-cn/about/awesome.md)
