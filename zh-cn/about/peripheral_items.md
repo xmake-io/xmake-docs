@@ -10,4 +10,4 @@
 
 价格：¥68
 
-<img src="/assets/img/xmake-cup.jpeg" width="50%" height="50%">
+<img src="/assets/img/xmake-cup.jpeg" width="80%" height="80%">
