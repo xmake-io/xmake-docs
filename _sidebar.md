@@ -22,6 +22,7 @@
   - [Local Package](package/local_package.md)
   - [System Package](package/system_package.md)
   - [Remote Package](package/remote_package.md)
+  - [Xrepo C/C++ Package Manager](package/xrepo.md)
 
 - Plugin
 
