@@ -24,7 +24,7 @@
   - [使用本地包](zh-cn/package/local_package.md)
   - [使用系统包](zh-cn/package/system_package.md)
   - [使用远程包](zh-cn/package/remote_package.md)
-  - [Xrepo C/C++ 包管理器](zh-cn/package/xrepo.md)
+  - [Xrepo C/C++ 包管理器](https://xrepo.xmake.io/#/zh-cn/getting_started)
 
 - 插件介绍
 

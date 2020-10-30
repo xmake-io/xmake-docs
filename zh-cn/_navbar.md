@@ -1,3 +1,4 @@
+- [Xrepo](https://xrepo.xmake.io/#/zh-cn/)
 - [教程](/zh-cn/about/course.md)
 - [赞助](/zh-cn/about/sponsor.md)
 - [文章](https://tboox.org/cn/category/#xmake)
