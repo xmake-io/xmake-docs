@@ -361,7 +361,7 @@ $ xmake require -f -v tbox "1.5.x"
 Pass additional setup information:
 
 ```console
-$ xmake require --extra="debug=true,config={small=true}" tbox
+$ xmake require --extra="{debug=true,config={small=true}}" tbox
 ```
 
 Install the debug package and pass the compilation configuration information of `small=true` to the package.

@@ -391,7 +391,7 @@ $ xmake require -f -v tbox "1.5.x"
 传递额外的设置信息：
 
 ```console
-$ xmake require --extra="debug=true,config={small=true}" tbox
+$ xmake require --extra="{debug=true,config={small=true}}" tbox
 ```
 
 安装debug包，并且传递`small=true`的编译配置信息到包中去。
