@@ -287,7 +287,7 @@ Xmake's dependency package management fully supports semantic version selection,
 Some examples:
 
 ```lua
-add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
+add_requires("tbox 1.6.*", "pcre 8.x", "libpng ^1.18")
 add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 ```
 
