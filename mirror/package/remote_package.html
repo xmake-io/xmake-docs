@@ -203,7 +203,7 @@ add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags 
 <p>In this way, spdlog corresponds to the internal fmt dependency package, we can also flexibly set various complex custom configurations in the upper layer through <code>add_requires</code>.</p>
 <h2 id="installthirdpartypackages">Install third-party packages</h2>
 <p>After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib and etc.</p>
-<h3 id="addahomebrewdependencypackage">Add a homebrew dependency package</h3>
+<h3 id="addhomebrewdependencypackage">Add homebrew dependency package</h3>
 <pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"}})
 add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
 
@@ -212,7 +212,7 @@ target("test")
     add_files("src/*.c") 
     add_packages("pcre2", "zlib")
 </code></pre>
-<h3 id="addavcpkgdependencypackage">Add a vcpkg dependency package</h3>
+<h3 id="addvcpkgdependencypackage">Add vcpkg dependency package</h3>
 <pre><code class="lang-lua">add_requires("vcpkg::zlib", "vcpkg::pcre2")
 
 target("test")
@@ -229,9 +229,9 @@ target("test")
     add_files("src/*.c") 
     add_packages("zlib", "pcre2")
 </code></pre>
-<h3 id="addaconandependencypackage">Add a conan dependency package</h3>
-<pre><code class="lang-lua">add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
-add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+<h3 id="addconandependencypackage">Add conan dependency package</h3>
+<pre><code class="lang-lua">add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
+add_requires("conan::openssl/1.1.1g", {alias = "openssl", 
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
@@ -245,17 +245,34 @@ checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
-  -> CONAN::zlib/1.2.11@conan/stable  (debug)
-  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+  -> conan::zlib/1.2.11 (debug)
+  -> conan::openssl/1.1.1g
 please input: y (y/n)
 
-  => installing CONAN::zlib/1.2.11@conan/stable .. ok
-  => installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+  => installing conan::zlib/1.2.11 .. ok
+  => installing conan::openssl/1.1.1g .. ok
 
 [  0%]: ccache compiling.release src/main.c
 [100%]: linking.release test
 </code></pre>
-<h3 id="addaclibdependencypackage">Add a clib dependency package</h3>
+<h3 id="addpacmandependencypackage">Add pacman dependency package</h3>
+<p>We support not only the installation and integration of the pacman package on archlinux, but also the installation and integration of the mingw x86_64/i386 package of pacman on msys2.</p>
+<pre><code class="lang-lua">add_requires("pacman::zlib", {alias = "zlib"})
+add_requires("pacman::libpng", {alias = "libpng"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib", "libpng")
+</code></pre>
+<p>On archlinux:</p>
+<pre><code class="lang-console">xmake
+</code></pre>
+<p>To install the mingw package on msys2, you need to specify the mingw platform:</p>
+<pre><code class="lang-console">xmake f -p mingw -a [x86_64|i386]
+xmake
+</code></pre>
+<h3 id="addclibdependencypackage">Add clib dependency package</h3>
 <p>Clib is a source-based dependency package manager. The dependent package is downloaded directly to the corresponding library source code, integrated into the project to compile, rather than binary library dependencies.</p>
 <p>It is also very convenient to integrate in xmake. The only thing to note is that you need to add the source code of the corresponding library to xmake.lua, for example:</p>
 <pre><code class="lang-lua">add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
@@ -265,6 +282,21 @@ target("test")
     add_files("clib/bytes/*.c")
     add_files("src/*.c")
     add_packages("bytes")
+</code></pre>
+<h3 id="adddubdlangdependencypackage">Add dub/dlang dependency package</h3>
+<p>xmake also supports dlang&#39;s dub package manager and integrates dlang&#39;s dependent packages to use.</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("dub::log 0.4.3", {alias = "log"})
+add_requires("dub::dateparser", {alias = "dateparser"})
+add_requires("dub::emsi_containers", {alias = "emsi_containers"})
+add_requires("dub::stdx-allocator", {alias = "stdx-allocator"})
+add_requires("dub::mir-core", {alias = "mir-core"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.d")
+     add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
 </code></pre>
 <h2 id="usingselfbuiltprivatepackagerepository">Using self-built private package repository</h2>
 <p>If the required package is not in the official repository <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>, we can submit the contribution code to the repository for support.<br>But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>

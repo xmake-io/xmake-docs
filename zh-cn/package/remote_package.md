@@ -203,7 +203,7 @@ add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags 
 
 2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等
 
-### 添加homebrew的依赖包
+### 添加 homebrew 的依赖包
 
 ```lua
 add_requires("brew::zlib", {alias = "zlib"}})
@@ -215,7 +215,7 @@ target("test")
     add_packages("pcre2", "zlib")
 ```
 
-### 添加vcpkg的依赖包
+### 添加 vcpkg 的依赖包
 
 ```lua
 add_requires("vcpkg::zlib", "vcpkg::pcre2")
@@ -238,11 +238,11 @@ target("test")
     add_packages("zlib", "pcre2")
 ```
 
-### 添加conan的依赖包
+### 添加 conan 的依赖包
 
 ```lua
-add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
-add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
+add_requires("conan::openssl/1.1.1g", {alias = "openssl", 
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
@@ -259,18 +259,45 @@ checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
-  -> CONAN::zlib/1.2.11@conan/stable  (debug)
-  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+  -> conan::zlib/1.2.11 (debug)
+  -> conan::openssl/1.1.1g
 please input: y (y/n)
 
-  => installing CONAN::zlib/1.2.11@conan/stable .. ok
-  => installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+  => installing conan::zlib/1.2.11 .. ok
+  => installing conan::openssl/1.1.1g .. ok
 
 [  0%]: ccache compiling.release src/main.c
 [100%]: linking.release test
 ```
 
-### 添加clib的依赖包
+### 添加 pacman 的依赖包
+
+我们既支持 archlinux 上的 pacman 包安装和集成，也支持 msys2 上 pacman 的 mingw x86_64/i386 包安装和集成。
+
+```lua
+add_requires("pacman::zlib", {alias = "zlib"})
+add_requires("pacman::libpng", {alias = "libpng"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("zlib", "libpng")
+```
+
+archlinux 上只需要：
+
+```console
+xmake
+```
+
+msys2 上安装 mingw 包，需要指定到 mingw 平台：
+
+```console
+xmake f -p mingw -a [x86_64|i386]
+xmake
+```
+
+### 添加 clib 的依赖包
 
 clib是一款基于源码的依赖包管理器，拉取的依赖包是直接下载对应的库源码，集成到项目中编译，而不是二进制库依赖。
 
@@ -284,6 +311,25 @@ target("test")
     add_files("clib/bytes/*.c")
     add_files("src/*.c") 
     add_packages("bytes")
+```
+
+### 添加 dub/dlang 的依赖包
+
+xmake 也支持 dlang 的 dub 包管理器，集成 dlang 的依赖包来使用。
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("dub::log 0.4.3", {alias = "log"})
+add_requires("dub::dateparser", {alias = "dateparser"})
+add_requires("dub::emsi_containers", {alias = "emsi_containers"})
+add_requires("dub::stdx-allocator", {alias = "stdx-allocator"})
+add_requires("dub::mir-core", {alias = "mir-core"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.d")
+    add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
 ```
 
 ## 使用自建私有包仓库

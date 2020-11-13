@@ -330,7 +330,7 @@ set_config("ld", "g++")
 <h4 id="">添加需要的依赖包</h4>
 <p>xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：<a href="https://semver.org/">https://semver.org/</a></p>
 <p>一些语义版本写法：</p>
-<pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
+<pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 8.x", "libpng ^1.18")
 add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 </code></pre>
 <p>目前xmake使用的语义版本解析器是<a href="https://github.com/uael">uael</a>贡献的<a href="https://github.com/uael/sv">sv</a>库，里面也有对版本描述写法的详细说明，可以参考下：<a href="https://github.com/uael/sv#versions">版本描述说明</a></p>

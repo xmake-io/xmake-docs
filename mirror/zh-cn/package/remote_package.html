@@ -217,7 +217,7 @@ add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags 
 <p>通过这种方式，spdlog对应内部的fmt依赖包，我们也可以在上层通过<code>add_requires</code>灵活的设置各种复杂的自定义配置。</p>
 <h2 id="">第三方依赖包安装</h2>
 <p>2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等</p>
-<h3 id="homebrew">添加homebrew的依赖包</h3>
+<h3 id="homebrew">添加 homebrew 的依赖包</h3>
 <pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"}})
 add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
 
@@ -226,7 +226,7 @@ target("test")
     add_files("src/*.c") 
     add_packages("pcre2", "zlib")
 </code></pre>
-<h3 id="vcpkg">添加vcpkg的依赖包</h3>
+<h3 id="vcpkg">添加 vcpkg 的依赖包</h3>
 <pre><code class="lang-lua">add_requires("vcpkg::zlib", "vcpkg::pcre2")
 
 target("test")
@@ -243,9 +243,9 @@ target("test")
     add_files("src/*.c") 
     add_packages("zlib", "pcre2")
 </code></pre>
-<h3 id="conan">添加conan的依赖包</h3>
-<pre><code class="lang-lua">add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
-add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+<h3 id="conan">添加 conan 的依赖包</h3>
+<pre><code class="lang-lua">add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
+add_requires("conan::openssl/1.1.1g", {alias = "openssl", 
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
@@ -259,17 +259,34 @@ checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
-  -> CONAN::zlib/1.2.11@conan/stable  (debug)
-  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+  -> conan::zlib/1.2.11 (debug)
+  -> conan::openssl/1.1.1g
 please input: y (y/n)
 
-  => installing CONAN::zlib/1.2.11@conan/stable .. ok
-  => installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+  => installing conan::zlib/1.2.11 .. ok
+  => installing conan::openssl/1.1.1g .. ok
 
 [  0%]: ccache compiling.release src/main.c
 [100%]: linking.release test
 </code></pre>
-<h3 id="clib">添加clib的依赖包</h3>
+<h3 id="pacman">添加 pacman 的依赖包</h3>
+<p>我们既支持 archlinux 上的 pacman 包安装和集成，也支持 msys2 上 pacman 的 mingw x86_64/i386 包安装和集成。</p>
+<pre><code class="lang-lua">add_requires("pacman::zlib", {alias = "zlib"})
+add_requires("pacman::libpng", {alias = "libpng"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c") 
+    add_packages("zlib", "libpng")
+</code></pre>
+<p>archlinux 上只需要：</p>
+<pre><code class="lang-console">xmake
+</code></pre>
+<p>msys2 上安装 mingw 包，需要指定到 mingw 平台：</p>
+<pre><code class="lang-console">xmake f -p mingw -a [x86_64|i386]
+xmake
+</code></pre>
+<h3 id="clib">添加 clib 的依赖包</h3>
 <p>clib是一款基于源码的依赖包管理器，拉取的依赖包是直接下载对应的库源码，集成到项目中编译，而不是二进制库依赖。</p>
 <p>其在xmake中集成也很方便，唯一需要注意的是，还需要自己添加上对应库的源码到xmake.lua，例如：</p>
 <pre><code class="lang-lua">add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
@@ -279,6 +296,21 @@ target("test")
     add_files("clib/bytes/*.c")
     add_files("src/*.c") 
     add_packages("bytes")
+</code></pre>
+<h3 id="dubdlang">添加 dub/dlang 的依赖包</h3>
+<p>xmake 也支持 dlang 的 dub 包管理器，集成 dlang 的依赖包来使用。</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("dub::log 0.4.3", {alias = "log"})
+add_requires("dub::dateparser", {alias = "dateparser"})
+add_requires("dub::emsi_containers", {alias = "emsi_containers"})
+add_requires("dub::stdx-allocator", {alias = "stdx-allocator"})
+add_requires("dub::mir-core", {alias = "mir-core"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.d")
+    add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
 </code></pre>
 <h2 id="">使用自建私有包仓库</h2>
 <p>如果需要的包不在官方仓库<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>中，我们可以提交贡献代码到仓库进行支持。<br>但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>

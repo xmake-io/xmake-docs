@@ -330,7 +330,7 @@ set_config("ld", "g++")
 <h4 id="addpackagedependencies">Add package dependencies</h4>
 <p>Xmake&#39;s dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of semantic versioning, see: <a href="https://semver.org/">https://semver.org/</a></p>
 <p>Some examples:</p>
-<pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
+<pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 8.x", "libpng ^1.18")
 add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 </code></pre>
 <p>The semantic version parser currently used by xmake is the <a href="https://github.com/uael/sv">sv</a> library contributed by <a href="https://github.com/uael">uael</a>, which also has a description of the version. For detailed instructions, please refer to the following: <a href="https://github.com/uael/sv#versions">Version Description</a></p>

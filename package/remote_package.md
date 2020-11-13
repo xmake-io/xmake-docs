@@ -176,7 +176,7 @@ In this way, spdlog corresponds to the internal fmt dependency package, we can a
 
 After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib and etc.
 
-### Add a homebrew dependency package
+### Add homebrew dependency package
 
 ```lua
 add_requires("brew::zlib", {alias = "zlib"}})
@@ -188,7 +188,7 @@ target("test")
     add_packages("pcre2", "zlib")
 ```
 
-### Add a vcpkg dependency package
+### Add vcpkg dependency package
 
 ```lua
 add_requires("vcpkg::zlib", "vcpkg::pcre2")
@@ -211,11 +211,11 @@ target("test")
     add_packages("zlib", "pcre2")
 ```
 
-### Add a conan dependency package
+### Add conan dependency package
 
 ```lua
-add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
-add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
+add_requires("conan::openssl/1.1.1g", {alias = "openssl", 
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
@@ -232,18 +232,45 @@ checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
-  -> CONAN::zlib/1.2.11@conan/stable  (debug)
-  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+  -> conan::zlib/1.2.11 (debug)
+  -> conan::openssl/1.1.1g
 please input: y (y/n)
 
-  => installing CONAN::zlib/1.2.11@conan/stable .. ok
-  => installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+  => installing conan::zlib/1.2.11 .. ok
+  => installing conan::openssl/1.1.1g .. ok
 
 [  0%]: ccache compiling.release src/main.c
 [100%]: linking.release test
 ```
 
-### Add a clib dependency package
+### Add pacman dependency package
+
+We support not only the installation and integration of the pacman package on archlinux, but also the installation and integration of the mingw x86_64/i386 package of pacman on msys2.
+
+```lua
+add_requires("pacman::zlib", {alias = "zlib"})
+add_requires("pacman::libpng", {alias = "libpng"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib", "libpng")
+```
+
+On archlinux:
+
+```console
+xmake
+```
+
+To install the mingw package on msys2, you need to specify the mingw platform:
+
+```console
+xmake f -p mingw -a [x86_64|i386]
+xmake
+```
+
+### Add clib dependency package
 
 Clib is a source-based dependency package manager. The dependent package is downloaded directly to the corresponding library source code, integrated into the project to compile, rather than binary library dependencies.
 
@@ -257,6 +284,25 @@ target("test")
     add_files("clib/bytes/*.c")
     add_files("src/*.c")
     add_packages("bytes")
+```
+
+### Add dub/dlang dependency package
+
+xmake also supports dlang's dub package manager and integrates dlang's dependent packages to use.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("dub::log 0.4.3", {alias = "log"})
+add_requires("dub::dateparser", {alias = "dateparser"})
+add_requires("dub::emsi_containers", {alias = "emsi_containers"})
+add_requires("dub::stdx-allocator", {alias = "stdx-allocator"})
+add_requires("dub::mir-core", {alias = "mir-core"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.d")
+     add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
 ```
 
 ## Using self-built private package repository
