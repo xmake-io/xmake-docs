@@ -172,6 +172,49 @@ Our project requires spdlog to enable fPIC compilation, then its fmt dependency 
 
 In this way, spdlog corresponds to the internal fmt dependency package, we can also flexibly set various complex custom configurations in the upper layer through `add_requires`.
 
+### Install any version of the package
+
+By default, `add_requires("zlib >1.2.x")` can only select the package version that exists in the `xmake-repo` repository, because each version of the package will have a sha256 check value. Use To check the integrity of the package.
+
+Therefore, there is no check value for packages of unknown version, and xmake will not let you choose to use it by default, which is not safe.
+
+What if the package version we need cannot be selected for use? There are two ways, one is to submit a pr to [xmake-repo](https://github.com/xmake-io/xmake-repo), add the new version of the specified package and the corresponding sha256, for example:
+
+```lua
+package("zlib")
+    add_versions("1.2.10", "8d7e9f698ce48787b6e1c67e6bff79e487303e66077e25cb9784ac8835978017")
+    add_versions("1.2.11", "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1")
+```
+
+In addition, there is another way that the user passes `{verify = false}` configuration to `add_requires` to force the file integrity check of the package to be ignored, so that the sha256 value is not needed, so any version of the package can be installed.
+
+Of course, there will be a certain degree of security and the risk of incomplete packages, which requires users to choose and evaluate.
+
+```lua
+add_requires("zlib 1.2.11", {verify = false})
+```
+
+### Disable external header file search path
+
+By default, packages installed through `add_requires` will use `-isystem` or `/external:I` to refer to the header file path inside, which can usually avoid the unmodifiable warning messages introduced by some package header files.
+However, we can still disable external header files by setting `{external = false}` and switch back to the use of `-I`.
+
+The compilation flags for external header files are enabled by default as follows:
+
+```console
+-isystem /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+```
+
+Manually turn off the compilation flags of external external header files as follows:
+
+```lua
+add_requires("zlib 1.x", {external = false})
+```
+
+```console
+-I /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+```
+
 ## Install third-party packages
 
 After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib and etc.

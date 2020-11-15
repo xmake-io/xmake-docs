@@ -6,7 +6,7 @@ add_requires("tbox 1.6.*", "libpng ~1.16", "zlib")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("tbox", "libpng", "zlib")
 ```
 
@@ -15,14 +15,14 @@ target("test")
 然后直接执行编译即可：
 
 ```console
-$ xmake 
+$ xmake
 ```
 
 xmake会去远程拉取相关源码包，然后自动编译安装，最后编译项目，进行依赖包的链接，具体效果见下图：
 
 <img src="/assets/img/index/package_manage.png" width="80%" />
 
-关于包依赖管理的更多相关信息和进展见相关issues：[Remote package management](https://github.com/xmake-io/xmake/issues/69) 
+关于包依赖管理的更多相关信息和进展见相关issues：[Remote package management](https://github.com/xmake-io/xmake/issues/69)
 
 ## 目前支持的特性
 
@@ -150,7 +150,7 @@ add_requires("tbox", {configs = {small = true}})
 
 ```console
 xmake require --info spdlog
-    require(spdlog): 
+    require(spdlog):
       -> requires:
          -> plat: macosx
          -> arch: x86_64
@@ -199,6 +199,49 @@ add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags 
 
 通过这种方式，spdlog对应内部的fmt依赖包，我们也可以在上层通过`add_requires`灵活的设置各种复杂的自定义配置。
 
+### 安装任意版本的包
+
+默认情况下，`add_requires("zlib >1.2.x")` 只能选择到 `xmake-repo` 仓库中存在的包版本，因为每个版本的包，它们都会有一个sha256的校验值，用于包的完整性校验。
+
+因此，未知版本的包不存在校验值，xmake 默认是不让选择使用的，这并不安全。
+
+那如果，我们需要的包版本无法选择使用怎么办呢？有两种方式，一种是提交一个 pr 给 [xmake-repo](https://github.com/xmake-io/xmake-repo)，增加指定包的新版本以及对应的 sha256，例如：
+
+```lua
+package("zlib")
+    add_versions("1.2.10", "8d7e9f698ce48787b6e1c67e6bff79e487303e66077e25cb9784ac8835978017")
+    add_versions("1.2.11", "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1")
+```
+
+另外，还有一种方式，就是用户传递 `{verify = false}` 配置给 `add_requires`，强制忽略包的文件完整性校验，这样就不需要 sha256 值，因此就可以安装任意版本的包。
+
+当然，这也会存在一定的安全性以及包不完整的风险，这就需要用户自己去选择评估了。
+
+```lua
+add_requires("zlib 1.2.11", {verify = false})
+```
+
+### 禁用外部头文件搜索路径
+
+默认情况下，通过 `add_requires` 安装的包会采用 `-isystem` 或者 `/external:I` 来引用里面的头文件路径，这通常能够避免一些包头文件引入的不可修改的警告信息，
+但是，我们还是可以通过设置 `{external = false}` 来禁用外部头文件，切回 `-I` 的使用。
+
+默认启用了 external 外部头文件的编译 flags 如下：
+
+```console
+-isystem /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+```
+
+手动关闭 external 外部头文件的编译 flags 如下：
+
+```lua
+add_requires("zlib 1.x", {external = false})
+```
+
+```console
+-I /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+```
+
 ## 第三方依赖包安装
 
 2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等
@@ -211,7 +254,7 @@ add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("pcre2", "zlib")
 ```
 
@@ -222,7 +265,7 @@ add_requires("vcpkg::zlib", "vcpkg::pcre2")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 ```
 
@@ -234,7 +277,7 @@ add_requires("vcpkg::pcre2", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("zlib", "pcre2")
 ```
 
@@ -242,12 +285,12 @@ target("test")
 
 ```lua
 add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
-add_requires("conan::openssl/1.1.1g", {alias = "openssl", 
+add_requires("conan::openssl/1.1.1g", {alias = "openssl",
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("openssl", "zlib")
 ```
 
@@ -280,7 +323,7 @@ add_requires("pacman::libpng", {alias = "libpng"})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("zlib", "libpng")
 ```
 
@@ -309,7 +352,7 @@ add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
 target("test")
     set_kind("binary")
     add_files("clib/bytes/*.c")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("bytes")
 ```
 
@@ -406,7 +449,7 @@ add_requires("libjpeg")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("libjpeg")
 ```
 
@@ -649,7 +692,7 @@ package("zlib")
     on_install("linux", "macosx", function (package)
         import("package.tools.autoconf").install(package, {"--static"})
     end)
- 
+
     on_install("iphoneos", "android@linux,macosx", "mingw@linux,macosx", function (package)
         import("package.tools.autoconf").configure(package, {host = "", "--static"})
         io.gsub("Makefile", "\nAR=.-\n",      "\nAR=" .. (package:build_getenv("ar") or "") .. "\n")
@@ -811,7 +854,7 @@ package("pcre2")
 ```bash
 $ xmake require --info pcre2
 The package info of project:
-    require(pcre2): 
+    require(pcre2):
       -> description: A Perl Compatible Regular Expressions Library
       -> version: 10.31
       ...

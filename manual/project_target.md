@@ -81,6 +81,7 @@ target("test2")
 | [add_linkdirs](#targetadd_linkdirs)             | Add link search directories                               | >= 1.0.1                    |
 | [add_rpathdirs](#targetadd_rpathdirs)           | Add load search directories for dynamic library           | >= 2.1.3                    |
 | [add_includedirs](#targetadd_includedirs)       | Add include search directories                            | >= 1.0.1                    |
+| [add_sysincludedirs](#targetadd_sysincludedirs) | Add system/external include search directories            | >= 2.3.9                    |
 | [add_defines](#targetadd_defines)               | Add macro definition                                      | >= 1.0.1                    |
 | [add_undefines](#targetadd_undefines)           | Add macro undefinition                                    | >= 1.0.1                    |
 | [add_cflags](#targetadd_cflags)                 | Add c compilation flags                                   | >= 1.0.1                    |
@@ -1465,6 +1466,38 @@ For more on this block, see: [add_deps](#targetadd_deps)
 <p class="tip">
 If you don't want to write to death in the project, you can set it by: `xmake f --includedirs=xxx` or `xmake f --cxflags="-I/xxx"`, of course, this manually set directory search priority. higher.
 </p>
+
+### target:add_sysincludedirs
+
+#### Add system header file search directory
+
+`add_includedirs` is usually used to add search directories for project header files. The introduction of some system library header files may trigger some internal warning messages, but these warnings may be unavoidable for users and cannot be fixed.
+
+Then, every time these warnings are displayed, it will interfere with the user. Therefore, gcc/clang provides `-isystem` to set the system header file search path. The header files set through this interface will suppress some warning messages to avoid disturbing users .
+
+msvc also provides the `/external:I` compilation option to set it, but it needs a higher version of msvc to support it.
+
+Therefore, xmake provides `add_sysincludedirs` to abstractly adapt and set the search path of system library header files. If the current compiler does not support it, it will automatically switch back to the `-I` compilation option.
+
+
+```lua
+target("test")
+    add_sysincludedirs("/usr/include")
+```
+
+The generated compilation options are as follows:
+
+```console
+-isystem /usr/include
+```
+
+In the case of the msvc compiler, it will be:
+
+```console
+/experimental:external /external:W0 /external:I /usr/include
+```
+
+!> In addition, the dependency package introduced with `add_requires()` will also use `-isystem` as the external system header file by default.
 
 ### target:add_defines
 

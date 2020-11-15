@@ -82,6 +82,7 @@ target("test2")
 | [add_linkdirs](#targetadd_linkdirs)             | 添加链接库搜索目录                   | >= 1.0.1 |
 | [add_rpathdirs](#targetadd_rpathdirs)           | 添加运行时候动态链接库搜索目录       | >= 2.1.3 |
 | [add_includedirs](#targetadd_includedirs)       | 添加头文件搜索目录                   | >= 1.0.1 |
+| [add_sysincludedirs](#targetadd_sysincludedirs) | 添加系统头文件搜索目录               | >= 2.3.9 |
 | [add_defines](#targetadd_defines)               | 添加宏定义                           | >= 1.0.1 |
 | [add_undefines](#targetadd_undefines)           | 取消宏定义                           | >= 1.0.1 |
 | [add_cflags](#targetadd_cflags)                 | 添加c编译选项                        | >= 1.0.1 |
@@ -1461,6 +1462,38 @@ target("demo")
 <p class="tip">
 如果不想在工程中写死，可以通过：`xmake f --includedirs=xxx`或者`xmake f --cxflags="-I/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
 </p>
+
+### target:add_sysincludedirs
+
+#### 添加系统头文件搜索目录
+
+`add_includedirs` 通常用于添加工程头文件搜索目录，而一些系统库头文件的引入，有可能会触发一些内部的警告信息，但是这些警告对于用户来讲也许是无法避免，也修复不了的。
+
+那么，每次显示这些警告反而会干扰用户，因此，gcc/clang 提供了 `-isystem` 专门用来设置系统头文件搜索路径，通过此接口设置的头文件，会压制一些警告信息来避免干扰用户。
+
+msvc 也通提供了 `/external:I` 编译选项来设置它，但是需要高版本 msvc 才支持。
+
+因此，xmake 提供了 `add_sysincludedirs` 来抽象适配设置系统库头文件搜索路径，如果当前编译器不支持，会自动切换回 `-I` 编译选项。
+
+
+```lua
+target("test")
+    add_sysincludedirs("/usr/include")
+```
+
+生成的编译选项如下：
+
+```console
+-isystem /usr/include
+```
+
+如果是 msvc 编译器，则会是：
+
+```console
+/experimental:external /external:W0 /external:I /usr/include
+```
+
+!> 另外，使用 `add_requires()` 引入的依赖包，默认也会使用 `-isystem` 作为外部系统头文件。
 
 ### target:add_defines
 

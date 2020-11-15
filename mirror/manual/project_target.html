@@ -402,6 +402,11 @@ target("test2")
 <td>>= 1.0.1</td>
 </tr>
 <tr>
+<td><a href="#targetadd_sysincludedirs">add_sysincludedirs</a></td>
+<td>Add system/external include search directories</td>
+<td>>= 2.3.9</td>
+</tr>
+<tr>
 <td><a href="#targetadd_defines">add_defines</a></td>
 <td>Add macro definition</td>
 <td>>= 1.0.1</td>
@@ -1792,6 +1797,22 @@ target("demo")
 <p><p class="tip"><br>If you don&#39;t want to write to death in the project, you can set it by: <code>xmake f --includedirs=xxx</code> or <code>xmake f --cxflags="-I/xxx"</code>, of course, this manually set directory search priority. higher.<br></p>
 
 </p>
+<h3 id="targetadd_sysincludedirs">target:add_sysincludedirs</h3>
+<h4 id="addsystemheaderfilesearchdirectory">Add system header file search directory</h4>
+<p><code>add_includedirs</code> is usually used to add search directories for project header files. The introduction of some system library header files may trigger some internal warning messages, but these warnings may be unavoidable for users and cannot be fixed.</p>
+<p>Then, every time these warnings are displayed, it will interfere with the user. Therefore, gcc/clang provides <code>-isystem</code> to set the system header file search path. The header files set through this interface will suppress some warning messages to avoid disturbing users .</p>
+<p>msvc also provides the <code>/external:I</code> compilation option to set it, but it needs a higher version of msvc to support it.</p>
+<p>Therefore, xmake provides <code>add_sysincludedirs</code> to abstractly adapt and set the search path of system library header files. If the current compiler does not support it, it will automatically switch back to the <code>-I</code> compilation option.</p>
+<pre><code class="lang-lua">target("test")
+    add_sysincludedirs("/usr/include")
+</code></pre>
+<p>The generated compilation options are as follows:</p>
+<pre><code class="lang-console">-isystem /usr/include
+</code></pre>
+<p>In the case of the msvc compiler, it will be:</p>
+<pre><code class="lang-console">/experimental:external /external:W0 /external:I /usr/include
+</code></pre>
+<p>!> In addition, the dependency package introduced with <code>add_requires()</code> will also use <code>-isystem</code> as the external system header file by default.</p>
 <h3 id="targetadd_defines">target:add_defines</h3>
 <h4 id="addmacrodefinition">Add macro definition</h4>
 <pre><code class="lang-lua">add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")

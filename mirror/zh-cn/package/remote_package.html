@@ -95,16 +95,16 @@
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("tbox", "libpng", "zlib")
 </code></pre>
 <p>上面的<code>add_requires</code>用于描述当前项目需要的依赖包，而<code>add_packages</code>用于应用依赖包到test目标，只有设置这个才会自动追加links, linkdirs, includedirs等设置。</p>
 <p>然后直接执行编译即可：</p>
-<pre><code class="lang-console">$ xmake 
+<pre><code class="lang-console">$ xmake
 </code></pre>
 <p>xmake会去远程拉取相关源码包，然后自动编译安装，最后编译项目，进行依赖包的链接，具体效果见下图：</p>
 <p><img src="/assets/img/index/package_manage.png" width="80%" /></p>
-<p>关于包依赖管理的更多相关信息和进展见相关issues：<a href="https://github.com/xmake-io/xmake/issues/69">Remote package management</a> </p>
+<p>关于包依赖管理的更多相关信息和进展见相关issues：<a href="https://github.com/xmake-io/xmake/issues/69">Remote package management</a></p>
 <h2 id="">目前支持的特性</h2>
 <ul>
 <li>语义版本支持，例如：">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"</li>
@@ -179,7 +179,7 @@ add_requires("tbox dev")
 <p>我们可以通过在工程目录中执行：<code>xmake require --info tbox</code> 来获取指定包所有的可配置参数列表和取值说明。</p>
 <p>比如：</p>
 <pre><code class="lang-console">xmake require --info spdlog
-    require(spdlog): 
+    require(spdlog):
       -> requires:
          -> plat: macosx
          -> arch: x86_64
@@ -215,6 +215,28 @@ add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags 
 </code></pre>
 <p>我们的项目需要spdlog启用fPIC编译，那么它的fmt依赖包也需要启用，那么我们可以在spdlog的上面优先添加fmt包，也设置上fPIC提前安装掉即可。</p>
 <p>通过这种方式，spdlog对应内部的fmt依赖包，我们也可以在上层通过<code>add_requires</code>灵活的设置各种复杂的自定义配置。</p>
+<h3 id="">安装任意版本的包</h3>
+<p>默认情况下，<code>add_requires("zlib >1.2.x")</code> 只能选择到 <code>xmake-repo</code> 仓库中存在的包版本，因为每个版本的包，它们都会有一个sha256的校验值，用于包的完整性校验。</p>
+<p>因此，未知版本的包不存在校验值，xmake 默认是不让选择使用的，这并不安全。</p>
+<p>那如果，我们需要的包版本无法选择使用怎么办呢？有两种方式，一种是提交一个 pr 给 <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>，增加指定包的新版本以及对应的 sha256，例如：</p>
+<pre><code class="lang-lua">package("zlib")
+    add_versions("1.2.10", "8d7e9f698ce48787b6e1c67e6bff79e487303e66077e25cb9784ac8835978017")
+    add_versions("1.2.11", "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1")
+</code></pre>
+<p>另外，还有一种方式，就是用户传递 <code>{verify = false}</code> 配置给 <code>add_requires</code>，强制忽略包的文件完整性校验，这样就不需要 sha256 值，因此就可以安装任意版本的包。</p>
+<p>当然，这也会存在一定的安全性以及包不完整的风险，这就需要用户自己去选择评估了。</p>
+<pre><code class="lang-lua">add_requires("zlib 1.2.11", {verify = false})
+</code></pre>
+<h3 id="">禁用外部头文件搜索路径</h3>
+<p>默认情况下，通过 <code>add_requires</code> 安装的包会采用 <code>-isystem</code> 或者 <code>/external:I</code> 来引用里面的头文件路径，这通常能够避免一些包头文件引入的不可修改的警告信息，<br>但是，我们还是可以通过设置 <code>{external = false}</code> 来禁用外部头文件，切回 <code>-I</code> 的使用。</p>
+<p>默认启用了 external 外部头文件的编译 flags 如下：</p>
+<pre><code class="lang-console">-isystem /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+</code></pre>
+<p>手动关闭 external 外部头文件的编译 flags 如下：</p>
+<pre><code class="lang-lua">add_requires("zlib 1.x", {external = false})
+</code></pre>
+<pre><code class="lang-console">-I /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+</code></pre>
 <h2 id="">第三方依赖包安装</h2>
 <p>2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等</p>
 <h3 id="homebrew">添加 homebrew 的依赖包</h3>
@@ -223,7 +245,7 @@ add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("pcre2", "zlib")
 </code></pre>
 <h3 id="vcpkg">添加 vcpkg 的依赖包</h3>
@@ -231,7 +253,7 @@ target("test")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 </code></pre>
 <p>我们也可以加个包别名，简化对<code>add_packages</code>的使用：</p>
@@ -240,17 +262,17 @@ add_requires("vcpkg::pcre2", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("zlib", "pcre2")
 </code></pre>
 <h3 id="conan">添加 conan 的依赖包</h3>
 <pre><code class="lang-lua">add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
-add_requires("conan::openssl/1.1.1g", {alias = "openssl", 
+add_requires("conan::openssl/1.1.1g", {alias = "openssl",
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("openssl", "zlib")
 </code></pre>
 <p>执行xmake进行编译后：</p>
@@ -276,7 +298,7 @@ add_requires("pacman::libpng", {alias = "libpng"})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("zlib", "libpng")
 </code></pre>
 <p>archlinux 上只需要：</p>
@@ -294,7 +316,7 @@ xmake
 target("test")
     set_kind("binary")
     add_files("clib/bytes/*.c")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("bytes")
 </code></pre>
 <h3 id="dubdlang">添加 dub/dlang 的依赖包</h3>
@@ -362,7 +384,7 @@ add_requires("libjpeg")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("libjpeg")
 </code></pre>
 <p>关于如何编写自定义包描述规则，详情见：<a href="#添加包到仓库">添加包到仓库</a></p>
@@ -607,7 +629,7 @@ end
 <p>在工程项目里面，我们也可以查看特定包的可配置参数和值列表：</p>
 <pre><code class="lang-bash">$ xmake require --info pcre2
 The package info of project:
-    require(pcre2): 
+    require(pcre2):
       -> description: A Perl Compatible Regular Expressions Library
       -> version: 10.31
       ...

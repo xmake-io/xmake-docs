@@ -201,6 +201,28 @@ add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags 
 </code></pre>
 <p>Our project requires spdlog to enable fPIC compilation, then its fmt dependency package also needs to be enabled, then we can add the fmt package first on the spdlog, and also set the fPIC to install it in advance.</p>
 <p>In this way, spdlog corresponds to the internal fmt dependency package, we can also flexibly set various complex custom configurations in the upper layer through <code>add_requires</code>.</p>
+<h3 id="installanyversionofthepackage">Install any version of the package</h3>
+<p>By default, <code>add_requires("zlib >1.2.x")</code> can only select the package version that exists in the <code>xmake-repo</code> repository, because each version of the package will have a sha256 check value. Use To check the integrity of the package.</p>
+<p>Therefore, there is no check value for packages of unknown version, and xmake will not let you choose to use it by default, which is not safe.</p>
+<p>What if the package version we need cannot be selected for use? There are two ways, one is to submit a pr to <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>, add the new version of the specified package and the corresponding sha256, for example:</p>
+<pre><code class="lang-lua">package("zlib")
+    add_versions("1.2.10", "8d7e9f698ce48787b6e1c67e6bff79e487303e66077e25cb9784ac8835978017")
+    add_versions("1.2.11", "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1")
+</code></pre>
+<p>In addition, there is another way that the user passes <code>{verify = false}</code> configuration to <code>add_requires</code> to force the file integrity check of the package to be ignored, so that the sha256 value is not needed, so any version of the package can be installed.</p>
+<p>Of course, there will be a certain degree of security and the risk of incomplete packages, which requires users to choose and evaluate.</p>
+<pre><code class="lang-lua">add_requires("zlib 1.2.11", {verify = false})
+</code></pre>
+<h3 id="disableexternalheaderfilesearchpath">Disable external header file search path</h3>
+<p>By default, packages installed through <code>add_requires</code> will use <code>-isystem</code> or <code>/external:I</code> to refer to the header file path inside, which can usually avoid the unmodifiable warning messages introduced by some package header files.<br>However, we can still disable external header files by setting <code>{external = false}</code> and switch back to the use of <code>-I</code>.</p>
+<p>The compilation flags for external header files are enabled by default as follows:</p>
+<pre><code class="lang-console">-isystem /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+</code></pre>
+<p>Manually turn off the compilation flags of external external header files as follows:</p>
+<pre><code class="lang-lua">add_requires("zlib 1.x", {external = false})
+</code></pre>
+<pre><code class="lang-console">-I /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+</code></pre>
 <h2 id="installthirdpartypackages">Install third-party packages</h2>
 <p>After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib and etc.</p>
 <h3 id="addhomebrewdependencypackage">Add homebrew dependency package</h3>
