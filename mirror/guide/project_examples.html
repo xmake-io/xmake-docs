@@ -471,6 +471,15 @@ $ xmake l utils.ipa.install test.ipa
 <p>We can also quickly create project through template:</p>
 <pre><code class="lang-console">$ xmake create -t xcode.framework -l objc test
 </code></pre>
+<p>In addition, xmake v2.3.9 and above, xmake also provides a complete iosapp/macapp empty project template with framework library usage, you can fully experience framework compilation, dependent use and integration into app applications.</p>
+<p>At the same time, if we turn on the emulator, xmake can support directly <code>xmake install</code> and <code>xmake run</code> to install the app to the emulator and load and run it.</p>
+<pre><code class="lang-console">$ xmake create -t xcode.iosapp_with_framework -l objc testapp
+$ cd testapp
+$ xmake f -p iphoneos -a x86_64
+$ xmake
+$ xmake install
+$ xmake run
+</code></pre>
 <h3 id="bundleprogram">Bundle Program</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.bundle")

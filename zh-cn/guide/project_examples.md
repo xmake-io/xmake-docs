@@ -596,6 +596,19 @@ target("test")
 $ xmake create -t xcode.framework -l objc test
 ```
 
+另外，xmake v2.3.9 以上版本，xmake 还提供了带有 framework 库使用的完整 iosapp/macapp 空工程模板，可以完整体验 framework 的编译，依赖使用以及集成到 app 应用程序中。
+
+同时，如果我们开启了模拟器，xmake 可以支持直接 `xmake install` 和 `xmake run` 将 app 安装到模拟器并加载运行。
+
+```console
+$ xmake create -t xcode.iosapp_with_framework -l objc testapp
+$ cd testapp
+$ xmake f -p iphoneos -a x86_64
+$ xmake
+$ xmake install
+$ xmake run
+```
+
 ### Bundle程序
 
 ```lua

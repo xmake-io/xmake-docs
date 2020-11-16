@@ -588,6 +588,19 @@ We can also quickly create project through template:
 $ xmake create -t xcode.framework -l objc test
 ```
 
+In addition, xmake v2.3.9 and above, xmake also provides a complete iosapp/macapp empty project template with framework library usage, you can fully experience framework compilation, dependent use and integration into app applications.
+
+At the same time, if we turn on the emulator, xmake can support directly `xmake install` and `xmake run` to install the app to the emulator and load and run it.
+
+```console
+$ xmake create -t xcode.iosapp_with_framework -l objc testapp
+$ cd testapp
+$ xmake f -p iphoneos -a x86_64
+$ xmake
+$ xmake install
+$ xmake run
+```
+
 ### Bundle Program
 
 ```lua

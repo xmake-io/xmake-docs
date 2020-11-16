@@ -476,6 +476,15 @@ $ xmake l utils.ipa.install test.ipa
 <p>我们也可以通过模板工程快速创建：</p>
 <pre><code class="lang-console">$ xmake create -t xcode.framework -l objc test
 </code></pre>
+<p>另外，xmake v2.3.9 以上版本，xmake 还提供了带有 framework 库使用的完整 iosapp/macapp 空工程模板，可以完整体验 framework 的编译，依赖使用以及集成到 app 应用程序中。</p>
+<p>同时，如果我们开启了模拟器，xmake 可以支持直接 <code>xmake install</code> 和 <code>xmake run</code> 将 app 安装到模拟器并加载运行。</p>
+<pre><code class="lang-console">$ xmake create -t xcode.iosapp_with_framework -l objc testapp
+$ cd testapp
+$ xmake f -p iphoneos -a x86_64
+$ xmake
+$ xmake install
+$ xmake run
+</code></pre>
 <h3 id="bundle">Bundle程序</h3>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.bundle")
