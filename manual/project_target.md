@@ -348,10 +348,12 @@ Set the symbol mode of the target. If no target is currently defined, it will be
 
 At present, we mainly support several levels:
 
-| Value | Description |
-| ------ | ---------------------- |
-| debug | Add debug symbols |
-| hidden | set symbol not visible |
+| Value        | Description                          | gcc/clang           | msvc           |
+| ------       | ----------------------               | -----               | ----           |
+| debug        | Add debugging symbols                | -g                  | /Zi /Pdxxx.pdb |
+| debug, edit  | Only for msvc, used with debug level | Ignore              | /ZI /Pdxxx.pdb |
+| debug, embed | Only for msvc, used with debug level | Ignore              | /Z7            |
+| hidden       | Set symbol invisible                 | -fvisibility=hidden | Ignore         |
 
 These two values can also be set at the same time, for example:
 
@@ -393,6 +395,14 @@ The android program will generate a .sym file (actually a symbolic so/binary pro
 [62%]: linking.release libtest.so
 [62%]: generating.release test.sym
 ```
+
+In v2.3.9 and above, two additional symbol levels, `edit` and `embed` have been added, which need to be combined with `debug` levels to further subdivide the debugging symbol format of the msvc compiler, for example:
+
+```lua
+set_symbols("debug", "edit")
+```
+
+It will switch from the default `-Zi -Pdxxx.pdb` to `-ZI -Pdxxx.pdb` compilation option, enable `Edit and Continue` debugging symbol format information, of course, this will not affect the processing of gcc/clang, so it is Fully compatible.
 
 ### target:set_basename
 
@@ -440,14 +450,15 @@ The modification of filename is to modify the entire target file name, including
 
 Set the warning level of the compilation of the current target, generally supporting several levels:
 
-| Value | Description | gcc/clang | msvc |
-| ----- | ---------------------- | ---------- | ----------------------------- |
-| none | disable all warnings | -w | -W0 |
-| less | Enable fewer warnings | -W1 | -W1 |
-| more | Enable more warnings | -W3 | -W3 |
-| all | Enable all warnings | -Wall | -W3 (-Wall too more warnings) |
-| everything | Enable all supported warnings | -Wall -Wextra -Weffc++ / -Weverything | -Wall |
-| error | Use all warnings as compilation errors | -Werror | -WX |
+| Value      | Description                               | gcc/clang                             | msvc                          |
+| -----      | ----------------------                    | ----------                            | ----------------------------- |
+| none       | disable all warnings                      | -w                                    | -W0                           |
+| less       | Enable fewer warnings                     | -W1                                   | -W1                           |
+| more       | Enable more warnings                      | -W3                                   | -W3                           |
+| all        | Enable all warnings                       | -Wall                                 | -W3                           |
+| allextra   | Enable all warnings + additional warnings | -Wall -Wextra                         | -W4                           |
+| everything | Enable all supported warnings             | -Wall -Wextra -Weffc++ / -Weverything | -Wall                         |
+| error      | Use all warnings as compilation errors    | -Werror                               | -WX                           |
 
 The parameters of this api can be added in combination, for example:
 

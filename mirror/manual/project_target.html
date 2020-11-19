@@ -832,16 +832,34 @@ target("test")
 <tr>
 <th>Value</th>
 <th>Description</th>
+<th>gcc/clang</th>
+<th>msvc</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>debug</td>
-<td>Add debug symbols</td>
+<td>Add debugging symbols</td>
+<td>-g</td>
+<td>/Zi /Pdxxx.pdb</td>
+</tr>
+<tr>
+<td>debug, edit</td>
+<td>Only for msvc, used with debug level</td>
+<td>Ignore</td>
+<td>/ZI /Pdxxx.pdb</td>
+</tr>
+<tr>
+<td>debug, embed</td>
+<td>Only for msvc, used with debug level</td>
+<td>Ignore</td>
+<td>/Z7</td>
 </tr>
 <tr>
 <td>hidden</td>
-<td>set symbol not visible</td>
+<td>Set symbol invisible</td>
+<td>-fvisibility=hidden</td>
+<td>Ignore</td>
 </tr>
 </tbody>
 </table>
@@ -869,6 +887,10 @@ target("test")
 <pre><code class="lang-console">[62%]: linking.release libtest.so
 [62%]: generating.release test.sym
 </code></pre>
+<p>In v2.3.9 and above, two additional symbol levels, <code>edit</code> and <code>embed</code> have been added, which need to be combined with <code>debug</code> levels to further subdivide the debugging symbol format of the msvc compiler, for example:</p>
+<pre><code class="lang-lua">set_symbols("debug", "edit")
+</code></pre>
+<p>It will switch from the default <code>-Zi -Pdxxx.pdb</code> to <code>-ZI -Pdxxx.pdb</code> compilation option, enable <code>Edit and Continue</code> debugging symbol format information, of course, this will not affect the processing of gcc/clang, so it is Fully compatible.</p>
 <h3 id="targetset_basename">target:set_basename</h3>
 <h4 id="setthebasenameoftargetfile">Set the base name of target file</h4>
 <p>By default, the generated target file name is based on the value configured in <code>target("name")</code>, for example:</p>
@@ -928,7 +950,13 @@ target("xxx2")
 <td>all</td>
 <td>Enable all warnings</td>
 <td>-Wall</td>
-<td>-W3 (-Wall too more warnings)</td>
+<td>-W3</td>
+</tr>
+<tr>
+<td>allextra</td>
+<td>Enable all warnings + additional warnings</td>
+<td>-Wall -Wextra</td>
+<td>-W4</td>
 </tr>
 <tr>
 <td>everything</td>

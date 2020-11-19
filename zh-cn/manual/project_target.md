@@ -346,10 +346,12 @@ target("test")
 
 目前主要支持一下几个级别：
 
-| 值     | 描述                   |
-| ------ | ---------------------- |
-| debug  | 添加调试符号           |
-| hidden | 设置符号不可见         |
+| 值           | 描述                            | gcc/clang           | msvc           |
+| ------       | ----------------------          | -----               | ----           |
+| debug        | 添加调试符号                    | -g                  | /Zi /Pdxxx.pdb |
+| debug, edit  | 仅 msvc 生效，配合debug级别使用 | 忽略                | /ZI /Pdxxx.pdb |
+| debug, embed | 仅 msvc 生效，配合debug级别使用 | 忽略                | /Z7            |
+| hidden       | 设置符号不可见                  | -fvisibility=hidden | 忽略           |
 
 这两个值也可以同时被设置，例如：
 
@@ -391,6 +393,14 @@ android程序会生成.sym文件（其实就是带符号的so/binary程序），
 [ 62%]: linking.release libtest.so
 [ 62%]: generating.release test.sym
 ```
+
+v2.3.9 以上版本，新增了 `edit` 和 `embed` 两个额外的附属级别，需要组合 `debug` 级别一起使用，仅用于进一步细分 msvc 编译器的调试符号格式，例如：
+
+```lua
+set_symbols("debug", "edit")
+```
+
+会从默认的 `-Zi -Pdxxx.pdb` 切换到 `-ZI -Pdxxx.pdb` 编译选项，开启 `Edit and Continue` 调试符号格式信息，当然这并不会影响 gcc/clang 的处理，所以也是完全兼容的。
 
 ### target:set_basename
 
@@ -438,14 +448,15 @@ target("xxx")
 
 设置当前目标的编译的警告级别，一般支持一下几个级别：
 
-| 值    | 描述                   | gcc/clang  | msvc                          |
-| ----- | ---------------------- | ---------- | ----------------------------- |
-| none  | 禁用所有警告           | -w         | -W0                           |
-| less  | 启用较少的警告         | -W1        | -W1                           |
-| more  | 启用较多的警告         | -W3        | -W3                           |
-| all   | 启用所有警告           | -Wall      | -W3 (-Wall too more warnings) |
-| everything | 启用全部支持的警告 | -Wall -Wextra -Weffc++ / -Weverything | -Wall |
-| error | 将所有警告作为编译错误 | -Werror    | -WX                           |
+| 值         | 描述                    | gcc/clang                             | msvc                          |
+| -----      | ----------------------  | ----------                            | ----------------------------- |
+| none       | 禁用所有警告            | -w                                    | -W0                           |
+| less       | 启用较少的警告          | -W1                                   | -W1                           |
+| more       | 启用较多的警告          | -W3                                   | -W3                           |
+| all        | 启用所有警告            | -Wall                                 | -W3                           |
+| allextra   | 启用所有警告+额外的警告 | -Wall -Wextra                         | -W4                           |
+| everything | 启用全部支持的警告      | -Wall -Wextra -Weffc++ / -Weverything | -Wall                         |
+| error      | 将所有警告作为编译错误  | -Werror                               | -WX                           |
 
 这个api的参数是可以混合添加的，例如：
 

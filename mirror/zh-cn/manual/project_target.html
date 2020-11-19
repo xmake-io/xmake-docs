@@ -833,16 +833,34 @@ target("test")
 <tr>
 <th>值</th>
 <th>描述</th>
+<th>gcc/clang</th>
+<th>msvc</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>debug</td>
 <td>添加调试符号</td>
+<td>-g</td>
+<td>/Zi /Pdxxx.pdb</td>
+</tr>
+<tr>
+<td>debug, edit</td>
+<td>仅 msvc 生效，配合debug级别使用</td>
+<td>忽略</td>
+<td>/ZI /Pdxxx.pdb</td>
+</tr>
+<tr>
+<td>debug, embed</td>
+<td>仅 msvc 生效，配合debug级别使用</td>
+<td>忽略</td>
+<td>/Z7</td>
 </tr>
 <tr>
 <td>hidden</td>
 <td>设置符号不可见</td>
+<td>-fvisibility=hidden</td>
+<td>忽略</td>
 </tr>
 </tbody>
 </table>
@@ -870,6 +888,10 @@ target("test")
 <pre><code class="lang-console">[ 62%]: linking.release libtest.so
 [ 62%]: generating.release test.sym
 </code></pre>
+<p>v2.3.9 以上版本，新增了 <code>edit</code> 和 <code>embed</code> 两个额外的附属级别，需要组合 <code>debug</code> 级别一起使用，仅用于进一步细分 msvc 编译器的调试符号格式，例如：</p>
+<pre><code class="lang-lua">set_symbols("debug", "edit")
+</code></pre>
+<p>会从默认的 <code>-Zi -Pdxxx.pdb</code> 切换到 <code>-ZI -Pdxxx.pdb</code> 编译选项，开启 <code>Edit and Continue</code> 调试符号格式信息，当然这并不会影响 gcc/clang 的处理，所以也是完全兼容的。</p>
 <h3 id="targetset_basename">target:set_basename</h3>
 <h4 id="">设置目标文件名</h4>
 <p>默认情况下，生成的目标文件名基于<code>target("name")</code>中配置的值，例如：</p>
@@ -929,7 +951,13 @@ target("xxx2")
 <td>all</td>
 <td>启用所有警告</td>
 <td>-Wall</td>
-<td>-W3 (-Wall too more warnings)</td>
+<td>-W3</td>
+</tr>
+<tr>
+<td>allextra</td>
+<td>启用所有警告+额外的警告</td>
+<td>-Wall -Wextra</td>
+<td>-W4</td>
 </tr>
 <tr>
 <td>everything</td>
