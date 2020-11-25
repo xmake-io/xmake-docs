@@ -120,6 +120,102 @@ toolchain("myclang")
 toolchain_end()
 ```
 
+#### Define cross toolchain
+
+We can also customize the configuration for different cross toolchain sdk in xmake.lua. Usually only need to specify sdkdir, xmake can automatically detect other configurations, such as cross and other information, for example:
+
+```lua
+toolchain("my_toolchain")
+    set_kind("standalone")
+    set_sdkdir("/tmp/arm-linux-musleabi-cross")
+toolchain_end()
+
+target("hello")
+    set_kind("binary")
+    add_files("apps/hello/*.c")
+```
+
+This is the most streamlined cross-toolchain configuration. It only sets the corresponding SDK path, and then marks it as a complete and independent toolchain by `set_kind("standalone")`.
+
+At this time, we can use the command line `--toolchain=my_toolchain` to manually switch to this toolchain.
+
+```console
+xmake f --toolchain=my_toolchain
+xmake
+```
+
+In addition, we can also directly bind it to the corresponding target through `set_toolchains` in xmake.lua, then only when this target is compiled, will we switch to our custom toolchain.
+
+
+```lua
+toolchain("my_toolchain")
+    set_kind("standalone")
+    set_sdkdir("/tmp/arm-linux-musleabi-cross")
+toolchain_end()
+
+target("hello")
+    set_kind("binary")
+    add_files("apps/hello/*.c")
+    set_toolchains("my_toolchain")
+```
+
+In this way, we no longer need to switch the toolchain manually, just execute xmake, and it will automatically switch to the my_toolchain toolchain by default.
+
+This is especially useful for embedded development, because there are many cross-compilation tool chains for embedded platforms, and we often need various switches to complete the compilation of different platforms.
+
+Therefore, we can place all toolchain definitions in a separate lua file to define, for example:
+
+```
+projectdir
+    -xmake.lua
+    -toolchains
+      -my_toolchain1.lua
+      -my_toolchain2.lua
+      -...
+```
+
+Then, we only need to introduce them through includes in xmake.lua, and bind different tool chains according to different custom platforms:
+
+```lua
+includes("toolchains/*.lua")
+target("hello")
+    set_kind("binary")
+    add_files("apps/hello/*.c")
+    if is_plat("myplat1") then
+        set_toolchains("my_toolchain1")
+    elseif is_plat("myplat2") then
+        set_toolchains("my_toolchain2")
+    end
+```
+
+In this way, we can quickly switch the designated platform directly when compiling to automatically switch the corresponding tool chain.
+
+```console
+xmake f -p myplat1
+xmake
+```
+
+If some cross-compilation toolchains are complex in structure and automatic detection is not enough, you can use `set_toolset`, `set_cross` and `set_bindir` interfaces according to the actual situation to configure other settings in a targeted manner.
+
+For example, in the following example, we also added some cxflags/ldflags and the built-in system library links.
+
+```lua
+toolchain("my_toolchain")
+    set_kind("standalone")
+    set_sdkdir("/tmp/arm-linux-musleabi-cross")
+    on_load(function (toolchain)
+        - add flags for arch
+        if toolchain:is_arch("arm") then
+            toolchain:add("cxflags", "-march=armv7-a", "-msoft-float", {force = true})
+            toolchain:add("ldflags", "-march=armv7-a", "-msoft-float", {force = true})
+        end
+        toolchain:add("ldflags", "--static", {force = true})
+        toolchain:add("syslinks", "gcc", "c")
+    end)
+```
+
+For more examples of custom toolchains, we can see the following interface documents, or refer to the built-in toolchain definition in the directory of xmake source code: [Internal Toolchain List](https://github.com/xmake-io /xmake/blob/master/xmake/toolchains/)
+
 ### toolchain:set_kind
 
 #### Set toolchain type
@@ -198,46 +294,25 @@ toolchain("myclang")
 
 ### toolchain:on_load
 
-#### Loading toolchain
+#### Load toolchain
 
 For some complex scenarios, we can dynamically and flexibly set various toolchain configurations in on_load, which is more flexible and powerful than setting in the description field:
 
 ```lua
 toolchain("myclang")
-    set_kind("standalone")
-    on_load(function (toolchain)
-        
-        - set toolset
-        toolchain:set("toolset", "cc", "clang")
-        toolchain:set("toolset", "ld", "clang++")
-        - ..
+    set_kind("standalone")
+    on_load(function (toolchain)
+        
+        -- set toolset
+        toolchain:set("toolset", "cc", "clang")
+        toolchain:set("toolset", "ld", "clang++")
 
-        - get march
-        local march = is_arch("x86_64", "x64") and "-m64" or "-m32"
-
-        - init flags for c/c++
-        toolchain:add("cxflags", march)
-        toolchain:add("ldflags", march)
-        toolchain:add("shflags", march)
-        if not is_plat("windows") and os.isdir("/usr") then
-            for _, includedir in ipairs({"/usr/local/include", "/usr/include"}) do
-                if os.isdir(includedir) then
-                    toolchain:add("includedirs", includedir)
-                end
-            end
-            for _, linkdir in ipairs({"/usr/local/lib", "/usr/lib"}) do
-                if os.isdir(linkdir) then
-                    toolchain:add("linkdirs", linkdir)
-                end
-            end
-        end
-
-        - init flags for objc/c++ (with ldflags and shflags)
-        toolchain:add("mxflags", march)
-
-        - init flags for asm
-        toolchain:add("asflags", march)
-    end)
+        -- init flags 
+        local march = toolchain:is_arch("x86_64", "x64") and "-m64" or "-m32"
+        toolchain:add("cxflags", march)
+        toolchain:add("ldflags", march)
+        toolchain:add("shflags", march)
+    end)
 ```
 
 ### toolchain_end

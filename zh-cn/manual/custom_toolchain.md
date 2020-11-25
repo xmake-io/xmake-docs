@@ -120,6 +120,102 @@ toolchain("myclang")
 toolchain_end()
 ```
 
+#### 定义交叉工具链
+
+我们也可以在 xmake.lua 中针对不同的交叉工具链sdk进行自定义配置，通常只需要指定 sdkdir，xmake就可以自动检测其他的配置，比如 cross 等信息，例如:
+
+```lua
+toolchain("my_toolchain")
+    set_kind("standalone")
+    set_sdkdir("/tmp/arm-linux-musleabi-cross")
+toolchain_end()
+
+target("hello")
+    set_kind("binary")
+    add_files("apps/hello/*.c")
+```
+
+这是一个最精简的交叉工具链配置，仅仅设置了对应的sdk路径，然后通过 `set_kind("standalone")` 将其标记为完整独立的工具链。
+
+这个时候，我们就可以通过命令行 `--toolchain=my_toolchain` 去手动切换到此工具链来使用。
+
+```console
+xmake f --toolchain=my_toolchain
+xmake
+```
+
+另外，我们还可以直接在 xmake.lua 中通过 `set_toolchains` 将其绑定到对应的 target 上去，那么仅仅只在编译此 target 时候，才会切换到我们自定义的工具链。
+
+
+```lua
+toolchain("my_toolchain")
+    set_kind("standalone")
+    set_sdkdir("/tmp/arm-linux-musleabi-cross")
+toolchain_end()
+
+target("hello")
+    set_kind("binary")
+    add_files("apps/hello/*.c")
+    set_toolchains("my_toolchain")
+```
+
+这样，我们不再需要手动切换工具链了，只需要执行 xmake，就会默认自动切换到 my_toolchain 工具链。
+
+这对于嵌入式开发来讲尤其有用，因为嵌入式平台的交叉编译工具链非常多，我们经常需要各种切换来完成不同平台的编译。
+
+因此，我们可以将所有的工具链定义放置到独立的 lua 文件中去定义，例如：
+
+```
+projectdir
+    - xmake.lua
+    - toolchains
+      - my_toolchain1.lua
+      - my_toolchain2.lua
+      - ...
+```
+
+然后，我们只需要再 xmake.lua 中通过 includes 去引入它们，并根据不同的自定义平台，绑定不同的工具链：
+
+```lua
+includes("toolchains/*.lua")
+target("hello")
+    set_kind("binary")
+    add_files("apps/hello/*.c")
+    if is_plat("myplat1") then
+        set_toolchains("my_toolchain1")
+    elseif is_plat("myplat2") then
+        set_toolchains("my_toolchain2")
+    end
+```
+
+这样，我们就可以编译的时候，直接快速切换指定平台，来自动切换对应的工具链了。
+
+```console
+xmake f -p myplat1
+xmake
+```
+
+如果，有些交叉编译工具链结构复杂，自动检测还不足够，那么可以根据实际情况，使用 `set_toolset`, `set_cross` 和 `set_bindir` 等接口，针对性的配置上其他的设置。
+
+例如下面的例子，我们还额外添加了一些 cxflags/ldflags 以及内置的系统库 links。
+
+```lua
+toolchain("my_toolchain")
+    set_kind("standalone")
+    set_sdkdir("/tmp/arm-linux-musleabi-cross")
+    on_load(function (toolchain)
+        -- add flags for arch
+        if toolchain:is_arch("arm") then
+            toolchain:add("cxflags", "-march=armv7-a", "-msoft-float", {force = true})
+            toolchain:add("ldflags", "-march=armv7-a", "-msoft-float", {force = true})
+        end
+        toolchain:add("ldflags", "--static", {force = true})
+        toolchain:add("syslinks", "gcc", "c")
+    end)
+```
+
+更多自定义工具链的例子，我们可以看下面的接口文档，也可以到 xmake 的源码的目录参考内置的工具链定义：[内部工具链列表](https://github.com/xmake-io/xmake/blob/master/xmake/toolchains/)
+
 ### toolchain:set_kind
 
 #### 设置工具链类型
@@ -210,33 +306,12 @@ toolchain("myclang")
         -- set toolset
         toolchain:set("toolset", "cc", "clang")
         toolchain:set("toolset", "ld", "clang++")
-        -- ..
 
-        -- get march
-        local march = is_arch("x86_64", "x64") and "-m64" or "-m32"
-
-        -- init flags for c/c++
+        -- init flags 
+        local march = toolchain:is_arch("x86_64", "x64") and "-m64" or "-m32"
         toolchain:add("cxflags", march)
         toolchain:add("ldflags", march)
         toolchain:add("shflags", march)
-        if not is_plat("windows") and os.isdir("/usr") then
-            for _, includedir in ipairs({"/usr/local/include", "/usr/include"}) do
-                if os.isdir(includedir) then
-                    toolchain:add("includedirs", includedir)
-                end
-            end
-            for _, linkdir in ipairs({"/usr/local/lib", "/usr/lib"}) do
-                if os.isdir(linkdir) then
-                    toolchain:add("linkdirs", linkdir)
-                end
-            end
-        end
-
-        -- init flags for objc/c++  (with ldflags and shflags)
-        toolchain:add("mxflags", march)
-
-        -- init flags for asm
-        toolchain:add("asflags", march)
     end)
 ```
 
