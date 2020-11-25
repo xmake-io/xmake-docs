@@ -1,3 +1,26 @@
+## v2.3.9
+
+### 新特性
+
+* 添加新的 [xrepo](https://github.com/xmake-io/xrepo) 命令去管理安装 C/C++ 包
+* 支持安装交叉编译的依赖包
+* 新增musl.cc上的工具链支持
+* [#1009](https://github.com/xmake-io/xmake/issues/1009): 支持忽略校验去安装任意版本的包，`add_requires("libcurl 7.73.0", {verify = false})`
+* [#1016](https://github.com/xmake-io/xmake/issues/1016): 针对依赖包增加license兼容性检测
+* [#1017](https://github.com/xmake-io/xmake/issues/1017): 支持外部/系统头文件支持 `add_sysincludedirs`，依赖包默认使用`-isystem`
+* [#1020](https://github.com/xmake-io/xmake/issues/1020): 支持在 archlinux 和 msys2 上查找安装 pacman 包
+* 改进 `xmake f --menu` 菜单配置，支持鼠标操作
+
+### 改进
+
+* [#997](https://github.com/xmake-io/xmake/issues/997): `xmake project -k cmake` 插件增加对 `set_languages` 的支持
+* [#998](https://github.com/xmake-io/xmake/issues/998): 支持安装 windows-static-md 类型的 vcpkg 包
+* [#996](https://github.com/xmake-io/xmake/issues/996): 改进 vcpkg 目录查找
+* [#1008](https://github.com/xmake-io/xmake/issues/1008): 改进交叉编译工具链
+* [#1030](https://github.com/xmake-io/xmake/issues/1030): 改进 xcode.framework and xcode.application 规则
+* [#1051](https://github.com/xmake-io/xmake/issues/1051): 为 msvc 编译器添加 `edit` 和 `embed` 调试信息格式类型到 `set_symbols()`
+* [#1062](https://github.com/xmake-io/xmake/issues/1062): 改进 `xmake project -k vs` 插件
+
 ## v2.3.8
 
 ### 新特性

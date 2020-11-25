@@ -90,7 +90,29 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v238">v2.3.8</h2>
+    <h2 id="v239">v2.3.9</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add new <a href="https://github.com/xmake-io/xrepo">xrepo</a> command to manage C/C++ packages</li>
+<li>Support for installing packages of cross-compilation</li>
+<li>Add musl.cc toolchains</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1009">#1009</a>: Support select and install any version package, e.g. <code>add_requires("libcurl 7.73.0", {verify = false})</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1016">#1016</a>: Add license checking for target/packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1017">#1017</a>: Support external/system include directories <code>add_sysincludedirs</code> for package and toolchains</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1020">#1020</a>: Support to find and install pacman package on archlinux and msys2</li>
+<li>Support mouse for <code>xmake f --menu</code></li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/997">#997</a>: Support to set std lanuages for <code>xmake project -k cmake</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/998">#998</a>: Support to install vcpkg packages with windows-static-md</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/996">#996</a>: Improve to find vcpkg directory</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1008">#1008</a>: Improve cross toolchains</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1030">#1030</a>: Improve xcode.framework and xcode.application rules</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1051">#1051</a>: Add <code>edit</code> and <code>embed</code> to <code>set_symbols()</code> only for msvc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1062">#1062</a>: Improve <code>xmake project -k vs</code> plugin.</li>
+</ul>
+<h2 id="v238">v2.3.8</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/955">#955</a>: Add zig project templates</li>

@@ -1,3 +1,26 @@
+## v2.3.9
+
+### New features
+
+* Add new [xrepo](https://github.com/xmake-io/xrepo) command to manage C/C++ packages
+* Support for installing packages of cross-compilation
+* Add musl.cc toolchains
+* [#1009](https://github.com/xmake-io/xmake/issues/1009): Support select and install any version package, e.g. `add_requires("libcurl 7.73.0", {verify = false})`
+* [#1016](https://github.com/xmake-io/xmake/issues/1016): Add license checking for target/packages
+* [#1017](https://github.com/xmake-io/xmake/issues/1017): Support external/system include directories `add_sysincludedirs` for package and toolchains
+* [#1020](https://github.com/xmake-io/xmake/issues/1020): Support to find and install pacman package on archlinux and msys2
+* Support mouse for `xmake f --menu`
+
+### Change
+
+* [#997](https://github.com/xmake-io/xmake/issues/997): Support to set std lanuages for `xmake project -k cmake`
+* [#998](https://github.com/xmake-io/xmake/issues/998): Support to install vcpkg packages with windows-static-md
+* [#996](https://github.com/xmake-io/xmake/issues/996): Improve to find vcpkg directory
+* [#1008](https://github.com/xmake-io/xmake/issues/1008): Improve cross toolchains
+* [#1030](https://github.com/xmake-io/xmake/issues/1030): Improve xcode.framework and xcode.application rules
+* [#1051](https://github.com/xmake-io/xmake/issues/1051): Add `edit` and `embed` to `set_symbols()` only for msvc
+* [#1062](https://github.com/xmake-io/xmake/issues/1062): Improve `xmake project -k vs` plugin.
+
 ## v2.3.8
 
 ### New features

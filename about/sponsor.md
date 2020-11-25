@@ -33,6 +33,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2020.11.25 | 小弧光                                | wechat  | ¥10    |                                                                         |
 | 2020.11.20 | Russell Haley                         | Paypal  | $25CAD |                                                                         |
 | 2020.11.11 | Russell Haley                         | Paypal  | $50CAD |                                                                         |
 | 2020.10.23 | Cartesian Technology                  | Paypal  | 5 EUR  |                                                                         |

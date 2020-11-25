@@ -35,6 +35,7 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 | 日期       | 支持者                                | 渠道     | 金额   | 评价                                                                    |
 |--          | --                                    | --       | --     | --                                                                      |
+| 2020.11.25 | 小弧光                                | 微信     | ¥10    |                                                                         |
 | 2020.11.20 | Russell Haley                         | Paypal   | $25CAD |                                                                         |
 | 2020.11.11 | Russell Haley                         | Paypal   | $50CAD |                                                                         |
 | 2020.10.23 | Cartesian Technology                  | Paypal   | 5 EUR  |                                                                         |
