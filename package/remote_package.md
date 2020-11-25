@@ -286,6 +286,26 @@ please input: y (y/n)
 [100%]: linking.release test
 ```
 
+Custom conan/settings:
+
+```lua
+add_requires("conan::poco/1.10.0", {alias = "poco",
+    configs = {settings = {"compiler=gcc", "compiler.libcxx=libstdc++11"}}})
+```
+
+Some other conan related configuration items:
+
+```
+{
+    build          = {description = "use it to choose if you want to build from sources.", default = "missing", values = {"all", "never", "missing", "outdated"}},
+    remote         = {description = "Set the conan remote server."},
+    options        = {description = "Set the options values, e.g. OpenSSL:shared=True"},
+    imports        = {description = "Set the imports for conan."},
+    settings       = {description = "Set the build settings for conan."},
+    build_requires = {description = "Set the build requires for conan.", default = "xmake_generator/0.1.0@bincrafters/testing"}
+}
+```
+
 ### Add pacman dependency package
 
 We support not only the installation and integration of the pacman package on archlinux, but also the installation and integration of the mingw x86_64/i386 package of pacman on msys2.

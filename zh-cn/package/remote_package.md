@@ -313,6 +313,26 @@ please input: y (y/n)
 [100%]: linking.release test
 ```
 
+自定义 conan/settings 配置：
+
+```lua
+add_requires("conan::poco/1.10.0", {alias = "poco",
+    configs = {settings = {"compiler=gcc", "compiler.libcxx=libstdc++11"}}})
+```
+
+其他一些 conan 相关配置项：
+
+```
+{
+    build          = {description = "use it to choose if you want to build from sources.", default = "missing", values = {"all", "never", "missing", "outdated"}},
+    remote         = {description = "Set the conan remote server."},
+    options        = {description = "Set the options values, e.g. OpenSSL:shared=True"},
+    imports        = {description = "Set the imports for conan."},
+    settings       = {description = "Set the build settings for conan."},
+    build_requires = {description = "Set the build requires for conan.", default = "xmake_generator/0.1.0@bincrafters/testing"}
+}
+```
+
 ### 添加 pacman 的依赖包
 
 我们既支持 archlinux 上的 pacman 包安装和集成，也支持 msys2 上 pacman 的 mingw x86_64/i386 包安装和集成。
