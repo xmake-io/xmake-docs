@@ -13,7 +13,7 @@ xmake create --help
 ```lua
 target("test")
     set_kind("binary")
-    add_files("src/*c")
+    add_files("src/*.c")
 ```
 
 For a complete example, execute the following command to create:
@@ -31,7 +31,7 @@ target("library")
 
 target("test")
     set_kind("binary")
-    add_files("src/*c")
+    add_files("src/*.c")
     add_deps("library")
 ```
 
