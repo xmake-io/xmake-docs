@@ -52,7 +52,7 @@ target("library")
 
 target("test")
     set_kind("binary")
-    add_files("src/*c")
+    add_files("src/*.c")
     add_deps("library")
 ```
 
