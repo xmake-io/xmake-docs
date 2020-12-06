@@ -33,6 +33,10 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2020.12.05 | 知而无知                              | wechat  | ¥50    |                                                                         |
+| 2020.12.05 | fghuh                                 | alipay  | ¥10    |                                                                         |
+| 2020.12.05 | @                                     | wechat  | ¥5     |                                                                         |
+| 2020.11.27 | 少东                                  | alipay  | ¥2.33  |                                                                         |
 | 2020.11.25 | 小弧光                                | wechat  | ¥10    |                                                                         |
 | 2020.11.20 | Russell Haley                         | Paypal  | $25CAD |                                                                         |
 | 2020.11.11 | Russell Haley                         | Paypal  | $50CAD |                                                                         |
