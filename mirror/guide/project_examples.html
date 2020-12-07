@@ -97,7 +97,7 @@
 <h2 id="executableprogram">Executable Program</h2>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
-    add_files("src/*c")
+    add_files("src/*.c")
 </code></pre>
 <p>For a complete example, execute the following command to create:</p>
 <pre><code class="lang-bash">xmake create -l c -t console test
@@ -109,7 +109,7 @@
 
 target("test")
     set_kind("binary")
-    add_files("src/*c")
+    add_files("src/*.c")
     add_deps("library")
 </code></pre>
 <p>We use <code>add_deps</code> to link a static library to test target.</p>
@@ -123,7 +123,7 @@ target("test")
 
 target("test")
     set_kind("binary")
-    add_files("src/*c")
+    add_files("src/*.c")
     add_deps("library")
 </code></pre>
 <p>We use <code>add_deps</code> to link a share library to test target.</p>
@@ -200,9 +200,11 @@ Build ok!
 <p>v2.2.9 or higher:</p>
 <pre><code class="lang-lua">target("qt_widgetapp")
     add_rules("qt.widgetapp")
+    add_headerfiles("src/*.h")
     add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
-    add_files("src/mainwindow.h")  -- add files with Q_OBJECT meta (only for qt.moc)
+    -- add files with Q_OBJECT meta (only for qt.moc)
+    add_files("src/mainwindow.h")
 </code></pre>
 <p>!> The new version provides the <code>qt.widgetapp</code> rule, built-in QtWidgets built-in rules, the use of simpler, the following version of the <code>qt.application</code> is still supported, backward compatible:</p>
 <pre><code class="lang-lua">target("qt_widgetapp")
