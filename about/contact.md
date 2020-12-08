@@ -1,6 +1,6 @@
 
 * Email：[waruqi@gmail.com](mailto:waruqi@gmail.com)
-* Homepage：[tboox.org](https://tboox.org)
+* Homepage：[xmake.io](https://xmake.io)
 * Community
   - [Chat on reddit](https://www.reddit.com/r/xmake/)
   - [Chat on telegram](https://t.me/tbooxorg)
