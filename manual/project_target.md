@@ -2038,6 +2038,27 @@ In luajit, you need to compile the minilua/buildvm of the host platform to gener
 
 For details of this, you can refer to: https://github.com/xmake-io/xmake/pull/857
 
+v2.5.1 has made further improvements to set_toolchains to better support independent toolchain switching for specific targets. For example, different targets support switching to different VS versions, for example:
+
+```lua
+target("test")
+     set_toolchains("msvc", {vs = "2015"})
+```
+
+By default, xmake will use the global vs tool chain. For example, if vs2019 is currently detected, but the user also installs vs2015 at the same time, you can switch the test target to vs2015 to compile through the above configuration.
+
+You can even use `set_arch` to specify a specific architecture to x86 instead of the default x64.
+
+```lua
+target("test")
+     set_arch("x86")
+     set_toolchains("msvc", {vs = "2015"})
+```
+
+The above effect is similar to `set_toolchains("msvc", {vs = "2015", arch = "x86"})`, but `set_arch` is for target granularity, and the arch setting in `set_toolchains` is only for specific tools Chain granularity.
+
+Generally, we recommend using `set_arch` to switch the architecture of the entire target.
+
 ### target:set_plat
 
 #### Set the compilation platform for the specified target

@@ -2221,6 +2221,18 @@ $ xmake
 <p>The application scenario and example of this piece can be seen: <a href="https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua">https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua</a></p>
 <p>In luajit, you need to compile the minilua/buildvm of the host platform to generate jit related code, and then start compiling luajit itself to different cross tool chains.</p>
 <p>For details of this, you can refer to: <a href="https://github.com/xmake-io/xmake/pull/857">https://github.com/xmake-io/xmake/pull/857</a></p>
+<p>v2.5.1 has made further improvements to set_toolchains to better support independent toolchain switching for specific targets. For example, different targets support switching to different VS versions, for example:</p>
+<pre><code class="lang-lua">target("test")
+     set_toolchains("msvc", {vs = "2015"})
+</code></pre>
+<p>By default, xmake will use the global vs tool chain. For example, if vs2019 is currently detected, but the user also installs vs2015 at the same time, you can switch the test target to vs2015 to compile through the above configuration.</p>
+<p>You can even use <code>set_arch</code> to specify a specific architecture to x86 instead of the default x64.</p>
+<pre><code class="lang-lua">target("test")
+     set_arch("x86")
+     set_toolchains("msvc", {vs = "2015"})
+</code></pre>
+<p>The above effect is similar to <code>set_toolchains("msvc", {vs = "2015", arch = "x86"})</code>, but <code>set_arch</code> is for target granularity, and the arch setting in <code>set_toolchains</code> is only for specific tools Chain granularity.</p>
+<p>Generally, we recommend using <code>set_arch</code> to switch the architecture of the entire target.</p>
 <h3 id="targetset_plat">target:set_plat</h3>
 <h4 id="setthecompilationplatformforthespecifiedtarget">Set the compilation platform for the specified target</h4>
 <p>Usually used with <a href="#target_setarch">set_arch</a> to switch the compilation platform of the specified target to the specified platform, xmake will automatically select the appropriate tool chain according to the switched platform.</p>

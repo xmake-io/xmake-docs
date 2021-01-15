@@ -2232,6 +2232,18 @@ $ xmake
 <p>这块的应用场景和example可以看下：<a href="https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua">https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua</a></p>
 <p>luajit里面就需要同时编译host平台的minilua/buildvm来生成jit相关代码，然后开始针对性编译luajit自身到不同的交叉工具链。</p>
 <p>关于这块详情，可以参考：<a href="https://github.com/xmake-io/xmake/pull/857">https://github.com/xmake-io/xmake/pull/857</a></p>
+<p>v2.5.1 对 set_toolchains 做了进一步的改进，更好地对特定 target 支持独立工具链切换，比如不同 target 支持切换到不同的 vs 版本，例如：</p>
+<pre><code class="lang-lua">target("test")
+    set_toolchains("msvc", {vs = "2015"})
+</code></pre>
+<p>默认 xmake 会使用全局 vs 工具链，比如当前检测到 vs2019，但是用户同时还安装了 vs2015，那么可以通过上面的配置将 test 目标切换到 vs2015 来编译。</p>
+<p>甚至还可以配合 <code>set_arch</code> 来指定特定的架构到 x86，而不是默认的 x64。</p>
+<pre><code class="lang-lua">target("test")
+    set_arch("x86")
+    set_toolchains("msvc", {vs = "2015"})
+</code></pre>
+<p>上面的效果跟 <code>set_toolchains("msvc", {vs = "2015", arch = "x86"})</code> 类似，不过 <code>set_arch</code> 是针对 target 粒度的，而 <code>set_toolchains</code> 里面的 arch 设置仅仅针对特定工具链粒度。</p>
+<p>通常，我们更推荐使用 <code>set_arch</code> 来对整个target实现架构切换。</p>
 <h3 id="targetset_plat">target:set_plat</h3>
 <h4 id="">设置指定目标的编译平台</h4>
 <p>通常配合<a href="#target_setarch">set_arch</a>使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。</p>
