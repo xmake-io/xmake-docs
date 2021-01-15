@@ -923,9 +923,23 @@ Similar to [os.exec](#osexec), just the way to pass parameters is passed through
 
 ```lua
 os.execv("echo", {"hello", "xmake!"})
-os.execv("echo", {"hello", "xmake!"}, {stdout = "/tmp/out", stderr = io.open("/tmp/err", 'w')})
-os.execv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 ```
+
+In addition, this interface also supports an optional parameter for passing settings: redirect output, perform environment variable settings, for example:
+
+```lua
+os.execv("echo", {"hello", "xmake!"}, {stdout = outfile, stderr = errfile, envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+```
+
+Among them, the stdout and stderr parameters are used to pass redirected output and error output. You can directly pass in the file path or the file object opened by io.open.
+
+After v2.5.1, we also support setting the stdin parameter to support redirecting input files.
+
+!> stdout/stderr/stdin can simultaneously support three types of values: file path, file object, and pipe object.
+
+In addition, if you want to temporarily set and rewrite some environment variables during this execution, you can pass the envs parameter. The environment variable settings inside will replace the existing settings, but will not affect the outer execution environment, only the current command.
+
+We can also get all the current environment variables through the `os.getenvs()` interface, and then pass in the envs parameter after rewriting some parts.
 
 #### os.iorun
 

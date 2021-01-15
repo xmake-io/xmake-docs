@@ -126,6 +126,7 @@ target("test2")
 | [set_policy](#targetset_policy)                 | 设置构建行为策略                     | >= 2.3.4 |
 | [set_plat](#targetset_plat)                     | 设置指定目标的编译平台               | >= 2.3.5 |
 | [set_arch](#targetset_arch)                     | 设置指定目标的编译架构               | >= 2.3.5 |
+| [set_runtimes](#targetset_runtimes)             | 设置编译目标依赖的运行时库           | >= 2.5.1 |
 
 ### target
 
@@ -2559,3 +2560,41 @@ set_policy("check.auto_map_flags", false)
 ```bash
 set_policy("build.across_targets_in_parallel", false)
 ```
+
+### target:set_runtimes
+
+#### 设置编译目标依赖的运行时库
+
+这是 v2.5.1 开始新增的接口，用于抽象化设置编译目标依赖的运行时库，目前仅仅支持对 msvc 运行时库的抽象，但后续也许会扩展对其他编译器运行时库的映射。
+
+目前支持的一些配置值说明如下：
+
+
+| 值     | 描述                                      |
+| ------ | ----------------------------------------- |
+| MT     | msvc 运行时库：多线程静态库               |
+| MTd    | msvc 运行时库：多线程静态库（调试）       |
+| MD     | msvc 运行时库：多线程动态库               |
+| MDd    | msvc 运行时库：多线程动态库（调试）       |
+
+关于 vs 运行时，可以参考：[msvc 运行时说明](https://docs.microsoft.com/en-us/cpp/build/reference/md-mt-ld-use-run-time-library?view=msvc-160)
+
+而这个接口传入 MT/MTd 参数配置，xmake 会自动配置上 `/MT /nodefaultlib:msvcrt.lib` 参数。
+
+我们可以针对不同的 target 设置不同的运行时。
+
+另外，如果我们将 `set_runtimes` 设置在全局根域，那么所有的 `add_requires("xx")` 包定义也会全局同步切换到对应的 vs runtime 配置
+
+```lua
+set_runtimes("MD")
+add_requires("libcurl", "fmt")
+target("test")
+   set_kind("binary")
+   add_files("src/*.c")
+```
+
+当然，我们也可以通过 `add_requires("xx", {configs = {vs_runtime = "MD"}})` 对特定包修改 vs 运行时库。
+
+我们也可以通过 `xmake f --vs_runtime=MD` 通过参数配置来全局切换它。
+
+与此 api 相关的 issue：[#1071](https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681)

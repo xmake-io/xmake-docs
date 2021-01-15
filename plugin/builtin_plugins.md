@@ -80,7 +80,7 @@ $ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug;release"
 If no version is specified, xmake will automatically detect the current version of vs to generate:
 
 ```bash
-$ xmake project -k vsxmake -m "debug;release"
+$ xmake project -k vsxmake -m "debug,release"
 ```
 
 ![](/assets/img/manual/qt_vs.png)
@@ -88,6 +88,15 @@ $ xmake project -k vsxmake -m "debug;release"
 In addition, the vsxmake plugin will additionally generate a custom configuration property page for easy and flexible modification and appending some xmake compilation configuration in the vs., and even switch to other cross toolchains in the configuration to achieve the vs. vs. Cross-compilation of other platforms such as android, linux.
 
 ![](/assets/img/manual/property_page_vsxmake.png)
+
+The v2.5.1 version provides a `add_rules("plugin.vsxmake.autoupdate")` rule. If this rule is applied, the production vs project will be checked for changes in xmake.lua and the code file list after the compilation is completed. If there are changes , The vs project will be updated automatically.
+
+```lua
+add_rules("plugin.vsxmake.autoupdate")
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+```
 
 #### Using vs built-in compilation mechanism
 

@@ -125,6 +125,7 @@ target("test2")
 | [set_policy](#targetset_policy)                 | Set build policy                                          | >= 2.3.4                    |
 | [set_plat](#targetset_plat)                     | Set the compilation platform for the specified target     | >= 2.3.5                    |
 | [set_arch](#targetset_arch)                     | Set the compilation architecture for the specified target | >= 2.3.5                    |
+| [set_runtimes](#targetset_runtimes)             | Set the runtime library of the compilation target         | >= 2.5.1                    |
 
 ### target
 
@@ -2556,3 +2557,41 @@ Of course, if the build source files in some special targets depend on previous 
 ```bash
 set_policy("build.across_targets_in_parallel", false)
 ```
+
+### target:set_runtimes
+
+#### Set the runtime library of the compilation target
+
+This is a newly added interface since v2.5.1, which is used to abstractly set the runtime library that the compilation target depends on. Currently, only the abstraction of the msvc runtime library is supported, but the mapping to other compiler runtime libraries may be expanded in the future.
+
+Some of the currently supported configuration values are described as follows:
+
+
+| Value  | Description                                                  |
+| ------ | -----------------------------------------                    |
+| MT     | msvc runtime library: multithreaded static library           |
+| MTd    | msvc runtime library: multithreaded static library (debug)   |
+| MD     | msvc runtime library: multi-threaded dynamic library         |
+| MDd    | msvc runtime library: multi-threaded dynamic library (debug) |
+
+About vs runtime, you can refer to: [msvc runtime description](https://docs.microsoft.com/en-us/cpp/build/reference/md-mt-ld-use-run-time-library?view =msvc-160)
+
+And this interface passes in the MT/MTd parameter configuration, xmake will automatically configure the `/MT /nodefaultlib:msvcrt.lib` parameter.
+
+We can set different runtimes for different targets.
+
+In addition, if we set `set_runtimes` in the global root domain, then all `add_requires("xx")` package definitions will also be globally synchronized to the corresponding vs runtime configuration
+
+```lua
+set_runtimes("MD")
+add_requires("libcurl", "fmt")
+target("test")
+   set_kind("binary")
+   add_files("src/*.c")
+```
+
+Of course, we can also use `add_requires("xx", {configs = {vs_runtime = "MD"}})` to modify the vs runtime library for specific packages.
+
+We can also use `xmake f --vs_runtime=MD` to switch it globally through parameter configuration.
+
+Issues related to this api: [#1071](https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681)
