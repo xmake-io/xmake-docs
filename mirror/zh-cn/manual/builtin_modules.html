@@ -217,12 +217,6 @@ end)
 <td>>= 2.0.1</td>
 </tr>
 <tr>
-<td><a href="#process">process</a></td>
-<td>进程操作模块</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
 <td><a href="#coroutine">coroutine</a></td>
 <td>协程操作模块</td>
 <td>脚本域</td>
@@ -352,7 +346,7 @@ end
     end,
 
     -- catch 代码块
-    catch 
+    catch
     {
         -- 发生异常后，被执行
         function (errors)
@@ -373,7 +367,7 @@ end
     end,
 
     -- catch 代码块
-    catch 
+    catch
     {
         -- 发生异常后，被执行
         function (errors)
@@ -382,7 +376,7 @@ end
     },
 
     -- finally 代码块
-    finally 
+    finally
     {
         -- 最后都会执行到这里
         function (ok, errors)
@@ -401,7 +395,7 @@ end
     end,
 
     -- finally 代码块
-    finally 
+    finally
     {
         -- 由于此try代码没发生异常，因此ok为true，errors为返回值: "info"
         function (ok, errors)
@@ -456,7 +450,7 @@ local result = try
             function ()
                 os.run("ldid -S %s", target:targetfile())
             end,
-            catch 
+            catch
             {
                 function (errors)
                     print(errors)
@@ -544,7 +538,7 @@ print("hello xmake! %d", 123)
 <pre><code>    ${red}hello ${clear}xmake
 </code></pre><p>这样的话，仅仅hello是显示红色，其他还是正常默认黑色显示。</p>
 <p>其他颜色属于，我这里就不一一介绍，直接贴上xmake代码里面的属性列表吧：</p>
-<pre><code class="lang-lua">    colors.keys = 
+<pre><code class="lang-lua">    colors.keys =
     {
         -- 属性
         reset       = 0 -- 重置属性
@@ -557,17 +551,17 @@ print("hello xmake! %d", 123)
     ,   reverse     = 7 -- 反转颜色
     ,   hidden      = 8 -- 隐藏文字
 
-        -- 前景色 
+        -- 前景色
     ,   black       = 30
     ,   red         = 31
     ,   green       = 32
     ,   yellow      = 33
     ,   blue        = 34
-    ,   magenta     = 35 
+    ,   magenta     = 35
     ,   cyan        = 36
     ,   white       = 37
 
-        -- 背景色 
+        -- 背景色
     ,   onblack     = 40
     ,   onred       = 41
     ,   ongreen     = 42
@@ -980,7 +974,6 @@ os.run("ls -l $(buildir)")
 <p><p class="warn"><br>使用此接口执行shell命令，容易使构建跨平台性降低，对于<code>os.run("cp ..")</code>这种尽量使用<code>os.cp</code>代替。<br><br>如果必须使用此接口运行shell程序，请自行使用<a href="#config-plat">config.plat</a>接口判断平台支持。<br></p>
 
 </p>
-<p>更加高级的进程运行和控制，见<a href="#process">process</a>模块接口。</p>
 <h4 id="osrunv">os.runv</h4>
 <ul>
 <li>安静运行原生shell命令，带参数列表</li>
@@ -1007,6 +1000,8 @@ os.run("ls -l $(buildir)")
 <pre><code class="lang-lua">os.execv("echo", {"hello", "xmake!"}, {stdout = outfile, stderr = errfile, envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
 </code></pre>
 <p>其中，stdout和stderr参数用于传递重定向输出和错误输出，可以直接传入文件路径，也可以传入io.open打开的文件对象。</p>
+<p>v2.5.1 之后的版本，我们还支持设置 stdin 参数，来支持重定向输入文件。</p>
+<p>!> stdout/stderr/stdin 可以同时支持：文件路径、文件对象、管道对象等三种类型值。</p>
 <p>另外，如果想在这次执行中临时设置和改写一些环境变量，可以传递envs参数，里面的环境变量设置会替换已有的设置，但是不影响外层的执行环境，只影响当前命令。</p>
 <p>我们也可以通过<code>os.getenvs()</code>接口获取当前所有的环境变量，然后改写部分后传入envs参数。</p>
 <h4 id="osiorun">os.iorun</h4>
@@ -1204,7 +1199,7 @@ end
 </code></pre>
 <h4 id="iosave">io.save</h4>
 <ul>
-<li>序列化保存所有table内容到指定路径文件 </li>
+<li>序列化保存所有table内容到指定路径文件</li>
 </ul>
 <p>可以序列化存储table内容到指定文件，一般与<a href="#ioload">io.load</a>配合使用，例如：</p>
 <pre><code class="lang-lua">io.save("xxx.txt", {a = "a", b = "b", c = "c"})
@@ -1414,11 +1409,11 @@ end
 </ul>
 <pre><code class="lang-lua">local pathes = path.splitenv(vformat("$(env PATH)"))
 
--- for windows 
+-- for windows
 local pathes = path.splitenv("C:\\Windows;C:\\Windows\\System32")
 -- got { "C:\\Windows", "C:\\Windows\\System32" }
 
--- for *nix 
+-- for *nix
 local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 -- got { "/usr/bin", "/usr/local/bin" }
 </code></pre>
@@ -1610,78 +1605,6 @@ end
 <pre><code class="lang-lua">string.rtrim("    hello xmake!    ")
 </code></pre>
 <p>结果为："    hello xmake!"</p>
-<h3 id="process">process</h3>
-<p>这个是xmake扩展的进程控制模块，用于更加灵活的控制进程，比起：<a href="#osrun">os.run</a>系列灵活性更高，也更底层。</p>
-<table>
-<thead>
-<tr>
-<th>接口</th>
-<th>描述</th>
-<th>支持版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#processopen">process.open</a></td>
-<td>打开进程</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#processopenv">process.openv</a></td>
-<td>打开进程，传递参数列表</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#processwaitlist">process.waitlist</a></td>
-<td>同时等待多个进程</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
-<h4 id="processopen">process.open</h4>
-<ul>
-<li>打开进程</li>
-</ul>
-<p>通过路径创建运行一个指定程序，并且返回对应的进程对象：</p>
-<pre><code class="lang-lua">-- 打开进程，后面两个参数指定需要捕获的stdout, stderr文件路径
-local proc = process.open("echo hello xmake!", {outpath = "/tmp/out", errpath = "/tmp/err", envs = {"PATH=xxx", "XXX=yyy"}}) 
-if proc then
-
-    -- 等待进程执行完成
-    --
-    -- 参数一为等待超时，-1为永久等待，0为尝试获取进程状态
-    -- 返回值waitok为等待状态：1为等待进程正常结束，0为进程还在运行中，-1位等待失败
-    -- 返回值status为，等待进程结束后，进程返回的状态码
-    local waitok, status = proc:wait(-1)
-
-    -- 释放进程对象
-    proc:close()
-end
-</code></pre>
-<p>上面的open参数中，outpath, errpath参数指定需要捕获的stdout, stderr文件路径。</p>
-<p>另外，如果想在这次执行中临时设置和改写一些环境变量，可以传递envs参数，里面的环境变量设置会替换已有的设置，但是不影响外层的执行环境，只影响当前命令。</p>
-<p>我们也可以通过<code>os.getenvs()</code>接口获取当前所有的环境变量，然后改写部分后传入envs参数。</p>
-<h4 id="processopenv">process.openv</h4>
-<ul>
-<li>打开进程，传递参数列表 </li>
-</ul>
-<p>此接口和<a href="#processopen">process.open</a>用法基本相似，唯一的不同是，这里传递一个带参数列表的命令来执行，而不是传递命令字符串，这样会省去不必要的转义，传入的参数更加可靠，兼容性和效率也更好。</p>
-<pre><code class="lang-lua">local proc = process.openv("echo", {"hello", "xmake!"})
-</code></pre>
-<h4 id="processwaitlist">process.waitlist</h4>
-<ul>
-<li>同时等待多个进程</li>
-</ul>
-<pre><code class="lang-lua">-- 第二个参数是等待超时，返回进程状态列表
-for _, procinfo in ipairs(process.waitlist(procs, -1)) do
-
-    -- 每个进程的：进程对象、进程pid、进程结束状态码
-    local proc      = procinfo[1]
-    local procid    = procinfo[2]
-    local status    = procinfo[3]
-
-end
-</code></pre>
 <h3 id="coroutine">coroutine</h3>
 <p>协程模块是lua原生自带的模块，具使用见：<a href="https://www.lua.org/manual/5.1/manual.html#5.2">lua官方手册</a></p>
 </article>

@@ -217,12 +217,6 @@ end)
 <td>>= 2.0.1</td>
 </tr>
 <tr>
-<td><a href="#process">process</a></td>
-<td>Process Operation Module</td>
-<td>Script Field</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
 <td><a href="#coroutine">coroutine</a></td>
 <td>Coroutine Operation Module</td>
 <td>Script Field</td>
@@ -1001,9 +995,15 @@ os.run("ls -l $(buildir)")
 </ul>
 <p>Similar to <a href="#osexec">os.exec</a>, just the way to pass parameters is passed through the parameter list, not the string command, for example:</p>
 <pre><code class="lang-lua">os.execv("echo", {"hello", "xmake!"})
-os.execv("echo", {"hello", "xmake!"}, {stdout = "/tmp/out", stderr = io.open("/tmp/err", &#39;w&#39;)})
-os.execv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 </code></pre>
+<p>In addition, this interface also supports an optional parameter for passing settings: redirect output, perform environment variable settings, for example:</p>
+<pre><code class="lang-lua">os.execv("echo", {"hello", "xmake!"}, {stdout = outfile, stderr = errfile, envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+</code></pre>
+<p>Among them, the stdout and stderr parameters are used to pass redirected output and error output. You can directly pass in the file path or the file object opened by io.open.</p>
+<p>After v2.5.1, we also support setting the stdin parameter to support redirecting input files.</p>
+<p>!> stdout/stderr/stdin can simultaneously support three types of values: file path, file object, and pipe object.</p>
+<p>In addition, if you want to temporarily set and rewrite some environment variables during this execution, you can pass the envs parameter. The environment variable settings inside will replace the existing settings, but will not affect the outer execution environment, only the current command.</p>
+<p>We can also get all the current environment variables through the <code>os.getenvs()</code> interface, and then pass in the envs parameter after rewriting some parts.</p>
 <h4 id="osiorun">os.iorun</h4>
 <ul>
 <li>Quietly running native shell commands and getting output</li>
@@ -1599,78 +1599,6 @@ end
 <pre><code class="lang-lua">string.rtrim("    hello xmake!    ")
 </code></pre>
 <p>The result is: "    hello xmake!"</p>
-<h3 id="process">process</h3>
-<p>This is the xmake extension&#39;s process control module for more flexible control of the process, compared to: <a href="#osrun">os.run</a> series is more flexible and lower level.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#processopen">process.open</a></td>
-<td>Open Process</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#processopenv">process.openv</a></td>
-<td>Open Process with arguments list</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#processwaitlist">process.waitlist</a></td>
-<td>Waiting for multiple processes at the same time</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
-<h4 id="processopen">process.open</h4>
-<ul>
-<li>Open the process</li>
-</ul>
-<p>Run a specified program through path creation and return the corresponding process object:</p>
-<pre><code class="lang-lua">-- Open the process, the last two parameters specify the stdout to be captured, the stderr file path
-local proc = process.open("echo hello xmake!", {outpath = "", errpath = ""})
-if proc then
-
-    -- Waiting for the process to complete
-    --
-    -- Parameter 1 is waiting for timeout, -1 is permanent waiting, 0 is trying to get process status
-    -- Return value waitok is wait state: 1 is waiting for the process to end normally, 0 is the process is still running, -1 bit is waiting to fail
-    -- The return value status is the status code returned by the process after waiting for the process to end.
-    local waitok, status = proc:wait(-1)
-
-    -- release process object
-    proc:close()
-end
-</code></pre>
-<p>In the open parameter above, the outpath and errpath parameters specify the stdout and stderr file paths to be captured.</p>
-<p>In addition, if you want to temporarily set and rewrite some environment variables during this execution, you can pass the envs parameter. The environment variable settings inside will replace the existing settings, but they will not affect the outer execution environment, only the current command.</p>
-<p>We can also get all current environment variables through the <code>os.getenvs()</code> interface, and then pass the envs parameter after rewriting part.</p>
-<h4 id="processopenv">process.openv</h4>
-<ul>
-<li>Open the process and pass the parameter list</li>
-</ul>
-<p>This interface is basically similar to <a href="#processopen">process.open</a>. The only difference is that you pass a command with a parameter list to execute instead of passing a command string. This will save unnecessary escaping. The input parameters are more reliable, and the compatibility and efficiency are better.</p>
-<p><code>`lua
-local proc = process.openv("echo", {"hello", "xmake!"})</code> `</p>
-<h4 id="processwaitlist">process.waitlist</h4>
-<ul>
-<li>Waiting for multiple processes at the same time</li>
-</ul>
-<pre><code class="lang-lua">-- The second parameter is waiting for a timeout, returning a list of process states
-for _, procinfo in ipairs(process.waitlist(procs, -1)) do
-
-    -- For each process: process object, process pid, process end status code
-    local proc   = procinfo[1]
-    local procid = procinfo[2]
-    local status = procinfo[3]
-
-end
-</code></pre>
 <h3 id="coroutine">coroutine</h3>
 <p>The coroutine module is a native module of lua. For use, see: <a href="https://www.lua.org/manual/5.1/manual.html#5.2">lua official manual</a></p>
 </article>

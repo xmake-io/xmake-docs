@@ -32,7 +32,6 @@ Of course, a small number of read-only built-in interfaces can still be used in 
 | [path](#path)                                   | Path Manipulation Module                              | Description Field, Script Field                             | = 2.0.1 |
 | [table](#table)                                 | Array and Dictionary Operations Module                | Description Field, Script Field                             | >= 2.0.1 |
 | [string](#string)                               | String Manipulation Module                            | Description Field, Script Field                             | >= 2.0.1 |
-| [process](#process)                             | Process Operation Module                              | Script Field                                                | >= 2.0.1 |
 | [coroutine](#coroutine)                         | Coroutine Operation Module                            | Script Field                                                | >= 2.0.1 |
 | [find_packages](#find_packages)                 | Find Dependency Packages                              | Script Fields                                               | >= 2.2.5 |
 
@@ -1549,71 +1548,6 @@ string.rtrim("    hello xmake!    ")
 ```
 
 The result is: "    hello xmake!"
-
-### process
-
-This is the xmake extension's process control module for more flexible control of the process, compared to: [os.run](#osrun) series is more flexible and lower level.
-
-| Interface                                       | Description                                     | Supported Versions |
-| ----------------------------------------------- | --------------------------------------------    | --------           |
-| [process.open](#processopen)                    | Open Process                                    | >= 2.0.1           |
-| [process.openv](#processopenv)                  | Open Process with arguments list                | >= 2.0.1           |
-| [process.waitlist](#processwaitlist)            | Waiting for multiple processes at the same time | >= 2.0.1           |
-
-#### process.open
-
-- Open the process
-
-Run a specified program through path creation and return the corresponding process object:
-
-```lua
--- Open the process, the last two parameters specify the stdout to be captured, the stderr file path
-local proc = process.open("echo hello xmake!", {outpath = "", errpath = ""})
-if proc then
-
-    -- Waiting for the process to complete
-    --
-    -- Parameter 1 is waiting for timeout, -1 is permanent waiting, 0 is trying to get process status
-    -- Return value waitok is wait state: 1 is waiting for the process to end normally, 0 is the process is still running, -1 bit is waiting to fail
-    -- The return value status is the status code returned by the process after waiting for the process to end.
-    local waitok, status = proc:wait(-1)
-
-    -- release process object
-    proc:close()
-end
-```
-
-In the open parameter above, the outpath and errpath parameters specify the stdout and stderr file paths to be captured.
-
-In addition, if you want to temporarily set and rewrite some environment variables during this execution, you can pass the envs parameter. The environment variable settings inside will replace the existing settings, but they will not affect the outer execution environment, only the current command.
-
-We can also get all current environment variables through the `os.getenvs()` interface, and then pass the envs parameter after rewriting part.
-
-#### process.openv
-
-- Open the process and pass the parameter list
-
-This interface is basically similar to [process.open](#processopen). The only difference is that you pass a command with a parameter list to execute instead of passing a command string. This will save unnecessary escaping. The input parameters are more reliable, and the compatibility and efficiency are better.
-
-`` `lua
-local proc = process.openv("echo", {"hello", "xmake!"})
-`` `
-
-#### process.waitlist
-
-- Waiting for multiple processes at the same time
-
-```lua
--- The second parameter is waiting for a timeout, returning a list of process states
-for _, procinfo in ipairs(process.waitlist(procs, -1)) do
-
-    -- For each process: process object, process pid, process end status code
-    local proc   = procinfo[1]
-    local procid = procinfo[2]
-    local status = procinfo[3]
-
-end
-```
 
 ### coroutine
 

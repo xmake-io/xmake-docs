@@ -32,7 +32,6 @@ end)
 | [path](#path)                                   | 路径操作模块                                 | 描述域、脚本域             | >= 2.0.1 |
 | [table](#table)                                 | 数组和字典操作模块                           | 描述域、脚本域             | >= 2.0.1 |
 | [string](#string)                               | 字符串操作模块                               | 描述域、脚本域             | >= 2.0.1 |
-| [process](#process)                             | 进程操作模块                                 | 脚本域                     | >= 2.0.1 |
 | [coroutine](#coroutine)                         | 协程操作模块                                 | 脚本域                     | >= 2.0.1 |
 | [find_packages](#find_packages)                 | 查找依赖包                                   | 脚本域                     | >= 2.2.5 |
 
@@ -52,7 +51,7 @@ end
 ```lua
 -- 描述域
 target("test")
-    
+
     -- 描述域
     set_kind("static")
     add_files("src/*.c")
@@ -110,7 +109,7 @@ import("core.base.option")
 import("core.base.task")
 
 function main()
-    
+
     -- 获取参数选项
     print(option.get("version"))
 
@@ -153,7 +152,7 @@ import("hello3", {rootdir = "/home/xxx/modules"})
 import("core.platform.platform", {alias = "p"})
 
 function main()
- 
+
     -- 这样我们就可以使用p来调用platform模块的plats接口，获取所有xmake支持的平台列表了
     utils.dump(p.plats())
 end
@@ -211,7 +210,7 @@ try
     end,
 
     -- catch 代码块
-    catch 
+    catch
     {
         -- 发生异常后，被执行
         function (errors)
@@ -238,7 +237,7 @@ try
     end,
 
     -- catch 代码块
-    catch 
+    catch
     {
         -- 发生异常后，被执行
         function (errors)
@@ -247,7 +246,7 @@ try
     },
 
     -- finally 代码块
-    finally 
+    finally
     {
         -- 最后都会执行到这里
         function (ok, errors)
@@ -269,7 +268,7 @@ try
     end,
 
     -- finally 代码块
-    finally 
+    finally
     {
         -- 由于此try代码没发生异常，因此ok为true，errors为返回值: "info"
         function (ok, errors)
@@ -339,7 +338,7 @@ target("test")
             function ()
                 os.run("ldid -S %s", target:targetfile())
             end,
-            catch 
+            catch
             {
                 function (errors)
                     print(errors)
@@ -487,7 +486,7 @@ xmake会同时支持这两种写法，内部会去自动智能检测，选择输
 其他颜色属于，我这里就不一一介绍，直接贴上xmake代码里面的属性列表吧：
 
 ```lua
-    colors.keys = 
+    colors.keys =
     {
         -- 属性
         reset       = 0 -- 重置属性
@@ -500,17 +499,17 @@ xmake会同时支持这两种写法，内部会去自动智能检测，选择输
     ,   reverse     = 7 -- 反转颜色
     ,   hidden      = 8 -- 隐藏文字
 
-        -- 前景色 
+        -- 前景色
     ,   black       = 30
     ,   red         = 31
     ,   green       = 32
     ,   yellow      = 33
     ,   blue        = 34
-    ,   magenta     = 35 
+    ,   magenta     = 35
     ,   cyan        = 36
     ,   white       = 37
 
-        -- 背景色 
+        -- 背景色
     ,   onblack     = 40
     ,   onred       = 41
     ,   ongreen     = 42
@@ -895,8 +894,6 @@ os.run("ls -l $(buildir)")
 如果必须使用此接口运行shell程序，请自行使用[config.plat](#config-plat)接口判断平台支持。
 </p>
 
-更加高级的进程运行和控制，见[process](#process)模块接口。
-
 #### os.runv
 
 - 安静运行原生shell命令，带参数列表
@@ -1136,7 +1133,7 @@ end
 
 #### io.save
 
-- 序列化保存所有table内容到指定路径文件 
+- 序列化保存所有table内容到指定路径文件
 
 可以序列化存储table内容到指定文件，一般与[io.load](#ioload)配合使用，例如：
 
@@ -1366,11 +1363,11 @@ end
 ```lua
 local pathes = path.splitenv(vformat("$(env PATH)"))
 
--- for windows 
+-- for windows
 local pathes = path.splitenv("C:\\Windows;C:\\Windows\\System32")
 -- got { "C:\\Windows", "C:\\Windows\\System32" }
 
--- for *nix 
+-- for *nix
 local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 -- got { "/usr/bin", "/usr/local/bin" }
 ```
@@ -1562,71 +1559,6 @@ string.rtrim("    hello xmake!    ")
 ```
 
 结果为："    hello xmake!"
-
-### process
-
-这个是xmake扩展的进程控制模块，用于更加灵活的控制进程，比起：[os.run](#osrun)系列灵活性更高，也更底层。
-
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [process.open](#processopen)                    | 打开进程                                     | >= 2.0.1 |
-| [process.openv](#processopenv)                  | 打开进程，传递参数列表                       | >= 2.0.1 |
-| [process.waitlist](#processwaitlist)            | 同时等待多个进程                             | >= 2.0.1 |
-
-#### process.open
-
-- 打开进程
-
-通过路径创建运行一个指定程序，并且返回对应的进程对象：
-
-```lua
--- 打开进程，后面两个参数指定需要捕获的stdout, stderr文件路径
-local proc = process.open("echo hello xmake!", {outpath = "/tmp/out", errpath = "/tmp/err", envs = {"PATH=xxx", "XXX=yyy"}}) 
-if proc then
-
-    -- 等待进程执行完成
-    --
-    -- 参数一为等待超时，-1为永久等待，0为尝试获取进程状态
-    -- 返回值waitok为等待状态：1为等待进程正常结束，0为进程还在运行中，-1位等待失败
-    -- 返回值status为，等待进程结束后，进程返回的状态码
-    local waitok, status = proc:wait(-1)
-
-    -- 释放进程对象
-    proc:close()
-end
-```
-
-上面的open参数中，outpath, errpath参数指定需要捕获的stdout, stderr文件路径。
-
-另外，如果想在这次执行中临时设置和改写一些环境变量，可以传递envs参数，里面的环境变量设置会替换已有的设置，但是不影响外层的执行环境，只影响当前命令。
-
-我们也可以通过`os.getenvs()`接口获取当前所有的环境变量，然后改写部分后传入envs参数。
-
-#### process.openv
-
-- 打开进程，传递参数列表 
-
-此接口和[process.open](#processopen)用法基本相似，唯一的不同是，这里传递一个带参数列表的命令来执行，而不是传递命令字符串，这样会省去不必要的转义，传入的参数更加可靠，兼容性和效率也更好。
-
-```lua
-local proc = process.openv("echo", {"hello", "xmake!"})
-```
-
-#### process.waitlist
-
-- 同时等待多个进程
-
-```lua
--- 第二个参数是等待超时，返回进程状态列表
-for _, procinfo in ipairs(process.waitlist(procs, -1)) do
-    
-    -- 每个进程的：进程对象、进程pid、进程结束状态码
-    local proc      = procinfo[1]
-    local procid    = procinfo[2]
-    local status    = procinfo[3]
-
-end
-```
 
 ### coroutine
 
