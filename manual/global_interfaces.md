@@ -1,20 +1,20 @@
 
 The global interface affects the whole project description scope and all sub-project files.
 
-| Interfaces                            | Description                           | Version  |
-| ------------------------------------- | ------------------------------------- | -------- |
-| [includes](#includes)                 | Add sub-project files and directories | >= 2.1.5 |
-| [set_modes](#set_modes)               | Set project compilation modes         | >= 2.1.2 |
-| [set_project](#set_project)           | Set project name                      | >= 2.0.1 |
-| [set_version](#set_version)           | Set project version                   | >= 2.0.1 |
-| [set_xmakever](#set_xmakever)         | Set minimal xmake version             | >= 2.1.1 |
-| [add_moduledirs](#add_moduledirs)     | Add module directories                | >= 2.1.5 |
-| [add_plugindirs](#add_plugindirs)     | Add plugin directories                | >= 2.0.1 |
-| [add_packagedirs](#add_packagedirs)   | Add package directories               | >= 2.0.1 |
-| [get_config](#get_config)             | Get the configuration value           | >= 2.2.2 |
-| [set_config](#set_config)             | Set the default configuration value   | >= 2.2.2 |
-| [add_requires](#add_requires)         | Add required package dependencies     | >= 2.2.2 |
-| [add_repositories](#add_repositories) | Add 3rd package repositories          | >= 2.2.2 |
+| Interfaces                            | Description                                              | Version  |
+| ------------------------------------- | -------------------------------------                    | -------- |
+| [includes](#includes)                 | Add sub-project files and directories                    | >= 2.1.5 |
+| [set_project](#set_project)           | Set project name                                         | >= 2.0.1 |
+| [set_version](#set_version)           | Set project version                                      | >= 2.0.1 |
+| [set_xmakever](#set_xmakever)         | Set minimal xmake version                                | >= 2.1.1 |
+| [add_moduledirs](#add_moduledirs)     | Add module directories                                   | >= 2.1.5 |
+| [add_plugindirs](#add_plugindirs)     | Add plugin directories                                   | >= 2.0.1 |
+| [add_packagedirs](#add_packagedirs)   | Add package directories                                  | >= 2.0.1 |
+| [get_config](#get_config)             | Get the configuration value                              | >= 2.2.2 |
+| [set_config](#set_config)             | Set the default configuration value                      | >= 2.2.2 |
+| [add_requires](#add_requires)         | Add required package dependencies                        | >= 2.2.2 |
+| [add_requireconfs](#add_requireconfs) | Set the configuration of the specified dependent package | >= 2.5.1 |
+| [add_repositories](#add_repositories) | Add 3rd package repositories                             | >= 2.2.2 |
 
 ### includes
 

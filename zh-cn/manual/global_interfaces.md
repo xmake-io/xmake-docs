@@ -4,16 +4,16 @@
 | 接口                                  | 描述                          | 支持版本 |
 | ------------------------------------- | ----------------------------- | -------- |
 | [includes](#includes)                 | 添加子工程文件和目录          | >= 2.1.5 |
-| [set_modes](#set_modes)               | 设置支持的编译模式            | >= 2.1.2 |
 | [set_project](#set_project)           | 设置工程名                    | >= 2.0.1 |
 | [set_version](#set_version)           | 设置工程版本                  | >= 2.0.1 |
 | [set_xmakever](#set_xmakever)         | 设置最小xmake版本             | >= 2.1.1 |
 | [add_moduledirs](#add_moduledirs)     | 添加模块目录                  | >= 2.1.5 |
-| [add_plugindirs](#add_plugindirs)     | 添加插件目录                  | >= 2.0.1 | 
+| [add_plugindirs](#add_plugindirs)     | 添加插件目录                  | >= 2.0.1 |
 | [add_packagedirs](#add_packagedirs)   | 添加包目录                    | >= 2.0.1 |
 | [get_config](#get_config)             | 获取给的配置值                | >= 2.2.2 |
 | [set_config](#set_config)             | 设置默认的配置值              | >= 2.2.2 |
 | [add_requires](#add_requires)         | 添加需要的依赖包              | >= 2.2.2 |
+| [add_requireconfs](#add_requireconfs) | 设置指定依赖包的配置          | >= 2.5.1 |
 | [add_repositories](#add_repositories) | 添加依赖包仓库                | >= 2.2.2 |
 
 ### includes
@@ -90,7 +90,7 @@ target("test")
     configvar_check_features("HAS_CONSTEXPR", "cxx_constexpr")
     configvar_check_features("HAS_CONSEXPR_AND_STATIC_ASSERT", {"cxx_constexpr", "c_static_assert"}, {languages = "c++11"})
 ```
-    
+
 config.h.in
 
 ```c
@@ -387,7 +387,7 @@ add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("pcre2", "zlib")
 ```
 
@@ -398,7 +398,7 @@ add_requires("vcpkg::zlib", "vcpkg::pcre2")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 ```
 
@@ -406,12 +406,12 @@ target("test")
 
 ```lua
 add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
-add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl",
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("openssl", "zlib")
 ```
 
@@ -424,7 +424,7 @@ checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
   -> CONAN::zlib/1.2.11@conan/stable  (debug)
-  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+  -> CONAN::OpenSSL/1.0.2n@conan/stable
 please input: y (y/n)
 
   => installing CONAN::zlib/1.2.11@conan/stable .. ok
@@ -448,7 +448,7 @@ add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
 target("xmake-test")
     set_kind("binary")
     add_files("clib/bytes/*.c")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("bytes")
 ```
 

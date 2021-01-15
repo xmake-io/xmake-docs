@@ -106,11 +106,6 @@
 <td>>= 2.1.5</td>
 </tr>
 <tr>
-<td><a href="#set_modes">set_modes</a></td>
-<td>设置支持的编译模式</td>
-<td>>= 2.1.2</td>
-</tr>
-<tr>
 <td><a href="#set_project">set_project</a></td>
 <td>设置工程名</td>
 <td>>= 2.0.1</td>
@@ -154,6 +149,11 @@
 <td><a href="#add_requires">add_requires</a></td>
 <td>添加需要的依赖包</td>
 <td>>= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#add_requireconfs">add_requireconfs</a></td>
+<td>设置指定依赖包的配置</td>
+<td>>= 2.5.1</td>
 </tr>
 <tr>
 <td><a href="#add_repositories">add_repositories</a></td>
@@ -392,7 +392,7 @@ add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("pcre2", "zlib")
 </code></pre>
 <p>添加vcpkg的依赖包：</p>
@@ -400,17 +400,17 @@ target("test")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 </code></pre>
 <p>添加conan的依赖包：</p>
 <pre><code class="lang-lua">add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
-add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl", 
+add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl",
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("openssl", "zlib")
 </code></pre>
 <p>执行xmake进行编译后：</p>
@@ -420,7 +420,7 @@ checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
   -> CONAN::zlib/1.2.11@conan/stable  (debug)
-  -> CONAN::OpenSSL/1.0.2n@conan/stable  
+  -> CONAN::OpenSSL/1.0.2n@conan/stable
 please input: y (y/n)
 
   => installing CONAN::zlib/1.2.11@conan/stable .. ok
@@ -438,7 +438,7 @@ please input: y (y/n)
 target("xmake-test")
     set_kind("binary")
     add_files("clib/bytes/*.c")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("bytes")
 </code></pre>
 <h3 id="add_repositories">add_repositories</h3>
