@@ -95,7 +95,7 @@
     print("hello xmake!")
 end)
 </code></pre>
-<p><p class="warn"><br>In order to ensure that the description field of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br><br>Of course, a small number of read-only built-in interfaces can still be used in the description field, as shown in the following table:<br></p>
+<p><p class="warn"><br>In order to ensure that the description scope of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br><br>Of course, a small number of read-only built-in interfaces can still be used in the description scope, as shown in the following table:<br></p>
 
 </p>
 <table>
@@ -109,15 +109,9 @@ end)
 </thead>
 <tbody>
 <tr>
-<td><a href="#val">val</a></td>
-<td>Get the value of the built-in variable</td>
-<td>Script Field</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
 <td><a href="#import">import</a></td>
 <td>Importing Extension Blocks</td>
-<td>Script Fields</td>
+<td>Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
@@ -129,49 +123,49 @@ end)
 <tr>
 <td><a href="#try-catch-finally">try-catch-finally</a></td>
 <td>Exception Capture</td>
-<td>Script Field</td>
+<td>Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#pairs">pairs</a></td>
 <td>Used to Traverse the Dictionary</td>
-<td>Description Field, Script Field</td>
+<td>Description scope, Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#ipairs">ipairs</a></td>
 <td>Used to traverse arrays</td>
-<td>Description fields, script fields</td>
+<td>Description scope, script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#print">print</a></td>
 <td>Wrap Print Terminal Log</td>
-<td>Description Field, Script Field</td>
+<td>Description scope, Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#printf">printf</a></td>
 <td>No Line Printing Terminal Log</td>
-<td>Script Field</td>
+<td>Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#cprint">cprint</a></td>
 <td>Wrap Color Print Terminal Log</td>
-<td>Script Field</td>
+<td>Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#cprintf">cprintf</a></td>
 <td>No Line Color Print Terminal Log</td>
-<td>Script Field</td>
+<td>Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#format">format</a></td>
 <td>Format String</td>
-<td>Description Field, Script Field</td>
+<td>Description scope, Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
@@ -183,54 +177,66 @@ end)
 <tr>
 <td><a href="#raise">raise</a></td>
 <td>Throwing an abort program</td>
-<td>Script Field</td>
+<td>Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#os">os</a></td>
 <td>System Operation Module</td>
-<td>Partial Read-Only Operation Description Field, Script Field</td>
+<td>Partial read-only operation description, script scope</td>
 <td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#winos">winos</a></td>
+<td>windows system operation module</td>
+<td>Partial read-only operation description, script scope</td>
+<td>>= 2.3.9</td>
+</tr>
+<tr>
+<td><a href="#macos">macos</a></td>
+<td>macOS system operation module</td>
+<td>Partial read-only operation description, script scope</td>
+<td>>= 2.3.9</td>
 </tr>
 <tr>
 <td><a href="#io">io</a></td>
 <td>File Manipulation Module</td>
-<td>Script Field</td>
+<td>Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#path">path</a></td>
 <td>Path Manipulation Module</td>
-<td>Description Field, Script Field</td>
+<td>Description scope, Script scope</td>
 <td>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#table">table</a></td>
 <td>Array and Dictionary Operations Module</td>
-<td>Description Field, Script Field</td>
+<td>Description scope, Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#string">string</a></td>
 <td>String Manipulation Module</td>
-<td>Description Field, Script Field</td>
+<td>Description scope, Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#coroutine">coroutine</a></td>
 <td>Coroutine Operation Module</td>
-<td>Script Field</td>
+<td>Script scope</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#find_packages">find_packages</a></td>
 <td>Find Dependency Packages</td>
-<td>Script Fields</td>
+<td>Script scope</td>
 <td>>= 2.2.5</td>
 </tr>
 </tbody>
 </table>
-<p>An example of using an interface call in a description field is as follows, generally only for conditional control:</p>
+<p>An example of using an interface call in a description scope is as follows, generally only for conditional control:</p>
 <pre><code class="lang-lua">-- Scan all subdirectories under the current xmake.lua directory, defining a task task with the name of each directory
 for _, taskname in ipairs(os.dirs("*"), path.basename) do
     task(taskname)
@@ -238,11 +244,11 @@ for _, taskname in ipairs(os.dirs("*"), path.basename) do
         end)
 end
 </code></pre>
-<p>The script field and description field mentioned above mainly refer to:</p>
-<pre><code class="lang-lua">-- Description field
+<p>The script scope and description scope mentioned above mainly refer to:</p>
+<pre><code class="lang-lua">-- description scope
 target("test")
 
-    -- Description field
+    -- description scope
     set_kind("static")
     add_files("src/*.c")
 
@@ -250,19 +256,8 @@ target("test")
         -- Script domain
     end)
 
--- Description field
+-- description scope
 </code></pre>
-<h3 id="val">val</h3>
-<h4 id="getthevalueofthebuiltinvariable">Get the value of the built-in variable</h4>
-<p><a href="/mirror/manual/builtin_variables.html">Built-in variables</a> can be obtained directly through this interface, without the need to add a <code>$()</code> package, which is much simpler to use, for example:</p>
-<pre><code class="lang-lua">print(val("host"))
-print(val("env PATH"))
-local s = val("shell echo hello")
-</code></pre>
-<p>Using <a href="#vformat">vformat</a> is cumbersome:</p>
-<pre><code class="lang-lua">local s = vformat("$(shell echo hello)")
-</code></pre>
-<p>However, <code>vformat</code> supports string parameter formatting, which is more powerful, so the application scenario is different.</p>
 <h3 id="import">import</h3>
 <h4 id="importingextensionblocks">Importing extension blocks</h4>
 <p>Import is mainly used to import xmake&#39;s extension class library and some custom class library modules, generally used to:</p>
@@ -624,11 +619,9 @@ $ xmake --version
     end)
 </code></pre>
 <h3 id="os">os</h3>
-<p>The system operation module belongs to the built-in module. It can be called directly by the script field without using <a href="#import">import</a> import.</p>
+<p>The system operation module belongs to the built-in module. It can be called directly by the script scope without using <a href="#import">import</a> import.</p>
 <p>This module is also a native module of lua, and xmake has been extended to provide more practical interfaces.</p>
-<p><p class="tip"><br>Only some readonly interfaces (for example: <code>os.getenv</code>, <code>os.arch</code>) in the os module can be used in the description field. Other interfaces can only be used in the script domain, for example: <code>os.cp</code>, <code>os .rm</code>etc.<br></p>
-
-</p>
+<p>!> Only some readonly interfaces (for example: <code>os.getenv</code>, <code>os.arch</code>) in the os module can be used in the description scope. Other interfaces can only be used in the script domain, for example: <code>os.cp</code>, <code>os .rm</code>etc.</p>
 <table>
 <thead>
 <tr>
@@ -1085,6 +1078,121 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 <li>Get the operating system of the current host</li>
 </ul>
 <p>Consistent with the result of <a href="#var-host">$(host)</a>, for example, if I execute xmake on <code>linux x86_64</code> to build, the return value is: <code>linux</code></p>
+<h3 id="winos">winos</h3>
+<p>The windows system operation module is a built-in module, no need to use <a href="#import">import</a> to import, you can directly call its interface in the script domain.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Support version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#winosversion">winos.version</a></td>
+<td>Get windows system version</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#winosregistry_keys">winos.registry_keys</a></td>
+<td>Get the list of registry keys</td>
+<td>>= 2.5.1</td>
+</tr>
+<tr>
+<td><a href="#winosregistry_values">winos.registry_values</a></td>
+<td>Get a list of registry value names</td>
+<td>>= 2.5.1</td>
+</tr>
+<tr>
+<td><a href="#winosregistry_query">winos.registry_query</a></td>
+<td>Get the registry value</td>
+<td>>= 2.3.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="winosversion">winos.version</h4>
+<ul>
+<li>Get windows system version</li>
+</ul>
+<p>The version returned is the semver semantic version object</p>
+<pre><code class="lang-lua">if winos.version():ge("win7") then
+    - ...
+end
+
+if winos.version():ge("6.1") then
+    - ...
+end
+</code></pre>
+<p>In addition, it can also support the direct judgment of the windows version name. The mapping rules are as follows:</p>
+<pre><code>nt4 = "4.0"
+win2k = "5.0"
+winxp = "5.1"
+ws03 = "5.2"
+win6 = "6.0"
+vista = "6.0"
+ws08 = "6.0"
+longhorn = "6.0"
+win7 = "6.1"
+win8 = "6.2"
+winblue = "6.3"
+win81 = "6.3"
+win10 = "10.0"
+</code></pre><h4 id="winosregistry_keys">winos.registry_keys</h4>
+<ul>
+<li>Get the list of registry builds</li>
+</ul>
+<p>Support through pattern matching, traverse to obtain the registry key path list, <code>*</code> is single-level path matching, <code>**</code> is recursive path matching.</p>
+<pre><code class="lang-lua">local keypaths = winos.registry_keys("HKEY_LOCAL_MACHINE\\SOFTWARE\\*\\Windows NT\\*\\CurrentVersion\\AeDebug")
+for _, keypath in ipairs(keypaths) do
+    print(winos.registry_query(keypath .. ";Debugger"))
+end
+</code></pre>
+<h4 id="winosregistry_values">winos.registry_values</h4>
+<ul>
+<li>Get a list of registry value names</li>
+</ul>
+<p>Support to obtain the value name list of the specified key path through pattern matching, and the string after the <code>;</code> is the specified key name pattern matching string.</p>
+<pre><code class="lang-lua">local valuepaths = winos.registry_values("HKEY_LOCAL_MACHINE\\SOFTWARE\\xx\\AeDebug;Debug*")
+for _, valuepath in ipairs(valuepaths) do
+    print(winos.registry_query(valuepath))
+end
+</code></pre>
+<h4 id="winosregistry_query">winos.registry_query</h4>
+<ul>
+<li>Get the registry value</li>
+</ul>
+<p>Get the value under the specified registry path, if the value name is not specified, then get the default value of the key path</p>
+<pre><code class="lang-lua">local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug")
+local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger")
+</code></pre>
+<h3 id="macos">macos</h3>
+<p>The macOS system operation module is a built-in module, no need to use <a href="#import">import</a> to import, you can directly call its interface in the script domain.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Support version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#macosversion">macos.version</a></td>
+<td>Get macOS system version</td>
+<td>>= 2.3.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="macosversion">macos.version</h4>
+<ul>
+<li>Get macOS system version</li>
+</ul>
+<p>The version returned is the semver semantic version object</p>
+<pre><code class="lang-lua">if macos.version():ge("10.0") then
+    - ...
+end
+</code></pre>
 <h3 id="io">io</h3>
 <p>The io operation module extends lua&#39;s built-in io module to provide more easy-to-use interfaces.</p>
 <table>

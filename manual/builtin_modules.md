@@ -8,34 +8,35 @@ end)
 ```
 
 <p class="warn">
-In order to ensure that the description field of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br>
-Of course, a small number of read-only built-in interfaces can still be used in the description field, as shown in the following table:
+In order to ensure that the description scope of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br>
+Of course, a small number of read-only built-in interfaces can still be used in the description scope, as shown in the following table:
 </p>
 
-| Interface                                       | Description                                           | Available Domains                                           | Supported Versions |
-| ----------------------------------------------- | --------------------------------------------          | --------------------------                                  | -------- |
-| [val](#val)                                     | Get the value of the built-in variable                | Script Field                                                | >= 2.1.5 |
-| [import](#import)                               | Importing Extension Blocks                            | Script Fields                                               | >= 2.0.1 |
-| [inherit](#inherit)                             | Import and inherit base class modules                 | Script Domain                                               | >= 2.0.1 |
-| [try-catch-finally](#try-catch-finally)         | Exception Capture                                     | Script Field                                                | >= 2.0.1 |
-| [pairs](#pairs)                                 | Used to Traverse the Dictionary                       | Description Field, Script Field                             | >= 2.0.1 |
-| [ipairs](#ipairs)                               | Used to traverse arrays                               | Description fields, script fields                           | >= 2.0.1 |
-| [print](#print)                                 | Wrap Print Terminal Log                               | Description Field, Script Field                             | >= 2.0.1 |
-| [printf](#printf)                               | No Line Printing Terminal Log                         | Script Field                                                | >= 2.0.1 |
-| [cprint](#cprint)                               | Wrap Color Print Terminal Log                         | Script Field                                                | >= 2.0.1 |
-| [cprintf](#cprintf)                             | No Line Color Print Terminal Log                      | Script Field                                                | >= 2.0.1 |
-| [format](#format)                               | Format String                                         | Description Field, Script Field                             | >= 2.0.1 |
-| [vformat](#vformat)                             | Format string, support for built-in variable escaping | Script Domain                                               | >= 2.0.1 |
-| [raise](#raise)                                 | Throwing an abort program                             | Script Field                                                | >= 2.0.1 |
-| [os](#os)                                       | System Operation Module                               | Partial Read-Only Operation Description Field, Script Field | >= 2.0.1 |
-| [io](#io)                                       | File Manipulation Module                              | Script Field                                                | >= 2.0.1 |
-| [path](#path)                                   | Path Manipulation Module                              | Description Field, Script Field                             | = 2.0.1 |
-| [table](#table)                                 | Array and Dictionary Operations Module                | Description Field, Script Field                             | >= 2.0.1 |
-| [string](#string)                               | String Manipulation Module                            | Description Field, Script Field                             | >= 2.0.1 |
-| [coroutine](#coroutine)                         | Coroutine Operation Module                            | Script Field                                                | >= 2.0.1 |
-| [find_packages](#find_packages)                 | Find Dependency Packages                              | Script Fields                                               | >= 2.2.5 |
+| Interface                                       | Description                                           | Available Domains                                     | Supported Versions |
+| ----------------------------------------------- | --------------------------------------------          | --------------------------                            | -------- |
+| [import](#import)                               | Importing Extension Blocks                            | Script scope                                         | >= 2.0.1 |
+| [inherit](#inherit)                             | Import and inherit base class modules                 | Script Domain                                         | >= 2.0.1 |
+| [try-catch-finally](#try-catch-finally)         | Exception Capture                                     | Script scope                                          | >= 2.0.1 |
+| [pairs](#pairs)                                 | Used to Traverse the Dictionary                       | Description scope, Script scope                       | >= 2.0.1 |
+| [ipairs](#ipairs)                               | Used to traverse arrays                               | Description scope, script scope                     | >= 2.0.1 |
+| [print](#print)                                 | Wrap Print Terminal Log                               | Description scope, Script scope                       | >= 2.0.1 |
+| [printf](#printf)                               | No Line Printing Terminal Log                         | Script scope                                          | >= 2.0.1 |
+| [cprint](#cprint)                               | Wrap Color Print Terminal Log                         | Script scope                                          | >= 2.0.1 |
+| [cprintf](#cprintf)                             | No Line Color Print Terminal Log                      | Script scope                                          | >= 2.0.1 |
+| [format](#format)                               | Format String                                         | Description scope, Script scope                       | >= 2.0.1 |
+| [vformat](#vformat)                             | Format string, support for built-in variable escaping | Script Domain                                         | >= 2.0.1 |
+| [raise](#raise)                                 | Throwing an abort program                             | Script scope                                          | >= 2.0.1 |
+| [os](#os)                                       | System Operation Module                               | Partial read-only operation description, script scope | >= 2.0.1 |
+| [winos](#winos)                                 | windows system operation module                       | Partial read-only operation description, script scope | >= 2.3.9 |
+| [macos](#macos)                                 | macOS system operation module                         | Partial read-only operation description, script scope | >= 2.3.9 |
+| [io](#io)                                       | File Manipulation Module                              | Script scope                                          | >= 2.0.1 |
+| [path](#path)                                   | Path Manipulation Module                              | Description scope, Script scope                       | = 2.0.1 |
+| [table](#table)                                 | Array and Dictionary Operations Module                | Description scope, Script scope                       | >= 2.0.1 |
+| [string](#string)                               | String Manipulation Module                            | Description scope, Script scope                       | >= 2.0.1 |
+| [coroutine](#coroutine)                         | Coroutine Operation Module                            | Script scope                                          | >= 2.0.1 |
+| [find_packages](#find_packages)                 | Find Dependency Packages                              | Script scope                                         | >= 2.2.5 |
 
-An example of using an interface call in a description field is as follows, generally only for conditional control:
+An example of using an interface call in a description scope is as follows, generally only for conditional control:
 
 ```lua
 -- Scan all subdirectories under the current xmake.lua directory, defining a task task with the name of each directory
@@ -46,13 +47,13 @@ for _, taskname in ipairs(os.dirs("*"), path.basename) do
 end
 ```
 
-The script field and description field mentioned above mainly refer to:
+The script scope and description scope mentioned above mainly refer to:
 
 ```lua
--- Description field
+-- description scope
 target("test")
 
-    -- Description field
+    -- description scope
     set_kind("static")
     add_files("src/*.c")
 
@@ -60,28 +61,8 @@ target("test")
         -- Script domain
     end)
 
--- Description field
+-- description scope
 ```
-
-### val
-
-#### Get the value of the built-in variable
-
-[Built-in variables](/manual/builtin_variables) can be obtained directly through this interface, without the need to add a `$()` package, which is much simpler to use, for example:
-
-```lua
-print(val("host"))
-print(val("env PATH"))
-local s = val("shell echo hello")
-```
-
-Using [vformat](#vformat) is cumbersome:
-
-```lua
-local s = vformat("$(shell echo hello)")
-```
-
-However, `vformat` supports string parameter formatting, which is more powerful, so the application scenario is different.
 
 ### import
 
@@ -614,13 +595,11 @@ target("test")
 
 ### os
 
-The system operation module belongs to the built-in module. It can be called directly by the script field without using [import](#import) import.
+The system operation module belongs to the built-in module. It can be called directly by the script scope without using [import](#import) import.
 
 This module is also a native module of lua, and xmake has been extended to provide more practical interfaces.
 
-<p class="tip">
-Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os module can be used in the description field. Other interfaces can only be used in the script domain, for example: `os.cp`, `os .rm`etc.
-</p>
+!> Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os module can be used in the description scope. Other interfaces can only be used in the script domain, for example: `os.cp`, `os .rm`etc.
 
 | Interface | Description | Supported Versions |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
@@ -1048,6 +1027,108 @@ That is the default architecture of the current host system, for example, I exec
 - Get the operating system of the current host
 
 Consistent with the result of [$(host)](#var-host), for example, if I execute xmake on `linux x86_64` to build, the return value is: `linux`
+
+### winos
+
+The windows system operation module is a built-in module, no need to use [import](#import) to import, you can directly call its interface in the script domain.
+
+| Interface                                       | Description                                   | Support version |
+| ----------------------------------------------- | --------------------------------------------- | --------        |
+| [winos.version](#winosversion)                  | Get windows system version                    | >= 2.3.1        |
+| [winos.registry_keys](#winosregistry_keys)      | Get the list of registry keys                 | >= 2.5.1        |
+| [winos.registry_values](#winosregistry_values)  | Get a list of registry value names            | >= 2.5.1        |
+| [winos.registry_query](#winosregistry_query)    | Get the registry value                        | >= 2.3.1        |
+
+#### winos.version
+
+- Get windows system version
+
+The version returned is the semver semantic version object
+
+```lua
+if winos.version():ge("win7") then
+    - ...
+end
+
+if winos.version():ge("6.1") then
+    - ...
+end
+```
+
+In addition, it can also support the direct judgment of the windows version name. The mapping rules are as follows:
+
+```
+nt4 = "4.0"
+win2k = "5.0"
+winxp = "5.1"
+ws03 = "5.2"
+win6 = "6.0"
+vista = "6.0"
+ws08 = "6.0"
+longhorn = "6.0"
+win7 = "6.1"
+win8 = "6.2"
+winblue = "6.3"
+win81 = "6.3"
+win10 = "10.0"
+```
+
+#### winos.registry_keys
+
+- Get the list of registry builds
+
+Support through pattern matching, traverse to obtain the registry key path list, `*` is single-level path matching, `**` is recursive path matching.
+
+```lua
+local keypaths = winos.registry_keys("HKEY_LOCAL_MACHINE\\SOFTWARE\\*\\Windows NT\\*\\CurrentVersion\\AeDebug")
+for _, keypath in ipairs(keypaths) do
+    print(winos.registry_query(keypath .. ";Debugger"))
+end
+```
+
+#### winos.registry_values
+
+- Get a list of registry value names
+
+Support to obtain the value name list of the specified key path through pattern matching, and the string after the `;` is the specified key name pattern matching string.
+
+```lua
+local valuepaths = winos.registry_values("HKEY_LOCAL_MACHINE\\SOFTWARE\\xx\\AeDebug;Debug*")
+for _, valuepath in ipairs(valuepaths) do
+    print(winos.registry_query(valuepath))
+end
+```
+
+#### winos.registry_query
+
+- Get the registry value
+
+Get the value under the specified registry path, if the value name is not specified, then get the default value of the key path
+
+```lua
+local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug")
+local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger")
+```
+
+### macos
+
+The macOS system operation module is a built-in module, no need to use [import](#import) to import, you can directly call its interface in the script domain.
+
+| Interface                                       | Description                                   | Support version |
+| ----------------------------------------------- | --------------------------------------------- | --------        |
+| [macos.version](#macosversion)                  | Get macOS system version                      | >= 2.3.1        |
+
+#### macos.version
+
+- Get macOS system version
+
+The version returned is the semver semantic version object
+
+```lua
+if macos.version():ge("10.0") then
+    - ...
+end
+```
 
 ### io
 

@@ -14,7 +14,6 @@ end)
 
 | 接口                                            | 描述                                         | 可使用域                   | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------------------------- | -------- |
-| [val](#val)                                     | 获取内置变量的值                             | 脚本域                     | >= 2.1.5 |
 | [import](#import)                               | 导入扩展摸块                                 | 脚本域                     | >= 2.0.1 |
 | [inherit](#inherit)                             | 导入并继承基类模块                           | 脚本域                     | >= 2.0.1 |
 | [try-catch-finally](#try-catch-finally)         | 异常捕获                                     | 脚本域                     | >= 2.0.1 |
@@ -28,6 +27,8 @@ end)
 | [vformat](#vformat)                             | 格式化字符串，支持内置变量转义               | 脚本域                     | >= 2.0.1 |
 | [raise](#raise)                                 | 抛出异常中断程序                             | 脚本域                     | >= 2.0.1 |
 | [os](#os)                                       | 系统操作模块                                 | 部分只读操作描述域、脚本域 | >= 2.0.1 |
+| [winos](#winos)                                 | windows 系统操作模块                         | 部分只读操作描述域、脚本域 | >= 2.3.9 |
+| [macos](#macos)                                 | macOS 系统操作模块                           | 部分只读操作描述域、脚本域 | >= 2.3.9 |
 | [io](#io)                                       | 文件操作模块                                 | 脚本域                     | >= 2.0.1 |
 | [path](#path)                                   | 路径操作模块                                 | 描述域、脚本域             | >= 2.0.1 |
 | [table](#table)                                 | 数组和字典操作模块                           | 描述域、脚本域             | >= 2.0.1 |
@@ -62,26 +63,6 @@ target("test")
 
 -- 描述域
 ```
-
-### val
-
-#### 获取内置变量的值
-
-[内置变量](/zh-cn/manual/builtin_variables)可以通过此接口直接获取，而不需要再加`$()`的包裹，使用更加简单，例如：
-
-```lua
-print(val("host"))
-print(val("env PATH"))
-local s = val("shell echo hello")
-```
-
-而用[vformat](#vformat)就比较繁琐了：
-
-```lua
-local s = vformat("$(shell echo hello)")
-```
-
-不过`vformat`支持字符串参数格式化，更加强大， 所以应用场景不同。
 
 ### import
 
@@ -616,9 +597,7 @@ target("test")
 
 此模块也是lua的原生模块，xmake在其基础上进行了扩展，提供更多实用的接口。
 
-<p class="tip">
-os模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：`os.cp`, `os.rm`等
-</p>
+!> os模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：`os.cp`, `os.rm`等
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
@@ -889,10 +868,8 @@ os.run("echo hello %s!", "xmake")
 os.run("ls -l $(buildir)")
 ```
 
-<p class="warn">
-使用此接口执行shell命令，容易使构建跨平台性降低，对于`os.run("cp ..")`这种尽量使用`os.cp`代替。<br>
+!> 使用此接口执行shell命令，容易使构建跨平台性降低，对于`os.run("cp ..")`这种尽量使用`os.cp`代替。<br>
 如果必须使用此接口运行shell程序，请自行使用[config.plat](#config-plat)接口判断平台支持。
-</p>
 
 #### os.runv
 
@@ -1056,22 +1033,125 @@ print(os.filesize("/tmp/a"))
 
 跟[$(host)](#var-host)结果一致，例如我在`linux x86_64`上执行xmake进行构建，那么返回值是：`linux`
 
+### winos
+
+windows 系统操作模块，属于内置模块，无需使用[import](#import)导入，可直接脚本域调用其接口。
+
+| 接口                                            | 描述                                         | 支持版本 |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [winos.version](#winosversion)                  | 获取 windows 系统版本                        | >= 2.3.1 |
+| [winos.registry_keys](#winosregistry_keys)      | 获取注册表建列表                             | >= 2.5.1 |
+| [winos.registry_values](#winosregistry_values)  | 获取注册表值名列表                           | >= 2.5.1 |
+| [winos.registry_query](#winosregistry_query)    | 获取注册表建值                               | >= 2.3.1 |
+
+#### winos.version
+
+- 获取 windows 系统版本
+
+返回的版本是 semver 语义版本对象
+
+```lua
+if winos.version():ge("win7") then
+    -- ...
+end
+
+if winos.version():ge("6.1") then
+    -- ...
+end
+```
+
+并且，还可以支持对 windows 版本名的直接判断，映射规则如下：
+
+```
+
+nt4      = "4.0"
+win2k    = "5.0"
+winxp    = "5.1"
+ws03     = "5.2"
+win6     = "6.0"
+vista    = "6.0"
+ws08     = "6.0"
+longhorn = "6.0"
+win7     = "6.1"
+win8     = "6.2"
+winblue  = "6.3"
+win81    = "6.3"
+win10    = "10.0"
+```
+
+#### winos.registry_keys
+
+- 获取注册表建列表
+
+支持通过模式匹配的方式，遍历获取注册表键路径列表，`*` 为单级路径匹配，`**` 为递归路径匹配。
+
+```lua
+local keypaths = winos.registry_keys("HKEY_LOCAL_MACHINE\\SOFTWARE\\*\\Windows NT\\*\\CurrentVersion\\AeDebug")
+for _, keypath in ipairs(keypaths) do
+    print(winos.registry_query(keypath .. ";Debugger"))
+end
+```
+
+#### winos.registry_values
+
+- 获取注册表值名列表
+
+支持通过模式匹配的方式，获取指定键路径的值名列表，`;` 之后的就是指定的键名模式匹配字符串。
+
+```lua
+local valuepaths = winos.registry_values("HKEY_LOCAL_MACHINE\\SOFTWARE\\xx\\AeDebug;Debug*")
+for _, valuepath in ipairs(valuepaths) do
+    print(winos.registry_query(valuepath))
+end
+```
+
+#### winos.registry_query
+
+- 获取注册表建值
+
+获取指定注册表建路径下的值，如果没有指定值名，那么获取键路径默认值
+
+```lua
+local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug")
+local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger")
+```
+
+### macos
+
+macOS 系统操作模块，属于内置模块，无需使用[import](#import)导入，可直接脚本域调用其接口。
+
+| 接口                                            | 描述                                         | 支持版本 |
+| ----------------------------------------------- | -------------------------------------------- | -------- |
+| [macos.version](#macosversion)                  | 获取 macOS 系统版本                          | >= 2.3.1 |
+
+#### macos.version
+
+- 获取 macOS 系统版本
+
+返回的版本是 semver 语义版本对象
+
+```lua
+if macos.version():ge("10.0") then
+    -- ...
+end
+```
+
 ### io
 
 io操作模块，扩展了lua内置的io模块，提供更多易用的接口。
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
-| [io.open](#ioopen)                             | 打开文件用于读写                             | >= 2.0.1 |
-| [io.load](#ioload)                             | 从指定路径文件反序列化加载所有table内容      | >= 2.0.1 |
-| [io.save](#iosave)                             | 序列化保存所有table内容到指定路径文件        | >= 2.0.1 |
+| [io.open](#ioopen)                              | 打开文件用于读写                             | >= 2.0.1 |
+| [io.load](#ioload)                              | 从指定路径文件反序列化加载所有table内容      | >= 2.0.1 |
+| [io.save](#iosave)                              | 序列化保存所有table内容到指定路径文件        | >= 2.0.1 |
 | [io.readfile](#io.readfile)                     | 从指定路径文件读取所有内容                   | >= 2.1.3 |
 | [io.writefile](#io.writefile)                   | 写入所有内容到指定路径文件                   | >= 2.1.3 |
-| [io.gsub](#iogsub)                             | 全文替换指定路径文件的内容                   | >= 2.0.1 |
-| [io.tail](#iotail)                             | 读取和显示文件的尾部内容                     | >= 2.0.1 |
-| [io.cat](#iocat)                               | 读取和显示文件的所有内容                     | >= 2.0.1 |
-| [io.print](#ioprint)                           | 带换行格式化输出内容到文件                   | >= 2.0.1 |
-| [io.printf](#ioprintf)                         | 无换行格式化输出内容到文件                   | >= 2.0.1 |
+| [io.gsub](#iogsub)                              | 全文替换指定路径文件的内容                   | >= 2.0.1 |
+| [io.tail](#iotail)                              | 读取和显示文件的尾部内容                     | >= 2.0.1 |
+| [io.cat](#iocat)                                | 读取和显示文件的所有内容                     | >= 2.0.1 |
+| [io.print](#ioprint)                            | 带换行格式化输出内容到文件                   | >= 2.0.1 |
+| [io.printf](#ioprintf)                          | 无换行格式化输出内容到文件                   | >= 2.0.1 |
 
 #### io.open
 

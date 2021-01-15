@@ -109,12 +109,6 @@ end)
 </thead>
 <tbody>
 <tr>
-<td><a href="#val">val</a></td>
-<td>获取内置变量的值</td>
-<td>脚本域</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
 <td><a href="#import">import</a></td>
 <td>导入扩展摸块</td>
 <td>脚本域</td>
@@ -193,6 +187,18 @@ end)
 <td>>= 2.0.1</td>
 </tr>
 <tr>
+<td><a href="#winos">winos</a></td>
+<td>windows 系统操作模块</td>
+<td>部分只读操作描述域、脚本域</td>
+<td>>= 2.3.9</td>
+</tr>
+<tr>
+<td><a href="#macos">macos</a></td>
+<td>macOS 系统操作模块</td>
+<td>部分只读操作描述域、脚本域</td>
+<td>>= 2.3.9</td>
+</tr>
+<tr>
 <td><a href="#io">io</a></td>
 <td>文件操作模块</td>
 <td>脚本域</td>
@@ -252,17 +258,6 @@ target("test")
 
 -- 描述域
 </code></pre>
-<h3 id="val">val</h3>
-<h4 id="">获取内置变量的值</h4>
-<p><a href="/mirror/zh-cn/manual/builtin_variables.html">内置变量</a>可以通过此接口直接获取，而不需要再加<code>$()</code>的包裹，使用更加简单，例如：</p>
-<pre><code class="lang-lua">print(val("host"))
-print(val("env PATH"))
-local s = val("shell echo hello")
-</code></pre>
-<p>而用<a href="#vformat">vformat</a>就比较繁琐了：</p>
-<pre><code class="lang-lua">local s = vformat("$(shell echo hello)")
-</code></pre>
-<p>不过<code>vformat</code>支持字符串参数格式化，更加强大， 所以应用场景不同。</p>
 <h3 id="import">import</h3>
 <h4 id="">导入扩展摸块</h4>
 <p>import的主要用于导入xmake的扩展类库以及一些自定义的类库模块，一般用于：</p>
@@ -625,9 +620,7 @@ $ xmake --version
 <h3 id="os">os</h3>
 <p>系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
 <p>此模块也是lua的原生模块，xmake在其基础上进行了扩展，提供更多实用的接口。</p>
-<p><p class="tip"><br>os模块里面只有部分readonly接口（例如：<code>os.getenv</code>, <code>os.arch</code>）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：<code>os.cp</code>, <code>os.rm</code>等<br></p>
-
-</p>
+<p>!> os模块里面只有部分readonly接口（例如：<code>os.getenv</code>, <code>os.arch</code>）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：<code>os.cp</code>, <code>os.rm</code>等</p>
 <table>
 <thead>
 <tr>
@@ -971,9 +964,7 @@ os.run("echo hello %s!", "xmake")
 -- 列举构建目录文件
 os.run("ls -l $(buildir)")
 </code></pre>
-<p><p class="warn"><br>使用此接口执行shell命令，容易使构建跨平台性降低，对于<code>os.run("cp ..")</code>这种尽量使用<code>os.cp</code>代替。<br><br>如果必须使用此接口运行shell程序，请自行使用<a href="#config-plat">config.plat</a>接口判断平台支持。<br></p>
-
-</p>
+<p>!> 使用此接口执行shell命令，容易使构建跨平台性降低，对于<code>os.run("cp ..")</code>这种尽量使用<code>os.cp</code>代替。<br><br>如果必须使用此接口运行shell程序，请自行使用<a href="#config-plat">config.plat</a>接口判断平台支持。</p>
 <h4 id="osrunv">os.runv</h4>
 <ul>
 <li>安静运行原生shell命令，带参数列表</li>
@@ -1087,6 +1078,122 @@ os.run("ls -l $(buildir)")
 <li>获取当前主机的操作系统</li>
 </ul>
 <p>跟<a href="#var-host">$(host)</a>结果一致，例如我在<code>linux x86_64</code>上执行xmake进行构建，那么返回值是：<code>linux</code></p>
+<h3 id="winos">winos</h3>
+<p>windows 系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#winosversion">winos.version</a></td>
+<td>获取 windows 系统版本</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#winosregistry_keys">winos.registry_keys</a></td>
+<td>获取注册表建列表</td>
+<td>>= 2.5.1</td>
+</tr>
+<tr>
+<td><a href="#winosregistry_values">winos.registry_values</a></td>
+<td>获取注册表值名列表</td>
+<td>>= 2.5.1</td>
+</tr>
+<tr>
+<td><a href="#winosregistry_query">winos.registry_query</a></td>
+<td>获取注册表建值</td>
+<td>>= 2.3.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="winosversion">winos.version</h4>
+<ul>
+<li>获取 windows 系统版本</li>
+</ul>
+<p>返回的版本是 semver 语义版本对象</p>
+<pre><code class="lang-lua">if winos.version():ge("win7") then
+    -- ...
+end
+
+if winos.version():ge("6.1") then
+    -- ...
+end
+</code></pre>
+<p>并且，还可以支持对 windows 版本名的直接判断，映射规则如下：</p>
+<pre><code>
+nt4      = "4.0"
+win2k    = "5.0"
+winxp    = "5.1"
+ws03     = "5.2"
+win6     = "6.0"
+vista    = "6.0"
+ws08     = "6.0"
+longhorn = "6.0"
+win7     = "6.1"
+win8     = "6.2"
+winblue  = "6.3"
+win81    = "6.3"
+win10    = "10.0"
+</code></pre><h4 id="winosregistry_keys">winos.registry_keys</h4>
+<ul>
+<li>获取注册表建列表</li>
+</ul>
+<p>支持通过模式匹配的方式，遍历获取注册表键路径列表，<code>*</code> 为单级路径匹配，<code>**</code> 为递归路径匹配。</p>
+<pre><code class="lang-lua">local keypaths = winos.registry_keys("HKEY_LOCAL_MACHINE\\SOFTWARE\\*\\Windows NT\\*\\CurrentVersion\\AeDebug")
+for _, keypath in ipairs(keypaths) do
+    print(winos.registry_query(keypath .. ";Debugger"))
+end
+</code></pre>
+<h4 id="winosregistry_values">winos.registry_values</h4>
+<ul>
+<li>获取注册表值名列表</li>
+</ul>
+<p>支持通过模式匹配的方式，获取指定键路径的值名列表，<code>;</code> 之后的就是指定的键名模式匹配字符串。</p>
+<pre><code class="lang-lua">local valuepaths = winos.registry_values("HKEY_LOCAL_MACHINE\\SOFTWARE\\xx\\AeDebug;Debug*")
+for _, valuepath in ipairs(valuepaths) do
+    print(winos.registry_query(valuepath))
+end
+</code></pre>
+<h4 id="winosregistry_query">winos.registry_query</h4>
+<ul>
+<li>获取注册表建值</li>
+</ul>
+<p>获取指定注册表建路径下的值，如果没有指定值名，那么获取键路径默认值</p>
+<pre><code class="lang-lua">local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug")
+local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger")
+</code></pre>
+<h3 id="macos">macos</h3>
+<p>macOS 系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#macosversion">macos.version</a></td>
+<td>获取 macOS 系统版本</td>
+<td>>= 2.3.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="macosversion">macos.version</h4>
+<ul>
+<li>获取 macOS 系统版本</li>
+</ul>
+<p>返回的版本是 semver 语义版本对象</p>
+<pre><code class="lang-lua">if macos.version():ge("10.0") then
+    -- ...
+end
+</code></pre>
 <h3 id="io">io</h3>
 <p>io操作模块，扩展了lua内置的io模块，提供更多易用的接口。</p>
 <table>
