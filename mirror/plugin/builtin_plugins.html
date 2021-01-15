@@ -142,6 +142,7 @@ target("test")
      set_kind("binary")
      add_files("src/*.c")
 </code></pre>
+<p>In addition, we can group each target through the <code>set_group</code> interface, so that the generated vs project can be grouped according to the specified structure. For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1026">issue 1026</a></p>
 <h4 id="usingvsbuiltincompilationmechanism">Using vs built-in compilation mechanism</h4>
 <p>!> It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.</p>
 <pre><code class="lang-bash">$ xmake project -k [vs2008|vs2013|vs2015|..]
@@ -158,6 +159,7 @@ target("test")
 <pre><code class="lang-bash">$ xmake project -k vs2017
 </code></pre>
 <p>The effect is same.</p>
+<p>In addition, we can group each target through the <code>set_group</code> interface, so that the generated vs project can be grouped according to the specified structure. For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1026">issue 1026</a></p>
 <h2 id="runthecustomluascript">Run the Custom Lua Script</h2>
 <h3 id="runthegivenscript">Run the given script</h3>
 <p>Write a simple lua script:</p>

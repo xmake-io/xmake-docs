@@ -148,6 +148,7 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 </code></pre>
+<p>另外，我们可以通过 <code>set_group</code> 接口对每个 target 设置分组，使得生成的 vs 工程可以按指定结构进行分组。更多详情见：<a href="https://github.com/xmake-io/xmake/issues/1026">issue 1026</a></p>
 <h4 id="vs">使用vs内置编译机制</h4>
 <p>!> 建议尽量使用上文提到的v2.2.8之后提供的新版的vs生成插件，支持更加完善，此处的生成方式不支持xmake的rules，以及对qt等工程的生成。</p>
 <pre><code class="lang-console">$ xmake project -k [vs2008|vs2013|vs2015|..]
@@ -160,6 +161,7 @@ target("test")
 <pre><code class="lang-lua">-- 配置当前的工程，支持哪些编译模式
 add_rules("mode.debug", "mode.release")
 </code></pre>
+<p>另外，我们可以通过 <code>set_group</code> 接口对每个 target 设置分组，使得生成的 vs 工程可以按指定结构进行分组。更多详情见：<a href="https://github.com/xmake-io/xmake/issues/1026">issue 1026</a></p>
 <h2 id="lua">运行自定义lua脚本</h2>
 <p>这个跟宏脚本类似，只是省去了导入导出操作，直接指定lua脚本来加载运行，这对于想要快速测试一些接口模块，验证自己的某些思路，都是一个不错的方式。</p>
 <h3 id="">运行指定的脚本文件</h3>

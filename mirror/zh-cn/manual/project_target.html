@@ -627,6 +627,11 @@ target("test2")
 <td>设置编译目标依赖的运行时库</td>
 <td>>= 2.5.1</td>
 </tr>
+<tr>
+<td><a href="#targetset_group">set_group</a></td>
+<td>设置目标分组</td>
+<td>>= 2.5.1</td>
+</tr>
 </tbody>
 </table>
 <h3 id="target">target</h3>
@@ -2669,6 +2674,43 @@ target("test")
 <p>当然，我们也可以通过 <code>add_requires("xx", {configs = {vs_runtime = "MD"}})</code> 对特定包修改 vs 运行时库。</p>
 <p>我们也可以通过 <code>xmake f --vs_runtime=MD</code> 通过参数配置来全局切换它。</p>
 <p>与此 api 相关的 issue：<a href="https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681">#1071</a></p>
+<h3 id="targetset_group">target:set_group</h3>
+<h4 id="">设置目标分组</h4>
+<p>目前此接口仅用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。</p>
+<p>比如对于下面的分组配置：</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("test1")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_group("group1")
+
+target("test2")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_group("group1")
+
+target("test3")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_group("group1/group2")
+
+target("test4")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_group("group3/group4")
+
+target("test5")
+    set_kind("binary")
+    add_files("src/*.cpp")
+
+target("test6")
+    set_kind("binary")
+    add_files("src/*.cpp")
+</code></pre>
+<p>生成的 vs 工程目录结构效果如下：</p>
+<p><img src="assets/img/manual/set_group.png" alt=""></p>
+<p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/1026">#1026</a></p>
 </article>
 </body>
 </html>

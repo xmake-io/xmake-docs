@@ -98,6 +98,8 @@ target("test")
      add_files("src/*.c")
 ```
 
+In addition, we can group each target through the `set_group` interface, so that the generated vs project can be grouped according to the specified structure. For more details, please see: [issue 1026](https://github.com/xmake-io/xmake/issues/1026)
+
 #### Using vs built-in compilation mechanism
 
 !> It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.
@@ -129,6 +131,8 @@ $ xmake project -k vs2017
 ```
 
 The effect is same.
+
+In addition, we can group each target through the `set_group` interface, so that the generated vs project can be grouped according to the specified structure. For more details, please see: [issue 1026](https://github.com/xmake-io/xmake/issues/1026)
 
 ## Run the Custom Lua Script
 

@@ -127,6 +127,7 @@ target("test2")
 | [set_plat](#targetset_plat)                     | 设置指定目标的编译平台               | >= 2.3.5 |
 | [set_arch](#targetset_arch)                     | 设置指定目标的编译架构               | >= 2.3.5 |
 | [set_runtimes](#targetset_runtimes)             | 设置编译目标依赖的运行时库           | >= 2.5.1 |
+| [set_group](#targetset_group)                   | 设置目标分组                         | >= 2.5.1 |
 
 ### target
 
@@ -2598,3 +2599,49 @@ target("test")
 我们也可以通过 `xmake f --vs_runtime=MD` 通过参数配置来全局切换它。
 
 与此 api 相关的 issue：[#1071](https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681)
+
+### target:set_group
+
+#### 设置目标分组
+
+目前此接口仅用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。
+
+比如对于下面的分组配置：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test1")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_group("group1")
+
+target("test2")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_group("group1")
+
+target("test3")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_group("group1/group2")
+
+target("test4")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_group("group3/group4")
+
+target("test5")
+    set_kind("binary")
+    add_files("src/*.cpp")
+
+target("test6")
+    set_kind("binary")
+    add_files("src/*.cpp")
+```
+
+生成的 vs 工程目录结构效果如下：
+
+![](assets/img/manual/set_group.png)
+
+更多详情见：[#1026](https://github.com/xmake-io/xmake/issues/1026)

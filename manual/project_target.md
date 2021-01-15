@@ -126,6 +126,7 @@ target("test2")
 | [set_plat](#targetset_plat)                     | Set the compilation platform for the specified target     | >= 2.3.5                    |
 | [set_arch](#targetset_arch)                     | Set the compilation architecture for the specified target | >= 2.3.5                    |
 | [set_runtimes](#targetset_runtimes)             | Set the runtime library of the compilation target         | >= 2.5.1                    |
+| [set_group](#targetset_group)                   | Set target group                                          | >= 2.5.1                    |
 
 ### target
 
@@ -2595,3 +2596,49 @@ Of course, we can also use `add_requires("xx", {configs = {vs_runtime = "MD"}})`
 We can also use `xmake f --vs_runtime=MD` to switch it globally through parameter configuration.
 
 Issues related to this api: [#1071](https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681)
+
+### target:set_group
+
+#### Set target group
+
+At present, this interface is only used to generate the vs/vsxmake project. The sub-project directory tree of the vs project is displayed in groups according to the specified structure, but grouping support may be added to other modules in the future.
+
+For example, for the following grouping configuration:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test1")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     set_group("group1")
+
+target("test2")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     set_group("group1")
+
+target("test3")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     set_group("group1/group2")
+
+target("test4")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     set_group("group3/group4")
+
+target("test5")
+     set_kind("binary")
+     add_files("src/*.cpp")
+
+target("test6")
+     set_kind("binary")
+     add_files("src/*.cpp")
+```
+
+The effect of the generated VS project directory structure is as follows:
+
+![](assets/img/manual/set_group.png)
+
+For more details, please see: [#1026](https://github.com/xmake-io/xmake/issues/1026)

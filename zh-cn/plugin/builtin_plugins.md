@@ -107,6 +107,8 @@ target("test")
     add_files("src/*.c")
 ```
 
+另外，我们可以通过 `set_group` 接口对每个 target 设置分组，使得生成的 vs 工程可以按指定结构进行分组。更多详情见：[issue 1026](https://github.com/xmake-io/xmake/issues/1026)
+
 #### 使用vs内置编译机制
 
 !> 建议尽量使用上文提到的v2.2.8之后提供的新版的vs生成插件，支持更加完善，此处的生成方式不支持xmake的rules，以及对qt等工程的生成。
@@ -129,6 +131,8 @@ $ xmake project -k vs2017 -m "debug,release"
 -- 配置当前的工程，支持哪些编译模式
 add_rules("mode.debug", "mode.release")
 ```
+
+另外，我们可以通过 `set_group` 接口对每个 target 设置分组，使得生成的 vs 工程可以按指定结构进行分组。更多详情见：[issue 1026](https://github.com/xmake-io/xmake/issues/1026)
 
 ## 运行自定义lua脚本
 
