@@ -449,7 +449,7 @@ add_requireconfs("zlib", {configs = {shared = true}})
 add_requires("zlib", {configs = {shared = true}})
 ```
 
-#### 设置通用的默认配置
+##### 设置通用的默认配置
 
 上面的用法，我们还看不出有什么实际用处，我们可以先再看下面的例子：
 
@@ -479,7 +479,7 @@ add_requires("zlib 1.2.11")
 add_requireconfs("zlib", {override = true, version = "1.2.10"})
 ```
 
-#### 改写包依赖配置
+##### 改写包依赖配置
 
 其实 `add_requireconfs` 最大的用处是可以让用户改写安装包的特定依赖包的配置。
 
@@ -509,7 +509,7 @@ add_requires("libpng")
 add_requireconfs("libpng.zlib", {version = "1.2.10"})
 ```
 
-#### 级联依赖的模式匹配
+##### 级联依赖的模式匹配
 
 如果一个包的依赖非常多，且依赖层次也很深，怎么办呢，比如 libwebp 这个包，它的依赖有：
 

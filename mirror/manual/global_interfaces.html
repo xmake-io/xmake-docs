@@ -436,7 +436,7 @@ add_requireconfs("zlib", {configs = {shared = true}})
 <p>It is equivalent to</p>
 <pre><code class="lang-lua">add_requires("zlib", {configs = {shared = true}})
 </code></pre>
-<h4 id="setgeneraldefaultconfiguration">Set general default configuration</h4>
+<h5 id="setgeneraldefaultconfiguration">Set general default configuration</h5>
 <p>The above usage, we still don&#39;t see any practical use, we can look at the following example first:</p>
 <pre><code class="lang-lua">add_requireconfs("*", {configs = {shared = true}})
 add_requires("zlib")
@@ -454,7 +454,7 @@ add_requires("libcurl", {configs = {shared = false}})
 <pre><code class="lang-lua">add_requires("zlib 1.2.11")
 add_requireconfs("zlib", {override = true, version = "1.2.10"})
 </code></pre>
-<h4 id="rewritepackagedependencyconfiguration">Rewrite package dependency configuration</h4>
+<h5 id="rewritepackagedependencyconfiguration">Rewrite package dependency configuration</h5>
 <p>In fact, the biggest use of <code>add_requireconfs</code> is to allow users to rewrite the configuration of specific dependent packages of the installation package.</p>
 <p>What does it mean? For example, our project integrates the package libpng and uses a dynamic library version, but the zlib library that libpng depends on is actually a static library version.</p>
 <pre><code class="lang-lua">add_requires("libpng", {configs = {shared = true}})
@@ -469,7 +469,7 @@ add_requireconfs("libpng.zlib", {configs = {shared = true}})
 <pre><code class="lang-lua">add_requires("libpng")
 add_requireconfs("libpng.zlib", {version = "1.2.10"})
 </code></pre>
-<h4 id="patternmatchingforcascadingdependencies">Pattern matching for cascading dependencies</h4>
+<h5 id="patternmatchingforcascadingdependencies">Pattern matching for cascading dependencies</h5>
 <p>If a package has a lot of dependencies, and the dependency level is also very deep, what to do, for example, the package libwebp, its dependencies are:</p>
 <pre><code>libwebp
   - libpng

@@ -439,7 +439,7 @@ add_requireconfs("zlib", {configs = {shared = true}})
 <p>它等价于</p>
 <pre><code class="lang-lua">add_requires("zlib", {configs = {shared = true}})
 </code></pre>
-<h4 id="">设置通用的默认配置</h4>
+<h5 id="">设置通用的默认配置</h5>
 <p>上面的用法，我们还看不出有什么实际用处，我们可以先再看下面的例子：</p>
 <pre><code class="lang-lua">add_requireconfs("*", {configs = {shared = true}})
 add_requires("zlib")
@@ -457,7 +457,7 @@ add_requires("libcurl", {configs = {shared = false}})
 <pre><code class="lang-lua">add_requires("zlib 1.2.11")
 add_requireconfs("zlib", {override = true, version = "1.2.10"})
 </code></pre>
-<h4 id="">改写包依赖配置</h4>
+<h5 id="">改写包依赖配置</h5>
 <p>其实 <code>add_requireconfs</code> 最大的用处是可以让用户改写安装包的特定依赖包的配置。</p>
 <p>什么意思呢，比如我们项目中集成使用 libpng 这个包，并且使用了动态库版本，但是 libpng 内部依赖的 zlib 库其实还是静态库版本。</p>
 <pre><code class="lang-lua">add_requires("libpng", {configs = {shared = true}})
@@ -472,7 +472,7 @@ add_requireconfs("libpng.zlib", {configs = {shared = true}})
 <pre><code class="lang-lua">add_requires("libpng")
 add_requireconfs("libpng.zlib", {version = "1.2.10"})
 </code></pre>
-<h4 id="">级联依赖的模式匹配</h4>
+<h5 id="">级联依赖的模式匹配</h5>
 <p>如果一个包的依赖非常多，且依赖层次也很深，怎么办呢，比如 libwebp 这个包，它的依赖有：</p>
 <pre><code>libwebp
   - libpng

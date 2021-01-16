@@ -442,7 +442,7 @@ It is equivalent to
 add_requires("zlib", {configs = {shared = true}})
 ```
 
-#### Set general default configuration
+##### Set general default configuration
 
 The above usage, we still don't see any practical use, we can look at the following example first:
 
@@ -472,7 +472,7 @@ add_requires("zlib 1.2.11")
 add_requireconfs("zlib", {override = true, version = "1.2.10"})
 ```
 
-#### Rewrite package dependency configuration
+##### Rewrite package dependency configuration
 
 In fact, the biggest use of `add_requireconfs` is to allow users to rewrite the configuration of specific dependent packages of the installation package.
 
@@ -502,7 +502,7 @@ add_requires("libpng")
 add_requireconfs("libpng.zlib", {version = "1.2.10"})
 ```
 
-#### Pattern matching for cascading dependencies
+##### Pattern matching for cascading dependencies
 
 If a package has a lot of dependencies, and the dependency level is also very deep, what to do, for example, the package libwebp, its dependencies are:
 
