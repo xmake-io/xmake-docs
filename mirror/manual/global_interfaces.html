@@ -238,20 +238,6 @@ ${define HAS_CONSEXPR_AND_STATIC_ASSERT}
 /* #undef HAS_CONSTEXPR */
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 </code></pre>
-<h3 id="set_modes">set_modes</h3>
-<h4 id="setprojectcompilationmodes">Set project compilation modes</h4>
-<p>This is an optional api, just to make it easy for plugins to get mode configuration information.</p>
-<pre><code class="lang-lua">set_modes("debug", "release")
-</code></pre>
-<p>If you set this configuration, you need not set them manually when generating vs201x project.</p>
-<pre><code class="lang-bash">$ xmake project -k vs2017
-</code></pre>
-<p>Otherwise, you need to run:</p>
-<pre><code class="lang-bash">$ xmake project -k vs2017 -m "debug,release"
-</code></pre>
-<p><p class="tip"><br>If you do not set this configuration, <a href="#is_mode">is_mode</a> can also be used normally.<br></p>
-
-</p>
 <h3 id="set_project">set_project</h3>
 <h4 id="setprojectname">Set project name</h4>
 <p>Set the whole project name, we can set it at the beginning of <code>xmake.lua</code>.</p>

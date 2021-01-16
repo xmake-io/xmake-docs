@@ -119,32 +119,6 @@ config.h
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 ```
 
-### set_modes
-
-#### Set project compilation modes
-
-This is an optional api, just to make it easy for plugins to get mode configuration information.
-
-```lua
-set_modes("debug", "release")
-```
-
-If you set this configuration, you need not set them manually when generating vs201x project.
-
-```bash
-$ xmake project -k vs2017
-```
-
-Otherwise, you need to run:
-
-```bash
-$ xmake project -k vs2017 -m "debug,release"
-```
-
-<p class="tip">
-If you do not set this configuration, [is_mode](#is_mode) can also be used normally.
-</p>
-
 ### set_project
 
 #### Set project name

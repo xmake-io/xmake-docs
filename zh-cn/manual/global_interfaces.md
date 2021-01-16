@@ -119,30 +119,6 @@ config.h
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 ```
 
-### set_modes
-
-#### 设置支持的编译模式
-
-这个是可选接口，一般情况下不需要设置，目前仅用于对工程增加更加细致的描述信息，方便vs工程的多模式生成，以及其他xmake插件中获取模式信息。
-
-例如：
-
-```lua
-set_modes("debug", "release")
-```
-
-如果设置了这个，xmake就知道当前工程支持哪些编译模式，这样生成vs工程文件的时候，只需要：
-
-```bash
-$ xmake project -k vs2017
-```
-
-不再需要额外手动指定需要的编译模式了，此外其他一些想要获取工程信息的插件，也许也会需要这些设置信息。
-
-<p class="tip">
-当然，对于[is_mode](#is_mode)接口，`set_modes`不是必须的，就算不设置，也是可以通过`is_mode`正常判断当前的编译模式。
-</p>
-
 ### set_project
 
 #### 设置工程名

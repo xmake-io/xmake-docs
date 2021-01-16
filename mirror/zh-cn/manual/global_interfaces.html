@@ -238,19 +238,6 @@ ${define HAS_CONSEXPR_AND_STATIC_ASSERT}
 /* #undef HAS_CONSTEXPR */
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 </code></pre>
-<h3 id="set_modes">set_modes</h3>
-<h4 id="">设置支持的编译模式</h4>
-<p>这个是可选接口，一般情况下不需要设置，目前仅用于对工程增加更加细致的描述信息，方便vs工程的多模式生成，以及其他xmake插件中获取模式信息。</p>
-<p>例如：</p>
-<pre><code class="lang-lua">set_modes("debug", "release")
-</code></pre>
-<p>如果设置了这个，xmake就知道当前工程支持哪些编译模式，这样生成vs工程文件的时候，只需要：</p>
-<pre><code class="lang-bash">$ xmake project -k vs2017
-</code></pre>
-<p>不再需要额外手动指定需要的编译模式了，此外其他一些想要获取工程信息的插件，也许也会需要这些设置信息。</p>
-<p><p class="tip"><br>当然，对于<a href="#is_mode">is_mode</a>接口，<code>set_modes</code>不是必须的，就算不设置，也是可以通过<code>is_mode</code>正常判断当前的编译模式。<br></p>
-
-</p>
 <h3 id="set_project">set_project</h3>
 <h4 id="">设置工程名</h4>
 <p>设置工程名，在doxygen自动文档生成插件、工程文件生成插件中会用到，一般设置在xmake.lua的最开头，当然放在其他地方也是可以的</p>
