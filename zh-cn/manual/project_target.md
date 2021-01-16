@@ -2625,7 +2625,7 @@ target("test")
 
 #### 设置目标分组
 
-目前此接口仅用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。
+目前此接口目前仅用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。
 
 比如对于下面的分组配置：
 
@@ -2664,5 +2664,7 @@ target("test6")
 生成的 vs 工程目录结构效果如下：
 
 ![](assets/img/manual/set_group.png)
+
+其中 `set_group("group1/group2")` 可以将 target 设置到二级分组中去。
 
 更多详情见：[#1026](https://github.com/xmake-io/xmake/issues/1026)

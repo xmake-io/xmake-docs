@@ -451,7 +451,18 @@ add_requires("zlib", {configs = {shared = true}})
 
 ##### 设置通用的默认配置
 
-上面的用法，我们还看不出有什么实际用处，我们可以先再看下面的例子：
+
+上面的用法，我们还看不出有什么实际用处，但如果依赖多了就能看出效果了，比如下面这样：
+
+```lua
+add_requires("zlib", {configs = {shared = true}})
+add_requires("pcre", {configs = {shared = true}})
+add_requires("libpng", {configs = {shared = true}})
+add_requires("libwebp", {configs = {shared = true}})
+add_requires("libcurl", {configs = {shared = false}})
+```
+
+是不是非常繁琐，如果我们用上 `add_requireconfs` 来设置默认配置，就可以极大的简化成下面的配置：
 
 ```lua
 add_requireconfs("*", {configs = {shared = true}})

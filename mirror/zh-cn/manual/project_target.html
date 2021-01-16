@@ -2688,7 +2688,7 @@ target("test")
 <p>与此 api 相关的 issue：<a href="https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681">#1071</a></p>
 <h3 id="targetset_group">target:set_group</h3>
 <h4 id="">设置目标分组</h4>
-<p>目前此接口仅用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。</p>
+<p>目前此接口目前仅用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。</p>
 <p>比如对于下面的分组配置：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 
@@ -2722,6 +2722,7 @@ target("test6")
 </code></pre>
 <p>生成的 vs 工程目录结构效果如下：</p>
 <p><img src="assets/img/manual/set_group.png" alt=""></p>
+<p>其中 <code>set_group("group1/group2")</code> 可以将 target 设置到二级分组中去。</p>
 <p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/1026">#1026</a></p>
 </article>
 </body>

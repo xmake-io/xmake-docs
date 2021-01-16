@@ -440,7 +440,14 @@ add_requireconfs("zlib", {configs = {shared = true}})
 <pre><code class="lang-lua">add_requires("zlib", {configs = {shared = true}})
 </code></pre>
 <h5 id="">设置通用的默认配置</h5>
-<p>上面的用法，我们还看不出有什么实际用处，我们可以先再看下面的例子：</p>
+<p>上面的用法，我们还看不出有什么实际用处，但如果依赖多了就能看出效果了，比如下面这样：</p>
+<pre><code class="lang-lua">add_requires("zlib", {configs = {shared = true}})
+add_requires("pcre", {configs = {shared = true}})
+add_requires("libpng", {configs = {shared = true}})
+add_requires("libwebp", {configs = {shared = true}})
+add_requires("libcurl", {configs = {shared = false}})
+</code></pre>
+<p>是不是非常繁琐，如果我们用上 <code>add_requireconfs</code> 来设置默认配置，就可以极大的简化成下面的配置：</p>
 <pre><code class="lang-lua">add_requireconfs("*", {configs = {shared = true}})
 add_requires("zlib")
 add_requires("pcre")
