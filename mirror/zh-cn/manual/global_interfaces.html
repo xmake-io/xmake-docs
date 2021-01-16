@@ -404,8 +404,8 @@ target("test")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 </code></pre>
 <p>添加conan的依赖包：</p>
-<pre><code class="lang-lua">add_requires("CONAN::zlib/1.2.11@conan/stable", {alias = "zlib", debug = true})
-add_requires("CONAN::OpenSSL/1.0.2n@conan/stable", {alias = "openssl",
+<pre><code class="lang-lua">add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
+add_requires("conan::openssl/1.1.1g", {alias = "openssl",
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
@@ -419,12 +419,12 @@ checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
-  -> CONAN::zlib/1.2.11@conan/stable  (debug)
-  -> CONAN::OpenSSL/1.0.2n@conan/stable
+  -> conan::zlib/1.2.11  (debug)
+  -> conan::openssl/1.1.1g
 please input: y (y/n)
 
-  => installing CONAN::zlib/1.2.11@conan/stable .. ok
-  => installing CONAN::OpenSSL/1.0.2n@conan/stable .. ok
+  => installing conan::zlib/1.2.11 .. ok
+  => installing conan::openssl/1.1.1g .. ok
 
 [  0%]: ccache compiling.release src/main.c
 [100%]: linking.release test
@@ -440,6 +440,71 @@ target("xmake-test")
     add_files("clib/bytes/*.c")
     add_files("src/*.c")
     add_packages("bytes")
+</code></pre>
+<h3 id="add_requireconfs">add_requireconfs</h3>
+<h4 id="">设置指定依赖包的配置</h4>
+<p>这是 v2.5.1 之后的版本新增的接口，我们可以用它来对 <code>add_requires()</code> 定义的包和它的依赖包的配置进行扩充和改写，它有下面几种用法。</p>
+<h5 id="">扩充指定包的配置</h5>
+<p>这是基本用法，比如我们已经通过 <code>add_requires("zlib")</code> 声明了一个包，想要在后面对这个 zlib 的配置进行扩展，改成动态库编译，可以通过下面的方式配置。</p>
+<pre><code class="lang-lua">add_requires("zlib")
+add_requireconfs("zlib", {configs = {shared = true}})
+</code></pre>
+<p>它等价于</p>
+<pre><code class="lang-lua">add_requires("zlib", {configs = {shared = true}})
+</code></pre>
+<h4 id="">设置通用的默认配置</h4>
+<p>上面的用法，我们还看不出有什么实际用处，我们可以先再看下面的例子：</p>
+<pre><code class="lang-lua">add_requireconfs("*", {configs = {shared = true}})
+add_requires("zlib")
+add_requires("pcre")
+add_requires("libpng")
+add_requires("libwebp")
+add_requires("libcurl", {configs = {shared = false}})
+</code></pre>
+<p>上面的配置，我们通过 <code>add_requireconfs("*", {configs = {shared = true}})</code> 使用模式匹配的方式，设置所有的依赖包默认走动态库编译安装。</p>
+<p>但是，我们又通过 <code>add_requires("libcurl", {configs = {shared = false}})</code> 将 libcurl 进行了特殊配置，强制走静态库编译安装。</p>
+<p>最终的配置结果为：zlib/pcre/libpng/libwebp 是 shared 库，libcurl 是静态库。</p>
+<p>我们通过模式匹配的方式，可以将一些每个包的常用配置都放置到统一的 <code>add_requireconfs</code> 中去预先配置好，极大简化每个 <code>add_requires</code> 的定义。</p>
+<p>!> 默认情况下，对于相同的配置，xmake 会优先使用 add_requires 中的配置，而不是 add_requireconfs。</p>
+<p>如果 <code>add_requires("zlib 1.2.11")</code> 中设置了版本，就会优先使用 add_requires 的配置，完全忽略 add_requireconfs 里面的版本配置，当然我们也可以通过 override 来完全重写 <code>add_requires</code> 中指定的版本。</p>
+<pre><code class="lang-lua">add_requires("zlib 1.2.11")
+add_requireconfs("zlib", {override = true, version = "1.2.10"})
+</code></pre>
+<h4 id="">改写包依赖配置</h4>
+<p>其实 <code>add_requireconfs</code> 最大的用处是可以让用户改写安装包的特定依赖包的配置。</p>
+<p>什么意思呢，比如我们项目中集成使用 libpng 这个包，并且使用了动态库版本，但是 libpng 内部依赖的 zlib 库其实还是静态库版本。</p>
+<pre><code class="lang-lua">add_requires("libpng", {configs = {shared = true}})
+</code></pre>
+<p>那如果我们想让 libpng 依赖的 zlib 包也改成动态库编译，应该怎么配置呢？这就需要 <code>add_requireconfs</code> 了。</p>
+<pre><code class="lang-lua">add_requires("libpng", {configs = {shared = true}})
+add_requireconfs("libpng.zlib", {configs = {shared = true}})
+</code></pre>
+<p>通过 <code>libpng.zlib</code> 依赖路径的写法，指定内部某个依赖，改写内部依赖配置。</p>
+<p>如果依赖路径很深，比如 <code>foo -> bar -> xyz</code> 的依赖链，我们可以写成：<code>foo.bar.xyz</code></p>
+<p>我们也可以改写 libpng 依赖的内部 zlib 库版本：</p>
+<pre><code class="lang-lua">add_requires("libpng")
+add_requireconfs("libpng.zlib", {version = "1.2.10"})
+</code></pre>
+<h4 id="">级联依赖的模式匹配</h4>
+<p>如果一个包的依赖非常多，且依赖层次也很深，怎么办呢，比如 libwebp 这个包，它的依赖有：</p>
+<pre><code>libwebp
+  - libpng
+    - zlib
+    - cmake
+  - libjpeg
+  - libtiff
+    - zlib
+  - giflib
+  - cmake
+</code></pre><p>如果我想改写 libwebp 里面的所有的依赖库都加上特定配置，那么挨个配置，就会非常繁琐，这个时候就需要 <code>add_requireconfs()</code> 的递归依赖模式匹配来支持了。</p>
+<pre><code class="lang-lua">add_requires("libwebp")
+add_requireconfs("libwebp.**|cmake", {configs = {cxflags = "-DTEST"}})
+</code></pre>
+<p>上面的配置，我们将 libwebp 中所以的库依赖就额外加上了 <code>-DTEST</code> 来编译，但是 cmake 依赖属于构建工具依赖，我们可以通过 <code>|xxx</code> 的方式排除它。</p>
+<p>这里的模式匹配写法，与 <code>add_files()</code> 非常类似。</p>
+<p>我们在给几个例子，比如这回我们只改写 libwebp 下单级的依赖配置，启用调试库：</p>
+<pre><code class="lang-lua">add_requires("libwebp")
+add_requireconfs("libwebp.*|cmake", {debug = true})
 </code></pre>
 <h3 id="add_repositories">add_repositories</h3>
 <h4 id="">添加依赖包仓库</h4>
