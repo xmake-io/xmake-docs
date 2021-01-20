@@ -131,11 +131,6 @@
 <td>>= 2.0.1</td>
 </tr>
 <tr>
-<td><a href="#is_option">is_option</a></td>
-<td>Is the given options enabled?</td>
-<td>>= 2.0.1 < 2.2.2 deprecated</td>
-</tr>
-<tr>
 <td><a href="#is_config">is_config</a></td>
 <td>Is the given config values?</td>
 <td>>= 2.2.2</td>
@@ -310,17 +305,6 @@ $ xmake
 <pre><code class="lang-bash"># compile as shared library
 $ xmake f -k shared
 $ xmake
-</code></pre>
-<h3 id="is_option">is_option</h3>
-<h4 id="isthegivenoptionsenabled">Is the given options enabled</h4>
-<p><p class="tip"><br>This interface has been deprecated after v2.2.2, please use <a href="#has_config">has_config</a> instead.<br></p>
-
-</p>
-<p>You can use this api to check the custom option configuration command：<code>xmake f --xxxx=y</code></p>
-<p>For example, we want to enable the custom option: <code>xmake f --demo=y</code> and check it from <code>xmake.lua</code>.</p>
-<pre><code class="lang-lua">if is_option("demo") then
-    includes("src/demo")
-end
 </code></pre>
 <h3 id="is_config">is_config</h3>
 <h4 id="isthegivenconfigvalues">Is the given config values?</h4>

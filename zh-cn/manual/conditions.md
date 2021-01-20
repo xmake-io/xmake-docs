@@ -9,7 +9,6 @@
 | [is_host](#is_host)         | 判断当前主机环境操作系统      | >= 2.1.4                |
 | [is_mode](#is_mode)         | 判断当前编译模式              | >= 2.0.1                |
 | [is_kind](#is_kind)         | 判断当前编译类型              | >= 2.0.1                |
-| [is_option](#is_option)     | 判断选项是否启用              | >= 2.0.1 < 2.2.2 已废弃 |
 | [is_config](#is_config)     | 判断指定配置是否为给定的值    | >= 2.2.2                |
 | [has_config](#has_config)   | 判断配置是否启用或者存在      | >= 2.2.2                |
 | [has_package](#has_package) | 判断依赖包是否被启用或者存在  | >= 2.2.3                |
@@ -240,25 +239,6 @@ $ xmake
 # 编译动态库
 $ xmake f -k shared
 $ xmake
-```
-
-### is_option
-
-#### 判断选项是否启用
-
-<p class="tip">
-此接口在2.2.2版本之后已经弃用，请使用[has_config](#has_config)来代替。
-</p>
-
-用于检测自定义的编译配置选型：`xmake f --xxxx=y`
-
-如果某个自动检测选项、手动设置选项被启用，那么可以通过`is_option`接口来判断，例如：
-
-```lua
--- 如果手动启用了xmake f --demo=y 选项
-if is_option("demo") then
-    includes("src/demo")
-end
 ```
 
 ### is_config

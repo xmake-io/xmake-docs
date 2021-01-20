@@ -129,7 +129,7 @@ option("small")
 option("test")
     add_deps("small")
     set_default(true)
-    on_check(function (option)
+    after_check(function (option)
         if option:dep("small"):enabled() then
             option:enable(false)
         end
@@ -137,6 +137,8 @@ option("test")
 ```
 
 After the detection of the dependent small option is completed, the state of the option of the test is controlled by judging the state of the small option.
+
+!> Since on_check will only be executed when the default value is not set, if the default value is set, the custom logic can be processed in the after_check phase.
 
 ### option:before_check
 
@@ -162,7 +164,6 @@ This script overrides the built-in option detection logic.
 ```lua
 option("test")
     add_deps("small")
-    set_default(true)
     on_check(function (option)
         if option:dep("small"):enabled() then
             option:enable(false)
@@ -171,6 +172,8 @@ option("test")
 ```
 
 If the option that test depends on passes, disable the test option.
+
+!> Only when `set_default` is not set, will the `on_check` be executed for custom option check script.
 
 ### option:after_check
 
@@ -191,7 +194,7 @@ option("test")
 
 #### Setting the list of option values
 
-For the graphical menu configuration of `xmake f --menu` only, a list of option values ​​is provided for quick selection by the user, for example:
+For the graphical menu configuration of `xmake f --menu` only, a list of option values is provided for quick selection by the user, for example:
 
 ```lua
 option("test")
@@ -228,7 +231,7 @@ option("test")
 | boolean    | Typically used as a parameter switch, value range: `true/false` | `xmake f --optionname=[y/n/yes/no/true/false]`  |
 | string     | can be any string, generally used for pattern judgment          | `xmake f --optionname=value`                    |
 
-If it is an option of the `boolean` value, it can be judged by [is_option](#is_option), and the option is enabled.
+If it is an option of the `boolean` value, it can be judged by [has_config](/manual/conditions?id=has_config), and the option is enabled.
 
 If it is an option of type `string`, it can be used directly in built-in variables, for example:
 

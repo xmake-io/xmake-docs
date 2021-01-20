@@ -9,7 +9,6 @@ Conditions are generally used to handle some special compilation platforms.
 | [is_host](#is_host)         | Is the current compilation host system?   | >= 2.1.4                    |
 | [is_mode](#is_mode)         | Is the current compilation mode?          | >= 2.0.1                    |
 | [is_kind](#is_kind)         | Is the current target kind?               | >= 2.0.1                    |
-| [is_option](#is_option)     | Is the given options enabled?             | >= 2.0.1 < 2.2.2 deprecated |
 | [is_config](#is_config)     | Is the given config values?               | >= 2.2.2                    |
 | [has_config](#has_config)   | Is the given configs enabled?             | >= 2.2.2                    |
 | [has_package](#has_package) | Is the given dependent package enabled?   | >= 2.2.3                    |
@@ -225,24 +224,6 @@ $ xmake
 # compile as shared library
 $ xmake f -k shared
 $ xmake
-```
-
-### is_option
-
-#### Is the given options enabled
-
-<p class="tip">
-This interface has been deprecated after v2.2.2, please use [has_config](#has_config) instead.
-</p>
-
-You can use this api to check the custom option configuration command：`xmake f --xxxx=y`
-
-For example, we want to enable the custom option: `xmake f --demo=y` and check it from `xmake.lua`.
-
-```lua
-if is_option("demo") then
-    includes("src/demo")
-end
 ```
 
 ### is_config

@@ -127,7 +127,7 @@ option("small")
 option("test")
     add_deps("small")
     set_default(true)
-    on_check(function (option)
+    after_check(function (option)
         if option:dep("small"):enabled() then
             option:enable(false)
         end
@@ -135,6 +135,8 @@ option("test")
 ```
 
 当依赖的small选项检测完成后，通过判断small选项的状态，来控制test的选项状态。
+
+!> 由于 on_check 只有在没有设置 default 值的情况下才会被执行，因此如果设置了 default 值，那么可以在 after_check 阶段处理自定义逻辑。
 
 ### option:before_check
 
@@ -160,15 +162,12 @@ option("zlib")
 ```lua
 option("test")
     add_deps("small")
-    set_default(true)
     on_check(function (option)
-        if option:dep("small"):enabled() then
-            option:enable(false)
-        end
+        option:enable(true)
     end)
 ```
 
-如果test依赖的选项通过，则禁用test选项。
+!> 仅仅在 `set_default` 没有被设置的情况下，才会执行 `on_check` 进行自定义的选项检测脚本。
 
 ### option:after_check
 
@@ -226,7 +225,7 @@ option("test")
 | boolean | 一般用作参数开关，值范围：`true/false` | `xmake f --optionname=[y/n/yes/no/true/false]` |
 | string  | 可以是任意字符串，一般用于模式判断     | `xmake f --optionname=value`                   |
 
-如果是`boolean`值的选项，可以通过[is_option](#is_option)来进行判断，选项是否被启用。
+如果是`boolean`值的选项，可以通过[has_config](/zh-cn/manual/conditions?id=has_config)来进行判断，选项是否被启用。
 
 如果是`string`类型的选项，可以在内建变量中直接使用，例如：
 

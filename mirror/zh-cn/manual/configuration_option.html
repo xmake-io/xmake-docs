@@ -384,13 +384,14 @@ $ xmake
 option("test")
     add_deps("small")
     set_default(true)
-    on_check(function (option)
+    after_check(function (option)
         if option:dep("small"):enabled() then
             option:enable(false)
         end
     end)
 </code></pre>
 <p>当依赖的small选项检测完成后，通过判断small选项的状态，来控制test的选项状态。</p>
+<p>!> 由于 on_check 只有在没有设置 default 值的情况下才会被执行，因此如果设置了 default 值，那么可以在 after_check 阶段处理自定义逻辑。</p>
 <h3 id="optionbefore_check">option:before_check</h3>
 <h4 id="">选项检测之前执行此脚本</h4>
 <p>例如：在检测之前，通过<a href="#detect-find_package">find_package</a>来查找包，将<code>links</code>, <code>includedirs</code>和<code>linkdirs</code>等信息添加到option中去，<br>然后开始选项检测，通过后就会自动链接到target上。</p>
@@ -405,14 +406,11 @@ option("test")
 <p>此脚本会覆盖内置的选项检测逻辑。</p>
 <pre><code class="lang-lua">option("test")
     add_deps("small")
-    set_default(true)
     on_check(function (option)
-        if option:dep("small"):enabled() then
-            option:enable(false)
-        end
+        option:enable(true)
     end)
 </code></pre>
-<p>如果test依赖的选项通过，则禁用test选项。</p>
+<p>!> 仅仅在 <code>set_default</code> 没有被设置的情况下，才会执行 <code>on_check</code> 进行自定义的选项检测脚本。</p>
 <h3 id="optionafter_check">option:after_check</h3>
 <h4 id="">选项检测之后执行此脚本</h4>
 <p>在选项检测完成后，执行此脚本做一些后期处理，也可以在此时重新禁用选项：</p>
@@ -465,7 +463,7 @@ option("test")
 </tr>
 </tbody>
 </table>
-<p>如果是<code>boolean</code>值的选项，可以通过<a href="#is_option">is_option</a>来进行判断，选项是否被启用。</p>
+<p>如果是<code>boolean</code>值的选项，可以通过<a href="/mirror/zh-cn/manual/conditions.html#has_config">has_config</a>来进行判断，选项是否被启用。</p>
 <p>如果是<code>string</code>类型的选项，可以在内建变量中直接使用，例如：</p>
 <pre><code class="lang-lua">-- 定义一个路径配置选项，默认使用临时目录
 option("rootdir")

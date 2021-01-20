@@ -131,11 +131,6 @@
 <td>>= 2.0.1</td>
 </tr>
 <tr>
-<td><a href="#is_option">is_option</a></td>
-<td>判断选项是否启用</td>
-<td>>= 2.0.1 < 2.2.2 已废弃</td>
-</tr>
-<tr>
 <td><a href="#is_config">is_config</a></td>
 <td>判断指定配置是否为给定的值</td>
 <td>>= 2.2.2</td>
@@ -320,18 +315,6 @@ $ xmake
 <pre><code class="lang-bash"># 编译动态库
 $ xmake f -k shared
 $ xmake
-</code></pre>
-<h3 id="is_option">is_option</h3>
-<h4 id="">判断选项是否启用</h4>
-<p><p class="tip"><br>此接口在2.2.2版本之后已经弃用，请使用<a href="#has_config">has_config</a>来代替。<br></p>
-
-</p>
-<p>用于检测自定义的编译配置选型：<code>xmake f --xxxx=y</code></p>
-<p>如果某个自动检测选项、手动设置选项被启用，那么可以通过<code>is_option</code>接口来判断，例如：</p>
-<pre><code class="lang-lua">-- 如果手动启用了xmake f --demo=y 选项
-if is_option("demo") then
-    includes("src/demo")
-end
 </code></pre>
 <h3 id="is_config">is_config</h3>
 <h4 id="">判断指定配置是否为给定的值</h4>
