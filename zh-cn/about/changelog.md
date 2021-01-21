@@ -11,6 +11,7 @@
 * [#1178](https://github.com/xmake-io/xmake/issues/1178): 添加 `add_requireconfs()` 接口去重写依赖包的配置
 * [#1043](https://github.com/xmake-io/xmake/issues/1043): 为 luarocks 模块添加 `luarocks.module` 构建规则
 * [#1190](https://github.com/xmake-io/xmake/issues/1190): 添加对 Apple Silicon (macOS ARM) 设备的支持
+* [#1145](https://github.com/xmake-io/xmake/pull/1145): 支持在 windows 上安装部署 Qt 程序, 感谢 @SirLynix
 
 ### 改进
 

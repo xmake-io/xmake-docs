@@ -11,6 +11,7 @@
 * [#1178](https://github.com/xmake-io/xmake/issues/1178): Add `add_requireconfs()` api to rewrite configs of depend packages
 * [#1043](https://github.com/xmake-io/xmake/issues/1043): Add `luarocks.module` rule for luarocks-build-xmake
 * [#1190](https://github.com/xmake-io/xmake/issues/1190): Support for Apple Silicon (macOS ARM)
+* [#1145](https://github.com/xmake-io/xmake/pull/1145): Support Qt deploy for Windows, thanks @SirLynix
 
 ### Change
 
