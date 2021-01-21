@@ -317,7 +317,7 @@ package("openssl")
 某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：
 
 ```lua
-add_requires("tbox", {config = {small=true}})
+add_requires("tbox", {configs = {small=true}})
 ```
 
 传递`--small=true`给tbox包，使得编译安装的tbox包是启用此选项的。

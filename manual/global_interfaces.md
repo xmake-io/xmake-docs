@@ -313,7 +313,7 @@ package("openssl")
 Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:
 
 ```lua
-add_requires("tbox", {config = {small=true}})
+add_requires("tbox", {configs = {small=true}})
 ```
 
 Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.

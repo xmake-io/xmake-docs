@@ -345,7 +345,7 @@ add_requires("tbox dev")
     end)
 </code></pre>
 <p>Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:</p>
-<pre><code class="lang-lua">add_requires("tbox", {config = {small=true}})
+<pre><code class="lang-lua">add_requires("tbox", {configs = {small=true}})
 </code></pre>
 <p>Pass <code>--small=true</code> to the tbox package so that compiling the installed tbox package is enabled.<br>After v2.2.3, you can control whether you need to add a dependency package in your own definition configuration option parameter by <a href="#option">option</a> and <a href="#has_config">has_config</a>:</p>
 <pre><code class="lang-lua">option("luajit")

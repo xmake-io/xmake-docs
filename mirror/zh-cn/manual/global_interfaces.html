@@ -346,7 +346,7 @@ add_requires("tbox dev")
     end)
 </code></pre>
 <p>某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：</p>
-<pre><code class="lang-lua">add_requires("tbox", {config = {small=true}})
+<pre><code class="lang-lua">add_requires("tbox", {configs = {small=true}})
 </code></pre>
 <p>传递<code>--small=true</code>给tbox包，使得编译安装的tbox包是启用此选项的。</p>
 <p>v2.2.3之后，可以通过<a href="#option">option</a>和<a href="#has_config">has_config</a>配合，在自己定义配置选项参数中控制是否需要添加某个依赖包：</p>

@@ -220,7 +220,7 @@ Note: The extension part of ``target = target}` is optional. If the target objec
 And you can also pass various configurations yourself, for example:
 
 ```lua
-local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {config = {linkdirs = "/usr/lib"}})
+local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {configs = {linkdirs = "/usr/lib"}})
 ```
 
 #### linker.linkargv
@@ -314,7 +314,7 @@ Note: The extension part of ``target = target}` is optional. If the target objec
 And you can also pass various configurations yourself, for example:
 
 ```lua
-local cmdstr = compiler.compcmd("xxx.c", "xxx.o", {config = {includedirs = "/usr/include", defines = "DEBUG"}})
+local cmdstr = compiler.compcmd("xxx.c", "xxx.o", {configs = {includedirs = "/usr/include", defines = "DEBUG"}})
 ```
 
 With target, we can export all source file compilation commands for the specified target:
@@ -390,7 +390,7 @@ local features = compiler.features("c")
 local features = compiler.features("cxx", {cofnig = {cxxflags = "-std=c++11"}})
 
 -- Get all the features of the current C++ language compiler, pass all configuration information of the project target
-local features = compiler.features("cxx", {target = target, config = {defines = "..", includedirs = ".."}})
+local features = compiler.features("cxx", {target = target, configs = {defines = "..", includedirs = ".."}})
 ```
 
 A list of all c compiler features:
@@ -1557,7 +1557,7 @@ The rules for describing functions are as follows:
 In the last optional parameter, in addition to specifying `includes`, you can also specify other parameters to control the option conditions for compile detection:
 
 ```lua
-{ verbose = false, target = [target|option], includes = .., config = {linkdirs = .., links = .., defines = ..}}
+{ verbose = false, target = [target|option], includes = .., configs = {linkdirs = .., links = .., defines = ..}}
 ```
 
 The verbose is used to echo the detection information, the target is used to append the configuration information in the target before the detection, and the config is used to customize the compilation options related to the target.
@@ -1579,7 +1579,7 @@ import("lib.detect.has_cincludes")
 
 local ok = has_cincludes("stdio.h")
 local ok = has_cincludes({"stdio.h", "stdlib.h"}, {target = target})
-local ok = has_cincludes({"stdio.h", "stdlib.h"}, {config = {defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
+local ok = has_cincludes({"stdio.h", "stdlib.h"}, {configs = {defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
 ```
 
 #### detect.has_cxxincludes
@@ -1599,7 +1599,7 @@ import("lib.detect.has_ctypes")
 
 local ok = has_ctypes("wchar_t")
 local ok = has_ctypes({"char", "wchar_t"}, {includes = "stdio.h"})
-local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, config = {"defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
+local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, configs = {"defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
 ```
 
 #### detect.has_cxxtypes

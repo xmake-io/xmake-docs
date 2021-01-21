@@ -369,7 +369,7 @@ end
 </code></pre>
 <p>Note: The extension part of <code></code>target = target}` is optional. If the target object is passed, the generated link command will add the link option corresponding to this target configuration.</p>
 <p>And you can also pass various configurations yourself, for example:</p>
-<pre><code class="lang-lua">local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {config = {linkdirs = "/usr/lib"}})
+<pre><code class="lang-lua">local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {configs = {linkdirs = "/usr/lib"}})
 </code></pre>
 <h4 id="linkerlinkargv">linker.linkargv</h4>
 <ul>
@@ -469,7 +469,7 @@ end
 </code></pre>
 <p>Note: The extension part of <code></code>target = target}` is optional. If the target object is passed, the generated compile command will add the link option corresponding to this target configuration.</p>
 <p>And you can also pass various configurations yourself, for example:</p>
-<pre><code class="lang-lua">local cmdstr = compiler.compcmd("xxx.c", "xxx.o", {config = {includedirs = "/usr/include", defines = "DEBUG"}})
+<pre><code class="lang-lua">local cmdstr = compiler.compcmd("xxx.c", "xxx.o", {configs = {includedirs = "/usr/include", defines = "DEBUG"}})
 </code></pre>
 <p>With target, we can export all source file compilation commands for the specified target:</p>
 <pre><code class="lang-lua">import("core.project.project")
@@ -527,7 +527,7 @@ local features = compiler.features("c")
 local features = compiler.features("cxx", {cofnig = {cxxflags = "-std=c++11"}})
 
 -- Get all the features of the current C++ language compiler, pass all configuration information of the project target
-local features = compiler.features("cxx", {target = target, config = {defines = "..", includedirs = ".."}})
+local features = compiler.features("cxx", {target = target, configs = {defines = "..", includedirs = ".."}})
 </code></pre>
 <p>A list of all c compiler features:</p>
 <table>
@@ -1782,7 +1782,7 @@ local ok = has_cfuncs({"sigsetjmp((void*)0, 0)", "setjmp"}, {includes = "setjmp.
 </tbody>
 </table>
 <p>In the last optional parameter, in addition to specifying <code>includes</code>, you can also specify other parameters to control the option conditions for compile detection:</p>
-<pre><code class="lang-lua">{ verbose = false, target = [target|option], includes = .., config = {linkdirs = .., links = .., defines = ..}}
+<pre><code class="lang-lua">{ verbose = false, target = [target|option], includes = .., configs = {linkdirs = .., links = .., defines = ..}}
 </code></pre>
 <p>The verbose is used to echo the detection information, the target is used to append the configuration information in the target before the detection, and the config is used to customize the compilation options related to the target.</p>
 <h4 id="detecthas_cxxfuncs">detect.has_cxxfuncs</h4>
@@ -1799,7 +1799,7 @@ local ok = has_cfuncs({"sigsetjmp((void*)0, 0)", "setjmp"}, {includes = "setjmp.
 
 local ok = has_cincludes("stdio.h")
 local ok = has_cincludes({"stdio.h", "stdlib.h"}, {target = target})
-local ok = has_cincludes({"stdio.h", "stdlib.h"}, {config = {defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
+local ok = has_cincludes({"stdio.h", "stdlib.h"}, {configs = {defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
 </code></pre>
 <h4 id="detecthas_cxxincludes">detect.has_cxxincludes</h4>
 <ul>
@@ -1815,7 +1815,7 @@ local ok = has_cincludes({"stdio.h", "stdlib.h"}, {config = {defines = "_GNU_SOU
 
 local ok = has_ctypes("wchar_t")
 local ok = has_ctypes({"char", "wchar_t"}, {includes = "stdio.h"})
-local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, config = {"defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
+local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, configs = {"defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
 </code></pre>
 <h4 id="detecthas_cxxtypes">detect.has_cxxtypes</h4>
 <ul>
