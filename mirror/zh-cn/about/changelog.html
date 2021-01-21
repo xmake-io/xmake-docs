@@ -90,7 +90,42 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v239">v2.3.9</h2>
+    <h2 id="v251">v2.5.1</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1035">#1035</a>: 图形配置菜单完整支持鼠标事件，并且新增滚动栏</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1098">#1098</a>: 支持传递 stdin 到 os.execv 进行输入重定向</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1079">#1079</a>: 为 vsxmake 插件添加工程自动更新插件，<code>add_rules("plugin.vsxmake.autoupdate")</code></li>
+<li>添加 <code>xmake f --vs_runtime=MT</code> 和 <code>set_runtimes("MT")</code> 去更方便的对 target 和 package 进行设置</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1032">#1032</a>: 支持枚举注册表 keys 和 values</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1026">#1026</a>: 支持对 vs/vsmake 工程增加分组设置</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1178">#1178</a>: 添加 <code>add_requireconfs()</code> 接口去重写依赖包的配置</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1043">#1043</a>: 为 luarocks 模块添加 <code>luarocks.module</code> 构建规则</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1190">#1190</a>: 添加对 Apple Silicon (macOS ARM) 设备的支持</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1072">#1072</a>: 修复并改进 cl 编译器头文件依赖信息</li>
+<li>针对 ui 模块和 <code>xmake f --menu</code> 增加 utf8 支持</li>
+<li>改进 zig 语言在 macOS 上的支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1135">#1135</a>: 针对特定 target 改进多平台多工具链同时配置支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1153">#1153</a>: 改进 llvm 工具链，针对 macos 上编译增加 isysroot 支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1071">#1071</a>: 改进 vs/vsxmake 生成插件去支持远程依赖包</li>
+<li>改进 vs/vsxmake 工程生成插件去支持全局的 <code>set_arch()</code> 设置</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1164">#1164</a>: 改进 vsxmake 插件调试加载 console 程序</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1179">#1179</a>: 改进 llvm 工具链，添加 isysroot</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1091">#1091</a>: 修复不正确的继承链接依赖</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1105">#1105</a>: 修复 vsxmake 插件 c++ 语言标准智能提示错误</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1132">#1132</a>: 修复 vsxmake 插件中配置路径被截断问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1142">#1142</a>: 修复安装包的时候，出现git找不到问题</li>
+<li>修复在 macOS Big Sur 上 macos.version 问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1084">#1084</a>: 修复 <code>add_defines()</code> 中带有双引号和空格导致无法正确处理宏定义的问题</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1195">#1195</a>: 修复 unicode 编码问题，改进 vs 环境查找和进程执行</li>
+</ul>
+<h2 id="v239">v2.3.9</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li>添加新的 <a href="https://github.com/xmake-io/xrepo">xrepo</a> 命令去管理安装 C/C++ 包</li>

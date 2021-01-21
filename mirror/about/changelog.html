@@ -90,7 +90,42 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v239">v2.3.9</h2>
+    <h2 id="v251">v2.5.1</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1035">#1035</a>: The graphics configuration menu fully supports mouse events, and support scroll bar</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1098">#1098</a>: Support stdin for os.execv</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1079">#1079</a>: Add autoupdate plugin rule for vsxmake, <code>add_rules("plugin.vsxmake.autoupdate")</code></li>
+<li>Add <code>xmake f --vs_runtime=MT</code> and <code>set_runtimes("MT")</code> to set vs runtime for targets and packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1032">#1032</a>: Support to enum registry keys and values</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1026">#1026</a>: Support group for vs/vsxmake project</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1178">#1178</a>: Add <code>add_requireconfs()</code> api to rewrite configs of depend packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1043">#1043</a>: Add <code>luarocks.module</code> rule for luarocks-build-xmake</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1190">#1190</a>: Support for Apple Silicon (macOS ARM)</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1072">#1072</a>: Fix and improve to parse cl deps</li>
+<li>Support utf8 for ui modules and <code>xmake f --menu</code></li>
+<li>Improve to support zig on macOS</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1135">#1135</a>: Improve multi-toolchain and multi-platforms for targets</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1153">#1153</a>: Improve llvm toolchain to support sysroot on macOS</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1071">#1071</a>: Improve to generate vs/vsxmake project to support for remote packages</li>
+<li>Improve vs/vsxmake project plugin to support global <code>set_arch()</code> setting</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1164">#1164</a>: Improve to launch console programs for vsxmake project</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1179">#1179</a>: Improve llvm toolchain and add isysroot</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1091">#1091</a>: Fix incorrect ordering of inherited library dependencies</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1105">#1105</a>: Fix c++ language intellisense for vsxmake</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1132">#1132</a>: Fix TrimEnd bug for vsxmake</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1142">#1142</a>: Fix git not found when installing packages</li>
+<li>Fix macos.version bug for macOS Big Sur</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1084">#1084</a>: Fix <code>add_defines()</code> bug (contain spaces)</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1195">#1195</a>: Fix unicode problem for vs and improve find_vstudio/os.exec</li>
+</ul>
+<h2 id="v239">v2.3.9</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li>Add new <a href="https://github.com/xmake-io/xrepo">xrepo</a> command to manage C/C++ packages</li>

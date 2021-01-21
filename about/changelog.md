@@ -1,3 +1,40 @@
+## v2.5.1
+
+### New features
+
+* [#1035](https://github.com/xmake-io/xmake/issues/1035): The graphics configuration menu fully supports mouse events, and support scroll bar
+* [#1098](https://github.com/xmake-io/xmake/issues/1098): Support stdin for os.execv
+* [#1079](https://github.com/xmake-io/xmake/issues/1079): Add autoupdate plugin rule for vsxmake, `add_rules("plugin.vsxmake.autoupdate")`
+* Add `xmake f --vs_runtime=MT` and `set_runtimes("MT")` to set vs runtime for targets and packages
+* [#1032](https://github.com/xmake-io/xmake/issues/1032): Support to enum registry keys and values
+* [#1026](https://github.com/xmake-io/xmake/issues/1026): Support group for vs/vsxmake project
+* [#1178](https://github.com/xmake-io/xmake/issues/1178): Add `add_requireconfs()` api to rewrite configs of depend packages
+* [#1043](https://github.com/xmake-io/xmake/issues/1043): Add `luarocks.module` rule for luarocks-build-xmake
+* [#1190](https://github.com/xmake-io/xmake/issues/1190): Support for Apple Silicon (macOS ARM)
+
+### Change
+
+* [#1072](https://github.com/xmake-io/xmake/issues/1072): Fix and improve to parse cl deps
+* Support utf8 for ui modules and `xmake f --menu`
+* Improve to support zig on macOS
+* [#1135](https://github.com/xmake-io/xmake/issues/1135): Improve multi-toolchain and multi-platforms for targets
+* [#1153](https://github.com/xmake-io/xmake/issues/1153): Improve llvm toolchain to support sysroot on macOS
+* [#1071](https://github.com/xmake-io/xmake/issues/1071): Improve to generate vs/vsxmake project to support for remote packages
+* Improve vs/vsxmake project plugin to support global `set_arch()` setting
+* [#1164](https://github.com/xmake-io/xmake/issues/1164): Improve to launch console programs for vsxmake project
+* [#1179](https://github.com/xmake-io/xmake/issues/1179): Improve llvm toolchain and add isysroot
+
+### Bugs fixed
+
+* [#1091](https://github.com/xmake-io/xmake/issues/1091): Fix incorrect ordering of inherited library dependencies
+* [#1105](https://github.com/xmake-io/xmake/issues/1105): Fix c++ language intellisense for vsxmake
+* [#1132](https://github.com/xmake-io/xmake/issues/1132): Fix TrimEnd bug for vsxmake
+* [#1142](https://github.com/xmake-io/xmake/issues/1142): Fix git not found when installing packages
+* Fix macos.version bug for macOS Big Sur
+* [#1084](https://github.com/xmake-io/xmake/issues/1084): Fix `add_defines()` bug (contain spaces)
+* [#1195](https://github.com/xmake-io/xmake/pull/1195): Fix unicode problem for vs and improve find_vstudio/os.exec
+
+
 ## v2.3.9
 
 ### New features
