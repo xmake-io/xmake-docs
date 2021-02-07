@@ -33,6 +33,8 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2021.02.07 | 抚*                                   | wechat  | ¥66    | xmake牛批！                                                             |
+| 2021.02.05 | *_                                    | alipay  | ¥5     |                                                                         |
 | 2020.12.05 | 知而无知                              | wechat  | ¥50    |                                                                         |
 | 2020.12.05 | fghuh                                 | alipay  | ¥10    |                                                                         |
 | 2020.12.05 | @                                     | wechat  | ¥5     |                                                                         |
