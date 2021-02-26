@@ -115,325 +115,8 @@ target("test")
 </code></pre>
 <p>A target can be superimposed to apply multiple rules to more customize its own build behavior, and even support different build environments.</p>
 <p>!> Rules specified by <code>add_files("*.md", {rule = "markdown"})</code>, with a higher priority than the rule set by <code>add_rules("markdown")</code>.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#rule">rule</a></td>
-<td>Defining Rules</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#ruleadd_imports">add_imports</a></td>
-<td>Pre-importing extension modules for all custom scripts</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#ruleset_extensions">set_extensions</a></td>
-<td>Set the file extension type supported by the rule</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#ruleon_load">on_load</a></td>
-<td>Custom Load Script</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleon_link">on_link</a></td>
-<td>Custom Link Script</td>
-<td>>= 2.2.7</td>
-</tr>
-<tr>
-<td><a href="#ruleon_build">on_build</a></td>
-<td>Custom Compilation Script</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#ruleon_clean">on_clean</a></td>
-<td>Custom Cleanup Script</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#ruleon_package">on_package</a></td>
-<td>Custom Package Script</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#ruleon_install">on_install</a></td>
-<td>Custom Installation Script</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#ruleon_uninstall">on_uninstall</a></td>
-<td>Custom Uninstall Script</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#ruleon_build_file">on_build_file</a></td>
-<td>Custom the build script to implement single file build</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleon_build_files">on_build_files</a></td>
-<td>Custom Compilation Scripts for Multi-File Construction</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#rulebefore_load">before_load</a></td>
-<td>Custom pre-load script</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#rulebefore_link">before_link</a></td>
-<td>Custom pre-link script</td>
-<td>>= 2.2.7</td>
-</tr>
-<tr>
-<td><a href="#rulebefore_build">before_build</a></td>
-<td>Custom pre-compilation script</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#rulebefore_clean">before_clean</a></td>
-<td>Custom the script before cleanup</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#rulebefore_package">before_package</a></td>
-<td>Custom the script before packaging</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#rulebefore_install">before_install</a></td>
-<td>Custom Pre-Installation Scripts</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#rulebefore_uninstall">before_uninstall</a></td>
-<td>Custom the script before uninstalling</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#rulebefore_build_file">before_build_file</a></td>
-<td>Custom pre-compilation scripts to implement single file builds</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#rulebefore_build_files">before_build_files</a></td>
-<td>Custom pre-compilation scripts for multi-file build</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleafter_load">after_load</a></td>
-<td>Custom script after loading</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleafter_link">after_link</a></td>
-<td>Custom script after linking</td>
-<td>>= 2.2.7</td>
-</tr>
-<tr>
-<td><a href="#ruleafter_build">after_build</a></td>
-<td>Custom script after compilation</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleafter_clean">after_clean</a></td>
-<td>Custom script after cleaning</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleafter_package">after_package</a></td>
-<td>Custom script after packaging</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleafter_install">after_install</a></td>
-<td>Custom script after installing</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleafter_uninstall">after_uninstall</a></td>
-<td>Custom script after uninstalling</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleafter_build_file">after_build_file</a></td>
-<td>Custom script after compiling the single file</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#ruleafter_build_files">after_build_files</a></td>
-<td>Custom script after compiling the multiple file</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#rule_end">rule_end</a></td>
-<td>End Definition Rule</td>
-<td>>= 2.1.9</td>
-</tr>
-</tbody>
-</table>
 <h3 id="builtinrules">Built-in rules</h3>
 <p>sinceAfter the 2.2.1 release, xmake provides some built-in rules to simplify the daily xmake.lua description and support for some common build environments.</p>
-<table>
-<thead>
-<tr>
-<th>Rules</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#mode-debug">mode.debug</a></td>
-<td>Debug Mode Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-release">mode.release</a></td>
-<td>Release Mode Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-releasedbg">mode.releasedbg</a></td>
-<td>Release Mode Compilation Rule (With Debug Symbols)</td>
-<td>>= 2.3.4</td>
-</tr>
-<tr>
-<td><a href="#mode-minsizerel">mode.minsizerel</a></td>
-<td>Release Mode Compilation Rule (With Minimum Size)</td>
-<td>>= 2.3.4</td>
-</tr>
-<tr>
-<td><a href="#mode-check">mode.check</a></td>
-<td>Detection Mode Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-profile">mode.profile</a></td>
-<td>Performance Analysis Mode Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-coverage">mode.coverage</a></td>
-<td>Coverage Analysis Compilation Mode Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-valgrind">mode.valgrind</a></td>
-<td>Valgrind Rule</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#mode-asan">mode.asan</a></td>
-<td>AddressSanitizer Rule</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#mode-tsan">mode.tsan</a></td>
-<td>ThreadSanitizer Rule</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#mode-lsan">mode.lsan</a></td>
-<td>LeakSanitizer Rule</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#mode-ubsan">mode.ubsan</a></td>
-<td>UndefinedBehaviorSanitizer Rule</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#qt-static">qt.static</a></td>
-<td>Qt Static Library Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#qt-shared">qt.shared</a></td>
-<td>Qt Dynamic Library Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#qt-console">qt.console</a></td>
-<td>Qt Console Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#qt-quickapp">qt.quickapp</a></td>
-<td>Qt QuickApp Compilation Rule</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#qt-quickapp_static">qt.quickapp_static</a></td>
-<td>Qt QuickApp Compilation Rule (static link)</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#qt-widgetapp">qt.widgetapp</a></td>
-<td>Qt WidgetApp Compilation Rule</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#qt-widgetapp_static">qt.widgetapp_static</a></td>
-<td>Qt WidgetApp Compilation Rule（static link）</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#xcode-bundle">xcode.bundle</a></td>
-<td>Xcode Bundle Compilation Rule</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#xcode-framework">xcode.framework</a></td>
-<td>Xcode Framework Compilation Rule</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#xcode-application">xcode.application</a></td>
-<td>Xcode iOS/MacOS App Compilation Rule</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#wdk-umdf-driver">wdk.umdf.driver</a></td>
-<td>WDK Environment umdf Driver Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-umdf-binary">wdk.umdf.binary</a></td>
-<td>WDK Environment umdf Driver Application Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-kmdf-driver">wdk.kmdf.driver</a></td>
-<td>WDK Environment kmdf Driver Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-kmdf-binary">wdk.kmdf.binary</a></td>
-<td>WDK Environment kmdf Driver Application Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-wdm-driver">wdk.wdm.driver</a></td>
-<td>WDK Environment wdm Driver Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-wdm-binary">wdk.wdm.binary</a></td>
-<td>WDK Environment wdm Driver Application Compilation Rule</td>
-<td>>= 2.2.1</td>
-</tr>
-</tbody>
-</table>
 <p>We can view the complete list of built-in rules by running the following command:</p>
 <pre><code class="lang-bash">$ xmake show -l rules
 </code></pre>
@@ -833,6 +516,61 @@ target("test")
     end)
 </code></pre>
 <p>The third parameter opt is an optional parameter, which is used to obtain some information state during the compilation process. For example, opt.progress is the compilation progress of the current period.</p>
+<h3 id="ruleon_buildcmd_file">rule:on_buildcmd_file</h3>
+<h4 id="custombatchcompilescriptprocessonesourcefileatatime">Custom batch compile script, process one source file at a time</h4>
+<p>This is a new interface added in version 2.5.2. The script inside will not directly construct the source file, but will construct a batch command line task through the batchcmds object.<br>When xmake actually executes the build, it executes these commands once.</p>
+<p>This is very useful for project generator plugins such as <code>xmake project</code>, because third-party project files generated by the generator do not support the execution of built-in scripts such as <code>on_build_files</code>.</p>
+<p>But the final result of <code>on_buildcmd_files</code> construction is a batch of original cmd command lines, which can be directly executed as custom commands for other project files.</p>
+<p>In addition, compared to <code>on_build_files</code>, it also simplifies the implementation of compiling extension files, is more readable and easy to configure, and is more user-friendly.</p>
+<pre><code class="lang-lua">rule("foo")
+    set_extensions(".xxx")
+    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
+        batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile})
+        batchcmds:add_depfiles("/xxxxx/dependfile.h", ...)
+        - batchcmds:add_depvalues(...)
+        - batchcmds:set_depmtime(os.mtime(...))
+        - batchcmds:set_depcache("xxxx.d")
+    end)
+</code></pre>
+<p>In addition to <code>batchcmds:vrunv</code>, we also support some other batch commands, such as:</p>
+<pre><code class="lang-lua">batchcmds:show("hello %s", "xmake")
+batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile}, {envs = {LD_LIBRARY_PATH="/xxx"}})
+batchcmds:mkdir("/xxx") - and cp, mv, rm, ln ..
+batchcmds:compile(sourcefile_cx, objectfile, {configs = {includedirs = sourcefile_dir, languages ​​= (sourcekind == "cxx" and "c++11")}})
+batchcmds:link(objectfiles, targetfile, {configs = {linkdirs = ""}})
+</code></pre>
+<p>At the same time, we also simplify the configuration of dependency execution in it. The following is a complete example:</p>
+<pre><code class="lang-lua">rule("lex")
+    set_extensions(".l", ".ll")
+    on_buildcmd_file(function (target, batchcmds, sourcefile_lex, opt)
+
+        - imports
+        import("lib.detect.find_tool")
+
+        - get lex
+        local lex = assert(find_tool("flex") or find_tool("lex"), "lex not found!")
+
+        - get c/c++ source file for lex
+        local extension = path.extension(sourcefile_lex)
+        local sourcefile_cx = path.join(target:autogendir(), "rules", "lex_yacc", path.basename(sourcefile_lex) .. (extension == ".ll" and ".cpp" or ".c"))
+
+        - add objectfile
+        local objectfile = target:objectfile(sourcefile_cx)
+        table.insert(target:objectfiles(), objectfile)
+
+        - add commands
+        batchcmds:show_progress(opt.progress, "${color.build.object}compiling.lex %s", sourcefile_lex)
+        batchcmds:mkdir(path.directory(sourcefile_cx))
+        batchcmds:vrunv(lex.program, {"-o", sourcefile_cx, sourcefile_lex})
+        batchcmds:compile(sourcefile_cx, objectfile)
+
+        - add deps
+        batchcmds:add_depfiles(sourcefile_lex)
+        batchcmds:set_depmtime(os.mtime(objectfile))
+        batchcmds:set_depcache(target:dependfile(objectfile))
+    end)
+</code></pre>
+<p>For a detailed description and background of this, see: <a href="https://github.com/xmake-io/xmake/issues/1246">issue 1246</a></p>
 <h3 id="ruleon_build_files">rule:on_build_files</h3>
 <h4 id="customizingthebuildscripttoprocessmultiplesourcefilesatonce">Customizing the build script to process multiple source files at once</h4>
 <p>Most of the custom build rules, each time processing a single file, output a target file, for example: a.c => a.o</p>
@@ -845,6 +583,17 @@ target("test")
             -- ...
         end
     end)
+</code></pre>
+<h3 id="ruleon_buildcmd_files">rule:on_buildcmd_files</h3>
+<h4 id="customizebatchcompilingscriptprocessmultiplesourcefilesatonce">Customize batch compiling script, process multiple source files at once</h4>
+<p>For a detailed description of this, see: <a href="#ruleon_buildcmd_file">rule:on_buildcmd_file</a></p>
+<pre><code class="lang-lua">rule("foo")
+     set_extensions(".xxx")
+     on_buildcmd_files(function (target, batchcmds, sourcebatch, opt)
+         for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
+             batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile})
+         end
+     end)
 </code></pre>
 <h3 id="rulebefore_load">rule:before_load</h3>
 <h4 id="custompreloadscript">Custom pre-load script</h4>
@@ -899,9 +648,15 @@ target("test")
 <h3 id="rulebefore_build_file">rule:before_build_file</h3>
 <h4 id="customprecompilationscripttoprocessonesourcefileatatime">Custom pre-compilation script to process one source file at a time</h4>
 <p>Similar to <a href="#ruleon_build_file">rule:on_build_file</a>, but the timing of this interface is called before compiling a source file.<br>Generally used to preprocess some source files before compiling.</p>
+<h3 id="rulebefore_buildcmd_file">rule:before_buildcmd_file</h3>
+<h4 id="customizetheprecompilationbatchscriptprocessonesourcefileatatime">Customize the pre-compilation batch script, process one source file at a time</h4>
+<p>Similar to the usage of <a href="#ruleon_buildcmd_file">rule:on_buildcmd_file</a>, but the time when this interface is called is before compiling a certain source file.<br>It is generally used to pre-process certain source files before compilation.</p>
 <h3 id="rulebefore_build_files">rule:before_build_files</h3>
-<h4 id="customprecompilationscripttoprocessmultiplesourcefilesatonce">Custom pre-compilation script to process multiple source files at once</h4>
-<p>Similar to <a href="#ruleon_build_files">rule:on_build_files</a>, but the timing of this interface is called before compiling some source files.<br>Generally used to preprocess some source files before compiling.</p>
+<h4 id="customizeprecompilationscriptstoprocessmultiplesourcefilesatonce">Customize pre-compilation scripts to process multiple source files at once</h4>
+<p>Similar to the usage of <a href="#ruleon_build_files">rule:on_build_files</a>, but the time when this interface is called is before compiling some source files,<br>It is generally used to pre-process certain source files before compilation.</p>
+<h3 id="rulebefore_buildcmd_files">rule:before_buildcmd_files</h3>
+<h4 id="customizetheprecompilationbatchscripttoprocessmultiplesourcefilesatonce">Customize the pre-compilation batch script to process multiple source files at once</h4>
+<p>Similar to the usage of <a href="#ruleon_buildcmd_files">rule:on_buildcmd_files</a>, but the time when this interface is called is before compiling some source files,<br>It is generally used to pre-process certain source files before compilation.</p>
 <h3 id="ruleafter_load">rule:after_load</h3>
 <h4 id="custompostloadingscript">Custom post-loading script</h4>
 <p>The execution script used to implement the custom target loading is similar to <a href="#ruleafter_load">rule:after_load</a>.</p>
@@ -926,9 +681,15 @@ target("test")
 <h3 id="ruleafter_build_file">rule:after_build_file</h3>
 <h4 id="custompostcompilationscriptstoprocessonesourcefileatatime">Custom post-compilation scripts to process one source file at a time</h4>
 <p>Similar to <a href="#ruleon_build_file">rule:on_build_file</a>, but the timing of this interface is called after compiling a source file.<br>Generally used to post-process some compiled object files.</p>
+<h3 id="ruleafter_buildcmd_file">rule:after_buildcmd_file</h3>
+<h4 id="customizethecompiledbatchscriptprocessonesourcefileatatime">Customize the compiled batch script, process one source file at a time</h4>
+<p>Similar to the usage of <a href="#ruleon_buildcmd_file">rule:on_buildcmd_file</a>, but the time when this interface is called is after compiling a certain source file,<br>Generally used for post-processing some compiled object files.</p>
 <h3 id="ruleafter_build_files">rule:after_build_files</h3>
-<h4 id="custompostcompilationscriptstoprocessmultiplesourcefilesatonce">Custom post-compilation scripts to process multiple source files at once</h4>
-<p>Similar to <a href="#ruleon_build_files">rule:on_build_files</a>, but the timing of this interface is called after compiling some source files.<br>Generally used to post-process some compiled object files.</p>
+<h4 id="customizethecompiledscripttoprocessmultiplesourcefilesatonce">Customize the compiled script to process multiple source files at once</h4>
+<p>The usage is similar to <a href="#ruleon_build_files">rule:on_build_files</a>, but the time when this interface is called is after some source files are compiled,<br>Generally used for post-processing some compiled object files.</p>
+<h3 id="ruleafter_buildcmd_files">rule:after_buildcmd_files</h3>
+<h4 id="customizethecompiledbatchscripttoprocessmultiplesourcefilesatonce">Customize the compiled batch script to process multiple source files at once</h4>
+<p>The usage is similar to <a href="#ruleon_buildcmd_files">rule:on_buildcmd_files</a>, but the time when this interface is called is after compiling some source files,<br>Generally used for post-processing some compiled object files.</p>
 <h3 id="rule_end">rule_end</h3>
 <h4 id="enddefinitionrules">End definition rules</h4>
 <p>This is optional. If you want to manually end the rule definition, you can call it:</p>

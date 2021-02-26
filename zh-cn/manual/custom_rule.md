@@ -34,40 +34,6 @@ target("test")
 
 !> 通过`add_files("*.md", {rule = "markdown"})`方式指定的规则，优先级高于`add_rules("markdown")`设置的规则。
 
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [rule](#rule)                                   | 定义规则                                     | >= 2.1.9 |
-| [add_imports](#ruleadd_imports)                 | 为所有自定义脚本预先导入扩展模块             | >= 2.1.9 |
-| [set_extensions](#ruleset_extensions)           | 设置规则支持的文件扩展类型                   | >= 2.1.9 |
-| [on_load](#ruleon_load)                         | 自定义加载脚本                               | >= 2.2.1 |
-| [on_link](#ruleon_link)                         | 自定义链接脚本                               | >= 2.2.7 |
-| [on_build](#ruleon_build)                       | 自定义编译脚本                               | >= 2.1.9 |
-| [on_clean](#ruleon_clean)                       | 自定义清理脚本                               | >= 2.1.9 |
-| [on_package](#ruleon_package)                   | 自定义打包脚本                               | >= 2.1.9 |
-| [on_install](#ruleon_install)                   | 自定义安装脚本                               | >= 2.1.9 |
-| [on_uninstall](#ruleon_uninstall)               | 自定义卸载脚本                               | >= 2.1.9 |
-| [on_build_file](#ruleon_build_file)             | 自定义编译脚本, 实现单文件构建               | >= 2.2.1 |
-| [on_build_files](#ruleon_build_files)           | 自定义编译脚本, 实现多文件构建               | >= 2.2.1 |
-| [before_load](#rulebefore_load)                 | 自定义加载前的脚本                           | >= 2.2.1 |
-| [before_link](#rulebefore_link)                 | 自定义链接前的脚本                           | >= 2.2.7 |
-| [before_build](#rulebefore_build)               | 自定义编译前的脚本                           | >= 2.2.1 |
-| [before_clean](#rulebefore_clean)               | 自定义清理前的脚本                           | >= 2.2.1 |
-| [before_package](#rulebefore_package)           | 自定义打包前的脚本                           | >= 2.2.1 |
-| [before_install](#rulebefore_install)           | 自定义安装前的脚本                           | >= 2.2.1 |
-| [before_uninstall](#rulebefore_uninstall)       | 自定义卸载前的脚本                           | >= 2.2.1 |
-| [before_build_file](#rulebefore_build_file)     | 自定义编译前的脚本, 实现单文件构建           | >= 2.2.1 |
-| [before_build_files](#rulebefore_build_files)   | 自定义编译前的脚本, 实现多文件构建           | >= 2.2.1 |
-| [after_load](#ruleafter_load)                   | 自定义加载后的脚本                           | >= 2.2.1 |
-| [after_link](#ruleafter_link)                   | 自定义链接后的脚本                           | >= 2.2.7 |
-| [after_build](#ruleafter_build)                 | 自定义编译后的脚本                           | >= 2.2.1 |
-| [after_clean](#ruleafter_clean)                 | 自定义清理后的脚本                           | >= 2.2.1 |
-| [after_package](#ruleafter_package)             | 自定义打包后的脚本                           | >= 2.2.1 |
-| [after_install](#ruleafter_install)             | 自定义安装后的脚本                           | >= 2.2.1 |
-| [after_uninstall](#ruleafter_uninstall)         | 自定义卸载后的脚本                           | >= 2.2.1 |
-| [after_build_file](#ruleafter_build_file)       | 自定义编译后的脚本, 实现单文件构建           | >= 2.2.1 |
-| [after_build_files](#ruleafter_build_files)     | 自定义编译后的脚本, 实现多文件构建           | >= 2.2.1 |
-| [rule_end](#rule_end)                           | 结束定义规则                                 | >= 2.1.9 |
-
 ### 内建规则
 
 自从2.2.1版本后，xmake提供了一些内置规则去简化日常xmake.lua描述，以及一些常用构建环境的支持。
@@ -704,6 +670,77 @@ rule("markdown")
 
 其中第三个参数opt是可选参数，用于获取一些编译过程中的信息状态，例如：opt.progress 为当期的编译进度。
 
+### rule:on_buildcmd_file
+
+#### 自定义批处理编译脚本，一次处理一个源文件
+
+这是 2.5.2 版本新加的接口，里面的脚本不会直接构建源文件，但是会通过 batchcmds 对象，构造一个批处理命令行任务，
+xmake 在实际执行构建的时候，一次性执行这些命令。
+
+这对于 `xmake project` 此类工程生成器插件非常有用，因为生成器生成的第三方工程文件并不支持 `on_build_files` 此类内置脚本的执行支持。
+
+但是 `on_buildcmd_files` 构造的最终结果，就是一批原始的 cmd 命令行，可以直接给其他工程文件作为 custom commands 来执行。
+
+另外，相比 `on_build_files`，它也简化对扩展文件的编译实现，更加的可读易配置，对用户也更加友好。
+
+```lua
+rule("foo")
+    set_extensions(".xxx")
+    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
+        batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile})
+        batchcmds:add_depfiles("/xxxxx/dependfile.h",  ...)
+        -- batchcmds:add_depvalues(...)
+        -- batchcmds:set_depmtime(os.mtime(...))
+        -- batchcmds:set_depcache("xxxx.d")
+    end)
+```
+
+除了 `batchcmds:vrunv`，我们还支持一些其他的批处理命令，例如：
+
+```lua
+batchcmds:show("hello %s", "xmake")
+batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile}, {envs = {LD_LIBRARY_PATH="/xxx"}})
+batchcmds:mkdir("/xxx") -- and cp, mv, rm, ln ..
+batchcmds:compile(sourcefile_cx, objectfile, {configs = {includedirs = sourcefile_dir, languages = (sourcekind == "cxx" and "c++11")}})
+batchcmds:link(objectfiles, targetfile, {configs = {linkdirs = ""}})
+```
+
+同时，我们在里面也简化对依赖执行的配置，下面是一个完整例子：
+
+```lua
+rule("lex")
+    set_extensions(".l", ".ll")
+    on_buildcmd_file(function (target, batchcmds, sourcefile_lex, opt)
+
+        -- imports
+        import("lib.detect.find_tool")
+
+        -- get lex
+        local lex = assert(find_tool("flex") or find_tool("lex"), "lex not found!")
+
+        -- get c/c++ source file for lex
+        local extension = path.extension(sourcefile_lex)
+        local sourcefile_cx = path.join(target:autogendir(), "rules", "lex_yacc", path.basename(sourcefile_lex) .. (extension == ".ll" and ".cpp" or ".c"))
+
+        -- add objectfile
+        local objectfile = target:objectfile(sourcefile_cx)
+        table.insert(target:objectfiles(), objectfile)
+
+        -- add commands
+        batchcmds:show_progress(opt.progress, "${color.build.object}compiling.lex %s", sourcefile_lex)
+        batchcmds:mkdir(path.directory(sourcefile_cx))
+        batchcmds:vrunv(lex.program, {"-o", sourcefile_cx, sourcefile_lex})
+        batchcmds:compile(sourcefile_cx, objectfile)
+
+        -- add deps
+        batchcmds:add_depfiles(sourcefile_lex)
+        batchcmds:set_depmtime(os.mtime(objectfile))
+        batchcmds:set_depcache(target:dependfile(objectfile))
+    end)
+```
+
+关于这个的详细说明和背景，见：[issue 1246](https://github.com/xmake-io/xmake/issues/1246)
+
 ### rule:on_build_files
 
 #### 自定义编译脚本，一次处理多个源文件
@@ -720,6 +757,22 @@ rule("markdown")
         -- build some source files
         for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
             -- ...
+        end
+    end)
+```
+
+### rule:on_buildcmd_files
+
+#### 自定义批处理编译脚本，一次处理多个源文件
+
+关于这个的详细说明，见：[rule:on_buildcmd_file](#ruleon_buildcmd_file)
+
+```lua
+rule("foo")
+    set_extensions(".xxx")
+    on_buildcmd_files(function (target, batchcmds, sourcebatch, opt)
+        for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
+            batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile})
         end
     end)
 ```
@@ -816,11 +869,25 @@ rule("markdown")
 跟[rule:on_build_file](#ruleon_build_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之前，
 一般用于对某些源文件进行编译前的预处理。
 
+### rule:before_buildcmd_file
+
+#### 自定义编译前批处理脚本，一次处理一个源文件
+
+跟[rule:on_buildcmd_file](#ruleon_buildcmd_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之前，
+一般用于对某些源文件进行编译前的预处理。
+
 ### rule:before_build_files
 
 #### 自定义编译前脚本，一次处理多个源文件
 
 跟[rule:on_build_files](#ruleon_build_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之前，
+一般用于对某些源文件进行编译前的预处理。
+
+### rule:before_buildcmd_files
+
+#### 自定义编译前批处理脚本，一次处理多个源文件
+
+跟[rule:on_buildcmd_files](#ruleon_buildcmd_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之前，
 一般用于对某些源文件进行编译前的预处理。
 
 ### rule:after_load
@@ -872,11 +939,25 @@ rule("markdown")
 跟[rule:on_build_file](#ruleon_build_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之后，
 一般用于对某些编译后对象文件进行后期处理。
 
+### rule:after_buildcmd_file
+
+#### 自定义编译后批处理脚本，一次处理一个源文件
+
+跟[rule:on_buildcmd_file](#ruleon_buildcmd_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之后，
+一般用于对某些编译后对象文件进行后期处理。
+
 ### rule:after_build_files
 
 #### 自定义编译后脚本，一次处理多个源文件
 
 跟[rule:on_build_files](#ruleon_build_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之后，
+一般用于对某些编译后对象文件进行后期处理。
+
+### rule:after_buildcmd_files
+
+#### 自定义编译后批处理脚本，一次处理多个源文件
+
+跟[rule:on_buildcmd_files](#ruleon_buildcmd_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之后，
 一般用于对某些编译后对象文件进行后期处理。
 
 ### rule_end
