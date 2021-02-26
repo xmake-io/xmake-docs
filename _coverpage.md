@@ -5,7 +5,7 @@
 > A cross-platform build utility based on Lua
 
 - *Simple, Fast, Cross-platform*
-- *Modern C/C++ build tools, Support multi-language hybrid compilation*
+- *Modern C/C++ build tools, Powerful dependency package integration*
 
 [Gitee](https://gitee.com/tboox/xmake/)
 [Github](https://github.com/xmake-io/xmake/)
