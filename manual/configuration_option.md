@@ -54,8 +54,6 @@ The `option` field can be repeatedly entered to implement separate settings. If 
 | [add_includedirs](/manual/project_target?id=targetadd_includedirs)             | Add Header Search Directory                       | >= 1.0.1           |
 | [add_defines](/manual/project_target?id=targetadd_defines)                     | Add Macro Definition                              | >= 1.0.1           |
 | [add_undefines](/manual/project_target?id=targetadd_undefines)                 | Cancel Macro Definition                           | >= 1.0.1           |
-| [add_defines_h](/manual/project_target?id=targetadd_defines_h)                 | Add macro definitions to header files             | >= 1.0.1           |
-| [add_undefines_h](/manual/project_target?id=targetadd_undefines_h)             | Cancel macro definition to header file            | >= 1.0.1           |
 | [add_cflags](/manual/project_target?id=targetadd_cflags)                       | Add c Compile Options                             | >= 1.0.1           |
 | [add_cxflags](/manual/project_target?id=targetadd_cxflags)                     | Add c/c++ Compile Options                         | >= 1.0.1           |
 | [add_cxxflags](/manual/project_target?id=targetadd_cxxflags)                   | Add c++ Compile Options                           | >= 1.0.1           |
