@@ -527,9 +527,9 @@ target("test")
     on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
         batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile})
         batchcmds:add_depfiles("/xxxxx/dependfile.h", ...)
-        - batchcmds:add_depvalues(...)
-        - batchcmds:set_depmtime(os.mtime(...))
-        - batchcmds:set_depcache("xxxx.d")
+        -- batchcmds:add_depvalues(...)
+        -- batchcmds:set_depmtime(os.mtime(...))
+        -- batchcmds:set_depcache("xxxx.d")
     end)
 </code></pre>
 <p>In addition to <code>batchcmds:vrunv</code>, we also support some other batch commands, such as:</p>

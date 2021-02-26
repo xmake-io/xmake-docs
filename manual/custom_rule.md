@@ -688,9 +688,9 @@ rule("foo")
     on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
         batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile})
         batchcmds:add_depfiles("/xxxxx/dependfile.h", ...)
-        - batchcmds:add_depvalues(...)
-        - batchcmds:set_depmtime(os.mtime(...))
-        - batchcmds:set_depcache("xxxx.d")
+        -- batchcmds:add_depvalues(...)
+        -- batchcmds:set_depmtime(os.mtime(...))
+        -- batchcmds:set_depcache("xxxx.d")
     end)
 ```
 

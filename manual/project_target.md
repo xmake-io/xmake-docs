@@ -1,9 +1,7 @@
 
 We can use `target("test")` to define a project target named "test", each target generates an executable program, a static library, or a dynamic library.
 
-<p class="tip">
-All interfaces of target can be set in the global scope, which affects all sub-targets.
-</p>
+!> All interfaces of target can be set in the global scope, which affects all sub-targets.
 
 For example:
 
@@ -18,115 +16,7 @@ target("test2")
     add_files("*.c")
 ```
 
-<p class="tip">
-`target()' interface can be repeatedly invoked in different places to set the same target.
-</p>
-
-| Interfaces                                      | Description                                               | Support version             |
-| ---------------------------------------------   | ------------------------------------------------------    | --------------------------- |
-| [target](#target)                               | Define a project target                                   | >= 1.0.1                    |
-| [target_end](#target_end)                       | End target definition                                     | >= 2.1.1                    |
-| [set_kind](#targetset_kind)                     | Set target kind                                           | >= 1.0.1                    |
-| [set_strip](#targetset_strip)                   | Strip target symbols                                      | >= 1.0.1                    |
-| [set_enabled](#targetset_enabled)               | Enable or disable target                                  | >= 2.2.2                    |
-| [set_default](#targetset_default)               | Mark as default target                                    | >= 2.1.3                    |
-| [set_options](#targetset_options)               | Set configuration options                                 | >= 1.0.1                    |
-| [set_symbols](#targetset_symbols)               | Set symbol info                                           | >= 1.0.1                    |
-| [set_basename](#targetset_basename)             | Set the base name of target file                          | >= 2.1.2                    |
-| [set_filename](#targetset_filename)             | Set the full name of target file                          | >= 2.1.2                    |
-| [set_warnings](#targetset_warnings)             | Set compilation warning level                             | >= 1.0.1                    |
-| [set_optimize](#targetset_optimize)             | Set compilation optimization level                        | >= 1.0.1                    |
-| [set_languages](#targetset_languages)           | Set source code language standards                        | >= 1.0.1                    |
-| [set_fpmodels](#targetset_fpmodels)             | Set float-point compilation model                         | >= 2.3.8                    |
-| [set_targetdir](#targetset_targetdir)           | Set output directories for target file                    | >= 1.0.1                    |
-| [set_objectdir](#targetset_objectdir)           | Set output directories for object files                   | >= 1.0.1                    |
-| [set_dependir](#targetset_dependir)             | Set output directories for dependent files                | >= 2.2.2                    |
-| [add_imports](#targetadd_imports)               | Add imported modules for the custom script                | >= 2.1.7                    |
-| [add_rules](#targetadd_rules)                   | Add custom compilation rule to target                     | >= 2.1.9                    |
-| [on_load](#targeton_load)                       | Run custom load target configuration script               | >= 2.1.5                    |
-| [on_link](#targeton_link)                       | Run custom link target script                             | >= 2.2.7                    |
-| [on_build](#targeton_build)                     | Run custom build target script                            | >= 2.0.1                    |
-| [on_build_file](#targeton_build_file)           | Run custom build single file script                       | >= 2.2.3                    |
-| [on_build_files](#targeton_build_files)         | Run custom build files script                             | >= 2.2.3                    |
-| [on_clean](#targeton_clean)                     | Run custom clean files script                             | >= 2.0.1                    |
-| [on_package](#targeton_package)                 | Run custom package target script                          | >= 2.0.1                    |
-| [on_install](#targeton_install)                 | Run custom install target file script                     | >= 2.0.1                    |
-| [on_uninstall](#targeton_uninstall)             | Run custom uninstall target file script                   | >= 2.0.1                    |
-| [on_run](#targeton_run)                         | Run custom run target script                              | >= 2.0.1                    |
-| [before_link](#targetbefore_link)               | Run custom script before linking target                   | >= 2.2.7                    |
-| [before_build](#targetbefore_build)             | Run custom script before building target                  | >= 2.0.1                    |
-| [before_build_file](#targetbefore_build_file)   | Run custom script before building single file             | >= 2.2.3                    |
-| [before_build_files](#targetbefore_build_files) | Run custom script before building files                   | >= 2.2.3                    |
-| [before_clean](#targetbefore_clean)             | Run custom script before cleaning target                  | >= 2.0.1                    |
-| [before_package](#targetbefore_package)         | Run custom script before packaging target                 | >= 2.0.1                    |
-| [before_install](#targetbefore_install)         | Run custom script before installing target                | >= 2.0.1                    |
-| [before_uninstall](#targetbefore_uninstall)     | Run custom script before uninstalling target              | >= 2.0.1                    |
-| [before_run](#targetbefore_run)                 | Run custom script before running target                   | >= 2.0.1                    |
-| [after_link](#targetafter_link)                 | Run custom script after linking target                    | >= 2.2.7                    |
-| [after_build](#targetafter_build)               | Run custom script after building target                   | >= 2.0.1                    |
-| [after_build_file](#targetafter_build_file)     | Run custom script after building single file              | >= 2.2.3                    |
-| [after_build_files](#targetafter_build_files)   | Run custom script after building files                    | >= 2.2.3                    |
-| [after_clean](#targetafter_clean)               | Run custom script after cleaning target                   | >= 2.0.1                    |
-| [after_package](#targetafter_package)           | Run custom script after packaging target                  | >= 2.0.1                    |
-| [after_install](#targetafter_install)           | Run custom script after installing target                 | >= 2.0.1                    |
-| [after_uninstall](#targetafter_uninstall)       | Run custom script after uninstalling target               | >= 2.0.1                    |
-| [after_run](#targetafter_run)                   | Run custom script after running target                    | >= 2.0.1                    |
-| [set_pcheader](#targetset_pcheader)             | Set pre-compiled c header file                            | >= 2.1.5                    |
-| [set_pcxxheader](#targetset_pcxxheader)         | Set pre-compiled c++ header file                          | >= 2.1.5                    |
-| [add_deps](#targetadd_deps)                     | Add target dependencies                                   | >= 1.0.1                    |
-| [add_links](#targetadd_links)                   | Add link libraries                                        | >= 1.0.1                    |
-| [add_syslinks](#targetadd_syslinks)             | Add system link libraries                                 | >= 2.2.3                    |
-| [add_files](#targetadd_files)                   | Add source files                                          | >= 1.0.1                    |
-| [del_files](#targetdel_files)                   | Remove source files                                       | >= 2.1.9                    |
-| [add_linkdirs](#targetadd_linkdirs)             | Add link search directories                               | >= 1.0.1                    |
-| [add_rpathdirs](#targetadd_rpathdirs)           | Add load search directories for dynamic library           | >= 2.1.3                    |
-| [add_includedirs](#targetadd_includedirs)       | Add include search directories                            | >= 1.0.1                    |
-| [add_sysincludedirs](#targetadd_sysincludedirs) | Add system/external include search directories            | >= 2.3.9                    |
-| [add_defines](#targetadd_defines)               | Add macro definition                                      | >= 1.0.1                    |
-| [add_undefines](#targetadd_undefines)           | Add macro undefinition                                    | >= 1.0.1                    |
-| [add_cflags](#targetadd_cflags)                 | Add c compilation flags                                   | >= 1.0.1                    |
-| [add_cxflags](#targetadd_cxflags)               | Add c/c++ compilation flags                               | >= 1.0.1                    |
-| [add_cxxflags](#targetadd_cxxflags)             | Add c++ compilation flags                                 | >= 1.0.1                    |
-| [add_mflags](#targetadd_mflags)                 | Add objc compilation flags                                | >= 1.0.1                    |
-| [add_mxflags](#targetadd_mxflags)               | Add objc/objc++ compilation flags                         | >= 1.0.1                    |
-| [add_mxxflags](#targetadd_mxxflags)             | Add objc++ compilation flags                              | >= 1.0.1                    |
-| [add_scflags](#targetadd_scflags)               | Add swift compilation flags                               | >= 2.0.1                    |
-| [add_asflags](#targetadd_asflags)               | Add asm compilation flags                                 | >= 2.0.1                    |
-| [add_gcflags](#targetadd_gcflags)               | Add go compilation flags                                  | >= 2.1.1                    |
-| [add_dcflags](#targetadd_dcflags)               | Add dlang compilation flags                               | >= 2.1.1                    |
-| [add_rcflags](#targetadd_rcflags)               | Add rust compilation flags                                | >= 2.1.1                    |
-| [add_fcflags](#targetadd_fcflags)               | Add fortran compilation flags                             | >= 2.3.5                    |
-| [add_zcflags](#targetadd_zcflags)               | Add zig compilation flags                                 | >= 2.3.5                    |
-| [add_cuflags](#targetadd_cuflags)               | Add cuda compilation flags                                | >= 2.1.1                    |
-| [add_culdflags](#targetadd_culdflags)           | Add cuda device-link flags                                | >= 2.2.7                    |
-| [add_cugencodes](#targetadd_cugencodes)         | Add cuda device gencode flags                             | >= 2.2.7                    |
-| [add_ldflags](#targetadd_ldflags)               | Add static library link flags                             | >= 1.0.1                    |
-| [add_arflags](#targetadd_arflags)               | Add archive library flags                                 | >= 1.0.1                    |
-| [add_shflags](#targetadd_shflags)               | Add dynamic library link flags                            | >= 1.0.1                    |
-| [add_packages](#targetadd_packages)             | Add package dependencies                                  | >= 2.0.1                    |
-| [add_options](#targetadd_options)               | Add options dependencies                                  | >= 2.0.1                    |
-| [add_languages](#targetadd_languages)           | Add language standards                                    | >= 1.0.1                    |
-| [add_vectorexts](#targetadd_vectorexts)         | Add vector extensions                                     | >= 1.0.1                    |
-| [add_frameworks](#targetadd_frameworks)         | Add frameworks                                            | >= 2.1.1                    |
-| [add_frameworkdirs](#targetadd_frameworkdirs)   | Add framework search directories                          | >= 2.1.5                    |
-| [set_toolset](#targetset_toolset)               | Set toolset                                               | >= 2.3.4                    |
-| [set_toolchains](#targetset_toolchains)         | Set toolchains                                            | >= 2.3.4                    |
-| [set_values](#targetset_values)                 | Set custom configuration values                           | >= 2.2.1                    |
-| [add_values](#targetadd_values)                 | Add custom configuration values                           | >= 2.2.1                    |
-| [set_rundir](#targetset_rundir)                 | Set run directory                                         | >= 2.2.7                    |
-| [add_runenvs](#targetadd_runenvs)               | Add run environments                                      | >= 2.2.7                    |
-| [set_runenv](#targetset_runenv)                 | Set run environment                                       | >= 2.2.8                    |
-| [set_installdir](#targetset_installdir)         | Set the installation directory                            | >= 2.2.5                    |
-| [add_installfiles](#targetadd_installfiles)     | add installation files                                    | >= 2.2.5                    |
-| [add_headerfiles](#targetadd_headerfiles)       | Add header files                                          | >= 2.2.5                    |
-| [set_configdir](#targetset_configdir)           | Set the output directory of configuration files           | >= 2.2.5                    |
-| [set_configvar](#targetset_configvar)           | Set template configuration variable                       | >= 2.2.5                    |
-| [add_configfiles](#targetadd_configfiles)       | Add template configuration files                          | >= 2.2.5                    |
-| [set_policy](#targetset_policy)                 | Set build policy                                          | >= 2.3.4                    |
-| [set_plat](#targetset_plat)                     | Set the compilation platform for the specified target     | >= 2.3.5                    |
-| [set_arch](#targetset_arch)                     | Set the compilation architecture for the specified target | >= 2.3.5                    |
-| [set_runtimes](#targetset_runtimes)             | Set the runtime library of the compilation target         | >= 2.5.1                    |
-| [set_group](#targetset_group)                   | Set target group                                          | >= 2.5.1                    |
+!> `target()' interface can be repeatedly invoked in different places to set the same target.
 
 ### target
 
@@ -157,9 +47,7 @@ target("demo")
     add_files("src/test.c")
 ```
 
-<p class="tip">
-All configuration in root scope affects all targets, but does not affect the configuration of `option()`.
-</p>
+!> All configuration in root scope affects all targets, but does not affect the configuration of `option()`.
 
 For example:
 
@@ -253,10 +141,10 @@ For example, with the above configuration, we can compile two related dependent 
 
 Set the current target strip mode, currently supports the mode:
 
-| Value | Description |
-| ------ | ----------------------------------------- |
-| debug | When you link, strip off debugging symbols |
-| all | When you link, strip all symbols, including debugging symbols |
+| Value  | Description                                                   |
+| ------ | -----------------------------------------                     |
+| debug  | When you link, strip off debugging symbols                    |
+| all    | When you link, strip all symbols, including debugging symbols |
 
 This api is generally used in release mode and can generate smaller binary programs.
 
@@ -294,11 +182,11 @@ target("test3")
 
 The three goals of the above code, when executing the `xmake`, `xmake install`, `xmake package`, `xmake run` and other commands, if you do not specify the target name, then:
 
-| Target Name | Behavior |
-| ------ | -------------------------------- |
-| test1 | will not be built, installed, packaged, and run by default |
-| test2 | Default build, install, package, and run |
-| test3 | Default build, install, package, and run |
+| Target Name | Behavior                                                   |
+| ------      | --------------------------------                           |
+| test1       | will not be built, installed, packaged, and run by default |
+| test2       | Default build, install, package, and run                   |
+| test3       | Default build, install, package, and run                   |
 
 Through the above example, you can see that the default target can be set more than one, and it will run in turn when running.
 
@@ -338,9 +226,7 @@ target("test")
     set_options("hello")
 ```
 
-<p class="warn">
-Some settings defined in [option](#option) will affect this `target` target only after calling `set_options` for the association to take effect, such as macro definitions, link libraries, compile options, etc.
-</p>
+!> Some settings defined in [option](#option) will affect this `target` target only after calling `set_options` for the association to take effect, such as macro definitions, link libraries, compile options, etc.
 
 ### target:set_symbols
 
@@ -479,14 +365,14 @@ Set the compile optimization level of the target. If no target is currently set,
 
 At present, we mainly support several levels:
 
-| Value | Description | gcc/clang | msvc |
-| ---------- | ---------------------- | ---------- | ------------ |
-| none | disable optimization | -O0 | -Od |
-| fast | quick optimization | -O1 | default |
-| faster | faster optimization | -O2 | -Ox |
-| fastest | Optimization of the fastest running speed | -O3 | -Ox -fp:fast |
-| smallest | Minimize code optimization | -Os | -O1 |
-| aggressive | over-optimization | -Ofast | -Ox -fp:fast |
+| Value      | Description                               | gcc/clang  | msvc         |
+| ---------- | ----------------------                    | ---------- | ------------ |
+| none       | disable optimization                      | -O0        | -Od          |
+| fast       | quick optimization                        | -O1        | default      |
+| faster     | faster optimization                       | -O2        | -Ox          |
+| fastest    | Optimization of the fastest running speed | -O3        | -Ox -fp:fast |
+| smallest   | Minimize code optimization                | -Os        | -O1          |
+| aggressive | over-optimization                         | -Ofast     | -Ox -fp:fast |
 
 E.g:
 
@@ -745,9 +631,7 @@ target("test")
     end)
 ```
 
-<p class="tip">
-Once the build process is set for this target target, the default build process for xmake will no longer be executed.
-</p>
+!> Once the build process is set for this target target, the default build process for xmake will no longer be executed.
 
 ### target:on_build_file
 
