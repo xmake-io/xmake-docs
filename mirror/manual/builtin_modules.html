@@ -1193,6 +1193,66 @@ local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Micros
     - ...
 end
 </code></pre>
+<h3 id="linuxos">linuxos</h3>
+<p>The linux system operation module is a built-in module, no need to use <a href="#import">import</a> to import, and its interface can be called directly in the script domain.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Support version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#linuxosname">linuxos.name</a></td>
+<td>Get the linux system release name</td>
+<td>>= 2.5.2</td>
+</tr>
+<tr>
+<td><a href="#linuxosversion">linuxos.version</a></td>
+<td>Get linux system version</td>
+<td>>= 2.5.2</td>
+</tr>
+<tr>
+<td><a href="#linuxoskernelver">linuxos.kernelver</a></td>
+<td>Get linux system kernel version</td>
+<td>>= 2.5.2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="linuxosname">linuxos.name</h4>
+<ul>
+<li>Get linux system name</li>
+</ul>
+<p>We can also quickly get the view through the following command</p>
+<pre><code class="lang-bash">xmake l linuxos.name
+</code></pre>
+<p>Some names currently supported are:</p>
+<ul>
+<li>ubuntu</li>
+<li>debian</li>
+<li>archlinux</li>
+<li>manjaro</li>
+<li>linuxmint</li>
+<li>centos</li>
+<li>fedora</li>
+<li>opensuse</li>
+</ul>
+<h4 id="linuxosversion">linuxos.version</h4>
+<ul>
+<li>Get linux system version</li>
+</ul>
+<p>The version returned is the semver semantic version object</p>
+<pre><code class="lang-lua">if linux.version():ge("10.0") then
+    -- ...
+end
+</code></pre>
+<h4 id="linuxoskernelver">linuxos.kernelver</h4>
+<ul>
+<li>Get linux system kernel version</li>
+</ul>
+<p>What is returned is also a semantic version object, you can also execute <code>xmake l linuxos.kernelver</code> to quickly view</p>
 <h3 id="io">io</h3>
 <p>The io operation module extends lua&#39;s built-in io module to provide more easy-to-use interfaces.</p>
 <table>

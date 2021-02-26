@@ -1194,6 +1194,66 @@ local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Micros
     -- ...
 end
 </code></pre>
+<h3 id="linuxos">linuxos</h3>
+<p>linux 系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#linuxosname">linuxos.name</a></td>
+<td>获取 linux 系统发行版名称</td>
+<td>>= 2.5.2</td>
+</tr>
+<tr>
+<td><a href="#linuxosversion">linuxos.version</a></td>
+<td>获取 linux 系统版本</td>
+<td>>= 2.5.2</td>
+</tr>
+<tr>
+<td><a href="#linuxoskernelver">linuxos.kernelver</a></td>
+<td>获取 linux 系统内核版本</td>
+<td>>= 2.5.2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="linuxosname">linuxos.name</h4>
+<ul>
+<li>获取 linux 系统发行版名称</li>
+</ul>
+<p>我们也可以通过下面的命令，快速获取查看</p>
+<pre><code class="lang-bash">xmake l linuxos.name
+</code></pre>
+<p>目前支持的一些名称有：</p>
+<ul>
+<li>ubuntu</li>
+<li>debian</li>
+<li>archlinux</li>
+<li>manjaro</li>
+<li>linuxmint</li>
+<li>centos</li>
+<li>fedora</li>
+<li>opensuse</li>
+</ul>
+<h4 id="linuxosversion">linuxos.version</h4>
+<ul>
+<li>获取 linux 系统版本</li>
+</ul>
+<p>返回的版本是 semver 语义版本对象</p>
+<pre><code class="lang-lua">if linux.version():ge("10.0") then
+    -- ...
+end
+</code></pre>
+<h4 id="linuxoskernelver">linuxos.kernelver</h4>
+<ul>
+<li>获取 linux 系统内核版本</li>
+</ul>
+<p>返回的也是语义版本对象，也可以执行 <code>xmake l linuxos.kernelver</code> 快速查看</p>
 <h3 id="io">io</h3>
 <p>io操作模块，扩展了lua内置的io模块，提供更多易用的接口。</p>
 <table>
