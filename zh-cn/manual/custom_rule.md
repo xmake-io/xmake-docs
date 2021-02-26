@@ -13,7 +13,7 @@ rule("markdown")
 
 target("test")
     set_kind("binary")
-    
+
     -- 使test目标支持markdown文件的构建规则
     add_rules("markdown")
 
@@ -32,9 +32,7 @@ target("test")
 
 一个target可以叠加应用多个rules去更加定制化实现自己的构建行为，甚至支持不同的构建环境。
 
-<p class="tip">
-通过`add_files("*.md", {rule = "markdown"})`方式指定的规则，优先级高于`add_rules("markdown")`设置的规则。
-</p>
+!> 通过`add_files("*.md", {rule = "markdown"})`方式指定的规则，优先级高于`add_rules("markdown")`设置的规则。
 
 | 接口                                            | 描述                                         | 支持版本 |
 | ----------------------------------------------- | -------------------------------------------- | -------- |
@@ -73,37 +71,6 @@ target("test")
 ### 内建规则
 
 自从2.2.1版本后，xmake提供了一些内置规则去简化日常xmake.lua描述，以及一些常用构建环境的支持。
-
-| 规则                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [mode.debug](#mode-debug)                       | 调试模式编译规则                             | >= 2.2.1 |
-| [mode.release](#mode-release)                   | 发布模式编译规则                             | >= 2.2.1 |
-| [mode.releasedbg](#mode-releasedbg)             | 发布模式编译规则（带调试符号）               | >= 2.3.4 |
-| [mode.minsizerel](#mode-minsizerel)             | 发布模式编译规则（最小编译）                 | >= 2.3.4 |
-| [mode.check](#mode-check)                       | 检测模式编译规则                             | >= 2.2.1 |
-| [mode.profile](#mode-profile)                   | 性能分析模式编译规则                         | >= 2.2.1 |
-| [mode.coverage](#mode-coverage)                 | 覆盖分析编译模式规则                         | >= 2.2.1 |
-| [mode.valgrind](#mode-valgrind)                 | Valgrind分析检测模式规则                     | >= 2.3.3 |
-| [mode.asan](#mode-asan)                         | AddressSanitizer分析检测模式规则             | >= 2.3.3 |
-| [mode.tsan](#mode-tsan)                         | ThreadSanitizer分析检测模式规则              | >= 2.3.3 |
-| [mode.lsan](#mode-lsan)                         | LeakSanitizer分析检测模式规则                | >= 2.3.3 |
-| [mode.ubsan](#mode-ubsan)                       | UndefinedBehaviorSanitizer分析检测模式规则   | >= 2.3.3 |
-| [qt.static](#qt-static)                         | Qt静态库编译规则                             | >= 2.2.1 |
-| [qt.shared](#qt-shared)                         | Qt动态库编译规则                             | >= 2.2.1 |
-| [qt.console](#qt-console)                       | Qt控制台编译规则                             | >= 2.2.1 |
-| [qt.quickapp](#qt-quickapp)                     | Qt QuickApp应用程序编译规则                  | >= 2.2.3 |
-| [qt.quickapp_static](#qt-quickapp_static)       | Qt QuickApp应用程序编译规则（静态链接）      | >= 2.2.3 |
-| [qt.widgetapp](#qt-widgetapp)                   | Qt WidgetApp应用程序编译规则                 | >= 2.2.3 |
-| [qt.widgetapp_static](#qt-widgetapp_static)     | Qt WidgetApp应用程序编译规则（静态链接）     | >= 2.2.3 |
-| [xcode.bundle](#xcode-bundle)                   | Xcode Bundle编译规则                         | >= 2.3.3 |
-| [xcode.framework](#xcode-framework)             | Xcode Framework编译规则                      | >= 2.3.3 |
-| [xcode.application](#xcode-application)         | Xcode iOS/MacOS App编译规则                  | >= 2.3.3 |
-| [wdk.umdf.driver](#wdk-umdf-driver)             | WDK环境umdf驱动编译规则                      | >= 2.2.1 |
-| [wdk.umdf.binary](#wdk-umdf-binary)             | WDK环境umdf驱动应用编译规则                  | >= 2.2.1 |
-| [wdk.kmdf.driver](#wdk-kmdf-driver)             | WDK环境kmdf驱动编译规则                      | >= 2.2.1 |
-| [wdk.kmdf.binary](#wdk-kmdf-binary)             | WDK环境kmdf驱动应用编译规则                  | >= 2.2.1 |
-| [wdk.wdm.driver](#wdk-wdm-driver)               | WDK环境wdm驱动编译规则                       | >= 2.2.1 |
-| [wdk.wdm.binary](#wdk-wdm-binary)               | WDK环境wdm驱动应用编译规则                   | >= 2.2.1 |
 
 我们可以通过运行以下命令，查看完整的内置规则列表：
 
@@ -348,7 +315,7 @@ target("test")
 ```lua
 target("test")
     add_rules("qt.quickapp")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/qml.qrc")
 ```
 
@@ -362,23 +329,23 @@ target("test")
 ```lua
 target("test")
     add_rules("qt.quickapp_static")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/qml.qrc")
 ```
 
-#### qt.widgetapp 
+#### qt.widgetapp
 
 用于编译Qt Widgets(ui/moc)应用程序
 
 ```lua
 target("test")
     add_rules("qt.widgetapp")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 ```
 
-#### qt.widgetapp_static 
+#### qt.widgetapp_static
 
 用于编译Qt Widgets(ui/moc)应用程序（静态库版本）
 
@@ -387,7 +354,7 @@ target("test")
 ```lua
 target("test")
     add_rules("qt.widgetapp_static")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 ```
@@ -453,7 +420,7 @@ target("echo")
     add_rules("wdk.driver", "wdk.env.kmdf")
 
     -- add files
-    add_files("driver/*.c") 
+    add_files("driver/*.c")
     add_files("driver/*.inx")
 
     -- add includedirs
@@ -474,7 +441,7 @@ target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
 
     -- add files
-    add_files("exe/*.cpp") 
+    add_files("exe/*.cpp")
 ```
 
 #### wdk.static
@@ -493,7 +460,7 @@ target("nonpnp")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
 ```
 
 #### wdk.shared
@@ -512,7 +479,7 @@ target("nonpnp")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
 ```
 
 #### wdk.tracewpp
@@ -529,7 +496,7 @@ target("nonpnp")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
     add_files("driver/*.rc")
 ```
 
@@ -561,6 +528,38 @@ target("usbview")
 ```lua
 add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 ```
+
+#### plugin.vsxmake.autoupdate
+
+我们可以使用此规则，在通过 `xmake project -k vsxmake` 生成的 vs 工程中，自动更新 vs 工程文件（当每次构建完成）。
+
+```lua
+add_rules("plugin.vsxmake.autoupdate")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
+#### utils.symbols.export_all
+
+v2.5.2 以上版本提供，我们可以用它自动导出所有的动态库符号，目前仅支持 windows dll 目标程序的符号导出，即使没有在代码中通过 `__declspec(dllexport)` 导出接口，
+xmake 也会自动导出所有 c 接口符号（c++ 类库符号太多，暂时没有导出它）。
+
+```lua
+add_rules("mode.release", "mode.debug")
+
+target("foo")
+    set_kind("shared")
+    add_files("src/foo.c")
+    add_rules("utils.symbols.export_all")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.c")
+```
+
+相关 issue [#1123](https://github.com/xmake-io/xmake/issues/1123)
 
 ### rule
 
@@ -596,7 +595,7 @@ rule("markdown")
 
 target("test")
     set_kind("binary")
-    
+
     -- 使test目标支持markdown文件的构建规则
     add_rules("markdown")
 

@@ -1285,16 +1285,17 @@ The above configuration, even if `add_syslinks` is set in advance, the final lin
 
 Source files used to add target projects, even library files, some file types currently supported:
 
-| Supported source file types | Description |
-| ------------------ | ---------------------------------- |
-| .c/.cpp/.cc/.cxx | c++ file |
-| .s/.S/.asm | Assembly files |
-| .m/.mm | objc file |
-| .swift | swift file |
-| .go | golang file |
-| .o/.obj | Object File |
-| .a/.lib | Static library files, will automatically merge the library to the target program |
-| .rc | msvc resource file |
+| Supported source file types | Description                                                                      |
+| ------------------          | ----------------------------------                                               |
+| .c/.cpp/.cc/.cxx            | c++ file                                                                         |
+| .s/.S/.asm                  | assembly files                                                                   |
+| .m/.mm                      | objc file                                                                        |
+| .swift                      | swift file                                                                       |
+| .go                         | golang file                                                                      |
+| .o/.obj                     | object File                                                                      |
+| .a/.lib                     | static library files, will automatically merge the library to the target program |
+| .rc                         | msvc resource file                                                               |
+| .manifest                   | windows manifest file                                                            |
 
 The wildcard `*` indicates that the file in the current directory is matched, and `**` matches the file in the multi-level directory.
 

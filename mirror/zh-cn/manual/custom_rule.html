@@ -115,9 +115,7 @@ target("test")
     add_files("src/test/*.md.in", {rule = "markdown"})
 </code></pre>
 <p>一个target可以叠加应用多个rules去更加定制化实现自己的构建行为，甚至支持不同的构建环境。</p>
-<p><p class="tip"><br>通过<code>add_files("*.md", {rule = "markdown"})</code>方式指定的规则，优先级高于<code>add_rules("markdown")</code>设置的规则。<br></p>
-
-</p>
+<p>!> 通过<code>add_files("*.md", {rule = "markdown"})</code>方式指定的规则，优先级高于<code>add_rules("markdown")</code>设置的规则。</p>
 <table>
 <thead>
 <tr>
@@ -286,157 +284,6 @@ target("test")
 </table>
 <h3 id="">内建规则</h3>
 <p>自从2.2.1版本后，xmake提供了一些内置规则去简化日常xmake.lua描述，以及一些常用构建环境的支持。</p>
-<table>
-<thead>
-<tr>
-<th>规则</th>
-<th>描述</th>
-<th>支持版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#mode-debug">mode.debug</a></td>
-<td>调试模式编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-release">mode.release</a></td>
-<td>发布模式编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-releasedbg">mode.releasedbg</a></td>
-<td>发布模式编译规则（带调试符号）</td>
-<td>>= 2.3.4</td>
-</tr>
-<tr>
-<td><a href="#mode-minsizerel">mode.minsizerel</a></td>
-<td>发布模式编译规则（最小编译）</td>
-<td>>= 2.3.4</td>
-</tr>
-<tr>
-<td><a href="#mode-check">mode.check</a></td>
-<td>检测模式编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-profile">mode.profile</a></td>
-<td>性能分析模式编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-coverage">mode.coverage</a></td>
-<td>覆盖分析编译模式规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#mode-valgrind">mode.valgrind</a></td>
-<td>Valgrind分析检测模式规则</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#mode-asan">mode.asan</a></td>
-<td>AddressSanitizer分析检测模式规则</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#mode-tsan">mode.tsan</a></td>
-<td>ThreadSanitizer分析检测模式规则</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#mode-lsan">mode.lsan</a></td>
-<td>LeakSanitizer分析检测模式规则</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#mode-ubsan">mode.ubsan</a></td>
-<td>UndefinedBehaviorSanitizer分析检测模式规则</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#qt-static">qt.static</a></td>
-<td>Qt静态库编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#qt-shared">qt.shared</a></td>
-<td>Qt动态库编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#qt-console">qt.console</a></td>
-<td>Qt控制台编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#qt-quickapp">qt.quickapp</a></td>
-<td>Qt QuickApp应用程序编译规则</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#qt-quickapp_static">qt.quickapp_static</a></td>
-<td>Qt QuickApp应用程序编译规则（静态链接）</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#qt-widgetapp">qt.widgetapp</a></td>
-<td>Qt WidgetApp应用程序编译规则</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#qt-widgetapp_static">qt.widgetapp_static</a></td>
-<td>Qt WidgetApp应用程序编译规则（静态链接）</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#xcode-bundle">xcode.bundle</a></td>
-<td>Xcode Bundle编译规则</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#xcode-framework">xcode.framework</a></td>
-<td>Xcode Framework编译规则</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#xcode-application">xcode.application</a></td>
-<td>Xcode iOS/MacOS App编译规则</td>
-<td>>= 2.3.3</td>
-</tr>
-<tr>
-<td><a href="#wdk-umdf-driver">wdk.umdf.driver</a></td>
-<td>WDK环境umdf驱动编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-umdf-binary">wdk.umdf.binary</a></td>
-<td>WDK环境umdf驱动应用编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-kmdf-driver">wdk.kmdf.driver</a></td>
-<td>WDK环境kmdf驱动编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-kmdf-binary">wdk.kmdf.binary</a></td>
-<td>WDK环境kmdf驱动应用编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-wdm-driver">wdk.wdm.driver</a></td>
-<td>WDK环境wdm驱动编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="#wdk-wdm-binary">wdk.wdm.binary</a></td>
-<td>WDK环境wdm驱动应用编译规则</td>
-<td>>= 2.2.1</td>
-</tr>
-</tbody>
-</table>
 <p>我们可以通过运行以下命令，查看完整的内置规则列表：</p>
 <pre><code class="lang-bash">$ xmake show -l rules
 </code></pre>
@@ -577,7 +424,7 @@ end
 <p>用于编译生成Qt环境的Quick(qml) ui应用程序。</p>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.quickapp")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/qml.qrc")
 </code></pre>
 <h4 id="qtquickapp_static">qt.quickapp_static</h4>
@@ -585,14 +432,14 @@ end
 <p>!> 需要切换到静态库版本Qt SDK</p>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.quickapp_static")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/qml.qrc")
 </code></pre>
 <h4 id="qtwidgetapp">qt.widgetapp</h4>
 <p>用于编译Qt Widgets(ui/moc)应用程序</p>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.widgetapp")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 </code></pre>
@@ -601,7 +448,7 @@ end
 <p>!> 需要切换到静态库版本Qt SDK</p>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.widgetapp_static")
-    add_files("src/*.cpp") 
+    add_files("src/*.cpp")
     add_files("src/mainwindow.ui")
     add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
 </code></pre>
@@ -643,7 +490,7 @@ target("echo")
     add_rules("wdk.driver", "wdk.env.kmdf")
 
     -- add files
-    add_files("driver/*.c") 
+    add_files("driver/*.c")
     add_files("driver/*.inx")
 
     -- add includedirs
@@ -659,7 +506,7 @@ target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
 
     -- add files
-    add_files("exe/*.cpp") 
+    add_files("exe/*.cpp")
 </code></pre>
 <h4 id="wdkstatic">wdk.static</h4>
 <p>编译生成windows下基于WDK环境的静态库程序，目前仅支持WDK10环境。</p>
@@ -673,7 +520,7 @@ target("app")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
 </code></pre>
 <h4 id="wdkshared">wdk.shared</h4>
 <p>编译生成windows下基于WDK环境的动态库程序，目前仅支持WDK10环境。</p>
@@ -687,7 +534,7 @@ target("app")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
 </code></pre>
 <h4 id="wdktracewpp">wdk.tracewpp</h4>
 <p>用于启用tracewpp预处理源文件：</p>
@@ -700,7 +547,7 @@ target("app")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"}) 
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
     add_files("driver/*.rc")
 </code></pre>
 <p>更多WDK规则描述见：<a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
@@ -723,6 +570,28 @@ target("usbview")
 <p>用于指定某些c++源文件作为c++.net来编译。</p>
 <pre><code class="lang-lua">add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
 </code></pre>
+<h4 id="pluginvsxmakeautoupdate">plugin.vsxmake.autoupdate</h4>
+<p>我们可以使用此规则，在通过 <code>xmake project -k vsxmake</code> 生成的 vs 工程中，自动更新 vs 工程文件（当每次构建完成）。</p>
+<pre><code class="lang-lua">add_rules("plugin.vsxmake.autoupdate")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+</code></pre>
+<h4 id="utilssymbolsexport_all">utils.symbols.export_all</h4>
+<p>v2.5.2 以上版本提供，我们可以用它自动导出所有的动态库符号，目前仅支持 windows dll 目标程序的符号导出，即使没有在代码中通过 <code>__declspec(dllexport)</code> 导出接口，<br>xmake 也会自动导出所有 c 接口符号（c++ 类库符号太多，暂时没有导出它）。</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+
+target("foo")
+    set_kind("shared")
+    add_files("src/foo.c")
+    add_rules("utils.symbols.export_all")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.c")
+</code></pre>
+<p>相关 issue <a href="https://github.com/xmake-io/xmake/issues/1123">#1123</a></p>
 <h3 id="rule">rule</h3>
 <h4 id="">定义规则</h4>
 <pre><code class="lang-lua">rule("markdown")
