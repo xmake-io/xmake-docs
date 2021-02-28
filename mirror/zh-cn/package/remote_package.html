@@ -655,6 +655,28 @@ The package info of project:
 <p>然后在项目里面，启用这些配置，编译集成带有特定配置的包：</p>
 <pre><code class="lang-lua">add_requires("pcre2", {configs = {bitwidth = 16}})
 </code></pre>
+<h4 id="add_extsources">add_extsources</h4>
+<p>2.5.2 版本开始，我们也新增了 <code>add_extsources</code> 和 <code>on_fetch</code> 两个配置接口，可以更好的配置 xmake 在安装 C/C++ 包的过程中，对系统库的查找过程。</p>
+<p>至于具体背景，我们可以举个例子，比如我们在 <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a> 仓库新增了一个 <code>package("libusb")</code> 的包。</p>
+<p>那么用户就可以通过下面的方式，直接集成使用它：</p>
+<pre><code class="lang-lua">add_requires("libusb")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("libusb")
+</code></pre>
+<p>如果用户系统上确实没有安装 libusb，那么 xmake 会自动下载 libusb 库源码，自动编译安装集成，没啥问题。</p>
+<p>但如果用户通过 <code>apt install libusb-1.0</code> 安装了 libusb 库到系统，那么按理 xmake 应该会自动优先查找用户安装到系统环境的 libusb 包，直接使用，避免额外的下载编译安装。</p>
+<p>但是问题来了，xmake 内部通过 <code>find_package("libusb")</code> 并没有找打它，这是为什么呢？因为通过 apt 安装的 libusb 包名是 <code>libusb-1.0</code>, 而不是 libusb。</p>
+<p>我们只能通过 <code>pkg-config --cflags libusb-1.0</code> 才能找到它，但是 xmake 内部的默认 find_package 逻辑并不知道 <code>libusb-1.0</code> 的存在，所以找不到。</p>
+<p>因此为了更好地适配不同系统环境下，系统库的查找，我们可以通过 <code>add_extsources("pkgconfig::libusb-1.0")</code> 去让 xmake 改进查找逻辑，例如：</p>
+<pre><code class="lang-lua">package("libusb")
+    add_extsources("pkgconfig::libusb-1.0")
+    on_install(function (package)
+        -- ...
+    end)
+</code></pre>
+<p>另外，我们也可以通过这个方式，改进查找 homebrew/pacman 等其他包管理器安装的包，例如：<code>add_extsources("pacman::libusb-1.0")</code>。</p>
 <h4 id="on_load">on_load</h4>
 <p>这是个可选的接口，如果要更加灵活的动态判断各种平台架构，针对性做设置，可以在这个里面完成，例如：</p>
 <pre><code class="lang-lua">on_load(function (package)
@@ -666,7 +688,17 @@ The package info of project:
 end)
 </code></pre>
 <p>pcre包需要做一些针对bitwidth的判断，才能确定对外输出的链接库名字，还需要针对动态库增加一些defines导出，这个时候在on_load里面设置，就更加灵活了。</p>
-<h4 id="on_install">on_install</h4>
+<h4 id="on_fetch">on_fetch</h4>
+<p>这是个可选配置，2.5.2 之后，如果不同系统下安装的系统库，仅仅只是包名不同，那么使用 <code>add_extsources</code> 改进系统库查找已经足够，简单方便。</p>
+<p>但是如果有些安装到系统的包，位置更加复杂，想要找到它们，也许需要一些额外的脚本才能实现，例如：windows 下注册表的访问去查找包等等，这个时候，我们就可以通过 <code>on_fetch</code> 完全定制化查找系统库逻辑。</p>
+<p>还是以 libusb 为例，我们不用 <code>add_extsources</code>，可以使用下面的方式，实现相同的效果，当然，我们可以在里面做更多的事情。</p>
+<pre><code>package("libusb")
+    on_fetch("linux", function(package, opt)
+        if opt.system then
+            return find_package("pkgconfig::libusb-1.0")
+        end
+    end)
+</code></pre><h4 id="on_install">on_install</h4>
 <p>这个接口主要用于添加安装脚本，前面的字符串参数用于设置支持的平台，像<code>on_load</code>, <code>on_test</code>等其他脚本域也是同样支持的。</p>
 <h5 id="">平台过滤</h5>
 <p>完整的过滤语法如下：<code>plat|arch1,arch2@host|arch1,arch2</code></p>

@@ -851,6 +851,42 @@ Then in the project, enable these configurations and compile the package with th
 add_requires("pcre2", {configs = {bitwidth = 16}})
 ```
 
+#### add_extsources
+
+Starting from version 2.5.2, we have also added two configuration interfaces `add_extsources` and `on_fetch`, which can better configure xmake to search for system libraries during the process of installing C/C++ packages.
+
+As for the specific background, we can give an example. For example, we added a package of `package("libusb")` to the [xmake-repo](https://github.com/xmake-io/xmake-repo) repository .
+
+Then users can directly integrate and use it in the following ways:
+
+```lua
+add_requires("libusb")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("libusb")
+```
+
+If libusb is not installed on the user's system, xmake will automatically download the libusb library source code, automatically compile, install and integrate, and there is no problem.
+
+But if the user installs the libusb library to the system through `apt install libusb-1.0`, then xmake should automatically search for the libusb package installed by the user in the system environment first, and use it directly, avoiding additional download, compilation and installation.
+
+But here comes the problem, xmake internally passes `find_package("libusb")` and fails to find it. Why is that? Because the package name of libusb installed via apt is `libusb-1.0`, not libusb.
+
+We can only find it through `pkg-config --cflags libusb-1.0`, but the default find_package logic inside xmake doesn't know the existence of `libusb-1.0`, so it can't be found.
+
+Therefore, in order to better adapt to the search of system libraries in different system environments, we can use `add_extsources("pkgconfig::libusb-1.0")` to let xmake improve the search logic, for example:
+
+```lua
+package("libusb")
+    add_extsources("pkgconfig::libusb-1.0")
+    on_install(function (package)
+        - ...
+    end)
+```
+
+In addition, we can also use this method to improve the search for packages installed by other package managers such as homebrew/pacman, for example: `add_extsources("pacman::libusb-1.0")`.
+
 #### on_load
 
 This is an optional interface. If you want to be more flexible and dynamically judge various platform architectures, you can do it in this way, for example:
@@ -866,6 +902,23 @@ end)
 ```
 
 The pcre package needs to do some judgment on the bitwidth to determine the name of the link library for external output. It also needs to add some defines to the dynamic library. This time, it is more flexible when set in on_load.
+
+#### on_fetch
+
+This is an optional configuration. After 2.5.2, if the system libraries installed under different systems only have different package names, then using `add_extsources` to improve the system library search is sufficient, simple and convenient.
+
+However, if some packages are installed in the system, the location is more complicated. To find them, some additional scripts may be needed. For example: access to the registry under windows to find packages, etc. At this time, we can use `on_fetch `Fully customized search system library logic.
+
+Let's take libusb as an example. Instead of `add_extsources`, we can use the following method to achieve the same effect. Of course, we can do more things in it.
+
+```
+package("libusb")
+     on_fetch("linux", function(package, opt)
+         if opt.system then
+             return find_package("pkgconfig::libusb-1.0")
+         end
+     end)
+```
 
 #### on_install
 

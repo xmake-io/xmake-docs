@@ -891,6 +891,42 @@ The package info of project:
 add_requires("pcre2", {configs = {bitwidth = 16}})
 ```
 
+#### add_extsources
+
+2.5.2 版本开始，我们也新增了 `add_extsources` 和 `on_fetch` 两个配置接口，可以更好的配置 xmake 在安装 C/C++ 包的过程中，对系统库的查找过程。
+
+至于具体背景，我们可以举个例子，比如我们在 [xmake-repo](https://github.com/xmake-io/xmake-repo) 仓库新增了一个 `package("libusb")` 的包。
+
+那么用户就可以通过下面的方式，直接集成使用它：
+
+```lua
+add_requires("libusb")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("libusb")
+```
+
+如果用户系统上确实没有安装 libusb，那么 xmake 会自动下载 libusb 库源码，自动编译安装集成，没啥问题。
+
+但如果用户通过 `apt install libusb-1.0` 安装了 libusb 库到系统，那么按理 xmake 应该会自动优先查找用户安装到系统环境的 libusb 包，直接使用，避免额外的下载编译安装。
+
+但是问题来了，xmake 内部通过 `find_package("libusb")` 并没有找打它，这是为什么呢？因为通过 apt 安装的 libusb 包名是 `libusb-1.0`, 而不是 libusb。
+
+我们只能通过 `pkg-config --cflags libusb-1.0` 才能找到它，但是 xmake 内部的默认 find_package 逻辑并不知道 `libusb-1.0` 的存在，所以找不到。
+
+因此为了更好地适配不同系统环境下，系统库的查找，我们可以通过 `add_extsources("pkgconfig::libusb-1.0")` 去让 xmake 改进查找逻辑，例如：
+
+```lua
+package("libusb")
+    add_extsources("pkgconfig::libusb-1.0")
+    on_install(function (package)
+        -- ...
+    end)
+```
+
+另外，我们也可以通过这个方式，改进查找 homebrew/pacman 等其他包管理器安装的包，例如：`add_extsources("pacman::libusb-1.0")`。
+
 #### on_load
 
 这是个可选的接口，如果要更加灵活的动态判断各种平台架构，针对性做设置，可以在这个里面完成，例如：
@@ -906,6 +942,23 @@ end)
 ```
 
 pcre包需要做一些针对bitwidth的判断，才能确定对外输出的链接库名字，还需要针对动态库增加一些defines导出，这个时候在on_load里面设置，就更加灵活了。
+
+#### on_fetch
+
+这是个可选配置，2.5.2 之后，如果不同系统下安装的系统库，仅仅只是包名不同，那么使用 `add_extsources` 改进系统库查找已经足够，简单方便。
+
+但是如果有些安装到系统的包，位置更加复杂，想要找到它们，也许需要一些额外的脚本才能实现，例如：windows 下注册表的访问去查找包等等，这个时候，我们就可以通过 `on_fetch` 完全定制化查找系统库逻辑。
+
+还是以 libusb 为例，我们不用 `add_extsources`，可以使用下面的方式，实现相同的效果，当然，我们可以在里面做更多的事情。
+
+```
+package("libusb")
+    on_fetch("linux", function(package, opt)
+        if opt.system then
+            return find_package("pkgconfig::libusb-1.0")
+        end
+    end)
+```
 
 #### on_install
 
