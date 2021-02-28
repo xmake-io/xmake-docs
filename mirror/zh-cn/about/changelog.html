@@ -90,7 +90,41 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v251">v2.5.1</h2>
+    <h2 id="v252">v2.5.2</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/955#issuecomment-766481512">#955</a>: 支持 <code>zig cc</code> 和 <code>zig c++</code> 作为 c/c++ 编译器</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/955#issuecomment-768193083">#955</a>: 支持使用 zig 进行交叉编译</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1177">#1177</a>: 改进终端和 color codes 探测</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1216">#1216</a>: 传递自定义 includes 脚本给 xrepo</li>
+<li>添加 linuxos 内置模块获取 linux 系统信息</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1217">#1217</a>: 支持当编译项目时自动拉取工具链</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1123">#1123</a>: 添加 <code>rule("utils.symbols.export_all")</code> 自动导出所有 windows/dll 中的符号</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1181">#1181</a>: 添加 <code>utils.platform.gnu2mslib(mslib, gnulib)</code> 模块接口去转换 mingw/xxx.dll.a 到 msvc xxx.lib</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1246">#1246</a>: 改进规则支持新的批处理命令去简化自定义规则实现</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1239">#1239</a>: 添加 <code>add_extsources</code> 去改进外部包的查找</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1241">#1241</a>: 支持为 windows 程序添加 .manifest 文件参与链接</li>
+<li>支持使用 <code>xrepo remove --all</code> 命令去移除所有的包，并且支持模式匹配</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1254">#1254</a>: 支持导出包配置给父 target，实现包配置的依赖继承</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1226">#1226</a>: 添加缺失的 Qt 头文件搜索路径</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1183">#1183</a>: 改进 C++ 语言标准，以便支持 Qt6</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1237">#1237</a>: 为 vsxmake 插件添加 qt.ui 文件</li>
+<li>改进 vs/vsxmake 插件去支持预编译头文件和智能提示</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1090">#1090</a>: 简化自定义规则</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1065">#1065</a>: 改进 protobuf 规则，支持 compile_commands 生成器</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1249">#1249</a>: 改进 vs/vsxmake 生成器去支持启动工程设置</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/605">#605</a>: 改进 add_deps 和 add_packages 直接的导出 links 顺序</li>
+<li>移除废弃的 <code>add_defines_h_if_ok</code> and <code>add_defines_h</code> 接口</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1219">#1219</a>: 修复版本检测和更新</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1235">#1235</a>: 修复 includes 搜索路径中带有空格编译不过问题</li>
+</ul>
+<h2 id="v251">v2.5.1</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/1035">#1035</a>: 图形配置菜单完整支持鼠标事件，并且新增滚动栏</li>

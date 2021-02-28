@@ -1,3 +1,38 @@
+## v2.5.2
+
+### 新特性
+
+* [#955](https://github.com/xmake-io/xmake/issues/955#issuecomment-766481512): 支持 `zig cc` 和 `zig c++` 作为 c/c++ 编译器
+* [#955](https://github.com/xmake-io/xmake/issues/955#issuecomment-768193083): 支持使用 zig 进行交叉编译
+* [#1177](https://github.com/xmake-io/xmake/issues/1177): 改进终端和 color codes 探测
+* [#1216](https://github.com/xmake-io/xmake/issues/1216): 传递自定义 includes 脚本给 xrepo
+* 添加 linuxos 内置模块获取 linux 系统信息
+* [#1217](https://github.com/xmake-io/xmake/issues/1217): 支持当编译项目时自动拉取工具链
+* [#1123](https://github.com/xmake-io/xmake/issues/1123): 添加 `rule("utils.symbols.export_all")` 自动导出所有 windows/dll 中的符号
+* [#1181](https://github.com/xmake-io/xmake/issues/1181): 添加 `utils.platform.gnu2mslib(mslib, gnulib)` 模块接口去转换 mingw/xxx.dll.a 到 msvc xxx.lib
+* [#1246](https://github.com/xmake-io/xmake/issues/1246): 改进规则支持新的批处理命令去简化自定义规则实现
+* [#1239](https://github.com/xmake-io/xmake/issues/1239): 添加 `add_extsources` 去改进外部包的查找
+* [#1241](https://github.com/xmake-io/xmake/issues/1241): 支持为 windows 程序添加 .manifest 文件参与链接
+* 支持使用 `xrepo remove --all` 命令去移除所有的包，并且支持模式匹配
+* [#1254](https://github.com/xmake-io/xmake/issues/1254): 支持导出包配置给父 target，实现包配置的依赖继承
+
+### 改进
+
+* [#1226](https://github.com/xmake-io/xmake/issues/1226): 添加缺失的 Qt 头文件搜索路径
+* [#1183](https://github.com/xmake-io/xmake/issues/1183): 改进 C++ 语言标准，以便支持 Qt6
+* [#1237](https://github.com/xmake-io/xmake/issues/1237): 为 vsxmake 插件添加 qt.ui 文件
+* 改进 vs/vsxmake 插件去支持预编译头文件和智能提示
+* [#1090](https://github.com/xmake-io/xmake/issues/1090): 简化自定义规则
+* [#1065](https://github.com/xmake-io/xmake/issues/1065): 改进 protobuf 规则，支持 compile_commands 生成器
+* [#1249](https://github.com/xmake-io/xmake/issues/1249): 改进 vs/vsxmake 生成器去支持启动工程设置
+* [#605](https://github.com/xmake-io/xmake/issues/605): 改进 add_deps 和 add_packages 直接的导出 links 顺序
+* 移除废弃的 `add_defines_h_if_ok` and `add_defines_h` 接口
+
+### Bugs 修复
+
+* [#1219](https://github.com/xmake-io/xmake/issues/1219): 修复版本检测和更新
+* [#1235](https://github.com/xmake-io/xmake/issues/1235): 修复 includes 搜索路径中带有空格编译不过问题
+
 ## v2.5.1
 
 ### 新特性

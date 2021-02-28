@@ -90,7 +90,41 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v251">v2.5.1</h2>
+    <h2 id="v252">v2.5.2</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/955#issuecomment-766481512">#955</a>: Support <code>zig cc</code> and <code>zig c++</code> as c/c++ compiler</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/955#issuecomment-768193083">#955</a>: Support zig cross-compilation</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1177">#1177</a>: Improve to detect terminal and color codes</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1216">#1216</a>: Pass custom configuration scripts to xrepo</li>
+<li>Add linuxos builtin module to get linux system information</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1217">#1217</a>: Support to fetch remote toolchain package when building project</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1123">#1123</a>: Add <code>rule("utils.symbols.export_all")</code> to export all symbols for windows/dll</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1181">#1181</a>: Add <code>utils.platform.gnu2mslib(mslib, gnulib)</code> module api to convert mingw/xxx.dll.a to msvc xxx.lib</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1246">#1246</a>: Improve rules and generators to support commands list</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1239">#1239</a>: Add <code>add_extsources</code> to improve find external packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1241">#1241</a>: Support add .manifest files for windows program</li>
+<li>Support to use <code>xrepo remove --all</code> to remove all packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1254">#1254</a>: Support to export packages to parent target</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1226">#1226</a>: Add missing qt include directories</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1183">#1183</a>: Improve c++ lanuages to support Qt6</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1237">#1237</a>: Add qt.ui files for vsxmake plugin</li>
+<li>Improve vs/vsxmake plugins to support precompiled header and intellisense</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1090">#1090</a>: Simplify integration of custom code generators</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1065">#1065</a>: Improve protobuf rule to support compile_commands generators</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1249">#1249</a>: Improve vs/vsxmake generator to support startproject</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/605">#605</a>: Improve to link orders for add_deps/add_packages</li>
+<li>Remove deprecated <code>add_defines_h_if_ok</code> and <code>add_defines_h</code> apis for option</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1219">#1219</a>: Fix version check and update</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1235">#1235</a>: Fix include directories with spaces</li>
+</ul>
+<h2 id="v251">v2.5.1</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/1035">#1035</a>: The graphics configuration menu fully supports mouse events, and support scroll bar</li>

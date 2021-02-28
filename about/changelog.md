@@ -1,3 +1,38 @@
+## v2.5.2
+
+### New features
+
+* [#955](https://github.com/xmake-io/xmake/issues/955#issuecomment-766481512): Support `zig cc` and `zig c++` as c/c++ compiler
+* [#955](https://github.com/xmake-io/xmake/issues/955#issuecomment-768193083): Support zig cross-compilation
+* [#1177](https://github.com/xmake-io/xmake/issues/1177): Improve to detect terminal and color codes
+* [#1216](https://github.com/xmake-io/xmake/issues/1216): Pass custom configuration scripts to xrepo
+* Add linuxos builtin module to get linux system information
+* [#1217](https://github.com/xmake-io/xmake/issues/1217): Support to fetch remote toolchain package when building project
+* [#1123](https://github.com/xmake-io/xmake/issues/1123): Add `rule("utils.symbols.export_all")` to export all symbols for windows/dll
+* [#1181](https://github.com/xmake-io/xmake/issues/1181): Add `utils.platform.gnu2mslib(mslib, gnulib)` module api to convert mingw/xxx.dll.a to msvc xxx.lib
+* [#1246](https://github.com/xmake-io/xmake/issues/1246): Improve rules and generators to support commands list
+* [#1239](https://github.com/xmake-io/xmake/issues/1239): Add `add_extsources` to improve find external packages
+* [#1241](https://github.com/xmake-io/xmake/issues/1241): Support add .manifest files for windows program
+* Support to use `xrepo remove --all` to remove all packages
+* [#1254](https://github.com/xmake-io/xmake/issues/1254): Support to export packages to parent target
+
+### Change
+
+* [#1226](https://github.com/xmake-io/xmake/issues/1226): Add missing qt include directories
+* [#1183](https://github.com/xmake-io/xmake/issues/1183): Improve c++ lanuages to support Qt6
+* [#1237](https://github.com/xmake-io/xmake/issues/1237): Add qt.ui files for vsxmake plugin
+* Improve vs/vsxmake plugins to support precompiled header and intellisense
+* [#1090](https://github.com/xmake-io/xmake/issues/1090): Simplify integration of custom code generators
+* [#1065](https://github.com/xmake-io/xmake/issues/1065): Improve protobuf rule to support compile_commands generators
+* [#1249](https://github.com/xmake-io/xmake/issues/1249): Improve vs/vsxmake generator to support startproject
+* [#605](https://github.com/xmake-io/xmake/issues/605): Improve to link orders for add_deps/add_packages
+* Remove deprecated `add_defines_h_if_ok` and `add_defines_h` apis for option
+
+### Bugs fixed
+
+* [#1219](https://github.com/xmake-io/xmake/issues/1219): Fix version check and update
+* [#1235](https://github.com/xmake-io/xmake/issues/1235): Fix include directories with spaces
+
 ## v2.5.1
 
 ### New features
