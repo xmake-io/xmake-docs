@@ -879,8 +879,6 @@ target("test")
 
 ## Zig程序
 
-!> 目前还在试验性支持阶段，还很不完善，比如：windows上不支持，linux/macOS下动态库编译还不支持，请自行评估使用。
-
 创建空工程：
 
 ```console

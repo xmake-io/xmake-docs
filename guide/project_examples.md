@@ -873,8 +873,6 @@ For more examples, see: [Objc Examples](https://github.com/xmake-io/xmake/tree/m
 
 ## Zig Program
 
-!> At present, it is still in the experimental support stage and is not perfect. For example, it is not supported on windows, and dynamic library compilation under linux/macOS is not yet supported. Please evaluate and use it yourself.
-
 Create an empty project:
 
 ```console
