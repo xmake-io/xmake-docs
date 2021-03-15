@@ -370,11 +370,10 @@ set_warnings("all", "error")
 | ---------- | ---------------------- | ---------- | ------------ |
 | none       | 禁用优化               | -O0        | -Od          |
 | fast       | 快速优化               | -O1        | default      |
-| faster     | 更快的优化             | -O2        | -Ox          |
+| faster     | 更快的优化             | -O2        | -O2          |
 | fastest    | 最快运行速度的优化     | -O3        | -Ox -fp:fast |
-| smallest   | 最小化代码优化         | -Os        | -O1          |
+| smallest   | 最小化代码优化         | -Os        | -O1 -GL      |
 | aggressive | 过度优化               | -Ofast     | -Ox -fp:fast |
-
 
 例如：
 

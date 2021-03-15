@@ -369,9 +369,9 @@ At present, we mainly support several levels:
 | ---------- | ----------------------                    | ---------- | ------------ |
 | none       | disable optimization                      | -O0        | -Od          |
 | fast       | quick optimization                        | -O1        | default      |
-| faster     | faster optimization                       | -O2        | -Ox          |
+| faster     | faster optimization                       | -O2        | -O2          |
 | fastest    | Optimization of the fastest running speed | -O3        | -Ox -fp:fast |
-| smallest   | Minimize code optimization                | -Os        | -O1          |
+| smallest   | Minimize code optimization                | -Os        | -O1 -GL      |
 | aggressive | over-optimization                         | -Ofast     | -Ox -fp:fast |
 
 E.g:
