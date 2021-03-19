@@ -33,7 +33,8 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | commnet                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
-| 2021.03.17 | *博                                   | 微信     | ¥100   |                                                                         |
+| 2021.03.18 | *博                                   | wechat     | ¥50   |                                                                         |
+| 2021.03.17 | *博                                   | wechat     | ¥100   |                                                                         |
 | 2021.03.14 | Gavin Ray                             | OpenCollective   | $10    |                                                                         |
 | 2021.02.07 | 抚*                                   | wechat  | ¥66    | xmake牛批！                                                             |
 | 2021.02.05 | *_                                    | alipay  | ¥5     |                                                                         |
