@@ -1197,6 +1197,7 @@ The io operation module extends lua's built-in io module to provide more easy-to
 | [io.printf](#ioprintf) | No line formatted output to file | >= 2.0.1 |
 | [io.lines](#iolines) | Read all lines from file | >= 2.2.9 |
 | [io.stdfile](#iostdfile) | Get std file | >= 2.2.9 |
+| [io.openlock](#ioopenlock) | Open a lock of a file | >= 2.2.9 |
 
 #### io.open
 
@@ -1371,6 +1372,16 @@ io.stdfile("/dev/stdin")
 io.stdfile("/dev/stdout")
 -- returns stderr
 io.stdfile("/dev/stderr")
+```
+
+### io.openlock
+
+- Open a lock of a file
+
+Returns a file lock object when successfully locking the file
+
+```lua
+io.openlock("xxx.txt")
 ```
 
 ### path
