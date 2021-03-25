@@ -1188,13 +1188,17 @@ The io operation module extends lua's built-in io module to provide more easy-to
 | [io.open](#ioopen) | Open file for reading and writing | >= 2.0.1 |
 | [io.load](#ioload) | De-serialize all table contents from the specified path file | >= 2.0.1 |
 | [io.save](#iosave) | Serialize all table contents to the specified path file | >= 2.0.1 |
-| [io.readfile](#io.readfile) | Read everything from the specified path file | >= 2.1.3 |
-| [io.writefile](#io.writefile) | Write everything to the specified path file | >= 2.1.3 |
+| [io.readfile](#ioreadfile) | Read everything from the specified path file | >= 2.1.3 |
+| [io.writefile](#iowritefile) | Write everything to the specified path file | >= 2.1.3 |
 | [io.gsub](#iogsub) | Full text replaces the contents of the specified path file | >= 2.0.1 |
 | [io.tail](#iotail) | Read and display the tail of the file | >= 2.0.1 |
 | [io.cat](#iocat) | Read and display all contents of a file | >= 2.0.1 |
 | [io.print](#ioprint) | Formatting output with a line feed to a file | >= 2.0.1 |
 | [io.printf](#ioprintf) | No line formatted output to file | >= 2.0.1 |
+| [io.lines](#iolines) | Read all lines from file | >= 2.2.9 |
+| [io.stdfile](#iostdfile) | Get std file | >= 2.2.9 |
+| [io.openlock](#ioopenlock) | Open a lock of a file | >= 2.2.9 |
+| [io.replace](#ioreplace) | Replace text of the given file and return the replaced data | >= 2.3.8 |
 
 #### io.open
 
@@ -1344,6 +1348,54 @@ Directly format the passed parameter to output a line of string to the file with
 
 ```lua
 io.printf("xxx.txt", "hello %s!\n", "xmake")
+```
+
+### io.lines
+
+- Read all lines from file
+
+Returns all lines from a given file name
+
+```lua
+io.lines("xxx.txt")
+```
+
+### io.stdfile
+
+- Get a std file
+
+Returns a file for a given std file name
+
+```lua
+-- returns stdin
+io.stdfile("/dev/stdin")
+-- returns stdout
+io.stdfile("/dev/stdout")
+-- returns stderr
+io.stdfile("/dev/stderr")
+```
+
+### io.openlock
+
+- Open a lock of a file
+
+Returns a file lock object when successfully locking the file
+
+```lua
+io.openlock("xxx.txt")
+```
+
+### io.replace
+
+- Replace text of the given file and return the replaced data
+
+Replaces a given pattern in a file by a replacement string
+
+```lua
+-- replace string "Hello" in "xxx.txt" with "World"
+io.replace("xxx.txt", "Hello", "World")
+-- if you want to replace a string and not a pattern
+io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 ```
 
 ### path
