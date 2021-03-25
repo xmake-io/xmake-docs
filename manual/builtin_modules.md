@@ -1188,8 +1188,8 @@ The io operation module extends lua's built-in io module to provide more easy-to
 | [io.open](#ioopen) | Open file for reading and writing | >= 2.0.1 |
 | [io.load](#ioload) | De-serialize all table contents from the specified path file | >= 2.0.1 |
 | [io.save](#iosave) | Serialize all table contents to the specified path file | >= 2.0.1 |
-| [io.readfile](#io.readfile) | Read everything from the specified path file | >= 2.1.3 |
-| [io.writefile](#io.writefile) | Write everything to the specified path file | >= 2.1.3 |
+| [io.readfile](#ioreadfile) | Read everything from the specified path file | >= 2.1.3 |
+| [io.writefile](#iowritefile) | Write everything to the specified path file | >= 2.1.3 |
 | [io.gsub](#iogsub) | Full text replaces the contents of the specified path file | >= 2.0.1 |
 | [io.tail](#iotail) | Read and display the tail of the file | >= 2.0.1 |
 | [io.cat](#iocat) | Read and display all contents of a file | >= 2.0.1 |
