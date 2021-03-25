@@ -1195,6 +1195,7 @@ The io operation module extends lua's built-in io module to provide more easy-to
 | [io.cat](#iocat) | Read and display all contents of a file | >= 2.0.1 |
 | [io.print](#ioprint) | Formatting output with a line feed to a file | >= 2.0.1 |
 | [io.printf](#ioprintf) | No line formatted output to file | >= 2.0.1 |
+| [io.lines](#iolines) | Read all lines from file | >= 2.2.9 |
 
 #### io.open
 
@@ -1344,6 +1345,16 @@ Directly format the passed parameter to output a line of string to the file with
 
 ```lua
 io.printf("xxx.txt", "hello %s!\n", "xmake")
+```
+
+### io.lines
+
+- Read all lines from file
+
+Returns all lines from a given file name
+
+```lua
+io.lines("xxx.txt")
 ```
 
 ### path
