@@ -1198,6 +1198,7 @@ The io operation module extends lua's built-in io module to provide more easy-to
 | [io.lines](#iolines) | Read all lines from file | >= 2.2.9 |
 | [io.stdfile](#iostdfile) | Get std file | >= 2.2.9 |
 | [io.openlock](#ioopenlock) | Open a lock of a file | >= 2.2.9 |
+| [io.replace](#ioreplace) | Replace text of the given file and return the replaced data | >= 2.3.8 |
 
 #### io.open
 
@@ -1382,6 +1383,19 @@ Returns a file lock object when successfully locking the file
 
 ```lua
 io.openlock("xxx.txt")
+```
+
+### io.replace
+
+- Replace text of the given file and return the replaced data
+
+Replaces a given pattern in a file by a replacement string
+
+```lua
+-- replace string "Hello" in "xxx.txt" with "World"
+io.replace("xxx.txt", "Hello", "World")
+-- if you want to replace a string and not a pattern
+io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 ```
 
 ### path
