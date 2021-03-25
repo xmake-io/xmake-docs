@@ -1196,6 +1196,7 @@ The io operation module extends lua's built-in io module to provide more easy-to
 | [io.print](#ioprint) | Formatting output with a line feed to a file | >= 2.0.1 |
 | [io.printf](#ioprintf) | No line formatted output to file | >= 2.0.1 |
 | [io.lines](#iolines) | Read all lines from file | >= 2.2.9 |
+| [io.stdfile](#iostdfile) | Get std file | >= 2.2.9 |
 
 #### io.open
 
@@ -1355,6 +1356,21 @@ Returns all lines from a given file name
 
 ```lua
 io.lines("xxx.txt")
+```
+
+### io.stdfile
+
+- Get a std file
+
+Returns a file for a given std file name
+
+```lua
+-- returns stdin
+io.stdfile("/dev/stdin")
+-- returns stdout
+io.stdfile("/dev/stdout")
+-- returns stderr
+io.stdfile("/dev/stderr")
 ```
 
 ### path
