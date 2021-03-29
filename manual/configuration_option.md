@@ -535,7 +535,7 @@ This option will be enabled if the c type is passed, for example:
 ```lua
 option("wchar")
     set_default(false)
-    add_cincludes("wchar_t")
+    add_ctypes("wchar_t")
     add_defines("HAVE_WCHAR")
 
 target("test")

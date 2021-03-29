@@ -479,7 +479,7 @@ target("test")
 ```lua
 option("wchar")
     set_default(false)
-    add_cincludes("wchar_t")
+    add_ctypes("wchar_t")
     add_defines("HAVE_WCHAR")
 
 target("test")
