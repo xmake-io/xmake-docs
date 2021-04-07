@@ -1280,12 +1280,12 @@ end
 <td>>= 2.0.1</td>
 </tr>
 <tr>
-<td><a href="#io.readfile">io.readfile</a></td>
+<td><a href="#ioreadfile">io.readfile</a></td>
 <td>Read everything from the specified path file</td>
 <td>>= 2.1.3</td>
 </tr>
 <tr>
-<td><a href="#io.writefile">io.writefile</a></td>
+<td><a href="#iowritefile">io.writefile</a></td>
 <td>Write everything to the specified path file</td>
 <td>>= 2.1.3</td>
 </tr>
@@ -1313,6 +1313,26 @@ end
 <td><a href="#ioprintf">io.printf</a></td>
 <td>No line formatted output to file</td>
 <td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#iolines">io.lines</a></td>
+<td>Read all lines from file</td>
+<td>>= 2.2.9</td>
+</tr>
+<tr>
+<td><a href="#iostdfile">io.stdfile</a></td>
+<td>Get std file</td>
+<td>>= 2.2.9</td>
+</tr>
+<tr>
+<td><a href="#ioopenlock">io.openlock</a></td>
+<td>Open a lock of a file</td>
+<td>>= 2.2.9</td>
+</tr>
+<tr>
+<td><a href="#ioreplace">io.replace</a></td>
+<td>Replace text of the given file and return the replaced data</td>
+<td>>= 2.3.8</td>
 </tr>
 </tbody>
 </table>
@@ -1426,6 +1446,42 @@ io.tail("xxx.txt", 10)
 </ul>
 <p>Directly format the passed parameter to output a line of string to the file without a line break, for example:</p>
 <pre><code class="lang-lua">io.printf("xxx.txt", "hello %s!\n", "xmake")
+</code></pre>
+<h3 id="iolines">io.lines</h3>
+<ul>
+<li>Read all lines from file</li>
+</ul>
+<p>Returns all lines from a given file name</p>
+<pre><code class="lang-lua">io.lines("xxx.txt")
+</code></pre>
+<h3 id="iostdfile">io.stdfile</h3>
+<ul>
+<li>Get a std file</li>
+</ul>
+<p>Returns a file for a given std file name</p>
+<pre><code class="lang-lua">-- returns stdin
+io.stdfile("/dev/stdin")
+-- returns stdout
+io.stdfile("/dev/stdout")
+-- returns stderr
+io.stdfile("/dev/stderr")
+</code></pre>
+<h3 id="ioopenlock">io.openlock</h3>
+<ul>
+<li>Open a lock of a file</li>
+</ul>
+<p>Returns a file lock object when successfully locking the file</p>
+<pre><code class="lang-lua">io.openlock("xxx.txt")
+</code></pre>
+<h3 id="ioreplace">io.replace</h3>
+<ul>
+<li>Replace text of the given file and return the replaced data</li>
+</ul>
+<p>Replaces a given pattern in a file by a replacement string</p>
+<pre><code class="lang-lua">-- replace string "Hello" in "xxx.txt" with "World"
+io.replace("xxx.txt", "Hello", "World")
+-- if you want to replace a string and not a pattern
+io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 </code></pre>
 <h3 id="path">path</h3>
 <p>The path operation module implements cross-platform path operations, which is a custom module of xmake.</p>

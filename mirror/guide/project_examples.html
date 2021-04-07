@@ -670,48 +670,28 @@ target("test")
      add_files("src/*.zig")
 </code></pre>
 <p>For more examples, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/zig">Zig Examples</a></p>
-<h2 id="automaticallypullremotetoolchain">Automatically pull remote toolchain</h2>
-<p>Starting from version 2.5.2, we can pull the specified toolchain to integrate the compilation project, and we also support switching the dependent package to the corresponding remote toolchain to participate in the compilation and integration.</p>
-<p>For related example codes, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/package">Toolchain/Packages Examples</a></p>
-<p>Related issue <a href="https://github.com/xmake-io/xmake/issues/1217">#1217</a></p>
-<h3 id="pullthespecifiedversionofthellvmtoolchain">Pull the specified version of the llvm toolchain</h3>
-<p>We use clang in llvm-10 to compile the project.</p>
-<pre><code class="lang-lua">add_requires("llvm 10.x", {alias = "llvm-10"})
-target("test")
-    set_kind("binary")
-    add_files("src/*.c)
-    set_toolchains("llvm@llvm-10")
-`
-</code></pre>
-<h3 id="pullcrosscompilationtoolchain">Pull cross compilation tool chain</h3>
-<p>We can also pull the specified cross-compilation tool chain to compile the project.</p>
-<pre><code class="lang-lua">add_requires("muslcc")
-target("test")
-    set_kind("binary")
-    add_files("src/*.c)
-    set_toolchains("@muslcc")
-</code></pre>
-<h3 id="pullthetoolchainandintegratethedependencypackagescompiledbythecorrespondingtoolchain">Pull the toolchain and integrate the dependency packages compiled by the corresponding toolchain</h3>
-<p>We can also use the specified muslcc cross-compilation tool chain to compile and integrate all dependent packages.</p>
-<pre><code class="lang-lua">add_requires("muslcc")
-add_requires("zlib", "libogg", {system = false})
+<h2 id="linuxbpfprogram">Linux Bpf program</h2>
+<p>Since 2.5.3, it supports bpf program construction, supports both linux and android platforms, and can automatically pull llvm and android ndk toolchains.</p>
+<p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1274">#1274</a></p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_rules("platform.linux.bpf")
 
-set_toolchains("@muslcc")
+add_requires("linux-tools", {configs = {bpftool = true}})
+add_requires("libbpf")
+if is_plat("android") then
+     add_requires("ndk >=22.x")
+     set_toolchains("@ndk", {sdkver = "23"})
+else
+     add_requires("llvm >=10.x")
+     set_toolchains("@llvm")
+     add_requires("linux-headers")
+end
 
-target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_packages("zlib", "libogg")
-</code></pre>
-<p>For a complete example, see: <a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/toolchain_muslcc/xmake.lua">Examples (muslcc)</a></p>
-<h3 id="pullzigtoolchain">Pull zig toolchain</h3>
-<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
-add_requires("zig 0.7.x")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.zig")
-    set_toolchains("@zig")
+target("minimal")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("linux-tools", "linux-headers", "libbpf")
+     set_license("GPL-2.0")
 </code></pre>
 </article>
 </body>

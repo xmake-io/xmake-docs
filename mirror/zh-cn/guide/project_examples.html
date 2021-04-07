@@ -673,48 +673,28 @@ target("test")
     add_files("src/*.zig")
 </code></pre>
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/zig">Zig Examples</a></p>
-<h2 id="">自动拉取远程工具链</h2>
-<p>从 2.5.2 版本开始，我们可以拉取指定的工具链来集成编译项目，我们也支持将依赖包切换到对应的远程工具链参与编译后集成进来。</p>
-<p>相关例子代码见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/package">Toolchain/Packages Examples</a></p>
-<p>相关的 issue <a href="https://github.com/xmake-io/xmake/issues/1217">#1217</a></p>
-<h3 id="llvm">拉取指定版本的 llvm 工具链</h3>
-<p>我们使用 llvm-10 中的 clang 来编译项目。</p>
-<pre><code class="lang-lua">add_requires("llvm 10.x", {alias = "llvm-10"})
-target("test")
-    set_kind("binary")
-    add_files("src/*.c)
-    set_toolchains("llvm@llvm-10")
-`
-</code></pre>
-<h3 id="">拉取交叉编译工具链</h3>
-<p>我们也可以拉取指定的交叉编译工具链来编译项目。</p>
-<pre><code class="lang-lua">add_requires("muslcc")
-target("test")
-    set_kind("binary")
-    add_files("src/*.c)
-    set_toolchains("@muslcc")
-</code></pre>
-<h3 id="">拉取工具链并且集成对应工具链编译的依赖包</h3>
-<p>我们也可以使用指定的muslcc交叉编译工具链去编译和集成所有的依赖包。</p>
-<pre><code class="lang-lua">add_requires("muslcc")
-add_requires("zlib", "libogg", {system = false})
+<h2 id="linuxbpf">Linux Bpf 程序</h2>
+<p>从 2.5.3 之后开始支持 bpf 程序构建，同时支持 linux 以及 android 平台，能够自动拉取 llvm 和 android ndk 工具链。</p>
+<p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/1274">#1274</a></p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_rules("platform.linux.bpf")
 
-set_toolchains("@muslcc")
+add_requires("linux-tools", {configs = {bpftool = true}})
+add_requires("libbpf")
+if is_plat("android") then
+    add_requires("ndk >=22.x")
+    set_toolchains("@ndk", {sdkver = "23"})
+else
+    add_requires("llvm >=10.x")
+    set_toolchains("@llvm")
+    add_requires("linux-headers")
+end
 
-target("test")
+target("minimal")
     set_kind("binary")
     add_files("src/*.c")
-    add_packages("zlib", "libogg")
-</code></pre>
-<p>完整例子见：<a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/toolchain_muslcc/xmake.lua">Examples (muslcc)</a></p>
-<h3 id="zig">拉取集成 Zig 工具链</h3>
-<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
-add_requires("zig 0.7.x")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.zig")
-    set_toolchains("@zig")
+    add_packages("linux-tools", "linux-headers", "libbpf")
+    set_license("GPL-2.0")
 </code></pre>
 </article>
 </body>

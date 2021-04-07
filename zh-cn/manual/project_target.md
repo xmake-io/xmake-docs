@@ -1180,6 +1180,7 @@ target("demo")
 | .a/.lib            | 静态库文件，会自动合并库到目标程序 |
 | .rc                | msvc的资源文件                     |
 | .manifest          | windows manifest 文件              |
+| .def               | windows dll 导出文件               |
 
 其中通配符`*`表示匹配当前目录下文件，而`**`则匹配多级目录下的文件。
 

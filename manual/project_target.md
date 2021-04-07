@@ -1180,6 +1180,7 @@ Source files used to add target projects, even library files, some file types cu
 | .a/.lib                     | static library files, will automatically merge the library to the target program |
 | .rc                         | msvc resource file                                                               |
 | .manifest                   | windows manifest file                                                            |
+| .dll                        | windows export file                                                              |
 
 The wildcard `*` indicates that the file in the current directory is matched, and `**` matches the file in the multi-level directory.
 

@@ -896,6 +896,49 @@ xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
 <p>如果你需要的包，当前的官方仓库还没有收录，可以提交issues或者自己可以在本地调通后，贡献提交到官方仓库：<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>详细的贡献说明，见：<a href="https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a></p>
 <p>关于如何制作自己的包，可以看下上文：<a href="#添加包到仓库">添加包到仓库</a>。</p>
+<h2 id="">自动拉取远程工具链</h2>
+<p>从 2.5.2 版本开始，我们可以拉取指定的工具链来集成编译项目，我们也支持将依赖包切换到对应的远程工具链参与编译后集成进来。</p>
+<p>相关例子代码见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/package">Toolchain/Packages Examples</a></p>
+<p>相关的 issue <a href="https://github.com/xmake-io/xmake/issues/1217">#1217</a></p>
+<h3 id="llvm">拉取指定版本的 llvm 工具链</h3>
+<p>我们使用 llvm-10 中的 clang 来编译项目。</p>
+<pre><code class="lang-lua">add_requires("llvm 10.x", {alias = "llvm-10"})
+target("test")
+    set_kind("binary")
+    add_files("src/*.c)
+    set_toolchains("llvm@llvm-10")
+`
+</code></pre>
+<h3 id="">拉取交叉编译工具链</h3>
+<p>我们也可以拉取指定的交叉编译工具链来编译项目。</p>
+<pre><code class="lang-lua">add_requires("muslcc")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c)
+    set_toolchains("@muslcc")
+</code></pre>
+<h3 id="">拉取工具链并且集成对应工具链编译的依赖包</h3>
+<p>我们也可以使用指定的muslcc交叉编译工具链去编译和集成所有的依赖包。</p>
+<pre><code class="lang-lua">add_requires("muslcc")
+add_requires("zlib", "libogg", {system = false})
+
+set_toolchains("@muslcc")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib", "libogg")
+</code></pre>
+<p>完整例子见：<a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/toolchain_muslcc/xmake.lua">Examples (muslcc)</a></p>
+<h3 id="zig">拉取集成 Zig 工具链</h3>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+add_requires("zig 0.7.x")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.zig")
+    set_toolchains("@zig")
+</code></pre>
 </article>
 </body>
 </html>
