@@ -527,6 +527,14 @@ target("test")
 
 相关 issue [#1123](https://github.com/xmake-io/xmake/issues/1123)
 
+#### utils.install.cmake_importfiles
+
+v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 .cmake 文件，用于其他 cmake 项目的库导入和查找。
+
+#### utils.install.pkgconfig_importfiles
+
+v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 pkgconfig/.pc 文件，用于其他项目的库导入和查找。
+
 ### rule
 
 #### 定义规则

@@ -306,6 +306,17 @@ Some other conan related configuration items:
 }
 ```
 
+### Add conda dependency package
+
+```lua
+add_requires("conda::zlib 1.2.11", {alias = "zlib"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+```
+
 ### Add pacman dependency package
 
 We support not only the installation and integration of the pacman package on archlinux, but also the installation and integration of the mingw x86_64/i386 package of pacman on msys2.

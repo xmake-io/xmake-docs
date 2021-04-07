@@ -426,6 +426,10 @@ target("test")
     add_files("src/main.c")
 </code></pre>
 <p>相关 issue <a href="https://github.com/xmake-io/xmake/issues/1123">#1123</a></p>
+<h4 id="utilsinstallcmake_importfiles">utils.install.cmake_importfiles</h4>
+<p>v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 .cmake 文件，用于其他 cmake 项目的库导入和查找。</p>
+<h4 id="utilsinstallpkgconfig_importfiles">utils.install.pkgconfig_importfiles</h4>
+<p>v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 pkgconfig/.pc 文件，用于其他项目的库导入和查找。</p>
 <h3 id="rule">rule</h3>
 <h4 id="">定义规则</h4>
 <pre><code class="lang-lua">rule("markdown")

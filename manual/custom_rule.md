@@ -526,6 +526,14 @@ target("test")
 
 Related issue [#1123](https://github.com/xmake-io/xmake/issues/1123)
 
+#### utils.install.cmake_importfiles
+
+We can use this rule to export the .cmake file when installing the target library file for the library import and search of other cmake projects.
+
+#### utils.install.pkgconfig_importfiles
+
+We can use this rule to export the pkgconfig/.pc file when installing the target target library file for library import and search for other projects.
+
 ### rule
 
 #### Defining rules

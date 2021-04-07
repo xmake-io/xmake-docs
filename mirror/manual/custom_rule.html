@@ -425,6 +425,10 @@ target("test")
      add_files("src/main.c")
 </code></pre>
 <p>Related issue <a href="https://github.com/xmake-io/xmake/issues/1123">#1123</a></p>
+<h4 id="utilsinstallcmake_importfiles">utils.install.cmake_importfiles</h4>
+<p>We can use this rule to export the .cmake file when installing the target library file for the library import and search of other cmake projects.</p>
+<h4 id="utilsinstallpkgconfig_importfiles">utils.install.pkgconfig_importfiles</h4>
+<p>We can use this rule to export the pkgconfig/.pc file when installing the target target library file for library import and search for other projects.</p>
 <h3 id="rule">rule</h3>
 <h4 id="definingrules">Defining rules</h4>
 <pre><code class="lang-lua">rule("markdown")

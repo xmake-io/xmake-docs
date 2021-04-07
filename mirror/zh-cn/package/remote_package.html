@@ -304,7 +304,15 @@ please input: y (y/n)
     settings       = {description = "Set the build settings for conan."},
     build_requires = {description = "Set the build requires for conan.", default = "xmake_generator/0.1.0@bincrafters/testing"}
 }
-</code></pre><h3 id="pacman">添加 pacman 的依赖包</h3>
+</code></pre><h3 id="conda">添加 conda 的依赖包</h3>
+<pre><code class="lang-lua">add_requires("conda::zlib 1.2.11", {alias = "zlib"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+</code></pre>
+<h3 id="pacman">添加 pacman 的依赖包</h3>
 <p>我们既支持 archlinux 上的 pacman 包安装和集成，也支持 msys2 上 pacman 的 mingw x86_64/i386 包安装和集成。</p>
 <pre><code class="lang-lua">add_requires("pacman::zlib", {alias = "zlib"})
 add_requires("pacman::libpng", {alias = "libpng"})

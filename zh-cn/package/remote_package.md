@@ -333,6 +333,17 @@ add_requires("conan::poco/1.10.0", {alias = "poco",
 }
 ```
 
+### 添加 conda 的依赖包
+
+```lua
+add_requires("conda::zlib 1.2.11", {alias = "zlib"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+```
+
 ### 添加 pacman 的依赖包
 
 我们既支持 archlinux 上的 pacman 包安装和集成，也支持 msys2 上 pacman 的 mingw x86_64/i386 包安装和集成。

@@ -2192,6 +2192,8 @@ add_configfiles("src/*.h.in", {prefixdir = "subdir"})
 add_configfiles("src/(tbox/config.h)")
 ```
 
+##### Variables
+
 One of the most important features of this interface is that it can be preprocessed and replaced with some of the template variables in the preprocessing, for example:
 
 Config.h.in
@@ -2233,6 +2235,8 @@ target("test")
     add_configfiles("config.h.in", {pattern = "@(.-)@"})
 ```
 
+##### Builtin variables
+
 We also have some built-in variables that can be replaced with default variables even if they are not set through this interface:
 
 ```
@@ -2269,6 +2273,30 @@ Config.h
 #define CONFIG_VERSION_ALTER 3
 #define CONFIG_VERSION_BUILD 201902031401
 ```
+
+Added git related built-in variables after v2.5.3:
+
+```c
+#define GIT_COMMIT "${GIT_COMMIT}"
+#define GIT_COMMIT_LONG "${GIT_COMMIT_LONG}"
+#define GIT_COMMIT_DATE "${GIT_COMMIT_DATE}"
+#define GIT_BRANCH "${GIT_BRANCH}"
+#define GIT_TAG "${GIT_TAG}"
+#define GIT_TAG_LONG "${GIT_TAG_LONG}"
+#define GIT_CUSTOM "${GIT_TAG}-${GIT_COMMIT}"
+```
+
+```c
+#define GIT_COMMIT "8c42b2c2"
+#define GIT_COMMIT_LONG "8c42b2c251793861eb85ffdf7e7c2307b129c7ae"
+#define GIT_COMMIT_DATE "20210121225744"
+#define GIT_BRANCH "dev"
+#define GIT_TAG "v1.6.6"
+#define GIT_TAG_LONG "v1.6.6-0-g8c42b2c2"
+#define GIT_CUSTOM "v1.6.6-8c42b2c2"
+```
+
+##### Macro definition
 
 We can also perform some variable state control processing on the `#define` definition:
 

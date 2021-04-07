@@ -2199,6 +2199,8 @@ add_configfiles("src/*.h.in", {prefixdir = "subdir"})
 add_configfiles("src/(tbox/config.h)")
 ```
 
+##### 变量替换
+
 这个接口的一个最重要的特性就是，可以在预处理的时候，对里面的一些模板变量进行预处理替换，例如：
 
 config.h.in
@@ -2240,6 +2242,8 @@ target("test")
     add_configfiles("config.h.in", {pattern = "@(.-)@"})
 ```
 
+##### 内置变量
+
 我们也有提供了一些内置的变量，即使不通过此接口设置，也是可以进行默认变量替换的：
 
 ```
@@ -2276,6 +2280,30 @@ config.h
 #define CONFIG_VERSION_ALTER 3
 #define CONFIG_VERSION_BUILD 201902031401
 ```
+
+v2.5.3 后新增 git 相关内置变量：
+
+```c
+#define GIT_COMMIT      "${GIT_COMMIT}"
+#define GIT_COMMIT_LONG "${GIT_COMMIT_LONG}"
+#define GIT_COMMIT_DATE "${GIT_COMMIT_DATE}"
+#define GIT_BRANCH      "${GIT_BRANCH}"
+#define GIT_TAG         "${GIT_TAG}"
+#define GIT_TAG_LONG    "${GIT_TAG_LONG}"
+#define GIT_CUSTOM      "${GIT_TAG}-${GIT_COMMIT}"
+```
+
+```c
+#define GIT_COMMIT      "8c42b2c2"
+#define GIT_COMMIT_LONG "8c42b2c251793861eb85ffdf7e7c2307b129c7ae"
+#define GIT_COMMIT_DATE "20210121225744"
+#define GIT_BRANCH      "dev"
+#define GIT_TAG         "v1.6.6"
+#define GIT_TAG_LONG    "v1.6.6-0-g8c42b2c2"
+#define GIT_CUSTOM      "v1.6.6-8c42b2c2"
+```
+
+##### 宏定义
 
 我们还可以对`#define`定义进行一些变量状态控制处理：
 

@@ -1928,6 +1928,7 @@ target("test")
 <pre><code class="lang-lua">add_configfiles("src/*.h.in", {prefixdir = "subdir"})
 add_configfiles("src/(tbox/config.h)")
 </code></pre>
+<h5 id="">变量替换</h5>
 <p>这个接口的一个最重要的特性就是，可以在预处理的时候，对里面的一些模板变量进行预处理替换，例如：</p>
 <p>config.h.in</p>
 <pre><code>#define VAR1 "${VAR1}"
@@ -1953,6 +1954,7 @@ target("test")
 <pre><code class="lang-lua">target("test")
     add_configfiles("config.h.in", {pattern = "@(.-)@"})
 </code></pre>
+<h5 id="">内置变量</h5>
 <p>我们也有提供了一些内置的变量，即使不通过此接口设置，也是可以进行默认变量替换的：</p>
 <pre><code>${VERSION} -> 1.6.3
 ${VERSION_MAJOR} -> 1
@@ -1979,6 +1981,24 @@ ${OS} and ${os} -> IOS or ios
 #define CONFIG_VERSION_ALTER 3
 #define CONFIG_VERSION_BUILD 201902031401
 </code></pre>
+<p>v2.5.3 后新增 git 相关内置变量：</p>
+<pre><code class="lang-c">#define GIT_COMMIT      "${GIT_COMMIT}"
+#define GIT_COMMIT_LONG "${GIT_COMMIT_LONG}"
+#define GIT_COMMIT_DATE "${GIT_COMMIT_DATE}"
+#define GIT_BRANCH      "${GIT_BRANCH}"
+#define GIT_TAG         "${GIT_TAG}"
+#define GIT_TAG_LONG    "${GIT_TAG_LONG}"
+#define GIT_CUSTOM      "${GIT_TAG}-${GIT_COMMIT}"
+</code></pre>
+<pre><code class="lang-c">#define GIT_COMMIT      "8c42b2c2"
+#define GIT_COMMIT_LONG "8c42b2c251793861eb85ffdf7e7c2307b129c7ae"
+#define GIT_COMMIT_DATE "20210121225744"
+#define GIT_BRANCH      "dev"
+#define GIT_TAG         "v1.6.6"
+#define GIT_TAG_LONG    "v1.6.6-0-g8c42b2c2"
+#define GIT_CUSTOM      "v1.6.6-8c42b2c2"
+</code></pre>
+<h5 id="">宏定义</h5>
 <p>我们还可以对<code>#define</code>定义进行一些变量状态控制处理：</p>
 <p>config.h.in</p>
 <pre><code class="lang-c">${define FOO_ENABLE}
