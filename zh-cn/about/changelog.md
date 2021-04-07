@@ -1,3 +1,30 @@
+## v2.5.3
+
+### 新特性
+
+* [#1259](https://github.com/xmake-io/xmake/issues/1259): 支持 `add_files("*.def")` 添加 def 文件去导出 windows/dll 符号
+* [#1267](https://github.com/xmake-io/xmake/issues/1267): 添加 `find_package("nvtx")`
+* [#1274](https://github.com/xmake-io/xmake/issues/1274): 添加 `platform.linux.bpf` 规则去构建 linux/bpf 程序
+* [#1280](https://github.com/xmake-io/xmake/issues/1280): 支持 fetchonly 包去扩展改进 find_package
+* 支持自动拉取远程 ndk 工具链包和集成
+* [#1268](https://github.com/xmake-io/xmake/issues/1268): 添加 `utils.install.pkgconfig_importfiles` 规则去安装 `*.pc` 文件
+* [#1268](https://github.com/xmake-io/xmake/issues/1268): 添加 `utils.install.cmake_importfiles` 规则去安装 `*.cmake` 导入文件
+* [#348](https://github.com/xmake-io/xmake-repo/pull/348): 添加 `platform.longpaths` 策略去支持 git longpaths
+* [#1314](https://github.com/xmake-io/xmake/issues/1314): 支持安装使用 conda 包
+* [#1120](https://github.com/xmake-io/xmake/issues/1120): 添加 `core.base.cpu` 模块并且改进 `os.cpuinfo()`
+* [#1325](https://github.com/xmake-io/xmake/issues/1325): 为 `add_configfiles` 添加内建的 git 变量
+
+## 改进
+
+* [#1275](https://github.com/xmake-io/xmake/issues/1275): 改进 vsxmake 生成器，支持条件化编译 targets
+* [#1290](https://github.com/xmake-io/xmake/pull/1290): 增加对 Android ndk r22 以上版本支持
+* [#1311](https://github.com/xmake-io/xmake/issues/1311): 为 vsxmake 工程添加包 dll 路径，确保调试运行加载正常
+
+## Bugs 修复
+
+* [#1266](https://github.com/xmake-io/xmake/issues/1266): 修复在 `add_repositories` 中的 repo 相对路径
+* [#1288](https://github.com/xmake-io/xmake/issues/1288): 修复 vsxmake 插件处理 option 配置问题
+
 ## v2.5.2
 
 ### 新特性

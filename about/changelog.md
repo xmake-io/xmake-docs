@@ -1,3 +1,30 @@
+### v2.5.3
+
+### New features
+
+* [#1259](https://github.com/xmake-io/xmake/issues/1259): Support `add_files("*.def")` to export symbols for windows/dll
+* [#1267](https://github.com/xmake-io/xmake/issues/1267): add `find_package("nvtx")`
+* [#1274](https://github.com/xmake-io/xmake/issues/1274): add `platform.linux.bpf` rule to build linux/bpf program
+* [#1280](https://github.com/xmake-io/xmake/issues/1280): Support fetchonly package to improve find_package
+* Support to fetch remote ndk toolchain package
+* [#1268](https://github.com/xmake-io/xmake/issues/1268): Add `utils.install.pkgconfig_importfiles` rule to install `*.pc` import file
+* [#1268](https://github.com/xmake-io/xmake/issues/1268): Add `utils.install.cmake_importfiles` rule to install `*.cmake` import files
+* [#348](https://github.com/xmake-io/xmake-repo/pull/348): Add `platform.longpaths` policy to support git longpaths
+* [#1314](https://github.com/xmake-io/xmake/issues/1314): Support to install and use conda packages
+* [#1120](https://github.com/xmake-io/xmake/issues/1120): Add `core.base.cpu` module and improve `os.cpuinfo()`
+* [#1325](https://github.com/xmake-io/xmake/issues/1325): Add builtin git variables for `add_configfiles`
+
+### Change
+
+* [#1275](https://github.com/xmake-io/xmake/issues/1275): Support conditionnal targets for vsxmake plugin
+* [#1290](https://github.com/xmake-io/xmake/pull/1290): Improve android ndk to support >= r22
+* [#1311](https://github.com/xmake-io/xmake/issues/1311): Add packages lib folder to PATH for vsxmake project
+
+### Bugs fixed
+
+* [#1266](https://github.com/xmake-io/xmake/issues/1266): Fix relative repo path in `add_repositories`
+* [#1288](https://github.com/xmake-io/xmake/issues/1288): Fix vsxmake generator with option configs
+
 ## v2.5.2
 
 ### New features

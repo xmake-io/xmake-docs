@@ -90,7 +90,33 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v252">v2.5.2</h2>
+    <h2 id="v253">v2.5.3</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1259">#1259</a>: 支持 <code>add_files("*.def")</code> 添加 def 文件去导出 windows/dll 符号</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1267">#1267</a>: 添加 <code>find_package("nvtx")</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1274">#1274</a>: 添加 <code>platform.linux.bpf</code> 规则去构建 linux/bpf 程序</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1280">#1280</a>: 支持 fetchonly 包去扩展改进 find_package</li>
+<li>支持自动拉取远程 ndk 工具链包和集成</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1268">#1268</a>: 添加 <code>utils.install.pkgconfig_importfiles</code> 规则去安装 <code>*.pc</code> 文件</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1268">#1268</a>: 添加 <code>utils.install.cmake_importfiles</code> 规则去安装 <code>*.cmake</code> 导入文件</li>
+<li><a href="https://github.com/xmake-io/xmake-repo/pull/348">#348</a>: 添加 <code>platform.longpaths</code> 策略去支持 git longpaths</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1314">#1314</a>: 支持安装使用 conda 包</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1120">#1120</a>: 添加 <code>core.base.cpu</code> 模块并且改进 <code>os.cpuinfo()</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1325">#1325</a>: 为 <code>add_configfiles</code> 添加内建的 git 变量</li>
+</ul>
+<h2 id="">改进</h2>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1275">#1275</a>: 改进 vsxmake 生成器，支持条件化编译 targets</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1290">#1290</a>: 增加对 Android ndk r22 以上版本支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1311">#1311</a>: 为 vsxmake 工程添加包 dll 路径，确保调试运行加载正常</li>
+</ul>
+<h2 id="bugs">Bugs 修复</h2>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1266">#1266</a>: 修复在 <code>add_repositories</code> 中的 repo 相对路径</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1288">#1288</a>: 修复 vsxmake 插件处理 option 配置问题</li>
+</ul>
+<h2 id="v252">v2.5.2</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/955#issuecomment-766481512">#955</a>: 支持 <code>zig cc</code> 和 <code>zig c++</code> 作为 c/c++ 编译器</li>
