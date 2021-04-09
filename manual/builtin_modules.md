@@ -642,6 +642,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.features](#osfeatures) | Get features | >= 2.3.1 |
 | [os.getenvs](#osgetenvs) | Get all current environment variables | >= 2.2.6 |
 | [os.addenv](#osaddenv) | Add values to environment variable | >= 2.1.5 |
+| [os.workingdir](#osworkingdir) | Get the working directory | >= 2.1.9 |
 
 #### os.cp
 
@@ -1083,6 +1084,10 @@ print(envs["HOME"])
 -- Add 'bin' to PATH
 os.addenv("PATH", "bin")
 ```
+
+### os.workingdir
+
+- Get the working directory
 
 ### winos
 
