@@ -16,4 +16,5 @@ so that the xmake project and the community will grow stronger.
 | [SirLynix](https://github.com/SirLynix) | [BurgWar](https://github.com/DigitalPulseSoftware/BurgWar) (Video game) & [obs-kinect](https://github.com/SirLynix/obs-kinect) (plugin for OBS) | After programming for more than 12 years in C++, I can say xmake is a life changer. It's to C++ what Cargo is to Rust, a truly helpful tool (especially with external dependencies) you won't want to give up.
 | [yamashi](https://github.com/yamashi) | [Cyber Engine Tweaks](https://github.com/yamashi/CyberEngineTweaks) (Mod for Cyberpunk 2077) | Dll injection to add Lua scripting, imgui user interface, console cheats and other hacks to Cyberpunk 2077.
 | [Tilted Phoques](https://github.com/tiltedphoques) | [Skyrim/Fallout Together](https://github.com/tiltedphoques/TiltedOnline/) (Mod for Skyrim & Fallout 4) | Dll injection to add multiplayer to CreationKit games such as Skyrim and Fallout 4.
+| 武汉凌久微电子有限公司 | 内部嵌入式图形驱动项目 | 支持多种国产嵌入式实时操作系统的GP系列国产GPU OpenGL/ES驱动 |
 
