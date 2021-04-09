@@ -635,6 +635,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.projectdir](#osprojectdir) | Get Project Home | |= 2.1.5 |
 | [os.arch](#osarch) | Get Current System Architecture | >= 2.0.1 |
 | [os.host](#oshost) | Get Current Host System | >= 2.0.1 |
+| [os.ln](#osln) | Link file or directory to the new symfile | >= 2.2.2 |
 
 #### os.cp
 
@@ -1027,6 +1028,15 @@ That is the default architecture of the current host system, for example, I exec
 - Get the operating system of the current host
 
 Consistent with the result of [$(host)](#var-host), for example, if I execute xmake on `linux x86_64` to build, the return value is: `linux`
+
+#### os.ln
+
+- Create a symlink to a file or directory
+
+```lua
+-- creates a symlink file "xxx.txt.ln" which is pointing to "xxx.txt"
+os.ln("xxx.txt", "xxx.txt.ln")
+```
 
 ### winos
 
