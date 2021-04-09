@@ -635,6 +635,14 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.projectdir](#osprojectdir) | Get Project Home | |= 2.1.5 |
 | [os.arch](#osarch) | Get Current System Architecture | >= 2.0.1 |
 | [os.host](#oshost) | Get Current Host System | >= 2.0.1 |
+| [os.ln](#osln) | Link file or directory to the new symfile | >= 2.2.2 |
+| [os.raise](#osraise) | Raise an exception and abort the current script | >= 2.2.8 |
+| [os.subhost](#ossubhost) | Get Subsystem host, e.g. msys, cygwin on windows | >= 2.3.1 |
+| [os.subarch](#ossubarch) | Get Subsystem host architecture | >= 2.3.1 |
+| [os.features](#osfeatures) | Get features | >= 2.3.1 |
+| [os.getenvs](#osgetenvs) | Get all current environment variables | >= 2.2.6 |
+| [os.addenv](#osaddenv) | Add values to environment variable | >= 2.1.5 |
+| [os.workingdir](#osworkingdir) | Get the working directory | >= 2.1.9 |
 
 #### os.cp
 
@@ -1027,6 +1035,59 @@ That is the default architecture of the current host system, for example, I exec
 - Get the operating system of the current host
 
 Consistent with the result of [$(host)](#var-host), for example, if I execute xmake on `linux x86_64` to build, the return value is: `linux`
+
+#### os.ln
+
+- Create a symlink to a file or directory
+
+```lua
+-- creates a symlink file "xxx.txt.ln" which is pointing to "xxx.txt"
+os.ln("xxx.txt", "xxx.txt.ln")
+```
+
+### os.raise
+
+- Raise an exception and abort the current script
+
+```lua
+-- Raise exception with message "an error occurred"
+os.raise("an error occurred")
+```
+
+### os.subhost
+
+- Get Subsystem host, e.g. msys, cygwin on windows
+
+### os.subarch
+
+- Get Subsystem host architecture
+
+### os.features
+
+- Get features
+
+### os.getenvs
+
+- Get all current environment variables
+
+```lua
+local envs = os.getenvs()
+--- home directory (on linux)
+print(envs["HOME"])
+```
+
+### os.addenv
+
+- Add values to environment variable
+
+```lua
+-- Add 'bin' to PATH
+os.addenv("PATH", "bin")
+```
+
+### os.workingdir
+
+- Get the working directory
 
 ### winos
 
