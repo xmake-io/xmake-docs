@@ -15,12 +15,6 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 [![Github Sponsor](/assets/img/github_sponsor.png)](https://github.com/sponsors/waruqi)
 
-## 爱发电
-
-<a href="https://afdian.net/@xmake" target="_blank">
-<img src="/assets/img/afdian-xmake.png" alt="afdian" width="50%" height="50%">
-</a>
-
 ## Paypal
 
 [![Paypal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
@@ -35,6 +29,8 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 
 | 日期       | 支持者                                | 渠道     | 金额   | 评价                                                                    |
 |--          | --                                    | --       | --     | --                                                                      |
+| 2021.04.04 | *烨                                   | 微信     | ¥50   |                                                                         |
+| 2021.03.31 | *晨                                   | 微信     | ¥10   |                                                                         |
 | 2021.03.18 | *博                                   | 微信     | ¥50   |                                                                         |
 | 2021.03.17 | *博                                   | 微信     | ¥100   |                                                                         |
 | 2021.03.14 | Gavin Ray                             | OpenCollective   | $10    |                                                                         |

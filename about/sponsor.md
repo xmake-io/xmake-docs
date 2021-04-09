@@ -23,16 +23,12 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 <img src="/assets/img/weixin.png" alt="weixin" width="218" height="218">
 
-## Afdian
-
-<a href="https://afdian.net/@xmake" target="_blank">
-<img src="/assets/img/afdian-xmake.png" alt="afdian" width="50%" height="50%">
-</a>
-
 ## Supporters 
 
-| date       | supporter                             | pay     | money  | commnet                                                                 |
+| date       | supporter                             | pay     | money  | comment                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2021.04.04 | *烨                                   | wechat     | ¥50   |                                                                         |
+| 2021.03.31 | *晨                                   | wechat     | ¥10   |                                                                         |
 | 2021.03.18 | *博                                   | wechat     | ¥50   |                                                                         |
 | 2021.03.17 | *博                                   | wechat     | ¥100   |                                                                         |
 | 2021.03.14 | Gavin Ray                             | OpenCollective   | $10    |                                                                         |
