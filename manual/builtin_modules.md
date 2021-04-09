@@ -638,6 +638,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.ln](#osln) | Link file or directory to the new symfile | >= 2.2.2 |
 | [os.raise](#osraise) | Raise an exception and abort the current script | >= 2.2.8 |
 | [os.subhost](#ossubhost) | Get Subsystem host, e.g. msys, cygwin on windows | >= 2.3.1 |
+| [os.subarch](#ossubarch) | Get Subsystem host architecture | >= 2.3.1 |
 
 #### os.cp
 
@@ -1051,7 +1052,11 @@ os.raise("an error occurred")
 
 ### os.subhost
 
-- Get subsystem host, e.g. msys, cygwin on windows
+- Get Subsystem host, e.g. msys, cygwin on windows
+
+### os.subarch
+
+- Get Subsystem host architecture
 
 ### winos
 
