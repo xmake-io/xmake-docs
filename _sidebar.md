@@ -3,10 +3,10 @@
   - [Introduction](about/introduction.md)
   - [Contact](about/contact.md)
   - [Sponsor ❤️](about/sponsor.md)
-  - [Technical Support](about/technical_support.md)
-  - [Changelog](about/changelog.md)
-  - [Awesome xmake](about/awesome.md)
   - [Who is using Xmake](about/who_is_using_xmake.md)
+  - [Technical Support](about/technical_support.md)
+  - [Awesome xmake](about/awesome.md)
+  - [Changelog](about/changelog.md)
  
 - Getting Started
 
