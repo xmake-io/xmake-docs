@@ -6,6 +6,7 @@
   - [Technical Support](about/technical_support.md)
   - [Changelog](about/changelog.md)
   - [Awesome xmake](about/awesome.md)
+  - [Who is using Xmake](about/who_is_using_xmake.md)
  
 - Getting Started
 

@@ -7,7 +7,8 @@
   - [周边 🗂️](zh-cn/about/peripheral_items.md)
   - [技术支持](zh-cn/about/technical_support.md)
   - [更新日志](zh-cn/about/changelog.md)
-  - [Awesome xmake](zh-cn/about/awesome.md)
+  - [Awesome Xmake](zh-cn/about/awesome.md)
+  - [谁在使用 Xmake](zh-cn/about/who_is_using_xmake.md)
  
 - 快速入门
 
