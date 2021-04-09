@@ -641,6 +641,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.subarch](#ossubarch) | Get Subsystem host architecture | >= 2.3.1 |
 | [os.features](#osfeatures) | Get features | >= 2.3.1 |
 | [os.getenvs](#osgetenvs) | Get all current environment variables | >= 2.2.6 |
+| [os.addenv](#osaddenv) | Add values to environment variable | >= 2.1.5 |
 
 #### os.cp
 
@@ -1072,6 +1073,15 @@ os.raise("an error occurred")
 local envs = os.getenvs()
 --- home directory (on linux)
 print(envs["HOME"])
+```
+
+### os.addenv
+
+- Add values to environment variable
+
+```lua
+-- Add 'bin' to PATH
+os.addenv("PATH", "bin")
 ```
 
 ### winos
