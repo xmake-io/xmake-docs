@@ -636,6 +636,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.arch](#osarch) | Get Current System Architecture | >= 2.0.1 |
 | [os.host](#oshost) | Get Current Host System | >= 2.0.1 |
 | [os.ln](#osln) | Link file or directory to the new symfile | >= 2.2.2 |
+| [os.raise](#osraise) | Raise an exception and abort the current script | >= 2.2.8 |
 
 #### os.cp
 
@@ -1036,6 +1037,15 @@ Consistent with the result of [$(host)](#var-host), for example, if I execute xm
 ```lua
 -- creates a symlink file "xxx.txt.ln" which is pointing to "xxx.txt"
 os.ln("xxx.txt", "xxx.txt.ln")
+```
+
+### os.raise
+
+- Raise an exception and abort the current script
+
+```lua
+-- Raise exception with message "an error occurred"
+os.raise("an error occurred")
 ```
 
 ### winos
