@@ -10,3 +10,4 @@ so that the xmake project and the community will grow stronger.
 | User (Company Name or Personal Contact) | Project (Project Introduction or Address) | Comment (optional) |
 | :--- | :--- | :--- |
 | [ruki](https://github.com/waruqi) | [tbox](https://github.com/tboox/tbox) | ... |
+| [zsx](https://github.com/acl-dev/acl) | [acl](https://github.com/acl-dev/acl) | Good |
