@@ -5,7 +5,7 @@ If you are using xmake, please click to edit [this page](https://github.com/xmak
 Ihis also let users to use xmake more confidently, and we will also have more motivation to maintain it continuously,
 so that the xmake project and the community will grow stronger.
 
-## user list
+## User list
 
 | User (Company Name or Personal Contact) | Project (Project Introduction or Address) |
 | :--- | :--- |
