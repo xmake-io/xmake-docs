@@ -637,6 +637,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.host](#oshost) | Get Current Host System | >= 2.0.1 |
 | [os.ln](#osln) | Link file or directory to the new symfile | >= 2.2.2 |
 | [os.raise](#osraise) | Raise an exception and abort the current script | >= 2.2.8 |
+| [os.subhost](#ossubhost) | Get Subsystem host, e.g. msys, cygwin on windows | >= 2.3.1 |
 
 #### os.cp
 
@@ -1047,6 +1048,10 @@ os.ln("xxx.txt", "xxx.txt.ln")
 -- Raise exception with message "an error occurred"
 os.raise("an error occurred")
 ```
+
+### os.subhost
+
+- Get subsystem host, e.g. msys, cygwin on windows
 
 ### winos
 
