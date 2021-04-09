@@ -10,5 +10,5 @@
 | :--- | :--- | :--- |
 | [ruki](https://github.com/waruqi) | [tbox](https://github.com/tboox/tbox) | ... |
 | [zsx](https://github.com/acl-dev/acl) | [acl](https://github.com/acl-dev/acl) | Good |
-| [深圳金鼎威视](http://www.gzgve.com/) | 暂时都是内部项目 | 嵌入式开发中目前用过的最优秀的c程序构建工具 |  
+| [深圳金鼎威视](http://www.gzgve.com/) | 暂时都是内部项目 | 嵌入式开发中目前用过的最优秀的c程序构建工具 |
 
