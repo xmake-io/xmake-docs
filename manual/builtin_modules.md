@@ -640,6 +640,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.subhost](#ossubhost) | Get Subsystem host, e.g. msys, cygwin on windows | >= 2.3.1 |
 | [os.subarch](#ossubarch) | Get Subsystem host architecture | >= 2.3.1 |
 | [os.features](#osfeatures) | Get features | >= 2.3.1 |
+| [os.getenvs](#osgetenvs) | Get all current environment variables | >= 2.2.6 |
 
 #### os.cp
 
@@ -1062,6 +1063,16 @@ os.raise("an error occurred")
 ### os.features
 
 - Get features
+
+### os.getenvs
+
+- Get all current environment variables
+
+```lua
+local envs = os.getenvs()
+--- home directory (on linux)
+print(envs["HOME"])
+```
 
 ### winos
 
