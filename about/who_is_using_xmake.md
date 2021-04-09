@@ -12,3 +12,4 @@ so that the xmake project and the community will grow stronger.
 | [ruki](https://github.com/waruqi) | [tbox](https://github.com/tboox/tbox) | ... |
 | [zsx](https://github.com/acl-dev/acl) | [acl](https://github.com/acl-dev/acl) | Good |
 | [深圳金鼎威视](http://www.gzgve.com/) | 暂时都是内部项目 | 嵌入式开发中目前用过的最优秀的c程序构建工具 |
+| [WillyJL](https://github.com/Willy-JL) | [CP77 Discord RPC](https://github.com/Willy-JL/cp77-discord-rpc) ([Homepage](https://www.nexusmods.com/cyberpunk2077/mods/986)) | Perfect and easy way to get into C++ without prior experience |
