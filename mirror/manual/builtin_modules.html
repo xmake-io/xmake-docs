@@ -792,6 +792,46 @@ $ xmake --version
 <td>Get Current Host System</td>
 <td>>= 2.0.1</td>
 </tr>
+<tr>
+<td><a href="#osln">os.ln</a></td>
+<td>Link file or directory to the new symfile</td>
+<td>>= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#osraise">os.raise</a></td>
+<td>Raise an exception and abort the current script</td>
+<td>>= 2.2.8</td>
+</tr>
+<tr>
+<td><a href="#ossubhost">os.subhost</a></td>
+<td>Get Subsystem host, e.g. msys, cygwin on windows</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#ossubarch">os.subarch</a></td>
+<td>Get Subsystem host architecture</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osfeatures">os.features</a></td>
+<td>Get features</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osgetenvs">os.getenvs</a></td>
+<td>Get all current environment variables</td>
+<td>>= 2.2.6</td>
+</tr>
+<tr>
+<td><a href="#osaddenv">os.addenv</a></td>
+<td>Add values to environment variable</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osworkingdir">os.workingdir</a></td>
+<td>Get the working directory</td>
+<td>>= 2.1.9</td>
+</tr>
 </tbody>
 </table>
 <h4 id="oscp">os.cp</h4>
@@ -1078,6 +1118,51 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 <li>Get the operating system of the current host</li>
 </ul>
 <p>Consistent with the result of <a href="#var-host">$(host)</a>, for example, if I execute xmake on <code>linux x86_64</code> to build, the return value is: <code>linux</code></p>
+<h4 id="osln">os.ln</h4>
+<ul>
+<li>Create a symlink to a file or directory</li>
+</ul>
+<pre><code class="lang-lua">-- creates a symlink file "xxx.txt.ln" which is pointing to "xxx.txt"
+os.ln("xxx.txt", "xxx.txt.ln")
+</code></pre>
+<h3 id="osraise">os.raise</h3>
+<ul>
+<li>Raise an exception and abort the current script</li>
+</ul>
+<pre><code class="lang-lua">-- Raise exception with message "an error occurred"
+os.raise("an error occurred")
+</code></pre>
+<h3 id="ossubhost">os.subhost</h3>
+<ul>
+<li>Get Subsystem host, e.g. msys, cygwin on windows</li>
+</ul>
+<h3 id="ossubarch">os.subarch</h3>
+<ul>
+<li>Get Subsystem host architecture</li>
+</ul>
+<h3 id="osfeatures">os.features</h3>
+<ul>
+<li>Get features</li>
+</ul>
+<h3 id="osgetenvs">os.getenvs</h3>
+<ul>
+<li>Get all current environment variables</li>
+</ul>
+<pre><code class="lang-lua">local envs = os.getenvs()
+--- home directory (on linux)
+print(envs["HOME"])
+</code></pre>
+<h3 id="osaddenv">os.addenv</h3>
+<ul>
+<li>Add values to environment variable</li>
+</ul>
+<pre><code class="lang-lua">-- Add &#39;bin&#39; to PATH
+os.addenv("PATH", "bin")
+</code></pre>
+<h3 id="osworkingdir">os.workingdir</h3>
+<ul>
+<li>Get the working directory</li>
+</ul>
 <h3 id="winos">winos</h3>
 <p>The windows system operation module is a built-in module, no need to use <a href="#import">import</a> to import, you can directly call its interface in the script domain.</p>
 <table>
