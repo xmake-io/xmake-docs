@@ -18,4 +18,5 @@ so that the xmake project and the community will grow stronger.
 | [Tilted Phoques](https://github.com/tiltedphoques) | [Skyrim/Fallout Together](https://github.com/tiltedphoques/TiltedOnline/) (Mod for Skyrim & Fallout 4) | Dll injection to add multiplayer to CreationKit games such as Skyrim and Fallout 4.
 | 武汉凌久微电子有限公司 | 内部嵌入式图形驱动项目 | 支持多种国产嵌入式实时操作系统的GP系列国产GPU OpenGL/ES驱动 |
 | [yecate](https://github.com/yecate) | 个人项目 | 跨平台构建的利器,xmake在我日常开发工作中提供了很大的便利 |
+| [fasiondog](https://github.com/fasiondog) | [Hikyuu Quant Framework](https://github.com/fasiondog/hikyuu) 基于C++/Python的开源量化交易研究框架 | xmake 的简洁高效是C/C++跨平台工程的解放 |
 
