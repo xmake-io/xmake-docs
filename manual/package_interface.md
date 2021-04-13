@@ -18,6 +18,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:is_arch](#packageis_arch)             | Wether the current architecture is one of the given platforms                | >= 2.2.6           |
 | [package:is_targetos](#packageis_targetos)     | Wether the currently targeted OS is one of the given OS                      | >= 2.5.2           |
 | [package:is_targetarch](#packageis_targetarch) | Wether the currently targeted architecture is one of the given architectures | >= 2.5.2           |
+| [package:alias](#packagealias)                 | Get the alias of the package                                                 | >= 2.1.7           |
 
 #### package:name
 
@@ -147,4 +148,18 @@ package:is_targetos("android", "iphoneos")
 package:is_targetarch("x86")
 -- Is the currently targeted architecture x64 or x86_64
 package:is_targetarch("x64", "x86_64")
+```
+
+#### package:alias
+
+- Get the alias of the package
+
+If the user sets an alias like so:
+```lua
+add_requires("libsdl", {alias = "sdl"})
+```
+This alias can be retrieved by
+```lua
+-- returns "sdl"
+package:alias()
 ```
