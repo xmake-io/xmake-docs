@@ -38,6 +38,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:is_cross](#packageis_cross)           | Wether the package is getting cross-compiled                                 | >= 2.5.3           |
 | [package:cachedir](#packagecachedir)           | Get the cache directory of the package                                       | >= 2.1.6           |
 | [package:installdir](#packageinstalldir)       | Get the installation directory of the package                                | >= 2.2.2           |
+| [package:scriptdir](#packagescriptdir)         | Get the directory where the xmake.lua of the package lies                    | >= 2.2.5           |
 
 #### package:name
 
@@ -347,3 +348,7 @@ package:installdir("include")
 -- returns the subdirectory include/files
 package:installdir("include", "files")
 ```
+
+#### package:scriptdir
+
+- Get the directory where the xmake.lua of the package lies
