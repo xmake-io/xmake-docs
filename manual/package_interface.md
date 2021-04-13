@@ -1,19 +1,20 @@
 
 This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](manual/package_dependencies.md)
 
-| Interface                                  | Description                                  | Supported Versions |
-| ------------------------------------------ | -------------------------------------------- | ------------------ |
-| [package:name](#packagename)               | Get the name of the package                  | >= 2.2.5           |
-| [package:get](#packageget)                 | Get the values of the package                | >= 2.1.6           |
-| [package:set](#packageset)                 | Set the values of the package                | >= 2.1.6           |
-| [package:add](#packageadd)                 | Add to the values of the package             | >= 2.2.5           |
-| [package:license](#packagelicense)         | Get the license of the package               | >= 2.3.9           |
-| [package:description](#packagedescription) | Get the description of the package           | >= 2.2.3           |
-| [package:plat](#packageplat)               | Get the platform of the package              | >= 2.2.2           |
-| [package:arch](#packagearch)               | Get the architecture of the package          | >= 2.2.2           |
-| [package:targetos](#packagetargetos)       | Get the targeted OS of the package           | >= 2.5.2           |
-| [package:targetarch](#packagetargetarch)   | Get the targeted architecture of the package | >= 2.5.2           |
-| [package:mode](#packagemode)               | Get the build mode of the package            | >= 2.2.5           |
+| Interface                                  | Description                                               | Supported Versions |
+| ------------------------------------------ | --------------------------------------------------------- | ------------------ |
+| [package:name](#packagename)               | Get the name of the package                               | >= 2.2.5           |
+| [package:get](#packageget)                 | Get the values of the package                             | >= 2.1.6           |
+| [package:set](#packageset)                 | Set the values of the package                             | >= 2.1.6           |
+| [package:add](#packageadd)                 | Add to the values of the package                          | >= 2.2.5           |
+| [package:license](#packagelicense)         | Get the license of the package                            | >= 2.3.9           |
+| [package:description](#packagedescription) | Get the description of the package                        | >= 2.2.3           |
+| [package:plat](#packageplat)               | Get the platform of the package                           | >= 2.2.2           |
+| [package:arch](#packagearch)               | Get the architecture of the package                       | >= 2.2.2           |
+| [package:targetos](#packagetargetos)       | Get the targeted OS of the package                        | >= 2.5.2           |
+| [package:targetarch](#packagetargetarch)   | Get the targeted architecture of the package              | >= 2.5.2           |
+| [package:mode](#packagemode)               | Get the build mode of the package                         | >= 2.2.5           |
+| [package:is_plat](#packageis_plat)         | Wether the current platform is one of the given platforms | >= 2.2.6           |
 
 #### package:name
 
@@ -100,3 +101,14 @@ If the package is binary [`os.arch`](manual/builtin_modules.md#osarch) is return
 - Get the build mode. Can be any of:
   + debug
   + release
+
+#### package:is_plat
+
+- Wether the current platform is one of the given platforms
+
+```lua
+-- Is the current platform android?
+package:is_plat("android")
+-- Is the current platform windows, linux or macosx?
+package:is_plat("windows", "linux", "macosx")
+```
