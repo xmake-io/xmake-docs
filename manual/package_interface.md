@@ -31,6 +31,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:is_toolchain](#packageis_toolchain)   | Wether the package is of kind toolchain                                      | >= 2.5.2           |
 | [package:is_library](#packageis_library)       | Wether the package is of kind library                                        | >= 2.5.2           |
 | [package:is_toplevel](#packageis_toplevel)     | Wether the package is directly required by the user                          | >= 2.5.2           |
+| [package:is_thirdparty](#packageis_thirdparty) | Wether the package is provided by a third party package manager              | >= 2.5.3           |
 
 #### package:name
 
@@ -296,3 +297,8 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 #### package:is_toplevel
 
 - Wether the package is directly required by the user (e.g. xmake.lua)
+
+
+#### package:is_thirdparty
+
+- Wether the package is provided by a thirdparty package manager (e.g. brew, conan, vcpkg)
