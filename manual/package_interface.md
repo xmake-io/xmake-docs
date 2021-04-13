@@ -39,6 +39,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:cachedir](#packagecachedir)           | Get the cache directory of the package                                       | >= 2.1.6           |
 | [package:installdir](#packageinstalldir)       | Get the installation directory of the package                                | >= 2.2.2           |
 | [package:scriptdir](#packagescriptdir)         | Get the directory where the xmake.lua of the package lies                    | >= 2.2.5           |
+| [package:envs](#packageenvs)                   | Get the exported environment variables of the package                        | >= 2.2.5           |
 
 #### package:name
 
@@ -352,3 +353,8 @@ package:installdir("include", "files")
 #### package:scriptdir
 
 - Get the directory where the xmake.lua of the package lies
+
+
+#### package:envs
+
+- Get the exported environment variables of the package
