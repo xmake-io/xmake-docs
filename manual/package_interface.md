@@ -1,17 +1,18 @@
 
 This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](manual/package_dependencies.md)
 
-| Interface                                  | Description                         | Supported Versions |
-| ------------------------------------------ | ----------------------------------- | ------------------ |
-| [package:name](#packagename)               | Get the name of the package         | >= 2.2.5           |
-| [package:get](#packageget)                 | Get the values of the package       | >= 2.1.6           |
-| [package:set](#packageset)                 | Set the values of the package       | >= 2.1.6           |
-| [package:add](#packageadd)                 | Add to the values of the package    | >= 2.2.5           |
-| [package:license](#packagelicense)         | Get the license of the package      | >= 2.3.9           |
-| [package:description](#packagedescription) | Get the description of the package  | >= 2.2.3           |
-| [package:plat](#packageplat)               | Get the platform of the package     | >= 2.2.2           |
-| [package:arch](#packagearch)               | Get the architecture of the package | >= 2.2.2           |
-| [package:targetos](#packagetargetos)       | Get the targeted OS of the package  | >= 2.5.2           |
+| Interface                                  | Description                                  | Supported Versions |
+| ------------------------------------------ | -------------------------------------------- | ------------------ |
+| [package:name](#packagename)               | Get the name of the package                  | >= 2.2.5           |
+| [package:get](#packageget)                 | Get the values of the package                | >= 2.1.6           |
+| [package:set](#packageset)                 | Set the values of the package                | >= 2.1.6           |
+| [package:add](#packageadd)                 | Add to the values of the package             | >= 2.2.5           |
+| [package:license](#packagelicense)         | Get the license of the package               | >= 2.3.9           |
+| [package:description](#packagedescription) | Get the description of the package           | >= 2.2.3           |
+| [package:plat](#packageplat)               | Get the platform of the package              | >= 2.2.2           |
+| [package:arch](#packagearch)               | Get the architecture of the package          | >= 2.2.2           |
+| [package:targetos](#packagetargetos)       | Get the targeted OS of the package           | >= 2.5.2           |
+| [package:targetarch](#packagetargetarch)   | Get the targeted architecture of the package | >= 2.5.2           |
 
 #### package:name
 
@@ -88,3 +89,7 @@ If the package is binary [`os.arch`](manual/builtin_modules.md#osarch) is return
 #### package:targetos
 
 - Get the targeted OS of the package. Can have the same values as [package:plat](#packageplat)
+
+#### package:targetarch
+
+- Get the targeted architecture of the package. Can have the same values as [package:arch](#packagearch)
