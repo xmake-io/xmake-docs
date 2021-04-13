@@ -16,6 +16,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:mode](#packagemode)               | Get the build mode of the package                             | >= 2.2.5           |
 | [package:is_plat](#packageis_plat)         | Wether the current platform is one of the given platforms     | >= 2.2.6           |
 | [package:is_arch](#packageis_arch)         | Wether the current architecture is one of the given platforms | >= 2.2.6           |
+| [package:is_targetos](#packageis_targetos) | Wether the currently targeted OS is one of the given OS       | >= 2.5.2           |
 
 #### package:name
 
@@ -123,4 +124,15 @@ package:is_plat("windows", "linux", "macosx")
 package:is_arch("x86")
 -- Is the current architecture x64 or x86_64
 package:is_arch("x64", "x86_64")
+```
+
+#### package:is_targetos
+
+- Wether the currently targeted OS is one of the given OS
+
+```lua
+-- Is the currently targeted OS windows?
+package:is_targetos("windows")
+-- Is the currently targeted OS android or iphoneos?
+package:is_targetos("android", "iphoneos")
 ```
