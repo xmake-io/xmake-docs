@@ -33,6 +33,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:is_toplevel](#packageis_toplevel)     | Wether the package is directly required by the user                          | >= 2.5.2           |
 | [package:is_thirdparty](#packageis_thirdparty) | Wether the package is provided by a third party package manager              | >= 2.5.3           |
 | [package:is_debug](#packageis_debug)           | Wether the the package gets built with debug mode                            | >= 2.5.3           |
+| [package:is_supported](#packageis_supported)   | Wether the package is supported by the current platform and architecture     | >= 2.5.3           |
 
 #### package:name
 
@@ -308,3 +309,8 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 #### package:is_debug
 
 - Wether the package is build with debug mode (Same as `package:config("debug")`)
+
+
+#### package:is_supported
+
+- Wether the package is supported by the current platform and architecture
