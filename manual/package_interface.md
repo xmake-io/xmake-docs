@@ -42,6 +42,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:envs](#packageenvs)                   | Get the exported environment variables of the package                        | >= 2.2.5           |
 | [package:getenv](#packagegetenv)               | Get the given environment variable                                           | >= 2.2.2           |
 | [package:setenv](#packagesetenv)               | Set the given environment variable                                           | >= 2.2.2           |
+| [package:addenv](#packageaddenv)               | Add the given values to the environment variable                             | >= 2.2.2           |
 
 #### package:name
 
@@ -378,4 +379,13 @@ package:getenv("PATH")
 ```lua
 -- sets PATH to {"bin", "lib"}
 package:setenv("PATH", "bin", "lib")
+```
+
+#### package:addenv
+
+- Add the given values to the environment variable
+
+```lua
+-- adds "bin" and "lib" to PATH
+package:addenv("PATH", "bin", "lib")
 ```
