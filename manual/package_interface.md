@@ -37,6 +37,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:debug](#packagedebug)                 | Wether the the package gets built with debug mode (deprecated)               | >= 2.2.3           |
 | [package:is_cross](#packageis_cross)           | Wether the package is getting cross-compiled                                 | >= 2.5.3           |
 | [package:cachedir](#packagecachedir)           | Get the cache directory of the package                                       | >= 2.1.6           |
+| [package:installdir](#packageinstalldir)       | Get the installation directory of the package                                | >= 2.2.2           |
 
 #### package:name
 
@@ -332,3 +333,17 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 #### package:cachedir
 
 - Get the cache directory of the package
+
+
+#### package:installdir
+
+- Get the installation directory of the package. Can also be used to get a subdirectory. If the given directory tree does not exist it will be created.
+
+```lua
+-- returns the installation directory
+package:installdir()
+-- returns the subdirectory include inside the installation directory
+package:installdir("include")
+-- returns the subdirectory include/files
+package:installdir("include", "files")
+```
