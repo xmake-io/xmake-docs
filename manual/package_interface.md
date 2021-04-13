@@ -1,12 +1,14 @@
 
 This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](manual/package_dependencies.md)
 
-| Interface                    | Description                      | Supported Versions |
-| ---------------------------- | -------------------------------- | ------------------ |
-| [package:name](#packagename) | Get the name of the package      | >= 2.2.5           |
-| [package:get](#packageget)   | Get the values of the package    | >= 2.1.6           |
-| [package:set](#packageset)   | Set the values of the package    | >= 2.1.6           |
-| [package:add](#packageadd)   | Add to the values of the package | >= 2.2.5           |
+| Interface                                  | Description                        | Supported Versions |
+| ------------------------------------------ | ---------------------------------- | ------------------ |
+| [package:name](#packagename)               | Get the name of the package        | >= 2.2.5           |
+| [package:get](#packageget)                 | Get the values of the package      | >= 2.1.6           |
+| [package:set](#packageset)                 | Set the values of the package      | >= 2.1.6           |
+| [package:add](#packageadd)                 | Add to the values of the package   | >= 2.2.5           |
+| [package:license](#packagelicense)         | Get the license of the package     | >= 2.3.9           |
+| [package:description](#packagedescription) | Get the description of the package | >= 2.2.3           |
 
 #### package:name
 
@@ -50,3 +52,11 @@ package:add("links", "sdl2")
 -- add defined macros
 package:add("defines", "SDL_MAIN_HANDLED")
 ```
+
+#### package:license
+
+- Get the license of the package (Same as `package:get("license")`)
+
+#### package:description
+
+- Get the description of the package (Same as `package:get("description")`)
