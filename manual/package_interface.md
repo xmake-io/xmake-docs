@@ -40,6 +40,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:installdir](#packageinstalldir)       | Get the installation directory of the package                                | >= 2.2.2           |
 | [package:scriptdir](#packagescriptdir)         | Get the directory where the xmake.lua of the package lies                    | >= 2.2.5           |
 | [package:envs](#packageenvs)                   | Get the exported environment variables of the package                        | >= 2.2.5           |
+| [package:getenv](#packagegetenv)               | Get the given environment variable                                           | >= 2.2.2           |
 
 #### package:name
 
@@ -358,3 +359,13 @@ package:installdir("include", "files")
 #### package:envs
 
 - Get the exported environment variables of the package
+
+
+#### package:getenv
+
+- Get the given environment variable
+
+```lua
+-- returns a table
+package:getenv("PATH")
+```
