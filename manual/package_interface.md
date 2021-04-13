@@ -25,6 +25,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:url_version](#packageurl_version)     | Get the version filter of an URL                                             | >= 2.1.6           |
 | [package:dep](#packagedep)                     | Get a dependency of the package                                              | >= 2.2.3           |
 | [package:deps](#packagedeps)                   | Get all dependencies of the package                                          | >= 2.1.7           |
+| [package:sourcehash](#packagesourcehash)       | Get the sha256 checksum of an URL alias                                      | >= 2.3.2           |
 
 #### package:name
 
@@ -246,4 +247,21 @@ python:name()
 for _,dep in pairs(package:deps()) do
     print(dep:name())
 end
+```
+
+#### package:sourcehash
+
+- Get the sha256 checksum of an URL alias
+
+If the checksum is provided like so:
+```lua
+add_urls("https://example.com/library-$(version).zip", {alias = "example"})
+add_versions("example:2.4.1", "29f9983cc7196e882c4bc3d23d7492f9c47574c7cf658afafe7d00c185429941")
+```
+You can retrieve the checksum like so:
+```lua
+-- returns "29f9983cc7196e882c4bc3d23d7492f9c47574c7cf658afafe7d00c185429941"
+package:sourcehash("example")
+-- or so
+package:sourcehash(package:url_alias(package:urls()[1]))
 ```
