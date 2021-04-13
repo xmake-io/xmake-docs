@@ -13,6 +13,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:arch](#packagearch)               | Get the architecture of the package          | >= 2.2.2           |
 | [package:targetos](#packagetargetos)       | Get the targeted OS of the package           | >= 2.5.2           |
 | [package:targetarch](#packagetargetarch)   | Get the targeted architecture of the package | >= 2.5.2           |
+| [package:mode](#packagemode)               | Get the build mode of the package            | >= 2.2.5           |
 
 #### package:name
 
@@ -93,3 +94,9 @@ If the package is binary [`os.arch`](manual/builtin_modules.md#osarch) is return
 #### package:targetarch
 
 - Get the targeted architecture of the package. Can have the same values as [package:arch](#packagearch)
+
+#### package:mode
+
+- Get the build mode. Can be any of:
+  + debug
+  + release
