@@ -19,6 +19,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:is_targetos](#packageis_targetos)     | Wether the currently targeted OS is one of the given OS                      | >= 2.5.2           |
 | [package:is_targetarch](#packageis_targetarch) | Wether the currently targeted architecture is one of the given architectures | >= 2.5.2           |
 | [package:alias](#packagealias)                 | Get the alias of the package                                                 | >= 2.1.7           |
+| [package:urls](#packageurls)                   | Get the URLs of the package                                                  | >= 2.1.6           |
 
 #### package:name
 
@@ -162,4 +163,20 @@ This alias can be retrieved by
 ```lua
 -- returns "sdl"
 package:alias()
+```
+
+#### package:urls
+
+- Get the URLs of the package
+
+Retrieve the URLs set by:
+```lua
+add_urls("https://example.com/library-$(version).zip")
+-- or so
+set_urls("https://example.com/library-$(version).zip")
+```
+Then write this:
+```lua
+-- returns the table {"https://example.com/library-$(version).zip"}
+package:urls()
 ```
