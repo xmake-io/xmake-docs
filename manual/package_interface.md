@@ -9,6 +9,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:add](#packageadd)                 | Add to the values of the package   | >= 2.2.5           |
 | [package:license](#packagelicense)         | Get the license of the package     | >= 2.3.9           |
 | [package:description](#packagedescription) | Get the description of the package | >= 2.2.3           |
+| [package:plat](#packageplat)               | Get the platform of the package    | >= 2.2.2           |
 
 #### package:name
 
@@ -60,3 +61,18 @@ package:add("defines", "SDL_MAIN_HANDLED")
 #### package:description
 
 - Get the description of the package (Same as `package:get("description")`)
+
+#### package:plat
+
+- Get the platform of the package. Can be any of:
+  + windows
+  + linux
+  + macosx
+  + android
+  + iphoneos
+  + watchos
+  + mingw
+  + cygwin
+  + bsd
+
+If the package is binary [`os.host`](manual/builtin_modules.md#oshost) is returned
