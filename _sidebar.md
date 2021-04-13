@@ -42,6 +42,7 @@
   - [Custom Rule](manual/custom_rule.md)
   - [Custom Toolchain](manual/custom_toolchain.md)
   - [Package Dependencies](manual/package_dependencies.md)
+  - [Package Interface](manual/package_interface.md)
   - [Builtin Variables](manual/builtin_variables.md)
   - [Builtin Modules](manual/builtin_modules.md)
   - [Extension Modules](manual/extension_modules.md)
