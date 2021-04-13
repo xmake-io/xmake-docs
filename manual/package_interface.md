@@ -35,6 +35,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:is_debug](#packageis_debug)           | Wether the the package gets built with debug mode                            | >= 2.5.3           |
 | [package:is_supported](#packageis_supported)   | Wether the package is supported by the current platform and architecture     | >= 2.5.3           |
 | [package:debug](#packagedebug)                 | Wether the the package gets built with debug mode (deprecated)               | >= 2.2.3           |
+| [package:is_cross](#packageis_cross)           | Wether the package is getting cross-compiled                                 | >= 2.5.3           |
 
 #### package:name
 
@@ -320,3 +321,8 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 #### package:debug
 
 - Wether the the package gets built with debug mode (deprecated: use [`package:is_debug`](#packageis_debug) instead)
+
+
+#### package:is_cross
+
+- Wether the package is getting cross-compiled
