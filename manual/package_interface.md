@@ -21,7 +21,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:alias](#packagealias)                 | Get the alias of the package                                                 | >= 2.1.7           |
 | [package:urls](#packageurls)                   | Get the URLs of the package                                                  | >= 2.1.6           |
 | [package:urls_set](#packageurls_set)           | Set the URLs of the package                                                  | >= 2.1.6           |
-
+| [package:url_alias](#packageurl_alias)         | Get the alias of an URL                                                      | >= 2.1.6           |
 #### package:name
 
 - Get the name of the package
@@ -190,3 +190,19 @@ package:urls()
 package:urls_set({"https://example.com/library-$(version).zip"})
 ```
 
+#### package:url_alias
+
+- Get the alias of an URL
+
+If the alias is set like so:
+```lua
+add_urls("https://example.com/library-$(version).zip", {alias = example})
+```
+It can be retrieved like so:
+```lua
+-- both return "example"
+-- the URL needs to be provided
+package:url_alias("https://example.com/library-$(version).zip")
+-- this is also possible
+package:url_alias(package:urls()[1])
+```
