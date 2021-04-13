@@ -26,6 +26,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:dep](#packagedep)                     | Get a dependency of the package                                              | >= 2.2.3           |
 | [package:deps](#packagedeps)                   | Get all dependencies of the package                                          | >= 2.1.7           |
 | [package:sourcehash](#packagesourcehash)       | Get the sha256 checksum of an URL alias                                      | >= 2.3.2           |
+| [package:kind](#packagekind)                   | Get the kind of the package                                                  | >= 2.1.7           |
 
 #### package:name
 
@@ -265,3 +266,10 @@ package:sourcehash("example")
 -- or so
 package:sourcehash(package:url_alias(package:urls()[1]))
 ```
+
+#### package:kind
+
+- Get the kind of the package. Can be any of:
+  + binary
+  + toolchain (is also binary)
+  + library (default)
