@@ -30,6 +30,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:is_binary](#packageis_binary)         | Wether the package is of kind binary                                         | >= 2.5.2           |
 | [package:is_toolchain](#packageis_toolchain)   | Wether the package is of kind toolchain                                      | >= 2.5.2           |
 | [package:is_library](#packageis_library)       | Wether the package is of kind library                                        | >= 2.5.2           |
+| [package:is_toplevel](#packageis_toplevel)     | Wether the package is directly required by the user                          | >= 2.5.2           |
 
 #### package:name
 
@@ -291,3 +292,7 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 #### package:is_library
 
 - Wether the package is of kind library
+
+#### package:is_toplevel
+
+- Wether the package is directly required by the user (e.g. xmake.lua)
