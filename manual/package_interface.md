@@ -24,6 +24,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:url_alias](#packageurl_alias)         | Get the alias of an URL                                                      | >= 2.1.6           |
 | [package:url_version](#packageurl_version)     | Get the version filter of an URL                                             | >= 2.1.6           |
 | [package:dep](#packagedep)                     | Get a dependency of the package                                              | >= 2.2.3           |
+| [package:deps](#packagedeps)                   | Get all dependencies of the package                                          | >= 2.1.7           |
 
 #### package:name
 
@@ -234,4 +235,15 @@ version_func()
 local python = package:dep("python")
 -- returns "python"
 python:name()
+```
+
+#### package:deps
+
+- Get all dependencies of the package
+
+```lua
+-- prints the names of all dependencies
+for _,dep in pairs(package:deps()) do
+    print(dep:name())
+end
 ```
