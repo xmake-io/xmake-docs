@@ -27,6 +27,9 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:deps](#packagedeps)                   | Get all dependencies of the package                                          | >= 2.1.7           |
 | [package:sourcehash](#packagesourcehash)       | Get the sha256 checksum of an URL alias                                      | >= 2.3.2           |
 | [package:kind](#packagekind)                   | Get the kind of the package                                                  | >= 2.1.7           |
+| [package:is_binary](#packageis_binary)         | Wether the package is of kind binary                                         | >= 2.5.2           |
+| [package:is_toolchain](#packageis_toolchain)   | Wether the package is of kind toolchain                                      | >= 2.5.2           |
+| [package:is_library](#packageis_library)       | Wether the package is of kind library                                        | >= 2.5.2           |
 
 #### package:name
 
@@ -273,3 +276,18 @@ package:sourcehash(package:url_alias(package:urls()[1]))
   + binary
   + toolchain (is also binary)
   + library (default)
+
+
+#### package:is_binary
+
+- Wether the package is of kind binary
+
+
+#### package:is_toolchain
+
+- Wether the package is of kind toolchain
+
+
+#### package:is_library
+
+- Wether the package is of kind library
