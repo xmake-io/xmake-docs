@@ -11,6 +11,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:description](#packagedescription) | Get the description of the package  | >= 2.2.3           |
 | [package:plat](#packageplat)               | Get the platform of the package     | >= 2.2.2           |
 | [package:arch](#packagearch)               | Get the architecture of the package | >= 2.2.2           |
+| [package:targetos](#packagetargetos)       | Get the targeted OS of the package  | >= 2.5.2           |
 
 #### package:name
 
@@ -83,3 +84,7 @@ If the package is binary [`os.host`](manual/builtin_modules.md#oshost) is return
 - Get the architecture of the package (e.g. x86, x64, x86_64)
 
 If the package is binary [`os.arch`](manual/builtin_modules.md#osarch) is returned
+
+#### package:targetos
+
+- Get the targeted OS of the package. Can have the same values as [package:plat](#packageplat)
