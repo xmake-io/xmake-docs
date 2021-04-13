@@ -1,22 +1,23 @@
 
 This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](manual/package_dependencies.md)
 
-| Interface                                  | Description                                                   | Supported Versions |
-| ------------------------------------------ | ------------------------------------------------------------- | ------------------ |
-| [package:name](#packagename)               | Get the name of the package                                   | >= 2.2.5           |
-| [package:get](#packageget)                 | Get the values of the package                                 | >= 2.1.6           |
-| [package:set](#packageset)                 | Set the values of the package                                 | >= 2.1.6           |
-| [package:add](#packageadd)                 | Add to the values of the package                              | >= 2.2.5           |
-| [package:license](#packagelicense)         | Get the license of the package                                | >= 2.3.9           |
-| [package:description](#packagedescription) | Get the description of the package                            | >= 2.2.3           |
-| [package:plat](#packageplat)               | Get the platform of the package                               | >= 2.2.2           |
-| [package:arch](#packagearch)               | Get the architecture of the package                           | >= 2.2.2           |
-| [package:targetos](#packagetargetos)       | Get the targeted OS of the package                            | >= 2.5.2           |
-| [package:targetarch](#packagetargetarch)   | Get the targeted architecture of the package                  | >= 2.5.2           |
-| [package:mode](#packagemode)               | Get the build mode of the package                             | >= 2.2.5           |
-| [package:is_plat](#packageis_plat)         | Wether the current platform is one of the given platforms     | >= 2.2.6           |
-| [package:is_arch](#packageis_arch)         | Wether the current architecture is one of the given platforms | >= 2.2.6           |
-| [package:is_targetos](#packageis_targetos) | Wether the currently targeted OS is one of the given OS       | >= 2.5.2           |
+| Interface                                      | Description                                                                  | Supported Versions |
+| ---------------------------------------------- | ---------------------------------------------------------------------------- | ------------------ |
+| [package:name](#packagename)                   | Get the name of the package                                                  | >= 2.2.5           |
+| [package:get](#packageget)                     | Get the values of the package                                                | >= 2.1.6           |
+| [package:set](#packageset)                     | Set the values of the package                                                | >= 2.1.6           |
+| [package:add](#packageadd)                     | Add to the values of the package                                             | >= 2.2.5           |
+| [package:license](#packagelicense)             | Get the license of the package                                               | >= 2.3.9           |
+| [package:description](#packagedescription)     | Get the description of the package                                           | >= 2.2.3           |
+| [package:plat](#packageplat)                   | Get the platform of the package                                              | >= 2.2.2           |
+| [package:arch](#packagearch)                   | Get the architecture of the package                                          | >= 2.2.2           |
+| [package:targetos](#packagetargetos)           | Get the targeted OS of the package                                           | >= 2.5.2           |
+| [package:targetarch](#packagetargetarch)       | Get the targeted architecture of the package                                 | >= 2.5.2           |
+| [package:mode](#packagemode)                   | Get the build mode of the package                                            | >= 2.2.5           |
+| [package:is_plat](#packageis_plat)             | Wether the current platform is one of the given platforms                    | >= 2.2.6           |
+| [package:is_arch](#packageis_arch)             | Wether the current architecture is one of the given platforms                | >= 2.2.6           |
+| [package:is_targetos](#packageis_targetos)     | Wether the currently targeted OS is one of the given OS                      | >= 2.5.2           |
+| [package:is_targetarch](#packageis_targetarch) | Wether the currently targeted architecture is one of the given architectures | >= 2.5.2           |
 
 #### package:name
 
@@ -135,4 +136,15 @@ package:is_arch("x64", "x86_64")
 package:is_targetos("windows")
 -- Is the currently targeted OS android or iphoneos?
 package:is_targetos("android", "iphoneos")
+```
+
+#### package:is_targetarch
+
+- Wether the currently targeted architecture is one of the given architectures
+
+```lua
+-- Is the currently targeted architecture x86
+package:is_targetarch("x86")
+-- Is the currently targeted architecture x64 or x86_64
+package:is_targetarch("x64", "x86_64")
 ```
