@@ -1,15 +1,16 @@
 
 This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](manual/package_dependencies.md)
 
-| Interface                                  | Description                        | Supported Versions |
-| ------------------------------------------ | ---------------------------------- | ------------------ |
-| [package:name](#packagename)               | Get the name of the package        | >= 2.2.5           |
-| [package:get](#packageget)                 | Get the values of the package      | >= 2.1.6           |
-| [package:set](#packageset)                 | Set the values of the package      | >= 2.1.6           |
-| [package:add](#packageadd)                 | Add to the values of the package   | >= 2.2.5           |
-| [package:license](#packagelicense)         | Get the license of the package     | >= 2.3.9           |
-| [package:description](#packagedescription) | Get the description of the package | >= 2.2.3           |
-| [package:plat](#packageplat)               | Get the platform of the package    | >= 2.2.2           |
+| Interface                                  | Description                         | Supported Versions |
+| ------------------------------------------ | ----------------------------------- | ------------------ |
+| [package:name](#packagename)               | Get the name of the package         | >= 2.2.5           |
+| [package:get](#packageget)                 | Get the values of the package       | >= 2.1.6           |
+| [package:set](#packageset)                 | Set the values of the package       | >= 2.1.6           |
+| [package:add](#packageadd)                 | Add to the values of the package    | >= 2.2.5           |
+| [package:license](#packagelicense)         | Get the license of the package      | >= 2.3.9           |
+| [package:description](#packagedescription) | Get the description of the package  | >= 2.2.3           |
+| [package:plat](#packageplat)               | Get the platform of the package     | >= 2.2.2           |
+| [package:arch](#packagearch)               | Get the architecture of the package | >= 2.2.2           |
 
 #### package:name
 
@@ -76,3 +77,9 @@ package:add("defines", "SDL_MAIN_HANDLED")
   + bsd
 
 If the package is binary [`os.host`](manual/builtin_modules.md#oshost) is returned
+
+#### package:arch
+
+- Get the architecture of the package (e.g. x86, x64, x86_64)
+
+If the package is binary [`os.arch`](manual/builtin_modules.md#osarch) is returned
