@@ -22,6 +22,8 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:urls](#packageurls)                   | Get the URLs of the package                                                  | >= 2.1.6           |
 | [package:urls_set](#packageurls_set)           | Set the URLs of the package                                                  | >= 2.1.6           |
 | [package:url_alias](#packageurl_alias)         | Get the alias of an URL                                                      | >= 2.1.6           |
+| [package:url_version](#packageurl_version)     | Get the version filter of an URL                                             | >= 2.1.6           |
+
 #### package:name
 
 - Get the name of the package
@@ -205,4 +207,20 @@ It can be retrieved like so:
 package:url_alias("https://example.com/library-$(version).zip")
 -- this is also possible
 package:url_alias(package:urls()[1])
+```
+
+#### package:url_version
+
+- Returns the version filter of the given URL
+
+This returns the function provided by `version`:
+```lua
+add_urls("https://example.com/library-$(version).zip", {version = function (version) return "example_version" end})
+```
+It can be used like so:
+```lua
+-- the URL needs to be provided
+local version_func = package:url_version(package:urls()[1])
+-- returns "example_version"
+version_func()
 ```
