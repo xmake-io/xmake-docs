@@ -20,6 +20,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:is_targetarch](#packageis_targetarch) | Wether the currently targeted architecture is one of the given architectures | >= 2.5.2           |
 | [package:alias](#packagealias)                 | Get the alias of the package                                                 | >= 2.1.7           |
 | [package:urls](#packageurls)                   | Get the URLs of the package                                                  | >= 2.1.6           |
+| [package:urls_set](#packageurls_set)           | Set the URLs of the package                                                  | >= 2.1.6           |
 
 #### package:name
 
@@ -180,3 +181,12 @@ Then write this:
 -- returns the table {"https://example.com/library-$(version).zip"}
 package:urls()
 ```
+
+#### package:urls_set
+
+- Set the URLs of the package. Overwrites all URLs of the package.
+
+```lua
+package:urls_set({"https://example.com/library-$(version).zip"})
+```
+
