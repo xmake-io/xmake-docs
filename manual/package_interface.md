@@ -5,6 +5,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | ---------------------------- | ----------------------------- | ------------------ |
 | [package:name](#packagename) | Get the name of the package   | >= 2.2.5           |
 | [package:get](#packageget)   | Get the values of the package | >= 2.1.6           |
+| [package:set](#packageset)   | Set the values of the package | >= 2.1.6           |
 
 #### package:name
 
@@ -21,4 +22,17 @@ package:get("deps")
 package:get("links")
 -- get the defined macros
 package:get("defines")
+```
+
+#### package:set
+
+- Set the values of the package by name (If you just want to add values use [package:add](#packageadd))
+
+```lua
+-- set the dependencies
+package:set("deps", {"python"})
+-- set the links
+package:set("links", {"sdl2"})
+-- set the defined macros
+package:set("defines", {"SDL_MAIN_HANDLED"})
 ```
