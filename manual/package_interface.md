@@ -54,6 +54,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:group](#packagegroup)                 | Get the group name of the package                                            | >= 2.2.3           |
 | [package:patches](#packagepatches)             | Get all patches of the current version                                       | >= 2.2.5           |
 | [package:has_cfuncs](#packagehas_cfuncs)       | Wether the package has the given C functions                                 | >= 2.2.5           |
+| [package:has_cxxfuncs](#packagehas_cxxfuncs)   | Wether the package has the given C++ functions                               | >= 2.2.5           |
 
 #### package:name
 
@@ -507,5 +508,21 @@ on_test(function (package)
   assert(package:has_cfuncs("blob", {includes = "blob.h", configs = {defines = "USE_BLOB"}}))
   -- you can even set the language
   assert(package:has_cfuncs("bla", {configs = {languages = "c99"}}))
+end)
+```
+
+#### package:has_cxxfuncs
+
+- Wether the package has the given C++ functions
+
+This should be used inside `on_test` like so:
+```lua
+on_test(function (package)
+  assert(package:has_cxxfuncs("foo"))
+  -- you can also add configs
+  assert(package:has_cxxfuncs("bar", {includes = "foo_bar.hpp"}))
+  assert(package:has_cxxfuncs("blob", {includes = "blob.hpp", configs = {defines = "USE_BLOB"}}))
+  -- you can even set the language
+  assert(package:has_cxxfuncs("bla", {configs = {languages = "cxx17"}}))
 end)
 ```
