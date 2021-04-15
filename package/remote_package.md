@@ -912,7 +912,7 @@ on_load(function (package)
 end)
 ```
 
-The pcre package needs to do some judgment on the bitwidth to determine the name of the link library for external output. It also needs to add some defines to the dynamic library. This time, it is more flexible when set in on_load.
+The pcre package needs to do some judgment on the bitwidth to determine the name of the link library for external output. It also needs to add some defines to the dynamic library. This time, it is more flexible when set in on_load. To find out what methods are available to `package` look [here](manual/package_interface.md).
 
 #### on_fetch
 
@@ -922,7 +922,7 @@ However, if some packages are installed in the system, the location is more comp
 
 Let's take libusb as an example. Instead of `add_extsources`, we can use the following method to achieve the same effect. Of course, we can do more things in it.
 
-```
+```lua
 package("libusb")
      on_fetch("linux", function(package, opt)
          if opt.system then
@@ -930,6 +930,8 @@ package("libusb")
          end
      end)
 ```
+
+To find out what methods are available to `package` look [here](manual/package_interface.md).
 
 #### on_install
 
