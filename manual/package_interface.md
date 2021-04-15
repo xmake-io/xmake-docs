@@ -1,65 +1,66 @@
 
 This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](manual/package_dependencies.md)
 
-| Interface                                          | Description                                                                  | Supported Versions |
-| -------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------ |
-| [package:name](#packagename)                       | Get the name of the package                                                  | >= 2.2.5           |
-| [package:get](#packageget)                         | Get the values of the package                                                | >= 2.1.6           |
-| [package:set](#packageset)                         | Set the values of the package                                                | >= 2.1.6           |
-| [package:add](#packageadd)                         | Add to the values of the package                                             | >= 2.2.5           |
-| [package:license](#packagelicense)                 | Get the license of the package                                               | >= 2.3.9           |
-| [package:description](#packagedescription)         | Get the description of the package                                           | >= 2.2.3           |
-| [package:plat](#packageplat)                       | Get the platform of the package                                              | >= 2.2.2           |
-| [package:arch](#packagearch)                       | Get the architecture of the package                                          | >= 2.2.2           |
-| [package:targetos](#packagetargetos)               | Get the targeted OS of the package                                           | >= 2.5.2           |
-| [package:targetarch](#packagetargetarch)           | Get the targeted architecture of the package                                 | >= 2.5.2           |
-| [package:mode](#packagemode)                       | Get the build mode of the package                                            | >= 2.2.5           |
-| [package:is_plat](#packageis_plat)                 | Wether the current platform is one of the given platforms                    | >= 2.2.6           |
-| [package:is_arch](#packageis_arch)                 | Wether the current architecture is one of the given platforms                | >= 2.2.6           |
-| [package:is_targetos](#packageis_targetos)         | Wether the currently targeted OS is one of the given OS                      | >= 2.5.2           |
-| [package:is_targetarch](#packageis_targetarch)     | Wether the currently targeted architecture is one of the given architectures | >= 2.5.2           |
-| [package:alias](#packagealias)                     | Get the alias of the package                                                 | >= 2.1.7           |
-| [package:urls](#packageurls)                       | Get the URLs of the package                                                  | >= 2.1.6           |
-| [package:urls_set](#packageurls_set)               | Set the URLs of the package                                                  | >= 2.1.6           |
-| [package:url_alias](#packageurl_alias)             | Get the alias of an URL                                                      | >= 2.1.6           |
-| [package:url_version](#packageurl_version)         | Get the version filter of an URL                                             | >= 2.1.6           |
-| [package:dep](#packagedep)                         | Get a dependency of the package                                              | >= 2.2.3           |
-| [package:deps](#packagedeps)                       | Get all dependencies of the package                                          | >= 2.1.7           |
-| [package:sourcehash](#packagesourcehash)           | Get the sha256 checksum of an URL alias                                      | >= 2.3.2           |
-| [package:kind](#packagekind)                       | Get the kind of the package                                                  | >= 2.1.7           |
-| [package:is_binary](#packageis_binary)             | Wether the package is of kind binary                                         | >= 2.5.2           |
-| [package:is_toolchain](#packageis_toolchain)       | Wether the package is of kind toolchain                                      | >= 2.5.2           |
-| [package:is_library](#packageis_library)           | Wether the package is of kind library                                        | >= 2.5.2           |
-| [package:is_toplevel](#packageis_toplevel)         | Wether the package is directly required by the user                          | >= 2.5.2           |
-| [package:is_thirdparty](#packageis_thirdparty)     | Wether the package is provided by a third party package manager              | >= 2.5.3           |
-| [package:is_debug](#packageis_debug)               | Wether the the package gets built with debug mode                            | >= 2.5.3           |
-| [package:is_supported](#packageis_supported)       | Wether the package is supported by the current platform and architecture     | >= 2.5.3           |
-| [package:debug](#packagedebug)                     | Wether the the package gets built with debug mode (deprecated)               | >= 2.2.3           |
-| [package:is_cross](#packageis_cross)               | Wether the package is getting cross-compiled                                 | >= 2.5.3           |
-| [package:cachedir](#packagecachedir)               | Get the cache directory of the package                                       | >= 2.1.6           |
-| [package:installdir](#packageinstalldir)           | Get the installation directory of the package                                | >= 2.2.2           |
-| [package:scriptdir](#packagescriptdir)             | Get the directory where the xmake.lua of the package lies                    | >= 2.2.5           |
-| [package:envs](#packageenvs)                       | Get the exported environment variables of the package                        | >= 2.2.5           |
-| [package:getenv](#packagegetenv)                   | Get the given environment variable                                           | >= 2.2.2           |
-| [package:setenv](#packagesetenv)                   | Set the given environment variable                                           | >= 2.2.2           |
-| [package:addenv](#packageaddenv)                   | Add the given values to the environment variable                             | >= 2.2.2           |
-| [package:versions](#packageversions)               | Get all version strings of the package                                       | >= 2.1.9           |
-| [package:version](#packageversion)                 | Get the version of the package                                               | >= 2.1.6           |
-| [package:version_str](#packageversion_str)         | Get the version of the package as string                                     | >= 2.1.6           |
-| [package:version_set](#packageversion_set)         | Set the version of the package                                               | >= 2.1.6           |
-| [package:config](#packageconfig)                   | Get the given configuration value of the package                             | >= 2.2.5           |
-| [package:config_set](#packageconfig_set)           | Set the given configuration value of the package                             | >= 2.5.1           |
-| [package:configs](#packageconfigs)                 | Get all configurations of the package                                        | >= 2.2.2           |
-| [package:buildhash](#packagebuildhash)             | Get the build hash of the package                                            | >= 2.2.5           |
-| [package:group](#packagegroup)                     | Get the group name of the package                                            | >= 2.2.3           |
-| [package:patches](#packagepatches)                 | Get all patches of the current version                                       | >= 2.2.5           |
-| [package:has_cfuncs](#packagehas_cfuncs)           | Wether the package has the given C functions                                 | >= 2.2.5           |
-| [package:has_cxxfuncs](#packagehas_cxxfuncs)       | Wether the package has the given C++ functions                               | >= 2.2.5           |
-| [package:has_ctypes](#packagehas_ctypes)           | Wether the package has the given C types                                     | >= 2.3.8           |
-| [package:has_cxxtypes](#packagehas_cxxtypes)       | Wether the package has the given C++ types                                   | >= 2.3.8           |
-| [package:has_cincludes](#packagehas_cincludes)     | Wether the package has the given C header files                              | >= 2.3.8           |
-| [package:has_cxxincludes](#packagehas_cxxincludes) | Wether the package has the given C++ header files                            | >= 2.3.8           |
-| [package:check_csnippets](#packagecheck_csnippets) | Wether the given C snippet can be compiled and linked                        | >= 2.2.6           |
+| Interface                                              | Description                                                                  | Supported Versions |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------- | ------------------ |
+| [package:name](#packagename)                           | Get the name of the package                                                  | >= 2.2.5           |
+| [package:get](#packageget)                             | Get the values of the package                                                | >= 2.1.6           |
+| [package:set](#packageset)                             | Set the values of the package                                                | >= 2.1.6           |
+| [package:add](#packageadd)                             | Add to the values of the package                                             | >= 2.2.5           |
+| [package:license](#packagelicense)                     | Get the license of the package                                               | >= 2.3.9           |
+| [package:description](#packagedescription)             | Get the description of the package                                           | >= 2.2.3           |
+| [package:plat](#packageplat)                           | Get the platform of the package                                              | >= 2.2.2           |
+| [package:arch](#packagearch)                           | Get the architecture of the package                                          | >= 2.2.2           |
+| [package:targetos](#packagetargetos)                   | Get the targeted OS of the package                                           | >= 2.5.2           |
+| [package:targetarch](#packagetargetarch)               | Get the targeted architecture of the package                                 | >= 2.5.2           |
+| [package:mode](#packagemode)                           | Get the build mode of the package                                            | >= 2.2.5           |
+| [package:is_plat](#packageis_plat)                     | Wether the current platform is one of the given platforms                    | >= 2.2.6           |
+| [package:is_arch](#packageis_arch)                     | Wether the current architecture is one of the given platforms                | >= 2.2.6           |
+| [package:is_targetos](#packageis_targetos)             | Wether the currently targeted OS is one of the given OS                      | >= 2.5.2           |
+| [package:is_targetarch](#packageis_targetarch)         | Wether the currently targeted architecture is one of the given architectures | >= 2.5.2           |
+| [package:alias](#packagealias)                         | Get the alias of the package                                                 | >= 2.1.7           |
+| [package:urls](#packageurls)                           | Get the URLs of the package                                                  | >= 2.1.6           |
+| [package:urls_set](#packageurls_set)                   | Set the URLs of the package                                                  | >= 2.1.6           |
+| [package:url_alias](#packageurl_alias)                 | Get the alias of an URL                                                      | >= 2.1.6           |
+| [package:url_version](#packageurl_version)             | Get the version filter of an URL                                             | >= 2.1.6           |
+| [package:dep](#packagedep)                             | Get a dependency of the package                                              | >= 2.2.3           |
+| [package:deps](#packagedeps)                           | Get all dependencies of the package                                          | >= 2.1.7           |
+| [package:sourcehash](#packagesourcehash)               | Get the sha256 checksum of an URL alias                                      | >= 2.3.2           |
+| [package:kind](#packagekind)                           | Get the kind of the package                                                  | >= 2.1.7           |
+| [package:is_binary](#packageis_binary)                 | Wether the package is of kind binary                                         | >= 2.5.2           |
+| [package:is_toolchain](#packageis_toolchain)           | Wether the package is of kind toolchain                                      | >= 2.5.2           |
+| [package:is_library](#packageis_library)               | Wether the package is of kind library                                        | >= 2.5.2           |
+| [package:is_toplevel](#packageis_toplevel)             | Wether the package is directly required by the user                          | >= 2.5.2           |
+| [package:is_thirdparty](#packageis_thirdparty)         | Wether the package is provided by a third party package manager              | >= 2.5.3           |
+| [package:is_debug](#packageis_debug)                   | Wether the the package gets built with debug mode                            | >= 2.5.3           |
+| [package:is_supported](#packageis_supported)           | Wether the package is supported by the current platform and architecture     | >= 2.5.3           |
+| [package:debug](#packagedebug)                         | Wether the the package gets built with debug mode (deprecated)               | >= 2.2.3           |
+| [package:is_cross](#packageis_cross)                   | Wether the package is getting cross-compiled                                 | >= 2.5.3           |
+| [package:cachedir](#packagecachedir)                   | Get the cache directory of the package                                       | >= 2.1.6           |
+| [package:installdir](#packageinstalldir)               | Get the installation directory of the package                                | >= 2.2.2           |
+| [package:scriptdir](#packagescriptdir)                 | Get the directory where the xmake.lua of the package lies                    | >= 2.2.5           |
+| [package:envs](#packageenvs)                           | Get the exported environment variables of the package                        | >= 2.2.5           |
+| [package:getenv](#packagegetenv)                       | Get the given environment variable                                           | >= 2.2.2           |
+| [package:setenv](#packagesetenv)                       | Set the given environment variable                                           | >= 2.2.2           |
+| [package:addenv](#packageaddenv)                       | Add the given values to the environment variable                             | >= 2.2.2           |
+| [package:versions](#packageversions)                   | Get all version strings of the package                                       | >= 2.1.9           |
+| [package:version](#packageversion)                     | Get the version of the package                                               | >= 2.1.6           |
+| [package:version_str](#packageversion_str)             | Get the version of the package as string                                     | >= 2.1.6           |
+| [package:version_set](#packageversion_set)             | Set the version of the package                                               | >= 2.1.6           |
+| [package:config](#packageconfig)                       | Get the given configuration value of the package                             | >= 2.2.5           |
+| [package:config_set](#packageconfig_set)               | Set the given configuration value of the package                             | >= 2.5.1           |
+| [package:configs](#packageconfigs)                     | Get all configurations of the package                                        | >= 2.2.2           |
+| [package:buildhash](#packagebuildhash)                 | Get the build hash of the package                                            | >= 2.2.5           |
+| [package:group](#packagegroup)                         | Get the group name of the package                                            | >= 2.2.3           |
+| [package:patches](#packagepatches)                     | Get all patches of the current version                                       | >= 2.2.5           |
+| [package:has_cfuncs](#packagehas_cfuncs)               | Wether the package has the given C functions                                 | >= 2.2.5           |
+| [package:has_cxxfuncs](#packagehas_cxxfuncs)           | Wether the package has the given C++ functions                               | >= 2.2.5           |
+| [package:has_ctypes](#packagehas_ctypes)               | Wether the package has the given C types                                     | >= 2.3.8           |
+| [package:has_cxxtypes](#packagehas_cxxtypes)           | Wether the package has the given C++ types                                   | >= 2.3.8           |
+| [package:has_cincludes](#packagehas_cincludes)         | Wether the package has the given C header files                              | >= 2.3.8           |
+| [package:has_cxxincludes](#packagehas_cxxincludes)     | Wether the package has the given C++ header files                            | >= 2.3.8           |
+| [package:check_csnippets](#packagecheck_csnippets)     | Wether the given C snippet can be compiled and linked                        | >= 2.2.6           |
+| [package:check_cxxsnippets](#packagecheck_cxxsnippets) | Wether the given C++ snippet can be compiled and linked                      | >= 2.2.6           |
 
 #### package:name
 
@@ -601,5 +602,23 @@ on_test(function (package)
       printf("%s", bar.blob);
     }
   ]]}, {configs = {languages = "c99"}, includes = "foo.h"}))
+end)
+```
+
+#### package:check_cxxsnippets
+
+- Wether the given C++ snippet can be compiled and linked
+
+This should be used in `on_test` like so:
+```lua
+on_test(function (package)
+  assert(package:check_cxxsnippets({test = [[
+    #define USE_BLOB
+    #include <blob.hpp>
+    void test(int argc, char** argv) {
+      foo bar();
+      std::cout << bar.blob;
+    }
+  ]]}, {configs = {languages = "cxx11"}, includes = "foo.hpp"}))
 end)
 ```
