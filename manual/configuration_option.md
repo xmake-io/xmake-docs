@@ -46,8 +46,8 @@ The `option` field can be repeatedly entered to implement separate settings. If 
 | [add_cxxincludes](#optionadd_cxxincludes)             | Add c++ header file detection                     | >= 1.0.1           |
 | [add_ctypes](#optionadd_ctypes)                       | Add c type detection                              | >= 1.0.1           |
 | [add_cxxtypes](#optionadd_cxxtypes)                   | Add c++ type detection                            | >= 1.0.1           |
-| [add_csnippet](#optionadd_csnippet)                   | Add c-code snippets detection                     | >= 2.1.5           |
-| [add_cxxsnippet](#optionadd_cxxsnippet)               | Add c++ code snippet detection                    | >= 2.1.5           |
+| [add_csnippets](#optionadd_csnippets)                   | Add c-code snippets detection                     | >= 2.1.5           |
+| [add_cxxsnippets](#optionadd_cxxsnippets)               | Add c++ code snippet detection                    | >= 2.1.5           |
 | [set_warnings](/manual/project_target?id=targetset_warnings)                   | Setting the warning level                         | >= 1.0.1           |
 | [set_optimize](/manual/project_target?id=targetset_optimize)                   | Setting the optimization level                    | >= 1.0.1           |
 | [set_languages](/manual/project_target?id=targetset_languages)                 | Setting the Code Language Standard                | >= 1.0.1           |
@@ -552,14 +552,14 @@ If you want more flexible detection, you can do this in [option.on_check](#optio
 
 Similar to [add_ctypes](#optionadd_ctypes), except that the type detected is a c++ type.
 
-### option:add_csnippet
+### option:add_csnippets
 
 #### Add c code fragment detection
 
 If the existing [add_ctypes](#optionadd_ctypes), [add_cfuncs](#optionadd_cfuncs), etc. cannot meet the current detection requirements,
-You can use this interface to implement more custom detection of some compiler feature detection, see: [add_cxxsnippet](#optionadd_cxxsnippet).
+You can use this interface to implement more custom detection of some compiler feature detection, see: [add_cxxsnippets](#optionadd_cxxsnippets).
 
-### option:add_cxxsnippet
+### option:add_cxxsnippets
 
 #### Adding c++ code snippet detection
 
@@ -567,7 +567,7 @@ This interface can be used to implement more custom detection of some compiler f
 
 ```lua
 option("constexpr")
-    add_cxxsnippet("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f (5); static_assert(x == 15);")
+    add_cxxsnippets("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f (5); static_assert(x == 15);")
 ```
 
 The first parameter sets the name of the code snippet as a label, and is displayed when the output information is detected.

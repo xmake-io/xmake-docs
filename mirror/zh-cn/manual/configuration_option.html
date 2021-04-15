@@ -210,12 +210,12 @@ option("test2")
 <td>>= 1.0.1</td>
 </tr>
 <tr>
-<td><a href="#optionadd_csnippet">add_csnippet</a></td>
+<td><a href="#optionadd_csnippets">add_csnippets</a></td>
 <td>添加c代码片段检测</td>
 <td>>= 2.1.5</td>
 </tr>
 <tr>
-<td><a href="#optionadd_cxxsnippet">add_cxxsnippet</a></td>
+<td><a href="#optionadd_cxxsnippets">add_cxxsnippets</a></td>
 <td>添加c++代码片段检测</td>
 <td>>= 2.1.5</td>
 </tr>
@@ -672,14 +672,14 @@ target("test")
 <h3 id="optionadd_cxxtypes">option:add_cxxtypes</h3>
 <h4 id="c">添加c++类型检测</h4>
 <p>与<a href="#optionadd_ctypes">add_ctypes</a>类似，只是检测的类型是c++类型。</p>
-<h3 id="optionadd_csnippet">option:add_csnippet</h3>
+<h3 id="optionadd_csnippets">option:add_csnippets</h3>
 <h4 id="c">添加c代码片段检测</h4>
-<p>如果现有的<a href="#optionadd_ctypes">add_ctypes</a>, <a href="#optionadd_cfuncs">add_cfuncs</a>等不能满足当前的检测需求，<br>可以用这个接口实现更加定制化检测一些编译器特性检测，具体见: <a href="#optionadd_cxxsnippet">add_cxxsnippet</a>。</p>
-<h3 id="optionadd_cxxsnippet">option:add_cxxsnippet</h3>
+<p>如果现有的<a href="#optionadd_ctypes">add_ctypes</a>, <a href="#optionadd_cfuncs">add_cfuncs</a>等不能满足当前的检测需求，<br>可以用这个接口实现更加定制化检测一些编译器特性检测，具体见: <a href="#optionadd_cxxsnippets">add_cxxsnippets</a>。</p>
+<h3 id="optionadd_cxxsnippets">option:add_cxxsnippets</h3>
 <h4 id="c">添加c++代码片段检测</h4>
 <p>可以用这个接口实现更加定制化检测一些编译器特性检测，尤其是c++的各种特性的检测支持，例如：</p>
 <pre><code class="lang-lua">option("constexpr")
-    add_cxxsnippet("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f(5);  static_assert(x == 15);")
+    add_cxxsnippets("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f(5);  static_assert(x == 15);")
 </code></pre>
 <p>第一个参数设置代码片段的名字作为标示，检测输出信息时候会有显示。</p>
 <p>上述代码，实现对c++的constexpr特性的检测，如果检测通过，则启用constexpr选项，当然这里只是个例子。</p>

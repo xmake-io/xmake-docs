@@ -46,8 +46,8 @@ option("test2")
 | [add_cxxincludes](#optionadd_cxxincludes)                                    | 添加c++头文件检测                            | >= 1.0.1 |
 | [add_ctypes](#optionadd_ctypes)                                              | 添加c类型检测                                | >= 1.0.1 |
 | [add_cxxtypes](#optionadd_cxxtypes)                                          | 添加c++类型检测                              | >= 1.0.1 |
-| [add_csnippet](#optionadd_csnippet)                                          | 添加c代码片段检测                            | >= 2.1.5 |
-| [add_cxxsnippet](#optionadd_cxxsnippet)                                      | 添加c++代码片段检测                          | >= 2.1.5 |
+| [add_csnippets](#optionadd_csnippets)                                          | 添加c代码片段检测                            | >= 2.1.5 |
+| [add_cxxsnippets](#optionadd_cxxsnippets)                                      | 添加c++代码片段检测                          | >= 2.1.5 |
 | [set_warnings](/zh-cn/manual/project_target?id=targetset_warnings)           | 设置警告级别                                 | >= 1.0.1 |
 | [set_optimize](/zh-cn/manual/project_target?id=targetset_optimize)           | 设置优化级别                                 | >= 1.0.1 |
 | [set_languages](/zh-cn/manual/project_target?id=targetset_languages)         | 设置代码语言标准                             | >= 1.0.1 |
@@ -496,14 +496,14 @@ target("test")
 
 与[add_ctypes](#optionadd_ctypes)类似，只是检测的类型是c++类型。
 
-### option:add_csnippet
+### option:add_csnippets
 
 #### 添加c代码片段检测
 
 如果现有的[add_ctypes](#optionadd_ctypes), [add_cfuncs](#optionadd_cfuncs)等不能满足当前的检测需求，
-可以用这个接口实现更加定制化检测一些编译器特性检测，具体见: [add_cxxsnippet](#optionadd_cxxsnippet)。
+可以用这个接口实现更加定制化检测一些编译器特性检测，具体见: [add_cxxsnippets](#optionadd_cxxsnippets)。
 
-### option:add_cxxsnippet
+### option:add_cxxsnippets
 
 #### 添加c++代码片段检测
 
@@ -511,7 +511,7 @@ target("test")
 
 ```lua
 option("constexpr")
-    add_cxxsnippet("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f(5);  static_assert(x == 15);")
+    add_cxxsnippets("constexpr", "constexpr int f(int x) { int sum=0; for (int i=0; i<=x; ++i) sum += i; return sum; } constexpr int x = f(5);  static_assert(x == 15);")
 ```
 
 第一个参数设置代码片段的名字作为标示，检测输出信息时候会有显示。
