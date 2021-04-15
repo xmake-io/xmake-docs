@@ -45,6 +45,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:addenv](#packageaddenv)               | Add the given values to the environment variable                             | >= 2.2.2           |
 | [package:versions](#packageversions)           | Get all version strings of the package                                       | >= 2.1.9           |
 | [package:version](#packageversion)             | Get the version of the package                                               | >= 2.1.6           |
+| [package:version_str](#packageversion_str)     | Get the version of the package as string                                     | >= 2.1.6           |
 
 #### package:name
 
@@ -410,3 +411,7 @@ version:minor()
 -- get the patch version
 version:patch()
 ```
+
+#### package:version_str
+
+- Get the version of the package as string
