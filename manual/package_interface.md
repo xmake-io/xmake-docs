@@ -44,6 +44,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:setenv](#packagesetenv)               | Set the given environment variable                                           | >= 2.2.2           |
 | [package:addenv](#packageaddenv)               | Add the given values to the environment variable                             | >= 2.2.2           |
 | [package:versions](#packageversions)           | Get all version strings of the package                                       | >= 2.1.9           |
+| [package:version](#packageversion)             | Get the version of the package                                               | >= 2.1.6           |
 
 #### package:name
 
@@ -394,3 +395,18 @@ package:addenv("PATH", "bin", "lib")
 #### package:versions
 
 - Get all version strings of the package. Returns a table containing all versions as strings
+
+
+#### package:version
+
+- Get the version of the package
+
+```lua
+local version = package:version()
+-- get the major version
+version:major()
+-- get the minor version
+version:minor()
+-- get the patch version
+version:patch()
+```
