@@ -13,16 +13,12 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:arch](#packagearch)                           | Get the architecture of the package                                          | >= 2.2.2           |
 | [package:targetos](#packagetargetos)                   | Get the targeted OS of the package                                           | >= 2.5.2           |
 | [package:targetarch](#packagetargetarch)               | Get the targeted architecture of the package                                 | >= 2.5.2           |
-| [package:mode](#packagemode)                           | Get the build mode of the package                                            | >= 2.2.5           |
 | [package:is_plat](#packageis_plat)                     | Wether the current platform is one of the given platforms                    | >= 2.2.6           |
 | [package:is_arch](#packageis_arch)                     | Wether the current architecture is one of the given platforms                | >= 2.2.6           |
 | [package:is_targetos](#packageis_targetos)             | Wether the currently targeted OS is one of the given OS                      | >= 2.5.2           |
 | [package:is_targetarch](#packageis_targetarch)         | Wether the currently targeted architecture is one of the given architectures | >= 2.5.2           |
 | [package:alias](#packagealias)                         | Get the alias of the package                                                 | >= 2.1.7           |
 | [package:urls](#packageurls)                           | Get the URLs of the package                                                  | >= 2.1.6           |
-| [package:urls_set](#packageurls_set)                   | Set the URLs of the package                                                  | >= 2.1.6           |
-| [package:url_alias](#packageurl_alias)                 | Get the alias of an URL                                                      | >= 2.1.6           |
-| [package:url_version](#packageurl_version)             | Get the version filter of an URL                                             | >= 2.1.6           |
 | [package:dep](#packagedep)                             | Get a dependency of the package                                              | >= 2.2.3           |
 | [package:deps](#packagedeps)                           | Get all dependencies of the package                                          | >= 2.1.7           |
 | [package:sourcehash](#packagesourcehash)               | Get the sha256 checksum of an URL alias                                      | >= 2.3.2           |
@@ -46,12 +42,10 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:versions](#packageversions)                   | Get all version strings of the package                                       | >= 2.1.9           |
 | [package:version](#packageversion)                     | Get the version of the package                                               | >= 2.1.6           |
 | [package:version_str](#packageversion_str)             | Get the version of the package as string                                     | >= 2.1.6           |
-| [package:version_set](#packageversion_set)             | Set the version of the package                                               | >= 2.1.6           |
 | [package:config](#packageconfig)                       | Get the given configuration value of the package                             | >= 2.2.5           |
 | [package:config_set](#packageconfig_set)               | Set the given configuration value of the package                             | >= 2.5.1           |
 | [package:configs](#packageconfigs)                     | Get all configurations of the package                                        | >= 2.2.2           |
 | [package:buildhash](#packagebuildhash)                 | Get the build hash of the package                                            | >= 2.2.5           |
-| [package:group](#packagegroup)                         | Get the group name of the package                                            | >= 2.2.3           |
 | [package:patches](#packagepatches)                     | Get all patches of the current version                                       | >= 2.2.5           |
 | [package:has_cfuncs](#packagehas_cfuncs)               | Wether the package has the given C functions                                 | >= 2.2.5           |
 | [package:has_cxxfuncs](#packagehas_cxxfuncs)           | Wether the package has the given C++ functions                               | >= 2.2.5           |
@@ -142,11 +136,6 @@ If the package is binary [`os.arch`](manual/builtin_modules.md#osarch) is return
 
 - Get the targeted architecture of the package. Can have the same values as [package:arch](#packagearch)
 
-#### package:mode
-
-- Get the build mode. Can be any of:
-  + debug
-  + release
 
 #### package:is_plat
 
@@ -220,47 +209,6 @@ Then write this:
 ```lua
 -- returns the table {"https://example.com/library-$(version).zip"}
 package:urls()
-```
-
-#### package:urls_set
-
-- Set the URLs of the package. Overwrites all URLs of the package.
-
-```lua
-package:urls_set({"https://example.com/library-$(version).zip"})
-```
-
-#### package:url_alias
-
-- Get the alias of an URL
-
-If the alias is set like so:
-```lua
-add_urls("https://example.com/library-$(version).zip", {alias = example})
-```
-It can be retrieved like so:
-```lua
--- both return "example"
--- the URL needs to be provided
-package:url_alias("https://example.com/library-$(version).zip")
--- this is also possible
-package:url_alias(package:urls()[1])
-```
-
-#### package:url_version
-
-- Returns the version filter of the given URL
-
-This returns the function provided by `version`:
-```lua
-add_urls("https://example.com/library-$(version).zip", {version = function (version) return "example_version" end})
-```
-It can be used like so:
-```lua
--- the URL needs to be provided
-local version_func = package:url_version(package:urls()[1])
--- returns "example_version"
-version_func()
 ```
 
 #### package:dep
@@ -432,19 +380,6 @@ version:patch()
 - Get the version of the package as string
 
 
-#### package:version_set
-
-- Set the version of the package
-
-```lua
--- normal semantic version
-package:version_set("2.4.1", "versions")
--- branch for git repo
-package:version_set("dev", "branches")
--- tag of git repo
-package:version_set("v2.4.1", "tags")
-```
-
 #### package:config
 
 - Get the given configuration value of the package
@@ -482,11 +417,6 @@ local value_y = configs["value_y"]
 #### package:buildhash
 
 - Get the build hash of the package
-
-
-#### package:group
-
-- Get the group name of the package
 
 
 #### package:patches
