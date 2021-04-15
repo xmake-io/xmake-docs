@@ -46,6 +46,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:versions](#packageversions)           | Get all version strings of the package                                       | >= 2.1.9           |
 | [package:version](#packageversion)             | Get the version of the package                                               | >= 2.1.6           |
 | [package:version_str](#packageversion_str)     | Get the version of the package as string                                     | >= 2.1.6           |
+| [package:version_set](#packageversion_set)     | Set the version of the package                                               | >= 2.1.6           |
 
 #### package:name
 
@@ -415,3 +416,17 @@ version:patch()
 #### package:version_str
 
 - Get the version of the package as string
+
+
+#### package:version_set
+
+- Set the version of the package
+
+```lua
+-- normal semantic version
+package:version_set("2.4.1", "versions")
+-- branch for git repo
+package:version_set("dev", "branches")
+-- tag of git repo
+package:version_set("v2.4.1", "tags")
+```
