@@ -49,6 +49,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:version_set](#packageversion_set)     | Set the version of the package                                               | >= 2.1.6           |
 | [package:config](#packageconfig)               | Get the given configuration value of the package                             | >= 2.2.5           |
 | [package:config_set](#packageconfig_set)       | Set the given configuration value of the package                             | >= 2.5.1           |
+| [package:configs](#packageconfigs)             | Get all configurations of the package                                        | >= 2.2.2           |
 
 #### package:name
 
@@ -454,4 +455,15 @@ package:config("value_y")
 ```lua
 package:config_set("enable_x", true)
 package:config_set("value_y", 6)
+```
+
+#### package:configs
+
+- Get all configurations of the package
+
+```lua
+-- returns a table with the configuration names as keys and their values as values
+local configs = package:configs()
+local enable_x = configs["enable_x"]
+local value_y = configs["value_y"]
 ```
