@@ -47,6 +47,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:version](#packageversion)             | Get the version of the package                                               | >= 2.1.6           |
 | [package:version_str](#packageversion_str)     | Get the version of the package as string                                     | >= 2.1.6           |
 | [package:version_set](#packageversion_set)     | Set the version of the package                                               | >= 2.1.6           |
+| [package:config](#packageconfig)               | Get the given configuration value of the package                             | >= 2.2.5           |
 
 #### package:name
 
@@ -429,4 +430,18 @@ package:version_set("2.4.1", "versions")
 package:version_set("dev", "branches")
 -- tag of git repo
 package:version_set("v2.4.1", "tags")
+```
+
+#### package:config
+
+- Get the given configuration value of the package
+
+```lua
+-- if configurations are set like so
+add_require("example", {config = {enable_x = true, value_y = 6}})
+-- these values can be retrieved like so
+-- returns true
+package:config("enable_x")
+-- returns 6
+package:config("value_y")
 ```
