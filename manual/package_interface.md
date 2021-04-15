@@ -51,6 +51,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:config_set](#packageconfig_set)       | Set the given configuration value of the package                             | >= 2.5.1           |
 | [package:configs](#packageconfigs)             | Get all configurations of the package                                        | >= 2.2.2           |
 | [package:buildhash](#packagebuildhash)         | Get the build hash of the package                                            | >= 2.2.5           |
+| [package:group](#packagegroup)                 | Get the group name of the package                                            | >= 2.2.3           |
 
 #### package:name
 
@@ -472,3 +473,8 @@ local value_y = configs["value_y"]
 #### package:buildhash
 
 - Get the build hash of the package
+
+
+#### package:group
+
+- Get the group name of the package
