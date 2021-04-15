@@ -59,6 +59,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:has_cxxtypes](#packagehas_cxxtypes)       | Wether the package has the given C++ types                                   | >= 2.3.8           |
 | [package:has_cincludes](#packagehas_cincludes)     | Wether the package has the given C header files                              | >= 2.3.8           |
 | [package:has_cxxincludes](#packagehas_cxxincludes) | Wether the package has the given C++ header files                            | >= 2.3.8           |
+| [package:check_csnippets](#packagecheck_csnippets) | Wether the given C snippet can be compiled and linked                        | >= 2.2.6           |
 
 #### package:name
 
@@ -582,5 +583,23 @@ This should be used in `on_test` like so:
 ```lua
 on_test(function (package)
   assert(package:has_cincludes("foo.hpp"))
+end)
+```
+
+#### package:check_csnippets
+
+- Wether the given C snippet can be compiled and linked
+
+This should be used in `on_test` like so:
+```lua
+on_test(function (package)
+  assert(package:check_csnippets({test = [[
+    #define USE_BLOB
+    #include <blob.h>
+    void test(int argc, char** argv) {
+      foo bar;
+      printf("%s", bar.blob);
+    }
+  ]]}, {configs = {languages = "c99"}, includes = "foo.h"}))
 end)
 ```
