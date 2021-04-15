@@ -50,6 +50,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:config](#packageconfig)               | Get the given configuration value of the package                             | >= 2.2.5           |
 | [package:config_set](#packageconfig_set)       | Set the given configuration value of the package                             | >= 2.5.1           |
 | [package:configs](#packageconfigs)             | Get all configurations of the package                                        | >= 2.2.2           |
+| [package:buildhash](#packagebuildhash)         | Get the build hash of the package                                            | >= 2.2.5           |
 
 #### package:name
 
@@ -467,3 +468,7 @@ local configs = package:configs()
 local enable_x = configs["enable_x"]
 local value_y = configs["value_y"]
 ```
+
+#### package:buildhash
+
+- Get the build hash of the package
