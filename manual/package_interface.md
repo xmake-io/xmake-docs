@@ -48,6 +48,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:version_str](#packageversion_str)     | Get the version of the package as string                                     | >= 2.1.6           |
 | [package:version_set](#packageversion_set)     | Set the version of the package                                               | >= 2.1.6           |
 | [package:config](#packageconfig)               | Get the given configuration value of the package                             | >= 2.2.5           |
+| [package:config_set](#packageconfig_set)       | Set the given configuration value of the package                             | >= 2.5.1           |
 
 #### package:name
 
@@ -444,4 +445,13 @@ add_require("example", {config = {enable_x = true, value_y = 6}})
 package:config("enable_x")
 -- returns 6
 package:config("value_y")
+```
+
+#### package:config_set
+
+- Set the given configuration value of the package
+
+```lua
+package:config_set("enable_x", true)
+package:config_set("value_y", 6)
 ```
