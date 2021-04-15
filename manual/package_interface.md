@@ -52,6 +52,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:configs](#packageconfigs)             | Get all configurations of the package                                        | >= 2.2.2           |
 | [package:buildhash](#packagebuildhash)         | Get the build hash of the package                                            | >= 2.2.5           |
 | [package:group](#packagegroup)                 | Get the group name of the package                                            | >= 2.2.3           |
+| [package:patches](#packagepatches)             | Get all patches of the current version                                       | >= 2.2.5           |
 
 #### package:name
 
@@ -478,3 +479,16 @@ local value_y = configs["value_y"]
 #### package:group
 
 - Get the group name of the package
+
+
+#### package:patches
+
+- Get all patches of the current version
+
+```lua
+-- returns a table with all patches
+local patches = package:patches()
+-- each element contains the keys "url" and "sha256"
+local url = patches[1]["url"]
+local sha256 = patches[1]["sha256"]
+```
