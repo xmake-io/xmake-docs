@@ -57,6 +57,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:has_cxxfuncs](#packagehas_cxxfuncs)   | Wether the package has the given C++ functions                               | >= 2.2.5           |
 | [package:has_ctypes](#packagehas_ctypes)       | Wether the package has the given C types                                     | >= 2.3.8           |
 | [package:has_cxxtypes](#packagehas_cxxtypes)   | Wether the package has the given C++ types                                   | >= 2.3.8           |
+| [package:has_cincludes](#packagehas_cincludes) | Wether the package has the given C header files                              | >= 2.3.8           |
 
 #### package:name
 
@@ -558,5 +559,16 @@ on_test(function (package)
   assert(package:has_cxxtypes("blob", {includes = "blob.hpp", configs = {defines = "USE_BLOB"}}))
   -- you can even set the language
   assert(package:has_cxxtypes("bla", {configs = {languages = "cxx17"}}))
+end)
+```
+
+#### package:has_cincludes
+
+- Wether the package has the given C header files
+
+This should be used in `on_test` like so:
+```lua
+on_test(function (package)
+  assert(package:has_cincludes("foo.h"))
 end)
 ```
