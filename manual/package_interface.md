@@ -43,6 +43,7 @@ This page describes the interface for `package` of functions like `on_load()`, `
 | [package:getenv](#packagegetenv)               | Get the given environment variable                                           | >= 2.2.2           |
 | [package:setenv](#packagesetenv)               | Set the given environment variable                                           | >= 2.2.2           |
 | [package:addenv](#packageaddenv)               | Add the given values to the environment variable                             | >= 2.2.2           |
+| [package:versions](#packageversions)           | Get all version strings of the package                                       | >= 2.1.9           |
 
 #### package:name
 
@@ -389,3 +390,7 @@ package:setenv("PATH", "bin", "lib")
 -- adds "bin" and "lib" to PATH
 package:addenv("PATH", "bin", "lib")
 ```
+
+#### package:versions
+
+- Get all version strings of the package. Returns a table containing all versions as strings
