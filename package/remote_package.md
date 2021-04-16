@@ -1074,6 +1074,17 @@ on_install(function (package)
 end)
 ```
 
+###### make
+
+You can also build and install projects using makefiles.
+
+```lua
+add_deps("make")
+on_install(function (package)
+    import("package.tools.make").install(package)
+end)
+```
+
 #### on_test
 
 After installation, you need to set the corresponding test script, perform some tests to ensure the reliability of the installation package, if the test does not pass, the entire installation package will be revoked.
