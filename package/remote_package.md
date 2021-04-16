@@ -1063,6 +1063,17 @@ on_install(function (package)
 end)
 ```
 
+###### gn
+
+If it is a GN project, you can build and install it using the following methods. Make sure to also add ninja as a dependency.
+
+```lua
+add_deps("gn", "ninja")
+on_install(function (package)
+    import("package.tools.gn").install(package)
+end)
+```
+
 #### on_test
 
 After installation, you need to set the corresponding test script, perform some tests to ensure the reliability of the installation package, if the test does not pass, the entire installation package will be revoked.
