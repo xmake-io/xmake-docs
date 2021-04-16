@@ -1096,6 +1096,17 @@ on_install(function (package)
 end)
 ```
 
+###### ninja
+
+You can also build and install packages with ninja.
+
+```lua
+add_deps("ninja")
+on_install(function (package)
+    import("package.tools.ninja").install(package)
+end)
+```
+
 #### on_test
 
 After installation, you need to set the corresponding test script, perform some tests to ensure the reliability of the installation package, if the test does not pass, the entire installation package will be revoked.
