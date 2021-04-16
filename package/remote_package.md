@@ -1063,6 +1063,72 @@ on_install(function (package)
 end)
 ```
 
+###### gn
+
+If it is a GN project, you can build and install it using the following methods. Make sure to also add ninja as a dependency.
+
+```lua
+add_deps("gn", "ninja")
+on_install(function (package)
+    import("package.tools.gn").install(package)
+end)
+```
+
+###### make
+
+You can also build and install projects using makefiles.
+
+```lua
+add_deps("make")
+on_install(function (package)
+    import("package.tools.make").install(package)
+end)
+```
+
+###### msbuild
+
+If the package uses Visual Studio projects you can build them using msbuild.
+
+```lua
+on_install(function (package)
+    import("package.tools.msbuild").build(package)
+    -- you then have to copy the built binaries manually
+end)
+```
+
+###### ninja
+
+You can also build and install packages with ninja.
+
+```lua
+add_deps("ninja")
+on_install(function (package)
+    import("package.tools.ninja").install(package)
+end)
+```
+
+###### nmake
+
+You can build and install packages with nmake
+
+```lua
+on_install(function (package)
+    import("package.tools.nmake").install(package)
+end)
+```
+
+###### scons
+
+You can build packages using scons.
+
+```lua
+add_deps("scons")
+on_install(function (package)
+    import("package.tools.scons").build(package)
+    -- you then need to manually copy the built binaries
+end)
+```
+
 #### on_test
 
 After installation, you need to set the corresponding test script, perform some tests to ensure the reliability of the installation package, if the test does not pass, the entire installation package will be revoked.
