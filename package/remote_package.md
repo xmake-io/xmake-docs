@@ -1117,6 +1117,18 @@ on_install(function (package)
 end)
 ```
 
+###### scons
+
+You can build packages using scons.
+
+```lua
+add_deps("scons")
+on_install(function (package)
+    import("package.tools.scons").build(package)
+    -- you then need to manually copy the built binaries
+end)
+```
+
 #### on_test
 
 After installation, you need to set the corresponding test script, perform some tests to ensure the reliability of the installation package, if the test does not pass, the entire installation package will be revoked.
