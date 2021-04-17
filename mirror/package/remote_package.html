@@ -675,18 +675,20 @@ target("test")
     end
 end)
 </code></pre>
-<p>The pcre package needs to do some judgment on the bitwidth to determine the name of the link library for external output. It also needs to add some defines to the dynamic library. This time, it is more flexible when set in on_load.</p>
+<p>The pcre package needs to do some judgment on the bitwidth to determine the name of the link library for external output. It also needs to add some defines to the dynamic library. This time, it is more flexible when set in on_load. To find out what methods are available to <code>package</code> look <a href="manual/package_interface.md">here</a>.</p>
 <h4 id="on_fetch">on_fetch</h4>
 <p>This is an optional configuration. After 2.5.2, if the system libraries installed under different systems only have different package names, then using <code>add_extsources</code> to improve the system library search is sufficient, simple and convenient.</p>
 <p>However, if some packages are installed in the system, the location is more complicated. To find them, some additional scripts may be needed. For example: access to the registry under windows to find packages, etc. At this time, we can use <code>on_fetch</code>Fully customized search system library logic.</p>
 <p>Let&#39;s take libusb as an example. Instead of <code>add_extsources</code>, we can use the following method to achieve the same effect. Of course, we can do more things in it.</p>
-<pre><code>package("libusb")
+<pre><code class="lang-lua">package("libusb")
      on_fetch("linux", function(package, opt)
          if opt.system then
              return find_package("pkgconfig::libusb-1.0")
          end
      end)
-</code></pre><h4 id="on_install">on_install</h4>
+</code></pre>
+<p>To find out what methods are available to <code>package</code> look <a href="manual/package_interface.md">here</a>.</p>
+<h4 id="on_install">on_install</h4>
 <p>This interface is mainly used to add installation scripts. The preceding string parameters are used to set up supported platforms. Other script fields like <code>on_load</code>, <code>on_test</code> are also supported.</p>
 <h5 id="platformfiltering">Platform Filtering</h5>
 <p>The complete filtering syntax is as follows: <code>plat|arch1,arch2@host|arch1,arch2</code></p>
@@ -764,6 +766,48 @@ end)
 <pre><code class="lang-lua">add_deps("meson", "ninja")
 on_install(function (package)
     import("package.tools.meson").install(package, {"-Dxxx=ON"})
+end)
+</code></pre>
+<h6 id="gn">gn</h6>
+<p>If it is a GN project, you can build and install it using the following methods. Make sure to also add ninja as a dependency.</p>
+<pre><code class="lang-lua">add_deps("gn", "ninja")
+on_install(function (package)
+    import("package.tools.gn").install(package)
+end)
+</code></pre>
+<h6 id="make">make</h6>
+<p>You can also build and install projects using makefiles.</p>
+<pre><code class="lang-lua">add_deps("make")
+on_install(function (package)
+    import("package.tools.make").install(package)
+end)
+</code></pre>
+<h6 id="msbuild">msbuild</h6>
+<p>If the package uses Visual Studio projects you can build them using msbuild.</p>
+<pre><code class="lang-lua">on_install(function (package)
+    import("package.tools.msbuild").build(package)
+    -- you then have to copy the built binaries manually
+end)
+</code></pre>
+<h6 id="ninja">ninja</h6>
+<p>You can also build and install packages with ninja.</p>
+<pre><code class="lang-lua">add_deps("ninja")
+on_install(function (package)
+    import("package.tools.ninja").install(package)
+end)
+</code></pre>
+<h6 id="nmake">nmake</h6>
+<p>You can build and install packages with nmake</p>
+<pre><code class="lang-lua">on_install(function (package)
+    import("package.tools.nmake").install(package)
+end)
+</code></pre>
+<h6 id="scons">scons</h6>
+<p>You can build packages using scons.</p>
+<pre><code class="lang-lua">add_deps("scons")
+on_install(function (package)
+    import("package.tools.scons").build(package)
+    -- you then need to manually copy the built binaries
 end)
 </code></pre>
 <h4 id="on_test">on_test</h4>
