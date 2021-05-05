@@ -249,8 +249,8 @@ add_requires("zlib 1.x", {external = false})
 ### 添加 homebrew 的依赖包
 
 ```lua
-add_requires("brew::zlib", {alias = "zlib"}})
-add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
+add_requires("brew::zlib", {alias = "zlib"})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")

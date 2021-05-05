@@ -222,8 +222,8 @@ After version 2.2.5, xmake supports support for dependency libraries in third-pa
 ### Add homebrew dependency package
 
 ```lua
-add_requires("brew::zlib", {alias = "zlib"}})
-add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
+add_requires("brew::zlib", {alias = "zlib"})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")

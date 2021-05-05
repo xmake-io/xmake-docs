@@ -351,8 +351,8 @@ After version 2.2.5, xmake supports third-party package managers, such as: conan
 Add a homebrew dependency package:
 
 ```lua
-add_requires("brew::zlib", {alias = "zlib"}})
-add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
+add_requires("brew::zlib", {alias = "zlib"})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")
