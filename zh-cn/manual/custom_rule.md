@@ -785,19 +785,6 @@ rule("foo")
     end)
 ```
 
-### rule:before_load
-
-#### 自定义加载前脚本
-
-用于实现自定义target加载前的执行脚本，例如：
-
-```lua
-rule("test")
-    before_load(function (target)
-        target:add("defines", "-DTEST")
-    end)
-```
-
 ### rule:before_link
 
 #### 自定义链接前脚本
@@ -897,12 +884,6 @@ rule("markdown")
 
 跟[rule:on_buildcmd_files](#ruleon_buildcmd_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之前，
 一般用于对某些源文件进行编译前的预处理。
-
-### rule:after_load
-
-#### 自定义加载后脚本
-
-用于实现自定义target加载后的执行脚本，用法跟[rule:before_load](#rulebefore_load)类似。
 
 ### rule:after_link
 

@@ -240,8 +240,8 @@ add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags 
 <h2 id="">第三方依赖包安装</h2>
 <p>2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等</p>
 <h3 id="homebrew">添加 homebrew 的依赖包</h3>
-<pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"}})
-add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
+<pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")

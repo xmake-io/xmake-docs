@@ -599,14 +599,6 @@ batchcmds:link(objectfiles, targetfile, {configs = {linkdirs = ""}})
          end
      end)
 </code></pre>
-<h3 id="rulebefore_load">rule:before_load</h3>
-<h4 id="custompreloadscript">Custom pre-load script</h4>
-<p>Used to implement the execution script before the custom target is loaded, for example:</p>
-<pre><code class="lang-lua">rule("test")
-    before_load(function (target)
-        target:add("defines", "-DTEST")
-    end)
-</code></pre>
 <h3 id="rulebefore_link">rule:before_link</h3>
 <h4 id="customprelinkscript">Custom pre-link script</h4>
 <p>Execution scripts used to implement custom target links, for example:</p>
@@ -661,9 +653,6 @@ batchcmds:link(objectfiles, targetfile, {configs = {linkdirs = ""}})
 <h3 id="rulebefore_buildcmd_files">rule:before_buildcmd_files</h3>
 <h4 id="customizetheprecompilationbatchscripttoprocessmultiplesourcefilesatonce">Customize the pre-compilation batch script to process multiple source files at once</h4>
 <p>Similar to the usage of <a href="#ruleon_buildcmd_files">rule:on_buildcmd_files</a>, but the time when this interface is called is before compiling some source files,<br>It is generally used to pre-process certain source files before compilation.</p>
-<h3 id="ruleafter_load">rule:after_load</h3>
-<h4 id="custompostloadingscript">Custom post-loading script</h4>
-<p>The execution script used to implement the custom target loading is similar to <a href="#ruleafter_load">rule:after_load</a>.</p>
 <h3 id="ruleafter_link">rule:after_link</h3>
 <h4 id="custompostlinkingscript">Custom post-linking script</h4>
 <p>The execution script used to implement the custom target link is similar to <a href="#ruleafter_link">rule:after_link</a>.</p>

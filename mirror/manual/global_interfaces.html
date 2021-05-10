@@ -371,8 +371,8 @@ target("test")
 </code></pre>
 <p>After version 2.2.5, xmake supports third-party package managers, such as: conan, brew, vcpkg, etc.</p>
 <p>Add a homebrew dependency package:</p>
-<pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"}})
-add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"}})
+<pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")

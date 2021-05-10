@@ -784,19 +784,6 @@ rule("foo")
      end)
 ```
 
-### rule:before_load
-
-#### Custom pre-load script
-
-Used to implement the execution script before the custom target is loaded, for example:
-
-```lua
-rule("test")
-    before_load(function (target)
-        target:add("defines", "-DTEST")
-    end)
-```
-
 ### rule:before_link
 
 #### Custom pre-link script
@@ -896,12 +883,6 @@ It is generally used to pre-process certain source files before compilation.
 
 Similar to the usage of [rule:on_buildcmd_files](#ruleon_buildcmd_files), but the time when this interface is called is before compiling some source files,
 It is generally used to pre-process certain source files before compilation.
-
-### rule:after_load
-
-#### Custom post-loading script
-
-The execution script used to implement the custom target loading is similar to [rule:after_load](#ruleafter_load).
 
 ### rule:after_link
 
