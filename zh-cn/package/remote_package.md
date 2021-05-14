@@ -710,6 +710,21 @@ end
 
 !> 另外，除了依赖包下载，其他涉及网络下载的命令也都支持代理，比如：`xmake update`
 
+#### 镜像代理
+
+v2.5.4 之后，pac.lua 配置里面还可以配置镜像代理规则，比如对所有 github.com 域名的访问切到 hub.fastgit.org 域名，实现加速下载包。
+
+```lua
+function mirror(url)
+     return url:gsub("github.com", "hub.fastgit.org")
+end
+```
+
+```console
+$ xrepo install libpng
+> curl https://hub.fastgit.org/glennrp/libpng/archive/v1.6.37.zip -o v1.6.37.zip
+```
+
 ## 添加包到仓库
 
 ### 仓库包结构

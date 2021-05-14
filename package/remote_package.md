@@ -670,6 +670,21 @@ If it returns true, then the url and host are the proxy to go, not to return or 
 
 For specific details of this piece, see: https://github.com/xmake-io/xmake/issues/854
 
+#### Mirror Agent
+
+After v2.5.4, mirroring proxy rules can also be configured in the pac.lua configuration. For example, access to all github.com domain names is switched to the hub.fastgit.org domain name to achieve accelerated downloading of packages.
+
+```lua
+function mirror(url)
+      return url:gsub("github.com", "hub.fastgit.org")
+end
+```
+
+```console
+$ xrepo install libpng
+> curl https://hub.fastgit.org/glennrp/libpng/archive/v1.6.37.zip -o v1.6.37.zip
+```
+
 ## Submit packages to the official repository
 
 ### Package structure in repository
