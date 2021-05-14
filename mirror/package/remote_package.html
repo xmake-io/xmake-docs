@@ -341,6 +341,24 @@ target("test")
      add_files("src/*.d")
      add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
 </code></pre>
+<h3 id="adddependencypackageofubuntuapt">Add dependency package of ubuntu/apt</h3>
+<p>After v2.5.4 support the use of apt to integrate dependent packages, and will also automatically find packages that have been installed on the ubuntu system.</p>
+<pre><code class="lang-lua">add_requires("apt::zlib1g-dev", {alias = "zlib"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+</code></pre>
+<h3 id="addgentooportabledependencypackage">Add gentoo/portable dependency package</h3>
+<p>After v2.5.4 support the use of Portable integrated dependency packages, and will also automatically find packages already installed on the Gentoo system.</p>
+<pre><code class="lang-lua">add_requires("portable::libhandy", {alias = "libhandy"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("libhandy")
+</code></pre>
 <h2 id="usingselfbuiltprivatepackagerepository">Using self-built private package repository</h2>
 <p>If the required package is not in the official repository <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>, we can submit the contribution code to the repository for support.<br>But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>For example, now we have a private repository repo:<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>
@@ -396,6 +414,9 @@ target("test")
 </code></pre>
 <h2 id="packagemanagementcommand">Package Management Command</h2>
 <p>The package management command <code>$ xmake require</code> can be used to manually display the download, install, uninstall, retrieve, and view package information.</p>
+<h3 id="xrepocommand">xrepo command</h3>
+<p><code>xmake require</code> is only used for the current project. We also provide a more convenient independent <code>xrepo</code> package manager command to install, uninstall, find and manage packages globally.</p>
+<p>For detailed documentation, see: <a href="https://xrepo.xmake.io/#/getting_started">Getting Started with Xrepo Commands</a></p>
 <h3 id="installthespecifiedpackage">Install the specified package</h3>
 <pre><code class="lang-console">$ xmake require tbox
 </code></pre>

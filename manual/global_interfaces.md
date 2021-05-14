@@ -254,134 +254,178 @@ However, we can still modify the default configuration in xmake.lua by `$xmake f
 
 ### add_requires
 
-#### Add package dependencies
+#### Add the required dependency packages
 
-Xmake's dependency package management fully supports semantic version selection, for example: "~1.6.1". For a detailed description of semantic versioning, see: [https://semver.org/](https://semver.org/)
+The dependency package management of xmake fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, please see: [https://semver.org/](https://semver.org/)
 
-Some examples:
+##### Semantic version
 
 ```lua
 add_requires("tbox 1.6.*", "pcre 8.x", "libpng ^1.18")
 add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 ```
 
-The semantic version parser currently used by xmake is the [sv](https://github.com/uael/sv) library contributed by [uael](https://github.com/uael), which also has a description of the version. For detailed instructions, please refer to the following: [Version Description](https://github.com/uael/sv#versions)
+At present, the semantic version parser used by xmake is the [sv](https://github.com/uael/sv) library contributed by [uael](https://github.com/uael), which also contains the version description writing method For detailed instructions, please refer to the following: [Version Description](https://github.com/uael/sv#versions)
 
-Of course, if we have no special requirements for the version of the dependency package, we can omit the version:
+##### Install latest version
+
+Of course, if we have no special requirements for the version of the current dependency package, we can write it directly like this:
 
 ```lua
 add_requires("tbox", "libpng", "zlib")
 ```
 
-This will use the latest known version of the package, or the source code compiled from the master branch. If the current package has a git repository address we can also specify a specific branch version:
+By default, if the version number is not set, xmake will select the latest version of the package, which is equivalent to `add_requires("zlib latest")`
+
+##### Branch selection
+
+This will use the latest known version of the package, or a package compiled from the source code of the master branch. If the current package has a git repo address, we can also specify a specific branch version:
 
 ```lua
 add_requires("tbox master")
 add_requires("tbox dev")
 ```
 
-If the specified dependency package is not supported by the current platform, or if the compilation and installation fails, then xmake will exit with an error, which is reasonable for some projects that must rely on certain packages to work.
-However, if some packages are optional dependencies, they can be set to optional packages even if they are not compiled properly.
+If the specified dependent package is not supported by the current platform, or the compilation and installation fails, then xmake will compile an error. This is reasonable for some projects that must rely on certain packages to work.
+But if some packages are optional dependencies and can be compiled and used normally even if not, they can be set as optional packages:
+
+##### Optional package
 
 ```lua
-add_requires("tbox", {optional = true})
+add_requires("zlib", {optional = true})
 ```
 
-With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library is provided by a third-party package manager, then you can set:
+##### Disable system package
+
+With the default setting, xmake will first check whether the system library exists (if the version requirement is not set). If the user does not want to use the system library and the library provided by the third-party package management at all, then you can set:
 
 ```lua
-add_requires("tbox", {system = false})
+add_requires("zlib", {system = false})
 ```
 
-If we want to debug the dependencies at the same time, we can set them to use the debug version of the package (provided that this package supports debug compilation):
+##### Disable package verification
+
+The default package installation will automatically check the integrity of the downloaded package to avoid tampering, but if you install some unknown new version of the package, it will not work.
+
+Users can install them temporarily via `{verify = false}` to forcibly disable the package integrity check (but this is generally not recommended).
 
 ```lua
-add_requires("tbox", {debug = true})
+add_requires("zlib", {verify = false})
 ```
 
-If the current package does not support debug compilation, you can submit the modified compilation rules in the repository to support the debug, for example:
+##### Use the debug package
+
+If we want to debug the dependent packages at the same time, we can set to use the debug version of the package (of course, the premise is that this package supports debug compilation):
+
+```lua
+add_requires("zlib", {debug = true})
+```
+
+If the current package does not support debug compilation, you can submit a modification to the compilation rules in the warehouse to support debugging, for example:
 
 ```lua
 package("openssl")
-    on_install("linux", "macosx", function (package)
-        os.vrun("./config %s --prefix=\"%s\"", package:debug() and "--debug" or "", package:installdir())
-        os.vrun("make -j4")
-        os.vrun("make install")
-    end)
+    on_install("linux", "macosx", function (package)
+        os.vrun("./config %s --prefix=\"%s\"", package:debug() and "--debug" or "", package:installdir())
+        os.vrun("make -j4")
+        os.vrun("make install")
+    end)
 ```
 
-Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:
+##### Use as a private package
+
+If this package is only used for package definition, and we don’t want to export links/linkdirs information by default, it can be provided as a private package.
+
+This is usually useful when making packages.
 
 ```lua
-add_requires("tbox", {configs = {small=true}})
+package("test")
+    add_deps("zlib", {private = true})
+    on_install(function (package)
+        local zlib = package:dep("zlib"):fetch()
+        - TODO
+    end)
 ```
 
-Pass `--small=true` to the tbox package so that compiling the installed tbox package is enabled.
-After v2.2.3, you can control whether you need to add a dependency package in your own definition configuration option parameter by [option](#option) and [has_config](#has_config):
+If you define a test package and privately rely on a zlib package, wait for the zlib installation to complete, get the package file information inside for further processing and installation, but the zlib package itself will not export links/linkdirs.
+
+Although `add_requires` also supports this option, it does not export links/linkdirs, so it is usually not used in this way. It is only useful for making packages.
+
+##### Use dynamic libraries
+
+The default package installs a static library. If you want to enable a dynamic library, you can configure it as follows:
 
 ```lua
-option("luajit")
-    set_default(false)
-    set_showmenu(true)
-    set_category("option")
-    set_description("Enable the luajit runtime engine.")
-option_end()
-
-if has_config("luajit") then
-    add_requires("luajit")
-else
-    add_requires("lua")
-end
+add_requires("zlib", {configs = {shared = true}})
 ```
 
-We can switch dependencies by `$xmake f --luajit=y`.
+!> Of course, the premise is that in the definition of this package, there is a judgment and processing of `package:config("shared")`. In the official xmake-repo repository, it is usually strictly differentiated and supported.
 
-And we also added the group parameter to group the dependencies, all the dependencies under the same group, only one can be enabled, the order of the dependencies is the same as the order in which they were added by `add_requires`:
+##### Disable pic support
+
+The linux packages installed by default are compiled with pic enabled, which is very useful for relying on static libraries in dynamic libraries, but if you want to disable pic, it is also possible.
 
 ```lua
-add_requires("openssl", {group = "ssl", optional = true})
-add_requires("mbedtls", {group = "ssl", optional = true})
-
-target("test")
-    add_packages("openssl", "mbedtls")
+add_requires("zlib", {config = {pic = false}})
 ```
 
-After version 2.2.5, xmake supports third-party package managers, such as: conan, brew, vcpkg, etc.
+##### Set vs runtime
 
-Add a homebrew dependency package:
+The windows package installed by default is compiled with msvc/MT, if you want to switch to MD, you can configure it as follows:
 
 ```lua
-add_requires("brew::zlib", {alias = "zlib"})
-add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_packages("pcre2", "zlib")
+add_requires("zlib", {config = {vs_runtime = "MD"}})
 ```
 
-Add a dependency package for vcpkg:
+In addition, it supports four options: MT, MTd, MD, and MDd.
+
+If there are many dependent packages, it is very troublesome to switch each configuration again. We can also switch through the `set_runtime` global setting to take effect for all dependent packages.
 
 ```lua
-add_requires("vcpkg::zlib", "vcpkg::pcre2")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_packages("vcpkg::zlib", "vcpkg::pcre2")
+set_runtime("MD")
+add_requires("zlib", "pcre2", "mbedtls")
 ```
 
-Add a conan dependency package:
+##### Specific configuration package
+
+Some packages have various compilation options during compilation, and we can also pass them in:
+
+```lua
+add_requires("boost", {configs = {context = true, coroutine = true}})
+```
+
+For example, the boost package installed above has enabled some of its internal sub-module features (packages with coroutine module support).
+
+Of course, which configurations are specifically supported are different for each package. You can use the `xmake require --info boost` command to view the list of the configs section inside.
+
+Because, in each package definition, there will be its own configuration options, and you can use `package:config("coroutine")` to determine whether to enable them during installation.
+
+##### Install third-party manager package
+
+Currently, the following packages in the third-party package manager are supported.
+
+* Conan (conan::openssl/1.1.1g)
+* Conda (conda::libpng 1.3.67)
+* Vcpkg (vcpkg:ffmpeg)
+* Homebrew/Linuxbrew (brew::pcre2/libpcre2-8)
+* Pacman on archlinux/msys2 (pacman::libcurl)
+* Apt on ubuntu/debian (apt::zlib1g-dev)
+* Clib (clib::clibs/bytes@0.0.4)
+* Dub (dub::log 0.4.3)
+* Portage on Gentoo/Linux (portage::libhandy)
+
+
+For example, add conan's dependency package:
 
 ```lua
 add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
 add_requires("conan::openssl/1.1.1g", {alias = "openssl",
-    configs = {options = "OpenSSL:shared=True"}})
+    configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_packages("openssl", "zlib")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("openssl", "zlib")
 ```
 
 After executing xmake to compile:
@@ -392,34 +436,19 @@ checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
 checking for the SDK version of Xcode ... 10.14
 note: try installing these packages (pass -y to skip confirm)?
-  -> conan::zlib/1.2.11  (debug)
+  -> conan::zlib/1.2.11 (debug)
   -> conan::openssl/1.1.1g
 please input: y (y/n)
 
   => installing conan::zlib/1.2.11 .. ok
   => installing conan::openssl/1.1.1g .. ok
 
-[  0%]: ccache compiling.release src/main.c
+[0%]: ccache compiling.release src/main.c
 [100%]: linking.release test
 ```
 
-We can see https://github.com/xmake-io/xmake/issues/339 to know more details.
-
-Add a clib dependency package:
-
-Clib is a source-based dependency package manager. The dependent package is downloaded directly to the corresponding library source code, integrated into the project to compile, rather than binary library dependencies.
-
-It is also very convenient to integrate in xmake. The only thing to note is that you need to add the source code of the corresponding library to xmake.lua, for example:
-
-```lua
-add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
-
-target("xmake-test")
-    set_kind("binary")
-    add_files("clib/bytes/*.c")
-    add_files("src/*.c")
-    add_packages("bytes")
-```
+For a complete introduction to this and the installation and use of all third-party packages,
+you can refer to the document: [Third-party dependency package installation](https://xmake.io/#/package/remote_package?id=install-third-party-packages)
 
 ### add_requireconfs
 

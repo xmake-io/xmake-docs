@@ -406,6 +406,32 @@ target("test")
     add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
 ```
 
+### 添加 ubuntu/apt 的依赖包
+
+v2.5.4 之后版本支持使用 apt 集成依赖包，也会自动查找 ubuntu 系统上已经安装的包。
+
+```lua
+add_requires("apt::zlib1g-dev", {alias = "zlib"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+```
+
+### 添加 gentoo/portable 的依赖包
+
+v2.5.4 之后版本支持使用 Portable 集成依赖包，也会自动查找 Gentoo 系统上已经安装的包。
+
+```lua
+add_requires("portable::libhandy", {alias = "libhandy"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("libhandy")
+```
+
 ## 使用自建私有包仓库
 
 如果需要的包不在官方仓库[xmake-repo](https://github.com/xmake-io/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。
@@ -489,6 +515,12 @@ target("test")
 ## 包管理命令使用
 
 包管理命令`$ xmake require` 可用于手动显示的下载编译安装、卸载、检索、查看包信息。
+
+### xrepo 命令
+
+`xmake require` 仅用于当前工程，我们也提供了更加方便的独立 `xrepo` 包管理器命令，来全局对包进行安装，卸载和查找管理。
+
+详细文档见：[Xrepo 命令使用入门](https://xrepo.xmake.io/#/zh-cn/getting_started)
 
 ### 安装指定包
 

@@ -379,6 +379,32 @@ target("test")
      add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
 ```
 
+### Add dependency package of ubuntu/apt
+
+After v2.5.4 support the use of apt to integrate dependent packages, and will also automatically find packages that have been installed on the ubuntu system.
+
+```lua
+add_requires("apt::zlib1g-dev", {alias = "zlib"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+```
+
+### Add gentoo/portable dependency package
+
+After v2.5.4 support the use of Portable integrated dependency packages, and will also automatically find packages already installed on the Gentoo system.
+
+```lua
+add_requires("portable::libhandy", {alias = "libhandy"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("libhandy")
+```
+
 ## Using self-built private package repository
 
 If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.
@@ -459,6 +485,12 @@ target("test")
 ## Package Management Command 
 
 The package management command `$ xmake require` can be used to manually display the download, install, uninstall, retrieve, and view package information.
+
+### xrepo command
+
+`xmake require` is only used for the current project. We also provide a more convenient independent `xrepo` package manager command to install, uninstall, find and manage packages globally.
+
+For detailed documentation, see: [Getting Started with Xrepo Commands](https://xrepo.xmake.io/#/getting_started)
 
 ### Install the specified package
 

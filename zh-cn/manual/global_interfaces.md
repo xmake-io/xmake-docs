@@ -262,7 +262,7 @@ set_config("ld", "g++")
 
 xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：[https://semver.org/](https://semver.org/)
 
-一些语义版本写法：
+##### 语义版本
 
 ```lua
 add_requires("tbox 1.6.*", "pcre 8.x", "libpng ^1.18")
@@ -271,11 +271,17 @@ add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 
 目前xmake使用的语义版本解析器是[uael](https://github.com/uael)贡献的[sv](https://github.com/uael/sv)库，里面也有对版本描述写法的详细说明，可以参考下：[版本描述说明](https://github.com/uael/sv#versions)
 
+##### 最近版本
+
 当然，如果我们对当前的依赖包的版本没有特殊要求，那么可以直接这么写：
 
 ```lua
 add_requires("tbox", "libpng", "zlib")
 ```
+
+默认，没设置版本号，xmake 会选取最近版本的包，等价于 `add_requires("zlib latest")`
+
+##### 分支选择
 
 这会使用已知的最新版本包，或者是master分支的源码编译的包，如果当前包有git repo地址，我们也能指定特定分支版本：
 
@@ -287,20 +293,36 @@ add_requires("tbox dev")
 如果指定的依赖包当前平台不支持，或者编译安装失败了，那么xmake会编译报错，这对于有些必须要依赖某些包才能工作的项目，这是合理的。
 但是如果有些包是可选的依赖，即使没有也可以正常编译使用的话，可以设置为可选包：
 
+##### 可选包
+
 ```lua
-add_requires("tbox", {optional = true})
+add_requires("zlib", {optional = true})
 ```
+
+##### 禁用系统包
 
 默认的设置，xmake会去优先检测系统库是否存在（如果没设置版本要求），如果用户完全不想使用系统库以及第三方包管理提供的库，那么可以设置：
 
 ```lua
-add_requires("tbox", {system = false})
+add_requires("zlib", {system = false})
 ```
+
+##### 禁用包校验
+
+默认包安装，对于下载的包都是会去自动校验完整性，避免被篡改，但是如果安装一些未知新版本的包，就不行了。
+
+用户可以通过 `{verify = false}` 强行禁用包完整性校验来临时安装他们（但通常不推荐这么做）。
+
+```lua
+add_requires("zlib", {verify = false})
+```
+
+##### 使用调试包
 
 如果我们想同时源码调试依赖包，那么可以设置为使用debug版本的包（当然前提是这个包支持debug编译）：
 
 ```lua
-add_requires("tbox", {debug = true})
+add_requires("zlib", {debug = true})
 ```
 
 如果当前包还不支持debug编译，可在仓库中提交修改编译规则，对debug进行支持，例如：
@@ -314,71 +336,90 @@ package("openssl")
     end)
 ```
 
-某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：
+##### 作为私有包使用
+
+如果这个包，我们仅仅用于包定义，不想对外默认导出 links/linkdirs 信息，可以作为私有包提供。
+
+这通常对于做包时候，很有用。
 
 ```lua
-add_requires("tbox", {configs = {small=true}})
+package("test")
+    add_deps("zlib", {private = true})
+    on_install(function (package)
+        local zlib = package:dep("zlib"):fetch()
+        -- TODO
+    end)
 ```
 
-传递`--small=true`给tbox包，使得编译安装的tbox包是启用此选项的。
+如果自己定义的一个 test 包，私有依赖一个 zlib 包，等待 zlib 安装完成后，获取里面的包文件信息做进一步处理安装，但是 zlib 包本身不会再对外导出 links/linkdirs。
 
-v2.2.3之后，可以通过[option](#option)和[has_config](#has_config)配合，在自己定义配置选项参数中控制是否需要添加某个依赖包：
+尽管，`add_requires` 也支持这个选项，但是不对外导出 links/linkdirs，所以通常不会去这么用，仅仅对于做包很有帮助。
+
+##### 使用动态库
+
+默认的包安装的是静态库，如果要启用动态库，可以配置如下：
 
 ```lua
-option("luajit")
-    set_default(false)
-    set_showmenu(true)
-    set_category("option")
-    set_description("Enable the luajit runtime engine.")
-option_end()
-
-if has_config("luajit") then
-    add_requires("luajit")
-else
-    add_requires("lua")
-end
+add_requires("zlib", {configs = {shared = true}})
 ```
 
-我们可以通过`$xmake f --luajit=y`去切换依赖包。
+!> 当然，前提是这个包的定义里面，有对 `package:config("shared")` 判断处理，官方 xmake-repo 仓库里面，通常都是严格区分支持的。
 
-并且我们也新增了group参数，来分组依赖包，同一个组下的所有依赖包，只能有一个生效启用，启用顺序依赖`add_requires`添加的顺序:
+##### 禁用 pic 支持
+
+默认安装的 linux 包，都是开启 pic 编译的，这对于动态库中依赖静态库非常有用，但如果想禁用 pic，也是可以的。
 
 ```lua
-add_requires("openssl", {group = "ssl", optional = true})
-add_requires("mbedtls", {group = "ssl", optional = true})
-
-target("test")
-    add_packages("openssl", "mbedtls")
+add_requires("zlib", {config = {pic = false}})
 ```
 
-例如上面，所以同时依赖两个ssl包，实际上只会启用生效实际安装成功的那一个ssl包，并不会同时链接两个依赖包。
+##### vs runtime 设置
 
-2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等
-
-添加homebrew的依赖包：
+默认安装的 windows 包是采用 msvc/MT 编译的，如果要切换到 MD，可以配置如下：
 
 ```lua
-add_requires("brew::zlib", {alias = "zlib"})
-add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_packages("pcre2", "zlib")
+add_requires("zlib", {config = {vs_runtime = "MD"}})
 ```
 
-添加vcpkg的依赖包：
+另外，还支持：MT, MTd, MD, MDd 四种选项。
+
+如果依赖的包很多，每个配置切换一遍非常的麻烦，我们也可以通过 `set_runtime` 全局设置切换，对所有依赖包生效。
 
 ```lua
-add_requires("vcpkg::zlib", "vcpkg::pcre2")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_packages("vcpkg::zlib", "vcpkg::pcre2")
+set_runtime("MD")
+add_requires("zlib", "pcre2", "mbedtls")
 ```
 
-添加conan的依赖包：
+##### 特定配置包
+
+某些包在编译时候有各种编译选项，我们也可以传递进来：
+
+```lua
+add_requires("boost", {configs = {context = true, coroutine = true}})
+```
+
+比如上面，安装的 boost 包，是启用了它内部的一些子模块特性（带有协程模块支持的包）。
+
+当然，具体支持哪些配置，每个包都是不同的，可以通过 `xmake require --info boost` 命令查看里面的 configs 部分列表。
+
+因为，每个包定义里面，都会有自己的配置选项，并且通过 `package:config("coroutine")` 在安装时候去判断启用它们。
+
+##### 安装第三方管理器的包
+
+目前支持安装下面这些第三方包管理器中包。
+
+* Conan (conan::openssl/1.1.1g)
+* Conda (conda::libpng 1.3.67)
+* Vcpkg (vcpkg:ffmpeg)
+* Homebrew/Linuxbrew (brew::pcre2/libpcre2-8)
+* Pacman on archlinux/msys2 (pacman::libcurl)
+* Apt on ubuntu/debian (apt::zlib1g-dev)
+* Clib (clib::clibs/bytes@0.0.4)
+* Dub (dub::log 0.4.3)
+* Portage on Gentoo/Linux (portage::libhandy)
+
+
+例如添加conan的依赖包：
 
 ```lua
 add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
@@ -410,23 +451,8 @@ please input: y (y/n)
 [100%]: linking.release test
 ```
 
-关于这块的更多详情见：https://github.com/xmake-io/xmake/issues/339
+关于这个的完整介绍和所有第三方包的安装使用，可以参考文档：[第三方依赖包安装](https://xmake.io/#/zh-cn/package/remote_package?id=%e7%ac%ac%e4%b8%89%e6%96%b9%e4%be%9d%e8%b5%96%e5%8c%85%e5%ae%89%e8%a3%85)
 
-添加clib的依赖包：
-
-clib是一款基于源码的依赖包管理器，拉取的依赖包是直接下载对应的库源码，集成到项目中编译，而不是二进制库依赖。
-
-其在xmake中集成也很方便，唯一需要注意的是，还需要自己添加上对应库的源码到xmake.lua，例如：
-
-```lua
-add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
-
-target("xmake-test")
-    set_kind("binary")
-    add_files("clib/bytes/*.c")
-    add_files("src/*.c")
-    add_packages("bytes")
-```
 
 ### add_requireconfs
 
