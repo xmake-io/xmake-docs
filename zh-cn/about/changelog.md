@@ -1,3 +1,32 @@
+
+## v2.5.4
+
+### 新特性
+
+* [#1323](https://github.com/xmake-io/xmake/issues/1323): 支持从 apt 查找安装包，`add_requires("apt::zlib1g-dev")`
+* [#1337](https://github.com/xmake-io/xmake/issues/1337): 添加环境变量去改进包安装和缓存目录
+* [#1338](https://github.com/xmake-io/xmake/issues/1338): 支持导入导出已安装的包
+* [#1087](https://github.com/xmake-io/xmake/issues/1087): 添加 `xrepo env shell` 并且支持从 `add_requires/xmake.lua` 加载包环境
+* [#1313](https://github.com/xmake-io/xmake/issues/1313): 为 `add_requires/add_deps` 添加私有包支持
+* [#1358](https://github.com/xmake-io/xmake/issues/1358): 支持设置镜像 url 站点加速包下载
+* [#1369](https://github.com/xmake-io/xmake/pull/1369): 为 vcpkg 增加 arm/arm64 包集成支持，感谢 @fallending
+* [#1405](https://github.com/xmake-io/xmake/pull/1405): 添加 portage 包管理器支持，感谢 @Phate6660
+
+### 改进
+
+* 改进 `find_package` 并且添加 `package:find_package` 接口在包定义中方便查找包
+* 移除废弃的 `set_config_h` 和 `set_config_h_prefix` 接口
+* [#1343](https://github.com/xmake-io/xmake/issues/1343): 改进搜索本地包文件
+* [#1347](https://github.com/xmake-io/xmake/issues/1347): 针对 binary 包改进 vs_runtime 配置
+* [#1353](https://github.com/xmake-io/xmake/issues/1353): 改进 del_files() 去加速匹配文件
+* [#1349](https://github.com/xmake-io/xmake/issues/1349): 改进 xrepo env shell 支持，更好的支持 powershell
+
+### Bugs 修复
+
+* [#1380](https://github.com/xmake-io/xmake/issues/1380): 修复 `add_packages()` 失败问题
+* [#1381](https://github.com/xmake-io/xmake/issues/1381): 修复添加本地 git 包源问题
+* [#1391](https://github.com/xmake-io/xmake/issues/1391): 修复 cuda/nvcc 工具链
+
 ## v2.5.3
 
 ### 新特性

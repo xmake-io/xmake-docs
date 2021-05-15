@@ -90,7 +90,34 @@
   line-height: 1;
 }
 </style>
-    <h3 id="v253">v2.5.3</h3>
+    <h2 id="v254">v2.5.4</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1323">#1323</a>: Support find and install package from <code>apt</code>, <code>add_requires("apt::zlib1g-dev")</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1337">#1337</a>: Add environment vars to change package directories</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1338">#1338</a>: Support import and export installed packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1087">#1087</a>: Add <code>xrepo env shell</code> and support load envs from <code>add_requires/xmake.lua</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1313">#1313</a>: Support private package for <code>add_requires/add_deps</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1358">#1358</a>: Support to set mirror url to speedup download package</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1369">#1369</a>: Support arm/arm64 packages for vcpkg, thanks @fallending</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1405">#1405</a>: Add portage package manager support, thanks @Phate6660</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li>Improve <code>find_package</code> and add <code>package:find_package</code> for xmake package</li>
+<li>Remove deprecated <code>set_config_h</code> and <code>set_config_h_prefix</code> apis</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1343">#1343</a>: Improve to search local package files</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1347">#1347</a>: Improve to vs_runtime configs for binary package</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1353">#1353</a>: Improve del_files() to speedup matching files</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1349">#1349</a>: Improve <code>xrepo env shell</code> to support powershell</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1380">#1380</a>: Fix add packages errors</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1381">#1381</a>: Fix add local git source for package</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1391">#1391</a>: Fix cuda/nvcc toolchain</li>
+</ul>
+<h2 id="v253">v2.5.3</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/1259">#1259</a>: Support <code>add_files("*.def")</code> to export symbols for windows/dll</li>

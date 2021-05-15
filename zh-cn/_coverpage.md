@@ -1,6 +1,6 @@
 <img src="/assets/img/logo.svg" width="16%" />
 
-# xmake <small>2.5.3</small>
+# xmake <small>2.5.4</small>
 
 > 一个基于Lua的轻量级跨平台自动构建工具
 

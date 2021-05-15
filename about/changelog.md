@@ -1,4 +1,33 @@
-### v2.5.3
+
+## v2.5.4
+
+### New features
+
+* [#1323](https://github.com/xmake-io/xmake/issues/1323): Support find and install package from `apt`, `add_requires("apt::zlib1g-dev")`
+* [#1337](https://github.com/xmake-io/xmake/issues/1337): Add environment vars to change package directories
+* [#1338](https://github.com/xmake-io/xmake/issues/1338): Support import and export installed packages
+* [#1087](https://github.com/xmake-io/xmake/issues/1087): Add `xrepo env shell` and support load envs from `add_requires/xmake.lua`
+* [#1313](https://github.com/xmake-io/xmake/issues/1313): Support private package for `add_requires/add_deps`
+* [#1358](https://github.com/xmake-io/xmake/issues/1358): Support to set mirror url to speedup download package
+* [#1369](https://github.com/xmake-io/xmake/pull/1369): Support arm/arm64 packages for vcpkg, thanks @fallending
+* [#1405](https://github.com/xmake-io/xmake/pull/1405): Add portage package manager support, thanks @Phate6660
+
+### Change
+
+* Improve `find_package` and add `package:find_package` for xmake package
+* Remove deprecated `set_config_h` and `set_config_h_prefix` apis
+* [#1343](https://github.com/xmake-io/xmake/issues/1343): Improve to search local package files
+* [#1347](https://github.com/xmake-io/xmake/issues/1347): Improve to vs_runtime configs for binary package
+* [#1353](https://github.com/xmake-io/xmake/issues/1353): Improve del_files() to speedup matching files
+* [#1349](https://github.com/xmake-io/xmake/issues/1349): Improve `xrepo env shell` to support powershell
+
+### Bugs fixed
+
+* [#1380](https://github.com/xmake-io/xmake/issues/1380): Fix add packages errors
+* [#1381](https://github.com/xmake-io/xmake/issues/1381): Fix add local git source for package
+* [#1391](https://github.com/xmake-io/xmake/issues/1391): Fix cuda/nvcc toolchain
+
+## v2.5.3
 
 ### New features
 
