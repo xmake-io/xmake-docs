@@ -392,12 +392,12 @@ target("test")
      add_packages("zlib")
 ```
 
-### Add gentoo/portable dependency package
+### Add gentoo/portage dependency package
 
-After v2.5.4 support the use of Portable integrated dependency packages, and will also automatically find packages already installed on the Gentoo system.
+After v2.5.4 support the use of Portage integrated dependency packages, and will also automatically find packages already installed on the Gentoo system.
 
 ```lua
-add_requires("portable::libhandy", {alias = "libhandy"})
+add_requires("portage::libhandy", {alias = "libhandy"})
 
 target("test")
      set_kind("binary")

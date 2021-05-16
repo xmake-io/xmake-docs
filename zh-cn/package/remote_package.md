@@ -419,12 +419,12 @@ target("test")
     add_packages("zlib")
 ```
 
-### 添加 gentoo/portable 的依赖包
+### 添加 gentoo/portage 的依赖包
 
-v2.5.4 之后版本支持使用 Portable 集成依赖包，也会自动查找 Gentoo 系统上已经安装的包。
+v2.5.4 之后版本支持使用 Portage 集成依赖包，也会自动查找 Gentoo 系统上已经安装的包。
 
 ```lua
-add_requires("portable::libhandy", {alias = "libhandy"})
+add_requires("portage::libhandy", {alias = "libhandy"})
 
 target("test")
     set_kind("binary")
