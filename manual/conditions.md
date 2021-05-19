@@ -35,7 +35,7 @@ Support operation systems:
 
 #### Is the current compilation architecture
 
-You can this api to check the configuration command: `xmake f -a armv7`
+You can use this api to check the configuration command: `xmake f -a armv7`
 
 ```lua
 -- if the current architecture is x86_64 or i386
@@ -49,7 +49,7 @@ if is_arch("armv7", "arm64", "armv7s", "armv7-a") then
 end
 ```
 
-And you can also use the wildchard: `*` to check all matched architectures.
+And you can also use the wildcard: `*` to check all matched architectures.
 
 ```lua
 -- if the current architecture is arm which contains armv7, arm64, armv7s and armv7-a ...
@@ -62,7 +62,7 @@ end
 
 #### Is the current compilation platform
 
-You can this api to check the configuration command: `xmake f -p iphoneos`
+You can use this api to check the configuration command: `xmake f -p iphoneos`
 
 ```lua
 -- if the current platform is android
@@ -145,7 +145,7 @@ We can also quickly view the current subsystem architecture by executing `xmake 
 
 #### Is the current compilation mode
 
-You can this api to check the configuration command: `xmake f -m debug`
+You can use this api to check the configuration command: `xmake f -m debug`
 
 The compilation mode is not builtin mode for xmake, so you can set the mode value by yourself.
 
@@ -197,7 +197,7 @@ end
 
 #### Is the current target kind
 
-You can this api to check the configuration command: `xmake f -k [static|shared]`
+You can use this api to check the configuration command: `xmake f -k [static|shared]`
 
 ```lua
 target("test")
