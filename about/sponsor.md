@@ -27,6 +27,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | comment                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2021.05.31 | 国栋                                  | alipay   | ¥100  | 加油 ^ O ^ ~ 做的好!                                                         |
 | 2021.05.26 | jerry                                 | alipay   | ¥100  | 感谢对开源世界的帮助！                                                                    |
 | 2021.05.02 | 乐                                    | alipay   | ¥20   |                                                                     |
 | 2021.04.26 | 灿辉                                  | alipay   | ¥20   |                                                                     |
