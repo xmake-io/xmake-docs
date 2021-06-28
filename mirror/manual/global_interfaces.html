@@ -381,8 +381,8 @@ add_requires("tbox dev")
 <pre><code class="lang-lua">add_requires("zlib", {config = {vs_runtime = "MD"}})
 </code></pre>
 <p>In addition, it supports four options: MT, MTd, MD, and MDd.</p>
-<p>If there are many dependent packages, it is very troublesome to switch each configuration again. We can also switch through the <code>set_runtime</code> global setting to take effect for all dependent packages.</p>
-<pre><code class="lang-lua">set_runtime("MD")
+<p>If there are many dependent packages, it is very troublesome to switch each configuration again. We can also switch through the <code>set_runtimes</code> global setting to take effect for all dependent packages.</p>
+<pre><code class="lang-lua">set_runtimes("MD")
 add_requires("zlib", "pcre2", "mbedtls")
 </code></pre>
 <h5 id="specificconfigurationpackage">Specific configuration package</h5>
