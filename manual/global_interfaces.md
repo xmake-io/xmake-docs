@@ -379,10 +379,10 @@ add_requires("zlib", {config = {vs_runtime = "MD"}})
 
 In addition, it supports four options: MT, MTd, MD, and MDd.
 
-If there are many dependent packages, it is very troublesome to switch each configuration again. We can also switch through the `set_runtime` global setting to take effect for all dependent packages.
+If there are many dependent packages, it is very troublesome to switch each configuration again. We can also switch through the `set_runtimes` global setting to take effect for all dependent packages.
 
 ```lua
-set_runtime("MD")
+set_runtimes("MD")
 add_requires("zlib", "pcre2", "mbedtls")
 ```
 

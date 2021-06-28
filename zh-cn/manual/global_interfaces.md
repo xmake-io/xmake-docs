@@ -383,10 +383,10 @@ add_requires("zlib", {config = {vs_runtime = "MD"}})
 
 另外，还支持：MT, MTd, MD, MDd 四种选项。
 
-如果依赖的包很多，每个配置切换一遍非常的麻烦，我们也可以通过 `set_runtime` 全局设置切换，对所有依赖包生效。
+如果依赖的包很多，每个配置切换一遍非常的麻烦，我们也可以通过 `set_runtimes` 全局设置切换，对所有依赖包生效。
 
 ```lua
-set_runtime("MD")
+set_runtimes("MD")
 add_requires("zlib", "pcre2", "mbedtls")
 ```
 
