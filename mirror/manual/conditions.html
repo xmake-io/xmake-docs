@@ -163,7 +163,7 @@ end
 </ul>
 <h3 id="is_arch">is_arch</h3>
 <h4 id="isthecurrentcompilationarchitecture">Is the current compilation architecture</h4>
-<p>You can this api to check the configuration command: <code>xmake f -a armv7</code></p>
+<p>You can use this api to check the configuration command: <code>xmake f -a armv7</code></p>
 <pre><code class="lang-lua">-- if the current architecture is x86_64 or i386
 if is_arch("x86_64", "i386") then
     add_files("src/xxx/*.c")
@@ -174,7 +174,7 @@ if is_arch("armv7", "arm64", "armv7s", "armv7-a") then
     -- ...
 end
 </code></pre>
-<p>And you can also use the wildchard: <code>*</code> to check all matched architectures.</p>
+<p>And you can also use the wildcard: <code>*</code> to check all matched architectures.</p>
 <pre><code class="lang-lua">-- if the current architecture is arm which contains armv7, arm64, armv7s and armv7-a ...
 if is_arch("arm*") then
     -- ...
@@ -182,7 +182,7 @@ end
 </code></pre>
 <h3 id="is_plat">is_plat</h3>
 <h4 id="isthecurrentcompilationplatform">Is the current compilation platform</h4>
-<p>You can this api to check the configuration command: <code>xmake f -p iphoneos</code></p>
+<p>You can use this api to check the configuration command: <code>xmake f -p iphoneos</code></p>
 <pre><code class="lang-lua">-- if the current platform is android
 if is_plat("android") then
     add_files("src/xxx/*.c")
@@ -240,7 +240,7 @@ end
 <p>We can also quickly view the current subsystem architecture by executing <code>xmake l os.subarch</code>.</p>
 <h3 id="is_mode">is_mode</h3>
 <h4 id="isthecurrentcompilationmode">Is the current compilation mode</h4>
-<p>You can this api to check the configuration command: <code>xmake f -m debug</code></p>
+<p>You can use this api to check the configuration command: <code>xmake f -m debug</code></p>
 <p>The compilation mode is not builtin mode for xmake, so you can set the mode value by yourself.</p>
 <p>We often use these configuration values: <code>debug</code>, <code>release</code>, <code>profile</code>, etc.</p>
 <pre><code class="lang-lua">-- if the current compilation mode is debug?
@@ -285,7 +285,7 @@ end
 </code></pre>
 <h3 id="is_kind">is_kind</h3>
 <h4 id="isthecurrenttargetkind">Is the current target kind</h4>
-<p>You can this api to check the configuration command: <code>xmake f -k [static|shared]</code></p>
+<p>You can use this api to check the configuration command: <code>xmake f -k [static|shared]</code></p>
 <pre><code class="lang-lua">target("test")
 
     -- set target kind from the configuration command

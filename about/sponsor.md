@@ -27,6 +27,8 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | comment                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2021.06.30 | *剑                                   | wechat   | ¥100  | 大佬牛逼，给你点个赞                                                     |
+| 2021.06.08 | Daniel Roussel                        | Paypal   | 5 EUR |                                                                         |
 | 2021.05.31 | 国栋                                  | alipay   | ¥100  | 加油 ^ O ^ ~ 做的好!                                                         |
 | 2021.05.26 | jerry                                 | alipay   | ¥100  | 感谢对开源世界的帮助！                                                                    |
 | 2021.05.02 | 乐                                    | alipay   | ¥20   |                                                                     |
