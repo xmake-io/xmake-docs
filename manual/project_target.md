@@ -104,12 +104,13 @@ target("test2")
 
 Set the target type, currently supported types are:
 
-| Value | Description |
-| ------ | -----------|
-| phony | Fake target program |
-| binary | binary program |
-| static | Static library program |
-| shared | Dynamic library program |
+| Value  | Description                          |
+| ------ | -----------                          |
+| phony  | Phony target program                 |
+| binary | binary program                       |
+| static | Static library program               |
+| shared | Dynamic library program              |
+| object | Only compile a collection of objects |
 
 ```lua
 target("demo")
@@ -134,6 +135,8 @@ target("demo")
 ```
 
 For example, with the above configuration, we can compile two related dependent programs: test1 and test2 when compiling with `xmake build demo`.
+
+!> Starting from 2.5.5, if the set_kind interface is not set, the default is binary type.
 
 ### target:set_strip
 

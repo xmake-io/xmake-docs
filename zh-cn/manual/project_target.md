@@ -109,6 +109,7 @@ target("test2")
 | binary | 二进制程序 |
 | static | 静态库程序 |
 | shared | 动态库程序 |
+| object | 仅仅编译对象集合 |
 
 ```lua
 target("demo")
@@ -133,6 +134,8 @@ target("demo")
 ```
 
 比如上述配置，我们就可以在执行 `xmake build demo` 编译的时候，同时编译相关的两个依赖程序：test1和test2。
+
+!> 2.5.5 开始，如果没有设置 set_kind 接口，默认就是 binary 类型。
 
 ### target:set_strip
 
