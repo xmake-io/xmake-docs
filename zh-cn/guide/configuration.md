@@ -151,7 +151,7 @@ $ xmake
 这个时候，xmake会去自动探测gcc等编译器的前缀名cross：`arm-linux-armeabi-`，并且编译的时候，也会自动加上`链接库`和`头文件`的搜索选项，例如：
 
 ```
--I/home/toolchains_sdkdir/include 
+-I/home/toolchains_sdkdir/include
 -L/home/toolchains_sdkdir/lib
 ```
 
@@ -184,7 +184,7 @@ $ xmake
 
 ```
 /opt/bin
-  - armv7-linux-gcc 
+  - armv7-linux-gcc
   - aarch64-linux-gcc
 ```
 
@@ -217,7 +217,7 @@ xmake f --cxx=clang++@/home/xxx/c++mips.exe
 ```
 
 设置c++mips.exe编译器作为类clang++的使用方式来编译。
- 
+
 也就是说，在指定编译器为`c++mips.exe`的同时，告诉xmake，它跟clang++用法和参数选项基本相同。
 
 ### 设置c/c++链接器
@@ -334,7 +334,7 @@ if is_plat("gragonfly", "freebsd", "netbsd", "openbsd") then
     add_files("src/unix/kqueue.c")
     add_files("src/unix/posix-hrtime.c")
     add_headerfiles("(include/uv-bsd.h)")
-end 
+end
 
 -- for sunos platform
 if is_plat("sunos") then
@@ -371,7 +371,7 @@ $ xmake show -l toolchains
 
 !> 此特性需要v2.3.4以上版本才支持
 
-上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入`--ldflags/--includedirs`等场景就比较繁琐了, 
+上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入`--ldflags/--includedirs`等场景就比较繁琐了,
 因此xmake也内置了一些常用工具链，可以省去交叉编译工具链复杂的配置过程，只需要执行：
 
 ```bash
@@ -652,7 +652,7 @@ $ xmake
 
 对于不规则工具链目录结构，靠单纯地[--sdk](#-sdk)选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。
 
-例如：一些特殊的交叉工具链的，编译器bin目录，并不在 `/home/toolchains_sdkdir/bin` 这个位置，而是独立到了 `/usr/opt/bin` 
+例如：一些特殊的交叉工具链的，编译器bin目录，并不在 `/home/toolchains_sdkdir/bin` 这个位置，而是独立到了 `/usr/opt/bin`
 
 ```bash
 $ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
@@ -828,3 +828,35 @@ $ xmake f -p iphoneos -c
 $ xmake
 ```
 
+## 导入导出配置
+
+2.5.5 之后，我们还可以导入导出已经配置好的配置集，方便配置的快速迁移。
+
+### 导出配置
+
+```console
+$ xmake f --export=/tmp/config.txt
+$ xmake f -m debug --xxx=y --export=/tmp/config.txt
+```
+
+### 导入配置
+
+```console
+$ xmake f --import=/tmp/config.txt
+$ xmake f -m debug --xxx=y --import=/tmp/config.txt
+```
+
+### 导出配置（带菜单）
+
+```console
+$ xmake f --menu --export=/tmp/config.txt
+$ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
+```
+
+
+### 导入配置（带菜单）
+
+```console
+$ xmake f --menu --import=/tmp/config.txt
+$ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
+```

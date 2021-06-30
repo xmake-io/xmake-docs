@@ -1,6 +1,7 @@
-After version 2.5.5, we have provided a new local package packaging solution that will seamlessly integrate `add_requires` and `add_packages`.
 
 ### Default packaging format
+
+After version 2.5.5, we have provided a new local package packaging solution that will seamlessly integrate `add_requires` and `add_packages`.
 
 We can execute the `xmake package` command to generate the default new version of the packaging format.
 

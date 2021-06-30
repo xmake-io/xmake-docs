@@ -155,7 +155,7 @@ Note: We can also specify the `-p linux` platform to configure cross compilation
 At this time, xmake will automatically detect the prefix name cross of gcc and other compilers: `arm-linux-armeabi-`, and when compiling, it will also automatically add search options for` link library` and `header files` :
 
 ```
--I/home/toolchains_sdkdir/include 
+-I/home/toolchains_sdkdir/include
 -L/home/toolchains_sdkdir/lib
 ```
 
@@ -188,7 +188,7 @@ For example, there are two different compilers in the bin directory of toolchain
 
 ```
 /opt/bin
-  - armv7-linux-gcc 
+  - armv7-linux-gcc
   - aarch64-linux-gcc
 ```
 
@@ -338,7 +338,7 @@ if is_plat("gragonfly", "freebsd", "netbsd", "openbsd") then
     add_files("src/unix/kqueue.c")
     add_files("src/unix/posix-hrtime.c")
     add_headerfiles("(include/uv-bsd.h)")
-end 
+end
 
 -- for sunos platform
 if is_plat("sunos") then
@@ -693,7 +693,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --as=armv7-linux-as
 If the 'AS' environment variable exists, it will use the values specified in the current environment variables.
 
 <p class="tip">
-We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --as=gcc@/home/xxx/asmips.exe` 
+We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --as=gcc@/home/xxx/asmips.exe`
 </p>
 
 #### --cc
@@ -707,7 +707,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang
 If the 'CC' environment variable exists, it will use the values specified in the current environment variables.
 
 <p class="tip">
-We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --cc=gcc@/home/xxx/ccmips.exe` 
+We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --cc=gcc@/home/xxx/ccmips.exe`
 </p>
 
 #### --cxx
@@ -721,7 +721,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --cxx=armv7-linux-clang++
 If the 'CXX' environment variable exists, it will use the values specified in the current environment variables.
 
 <p class="tip">
-We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --cxx=g++@/home/xxx/c++mips.exe` 
+We can set a unknown compiler as like-gcc/clang compiler, .e.g `xmake f --cxx=g++@/home/xxx/c++mips.exe`
 </p>
 
 #### --ld
@@ -735,7 +735,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++
 If the 'LD' environment variable exists, it will use the values specified in the current environment variables.
 
 <p class="tip">
-We can set a unknown compiler as like-gcc/clang linker, .e.g `xmake f --ld=g++@/home/xxx/c++mips.exe` 
+We can set a unknown compiler as like-gcc/clang linker, .e.g `xmake f --ld=g++@/home/xxx/c++mips.exe`
 </p>
 
 #### --sh
@@ -749,7 +749,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --sh=armv7-linux-clang++
 If the 'SH' environment variable exists, it will use the values specified in the current environment variables.
 
 <p class="tip">
-We can set a unknown compiler as like-gcc/clang linker, .e.g `xmake f --sh=g++@/home/xxx/c++mips.exe` 
+We can set a unknown compiler as like-gcc/clang linker, .e.g `xmake f --sh=g++@/home/xxx/c++mips.exe`
 </p>
 
 #### --ar
@@ -763,7 +763,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --ar=armv7-linux-ar
 If the 'AR' environment variable exists, it will use the values specified in the current environment variables.
 
 <p class="tip">
-We can set a unknown compiler as like-ar archiver, .e.g `xmake f --ar=ar@/home/xxx/armips.exe` 
+We can set a unknown compiler as like-ar archiver, .e.g `xmake f --ar=ar@/home/xxx/armips.exe`
 </p>
 
 ## Global Configuration
@@ -796,10 +796,42 @@ $ xmake f -c
 $ xmake
 ```
 
-or 
+or
 
 ```bash
 $ xmake f -p iphoneos -c
 $ xmake
 ```
 
+## Import and export configuration
+
+After 2.5.5, we can also import and export the configured configuration set to facilitate rapid configuration migration.
+
+### Export configuration
+
+```console
+$ xmake f --export=/tmp/config.txt
+$ xmake f -m debug --xxx=y --export=/tmp/config.txt
+```
+
+### Import configuration
+
+```console
+$ xmake f --import=/tmp/config.txt
+$ xmake f -m debug --xxx=y --import=/tmp/config.txt
+```
+
+### Export configuration (with menu)
+
+```console
+$ xmake f --menu --export=/tmp/config.txt
+$ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
+```
+
+
+### Import configuration (with menu)
+
+```console
+$ xmake f --menu --import=/tmp/config.txt
+$ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
+```
