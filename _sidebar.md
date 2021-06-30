@@ -21,7 +21,7 @@
 - Package Management
 
   - [Local Package (Old)](package/local_package_old.md)
-  - [Local Package](package/local_package.md)
+  - [Local Package (New)](package/local_package.md)
   - [System Package](package/system_package.md)
   - [Remote Package](package/remote_package.md)
   - [Xrepo C/C++ Package Manager](https://xrepo.xmake.io/#/getting_started)

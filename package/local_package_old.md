@@ -2,7 +2,7 @@
 
 This is a very early packaging solution, incompatible with `add_requires()` and `add_packages()`, and is gradually being deprecated.
 
-2.5.5 Start to adopt the new local package solution, see for details: [New version local package scheme](/package/local_package).
+2.5.5 Start to adopt the new local package solution, see for details: [New local package solution](/package/local_package).
 
 If you still want to use the old packaging method, you can execute the following command to specify the package format: `oldpkg`
 
