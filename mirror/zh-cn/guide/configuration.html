@@ -176,7 +176,7 @@ $ xmake
 <p>其中，<code>-p cross</code>用于指定当前的平台是交叉编译平台，<code>--sdk=</code>用于指定交叉工具链的根目录。</p>
 <p>注：我们也可以指定<code>-p linux</code>平台来配置交叉编译，效果是一样的，唯一的区别是额外标识了linux平台名，方便xmake.lua里面通过<code>is_plat("linux")</code>来判断平台。</p>
 <p>这个时候，xmake会去自动探测gcc等编译器的前缀名cross：<code>arm-linux-armeabi-</code>，并且编译的时候，也会自动加上<code>链接库</code>和<code>头文件</code>的搜索选项，例如：</p>
-<pre><code>-I/home/toolchains_sdkdir/include 
+<pre><code>-I/home/toolchains_sdkdir/include
 -L/home/toolchains_sdkdir/lib
 </code></pre><p>这些都是xmake自动处理的，不需要手动配置他们。</p>
 <h3 id="">手动配置编译</h3>
@@ -193,7 +193,7 @@ $ xmake
 <p>但是对于一些极特殊的工具链，一个目录下同时有多个cross前缀的工具bin混在一起的情况，你需要手动设置这个配置，来区分到底需要选用哪个bin。</p>
 <p>例如，toolchains的bin目录下同时存在两个不同的编译器：</p>
 <pre><code>/opt/bin
-  - armv7-linux-gcc 
+  - armv7-linux-gcc
   - aarch64-linux-gcc
 </code></pre><p>我们现在想要选用armv7的版本，那么我们可以追加<code>--cross=</code>配置编译工具前缀名，例如：</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
@@ -282,7 +282,7 @@ if is_plat("gragonfly", "freebsd", "netbsd", "openbsd") then
     add_files("src/unix/kqueue.c")
     add_files("src/unix/posix-hrtime.c")
     add_headerfiles("(include/uv-bsd.h)")
-end 
+end
 
 -- for sunos platform
 if is_plat("sunos") then
@@ -647,7 +647,7 @@ $ xmake
 <li>设置工具链bin目录</li>
 </ul>
 <p>对于不规则工具链目录结构，靠单纯地<a href="#-sdk">--sdk</a>选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。</p>
-<p>例如：一些特殊的交叉工具链的，编译器bin目录，并不在 <code>/home/toolchains_sdkdir/bin</code> 这个位置，而是独立到了 <code>/usr/opt/bin</code> </p>
+<p>例如：一些特殊的交叉工具链的，编译器bin目录，并不在 <code>/home/toolchains_sdkdir/bin</code> 这个位置，而是独立到了 <code>/usr/opt/bin</code></p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
 $ xmake
 </code></pre>
@@ -752,6 +752,24 @@ $ xmake
 <p>或者：</p>
 <pre><code class="lang-bash">$ xmake f -p iphoneos -c
 $ xmake
+</code></pre>
+<h2 id="">导入导出配置</h2>
+<p>2.5.5 之后，我们还可以导入导出已经配置好的配置集，方便配置的快速迁移。</p>
+<h3 id="">导出配置</h3>
+<pre><code class="lang-console">$ xmake f --export=/tmp/config.txt
+$ xmake f -m debug --xxx=y --export=/tmp/config.txt
+</code></pre>
+<h3 id="">导入配置</h3>
+<pre><code class="lang-console">$ xmake f --import=/tmp/config.txt
+$ xmake f -m debug --xxx=y --import=/tmp/config.txt
+</code></pre>
+<h3 id="">导出配置（带菜单）</h3>
+<pre><code class="lang-console">$ xmake f --menu --export=/tmp/config.txt
+$ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
+</code></pre>
+<h3 id="">导入配置（带菜单）</h3>
+<pre><code class="lang-console">$ xmake f --menu --import=/tmp/config.txt
+$ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
 </code></pre>
 </article>
 </body>

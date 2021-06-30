@@ -502,6 +502,9 @@ target("console_c")
      add_files("src/*.c")
      add_files("src/*.proto", {rules = "protobuf.c"})
 </code></pre>
+<p>In version 2.5.5, we can also set <code>proto_public = true</code> to export the proto header file search directory and open it to other parent targets for inheritance.</p>
+<pre><code class="lang-lua">     add_files("src/**.proto", {rules = "protobuf.c", proto_public = true})
+</code></pre>
 <h3 id="usingtheclibrary">Using the C++ library</h3>
 <pre><code class="lang-lua">add_requires("protobuf-cpp")
 

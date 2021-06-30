@@ -639,6 +639,12 @@ target("console_c")
     add_files("src/*.proto", {rules = "protobuf.c"})
 ```
 
+2.5.5 版本，我们还可以设置 `proto_public = true` 来导出 proto 的头文件搜索目录，开放给其他父 target 继承使用。
+
+```lua
+    add_files("src/**.proto", {rules = "protobuf.c", proto_public = true})
+```
+
 ### 使用c++库
 
 ```lua

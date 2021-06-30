@@ -178,7 +178,7 @@ $ xmake
 <p>Among them, <code>-p cross</code> is used to specify that the current platform is a cross-compilation platform, and <code>--sdk=</code> is used to specify the root directory of the cross toolchain.</p>
 <p>Note: We can also specify the <code>-p linux</code> platform to configure cross compilation, the effect is the same, the only difference is that the name of the linux platform is additionally identified, which is convenient for xmake.lua to determine the platform by<code>is_plat ("linux")</code> .</p>
 <p>At this time, xmake will automatically detect the prefix name cross of gcc and other compilers: <code>arm-linux-armeabi-</code>, and when compiling, it will also automatically add search options for<code>link library</code> and <code>header files</code> :</p>
-<pre><code>-I/home/toolchains_sdkdir/include 
+<pre><code>-I/home/toolchains_sdkdir/include
 -L/home/toolchains_sdkdir/lib
 </code></pre><p>These are handled automatically by xmake, there is no need to configure them manually.</p>
 <h3 id="manuallyconfigureandcompile">Manually configure and compile</h3>
@@ -195,7 +195,7 @@ $ xmake
 <p>But for some very special tool chains, if there are multiple cross prefix tool bins in a directory at the same time, you need to manually set this configuration to distinguish which bin you need to choose.</p>
 <p>For example, there are two different compilers in the bin directory of toolchains:</p>
 <pre><code>/opt/bin
-  - armv7-linux-gcc 
+  - armv7-linux-gcc
   - aarch64-linux-gcc
 </code></pre><p>We now want to choose the armv7 version, then we can append <code>--cross=</code> to configure the compiler tool prefix name, for example:</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
@@ -284,7 +284,7 @@ if is_plat("gragonfly", "freebsd", "netbsd", "openbsd") then
     add_files("src/unix/kqueue.c")
     add_files("src/unix/posix-hrtime.c")
     add_headerfiles("(include/uv-bsd.h)")
-end 
+end
 
 -- for sunos platform
 if is_plat("sunos") then
@@ -742,9 +742,27 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -c
 $ xmake
 </code></pre>
-<p>or </p>
+<p>or</p>
 <pre><code class="lang-bash">$ xmake f -p iphoneos -c
 $ xmake
+</code></pre>
+<h2 id="importandexportconfiguration">Import and export configuration</h2>
+<p>After 2.5.5, we can also import and export the configured configuration set to facilitate rapid configuration migration.</p>
+<h3 id="exportconfiguration">Export configuration</h3>
+<pre><code class="lang-console">$ xmake f --export=/tmp/config.txt
+$ xmake f -m debug --xxx=y --export=/tmp/config.txt
+</code></pre>
+<h3 id="importconfiguration">Import configuration</h3>
+<pre><code class="lang-console">$ xmake f --import=/tmp/config.txt
+$ xmake f -m debug --xxx=y --import=/tmp/config.txt
+</code></pre>
+<h3 id="exportconfigurationwithmenu">Export configuration (with menu)</h3>
+<pre><code class="lang-console">$ xmake f --menu --export=/tmp/config.txt
+$ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
+</code></pre>
+<h3 id="importconfigurationwithmenu">Import configuration (with menu)</h3>
+<pre><code class="lang-console">$ xmake f --menu --import=/tmp/config.txt
+$ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
 </code></pre>
 </article>
 </body>

@@ -633,6 +633,12 @@ target("console_c")
      add_files("src/*.proto", {rules = "protobuf.c"})
 ```
 
+In version 2.5.5, we can also set `proto_public = true` to export the proto header file search directory and open it to other parent targets for inheritance.
+
+```lua
+     add_files("src/**.proto", {rules = "protobuf.c", proto_public = true})
+```
+
 ### Using the C++ library
 
 ```lua
