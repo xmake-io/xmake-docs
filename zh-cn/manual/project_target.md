@@ -333,6 +333,40 @@ target("xxx")
 
 而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把`libtest.a`改成`test.dll`，这个对于[set_basename](#targetset_basename)是做不到的。
 
+### target:set_prefixname
+
+#### 设置目标文件的前置名
+
+2.5.5 之后版本才支持，可以修改设置目标文件的前置名，例如将默认的：`libtest.so` 改成 `test.so`
+
+```lua
+target("test")
+    set_prefixname("")
+```
+
+### target:set_suffixname
+
+#### 设置目标文件的后置名
+
+2.5.5 之后版本才支持，可以修改设置目标文件的后置名，例如将默认的：`libtest.so` 改成 `libtest-d.so`
+
+```lua
+target("test")
+    set_suffixname("-d")
+```
+
+### target:set_extension
+
+#### 设置目标文件的扩展名
+
+2.5.5 之后版本才支持，可以修改设置目标文件的扩展名，例如将默认的：`libtest.so` 改成 `test.dll`
+
+```lua
+target("test")
+    set_prefixname("")
+    set_extension(".dll")
+```
+
 ### target:set_warnings
 
 #### 设置警告级别
@@ -2586,3 +2620,4 @@ target("test6")
 其中 `set_group("group1/group2")` 可以将 target 设置到二级分组中去。
 
 更多详情见：[#1026](https://github.com/xmake-io/xmake/issues/1026)
+

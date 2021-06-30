@@ -332,6 +332,40 @@ The difference between it and [set_basename](#targetset_basename) is that [set_b
 
 The modification of filename is to modify the entire target file name, including the prefix and suffix. For example, you can directly change `libtest.a` to `test.dll`, which is not available for [set_basename](#targetset_basename).
 
+### target:set_prefixname
+
+#### Set the leading name of the target file
+
+Only supported after version 2.5.5, you can modify the prefix name of the target file, for example, change the default: `libtest.so` to `test.so`
+
+```lua
+target("test")
+     set_prefixname("")
+```
+
+### target:set_suffixname
+
+#### Set the postname of the target file
+
+Only supported after version 2.5.5, you can modify the postname of the target file, for example, change the default: `libtest.so` to `libtest-d.so`
+
+```lua
+target("test")
+     set_suffixname("-d")
+```
+
+### target:set_extension
+
+#### Set the extension of the target file
+
+Only supported after version 2.5.5, you can modify the extension of the set target file, for example, change the default: `libtest.so` to `test.dll`
+
+```lua
+target("test")
+     set_prefixname("")
+     set_extension(".dll")
+```
+
 ### target:set_warnings
 
 #### Set compilation warning level
