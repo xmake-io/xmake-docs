@@ -173,7 +173,7 @@ target("test2")
 <tbody>
 <tr>
 <td>phony</td>
-<td>Fake target program</td>
+<td>Phony target program</td>
 </tr>
 <tr>
 <td>binary</td>
@@ -186,6 +186,10 @@ target("test2")
 <tr>
 <td>shared</td>
 <td>Dynamic library program</td>
+</tr>
+<tr>
+<td>object</td>
+<td>Only compile a collection of objects</td>
 </tr>
 </tbody>
 </table>
@@ -207,6 +211,7 @@ target("demo")
      add_deps("test1", "test2")
 </code></pre>
 <p>For example, with the above configuration, we can compile two related dependent programs: test1 and test2 when compiling with <code>xmake build demo</code>.</p>
+<p>!> Starting from 2.5.5, if the set_kind interface is not set, the default is binary type.</p>
 <h3 id="targetset_strip">target:set_strip</h3>
 <h4 id="striptargetsymbols">Strip target symbols</h4>
 <p>Set the current target strip mode, currently supports the mode:</p>
@@ -391,6 +396,25 @@ target("xxx2")
 <h4 id="setthefullnameoftargetfile">Set the full name of target file</h4>
 <p>The difference between it and <a href="#targetset_basename">set_basename</a> is that <a href="#targetset_basename">set_basename</a> sets the name without a suffix and a prefix, for example: <code>libtest.a</code>, if the basename is changed to test2, it becomes <code>libtest2.a</code>.</p>
 <p>The modification of filename is to modify the entire target file name, including the prefix and suffix. For example, you can directly change <code>libtest.a</code> to <code>test.dll</code>, which is not available for <a href="#targetset_basename">set_basename</a>.</p>
+<h3 id="targetset_prefixname">target:set_prefixname</h3>
+<h4 id="settheleadingnameofthetargetfile">Set the leading name of the target file</h4>
+<p>Only supported after version 2.5.5, you can modify the prefix name of the target file, for example, change the default: <code>libtest.so</code> to <code>test.so</code></p>
+<pre><code class="lang-lua">target("test")
+     set_prefixname("")
+</code></pre>
+<h3 id="targetset_suffixname">target:set_suffixname</h3>
+<h4 id="setthepostnameofthetargetfile">Set the postname of the target file</h4>
+<p>Only supported after version 2.5.5, you can modify the postname of the target file, for example, change the default: <code>libtest.so</code> to <code>libtest-d.so</code></p>
+<pre><code class="lang-lua">target("test")
+     set_suffixname("-d")
+</code></pre>
+<h3 id="targetset_extension">target:set_extension</h3>
+<h4 id="settheextensionofthetargetfile">Set the extension of the target file</h4>
+<p>Only supported after version 2.5.5, you can modify the extension of the set target file, for example, change the default: <code>libtest.so</code> to <code>test.dll</code></p>
+<pre><code class="lang-lua">target("test")
+     set_prefixname("")
+     set_extension(".dll")
+</code></pre>
 <h3 id="targetset_warnings">target:set_warnings</h3>
 <h4 id="setcompilationwarninglevel">Set compilation warning level</h4>
 <p>Set the warning level of the compilation of the current target, generally supporting several levels:</p>

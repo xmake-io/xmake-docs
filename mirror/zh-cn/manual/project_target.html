@@ -189,6 +189,10 @@ target("test2")
 <td>shared</td>
 <td>动态库程序</td>
 </tr>
+<tr>
+<td>object</td>
+<td>仅仅编译对象集合</td>
+</tr>
 </tbody>
 </table>
 <pre><code class="lang-lua">target("demo")
@@ -209,6 +213,7 @@ target("demo")
     add_deps("test1", "test2")
 </code></pre>
 <p>比如上述配置，我们就可以在执行 <code>xmake build demo</code> 编译的时候，同时编译相关的两个依赖程序：test1和test2。</p>
+<p>!> 2.5.5 开始，如果没有设置 set_kind 接口，默认就是 binary 类型。</p>
 <h3 id="targetset_strip">target:set_strip</h3>
 <h4 id="strip">设置是否strip信息</h4>
 <p>设置当前目标的strip模式，目前支持一下模式：</p>
@@ -395,6 +400,25 @@ target("xxx2")
 <h4 id="">设置目标文件全名</h4>
 <p>它跟<a href="#targetset_basename">set_basename</a>的区别在于，<a href="#targetset_basename">set_basename</a>设置名字不带后缀跟前缀，例如：<code>libtest.a</code>，basename如果改成test2后就变成了<code>libtest2.a</code>。</p>
 <p>而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把<code>libtest.a</code>改成<code>test.dll</code>，这个对于<a href="#targetset_basename">set_basename</a>是做不到的。</p>
+<h3 id="targetset_prefixname">target:set_prefixname</h3>
+<h4 id="">设置目标文件的前置名</h4>
+<p>2.5.5 之后版本才支持，可以修改设置目标文件的前置名，例如将默认的：<code>libtest.so</code> 改成 <code>test.so</code></p>
+<pre><code class="lang-lua">target("test")
+    set_prefixname("")
+</code></pre>
+<h3 id="targetset_suffixname">target:set_suffixname</h3>
+<h4 id="">设置目标文件的后置名</h4>
+<p>2.5.5 之后版本才支持，可以修改设置目标文件的后置名，例如将默认的：<code>libtest.so</code> 改成 <code>libtest-d.so</code></p>
+<pre><code class="lang-lua">target("test")
+    set_suffixname("-d")
+</code></pre>
+<h3 id="targetset_extension">target:set_extension</h3>
+<h4 id="">设置目标文件的扩展名</h4>
+<p>2.5.5 之后版本才支持，可以修改设置目标文件的扩展名，例如将默认的：<code>libtest.so</code> 改成 <code>test.dll</code></p>
+<pre><code class="lang-lua">target("test")
+    set_prefixname("")
+    set_extension(".dll")
+</code></pre>
 <h3 id="targetset_warnings">target:set_warnings</h3>
 <h4 id="">设置警告级别</h4>
 <p>设置当前目标的编译的警告级别，一般支持一下几个级别：</p>

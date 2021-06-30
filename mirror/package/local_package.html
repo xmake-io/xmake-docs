@@ -90,32 +90,96 @@
   line-height: 1;
 }
 </style>
-    <p>By including a dependency package directory and some binary library files in the project, it is convenient to integrate some third-party dependency libraries. This method is relatively simple and straightforward, but the disadvantages are also obvious and inconvenient to manage.</p>
-<p>Take the tbox project as an example. The dependency package is as follows:</p>
-<pre><code>- base.pkg
-- zlib.pkg
-- polarssl.pkg
-- openssl.pkg
-- mysql.pkg
-- pcre.pkg
-- ...
-</code></pre><p>If you want the current project to recognize loading these packages, you first need to specify the package directory path, for example:</p>
-<pre><code class="lang-lua">add_packagedirs("packages")
+    <p>After version 2.5.5, we have provided a new local package packaging solution that will seamlessly integrate <code>add_requires</code> and <code>add_packages</code>.</p>
+<h3 id="defaultpackagingformat">Default packaging format</h3>
+<p>We can execute the <code>xmake package</code> command to generate the default new version of the packaging format.</p>
+<pre><code class="lang-console">$ xmake package
+package(foo): build/packages/f/foo generated
 </code></pre>
-<p>Once specified, you can add integration package dependencies in the target scope via the <a href="/mirror/manual/project_target.html#targetadd_packages">add_packages</a> interface, for example:</p>
-<pre><code class="lang-lua">target("tbox")
-    add_packages("zlib", "polarssl", "pcre", "mysql")
+<p>It will generate the file <code>build/packages/f/foo/xmake.lua</code> with the following content:</p>
+<pre><code class="lang-lua">package("foo")
+    set_description("The foo package")
+    set_license("Apache-2.0")
+    add_deps("add", "sub")
+
+    on_load(function (package)
+        package:set("installdir", path.join(os.scriptdir(), package:plat(), package:arch(), package:mode()))
+    end)
+
+    on_fetch(function (package)
+        local result = {}
+        result.links = "foo"
+        result.linkdirs = package:installdir("lib")
+        result.includedirs = package:installdir("include")
+        return result
+    end)
 </code></pre>
-<p>So how to generate a *.pkg package, if it is based on xmake project, the generation method is very simple, only need:</p>
-<pre><code class="lang-console">$ cd tbox
-$ xmake package
+<p>In fact, it uses <code>package()</code> to define and describe local packages, just like remote packages.</p>
+<p>The generated directory structure is as follows:</p>
+<pre><code class="lang-console">$ tree build/packages/f/foo/
+build/packages/f/foo/
+├── macosx
+│   └── x86_64
+│       └── release
+│           ├── include
+│           │   └── foo.h
+│           └── lib
+│               └── libfoo.a
+└── xmake.lua
 </code></pre>
-<p>You can generate a tbox.pkg cross-platform package in the build directory for use by third-party projects. I can also directly set the output directory and compile and generate it into the other project, for example:</p>
-<pre><code class="lang-console">$ cd tbox
-$ xmake package -o ../test/packages
+<p>We can also use the <code>add_requires</code>/<code>add_repositories</code> interface to seamlessly integrate this package.</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_repositories("local-repo build")
+add_requires("foo")
+
+target("bar")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("foo")
 </code></pre>
-<p>In this way, the test project can pass <a href="/mirror/manual/project_target.html#targetadd_packages">add_packages</a> and <a href="/mirror/manual/global_interfaces.html#add_packagedirs">add_packagedirs</a> to configure and use the tbox.pkg package.</p>
-<p>For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: <a href="https://tboox.org/cn/2016/08/06/add-package-and-autocheck/">Dependency package addition and automatic detection mechanism</a></p>
+<p>Among them, add_repositories configuration specifies the warehouse root directory of the local package, and then this package can be referenced through <code>add_requires</code>.</p>
+<p>In addition, the generated local package has another feature, which is to support <code>target/add_deps</code>, which automatically associates the dependencies of multiple packages, and automatically connects all dependency links during integration.</p>
+<p>Here is the complete <a href="https://github.com/xmake-io/xmake/blob/dev/tests/actions/package/localpkg/test.lua">test example</a>.</p>
+<pre><code class="lang-console">"/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/bar build/.objs/bar/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version -min=10.15 -isysroot
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk -stdlib=libc++
+ -L/Users/ruki/projects/personal/xmake/tests/actions/package/localpkg/bar/build/packages/f/foo/macosx/x86_64/release/lib
+ -L/Users/ruki/projects/personal/xmake/tests/actions/package/localpkg/bar/build/packages/s/sub/macosx/x86_64/release/lib
+ -L/Users/ruki/projects/personal/xmake/tests/actions/package/localpkg/bar/build/packages/a/add/macosx/x86_64/release/lib
+ -Wl,-x -lfoo -lsub -ladd -lz
+</code></pre>
+<h3 id="generateremotepackage">Generate remote package</h3>
+<p>Out of the local package format, <code>xmake package</code> now also supports generating remote packages, so that users can quickly submit them to remote warehouses.</p>
+<p>We only need to modify the package format when packaging.</p>
+<pre><code class="lang-console">$ xmake package -f remote
+</code></pre>
+<p>He will also generate packages/f/foo/xmake.lua file.</p>
+<pre><code class="lang-lua">package("foo")
+    set_description("The foo package")
+    set_license("Apache-2.0")
+    add_deps("add", "sub")
+
+    add_urls("https://github.com/myrepo/foo.git")
+    add_versions("1.0", "<shasum256 or gitcommit>")
+
+    on_install(function (package)
+        local configs = {}
+        if package:config("shared") then
+            configs.kind = "shared"
+        end
+        import("package.tools.xmake").install(package, configs)
+    end)
+
+    on_test(function (package)
+        - TODO check includes and interfaces
+        - assert(package:has_cfuncs("foo", {includes = "foo.h"})
+    end)
+</code></pre>
+<p>Compared with the local package, the package definition configuration has more actual installation logic, as well as the settings of urls and versions,</p>
+<p>We can also modify urls, versions and other configuration values ​​through additional parameters, for example:</p>
+<pre><code class="lang-console">$ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepage=xxxxx`
+</code></pre>
+<p>xmake will also read the relevant configuration information from the target&#39;s <code>set_license</code> and <code>set_version</code> configurations.</p>
 </article>
 </body>
 </html>

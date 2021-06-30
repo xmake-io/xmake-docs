@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/package/local_package_old">https://xmake.io/#/package/local_package_old</a>
+</br>
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h3 id="note">Note</h3>
+<p>This is a very early packaging solution, incompatible with <code>add_requires()</code> and <code>add_packages()</code>, and is gradually being deprecated.</p>
+<p>2.5.5 Start to adopt the new local package solution, see for details: <a href="/mirror/package/local_package.html">New local package solution</a>.</p>
+<p>If you still want to use the old packaging method, you can execute the following command to specify the package format: <code>oldpkg</code></p>
+<pre><code class="lang-console">$ xmake package -f oldpkg
+</code></pre>
+<p>To replace the previous</p>
+<pre><code class="lang-console">$ xmake package
+</code></pre>
+<h3 id="packaginginstructions">Packaging instructions</h3>
+<p>By including a dependency package directory and some binary library files in the project, it is convenient to integrate some third-party dependency libraries. This method is relatively simple and straightforward, but the disadvantages are also obvious and inconvenient to manage.</p>
+<p>Take the tbox project as an example. The dependency package is as follows:</p>
+<pre><code>- base.pkg
+- zlib.pkg
+- polarssl.pkg
+- openssl.pkg
+- mysql.pkg
+- pcre.pkg
+- ...
+</code></pre><p>If you want the current project to recognize loading these packages, you first need to specify the package directory path, for example:</p>
+<pre><code class="lang-lua">add_packagedirs("packages")
+</code></pre>
+<p>Once specified, you can add integration package dependencies in the target scope via the <a href="/mirror/manual/project_target.html#targetadd_packages">add_packages</a> interface, for example:</p>
+<pre><code class="lang-lua">target("tbox")
+    add_packages("zlib", "polarssl", "pcre", "mysql")
+</code></pre>
+<p>So how to generate a *.pkg package, if it is based on xmake project, the generation method is very simple, only need:</p>
+<pre><code class="lang-console">$ cd tbox
+$ xmake package
+</code></pre>
+<p>You can generate a tbox.pkg cross-platform package in the build directory for use by third-party projects. I can also directly set the output directory and compile and generate it into the other project, for example:</p>
+<pre><code class="lang-console">$ cd tbox
+$ xmake package -o ../test/packages
+</code></pre>
+<p>In this way, the test project can pass <a href="/mirror/manual/project_target.html#targetadd_packages">add_packages</a> and <a href="/mirror/manual/global_interfaces.html#add_packagedirs">add_packagedirs</a> to configure and use the tbox.pkg package.</p>
+<p>For a detailed description of the built-in package, you can also refer to the following related article, which is described in detail: <a href="https://tboox.org/cn/2016/08/06/add-package-and-autocheck/">Dependency package addition and automatic detection mechanism</a></p>
+</article>
+</body>
+</html>
