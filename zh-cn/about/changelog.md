@@ -1,4 +1,33 @@
 
+## v2.5.5
+
+### 新特性
+
+* [#1421](https://github.com/xmake-io/xmake/issues/1421): 针对 target 目标，增加目标文件名的前缀，后缀和扩展名设置接口。
+* [#1422](https://github.com/xmake-io/xmake/issues/1422): 支持从 vcpkg, conan 中搜索包
+* [#1424](https://github.com/xmake-io/xmake/issues/1424): 设置 binary 作为默认的 target 目标类型
+* [#1140](https://github.com/xmake-io/xmake/issues/1140): 支持安装时候，手动选择从第三包包管理器安装包
+* [#1339](https://github.com/xmake-io/xmake/issues/1339): 改进 `xmake package` 去产生新的本地包格式，无缝集成 `add_requires`，并且新增生成远程包支持
+* 添加 `appletvos` 编译平台支持, `xmake f -p appletvos`
+* [#1437](https://github.com/xmake-io/xmake/issues/1437): 为包添加 headeronly 库类型去忽略 `vs_runtime`
+* [#1351](https://github.com/xmake-io/xmake/issues/1351): 支持导入导出当前配置
+* [#1454](https://github.com/xmake-io/xmake/issues/1454): 支持下载安装 windows 预编译包
+
+### 改进
+
+* [#1425](https://github.com/xmake-io/xmake/issues/1425): 改进 tools/meson 去加载 msvc 环境，并且增加一些内置配置。
+* [#1442](https://github.com/xmake-io/xmake/issues/1442): 支持从 git url 去下载包资源文件
+* [#1389](https://github.com/xmake-io/xmake/issues/1389): 支持添加工具链环境到 `xrepo env`
+* [#1453](https://github.com/xmake-io/xmake/issues/1453): 支持 protobuf 规则导出头文件搜索目录
+* 新增对 vs2022 的支持
+
+### Bugs 修复
+
+* [#1413](https://github.com/xmake-io/xmake/issues/1413): 修复查找包过程中出现的挂起卡死问题
+* [#1420](https://github.com/xmake-io/xmake/issues/1420): 修复包检测和配置缓存
+* [#1445](https://github.com/xmake-io/xmake/issues/1445): 修复 WDK 驱动签名错误
+* [#1465](https://github.com/xmake-io/xmake/issues/1465): 修复缺失的链接目录
+
 ## v2.5.4
 
 ### 新特性

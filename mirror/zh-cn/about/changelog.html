@@ -90,7 +90,35 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v254">v2.5.4</h2>
+    <h2 id="v255">v2.5.5</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1421">#1421</a>: 针对 target 目标，增加目标文件名的前缀，后缀和扩展名设置接口。</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1422">#1422</a>: 支持从 vcpkg, conan 中搜索包</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1424">#1424</a>: 设置 binary 作为默认的 target 目标类型</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1140">#1140</a>: 支持安装时候，手动选择从第三包包管理器安装包</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1339">#1339</a>: 改进 <code>xmake package</code> 去产生新的本地包格式，无缝集成 <code>add_requires</code>，并且新增生成远程包支持</li>
+<li>添加 <code>appletvos</code> 编译平台支持, <code>xmake f -p appletvos</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1437">#1437</a>: 为包添加 headeronly 库类型去忽略 <code>vs_runtime</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1351">#1351</a>: 支持导入导出当前配置</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1454">#1454</a>: 支持下载安装 windows 预编译包</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1425">#1425</a>: 改进 tools/meson 去加载 msvc 环境，并且增加一些内置配置。</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1442">#1442</a>: 支持从 git url 去下载包资源文件</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1389">#1389</a>: 支持添加工具链环境到 <code>xrepo env</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1453">#1453</a>: 支持 protobuf 规则导出头文件搜索目录</li>
+<li>新增对 vs2022 的支持</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1413">#1413</a>: 修复查找包过程中出现的挂起卡死问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1420">#1420</a>: 修复包检测和配置缓存</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1445">#1445</a>: 修复 WDK 驱动签名错误</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1465">#1465</a>: 修复缺失的链接目录</li>
+</ul>
+<h2 id="v254">v2.5.4</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/1323">#1323</a>: 支持从 apt 查找安装包，<code>add_requires("apt::zlib1g-dev")</code></li>

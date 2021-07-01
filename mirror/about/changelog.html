@@ -90,7 +90,35 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v254">v2.5.4</h2>
+    <h2 id="v255">v2.5.5</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1421">#1421</a>: Add prefix, suffix and extension options for target names</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1422">#1422</a>: Support search packages from vcpkg, conan</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1424">#1424</a>: Set binary as default target kind</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1140">#1140</a>: Add a way to ask xmake to try to download dependencies from a certain package manager</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1339">#1339</a>: Improve <code>xmake package</code> to generate new local/remote packages</li>
+<li>Add <code>appletvos</code> platform support for AppleTV, <code>xmake f -p appletvos</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1437">#1437</a>: Add headeronly library type for package to ignore <code>vs_runtime</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1351">#1351</a>: Support export/import current configs</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1454">#1454</a>: Support to download and install precompiled image packages from xmake-mirror</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1425">#1425</a>: Improve tools/meson to load msvc envirnoments</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1442">#1442</a>: Support to clone package resources from git url</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1389">#1389</a>: Support to add toolchain envs to <code>xrepo env</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1453">#1453</a>: Support to export protobuf includedirs</li>
+<li>Support vs2022</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1413">#1413</a>: Fix hangs on fetching packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1420">#1420</a>: Fix config and packages cache</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1445">#1445</a>: Fix WDK driver sign error</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1465">#1465</a>: Fix missing link directory</li>
+</ul>
+<h2 id="v254">v2.5.4</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/1323">#1323</a>: Support find and install package from <code>apt</code>, <code>add_requires("apt::zlib1g-dev")</code></li>

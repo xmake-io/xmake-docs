@@ -1,3 +1,31 @@
+## v2.5.5
+
+### New features
+
+* [#1421](https://github.com/xmake-io/xmake/issues/1421): Add prefix, suffix and extension options for target names
+* [#1422](https://github.com/xmake-io/xmake/issues/1422): Support search packages from vcpkg, conan
+* [#1424](https://github.com/xmake-io/xmake/issues/1424): Set binary as default target kind
+* [#1140](https://github.com/xmake-io/xmake/issues/1140): Add a way to ask xmake to try to download dependencies from a certain package manager
+* [#1339](https://github.com/xmake-io/xmake/issues/1339): Improve `xmake package` to generate new local/remote packages
+* Add `appletvos` platform support for AppleTV, `xmake f -p appletvos`
+* [#1437](https://github.com/xmake-io/xmake/issues/1437): Add headeronly library type for package to ignore `vs_runtime`
+* [#1351](https://github.com/xmake-io/xmake/issues/1351): Support export/import current configs
+* [#1454](https://github.com/xmake-io/xmake/issues/1454): Support to download and install precompiled image packages from xmake-mirror
+
+### Change
+
+* [#1425](https://github.com/xmake-io/xmake/issues/1425): Improve tools/meson to load msvc envirnoments
+* [#1442](https://github.com/xmake-io/xmake/issues/1442): Support to clone package resources from git url
+* [#1389](https://github.com/xmake-io/xmake/issues/1389): Support to add toolchain envs to `xrepo env`
+* [#1453](https://github.com/xmake-io/xmake/issues/1453): Support to export protobuf includedirs
+* Support vs2022
+
+### Bugs fixed
+
+* [#1413](https://github.com/xmake-io/xmake/issues/1413): Fix hangs on fetching packages
+* [#1420](https://github.com/xmake-io/xmake/issues/1420): Fix config and packages cache
+* [#1445](https://github.com/xmake-io/xmake/issues/1445): Fix WDK driver sign error
+* [#1465](https://github.com/xmake-io/xmake/issues/1465): Fix missing link directory
 
 ## v2.5.4
 
