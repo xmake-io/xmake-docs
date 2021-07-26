@@ -1,21 +1,6 @@
 
 全局接口影响整个工程描述，被调用后，后面被包含进来的所有子`xmake.lua`都会受影响。
 
-| 接口                                  | 描述                          | 支持版本 |
-| ------------------------------------- | ----------------------------- | -------- |
-| [includes](#includes)                 | 添加子工程文件和目录          | >= 2.1.5 |
-| [set_project](#set_project)           | 设置工程名                    | >= 2.0.1 |
-| [set_version](#set_version)           | 设置工程版本                  | >= 2.0.1 |
-| [set_xmakever](#set_xmakever)         | 设置最小xmake版本             | >= 2.1.1 |
-| [add_moduledirs](#add_moduledirs)     | 添加模块目录                  | >= 2.1.5 |
-| [add_plugindirs](#add_plugindirs)     | 添加插件目录                  | >= 2.0.1 |
-| [add_packagedirs](#add_packagedirs)   | 添加包目录                    | >= 2.0.1 |
-| [get_config](#get_config)             | 获取给的配置值                | >= 2.2.2 |
-| [set_config](#set_config)             | 设置默认的配置值              | >= 2.2.2 |
-| [add_requires](#add_requires)         | 添加需要的依赖包              | >= 2.2.2 |
-| [add_requireconfs](#add_requireconfs) | 设置指定依赖包的配置          | >= 2.5.1 |
-| [add_repositories](#add_repositories) | 添加依赖包仓库                | >= 2.2.2 |
-
 ### includes
 
 #### 添加子工程文件和目录
@@ -58,6 +43,8 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 ```
+
+#### 内置的辅助接口
 
 另外，此接口在2.2.5之后的版本，提供了一些内置的辅助函数，可以直接includes后使用，具体有哪些内置函数可以看下：https://github.com/xmake-io/xmake/tree/master/xmake/includes
 
@@ -197,35 +184,6 @@ add_plugindirs("$(projectdir)/plugins")
 ```
 
 这样，xmake在编译此工程的时候，也就加载这些插件。
-
-### add_packagedirs
-
-#### 添加包目录
-
-通过设置依赖包目录，可以方便的集成一些第三方的依赖库，以tbox工程为例，其依赖包如下：
-
-```
-- base.pkg
-- zlib.pkg
-- polarssl.pkg
-- openssl.pkg
-- mysql.pkg
-- pcre.pkg
-- ...
-```
-
-如果要让当前工程识别加载这些包，首先要指定包目录路径，例如：
-
-```lua
-add_packagedirs("packages")
-```
-
-指定好后，就可以在target作用域中，通过[add_packages](#add_packages)接口，来添加集成包依赖了，例如：
-
-```lua
-target("tbox")
-    add_packages("zlib", "polarssl", "pcre", "mysql")
-```
 
 ### get_config
 
@@ -617,3 +575,99 @@ add_repositories("my-repo myrepo")
 
 这个可以参考[benchbox](https://github.com/tboox/benchbox)项目，里面就内置了一个私有仓库。
 
+### set_defaultplat
+
+#### 设置默认的编译平台
+
+v2.5.6 以上版本才支持，用于设置工程默认的编译平台，如果没有设置，默认平台跟随当前系统平台，也就是 os.host()。
+
+比如，在 macOS 上默认编译平台是 macosx，如果当前项目是 ios 项目，那么可以设置默认编译平台为 iphoneos。
+
+```lua
+set_defaultplat("iphoneos")
+```
+
+它等价于，`xmake f -p iphoneos`。
+
+### set_defaultarch
+
+#### 设置默认的编译架构
+
+v2.5.6 以上版本才支持，用于设置工程默认的编译架构，如果没有设置，默认平台跟随当前系统架构，也就是 os.arch()。
+
+```lua
+set_defaultplat("iphoneos")
+set_defaultarch("arm64")
+```
+
+它等价于，`xmake f -p iphoneos -a arm64`。
+
+我们也可以设置多个平台下的默认架构。
+
+```lua
+set_defaultarch("iphoneos|arm64", "windows|x64")
+```
+
+在 iphoneos 上默认编译 arm64 架构，在 windows 上默认编译 x64 架构。
+
+### set_defaultmode
+
+#### 设置默认的编译模式
+
+v2.5.6 以上版本才支持，用于设置工程默认的编译模式，如果没有设置，默认是 release 模式编译。
+
+```lua
+set_defaultmode("releasedbg")
+```
+
+它等价于，`xmake f -m releasedbg`。
+
+### set_allowedplats
+
+#### 设置允许编译的平台列表
+
+v2.5.6 以上版本才支持，用于设置工程支持的编译平台列表，如果用户指定了其他平台，会提示错误，这通常用于限制用户指定错误的无效平台。
+
+如果没有设置，那么没有任何平台限制。
+
+```lua
+set_allowedplats("windows", "mingw")
+```
+
+设置当前项目仅仅支持 windows 和 mingw 平台。
+
+### set_allowedarchs
+
+#### 设置允许编译的平台架构
+
+v2.5.6 以上版本才支持，用于设置工程支持的编译架构列表，如果用户指定了其他架构，会提示错误，这通常用于限制用户指定错误的无效架构。
+
+如果没有设置，那么没有任何架构限制。
+
+```lua
+set_allowedarchs("x64", "x86")
+```
+
+当前项目，仅仅支持 x64/x86 平台。
+
+我们也可以同时指定多个平台下允许的架构列表。
+
+```lua
+set_allowedarchs("windows|x64", "iphoneos|arm64")
+```
+
+设置当前项目在 windows 上仅仅支持 x64 架构，并且在 iphoneos 上仅仅支持 arm64 架构。
+
+### set_allowedmodes
+
+#### 设置允许的编译模式列表
+
+v2.5.6 以上版本才支持，用于设置工程支持的编译模式列表，如果用户指定了其他模式，会提示错误，这通常用于限制用户指定错误的无效模式。
+
+如果没有设置，那么没有任何模式限制。
+
+```lua
+set_allowedmodes("release", "releasedbg")
+```
+
+设置当前项目仅仅支持 release/releasedbg 两个编译模式。

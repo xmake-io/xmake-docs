@@ -91,77 +91,6 @@
 }
 </style>
     <p>全局接口影响整个工程描述，被调用后，后面被包含进来的所有子<code>xmake.lua</code>都会受影响。</p>
-<table>
-<thead>
-<tr>
-<th>接口</th>
-<th>描述</th>
-<th>支持版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#includes">includes</a></td>
-<td>添加子工程文件和目录</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#set_project">set_project</a></td>
-<td>设置工程名</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#set_version">set_version</a></td>
-<td>设置工程版本</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#set_xmakever">set_xmakever</a></td>
-<td>设置最小xmake版本</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#add_moduledirs">add_moduledirs</a></td>
-<td>添加模块目录</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#add_plugindirs">add_plugindirs</a></td>
-<td>添加插件目录</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#add_packagedirs">add_packagedirs</a></td>
-<td>添加包目录</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#get_config">get_config</a></td>
-<td>获取给的配置值</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#set_config">set_config</a></td>
-<td>设置默认的配置值</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#add_requires">add_requires</a></td>
-<td>添加需要的依赖包</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#add_requireconfs">add_requireconfs</a></td>
-<td>设置指定依赖包的配置</td>
-<td>>= 2.5.1</td>
-</tr>
-<tr>
-<td><a href="#add_repositories">add_repositories</a></td>
-<td>添加依赖包仓库</td>
-<td>>= 2.2.2</td>
-</tr>
-</tbody>
-</table>
 <h3 id="includes">includes</h3>
 <h4 id="">添加子工程文件和目录</h4>
 <p>我们能够使用此接口添加工程子文件(xmake.lua)或者带有xmake.lua的工程子目录。</p>
@@ -190,6 +119,7 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 </code></pre>
+<h4 id="">内置的辅助接口</h4>
 <p>另外，此接口在2.2.5之后的版本，提供了一些内置的辅助函数，可以直接includes后使用，具体有哪些内置函数可以看下：<a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">https://github.com/xmake-io/xmake/tree/master/xmake/includes</a></p>
 <p>关于这块的更加完整的说明，可以看下：<a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
 <p>例子：</p>
@@ -279,23 +209,6 @@ set_xmakever("2.1.0")
 add_plugindirs("$(projectdir)/plugins")
 </code></pre>
 <p>这样，xmake在编译此工程的时候，也就加载这些插件。</p>
-<h3 id="add_packagedirs">add_packagedirs</h3>
-<h4 id="">添加包目录</h4>
-<p>通过设置依赖包目录，可以方便的集成一些第三方的依赖库，以tbox工程为例，其依赖包如下：</p>
-<pre><code>- base.pkg
-- zlib.pkg
-- polarssl.pkg
-- openssl.pkg
-- mysql.pkg
-- pcre.pkg
-- ...
-</code></pre><p>如果要让当前工程识别加载这些包，首先要指定包目录路径，例如：</p>
-<pre><code class="lang-lua">add_packagedirs("packages")
-</code></pre>
-<p>指定好后，就可以在target作用域中，通过<a href="#add_packages">add_packages</a>接口，来添加集成包依赖了，例如：</p>
-<pre><code class="lang-lua">target("tbox")
-    add_packages("zlib", "polarssl", "pcre", "mysql")
-</code></pre>
 <h3 id="get_config">get_config</h3>
 <h4 id="">获取给定的配置值</h4>
 <p>此接口从2.2.2版本开始引入，用于快速获取给定的配置值，可用于描述域。</p>
@@ -525,6 +438,55 @@ add_requireconfs("libwebp.*|cmake", {debug = true})
 <pre><code class="lang-lua">add_repositories("my-repo myrepo")
 </code></pre>
 <p>这个可以参考<a href="https://github.com/tboox/benchbox">benchbox</a>项目，里面就内置了一个私有仓库。</p>
+<h3 id="set_defaultplat">set_defaultplat</h3>
+<h4 id="">设置默认的编译平台</h4>
+<p>v2.5.6 以上版本才支持，用于设置工程默认的编译平台，如果没有设置，默认平台跟随当前系统平台，也就是 os.host()。</p>
+<p>比如，在 macOS 上默认编译平台是 macosx，如果当前项目是 ios 项目，那么可以设置默认编译平台为 iphoneos。</p>
+<pre><code class="lang-lua">set_defaultplat("iphoneos")
+</code></pre>
+<p>它等价于，<code>xmake f -p iphoneos</code>。</p>
+<h3 id="set_defaultarch">set_defaultarch</h3>
+<h4 id="">设置默认的编译架构</h4>
+<p>v2.5.6 以上版本才支持，用于设置工程默认的编译架构，如果没有设置，默认平台跟随当前系统架构，也就是 os.arch()。</p>
+<pre><code class="lang-lua">set_defaultplat("iphoneos")
+set_defaultarch("arm64")
+</code></pre>
+<p>它等价于，<code>xmake f -p iphoneos -a arm64</code>。</p>
+<p>我们也可以设置多个平台下的默认架构。</p>
+<pre><code class="lang-lua">set_defaultarch("iphoneos|arm64", "windows|x64")
+</code></pre>
+<p>在 iphoneos 上默认编译 arm64 架构，在 windows 上默认编译 x64 架构。</p>
+<h3 id="set_defaultmode">set_defaultmode</h3>
+<h4 id="">设置默认的编译模式</h4>
+<p>v2.5.6 以上版本才支持，用于设置工程默认的编译模式，如果没有设置，默认是 release 模式编译。</p>
+<pre><code class="lang-lua">set_defaultmode("releasedbg")
+</code></pre>
+<p>它等价于，<code>xmake f -m releasedbg</code>。</p>
+<h3 id="set_allowedplats">set_allowedplats</h3>
+<h4 id="">设置允许编译的平台列表</h4>
+<p>v2.5.6 以上版本才支持，用于设置工程支持的编译平台列表，如果用户指定了其他平台，会提示错误，这通常用于限制用户指定错误的无效平台。</p>
+<p>如果没有设置，那么没有任何平台限制。</p>
+<pre><code class="lang-lua">set_allowedplats("windows", "mingw")
+</code></pre>
+<p>设置当前项目仅仅支持 windows 和 mingw 平台。</p>
+<h3 id="set_allowedarchs">set_allowedarchs</h3>
+<h4 id="">设置允许编译的平台架构</h4>
+<p>v2.5.6 以上版本才支持，用于设置工程支持的编译架构列表，如果用户指定了其他架构，会提示错误，这通常用于限制用户指定错误的无效架构。</p>
+<p>如果没有设置，那么没有任何架构限制。</p>
+<pre><code class="lang-lua">set_allowedarchs("x64", "x86")
+</code></pre>
+<p>当前项目，仅仅支持 x64/x86 平台。</p>
+<p>我们也可以同时指定多个平台下允许的架构列表。</p>
+<pre><code class="lang-lua">set_allowedarchs("windows|x64", "iphoneos|arm64")
+</code></pre>
+<p>设置当前项目在 windows 上仅仅支持 x64 架构，并且在 iphoneos 上仅仅支持 arm64 架构。</p>
+<h3 id="set_allowedmodes">set_allowedmodes</h3>
+<h4 id="">设置允许的编译模式列表</h4>
+<p>v2.5.6 以上版本才支持，用于设置工程支持的编译模式列表，如果用户指定了其他模式，会提示错误，这通常用于限制用户指定错误的无效模式。</p>
+<p>如果没有设置，那么没有任何模式限制。</p>
+<pre><code class="lang-lua">set_allowedmodes("release", "releasedbg")
+</code></pre>
+<p>设置当前项目仅仅支持 release/releasedbg 两个编译模式。</p>
 </article>
 </body>
 </html>

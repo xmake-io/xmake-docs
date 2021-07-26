@@ -1,21 +1,6 @@
 
 The global interface affects the whole project description scope and all sub-project files.
 
-| Interfaces                            | Description                                              | Version  |
-| ------------------------------------- | -------------------------------------                    | -------- |
-| [includes](#includes)                 | Add sub-project files and directories                    | >= 2.1.5 |
-| [set_project](#set_project)           | Set project name                                         | >= 2.0.1 |
-| [set_version](#set_version)           | Set project version                                      | >= 2.0.1 |
-| [set_xmakever](#set_xmakever)         | Set minimal xmake version                                | >= 2.1.1 |
-| [add_moduledirs](#add_moduledirs)     | Add module directories                                   | >= 2.1.5 |
-| [add_plugindirs](#add_plugindirs)     | Add plugin directories                                   | >= 2.0.1 |
-| [add_packagedirs](#add_packagedirs)   | Add package directories                                  | >= 2.0.1 |
-| [get_config](#get_config)             | Get the configuration value                              | >= 2.2.2 |
-| [set_config](#set_config)             | Set the default configuration value                      | >= 2.2.2 |
-| [add_requires](#add_requires)         | Add required package dependencies                        | >= 2.2.2 |
-| [add_requireconfs](#add_requireconfs) | Set the configuration of the specified dependent package | >= 2.5.1 |
-| [add_repositories](#add_repositories) | Add 3rd package repositories                             | >= 2.2.2 |
-
 ### includes
 
 #### Add sub-project files and directories
@@ -58,6 +43,8 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 ```
+
+#### Builtin help functions
 
 In addition, in 2.2.5 and later, this interface provides some built-in helper functions, which can be used directly after the include, specifically which built-in functions can be seen at: https://github.com/xmake-io/xmake/tree/master/xmake/includes
 
@@ -183,44 +170,6 @@ The builtin plugins are placed in the 'xmake/plugins' directory, but for user-de
 add_plugindirs("$(projectdir)/plugins")
 ```
 xmake will load all plugins in the given directory.
-
-### add_packagedirs
-
-#### Add package directories
-
-By setting up a dependency package directory, you can easily integrate some third-party dependent libraries.
-Taking the tbox project as an example, its package directory is as follows:
-
-
-```
-tbox.pkg
-- base.pkg
-- zlib.pkg
-- polarssl.pkg
-- openssl.pkg
-- mysql.pkg
-- pcre.pkg
-- ...
-```
-
-If you want the current project to load these packages, first specify the package directory path, for example:
-
-```lua
-add_packagedirs("pkg")
-```
-
-Then, please add these packages to the given target by [add_packages](#add_packages):
-
-```lua
-target("tbox")
-    add_packages("zlib", "polarssl", "pcre", "mysql")
-```
-
-xmake will check these packages automatically and link with them if they exist, and we can disable them manually.
-
-```bash
-$ xmake f --openssl=n
-```
 
 ### get_config
 
@@ -600,3 +549,100 @@ add_repositories("my-repo myrepo")
 ```
 
 This can be referred to [benchbox](https://github.com/tboox/benchbox) project, which has a built-in private repository.
+
+### set_defaultplat
+
+#### Set the default compilation platform
+
+Only supported by v2.5.6 and above, it is used to set the default compilation platform of the project. If it is not set, the default platform follows the current system platform, which is os.host().
+
+For example, the default compilation platform on macOS is macosx, if the current project is an ios project, you can set the default compilation platform to iphoneos.
+
+```lua
+set_defaultplat("iphoneos")
+```
+
+It is equivalent to `xmake f -p iphoneos`.
+
+### set_defaultarch
+
+#### Set the default compilation architecture
+
+Only supported by v2.5.6 and above, it is used to set the default compilation architecture of the project. If it is not set, the default platform follows the current system architecture, which is os.arch().
+
+```lua
+set_defaultplat("iphoneos")
+set_defaultarch("arm64")
+```
+
+It is equivalent to `xmake f -p iphoneos -a arm64`.
+
+We can also set the default architecture under multiple platforms.
+
+```lua
+set_defaultarch("iphoneos|arm64", "windows|x64")
+```
+
+The arm64 architecture is compiled by default on iphoneos, and the x64 architecture is compiled by default on windows.
+
+### set_defaultmode
+
+#### Set the default compilation mode
+
+Only supported by v2.5.6 and above, it is used to set the default compilation mode of the project. If it is not set, the default is to compile in release mode.
+
+```lua
+set_defaultmode("releasedbg")
+```
+
+It is equivalent to `xmake f -m releasedbg`.
+
+### set_allowedplats
+
+#### Set the list of platforms allowed to compile
+
+It is only supported by v2.5.6 and above. It is used to set the list of compilation platforms supported by the project. If the user specifies other platforms, an error will be prompted. This is usually used to restrict the user from specifying the wrong invalid platform.
+
+If it is not set, then there are no platform restrictions.
+
+```lua
+set_allowedplats("windows", "mingw")
+```
+
+Set the current project to only support windows and mingw platforms.
+
+### set_allowedarchs
+
+#### Set the platform architecture that allows compilation
+
+Only supported by v2.5.6 and above. It is used to set the list of compiled architectures supported by the project. If the user specifies other architectures, an error will be prompted. This is usually used to restrict users from specifying incorrect invalid architectures.
+
+If it is not set, then there are no architectural restrictions.
+
+```lua
+set_allowedarchs("x64", "x86")
+```
+
+The current project only supports x64/x86 platforms.
+
+We can also specify the list of architectures allowed under multiple platforms at the same time.
+
+```lua
+set_allowedarchs("windows|x64", "iphoneos|arm64")
+```
+
+Set the current project to only support x64 architecture on windows, and only support arm64 architecture on iphoneos.
+
+### set_allowedmodes
+
+#### Set the list of allowed compilation modes
+
+It is only supported by v2.5.6 and above. It is used to set the list of compilation modes supported by the project. If the user specifies other modes, an error will be prompted. This is usually used to restrict the user from specifying incorrect invalid modes.
+
+If it is not set, then there is no mode restriction.
+
+```lua
+set_allowedmodes("release", "releasedbg")
+```
+
+Set the current project to only support the two compilation modes release/releasedbg.

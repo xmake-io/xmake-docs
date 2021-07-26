@@ -1,3 +1,22 @@
+## v2.5.6
+
+### New features
+
+* [#1483](https://github.com/xmake-io/xmake/issues/1483): Add `os.joinenvs()` and improve package tools envirnoments
+* [#1523](https://github.com/xmake-io/xmake/issues/1523): Add `set_allowedmodes`, `set_allowedplats` and `set_allowedarchs`
+* [#1523](https://github.com/xmake-io/xmake/issues/1523): Add `set_defaultmode`, `set_defaultplat` and `set_defaultarch`
+
+### Change
+
+* Improve vs/vsxmake project generator to support vs2022
+* [#1513](https://github.com/xmake-io/xmake/issues/1513): Improve precompiled binary package compatibility on windows/msvc
+* Improve to find vcpkg root directory on windows
+* Improve to support Qt6
+
+### Bugs fixed
+
+* [#489](https://github.com/xmake-io/xmake-repo/pull/489): Fix run os.execv with too long envirnoment value on windows
+
 ## v2.5.5
 
 ### New features

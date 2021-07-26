@@ -91,77 +91,6 @@
 }
 </style>
     <p>The global interface affects the whole project description scope and all sub-project files.</p>
-<table>
-<thead>
-<tr>
-<th>Interfaces</th>
-<th>Description</th>
-<th>Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#includes">includes</a></td>
-<td>Add sub-project files and directories</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#set_project">set_project</a></td>
-<td>Set project name</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#set_version">set_version</a></td>
-<td>Set project version</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#set_xmakever">set_xmakever</a></td>
-<td>Set minimal xmake version</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#add_moduledirs">add_moduledirs</a></td>
-<td>Add module directories</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#add_plugindirs">add_plugindirs</a></td>
-<td>Add plugin directories</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#add_packagedirs">add_packagedirs</a></td>
-<td>Add package directories</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#get_config">get_config</a></td>
-<td>Get the configuration value</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#set_config">set_config</a></td>
-<td>Set the default configuration value</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#add_requires">add_requires</a></td>
-<td>Add required package dependencies</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#add_requireconfs">add_requireconfs</a></td>
-<td>Set the configuration of the specified dependent package</td>
-<td>>= 2.5.1</td>
-</tr>
-<tr>
-<td><a href="#add_repositories">add_repositories</a></td>
-<td>Add 3rd package repositories</td>
-<td>>= 2.2.2</td>
-</tr>
-</tbody>
-</table>
 <h3 id="includes">includes</h3>
 <h4 id="addsubprojectfilesanddirectories">Add sub-project files and directories</h4>
 <p>We can use this interfaces to add sub-project files (xmake.lua) or directories with xmake.lua.</p>
@@ -190,6 +119,7 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 </code></pre>
+<h4 id="builtinhelpfunctions">Builtin help functions</h4>
 <p>In addition, in 2.2.5 and later, this interface provides some built-in helper functions, which can be used directly after the include, specifically which built-in functions can be seen at: <a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">https://github.com/xmake-io/xmake/tree/master/xmake/includes</a></p>
 <p>For a more complete description of this, see: <a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
 <p>Examples:</p>
@@ -274,27 +204,6 @@ set_xmakever("2.1.0")
 <pre><code class="lang-lua">add_plugindirs("$(projectdir)/plugins")
 </code></pre>
 <p>xmake will load all plugins in the given directory.</p>
-<h3 id="add_packagedirs">add_packagedirs</h3>
-<h4 id="addpackagedirectories">Add package directories</h4>
-<p>By setting up a dependency package directory, you can easily integrate some third-party dependent libraries.<br>Taking the tbox project as an example, its package directory is as follows:</p>
-<pre><code>tbox.pkg
-- base.pkg
-- zlib.pkg
-- polarssl.pkg
-- openssl.pkg
-- mysql.pkg
-- pcre.pkg
-- ...
-</code></pre><p>If you want the current project to load these packages, first specify the package directory path, for example:</p>
-<pre><code class="lang-lua">add_packagedirs("pkg")
-</code></pre>
-<p>Then, please add these packages to the given target by <a href="#add_packages">add_packages</a>:</p>
-<pre><code class="lang-lua">target("tbox")
-    add_packages("zlib", "polarssl", "pcre", "mysql")
-</code></pre>
-<p>xmake will check these packages automatically and link with them if they exist, and we can disable them manually.</p>
-<pre><code class="lang-bash">$ xmake f --openssl=n
-</code></pre>
 <h3 id="get_config">get_config</h3>
 <h4 id="gettheconfigurationvalue">Get the configuration value</h4>
 <p>This interface is introduced from version 2.2.2 to get the configuration value from the given name.</p>
@@ -517,6 +426,55 @@ add_requireconfs("libwebp.*|cmake", {debug = true})
 <pre><code class="lang-lua">add_repositories("my-repo myrepo")
 </code></pre>
 <p>This can be referred to <a href="https://github.com/tboox/benchbox">benchbox</a> project, which has a built-in private repository.</p>
+<h3 id="set_defaultplat">set_defaultplat</h3>
+<h4 id="setthedefaultcompilationplatform">Set the default compilation platform</h4>
+<p>Only supported by v2.5.6 and above, it is used to set the default compilation platform of the project. If it is not set, the default platform follows the current system platform, which is os.host().</p>
+<p>For example, the default compilation platform on macOS is macosx, if the current project is an ios project, you can set the default compilation platform to iphoneos.</p>
+<pre><code class="lang-lua">set_defaultplat("iphoneos")
+</code></pre>
+<p>It is equivalent to <code>xmake f -p iphoneos</code>.</p>
+<h3 id="set_defaultarch">set_defaultarch</h3>
+<h4 id="setthedefaultcompilationarchitecture">Set the default compilation architecture</h4>
+<p>Only supported by v2.5.6 and above, it is used to set the default compilation architecture of the project. If it is not set, the default platform follows the current system architecture, which is os.arch().</p>
+<pre><code class="lang-lua">set_defaultplat("iphoneos")
+set_defaultarch("arm64")
+</code></pre>
+<p>It is equivalent to <code>xmake f -p iphoneos -a arm64</code>.</p>
+<p>We can also set the default architecture under multiple platforms.</p>
+<pre><code class="lang-lua">set_defaultarch("iphoneos|arm64", "windows|x64")
+</code></pre>
+<p>The arm64 architecture is compiled by default on iphoneos, and the x64 architecture is compiled by default on windows.</p>
+<h3 id="set_defaultmode">set_defaultmode</h3>
+<h4 id="setthedefaultcompilationmode">Set the default compilation mode</h4>
+<p>Only supported by v2.5.6 and above, it is used to set the default compilation mode of the project. If it is not set, the default is to compile in release mode.</p>
+<pre><code class="lang-lua">set_defaultmode("releasedbg")
+</code></pre>
+<p>It is equivalent to <code>xmake f -m releasedbg</code>.</p>
+<h3 id="set_allowedplats">set_allowedplats</h3>
+<h4 id="setthelistofplatformsallowedtocompile">Set the list of platforms allowed to compile</h4>
+<p>It is only supported by v2.5.6 and above. It is used to set the list of compilation platforms supported by the project. If the user specifies other platforms, an error will be prompted. This is usually used to restrict the user from specifying the wrong invalid platform.</p>
+<p>If it is not set, then there are no platform restrictions.</p>
+<pre><code class="lang-lua">set_allowedplats("windows", "mingw")
+</code></pre>
+<p>Set the current project to only support windows and mingw platforms.</p>
+<h3 id="set_allowedarchs">set_allowedarchs</h3>
+<h4 id="settheplatformarchitecturethatallowscompilation">Set the platform architecture that allows compilation</h4>
+<p>Only supported by v2.5.6 and above. It is used to set the list of compiled architectures supported by the project. If the user specifies other architectures, an error will be prompted. This is usually used to restrict users from specifying incorrect invalid architectures.</p>
+<p>If it is not set, then there are no architectural restrictions.</p>
+<pre><code class="lang-lua">set_allowedarchs("x64", "x86")
+</code></pre>
+<p>The current project only supports x64/x86 platforms.</p>
+<p>We can also specify the list of architectures allowed under multiple platforms at the same time.</p>
+<pre><code class="lang-lua">set_allowedarchs("windows|x64", "iphoneos|arm64")
+</code></pre>
+<p>Set the current project to only support x64 architecture on windows, and only support arm64 architecture on iphoneos.</p>
+<h3 id="set_allowedmodes">set_allowedmodes</h3>
+<h4 id="setthelistofallowedcompilationmodes">Set the list of allowed compilation modes</h4>
+<p>It is only supported by v2.5.6 and above. It is used to set the list of compilation modes supported by the project. If the user specifies other modes, an error will be prompted. This is usually used to restrict the user from specifying incorrect invalid modes.</p>
+<p>If it is not set, then there is no mode restriction.</p>
+<pre><code class="lang-lua">set_allowedmodes("release", "releasedbg")
+</code></pre>
+<p>Set the current project to only support the two compilation modes release/releasedbg.</p>
 </article>
 </body>
 </html>

@@ -1,3 +1,21 @@
+## v2.5.6
+
+### 新特性
+
+* [#1483](https://github.com/xmake-io/xmake/issues/1483): 添加 `os.joinenvs()` 和改进包工具环境
+* [#1523](https://github.com/xmake-io/xmake/issues/1523): 添加 `set_allowedmodes`, `set_allowedplats` 和 `set_allowedarchs`
+* [#1523](https://github.com/xmake-io/xmake/issues/1523): 添加 `set_defaultmode`, `set_defaultplat` 和 `set_defaultarch`
+
+### 改进
+
+* 改进 vs/vsxmake 工程插件支持 vs2022
+* [#1513](https://github.com/xmake-io/xmake/issues/1513): 改进 windows 预编译包的兼容性问题
+* 改进 vcpkg 包在 windows 上的查找
+* 改进对 Qt6 的支持
+
+### Bugs 修复
+
+* [#489](https://github.com/xmake-io/xmake-repo/pull/489): 修复 run os.execv 带有过长环境变量值出现的一些问题
 
 ## v2.5.5
 
