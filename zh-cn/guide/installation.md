@@ -149,6 +149,11 @@ source ~/.xmake/profile
 ```
 
 如果觉得github的源太慢，可以通过gitee的镜像源拉取：`clone --recursive https://gitee.com/tboox/xmake.git`
+也可以如下修改~/.gitconfig，永久解决github clone慢的问题
+```
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+```
 
 !> 由于目前xmake源码通过git submodule维护依赖，所以clone的时候需要加上`--recursive`参数同时拉取所有submodules代码，请不要直接下载tar.gz源码，因为github不会自动打包submodules里面的代码。
 
