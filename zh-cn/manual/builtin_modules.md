@@ -668,9 +668,13 @@ os.cp("src/**.h", "/tmp/", {rootdir = "src"})
 
 上面的脚本可以按`src`根目录，将src下的所有子文件保持目录结构复制过去。
 
-<p class="tip">
-尽量使用`os.cp`接口，而不是`os.run("cp ..")`，这样更能保证平台一致性，实现跨平台构建描述。
-</p>
+!> 尽量使用`os.cp`接口，而不是`os.run("cp ..")`，这样更能保证平台一致性，实现跨平台构建描述。
+
+2.5.7 下，新增 `{symlink = true}` 参数，在复制文件时候保留符号链接。
+
+```lua
+os.cp("/xxx/foo", "/xxx/bar", {symlink = true})
+```
 
 #### os.mv
 

@@ -650,7 +650,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 
 The behavior is similar to the `cp` command in the shell, supporting path wildcard matching (using lua pattern matching), support for multi-file copying, and built-in variable support.
 
-E.g:
+e.g:
 
 ```lua
 os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
@@ -678,9 +678,13 @@ os.cp ("src/**.h", "/tmp/", {rootdir=""src"})
 
 The above script can press the root directory of `src` to copy all sub-files under src in the same directory structure.
 
-<p class="tip">
-Try to use the `os.cp` interface instead of `os.run("cp ..")`, which will ensure platform consistency and cross-platform build description.
-</p>
+!> Try to use the `os.cp` interface instead of `os.run("cp ..")`, which will ensure platform consistency and cross-platform build description.
+
+Under 2.5.7, the parameter `{symlink = true}` is added to keep the symbolic link when copying files.
+
+```lua
+os.cp("/xxx/foo", "/xxx/bar", {symlink = true})
+```
 
 #### os.mv
 
