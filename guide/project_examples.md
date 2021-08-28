@@ -924,3 +924,26 @@ target("minimal")
      add_packages("linux-tools", "linux-headers", "libbpf")
      set_license("GPL-2.0")
 ```
+
+## Vala program
+
+After 2.5.7 to support the construction of Vala programs, we need to apply the `add_rules("vala")` rule, and the glib package is necessary.
+
+`add_values("vala.packages")` is used to tell valac which packages the project needs, it will introduce the vala api of the relevant package, but the dependency integration of the package still needs to be downloaded and integrated through `add_requires("lua")`.
+
+E.g:
+
+```lua
+add_rules("mode.release", "mode.debug")
+
+add_requires("lua", "glib")
+
+target("test")
+     set_kind("binary")
+     add_rules("vala")
+     add_files("src/*.vala")
+     add_packages("lua", "glib")
+     add_values("vala.packages", "lua")
+```
+
+More examples: [Vala examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/vala)

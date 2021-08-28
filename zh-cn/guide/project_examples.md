@@ -930,3 +930,26 @@ target("minimal")
     add_packages("linux-tools", "linux-headers", "libbpf")
     set_license("GPL-2.0")
 ```
+
+## Vala 程序
+
+2.5.7 之后开始支持构建 Vala 程序，我们需要应用 `add_rules("vala")` 规则，并且 glib 包是必须的。
+
+`add_values("vala.packages")` 用于告诉 valac，项目需要哪些包，它会引入相关包的 vala api，但是包的依赖集成，还是需要通过 `add_requires("lua")` 下载集成。
+
+例如：
+
+```lua
+add_rules("mode.release", "mode.debug")
+
+add_requires("lua", "glib")
+
+target("test")
+    set_kind("binary")
+    add_rules("vala")
+    add_files("src/*.vala")
+    add_packages("lua", "glib")
+    add_values("vala.packages", "lua")
+```
+
+更多例子：[Vala examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/vala)

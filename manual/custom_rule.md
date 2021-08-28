@@ -534,6 +534,43 @@ We can use this rule to export the .cmake file when installing the target librar
 
 We can use this rule to export the pkgconfig/.pc file when installing the target target library file for library import and search for other projects.
 
+#### utils.bin2c
+
+This rule can be used in versions above v2.5.7 to introduce some binary files into the project, and see them as c/c++ header files for developers to use to obtain the data of these files.
+
+For example, we can embed some png/jpg resource files into the code in the project.
+
+```lua
+target("console")
+    set_kind("binart")
+    add_rules("utils.bin2c", {extensions = {".png", ".jpg"}})
+    add_files("src/*.c")
+    add_files("res/*.png", "res/*.jpg")
+```
+
+!> The setting of extensions is optional, the default extension is .bin
+
+Then, we can import and use it through `#include "filename.png.h"`, xmake will automatically generate the corresponding header file for you, and add the corresponding search directory.
+
+```c
+static unsigned char g_png_data[] = {
+    #include "image.png.h"
+};
+
+int main(int argc, char** argv)
+{
+    printf("image.png: %s, size: %d\n", g_png_data, sizeof(g_png_data));
+    return 0;
+}
+```
+
+The content of the generated header file is similar:
+
+```console
+cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
+  0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
+```
+
 ### rule
 
 #### Defining rules
