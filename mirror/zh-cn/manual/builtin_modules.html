@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/manual/builtin_modules">https://xmake.io/#/zh-cn/manual/builtin_modules</a>
+</br>
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>在自定义脚本、插件脚本、任务脚本、平台扩展、模板扩展等脚本代码中使用，也就是在类似下面的代码块中，可以使用这些模块接口：</p>
+<pre><code class="lang-lua">on_run(function (target)
+    print("hello xmake!")
+end)
+</code></pre>
+<p><p class="warn"><br>为了保证外层的描述域尽可能简洁、安全，一般不建议在这个域使用接口和模块操作api，因此大部分模块接口只能脚本域使用，来实现复杂功能。</br><br>当然少部分只读的内置接口还是可以在描述域使用的，具体见下表：<br></p>
+
+</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>可使用域</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#import">import</a></td>
+<td>导入扩展摸块</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#inherit">inherit</a></td>
+<td>导入并继承基类模块</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#try-catch-finally">try-catch-finally</a></td>
+<td>异常捕获</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pairs">pairs</a></td>
+<td>用于遍历字典</td>
+<td>描述域、脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ipairs">ipairs</a></td>
+<td>用于遍历数组</td>
+<td>描述域、脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#print">print</a></td>
+<td>换行打印终端日志</td>
+<td>描述域、脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#printf">printf</a></td>
+<td>无换行打印终端日志</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#cprint">cprint</a></td>
+<td>换行彩色打印终端日志</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#cprintf">cprintf</a></td>
+<td>无换行彩色打印终端日志</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#format">format</a></td>
+<td>格式化字符串</td>
+<td>描述域、脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#vformat">vformat</a></td>
+<td>格式化字符串，支持内置变量转义</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#raise">raise</a></td>
+<td>抛出异常中断程序</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#os">os</a></td>
+<td>系统操作模块</td>
+<td>部分只读操作描述域、脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#winos">winos</a></td>
+<td>windows 系统操作模块</td>
+<td>部分只读操作描述域、脚本域</td>
+<td>>= 2.3.9</td>
+</tr>
+<tr>
+<td><a href="#macos">macos</a></td>
+<td>macOS 系统操作模块</td>
+<td>部分只读操作描述域、脚本域</td>
+<td>>= 2.3.9</td>
+</tr>
+<tr>
+<td><a href="#io">io</a></td>
+<td>文件操作模块</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#path">path</a></td>
+<td>路径操作模块</td>
+<td>描述域、脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#table">table</a></td>
+<td>数组和字典操作模块</td>
+<td>描述域、脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#string">string</a></td>
+<td>字符串操作模块</td>
+<td>描述域、脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#coroutine">coroutine</a></td>
+<td>协程操作模块</td>
+<td>脚本域</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#find_packages">find_packages</a></td>
+<td>查找依赖包</td>
+<td>脚本域</td>
+<td>>= 2.2.5</td>
+</tr>
+</tbody>
+</table>
+<p>在描述域使用接口调用的实例如下，一般仅用于条件控制：</p>
+<pre><code class="lang-lua">-- 扫描当前xmake.lua目录下的所有子目录，以每个目录的名字定义一个task任务
+for _, taskname in ipairs(os.dirs("*"), path.basename) do
+    task(taskname)
+        on_run(function ()
+        end)
+end
+</code></pre>
+<p>上面所说的脚本域、描述域主要是指：</p>
+<pre><code class="lang-lua">-- 描述域
+target("test")
+
+    -- 描述域
+    set_kind("static")
+    add_files("src/*.c")
+
+    on_run(function (target)
+        -- 脚本域
+    end)
+
+-- 描述域
+</code></pre>
+<h3 id="import">import</h3>
+<h4 id="">导入扩展摸块</h4>
+<p>import的主要用于导入xmake的扩展类库以及一些自定义的类库模块，一般用于：</p>
+<ul>
+<li>自定义脚本(<a href="/mirror/zh-cn/manual/project_target.html#targeton_build">on_build</a>, <a href="/mirror/zh-cn/manual/project_target.html#targeton_run">on_run</a> ..)</li>
+<li>插件开发</li>
+<li>模板开发</li>
+<li>平台扩展</li>
+<li>自定义任务task</li>
+</ul>
+<p>导入机制如下：</p>
+<ol>
+<li>优先从当前脚本目录下导入</li>
+<li>再从扩展类库中导入</li>
+</ol>
+<p>导入的语法规则：</p>
+<p>基于<code>.</code>的类库路径规则，例如：</p>
+<pre><code class="lang-lua">import("core.base.option")
+import("core.base.task")
+
+function main()
+
+    -- 获取参数选项
+    print(option.get("version"))
+
+    -- 运行任务和插件
+    task.run("hello")
+end
+</code></pre>
+<p>导入当前目录下的自定义模块：</p>
+<p>目录结构：</p>
+<pre><code>plugin
+  - xmake.lua
+  - main.lua
+  - modules
+    - hello1.lua
+    - hello2.lua
+</code></pre><p>在main.lua中导入modules</p>
+<pre><code class="lang-lua">import("modules.hello1")
+import("modules.hello2")
+</code></pre>
+<p>导入后就可以直接使用里面的所有公有接口，私有接口用<code>_</code>前缀标示，表明不会被导出，不会被外部调用到。。</p>
+<p>除了当前目录，我们还可以导入其他指定目录里面的类库，例如：</p>
+<pre><code class="lang-lua">import("hello3", {rootdir = "/home/xxx/modules"})
+</code></pre>
+<p>为了防止命名冲突，导入后还可以指定的别名：</p>
+<pre><code class="lang-lua">import("core.platform.platform", {alias = "p"})
+
+function main()
+
+    -- 这样我们就可以使用p来调用platform模块的plats接口，获取所有xmake支持的平台列表了
+    utils.dump(p.plats())
+end
+</code></pre>
+<p>import不仅可以导入类库，还支持导入的同时作为继承导入，实现模块间的继承关系</p>
+<pre><code class="lang-lua">import("xxx.xxx", {inherit = true})
+</code></pre>
+<p>这样导入的不是这个模块的引用，而是导入的这个模块的所有公有接口本身，这样就会跟当前模块的接口进行合并，实现模块间的继承。</p>
+<p>2.1.5版本新增两个新属性：<code>import("xxx.xxx", {try = true, anonymous = true})</code></p>
+<p>try为true，则导入的模块不存在的话，仅仅返回nil，并不会抛异常后中断xmake.<br>anonymous为true，则导入的模块不会引入当前作用域，仅仅在import接口返回导入的对象引用。</p>
+<h3 id="inherit">inherit</h3>
+<h4 id="">导入并继承基类模块</h4>
+<p>这个等价于<a href="#import">import</a>接口的<code>inherit</code>模式，也就是：</p>
+<pre><code class="lang-lua">import("xxx.xxx", {inherit = true})
+</code></pre>
+<p>用<code>inherit</code>接口的话，会更简洁些：</p>
+<pre><code class="lang-lu">inherit("xxx.xxx")
+</code></pre>
+<p>使用实例，可以参看xmake的tools目录下的脚本：<a href="#https://github.com/xmake-io/xmake/blob/master/xmake/tools/clang.lua">clang.lua</a></p>
+<p>这个就是clang工具模块继承了gcc的部分实现。</p>
+<h3 id="trycatchfinally">try-catch-finally</h3>
+<h4 id="">异常捕获</h4>
+<p>lua原生并没有提供try-catch的语法来捕获异常处理，但是提供了<code>pcall/xpcall</code>等接口，可在保护模式下执行lua函数。</p>
+<p>因此，可以通过封装这两个接口，来实现try-catch块的捕获机制。</p>
+<p>我们可以先来看下，封装后的try-catch使用方式：</p>
+<pre><code class="lang-lua">try
+{
+    -- try 代码块
+    function ()
+        error("error message")
+    end,
+
+    -- catch 代码块
+    catch
+    {
+        -- 发生异常后，被执行
+        function (errors)
+            print(errors)
+        end
+    }
+}
+</code></pre>
+<p>上面的代码中，在try块内部认为引发了一个异常，并且抛出错误消息，在catch中进行了捕获，并且将错误消息进行输出显示。</p>
+<p>而finally的处理，这个的作用是对于<code>try{}</code>代码块，不管是否执行成功，都会执行到finally块中</p>
+<p>也就说，其实上面的实现，完整的支持语法是：<code>try-catch-finally</code>模式，其中catch和finally都是可选的，根据自己的实际需求提供</p>
+<p>例如：</p>
+<pre><code class="lang-lua">try
+{
+    -- try 代码块
+    function ()
+        error("error message")
+    end,
+
+    -- catch 代码块
+    catch
+    {
+        -- 发生异常后，被执行
+        function (errors)
+            print(errors)
+        end
+    },
+
+    -- finally 代码块
+    finally
+    {
+        -- 最后都会执行到这里
+        function (ok, errors)
+            -- 如果try{}中存在异常，ok为true，errors为错误信息，否则为false，errors为try中的返回值
+        end
+    }
+}
+
+</code></pre>
+<p>或者只有finally块：</p>
+<pre><code class="lang-lua">try
+{
+    -- try 代码块
+    function ()
+        return "info"
+    end,
+
+    -- finally 代码块
+    finally
+    {
+        -- 由于此try代码没发生异常，因此ok为true，errors为返回值: "info"
+        function (ok, errors)
+        end
+    }
+}
+</code></pre>
+<p>处理可以在finally中获取try里面的正常返回值，其实在仅有try的情况下，也是可以获取返回值的：</p>
+<pre><code class="lang-lua">-- 如果没发生异常，result 为返回值："xxxx"，否则为nil
+local result = try
+{
+    function ()
+        return "xxxx"
+    end
+}
+</code></pre>
+<p>在xmake的自定义脚本、插件开发中，也是完全基于此异常捕获机制</p>
+<p>这样使得扩展脚本的开发非常的精简可读，省去了繁琐的<code>if err ~= nil then</code>返回值判断，在发生错误时，xmake会直接抛出异常进行中断，然后高亮提示详细的错误信息。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+
+    -- 在编译完ios程序后，对目标程序进行ldid签名
+    after_build(function (target))
+        os.run("ldid -S %s", target:targetfile())
+    end
+</code></pre>
+<p>只需要一行<code>os.run</code>就行了，也不需要返回值判断是否运行成功，因为运行失败后，xmake会自动抛异常，中断程序并且提示错误</p>
+<p>如果你想在运行失败后，不直接中断xmake，继续往下运行，可以自己加个try快就行了：</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+
+    after_build(function (target))
+        try
+        {
+            function ()
+                os.run("ldid -S %s", target:targetfile())
+            end
+        }
+    end
+</code></pre>
+<p>如果还想捕获出错信息，可以再加个catch:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+
+    after_build(function (target))
+        try
+        {
+            function ()
+                os.run("ldid -S %s", target:targetfile())
+            end,
+            catch
+            {
+                function (errors)
+                    print(errors)
+                end
+            }
+        }
+    end
+</code></pre>
+<p>不过一般情况下，在xmake中写自定义脚本，是不需要手动加try-catch的，直接调用各种api，出错后让xmake默认的处理程序接管，直接中断就行了。。</p>
+<h3 id="pairs">pairs</h3>
+<h4 id="">用于遍历字典</h4>
+<p>这个是lua原生的内置api，在xmake中，在原有的行为上对其进行了一些扩展，来简化一些日常的lua遍历代码。</p>
+<p>先看下默认的原生写法：</p>
+<pre><code class="lang-lua">local t = {a = "a", b = "b", c = "c", d = "d", e = "e", f = "f"}
+
+for key, val in pairs(t) do
+    print("%s: %s", key, val)
+end
+</code></pre>
+<p>这对于通常的遍历操作就足够了，但是如果我们相对其中每个遍历出来的元素，获取其大写，我们可以这么写：</p>
+<pre><code class="lang-lua">for key, val in pairs(t, function (v) return v:upper() end) do
+     print("%s: %s", key, val)
+end
+</code></pre>
+<p>甚至传入一些参数到第二个<code>function</code>中，例如：</p>
+<pre><code class="lang-lua">for key, val in pairs(t, function (v, a, b) return v:upper() .. a .. b end, "a", "b") do
+     print("%s: %s", key, val)
+end
+</code></pre>
+<h3 id="ipairs">ipairs</h3>
+<h4 id="">用于遍历数组</h4>
+<p>这个是lua原生的内置api，在xmake中，在原有的行为上对其进行了一些扩展，来简化一些日常的lua遍历代码。</p>
+<p>先看下默认的原生写法：</p>
+<pre><code class="lang-lua">for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}) do
+     print("%d %s", idx, val)
+end
+</code></pre>
+<p>扩展写法类似<a href="#pairs">pairs</a>接口，例如：</p>
+<pre><code class="lang-lua">for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}, function (v) return v:upper() end) do
+     print("%d %s", idx, val)
+end
+
+for idx, val in ipairs({"a", "b", "c", "d", "e", "f"}, function (v, a, b) return v:upper() .. a .. b end, "a", "b") do
+     print("%d %s", idx, val)
+end
+</code></pre>
+<p>这样可以简化<code>for</code>块代码的逻辑，例如我要遍历指定目录，获取其中的文件名，但不包括路径，就可以通过这种扩展方式，简化写法：</p>
+<pre><code class="lang-lua">for _, filename in ipairs(os.dirs("*"), path.filename) do
+    -- ...
+end
+</code></pre>
+<h3 id="print">print</h3>
+<h4 id="">换行打印终端日志</h4>
+<p>此接口也是lua的原生接口，xmake在原有行为不变的基础上也进行了扩展，同时支持：格式化输出、多变量输出。</p>
+<p>先看下原生支持的方式：</p>
+<pre><code class="lang-lua">print("hello xmake!")
+print("hello", "xmake!", 123)
+</code></pre>
+<p>并且同时还支持扩展的格式化写法：</p>
+<pre><code class="lang-lua">print("hello %s!", "xmake")
+print("hello xmake! %d", 123)
+</code></pre>
+<p>xmake会同时支持这两种写法，内部会去自动智能检测，选择输出行为。</p>
+<h3 id="printf">printf</h3>
+<h4 id="">无换行打印终端日志</h4>
+<p>类似<a href="#print">print</a>接口，唯一的区别就是不换行。</p>
+<h3 id="cprint">cprint</h3>
+<h4 id="">换行彩色打印终端日志</h4>
+<p>行为类似<a href="#print">print</a>，区别就是此接口还支持彩色终端输出，并且支持<code>emoji</code>字符输出。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">    cprint(&#39;${bright}hello xmake&#39;)
+    cprint(&#39;${red}hello xmake&#39;)
+    cprint(&#39;${bright green}hello ${clear}xmake&#39;)
+    cprint(&#39;${blue onyellow underline}hello xmake${clear}&#39;)
+    cprint(&#39;${red}hello ${magenta}xmake&#39;)
+    cprint(&#39;${cyan}hello ${dim yellow}xmake&#39;)
+</code></pre>
+<p>显示结果如下：</p>
+<p><img src="https://tboox.org/static/img/xmake/cprint_colors.png" alt="cprint_colors"></p>
+<p>跟颜色相关的描述，都放置在 <code>${  }</code> 里面，可以同时设置多个不同的属性，例如：</p>
+<pre><code>    ${bright red underline onyellow}
+</code></pre><p>表示：高亮红色，背景黄色，并且带下滑线</p>
+<p>所有这些描述，都会影响后面一整行字符，如果只想显示部分颜色的文字，可以在结束位置，插入<code>${clear}</code>清楚前面颜色描述</p>
+<p>例如：</p>
+<pre><code>    ${red}hello ${clear}xmake
+</code></pre><p>这样的话，仅仅hello是显示红色，其他还是正常默认黑色显示。</p>
+<p>其他颜色属于，我这里就不一一介绍，直接贴上xmake代码里面的属性列表吧：</p>
+<pre><code class="lang-lua">    colors.keys =
+    {
+        -- 属性
+        reset       = 0 -- 重置属性
+    ,   clear       = 0 -- 清楚属性
+    ,   default     = 0 -- 默认属性
+    ,   bright      = 1 -- 高亮
+    ,   dim         = 2 -- 暗色
+    ,   underline   = 4 -- 下划线
+    ,   blink       = 5 -- 闪烁
+    ,   reverse     = 7 -- 反转颜色
+    ,   hidden      = 8 -- 隐藏文字
+
+        -- 前景色
+    ,   black       = 30
+    ,   red         = 31
+    ,   green       = 32
+    ,   yellow      = 33
+    ,   blue        = 34
+    ,   magenta     = 35
+    ,   cyan        = 36
+    ,   white       = 37
+
+        -- 背景色
+    ,   onblack     = 40
+    ,   onred       = 41
+    ,   ongreen     = 42
+    ,   onyellow    = 43
+    ,   onblue      = 44
+    ,   onmagenta   = 45
+    ,   oncyan      = 46
+    ,   onwhite     = 47
+</code></pre>
+<p>除了可以色彩高亮显示外，如果你的终端是在macosx下，lion以上的系统，xmake还可以支持emoji表情的显示哦，对于不支持系统，会<br>忽略显示，例如：</p>
+<pre><code class="lang-lua">    cprint("hello xmake${beer}")
+    cprint("hello${ok_hand} xmake")
+</code></pre>
+<p>上面两行代码，我打印了一个homebrew里面经典的啤酒符号，下面那行打印了一个ok的手势符号，是不是很炫哈。。</p>
+<p><img src="https://tboox.org/static/img/xmake/cprint_emoji.png" alt="cprint_emoji"></p>
+<p>所有的emoji表情，以及xmake里面对应的key，都可以通过<a href="http://www.emoji-cheat-sheet.com/">emoji符号</a>里面找到。。</p>
+<p>2.1.7版本支持24位真彩色输出，如果终端支持的话：</p>
+<pre><code class="lang-lua">import("core.base.colors")
+if colors.truecolor() then
+    cprint("${255;0;0}hello")
+    cprint("${on;255;0;0}hello${clear} xmake")
+    cprint("${bright 255;0;0 underline}hello")
+    cprint("${bright on;255;0;0 0;255;0}hello${clear} xmake")
+end
+</code></pre>
+<p>xmake对于truecolor的检测支持，是通过<code>$COLORTERM</code>环境变量来实现的，如果你的终端支持truecolor，可以手动设置此环境变量，来告诉xmake启用truecolor支持。</p>
+<p>可以通过下面的命令来启用和测试：</p>
+<pre><code class="lang-bash">$ export COLORTERM=truecolor
+$ xmake --version
+</code></pre>
+<p>2.1.7版本可通过<code>COLORTERM=nocolor</code>来禁用色彩输出。</p>
+<h3 id="cprintf">cprintf</h3>
+<h4 id="">无换行彩色打印终端日志</h4>
+<p>此接口类似<a href="#cprint">cprint</a>，区别就是不换行输出。</p>
+<h3 id="format">format</h3>
+<h4 id="">格式化字符串</h4>
+<p>如果只是想格式化字符串，不进行输出，可以使用这个接口，此接口跟<a href="#stringformat">string.format</a>接口等价，只是个接口名简化版。</p>
+<pre><code class="lang-lua">local s = format("hello %s", xmake)
+</code></pre>
+<h3 id="vformat">vformat</h3>
+<h4 id="">格式化字符串，支持内置变量转义</h4>
+<p>此接口跟<a href="#format">format</a>接口类似，只是增加对内置变量的获取和转义支持。</p>
+<pre><code class="lang-lua">local s = vformat("hello %s $(mode) $(arch) $(env PATH)", xmake)
+</code></pre>
+<h3 id="raise">raise</h3>
+<h4 id="">抛出异常中断程序</h4>
+<p>如果想在自定义脚本、插件任务中中断xmake运行，可以使用这个接口抛出异常，如果上层没有显示调用<a href="#try-catch-finally">try-catch</a>捕获的话，xmake就会中断执行，并且显示出错信息。</p>
+<pre><code class="lang-lua">if (errors) raise(errors)
+</code></pre>
+<p>如果在try块中抛出异常，就会在catch和finally中进行errors信息捕获，具体见：<a href="#try-catch-finally">try-catch</a></p>
+<h3 id="find_packages">find_packages</h3>
+<h4 id="">查找依赖包</h4>
+<p>此接口是对<a href="/mirror/zh-cn/manual/extension_modules.html#detectfind_package">lib.detect.find_package</a>接口的封装，提供多个依赖包的查找支持，例如：</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_load(function (target)
+        target:add(find_packages("openssl", "zlib"))
+    end)
+</code></pre>
+<h3 id="os">os</h3>
+<p>系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
+<p>此模块也是lua的原生模块，xmake在其基础上进行了扩展，提供更多实用的接口。</p>
+<p>!> os模块里面只有部分readonly接口（例如：<code>os.getenv</code>, <code>os.arch</code>）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：<code>os.cp</code>, <code>os.rm</code>等</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#oscp">os.cp</a></td>
+<td>复制文件或目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osmv">os.mv</a></td>
+<td>移动重命名文件或目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osrm">os.rm</a></td>
+<td>删除文件或目录树</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ostrycp">os.trycp</a></td>
+<td>尝试复制文件或目录</td>
+<td>>= 2.1.6</td>
+</tr>
+<tr>
+<td><a href="#ostrymv">os.trymv</a></td>
+<td>尝试移动重命名文件或目录</td>
+<td>>= 2.1.6</td>
+</tr>
+<tr>
+<td><a href="#ostryrm">os.tryrm</a></td>
+<td>尝试删除文件或目录树</td>
+<td>>= 2.1.6</td>
+</tr>
+<tr>
+<td><a href="#oscd">os.cd</a></td>
+<td>进入指定目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osrmdir">os.rmdir</a></td>
+<td>删除目录树</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osmkdir">os.mkdir</a></td>
+<td>创建指定目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osisdir">os.isdir</a></td>
+<td>判断目录是否存在</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osisfile">os.isfile</a></td>
+<td>判断文件是否存在</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osexists">os.exists</a></td>
+<td>判断文件或目录是否存在</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osdirs">os.dirs</a></td>
+<td>遍历获取指定目录下的所有目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osfiles">os.files</a></td>
+<td>遍历获取指定目录下的所有文件</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osfiledirs">os.filedirs</a></td>
+<td>遍历获取指定目录下的所有文件或目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osrun">os.run</a></td>
+<td>安静运行程序</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osrunv">os.runv</a></td>
+<td>安静运行程序，带参数列表</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osexec">os.exec</a></td>
+<td>回显运行程序</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osexecv">os.execv</a></td>
+<td>回显运行程序，带参数列表</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osiorun">os.iorun</a></td>
+<td>运行并获取程序输出内容</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osiorunv">os.iorunv</a></td>
+<td>运行并获取程序输出内容，带参数列表</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osgetenv">os.getenv</a></td>
+<td>获取环境变量</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ossetenv">os.setenv</a></td>
+<td>设置环境变量</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ostmpdir">os.tmpdir</a></td>
+<td>获取临时目录路径</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ostmpfile">os.tmpfile</a></td>
+<td>获取临时文件路径</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#oscurdir">os.curdir</a></td>
+<td>获取当前目录路径</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osfilesize">os.filesize</a></td>
+<td>获取文件大小</td>
+<td>>= 2.1.9</td>
+</tr>
+<tr>
+<td><a href="#osscriptdir">os.scriptdir</a></td>
+<td>获取脚本目录路径</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#osprogramdir">os.programdir</a></td>
+<td>获取xmake安装主程序脚本目录</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osprojectdir">os.projectdir</a></td>
+<td>获取工程主目录</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osarch">os.arch</a></td>
+<td>获取当前系统架构</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#oshost">os.host</a></td>
+<td>获取当前主机系统</td>
+<td>>= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oscp">os.cp</h4>
+<ul>
+<li>复制文件或目录</li>
+</ul>
+<p>行为和shell中的<code>cp</code>命令类似，支持路径通配符匹配（使用的是lua模式匹配），支持多文件复制，以及内置变量支持。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
+os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
+</code></pre>
+<p>上面的代码将：当前<code>xmake.lua</code>目录下的所有头文件、工程源码test目录下的头文件全部复制到<code>$(buildir)</code>输出目录中。</p>
+<p>其中<code>$(scriptdir)</code>, <code>$(projectdir)</code> 这些变量是xmake的内置变量，具体详情见：<a href="#内置变量">内置变量</a>的相关文档。</p>
+<p>而<code>*.h</code>和<code>**.h</code>中的匹配模式，跟<a href="#targetadd_files">add_files</a>中的类似，前者是单级目录匹配，后者是递归多级目录匹配。</p>
+<p>此接口同时支持目录的<code>递归复制</code>，例如：</p>
+<pre><code class="lang-lua">-- 递归复制当前目录到临时目录
+os.cp("$(curdir)/test/", "$(tmpdir)/test")
+</code></pre>
+<p>上面的复制，会把所有文件全部展开复制到指定目录，丢失源目录层级，如果要按保持原有的目录结构复制，可以设置rootdir参数：</p>
+<pre><code class="lang-lua">os.cp("src/**.h", "/tmp/", {rootdir = "src"})
+</code></pre>
+<p>上面的脚本可以按<code>src</code>根目录，将src下的所有子文件保持目录结构复制过去。</p>
+<p><p class="tip"><br>尽量使用<code>os.cp</code>接口，而不是<code>os.run("cp ..")</code>，这样更能保证平台一致性，实现跨平台构建描述。<br></p>
+
+</p>
+<h4 id="osmv">os.mv</h4>
+<ul>
+<li>移动重命名文件或目录</li>
+</ul>
+<p>跟<a href="#oscp">os.cp</a>的使用类似，同样支持多文件移动操作和模式匹配，例如：</p>
+<pre><code class="lang-lua">-- 移动文件到临时目录
+os.mv("$(buildir)/test1", "$(tmpdir)")
+
+-- 文件移动不支持批量操作，也就是文件重命名
+os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
+</code></pre>
+<h4 id="osrm">os.rm</h4>
+<ul>
+<li>删除文件或目录树</li>
+</ul>
+<p>支持递归删除目录，批量删除操作，以及模式匹配和内置变量，例如：</p>
+<pre><code class="lang-lua">os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
+</code></pre>
+<h4 id="ostrycp">os.trycp</h4>
+<ul>
+<li>尝试复制文件或目录</li>
+</ul>
+<p>跟<a href="#oscp">os.cp</a>类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。</p>
+<pre><code class="lang-lua">if os.trycp("file", "dest/file") then
+end
+</code></pre>
+<h4 id="ostrymv">os.trymv</h4>
+<ul>
+<li>尝试移动文件或目录</li>
+</ul>
+<p>跟<a href="#osmv">os.mv</a>类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。</p>
+<pre><code class="lang-lua">if os.trymv("file", "dest/file") then
+end
+</code></pre>
+<h4 id="ostryrm">os.tryrm</h4>
+<ul>
+<li>尝试删除文件或目录</li>
+</ul>
+<p>跟<a href="#osrm">os.rm</a>类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。</p>
+<pre><code class="lang-lua">if os.tryrm("file") then
+end
+</code></pre>
+<h4 id="oscd">os.cd</h4>
+<ul>
+<li>进入指定目录</li>
+</ul>
+<p>这个操作用于目录切换，同样也支持内置变量，但是不支持模式匹配和多目录处理，例如：</p>
+<pre><code class="lang-lua">-- 进入临时目录
+os.cd("$(tmpdir)")
+</code></pre>
+<p>如果要离开进入之前的目录，有多种方式：</p>
+<pre><code class="lang-lua">-- 进入上级目录
+os.cd("..")
+
+-- 进入先前的目录，相当于：cd -
+os.cd("-")
+
+-- 进入目录前保存之前的目录，用于之后跨级直接切回
+local oldir = os.cd("./src")
+...
+os.cd(oldir)
+</code></pre>
+<h4 id="osrmdir">os.rmdir</h4>
+<ul>
+<li>仅删除目录</li>
+</ul>
+<p>如果不是目录就无法删除。</p>
+<h4 id="osmkdir">os.mkdir</h4>
+<ul>
+<li>创建目录</li>
+</ul>
+<p>支持批量创建和内置变量，例如：</p>
+<pre><code class="lang-lua">os.mkdir("$(tmpdir)/test", "$(buildir)/inc")
+</code></pre>
+<h4 id="osisdir">os.isdir</h4>
+<ul>
+<li>判断是否为目录</li>
+</ul>
+<p>如果目录不存在，则返回false</p>
+<pre><code class="lang-lua">if os.isdir("src") then
+    -- ...
+end
+</code></pre>
+<h4 id="osisfile">os.isfile</h4>
+<ul>
+<li>判断是否为文件</li>
+</ul>
+<p>如果文件不存在，则返回false</p>
+<pre><code class="lang-lua">if os.isfile("$(buildir)/libxxx.a") then
+    -- ...
+end
+</code></pre>
+<h4 id="osexists">os.exists</h4>
+<ul>
+<li>判断文件或目录是否存在</li>
+</ul>
+<p>如果文件或目录不存在，则返回false</p>
+<pre><code class="lang-lua">-- 判断目录存在
+if os.exists("$(buildir)") then
+    -- ...
+end
+
+-- 判断文件存在
+if os.exists("$(buildir)/libxxx.a") then
+    -- ...
+end
+</code></pre>
+<h4 id="osdirs">os.dirs</h4>
+<ul>
+<li>遍历获取指定目录下的所有目录</li>
+</ul>
+<p>支持<a href="#targetadd_files">add_files</a>中的模式匹配，支持递归和非递归模式遍历，返回的结果是一个table数组，如果获取不到，返回空数组，例如：</p>
+<pre><code class="lang-lua">-- 递归遍历获取所有子目录
+for _, dir in ipairs(os.dirs("$(buildir)/inc/**")) do
+    print(dir)
+end
+</code></pre>
+<h4 id="osfiles">os.files</h4>
+<ul>
+<li>遍历获取指定目录下的所有文件</li>
+</ul>
+<p>支持<a href="#targetadd_files">add_files</a>中的模式匹配，支持递归和非递归模式遍历，返回的结果是一个table数组，如果获取不到，返回空数组，例如：</p>
+<pre><code class="lang-lua">-- 非递归遍历获取所有子文件
+for _, filepath in ipairs(os.files("$(buildir)/inc/*.h")) do
+    print(filepath)
+end
+</code></pre>
+<h4 id="osfiledirs">os.filedirs</h4>
+<ul>
+<li>遍历获取指定目录下的所有文件和目录</li>
+</ul>
+<p>支持<a href="#targetadd_files">add_files</a>中的模式匹配，支持递归和非递归模式遍历，返回的结果是一个table数组，如果获取不到，返回空数组，例如：</p>
+<pre><code class="lang-lua">-- 递归遍历获取所有子文件和目录
+for _, filedir in ipairs(os.filedirs("$(buildir)/**")) do
+    print(filedir)
+end
+</code></pre>
+<h4 id="osrun">os.run</h4>
+<ul>
+<li>安静运行原生shell命令</li>
+</ul>
+<p>用于执行第三方的shell命令，但不会回显输出，仅仅在出错后，高亮输出错误信息。</p>
+<p>此接口支持参数格式化、内置变量，例如：</p>
+<pre><code class="lang-lua">-- 格式化参数传入
+os.run("echo hello %s!", "xmake")
+
+-- 列举构建目录文件
+os.run("ls -l $(buildir)")
+</code></pre>
+<p>!> 使用此接口执行shell命令，容易使构建跨平台性降低，对于<code>os.run("cp ..")</code>这种尽量使用<code>os.cp</code>代替。<br><br>如果必须使用此接口运行shell程序，请自行使用<a href="#config-plat">config.plat</a>接口判断平台支持。</p>
+<h4 id="osrunv">os.runv</h4>
+<ul>
+<li>安静运行原生shell命令，带参数列表</li>
+</ul>
+<p>跟<a href="#osrun">os.run</a>类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：</p>
+<pre><code class="lang-lua">os.runv("echo", {"hello", "xmake!"})
+</code></pre>
+<p>另外，此接口也支持envs参数设置：</p>
+<pre><code class="lang-lua">os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+</code></pre>
+<h4 id="osexec">os.exec</h4>
+<ul>
+<li>回显运行原生shell命令</li>
+</ul>
+<p>与<a href="#osrun">os.run</a>接口类似，唯一的不同是，此接口执行shell程序时，是带回显输出的，一般调试的时候用的比较多</p>
+<h4 id="osexecv">os.execv</h4>
+<ul>
+<li>回显运行原生shell命令，带参数列表</li>
+</ul>
+<p>跟<a href="#osexec">os.exec</a>类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：</p>
+<pre><code class="lang-lua">os.execv("echo", {"hello", "xmake!"})
+</code></pre>
+<p>另外，此接口还支持一个可选的参数，用于传递设置：重定向输出，执行环境变量设置，例如：</p>
+<pre><code class="lang-lua">os.execv("echo", {"hello", "xmake!"}, {stdout = outfile, stderr = errfile, envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+</code></pre>
+<p>其中，stdout和stderr参数用于传递重定向输出和错误输出，可以直接传入文件路径，也可以传入io.open打开的文件对象。</p>
+<p>v2.5.1 之后的版本，我们还支持设置 stdin 参数，来支持重定向输入文件。</p>
+<p>!> stdout/stderr/stdin 可以同时支持：文件路径、文件对象、管道对象等三种类型值。</p>
+<p>另外，如果想在这次执行中临时设置和改写一些环境变量，可以传递envs参数，里面的环境变量设置会替换已有的设置，但是不影响外层的执行环境，只影响当前命令。</p>
+<p>我们也可以通过<code>os.getenvs()</code>接口获取当前所有的环境变量，然后改写部分后传入envs参数。</p>
+<h4 id="osiorun">os.iorun</h4>
+<ul>
+<li>安静运行原生shell命令并获取输出内容</li>
+</ul>
+<p>与<a href="#osrun">os.run</a>接口类似，唯一的不同是，此接口执行shell程序后，会获取shell程序的执行结果，相当于重定向输出。</p>
+<p>可同时获取<code>stdout</code>, <code>stderr</code>中的内容，例如：</p>
+<pre><code class="lang-lua">local outdata, errdata = os.iorun("echo hello xmake!")
+</code></pre>
+<h4 id="osiorunv">os.iorunv</h4>
+<ul>
+<li>安静运行原生shell命令并获取输出内容，带参数列表</li>
+</ul>
+<p>跟<a href="#osiorun">os.iorun</a>类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：</p>
+<pre><code class="lang-lua">local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"})
+</code></pre>
+<p>另外，此接口也支持envs参数设置：</p>
+<pre><code class="lang-lua">local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+</code></pre>
+<h4 id="osgetenv">os.getenv</h4>
+<ul>
+<li>获取系统环境变量</li>
+</ul>
+<pre><code class="lang-lua">print(os.getenv("PATH"))
+</code></pre>
+<h4 id="ossetenv">os.setenv</h4>
+<ul>
+<li>设置系统环境变量</li>
+</ul>
+<pre><code class="lang-lua">os.setenv("HOME", "/tmp/")
+</code></pre>
+<h4 id="ostmpdir">os.tmpdir</h4>
+<ul>
+<li>获取临时目录</li>
+</ul>
+<p>跟<a href="#var-tmpdir">$(tmpdir)</a>结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。</p>
+<pre><code class="lang-lua">print(path.join(os.tmpdir(), "file.txt"))
+</code></pre>
+<p>等价于：</p>
+<pre><code class="lang-lua">print("$(tmpdir)/file.txt")
+</code></pre>
+<h4 id="ostmpfile">os.tmpfile</h4>
+<ul>
+<li>获取临时文件路径</li>
+</ul>
+<p>用于获取生成一个临时文件路径，仅仅是个路径，文件需要自己创建。</p>
+<h4 id="oscurdir">os.curdir</h4>
+<ul>
+<li>获取当前目录路径</li>
+</ul>
+<p>跟<a href="#var-curdir">$(curdir)</a>结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。</p>
+<p>用法参考：<a href="#ostmpdir">os.tmpdir</a>。</p>
+<h4 id="osfilesize">os.filesize</h4>
+<ul>
+<li>获取文件大小</li>
+</ul>
+<pre><code class="lang-lua">print(os.filesize("/tmp/a"))
+</code></pre>
+<h4 id="osscriptdir">os.scriptdir</h4>
+<ul>
+<li>获取当前描述脚本的路径</li>
+</ul>
+<p>跟<a href="#var-scriptdir">$(scriptdir)</a>结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。</p>
+<p>用法参考：<a href="#ostmpdir">os.tmpdir</a>。</p>
+<h4 id="osprogramdir">os.programdir</h4>
+<ul>
+<li>获取xmake安装主程序脚本目录</li>
+</ul>
+<p>跟<a href="#var-programdir">$(programdir)</a>结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。</p>
+<h4 id="osprojectdir">os.projectdir</h4>
+<ul>
+<li>获取工程主目录</li>
+</ul>
+<p>跟<a href="#var-projectdir">$(projectdir)</a>结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。</p>
+<h4 id="osarch">os.arch</h4>
+<ul>
+<li>获取当前系统架构</li>
+</ul>
+<p>也就是当前主机系统的默认架构，例如我在<code>linux x86_64</code>上执行xmake进行构建，那么返回值是：<code>x86_64</code></p>
+<h4 id="oshost">os.host</h4>
+<ul>
+<li>获取当前主机的操作系统</li>
+</ul>
+<p>跟<a href="#var-host">$(host)</a>结果一致，例如我在<code>linux x86_64</code>上执行xmake进行构建，那么返回值是：<code>linux</code></p>
+<h3 id="winos">winos</h3>
+<p>windows 系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#winosversion">winos.version</a></td>
+<td>获取 windows 系统版本</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#winosregistry_keys">winos.registry_keys</a></td>
+<td>获取注册表建列表</td>
+<td>>= 2.5.1</td>
+</tr>
+<tr>
+<td><a href="#winosregistry_values">winos.registry_values</a></td>
+<td>获取注册表值名列表</td>
+<td>>= 2.5.1</td>
+</tr>
+<tr>
+<td><a href="#winosregistry_query">winos.registry_query</a></td>
+<td>获取注册表建值</td>
+<td>>= 2.3.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="winosversion">winos.version</h4>
+<ul>
+<li>获取 windows 系统版本</li>
+</ul>
+<p>返回的版本是 semver 语义版本对象</p>
+<pre><code class="lang-lua">if winos.version():ge("win7") then
+    -- ...
+end
+
+if winos.version():ge("6.1") then
+    -- ...
+end
+</code></pre>
+<p>并且，还可以支持对 windows 版本名的直接判断，映射规则如下：</p>
+<pre><code>
+nt4      = "4.0"
+win2k    = "5.0"
+winxp    = "5.1"
+ws03     = "5.2"
+win6     = "6.0"
+vista    = "6.0"
+ws08     = "6.0"
+longhorn = "6.0"
+win7     = "6.1"
+win8     = "6.2"
+winblue  = "6.3"
+win81    = "6.3"
+win10    = "10.0"
+</code></pre><h4 id="winosregistry_keys">winos.registry_keys</h4>
+<ul>
+<li>获取注册表建列表</li>
+</ul>
+<p>支持通过模式匹配的方式，遍历获取注册表键路径列表，<code>*</code> 为单级路径匹配，<code>**</code> 为递归路径匹配。</p>
+<pre><code class="lang-lua">local keypaths = winos.registry_keys("HKEY_LOCAL_MACHINE\\SOFTWARE\\*\\Windows NT\\*\\CurrentVersion\\AeDebug")
+for _, keypath in ipairs(keypaths) do
+    print(winos.registry_query(keypath .. ";Debugger"))
+end
+</code></pre>
+<h4 id="winosregistry_values">winos.registry_values</h4>
+<ul>
+<li>获取注册表值名列表</li>
+</ul>
+<p>支持通过模式匹配的方式，获取指定键路径的值名列表，<code>;</code> 之后的就是指定的键名模式匹配字符串。</p>
+<pre><code class="lang-lua">local valuepaths = winos.registry_values("HKEY_LOCAL_MACHINE\\SOFTWARE\\xx\\AeDebug;Debug*")
+for _, valuepath in ipairs(valuepaths) do
+    print(winos.registry_query(valuepath))
+end
+</code></pre>
+<h4 id="winosregistry_query">winos.registry_query</h4>
+<ul>
+<li>获取注册表建值</li>
+</ul>
+<p>获取指定注册表建路径下的值，如果没有指定值名，那么获取键路径默认值</p>
+<pre><code class="lang-lua">local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug")
+local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger")
+</code></pre>
+<h3 id="macos">macos</h3>
+<p>macOS 系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#macosversion">macos.version</a></td>
+<td>获取 macOS 系统版本</td>
+<td>>= 2.3.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="macosversion">macos.version</h4>
+<ul>
+<li>获取 macOS 系统版本</li>
+</ul>
+<p>返回的版本是 semver 语义版本对象</p>
+<pre><code class="lang-lua">if macos.version():ge("10.0") then
+    -- ...
+end
+</code></pre>
+<h3 id="linuxos">linuxos</h3>
+<p>linux 系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#linuxosname">linuxos.name</a></td>
+<td>获取 linux 系统发行版名称</td>
+<td>>= 2.5.2</td>
+</tr>
+<tr>
+<td><a href="#linuxosversion">linuxos.version</a></td>
+<td>获取 linux 系统版本</td>
+<td>>= 2.5.2</td>
+</tr>
+<tr>
+<td><a href="#linuxoskernelver">linuxos.kernelver</a></td>
+<td>获取 linux 系统内核版本</td>
+<td>>= 2.5.2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="linuxosname">linuxos.name</h4>
+<ul>
+<li>获取 linux 系统发行版名称</li>
+</ul>
+<p>我们也可以通过下面的命令，快速获取查看</p>
+<pre><code class="lang-bash">xmake l linuxos.name
+</code></pre>
+<p>目前支持的一些名称有：</p>
+<ul>
+<li>ubuntu</li>
+<li>debian</li>
+<li>archlinux</li>
+<li>manjaro</li>
+<li>linuxmint</li>
+<li>centos</li>
+<li>fedora</li>
+<li>opensuse</li>
+</ul>
+<h4 id="linuxosversion">linuxos.version</h4>
+<ul>
+<li>获取 linux 系统版本</li>
+</ul>
+<p>返回的版本是 semver 语义版本对象</p>
+<pre><code class="lang-lua">if linux.version():ge("10.0") then
+    -- ...
+end
+</code></pre>
+<h4 id="linuxoskernelver">linuxos.kernelver</h4>
+<ul>
+<li>获取 linux 系统内核版本</li>
+</ul>
+<p>返回的也是语义版本对象，也可以执行 <code>xmake l linuxos.kernelver</code> 快速查看</p>
+<h3 id="io">io</h3>
+<p>io操作模块，扩展了lua内置的io模块，提供更多易用的接口。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#ioopen">io.open</a></td>
+<td>打开文件用于读写</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ioload">io.load</a></td>
+<td>从指定路径文件反序列化加载所有table内容</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#iosave">io.save</a></td>
+<td>序列化保存所有table内容到指定路径文件</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#io.readfile">io.readfile</a></td>
+<td>从指定路径文件读取所有内容</td>
+<td>>= 2.1.3</td>
+</tr>
+<tr>
+<td><a href="#io.writefile">io.writefile</a></td>
+<td>写入所有内容到指定路径文件</td>
+<td>>= 2.1.3</td>
+</tr>
+<tr>
+<td><a href="#iogsub">io.gsub</a></td>
+<td>全文替换指定路径文件的内容</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#iotail">io.tail</a></td>
+<td>读取和显示文件的尾部内容</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#iocat">io.cat</a></td>
+<td>读取和显示文件的所有内容</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ioprint">io.print</a></td>
+<td>带换行格式化输出内容到文件</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ioprintf">io.printf</a></td>
+<td>无换行格式化输出内容到文件</td>
+<td>>= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ioopen">io.open</h4>
+<ul>
+<li>打开文件用于读写</li>
+</ul>
+<p>这个是属于lua的原生接口，详细使用可以参看lua的官方文档：<a href="https://www.lua.org/pil/21.2.html">The Complete I/O Model</a></p>
+<p>如果要读取文件所有内容，可以这么写：</p>
+<pre><code class="lang-lua">local file = io.open("$(tmpdir)/file.txt", "r")
+if file then
+    local data = file:read("*all")
+    file:close()
+end
+</code></pre>
+<p>或者可以使用<a href="#io.readfile">io.readfile</a>更加快速地读取。</p>
+<p>如果要写文件，可以这么操作：</p>
+<pre><code class="lang-lua">-- 打开文件：w 为写模式, a 为追加写模式
+local file = io.open("xxx.txt", "w")
+if file then
+
+    -- 用原生的lua接口写入数据到文件，不支持格式化，无换行，不支持内置变量
+    file:write("hello xmake\n")
+
+    -- 用xmake扩展的接口写入数据到文件，支持格式化，无换行，不支持内置变量
+    file:writef("hello %s\n", "xmake")
+
+    -- 使用xmake扩展的格式化传参写入一行，带换行符，并且支持内置变量
+    file:print("hello %s and $(buildir)", "xmake")
+
+    -- 使用xmake扩展的格式化传参写入一行，无换行符，并且支持内置变量
+    file:printf("hello %s and $(buildir) \n", "xmake")
+
+    -- 关闭文件
+    file:close()
+end
+</code></pre>
+<h4 id="ioload">io.load</h4>
+<ul>
+<li>从指定路径文件反序列化加载所有table内容</li>
+</ul>
+<p>可以从文件中加载序列化好的table内容，一般与<a href="#iosave">io.save</a>配合使用，例如：</p>
+<pre><code class="lang-lua">-- 加载序列化文件的内容到table
+local data = io.load("xxx.txt")
+if data then
+
+    -- 在终端中dump打印整个table中内容，格式化输出
+    utils.dump(data)
+end
+</code></pre>
+<h4 id="iosave">io.save</h4>
+<ul>
+<li>序列化保存所有table内容到指定路径文件</li>
+</ul>
+<p>可以序列化存储table内容到指定文件，一般与<a href="#ioload">io.load</a>配合使用，例如：</p>
+<pre><code class="lang-lua">io.save("xxx.txt", {a = "a", b = "b", c = "c"})
+</code></pre>
+<p>存储结果为：</p>
+<pre><code>{
+    ["b"] = "b"
+,   ["a"] = "a"
+,   ["c"] = "c"
+}
+</code></pre><h4 id="ioreadfile">io.readfile</h4>
+<ul>
+<li>从指定路径文件读取所有内容</li>
+</ul>
+<p>可在不打开文件的情况下，直接读取整个文件的内容，更加的方便，例如：</p>
+<pre><code class="lang-lua">local data = io.readfile("xxx.txt")
+</code></pre>
+<h4 id="iowritefile">io.writefile</h4>
+<ul>
+<li>写入所有内容到指定路径文件</li>
+</ul>
+<p>可在不打开文件的情况下，直接写入整个文件的内容，更加的方便，例如：</p>
+<pre><code class="lang-lua">io.writefile("xxx.txt", "all data")
+</code></pre>
+<h4 id="iogsub">io.gsub</h4>
+<ul>
+<li>全文替换指定路径文件的内容</li>
+</ul>
+<p>类似<a href="#stringgsub">string.gsub</a>接口，全文模式匹配替换内容，不过这里是直接操作文件，例如：</p>
+<pre><code class="lang-lua">-- 移除文件所有的空白字符
+io.gsub("xxx.txt", "%s+", "")
+</code></pre>
+<h4 id="iotail">io.tail</h4>
+<ul>
+<li>读取和显示文件的尾部内容</li>
+</ul>
+<p>读取文件尾部指定行数的数据，并显示，类似<code>cat xxx.txt | tail -n 10</code>命令，例如：</p>
+<pre><code class="lang-lua">-- 显示文件最后10行内容
+io.tail("xxx.txt", 10)
+</code></pre>
+<h4 id="iocat">io.cat</h4>
+<ul>
+<li>读取和显示文件的所有内容</li>
+</ul>
+<p>读取文件的所有内容并显示，类似<code>cat xxx.txt</code>命令，例如：</p>
+<pre><code class="lang-lua">io.cat("xxx.txt")
+</code></pre>
+<h4 id="ioprint">io.print</h4>
+<ul>
+<li>带换行格式化输出内容到文件</li>
+</ul>
+<p>直接格式化传参输出一行字符串到文件，并且带换行，例如：</p>
+<pre><code class="lang-lua">io.print("xxx.txt", "hello %s!", "xmake")
+</code></pre>
+<h4 id="ioprintf">io.printf</h4>
+<ul>
+<li>无换行格式化输出内容到文件</li>
+</ul>
+<p>直接格式化传参输出一行字符串到文件，不带换行，例如：</p>
+<pre><code class="lang-lua">io.printf("xxx.txt", "hello %s!\n", "xmake")
+</code></pre>
+<h3 id="path">path</h3>
+<p>路径操作模块，实现跨平台的路径操作，这是xmake的一个自定义的模块。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#pathjoin">path.join</a></td>
+<td>拼接路径</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathtranslate">path.translate</a></td>
+<td>转换路径到当前平台的路径风格</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathbasename">path.basename</a></td>
+<td>获取路径最后不带后缀的文件名</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathfilename">path.filename</a></td>
+<td>获取路径最后带后缀的文件名</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathextension">path.extension</a></td>
+<td>获取路径的后缀名</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathdirectory">path.directory</a></td>
+<td>获取路径最后的目录名</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathrelative">path.relative</a></td>
+<td>转换成相对路径</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathabsolute">path.absolute</a></td>
+<td>转换成绝对路径</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathis_absolute">path.is_absolute</a></td>
+<td>判断是否为绝对路径</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathsplitenv">path.splitenv</a></td>
+<td>分割环境变量中的路径</td>
+<td>>= 2.2.7</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pathjoin">path.join</h4>
+<ul>
+<li>拼接路径</li>
+</ul>
+<p>将多个路径项进行追加拼接，由于<code>windows/unix</code>风格的路径差异，使用api来追加路径更加跨平台，例如：</p>
+<pre><code class="lang-lua">print(path.join("$(tmpdir)", "dir1", "dir2", "file.txt"))
+</code></pre>
+<p>上述拼接在unix上相当于：<code>$(tmpdir)/dir1/dir2/file.txt</code>，而在windows上相当于：<code>$(tmpdir)\\dir1\\dir2\\file.txt</code></p>
+<p>如果觉得这样很繁琐，不够清晰简洁，可以使用：<a href="path-translate">path.translate</a>方式，格式化转换路径字符串到当前平台支持的格式。</p>
+<h4 id="pathtranslate">path.translate</h4>
+<ul>
+<li>转换路径到当前平台的路径风格</li>
+</ul>
+<p>格式化转化指定路径字符串到当前平台支持的路径风格，同时支持<code>windows/unix</code>格式的路径字符串参数传入，甚至混合传入，例如：</p>
+<pre><code class="lang-lua">print(path.translate("$(tmpdir)/dir/file.txt"))
+print(path.translate("$(tmpdir)\\dir\\file.txt"))
+print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
+</code></pre>
+<p>上面这三种不同格式的路径字符串，经过<code>translate</code>规范化后，就会变成当前平台支持的格式，并且会去掉冗余的路径分隔符。</p>
+<h4 id="pathbasename">path.basename</h4>
+<ul>
+<li>获取路径最后不带后缀的文件名</li>
+</ul>
+<pre><code class="lang-lua">print(path.basename("$(tmpdir)/dir/file.txt"))
+</code></pre>
+<p>显示结果为：<code>file</code></p>
+<h4 id="pathfilename">path.filename</h4>
+<ul>
+<li>获取路径最后带后缀的文件名</li>
+</ul>
+<pre><code class="lang-lua">print(path.filename("$(tmpdir)/dir/file.txt"))
+</code></pre>
+<p>显示结果为：<code>file.txt</code></p>
+<h4 id="pathextension">path.extension</h4>
+<ul>
+<li>获取路径的后缀名</li>
+</ul>
+<pre><code class="lang-lua">print(path.extensione("$(tmpdir)/dir/file.txt"))
+</code></pre>
+<p>显示结果为：<code>.txt</code></p>
+<h4 id="pathdirectory">path.directory</h4>
+<ul>
+<li>获取路径最后的目录名</li>
+</ul>
+<pre><code class="lang-lua">print(path.directory("$(tmpdir)/dir/file.txt"))
+</code></pre>
+<p>显示结果为：<code>dir</code></p>
+<h4 id="pathrelative">path.relative</h4>
+<ul>
+<li>转换成相对路径</li>
+</ul>
+<pre><code class="lang-lua">print(path.relative("$(tmpdir)/dir/file.txt", "$(tmpdir)"))
+</code></pre>
+<p>显示结果为：<code>dir/file.txt</code></p>
+<p>第二个参数是指定相对的根目录，如果不指定，则默认相对当前目录：</p>
+<pre><code class="lang-lua">os.cd("$(tmpdir)")
+print(path.relative("$(tmpdir)/dir/file.txt"))
+</code></pre>
+<p>这样结果是一样的。</p>
+<h4 id="pathabsolute">path.absolute</h4>
+<ul>
+<li>转换成绝对路径</li>
+</ul>
+<pre><code class="lang-lua">print(path.absolute("dir/file.txt", "$(tmpdir)"))
+</code></pre>
+<p>显示结果为：<code>$(tmpdir)/dir/file.txt</code></p>
+<p>第二个参数是指定相对的根目录，如果不指定，则默认相对当前目录：</p>
+<pre><code class="lang-lua">os.cd("$(tmpdir)")
+print(path.absolute("dir/file.txt"))
+</code></pre>
+<p>这样结果是一样的。</p>
+<h4 id="pathis_absolute">path.is_absolute</h4>
+<ul>
+<li>判断是否为绝对路径</li>
+</ul>
+<pre><code class="lang-lua">if path.is_absolute("/tmp/file.txt") then
+    -- 如果是绝对路径
+end
+</code></pre>
+<h4 id="pathsplitenv">path.splitenv</h4>
+<ul>
+<li>分割环境变量中的路径</li>
+</ul>
+<pre><code class="lang-lua">local pathes = path.splitenv(vformat("$(env PATH)"))
+
+-- for windows
+local pathes = path.splitenv("C:\\Windows;C:\\Windows\\System32")
+-- got { "C:\\Windows", "C:\\Windows\\System32" }
+
+-- for *nix
+local pathes = path.splitenv("/usr/bin:/usr/local/bin")
+-- got { "/usr/bin", "/usr/local/bin" }
+</code></pre>
+<p>结果为一个包含了输入字符串中路径的数组。</p>
+<h3 id="table">table</h3>
+<p>table属于lua原生提供的模块，对于原生接口使用可以参考：<a href="https://www.lua.org/manual/5.1/manual.html#5.5">lua官方文档</a></p>
+<p>xmake中对其进行了扩展，增加了一些扩展接口：</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#tablejoin">table.join</a></td>
+<td>合并多个table并返回</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#tablejoin2">table.join2</a></td>
+<td>合并多个table到第一个table</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#tableunique">table.unique</a></td>
+<td>对table中的内容进行去重</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#tableslice">table.slice</a></td>
+<td>获取table的切片</td>
+<td>>= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tablejoin">table.join</h4>
+<ul>
+<li>合并多个table并返回</li>
+</ul>
+<p>可以将多个table里面的元素进行合并后，返回到一个新的table中，例如：</p>
+<pre><code class="lang-lua">local newtable = table.join({1, 2, 3}, {4, 5, 6}, {7, 8, 9})
+</code></pre>
+<p>结果为：<code>{1, 2, 3, 4, 5, 6, 7, 8, 9}</code></p>
+<p>并且它也支持字典的合并：</p>
+<pre><code class="lang-lua">local newtable = table.join({a = "a", b = "b"}, {c = "c"}, {d = "d"})
+</code></pre>
+<p>结果为：<code>{a = "a", b = "b", c = "c", d = "d"}</code></p>
+<h4 id="tablejoin2">table.join2</h4>
+<ul>
+<li>合并多个table到第一个table</li>
+</ul>
+<p>类似<a href="#table.join">table.join</a>，唯一的区别是，合并的结果放置在第一个参数中，例如：</p>
+<pre><code class="lang-lua">local t = {0, 9}
+table.join2(t, {1, 2, 3})
+</code></pre>
+<p>结果为：<code>t = {0, 9, 1, 2, 3}</code></p>
+<h4 id="tableunique">table.unique</h4>
+<ul>
+<li>对table中的内容进行去重</li>
+</ul>
+<p>去重table的元素，一般用于数组table，例如：</p>
+<pre><code class="lang-lua">local newtable = table.unique({1, 1, 2, 3, 4, 4, 5})
+</code></pre>
+<p>结果为：<code>{1, 2, 3, 4, 5}</code></p>
+<h4 id="tableslice">table.slice</h4>
+<ul>
+<li>获取table的切片</li>
+</ul>
+<p>用于提取数组table的部分元素，例如：</p>
+<pre><code class="lang-lua">-- 提取第4个元素后面的所有元素，结果：{4, 5, 6, 7, 8, 9}
+table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4)
+
+-- 提取第4-8个元素，结果：{4, 5, 6, 7, 8}
+table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8)
+
+-- 提取第4-8个元素，间隔步长为2，结果：{4, 6, 8}
+table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
+</code></pre>
+<h3 id="string">string</h3>
+<p>字符串模块为lua原生自带的模块，具体使用见：<a href="https://www.lua.org/manual/5.1/manual.html#5.4">lua官方手册</a></p>
+<p>xmake中对其进行了扩展，增加了一些扩展接口：</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#stringstartswith">string.startswith</a></td>
+<td>判断字符串开头是否匹配</td>
+<td>>= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#stringendswith">string.endswith</a></td>
+<td>判断字符串结尾是否匹配</td>
+<td>>= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#stringsplit">string.split</a></td>
+<td>分割字符串</td>
+<td>>= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#stringtrim">string.trim</a></td>
+<td>去掉字符串左右空白字符</td>
+<td>>= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#stringltrim">string.ltrim</a></td>
+<td>去掉字符串左边空白字符</td>
+<td>>= 1.0.1</td>
+</tr>
+<tr>
+<td><a href="#stringrtrim">string.rtrim</a></td>
+<td>去掉字符串右边空白字符</td>
+<td>>= 1.0.1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="stringstartswith">string.startswith</h4>
+<ul>
+<li>判断字符串开头是否匹配</li>
+</ul>
+<pre><code class="lang-lua">local s = "hello xmake"
+if s:startswith("hello") then
+    print("match")
+end
+</code></pre>
+<h4 id="stringendswith">string.endswith</h4>
+<ul>
+<li>判断字符串结尾是否匹配</li>
+</ul>
+<pre><code class="lang-lua">local s = "hello xmake"
+if s:endswith("xmake") then
+    print("match")
+end
+</code></pre>
+<h4 id="stringsplit">string.split</h4>
+<ul>
+<li>分割字符串</li>
+</ul>
+<p>v2.2.7版本对这个接口做了改进，以下是对2.2.7之后版本的使用说明。</p>
+<p>按模式匹配分割字符串，忽略空串，例如：</p>
+<pre><code class="lang-lua">("1\n\n2\n3"):split(&#39;\n&#39;) => 1, 2, 3
+("abc123123xyz123abc"):split(&#39;123&#39;) => abc, xyz, abc
+("abc123123xyz123abc"):split(&#39;[123]+&#39;) => abc, xyz, abc
+</code></pre>
+<p>按纯文本匹配分割字符串，忽略空串（省去了模式匹配，会提升稍许性能），例如：</p>
+<pre><code class="lang-lua">("1\n\n2\n3"):split(&#39;\n&#39;, {plain = true}) => 1, 2, 3
+("abc123123xyz123abc"):split(&#39;123&#39;, {plain = true}) => abc, xyz, abc
+</code></pre>
+<p>按模式匹配分割字符串，严格匹配，不忽略空串，例如：</p>
+<pre><code class="lang-lua">("1\n\n2\n3"):split(&#39;\n&#39;, {strict = true}) => 1, , 2, 3
+("abc123123xyz123abc"):split(&#39;123&#39;, {strict = true}) => abc, , xyz, abc
+("abc123123xyz123abc"):split(&#39;[123]+&#39;, {strict = true}) => abc, xyz, abc
+</code></pre>
+<p>按纯文本匹配分割字符串，严格匹配，不忽略空串（省去了模式匹配，会提升稍许性能），例如：</p>
+<pre><code class="lang-lua">("1\n\n2\n3"):split(&#39;\n&#39;, {plain = true, strict = true}) => 1, , 2, 3
+("abc123123xyz123abc"):split(&#39;123&#39;, {plain = true, strict = true}) => abc, , xyz, abc
+</code></pre>
+<p>限制分割块数</p>
+<pre><code class="lang-lua">("1\n\n2\n3"):split(&#39;\n&#39;, {limit = 2}) => 1, 2\n3
+("1.2.3.4.5"):split(&#39;%.&#39;, {limit = 3}) => 1, 2, 3.4.5
+</code></pre>
+<h4 id="stringtrim">string.trim</h4>
+<ul>
+<li>去掉字符串左右空白字符</li>
+</ul>
+<pre><code class="lang-lua">string.trim("    hello xmake!    ")
+</code></pre>
+<p>结果为："hello xmake!"</p>
+<h4 id="stringltrim">string.ltrim</h4>
+<ul>
+<li>去掉字符串左边空白字符</li>
+</ul>
+<pre><code class="lang-lua">string.ltrim("    hello xmake!    ")
+</code></pre>
+<p>结果为："hello xmake!    "</p>
+<h4 id="stringrtrim">string.rtrim</h4>
+<ul>
+<li>去掉字符串右边空白字符</li>
+</ul>
+<pre><code class="lang-lua">string.rtrim("    hello xmake!    ")
+</code></pre>
+<p>结果为："    hello xmake!"</p>
+<h3 id="coroutine">coroutine</h3>
+<p>协程模块是lua原生自带的模块，具使用见：<a href="https://www.lua.org/manual/5.1/manual.html#5.2">lua官方手册</a></p>
+</article>
+</body>
+</html>

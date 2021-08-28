@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/theme/builtin_themes">https://xmake.io/#/zh-cn/theme/builtin_themes</a>
+</br>
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="">默认主题</h2>
+<p>这个也就是咱们安装xmake后默认的显示主题，主题名：default，它默认会提供色彩输出，适合一些深色背景的终端。</p>
+<p><img src="/assets/img/theme/default.png" width="60%" /></p>
+<p>我们也可以通过下面的命令切回默认主题：</p>
+<pre><code class="lang-bash">$ xmake g --theme=default
+</code></pre>
+<h2 id="ninja">Ninja主题</h2>
+<p>这个是v2.3.4之后版本提供的主题，构建进度风格类似ninja，采用单行进度条，不再回滚进度，用户可以根据自己的喜好设置。</p>
+<p>除了进度展示不同外，其他都跟默认主题的配置相同。</p>
+<pre><code class="lang-bash">$ xmake g --theme=ninja
+</code></pre>
+<p><img src="/assets/img/theme/ninja.png" width="60%" /></p>
+<h2 id="emoji">Emoji主题</h2>
+<p>这个主题部分输出通过emoji字符代替之前的色彩输出。</p>
+<pre><code class="lang-bash">$ xmake g --theme=emoji
+</code></pre>
+<p><img src="/assets/img/theme/emoji.png" width="60%" /></p>
+<h2 id="dark">Dark主题</h2>
+<p>这个主题主要是对一些终端背景是浅色系（比如淡黄色等），导致一些警告输出（默认也是黄色）重合不可见，所以把主题配色变成深色系，提高可见性。</p>
+<pre><code class="lang-bash">$ xmake g --theme=dark
+</code></pre>
+<h2 id="plain">Plain主题</h2>
+<p>这个主题，其实就是完全禁用色彩、emoji输出，主要是应对一些不支持colors code的终端导致显示乱码的问题，也是最朴素的主题风格。</p>
+<p>!> 一些win终端可能不支持colors，就可以设置这个主题来解决乱码显示问题</p>
+<pre><code class="lang-bash">$ xmake g --theme=plain
+</code></pre>
+<h2 id="powershell">Powershell主题</h2>
+<p>win下powershell终端背景是蓝色的，而它的调色板配置似乎被改过的，其中magenta色居然显示成背景蓝色，很诡异，导致xmake的默认输出会有局部文本不可见（跟背景色重叠了）</p>
+<p>所以，这个主题就是为了更好的适配powershell终端下的显示输出。</p>
+<pre><code class="lang-bash">$ xmake g --theme=powershell
+</code></pre>
+</article>
+</body>
+</html>

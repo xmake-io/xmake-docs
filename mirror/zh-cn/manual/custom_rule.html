@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/manual/custom_rule">https://xmake.io/#/zh-cn/manual/custom_rule</a>
+</br>
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>在2.2.1版本之后，xmake不仅原生内置支持多种语言文件的构建，而且还可以通过自定义构建规则，让用户自己来实现复杂的未知文件构建。</p>
+<p>我们可以通过预先设置规则支持的文件后缀，来扩展其他文件的构建支持：</p>
+<pre><code class="lang-lua">-- 定义一个markdown文件的构建规则
+rule("markdown")
+    set_extensions(".md", ".markdown")
+    on_build_file(function (target, sourcefile, opt)
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+    end)
+
+target("test")
+    set_kind("binary")
+
+    -- 使test目标支持markdown文件的构建规则
+    add_rules("markdown")
+
+    -- 添加markdown文件的构建
+    add_files("src/*.md")
+    add_files("src/*.markdown")
+</code></pre>
+<p>我们也可以指定某些零散的其他文件作为markdown规则来处理：</p>
+<pre><code class="lang-lua">target("test")
+    -- ...
+    add_files("src/test/*.md.in", {rule = "markdown"})
+</code></pre>
+<p>一个target可以叠加应用多个rules去更加定制化实现自己的构建行为，甚至支持不同的构建环境。</p>
+<p>!> 通过<code>add_files("*.md", {rule = "markdown"})</code>方式指定的规则，优先级高于<code>add_rules("markdown")</code>设置的规则。</p>
+<h3 id="">内建规则</h3>
+<p>自从2.2.1版本后，xmake提供了一些内置规则去简化日常xmake.lua描述，以及一些常用构建环境的支持。</p>
+<p>我们可以通过运行以下命令，查看完整的内置规则列表：</p>
+<pre><code class="lang-bash">$ xmake show -l rules
+</code></pre>
+<h4 id="modedebug">mode.debug</h4>
+<p>为当前工程xmake.lua添加debug编译模式的配置规则，例如：</p>
+<pre><code class="lang-lua">add_rules("mode.debug")
+</code></pre>
+<p>相当于：</p>
+<pre><code class="lang-lua">if is_mode("debug") then
+    set_symbols("debug")
+    set_optimize("none")
+end
+</code></pre>
+<p>我们可以通过：<code>xmake f -m debug</code>来切换到此编译模式。</p>
+<h4 id="moderelease">mode.release</h4>
+<p>为当前工程xmake.lua添加release编译模式的配置规则，例如：</p>
+<pre><code class="lang-lua">add_rules("mode.release")
+</code></pre>
+<p>!> 此模式默认不会带调试符号。</p>
+<p>相当于：</p>
+<pre><code class="lang-lua">if is_mode("release") then
+    set_symbols("hidden")
+    set_optimize("fastest")
+    set_strip("all")
+end
+</code></pre>
+<p>我们可以通过：<code>xmake f -m release</code>来切换到此编译模式。</p>
+<h4 id="modereleasedbg">mode.releasedbg</h4>
+<p>为当前工程xmake.lua添加releasedbg编译模式的配置规则，例如：</p>
+<pre><code class="lang-lua">add_rules("mode.releasedbg")
+</code></pre>
+<p>!> 与release模式相比，此模式还会额外开启调试符号，这通常是非常有用的。</p>
+<p>相当于：</p>
+<pre><code class="lang-lua">if is_mode("releasedbg") then
+    set_symbols("debug")
+    set_optimize("fastest")
+    set_strip("all")
+end
+</code></pre>
+<p>我们可以通过：<code>xmake f -m releasedbg</code>来切换到此编译模式。</p>
+<h4 id="modeminsizerel">mode.minsizerel</h4>
+<p>为当前工程xmake.lua添加minsizerel编译模式的配置规则，例如：</p>
+<pre><code class="lang-lua">add_rules("mode.minsizerel")
+</code></pre>
+<p>!> 与release模式相比，此模式更加倾向于最小代码编译优化，而不是速度优先。</p>
+<p>相当于：</p>
+<pre><code class="lang-lua">if is_mode("minsizerel") then
+    set_symbols("hidden")
+    set_optimize("smallest")
+    set_strip("all")
+end
+</code></pre>
+<p>我们可以通过：<code>xmake f -m minsizerel</code>来切换到此编译模式。</p>
+<h4 id="modecheck">mode.check</h4>
+<p>为当前工程xmake.lua添加check编译模式的配置规则，一般用于内存检测，例如：</p>
+<pre><code class="lang-lua">add_rules("mode.check")
+</code></pre>
+<p>相当于：</p>
+<pre><code class="lang-lua">if is_mode("check") then
+    set_symbols("debug")
+    set_optimize("none")
+    add_cxflags("-fsanitize=address", "-ftrapv")
+    add_mxflags("-fsanitize=address", "-ftrapv")
+    add_ldflags("-fsanitize=address")
+end
+</code></pre>
+<p>我们可以通过：<code>xmake f -m check</code>来切换到此编译模式。</p>
+<h4 id="modeprofile">mode.profile</h4>
+<p>为当前工程xmake.lua添加profile编译模式的配置规则，一般用于性能分析，例如：</p>
+<pre><code class="lang-lua">add_rules("mode.profile")
+</code></pre>
+<p>相当于：</p>
+<pre><code class="lang-lua">if is_mode("profile") then
+    set_symbols("debug")
+    add_cxflags("-pg")
+    add_ldflags("-pg")
+end
+</code></pre>
+<p>我们可以通过：<code>xmake f -m profile</code>来切换到此编译模式。</p>
+<h4 id="modecoverage">mode.coverage</h4>
+<p>为当前工程xmake.lua添加coverage编译模式的配置规则，一般用于覆盖分析，例如：</p>
+<pre><code class="lang-lua">add_rules("mode.coverage")
+</code></pre>
+<p>相当于：</p>
+<pre><code class="lang-lua">if is_mode("coverage") then
+    add_cxflags("--coverage")
+    add_mxflags("--coverage")
+    add_ldflags("--coverage")
+end
+</code></pre>
+<p>我们可以通过：<code>xmake f -m coverage</code>来切换到此编译模式。</p>
+<h4 id="modevalgrind">mode.valgrind</h4>
+<p>此模式提供valgrind内存分析检测支持。</p>
+<pre><code class="lang-lua">add_rules("mode.valgrind")
+</code></pre>
+<p>我们可以通过：<code>xmake f -m valgrind</code>来切换到此编译模式。</p>
+<h4 id="modeasan">mode.asan</h4>
+<p>此模式提供AddressSanitizer内存分析检测支持。</p>
+<pre><code class="lang-lua">add_rules("mode.asan")
+</code></pre>
+<p>我们可以通过：<code>xmake f -m asan</code>来切换到此编译模式。</p>
+<h4 id="modetsan">mode.tsan</h4>
+<p>此模式提供ThreadSanitizer内存分析检测支持。</p>
+<pre><code class="lang-lua">add_rules("mode.tsan")
+</code></pre>
+<p>我们可以通过：<code>xmake f -m tsan</code>来切换到此编译模式。</p>
+<h4 id="modelsan">mode.lsan</h4>
+<p>此模式提供LeakSanitizer内存分析检测支持。</p>
+<pre><code class="lang-lua">add_rules("mode.lsan")
+</code></pre>
+<p>我们可以通过：<code>xmake f -m lsan</code>来切换到此编译模式。</p>
+<h4 id="modeubsan">mode.ubsan</h4>
+<p>此模式提供UndefinedBehaviorSanitizer内存分析检测支持。</p>
+<pre><code class="lang-lua">add_rules("mode.ubsan")
+</code></pre>
+<p>我们可以通过：<code>xmake f -m ubsan</code>来切换到此编译模式。</p>
+<h4 id="qtstatic">qt.static</h4>
+<p>用于编译生成Qt环境的静态库程序：</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.static")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
+</code></pre>
+<h4 id="qtshared">qt.shared</h4>
+<p>用于编译生成Qt环境的动态库程序：</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.shared")
+    add_files("src/*.cpp")
+    add_frameworks("QtNetwork", "QtGui")
+</code></pre>
+<h4 id="qtconsole">qt.console</h4>
+<p>用于编译生成Qt环境的控制台程序：</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.console")
+    add_files("src/*.cpp")
+</code></pre>
+<h4 id="qtquickapp">qt.quickapp</h4>
+<p>用于编译生成Qt环境的Quick(qml) ui应用程序。</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.quickapp")
+    add_files("src/*.cpp")
+    add_files("src/qml.qrc")
+</code></pre>
+<h4 id="qtquickapp_static">qt.quickapp_static</h4>
+<p>用于编译生成Qt环境的Quick(qml) ui应用程序（静态链接版本）。</p>
+<p>!> 需要切换到静态库版本Qt SDK</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.quickapp_static")
+    add_files("src/*.cpp")
+    add_files("src/qml.qrc")
+</code></pre>
+<h4 id="qtwidgetapp">qt.widgetapp</h4>
+<p>用于编译Qt Widgets(ui/moc)应用程序</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.widgetapp")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
+</code></pre>
+<h4 id="qtwidgetapp_static">qt.widgetapp_static</h4>
+<p>用于编译Qt Widgets(ui/moc)应用程序（静态库版本）</p>
+<p>!> 需要切换到静态库版本Qt SDK</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("qt.widgetapp_static")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
+</code></pre>
+<p>更多Qt相关描述见：<a href="https://github.com/xmake-io/xmake/issues/160">#160</a></p>
+<h4 id="xcodebundle">xcode.bundle</h4>
+<p>用于编译生成ios/macos bundle程序</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("xcode.bundle")
+    add_files("src/*.m")
+    add_files("src/Info.plist")
+</code></pre>
+<h4 id="xcodeframework">xcode.framework</h4>
+<p>用于编译生成ios/macos framework程序</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("xcode.framework")
+    add_files("src/*.m")
+    add_files("src/Info.plist")
+</code></pre>
+<h4 id="xcodeapplication">xcode.application</h4>
+<p>用于编译生成ios/macos应用程序</p>
+<pre><code class="lang-lua">target("test")
+    add_rules("xcode.application")
+    add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
+    add_files("src/Info.plist")
+</code></pre>
+<h4 id="wdkenvkmdf">wdk.env.kmdf</h4>
+<p>应用WDK下kmdf的编译环境设置，需要配合：<code>wdk.[driver|binary|static|shared]</code>等规则来使用。</p>
+<h4 id="wdkenvumdf">wdk.env.umdf</h4>
+<p>应用WDK下umdf的编译环境设置，需要配合：<code>wdk.[driver|binary|static|shared]</code>等规则来使用。</p>
+<h4 id="wdkenvwdm">wdk.env.wdm</h4>
+<p>应用WDK下wdm的编译环境设置，需要配合：<code>wdk.[driver|binary|static|shared]</code>等规则来使用。</p>
+<h4 id="wdkdriver">wdk.driver</h4>
+<p>编译生成windows下基于WDK环境的驱动程序，目前仅支持WDK10环境。</p>
+<p>注：需要配合：<code>wdk.env.[umdf|kmdf|wdm]</code>等环境规则使用。</p>
+<pre><code class="lang-lua">-- add target
+target("echo")
+
+    -- add rules
+    add_rules("wdk.driver", "wdk.env.kmdf")
+
+    -- add files
+    add_files("driver/*.c")
+    add_files("driver/*.inx")
+
+    -- add includedirs
+    add_includedirs("exe")
+</code></pre>
+<h4 id="wdkbinary">wdk.binary</h4>
+<p>编译生成windows下基于WDK环境的可执行程序，目前仅支持WDK10环境。</p>
+<p>注：需要配合：<code>wdk.env.[umdf|kmdf|wdm]</code>等环境规则使用。</p>
+<pre><code class="lang-lua">-- add target
+target("app")
+
+    -- add rules
+    add_rules("wdk.binary", "wdk.env.umdf")
+
+    -- add files
+    add_files("exe/*.cpp")
+</code></pre>
+<h4 id="wdkstatic">wdk.static</h4>
+<p>编译生成windows下基于WDK环境的静态库程序，目前仅支持WDK10环境。</p>
+<p>注：需要配合：<code>wdk.env.[umdf|kmdf|wdm]</code>等环境规则使用。</p>
+<pre><code class="lang-lua">target("nonpnp")
+
+    -- add rules
+    add_rules("wdk.static", "wdk.env.kmdf")
+
+    -- add flags for rule: wdk.tracewpp
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
+
+    -- add files
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
+</code></pre>
+<h4 id="wdkshared">wdk.shared</h4>
+<p>编译生成windows下基于WDK环境的动态库程序，目前仅支持WDK10环境。</p>
+<p>注：需要配合：<code>wdk.env.[umdf|kmdf|wdm]</code>等环境规则使用。</p>
+<pre><code class="lang-lua">target("nonpnp")
+
+    -- add rules
+    add_rules("wdk.shared", "wdk.env.wdm")
+
+    -- add flags for rule: wdk.tracewpp
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
+
+    -- add files
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
+</code></pre>
+<h4 id="wdktracewpp">wdk.tracewpp</h4>
+<p>用于启用tracewpp预处理源文件：</p>
+<pre><code class="lang-lua">target("nonpnp")
+
+    -- add rules
+    add_rules("wdk.driver", "wdk.env.kmdf")
+
+    -- add flags for rule: wdk.tracewpp
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
+
+    -- add files
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
+    add_files("driver/*.rc")
+</code></pre>
+<p>更多WDK规则描述见：<a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
+<h4 id="winsdkapplication">win.sdk.application</h4>
+<p>编译生成winsdk应用程序。</p>
+<pre><code class="lang-lua">-- add rules
+add_rules("mode.debug", "mode.release")
+
+-- define target
+target("usbview")
+
+    -- windows application
+    add_rules("win.sdk.application")
+
+    -- add files
+    add_files("*.c", "*.rc")
+    add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
+</code></pre>
+<h4 id="wdksdkdotnet">wdk.sdk.dotnet</h4>
+<p>用于指定某些c++源文件作为c++.net来编译。</p>
+<pre><code class="lang-lua">add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
+</code></pre>
+<h4 id="pluginvsxmakeautoupdate">plugin.vsxmake.autoupdate</h4>
+<p>我们可以使用此规则，在通过 <code>xmake project -k vsxmake</code> 生成的 vs 工程中，自动更新 vs 工程文件（当每次构建完成）。</p>
+<pre><code class="lang-lua">add_rules("plugin.vsxmake.autoupdate")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+</code></pre>
+<h4 id="utilssymbolsexport_all">utils.symbols.export_all</h4>
+<p>v2.5.2 以上版本提供，我们可以用它自动导出所有的动态库符号，目前仅支持 windows dll 目标程序的符号导出，即使没有在代码中通过 <code>__declspec(dllexport)</code> 导出接口，<br>xmake 也会自动导出所有 c 接口符号（c++ 类库符号太多，暂时没有导出它）。</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+
+target("foo")
+    set_kind("shared")
+    add_files("src/foo.c")
+    add_rules("utils.symbols.export_all")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.c")
+</code></pre>
+<p>相关 issue <a href="https://github.com/xmake-io/xmake/issues/1123">#1123</a></p>
+<h4 id="utilsinstallcmake_importfiles">utils.install.cmake_importfiles</h4>
+<p>v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 .cmake 文件，用于其他 cmake 项目的库导入和查找。</p>
+<h4 id="utilsinstallpkgconfig_importfiles">utils.install.pkgconfig_importfiles</h4>
+<p>v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 pkgconfig/.pc 文件，用于其他项目的库导入和查找。</p>
+<h3 id="rule">rule</h3>
+<h4 id="">定义规则</h4>
+<pre><code class="lang-lua">rule("markdown")
+    set_extensions(".md", ".markdown")
+    on_build_file(function (target, sourcefile, opt)
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+    end)
+</code></pre>
+<h3 id="ruleadd_imports">rule:add_imports</h3>
+<h4 id="">为所有自定义脚本预先导入扩展模块</h4>
+<p>使用方式和说明请见：<a href="#targetadd_imports">target:add_imports</a>，用法相同。</p>
+<h3 id="ruleset_extensions">rule:set_extensions</h3>
+<h4 id="">设置规则支持的文件扩展类型</h4>
+<p>通过设置支持的扩展文件类型，将规则应用于带这些后缀的文件上，例如：</p>
+<pre><code class="lang-lua">-- 定义一个markdown文件的构建规则
+rule("markdown")
+    set_extensions(".md", ".markdown")
+    on_build_file(function (target, sourcefile, opt)
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+    end)
+
+target("test")
+    set_kind("binary")
+
+    -- 使test目标支持markdown文件的构建规则
+    add_rules("markdown")
+
+    -- 添加markdown文件的构建
+    add_files("src/*.md")
+    add_files("src/*.markdown")
+</code></pre>
+<h3 id="ruleon_load">rule:on_load</h3>
+<h4 id="">自定义加载脚本</h4>
+<p>用于实现自定规则的加载脚本，当加载target的时候，会被执行，可在里面自定义设置一些target配置，例如：</p>
+<pre><code class="lang-lua">rule("test")
+    on_load(function (target)
+        target:add("defines", "-DTEST")
+    end)
+</code></pre>
+<h3 id="ruleon_link">rule:on_link</h3>
+<h4 id="">自定义链接脚本</h4>
+<p>用于实现自定规则的链接脚本，会覆盖被应用的target的默认链接行为，例如：</p>
+<pre><code class="lang-lua">rule("test")
+    on_link(function (target)
+    end)
+</code></pre>
+<h3 id="ruleon_build">rule:on_build</h3>
+<h4 id="">自定义编译脚本</h4>
+<p>用于实现自定规则的构建脚本，会覆盖被应用的target的默认构建行为，例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    on_build(function (target)
+    end)
+</code></pre>
+<h3 id="ruleon_clean">rule:on_clean</h3>
+<h4 id="">自定义清理脚本</h4>
+<p>用于实现自定规则的清理脚本会，覆盖被应用的target的默认清理行为，例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    on_clean(function (target)
+        -- remove sourcefile.html
+    end)
+</code></pre>
+<h3 id="ruleon_package">rule:on_package</h3>
+<h4 id="">自定义打包脚本</h4>
+<p>用于实现自定规则的打包脚本，覆盖被应用的target的默认打包行为, 例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    on_package(function (target)
+        -- package sourcefile.html
+    end)
+</code></pre>
+<h3 id="ruleon_install">rule:on_install</h3>
+<h4 id="">自定义安装脚本</h4>
+<p>用于实现自定规则的安装脚本，覆盖被应用的target的默认安装行为, 例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    on_install(function (target)
+    end)
+</code></pre>
+<h3 id="ruleon_uninstall">rule:on_uninstall</h3>
+<h4 id="">自定义卸载脚本</h4>
+<p>用于实现自定规则的卸载脚本，覆盖被应用的target的默认卸载行为, 例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    on_uninstall(function (target)
+    end)
+</code></pre>
+<h3 id="ruleon_build_file">rule:on_build_file</h3>
+<h4 id="">自定义编译脚本，一次处理一个源文件</h4>
+<pre><code class="lang-lua">rule("markdown")
+    on_build_file(function (target, sourcefile, opt)
+        print("%%%d: %s", opt.progress, sourcefile)
+    end)
+</code></pre>
+<p>其中第三个参数opt是可选参数，用于获取一些编译过程中的信息状态，例如：opt.progress 为当期的编译进度。</p>
+<h3 id="ruleon_buildcmd_file">rule:on_buildcmd_file</h3>
+<h4 id="">自定义批处理编译脚本，一次处理一个源文件</h4>
+<p>这是 2.5.2 版本新加的接口，里面的脚本不会直接构建源文件，但是会通过 batchcmds 对象，构造一个批处理命令行任务，<br>xmake 在实际执行构建的时候，一次性执行这些命令。</p>
+<p>这对于 <code>xmake project</code> 此类工程生成器插件非常有用，因为生成器生成的第三方工程文件并不支持 <code>on_build_files</code> 此类内置脚本的执行支持。</p>
+<p>但是 <code>on_buildcmd_files</code> 构造的最终结果，就是一批原始的 cmd 命令行，可以直接给其他工程文件作为 custom commands 来执行。</p>
+<p>另外，相比 <code>on_build_files</code>，它也简化对扩展文件的编译实现，更加的可读易配置，对用户也更加友好。</p>
+<pre><code class="lang-lua">rule("foo")
+    set_extensions(".xxx")
+    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
+        batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile})
+        batchcmds:add_depfiles("/xxxxx/dependfile.h",  ...)
+        -- batchcmds:add_depvalues(...)
+        -- batchcmds:set_depmtime(os.mtime(...))
+        -- batchcmds:set_depcache("xxxx.d")
+    end)
+</code></pre>
+<p>除了 <code>batchcmds:vrunv</code>，我们还支持一些其他的批处理命令，例如：</p>
+<pre><code class="lang-lua">batchcmds:show("hello %s", "xmake")
+batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile}, {envs = {LD_LIBRARY_PATH="/xxx"}})
+batchcmds:mkdir("/xxx") -- and cp, mv, rm, ln ..
+batchcmds:compile(sourcefile_cx, objectfile, {configs = {includedirs = sourcefile_dir, languages = (sourcekind == "cxx" and "c++11")}})
+batchcmds:link(objectfiles, targetfile, {configs = {linkdirs = ""}})
+</code></pre>
+<p>同时，我们在里面也简化对依赖执行的配置，下面是一个完整例子：</p>
+<pre><code class="lang-lua">rule("lex")
+    set_extensions(".l", ".ll")
+    on_buildcmd_file(function (target, batchcmds, sourcefile_lex, opt)
+
+        -- imports
+        import("lib.detect.find_tool")
+
+        -- get lex
+        local lex = assert(find_tool("flex") or find_tool("lex"), "lex not found!")
+
+        -- get c/c++ source file for lex
+        local extension = path.extension(sourcefile_lex)
+        local sourcefile_cx = path.join(target:autogendir(), "rules", "lex_yacc", path.basename(sourcefile_lex) .. (extension == ".ll" and ".cpp" or ".c"))
+
+        -- add objectfile
+        local objectfile = target:objectfile(sourcefile_cx)
+        table.insert(target:objectfiles(), objectfile)
+
+        -- add commands
+        batchcmds:show_progress(opt.progress, "${color.build.object}compiling.lex %s", sourcefile_lex)
+        batchcmds:mkdir(path.directory(sourcefile_cx))
+        batchcmds:vrunv(lex.program, {"-o", sourcefile_cx, sourcefile_lex})
+        batchcmds:compile(sourcefile_cx, objectfile)
+
+        -- add deps
+        batchcmds:add_depfiles(sourcefile_lex)
+        batchcmds:set_depmtime(os.mtime(objectfile))
+        batchcmds:set_depcache(target:dependfile(objectfile))
+    end)
+</code></pre>
+<p>关于这个的详细说明和背景，见：<a href="https://github.com/xmake-io/xmake/issues/1246">issue 1246</a></p>
+<h3 id="ruleon_build_files">rule:on_build_files</h3>
+<h4 id="">自定义编译脚本，一次处理多个源文件</h4>
+<p>大部分的自定义构建规则，每次都是处理单独一个文件，输出一个目标文件，例如：a.c => a.o</p>
+<p>但是，有些情况下，我们需要同时输入多个源文件一起构建生成一个目标文件，例如：a.c b.c d.c => x.o</p>
+<p>对于这种情况，我们可以通过自定义这个脚本来实现：</p>
+<pre><code class="lang-lua">rule("markdown")
+    on_build_files(function (target, sourcebatch, opt)
+        -- build some source files
+        for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
+            -- ...
+        end
+    end)
+</code></pre>
+<h3 id="ruleon_buildcmd_files">rule:on_buildcmd_files</h3>
+<h4 id="">自定义批处理编译脚本，一次处理多个源文件</h4>
+<p>关于这个的详细说明，见：<a href="#ruleon_buildcmd_file">rule:on_buildcmd_file</a></p>
+<pre><code class="lang-lua">rule("foo")
+    set_extensions(".xxx")
+    on_buildcmd_files(function (target, batchcmds, sourcebatch, opt)
+        for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
+            batchcmds:vrunv("gcc", {"-o", objectfile, "-c", sourcefile})
+        end
+    end)
+</code></pre>
+<h3 id="rulebefore_link">rule:before_link</h3>
+<h4 id="">自定义链接前脚本</h4>
+<p>用于实现自定义target链接前的执行脚本，例如：</p>
+<pre><code class="lang-lua">rule("test")
+    before_link(function (target)
+    end)
+</code></pre>
+<h3 id="rulebefore_build">rule:before_build</h3>
+<h4 id="">自定义编译前脚本</h4>
+<p>用于实现自定义target构建前的执行脚本，例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    before_build(function (target)
+    end)
+</code></pre>
+<h3 id="rulebefore_clean">rule:before_clean</h3>
+<h4 id="">自定义清理前脚本</h4>
+<p>用于实现自定义target清理前的执行脚本，例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    before_clean(function (target)
+    end)
+</code></pre>
+<h3 id="rulebefore_package">rule:before_package</h3>
+<h4 id="">自定义打包前脚本</h4>
+<p>用于实现自定义target打包前的执行脚本, 例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    before_package(function (target)
+    end)
+</code></pre>
+<h3 id="rulebefore_install">rule:before_install</h3>
+<h4 id="">自定义安装前脚本</h4>
+<p>用于实现自定义target安装前的执行脚本，例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    before_install(function (target)
+    end)
+</code></pre>
+<h3 id="rulebefore_uninstall">rule:before_uninstall</h3>
+<h4 id="">自定义卸载前脚本</h4>
+<p>用于实现自定义target卸载前的执行脚本，例如：</p>
+<pre><code class="lang-lua">rule("markdown")
+    before_uninstall(function (target)
+    end)
+</code></pre>
+<h3 id="rulebefore_build_file">rule:before_build_file</h3>
+<h4 id="">自定义编译前脚本，一次处理一个源文件</h4>
+<p>跟<a href="#ruleon_build_file">rule:on_build_file</a>用法类似，不过这个接口被调用的时机是在编译某个源文件之前，<br>一般用于对某些源文件进行编译前的预处理。</p>
+<h3 id="rulebefore_buildcmd_file">rule:before_buildcmd_file</h3>
+<h4 id="">自定义编译前批处理脚本，一次处理一个源文件</h4>
+<p>跟<a href="#ruleon_buildcmd_file">rule:on_buildcmd_file</a>用法类似，不过这个接口被调用的时机是在编译某个源文件之前，<br>一般用于对某些源文件进行编译前的预处理。</p>
+<h3 id="rulebefore_build_files">rule:before_build_files</h3>
+<h4 id="">自定义编译前脚本，一次处理多个源文件</h4>
+<p>跟<a href="#ruleon_build_files">rule:on_build_files</a>用法类似，不过这个接口被调用的时机是在编译某些源文件之前，<br>一般用于对某些源文件进行编译前的预处理。</p>
+<h3 id="rulebefore_buildcmd_files">rule:before_buildcmd_files</h3>
+<h4 id="">自定义编译前批处理脚本，一次处理多个源文件</h4>
+<p>跟<a href="#ruleon_buildcmd_files">rule:on_buildcmd_files</a>用法类似，不过这个接口被调用的时机是在编译某些源文件之前，<br>一般用于对某些源文件进行编译前的预处理。</p>
+<h3 id="ruleafter_link">rule:after_link</h3>
+<h4 id="">自定义链接后脚本</h4>
+<p>用于实现自定义target链接后的执行脚本，用法跟<a href="#rulebefore_link">rule:before_link</a>类似。</p>
+<h3 id="ruleafter_build">rule:after_build</h3>
+<h4 id="">自定义编译后脚本</h4>
+<p>用于实现自定义target构建后的执行脚本，用法跟<a href="#rulebefore_build">rule:before_build</a>类似。</p>
+<h3 id="ruleafter_clean">rule:after_clean</h3>
+<h4 id="">自定义清理后脚本</h4>
+<p>用于实现自定义target清理后的执行脚本，用法跟<a href="#rulebefore_clean">rule:before_clean</a>类似。</p>
+<h3 id="ruleafter_package">rule:after_package</h3>
+<h4 id="">自定义打包后脚本</h4>
+<p>用于实现自定义target打包后的执行脚本, 用法跟<a href="#rulebefore_package">rule:before_package</a>类似。</p>
+<h3 id="ruleafter_install">rule:after_install</h3>
+<h4 id="">自定义安装后脚本</h4>
+<p>用于实现自定义target安装后的执行脚本，用法跟<a href="#rulebefore_install">rule:before_install</a>类似。</p>
+<h3 id="ruleafter_uninstall">rule:after_uninstall</h3>
+<h4 id="">自定义卸载后脚本</h4>
+<p>用于实现自定义target卸载后的执行脚本，用法跟<a href="#rulebefore_uninstall">rule:before_uninstall</a>类似。</p>
+<h3 id="ruleafter_build_file">rule:after_build_file</h3>
+<h4 id="">自定义编译后脚本，一次处理一个源文件</h4>
+<p>跟<a href="#ruleon_build_file">rule:on_build_file</a>用法类似，不过这个接口被调用的时机是在编译某个源文件之后，<br>一般用于对某些编译后对象文件进行后期处理。</p>
+<h3 id="ruleafter_buildcmd_file">rule:after_buildcmd_file</h3>
+<h4 id="">自定义编译后批处理脚本，一次处理一个源文件</h4>
+<p>跟<a href="#ruleon_buildcmd_file">rule:on_buildcmd_file</a>用法类似，不过这个接口被调用的时机是在编译某个源文件之后，<br>一般用于对某些编译后对象文件进行后期处理。</p>
+<h3 id="ruleafter_build_files">rule:after_build_files</h3>
+<h4 id="">自定义编译后脚本，一次处理多个源文件</h4>
+<p>跟<a href="#ruleon_build_files">rule:on_build_files</a>用法类似，不过这个接口被调用的时机是在编译某些源文件之后，<br>一般用于对某些编译后对象文件进行后期处理。</p>
+<h3 id="ruleafter_buildcmd_files">rule:after_buildcmd_files</h3>
+<h4 id="">自定义编译后批处理脚本，一次处理多个源文件</h4>
+<p>跟<a href="#ruleon_buildcmd_files">rule:on_buildcmd_files</a>用法类似，不过这个接口被调用的时机是在编译某些源文件之后，<br>一般用于对某些编译后对象文件进行后期处理。</p>
+<h3 id="rule_end">rule_end</h3>
+<h4 id="">结束定义规则</h4>
+<p>这个是可选的，如果想要手动结束rule的定义，可以调用它：</p>
+<pre><code class="lang-lua">rule("test")
+    -- ..
+rule_end()
+</code></pre>
+</article>
+</body>
+</html>

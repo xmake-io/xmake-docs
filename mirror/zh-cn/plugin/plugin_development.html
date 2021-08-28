@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/plugin/plugin_development">https://xmake.io/#/zh-cn/plugin/plugin_development</a>
+</br>
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="">简介</h2>
+<p>XMake完全支持插件模式，我们可以很方便的扩展实现自己的插件，并且xmake也提供了一些内建的使用插件。</p>
+<p>我们可以执行下 <code>xmake -h</code> 看下当前支持的插件：</p>
+<pre><code>Plugins: 
+    l, lua                                 Run the lua script.
+    m, macro                               Run the given macro.
+       doxygen                             Generate the doxygen document.
+       hello                               Hello xmake!
+       project                             Create the project file.
+</code></pre><ul>
+<li>lua: 运行lua脚本的插件</li>
+<li>macro: 这个很实用，宏脚本插件，可以手动录制多条xmake命令并且回放，也可以通过脚本实现一些复杂的宏脚本，这个我们后续会更加详细的介绍</li>
+<li>doxygen：一键生成doxygen文档的插件</li>
+<li>hello: 插件demo，仅仅显示一句话：&#39;hello xmake!&#39;</li>
+<li>project： 生成工程文件的插件，目前仅支持(makefile)，后续还会支持(vs,xcode等工程)的生成</li>
+</ul>
+<h2 id="">快速开始</h2>
+<p>接下来我们介绍下本文的重点，一个简单的hello xmake插件的开发，代码如下：</p>
+<pre><code class="lang-lua">-- 定义一个名叫hello的插件任务
+task("hello")
+
+    -- 设置类型为插件
+    set_category("plugin")
+
+    -- 插件运行的入口
+    on_run(function ()
+
+        -- 显示hello xmake!
+        print("hello xmake!")
+
+    end)
+
+    -- 设置插件的命令行选项，这里没有任何参数选项，仅仅显示插件描述
+    set_menu {
+                -- usage
+                usage = "xmake hello [options]"
+
+                -- description
+            ,   description = "Hello xmake!"
+
+                -- options
+            ,   options = {}
+            } 
+</code></pre>
+<p>这个插件的文件结构如下：</p>
+<pre><code>hello
+ - xmake.lua
+
+</code></pre><p>现在一个最简单的插件写完了，那怎么让它被xmake检测到呢，有三种方式：</p>
+<ol>
+<li>把 hello 这个文件夹放置在 xmake的插件安装目录 <code>xmake/plugins</code>，这个里面都是些内建的插件</li>
+<li>把 hello 文件夹放置在 <code>~/.xmake/plugins</code> 用户全局目录，这样对当前xmake 全局生效</li>
+<li>把 hello 文件夹放置在任意地方，通过在工程描述文件xmake.lua中调用<code>add_plugindirs("./hello")</code> 添加当前的工程的插件搜索目录，这样只对当前工程生效</li>
+</ol>
+<h2 id="">运行插件</h2>
+<p>接下来，我们尝试运行下这个插件：</p>
+<pre><code class="lang-console">xmake hello
+</code></pre>
+<p>显示结果：</p>
+<pre><code>hello xmake!
+</code></pre><p>最后我们还可以在target自定义的脚本中运行这个插件：</p>
+<pre><code class="lang-lua">target("demo")
+
+    -- 构建之后运行插件
+    after_build(function (target)
+
+        -- 导入task模块
+        import("core.project.task")
+
+        -- 运行插件任务
+        task.run("hello")
+    end)
+</code></pre>
+</article>
+</body>
+</html>

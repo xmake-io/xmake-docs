@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/package/system_package">https://xmake.io/#/zh-cn/package/system_package</a>
+</br>
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="">查找系统包</h2>
+<p>如果觉得上述内置包的管理方式非常不方便，可以通过xmake提供的内置接口<code>find_packages</code>。</p>
+<p>并且通过系统和第三方包管理工具进行依赖包的安装，然后与xmake进行集成使用，例如我们查找一个openssl包：</p>
+<pre><code class="lang-lua">local packages = find_packages("openssl", "zlib")
+</code></pre>
+<p>返回的结果如下：</p>
+<pre><code class="lang-lua">{
+    {links = {"ssl", "crypto"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}},
+    {links = {"z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
+}
+</code></pre>
+<p>如果查找成功，则返回一个包含所有包信息的table，如果失败返回nil</p>
+<p>这里的返回结果可以直接作为<code>target:add</code>, <code>option:add</code>的参数传入，用于动态增加<code>target/option</code>的配置：</p>
+<pre><code class="lang-lua">option("zlib")
+    set_showmenu(true)
+    before_check(function (option)
+        option:add(find_packages("openssl", "zlib"))
+    end)
+</code></pre>
+<pre><code class="lang-lua">target("test")
+    on_load(function (target)
+        target:add(find_packages("openssl", "zlib"))
+    end)
+</code></pre>
+<p>目前此接口支持以下一些包管理支持：</p>
+<ul>
+<li>conan</li>
+<li>vcpkg</li>
+<li>homebrew</li>
+<li>pkg-config</li>
+</ul>
+<p>如果系统上装有<code>homebrew</code>, <code>pkg-config</code>等第三方工具，那么此接口会尝试使用它们去改进查找结果。</p>
+<p>更完整的使用描述，请参考：<a href="/mirror/zh-cn/manual/builtin_modules.html#find_packages">find_packages</a>接口文档。</p>
+<p>当然，如果觉得通过查找包的方式来集成第三方依赖包还不能满足需求，也可以通过<code>add_requires</code>来直接集成远程依赖包，具体请查看文档：<a href="https://xmake.io/#/zh-cn/package/remote_package">使用远程依赖包</a></p>
+<h2 id="homebrew">查找homebrew包</h2>
+<p>另外，我们也可以从手动指定的包管理器查找包：</p>
+<pre><code class="lang-lua">find_packages("brew::pcre2/libpcre2-8", "brew::x264")
+</code></pre>
+<p>我们只需要添加<code>brew::</code>前缀，就可以显式指定从homebrew的包源来查找包，如果<code>brew::pcre2</code>存在多个pkgconfig文件，例如：libpcre2-8.pc, libpcre2-16.pc, libpcre2-32.pc</p>
+<p>那么我们可以通过<code>brew::pcre2/libpcre2-16</code>来选择对应的pkgconfig文件指定的链接库信息。</p>
+<p>由于homebrew一般都是把包直接装到的系统中去了，因此用户不需要做任何集成工作，<code>find_packages</code>就已经原生无缝支持。</p>
+<h2 id="vcpkg">查找vcpkg包</h2>
+<p>目前xmake v2.2.2版本已经支持了vcpkg，用户只需要装完vcpkg后，执行<code>$ vcpkg integrate install</code>，xmake就能自动从系统中检测到vcpkg的根路径，然后自动适配里面包。</p>
+<p>当然，我们也可以手动指定vcpkg的根路径来支持：</p>
+<pre><code class="lang-console">$ xmake f --vcpkg=f:\vcpkg
+</code></pre>
+<p>或者我们可以设置到全局配置中去，避免每次切换配置的时候，重复设置：</p>
+<pre><code class="lang-console">$ xmake g --vcpkg=f:\vcpkg
+</code></pre>
+<p>然后，我们就可以通过<code>vcpkg::</code>前缀，来指定查找vcpkg中的依赖包了：</p>
+<pre><code class="lang-lua">find_packages("vcpkg::zlib", "vcpkg::openssl")
+</code></pre>
+<h2 id="conan">查找conan包</h2>
+<p>xmake v2.2.6以后的版本，也支持从conan中查找指定的包：</p>
+<pre><code class="lang-lua">find_packages("conan::openssl/1.1.1g")
+</code></pre>
+<h2 id="">查找包快速测试</h2>
+<p>我们可以使用下面的命令，快速检测系统上指定的包信息：</p>
+<pre><code class="lang-console">$ xmake l find_packages x264
+{ 
+  { 
+    links = { 
+      "x264" 
+    },
+    linkdirs = { 
+      "/usr/local/Cellar/x264/r2699/lib" 
+    },
+    version = "0.148.2699 a5e06b9",
+    includedirs = { 
+      "/usr/local/Cellar/x264/r2699/include" 
+    } 
+  } 
+}
+</code></pre>
+<p>我们也可以追加第三方包管理器前缀来测试：</p>
+<pre><code class="lang-console">xmake l find_packages conan::OpenSSL/1.0.2n@conan/stable
+</code></pre>
+<p>!> 需要注意的是，find_package命令如果在带有xmake.lua的工程目录下执行，是会有缓存的，如果查找失败，下次查找也会使用缓存的结果，如果要每次强制重新检测，请切换到非工程目录下执行上面的命令。</p>
+</article>
+</body>
+</html>

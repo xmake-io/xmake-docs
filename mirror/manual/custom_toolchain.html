@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/manual/custom_toolchain">https://xmake.io/#/manual/custom_toolchain</a>
+</br>
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>After version 2.3.4, xmake has supported custom toolchain in user&#39;s project xmake.lua, for example:</p>
+<pre><code class="lang-lua">-- define toolchain
+toolchain("myclang")
+
+    -- mark as standalone toolchain
+    set_kind("standalone")
+
+    -- set toolset
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
+
+    add_defines("MYCLANG")
+
+    -- check toolchain
+    on_check(function (toolchain)
+        return import("lib.detect.find_tool")("clang")
+    end)
+
+    -- on load
+    on_load(function (toolchain)
+
+        -- get march
+        local march = is_arch("x86_64", "x64") and "-m64" or "-m32"
+
+        -- init flags for c/c++
+        toolchain:add("cxflags", march)
+        toolchain:add("ldflags", march)
+        toolchain:add("shflags", march)
+        if not is_plat("windows") and os.isdir("/usr") then
+            for _, includedir in ipairs({"/usr/local/include", "/usr/include"}) do
+                if os.isdir(includedir) then
+                    toolchain:add("includedirs", includedir)
+                end
+            end
+            for _, linkdir in ipairs({"/usr/local/lib", "/usr/lib"}) do
+                if os.isdir(linkdir) then
+                    toolchain:add("linkdirs", linkdir)
+                end
+            end
+        end
+
+        -- init flags for objc/c++  (with ldflags and shflags)
+        toolchain:add("mxflags", march)
+
+        -- init flags for asm
+        toolchain:add("asflags", march)
+    end)
+</code></pre>
+<p>Then use the following command to cut to the toolchain you defined:</p>
+<pre><code class="lang-bash">$ xmake f --toolchain=myclang
+</code></pre>
+<p>Of course, we can also switch to the specified target directly to the custom toolchain through the <code>set_toolchains</code> interface.</p>
+<p>Before customizing the tool, we can run the following command to view the complete list of built-in toolchains to ensure that xmake does not provide it. If so, just use it directly. There is no need to define it yourself:</p>
+<pre><code class="lang-bash">$ xmake show -l toolchains
+</code></pre>
+<p>The following is a list of interfaces currently supported by the custom toolchain:</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#toolchain">toolchain</a></td>
+<td>Define Toolchain</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="#toolchainset_kind">set_kind</a></td>
+<td>Set toolchain type</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="#toolchainset_toolset">set_toolset</a></td>
+<td>Set toolset</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="#toolchainset_sdkdir">set_sdkdir</a></td>
+<td>Set toolchain sdk directory path</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="#toolchainset_bindir">set_bindir</a></td>
+<td>Set toolchain bin directory path</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="#toolchainon_check">on_check</a></td>
+<td>Check toolchain</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="#toolchainonon_load">on_load</a></td>
+<td>Load Toolchain</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="#toolchain_end">toolchain_end</a></td>
+<td>End defining toolchain</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_includedirs">add_includedirs</a></td>
+<td>Add header file search directory</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_defines">add_defines</a></td>
+<td>Add Macro Definition</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_undefines">add_undefines</a></td>
+<td>Cancel macro definition</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_cflags">add_cflags</a></td>
+<td>Add c compilation option</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_cxflags">add_cxflags</a></td>
+<td>Add c/c++ compilation options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_cxxflags">add_cxxflags</a></td>
+<td>Add c++ compilation options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_mflags">add_mflags</a></td>
+<td>Add objc compilation option</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_mxflags">add_mxflags</a></td>
+<td>Add objc/objc++ compilation options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_mxxflags">add_mxxflags</a></td>
+<td>Add objc++ compilation options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_scflags">add_scflags</a></td>
+<td>Add swift compilation options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_asflags">add_asflags</a></td>
+<td>Add assembly compilation options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_gcflags">add_gcflags</a></td>
+<td>Add go compilation options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_dcflags">add_dcflags</a></td>
+<td>Add dlang compilation options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_rcflags">add_rcflags</a></td>
+<td>Add rust compilation option</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_cuflags">add_cuflags</a></td>
+<td>Add cuda compilation options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_culdflags">add_culdflags</a></td>
+<td>Add cuda device link option</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_ldflags">add_ldflags</a></td>
+<td>Add link options</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_arflags">add_arflags</a></td>
+<td>Add static library archive option</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_shflags">add_shflags</a></td>
+<td>Add dynamic library link option</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_languages">add_languages</a></td>
+<td>Add language standards</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_frameworks">add_frameworks</a></td>
+<td>Add Link Frame</td>
+<td>>= 2.3.4</td>
+</tr>
+<tr>
+<td><a href="/mirror/manual/project_target.html#targetadd_frameworkdirs">add_frameworkdirs</a></td>
+<td>Add Link Framework</td>
+<td>>= 2.3.4</td>
+</tr>
+</tbody>
+</table>
+<h3 id="toolchain">toolchain</h3>
+<h4 id="definetoolchain">Define toolchain</h4>
+<p>It can be defined in the user project xmake.lua, or it can be independently defined by a separate xmake.lua to specifically define various toolchains</p>
+<pre><code class="lang-lua">toolchain("myclang")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+toolchain_end()
+</code></pre>
+<h4 id="definecrosstoolchain">Define cross toolchain</h4>
+<p>We can also customize the configuration for different cross toolchain sdk in xmake.lua. Usually only need to specify sdkdir, xmake can automatically detect other configurations, such as cross and other information, for example:</p>
+<pre><code class="lang-lua">toolchain("my_toolchain")
+    set_kind("standalone")
+    set_sdkdir("/tmp/arm-linux-musleabi-cross")
+toolchain_end()
+
+target("hello")
+    set_kind("binary")
+    add_files("apps/hello/*.c")
+</code></pre>
+<p>This is the most streamlined cross-toolchain configuration. It only sets the corresponding SDK path, and then marks it as a complete and independent toolchain by <code>set_kind("standalone")</code>.</p>
+<p>At this time, we can use the command line <code>--toolchain=my_toolchain</code> to manually switch to this toolchain.</p>
+<pre><code class="lang-console">xmake f --toolchain=my_toolchain
+xmake
+</code></pre>
+<p>In addition, we can also directly bind it to the corresponding target through <code>set_toolchains</code> in xmake.lua, then only when this target is compiled, will we switch to our custom toolchain.</p>
+<pre><code class="lang-lua">toolchain("my_toolchain")
+    set_kind("standalone")
+    set_sdkdir("/tmp/arm-linux-musleabi-cross")
+toolchain_end()
+
+target("hello")
+    set_kind("binary")
+    add_files("apps/hello/*.c")
+    set_toolchains("my_toolchain")
+</code></pre>
+<p>In this way, we no longer need to switch the toolchain manually, just execute xmake, and it will automatically switch to the my_toolchain toolchain by default.</p>
+<p>This is especially useful for embedded development, because there are many cross-compilation tool chains for embedded platforms, and we often need various switches to complete the compilation of different platforms.</p>
+<p>Therefore, we can place all toolchain definitions in a separate lua file to define, for example:</p>
+<pre><code>projectdir
+    -xmake.lua
+    -toolchains
+      -my_toolchain1.lua
+      -my_toolchain2.lua
+      -...
+</code></pre><p>Then, we only need to introduce them through includes in xmake.lua, and bind different tool chains according to different custom platforms:</p>
+<pre><code class="lang-lua">includes("toolchains/*.lua")
+target("hello")
+    set_kind("binary")
+    add_files("apps/hello/*.c")
+    if is_plat("myplat1") then
+        set_toolchains("my_toolchain1")
+    elseif is_plat("myplat2") then
+        set_toolchains("my_toolchain2")
+    end
+</code></pre>
+<p>In this way, we can quickly switch the designated platform directly when compiling to automatically switch the corresponding tool chain.</p>
+<pre><code class="lang-console">xmake f -p myplat1
+xmake
+</code></pre>
+<p>If some cross-compilation toolchains are complex in structure and automatic detection is not enough, you can use <code>set_toolset</code>, <code>set_cross</code> and <code>set_bindir</code> interfaces according to the actual situation to configure other settings in a targeted manner.</p>
+<p>For example, in the following example, we also added some cxflags/ldflags and the built-in system library links.</p>
+<pre><code class="lang-lua">toolchain("my_toolchain")
+    set_kind("standalone")
+    set_sdkdir("/tmp/arm-linux-musleabi-cross")
+    on_load(function (toolchain)
+        - add flags for arch
+        if toolchain:is_arch("arm") then
+            toolchain:add("cxflags", "-march=armv7-a", "-msoft-float", {force = true})
+            toolchain:add("ldflags", "-march=armv7-a", "-msoft-float", {force = true})
+        end
+        toolchain:add("ldflags", "--static", {force = true})
+        toolchain:add("syslinks", "gcc", "c")
+    end)
+</code></pre>
+<p>For more examples of custom toolchains, we can see the following interface documents, or refer to the built-in toolchain definition in the directory of xmake source code: <a href="https://github.com/xmake-io /xmake/blob/master/xmake/toolchains/">Internal Toolchain List</a></p>
+<h3 id="toolchainset_kind">toolchain:set_kind</h3>
+<h4 id="settoolchaintype">Set toolchain type</h4>
+<p>Currently only supports the setting of <code>standalone</code> type, which means that the current toolchain is an independent and complete toolchain, including a complete set of tool set configurations such as cc/cxx/ld/sh/ar and other compilers, archivers, and linkers.</p>
+<p>Usually used when a target is set with multiple toolchains at the same time, but only one independent toolchain can be effective at the same time. This configuration can ensure that the toolchains in effect are mutually exclusive. For example, the gcc/clang toolchain will not be simultaneously. Take effect.</p>
+<p>However, local toolchains such as yasm/nasm belong to the extension of additional local toolchains, and there is no need to set up standalone because two toolchains of clang/yasm may exist at the same time.</p>
+<p>!> Just remember that the toolchain with a complete compilation environment is set to standalone</p>
+<h3 id="toolchainset_toolset">toolchain:set_toolset</h3>
+<h4 id="settoolset">Set Tool Set</h4>
+<p>Used to set the name and path of each individual tool, for example:</p>
+<pre><code class="lang-lua">toolchain("myclang")
+    set_kind("standalone")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
+</code></pre>
+<p>For details about this interface, you can see: <a href="/mirror/manual/project_target.html#targetset_toolset">target.set_toolset</a></p>
+<h3 id="toolchainset_sdkdir">toolchain:set_sdkdir</h3>
+<h4 id="settoolchainsdkdirectorypath">Set toolchain sdk directory path</h4>
+<p>Usually we can configure the sdk directory through <code>xmake f --toolchain=myclang --sdk=xxx</code>, but each time the configuration is more cumbersome, we can also pre-configure to xmake.lua through this interface to facilitate quick switching.</p>
+<pre><code class="lang-lua">toolchain("myclang")
+    set_kind("standalone")
+    set_sdkdir("/tmp/sdkdir")
+    set_toolset("cc", "clang")
+</code></pre>
+<h3 id="toolchainset_bindir">toolchain:set_bindir</h3>
+<h4 id="settoolchainbindirectorypath">Set toolchain bin directory path</h4>
+<p>Normally, we can configure the SDK directory through <code>xmake f --toolchain=myclang --bin=xxx</code>, but each time the configuration is more cumbersome, we can also pre-configure to xmake.lua through this interface, which is convenient for quick switching.</p>
+<pre><code class="lang-lua">toolchain("myclang")
+    set_kind("standalone")
+    set_bindir("/tmp/sdkdir/bin")
+    set_toolset("cc", "clang")
+</code></pre>
+<h3 id="toolchainon_check">toolchain:on_check</h3>
+<h4 id="detectiontoolchain">Detection toolchain</h4>
+<p>It is used to detect whether the sdk or program where the specified toolchain exists exists on the current system. It is usually used in the case of multiple standalone toolchains to automatically detect and select an effective toolchain.</p>
+<p>For scenes specified manually by <code>xmake f --toolchain=myclang</code>, this detection configuration is not necessary and can be omitted.</p>
+<pre><code class="lang-lua">toolchain("myclang")
+    on_check(function (toolchain)
+        return import("lib.detect.find_tool")("clang")
+    end)
+</code></pre>
+<h3 id="toolchainon_load">toolchain:on_load</h3>
+<h4 id="loadtoolchain">Load toolchain</h4>
+<p>For some complex scenarios, we can dynamically and flexibly set various toolchain configurations in on_load, which is more flexible and powerful than setting in the description field:</p>
+<pre><code class="lang-lua">toolchain("myclang")
+    set_kind("standalone")
+    on_load(function (toolchain)
+
+        -- set toolset
+        toolchain:set("toolset", "cc", "clang")
+        toolchain:set("toolset", "ld", "clang++")
+
+        -- init flags 
+        local march = toolchain:is_arch("x86_64", "x64") and "-m64" or "-m32"
+        toolchain:add("cxflags", march)
+        toolchain:add("ldflags", march)
+        toolchain:add("shflags", march)
+    end)
+</code></pre>
+<h3 id="toolchain_end">toolchain_end</h3>
+<h4 id="enddefinitiontoolchain">End definition toolchain</h4>
+<p>This is optional, if you want to manually end the definition of toolchain, you can call it:</p>
+<pre><code class="lang-lua">toolchain("myclang")
+    - ..
+toolchain_end()
+</code></pre>
+</article>
+</body>
+</html>

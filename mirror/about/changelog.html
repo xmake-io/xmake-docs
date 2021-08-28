@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/about/changelog">https://xmake.io/#/about/changelog</a>
+</br>
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="v256">v2.5.6</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1483">#1483</a>: Add <code>os.joinenvs()</code> and improve package tools envirnoments</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1523">#1523</a>: Add <code>set_allowedmodes</code>, <code>set_allowedplats</code> and <code>set_allowedarchs</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1523">#1523</a>: Add <code>set_defaultmode</code>, <code>set_defaultplat</code> and <code>set_defaultarch</code></li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li>Improve vs/vsxmake project generator to support vs2022</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1513">#1513</a>: Improve precompiled binary package compatibility on windows/msvc</li>
+<li>Improve to find vcpkg root directory on windows</li>
+<li>Improve to support Qt6</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake-repo/pull/489">#489</a>: Fix run os.execv with too long envirnoment value on windows</li>
+</ul>
+<h2 id="v255">v2.5.5</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1421">#1421</a>: Add prefix, suffix and extension options for target names</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1422">#1422</a>: Support search packages from vcpkg, conan</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1424">#1424</a>: Set binary as default target kind</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1140">#1140</a>: Add a way to ask xmake to try to download dependencies from a certain package manager</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1339">#1339</a>: Improve <code>xmake package</code> to generate new local/remote packages</li>
+<li>Add <code>appletvos</code> platform support for AppleTV, <code>xmake f -p appletvos</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1437">#1437</a>: Add headeronly library type for package to ignore <code>vs_runtime</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1351">#1351</a>: Support export/import current configs</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1454">#1454</a>: Support to download and install precompiled image packages from xmake-mirror</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1425">#1425</a>: Improve tools/meson to load msvc envirnoments</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1442">#1442</a>: Support to clone package resources from git url</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1389">#1389</a>: Support to add toolchain envs to <code>xrepo env</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1453">#1453</a>: Support to export protobuf includedirs</li>
+<li>Support vs2022</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1413">#1413</a>: Fix hangs on fetching packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1420">#1420</a>: Fix config and packages cache</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1445">#1445</a>: Fix WDK driver sign error</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1465">#1465</a>: Fix missing link directory</li>
+</ul>
+<h2 id="v254">v2.5.4</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1323">#1323</a>: Support find and install package from <code>apt</code>, <code>add_requires("apt::zlib1g-dev")</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1337">#1337</a>: Add environment vars to change package directories</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1338">#1338</a>: Support import and export installed packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1087">#1087</a>: Add <code>xrepo env shell</code> and support load envs from <code>add_requires/xmake.lua</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1313">#1313</a>: Support private package for <code>add_requires/add_deps</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1358">#1358</a>: Support to set mirror url to speedup download package</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1369">#1369</a>: Support arm/arm64 packages for vcpkg, thanks @fallending</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1405">#1405</a>: Add portage package manager support, thanks @Phate6660</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li>Improve <code>find_package</code> and add <code>package:find_package</code> for xmake package</li>
+<li>Remove deprecated <code>set_config_h</code> and <code>set_config_h_prefix</code> apis</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1343">#1343</a>: Improve to search local package files</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1347">#1347</a>: Improve to vs_runtime configs for binary package</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1353">#1353</a>: Improve del_files() to speedup matching files</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1349">#1349</a>: Improve <code>xrepo env shell</code> to support powershell</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1380">#1380</a>: Fix add packages errors</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1381">#1381</a>: Fix add local git source for package</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1391">#1391</a>: Fix cuda/nvcc toolchain</li>
+</ul>
+<h2 id="v253">v2.5.3</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1259">#1259</a>: Support <code>add_files("*.def")</code> to export symbols for windows/dll</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1267">#1267</a>: add <code>find_package("nvtx")</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1274">#1274</a>: add <code>platform.linux.bpf</code> rule to build linux/bpf program</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1280">#1280</a>: Support fetchonly package to improve find_package</li>
+<li>Support to fetch remote ndk toolchain package</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1268">#1268</a>: Add <code>utils.install.pkgconfig_importfiles</code> rule to install <code>*.pc</code> import file</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1268">#1268</a>: Add <code>utils.install.cmake_importfiles</code> rule to install <code>*.cmake</code> import files</li>
+<li><a href="https://github.com/xmake-io/xmake-repo/pull/348">#348</a>: Add <code>platform.longpaths</code> policy to support git longpaths</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1314">#1314</a>: Support to install and use conda packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1120">#1120</a>: Add <code>core.base.cpu</code> module and improve <code>os.cpuinfo()</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1325">#1325</a>: Add builtin git variables for <code>add_configfiles</code></li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1275">#1275</a>: Support conditionnal targets for vsxmake plugin</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1290">#1290</a>: Improve android ndk to support >= r22</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1311">#1311</a>: Add packages lib folder to PATH for vsxmake project</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1266">#1266</a>: Fix relative repo path in <code>add_repositories</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1288">#1288</a>: Fix vsxmake generator with option configs</li>
+</ul>
+<h2 id="v252">v2.5.2</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/955#issuecomment-766481512">#955</a>: Support <code>zig cc</code> and <code>zig c++</code> as c/c++ compiler</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/955#issuecomment-768193083">#955</a>: Support zig cross-compilation</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1177">#1177</a>: Improve to detect terminal and color codes</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1216">#1216</a>: Pass custom configuration scripts to xrepo</li>
+<li>Add linuxos builtin module to get linux system information</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1217">#1217</a>: Support to fetch remote toolchain package when building project</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1123">#1123</a>: Add <code>rule("utils.symbols.export_all")</code> to export all symbols for windows/dll</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1181">#1181</a>: Add <code>utils.platform.gnu2mslib(mslib, gnulib)</code> module api to convert mingw/xxx.dll.a to msvc xxx.lib</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1246">#1246</a>: Improve rules and generators to support commands list</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1239">#1239</a>: Add <code>add_extsources</code> to improve find external packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1241">#1241</a>: Support add .manifest files for windows program</li>
+<li>Support to use <code>xrepo remove --all</code> to remove all packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1254">#1254</a>: Support to export packages to parent target</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1226">#1226</a>: Add missing qt include directories</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1183">#1183</a>: Improve c++ lanuages to support Qt6</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1237">#1237</a>: Add qt.ui files for vsxmake plugin</li>
+<li>Improve vs/vsxmake plugins to support precompiled header and intellisense</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1090">#1090</a>: Simplify integration of custom code generators</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1065">#1065</a>: Improve protobuf rule to support compile_commands generators</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1249">#1249</a>: Improve vs/vsxmake generator to support startproject</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/605">#605</a>: Improve to link orders for add_deps/add_packages</li>
+<li>Remove deprecated <code>add_defines_h_if_ok</code> and <code>add_defines_h</code> apis for option</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1219">#1219</a>: Fix version check and update</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1235">#1235</a>: Fix include directories with spaces</li>
+</ul>
+<h2 id="v251">v2.5.1</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1035">#1035</a>: The graphics configuration menu fully supports mouse events, and support scroll bar</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1098">#1098</a>: Support stdin for os.execv</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1079">#1079</a>: Add autoupdate plugin rule for vsxmake, <code>add_rules("plugin.vsxmake.autoupdate")</code></li>
+<li>Add <code>xmake f --vs_runtime=MT</code> and <code>set_runtimes("MT")</code> to set vs runtime for targets and packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1032">#1032</a>: Support to enum registry keys and values</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1026">#1026</a>: Support group for vs/vsxmake project</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1178">#1178</a>: Add <code>add_requireconfs()</code> api to rewrite configs of depend packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1043">#1043</a>: Add <code>luarocks.module</code> rule for luarocks-build-xmake</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1190">#1190</a>: Support for Apple Silicon (macOS ARM)</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1145">#1145</a>: Support Qt deploy for Windows, thanks @SirLynix</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1072">#1072</a>: Fix and improve to parse cl deps</li>
+<li>Support utf8 for ui modules and <code>xmake f --menu</code></li>
+<li>Improve to support zig on macOS</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1135">#1135</a>: Improve multi-toolchain and multi-platforms for targets</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1153">#1153</a>: Improve llvm toolchain to support sysroot on macOS</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1071">#1071</a>: Improve to generate vs/vsxmake project to support for remote packages</li>
+<li>Improve vs/vsxmake project plugin to support global <code>set_arch()</code> setting</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1164">#1164</a>: Improve to launch console programs for vsxmake project</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1179">#1179</a>: Improve llvm toolchain and add isysroot</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1091">#1091</a>: Fix incorrect ordering of inherited library dependencies</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1105">#1105</a>: Fix c++ language intellisense for vsxmake</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1132">#1132</a>: Fix TrimEnd bug for vsxmake</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1142">#1142</a>: Fix git not found when installing packages</li>
+<li>Fix macos.version bug for macOS Big Sur</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1084">#1084</a>: Fix <code>add_defines()</code> bug (contain spaces)</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1195">#1195</a>: Fix unicode problem for vs and improve find_vstudio/os.exec</li>
+</ul>
+<h2 id="v239">v2.3.9</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add new <a href="https://github.com/xmake-io/xrepo">xrepo</a> command to manage C/C++ packages</li>
+<li>Support for installing packages of cross-compilation</li>
+<li>Add musl.cc toolchains</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1009">#1009</a>: Support select and install any version package, e.g. <code>add_requires("libcurl 7.73.0", {verify = false})</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1016">#1016</a>: Add license checking for target/packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1017">#1017</a>: Support external/system include directories <code>add_sysincludedirs</code> for package and toolchains</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1020">#1020</a>: Support to find and install pacman package on archlinux and msys2</li>
+<li>Support mouse for <code>xmake f --menu</code></li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/997">#997</a>: Support to set std lanuages for <code>xmake project -k cmake</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/998">#998</a>: Support to install vcpkg packages with windows-static-md</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/996">#996</a>: Improve to find vcpkg directory</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1008">#1008</a>: Improve cross toolchains</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1030">#1030</a>: Improve xcode.framework and xcode.application rules</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1051">#1051</a>: Add <code>edit</code> and <code>embed</code> to <code>set_symbols()</code> only for msvc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1062">#1062</a>: Improve <code>xmake project -k vs</code> plugin.</li>
+</ul>
+<h2 id="v238">v2.3.8</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/955">#955</a>: Add zig project templates</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/956">#956</a>: Add wasm platform and support Qt/Wasm SDK</li>
+<li>Upgrade luajit vm and support for runing on mips64 device</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/972">#972</a>: Add <code>depend.on_changed()</code> api to simplify adding dependent files</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/981">#981</a>: Add <code>set_fpmodels()</code> for math optimization mode</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/980">#980</a>: Support Intel C/C++ and Fortran Compiler</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/986">#986</a>: Support for <code>c11</code> and <code>c17</code> for MSVC Version 16.8 and Above</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/979">#979</a>: Add Abstraction for OpenMP. <code>add_rules("c++.openmp")</code></li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/958">#958</a>: Improve mingw platform to support llvm-mingw toolchain</li>
+<li>Improve <code>add_requires("zlib~xxx")</code> to support for installing multi-packages at same time</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/977">#977</a>: Improve find_mingw for windows</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/978">#978</a>: Improve toolchain flags order</li>
+<li>Improve Xcode toolchain to support for macOS/arm64</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/951">#951</a>: Fix emcc support for windows</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/992">#992</a>: Fix filelock bug</li>
+</ul>
+<h2 id="v237">v2.3.7</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/microsoft/winget-pkgs/pull/2941">#2941</a>: Add support for winget</li>
+<li>Add xmake-tinyc installer without msvc compiler for windows</li>
+<li>Add tinyc compiler toolchain</li>
+<li>Add emcc compiler toolchain (emscripten) to compiling to asm.js and WebAssembly</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/947">#947</a>: Add <code>xmake g --network=private</code> to enable the private network</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/907">#907</a>: Improve to the linker optimization for msvc</li>
+<li>Improve to detect qt sdk environment</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/918">#918</a>: Improve to support cuda11 toolchains</li>
+<li>Improve Qt support for ubuntu/apt</li>
+<li>Improve CMake project generator</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/931">#931</a>: Support to export packages with all dependences</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/930">#930</a>: Support to download package without version list directly </li>
+<li><a href="https://github.com/xmake-io/xmake/issues/927">#927</a>: Support to switch arm/thumb mode for android ndk</li>
+<li>Improve trybuild/cmake to support android/mingw/iphoneos/watchos toolchains</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/903">#903</a>: Fix install vcpkg packages fails</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/912">#912</a>: Fix the custom toolchain</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/914">#914</a>: Fix bad light userdata pointer for lua on some aarch64 devices</li>
+</ul>
+<h2 id="v236">v2.3.6</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add <code>xmake project -k xcode</code> generator (use cmake)</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/870">#870</a>: Support gfortran compiler</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/887">#887</a>: Support zig compiler</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/893">#893</a>: Add json module</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/898">#898</a>: Support cross-compilation for golang</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/275">#275</a>: Support go package manager to install go packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/581">#581</a>: Support dub package manager to install dlang packages</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/868">#868</a>: Support new cl.exe dependency report files, <code>/sourceDependencies xxx.json</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/902">#902</a>: Improve to detect cross-compilation toolchain</li>
+</ul>
+<h2 id="v235">v2.3.5</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add <code>xmake show -l envs</code> to show all builtin envirnoment variables</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/861">#861</a>: Support search local package file to install remote package</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/854">#854</a>: Support global proxy settings for curl, wget and git</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/828">#828</a>: Support to import sub-directory files for protobuf rules</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/835">#835</a>: Improve mode.minsizerel to add /GL flags for msvc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/828">#828</a>: Support multi-level directories for protobuf/import</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/838#issuecomment-643570920">#838</a>: Support to override builtin-rules for <code>add_files("src/*.c", {rules = {"xx", override = true}})</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/847">#847</a>: Support to parse include deps for rc file</li>
+<li>Improve msvc tool chain, remove the dependence of global environment variables</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/857">#857</a>: Improved <code>set_toolchains()</code> when cross-compilation is supported, specific target can be switched to host toolchain and compiled at the same time</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix the progress bug for theme</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/829">#829</a>: Fix invalid sysroot path for macOS</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/832">#832</a>: Fix find_packages bug for the debug mode</li>
+</ul>
+<h2 id="v234">v2.3.4</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/630">#630</a>: Support *BSD system, e.g. FreeBSD, ..</li>
+<li>Add wprint builtin api to show warnings</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/784">#784</a>: Add <code>set_policy()</code> to set and modify some builtin policies</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/780">#780</a>: Add set_toolchains/set_toolsets for target and improve to detect cross-compilation toolchains</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/798">#798</a>: Add <code>xmake show</code> plugin to show some builtin configuration values and infos</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/797">#797</a>: Add ninja theme style, e.g. <code>xmake g --theme=ninja</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/816">#816</a>: Add mode.releasedbg and mode.minsizerel rules</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/819">#819</a>: Support ansi/vt100 terminal control</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/771">#771</a>: Check includedirs, linkdirs and frameworkdirs</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/774">#774</a>: Support ltui windows resize for <code>xmake f --menu</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/782">#782</a>: Add check flags failed tips for add_cxflags, ..</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/808">#808</a>: Support add_frameworks for cmakelists</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/820">#820</a>: Support independent working/build directory</li>
+</ul>
+<h3 id="bugfixed">Bug fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/786">#786</a>: Fix check header file deps</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/810">#810</a>: Fix strip debug bug for linux</li>
+</ul>
+<h2 id="v233">v2.3.3</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/727">#727</a>: Strip and generate debug symbols file (.so/.dSYM) for android/ios program</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/687">#687</a>: Support to generate objc/bundle program.</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/743">#743</a>: Support to generate objc/framework program.</li>
+<li>Support to compile bundle, framework, mac application and ios application, and all some project templates</li>
+<li>Support generate ios *.ipa file and codesign</li>
+<li>Add xmake.cli rule to develop lua program with xmake core engine</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/750">#750</a>: Improve qt.widgetapp rule to support private slot</li>
+</ul>
+<h2 id="v232">v2.3.2</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add powershell theme for powershell terminal</li>
+<li>Add <code>xmake --dry-run -v</code> to dry run building target and only show verbose build command.</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/712">#712</a>: Add sdcc platform and support sdcc compiler</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/589">#589</a>: Improve and optimize build speed, supports parallel compilation and linking across targets</li>
+<li>Improve the ninja/cmake generator</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/728">#728</a>: Improve os.cp to support reserve source directory structure</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/732">#732</a>: Improve find_package to support <code>homebrew/cmake</code> pacakges</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/695">#695</a>: Improve android abi</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix the link errors output issues for msvc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/718">#718</a>: Fix download cache bug for package</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/722">#722</a>: Fix invalid package deps</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/719">#719</a>: Fix process exit bug</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/720">#720</a>: Fix compile_commands generator</li>
+</ul>
+<h2 id="v231">v2.3.1</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/675">#675</a>: Support to compile <code>*.c</code> as c++, <code>add_files("*.c", {sourcekind = "cxx"})</code>.</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/681">#681</a>: Support compile xmake on msys/cygwin and add msys/cygwin platform</li>
+<li>Add socket/pipe io modules and support to schedule socket/process/pipe in coroutine</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/192">#192</a>: Try building project with the third-party buildsystem</li>
+<li>Enable color diagnostics output for gcc/clang</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/588">#588</a>: Improve project generator, <code>xmake project -k ninja</code>, support for build.ninja</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/665">#665</a>: Support to parse *nix style command options, thanks <a href="https://github.com/OpportunityLiu">@OpportunityLiu</a></li>
+<li><a href="https://github.com/xmake-io/xmake/pull/673">#673</a>: Improve tab complete to support argument values</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/680">#680</a>: Improve get.sh scripts and add download mirrors</li>
+<li>Improve process scheduler</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/651">#651</a>: Improve os/io module syserrors tips</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix incremental compilation for checking the dependent file </li>
+<li>Fix log output for parsing xmake-vscode/problem info</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/684">#684</a>: Fix linker errors for android ndk on windows</li>
+</ul>
+<h2 id="v229">v2.2.9</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/569">#569</a>: Add c++ modules build rules</li>
+<li>Add <code>xmake project -k xmakefile</code> generator</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/620">620</a>: Add global <code>~/.xmakerc.lua</code> for all projects.</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/593">593</a>: Add <code>core.base.socket</code> module.</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/563">#563</a>: Separate build rules for specific language files from action/build </li>
+<li><a href="https://github.com/xmake-io/xmake/issues/570">#570</a>: Add <code>qt.widgetapp</code> and <code>qt.quickapp</code> rules</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/576">#576</a>: Uses <code>set_toolchain</code> instead of <code>add_tools</code> and <code>set_tools</code></li>
+<li>Improve <code>xmake create</code> action</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/589">#589</a>: Improve the default build jobs number to optimize build speed</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/598">#598</a>: Improve find_package to support .tbd libraries on macOS</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/615">#615</a>: Support to install and use other archs and ios conan packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/629">#629</a>: Improve hash.uuid and implement uuid v4</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/639">#639</a>: Improve to parse argument options to support -jN</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/567">#567</a>: Fix out of memory for serialize </li>
+<li><a href="https://github.com/xmake-io/xmake/issues/566">#566</a>: Fix link order problem with remote packages </li>
+<li><a href="https://github.com/xmake-io/xmake/issues/565">#565</a>: Fix run path for vcpkg packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/597">#597</a>: Fix run <code>xmake require</code> command too slowly</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/634">#634</a>: Fix mode.coverage rule and check flags</li>
+</ul>
+<h2 id="v228">v2.2.8</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add protobuf c/c++ rules</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/468">#468</a>: Add utf-8 support for io module on windows</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/472">#472</a>: Add <code>xmake project -k vsxmake</code> plugin to support call xmake from vs/msbuild</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/487">#487</a>: Support to build the selected files for the given target</li>
+<li>Add filelock for io</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/513">#513</a>: Support for android/termux</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/517">#517</a>: Add <code>add_cleanfiles</code> api for target</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/537">#537</a>: Add <code>set_runenv</code> api to override os/envs </li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/257">#257</a>: Lock the whole project to avoid other process to access.</li>
+<li>Attempt to enable /dev/shm for the os.tmpdir</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/542">#542</a>: Improve vs unicode output for link/cl</li>
+<li>Improve binary bitcode lua scripts in the program directory</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/549">#549</a>: Fix error caused by the new vsDevCmd.bat of vs2019</li>
+</ul>
+<h2 id="v227">v2.2.7</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/455">#455</a>: support clang as cuda compiler, try <code>xmake f --cu=clang</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/440">#440</a>: Add <code>set_rundir()</code> and <code>add_runenvs()</code> api for target/run</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/443">#443</a>: Add tab completion support</li>
+<li>Add <code>on_link</code>, <code>before_link</code> and <code>after_link</code> for rule and target</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/190">#190</a>: Add <code>add_rules("lex", "yacc")</code> rules to support lex/yacc projects</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/430">#430</a>: Add <code>add_cucodegens()</code> api to improve set codegen for cuda</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/432">#432</a>: support deps analyze for cu file (for CUDA 10.1+)</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/437">#437</a>: Support explict git source for xmake update, <code>xmake update github:xmake-io/xmake#dev</code></li>
+<li><a href="https://github.com/xmake-io/xmake/pull/438">#438</a>: Support to only update scripts, <code>xmake update --scriptonly dev</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/433">#433</a>: Improve cuda to support device-link</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/442">#442</a>: Improve test library</li>
+</ul>
+<h2 id="v226">v2.2.6</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/380">#380</a>: Add support to export compile_flags.txt </li>
+<li><a href="https://github.com/xmake-io/xmake/issues/382">#382</a>: Simplify simple scope settings</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/397">#397</a>: Add clib package manager support</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/404">#404</a>: Support Qt for android and deploy android apk</li>
+<li>Add some qt empty project templates, e.g. <code>widgetapp_qt</code>, <code>quickapp_qt_static</code> and <code>widgetapp_qt_static</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/415">#415</a>: Add <code>--cu-cxx</code> config arguments to <code>nvcc/-ccbin</code></li>
+<li>Add <code>--ndk_stdcxx=y</code> and <code>--ndk_cxxstl=gnustl_static</code> argument options for android NDK</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve remote package manager</li>
+<li>Improve <code>target:on_xxx</code> scripts to support to match <code>android|armv7-a@macosx,linux|x86_64</code> pattern</li>
+<li>Improve loadfile to optimize startup speed, decrease 98% time</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/400">#400</a>: fix c++ languages bug for qt rules</li>
+</ul>
+<h2 id="v225">v2.2.5</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add <code>string.serialize</code> and <code>string.deserialize</code> to serialize and deserialize object, function and others.</li>
+<li>Add <code>xmake g --menu</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/283">#283</a>: Add <code>target:installdir()</code> and <code>set_installdir()</code> api for target</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/260">#260</a>: Add <code>add_platformdirs</code> api, we can define custom platforms</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/310">#310</a>: Add theme feature</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/318">#318</a>: Add <code>add_installfiles</code> api to target</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/339">#339</a>: Improve <code>add_requires</code> and <code>find_package</code> to integrate the 3rd package manager</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/327">#327</a>: Integrate with Conan package manager </li>
+<li>Add the builtin api <code>find_packages("pcre2", "zlib")</code> to find multiple packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/320">#320</a>: Add template configuration files and replace all variables before building</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/179">#179</a>: Generate CMakelist.txt file for <code>xmake project</code> plugin</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/361">#361</a>: Support vs2019 preview</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/368">#368</a>: Support <code>private, public, interface</code> to improve dependency inheritance like cmake</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/284">#284</a>: Add passing user configs description for <code>package()</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/319">#319</a>: Add <code>add_headerfiles</code> to improve to set header files and directories</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/342">#342</a>: Add some builtin help functions for <code>includes()</code>, e.g. <code>check_cfuncs</code></li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve to switch version and debug mode for the dependent packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/264">#264</a>: Support <code>xmake update dev</code> on windows</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/293">#293</a>: Add <code>xmake f/g --mingw=xxx</code> configuration option and improve to find_mingw</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/301">#301</a>: Improve precompiled header file</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/322">#322</a>: Add <code>option.add_features</code>, <code>option.add_cxxsnippets</code> and <code>option.add_csnippets</code></li>
+<li>Remove some deprecated interfaces of xmake 1.x, e.g. <code>add_option_xxx</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/327">#327</a>: Support conan package manager for <code>lib.detect.find_package</code> </li>
+<li>Improve <code>lib.detect.find_package</code> and add builtin <code>find_packages("zlib 1.x", "openssl", {xxx = ...})</code> api</li>
+<li>Mark <code>set_modes()</code> as deprecated, we use <code>add_rules("mode.debug", "mode.release")</code> instead of it</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/353">#353</a>: Improve <code>target:set</code>, <code>target:add</code> and add <code>target:del</code> to modify target configuration</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/356">#356</a>: Add <code>qt_add_static_plugins()</code> api to support static Qt sdk</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/351">#351</a>: Support yasm for generating vs201x project</li>
+<li>Improve the remote package manager.</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix cannot call <code>set_optimize()</code> to set optimization flags when exists <code>add_rules("mode.release")</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/289">#289</a>: Fix unarchive gzip file failed on windows</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/296">#296</a>: Fix <code>option.add_includedirs</code> for cuda</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/321">#321</a>: Fix find program bug with $PATH envirnoment</li>
+</ul>
+<h2 id="v223">v2.2.3</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/233">#233</a>: Support windres for mingw platform</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/239">#239</a>: Add cparser compiler support</li>
+<li>Add plugin manager <code>xmake plugin --help</code></li>
+<li>Add <code>add_syslinks</code> api to add system libraries dependence</li>
+<li>Add <code>xmake l time xmake [--rebuild]</code> to record compilation time</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/250">#250</a>: Add <code>xmake f --vs_sdkver=10.0.15063.0</code> to change windows sdk version</li>
+<li>Add <code>lib.luajit.ffi</code> and <code>lib.luajit.jit</code> extension modules</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/263">#263</a>: Add new target kind: object to only compile object files</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/229">#229</a>: Improve to select toolset for vcproj plugin</li>
+<li>Improve compilation dependences</li>
+<li>Support *.xz for extractor</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/249">#249</a>: revise progress formatting to space-leading three digit percentages </li>
+<li><a href="https://github.com/xmake-io/xmake/pull/247">#247</a>: Add <code>-D</code> and <code>--diagnosis</code> instead of <code>--backtrace</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/259">#259</a>: Improve on_build, on_build_file and on_xxx for target and rule</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/269">#269</a>: Clean up the temporary files at last 30 days</li>
+<li>Improve remote package manager</li>
+<li>Support to add packages with only header file</li>
+<li>Support to modify builtin package links, e.g. <code>add_packages("xxx", {links = {}})</code></li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix state inconsistency after failed outage of installation dependency package</li>
+</ul>
+<h2 id="v222">v2.2.2</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Support fasm assembler</li>
+<li>Add <code>has_config</code>, <code>get_config</code>, and <code>is_config</code> apis</li>
+<li>Add <code>set_config</code> to set the default configuration</li>
+<li>Add <code>$xmake --try</code> to try building project using third-party buildsystem</li>
+<li>Add <code>set_enabled(false)</code> to disable target </li>
+<li><a href="https://github.com/xmake-io/xmake/issues/69">#69</a>: Add remote package management, <code>add_requires("tbox ~1.6.1")</code></li>
+<li><a href="https://github.com/xmake-io/xmake/pull/216">#216</a>: Add windows mfc rules</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve to detect Qt envirnoment and support mingw</li>
+<li>Add debug and release rules to the auto-generated xmake.lua</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/178">#178</a>: Modify the shared library name for mingw.</li>
+<li>Support case-insensitive path pattern-matching for <code>add_files()</code> on windows</li>
+<li>Improve to detect Qt sdk directory for <code>detect.sdks.find_qt</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/184">#184</a>: Improve <code>lib.detect.find_package</code> to support vcpkg</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/208">#208</a>: Improve rpath for shared library</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/225">#225</a>: Improve to detect vs envirnoment</li>
+</ul>
+<h3 id="bugfixed">Bug fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/177">#177</a>: Fix the dependent target link bug</li>
+<li>Fix high cpu usage bug and Exit issues for <code>$ xmake f --menu</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/197">#197</a>: Fix Chinese path for generating vs201x project</li>
+<li>Fix wdk rules bug</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/205">#205</a>: Fix targetdir,objectdir not used in vsproject </li>
+</ul>
+<h2 id="v221">v2.2.1</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/158">#158</a>: Support CUDA Toolkit and Compiler</li>
+<li>Add <code>set_tools</code> and <code>add_tools</code> apis to change the toolchains for special target</li>
+<li>Add builtin rules: <code>mode.debug</code>, <code>mode.release</code>, <code>mode.profile</code> and <code>mode.check</code></li>
+<li>Add <code>is_mode</code>, <code>is_arch</code> and <code>is_plat</code> builtin apis in the custom scripts</li>
+<li>Add color256 codes</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/160">#160</a>: Support Qt compilation environment and add <code>qt.console</code>, <code>qt.application</code> rules</li>
+<li>Add some Qt project templates</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/169">#169</a>: Support yasm for linux, macosx and windows</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/159">#159</a>: Support WDK driver compilation environment </li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Add FAQ to the auto-generated xmake.lua</li>
+<li>Support android NDK >= r14</li>
+<li>Improve warning flags for swiftc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/167">#167</a>: Improve custom rules</li>
+<li>Improve <code>os.files</code> and <code>os.dirs</code> api</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/171">#171</a>: Improve build dependence for qt rule</li>
+<li>Implement <code>make clean</code> for generating makefile plugin</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix force to add flags bug</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/157">#157</a>: Fix generate pdb file error if it&#39;s output directory does not exists</li>
+<li>Fix strip all symbols bug for macho target file</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/168">#168</a>: Fix generate vs201x project bug with x86/x64 architectures</li>
+</ul>
+<h2 id="v219">v2.1.9</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add <code>del_files()</code> api to delete files in the files list</li>
+<li>Add <code>rule()</code>, <code>add_rules()</code> api to implement the custom build rule and improve <code>add_files("src/*.md", {rule = "markdown"})</code></li>
+<li>Add <code>os.filesize()</code> api</li>
+<li>Add <code>core.ui.xxx</code> cui components</li>
+<li>Add <code>xmake f --menu</code> to configure project with a menu configuration interface</li>
+<li>Add <code>set_values</code> api to <code>option()</code></li>
+<li>Support to generate a menu configuration interface from user custom project options</li>
+<li>Add source file position to interpreter and search results in menu</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve to configure cross-toolchains, add tool alias to support unknown tool name, .e.g <code>xmake f --cc=gcc@ccmips.exe</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/151">#151</a>: Improve to build the share library for the mingw platform</li>
+<li>Improve to generate makefile plugin</li>
+<li>Improve the checking errors tips</li>
+<li>Improve <code>add_cxflags</code> .., force to set flags without auto checking: <code>add_cxflags("-DTEST", {force = true})</code></li>
+<li>Improve <code>add_files</code>, add force block to force to set flags without auto checking: <code>add_files("src/*.c", {force = {cxflags = "-DTEST"}})</code></li>
+<li>Improve to search the root project directory</li>
+<li>Improve to detect vs environment</li>
+<li>Upgrade luajit to 2.1.0-beta3</li>
+<li>Support to run xmake on linux (arm, arm64)</li>
+<li>Improve to generate vs201x project plugin</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix complation dependence</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/151">#151</a>: Fix <code>os.nuldev()</code> for gcc on mingw</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/150">#150</a>: Fix the command line string limitation for <code>ar.exe</code></li>
+<li>Fix <code>xmake f --cross</code> error</li>
+<li>Fix <code>os.cd</code> to the windows root path bug</li>
+</ul>
+<h2 id="v218">v2.1.8</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add <code>XMAKE_LOGFILE</code> environment variable to dump the output info to file</li>
+<li>Support tinyc compiler</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve support for IDE/editor plugins (.e.g vscode, sublime, intellij-idea)</li>
+<li>Add <code>.gitignore</code> file when creating new projects</li>
+<li>Improve to create template project</li>
+<li>Improve to detect toolchains on macosx without xcode</li>
+<li>Improve <code>set_config_header</code> to support <code>set_config_header("config", {version = "2.1.8", build = "%Y%m%d%H%M"})</code></li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/145">#145</a>: Fix the current directory when running target</li>
+</ul>
+<h2 id="v217">v2.1.7</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add <code>add_imports</code> to bulk import modules for the target, option and package script</li>
+<li>Add <code>xmake -y/--yes</code> to confirm the user input by default</li>
+<li>Add <code>xmake l package.manager.install xxx</code> to install software package</li>
+<li>Add xmake plugin for vscode editor, <a href="https://marketplace.visualstudio.com/items?itemName=tboox.xmake-vscode#overview">xmake-vscode</a></li>
+<li>Add <code>xmake macro ..</code> to run the last command</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Support 24bits truecolors for <code>cprint()</code></li>
+<li>Support <code>@loader_path</code> and <code>$ORIGIN</code> for <code>add_rpathdirs()</code></li>
+<li>Improve <code>set_version("x.x.x", {build = "%Y%m%d%H%M"})</code> and add build version</li>
+<li>Move docs directory to xmake-docs repo</li>
+<li>Improve install and uninstall actions and support DESTDIR and PREFIX envirnoment variables</li>
+<li>Optimize to detect flags</li>
+<li>Add <code>COLORTERM=nocolor</code> to disable color output</li>
+<li>Remove <code>and_bindings</code> and <code>add_rbindings</code> api</li>
+<li>Disable to output colors code to file</li>
+<li>Update project templates with tbox</li>
+<li>Improve <code>lib.detect.find_program</code> interface</li>
+<li>Enable colors output for windows cmd</li>
+<li>Add <code>-w|--warning</code> arguments to enable the warnings output</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix <code>set_pcxxheader</code> bug</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/140">#140</a>: Fix <code>os.tmpdir()</code> in fakeroot</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/142">#142</a>: Fix <code>os.getenv</code> charset bug on windows</li>
+<li>Fix compile error with spaces path</li>
+<li>Fix setenv empty value bug</li>
+</ul>
+<h2 id="v216">v2.1.6</h2>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve <code>add_files</code> to configure the compile option of the given files</li>
+<li>Inherit links and linkdirs from the dependent targets and options</li>
+<li>Improve <code>target.add_deps</code> and add inherit config, .e.g <code>add_deps("test", {inherit = false})</code></li>
+<li>Remove the binary files of <code>tbox.pkg</code></li>
+<li>Use <code>/Zi</code> instead of <code>/ZI</code> for msvc</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix target deps</li>
+<li>Fix <code>target:add</code> and <code>option:add</code> bug</li>
+<li>Fix compilation and installation bug on archlinux</li>
+</ul>
+<h2 id="v215">v2.1.5</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/83">#83</a>: Add <code>add_csnippet</code> and <code>add_cxxsnippet</code> into <code>option</code> for detecting some compiler features.</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/83">#83</a>: Add user extension modules to detect program, libraries and files.</li>
+<li>Add <code>find_program</code>, <code>find_file</code>, <code>find_library</code>, <code>find_tool</code> and <code>find_package</code> module interfaces.</li>
+<li>Add <code>net.*</code> and <code>devel.*</code> extension modules</li>
+<li>Add <code>val()</code> api to get the value of builtin-variable, .e.g <code>val("host")</code>, <code>val("env PATH")</code>, <code>val("shell echo hello")</code> and <code>val("reg HKEY_LOCAL_MACHINE\\XX;Value")</code></li>
+<li>Support to compile the microsoft resource file (.rc)</li>
+<li>Add <code>has_flags</code>, <code>features</code> and <code>has_features</code> for detect module interfaces.</li>
+<li>Add <code>option.on_check</code>, <code>option.after_check</code> and <code>option.before_check</code> api</li>
+<li>Add <code>target.on_load</code> api</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/132">#132</a>: Add <code>add_frameworkdirs</code> api</li>
+<li>Add <code>lib.detect.has_xxx</code> and <code>lib.detect.find_xxx</code> apis.</li>
+<li>Add <code>add_moduledirs</code> api</li>
+<li>Add <code>includes</code> api instead of <code>add_subdirs</code> and <code>add_subfiles</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/133">#133</a>: Improve the project plugin to generate <code>compile_commands.json</code> by run  <code>xmake project -k compile_commands</code></li>
+<li>Add <code>set_pcheader</code> and <code>set_pcxxheader</code> to support the precompiled header, support gcc, clang, msvc</li>
+<li>Add <code>xmake f -p cross</code> platform and support the custom platform</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/87">#87</a>: Add includes and links from target deps automatically </li>
+<li>Improve <code>import</code> to load user extension and global modules</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/93">#93</a>: Improve <code>xmake lua</code> to run a single line command</li>
+<li>Improve to print gcc error and warning info</li>
+<li>Improve <code>print</code> interface to dump table</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/111">#111</a>: Add <code>--root</code> common option to allow run xmake command as root</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/113">#113</a>: Privilege manage when running as root, store the root privilege and degrade.</li>
+<li>Improve <code>xxx_script</code> in <code>xmake.lua</code> to support pattern match, .e.g <code>on_build("iphoneos|arm*", function (target) end)</code></li>
+<li>improve builtin-variables to support to get the value envirnoment and registry</li>
+<li>Improve to detect vstudio sdk and cross toolchains envirnoment</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/71">#71</a>: Improve to detect compiler and linker from env vars</li>
+<li>Improve the option detection (cache and multi-jobs) and increase 70% speed</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/129">#129</a>: Check link deps and cache the target file</li>
+<li>Support <code>*.asm</code> source files for vs201x project plugin</li>
+<li>Mark <code>add_bindings</code> and <code>add_rbindings</code> as deprecated</li>
+<li>Optimize <code>xmake rebuild</code> speed on windows</li>
+<li>Move <code>core.project.task</code> to <code>core.base.task</code></li>
+<li>Move <code>echo</code> and <code>app2ipa</code> plugins to <a href="https://github.com/xmake-io/xmake-plugins">xmake-plugins</a> repo.</li>
+<li>Add new api <code>set_config_header("config.h", {prefix = ""})</code> instead of <code>set_config_h</code> and <code>set_config_h_prefix</code></li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix <code>try-catch-finally</code></li>
+<li>Fix interpreter bug when parsing multi-level subdirs</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/115">#115</a>: Fix the path problem of the install script <code>get.sh</code></li>
+<li>Fix cache bug for import()</li>
+</ul>
+<h2 id="v214">v2.1.4</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/68">#68</a>: Add <code>$(programdir)</code> and <code>$(xmake)</code> builtin variables</li>
+<li>add <code>is_host</code> api to get current host operating system</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/79">#79</a>: Improve <code>xmake lua</code> to run interactive commands, read-eval-print (REPL)</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Modify option menu color.</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/71">#71</a>: Improve to map optimization flags for cl.exe</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/73">#73</a>: Attempt to get executable path as xmake&#39;s program directory</li>
+<li>Improve the scope of <code>xmake.lua</code> in <code>add_subdirs</code> and use independent sub-scope to avoid dirty scope</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/78">#78</a>: Get terminal size in runtime and soft-wrap the help printing</li>
+<li>Avoid generate <code>.xmake</code> directory if be not in project</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/67">#67</a>: Fix <code>sudo make install</code> permission problem</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/70">#70</a>: Fix check android compiler error</li>
+<li>Fix temporary file path conflict</li>
+<li>Fix <code>os.host</code> and <code>os.arch</code> interfaces</li>
+<li>Fix interpreter bug for loading root api</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/77">#77</a>: fix <code>cprint</code> no color reset eol</li>
+</ul>
+<h2 id="v213">v2.1.3</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/65">#65</a>: Add <code>set_default</code> api for target to modify default build and install behavior</li>
+<li>Allows to run <code>xmake</code> command in project subdirectories, it will find the project root directory automatically</li>
+<li>Add <code>add_rpathdirs</code> for target and option</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/61">#61</a>: Provide safer <code>xmake install</code> and <code>xmake uninstall</code> task with administrator permission</li>
+<li>Provide <code>rpm</code>, <code>deb</code> and <code>osxpkg</code> install package</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/63">#63</a>: More safer build and install xmake</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/61">#61</a>: Check run command as root</li>
+<li>Improve check toolchains and implement delay checking</li>
+<li>Add user tips when scanning and generating <code>xmake.lua</code> automatically</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix error tips for checking xmake min version</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/60">#60</a>: Fix self-build for macosx and windows</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/64">#64</a>: Fix compile android <code>armv8-a</code> error</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/50">#50</a>: Fix only position independent executables issue for android program</li>
+</ul>
+<h2 id="v212">v2.1.2</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add aur package script and support to install xmake from yaourt</li>
+<li>Add <a href="#http://xmake.io/#/manual?id=targetset_basename">set_basename</a> api for target</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Support vs2017</li>
+<li>Support compile rust for android</li>
+<li>Improve vs201x project plugin and support multi-modes compilation.</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix cannot find android sdk header files</li>
+<li>Fix checking option bug</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/57">#57</a>: Fix code files mode to 0644</li>
+</ul>
+<h2 id="v211">v2.1.1</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add <code>--links</code>, <code>--linkdirs</code> and <code>--includedirs</code> configure arguments</li>
+<li>Add app2ipa plugin</li>
+<li>Add dictionary syntax style for <code>xmake.lua</code></li>
+<li>Provide smart scanning and building mode without <code>xmake.lua</code></li>
+<li>Add <code>set_xmakever</code> api for <code>xmake.lua</code></li>
+<li>Add <code>add_frameworks</code> api for <code>objc</code> and <code>swift</code></li>
+<li>Support multi-languages extension and add <code>golang</code>, <code>dlang</code> and <code>rust</code> language</li>
+<li>Add optional <code>target_end</code>, <code>option_end</code>, <code>task_end</code> apis for scope</li>
+<li>Add <code>golang</code>, <code>dlang</code> and <code>rust</code> project templates</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Support vs2017 for the project plugin</li>
+<li>Improve gcc error and warning tips</li>
+<li>Improve lanuage module</li>
+<li>Improve print interface, support lua print and format output</li>
+<li>Automatically scan project files and generate it for building if xmake.lua not exists</li>
+<li>Modify license to Apache License 2.0</li>
+<li>Remove some binary tools</li>
+<li>Remove install.bat script and provide nsis install package</li>
+<li>Rewrite <a href="http://www.xmake.io/#/home/">documents</a> using <a href="https://github.com/egoist/docute">docute</a></li>
+<li>Improve <code>os.run</code>, <code>os.exec</code>, <code>os.cp</code>, <code>os.mv</code> and <code>os.rm</code> interfaces and support wildcard pattern</li>
+<li>Optimize the output info and add <code>-q|--quiet</code> option</li>
+<li>Improve makefile generator, uses $(XX) variables for tools and flags</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/waruqi/xmake/issues/41">#41</a>: Fix checker bug for windows </li>
+<li><a href="https://github.com/waruqi/xmake/issues/43">#43</a>: Avoid to generate unnecessary .xmake directory  </li>
+<li>Add c++ stl search directories for android</li>
+<li>Fix compile error for rhel 5.10</li>
+<li>Fix <code>os.iorun</code> bug</li>
+</ul>
+<h2 id="v205">v2.0.5</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add some interpreter builtin-modules</li>
+<li>Support ml64 assembler for windows x64</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve ipairs and pairs interfaces and support filter</li>
+<li>Add filters for generating vs201x project</li>
+<li>Remove <code>core/tools</code> (msys toolchains) and uses xmake to compile core sources on windows</li>
+<li>Remove <code>xmake/packages</code> for templates</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix <code>-def:xxx.def</code> flags failed for msvc</li>
+<li>Fix ml.exe assembler script</li>
+<li>Fix options linking order bug</li>
+</ul>
+<h2 id="v204">v2.0.4</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add native shell support for <code>xmake.lua</code>. .e.g <code>add_ldflags("$(shell pkg-config --libs sqlite3)")</code></li>
+<li>Enable pdb symbol files for windows</li>
+<li>Add debugger support on windows (vsjitdebugger, ollydbg, windbg ... )</li>
+<li>Add <code>getenv</code> interface for the global scope of <code>xmake.lua</code></li>
+<li>Add plugin for generating vstudio project file (vs2002 - vs2015)</li>
+<li>Add <code>set_default</code> api for option</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve builtin-variable format</li>
+<li>Support option for string type</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix check ld failed without g++ on linux </li>
+<li>Fix compile <code>*.cxx</code> files failed</li>
+</ul>
+<h2 id="v203">v2.0.3</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add check includes dependence automatically</li>
+<li>Add print colors </li>
+<li>Add debugger support, .e.g <code>xmake run -d program ...</code></li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve the interfaces of run shell</li>
+<li>Upgrade luajit to v2.0.4</li>
+<li>Improve to generate makefile plugin</li>
+<li>Optimizate the multitasking compiling speed</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix install directory bug</li>
+<li>Fix the root directory error for <code>import</code> interface</li>
+<li>Fix check visual stdio error on windows</li>
+</ul>
+<h2 id="v202">v2.0.2</h2>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Change install and uninstall actions</li>
+<li>Update templates</li>
+<li>Improve to check function </li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/waruqi/xmake/issues/7">#7</a>: Fix create project bug with &#39;[targetname]&#39;</li>
+<li><a href="https://github.com/waruqi/xmake/issues/9">#9</a>: Support clang with c++11</li>
+<li>Fix api scope leaks bug</li>
+<li>Fix path bug for windows</li>
+<li>Fix check function bug</li>
+<li>Fix check toolchains failed</li>
+<li>Fix compile failed for android on windows </li>
+</ul>
+<h2 id="v201">v2.0.1</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add task api for running custom tasks</li>
+<li>Add plugin expansion and provide some builtin plugins</li>
+<li>Add export ide project plugin(.e.g makefile and will support to export other projects for vs, xcode in feature)</li>
+<li>Add demo plugin for printing &#39;hello xmake&#39;</li>
+<li>Add make doxygen documents plugin</li>
+<li>Add macro script plugin</li>
+<li>Add more modules for developing plugin</li>
+<li>Add exception using try/catch and simplify grammar for plugin script</li>
+<li>Add option bindings</li>
+<li>Show progress when building</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Rewrite interpreter for xmake.lua</li>
+<li>More strict syntax detection mechanism</li>
+<li>More strict api scope for xmake.lua </li>
+<li>Simplify template development</li>
+<li>Extend platforms, tools, templates and actions fastly</li>
+<li>Simplify api and support import modules</li>
+<li>Remove dependence for gnu make/nmake, no longer need makefile</li>
+<li>Optimize speed for building and faster x4 than v1.0.4</li>
+<li>Optimize automatic detection </li>
+<li>Modify some api name, but be compatible with the old version</li>
+<li>Optimize merging static library</li>
+<li>Simplify cross compilation using argument <code>--sdk=xxx</code></li>
+<li>Simplify boolean option for command line, .e.g <code>xmake config --xxx=[y|n|yes|no|true|false]</code></li>
+<li>Merge iphoneos and iphonesimulator platforms</li>
+<li>Merge watchos and watchsimulator platformss</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/waruqi/xmake/issues/3">#3</a>: ArchLinux compilation failed</li>
+<li><a href="https://github.com/waruqi/xmake/issues/4">#4</a>: Install failed for windows</li>
+<li>Fix envirnoment variable bug for windows</li>
+</ul>
+<h2 id="v104">v1.0.4</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Support windows assembler</li>
+<li>Add some project templates</li>
+<li>Support swift codes</li>
+<li>Add -v argument for outputing more verbose info</li>
+<li>Add apple platforms：watchos, watchsimulator</li>
+<li>Add architecture x64, amd64, x86_amd64 for windows</li>
+<li>Support switch static and share library</li>
+<li>Add <code>-j/--jobs</code> argument for supporting multi-jobs </li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Improve <code>add_files</code> api and support to add <code>*.o/obj/a/lib</code> files for merging static library and object files</li>
+<li>Optimize installation and remove some binary files</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/waruqi/xmake/issues/4">#1</a>: Install failed for win7</li>
+<li>Fix checking toolchains bug</li>
+<li>Fix install script bug</li>
+<li>Fix install bug for linux x86_64</li>
+</ul>
+<h2 id="v103">v1.0.3</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li>Add <code>set_runscript</code> api and support custom action</li>
+<li>Add import api and support import modules in xmake.lua, .e.g os, path, utils ...</li>
+<li>Add new architecture: arm64-v8a for android</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix api bug for <code>set_installscript</code></li>
+<li>Fix install bug for windows <code>x86_64</code></li>
+<li>Fix relative path bug</li>
+</ul>
+</article>
+</body>
+</html>
