@@ -445,6 +445,8 @@ target("test")
     add_files("src/Info.plist")
 ```
 
+!> 2.5.7 之后，可以支持直接添加 `*.metal` 文件，xmake 会自动生成 default.metallib 提供给应用程序加载使用。
+
 #### 创建工程
 
 我们也可以通过模板工程快速创建：

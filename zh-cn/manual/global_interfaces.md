@@ -46,6 +46,8 @@ target("test")
 
 #### 内置的辅助接口
 
+##### 自动检测辅助接口
+
 另外，此接口在2.2.5之后的版本，提供了一些内置的辅助函数，可以直接includes后使用，具体有哪些内置函数可以看下：https://github.com/xmake-io/xmake/tree/master/xmake/includes
 
 关于这块的更加完整的说明，可以看下：[https://github.com/xmake-io/xmake/issues/342](https://github.com/xmake-io/xmake/issues/342)
@@ -105,6 +107,26 @@ config.h
 /* #undef HAS_CONSTEXPR */
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 ```
+
+v2.5.7 之后对 check_csnippets 做了改进，新增 `tryrun` 和 `output` 参数去尝试运行和捕获输出。
+
+````lua
+includes("check_csnippets.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("*.c")
+    add_configfiles("config.h.in")
+
+    check_csnippets("HAS_INT_4", "return (sizeof(int) == 4)? 0 : -1;", {tryrun = true})
+    check_csnippets("INT_SIZE", 'printf("%d", sizeof(int)); return 0;', {output = true, number = true})
+    configvar_check_csnippets("HAS_LONG_8", "return (sizeof(long) == 8)? 0 : -1;", {tryrun = true})
+    configvar_check_csnippets("PTR_SIZE", 'printf("%d", sizeof(void*)); return 0;', {output = true, number = true})
+```
+
+如果启用捕获输出，`config.h.in` 的 `${define PTR_SIZE}` 会自动生成 `#define PTR_SIZE 4`。
+
+其中，`number = true` 设置，可以强制作为 number 而不是字符串值，否则默认会定义为 `#define PTR_SIZE "4"`
 
 ### set_project
 
@@ -574,6 +596,14 @@ add_repositories("my-repo myrepo")
 ```
 
 这个可以参考[benchbox](https://github.com/tboox/benchbox)项目，里面就内置了一个私有仓库。
+
+注：其中 myrepo 是 xmake 命令执行目录的相对路径，它不会自动根据配置文件所在目录自动转换，如果想要设置到相对于当前 xmake.lua 文件的路径，可以通过 rootdir 参数指定。
+
+```lua
+add_repositories("my-repo myrepo", {rootdir = os.scriptdir()})
+```
+
+不过这个参数设置只有 v2.5.7 以上版本才支持。
 
 ### set_defaultplat
 

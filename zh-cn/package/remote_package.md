@@ -478,7 +478,7 @@ projectdir
 add_repositories("my-repo myrepo")
 ```
 
-这个可以参考[benchbox](https://github.com/tboox/benchbox)项目，里面就内置了一个私有仓库。
+这个可以参考[benchbox](https://github.com/xmake-io/benchbox)项目，里面就内置了一个私有仓库。
 
 我们甚至可以连仓库也不用建，直接定义包描述到项目xmake.lua中，这对依赖一两个包的情况还是很有用的，例如：
 
@@ -1388,4 +1388,70 @@ target("test")
     set_kind("binary")
     add_files("src/*.zig")
     set_toolchains("@zig")
+```
+
+## 依赖包的锁定和升级
+
+v2.5.7 之后，新增依赖包的版本锁定，类似 npm 的 package.lock, cargo 的 cargo.lock。
+
+比如，我们引用一些包，默认情况下，如果不指定版本，那么 xmake 每次都会自动拉取最新版本的包来集成使用，例如：
+
+```lua
+add_requires("zlib")
+```
+
+但如果上游的包仓库更新改动，比如 zlib 新增了一个 1.2.11 版本，或者安装脚本有了变动，都会导致用户的依赖包发生改变。
+
+这容易导致原本编译通过的一些项目，由于依赖包的变动出现一些不稳定因素，有可能编译失败等等。
+
+为了确保用户的项目每次使用的包都是固定的，我们可以通过下面的配置去启用包依赖锁定。
+
+```lua
+set_policy("package.requires_lock", true)
+```
+
+这是一个全局设置，必须设置到全局根作用域，如果启用后，xmake 执行完包拉取，就会自动生成一个 `xmake-requires.lock` 的配置文件。
+
+它包含了项目依赖的所有包，以及当前包的版本等信息。
+
+```lua
+{
+    __meta__ = {
+        version = "1.0"
+    },
+    ["macosx|x86_64"] = {
+        ["cmake#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "4498f11267de5112199152ab030ed139c985ad5a",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "3.21.0"
+        },
+        ["glfw#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "eda7adee81bac151f87c507030cc0dd8ab299462",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "3.3.4"
+        },
+        ["opengl#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "94d2eee1f466092e04c5cf1e4ecc8c8883c1d0eb",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            }
+        }
+    }
+}
+```
+
+当然，我们也可以执行下面的命令，强制升级包到最新版本。
+
+```console
+$ xmake require --upgrade
+upgrading packages ..
+  zlib: 1.2.10 -> 1.2.11
+1 package is upgraded!
 ```

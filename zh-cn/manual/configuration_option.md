@@ -14,11 +14,11 @@ option()
     add_defines("DEBUG")
 
 option("test")
-    -- ... 
+    -- ...
     -- 尽量保持缩进，因为这个之后的所有设置，都是针对test选项的
 
 option("test2")
-    -- ... 
+    -- ...
 ```
 
 <p class="tip">
@@ -312,7 +312,7 @@ Options:
 
     --test1=TEST1
     --test2=TEST2
- 
+
     --demo1=DEMO1
     --demo2=DEMO2
 ```
@@ -472,7 +472,7 @@ target("test")
 
 ### option:add_ctypes
 
-#### 添加c类型检测 
+#### 添加c类型检测
 
 如果c类型检测通过，此选项将被启用，例如：
 
@@ -522,3 +522,28 @@ option("constexpr")
 
 如果想要更加灵活的检测，可以通过[lib.detect.check_cxsnippets](#detect-check_cxsnippets)在[option.on_check](#optionon_check)中去实现。
 
+v2.5.7 版本后，新增 `{tryrun = true}` 和 `{output = true}` 两个选项用于尝试运行检测和捕获输出。
+
+设置 tryrun 可以尝试运行来检测：
+
+```lua
+option("test")
+    add_cxxsnippets("HAS_INT_4", "return (sizeof(int) == 4)? 0 : -1;", {tryrun = true})
+```
+
+设置 output 也会尝试去检测，并且额外捕获运行的输出内容。
+
+```lua
+option("test")
+    add_cxxsnippets("INT_SIZE", 'printf("%d", sizeof(int)); return 0;', {output = true, number = true})
+```
+
+!> 设置为捕获输出，当前 option 不能再设置其他 snippets
+
+我们也可以通过 `is_config` 获取绑定到option的输出。
+
+```lua
+if is_config("test", "8") tben
+    -- xxx
+end
+```

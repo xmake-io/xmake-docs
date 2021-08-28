@@ -46,6 +46,8 @@ target("test")
 
 #### Builtin help functions
 
+##### Automatic detection
+
 In addition, in 2.2.5 and later, this interface provides some built-in helper functions, which can be used directly after the include, specifically which built-in functions can be seen at: https://github.com/xmake-io/xmake/tree/master/xmake/includes
 
 For a more complete description of this, see: [https://github.com/xmake-io/xmake/issues/342](https://github.com/xmake-io/xmake/issues/342 )
@@ -105,6 +107,26 @@ config.h
 /* #undef HAS_CONSTEXPR */
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 ```
+
+After v2.5.7, check_csnippets has been improved, adding `tryrun` and `output` parameters to try to run and capture output.
+
+````lua
+includes("check_csnippets.lua")
+
+target("test")
+     set_kind("binary")
+     add_files("*.c")
+     add_configfiles("config.h.in")
+
+     check_csnippets("HAS_INT_4", "return (sizeof(int) == 4)? 0: -1;", {tryrun = true})
+     check_csnippets("INT_SIZE",'printf("%d", sizeof(int)); return 0;', {output = true, number = true})
+     configvar_check_csnippets("HAS_LONG_8", "return (sizeof(long) == 8)? 0: -1;", {tryrun = true})
+     configvar_check_csnippets("PTR_SIZE",'printf("%d", sizeof(void*)); return 0;', {output = true, number = true})
+```
+
+If capture output is enabled, `${define PTR_SIZE}` in `config.h.in` will automatically generate `#define PTR_SIZE 4`.
+
+Among them, the `number = true` setting can be forced as a number instead of a string value, otherwise it will be defined as `#define PTR_SIZE "4"` by default
 
 ### set_project
 
@@ -549,6 +571,14 @@ add_repositories("my-repo myrepo")
 ```
 
 This can be referred to [benchbox](https://github.com/tboox/benchbox) project, which has a built-in private repository.
+
+Note: myrepo is the relative path of the directory where the xmake command is executed. It will not be automatically converted according to the directory where the configuration file is located. If you want to set the path relative to the current xmake.lua file, you can specify it through the rootdir parameter.
+
+```lua
+add_repositories("my-repo myrepo", {rootdir = os.scriptdir()})
+```
+
+However, this parameter setting is only supported by v2.5.7 and above.
 
 ### set_defaultplat
 

@@ -439,6 +439,8 @@ target("test")
     add_files("src/Info.plist")
 ```
 
+!> After 2.5.7, you can directly add `*.metal` files, xmake will automatically generate default.metallib for the application to load and use.
+
 #### Create Project
 
 We can also quickly create project through template:

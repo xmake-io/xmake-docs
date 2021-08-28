@@ -578,4 +578,29 @@ For the detection of compiler features, there is a more convenient and efficient
 
 If you want more flexible detection, you can do this in [option.on_check](#optionon_check) via [lib.detect.check_cxsnippets](#detect-check_cxsnippets).
 
+After v2.5.7, two new options, `{tryrun = true}` and `{output = true}`, are added to try to run detection and capture output.
+
+Setting tryrun can try to run to detect:
+
+```lua
+option("test")
+     add_cxxsnippets("HAS_INT_4", "return (sizeof(int) == 4)? 0: -1;", {tryrun = true})
+```
+
+Setting output will also try to detect and additionally capture the output content of the run.
+
+```lua
+option("test")
+     add_cxxsnippets("INT_SIZE",'printf("%d", sizeof(int)); return 0;', {output = true, number = true})
+```
+
+!> Set to capture output, the current option cannot set other snippets
+
+We can also get the output bound to the option through `is_config`.
+
+```lua
+if is_config("test", "8") tben
+     - xxx
+end
+```
 
