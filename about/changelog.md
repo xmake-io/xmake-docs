@@ -1,3 +1,23 @@
+## v2.5.7
+
+### New features
+
+* [#1534](https://github.com/xmake-io/xmake/issues/1534): Support to compile Vala lanuage project
+* [#1544](https://github.com/xmake-io/xmake/issues/1544): Add utils.bin2c rule to generate header from binary file
+* [#1547](https://github.com/xmake-io/xmake/issues/1547): Support to run and get output of c/c++ snippets in option
+* [#1567](https://github.com/xmake-io/xmake/issues/1567): Package "lock file" support to freeze dependencies
+* [#1597](https://github.com/xmake-io/xmake/issues/1597): Support to compile *.metal files to generate *.metalib and improve xcode.application rule
+
+### Change
+
+* [#1540](https://github.com/xmake-io/xmake/issues/1540): Better support for compilation of automatically generated code
+* [#1578](https://github.com/xmake-io/xmake/issues/1578): Improve add_repositories to support relative path better
+* [#1582](https://github.com/xmake-io/xmake/issues/1582): Improve installation and os.cp to reserve symlink
+
+### Bugs fixed
+
+* [#1531](https://github.com/xmake-io/xmake/issues/1531): Fix error info when loading targets failed
+
 ## v2.5.6
 
 ### New features

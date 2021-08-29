@@ -1,3 +1,23 @@
+## v2.5.7
+
+### 新特性
+
+* [#1534](https://github.com/xmake-io/xmake/issues/1534): 新增对 Vala 语言的支持
+* [#1544](https://github.com/xmake-io/xmake/issues/1544): 添加 utils.bin2c 规则去自动从二进制资源文件产生 .h 头文件并引入到 C/C++ 代码中
+* [#1547](https://github.com/xmake-io/xmake/issues/1547): option/snippets 支持运行检测模式，并且可以获取输出
+* [#1567](https://github.com/xmake-io/xmake/issues/1567): 新增 xmake-requires.lock 包依赖锁定支持
+* [#1597](https://github.com/xmake-io/xmake/issues/1597): 支持编译 metal 文件到 metallib，并改进 xcode.application 规则去生成内置的 default.metallib 到 app
+
+### 改进
+
+* [#1540](https://github.com/xmake-io/xmake/issues/1540): 更好更方便地编译自动生成的代码
+* [#1578](https://github.com/xmake-io/xmake/issues/1578): 改进 add_repositories 去更好地支持相对路径
+* [#1582](https://github.com/xmake-io/xmake/issues/1582): 改进安装和 os.cp 支持符号链接
+
+### Bugs 修复
+
+* [#1531](https://github.com/xmake-io/xmake/issues/1531): 修复 targets 加载失败的错误信息提示错误
+
 ## v2.5.6
 
 ### 新特性
