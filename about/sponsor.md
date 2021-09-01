@@ -27,6 +27,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | comment                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2021.08.22 | Alvin-co                              | 微信     | ¥100  |                                                         |
 | 2021.08.17 | 九州                                  | alipay   | ¥100  |                                                         |
 | 2021.07.29 | chaney                                | alipay   | ¥1000  | xmake 很好用                                                    |
 | 2021.06.30 | *剑                                   | wechat   | ¥100  | 大佬牛逼，给你点个赞                                                     |
