@@ -120,6 +120,7 @@ target("test")
     add_files("src/*.c")
 </code></pre>
 <h4 id="builtinhelpfunctions">Builtin help functions</h4>
+<h5 id="automaticdetection">Automatic detection</h5>
 <p>In addition, in 2.2.5 and later, this interface provides some built-in helper functions, which can be used directly after the include, specifically which built-in functions can be seen at: <a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">https://github.com/xmake-io/xmake/tree/master/xmake/includes</a></p>
 <p>For a more complete description of this, see: <a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
 <p>Examples:</p>
@@ -168,6 +169,21 @@ ${define HAS_CONSEXPR_AND_STATIC_ASSERT}
 /* #undef HAS_CONSTEXPR */
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 </code></pre>
+<p>After v2.5.7, check_csnippets has been improved, adding <code>tryrun</code> and <code>output</code> parameters to try to run and capture output.</p>
+<pre><code class="lang-`lua">includes("check_csnippets.lua")
+
+target("test")
+     set_kind("binary")
+     add_files("*.c")
+     add_configfiles("config.h.in")
+
+     check_csnippets("HAS_INT_4", "return (sizeof(int) == 4)? 0: -1;", {tryrun = true})
+     check_csnippets("INT_SIZE",&#39;printf("%d", sizeof(int)); return 0;&#39;, {output = true, number = true})
+     configvar_check_csnippets("HAS_LONG_8", "return (sizeof(long) == 8)? 0: -1;", {tryrun = true})
+     configvar_check_csnippets("PTR_SIZE",&#39;printf("%d", sizeof(void*)); return 0;&#39;, {output = true, number = true})
+</code></pre>
+<p>If capture output is enabled, <code>${define PTR_SIZE}</code> in <code>config.h.in</code> will automatically generate <code>#define PTR_SIZE 4</code>.</p>
+<p>Among them, the <code>number = true</code> setting can be forced as a number instead of a string value, otherwise it will be defined as <code>#define PTR_SIZE "4"</code> by default</p>
 <h3 id="set_project">set_project</h3>
 <h4 id="setprojectname">Set project name</h4>
 <p>Set the whole project name, we can set it at the beginning of <code>xmake.lua</code>.</p>
@@ -426,6 +442,10 @@ add_requireconfs("libwebp.*|cmake", {debug = true})
 <pre><code class="lang-lua">add_repositories("my-repo myrepo")
 </code></pre>
 <p>This can be referred to <a href="https://github.com/tboox/benchbox">benchbox</a> project, which has a built-in private repository.</p>
+<p>Note: myrepo is the relative path of the directory where the xmake command is executed. It will not be automatically converted according to the directory where the configuration file is located. If you want to set the path relative to the current xmake.lua file, you can specify it through the rootdir parameter.</p>
+<pre><code class="lang-lua">add_repositories("my-repo myrepo", {rootdir = os.scriptdir()})
+</code></pre>
+<p>However, this parameter setting is only supported by v2.5.7 and above.</p>
 <h3 id="set_defaultplat">set_defaultplat</h3>
 <h4 id="setthedefaultcompilationplatform">Set the default compilation platform</h4>
 <p>Only supported by v2.5.6 and above, it is used to set the default compilation platform of the project. If it is not set, the default platform follows the current system platform, which is os.host().</p>

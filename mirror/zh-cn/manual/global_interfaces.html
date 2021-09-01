@@ -120,6 +120,7 @@ target("test")
     add_files("src/*.c")
 </code></pre>
 <h4 id="">内置的辅助接口</h4>
+<h5 id="">自动检测辅助接口</h5>
 <p>另外，此接口在2.2.5之后的版本，提供了一些内置的辅助函数，可以直接includes后使用，具体有哪些内置函数可以看下：<a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">https://github.com/xmake-io/xmake/tree/master/xmake/includes</a></p>
 <p>关于这块的更加完整的说明，可以看下：<a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
 <p>例子：</p>
@@ -168,6 +169,21 @@ ${define HAS_CONSEXPR_AND_STATIC_ASSERT}
 /* #undef HAS_CONSTEXPR */
 #define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 </code></pre>
+<p>v2.5.7 之后对 check_csnippets 做了改进，新增 <code>tryrun</code> 和 <code>output</code> 参数去尝试运行和捕获输出。</p>
+<pre><code class="lang-`lua">includes("check_csnippets.lua")
+
+target("test")
+    set_kind("binary")
+    add_files("*.c")
+    add_configfiles("config.h.in")
+
+    check_csnippets("HAS_INT_4", "return (sizeof(int) == 4)? 0 : -1;", {tryrun = true})
+    check_csnippets("INT_SIZE", &#39;printf("%d", sizeof(int)); return 0;&#39;, {output = true, number = true})
+    configvar_check_csnippets("HAS_LONG_8", "return (sizeof(long) == 8)? 0 : -1;", {tryrun = true})
+    configvar_check_csnippets("PTR_SIZE", &#39;printf("%d", sizeof(void*)); return 0;&#39;, {output = true, number = true})
+</code></pre>
+<p>如果启用捕获输出，<code>config.h.in</code> 的 <code>${define PTR_SIZE}</code> 会自动生成 <code>#define PTR_SIZE 4</code>。</p>
+<p>其中，<code>number = true</code> 设置，可以强制作为 number 而不是字符串值，否则默认会定义为 <code>#define PTR_SIZE "4"</code></p>
 <h3 id="set_project">set_project</h3>
 <h4 id="">设置工程名</h4>
 <p>设置工程名，在doxygen自动文档生成插件、工程文件生成插件中会用到，一般设置在xmake.lua的最开头，当然放在其他地方也是可以的</p>
@@ -438,6 +454,10 @@ add_requireconfs("libwebp.*|cmake", {debug = true})
 <pre><code class="lang-lua">add_repositories("my-repo myrepo")
 </code></pre>
 <p>这个可以参考<a href="https://github.com/tboox/benchbox">benchbox</a>项目，里面就内置了一个私有仓库。</p>
+<p>注：其中 myrepo 是 xmake 命令执行目录的相对路径，它不会自动根据配置文件所在目录自动转换，如果想要设置到相对于当前 xmake.lua 文件的路径，可以通过 rootdir 参数指定。</p>
+<pre><code class="lang-lua">add_repositories("my-repo myrepo", {rootdir = os.scriptdir()})
+</code></pre>
+<p>不过这个参数设置只有 v2.5.7 以上版本才支持。</p>
 <h3 id="set_defaultplat">set_defaultplat</h3>
 <h4 id="">设置默认的编译平台</h4>
 <p>v2.5.6 以上版本才支持，用于设置工程默认的编译平台，如果没有设置，默认平台跟随当前系统平台，也就是 os.host()。</p>

@@ -722,6 +722,21 @@ target("test")
 <p>The above code implements the detection of the constexpr feature of C++. If the test passes, the constexpr option is enabled. Of course, this is just an example.</p>
 <p>For the detection of compiler features, there is a more convenient and efficient detection module, providing more powerful detection support, see: <a href="#compiler-has_features">compiler.has_features</a> and <a href="#detect-check_cxsnippets">detect.check_cxsnippets</a></p>
 <p>If you want more flexible detection, you can do this in <a href="#optionon_check">option.on_check</a> via <a href="#detect-check_cxsnippets">lib.detect.check_cxsnippets</a>.</p>
+<p>After v2.5.7, two new options, <code>{tryrun = true}</code> and <code>{output = true}</code>, are added to try to run detection and capture output.</p>
+<p>Setting tryrun can try to run to detect:</p>
+<pre><code class="lang-lua">option("test")
+     add_cxxsnippets("HAS_INT_4", "return (sizeof(int) == 4)? 0: -1;", {tryrun = true})
+</code></pre>
+<p>Setting output will also try to detect and additionally capture the output content of the run.</p>
+<pre><code class="lang-lua">option("test")
+     add_cxxsnippets("INT_SIZE",&#39;printf("%d", sizeof(int)); return 0;&#39;, {output = true, number = true})
+</code></pre>
+<p>!> Set to capture output, the current option cannot set other snippets</p>
+<p>We can also get the output bound to the option through <code>is_config</code>.</p>
+<pre><code class="lang-lua">if is_config("test", "8") tben
+     - xxx
+end
+</code></pre>
 </article>
 </body>
 </html>

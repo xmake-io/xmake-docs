@@ -430,6 +430,31 @@ target("test")
 <p>v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 .cmake 文件，用于其他 cmake 项目的库导入和查找。</p>
 <h4 id="utilsinstallpkgconfig_importfiles">utils.install.pkgconfig_importfiles</h4>
 <p>v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 pkgconfig/.pc 文件，用于其他项目的库导入和查找。</p>
+<h4 id="utilsbin2c">utils.bin2c</h4>
+<p>v2.5.7 以上版本可以使用此规则，在项目中引入一些二进制文件，并见他们作为 c/c++ 头文件的方式提供开发者使用，获取这些文件的数据。</p>
+<p>比如，我们可以在项目中，内嵌一些 png/jpg 资源文件到代码中。</p>
+<pre><code class="lang-lua">target("console")
+    set_kind("binart")
+    add_rules("utils.bin2c", {extensions = {".png", ".jpg"}})
+    add_files("src/*.c")
+    add_files("res/*.png", "res/*.jpg")
+</code></pre>
+<p>!> extensions 的设置是可选的，默认后缀名是 .bin</p>
+<p>然后，我们就可以通过 <code>#include "filename.png.h"</code> 的方式引入进来使用，xmake 会自动帮你生成对应的头文件，并且添加对应的搜索目录。</p>
+<pre><code class="lang-c">static unsigned char g_png_data[] = {
+    #include "image.png.h"
+};
+
+int main(int argc, char** argv)
+{
+    printf("image.png: %s, size: %d\n", g_png_data, sizeof(g_png_data));
+    return 0;
+}
+</code></pre>
+<p>生成头文件内容类似：</p>
+<pre><code class="lang-console">cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
+  0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
+</code></pre>
 <h3 id="rule">rule</h3>
 <h4 id="">定义规则</h4>
 <pre><code class="lang-lua">rule("markdown")

@@ -378,6 +378,7 @@ $ xmake
     add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
     add_files("src/Info.plist")
 </code></pre>
+<p>!> 2.5.7 之后，可以支持直接添加 <code>*.metal</code> 文件，xmake 会自动生成 default.metallib 提供给应用程序加载使用。</p>
 <h4 id="">创建工程</h4>
 <p>我们也可以通过模板工程快速创建：</p>
 <pre><code class="lang-console">$ xmake create -t xcode.macapp -l objc test
@@ -699,6 +700,22 @@ target("minimal")
     add_packages("linux-tools", "linux-headers", "libbpf")
     set_license("GPL-2.0")
 </code></pre>
+<h2 id="vala">Vala 程序</h2>
+<p>2.5.7 之后开始支持构建 Vala 程序，我们需要应用 <code>add_rules("vala")</code> 规则，并且 glib 包是必须的。</p>
+<p><code>add_values("vala.packages")</code> 用于告诉 valac，项目需要哪些包，它会引入相关包的 vala api，但是包的依赖集成，还是需要通过 <code>add_requires("lua")</code> 下载集成。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+
+add_requires("lua", "glib")
+
+target("test")
+    set_kind("binary")
+    add_rules("vala")
+    add_files("src/*.vala")
+    add_packages("lua", "glib")
+    add_values("vala.packages", "lua")
+</code></pre>
+<p>更多例子：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/vala">Vala examples</a></p>
 </article>
 </body>
 </html>

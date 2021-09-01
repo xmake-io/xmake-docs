@@ -178,8 +178,10 @@ make build
 ./scripts/get.sh __local__ __install_only__
 source ~/.xmake/profile
 </code></pre>
-<p>如果觉得github的源太慢，可以通过gitee的镜像源拉取：<code>clone --recursive https://gitee.com/tboox/xmake.git</code></p>
-<p>!> 由于目前xmake源码通过git submodule维护依赖，所以clone的时候需要加上<code>--recursive</code>参数同时拉取所有submodules代码，请不要直接下载tar.gz源码，因为github不会自动打包submodules里面的代码。</p>
+<p>如果觉得github的源太慢，可以通过gitee的镜像源拉取：<code>clone --recursive https://gitee.com/tboox/xmake.git</code><br>也可以如下修改~/.gitconfig，永久解决github clone慢的问题</p>
+<pre><code>[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+</code></pre><p>!> 由于目前xmake源码通过git submodule维护依赖，所以clone的时候需要加上<code>--recursive</code>参数同时拉取所有submodules代码，请不要直接下载tar.gz源码，因为github不会自动打包submodules里面的代码。</p>
 <p>如果git clone的时候忘记加<code>--recursive</code>，那么也可以执行<code>git submodule update --init</code>来拉取所有submodules，例如：</p>
 <pre><code class="lang-bash">git clone https://github.com/xmake-io/xmake.git
 cd ./xmake

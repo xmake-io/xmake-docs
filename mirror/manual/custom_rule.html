@@ -429,6 +429,31 @@ target("test")
 <p>We can use this rule to export the .cmake file when installing the target library file for the library import and search of other cmake projects.</p>
 <h4 id="utilsinstallpkgconfig_importfiles">utils.install.pkgconfig_importfiles</h4>
 <p>We can use this rule to export the pkgconfig/.pc file when installing the target target library file for library import and search for other projects.</p>
+<h4 id="utilsbin2c">utils.bin2c</h4>
+<p>This rule can be used in versions above v2.5.7 to introduce some binary files into the project, and see them as c/c++ header files for developers to use to obtain the data of these files.</p>
+<p>For example, we can embed some png/jpg resource files into the code in the project.</p>
+<pre><code class="lang-lua">target("console")
+    set_kind("binart")
+    add_rules("utils.bin2c", {extensions = {".png", ".jpg"}})
+    add_files("src/*.c")
+    add_files("res/*.png", "res/*.jpg")
+</code></pre>
+<p>!> The setting of extensions is optional, the default extension is .bin</p>
+<p>Then, we can import and use it through <code>#include "filename.png.h"</code>, xmake will automatically generate the corresponding header file for you, and add the corresponding search directory.</p>
+<pre><code class="lang-c">static unsigned char g_png_data[] = {
+    #include "image.png.h"
+};
+
+int main(int argc, char** argv)
+{
+    printf("image.png: %s, size: %d\n", g_png_data, sizeof(g_png_data));
+    return 0;
+}
+</code></pre>
+<p>The content of the generated header file is similar:</p>
+<pre><code class="lang-console">cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
+  0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
+</code></pre>
 <h3 id="rule">rule</h3>
 <h4 id="definingrules">Defining rules</h4>
 <pre><code class="lang-lua">rule("markdown")

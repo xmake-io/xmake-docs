@@ -1000,6 +1000,55 @@ target("test")
     add_files("src/*.zig")
     set_toolchains("@zig")
 </code></pre>
+<h2 id="dependentpackagelockandupgrade">Dependent package lock and upgrade</h2>
+<p>After v2.5.7, version locks of dependent packages have been added, similar to npm&#39;s package.lock and cargo&#39;s cargo.lock.</p>
+<p>For example, if we quote some packages, by default, if the version is not specified, xmake will automatically pull the latest version of the package for integrated use each time, for example:</p>
+<pre><code class="lang-lua">add_requires("zlib")
+</code></pre>
+<p>However, if the upstream package warehouse is updated and changed, for example, zlib adds a new version 1.2.11, or the installation script is changed, the user&#39;s dependent packages will change.</p>
+<p>This can easily lead to some projects that were originally compiled and passed, and there may be some unstable factors due to changes in dependent packages, and the compilation may fail, etc.</p>
+<p>In order to ensure that the package used by the user&#39;s project is fixed each time, we can enable the package dependency lock through the following configuration.</p>
+<pre><code class="lang-lua">set_policy("package.requires_lock", true)
+</code></pre>
+<p>This is a global setting and must be set to the global root scope. If enabled, xmake will automatically generate a <code>xmake-requires.lock</code> configuration file after executing package pull.</p>
+<p>It contains all the packages that the project depends on, as well as the current package version and other information.</p>
+<pre><code class="lang-lua">{
+    __meta__ = {
+        version = "1.0"
+    },
+    ["macosx|x86_64"] = {
+        ["cmake#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "4498f11267de5112199152ab030ed139c985ad5a",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "3.21.0"
+        },
+        ["glfw#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "eda7adee81bac151f87c507030cc0dd8ab299462",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "3.3.4"
+        },
+        ["opengl#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "94d2eee1f466092e04c5cf1e4ecc8c8883c1d0eb",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            }
+        }
+    }
+}
+</code></pre>
+<p>Of course, we can also execute the following command to force the upgrade package to the latest version.</p>
+<pre><code class="lang-console">$ xmake require --upgrade
+upgrading packages ..
+  zlib: 1.2.10 -> 1.2.11
+1 package is upgraded!
+</code></pre>
 </article>
 </body>
 </html>

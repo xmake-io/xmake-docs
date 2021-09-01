@@ -812,9 +812,10 @@ os.cp("$(curdir)/test/", "$(tmpdir)/test")
 <pre><code class="lang-lua">os.cp("src/**.h", "/tmp/", {rootdir = "src"})
 </code></pre>
 <p>上面的脚本可以按<code>src</code>根目录，将src下的所有子文件保持目录结构复制过去。</p>
-<p><p class="tip"><br>尽量使用<code>os.cp</code>接口，而不是<code>os.run("cp ..")</code>，这样更能保证平台一致性，实现跨平台构建描述。<br></p>
-
-</p>
+<p>!> 尽量使用<code>os.cp</code>接口，而不是<code>os.run("cp ..")</code>，这样更能保证平台一致性，实现跨平台构建描述。</p>
+<p>2.5.7 下，新增 <code>{symlink = true}</code> 参数，在复制文件时候保留符号链接。</p>
+<pre><code class="lang-lua">os.cp("/xxx/foo", "/xxx/bar", {symlink = true})
+</code></pre>
 <h4 id="osmv">os.mv</h4>
 <ul>
 <li>移动重命名文件或目录</li>
