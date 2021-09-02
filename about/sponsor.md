@@ -12,22 +12,23 @@ If you would like to support the development of xmake, welcome to donate to us.
 [![Github Sponsor](/assets/img/github_sponsor.png)](https://github.com/sponsors/waruqi)
 
 ## OpenCollective
- 
+
 [[Become a sponsor](https://opencollective.com/xmake#sponsor)]
 
-## Alipay 
+## Alipay
 
 <img src="/assets/img/alipay.png" alt="alipay" width="256" height="256">
 
-## Weixin 
+## Weixin
 
 <img src="/assets/img/weixin.png" alt="weixin" width="218" height="218">
 
-## Supporters 
+## Supporters
 
 | date       | supporter                             | pay     | money  | comment                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
-| 2021.08.22 | Alvin-co                              | 微信     | ¥100  |                                                         |
+| 2021.09.01 | 姚冬                                  | wechat     | ¥1024  | 祝 xmake 越做越好                                                       |
+| 2021.08.22 | Alvin-co                              | wechat    | ¥100  |                                                         |
 | 2021.08.17 | 九州                                  | alipay   | ¥100  |                                                         |
 | 2021.07.29 | chaney                                | alipay   | ¥1000  | xmake 很好用                                                    |
 | 2021.06.30 | *剑                                   | wechat   | ¥100  | 大佬牛逼，给你点个赞                                                     |
