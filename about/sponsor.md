@@ -27,6 +27,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | comment                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2021.09.06 | Stefan Boberg                         | Paypal     | € 25  |                                                        |
 | 2021.09.01 | 姚冬                                  | wechat     | ¥1024  | 祝 xmake 越做越好                                                       |
 | 2021.08.22 | Alvin-co                              | wechat    | ¥100  |                                                         |
 | 2021.08.17 | 九州                                  | alipay   | ¥100  |                                                         |
