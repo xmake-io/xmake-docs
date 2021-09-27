@@ -306,7 +306,7 @@ The information of target(tbox):
 ### Show builtin compilation modes list
 
 ```bash
-$ xmake show -l modes
+$ xmake show -l buildmodes
 ```
 
 ### Show builtin compilation rules list
