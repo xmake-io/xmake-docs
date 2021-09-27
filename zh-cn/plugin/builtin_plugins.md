@@ -316,7 +316,7 @@ The information of target(tbox):
 ### 显示内置编译模式列表
 
 ```bash
-$ xmake show -l modes
+$ xmake show -l buildmodes
 ```
 
 ### 显示内置编译规则列表
