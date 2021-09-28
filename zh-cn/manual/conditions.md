@@ -267,6 +267,7 @@ end
 ```
 
 可以用来根据配置值增加对应的依赖包，例如：
+
 ```lua
 -- 根据lua_flavor的配置值，选择依赖lua还是luajit
 option("lua_flavor")
