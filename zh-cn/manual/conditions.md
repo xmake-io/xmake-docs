@@ -266,6 +266,21 @@ if is_config("test", "hello1", "hello2") then
 end
 ```
 
+可以用来根据配置值增加对应的依赖包，例如：
+
+```lua
+-- 根据lua_flavor的配置值，选择依赖lua还是luajit
+option("lua_flavor")
+    set_showmenu(true)
+    set_values("luajit", "lua")
+option_end()
+if is_config("lua_flavor", "luajit") then
+    add_requires("luajit")
+elseif is_config("lua_flavor", "lua") then
+    add_requires("lua")
+end
+```
+
 不仅如此，我们还可以设置模式匹配规则去判断值，例如：
 
 ```lua

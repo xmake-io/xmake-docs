@@ -249,6 +249,21 @@ if is_config("test", "hello1", "hello2") then
 end
 ```
 
+Can be used for conditional package requirements, eg. ：
+
+```lua
+-- Add lua or luajit package requirements, depending on the lua_flavor option value
+option("lua_flavor")
+    set_showmenu(true)
+    set_values("luajit", "lua")
+option_end()
+if is_config("lua_flavor", "luajit") then
+    add_requires("luajit")
+elseif is_config("lua_flavor", "lua") then
+    add_requires("lua")
+end
+```
+
 Not only that, we can also set pattern matching rules to determine values, such as:
 
 ```lua
