@@ -252,7 +252,7 @@ end
 Can be used for conditional package requirements, eg. ：
 
 ```lua
--- Add lua or luajit package, depending on the lua_flavor option value
+-- Add lua or luajit package requirements, depending on the lua_flavor option value
 option("lua_flavor")
     set_showmenu(true)
     set_values("luajit", "lua")
