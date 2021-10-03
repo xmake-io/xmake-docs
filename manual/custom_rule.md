@@ -1,18 +1,36 @@
 
 After the 2.2.1 release, xmake not only natively supports the construction of multi-language files, but also allows users to implement complex unknown file builds by custom building rules.
 
-We can extend the build support for other files by pre-setting the file suffixes supported by the rules:
+Custom build rules can have a set of file extensions associated to them using `set_extensions`.
+Once these extensions are associated to the rule a later call to `add_files` will automatically use this custom rule.
+Here is an example rule that will use Pandoc to convert markdown files added to a build target in to HTML files:
 
 ```lua
 -- Define a build rule for a markdown file
 rule("markdown")
     set_extensions(".md", ".markdown")
-    on_build_file(function (target, sourcefile)
-        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+    on_build_file(function (target, sourcefile, opt)
+        import("core.project.depend")    -- import 'depend' helper
+        import("private.utils.progress") -- import 'progress' reporter
+        -- make sure build directory exists
+        os.mkdir(target:targetdir())
+        -- replace .md with .html
+        local targetfile =
+            path.join(
+                target:targetdir(),
+                path.basename(sourcefile) .. ".html")
+        -- only rebuild the file if its changed since last run
+        depend.on_changed(function ()
+            -- call pandoc to make a standalone html file from a markdown file
+            os.vrunv(
+                'pandoc',
+                {"-s", "-f", "markdown", "-t", "html", "-o", targetfile, sourcefile})
+            progress.show(opt.progress, "${color.build.object}markdown %s", sourcefile)
+        end, {files = targetfile})
     end)
 
 target("test")
-    set_kind("binary")
+    set_kind("object")
 
     -- make the test target support the construction rules of the markdown file
     add_rules("markdown")
@@ -22,7 +40,14 @@ target("test")
     add_files("src/*.markdown")
 ```
 
-We can also specify some other scattered files to be processed as markdown rules:
+Note that in xmake a rule is responsible for checking when targets are out of date and informing the user of ongoing progress.
+
+There is also an alternative to `on_build_file` in the form of `on_build_files` which allows you to process the entire set of files in one function call.
+
+A second form called `on_buildcmd_file` and `on_buildcmd_files` is instead declarative; rather than running arbitrary Lua to build a target it runs Lua to learn how those targets are built.
+The advantage to `buildcmd` is that those rules can be exported to makefiles which do not require xmake at all in order to run.
+
+Files can be assigned to a specific rule regardless of their file extension. You do this by setting the `rule` custom property when adding the file like in the following example:
 
 ```lua
 target("test")
