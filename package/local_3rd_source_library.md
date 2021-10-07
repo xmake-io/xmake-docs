@@ -1,6 +1,6 @@
-### Integrate CMake code base
+### Integrate CMake source library
 
-After version 2.5.8, we can also directly integrate the code base with CMakeLists.txt in our project through the package mode of xmake, instead of downloading and installing it remotely.
+After version 2.5.8, we can also directly integrate the source library with CMakeLists.txt in our project through the package mode of xmake, instead of downloading and installing it remotely.
 
 Related issues: [#1714](https://github.com/xmake-io/xmake/issues/1714)
 
@@ -57,7 +57,7 @@ In addition, `on_test` is optional. If you want to strictly check whether the pa
 
 For a complete example, see: [Library with CMakeLists](https://github.com/xmake-io/xmake/tree/master/tests/projects/c/library_with_cmakelists)
 
-### Integrate the Meson code base
+### Integrate Meson source library
 
 xmake supports the integration of more third-party source code libraries maintained by other build systems, such as meson. You only need to import and use the `package.tools.meson` auxiliary building module to call meson to build them.
 
@@ -91,7 +91,7 @@ package("harfbuzz")
     end)
 ```
 
-### Integrate autoconf code base
+### Integrate autoconf source library
 
 We can also use `package.tools.autoconf` to locally integrate third-party code libraries maintained by autoconf.
 
@@ -140,7 +140,7 @@ package("pcre2")
 
 Both `package.tools.autoconf` and `package.tools.cmake` modules can support cross-compilation platforms and toolchains such as mingw/cross/iphoneos/android, xmake will automatically pass the corresponding toolchain into it, and the user does not need to do Anything else.
 
-### Integrated Scons code base
+### Integrated Scons source library
 
 We can also use `package.tools.scons` to locally integrate third-party code libraries maintained by Scons.
 
@@ -188,7 +188,7 @@ package("godotcpp")
     end)
 ```
 
-### Integrated makefile code base
+### Integrated makefile source library
 
 #### Use Nmake
 
