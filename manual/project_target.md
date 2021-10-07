@@ -435,19 +435,24 @@ The supported language standards currently have the following main ones:
 | gnu99      | c language standard: gnu99       |
 | c11        | c language standard: c11         |
 | c17        | c language standard: c17         |
+| clatest    | c language standard: clatest     |
 
-| Value      | Description                      |
-| ---------- | ----------------------           |
-| cxx98      | c++ language standard: `c++98`   |
-| gnuxx98    | c++ language standard: `gnu++98` |
-| cxx11      | c++ language standard: `c++11`   |
-| gnuxx11    | c++ language standard: `gnu++11` |
-| cxx14      | c++ language standard: `c++14`   |
-| gnuxx14    | c++ language standard: `gnu++14` |
-| cxx1z      | c++ language standard: `c++1z`   |
-| gnuxx1z    | c++ language standard: `gnu++1z` |
-| cxx17      | c++ language standard: `c++17`   |
-| gnuxx17    | c++ language standard: `gnu++17` |
+| Value      | Description                          |
+| ---------- | ----------------------               |
+| cxx98      | c++ language standard: `c++98`       |
+| gnuxx98    | c++ language standard: `gnu++98`     |
+| cxx11      | c++ language standard: `c++11`       |
+| gnuxx11    | c++ language standard: `gnu++11`     |
+| cxx14      | c++ language standard: `c++14`       |
+| gnuxx14    | c++ language standard: `gnu++14`     |
+| cxx1z      | c++ language standard: `c++1z`       |
+| gnuxx1z    | c++ language standard: `gnu++1z`     |
+| cxx17      | c++ language standard: `c++17`       |
+| gnuxx17    | c++ language standard: `gnu++17`     |
+| cxx20      | c++ language standard: `c++20`       |
+| gnuxx20    | c++ language standard: `gnu++20`     |
+| cxxlatest  | c++ language standard: `c++latest`   |
+| gnuxxlatest| c++ language standard: `gnu++latest` |
 
 The c standard and the c++ standard can be set at the same time, for example:
 

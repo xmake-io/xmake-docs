@@ -38,6 +38,7 @@
   - [Specification](manual/specification.md)
   - [Conditions](manual/conditions.md)
   - [Global Interfaces](manual/global_interfaces.md)
+  - [Helper Interfaces](manual/helper_interfaces.md)
   - [Project Target](manual/project_target.md)
   - [Configuration Option](manual/configuration_option.md)
   - [Plugin and Task](manual/plugin_task.md)

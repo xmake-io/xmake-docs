@@ -40,6 +40,7 @@
   - [接口规范](zh-cn/manual/specification.md)
   - [条件判断](zh-cn/manual/conditions.md)
   - [全局接口](zh-cn/manual/global_interfaces.md)
+  - [辅助接口](zh-cn/manual/helper_interfaces.md)
   - [工程目标](zh-cn/manual/project_target.md)
   - [配置选项](zh-cn/manual/configuration_option.md)
   - [插件任务](zh-cn/manual/plugin_task.md)
