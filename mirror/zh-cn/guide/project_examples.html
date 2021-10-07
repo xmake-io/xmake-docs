@@ -811,6 +811,55 @@ target("example")
     add_files("src/example.cpp")
     add_packages("python")
 </code></pre>
+<h3 id="c20">C++20 模块</h3>
+<p>xmake 采用 <code>.mpp</code> 作为默认的模块扩展名，但是也同时支持 <code>.ixx</code>, <code>.cppm</code>, <code>.mxx</code> 等扩展名。</p>
+<p>不过目前这个特性支持还不是很成熟，并且仅仅支持 msvc 和 clang 的 ts-modules，还不支持 gcc，后面会进一步改进。</p>
+<pre><code class="lang-lua">set_languages("c++20")
+target("class")
+    set_kind("binary")
+    add_files("src/*.cpp", "src/*.mpp")
+</code></pre>
+<p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules">C++ Modules</a></p>
+<h3 id="">合并静态库</h3>
+<h4 id="target">自动合并 target 库</h4>
+<p>2.5.8 之后，我们可以通过设置 <code>build.merge_archive</code> 策略，启用自动合并依赖的所有静态库，例如：</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("add")
+    set_kind("static")
+    add_files("src/add.c")
+    add_files("src/subdir/add.c")
+
+target("sub")
+    set_kind("static")
+    add_files("src/sub.c")
+    add_files("src/subdir/sub.c")
+
+target("mul")
+    set_kind("static")
+    add_deps("add", "sub")
+    add_files("src/mul.c")
+    set_policy("build.merge_archive", true)
+</code></pre>
+<p>mul 静态库自动合并了 add 和 sub 静态库，生成一个包含 add/sub 代码的完整 libmul.a 库。</p>
+<p>这个合并相对比较稳定完善，支持 ar 和 msvc/lib.exe，也支持交叉编译工具链生成的静态库合并，也支持带有重名 obj 文件的静态库。</p>
+<h4 id="">合并指定的静态库文件</h4>
+<p>如果自动合并不满足需求，我们也可以主动调用 <code>utils.archive.merge_archive</code> 模块在 <code>after_link</code> 阶段合并指定的静态库列表。</p>
+<pre><code class="lang-lua">target("test")
+    after_link(function (target)
+        import("utils.archive.merge_staticlib")
+        merge_staticlib(target, "libout.a", {"libfoo.a", "libbar.a"})
+    end)
+</code></pre>
+<h4 id="add_files">使用 add_files 合并静态库</h4>
+<p>其实，我们之前的版本已经支持通过 <code>add_files("*.a")</code> 来合并静态库。</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("*.a")
+    add_files("*.c")
+</code></pre>
+<p>但是它有一些缺陷：如果使用 ar，可能会存在 .obj 对象文件同名冲突导致合并失败，因此推荐使用上文介绍的合并方式，更加的稳定可靠，也更加的简单。</p>
+<p>相关 issues: <a href="https://github.com/xmake-io/xmake/issues/1638">#1638</a></p>
 </article>
 </body>
 </html>

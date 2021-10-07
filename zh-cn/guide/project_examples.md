@@ -1079,3 +1079,75 @@ target("example")
     add_files("src/example.cpp")
     add_packages("python")
 ```
+
+### C++20 模块
+
+xmake 采用 `.mpp` 作为默认的模块扩展名，但是也同时支持 `.ixx`, `.cppm`, `.mxx` 等扩展名。
+
+不过目前这个特性支持还不是很成熟，并且仅仅支持 msvc 和 clang 的 ts-modules，还不支持 gcc，后面会进一步改进。
+
+```lua
+set_languages("c++20")
+target("class")
+    set_kind("binary")
+    add_files("src/*.cpp", "src/*.mpp")
+```
+
+更多例子见：[C++ Modules](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules)
+
+### 合并静态库
+
+#### 自动合并 target 库
+
+2.5.8 之后，我们可以通过设置 `build.merge_archive` 策略，启用自动合并依赖的所有静态库，例如：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("add")
+    set_kind("static")
+    add_files("src/add.c")
+    add_files("src/subdir/add.c")
+
+target("sub")
+    set_kind("static")
+    add_files("src/sub.c")
+    add_files("src/subdir/sub.c")
+
+target("mul")
+    set_kind("static")
+    add_deps("add", "sub")
+    add_files("src/mul.c")
+    set_policy("build.merge_archive", true)
+```
+
+mul 静态库自动合并了 add 和 sub 静态库，生成一个包含 add/sub 代码的完整 libmul.a 库。
+
+这个合并相对比较稳定完善，支持 ar 和 msvc/lib.exe，也支持交叉编译工具链生成的静态库合并，也支持带有重名 obj 文件的静态库。
+
+#### 合并指定的静态库文件
+
+如果自动合并不满足需求，我们也可以主动调用 `utils.archive.merge_archive` 模块在 `after_link` 阶段合并指定的静态库列表。
+
+```lua
+target("test")
+    after_link(function (target)
+        import("utils.archive.merge_staticlib")
+        merge_staticlib(target, "libout.a", {"libfoo.a", "libbar.a"})
+    end)
+```
+
+#### 使用 add_files 合并静态库
+
+其实，我们之前的版本已经支持通过 `add_files("*.a")` 来合并静态库。
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("*.a")
+    add_files("*.c")
+```
+
+但是它有一些缺陷：如果使用 ar，可能会存在 .obj 对象文件同名冲突导致合并失败，因此推荐使用上文介绍的合并方式，更加的稳定可靠，也更加的简单。
+
+相关 issues: [#1638](https://github.com/xmake-io/xmake/issues/1638)

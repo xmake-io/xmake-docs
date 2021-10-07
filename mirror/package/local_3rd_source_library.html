@@ -90,8 +90,8 @@
   line-height: 1;
 }
 </style>
-    <h3 id="integratecmakecodebase">Integrate CMake code base</h3>
-<p>After version 2.5.8, we can also directly integrate the code base with CMakeLists.txt in our project through the package mode of xmake, instead of downloading and installing it remotely.</p>
+    <h3 id="integratecmakesourcelibrary">Integrate CMake source library</h3>
+<p>After version 2.5.8, we can also directly integrate the source library with CMakeLists.txt in our project through the package mode of xmake, instead of downloading and installing it remotely.</p>
 <p>Related issues: <a href="https://github.com/xmake-io/xmake/issues/1714">#1714</a></p>
 <p>For example, we have the following project structure:</p>
 <pre><code>├── foo
@@ -133,7 +133,7 @@ target("demo")
 <p>After defining the package, we can integrate it with <code>add_requires("foo")</code> and <code>add_packages("foo")</code>, just like integrating remote packages.</p>
 <p>In addition, <code>on_test</code> is optional. If you want to strictly check whether the package is compiled and installed successfully, you can do some tests in it.</p>
 <p>For a complete example, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/c/library_with_cmakelists">Library with CMakeLists</a></p>
-<h3 id="integratethemesoncodebase">Integrate the Meson code base</h3>
+<h3 id="integratemesonsourcelibrary">Integrate Meson source library</h3>
 <p>xmake supports the integration of more third-party source code libraries maintained by other build systems, such as meson. You only need to import and use the <code>package.tools.meson</code> auxiliary building module to call meson to build them.</p>
 <p>For example, we select a package built with meson from the xmake-repo repository as an example:</p>
 <pre><code class="lang-lua">package("harfbuzz")
@@ -162,7 +162,7 @@ target("demo")
         assert(package:has_cfuncs("hb_buffer_add_utf8", {includes = "harfbuzz/hb.h"}))
     end)
 </code></pre>
-<h3 id="integrateautoconfcodebase">Integrate autoconf code base</h3>
+<h3 id="integrateautoconfsourcelibrary">Integrate autoconf source library</h3>
 <p>We can also use <code>package.tools.autoconf</code> to locally integrate third-party code libraries maintained by autoconf.</p>
 <pre><code class="lang-lua">package("pcre2")
 
@@ -206,7 +206,7 @@ target("demo")
     end)
 </code></pre>
 <p>Both <code>package.tools.autoconf</code> and <code>package.tools.cmake</code> modules can support cross-compilation platforms and toolchains such as mingw/cross/iphoneos/android, xmake will automatically pass the corresponding toolchain into it, and the user does not need to do Anything else.</p>
-<h3 id="integratedsconscodebase">Integrated Scons code base</h3>
+<h3 id="integratedsconssourcelibrary">Integrated Scons source library</h3>
 <p>We can also use <code>package.tools.scons</code> to locally integrate third-party code libraries maintained by Scons.</p>
 <pre><code class="lang-lua">package("godotcpp")
 
@@ -250,7 +250,7 @@ target("demo")
         os.cp("godot-headers/*.h", package:installdir("include"))
     end)
 </code></pre>
-<h3 id="integratedmakefilecodebase">Integrated makefile code base</h3>
+<h3 id="integratedmakefilesourcelibrary">Integrated makefile source library</h3>
 <h4 id="usenmake">Use Nmake</h4>
 <p>We can also use <code>package.tools.nmake</code> to locally integrate third-party code libraries maintained by nmake.</p>
 <p><code>nmake.install</code> will automatically bind the msvc build environment of the current user to ensure that the user can successfully call nmake.exe, msbuild and cl.exe and other programs.</p>
