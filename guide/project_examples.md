@@ -931,9 +931,11 @@ target("minimal")
 
 After 2.5.7 to support the construction of Vala programs, we need to apply the `add_rules("vala")` rule, and the glib package is necessary.
 
+related issues: [#1618](https://github.com/xmake-io/xmake/issues/1618)
+
 `add_values("vala.packages")` is used to tell valac which packages the project needs, it will introduce the vala api of the relevant package, but the dependency integration of the package still needs to be downloaded and integrated through `add_requires("lua")`.
 
-E.g:
+### Console program
 
 ```lua
 add_rules("mode.release", "mode.debug")
@@ -941,11 +943,133 @@ add_rules("mode.release", "mode.debug")
 add_requires("lua", "glib")
 
 target("test")
-     set_kind("binary")
-     add_rules("vala")
-     add_files("src/*.vala")
-     add_packages("lua", "glib")
-     add_values("vala.packages", "lua")
+    set_kind("binary")
+    add_rules("vala")
+    add_files("src/*.vala")
+    add_packages("lua", "glib")
+    add_values("vala.packages", "lua")
+```
+
+### Static library program
+
+After v2.5.8, we continue to support the construction of library programs. The exported interface header file name can be set through `add_values("vala.header", "mymath.h")`, and through `add_values("vala.vapi", "mymath -1.0.vapi")` Set the name of the exported vapi file.
+
+```lua
+add_rules("mode.release", "mode.debug")
+
+add_requires("glib")
+
+target("mymath")
+    set_kind("static")
+    add_rules("vala")
+    add_files("src/mymath.vala")
+    add_values("vala.header", "mymath.h")
+    add_values("vala.vapi", "mymath-1.0.vapi")
+    add_packages("glib")
+
+target("test")
+    set_kind("binary")
+    add_deps("mymath")
+    add_rules("vala")
+    add_files("src/main.vala")
+    add_packages("glib")
+```
+
+### Dynamic library program
+
+```lua
+add_rules("mode.release", "mode.debug")
+
+add_requires("glib")
+
+target("mymath")
+    set_kind("shared")
+    add_rules("vala")
+    add_files("src/mymath.vala")
+    add_values("vala.header", "mymath.h")
+    add_values("vala.vapi", "mymath-1.0.vapi")
+    add_packages("glib")
+
+target("test")
+    set_kind("binary")
+    add_deps("mymath")
+    add_rules("vala")
+    add_files("src/main.vala")
+    add_packages("glib")
 ```
 
 More examples: [Vala examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/vala)
+
+## Pascal program
+
+After 2.5.8, we can support the construction of Pascal programs. For related issues, see: [#388](https://github.com/xmake-io/xmake/issues/388)
+
+### Console program
+
+```lua
+add_rules("mode.debug", "mode.release")
+target("test")
+     set_kind("binary")
+     add_files("src/*.pas")
+```
+
+### Dynamic library program
+
+```lua
+add_rules("mode.debug", "mode.release")
+target("foo")
+     set_kind("shared")
+     add_files("src/foo.pas")
+
+target("test")
+     set_kind("binary")
+     add_deps("foo")
+     add_files("src/main.pas")
+```
+
+More examples: [Pascal examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/pascal)
+
+## Swig Module
+
+Version 2.5.8 supports the construction of Swig modules. We provide `swig.c` and `swig.cpp` rules, which respectively support the generation of c/c++ module interface code, and cooperate with xmake's package management system to realize fully automated modules and dependent packages. Integration.
+
+Related issues: [#1622](https://github.com/xmake-io/xmake/issues/1622)
+
+### Lua/C Module
+
+```lua
+add_rules("mode.release", "mode.debug")
+add_requires("lua")
+
+target("example")
+    add_rules("swig.c", {moduletype = "lua"})
+    add_files("src/example.i", {swigflags = "-no-old-metatable-bindings"})
+    add_files("src/example.c")
+    add_packages("lua")
+```
+
+### Python/C module
+
+```lua
+add_rules("mode.release", "mode.debug")
+add_requires("python 3.x")
+
+target("example")
+    add_rules("swig.c", {moduletype = "python"})
+    add_files("src/example.i", {scriptdir = "share"})
+    add_files("src/example.c")
+    add_packages("python")
+```
+
+### Python/C++ Module
+
+```lua
+add_rules("mode.release", "mode.debug")
+add_requires("python 3.x")
+
+target("example")
+    add_rules("swig.cpp", {moduletype = "python"})
+    add_files("src/example.i", {scriptdir = "share"})
+    add_files("src/example.cpp")
+    add_packages("python")
+```

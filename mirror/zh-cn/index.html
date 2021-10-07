@@ -243,6 +243,7 @@ $ xmake
 <li>Android (x86, x86_64, armeabi, armeabi-v7a, arm64-v8a)</li>
 <li>iOS (armv7, armv7s, arm64, i386, x86_64)</li>
 <li>WatchOS (armv7k, i386)</li>
+<li>AppleTVOS (armv7, arm64, i386, x86_64)</li>
 <li>MSYS (i386, x86_64)</li>
 <li>MinGW (i386, x86_64, arm, arm64)</li>
 <li>Cygwin (i386, x86_64)</li>
@@ -276,6 +277,7 @@ emcc          A toolchain for compiling to asm.js and WebAssembly
 icc           Intel C/C++ Compiler
 ifort         Intel Fortran Compiler
 muslcc        The musl-based cross-compilation toolchains
+fpc           Free Pascal Programming Language Compiler
 </code></pre>
 <h2 id="">支持语言</h2>
 <ul>
@@ -289,6 +291,8 @@ muslcc        The musl-based cross-compilation toolchains
 <li>Fortran</li>
 <li>Cuda</li>
 <li>Zig</li>
+<li>Vala</li>
+<li>Pascal</li>
 </ul>
 <h2 id="">支持特性</h2>
 <ul>
@@ -299,7 +303,8 @@ muslcc        The musl-based cross-compilation toolchains
 <li>多任务并行编译支持</li>
 <li>C++20 Module-TS 支持</li>
 <li>支持跨平台的 C/C++ 依赖包快速集成</li>
-<li>自建分布式包仓库，第三方包仓库支持</li>
+<li>自建分布式包仓库，支持安装云端预编译包</li>
+<li>第三方包仓库支持，例如：vcpkg, conan, conda 等等</li>
 <li>多语言混合编译支持</li>
 <li>灵活的 lua 脚本，丰富的扩展模块，可实现高度定制化</li>
 <li>丰富的插件支持，内置 vs/cmake/makefile/compile_commands 等生成插件</li>
@@ -307,19 +312,25 @@ muslcc        The musl-based cross-compilation toolchains
 <li>增量编译支持，头文件依赖自动分析</li>
 <li>工具链的快速切换、定制化支持</li>
 <li>自动拉取工具链以及依赖包的快速整合</li>
+<li>支持预编译包以及包依赖锁定</li>
 </ul>
 <h2 id="">工程类型</h2>
 <ul>
 <li>静态库程序</li>
 <li>动态库类型</li>
 <li>控制台程序</li>
-<li>Cuda程序</li>
-<li>Qt应用程序</li>
-<li>WDK驱动程序</li>
-<li>WinSDK应用程序</li>
-<li>MFC应用程序</li>
-<li>iOS/MacOS应用程序</li>
+<li>Cuda 程序</li>
+<li>Qt 应用程序</li>
+<li>WDK 驱动程序</li>
+<li>WinSDK 应用程序</li>
+<li>MFC 应用程序</li>
+<li>iOS/MacOS 应用程序（支持.metal）</li>
 <li>Framework和Bundle程序（iOS/MacOS）</li>
+<li>SWIG 模块 (Lua, python, ...)</li>
+<li>Luarocks 模块</li>
+<li>Protobuf 程序</li>
+<li>Lex/yacc 程序</li>
+<li>C++20 模块</li>
 </ul>
 <h2 id="">更多例子</h2>
 <h4 id="debugrelease">Debug 和 Release模式</h4>
@@ -399,7 +410,7 @@ target("loop")
 <h4 id="zig">Zig 程序</h4>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
-    add_files("src/*.zig")
+    add_files("src/main.zig")
 </code></pre>
 <h3 id="">自动拉取远程工具链</h3>
 <h4 id="llvm">拉取指定版本的 llvm 工具链</h4>
@@ -473,7 +484,7 @@ $ xmake l
 <h3 id="xmakegradlejni">XMake Gradle插件 (JNI)</h3>
 <p>我们也可以在Gradle中使用<a href="https://github.com/xmake-io/xmake-gradle">xmake-gradle</a>插件来集成编译JNI库</p>
 <pre><code>plugins {
-  id &#39;org.tboox.gradle-xmake-plugin&#39; version &#39;1.0.6&#39;
+  id &#39;org.tboox.gradle-xmake-plugin&#39; version &#39;1.1.4&#39;
 }
 
 android {
@@ -529,9 +540,10 @@ android {
 <h2 id="">感谢</h2>
 <p>感谢所有对xmake有所<a href="CONTRIBUTING.md">贡献</a>的人:<br><a href="https://github.com/xmake-io/xmake/graphs/contributors"><img src="https://opencollective.com/xmake/contributors.svg?width=890&amp;button=false" /></a></p>
 <ul>
-<li><a href="https://github.com/TitanSnow">TitanSnow</a>: 提供xmake <a href="https://github.com/TitanSnow/ts-xmake-logo">logo</a> 和安装脚本</li>
-<li><a href="https://github.com/uael">uael</a>: 提供语义版本跨平台c库 <a href="https://github.com/uael/sv">sv</a></li>
-<li><a href="https://github.com/OpportunityLiu">OpportunityLiu</a>: 改进cuda构建, tests框架和ci</li>
+<li><a href="https://github.com/TitanSnow">TitanSnow</a>: 提供xmake <a href="https://github.com/TitanSnow/ts-xmake-logo">logo</a> 和安装脚本。</li>
+<li><a href="https://github.com/uael">uael</a>: 提供语义版本跨平台c库 <a href="https://github.com/uael/sv">sv</a>。</li>
+<li><a href="https://github.com/OpportunityLiu">OpportunityLiu</a>: 改进cuda构建, tests框架和ci。</li>
+<li><a href="https://github.com/xq114">xq144</a>: 改进 <code>xrepo env shell</code>，并贡献大量包到 <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a> 仓库。</li>
 </ul>
 </article>
 </body>

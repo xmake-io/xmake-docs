@@ -1,5 +1,5 @@
 - About
-  
+
   - [Introduction](about/introduction.md)
   - [Contact](about/contact.md)
   - [Sponsor ❤️](about/sponsor.md)
@@ -7,7 +7,7 @@
   - [Technical Support](about/technical_support.md)
   - [Awesome xmake](about/awesome.md)
   - [Changelog](about/changelog.md)
- 
+
 - Getting Started
 
   - [Installation](guide/installation.md)
@@ -24,6 +24,7 @@
   - [Local Package (New)](package/local_package.md)
   - [System Package](package/system_package.md)
   - [Remote Package](package/remote_package.md)
+  - [Local 3rd source code library](package/local_3rd_source_library.md)
   - [Xrepo C/C++ Package Manager](https://xrepo.xmake.io/#/getting_started)
 
 - Plugin

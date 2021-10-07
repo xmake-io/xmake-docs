@@ -144,6 +144,7 @@ $ xmake f --menu
 * Android (x86, x86_64, armeabi, armeabi-v7a, arm64-v8a)
 * iOS (armv7, armv7s, arm64, i386, x86_64)
 * WatchOS (armv7k, i386)
+* AppleTVOS (armv7, arm64, i386, x86_64)
 * MSYS (i386, x86_64)
 * MinGW (i386, x86_64, arm, arm64)
 * Cygwin (i386, x86_64)
@@ -179,6 +180,7 @@ emcc          A toolchain for compiling to asm.js and WebAssembly
 icc           Intel C/C++ Compiler
 ifort         Intel Fortran Compiler
 muslcc        The musl-based cross-compilation toolchains
+fpc           Free Pascal Programming Language Compiler
 ```
 
 ## 支持语言
@@ -193,6 +195,8 @@ muslcc        The musl-based cross-compilation toolchains
 * Fortran
 * Cuda
 * Zig
+* Vala
+* Pascal
 
 ## 支持特性
 
@@ -203,7 +207,8 @@ muslcc        The musl-based cross-compilation toolchains
 * 多任务并行编译支持
 * C++20 Module-TS 支持
 * 支持跨平台的 C/C++ 依赖包快速集成
-* 自建分布式包仓库，第三方包仓库支持
+* 自建分布式包仓库，支持安装云端预编译包
+* 第三方包仓库支持，例如：vcpkg, conan, conda 等等
 * 多语言混合编译支持
 * 灵活的 lua 脚本，丰富的扩展模块，可实现高度定制化
 * 丰富的插件支持，内置 vs/cmake/makefile/compile_commands 等生成插件
@@ -211,19 +216,25 @@ muslcc        The musl-based cross-compilation toolchains
 * 增量编译支持，头文件依赖自动分析
 * 工具链的快速切换、定制化支持
 * 自动拉取工具链以及依赖包的快速整合
+* 支持预编译包以及包依赖锁定
 
 ## 工程类型
 
 * 静态库程序
 * 动态库类型
 * 控制台程序
-* Cuda程序
-* Qt应用程序
-* WDK驱动程序
-* WinSDK应用程序
-* MFC应用程序
-* iOS/MacOS应用程序
+* Cuda 程序
+* Qt 应用程序
+* WDK 驱动程序
+* WinSDK 应用程序
+* MFC 应用程序
+* iOS/MacOS 应用程序（支持.metal）
 * Framework和Bundle程序（iOS/MacOS）
+* SWIG 模块 (Lua, python, ...)
+* Luarocks 模块
+* Protobuf 程序
+* Lex/yacc 程序
+* C++20 模块
 
 ## 更多例子
 
@@ -336,7 +347,7 @@ target("loop")
 ```lua
 target("test")
     set_kind("binary")
-    add_files("src/*.zig")
+    add_files("src/main.zig")
 ```
 
 ### 自动拉取远程工具链
@@ -435,7 +446,7 @@ $ xmake l
 
 ```
 plugins {
-  id 'org.tboox.gradle-xmake-plugin' version '1.0.6'
+  id 'org.tboox.gradle-xmake-plugin' version '1.1.4'
 }
 
 android {
@@ -506,7 +517,9 @@ $ ./gradlew app:assembleDebug
 感谢所有对xmake有所[贡献](CONTRIBUTING.md)的人:
 <a href="https://github.com/xmake-io/xmake/graphs/contributors"><img src="https://opencollective.com/xmake/contributors.svg?width=890&button=false" /></a>
 
-* [TitanSnow](https://github.com/TitanSnow): 提供xmake [logo](https://github.com/TitanSnow/ts-xmake-logo) 和安装脚本
-* [uael](https://github.com/uael): 提供语义版本跨平台c库 [sv](https://github.com/uael/sv)
-* [OpportunityLiu](https://github.com/OpportunityLiu): 改进cuda构建, tests框架和ci
+* [TitanSnow](https://github.com/TitanSnow): 提供xmake [logo](https://github.com/TitanSnow/ts-xmake-logo) 和安装脚本。
+* [uael](https://github.com/uael): 提供语义版本跨平台c库 [sv](https://github.com/uael/sv)。
+* [OpportunityLiu](https://github.com/OpportunityLiu): 改进cuda构建, tests框架和ci。
+* [xq144](https://github.com/xq114): 改进 `xrepo env shell`，并贡献大量包到 [xmake-repo](https://github.com/xmake-io/xmake-repo) 仓库。
+
 

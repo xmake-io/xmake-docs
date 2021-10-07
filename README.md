@@ -7,7 +7,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 <a href="https://opencollective.com/xmake#sponsors" target="_blank"><img src="https://opencollective.com/xmake/sponsors.svg?width=890"></a>
 
-## Introduction
+## Introduction ([中文](/README_zh.md))
 
 xmake is a lightweight cross-platform build utility based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more concise and intuitive. It is very friendly to novices and can quickly get started in a short time. Let users focus more on actual project development.
 
@@ -125,6 +125,7 @@ The test project: [xmake-core](https://github.com/xmake-io/xmake/tree/master/cor
 * Apt on ubuntu/debian (apt::zlib1g-dev)
 * Clib (clib::clibs/bytes@0.0.4)
 * Dub (dub::log 0.4.3)
+* Portage on Gentoo/Linux (portage::libhandy)
 
 ## Supported platforms
 
@@ -135,6 +136,7 @@ The test project: [xmake-core](https://github.com/xmake-io/xmake/tree/master/cor
 * Android (x86, x86_64, armeabi, armeabi-v7a, arm64-v8a)
 * iOS (armv7, armv7s, arm64, i386, x86_64)
 * WatchOS (armv7k, i386)
+* AppleTVOS (armv7, arm64, i386, x86_64)
 * MSYS (i386, x86_64)
 * MinGW (i386, x86_64, arm, arm64)
 * Cygwin (i386, x86_64)
@@ -170,6 +172,7 @@ emcc          A toolchain for compiling to asm.js and WebAssembly
 icc           Intel C/C++ Compiler
 ifort         Intel Fortran Compiler
 muslcc        The musl-based cross-compilation toolchains
+fpc           Free Pascal Programming Language Compiler
 ```
 
 ## Supported Languages
@@ -185,8 +188,10 @@ muslcc        The musl-based cross-compilation toolchains
 * Fortran
 * Cuda
 * Zig
+* Vala
+* Pascal
 
-## Support Features
+## Supported Features
 
 * Simple project configuration syntax
 * Direct build support, without relying on any third-party back-end make tools
@@ -195,7 +200,9 @@ muslcc        The musl-based cross-compilation toolchains
 * Multi-task parallel compilation support
 * C++20 Module-TS support
 * Support cross-platform C/C++ dependency packages
-* Support self-built distributed and third-party package repositories
+* Support self-built distributed package repositories
+* Support the installation of cloud pre-compiled packages
+* Support third-party package repositories, such as: vcpkg, conan, conda, etc.
 * Support multi-language mixed compilation
 * Flexible lua scripts, rich extension modules
 * Support for generating vsproj/cmake/makefile/compile_commands files
@@ -203,6 +210,7 @@ muslcc        The musl-based cross-compilation toolchains
 * Incremental compilation support, automatic analysis of header dependency files
 * Fast switching toolchains
 * Automatic pull toolchain and dependency package integration
+* Support precompiled package and lock package requires
 
 ## Supported Projects
 
@@ -214,8 +222,13 @@ muslcc        The musl-based cross-compilation toolchains
 * WDK Driver (umdf/kmdf/wdm)
 * WinSDK Application
 * MFC Application
-* iOS/MacOS Application
+* iOS/MacOS Application (Support .metal)
 * Framework and Bundle Program (iOS/MacOS)
+* SWIG Modules (Lua, python, ...)
+* Luarocks Modules
+* Protobuf Program
+* Lex/yacc program
+* C++20 Modules
 
 ## More Examples
 
@@ -328,7 +341,7 @@ target("loop")
 ```lua
 target("test")
     set_kind("binary")
-    add_files("src/*.zig")
+    add_files("src/main.zig")
 ```
 
 ### Automatically fetch remote toolchain
@@ -427,7 +440,7 @@ We can uses [xmake-gradle](https://github.com/xmake-io/xmake-gradle) plugin to c
 
 ```
 plugins {
-  id 'org.tboox.gradle-xmake-plugin' version '1.0.6'
+  id 'org.tboox.gradle-xmake-plugin' version '1.1.4'
 }
 
 android {
@@ -502,3 +515,5 @@ This project exists thanks to all the people who have [contributed](CONTRIBUTING
 * [TitanSnow](https://github.com/TitanSnow): provide the xmake [logo](https://github.com/TitanSnow/ts-xmake-logo) and install scripts
 * [uael](https://github.com/uael): provide the semantic versioning library [sv](https://github.com/uael/sv)
 * [OpportunityLiu](https://github.com/OpportunityLiu): improve cuda, tests and ci
+* [xq144](https://github.com/xq114): Improve `xrepo env shell`, and contribute a lot of packages to the [xmake-repo](https://github.com/xmake-io/xmake-repo) repository.
+

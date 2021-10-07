@@ -699,20 +699,115 @@ target("minimal")
 </code></pre>
 <h2 id="valaprogram">Vala program</h2>
 <p>After 2.5.7 to support the construction of Vala programs, we need to apply the <code>add_rules("vala")</code> rule, and the glib package is necessary.</p>
+<p>related issues: <a href="https://github.com/xmake-io/xmake/issues/1618">#1618</a></p>
 <p><code>add_values("vala.packages")</code> is used to tell valac which packages the project needs, it will introduce the vala api of the relevant package, but the dependency integration of the package still needs to be downloaded and integrated through <code>add_requires("lua")</code>.</p>
-<p>E.g:</p>
+<h3 id="consoleprogram">Console program</h3>
 <pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
 
 add_requires("lua", "glib")
 
 target("test")
-     set_kind("binary")
-     add_rules("vala")
-     add_files("src/*.vala")
-     add_packages("lua", "glib")
-     add_values("vala.packages", "lua")
+    set_kind("binary")
+    add_rules("vala")
+    add_files("src/*.vala")
+    add_packages("lua", "glib")
+    add_values("vala.packages", "lua")
+</code></pre>
+<h3 id="staticlibraryprogram">Static library program</h3>
+<p>After v2.5.8, we continue to support the construction of library programs. The exported interface header file name can be set through <code>add_values("vala.header", "mymath.h")</code>, and through <code>add_values("vala.vapi", "mymath -1.0.vapi")</code> Set the name of the exported vapi file.</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+
+add_requires("glib")
+
+target("mymath")
+    set_kind("static")
+    add_rules("vala")
+    add_files("src/mymath.vala")
+    add_values("vala.header", "mymath.h")
+    add_values("vala.vapi", "mymath-1.0.vapi")
+    add_packages("glib")
+
+target("test")
+    set_kind("binary")
+    add_deps("mymath")
+    add_rules("vala")
+    add_files("src/main.vala")
+    add_packages("glib")
+</code></pre>
+<h3 id="dynamiclibraryprogram">Dynamic library program</h3>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+
+add_requires("glib")
+
+target("mymath")
+    set_kind("shared")
+    add_rules("vala")
+    add_files("src/mymath.vala")
+    add_values("vala.header", "mymath.h")
+    add_values("vala.vapi", "mymath-1.0.vapi")
+    add_packages("glib")
+
+target("test")
+    set_kind("binary")
+    add_deps("mymath")
+    add_rules("vala")
+    add_files("src/main.vala")
+    add_packages("glib")
 </code></pre>
 <p>More examples: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/vala">Vala examples</a></p>
+<h2 id="pascalprogram">Pascal program</h2>
+<p>After 2.5.8, we can support the construction of Pascal programs. For related issues, see: <a href="https://github.com/xmake-io/xmake/issues/388">#388</a></p>
+<h3 id="consoleprogram">Console program</h3>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+target("test")
+     set_kind("binary")
+     add_files("src/*.pas")
+</code></pre>
+<h3 id="dynamiclibraryprogram">Dynamic library program</h3>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+target("foo")
+     set_kind("shared")
+     add_files("src/foo.pas")
+
+target("test")
+     set_kind("binary")
+     add_deps("foo")
+     add_files("src/main.pas")
+</code></pre>
+<p>More examples: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/pascal">Pascal examples</a></p>
+<h2 id="swigmodule">Swig Module</h2>
+<p>Version 2.5.8 supports the construction of Swig modules. We provide <code>swig.c</code> and <code>swig.cpp</code> rules, which respectively support the generation of c/c++ module interface code, and cooperate with xmake&#39;s package management system to realize fully automated modules and dependent packages. Integration.</p>
+<p>Related issues: <a href="https://github.com/xmake-io/xmake/issues/1622">#1622</a></p>
+<h3 id="luacmodule">Lua/C Module</h3>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("lua")
+
+target("example")
+    add_rules("swig.c", {moduletype = "lua"})
+    add_files("src/example.i", {swigflags = "-no-old-metatable-bindings"})
+    add_files("src/example.c")
+    add_packages("lua")
+</code></pre>
+<h3 id="pythoncmodule">Python/C module</h3>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("python 3.x")
+
+target("example")
+    add_rules("swig.c", {moduletype = "python"})
+    add_files("src/example.i", {scriptdir = "share"})
+    add_files("src/example.c")
+    add_packages("python")
+</code></pre>
+<h3 id="pythoncmodule">Python/C++ Module</h3>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("python 3.x")
+
+target("example")
+    add_rules("swig.cpp", {moduletype = "python"})
+    add_files("src/example.i", {scriptdir = "share"})
+    add_files("src/example.cpp")
+    add_packages("python")
+</code></pre>
 </article>
 </body>
 </html>

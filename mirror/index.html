@@ -96,7 +96,7 @@
 <li><a href="https://xmake.io/#/about/sponsor">Become a sponsor</a></li>
 </ul>
 <p><a href="https://opencollective.com/xmake#sponsors" target="_blank"><img src="https://opencollective.com/xmake/sponsors.svg?width=890"></a></p>
-<h2 id="introduction">Introduction</h2>
+<h2 id="introduction">Introduction (<a href="/mirror/README_zh.md.html">中文</a>)</h2>
 <p>xmake is a lightweight cross-platform build utility based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more concise and intuitive. It is very friendly to novices and can quickly get started in a short time. Let users focus more on actual project development.</p>
 <p>It can compile the project directly like Make/Ninja, or generate project files like CMake/Meson, and it also has a built-in package management system to help users solve the integrated use of C/C++ dependent libraries.</p>
 <p>If you want to know more, please refer to: <a href="https://xmake.io/#/getting_started">Documents</a>, <a href="https://github.com/xmake-io/xmake">Github</a> and <a href="https://gitee.com/tboox/xmake">Gitee</a> and also welcome to join our <a href="https://xmake.io/#/about/contact">community</a>.</p>
@@ -227,6 +227,7 @@ $ xmake
 <li>Apt on ubuntu/debian (apt::zlib1g-dev)</li>
 <li>Clib (clib::<a href="mailto:clibs/bytes@0.0.4">clibs/bytes@0.0.4</a>)</li>
 <li>Dub (dub::log 0.4.3)</li>
+<li>Portage on Gentoo/Linux (portage::libhandy)</li>
 </ul>
 <h2 id="supportedplatforms">Supported platforms</h2>
 <ul>
@@ -237,6 +238,7 @@ $ xmake
 <li>Android (x86, x86_64, armeabi, armeabi-v7a, arm64-v8a)</li>
 <li>iOS (armv7, armv7s, arm64, i386, x86_64)</li>
 <li>WatchOS (armv7k, i386)</li>
+<li>AppleTVOS (armv7, arm64, i386, x86_64)</li>
 <li>MSYS (i386, x86_64)</li>
 <li>MinGW (i386, x86_64, arm, arm64)</li>
 <li>Cygwin (i386, x86_64)</li>
@@ -270,6 +272,7 @@ emcc          A toolchain for compiling to asm.js and WebAssembly
 icc           Intel C/C++ Compiler
 ifort         Intel Fortran Compiler
 muslcc        The musl-based cross-compilation toolchains
+fpc           Free Pascal Programming Language Compiler
 </code></pre>
 <h2 id="supportedlanguages">Supported Languages</h2>
 <ul>
@@ -284,8 +287,10 @@ muslcc        The musl-based cross-compilation toolchains
 <li>Fortran</li>
 <li>Cuda</li>
 <li>Zig</li>
+<li>Vala</li>
+<li>Pascal</li>
 </ul>
-<h2 id="supportfeatures">Support Features</h2>
+<h2 id="supportedfeatures">Supported Features</h2>
 <ul>
 <li>Simple project configuration syntax</li>
 <li>Direct build support, without relying on any third-party back-end make tools</li>
@@ -294,7 +299,9 @@ muslcc        The musl-based cross-compilation toolchains
 <li>Multi-task parallel compilation support</li>
 <li>C++20 Module-TS support</li>
 <li>Support cross-platform C/C++ dependency packages</li>
-<li>Support self-built distributed and third-party package repositories</li>
+<li>Support self-built distributed package repositories</li>
+<li>Support the installation of cloud pre-compiled packages</li>
+<li>Support third-party package repositories, such as: vcpkg, conan, conda, etc.</li>
 <li>Support multi-language mixed compilation</li>
 <li>Flexible lua scripts, rich extension modules</li>
 <li>Support for generating vsproj/cmake/makefile/compile_commands files</li>
@@ -302,6 +309,7 @@ muslcc        The musl-based cross-compilation toolchains
 <li>Incremental compilation support, automatic analysis of header dependency files</li>
 <li>Fast switching toolchains</li>
 <li>Automatic pull toolchain and dependency package integration</li>
+<li>Support precompiled package and lock package requires</li>
 </ul>
 <h2 id="supportedprojects">Supported Projects</h2>
 <ul>
@@ -313,8 +321,13 @@ muslcc        The musl-based cross-compilation toolchains
 <li>WDK Driver (umdf/kmdf/wdm)</li>
 <li>WinSDK Application</li>
 <li>MFC Application</li>
-<li>iOS/MacOS Application</li>
+<li>iOS/MacOS Application (Support .metal)</li>
 <li>Framework and Bundle Program (iOS/MacOS)</li>
+<li>SWIG Modules (Lua, python, ...)</li>
+<li>Luarocks Modules</li>
+<li>Protobuf Program</li>
+<li>Lex/yacc program</li>
+<li>C++20 Modules</li>
 </ul>
 <h2 id="moreexamples">More Examples</h2>
 <h4 id="debugandreleasemodes">Debug and release modes</h4>
@@ -394,7 +407,7 @@ target("loop")
 <h4 id="zigprogram">Zig Program</h4>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
-    add_files("src/*.zig")
+    add_files("src/main.zig")
 </code></pre>
 <h3 id="automaticallyfetchremotetoolchain">Automatically fetch remote toolchain</h3>
 <h4 id="fetchthespecialversionofllvm">fetch the special version of llvm</h4>
@@ -468,7 +481,7 @@ $ xmake l
 <h3 id="xmakegradlepluginjni">XMake Gradle Plugin (JNI)</h3>
 <p>We can uses <a href="https://github.com/xmake-io/xmake-gradle">xmake-gradle</a> plugin to compile JNI library in gradle.</p>
 <pre><code>plugins {
-  id &#39;org.tboox.gradle-xmake-plugin&#39; version &#39;1.0.6&#39;
+  id &#39;org.tboox.gradle-xmake-plugin&#39; version &#39;1.1.4&#39;
 }
 
 android {
@@ -527,6 +540,7 @@ android {
 <li><a href="https://github.com/TitanSnow">TitanSnow</a>: provide the xmake <a href="https://github.com/TitanSnow/ts-xmake-logo">logo</a> and install scripts</li>
 <li><a href="https://github.com/uael">uael</a>: provide the semantic versioning library <a href="https://github.com/uael/sv">sv</a></li>
 <li><a href="https://github.com/OpportunityLiu">OpportunityLiu</a>: improve cuda, tests and ci</li>
+<li><a href="https://github.com/xq114">xq144</a>: Improve <code>xrepo env shell</code>, and contribute a lot of packages to the <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a> repository.</li>
 </ul>
 </article>
 </body>

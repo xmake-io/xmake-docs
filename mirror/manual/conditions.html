@@ -321,6 +321,18 @@ if is_config("test", "hello1", "hello2") then
     add_defines("HELLO")
 end
 </code></pre>
+<p>Can be used for conditional package requirements, eg. ：</p>
+<pre><code class="lang-lua">-- Add lua or luajit package requirements, depending on the lua_flavor option value
+option("lua_flavor")
+    set_showmenu(true)
+    set_values("luajit", "lua")
+option_end()
+if is_config("lua_flavor", "luajit") then
+    add_requires("luajit")
+elseif is_config("lua_flavor", "lua") then
+    add_requires("lua")
+end
+</code></pre>
 <p>Not only that, we can also set pattern matching rules to determine values, such as:</p>
 <pre><code class="lang-lua">if is_config("test", "hello.*") then
     add_defines("HELLO")
