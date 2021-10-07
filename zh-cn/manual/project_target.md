@@ -2203,6 +2203,36 @@ target("test")
 
 2.2.5版本新增接口，用于在编译前，添加一些需要预处理的模板配置变量，一般用于[add_configfiles](#targetadd_configfiles)接口。
 
+```lua
+target("test")
+    set_kind("binary")
+    add_files("main.c")
+    set_configvar("HAS_FOO", 1)
+    set_configvar("HAS_BAR", "bar")
+    set_configvar("HAS_ZOO", "zoo", {quote = false})
+    add_configfiles("config.h.in")
+```
+
+config.h.in
+
+```c
+${define HAS_FOO}
+${define HAS_BAR}
+${define HAS_ZOO}
+```
+
+生成的 config.h 内容如下：
+
+```c
+#define HAS_FOO 1
+#define HAS_BAR "bar"
+#define HAS_ZOO zoo
+```
+
+set_configvar 可以设置 number，string 和 boolean 类型值，如果是 string 值，默认生成的宏定义带有引号，如果要去掉引号，可以设置 `{quote = false}`。
+
+相关 issues 见：[#1694](https://github.com/xmake-io/xmake/issues/1694)
+
 ### target:add_configfiles
 
 #### 添加模板配置文件
