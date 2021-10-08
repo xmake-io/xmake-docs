@@ -1,3 +1,34 @@
+
+## v2.5.8
+
+### New features
+
+* [#388](https://github.com/xmake-io/xmake/issues/388): Pascal Language Support
+* [#1682](https://github.com/xmake-io/xmake/issues/1682): Add optional lua5.3 backend instead of luajit to provide better compatibility
+* [#1622](https://github.com/xmake-io/xmake/issues/1622): Support Swig
+* [#1714](https://github.com/xmake-io/xmake/issues/1714): Support build local embed cmake projects
+* [#1715](https://github.com/xmake-io/xmake/issues/1715): Support to detect compiler language standards as features and add `check_macros`
+* Support Loongarch
+
+### Change
+
+* [#1618](https://github.com/xmake-io/xmake/issues/1618): Improve vala to support to generate libraries and bindings
+* Improve Qt rules to support Qt 4.x
+* Improve `set_symbols("debug")` to generate pdb file for clang on windows
+* [#1638](https://github.com/xmake-io/xmake/issues/1638): Improve to merge static library
+* Improve on_load/after_load to support to add target deps dynamically
+* [#1675](https://github.com/xmake-io/xmake/pull/1675): Rename dynamic and import library suffix for mingw
+* [#1694](https://github.com/xmake-io/xmake/issues/1694): Support to define a variable without quotes for configuration files
+* Support Android NDK r23
+* Add `c++latest` and `clatest` for `set_languages`
+* [#1720](https://github.com/xmake-io/xmake/issues/1720): Add `save_scope` and `restore_scope` to fix `check_xxx` apis
+* [#1726](https://github.com/xmake-io/xmake/issues/1726): Improve compile_commands generator to support nvcc
+
+### Bugs fixed
+
+* [#1671](https://github.com/xmake-io/xmake/issues/1671): Fix incorrect absolute path after installing precompiled packages
+* [#1689](https://github.com/xmake-io/xmake/issues/1689): Fix unicode chars bug for vsxmake
+
 ## v2.5.7
 
 ### New features

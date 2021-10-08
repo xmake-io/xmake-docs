@@ -1,3 +1,34 @@
+
+## v2.5.8
+
+### 新特性
+
+* [#388](https://github.com/xmake-io/xmake/issues/388): Pascal 语言支持，可以使用 fpc 来编译 free pascal
+* [#1682](https://github.com/xmake-io/xmake/issues/1682): 添加可选的额lua5.3 运行时替代 luajit，提供更好的平台兼容性。
+* [#1622](https://github.com/xmake-io/xmake/issues/1622): 支持 Swig
+* [#1714](https://github.com/xmake-io/xmake/issues/1714): 支持内置 cmake 等第三方项目的混合编译
+* [#1715](https://github.com/xmake-io/xmake/issues/1715): 支持探测编译器语言标准特性，并且新增 `check_macros` 检测接口
+* xmake 支持在 Loongarch 架构上运行
+
+### 改进
+
+* [#1618](https://github.com/xmake-io/xmake/issues/1618): 改进 vala 支持构建动态库和静态库程序
+* 改进 Qt 规则去支持 Qt 4.x
+* 改进 `set_symbols("debug")` 支持 clang/windows 生成 pdb 文件
+* [#1638](https://github.com/xmake-io/xmake/issues/1638): 改进合并静态库
+* 改进 on_load/after_load 去支持动态的添加 target deps
+* [#1675](https://github.com/xmake-io/xmake/pull/1675): 针对 mingw 平台，重命名动态库和导入库文件名后缀
+* [#1694](https://github.com/xmake-io/xmake/issues/1694): 支持在 set_configvar 中定义一个不带引号的字符串变量
+* 改进对 Android NDK r23 的支持
+* 为 `set_languages` 新增 `c++latest` 和 `clatest` 配置值
+* [#1720](https://github.com/xmake-io/xmake/issues/1720): 添加 `save_scope` 和 `restore_scope` 去修复 `check_xxx` 相关接口
+* [#1726](https://github.com/xmake-io/xmake/issues/1726): 改进 compile_commands 生成器去支持 nvcc
+
+### Bugs 修复
+
+* [#1671](https://github.com/xmake-io/xmake/issues/1671): 修复安装预编译包后，*.cmake 里面的一些不正确的绝对路径
+* [#1689](https://github.com/xmake-io/xmake/issues/1689): 修复 vsxmake 插件的 unicode 字符显示和加载问题
+
 ## v2.5.7
 
 ### 新特性
