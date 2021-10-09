@@ -90,7 +90,39 @@
   line-height: 1;
 }
 </style>
-    <h3 id="thedocumenthereisstillinprogresspleasebepatientyoucanalsospeeduptheupdateofthedocumentbysponsoringorsubmitingpr">The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr</h3>
+    <p>This page describes the interface for <code>option</code> of functions like <code>on_load()</code>, <code>on_check()</code> or <code>after_check()</code> of the <a href="manual/configuration_option.md">Configuration option</a></p>
+<h4 id="optionname">option:name</h4>
+<ul>
+<li>Get the name of the option</li>
+</ul>
+<h4 id="optionget">option:get</h4>
+<ul>
+<li>Get the values of the option by name</li>
+</ul>
+<pre><code class="lang-lua">-- get the links
+option:get("links")
+-- get the defined macros
+option:get("defines")
+</code></pre>
+<h4 id="optionset">option:set</h4>
+<ul>
+<li>Set the values of the option by name (If you just want to add values use <a href="#optionadd">option:add</a>)</li>
+</ul>
+<pre><code class="lang-lua">-- set the links
+option:set("links", "sdl2")
+-- set the defined macros
+option:set("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<h4 id="optionadd">option:add</h4>
+<ul>
+<li>Add to the values of the option by name</li>
+</ul>
+<pre><code class="lang-lua">-- add links
+option:add("links", "sdl2")
+-- add defined macros
+option:add("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<p>!> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr</p>
 </article>
 </body>
 </html>

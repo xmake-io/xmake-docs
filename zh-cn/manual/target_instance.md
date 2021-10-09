@@ -34,8 +34,6 @@ target:set("defines", "SDL_MAIN_HANDLED")
 - 按名称添加到目标的值
 
 ```lua
--- add dependencies
-target:add("deps", "python")
 -- add links
 target:add("links", "sdl2")
 -- add defined macros
