@@ -90,7 +90,36 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v257">v2.5.7</h2>
+    <h2 id="v258">v2.5.8</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/388">#388</a>: Pascal Language Support</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1682">#1682</a>: Add optional lua5.3 backend instead of luajit to provide better compatibility</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1622">#1622</a>: Support Swig</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1714">#1714</a>: Support build local embed cmake projects</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1715">#1715</a>: Support to detect compiler language standards as features and add <code>check_macros</code></li>
+<li>Support Loongarch</li>
+</ul>
+<h3 id="change">Change</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1618">#1618</a>: Improve vala to support to generate libraries and bindings</li>
+<li>Improve Qt rules to support Qt 4.x</li>
+<li>Improve <code>set_symbols("debug")</code> to generate pdb file for clang on windows</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1638">#1638</a>: Improve to merge static library</li>
+<li>Improve on_load/after_load to support to add target deps dynamically</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1675">#1675</a>: Rename dynamic and import library suffix for mingw</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1694">#1694</a>: Support to define a variable without quotes for configuration files</li>
+<li>Support Android NDK r23</li>
+<li>Add <code>c++latest</code> and <code>clatest</code> for <code>set_languages</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1720">#1720</a>: Add <code>save_scope</code> and <code>restore_scope</code> to fix <code>check_xxx</code> apis</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1726">#1726</a>: Improve compile_commands generator to support nvcc</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1671">#1671</a>: Fix incorrect absolute path after installing precompiled packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1689">#1689</a>: Fix unicode chars bug for vsxmake</li>
+</ul>
+<h2 id="v257">v2.5.7</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/1534">#1534</a>: Support to compile Vala lanuage project</li>

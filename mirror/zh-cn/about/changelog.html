@@ -90,7 +90,36 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v257">v2.5.7</h2>
+    <h2 id="v258">v2.5.8</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/388">#388</a>: Pascal 语言支持，可以使用 fpc 来编译 free pascal</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1682">#1682</a>: 添加可选的额lua5.3 运行时替代 luajit，提供更好的平台兼容性。</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1622">#1622</a>: 支持 Swig</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1714">#1714</a>: 支持内置 cmake 等第三方项目的混合编译</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1715">#1715</a>: 支持探测编译器语言标准特性，并且新增 <code>check_macros</code> 检测接口</li>
+<li>xmake 支持在 Loongarch 架构上运行</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1618">#1618</a>: 改进 vala 支持构建动态库和静态库程序</li>
+<li>改进 Qt 规则去支持 Qt 4.x</li>
+<li>改进 <code>set_symbols("debug")</code> 支持 clang/windows 生成 pdb 文件</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1638">#1638</a>: 改进合并静态库</li>
+<li>改进 on_load/after_load 去支持动态的添加 target deps</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1675">#1675</a>: 针对 mingw 平台，重命名动态库和导入库文件名后缀</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1694">#1694</a>: 支持在 set_configvar 中定义一个不带引号的字符串变量</li>
+<li>改进对 Android NDK r23 的支持</li>
+<li>为 <code>set_languages</code> 新增 <code>c++latest</code> 和 <code>clatest</code> 配置值</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1720">#1720</a>: 添加 <code>save_scope</code> 和 <code>restore_scope</code> 去修复 <code>check_xxx</code> 相关接口</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1726">#1726</a>: 改进 compile_commands 生成器去支持 nvcc</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1671">#1671</a>: 修复安装预编译包后，*.cmake 里面的一些不正确的绝对路径</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1689">#1689</a>: 修复 vsxmake 插件的 unicode 字符显示和加载问题</li>
+</ul>
+<h2 id="v257">v2.5.7</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/1534">#1534</a>: 新增对 Vala 语言的支持</li>

@@ -44,6 +44,8 @@
 - API Manual (Script Scope)
 
   - [Package Instance](manual/package_instance.md)
+  - [Target Instance](manual/target_instance.md)
+  - [Option Instance](manual/option_instance.md)
   - [Builtin Modules](manual/builtin_modules.md)
   - [Extension Modules](manual/extension_modules.md)
 

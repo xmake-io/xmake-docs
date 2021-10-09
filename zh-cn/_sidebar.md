@@ -45,6 +45,9 @@
 
 - API手册（脚本域）
 
+  - [包实例](zh-cn/manual/package_instance.md)
+  - [目标实例](zh-cn/manual/target_instance.md)
+  - [选项实例](zh-cn/manual/option_instance.md)
   - [内置模块](zh-cn/manual/builtin_modules.md)
   - [扩展模块](zh-cn/manual/extension_modules.md)
 

@@ -1,13 +1,15 @@
 
-This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](manual/package_dependencies.md)
+此页面描述了 [Package Dependencies](zh-cn/manual/package_dependencies.md) 的 `on_load()`、`on_install()` 或 `on_test()` 等函数的 `package` 接口
 
 #### package:name
 
-- Get the name of the package
+- 获取包的名字
 
 #### package:get
 
-- Get the values of the package by name
+- 获取包在描述域的配置值
+
+任何在描述域的 `set_xxx` 和 `add_xxx` 配置值都可以通过这个接口获取到。
 
 ```lua
 -- get the dependencies
@@ -20,7 +22,7 @@ package:get("defines")
 
 #### package:set
 
-- Set the values of the package by name (If you just want to add values use [package:add](#packageadd))
+- 设置包的配置值，（如果你想添加值可以用 [package:add](#packageadd)）。
 
 ```lua
 -- set the dependencies
@@ -33,7 +35,7 @@ package:set("defines", {"SDL_MAIN_HANDLED"})
 
 #### package:add
 
-- Add to the values of the package by name
+- 按名称添加到包的值
 
 ```lua
 -- add dependencies
@@ -46,15 +48,15 @@ package:add("defines", "SDL_MAIN_HANDLED")
 
 #### package:license
 
-- Get the license of the package (Same as `package:get("license")`)
+- 获取包的许可证（同`package:get("license")`）
 
 #### package:description
 
-- Get the description of the package (Same as `package:get("description")`)
+- 获取包的描述（同`package:get("description")`）
 
 #### package:plat
 
-- Get the platform of the package. Can be any of:
+- 获取包的平台。 可以是以下任何一种：
   + windows
   + linux
   + macosx
@@ -65,26 +67,25 @@ package:add("defines", "SDL_MAIN_HANDLED")
   + cygwin
   + bsd
 
-If the package is binary [`os.host`](manual/builtin_modules.md#oshost) is returned
+如果包是二进制的，则会返回 [`os.host`](zh-cn/manual/builtin_modules.md#oshost) 的值
 
 #### package:arch
 
-- Get the architecture of the package (e.g. x86, x64, x86_64)
+- 获取包的架构（例如 x86、x64、x86_64）
 
-If the package is binary [`os.arch`](manual/builtin_modules.md#osarch) is returned
+如果包是二进制的，则返回 [`os.arch`](zh-cn/manual/builtin_modules.md#osarch)
 
 #### package:targetos
 
-- Get the targeted OS of the package. Can have the same values as [package:plat](#packageplat)
+- 获取包的目标操作系统。 可以具有与 [package:plat](#packageplat) 相同的值
 
 #### package:targetarch
 
-- Get the targeted architecture of the package. Can have the same values as [package:arch](#packagearch)
-
+- 获取包的目标架构。 可以具有与 [package:arch](#packagearch) 相同的值
 
 #### package:is_plat
 
-- Wether the current platform is one of the given platforms
+- 当前平台是否是给定平台之一
 
 ```lua
 -- Is the current platform android?
@@ -95,7 +96,7 @@ package:is_plat("windows", "linux", "macosx")
 
 #### package:is_arch
 
-- Wether the current platform is one of the given platforms
+- 当前平台是否是给定平台之一
 
 ```lua
 -- Is the current architecture x86
@@ -106,7 +107,7 @@ package:is_arch("x64", "x86_64")
 
 #### package:is_targetos
 
-- Wether the currently targeted OS is one of the given OS
+- 当前目标操作系统是否是给定操作系统之一
 
 ```lua
 -- Is the currently targeted OS windows?
@@ -117,7 +118,7 @@ package:is_targetos("android", "iphoneos")
 
 #### package:is_targetarch
 
-- Wether the currently targeted architecture is one of the given architectures
+- 当前目标架构是否是给定架构之一
 
 ```lua
 -- Is the currently targeted architecture x86
@@ -128,13 +129,16 @@ package:is_targetarch("x64", "x86_64")
 
 #### package:alias
 
-- Get the alias of the package
+- 获取包的别名
 
-If the user sets an alias like so:
+如果用户像这样设置别名：
+
 ```lua
 add_requires("libsdl", {alias = "sdl"})
 ```
-This alias can be retrieved by
+
+那么这个别名可以通过这个接口获取到：
+
 ```lua
 -- returns "sdl"
 package:alias()
@@ -142,15 +146,18 @@ package:alias()
 
 #### package:urls
 
-- Get the URLs of the package
+- 获取包的 urls 列表
 
-Retrieve the URLs set by:
+如果我们设置了如下 URLs
+
 ```lua
 add_urls("https://example.com/library-$(version).zip")
 -- or so
 set_urls("https://example.com/library-$(version).zip")
 ```
-Then write this:
+
+那么我们可以通过下面的接口来获取
+
 ```lua
 -- returns the table {"https://example.com/library-$(version).zip"}
 package:urls()
@@ -158,7 +165,7 @@ package:urls()
 
 #### package:dep
 
-- Get a dependency of the package by name. The name needs to be a dependency of the package.
+- 通过名称获取包的依赖项。 该名称需要是包的依赖项。
 
 ```lua
 local python = package:dep("python")
@@ -168,7 +175,7 @@ python:name()
 
 #### package:deps
 
-- Get all dependencies of the package
+- 获取包的所有依赖项
 
 ```lua
 -- prints the names of all dependencies
@@ -179,14 +186,17 @@ end
 
 #### package:sourcehash
 
-- Get the sha256 checksum of an URL alias
+- 获取 URL 别名的 sha256 校验和
 
-If the checksum is provided like so:
+如果校验和是这样提供的：
+
 ```lua
 add_urls("https://example.com/library-$(version).zip", {alias = "example"})
 add_versions("example:2.4.1", "29f9983cc7196e882c4bc3d23d7492f9c47574c7cf658afafe7d00c185429941")
 ```
-You can retrieve the checksum like so:
+
+您可以像这样获取它：
+
 ```lua
 -- returns "29f9983cc7196e882c4bc3d23d7492f9c47574c7cf658afafe7d00c185429941"
 package:sourcehash("example")
@@ -196,7 +206,7 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 
 #### package:kind
 
-- Get the kind of the package. Can be any of:
+- 获取包的类型。 可以是以下任何一种：
   + binary
   + toolchain (is also binary)
   + library (default)
@@ -204,32 +214,27 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 
 #### package:is_binary
 
-- Wether the package is of kind binary
-
+- 包是否为二进制类型
 
 #### package:is_toolchain
 
-- Wether the package is of kind toolchain
-
+- 报是否为工具链类型
 
 #### package:is_library
 
-- Wether the package is of kind library
+- 包是否为库类型
 
 #### package:is_toplevel
 
-- Wether the package is directly required by the user (e.g. xmake.lua)
-
+-- 包是否在用户 xmake.lua 里面通过 add_requires 直接引用
 
 #### package:is_thirdparty
 
-- Wether the package is provided by a thirdparty package manager (e.g. brew, conan, vcpkg)
-
+- 包是否由第三方包管理器提供（例如 brew、conan、vcpkg）
 
 #### package:is_debug
 
-- Wether the package is build with debug mode (Same as `package:config("debug")`)
-
+- 包是否以调试模式构建（同`package:config("debug")`）
 
 #### package:is_supported
 
@@ -266,17 +271,15 @@ package:installdir("include", "files")
 
 #### package:scriptdir
 
-- Get the directory where the xmake.lua of the package lies
-
+- 获取包的xmake.lua所在目录
 
 #### package:envs
 
-- Get the exported environment variables of the package
-
+- 获取包导出的环境变量
 
 #### package:getenv
 
-- Get the given environment variable
+- 获取给定的环境变量
 
 ```lua
 -- returns a table
@@ -285,7 +288,7 @@ package:getenv("PATH")
 
 #### package:setenv
 
-- Set the given environment variable. Overwrites the variable
+- 设置给定的环境变量。 覆盖变量
 
 ```lua
 -- sets PATH to {"bin", "lib"}
@@ -294,7 +297,7 @@ package:setenv("PATH", "bin", "lib")
 
 #### package:addenv
 
-- Add the given values to the environment variable
+- 将给定的值添加到环境变量
 
 ```lua
 -- adds "bin" and "lib" to PATH
@@ -303,12 +306,13 @@ package:addenv("PATH", "bin", "lib")
 
 #### package:versions
 
-- Get all version strings of the package. Returns a table containing all versions as strings
-
+- 获取包的所有版本列表。
 
 #### package:version
 
-- Get the version of the package
+- 获取包的版本
+
+它会返回一个语义版本对象，便于做版本之间的判断。
 
 ```lua
 local version = package:version()
@@ -322,12 +326,11 @@ version:patch()
 
 #### package:version_str
 
-- Get the version of the package as string
-
+- 以字符串形式获取包的版本
 
 #### package:config
 
-- Get the given configuration value of the package
+- 获取包的给定配置值
 
 ```lua
 -- if configurations are set like so
@@ -341,7 +344,7 @@ package:config("value_y")
 
 #### package:config_set
 
-- Set the given configuration value of the package
+- 设置包的给定配置值
 
 ```lua
 package:config_set("enable_x", true)
@@ -350,7 +353,7 @@ package:config_set("value_y", 6)
 
 #### package:configs
 
-- Get all configurations of the package
+- 获取包的所有配置
 
 ```lua
 -- returns a table with the configuration names as keys and their values as values
@@ -361,12 +364,13 @@ local value_y = configs["value_y"]
 
 #### package:buildhash
 
-- Get the build hash of the package
+- 获取包的构建哈希
 
+它确保每个包，不同的配置安装到唯一的路径下，相互之间不冲突。
 
 #### package:patches
 
-- Get all patches of the current version
+- 获取当前版本的所有补丁
 
 ```lua
 -- returns a table with all patches
@@ -378,9 +382,10 @@ local sha256 = patches[1]["sha256"]
 
 #### package:has_cfuncs
 
-- Wether the package has the given C functions
+- 检测包是否具有给定的 C 函数
 
-This should be used inside `on_test` like so:
+这应该在 `on_test` 中使用，如下所示：
+
 ```lua
 on_test(function (package)
   assert(package:has_cfuncs("foo"))
@@ -394,9 +399,10 @@ end)
 
 #### package:has_cxxfuncs
 
-- Wether the package has the given C++ functions
+- 检测包是否具有给定的 C++ 函数
 
-This should be used inside `on_test` like so:
+这应该在 `on_test` 中使用，如下所示：
+
 ```lua
 on_test(function (package)
   assert(package:has_cxxfuncs("foo"))
@@ -410,9 +416,10 @@ end)
 
 #### package:has_ctypes
 
-- Wether the package has the given C types
+- 检测包是否具有给定的 C 类型
 
-This should be used inside `on_test` like so:
+这应该在 `on_test` 中使用，如下所示：
+
 ```lua
 on_test(function (package)
   assert(package:has_ctypes("foo"))
@@ -426,9 +433,10 @@ end)
 
 #### package:has_cxxtypes
 
-- Wether the package has the given C++ types
+- 检测包是否具有给定的 C++ 类型
 
-This should be used inside `on_test` like so:
+这应该在 `on_test` 中使用，如下所示：
+
 ```lua
 on_test(function (package)
   assert(package:has_cxxtypes("foo"))
@@ -442,9 +450,10 @@ end)
 
 #### package:has_cincludes
 
-- Wether the package has the given C header files
+- 检测包是否具有给定的 C 头文件
 
-This should be used in `on_test` like so:
+这应该在 `on_test` 中使用，如下所示：
+
 ```lua
 on_test(function (package)
   assert(package:has_cincludes("foo.h"))
@@ -453,9 +462,10 @@ end)
 
 #### package:has_cxxincludes
 
-- Wether the package has the given C++ header files
+- 检测包是否具有给定的 C++ 头文件
 
-This should be used in `on_test` like so:
+这应该在 `on_test` 中使用，如下所示：
+
 ```lua
 on_test(function (package)
   assert(package:has_cincludes("foo.hpp"))
@@ -464,9 +474,10 @@ end)
 
 #### package:check_csnippets
 
-- Wether the given C snippet can be compiled and linked
+- 检测是否可以编译和链接给定的 C 代码片段
 
-This should be used in `on_test` like so:
+这应该在 `on_test` 中使用，如下所示：
+
 ```lua
 on_test(function (package)
   assert(package:check_csnippets({test = [[
@@ -482,9 +493,10 @@ end)
 
 #### package:check_cxxsnippets
 
-- Wether the given C++ snippet can be compiled and linked
+- 检测是否可以编译和链接给定的 C++ 代码片段
 
-This should be used in `on_test` like so:
+这应该在 `on_test` 中使用，如下所示：
+
 ```lua
 on_test(function (package)
   assert(package:check_cxxsnippets({test = [[

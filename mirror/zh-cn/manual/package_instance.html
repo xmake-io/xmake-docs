@@ -26,7 +26,7 @@
 </head>
 <body>
 <article class="markdown-body">
-<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/manual/package_interface">https://xmake.io/#/manual/package_interface</a>
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/manual/package_instance">https://xmake.io/#/zh-cn/manual/package_instance</a>
 </br>
     <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
 <style>
@@ -90,286 +90,16 @@
   line-height: 1;
 }
 </style>
-    <p>This page describes the interface for <code>package</code> of functions like <code>on_load()</code>, <code>on_install()</code> or <code>on_test()</code> of the <a href="manual/package_dependencies.md">Package Dependencies</a></p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#packagename">package:name</a></td>
-<td>Get the name of the package</td>
-<td>>= 2.2.5</td>
-</tr>
-<tr>
-<td><a href="#packageget">package:get</a></td>
-<td>Get the values of the package</td>
-<td>>= 2.1.6</td>
-</tr>
-<tr>
-<td><a href="#packageset">package:set</a></td>
-<td>Set the values of the package</td>
-<td>>= 2.1.6</td>
-</tr>
-<tr>
-<td><a href="#packageadd">package:add</a></td>
-<td>Add to the values of the package</td>
-<td>>= 2.2.5</td>
-</tr>
-<tr>
-<td><a href="#packagelicense">package:license</a></td>
-<td>Get the license of the package</td>
-<td>>= 2.3.9</td>
-</tr>
-<tr>
-<td><a href="#packagedescription">package:description</a></td>
-<td>Get the description of the package</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#packageplat">package:plat</a></td>
-<td>Get the platform of the package</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#packagearch">package:arch</a></td>
-<td>Get the architecture of the package</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#packagetargetos">package:targetos</a></td>
-<td>Get the targeted OS of the package</td>
-<td>>= 2.5.2</td>
-</tr>
-<tr>
-<td><a href="#packagetargetarch">package:targetarch</a></td>
-<td>Get the targeted architecture of the package</td>
-<td>>= 2.5.2</td>
-</tr>
-<tr>
-<td><a href="#packageis_plat">package:is_plat</a></td>
-<td>Wether the current platform is one of the given platforms</td>
-<td>>= 2.2.6</td>
-</tr>
-<tr>
-<td><a href="#packageis_arch">package:is_arch</a></td>
-<td>Wether the current architecture is one of the given platforms</td>
-<td>>= 2.2.6</td>
-</tr>
-<tr>
-<td><a href="#packageis_targetos">package:is_targetos</a></td>
-<td>Wether the currently targeted OS is one of the given OS</td>
-<td>>= 2.5.2</td>
-</tr>
-<tr>
-<td><a href="#packageis_targetarch">package:is_targetarch</a></td>
-<td>Wether the currently targeted architecture is one of the given architectures</td>
-<td>>= 2.5.2</td>
-</tr>
-<tr>
-<td><a href="#packagealias">package:alias</a></td>
-<td>Get the alias of the package</td>
-<td>>= 2.1.7</td>
-</tr>
-<tr>
-<td><a href="#packageurls">package:urls</a></td>
-<td>Get the URLs of the package</td>
-<td>>= 2.1.6</td>
-</tr>
-<tr>
-<td><a href="#packagedep">package:dep</a></td>
-<td>Get a dependency of the package</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#packagedeps">package:deps</a></td>
-<td>Get all dependencies of the package</td>
-<td>>= 2.1.7</td>
-</tr>
-<tr>
-<td><a href="#packagesourcehash">package:sourcehash</a></td>
-<td>Get the sha256 checksum of an URL alias</td>
-<td>>= 2.3.2</td>
-</tr>
-<tr>
-<td><a href="#packagekind">package:kind</a></td>
-<td>Get the kind of the package</td>
-<td>>= 2.1.7</td>
-</tr>
-<tr>
-<td><a href="#packageis_binary">package:is_binary</a></td>
-<td>Wether the package is of kind binary</td>
-<td>>= 2.5.2</td>
-</tr>
-<tr>
-<td><a href="#packageis_toolchain">package:is_toolchain</a></td>
-<td>Wether the package is of kind toolchain</td>
-<td>>= 2.5.2</td>
-</tr>
-<tr>
-<td><a href="#packageis_library">package:is_library</a></td>
-<td>Wether the package is of kind library</td>
-<td>>= 2.5.2</td>
-</tr>
-<tr>
-<td><a href="#packageis_toplevel">package:is_toplevel</a></td>
-<td>Wether the package is directly required by the user</td>
-<td>>= 2.5.2</td>
-</tr>
-<tr>
-<td><a href="#packageis_thirdparty">package:is_thirdparty</a></td>
-<td>Wether the package is provided by a third party package manager</td>
-<td>>= 2.5.3</td>
-</tr>
-<tr>
-<td><a href="#packageis_debug">package:is_debug</a></td>
-<td>Wether the the package gets built with debug mode</td>
-<td>>= 2.5.3</td>
-</tr>
-<tr>
-<td><a href="#packageis_supported">package:is_supported</a></td>
-<td>Wether the package is supported by the current platform and architecture</td>
-<td>>= 2.5.3</td>
-</tr>
-<tr>
-<td><a href="#packagedebug">package:debug</a></td>
-<td>Wether the the package gets built with debug mode (deprecated)</td>
-<td>>= 2.2.3</td>
-</tr>
-<tr>
-<td><a href="#packageis_cross">package:is_cross</a></td>
-<td>Wether the package is getting cross-compiled</td>
-<td>>= 2.5.3</td>
-</tr>
-<tr>
-<td><a href="#packagecachedir">package:cachedir</a></td>
-<td>Get the cache directory of the package</td>
-<td>>= 2.1.6</td>
-</tr>
-<tr>
-<td><a href="#packageinstalldir">package:installdir</a></td>
-<td>Get the installation directory of the package</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#packagescriptdir">package:scriptdir</a></td>
-<td>Get the directory where the xmake.lua of the package lies</td>
-<td>>= 2.2.5</td>
-</tr>
-<tr>
-<td><a href="#packageenvs">package:envs</a></td>
-<td>Get the exported environment variables of the package</td>
-<td>>= 2.2.5</td>
-</tr>
-<tr>
-<td><a href="#packagegetenv">package:getenv</a></td>
-<td>Get the given environment variable</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#packagesetenv">package:setenv</a></td>
-<td>Set the given environment variable</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#packageaddenv">package:addenv</a></td>
-<td>Add the given values to the environment variable</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#packageversions">package:versions</a></td>
-<td>Get all version strings of the package</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#packageversion">package:version</a></td>
-<td>Get the version of the package</td>
-<td>>= 2.1.6</td>
-</tr>
-<tr>
-<td><a href="#packageversion_str">package:version_str</a></td>
-<td>Get the version of the package as string</td>
-<td>>= 2.1.6</td>
-</tr>
-<tr>
-<td><a href="#packageconfig">package:config</a></td>
-<td>Get the given configuration value of the package</td>
-<td>>= 2.2.5</td>
-</tr>
-<tr>
-<td><a href="#packageconfig_set">package:config_set</a></td>
-<td>Set the given configuration value of the package</td>
-<td>>= 2.5.1</td>
-</tr>
-<tr>
-<td><a href="#packageconfigs">package:configs</a></td>
-<td>Get all configurations of the package</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#packagebuildhash">package:buildhash</a></td>
-<td>Get the build hash of the package</td>
-<td>>= 2.2.5</td>
-</tr>
-<tr>
-<td><a href="#packagepatches">package:patches</a></td>
-<td>Get all patches of the current version</td>
-<td>>= 2.2.5</td>
-</tr>
-<tr>
-<td><a href="#packagehas_cfuncs">package:has_cfuncs</a></td>
-<td>Wether the package has the given C functions</td>
-<td>>= 2.2.5</td>
-</tr>
-<tr>
-<td><a href="#packagehas_cxxfuncs">package:has_cxxfuncs</a></td>
-<td>Wether the package has the given C++ functions</td>
-<td>>= 2.2.5</td>
-</tr>
-<tr>
-<td><a href="#packagehas_ctypes">package:has_ctypes</a></td>
-<td>Wether the package has the given C types</td>
-<td>>= 2.3.8</td>
-</tr>
-<tr>
-<td><a href="#packagehas_cxxtypes">package:has_cxxtypes</a></td>
-<td>Wether the package has the given C++ types</td>
-<td>>= 2.3.8</td>
-</tr>
-<tr>
-<td><a href="#packagehas_cincludes">package:has_cincludes</a></td>
-<td>Wether the package has the given C header files</td>
-<td>>= 2.3.8</td>
-</tr>
-<tr>
-<td><a href="#packagehas_cxxincludes">package:has_cxxincludes</a></td>
-<td>Wether the package has the given C++ header files</td>
-<td>>= 2.3.8</td>
-</tr>
-<tr>
-<td><a href="#packagecheck_csnippets">package:check_csnippets</a></td>
-<td>Wether the given C snippet can be compiled and linked</td>
-<td>>= 2.2.6</td>
-</tr>
-<tr>
-<td><a href="#packagecheck_cxxsnippets">package:check_cxxsnippets</a></td>
-<td>Wether the given C++ snippet can be compiled and linked</td>
-<td>>= 2.2.6</td>
-</tr>
-</tbody>
-</table>
+    <p>此页面描述了 <a href="zh-cn/manual/package_dependencies.md">Package Dependencies</a> 的 <code>on_load()</code>、<code>on_install()</code> 或 <code>on_test()</code> 等函数的 <code>package</code> 接口</p>
 <h4 id="packagename">package:name</h4>
 <ul>
-<li>Get the name of the package</li>
+<li>获取包的名字</li>
 </ul>
 <h4 id="packageget">package:get</h4>
 <ul>
-<li>Get the values of the package by name</li>
+<li>获取包在描述域的配置值</li>
 </ul>
+<p>任何在描述域的 <code>set_xxx</code> 和 <code>add_xxx</code> 配置值都可以通过这个接口获取到。</p>
 <pre><code class="lang-lua">-- get the dependencies
 package:get("deps")
 -- get the links
@@ -379,7 +109,7 @@ package:get("defines")
 </code></pre>
 <h4 id="packageset">package:set</h4>
 <ul>
-<li>Set the values of the package by name (If you just want to add values use <a href="#packageadd">package:add</a>)</li>
+<li>设置包的配置值，（如果你想添加值可以用 <a href="#packageadd">package:add</a>）。</li>
 </ul>
 <pre><code class="lang-lua">-- set the dependencies
 package:set("deps", {"python"})
@@ -390,7 +120,7 @@ package:set("defines", {"SDL_MAIN_HANDLED"})
 </code></pre>
 <h4 id="packageadd">package:add</h4>
 <ul>
-<li>Add to the values of the package by name</li>
+<li>按名称添加到包的值</li>
 </ul>
 <pre><code class="lang-lua">-- add dependencies
 package:add("deps", "python")
@@ -401,15 +131,15 @@ package:add("defines", "SDL_MAIN_HANDLED")
 </code></pre>
 <h4 id="packagelicense">package:license</h4>
 <ul>
-<li>Get the license of the package (Same as <code>package:get("license")</code>)</li>
+<li>获取包的许可证（同<code>package:get("license")</code>）</li>
 </ul>
 <h4 id="packagedescription">package:description</h4>
 <ul>
-<li>Get the description of the package (Same as <code>package:get("description")</code>)</li>
+<li>获取包的描述（同<code>package:get("description")</code>）</li>
 </ul>
 <h4 id="packageplat">package:plat</h4>
 <ul>
-<li>Get the platform of the package. Can be any of:<ul>
+<li>获取包的平台。 可以是以下任何一种：<ul>
 <li>windows</li>
 <li>linux</li>
 <li>macosx</li>
@@ -422,23 +152,23 @@ package:add("defines", "SDL_MAIN_HANDLED")
 </ul>
 </li>
 </ul>
-<p>If the package is binary <a href="manual/builtin_modules.md#oshost"><code>os.host</code></a> is returned</p>
+<p>如果包是二进制的，则会返回 <a href="zh-cn/manual/builtin_modules.md#oshost"><code>os.host</code></a> 的值</p>
 <h4 id="packagearch">package:arch</h4>
 <ul>
-<li>Get the architecture of the package (e.g. x86, x64, x86_64)</li>
+<li>获取包的架构（例如 x86、x64、x86_64）</li>
 </ul>
-<p>If the package is binary <a href="manual/builtin_modules.md#osarch"><code>os.arch</code></a> is returned</p>
+<p>如果包是二进制的，则返回 <a href="zh-cn/manual/builtin_modules.md#osarch"><code>os.arch</code></a></p>
 <h4 id="packagetargetos">package:targetos</h4>
 <ul>
-<li>Get the targeted OS of the package. Can have the same values as <a href="#packageplat">package:plat</a></li>
+<li>获取包的目标操作系统。 可以具有与 <a href="#packageplat">package:plat</a> 相同的值</li>
 </ul>
 <h4 id="packagetargetarch">package:targetarch</h4>
 <ul>
-<li>Get the targeted architecture of the package. Can have the same values as <a href="#packagearch">package:arch</a></li>
+<li>获取包的目标架构。 可以具有与 <a href="#packagearch">package:arch</a> 相同的值</li>
 </ul>
 <h4 id="packageis_plat">package:is_plat</h4>
 <ul>
-<li>Wether the current platform is one of the given platforms</li>
+<li>当前平台是否是给定平台之一</li>
 </ul>
 <pre><code class="lang-lua">-- Is the current platform android?
 package:is_plat("android")
@@ -447,7 +177,7 @@ package:is_plat("windows", "linux", "macosx")
 </code></pre>
 <h4 id="packageis_arch">package:is_arch</h4>
 <ul>
-<li>Wether the current platform is one of the given platforms</li>
+<li>当前平台是否是给定平台之一</li>
 </ul>
 <pre><code class="lang-lua">-- Is the current architecture x86
 package:is_arch("x86")
@@ -456,7 +186,7 @@ package:is_arch("x64", "x86_64")
 </code></pre>
 <h4 id="packageis_targetos">package:is_targetos</h4>
 <ul>
-<li>Wether the currently targeted OS is one of the given OS</li>
+<li>当前目标操作系统是否是给定操作系统之一</li>
 </ul>
 <pre><code class="lang-lua">-- Is the currently targeted OS windows?
 package:is_targetos("windows")
@@ -465,7 +195,7 @@ package:is_targetos("android", "iphoneos")
 </code></pre>
 <h4 id="packageis_targetarch">package:is_targetarch</h4>
 <ul>
-<li>Wether the currently targeted architecture is one of the given architectures</li>
+<li>当前目标架构是否是给定架构之一</li>
 </ul>
 <pre><code class="lang-lua">-- Is the currently targeted architecture x86
 package:is_targetarch("x86")
@@ -474,31 +204,31 @@ package:is_targetarch("x64", "x86_64")
 </code></pre>
 <h4 id="packagealias">package:alias</h4>
 <ul>
-<li>Get the alias of the package</li>
+<li>获取包的别名</li>
 </ul>
-<p>If the user sets an alias like so:</p>
+<p>如果用户像这样设置别名：</p>
 <pre><code class="lang-lua">add_requires("libsdl", {alias = "sdl"})
 </code></pre>
-<p>This alias can be retrieved by</p>
+<p>那么这个别名可以通过这个接口获取到：</p>
 <pre><code class="lang-lua">-- returns "sdl"
 package:alias()
 </code></pre>
 <h4 id="packageurls">package:urls</h4>
 <ul>
-<li>Get the URLs of the package</li>
+<li>获取包的 urls 列表</li>
 </ul>
-<p>Retrieve the URLs set by:</p>
+<p>如果我们设置了如下 URLs</p>
 <pre><code class="lang-lua">add_urls("https://example.com/library-$(version).zip")
 -- or so
 set_urls("https://example.com/library-$(version).zip")
 </code></pre>
-<p>Then write this:</p>
+<p>那么我们可以通过下面的接口来获取</p>
 <pre><code class="lang-lua">-- returns the table {"https://example.com/library-$(version).zip"}
 package:urls()
 </code></pre>
 <h4 id="packagedep">package:dep</h4>
 <ul>
-<li>Get a dependency of the package by name. The name needs to be a dependency of the package.</li>
+<li>通过名称获取包的依赖项。 该名称需要是包的依赖项。</li>
 </ul>
 <pre><code class="lang-lua">local python = package:dep("python")
 -- returns "python"
@@ -506,7 +236,7 @@ python:name()
 </code></pre>
 <h4 id="packagedeps">package:deps</h4>
 <ul>
-<li>Get all dependencies of the package</li>
+<li>获取包的所有依赖项</li>
 </ul>
 <pre><code class="lang-lua">-- prints the names of all dependencies
 for _,dep in pairs(package:deps()) do
@@ -515,13 +245,13 @@ end
 </code></pre>
 <h4 id="packagesourcehash">package:sourcehash</h4>
 <ul>
-<li>Get the sha256 checksum of an URL alias</li>
+<li>获取 URL 别名的 sha256 校验和</li>
 </ul>
-<p>If the checksum is provided like so:</p>
+<p>如果校验和是这样提供的：</p>
 <pre><code class="lang-lua">add_urls("https://example.com/library-$(version).zip", {alias = "example"})
 add_versions("example:2.4.1", "29f9983cc7196e882c4bc3d23d7492f9c47574c7cf658afafe7d00c185429941")
 </code></pre>
-<p>You can retrieve the checksum like so:</p>
+<p>您可以像这样获取它：</p>
 <pre><code class="lang-lua">-- returns "29f9983cc7196e882c4bc3d23d7492f9c47574c7cf658afafe7d00c185429941"
 package:sourcehash("example")
 -- or so
@@ -529,7 +259,7 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 </code></pre>
 <h4 id="packagekind">package:kind</h4>
 <ul>
-<li>Get the kind of the package. Can be any of:<ul>
+<li>获取包的类型。 可以是以下任何一种：<ul>
 <li>binary</li>
 <li>toolchain (is also binary)</li>
 <li>library (default)</li>
@@ -538,27 +268,25 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 </ul>
 <h4 id="packageis_binary">package:is_binary</h4>
 <ul>
-<li>Wether the package is of kind binary</li>
+<li>包是否为二进制类型</li>
 </ul>
 <h4 id="packageis_toolchain">package:is_toolchain</h4>
 <ul>
-<li>Wether the package is of kind toolchain</li>
+<li>报是否为工具链类型</li>
 </ul>
 <h4 id="packageis_library">package:is_library</h4>
 <ul>
-<li>Wether the package is of kind library</li>
+<li>包是否为库类型</li>
 </ul>
 <h4 id="packageis_toplevel">package:is_toplevel</h4>
-<ul>
-<li>Wether the package is directly required by the user (e.g. xmake.lua)</li>
-</ul>
+<p>-- 包是否在用户 xmake.lua 里面通过 add_requires 直接引用</p>
 <h4 id="packageis_thirdparty">package:is_thirdparty</h4>
 <ul>
-<li>Wether the package is provided by a thirdparty package manager (e.g. brew, conan, vcpkg)</li>
+<li>包是否由第三方包管理器提供（例如 brew、conan、vcpkg）</li>
 </ul>
 <h4 id="packageis_debug">package:is_debug</h4>
 <ul>
-<li>Wether the package is build with debug mode (Same as <code>package:config("debug")</code>)</li>
+<li>包是否以调试模式构建（同<code>package:config("debug")</code>）</li>
 </ul>
 <h4 id="packageis_supported">package:is_supported</h4>
 <ul>
@@ -589,41 +317,42 @@ package:installdir("include", "files")
 </code></pre>
 <h4 id="packagescriptdir">package:scriptdir</h4>
 <ul>
-<li>Get the directory where the xmake.lua of the package lies</li>
+<li>获取包的xmake.lua所在目录</li>
 </ul>
 <h4 id="packageenvs">package:envs</h4>
 <ul>
-<li>Get the exported environment variables of the package</li>
+<li>获取包导出的环境变量</li>
 </ul>
 <h4 id="packagegetenv">package:getenv</h4>
 <ul>
-<li>Get the given environment variable</li>
+<li>获取给定的环境变量</li>
 </ul>
 <pre><code class="lang-lua">-- returns a table
 package:getenv("PATH")
 </code></pre>
 <h4 id="packagesetenv">package:setenv</h4>
 <ul>
-<li>Set the given environment variable. Overwrites the variable</li>
+<li>设置给定的环境变量。 覆盖变量</li>
 </ul>
 <pre><code class="lang-lua">-- sets PATH to {"bin", "lib"}
 package:setenv("PATH", "bin", "lib")
 </code></pre>
 <h4 id="packageaddenv">package:addenv</h4>
 <ul>
-<li>Add the given values to the environment variable</li>
+<li>将给定的值添加到环境变量</li>
 </ul>
 <pre><code class="lang-lua">-- adds "bin" and "lib" to PATH
 package:addenv("PATH", "bin", "lib")
 </code></pre>
 <h4 id="packageversions">package:versions</h4>
 <ul>
-<li>Get all version strings of the package. Returns a table containing all versions as strings</li>
+<li>获取包的所有版本列表。</li>
 </ul>
 <h4 id="packageversion">package:version</h4>
 <ul>
-<li>Get the version of the package</li>
+<li>获取包的版本</li>
 </ul>
+<p>它会返回一个语义版本对象，便于做版本之间的判断。</p>
 <pre><code class="lang-lua">local version = package:version()
 -- get the major version
 version:major()
@@ -634,11 +363,11 @@ version:patch()
 </code></pre>
 <h4 id="packageversion_str">package:version_str</h4>
 <ul>
-<li>Get the version of the package as string</li>
+<li>以字符串形式获取包的版本</li>
 </ul>
 <h4 id="packageconfig">package:config</h4>
 <ul>
-<li>Get the given configuration value of the package</li>
+<li>获取包的给定配置值</li>
 </ul>
 <pre><code class="lang-lua">-- if configurations are set like so
 add_require("example", {config = {enable_x = true, value_y = 6}})
@@ -650,14 +379,14 @@ package:config("value_y")
 </code></pre>
 <h4 id="packageconfig_set">package:config_set</h4>
 <ul>
-<li>Set the given configuration value of the package</li>
+<li>设置包的给定配置值</li>
 </ul>
 <pre><code class="lang-lua">package:config_set("enable_x", true)
 package:config_set("value_y", 6)
 </code></pre>
 <h4 id="packageconfigs">package:configs</h4>
 <ul>
-<li>Get all configurations of the package</li>
+<li>获取包的所有配置</li>
 </ul>
 <pre><code class="lang-lua">-- returns a table with the configuration names as keys and their values as values
 local configs = package:configs()
@@ -666,11 +395,12 @@ local value_y = configs["value_y"]
 </code></pre>
 <h4 id="packagebuildhash">package:buildhash</h4>
 <ul>
-<li>Get the build hash of the package</li>
+<li>获取包的构建哈希</li>
 </ul>
+<p>它确保每个包，不同的配置安装到唯一的路径下，相互之间不冲突。</p>
 <h4 id="packagepatches">package:patches</h4>
 <ul>
-<li>Get all patches of the current version</li>
+<li>获取当前版本的所有补丁</li>
 </ul>
 <pre><code class="lang-lua">-- returns a table with all patches
 local patches = package:patches()
@@ -680,9 +410,9 @@ local sha256 = patches[1]["sha256"]
 </code></pre>
 <h4 id="packagehas_cfuncs">package:has_cfuncs</h4>
 <ul>
-<li>Wether the package has the given C functions</li>
+<li>检测包是否具有给定的 C 函数</li>
 </ul>
-<p>This should be used inside <code>on_test</code> like so:</p>
+<p>这应该在 <code>on_test</code> 中使用，如下所示：</p>
 <pre><code class="lang-lua">on_test(function (package)
   assert(package:has_cfuncs("foo"))
   -- you can also add configs
@@ -694,9 +424,9 @@ end)
 </code></pre>
 <h4 id="packagehas_cxxfuncs">package:has_cxxfuncs</h4>
 <ul>
-<li>Wether the package has the given C++ functions</li>
+<li>检测包是否具有给定的 C++ 函数</li>
 </ul>
-<p>This should be used inside <code>on_test</code> like so:</p>
+<p>这应该在 <code>on_test</code> 中使用，如下所示：</p>
 <pre><code class="lang-lua">on_test(function (package)
   assert(package:has_cxxfuncs("foo"))
   -- you can also add configs
@@ -708,9 +438,9 @@ end)
 </code></pre>
 <h4 id="packagehas_ctypes">package:has_ctypes</h4>
 <ul>
-<li>Wether the package has the given C types</li>
+<li>检测包是否具有给定的 C 类型</li>
 </ul>
-<p>This should be used inside <code>on_test</code> like so:</p>
+<p>这应该在 <code>on_test</code> 中使用，如下所示：</p>
 <pre><code class="lang-lua">on_test(function (package)
   assert(package:has_ctypes("foo"))
   -- you can also add configs
@@ -722,9 +452,9 @@ end)
 </code></pre>
 <h4 id="packagehas_cxxtypes">package:has_cxxtypes</h4>
 <ul>
-<li>Wether the package has the given C++ types</li>
+<li>检测包是否具有给定的 C++ 类型</li>
 </ul>
-<p>This should be used inside <code>on_test</code> like so:</p>
+<p>这应该在 <code>on_test</code> 中使用，如下所示：</p>
 <pre><code class="lang-lua">on_test(function (package)
   assert(package:has_cxxtypes("foo"))
   -- you can also add configs
@@ -736,27 +466,27 @@ end)
 </code></pre>
 <h4 id="packagehas_cincludes">package:has_cincludes</h4>
 <ul>
-<li>Wether the package has the given C header files</li>
+<li>检测包是否具有给定的 C 头文件</li>
 </ul>
-<p>This should be used in <code>on_test</code> like so:</p>
+<p>这应该在 <code>on_test</code> 中使用，如下所示：</p>
 <pre><code class="lang-lua">on_test(function (package)
   assert(package:has_cincludes("foo.h"))
 end)
 </code></pre>
 <h4 id="packagehas_cxxincludes">package:has_cxxincludes</h4>
 <ul>
-<li>Wether the package has the given C++ header files</li>
+<li>检测包是否具有给定的 C++ 头文件</li>
 </ul>
-<p>This should be used in <code>on_test</code> like so:</p>
+<p>这应该在 <code>on_test</code> 中使用，如下所示：</p>
 <pre><code class="lang-lua">on_test(function (package)
   assert(package:has_cincludes("foo.hpp"))
 end)
 </code></pre>
 <h4 id="packagecheck_csnippets">package:check_csnippets</h4>
 <ul>
-<li>Wether the given C snippet can be compiled and linked</li>
+<li>检测是否可以编译和链接给定的 C 代码片段</li>
 </ul>
-<p>This should be used in <code>on_test</code> like so:</p>
+<p>这应该在 <code>on_test</code> 中使用，如下所示：</p>
 <pre><code class="lang-lua">on_test(function (package)
   assert(package:check_csnippets({test = [[
     #define USE_BLOB
@@ -770,9 +500,9 @@ end)
 </code></pre>
 <h4 id="packagecheck_cxxsnippets">package:check_cxxsnippets</h4>
 <ul>
-<li>Wether the given C++ snippet can be compiled and linked</li>
+<li>检测是否可以编译和链接给定的 C++ 代码片段</li>
 </ul>
-<p>This should be used in <code>on_test</code> like so:</p>
+<p>这应该在 <code>on_test</code> 中使用，如下所示：</p>
 <pre><code class="lang-lua">on_test(function (package)
   assert(package:check_cxxsnippets({test = [[
     #define USE_BLOB
