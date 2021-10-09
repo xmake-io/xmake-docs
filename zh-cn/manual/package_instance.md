@@ -238,27 +238,23 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 
 #### package:is_supported
 
-- Wether the package is supported by the current platform and architecture
-
+- 当前平台和架构是否支持该包
 
 #### package:debug
 
-- Wether the the package gets built with debug mode (deprecated: use [`package:is_debug`](#packageis_debug) instead)
-
+- 包是否使用调试模式构建（不推荐使用：使用 [`package:is_debug`](#packageis_debug) 代替）
 
 #### package:is_cross
 
-- Wether the package is getting cross-compiled
-
+- 包是否正在交叉编译
 
 #### package:cachedir
 
-- Get the cache directory of the package
-
+- 获取包的缓存目录
 
 #### package:installdir
 
-- Get the installation directory of the package. Can also be used to get a subdirectory. If the given directory tree does not exist it will be created.
+- 获取包的安装目录。 也可用于获取子目录。 如果给定的目录树不存在，它将被创建。
 
 ```lua
 -- returns the installation directory
