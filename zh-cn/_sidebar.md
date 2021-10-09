@@ -29,13 +29,7 @@
   - [集成本地第三方源码库](zh-cn/package/local_3rd_source_library.md)
   - [Xrepo C/C++ 包管理器](https://xrepo.xmake.io/#/zh-cn/getting_started)
 
-- 插件介绍
-
-  - [插件开发](zh-cn/plugin/plugin_development.md)
-  - [内置插件](zh-cn/plugin/builtin_plugins.md)
-  - [更多插件](zh-cn/plugin/more_plugins.md)
-
-- API手册
+- API手册（描述域）
 
   - [接口规范](zh-cn/manual/specification.md)
   - [条件判断](zh-cn/manual/conditions.md)
@@ -48,8 +42,17 @@
   - [自定义工具链](zh-cn/manual/custom_toolchain.md)
   - [包依赖管理](zh-cn/manual/package_dependencies.md)
   - [内置变量](zh-cn/manual/builtin_variables.md)
+
+- API手册（脚本域）
+
   - [内置模块](zh-cn/manual/builtin_modules.md)
   - [扩展模块](zh-cn/manual/extension_modules.md)
+
+- 插件介绍
+
+  - [插件开发](zh-cn/plugin/plugin_development.md)
+  - [内置插件](zh-cn/plugin/builtin_plugins.md)
+  - [更多插件](zh-cn/plugin/more_plugins.md)
 
 - 主题风格
 

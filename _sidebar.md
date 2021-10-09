@@ -27,13 +27,7 @@
   - [Local 3rd source code library](package/local_3rd_source_library.md)
   - [Xrepo C/C++ Package Manager](https://xrepo.xmake.io/#/getting_started)
 
-- Plugin
-
-  - [Plugin Development](plugin/plugin_development.md)
-  - [Builtin Plugins](plugin/builtin_plugins.md)
-  - [More Plugins](plugin/more_plugins.md)
-
-- API Manual
+- API Manual (Description Scope)
 
   - [Specification](manual/specification.md)
   - [Conditions](manual/conditions.md)
@@ -45,10 +39,19 @@
   - [Custom Rule](manual/custom_rule.md)
   - [Custom Toolchain](manual/custom_toolchain.md)
   - [Package Dependencies](manual/package_dependencies.md)
-  - [Package Interface](manual/package_interface.md)
   - [Builtin Variables](manual/builtin_variables.md)
+
+- API Manual (Script Scope)
+
+  - [Package Instance](manual/package_instance.md)
   - [Builtin Modules](manual/builtin_modules.md)
   - [Extension Modules](manual/extension_modules.md)
+
+- Plugin
+
+  - [Plugin Development](plugin/plugin_development.md)
+  - [Builtin Plugins](plugin/builtin_plugins.md)
+  - [More Plugins](plugin/more_plugins.md)
 
 - Theme Style
 
