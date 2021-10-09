@@ -24,11 +24,11 @@ package:get("defines")
 
 ```lua
 -- set the dependencies
-package:set("deps", {"python"})
+package:set("deps", "python")
 -- set the links
-package:set("links", {"sdl2"})
+package:set("links", "sdl2")
 -- set the defined macros
-package:set("defines", {"SDL_MAIN_HANDLED"})
+package:set("defines", "SDL_MAIN_HANDLED")
 ```
 
 #### package:add

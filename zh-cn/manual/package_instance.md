@@ -1,5 +1,5 @@
 
-此页面描述了 [Package Dependencies](zh-cn/manual/package_dependencies.md) 的 `on_load()`、`on_install()` 或 `on_test()` 等函数的 `package` 接口
+此页面描述了 [包依赖管理](zh-cn/manual/package_dependencies.md) 的 `on_load()`、`on_install()` 或 `on_test()` 等函数的 `package` 接口
 
 #### package:name
 
@@ -26,11 +26,11 @@ package:get("defines")
 
 ```lua
 -- set the dependencies
-package:set("deps", {"python"})
+package:set("deps", "python")
 -- set the links
-package:set("links", {"sdl2"})
+package:set("links", "sdl2")
 -- set the defined macros
-package:set("defines", {"SDL_MAIN_HANDLED"})
+package:set("defines", "SDL_MAIN_HANDLED")
 ```
 
 #### package:add

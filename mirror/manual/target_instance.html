@@ -90,7 +90,41 @@
   line-height: 1;
 }
 </style>
-    <h3 id="thedocumenthereisstillinprogresspleasebepatientyoucanalsospeeduptheupdateofthedocumentbysponsoringorsubmitingpr">The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr</h3>
+    <p>This page describes the interface for <code>target</code> of functions like <code>on_load()</code>, <code>before_build()</code> or <code>after_install()</code> of the <a href="manual/project_target.md">Project target</a></p>
+<h4 id="targetname">target:name</h4>
+<ul>
+<li>Get the name of the target</li>
+</ul>
+<h4 id="targetget">target:get</h4>
+<ul>
+<li>Get the values of the target by name</li>
+</ul>
+<pre><code class="lang-lua">-- get the links
+target:get("links")
+-- get the defined macros
+target:get("defines")
+</code></pre>
+<h4 id="targetset">target:set</h4>
+<ul>
+<li>Set the values of the target by name (If you just want to add values use <a href="#targetadd">target:add</a>)</li>
+</ul>
+<pre><code class="lang-lua">-- set the links
+target:set("links", "sdl2")
+-- set the defined macros
+target:set("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<h4 id="targetadd">target:add</h4>
+<ul>
+<li>Add to the values of the target by name</li>
+</ul>
+<pre><code class="lang-lua">-- add dependencies
+target:add("deps", "python")
+-- add links
+target:add("links", "sdl2")
+-- add defined macros
+target:add("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<p>!> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr</p>
 </article>
 </body>
 </html>

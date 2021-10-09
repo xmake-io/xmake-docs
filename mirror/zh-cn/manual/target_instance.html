@@ -90,7 +90,42 @@
   line-height: 1;
 }
 </style>
-    <h2 id="pr">此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新</h2>
+    <p>此页面描述了 <a href="zh-cn/manual/project_target.md">工程目标</a> 的 <code>on_load()</code>、<code>before_build()</code> 或 <code>after_install()</code> 等函数的 <code>target</code> 接口</p>
+<h4 id="targetname">target:name</h4>
+<ul>
+<li>获取目标的名字</li>
+</ul>
+<h4 id="targetget">target:get</h4>
+<ul>
+<li>获取目标在描述域的配置值</li>
+</ul>
+<p>任何在描述域的 <code>set_xxx</code> 和 <code>add_xxx</code> 配置值都可以通过这个接口获取到。</p>
+<pre><code class="lang-lua">-- get the links
+target:get("links")
+-- get the defined macros
+target:get("defines")
+</code></pre>
+<h4 id="targetset">target:set</h4>
+<ul>
+<li>设置目标的配置值，（如果你想添加值可以用 <a href="#targetadd">target:add</a>）。</li>
+</ul>
+<pre><code class="lang-lua">-- set the links
+target:set("links", "sdl2")
+-- set the defined macros
+target:set("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<h4 id="targetadd">target:add</h4>
+<ul>
+<li>按名称添加到目标的值</li>
+</ul>
+<pre><code class="lang-lua">-- add dependencies
+target:add("deps", "python")
+-- add links
+target:add("links", "sdl2")
+-- add defined macros
+target:add("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<p>!> 此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新</p>
 </article>
 </body>
 </html>
