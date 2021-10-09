@@ -10,23 +10,21 @@ Here is an example rule that will use Pandoc to convert markdown files added to 
 rule("markdown")
     set_extensions(".md", ".markdown")
     on_build_file(function (target, sourcefile, opt)
-        import("core.project.depend")    -- import 'depend' helper
-        import("private.utils.progress") -- import 'progress' reporter
+        import("core.project.depend")
+        import("utils.progress") -- it only for v2.5.9, we need use print to show progress below v2.5.8
+
         -- make sure build directory exists
         os.mkdir(target:targetdir())
+
         -- replace .md with .html
-        local targetfile =
-            path.join(
-                target:targetdir(),
-                path.basename(sourcefile) .. ".html")
+        local targetfile = path.join(target:targetdir(), path.basename(sourcefile) .. ".html")
+
         -- only rebuild the file if its changed since last run
         depend.on_changed(function ()
             -- call pandoc to make a standalone html file from a markdown file
-            os.vrunv(
-                'pandoc',
-                {"-s", "-f", "markdown", "-t", "html", "-o", targetfile, sourcefile})
+            os.vrunv('pandoc', {"-s", "-f", "markdown", "-t", "html", "-o", targetfile, sourcefile})
             progress.show(opt.progress, "${color.build.object}markdown %s", sourcefile)
-        end, {files = targetfile})
+        end, {files = sourcefile})
     end)
 
 target("test")
@@ -46,6 +44,39 @@ There is also an alternative to `on_build_file` in the form of `on_build_files` 
 
 A second form called `on_buildcmd_file` and `on_buildcmd_files` is instead declarative; rather than running arbitrary Lua to build a target it runs Lua to learn how those targets are built.
 The advantage to `buildcmd` is that those rules can be exported to makefiles which do not require xmake at all in order to run.
+
+We can use buildcmd to simplify it further, like this:
+
+```lua
+-- Define a build rule for a markdown file
+rule("markdown")
+    set_extensions(".md", ".markdown")
+    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
+
+        -- make sure build directory exists
+        batchcmds:mkdir(target:targetdir())
+
+        -- replace .md with .html
+        local targetfile = path.join(target:targetdir(), path.basename(sourcefile) .. ".html")
+
+        -- call pandoc to make a standalone html file from a markdown file
+        batchcmds:vrunv('pandoc', {"-s", "-f", "markdown", "-t", "html", "-o", targetfile, sourcefile})
+        batchcmds:show_progress(opt.progress, "${color.build.object}markdown %s", sourcefile)
+
+        -- only rebuild the file if its changed since last run
+        batchcmds:add_depfiles(sourcefile)
+    end)
+
+target("test")
+    set_kind("object")
+
+    -- make the test target support the construction rules of the markdown file
+    add_rules("markdown")
+
+    -- adding a markdown file to build
+    add_files("src/*.md")
+    add_files("src/*.markdown")
+```
 
 Files can be assigned to a specific rule regardless of their file extension. You do this by setting the `rule` custom property when adding the file like in the following example:
 
