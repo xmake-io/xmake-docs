@@ -93,22 +93,6 @@
     <p>All expansion modules need to be imported through the <a href="/mirror/manual/builtin_modules.html#import">import</a> interface.</p>
 <h3 id="corebaseoption">core.base.option</h3>
 <p>Commonly used to get the value of the xmake command parameter option, often used for plugin development.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#optionget">option.get</a></td>
-<td>Get Parameter Option Value</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
 <h4 id="optionget">option.get</h4>
 <ul>
 <li>Get parameter option values</li>
@@ -132,40 +116,7 @@ end
 </code></pre>
 <h3 id="corebaseglobal">core.base.global</h3>
 <p>Used to get the configuration information of xmake global, that is, the value of the parameter option passed in <code>xmake g|global --xxx=val</code>.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#globalget">global.get</a></td>
-<td>Get the specified configuration value</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#globalload">global.load</a></td>
-<td>Load Configuration</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#globaldirectory">global.directory</a></td>
-<td>Get Global Configuration Information Directory</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#globaldump">global.dump</a></td>
-<td>Print out all global configuration information</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
-<p><p class="tip"><br>Prior to version 2.1.5, it was <code>core.project.global</code>.<br></p>
-
-</p>
+<p>!> Prior to version 2.1.5, it was <code>core.project.global</code>.</p>
 <h4 id="globalget">global.get</h4>
 <ul>
 <li>Get the specified configuration value</li>
@@ -194,25 +145,7 @@ end
 </code></pre>
 <h3 id="corebasetask">core.base.task</h3>
 <p>Used for task operations, generally used to call other task tasks in custom scripts and plug-in tasks.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#taskrun">task.run</a></td>
-<td>Run the specified task</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
-<p><p class="tip"><br>Prior to version 2.1.5, it was <code>core.project.task</code>.<br></p>
-
-</p>
+<p>!> Prior to version 2.1.5, it was <code>core.project.task</code>.</p>
 <h4 id="taskrun">task.run</h4>
 <ul>
 <li>Run the specified task</li>
@@ -262,42 +195,6 @@ end
 </code></pre>
 <h3 id="coretoollinker">core.tool.linker</h3>
 <p>Linker related operations, often used for plugin development.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#linkerlink">linker.link</a></td>
-<td>Execute Link</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#linkerlinkcmd">linker.linkcmd</a></td>
-<td>Get Link Command Line</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#linkerlinkargv">linker.linkargv</a></td>
-<td>Get Link Command Line List</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#linkerlinkflags">linker.linkflags</a></td>
-<td>Get LinksOptions</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#linkerhas_flags">linker.has_flags</a></td>
-<td>Determine if the specified link option is supported</td>
-<td>>= 2.1.5</td>
-</tr>
-</tbody>
-</table>
 <h4 id="linkerlink">linker.link</h4>
 <ul>
 <li>Execute link</li>
@@ -402,52 +299,6 @@ end
 </code></pre>
 <h3 id="coretoolcompiler">core.tool.compiler</h3>
 <p>Compiler related operations, often used for plugin development.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#compilercompile">compiler.compile</a></td>
-<td>Execute Compilation</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#compilercompcmd">compiler.compcmd</a></td>
-<td>Get Compiler Command Line</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#compilercompargv">compiler.compargv</a></td>
-<td>Get Compiled Command Line List</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#compilercompflags">compiler.compflags</a></td>
-<td>Get Compilation Options</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#compilerhas_flags">compiler.has_flags</a></td>
-<td>Determine if the specified compilation option is supported</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#compilerfeatures">compiler.features</a></td>
-<td>Get all compiler features</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#compilerhas_features">compiler.has_features</a></td>
-<td>Determine if the specified compilation feature is supported</td>
-<td>>= 2.1.5</td>
-</tr>
-</tbody>
-</table>
 <h4 id="compilercompile">compiler.compile</h4>
 <ul>
 <li>Perform compilation</li>
@@ -749,57 +600,6 @@ end
 <p>For specific feature names, refer to <a href="#compilerfeatures">compiler.features</a>.</p>
 <h3 id="coreprojectconfig">core.project.config</h3>
 <p>Used to get the configuration information when the project is compiled, that is, the value of the parameter option passed in <code>xmake f|config --xxx=val</code>.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#configget">config.get</a></td>
-<td>Get the specified configuration value</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#configload">config.load</a></td>
-<td>Load Configuration</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#configarch">config.arch</a></td>
-<td>Get the schema configuration of the current project</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#configplat">config.plat</a></td>
-<td>Get the platform configuration of the current project</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#configmode">config.mode</a></td>
-<td>Get the compilation mode configuration of the current project</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#configbuildir">config.buildir</a></td>
-<td>Get the output directory configuration of the current project</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#configdIrectory">config.directory</a></td>
-<td>Get the configuration information directory of the current project</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#configdump">config.dump</a></td>
-<td>Print out all configuration information for the current project</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
 <h4 id="configget">config.get</h4>
 <ul>
 <li>Get the specified configuration value</li>
@@ -894,57 +694,6 @@ end
 </code></pre>
 <h3 id="coreprojectproject">core.project.project</h3>
 <p>Used to get some description information of the current project, that is, the configuration information defined in the <code>xmake.lua</code> project description file, for example: <a href="#target">target</a>, <a href="#option">option</a>, etc.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#projectload">project.load</a></td>
-<td>Load Project Configuration</td>
-<td>>= 2.0.1 (2.1.5 Obsolete)</td>
-</tr>
-<tr>
-<td><a href="#projectdirectory">project.directory</a></td>
-<td>Get Project Directory</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#projecttarget">project.target</a></td>
-<td>Get the specified project target object</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#projecttargets">project.targets</a></td>
-<td>Get the list of project target objects</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#projectoption">project.option</a></td>
-<td>Get the specified option object</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#projectoptions">project.options</a></td>
-<td>Get all option objects for the project</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#projectname">project.name</a></td>
-<td>Get current project name</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#projectversion">project.version</a></td>
-<td>Get current project version number</td>
-<td>>= 2.0.1</td>
-</tr>
-</tbody>
-</table>
 <h4 id="projectload">project.load</h4>
 <ul>
 <li>Load project description configuration</li>
@@ -963,17 +712,13 @@ function main(...)
     local target = project.target("test")
 end
 </code></pre>
-<p><p class="tip"><br>After version 2.1.5, if not needed, the project load will automatically load at the appropriate time.<br></p>
-
-</p>
+<p>!> After version 2.1.5, if not needed, the project load will automatically load at the appropriate time.</p>
 <h4 id="projectdirectory">project.directory</h4>
 <ul>
 <li>Get the project directory</li>
 </ul>
 <p>Get the current project directory, which is the directory specified in <code>xmake -P xxx</code>, otherwise it is the default current <code>xmake</code> command execution directory.</p>
-<p><p class="tip"><br>After version 2.1.5, it is recommended to use <a href="#os-projectdir">os.projectdir</a> to get it.<br></p>
-
-</p>
+<p>!> After version 2.1.5, it is recommended to use <a href="#os-projectdir">os.projectdir</a> to get it.</p>
 <h4 id="projecttarget">project.target</h4>
 <ul>
 <li>Get the specified project target object</li>
@@ -1045,57 +790,6 @@ end
 </code></pre>
 <h3 id="corelanguagelanguage">core.language.language</h3>
 <p>Used to obtain information about the compiled language, generally used for the operation of code files.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#languageextensions">language.extensions</a></td>
-<td>Get a list of code suffixes for all languages ​​</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#languagetargetkinds">language.targetkinds</a></td>
-<td>Get a list of target types for all languages ​​</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#languagesourcekinds">language.sourcekinds</a></td>
-<td>Get a list of source file types for all languages ​​</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#languagesourceflags">language.sourceflags</a></td>
-<td>Load source file compilation option name list for all languages ​​</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#languageload">language.load</a></td>
-<td>Load the specified language</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#languageload_sk">language.load_sk</a></td>
-<td>Load the specified language from the source file type</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#languageload_ex">language.load_ex</a></td>
-<td>Load the specified language from the source file suffix</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#languagesourcekind_of">language.sourcekind_of</a></td>
-<td>Get the source file type of the specified source file</td>
-<td>>= 2.1.1</td>
-</tr>
-</tbody>
-</table>
 <h4 id="languageextensions">language.extensions</h4>
 <ul>
 <li>Get a list of code suffixes for all languages</li>
@@ -1191,112 +885,6 @@ end
 <h3 id="libdetect">lib.detect</h3>
 <p>This module provides very powerful probing capabilities for probing programs, compilers, language features, dependencies, and more.</p>
 <p>!> The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient, for example: <code>import("lib.detect.find_package")</code> instead of <code>import("lib.detect ")</code>Import all to call.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#detectfind_file">detect.find_file</a></td>
-<td>Find Files</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detectfind_path">detect.find_path</a></td>
-<td>Find File Path</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detectfind_library">detect.find_library</a></td>
-<td>Find Library Files</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detectfind_program">detect.find_program</a></td>
-<td>Find executables</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detectfind_programver">detect.find_programver</a></td>
-<td>Find executable version number</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detectfind_package">detect.find_package</a></td>
-<td>Find package files, including library files and search paths</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detectfind_tool">detect.find_tool</a></td>
-<td>Find Tool</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detectfind_toolname">detect.find_toolname</a></td>
-<td>Find Tool Name</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detectfind_cudadevices">detect.find_cudadevices</a></td>
-<td>Find CUDA devices of the host</td>
-<td>>= 2.2.7</td>
-</tr>
-<tr>
-<td><a href="#detectfeatures">detect.features</a></td>
-<td>Get all the features of the specified tool</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detecthas_features">detect.has_features</a></td>
-<td>Determine if the specified feature is supported</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detecthas_flags">detect.has_flags</a></td>
-<td>Determine if the specified parameter options are supported</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detecthas_cfuncs">detect.has_cfuncs</a></td>
-<td>Determine if the specified c function exists</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detecthas_cxxfuncs">detect.has_cxxfuncs</a></td>
-<td>Determine if the specified c++ function exists</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detecthas_cincludes">detect.has_cincludes</a></td>
-<td>Determine if the specified c header file exists</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detecthas_cxxincludes">detect.has_cxxincludess</a></td>
-<td>Determine if the specified c++ header file exists</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detecthas_ctypes">detect.has_ctypes</a></td>
-<td>Determine if the specified c type exists</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detecthas_cxxtypes">detect.has_cxxtypes</a></td>
-<td>Determine if the specified c++ type exists</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#detectcheck_cxsnippets">detect.check_cxsnippets</a></td>
-<td>Check if c/c++ code snippets can be compiled by</td>
-<td>>= 2.1.5</td>
-</tr>
-</tbody>
-</table>
 <h4 id="detectfind_file">detect.find_file</h4>
 <ul>
 <li>Find files</li>
@@ -1326,9 +914,7 @@ local file = find_file("ccache", { "/usr/bin", "/usr/local/bin"})
 /usr/local/include
 /usr/local/lib
 </code></pre><p>And without changing the path list, you can dynamically switch subdirectories to search for files.</p>
-<p><p class="tip"><br>We can also quickly call and test this interface with the <code>xmake lua</code> plugin: <code>xmake lua lib.detect.find_file test.h /usr/local</code><br></p>
-
-</p>
+<p>!> We can also quickly call and test this interface with the <code>xmake lua</code> plugin: <code>xmake lua lib.detect.find_file test.h /usr/local</code></p>
 <h4 id="detectfind_path">detect.find_path</h4>
 <ul>
 <li>Find the path</li>
@@ -1390,9 +976,7 @@ local program = find_program("ccache")
 <pre><code class="lang-lua">local program = find_program("ccache", {pathes = {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"}})
 local program = find_program("ccache", {pathes = {"$(env PATH)", function () return "/usr/local/bin" end}})
 </code></pre>
-<p><p class="tip"><br>In order to speed up the efficiency of frequent lookups, this interface comes with a default cache, so even if you frequently find the same program, it will not take too much time.<br>If you want to disable the cache, you can clear the local cache by executing <code>xmake f -c</code> in the project directory.<br></p>
-
-</p>
+<p>!> In order to speed up the efficiency of frequent lookups, this interface comes with a default cache, so even if you frequently find the same program, it will not take too much time.<br>If you want to disable the cache, you can clear the local cache by executing <code>xmake f -c</code> in the project directory.</p>
 <p>We can also test quickly with <code>xmake lua lib.detect.find_program ccache</code>.</p>
 <h4 id="detectfind_programver">detect.find_programver</h4>
 <ul>
@@ -1413,9 +997,7 @@ local programver = find_programver("ccache")
 <pre><code class="lang-lua">local version = find_programver("ccache", {command = "--version", parse = "(%d+%.?%d*%.?%d*.-)%s"})
 local version = find_programver("ccache", {command = "--version", parse = function (output) return output:match("(%d+%.?%d*%.?%d*.-)%s ") end})
 </code></pre>
-<p><p class="tip"><br>In order to speed up the efficiency of frequent lookups, this interface is self-contained by default. If you want to disable the cache, you can execute <code>xmake f -c</code> in the project directory to clear the local cache.<br></p>
-
-</p>
+<p>!> In order to speed up the efficiency of frequent lookups, this interface is self-contained by default. If you want to disable the cache, you can execute <code>xmake f -c</code> in the project directory to clear the local cache.</p>
 <p>We can also test quickly with <code>xmake lua lib.detect.find_programver ccache</code>.</p>
 <h4 id="detectfind_package">detect.find_package</h4>
 <ul>
@@ -1551,9 +1133,7 @@ function main(opt)
     end
 </code></pre>
 <p>Inside the windows platform to read the registry, to find the<br>specified library file, the bottom layer is actually called<br><a href="#detectfind_library">find_library</a> and other interfaces.</p>
-<p><p class="tip"> In order to speed up the efficiency of frequent<br>lookups, this interface is self-contained by default. If you want to<br>disable the cache, you can execute <code>xmake f -c</code> in the project<br>directory to clear the local cache.  You can also disable the cache by<br>specifying the force parameter, forcing a re-find:<br><code>find_package("openssl", {force = true})</code> </p>
-
-</p>
+<p>!> In order to speed up the efficiency of frequent<br>lookups, this interface is self-contained by default. If you want to<br>disable the cache, you can execute <code>xmake f -c</code> in the project<br>directory to clear the local cache.  You can also disable the cache by<br>specifying the force parameter, forcing a re-find:<br><code>find_package("openssl", {force = true})</code></p>
 <p>We can also test quickly with <code>xmake lua lib.detect.find_package
 openssl</code>.</p>
 <p>After the 2.2.5 version, the built-in interface [find_packages]<br>(#find_packages) has been added, which can find multiple packages at<br>the same time, and can be used directly without importing by import.</p>
@@ -1651,9 +1231,7 @@ end
 </code></pre>
 <p>After placing it in the project&#39;s module directory, execute: <code>xmake l
 lib.detect.find_tool 7z</code> to find it.</p>
-<p><p class="tip"> In order to speed up the efficiency of frequent<br>lookups, this interface is self-contained by default. If you want to<br>disable the cache, you can execute <code>xmake f -c</code> in the project<br>directory to clear the local cache.  </p>
-
-</p>
+<p>!> In order to speed up the efficiency of frequent<br>lookups, this interface is self-contained by default. If you want to<br>disable the cache, you can execute <code>xmake f -c</code> in the project<br>directory to clear the local cache.</p>
 <p>We can also test quickly with <code>xmake lua lib.detect.find_tool clang</code>.</p>
 <h4 id="detectfind_toolname">detect.find_toolname</h4>
 <ul>
@@ -1845,21 +1423,6 @@ local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar
 <p>The verbose is used to echo the detection information. The target is used to append the configuration information in the target before the detection. The sourcekind is used to specify the tool type such as the compiler. For example, the incoming <code>cxx</code> is forced to be detected as c++ code.</p>
 <h3 id="nethttp">net.http</h3>
 <p>This module provides various operational support for http. The currently available interfaces are as follows:</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><a href="#http-download">http.download</a> | Download http file | >= 2.1.5 |</p>
 <h4 id="httpdownload">http.download</h4>
 <ul>
 <li>Download http file</li>
@@ -1871,55 +1434,7 @@ http.download("https://xmake.io", "/tmp/index.html")
 </code></pre>
 <h3 id="privilegesudo">privilege.sudo</h3>
 <p>This interface is used to run commands via <code>sudo</code> and provides platform consistency handling, which can be used for scripts that require root privileges to run.</p>
-<p><p class="warn"><br>In order to ensure security, unless you must use it, try not to use this interface in other cases.<br></p>
-
-</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#sudo-has">sudo.has</a></td>
-<td>Determine if sudo supports</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#sudo-run">sudo.run</a></td>
-<td>Quiet running program</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#sudo-runv">sudo.runv</a></td>
-<td>Quiet running program with parameter list</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#sudo-exec">sudo.exec</a></td>
-<td>Evoke Run Program</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#sudo-execv">sudo.execv</a></td>
-<td>Echo running program with parameter list</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#sudo-iorun">sudo.iorun</a></td>
-<td>Run and get the program output</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#sudo-iorunv">sudo.iorunv</a></td>
-<td>Run and get the program output with parameter list</td>
-<td>>= 2.1.5</td>
-</tr>
-</tbody>
-</table>
+<p>!> In order to ensure security, unless you must use it, try not to use this interface in other cases.</p>
 <h4 id="sudohas">sudo.has</h4>
 <ul>
 <li>Determine if sudo supports</li>
@@ -1967,55 +1482,7 @@ sudo.run("rm /system/file")
 <p>For specific usage, please refer to: <a href="#os-iorunv">os.iorunv</a>.</p>
 <h3 id="develgit">devel.git</h3>
 <p>This interface provides access to various commands of git. Compared to the direct call to git command, this module provides a more easy-to-use package interface and provides automatic detection and cross-platform processing for git.</p>
-<p><p class="tip"><br>Currently on Windows, you need to manually install the git package before you can detect it. The subsequent version will provide automatic integration of git function. Users will not need to care about how to install git, they can be used directly.<br></p>
-
-</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#git-clone">git.clone</a></td>
-<td>clone codebase</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#git-pull">git.pull</a></td>
-<td>Pull the codebase latest commit</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#git-clean">git.clean</a></td>
-<td>Clean up the codebase file</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#git-checkout">git.checkout</a></td>
-<td>Check out the specified branch version</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#git-refs">git.refs</a></td>
-<td>Get a list of all references</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#git-tags">git.tags</a></td>
-<td>Get all tag lists</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#git-branches">git.branches</a></td>
-<td>Get a list of all branches</td>
-<td>>= 2.1.5</td>
-</tr>
-</tbody>
-</table>
+<p>!> Currently on Windows, you need to manually install the git package before you can detect it. The subsequent version will provide automatic integration of git function. Users will not need to care about how to install git, they can be used directly.</p>
 <h4 id="gitclone">git.clone</h4>
 <ul>
 <li>clone codebase</li>
@@ -2085,22 +1552,6 @@ local branches = git.branches(url)
 </code></pre>
 <h3 id="utilsarchive">utils.archive</h3>
 <p>This module is used to compress and decompress files.</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#archive-extract">archive.extract</a></td>
-<td>Extract files</td>
-<td>>= 2.1.5</td>
-</tr>
-</tbody>
-</table>
 <h4 id="archiveextract">archive.extract</h4>
 <ul>
 <li>unzip files</li>
@@ -2113,6 +1564,25 @@ archive.extract("/tmp/a.7z", "/tmp/outputdir")
 archive.extract("/tmp/a.gzip", "/tmp/outputdir")
 archive.extract("/tmp/a.tar.bz2", "/tmp/outputdir")
 </code></pre>
+<h3 id="utilsplatform">utils.platform</h3>
+<p>This module is used for some platform-related auxiliary operation interfaces</p>
+<h4 id="utilsplatformgnu2mslib">utils.platform.gnu2mslib</h4>
+<ul>
+<li>Convert mingw&#39;s libxxxdll.a to msvc&#39;s xxx.lib library</li>
+</ul>
+<p>This feature is particularly helpful for Fortran &amp; C++ mixed projects, because VS does not provide the fortran compiler. You can only use MinGW&#39;s gfortran to compile the fortran part, and then link with the VS project.<br>Often such projects also have some other libraries provided in the vs format, so pure MinGW compilation is not possible, you can only use this function to mix compilation.</p>
+<p>And cmake also has a similar <a href="https://cmake.org/cmake/help/latest/prop_tgt/GNUtoMS.html">GNUtoMS</a>.</p>
+<p>For related issues, see: <a href="https://github.com/xmake-io/xmake/issues/1181">#1181</a></p>
+<pre><code class="lang-lua">import("utils.platform.gnu2mslib")
+
+gnu2mslib("xxx.lib", "xxx.dll.a")
+gnu2mslib("xxx.lib", "xxx.def")
+gnu2mslib("xxx.lib", "xxx.dll.a", {dllname = "xxx.dll", arch = "x64"})
+</code></pre>
+<p>Support to generate xxx.lib from def, and also support to automatically export .def from xxx.dll.a, and then generate xxx.lib</p>
+<p>If you don’t want to automatically generate def from dll.a, but want to borrow the def generated by gnu linker, then configure it yourself through add_shflags("-Wl,--output-def,xxx.def") to generate def, and then pass in def to this interface. .</p>
+<p><code>{dllname = xxx, arch = "xxx"}</code> These are optional, according to your needs.</p>
+<p>You can also directly xmake l utils.platform.gnu2mslib xxx.lib xxx.dll.a quick test verification</p>
 </article>
 </body>
 </html>

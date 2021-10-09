@@ -5,10 +5,6 @@
 
 一般用于获取xmake命令参数选项的值，常用于插件开发。
 
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [option.get](#optionget)                       | 获取参数选项值                               | >= 2.0.1 |
-
 #### option.get
 
 - 获取参数选项值
@@ -41,16 +37,7 @@ task("hello")
 
 用于获取xmake全局的配置信息，也就是`xmake g|global --xxx=val` 传入的参数选项值。
 
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [global.get](#globalget)                       | 获取指定配置值                               | >= 2.0.1 |
-| [global.load](#globalload)                     | 加载配置                                     | >= 2.0.1 |
-| [global.directory](#globaldirectory)           | 获取全局配置信息目录                         | >= 2.0.1 |
-| [global.dump](#globaldump)                     | 打印输出所有全局配置信息                     | >= 2.0.1 |
-
-<p class="tip">
-2.1.5版本之前为`core.project.global`。
-</p>
+!> 2.1.5版本之前为`core.project.global`。
 
 #### global.get
 
@@ -88,13 +75,7 @@ task("hello")
 
 用于任务操作，一般用于在自定义脚本中、插件任务中，调用运行其他task任务。
 
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [task.run](#taskrun)                           | 运行指定任务                                 | >= 2.0.1 |
-
-<p class="tip">
-2.1.5版本之前为`core.project.task`。
-</p>
+!> 2.1.5版本之前为`core.project.task`。
 
 #### task.run
 
@@ -155,14 +136,6 @@ emd
 ### core.tool.linker
 
 链接器相关操作，常用于插件开发。
-
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [linker.link](#linkerlink)                     | 执行链接                                     | >= 2.0.1 |
-| [linker.linkcmd](#linkerlinkcmd)               | 获取链接命令行                               | >= 2.0.1 |
-| [linker.linkargv](#linkerlinkargv)             | 获取链接命令行列表                           | >= 2.1.5 |
-| [linker.linkflags](#linkerlinkflags)           | 获取链接选项                                 | >= 2.0.1 |
-| [linker.has_flags](#linkerhas_flags)           | 判断指定链接选项是否支持                     | >= 2.1.5 |
 
 #### linker.link
 
@@ -268,16 +241,6 @@ end
 ### core.tool.compiler
 
 编译器相关操作，常用于插件开发。
-
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [compiler.compile](#compilercompile)           | 执行编译                                     | >= 2.0.1 |
-| [compiler.compcmd](#compilercompcmd)           | 获取编译命令行                               | >= 2.0.1 |
-| [compiler.compargv](#compilercompargv)         | 获取编译命令行列表                           | >= 2.1.5 |
-| [compiler.compflags](#compilercompflags)       | 获取编译选项                                 | >= 2.0.1 |
-| [compiler.has_flags](#compilerhas_flags)       | 判断指定编译选项是否支持                     | >= 2.1.5 |
-| [compiler.features](#compilerfeatures)         | 获取所有编译器特性                           | >= 2.1.5 |
-| [compiler.has_features](#compilerhas_features) | 判断指定编译特性是否支持                     | >= 2.1.5 |
 
 #### compiler.compile
 
@@ -490,17 +453,6 @@ end
 
 用于获取工程编译时候的配置信息，也就是`xmake f|config --xxx=val` 传入的参数选项值。
 
-| 接口                                            | 描述                                         | 支持版本 |
-| ----------------------------------------------- | -------------------------------------------- | -------- |
-| [config.get](#configget)                       | 获取指定配置值                               | >= 2.0.1 |
-| [config.load](#configload)                     | 加载配置                                     | >= 2.0.1 |
-| [config.arch](#configarch)                     | 获取当前工程的架构配置                       | >= 2.0.1 |
-| [config.plat](#configplat)                     | 获取当前工程的平台配置                       | >= 2.0.1 |
-| [config.mode](#configmode)                     | 获取当前工程的编译模式配置                   | >= 2.0.1 |
-| [config.buildir](#configbuildir)               | 获取当前工程的输出目录配置                   | >= 2.0.1 |
-| [config.directory](#configdirectory)           | 获取当前工程的配置信息目录                   | >= 2.0.1 |
-| [config.dump](#configdump)                     | 打印输出当前工程的所有配置信息               | >= 2.0.1 |
-
 #### config.get
 
 - 获取指定配置值
@@ -534,7 +486,7 @@ function main(...)
 
     -- 先加载工程配置
     config.load()
-    
+
     -- 获取配置值
     print(config.get("xxx"))
 end
@@ -611,17 +563,6 @@ end
 
 用于获取当前工程的一些描述信息，也就是在`xmake.lua`工程描述文件中定义的配置信息，例如：[target](#target)、[option](#option)等。
 
-| 接口                                            | 描述                                         | 支持版本             |
-| ----------------------------------------------- | -------------------------------------------- | -------------------- |
-| [project.load](#projectload)                    | 加载工程配置                                 | >= 2.0.1 (2.1.5废弃) |
-| [project.directory](#projectdirectory)          | 获取工程目录                                 | >= 2.0.1             |
-| [project.target](#projecttarget)                | 获取指定工程目标对象                         | >= 2.0.1             |
-| [project.targets](#projecttargets)              | 获取工程目标对象列表                         | >= 2.0.1             |
-| [project.option](#projectoption)                | 获取指定的选项对象                           | >= 2.1.5             |
-| [project.options](#projectoptions)              | 获取工程所有的选项对象                       | >= 2.1.5             |
-| [project.name](#projectname)                    | 获取当前工程名                               | >= 2.0.1             |
-| [project.version](#projectversion)              | 获取当前工程版本号                           | >= 2.0.1             |
-
 #### project.load
 
 - 加载工程描述配置
@@ -643,9 +584,7 @@ function main(...)
 end
 ```
 
-<p class="tip">
-2.1.5版本后，不在需要，工程加载会自动在合适时机延迟加载。
-</p>
+!> 2.1.5版本后，不在需要，工程加载会自动在合适时机延迟加载。
 
 #### project.directory
 
@@ -653,9 +592,7 @@ end
 
 获取当前工程目录，也就是`xmake -P xxx`中指定的目录，否则为默认当前`xmake`命令执行目录。
 
-<p class="tip">
-2.1.5版本后，建议使用[os.projectdir](#os-projectdir)来获取。
-</p>
+!> 2.1.5版本后，建议使用[os.projectdir](#os-projectdir)来获取。
 
 #### project.target
 
@@ -753,17 +690,6 @@ print(project.version())
 ### core.language.language
 
 用于获取编译语言相关信息，一般用于代码文件的操作。
-
-| 接口                                              | 描述                                         | 支持版本 |
-| -----------------------------------------------   | -------------------------------------------- | -------- |
-| [language.extensions](#languageextensions)       | 获取所有语言的代码后缀名列表                 | >= 2.1.1 |
-| [language.targetkinds](#languagetargetkinds)     | 获取所有语言的目标类型列表                   | >= 2.1.1 |
-| [language.sourcekinds](#languagesourcekinds)     | 获取所有语言的源文件类型列表                 | >= 2.1.1 |
-| [language.sourceflags](#languagesourceflags)     | 加载所有语言的源文件编译选项名列表           | >= 2.1.1 |
-| [language.load](#languageload)                   | 加载指定语言                                 | >= 2.1.1 |
-| [language.load_sk](#languageload_sk)             | 从源文件类型加载指定语言                     | >= 2.1.1 |
-| [language.load_ex](#languageload_ex)             | 从源文件后缀名加载指定语言                   | >= 2.1.1 |
-| [language.sourcekind_of](#languagesourcekind_of) | 获取指定源文件的源文件类型                   | >= 2.1.1 |
 
 #### language.extensions
 
@@ -888,28 +814,6 @@ print(language.sourcekind_of("/xxxx/test.cpp"))
 
 !> 此模块的接口分散在多个模块目录中，尽量通过导入单个接口来使用，这样效率更高，例如：`import("lib.detect.find_package")`，而不是通过`import("lib.detect")`导入所有来调用。
 
-| 接口                                                | 描述                                         | 支持版本             |
-| --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [detect.find_file](#detectfind_file)               | 查找文件                                     | >= 2.1.5             |
-| [detect.find_path](#detectfind_path)               | 查找文件路径                                 | >= 2.1.5             |
-| [detect.find_library](#detectfind_library)         | 查找库文件                                   | >= 2.1.5             |
-| [detect.find_program](#detectfind_program)         | 查找可执行程序                               | >= 2.1.5             |
-| [detect.find_programver](#detectfind_programver)   | 查找可执行程序版本号                         | >= 2.1.5             |
-| [detect.find_package](#detectfind_package)         | 查找包文件，包含库文件和搜索路径             | >= 2.1.5             |
-| [detect.find_tool](#detectfind_tool)               | 查找工具                                     | >= 2.1.5             |
-| [detect.find_toolname](#detectfind_toolname)       | 查找工具名                                   | >= 2.1.5             |
-| [detect.find_cudadevices](#detectfind_cudadevices) | 查找本机的 CUDA 设备                         | >= 2.2.7             |
-| [detect.features](#detectfeatures)                 | 获取指定工具的所有特性                       | >= 2.1.5             |
-| [detect.has_features](#detecthas_features)         | 判断指定特性是否支持                         | >= 2.1.5             |
-| [detect.has_flags](#detecthas_flags)               | 判断指定参数选项是否支持                     | >= 2.1.5             |
-| [detect.has_cfuncs](#detecthas_cfuncs)             | 判断指定c函数是否存在                        | >= 2.1.5             |
-| [detect.has_cxxfuncs](#detecthas_cxxfuncs)         | 判断指定c++函数是否存在                      | >= 2.1.5             |
-| [detect.has_cincludes](#detecthas_cincludes)       | 判断指定c头文件是否存在                      | >= 2.1.5             |
-| [detect.has_cxxincludess](#detecthas_cxxincludes)  | 判断指定c++头文件是否存在                    | >= 2.1.5             |
-| [detect.has_ctypes](#detecthas_ctypes)             | 判断指定c类型是否存在                        | >= 2.1.5             |
-| [detect.has_cxxtypes](#detecthas_cxxtypes)         | 判断指定c++类型是否存在                      | >= 2.1.5             |
-| [detect.check_cxsnippets](#detectcheck_cxsnippets) | 检测c/c++代码片段是否能够编译通过            | >= 2.1.5             |
-
 #### detect.find_file
 
 - 查找文件
@@ -961,9 +865,7 @@ local file = find_file("test.h", { "/usr", "/usr/local"}, {suffixes = {"/include
 
 并且不用改变路径列表，就能动态切换子目录来搜索文件。
 
-<p class="tip">
-我们也可以通过`xmake lua`插件来快速调用和测试此接口：`xmake lua lib.detect.find_file test.h /usr/local`
-</p>
+!> 我们也可以通过`xmake lua`插件来快速调用和测试此接口：`xmake lua lib.detect.find_file test.h /usr/local`
 
 #### detect.find_path
 
@@ -1046,7 +948,7 @@ local program = find_program("ccache")
 指定搜索目录，修改尝试运行的检测命令参数（默认是：`ccache --version`）：
 
 ```lua
-local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = "--help"}) 
+local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = "--help"})
 ```
 
 上述代码会尝试运行：`/usr/bin/ccache --help`，如果运行成功，则返回：`/usr/bin/ccache`。
@@ -1103,9 +1005,7 @@ local version = find_programver("ccache", {command = "--version", parse = "(%d+%
 local version = find_programver("ccache", {command = "--version", parse = function (output) return output:match("(%d+%.?%d*%.?%d*.-)%s") end})
 ```
 
-<p class="tip">
-为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
-</p>
+!> 为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
 
 我们也可以通过`xmake lua lib.detect.find_programver ccache` 来快速测试。
 
@@ -1237,7 +1137,7 @@ add_moduledirs("$(projectdir)/xmake/modules")
 import("lib.detect.find_path")
 import("lib.detect.find_library")
 
--- find openssl 
+-- find openssl
 --
 -- @param opt   the package options. e.g. see the options of find_package()
 --
@@ -1273,7 +1173,7 @@ function main(opt)
 
         -- not found?
         if #result.links ~= 2 then
-            return 
+            return
         end
 
         -- find include
@@ -1287,10 +1187,8 @@ end
 
 里面对windows平台进行注册表读取，去查找指定的库文件，其底层其实也是调用的[find_library](#detectfind_library)等接口。
 
-<p class="tip">
-为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
+!> 为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
 也可以通过指定force参数，来禁用cache，强制重新查找：`find_package("openssl", {force = true})`
-</p>
 
 我们也可以通过`xmake lua lib.detect.find_package openssl` 来快速测试。
 
@@ -1350,7 +1248,7 @@ local tool = find_tool("gcc")
 
 通过这个结果就可以看的区别来了，工具名实际会被标示为clang，但是可执行的命令用的是gcc。
 
-我们也可以指定`{version = true}`参数去获取工具的版本，并且指定一个自定义的搜索路径，也支持内建变量和自定义脚本哦： 
+我们也可以指定`{version = true}`参数去获取工具的版本，并且指定一个自定义的搜索路径，也支持内建变量和自定义脚本哦：
 
 ```lua
 local tool = find_tool("clang", {version = true, {pathes = {"/usr/bin", "/usr/local/bin", "$(env PATH)", function () return "/usr/xxx/bin" end}})
@@ -1361,7 +1259,7 @@ local tool = find_tool("clang", {version = true, {pathes = {"/usr/bin", "/usr/lo
 这个接口是对`find_program`的上层封装，因此也支持自定义脚本检测：
 
 ```lua
-local tool = find_tool("clang", {check = "--help"}) 
+local tool = find_tool("clang", {check = "--help"})
 local tool = find_tool("clang", {check = function (tool) os.run("%s -h", tool) end})
 ```
 
@@ -1406,9 +1304,7 @@ end
 
 将它放置到工程的模块目录下后，执行：`xmake l lib.detect.find_tool 7z`就可以查找到了。
 
-<p class="tip">
-为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
-</p>
+!> 为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行`xmake f -c`清除本地cache。
 
 我们也可以通过`xmake lua lib.detect.find_tool clang` 来快速测试。
 
@@ -1618,10 +1514,6 @@ local ok = check_cxsnippets({}, {types = {"wchar_t", "char*"}, includes = "stdio
 
 此模块提供http的各种操作支持，目前提供的接口如下：
 
-| 接口                                                | 描述                                         | 支持版本             |
-| --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [http.download](#http-download)                     | 下载http文件                                 | >= 2.1.5             |
-
 #### http.download
 
 - 下载http文件
@@ -1638,19 +1530,7 @@ http.download("https://xmake.io", "/tmp/index.html")
 
 此接口用于通过`sudo`来运行命令，并且提供了平台一致性处理，对于一些需要root权限运行的脚本，可以使用此接口。
 
-<p class="warn">
-为了保证安全性，除非必须使用的场合，其他情况下尽量不要使用此接口。
-</p>
-
-| 接口                                                | 描述                                         | 支持版本             |
-| --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [sudo.has](#sudo-has)                               | 判断sudo是否支持                             | >= 2.1.5             |
-| [sudo.run](#sudo-run)                               | 安静运行程序                                 | >= 2.1.5             |
-| [sudo.runv](#sudo-runv)                             | 安静运行程序，带参数列表                     | >= 2.1.5             |
-| [sudo.exec](#sudo-exec)                             | 回显运行程序                                 | >= 2.1.5             |
-| [sudo.execv](#sudo-execv)                           | 回显运行程序，带参数列表                     | >= 2.1.5             |
-| [sudo.iorun](#sudo-iorun)                           | 运行并获取程序输出内容                       | >= 2.1.5             |
-| [sudo.iorunv](#sudo-iorunv)                         | 运行并获取程序输出内容，带参数列表           | >= 2.1.5             |
+!> 为了保证安全性，除非必须使用的场合，其他情况下尽量不要使用此接口。
 
 #### sudo.has
 
@@ -1712,19 +1592,7 @@ sudo.run("rm /system/file")
 
 此接口提供了git各种命令的访问接口，相对于直接调用git命令，此模块提供了更加上层易用的封装接口，并且提供对git的自动检测和跨平台处理。
 
-<p class="tip">
-目前windows上，需要手动安装git包后，才能检测到，后续版本会提供自动集成git功能，用户将不用关心如何安装git，就可以直接使用。
-</p>
-
-| 接口                                                | 描述                                         | 支持版本             |
-| --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [git.clone](#git-clone)                             | clone代码库                                  | >= 2.1.5             |
-| [git.pull](#git-pull)                               | 拉取代码库最新提交                           | >= 2.1.5             |
-| [git.clean](#git-clean)                             | 清理代码库文件                               | >= 2.1.5             |
-| [git.checkout](#git-checkout)                       | 签出指定分支版本                             | >= 2.1.5             |
-| [git.refs](#git-refs)                               | 获取所有引用列表                             | >= 2.1.5             |
-| [git.tags](#git-tags)                               | 获取所有标记列表                             | >= 2.1.5             |
-| [git.branches](#git-branches)                       | 获取所有分支列表                             | >= 2.1.5             |
+!> 目前windows上，需要手动安装git包后，才能检测到，后续版本会提供自动集成git功能，用户将不用关心如何安装git，就可以直接使用。
 
 #### git.clone
 
@@ -1734,7 +1602,7 @@ sudo.run("rm /system/file")
 
 ```lua
 import("devel.git")
- 
+
 git.clone("git@github.com:tboox/xmake.git")
 git.clone("git@github.com:tboox/xmake.git", {depth = 1, branch = "master", outputdir = "/tmp/xmake"})
 ```
@@ -1747,7 +1615,7 @@ git.clone("git@github.com:tboox/xmake.git", {depth = 1, branch = "master", outpu
 
 ```lua
 import("devel.git")
- 
+
 git.pull()
 git.pull({remote = "origin", tags = true, branch = "master", repodir = "/tmp/xmake"})
 ```
@@ -1760,7 +1628,7 @@ git.pull({remote = "origin", tags = true, branch = "master", repodir = "/tmp/xma
 
 ```lua
 import("devel.git")
- 
+
 git.clean()
 git.clean({repodir = "/tmp/xmake", force = true})
 ```
@@ -1773,54 +1641,50 @@ git.clean({repodir = "/tmp/xmake", force = true})
 
 ```lua
 import("devel.git")
- 
+
 git.checkout("master", {repodir = "/tmp/xmake"})
 git.checkout("v1.0.1", {repodir = "/tmp/xmake"})
 ```
 
 #### git.refs
 
-- 获取所有引用列表 
+- 获取所有引用列表
 
 此接口对应`git ls-remote --refs`命令
 
 ```lua
 import("devel.git")
- 
+
 local refs = git.refs(url)
 ```
 
 #### git.tags
 
-- 获取所有标记列表 
+- 获取所有标记列表
 
 此接口对应`git ls-remote --tags`命令
 
 ```lua
 import("devel.git")
- 
+
 local tags = git.tags(url)
 ```
 
 #### git.branches
 
-- 获取所有分支列表 
+- 获取所有分支列表
 
 此接口对应`git ls-remote --heads`命令
 
 ```lua
 import("devel.git")
- 
+
 local branches = git.branches(url)
 ```
 
 ### utils.archive
 
 此模块用于压缩和解压缩文件。
-
-| 接口                                                | 描述                                         | 支持版本             |
-| --------------------------------------------------- | -------------------------------------------- | -------------------- |
-| [archive.extract](#archive-extract)                 | 解压文件                                     | >= 2.1.5             |
 
 #### archive.extract
 
@@ -1836,3 +1700,34 @@ archive.extract("/tmp/a.7z", "/tmp/outputdir")
 archive.extract("/tmp/a.gzip", "/tmp/outputdir")
 archive.extract("/tmp/a.tar.bz2", "/tmp/outputdir")
 ```
+
+### utils.platform
+
+此模块用于一些平台相关的辅助操作接口
+
+#### utils.platform.gnu2mslib
+
+- 将 mingw 的 libxxxdll.a 转换成 msvc 的 xxx.lib 库
+
+这个功能对 Fortran & C++ 混合项目特别有帮助，因为 VS 不提供fortran编译器，只能用MinGW的gfortran来编译fortran部分，然后和VS的项目链接。
+往往这样的项目同时有一些其他的库以vs格式提供，因此纯用MinGW编译也不行，只能使用这个功能来混合编译。
+
+而 cmake 也有个类似的 [GNUtoMS](https://cmake.org/cmake/help/latest/prop_tgt/GNUtoMS.html)。
+
+相关 issues 见：[#1181](https://github.com/xmake-io/xmake/issues/1181)
+
+```lua
+import("utils.platform.gnu2mslib")
+
+gnu2mslib("xxx.lib", "xxx.dll.a")
+gnu2mslib("xxx.lib", "xxx.def")
+gnu2mslib("xxx.lib", "xxx.dll.a", {dllname = "xxx.dll", arch = "x64"})
+```
+
+支持从 def 生成 xxx.lib ，也支持从 xxx.dll.a 自动导出 .def ，然后再生成 xxx.lib
+
+如果不想自动从dll.a生成 def，想借用 gnu linker 生成的 def，那就自己通过 add_shflags("-Wl,--output-def,xxx.def") 配置，生成 def，然后传入 def 到这个接口。。
+
+`{dllname = xxx, arch = "xxx"}` 这些是可选的，根据自己的需求而定。。
+
+也可以直接 xmake l utils.platform.gnu2mslib xxx.lib xxx.dll.a 快速测试验证
