@@ -25,3 +25,4 @@ so that the xmake project and the community will grow stronger.
 | [KnightJun](https://github.com/knightjun) | [BingW](https://github.com/knightjun/BingW)(bing wallpaper) | xmake is an excellent, simple, easy-to-use and powerful build tool.
 | [Phate6660](https://github.com/Phate6660) | [cppfetch](https://github.com/Phate6660/cppfetch) (info fetch tool) | I tried this out after seeing [this](https://github.com/xmake-io/xmake/wiki/C-and-Cplusplus-build-system,-I-use-xmake), and after using it I loved it enough that I replaced meson with this!
 |walletiger | ERTC - an easy and efficient cross platform RTC project | 个人项目，简单易用跨平台 兼容 webrtc 标准的 SFU及前端通信组件 ， xmake + tbox 提供了优秀的跨平台编译和底层库支持| 
+| [Alvin](https://github.com/idealvin) | [co](https://github.com/idealvin/co) | A go-style coroutine library in C++11. Xmake is nice! |
