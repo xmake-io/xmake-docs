@@ -22,3 +22,4 @@
 | [fasiondog](https://github.com/fasiondog) | [Hikyuu Quant Framework](https://github.com/fasiondog/hikyuu) 基于C++/Python的开源量化交易研究框架 | xmake 的简洁高效是C/C++跨平台工程的解放 |
 | [KnightJun](https://github.com/knightjun) | [BingW](https://github.com/knightjun/BingW)(bing wallpaper) | xmake is an excellent, simple, easy-to-use and powerful build tool.
 | [Phate6660](https://github.com/Phate6660) | [cppfetch](https://github.com/Phate6660/cppfetch) (info fetch tool) | I tried this out after seeing [this](https://github.com/xmake-io/xmake/wiki/C-and-Cplusplus-build-system,-I-use-xmake), and after using it I loved it enough that I replaced meson with this!
+| [ekko](https://github.com/ekkone) | 电网融合终端linux应用，个人使用 | 相比Makefile和Cmake简洁易懂太多了，构建十分高效，并发编译速度比公司用的cmake快一个数量级，希望发展越来越好 |
