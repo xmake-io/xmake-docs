@@ -1,4 +1,3 @@
-
 ## Supporting the project
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. 🙏
@@ -7,11 +6,15 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 <a href="https://opencollective.com/xmake#sponsors" target="_blank"><img src="https://opencollective.com/xmake/sponsors.svg?width=890"></a>
 
-## Introduction ([中文](/README_zh.md))
+## Introduction
 
 xmake is a lightweight cross-platform build utility based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more concise and intuitive. It is very friendly to novices and can quickly get started in a short time. Let users focus more on actual project development.
 
 It can compile the project directly like Make/Ninja, or generate project files like CMake/Meson, and it also has a built-in package management system to help users solve the integrated use of C/C++ dependent libraries.
+
+```
+Xmake = Build backend + Project Generator + Package Manager
+```
 
 If you want to know more, please refer to: [Documents](https://xmake.io/#/getting_started), [Github](https://github.com/xmake-io/xmake) and [Gitee](https://gitee.com/tboox/xmake) and also welcome to join our [community](https://xmake.io/#/about/contact).
 
@@ -126,6 +129,18 @@ The test project: [xmake-core](https://github.com/xmake-io/xmake/tree/master/cor
 * Clib (clib::clibs/bytes@0.0.4)
 * Dub (dub::log 0.4.3)
 * Portage on Gentoo/Linux (portage::libhandy)
+* Nimble for nimlang (nimble::zip >1.3)
+
+### Package management features
+
+* The official repository provides nearly 500+ packages, one-click compilation on all platforms
+* Full platform package support, support for cross-compiled dependent package integration
+* Support package virtual environment, `xrepo env shell`
+* Rrecompiled package acceleration for windows
+* Support self-built package repositories, private repository deployment
+* Third-party package repository support, such as: vcpkg, conan, conda, etc.
+* Support to pull using remote toolchain automatically
+* Support to lock package dependency
 
 ## Supported platforms
 
@@ -171,8 +186,13 @@ tinycc        Tiny C Compiler
 emcc          A toolchain for compiling to asm.js and WebAssembly
 icc           Intel C/C++ Compiler
 ifort         Intel Fortran Compiler
-muslcc        The musl-based cross-compilation toolchains
+muslcc        The musl-based cross-compilation toolchain
 fpc           Free Pascal Programming Language Compiler
+wasi          WASI-enabled WebAssembly C/C++ toolchain
+nim           Nim Programming Language Compiler
+circle        A new C++20 compiler
+armcc         ARM Compiler Version 5 of Keil MDK
+armclang      ARM Compiler Version 6 of Keil MDK
 ```
 
 ## Supported Languages
@@ -190,27 +210,23 @@ fpc           Free Pascal Programming Language Compiler
 * Zig
 * Vala
 * Pascal
+* Nim
 
 ## Supported Features
 
-* Simple project configuration syntax
-* Direct build support, without relying on any third-party back-end make tools
-* Support cross platform
-* Support cross compilation
-* Multi-task parallel compilation support
-* C++20 Module-TS support
-* Support cross-platform C/C++ dependency packages
-* Support self-built distributed package repositories
-* Support the installation of cloud pre-compiled packages
-* Support third-party package repositories, such as: vcpkg, conan, conda, etc.
-* Support multi-language mixed compilation
-* Flexible lua scripts, rich extension modules
-* Support for generating vsproj/cmake/makefile/compile_commands files
+* The configuration grammar is simple and easy to use
+* Quick installation, without any dependencies
+* One-click compilation for all platforms
+* Support cross compilation, intelligent analysis of cross tool chain information
+* Extremely fast, multi-task parallel compilation support
+* C++20 Module support
+* Support cross-platform C/C++ dependency package quick integration, built-in package manager
+* Multi-language mixed compilation support
+* Rich plug-in support, providing various project generators, such as: vs/makefile/cmakelists/compile_commands to generate plugins
 * REPL interactive execution support
-* Incremental compilation support, automatic analysis of header dependency files
-* Fast switching toolchains
-* Automatic pull toolchain and dependency package integration
-* Support precompiled package and lock package requires
+* Incremental compilation support, automatic analysis of header files
+* Quick switching and customization support of tool chain
+* A large number of expansion modules support
 
 ## Supported Projects
 
@@ -516,4 +532,3 @@ This project exists thanks to all the people who have [contributed](CONTRIBUTING
 * [uael](https://github.com/uael): provide the semantic versioning library [sv](https://github.com/uael/sv)
 * [OpportunityLiu](https://github.com/OpportunityLiu): improve cuda, tests and ci
 * [xq144](https://github.com/xq114): Improve `xrepo env shell`, and contribute a lot of packages to the [xmake-repo](https://github.com/xmake-io/xmake-repo) repository.
-

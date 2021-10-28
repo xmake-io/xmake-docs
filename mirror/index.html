@@ -96,10 +96,11 @@
 <li><a href="https://xmake.io/#/about/sponsor">Become a sponsor</a></li>
 </ul>
 <p><a href="https://opencollective.com/xmake#sponsors" target="_blank"><img src="https://opencollective.com/xmake/sponsors.svg?width=890"></a></p>
-<h2 id="introduction">Introduction (<a href="/mirror/README_zh.md.html">中文</a>)</h2>
+<h2 id="introduction">Introduction</h2>
 <p>xmake is a lightweight cross-platform build utility based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more concise and intuitive. It is very friendly to novices and can quickly get started in a short time. Let users focus more on actual project development.</p>
 <p>It can compile the project directly like Make/Ninja, or generate project files like CMake/Meson, and it also has a built-in package management system to help users solve the integrated use of C/C++ dependent libraries.</p>
-<p>If you want to know more, please refer to: <a href="https://xmake.io/#/getting_started">Documents</a>, <a href="https://github.com/xmake-io/xmake">Github</a> and <a href="https://gitee.com/tboox/xmake">Gitee</a> and also welcome to join our <a href="https://xmake.io/#/about/contact">community</a>.</p>
+<pre><code>Xmake = Build backend + Project Generator + Package Manager
+</code></pre><p>If you want to know more, please refer to: <a href="https://xmake.io/#/getting_started">Documents</a>, <a href="https://github.com/xmake-io/xmake">Github</a> and <a href="https://gitee.com/tboox/xmake">Gitee</a> and also welcome to join our <a href="https://xmake.io/#/about/contact">community</a>.</p>
 <p><img src="https://xmake.io/assets/img/index/xmake-basic-render.gif" alt=""></p>
 <h2 id="installation">Installation</h2>
 <h4 id="viacurl">via curl</h4>
@@ -228,6 +229,18 @@ $ xmake
 <li>Clib (clib::<a href="mailto:clibs/bytes@0.0.4">clibs/bytes@0.0.4</a>)</li>
 <li>Dub (dub::log 0.4.3)</li>
 <li>Portage on Gentoo/Linux (portage::libhandy)</li>
+<li>Nimble for nimlang (nimble::zip >1.3)</li>
+</ul>
+<h3 id="packagemanagementfeatures">Package management features</h3>
+<ul>
+<li>The official repository provides nearly 500+ packages, one-click compilation on all platforms</li>
+<li>Full platform package support, support for cross-compiled dependent package integration</li>
+<li>Support package virtual environment, <code>xrepo env shell</code></li>
+<li>Rrecompiled package acceleration for windows</li>
+<li>Support self-built package repositories, private repository deployment</li>
+<li>Third-party package repository support, such as: vcpkg, conan, conda, etc.</li>
+<li>Support to pull using remote toolchain automatically</li>
+<li>Support to lock package dependency</li>
 </ul>
 <h2 id="supportedplatforms">Supported platforms</h2>
 <ul>
@@ -271,8 +284,13 @@ tinycc        Tiny C Compiler
 emcc          A toolchain for compiling to asm.js and WebAssembly
 icc           Intel C/C++ Compiler
 ifort         Intel Fortran Compiler
-muslcc        The musl-based cross-compilation toolchains
+muslcc        The musl-based cross-compilation toolchain
 fpc           Free Pascal Programming Language Compiler
+wasi          WASI-enabled WebAssembly C/C++ toolchain
+nim           Nim Programming Language Compiler
+circle        A new C++20 compiler
+armcc         ARM Compiler Version 5 of Keil MDK
+armclang      ARM Compiler Version 6 of Keil MDK
 </code></pre>
 <h2 id="supportedlanguages">Supported Languages</h2>
 <ul>
@@ -289,27 +307,23 @@ fpc           Free Pascal Programming Language Compiler
 <li>Zig</li>
 <li>Vala</li>
 <li>Pascal</li>
+<li>Nim</li>
 </ul>
 <h2 id="supportedfeatures">Supported Features</h2>
 <ul>
-<li>Simple project configuration syntax</li>
-<li>Direct build support, without relying on any third-party back-end make tools</li>
-<li>Support cross platform</li>
-<li>Support cross compilation</li>
-<li>Multi-task parallel compilation support</li>
-<li>C++20 Module-TS support</li>
-<li>Support cross-platform C/C++ dependency packages</li>
-<li>Support self-built distributed package repositories</li>
-<li>Support the installation of cloud pre-compiled packages</li>
-<li>Support third-party package repositories, such as: vcpkg, conan, conda, etc.</li>
-<li>Support multi-language mixed compilation</li>
-<li>Flexible lua scripts, rich extension modules</li>
-<li>Support for generating vsproj/cmake/makefile/compile_commands files</li>
+<li>The configuration grammar is simple and easy to use</li>
+<li>Quick installation, without any dependencies</li>
+<li>One-click compilation for all platforms</li>
+<li>Support cross compilation, intelligent analysis of cross tool chain information</li>
+<li>Extremely fast, multi-task parallel compilation support</li>
+<li>C++20 Module support</li>
+<li>Support cross-platform C/C++ dependency package quick integration, built-in package manager</li>
+<li>Multi-language mixed compilation support</li>
+<li>Rich plug-in support, providing various project generators, such as: vs/makefile/cmakelists/compile_commands to generate plugins</li>
 <li>REPL interactive execution support</li>
-<li>Incremental compilation support, automatic analysis of header dependency files</li>
-<li>Fast switching toolchains</li>
-<li>Automatic pull toolchain and dependency package integration</li>
-<li>Support precompiled package and lock package requires</li>
+<li>Incremental compilation support, automatic analysis of header files</li>
+<li>Quick switching and customization support of tool chain</li>
+<li>A large number of expansion modules support</li>
 </ul>
 <h2 id="supportedprojects">Supported Projects</h2>
 <ul>
