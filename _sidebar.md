@@ -27,6 +27,12 @@
   - [Local 3rd source code library](package/local_3rd_source_library.md)
   - [Xrepo C/C++ Package Manager](https://xrepo.xmake.io/#/getting_started)
 
+- Toolchain Management
+
+  - [Builtin Toolchain](toolchain/builtin_toolchains.md)
+  - [Custom toolchain](manual/custom_toolchain.md)
+  - [Pull Remote Toolchain](toolchain/remote_toolchain.md)
+
 - API Manual (Description Scope)
 
   - [Specification](manual/specification.md)
