@@ -121,3 +121,105 @@ $ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepag
 ```
 
 xmake 也会从 target 的 `set_license` 和 `set_version` 等配置中读取相关配置信息。
+
+### 从 CMake 中查找包
+
+现在 cmake 已经是事实上的标准，所以 CMake 提供的 find_package 已经可以查找大量的库和模块，我们完全复用 cmake 的这部分生态来扩充 xmake 对包的集成。
+
+我们可以通过 `find_package("cmake::xxx")` 去借助 cmake 来找一些包，xmake 会自动生成一个 cmake 脚本来调用 cmake 的 find_package 去查找一些包，获取里面包信息。
+
+例如：
+
+```console
+$ xmake l find_package cmake::ZLIB
+{
+  links = {
+    "z"
+  },
+  includedirs = {
+    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.
+15.sdk/usr/include"
+  },
+  linkdirs = {
+    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.
+15.sdk/usr/lib"
+  }
+}
+$ xmake l find_package cmake::LibXml2
+{
+  links = {
+    "xml2"
+  },
+  includedirs = {
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/libxml2"
+  },
+  linkdirs = {
+    "/usr/lib"
+  }
+}
+```
+
+#### 指定版本
+
+```lua
+find_package("cmake::OpenCV", {required_version = "4.1.1"})
+```
+
+#### 指定组件
+
+```lua
+find_package("cmake::Boost", {components = {"regex", "system"}})
+```
+
+#### 预设开关
+
+```lua
+find_package("cmake::Boost", {components = {"regex", "system"}, presets = {Boost_USE_STATIC_LIB = true}})
+set(Boost_USE_STATIC_LIB ON) -- will be used in FindBoost.cmake
+find_package(Boost REQUIRED COMPONENTS regex system)
+```
+
+#### 设置环境变量
+
+```lua
+find_package("cmake::OpenCV", {envs = {CMAKE_PREFIX_PATH = "xxx"}})
+```
+
+#### 指定自定义 FindFoo.cmake 模块脚本目录
+
+mydir/cmake_modules/FindFoo.cmake
+
+```lua
+find_package("cmake::Foo", {moduledirs = "mydir/cmake_modules"})
+```
+
+#### 包依赖集成
+
+```lua
+package("xxx")
+    on_fetch(function (package, opt)
+         return package:find_package("cmake::xxx", opt)
+    end)
+package_end()
+
+add_requires("xxx")
+```
+
+#### 包依赖集成（可选组件）
+
+```lua
+package("boost")
+    add_configs("regex",   { description = "Enable regex.", default = false, type = "boolean"})
+    on_fetch(function (package, opt)
+         opt.components = {}
+         if package:config("regex") then
+             table.insert(opt.components, "regex")
+         end
+         return package:find_package("cmake::Boost", opt)
+    end)
+package_end()
+
+add_requires("boost", {configs = {regex = true}})
+```
+
+相关 issues: [#1632](https://github.com/xmake-io/xmake/issues/1632)

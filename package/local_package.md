@@ -121,3 +121,105 @@ $ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepag
 ```
 
 xmake will also read the relevant configuration information from the target's `set_license` and `set_version` configurations.
+
+### Find packages from CMake
+
+Now cmake is the de facto standard, so the find_package provided by CMake can already find a large number of libraries and modules. We fully reuse this part of cmake's ecology to expand xmake's integration of packages.
+
+We can use `find_package("cmake::xxx")` to find some packages with cmake, xmake will automatically generate a cmake script to call cmake's find_package to find some packages and get the bread information.
+
+E.g:
+
+```console
+$ xmake l find_package cmake::ZLIB
+{
+  links = {
+    "z"
+  },
+  includedirs = {
+    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.
+15.sdk/usr/include"
+  },
+  linkdirs = {
+    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.
+15.sdk/usr/lib"
+  }
+}
+$ xmake l find_package cmake::LibXml2
+{
+  links = {
+    "xml2"
+  },
+  includedirs = {
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/libxml2"
+  },
+  linkdirs = {
+    "/usr/lib"
+  }
+}
+```
+
+#### Specify version
+
+```lua
+find_package("cmake::OpenCV", {required_version = "4.1.1"})
+```
+
+#### Specified components
+
+```lua
+find_package("cmake::Boost", {components = {"regex", "system"}})
+```
+
+#### Default switch
+
+```lua
+find_package("cmake::Boost", {components = {"regex", "system"}, presets = {Boost_USE_STATIC_LIB = true}})
+set(Boost_USE_STATIC_LIB ON) - will be used in FindBoost.cmake
+find_package(Boost REQUIRED COMPONENTS regex system)
+```
+
+#### Set environment variables
+
+```lua
+find_package("cmake::OpenCV", {envs = {CMAKE_PREFIX_PATH = "xxx"}})
+```
+
+#### Specify custom FindFoo.cmake module script directory
+
+mydir/cmake_modules/FindFoo.cmake
+
+```lua
+find_package("cmake::Foo", {moduledirs = "mydir/cmake_modules"})
+```
+
+#### Package dependency integration
+
+```lua
+package("xxx")
+    on_fetch(function (package, opt)
+         return package:find_package("cmake::xxx", opt)
+    end)
+package_end()
+
+add_requires("xxx")
+```
+
+#### Package dependency integration (optional component)
+
+```lua
+package("boost")
+    add_configs("regex", {description = "Enable regex.", default = false, type = "boolean"})
+    on_fetch(function (package, opt)
+         opt.components = {}
+         if package:config("regex") then
+             table.insert(opt.components, "regex")
+         end
+         return package:find_package("cmake::Boost", opt)
+    end)
+package_end()
+
+add_requires("boost", {configs = {regex = true}})
+```
+
+Related issues: [#1632](https://github.com/xmake-io/xmake/issues/1632)
