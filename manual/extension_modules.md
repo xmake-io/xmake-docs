@@ -1186,19 +1186,20 @@ lookups, this interface is self-contained by default. If you want to
 disable the cache, you can execute `xmake f -c` in the project
 directory to clear the local cache.  You can also disable the cache by
 specifying the force parameter, forcing a re-find:
+
 `find_package("openssl", {force = true})`
 
-We can also test quickly with `xmake lua lib.detect.find_package
-openssl`.
+We can also test quickly with `xmake lua lib.detect.find_package openssl`.
 
-After the 2.2.5 version, the built-in interface [find_packages]
-(#find_packages) has been added, which can find multiple packages at
+After the 2.2.5 version, the built-in interface [find_packages](#find_packages) has been added, which can find multiple packages at
 the same time, and can be used directly without importing by import.
 
 And after this release, support for explicitly looking for packages
 from a specified third-party package manager, for example:
 
-```lua find_package("brew::pcre2/libpcre2-8") ```
+```lua
+find_package("brew::pcre2/libpcre2-8")
+```
 
 Since the package name of each third-party package manager is not
 completely consistent, for example, pcre2 has three library versions
@@ -1207,6 +1208,8 @@ version by the above method.
 
 In addition, for vcpkg, conan can also specify the library inside by
 adding the `vcpkg::`, `conan::` package namespace.
+
+v2.5.9 We can also use cmake to find some packages through `find_package("cmake::xxx")`.
 
 #### detect.find_tool
 

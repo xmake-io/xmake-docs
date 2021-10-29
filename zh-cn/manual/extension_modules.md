@@ -1204,6 +1204,8 @@ find_package("brew::pcre2/libpcre2-8")
 
 另外，对于vcpkg, conan也可以通过加上`vcpkg::`, `conan::`包命名空间来指定查找里面的库。
 
+v2.5.9 我们也可以通过 `find_package("cmake::xxx")` 去借助 cmake 来找一些包。
+
 #### detect.find_tool
 
 - 查找工具
