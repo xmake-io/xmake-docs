@@ -193,13 +193,54 @@ target("test2")
 <td>object</td>
 <td>仅仅编译对象集合</td>
 </tr>
+<tr>
+<td>headeronly</td>
+<td>仅仅头文件集合</td>
+</tr>
 </tbody>
 </table>
+<h5 id="binary">binary</h5>
+<ul>
+<li>可执行文件类型</li>
+</ul>
 <pre><code class="lang-lua">target("demo")
     set_kind("binary")
     add_files("src/*.c")
 </code></pre>
-<p>!> 其中，phony是一个特殊的目标程序类型，它不生成任何实际的程序文件，仅仅用于组合其他目标程序的依赖关系。</p>
+<p>!> 2.5.5 开始，如果没有设置 set_kind 接口，默认就是 binary 类型。</p>
+<p>所以我们简化为：</p>
+<pre><code class="lang-lua">target("demo")
+    add_files("src/*.c")
+</code></pre>
+<p>甚至:</p>
+<pre><code class="lang-lua">target("demo", {files = "src/*.c"})
+</code></pre>
+<h5 id="static">static</h5>
+<ul>
+<li>静态库目标类型</li>
+</ul>
+<pre><code class="lang-lua">target("demo")
+    set_kind("static")
+    add_files("src/*.c")
+</code></pre>
+<h5 id="shared">shared</h5>
+<ul>
+<li>动态库目标类型</li>
+</ul>
+<pre><code class="lang-lua">target("demo")
+    set_kind("shared")
+    add_files("src/*.c")
+</code></pre>
+<h5 id="object">object</h5>
+<ul>
+<li>纯对象文件列表类型</li>
+</ul>
+<p>通常用于两个目标程序间，部分对象文件共享，仅仅编译一次。也可以用于分离对象文件列表，配置不同的编译参数。</p>
+<h5 id="phony">phony</h5>
+<ul>
+<li>空目标类型</li>
+</ul>
+<p>它是一个特殊的目标程序类型，它不生成任何实际的程序文件，仅仅用于组合其他目标程序的依赖关系。</p>
 <pre><code class="lang-lua">target("test1")
     set_kind("binary")
     add_files("src/*.c")
@@ -213,7 +254,22 @@ target("demo")
     add_deps("test1", "test2")
 </code></pre>
 <p>比如上述配置，我们就可以在执行 <code>xmake build demo</code> 编译的时候，同时编译相关的两个依赖程序：test1和test2。</p>
-<p>!> 2.5.5 开始，如果没有设置 set_kind 接口，默认就是 binary 类型。</p>
+<h5 id="headeronly">headeronly</h5>
+<ul>
+<li>纯头文件目标类型</li>
+</ul>
+<p>2.5.9 之后，我们新增了 <code>headeronly</code> 目标类型，这个类型的目标程序，我们不会实际编译它们，因为它没有源文件需要被编译。</p>
+<p>但是它包含了头文件列表，这通常用于 headeronly 库项目的安装，IDE 工程的文件列表生成，以及安装阶段的 cmake/pkgconfig 导入文件的生成。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+
+target("foo")
+    set_kind("headeronly")
+    add_headerfiles("src/foo.h")
+    add_rules("utils.install.cmake_importfiles")
+    add_rules("utils.install.pkgconfig_importfiles")
+</code></pre>
+<p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/1747">#1747</a></p>
 <h3 id="targetset_strip">target:set_strip</h3>
 <h4 id="strip">设置是否strip信息</h4>
 <p>设置当前目标的strip模式，目前支持一下模式：</p>

@@ -191,27 +191,81 @@ target("test2")
 <td>object</td>
 <td>Only compile a collection of objects</td>
 </tr>
+<tr>
+<td>headeronly</td>
+<td>header file collection only</td>
+</tr>
 </tbody>
 </table>
+<h5 id="binary">binary</h5>
+<ul>
+<li>Executable file type</li>
+</ul>
 <pre><code class="lang-lua">target("demo")
-     set_kind("binary")
-     add_files("src/*.c")
+    set_kind("binary")
+    add_files("src/*.c")
 </code></pre>
-<p>!> Among them, phony is a special target program type. It does not generate any actual program files, but is only used to combine the dependencies of other target programs.</p>
+<p>!> Starting from 2.5.5, if the set_kind interface is not set, the default is binary type.</p>
+<p>So we simplify to:</p>
+<pre><code class="lang-lua">target("demo")
+    add_files("src/*.c")
+</code></pre>
+<p>even:</p>
+<pre><code class="lang-lua">target("demo", {files = "src/*.c"})
+</code></pre>
+<h5 id="static">static</h5>
+<ul>
+<li>Static library target type</li>
+</ul>
+<pre><code class="lang-lua">target("demo")
+    set_kind("static")
+    add_files("src/*.c")
+</code></pre>
+<h5 id="shared">shared</h5>
+<ul>
+<li>Dynamic library target type</li>
+</ul>
+<pre><code class="lang-lua">target("demo")
+    set_kind("shared")
+    add_files("src/*.c")
+</code></pre>
+<h5 id="object">object</h5>
+<ul>
+<li>Pure object file list type</li>
+</ul>
+<p>Usually used between two target programs, part of the object file is shared, and only compiled once. It can also be used to separate the object file list and configure different compilation parameters.</p>
+<h5 id="phony">phony</h5>
+<ul>
+<li>Empty target type</li>
+</ul>
+<p>It is a special target program type. It does not generate any actual program files, but is only used to combine the dependencies of other target programs.</p>
 <pre><code class="lang-lua">target("test1")
-     set_kind("binary")
-     add_files("src/*.c")
+    set_kind("binary")
+    add_files("src/*.c")
 
 target("test2")
-     set_kind("binary")
-     add_files("src/*.c")
+    set_kind("binary")
+    add_files("src/*.c")
 
 target("demo")
-     set_kind("phony")
-     add_deps("test1", "test2")
+    set_kind("phony")
+    add_deps("test1", "test2")
 </code></pre>
-<p>For example, with the above configuration, we can compile two related dependent programs: test1 and test2 when compiling with <code>xmake build demo</code>.</p>
-<p>!> Starting from 2.5.5, if the set_kind interface is not set, the default is binary type.</p>
+<p>For example, with the above configuration, we can compile two dependent programs at the same time: test1 and test2 when executing <code>xmake build demo</code>.</p>
+<h5 id="headeronly">headeronly</h5>
+<p>-Pure header file target type</p>
+<p>After 2.5.9, we added the <code>headeronly</code> target type. For target programs of this type, we will not actually compile them because it has no source files to be compiled.</p>
+<p>But it contains a list of header files, which are usually used for the installation of headeronly library projects, the generation of file lists for IDE projects, and the generation of cmake/pkgconfig import files during the installation phase.</p>
+<p>E.g:</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+
+target("foo")
+    set_kind("headeronly")
+    add_headerfiles("src/foo.h")
+    add_rules("utils.install.cmake_importfiles")
+    add_rules("utils.install.pkgconfig_importfiles")
+</code></pre>
+<p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1747">#1747</a></p>
 <h3 id="targetset_strip">target:set_strip</h3>
 <h4 id="striptargetsymbols">Strip target symbols</h4>
 <p>Set the current target strip mode, currently supports the mode:</p>

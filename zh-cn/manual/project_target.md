@@ -110,6 +110,11 @@ target("test2")
 | static | 静态库程序 |
 | shared | 动态库程序 |
 | object | 仅仅编译对象集合 |
+| headeronly | 仅仅头文件集合 |
+
+##### binary
+
+- 可执行文件类型
 
 ```lua
 target("demo")
@@ -117,7 +122,54 @@ target("demo")
     add_files("src/*.c")
 ```
 
-!> 其中，phony是一个特殊的目标程序类型，它不生成任何实际的程序文件，仅仅用于组合其他目标程序的依赖关系。
+!> 2.5.5 开始，如果没有设置 set_kind 接口，默认就是 binary 类型。
+
+所以我们简化为：
+
+
+```lua
+target("demo")
+    add_files("src/*.c")
+```
+
+甚至:
+
+
+```lua
+target("demo", {files = "src/*.c"})
+```
+
+##### static
+
+- 静态库目标类型
+
+```lua
+target("demo")
+    set_kind("static")
+    add_files("src/*.c")
+```
+
+##### shared
+
+- 动态库目标类型
+
+```lua
+target("demo")
+    set_kind("shared")
+    add_files("src/*.c")
+```
+
+##### object
+
+- 纯对象文件列表类型
+
+通常用于两个目标程序间，部分对象文件共享，仅仅编译一次。也可以用于分离对象文件列表，配置不同的编译参数。
+
+##### phony
+
+- 空目标类型
+
+它是一个特殊的目标程序类型，它不生成任何实际的程序文件，仅仅用于组合其他目标程序的依赖关系。
 
 ```lua
 target("test1")
@@ -135,7 +187,27 @@ target("demo")
 
 比如上述配置，我们就可以在执行 `xmake build demo` 编译的时候，同时编译相关的两个依赖程序：test1和test2。
 
-!> 2.5.5 开始，如果没有设置 set_kind 接口，默认就是 binary 类型。
+##### headeronly
+
+- 纯头文件目标类型
+
+2.5.9 之后，我们新增了 `headeronly` 目标类型，这个类型的目标程序，我们不会实际编译它们，因为它没有源文件需要被编译。
+
+但是它包含了头文件列表，这通常用于 headeronly 库项目的安装，IDE 工程的文件列表生成，以及安装阶段的 cmake/pkgconfig 导入文件的生成。
+
+例如：
+
+```lua
+add_rules("mode.release", "mode.debug")
+
+target("foo")
+    set_kind("headeronly")
+    add_headerfiles("src/foo.h")
+    add_rules("utils.install.cmake_importfiles")
+    add_rules("utils.install.pkgconfig_importfiles")
+```
+
+更多详情见：[#1747](https://github.com/xmake-io/xmake/issues/1747)
 
 ### target:set_strip
 

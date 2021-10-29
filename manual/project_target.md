@@ -111,33 +111,104 @@ Set the target type, currently supported types are:
 | static | Static library program               |
 | shared | Dynamic library program              |
 | object | Only compile a collection of objects |
+| headeronly | header file collection only |
+
+##### binary
+
+- Executable file type
 
 ```lua
 target("demo")
-     set_kind("binary")
-     add_files("src/*.c")
+    set_kind("binary")
+    add_files("src/*.c")
 ```
-
-!> Among them, phony is a special target program type. It does not generate any actual program files, but is only used to combine the dependencies of other target programs.
-
-```lua
-target("test1")
-     set_kind("binary")
-     add_files("src/*.c")
-
-target("test2")
-     set_kind("binary")
-     add_files("src/*.c")
-
-target("demo")
-     set_kind("phony")
-     add_deps("test1", "test2")
-```
-
-For example, with the above configuration, we can compile two related dependent programs: test1 and test2 when compiling with `xmake build demo`.
 
 !> Starting from 2.5.5, if the set_kind interface is not set, the default is binary type.
 
+So we simplify to:
+
+
+```lua
+target("demo")
+    add_files("src/*.c")
+```
+
+even:
+
+
+```lua
+target("demo", {files = "src/*.c"})
+```
+
+##### static
+
+- Static library target type
+
+```lua
+target("demo")
+    set_kind("static")
+    add_files("src/*.c")
+```
+
+##### shared
+
+- Dynamic library target type
+
+```lua
+target("demo")
+    set_kind("shared")
+    add_files("src/*.c")
+```
+
+##### object
+
+- Pure object file list type
+
+Usually used between two target programs, part of the object file is shared, and only compiled once. It can also be used to separate the object file list and configure different compilation parameters.
+
+##### phony
+
+- Empty target type
+
+It is a special target program type. It does not generate any actual program files, but is only used to combine the dependencies of other target programs.
+
+```lua
+target("test1")
+    set_kind("binary")
+    add_files("src/*.c")
+
+target("test2")
+    set_kind("binary")
+    add_files("src/*.c")
+
+target("demo")
+    set_kind("phony")
+    add_deps("test1", "test2")
+```
+
+For example, with the above configuration, we can compile two dependent programs at the same time: test1 and test2 when executing `xmake build demo`.
+
+##### headeronly
+
+-Pure header file target type
+
+After 2.5.9, we added the `headeronly` target type. For target programs of this type, we will not actually compile them because it has no source files to be compiled.
+
+But it contains a list of header files, which are usually used for the installation of headeronly library projects, the generation of file lists for IDE projects, and the generation of cmake/pkgconfig import files during the installation phase.
+
+E.g:
+
+```lua
+add_rules("mode.release", "mode.debug")
+
+target("foo")
+    set_kind("headeronly")
+    add_headerfiles("src/foo.h")
+    add_rules("utils.install.cmake_importfiles")
+    add_rules("utils.install.pkgconfig_importfiles")
+```
+
+For more details, please see: [#1747](https://github.com/xmake-io/xmake/issues/1747)
 ### target:set_strip
 
 #### Strip target symbols
