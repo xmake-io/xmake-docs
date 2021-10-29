@@ -966,49 +966,6 @@ xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
 <p>If you need a package that is not supported by the current official repository, you can commit it to the official repository after local tuning: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>For detailed contribution descriptions, see: <a href="https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a></p>
 <p>For how to make your own package, you can look at the above: <a href="#Adding-packages-to-the-official-repository">Adding packages to the official repository</a>.</p>
-<h2 id="automaticallypullremotetoolchain">Automatically pull remote toolchain</h2>
-<p>Starting from version 2.5.2, we can pull the specified toolchain to integrate the compilation project, and we also support switching the dependent package to the corresponding remote toolchain to participate in the compilation and integration.</p>
-<p>For related example codes, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/package">Toolchain/Packages Examples</a></p>
-<p>Related issue <a href="https://github.com/xmake-io/xmake/issues/1217">#1217</a></p>
-<h3 id="pullthespecifiedversionofthellvmtoolchain">Pull the specified version of the llvm toolchain</h3>
-<p>We use clang in llvm-10 to compile the project.</p>
-<pre><code class="lang-lua">add_requires("llvm 10.x", {alias = "llvm-10"})
-target("test")
-    set_kind("binary")
-    add_files("src/*.c)
-    set_toolchains("llvm@llvm-10")
-`
-</code></pre>
-<h3 id="pullcrosscompilationtoolchain">Pull cross compilation tool chain</h3>
-<p>We can also pull the specified cross-compilation tool chain to compile the project.</p>
-<pre><code class="lang-lua">add_requires("muslcc")
-target("test")
-    set_kind("binary")
-    add_files("src/*.c)
-    set_toolchains("@muslcc")
-</code></pre>
-<h3 id="pullthetoolchainandintegratethedependencypackagescompiledbythecorrespondingtoolchain">Pull the toolchain and integrate the dependency packages compiled by the corresponding toolchain</h3>
-<p>We can also use the specified muslcc cross-compilation tool chain to compile and integrate all dependent packages.</p>
-<pre><code class="lang-lua">add_requires("muslcc")
-add_requires("zlib", "libogg", {system = false})
-
-set_toolchains("@muslcc")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_packages("zlib", "libogg")
-</code></pre>
-<p>For a complete example, see: <a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/toolchain_muslcc/xmake.lua">Examples (muslcc)</a></p>
-<h3 id="pullzigtoolchain">Pull zig toolchain</h3>
-<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
-add_requires("zig 0.7.x")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.zig")
-    set_toolchains("@zig")
-</code></pre>
 <h2 id="dependentpackagelockandupgrade">Dependent package lock and upgrade</h2>
 <p>After v2.5.7, version locks of dependent packages have been added, similar to npm&#39;s package.lock and cargo&#39;s cargo.lock.</p>
 <p>For example, if we quote some packages, by default, if the version is not specified, xmake will automatically pull the latest version of the package for integrated use each time, for example:</p>

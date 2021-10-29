@@ -29,6 +29,12 @@
   - [集成本地第三方源码库](zh-cn/package/local_3rd_source_library.md)
   - [Xrepo C/C++ 包管理器](https://xrepo.xmake.io/#/zh-cn/getting_started)
 
+- 工具链管理
+
+  - [内置工具链](zh-cn/toolchain/builtin_toolchains.md)
+  - [自定义工具链](zh-cn/manual/custom_toolchain.md)
+  - [自动拉取远程工具链](zh-cn/toolchain/remote_toolchain.md)
+
 - API手册（描述域）
 
   - [接口规范](zh-cn/manual/specification.md)

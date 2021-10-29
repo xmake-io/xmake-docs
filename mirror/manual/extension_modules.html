@@ -1133,14 +1133,16 @@ function main(opt)
     end
 </code></pre>
 <p>Inside the windows platform to read the registry, to find the<br>specified library file, the bottom layer is actually called<br><a href="#detectfind_library">find_library</a> and other interfaces.</p>
-<p>!> In order to speed up the efficiency of frequent<br>lookups, this interface is self-contained by default. If you want to<br>disable the cache, you can execute <code>xmake f -c</code> in the project<br>directory to clear the local cache.  You can also disable the cache by<br>specifying the force parameter, forcing a re-find:<br><code>find_package("openssl", {force = true})</code></p>
-<p>We can also test quickly with <code>xmake lua lib.detect.find_package
-openssl</code>.</p>
-<p>After the 2.2.5 version, the built-in interface [find_packages]<br>(#find_packages) has been added, which can find multiple packages at<br>the same time, and can be used directly without importing by import.</p>
+<p>!> In order to speed up the efficiency of frequent<br>lookups, this interface is self-contained by default. If you want to<br>disable the cache, you can execute <code>xmake f -c</code> in the project<br>directory to clear the local cache.  You can also disable the cache by<br>specifying the force parameter, forcing a re-find:</p>
+<p><code>find_package("openssl", {force = true})</code></p>
+<p>We can also test quickly with <code>xmake lua lib.detect.find_package openssl</code>.</p>
+<p>After the 2.2.5 version, the built-in interface <a href="#find_packages">find_packages</a> has been added, which can find multiple packages at<br>the same time, and can be used directly without importing by import.</p>
 <p>And after this release, support for explicitly looking for packages<br>from a specified third-party package manager, for example:</p>
-<p><code>lua find_package("brew::pcre2/libpcre2-8")</code></p>
+<pre><code class="lang-lua">find_package("brew::pcre2/libpcre2-8")
+</code></pre>
 <p>Since the package name of each third-party package manager is not<br>completely consistent, for example, pcre2 has three library versions<br>in homebrew, we can specify the library corresponding to libpcre2-8<br>version by the above method.</p>
 <p>In addition, for vcpkg, conan can also specify the library inside by<br>adding the <code>vcpkg::</code>, <code>conan::</code> package namespace.</p>
+<p>v2.5.9 We can also use cmake to find some packages through <code>find_package("cmake::xxx")</code>.</p>
 <h4 id="detectfind_tool">detect.find_tool</h4>
 <ul>
 <li>Find tool</li>

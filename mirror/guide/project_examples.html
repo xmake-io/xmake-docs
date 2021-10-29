@@ -857,6 +857,115 @@ target("mul")
 </code></pre>
 <p>However, it has some drawbacks: if you use ar, there may be conflicts with the same name of the .obj object file and cause the merge to fail. Therefore, it is recommended to use the merge method described above, which is more stable, reliable, and simpler.</p>
 <p>Related issues: <a href="https://github.com/xmake-io/xmake/issues/1638">#1638</a></p>
+<h2 id="nimprogram">Nim program</h2>
+<p>After v2.5.9, we have added support for the Nimlang project. For related issues, see: <a href="https://github.com/xmake-io/xmake/issues/1756">#1756</a></p>
+<h3 id="createanemptyproject">Create an empty project</h3>
+<p>We can use the <code>xmake create</code> command to create an empty project.</p>
+<pre><code class="lang-console">xmake create -l nim -t console test
+xmake create -l nim -t static test
+xmake create -l nim -t shared test
+</code></pre>
+<h3 id="consoleprogram">Console program</h3>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.nim")
+</code></pre>
+<pre><code class="lang-console">$ xmake -v
+[33%]: linking.release test
+/usr/local/bin/nim c --opt:speed --nimcache:build/.gens/test/macosx/x86_64/release/nimcache -o:b
+uild/macosx/x86_64/release/test src/main.nim
+[100%]: build ok!
+</code></pre>
+<h3 id="staticlibraryprogram">Static library program</h3>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("foo")
+    set_kind("static")
+    add_files("src/foo.nim")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.nim")
+</code></pre>
+<pre><code class="lang-console">$ xmake -v
+[33%]: linking.release libfoo.a
+/usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
+:staticlib --noMain --passC:-DNimMain=NimMain_B6D5BD02 --passC:-DNimMainInner=NimMainInner_B6D5B
+D02 --passC:-DNimMainModule=NimMainModule_B6D5BD02 --passC:-DPreMain=PreMain_B6D5BD02 --passC:-D
+PreMainInner=PreMainInner_B6D5BD02 -o:build/macosx/x86_64/release/libfoo.a src/foo.nim
+[66%]: linking.release test
+/usr/local/bin/nim c --opt:speed --nimcache:build/.gens/test/macosx/x86_64/release/nimcache --pa
+ssL:-Lbuild/macosx/x86_64/release --passL:-lfoo -o:build/macosx/x86_64/release/test src/main.nim
+[100%]: build ok!
+</code></pre>
+<h3 id="dynamiclibraryprogram">Dynamic library program</h3>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("foo")
+    set_kind("shared")
+    add_files("src/foo.nim")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.nim")
+</code></pre>
+<pre><code class="lang-console">$ xmake -rv
+[33%]: linking.release libfoo.dylib
+/usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
+:lib --noMain -o:build/macosx/x86_64/release/libfoo.dylib src/foo.nim
+[66%]: linking.release test
+/usr/local/bin/nim c --opt:speed --nimcache:build/.gens/test/macosx/x86_64/release/nimcache --pa
+ssL:-Lbuild/macosx/x86_64/release --passL:-lfoo -o:build/macosx/x86_64/release/test src/main.nim
+[100%]: build ok!
+</code></pre>
+<h3 id="ccodemixedcompilation">C code mixed compilation</h3>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("foo")
+    set_kind("static")
+    add_files("src/*.c")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.nim")
+</code></pre>
+<h3 id="nimbledependencypackageintegration">Nimble dependency package integration</h3>
+<p>For a complete example, see: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/nim/nimble_package">Nimble Package Example</a></p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("nimble::zip >0.3")
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.nim")
+    add_packages("nimble::zip")
+</code></pre>
+<p>main.nim</p>
+<pre><code class="lang-nim">import zip/zlib
+
+echo zlibVersion()
+</code></pre>
+<h3 id="nativedependencypackageintegration">Native dependency package integration</h3>
+<p>For a complete example, see: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/nim/native_package">Native Package Example</a></p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("zlib")
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.nim")
+    add_packages("zlib")
+</code></pre>
+<p>main.nim</p>
+<pre><code class="lang-nim">proc zlibVersion(): cstring {.cdecl, importc}
+
+echo zlibVersion()
+</code></pre>
 </article>
 </body>
 </html>

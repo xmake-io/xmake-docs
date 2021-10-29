@@ -1149,6 +1149,7 @@ end
 </code></pre>
 <p>由于每个第三方包管理器的包名不完全一致，比如pcre2在homebrew中有三个库版本，我们可以通过上面的方式，指定查找对应libpcre2-8版本的库。</p>
 <p>另外，对于vcpkg, conan也可以通过加上<code>vcpkg::</code>, <code>conan::</code>包命名空间来指定查找里面的库。</p>
+<p>v2.5.9 我们也可以通过 <code>find_package("cmake::xxx")</code> 去借助 cmake 来找一些包。</p>
 <h4 id="detectfind_tool">detect.find_tool</h4>
 <ul>
 <li>查找工具</li>
