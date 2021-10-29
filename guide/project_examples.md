@@ -1292,3 +1292,44 @@ proc zlibVersion(): cstring {.cdecl, importc}
 
 echo zlibVersion()
 ```
+
+## Keil/MDK Embedded Program
+
+Related example project: [Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/mdk/hello)
+
+xmake will automatically detect the compiler installed by Keil/MDK, related issues [#1753](https://github.com/xmake-io/xmake/issues/1753).
+
+Compile with armcc
+
+```console
+$ xmake f -p cross -a cortex-m3 --toolchain=armcc -c
+$ xmake
+```
+
+Compile with armclang
+
+```console
+$ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
+$ xmake
+```
+
+### Console program
+
+```lua
+target("hello")
+     add_deps("foo")
+     add_rules("mdk.console")
+     add_files("src/*.c", "src/*.s")
+     add_defines("__EVAL", "__MICROLIB")
+     add_includedirs("src/lib/cmsis")
+```
+
+### Static library program
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("foo")
+     add_rules("mdk.static")
+     add_files("src/foo/*.c")
+```
