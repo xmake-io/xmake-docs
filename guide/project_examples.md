@@ -1078,7 +1078,8 @@ target("example")
 
 xmake uses `.mpp` as the default module extension, but also supports `.ixx`, `.cppm`, `.mxx` and other extensions.
 
-However, the current feature support is not very mature, and only supports msvc and clang's ts-modules, but does not support gcc. It will be further improved in the future.
+At present, xmake has fully supported the C++20 Modules construction support of gcc11/clang/msvc,
+and can automatically analyze the dependencies between modules to maximize parallel compilation.
 
 ```lua
 set_languages("c++20")

@@ -1084,7 +1084,7 @@ target("example")
 
 xmake 采用 `.mpp` 作为默认的模块扩展名，但是也同时支持 `.ixx`, `.cppm`, `.mxx` 等扩展名。
 
-不过目前这个特性支持还不是很成熟，并且仅仅支持 msvc 和 clang 的 ts-modules，还不支持 gcc，后面会进一步改进。
+目前 xmake 已经完整支持 gcc11/clang/msvc 的 C++20 Modules 构建支持，并且能够自动分析模块间的依赖关系，实现最大化并行编译。
 
 ```lua
 set_languages("c++20")

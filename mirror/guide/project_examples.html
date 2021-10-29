@@ -810,7 +810,7 @@ target("example")
 </code></pre>
 <h3 id="c20module">C++20 Module</h3>
 <p>xmake uses <code>.mpp</code> as the default module extension, but also supports <code>.ixx</code>, <code>.cppm</code>, <code>.mxx</code> and other extensions.</p>
-<p>However, the current feature support is not very mature, and only supports msvc and clang&#39;s ts-modules, but does not support gcc. It will be further improved in the future.</p>
+<p>At present, xmake has fully supported the C++20 Modules construction support of gcc11/clang/msvc,<br>and can automatically analyze the dependencies between modules to maximize parallel compilation.</p>
 <pre><code class="lang-lua">set_languages("c++20")
 target("class")
     set_kind("binary")
