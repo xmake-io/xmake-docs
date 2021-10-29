@@ -432,6 +432,19 @@ target("test")
     add_packages("libhandy")
 ```
 
+### 添加 nimble 的依赖包
+
+v2.5.8 之后支持集成 nimble 包管理器中的包，但是目前仅用于 nim 项目，因为它并没有提供二进制的包，而是直接安装的 nim 代码包。
+
+```lua
+add_requires("nimble::zip >1.3")
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.nim")
+    add_packages("nimble::zip")
+```
+
 ## 使用自建私有包仓库
 
 如果需要的包不在官方仓库[xmake-repo](https://github.com/xmake-io/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。

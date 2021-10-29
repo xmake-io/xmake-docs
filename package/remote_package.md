@@ -405,6 +405,19 @@ target("test")
      add_packages("libhandy")
 ```
 
+### Add nimble's dependency package
+
+After v2.5.8, it supports the integration of packages in the nimble package manager, but it is currently only used for nim projects, because it does not provide binary packages, but directly installed nim code packages.
+
+```lua
+add_requires("nimble::zip >1.3")
+
+target("test")
+     set_kind("binary")
+     add_files("src/main.nim")
+     add_packages("nimble::zip")
+```
+
 ## Using self-built private package repository
 
 If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.
