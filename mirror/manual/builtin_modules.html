@@ -95,147 +95,7 @@
     print("hello xmake!")
 end)
 </code></pre>
-<p><p class="warn"><br>In order to ensure that the description scope of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br><br>Of course, a small number of read-only built-in interfaces can still be used in the description scope, as shown in the following table:<br></p>
-
-</p>
-<table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>Description</th>
-<th>Available Domains</th>
-<th>Supported Versions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#import">import</a></td>
-<td>Importing Extension Blocks</td>
-<td>Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#inherit">inherit</a></td>
-<td>Import and inherit base class modules</td>
-<td>Script Domain</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#try-catch-finally">try-catch-finally</a></td>
-<td>Exception Capture</td>
-<td>Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#pairs">pairs</a></td>
-<td>Used to Traverse the Dictionary</td>
-<td>Description scope, Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#ipairs">ipairs</a></td>
-<td>Used to traverse arrays</td>
-<td>Description scope, script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#print">print</a></td>
-<td>Wrap Print Terminal Log</td>
-<td>Description scope, Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#printf">printf</a></td>
-<td>No Line Printing Terminal Log</td>
-<td>Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#cprint">cprint</a></td>
-<td>Wrap Color Print Terminal Log</td>
-<td>Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#cprintf">cprintf</a></td>
-<td>No Line Color Print Terminal Log</td>
-<td>Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#format">format</a></td>
-<td>Format String</td>
-<td>Description scope, Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#vformat">vformat</a></td>
-<td>Format string, support for built-in variable escaping</td>
-<td>Script Domain</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#raise">raise</a></td>
-<td>Throwing an abort program</td>
-<td>Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#os">os</a></td>
-<td>System Operation Module</td>
-<td>Partial read-only operation description, script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#winos">winos</a></td>
-<td>windows system operation module</td>
-<td>Partial read-only operation description, script scope</td>
-<td>>= 2.3.9</td>
-</tr>
-<tr>
-<td><a href="#macos">macos</a></td>
-<td>macOS system operation module</td>
-<td>Partial read-only operation description, script scope</td>
-<td>>= 2.3.9</td>
-</tr>
-<tr>
-<td><a href="#io">io</a></td>
-<td>File Manipulation Module</td>
-<td>Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#path">path</a></td>
-<td>Path Manipulation Module</td>
-<td>Description scope, Script scope</td>
-<td>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#table">table</a></td>
-<td>Array and Dictionary Operations Module</td>
-<td>Description scope, Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#string">string</a></td>
-<td>String Manipulation Module</td>
-<td>Description scope, Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#coroutine">coroutine</a></td>
-<td>Coroutine Operation Module</td>
-<td>Script scope</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#find_packages">find_packages</a></td>
-<td>Find Dependency Packages</td>
-<td>Script scope</td>
-<td>>= 2.2.5</td>
-</tr>
-</tbody>
-</table>
+<p>!> In order to ensure that the description scope of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br><br>Of course, a small number of read-only built-in interfaces can still be used in the description scope, as shown in the following table:</p>
 <p>An example of using an interface call in a description scope is as follows, generally only for conditional control:</p>
 <pre><code class="lang-lua">-- Scan all subdirectories under the current xmake.lua directory, defining a task task with the name of each directory
 for _, taskname in ipairs(os.dirs("*"), path.basename) do
@@ -1803,6 +1663,20 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8)
 -- Extract the 4th-8th element with an interval of 2, resulting in: {4, 6, 8}
 table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 </code></pre>
+<h4 id="tablecontains">table.contains</h4>
+<ul>
+<li>Determine that the table contains the specified value</li>
+</ul>
+<pre><code class="lang-lua">if table.contains(t, 1, 2, 3) then
+     - ...
+end
+</code></pre>
+<p>As long as the table contains any value from 1, 2, 3, it returns true</p>
+<h4 id="tableorderkeys">table.orderkeys</h4>
+<ul>
+<li>Get an ordered list of keys</li>
+</ul>
+<p>The order of the key list returned by <code>table.keys(t)</code> is random. If you want to get an ordered key list, you can use this interface.</p>
 <h3 id="string">string</h3>
 <p>The string module is a native module of lua. For details, see: <a href="https://www.lua.org/manual/5.1/manual.html#5.4">lua official manual</a></p>
 <p>It has been extended in xmake to add some extension interfaces:</p>

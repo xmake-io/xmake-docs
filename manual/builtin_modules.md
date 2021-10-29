@@ -7,34 +7,8 @@ on_run(function (target)
 end)
 ```
 
-<p class="warn">
-In order to ensure that the description scope of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br>
+!> In order to ensure that the description scope of the outer layer is as simple and secure as possible, it is generally not recommended to use the interface and module operation api in this domain. Therefore, most module interfaces can only be used in the script domain to implement complex functions. </br>
 Of course, a small number of read-only built-in interfaces can still be used in the description scope, as shown in the following table:
-</p>
-
-| Interface                                       | Description                                           | Available Domains                                     | Supported Versions |
-| ----------------------------------------------- | --------------------------------------------          | --------------------------                            | -------- |
-| [import](#import)                               | Importing Extension Blocks                            | Script scope                                         | >= 2.0.1 |
-| [inherit](#inherit)                             | Import and inherit base class modules                 | Script Domain                                         | >= 2.0.1 |
-| [try-catch-finally](#try-catch-finally)         | Exception Capture                                     | Script scope                                          | >= 2.0.1 |
-| [pairs](#pairs)                                 | Used to Traverse the Dictionary                       | Description scope, Script scope                       | >= 2.0.1 |
-| [ipairs](#ipairs)                               | Used to traverse arrays                               | Description scope, script scope                     | >= 2.0.1 |
-| [print](#print)                                 | Wrap Print Terminal Log                               | Description scope, Script scope                       | >= 2.0.1 |
-| [printf](#printf)                               | No Line Printing Terminal Log                         | Script scope                                          | >= 2.0.1 |
-| [cprint](#cprint)                               | Wrap Color Print Terminal Log                         | Script scope                                          | >= 2.0.1 |
-| [cprintf](#cprintf)                             | No Line Color Print Terminal Log                      | Script scope                                          | >= 2.0.1 |
-| [format](#format)                               | Format String                                         | Description scope, Script scope                       | >= 2.0.1 |
-| [vformat](#vformat)                             | Format string, support for built-in variable escaping | Script Domain                                         | >= 2.0.1 |
-| [raise](#raise)                                 | Throwing an abort program                             | Script scope                                          | >= 2.0.1 |
-| [os](#os)                                       | System Operation Module                               | Partial read-only operation description, script scope | >= 2.0.1 |
-| [winos](#winos)                                 | windows system operation module                       | Partial read-only operation description, script scope | >= 2.3.9 |
-| [macos](#macos)                                 | macOS system operation module                         | Partial read-only operation description, script scope | >= 2.3.9 |
-| [io](#io)                                       | File Manipulation Module                              | Script scope                                          | >= 2.0.1 |
-| [path](#path)                                   | Path Manipulation Module                              | Description scope, Script scope                       | = 2.0.1 |
-| [table](#table)                                 | Array and Dictionary Operations Module                | Description scope, Script scope                       | >= 2.0.1 |
-| [string](#string)                               | String Manipulation Module                            | Description scope, Script scope                       | >= 2.0.1 |
-| [coroutine](#coroutine)                         | Coroutine Operation Module                            | Script scope                                          | >= 2.0.1 |
-| [find_packages](#find_packages)                 | Find Dependency Packages                              | Script scope                                         | >= 2.2.5 |
 
 An example of using an interface call in a description scope is as follows, generally only for conditional control:
 
@@ -1689,6 +1663,24 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8)
 -- Extract the 4th-8th element with an interval of 2, resulting in: {4, 6, 8}
 table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 ```
+
+#### table.contains
+
+- Determine that the table contains the specified value
+
+```lua
+if table.contains(t, 1, 2, 3) then
+     - ...
+end
+```
+
+As long as the table contains any value from 1, 2, 3, it returns true
+
+#### table.orderkeys
+
+- Get an ordered list of keys
+
+The order of the key list returned by `table.keys(t)` is random. If you want to get an ordered key list, you can use this interface.
 
 ### string
 

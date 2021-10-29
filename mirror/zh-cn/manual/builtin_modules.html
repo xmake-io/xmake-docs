@@ -95,147 +95,7 @@
     print("hello xmake!")
 end)
 </code></pre>
-<p><p class="warn"><br>为了保证外层的描述域尽可能简洁、安全，一般不建议在这个域使用接口和模块操作api，因此大部分模块接口只能脚本域使用，来实现复杂功能。</br><br>当然少部分只读的内置接口还是可以在描述域使用的，具体见下表：<br></p>
-
-</p>
-<table>
-<thead>
-<tr>
-<th>接口</th>
-<th>描述</th>
-<th>可使用域</th>
-<th>支持版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#import">import</a></td>
-<td>导入扩展摸块</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#inherit">inherit</a></td>
-<td>导入并继承基类模块</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#try-catch-finally">try-catch-finally</a></td>
-<td>异常捕获</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#pairs">pairs</a></td>
-<td>用于遍历字典</td>
-<td>描述域、脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#ipairs">ipairs</a></td>
-<td>用于遍历数组</td>
-<td>描述域、脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#print">print</a></td>
-<td>换行打印终端日志</td>
-<td>描述域、脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#printf">printf</a></td>
-<td>无换行打印终端日志</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#cprint">cprint</a></td>
-<td>换行彩色打印终端日志</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#cprintf">cprintf</a></td>
-<td>无换行彩色打印终端日志</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#format">format</a></td>
-<td>格式化字符串</td>
-<td>描述域、脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#vformat">vformat</a></td>
-<td>格式化字符串，支持内置变量转义</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#raise">raise</a></td>
-<td>抛出异常中断程序</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#os">os</a></td>
-<td>系统操作模块</td>
-<td>部分只读操作描述域、脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#winos">winos</a></td>
-<td>windows 系统操作模块</td>
-<td>部分只读操作描述域、脚本域</td>
-<td>>= 2.3.9</td>
-</tr>
-<tr>
-<td><a href="#macos">macos</a></td>
-<td>macOS 系统操作模块</td>
-<td>部分只读操作描述域、脚本域</td>
-<td>>= 2.3.9</td>
-</tr>
-<tr>
-<td><a href="#io">io</a></td>
-<td>文件操作模块</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#path">path</a></td>
-<td>路径操作模块</td>
-<td>描述域、脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#table">table</a></td>
-<td>数组和字典操作模块</td>
-<td>描述域、脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#string">string</a></td>
-<td>字符串操作模块</td>
-<td>描述域、脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#coroutine">coroutine</a></td>
-<td>协程操作模块</td>
-<td>脚本域</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#find_packages">find_packages</a></td>
-<td>查找依赖包</td>
-<td>脚本域</td>
-<td>>= 2.2.5</td>
-</tr>
-</tbody>
-</table>
+<p>!> 为了保证外层的描述域尽可能简洁、安全，一般不建议在这个域使用接口和模块操作api，因此大部分模块接口只能脚本域使用，来实现复杂功能。</br><br>当然少部分只读的内置接口还是可以在描述域使用的，具体见下表：</p>
 <p>在描述域使用接口调用的实例如下，一般仅用于条件控制：</p>
 <pre><code class="lang-lua">-- 扫描当前xmake.lua目录下的所有子目录，以每个目录的名字定义一个task任务
 for _, taskname in ipairs(os.dirs("*"), path.basename) do
@@ -1663,6 +1523,20 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8)
 -- 提取第4-8个元素，间隔步长为2，结果：{4, 6, 8}
 table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 </code></pre>
+<h4 id="tablecontains">table.contains</h4>
+<ul>
+<li>判断 table 中包含指定的值</li>
+</ul>
+<pre><code class="lang-lua">if table.contains(t, 1, 2, 3) then
+    -- ...
+end
+</code></pre>
+<p>只要 table 中包含 1, 2, 3 里面任意一个值，则返回 true</p>
+<h4 id="tableorderkeys">table.orderkeys</h4>
+<ul>
+<li>获取有序的 key 列表</li>
+</ul>
+<p><code>table.keys(t)</code> 返回的 key 列表顺序是随机的，想要获取有序 key 列表，可以用这个接口。</p>
 <h3 id="string">string</h3>
 <p>字符串模块为lua原生自带的模块，具体使用见：<a href="https://www.lua.org/manual/5.1/manual.html#5.4">lua官方手册</a></p>
 <p>xmake中对其进行了扩展，增加了一些扩展接口：</p>

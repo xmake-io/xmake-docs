@@ -272,6 +272,56 @@ config.h
 | cxx_variadic_macros                  |
 | cxx_template_template_parameters     |
 
+v2.5.9 新增 c++17 特性检测：
+
+| 特性名                               |
+| ------------------------------------ |
+| cxx_aggregate_bases                  |
+| cxx_aligned_new                      |
+| cxx_capture_star_this                |
+| cxx_constexpr                        |
+| cxx_deduction_guides                 |
+| cxx_enumerator_attributes            |
+| cxx_fold_expressions                 |
+| cxx_guaranteed_copy_elision          |
+| cxx_hex_float                        |
+| cxx_if_constexpr                     |
+| cxx_inheriting_constructors          |
+| cxx_inline_variables                 |
+| cxx_namespace_attributes             |
+| cxx_noexcept_function_type           |
+| cxx_nontype_template_args            |
+| cxx_nontype_template_parameter_auto  |
+| cxx_range_based_for                  |
+| cxx_static_assert                    |
+| cxx_structured_bindings              |
+| cxx_template_template_args           |
+| cxx_variadic_using                   |
+
+v2.5.9 新增 c++20 特性检测：
+
+| 特性名                               |
+| ------------------------------------ |
+| cxx_aggregate_paren_init             |
+| cxx_char8_t                          |
+| cxx_concepts                         |
+| cxx_conditional_explicit             |
+| cxx_consteval                        |
+| cxx_constexpr                        |
+| cxx_constexpr_dynamic_alloc          |
+| cxx_constexpr_in_decltype            |
+| cxx_constinit                        |
+| cxx_deduction_guides                 |
+| cxx_designated_initializers          |
+| cxx_generic_lambdas                  |
+| cxx_impl_coroutine                   |
+| cxx_impl_destroying_delete           |
+| cxx_impl_three_way_comparison        |
+| cxx_init_captures                    |
+| cxx_modules                          |
+| cxx_nontype_template_args            |
+| cxx_using_enum                       |
+
 2.5.8 之后，新增对 cstd 和 c++ std 版本支持，相关 issues: [#1715](https://github.com/xmake-io/xmake/issues/1715)
 
 ```lua
