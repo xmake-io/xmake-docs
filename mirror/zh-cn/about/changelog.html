@@ -90,7 +90,31 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v258">v2.5.8</h2>
+    <h2 id="v259">v2.5.9</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1736">#1736</a>: 支持 wasi-sdk 工具链</li>
+<li>支持 Lua 5.4 运行时</li>
+<li>添加 gcc-8, gcc-9, gcc-10, gcc-11 工具链</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1632">#1623</a>: 支持 find_package 从 cmake 查找包</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1747">#1747</a>: 添加 <code>set_kind("headeronly")</code> 更好的处理 headeronly 库的安装</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1019">#1019</a>: 支持 Unity build</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1438">#1438</a>: 增加 <code>xmake l cli.amalgamate</code> 命令支持代码合并</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1756">#1765</a>: 支持 nim 语言</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1762">#1762</a>: 为 <code>xrepo env</code> 管理和切换指定的环境配置</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1767">#1767</a>: 支持 Circle 编译器</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1753">#1753</a>: 支持 Keil/MDK 的 armcc/armclang 工具链</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1774">#1774</a>: 添加 table.contains api</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1735">#1735</a>: 添加自定义命令到 cmake 生成器</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1781">#1781</a>: 改进 get.sh 安装脚本支持 nixos</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1528">#1528</a>: 检测 c++17/20 特性</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1729">#1729</a>: 改进 C++20 modules 对 clang/gcc/msvc 的支持，支持模块间依赖编译和并行优化</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1779">#1779</a>: 改进 ml.exe/x86，移除内置的 <code>-Gd</code> 选项</li>
+</ul>
+<h2 id="v258">v2.5.8</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/388">#388</a>: Pascal 语言支持，可以使用 fpc 来编译 free pascal</li>

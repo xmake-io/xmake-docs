@@ -1,3 +1,27 @@
+## v2.5.9
+
+### 新特性
+
+* [#1736](https://github.com/xmake-io/xmake/issues/1736): 支持 wasi-sdk 工具链
+* 支持 Lua 5.4 运行时
+* 添加 gcc-8, gcc-9, gcc-10, gcc-11 工具链
+* [#1623](https://github.com/xmake-io/xmake/issues/1632): 支持 find_package 从 cmake 查找包
+* [#1747](https://github.com/xmake-io/xmake/issues/1747): 添加 `set_kind("headeronly")` 更好的处理 headeronly 库的安装
+* [#1019](https://github.com/xmake-io/xmake/issues/1019): 支持 Unity build
+* [#1438](https://github.com/xmake-io/xmake/issues/1438): 增加 `xmake l cli.amalgamate` 命令支持代码合并
+* [#1765](https://github.com/xmake-io/xmake/issues/1756): 支持 nim 语言
+* [#1762](https://github.com/xmake-io/xmake/issues/1762): 为 `xrepo env` 管理和切换指定的环境配置
+* [#1767](https://github.com/xmake-io/xmake/issues/1767): 支持 Circle 编译器
+* [#1753](https://github.com/xmake-io/xmake/issues/1753): 支持 Keil/MDK 的 armcc/armclang 工具链
+* [#1774](https://github.com/xmake-io/xmake/issues/1774): 添加 table.contains api
+* [#1735](https://github.com/xmake-io/xmake/issues/1735): 添加自定义命令到 cmake 生成器
+* [#1781](https://github.com/xmake-io/xmake/issues/1781): 改进 get.sh 安装脚本支持 nixos
+
+### 改进
+
+* [#1528](https://github.com/xmake-io/xmake/issues/1528): 检测 c++17/20 特性
+* [#1729](https://github.com/xmake-io/xmake/issues/1729): 改进 C++20 modules 对 clang/gcc/msvc 的支持，支持模块间依赖编译和并行优化
+* [#1779](https://github.com/xmake-io/xmake/issues/1779): 改进 ml.exe/x86，移除内置的 `-Gd` 选项
 
 ## v2.5.8
 

@@ -1,3 +1,27 @@
+## v2.5.9
+
+### New features
+
+* [#1736](https://github.com/xmake-io/xmake/issues/1736): Support wasi-sdk toolchain
+* Support Lua 5.4 runtime
+* Add gcc-8, gcc-9, gcc-10, gcc-11 toolchains
+* [#1623](https://github.com/xmake-io/xmake/issues/1632): Support find_package from cmake
+* [#1747](https://github.com/xmake-io/xmake/issues/1747): Add `set_kind("headeronly")` for target to install files for headeronly library
+* [#1019](https://github.com/xmake-io/xmake/issues/1019): Support Unity build
+* [#1438](https://github.com/xmake-io/xmake/issues/1438): Support code amalgamation, `xmake l cli.amalgamate`
+* [#1765](https://github.com/xmake-io/xmake/issues/1756): Support nim language
+* [#1762](https://github.com/xmake-io/xmake/issues/1762): Manage and switch the given package envs for `xrepo env`
+* [#1767](https://github.com/xmake-io/xmake/issues/1767): Support Circle compiler
+* [#1753](https://github.com/xmake-io/xmake/issues/1753): Support armcc/armclang toolchains for Keil/MDK
+* [#1774](https://github.com/xmake-io/xmake/issues/1774): Add table.contains api
+* [#1735](https://github.com/xmake-io/xmake/issues/1735): Add custom command in cmake generator
+
+### Changes
+
+* [#1528](https://github.com/xmake-io/xmake/issues/1528): Check c++17/20 features
+* [#1729](https://github.com/xmake-io/xmake/issues/1729): Improve C++20 modules for clang/gcc/msvc, support inter-module dependency compilation and parallel optimization
+* [#1779](https://github.com/xmake-io/xmake/issues/1779): Remove builtin `-Gd` for ml.exe/x86
+* [#1781](https://github.com/xmake-io/xmake/issues/1781): Improve get.sh installation script to support nixos
 
 ## v2.5.8
 
