@@ -234,11 +234,11 @@ add_requires("tbox dev")
 <p>!> Of course, the premise is that in the definition of this package, there is a judgment and processing of <code>package:config("shared")</code>. In the official xmake-repo repository, it is usually strictly differentiated and supported.</p>
 <h5 id="disablepicsupport">Disable pic support</h5>
 <p>The linux packages installed by default are compiled with pic enabled, which is very useful for relying on static libraries in dynamic libraries, but if you want to disable pic, it is also possible.</p>
-<pre><code class="lang-lua">add_requires("zlib", {config = {pic = false}})
+<pre><code class="lang-lua">add_requires("zlib", {configs = {pic = false}})
 </code></pre>
 <h5 id="setvsruntime">Set vs runtime</h5>
 <p>The windows package installed by default is compiled with msvc/MT, if you want to switch to MD, you can configure it as follows:</p>
-<pre><code class="lang-lua">add_requires("zlib", {config = {vs_runtime = "MD"}})
+<pre><code class="lang-lua">add_requires("zlib", {configs = {vs_runtime = "MD"}})
 </code></pre>
 <p>In addition, it supports four options: MT, MTd, MD, and MDd.</p>
 <p>If there are many dependent packages, it is very troublesome to switch each configuration again. We can also switch through the <code>set_runtimes</code> global setting to take effect for all dependent packages.</p>

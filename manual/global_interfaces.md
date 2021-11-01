@@ -253,7 +253,7 @@ add_requires("zlib", {configs = {shared = true}})
 The linux packages installed by default are compiled with pic enabled, which is very useful for relying on static libraries in dynamic libraries, but if you want to disable pic, it is also possible.
 
 ```lua
-add_requires("zlib", {config = {pic = false}})
+add_requires("zlib", {configs = {pic = false}})
 ```
 
 ##### Set vs runtime
@@ -261,7 +261,7 @@ add_requires("zlib", {config = {pic = false}})
 The windows package installed by default is compiled with msvc/MT, if you want to switch to MD, you can configure it as follows:
 
 ```lua
-add_requires("zlib", {config = {vs_runtime = "MD"}})
+add_requires("zlib", {configs = {vs_runtime = "MD"}})
 ```
 
 In addition, it supports four options: MT, MTd, MD, and MDd.
