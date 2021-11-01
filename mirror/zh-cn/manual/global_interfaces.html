@@ -239,11 +239,11 @@ add_requires("tbox dev")
 <p>!> 当然，前提是这个包的定义里面，有对 <code>package:config("shared")</code> 判断处理，官方 xmake-repo 仓库里面，通常都是严格区分支持的。</p>
 <h5 id="pic">禁用 pic 支持</h5>
 <p>默认安装的 linux 包，都是开启 pic 编译的，这对于动态库中依赖静态库非常有用，但如果想禁用 pic，也是可以的。</p>
-<pre><code class="lang-lua">add_requires("zlib", {config = {pic = false}})
+<pre><code class="lang-lua">add_requires("zlib", {configs = {pic = false}})
 </code></pre>
 <h5 id="vsruntime">vs runtime 设置</h5>
 <p>默认安装的 windows 包是采用 msvc/MT 编译的，如果要切换到 MD，可以配置如下：</p>
-<pre><code class="lang-lua">add_requires("zlib", {config = {vs_runtime = "MD"}})
+<pre><code class="lang-lua">add_requires("zlib", {configs = {vs_runtime = "MD"}})
 </code></pre>
 <p>另外，还支持：MT, MTd, MD, MDd 四种选项。</p>
 <p>如果依赖的包很多，每个配置切换一遍非常的麻烦，我们也可以通过 <code>set_runtimes</code> 全局设置切换，对所有依赖包生效。</p>

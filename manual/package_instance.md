@@ -331,7 +331,7 @@ version:patch()
 
 ```lua
 -- if configurations are set like so
-add_require("example", {config = {enable_x = true, value_y = 6}})
+add_require("example", {configs = {enable_x = true, value_y = 6}})
 -- these values can be retrieved like so
 -- returns true
 package:config("enable_x")

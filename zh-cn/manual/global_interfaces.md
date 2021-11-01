@@ -266,7 +266,7 @@ add_requires("zlib", {configs = {shared = true}})
 默认安装的 linux 包，都是开启 pic 编译的，这对于动态库中依赖静态库非常有用，但如果想禁用 pic，也是可以的。
 
 ```lua
-add_requires("zlib", {config = {pic = false}})
+add_requires("zlib", {configs = {pic = false}})
 ```
 
 ##### vs runtime 设置
@@ -274,7 +274,7 @@ add_requires("zlib", {config = {pic = false}})
 默认安装的 windows 包是采用 msvc/MT 编译的，如果要切换到 MD，可以配置如下：
 
 ```lua
-add_requires("zlib", {config = {vs_runtime = "MD"}})
+add_requires("zlib", {configs = {vs_runtime = "MD"}})
 ```
 
 另外，还支持：MT, MTd, MD, MDd 四种选项。
