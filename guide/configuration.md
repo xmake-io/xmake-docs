@@ -835,3 +835,204 @@ $ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
 $ xmake f --menu --import=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
 ```
+
+## Environment variables
+
+We can execute the following command to get all the environment variables used by xmake and the currently set values.
+
+```console
+$ xmake show -l envs
+XMAKE_RAMDIR Set the ramdisk directory.
+                        <empty>
+XMAKE_GLOBALDIR Set the global config directory of xmake.
+                        /Users/ruki/.xmake
+XMAKE_ROOT Allow xmake to run under root.
+                        <empty>
+XMAKE_COLORTERM Set the color terminal environment.
+                        <empty>
+XMAKE_PKG_INSTALLDIR Set the install directory of packages.
+                        <empty>
+XMAKE_TMPDIR Set the temporary directory.
+                        /var/folders/vn/ppcrrcm911v8b4510klg9xw80000gn/T/.xmake501/211104
+XMAKE_PKG_CACHEDIR Set the cache directory of packages.
+                        <empty>
+XMAKE_PROGRAM_DIR Set the program scripts directory of xmake.
+                        /Users/ruki/.local/share/xmake
+XMAKE_PROFILE Start profiler, e.g. perf, trace.
+                        <empty>
+XMAKE_RCFILES Set the runtime configuration files.
+
+XMAKE_CONFIGDIR Set the local config directory of project.
+                        /Users/ruki/projects/personal/xmake-docs/.xmake/macosx/x86_64
+XMAKE_LOGFILE Set the log output file path.
+                        <empty>
+```
+
+### XMAKE_RAMDIR
+
+- Set the ramdisk directory path
+
+The ramdisk directory is the directory location of the memory file system. Usually the `os.tmpdir()` interface will use the temporary files used by xmake. If the user sets the ramdisk path, it will be stored in this first to improve the overall compilation speed.
+
+### XMAKE_TMPDIR
+
+- Set the user's temporary directory
+
+By default, xmake will use `/tmp/.xmake` and `%TEMP%/.xmake`. Of course, users can modify the default path through this variable.
+
+### XMAKE_GLOBALDIR
+
+- Set the root directory of the global configuration file
+
+That is, the storage directory of the global configuration of `xmake g/global`, as well as other global files such as installation packages, caches, etc., will be stored in this directory by default.
+
+The default path is: `~/.xmake`.
+
+### XMAKE_ROOT
+
+-Allow users to run in root mode
+
+Usually xmake is forbidden to run under root by default, which is very insecure. But if the user has to run under root, he can also set this variable to force it on.
+
+```console
+export XMAKE_ROOT=y
+```
+
+### XMAKE_COLORTERM
+
+- Set the color output of Terminal
+
+Currently, these values ​​can be set:
+
+| Value | Description |
+| --- | --- |
+| nocolor | Disable color output |
+| color8 | 8-color output support |
+| color256 | 256 color output support |
+| truecolor | True color output support |
+
+Generally, users don't need to set them, xmake will automatically detect the color range supported by the user terminal. If the user doesn't want to output colors, they can set nocolor to disable them globally.
+
+Or use `xmake g --theme=plain` to disable it globally.
+
+### XMAKE_PKG_INSTALLDIR
+
+- Set the installation root directory of the dependent package
+
+The default global directory for xmake's remote package installation is `~/.xmake/packages`, but users can also set this variable to modify it individually.
+
+### XMAKE_PKG_CACHEDIR Set the cache directory of packages.
+
+- Set the cache directory of dependent packages
+
+The default path is in the `~/.xmake/cache` directory, which stores various cache files during the package installation process, which takes up more storage space, and the user can also set it separately.
+
+Of course, xmake will automatically clean up all cache files of the previous month every month.
+
+### XMAKE_PROGRAM_DIR
+
+- Set the script directory of xmake
+
+All lua scripts of xmake are installed with the installer. By default, they are in the installation directory. However, if you want to switch to the script directory you downloaded to facilitate local modification and debugging, you can set the secondary variable.
+
+If you want to view the script directory currently used by xmake, you can execute:
+
+```console
+$ xmake l os.programdir
+/Users/ruki/.local/share/xmake
+```
+
+### XMAKE_PROFILE
+
+-Turn on performance analysis
+
+This is only open to the developers of xmake, and is used to analyze the time-consuming situation of xmake running and track the calling process.
+
+It has two modes, a performance analysis mode, which displays the time-consuming order of each function.
+
+```console
+$ XMAKE_PROFILE=perf xmake
+[25%]: ccache compiling.release src/main.cpp
+[50%]: linking.release test
+[100%]: build ok!
+ 0.238, 97.93%, 1, runloop: @programdir/core/base/scheduler.lua: 805
+ 0.180, 74.04%, 25, _resume: [C]: -1
+ 0.015, 6.34%, 50, _co_groups_resume: @programdir/core/base/scheduler.lua: 299
+ 0.011, 4.37%, 48, wait: @programdir/core/base/poller.lua: 111
+ 0.004, 1.70%, 62, status: @programdir/core/base/scheduler.lua: 71
+ 0.004, 1.53%, 38, is_dead: @programdir/core/base/scheduler.lua: 76
+ 0.003, 1.44%, 50, next: @programdir/core/base/timer.lua: 74
+ 0.003, 1.33%, 48, delay: @programdir/core/base/timer.lua: 60
+ 0.002, 1.02%, 24, is_suspended: @programdir/core/base/scheduler.lua: 86
+```
+
+The other is to track the running process of xmake:
+
+```console
+$ XMAKE_PROFILE=trace xmake
+func: @programdir/core/base/scheduler.lua: 457
+is_suspended: @programdir/core/base/scheduler.lua: 86
+status: @programdir/core/base/scheduler.lua: 71
+thread: @programdir/core/base/scheduler.lua: 66
+thread: @programdir/core/base/scheduler.lua: 66
+length: @programdir/core/base/heap.lua: 120
+```
+
+### XMAKE_RCFILES
+
+- Set up a global configuration file
+
+We can set up some xmakerc.lua global configuration files, and introduce them globally when users compile the project, such as global introduction of some user-defined help scripts, tool chains and so on.
+
+```console
+$ export XMAKE_RCFILES=xmakerc.lua
+$ xmake
+```
+
+If not set, the default path is: `~/.xmake/xmakerc.lua`.
+
+### XMAKE_CONFIGDIR
+
+- Set local project configuration directory
+
+The local compilation configuration of each project will be stored in the `.xmake` path in the root directory of the current project by default, and then differentiated according to different platforms and architectures, for example:
+
+```console
+.xmake/macosx/x86_64
+```
+
+If we don't want to store it in the root directory of the project, we can also set it to other paths ourselves, such as the build directory and so on.
+
+### XMAKE_LOGFILE
+
+- Set the log file path
+
+By default, xmake will echo the output to the terminal. We can turn on the automatic log storage to the specified file by setting this path, but it will not affect the normal echo output of the terminal.
+
+### XMAKE_STATS
+
+-Enable or disable user statistics
+
+Since xmake is still in the early stages of development, we need to know the approximate user growth in order to provide us with the motivation to continue to update xmake.
+
+Therefore, xmake defaults to the first project build every day, and it will automatically git clone an empty warehouse in the background process: https://github.com/xmake-io/xmake-stats
+
+Then borrow the Traffic statistics chart provided by github itself to get the approximate number of users.
+
+For each project, we will only count once a day, and will not disclose any user privacy, because there is only one additional git clone operation. In addition, we cloned an empty warehouse, which will not consume much user traffic.
+
+Of course, not every user wants to do this, user has right to disable this behavior, we only need to set:
+
+```console
+export XMAKE_STATS=n
+```
+
+It can be completely disabled, and we will also automatically disable this behavior on ci.
+
+When will it be removed?
+
+This behavior will not exist forever. When xmake has enough users, or there are other better statistical methods, we will consider removing the relevant statistical code.
+
+Of course, if a lot of user feedback is unwilling to accept it, we will also consider removing it.
+
+For related issues about this, see: [#1795](https://github.com/xmake-io/xmake/issues/1795)

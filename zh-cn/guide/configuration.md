@@ -860,3 +860,204 @@ $ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
 $ xmake f --menu --import=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
 ```
+
+## 环境变量
+
+我们可以执行下面的命令，获取所有 xmake 用到的环境变量，以及当前被设置的值。
+
+```console
+$ xmake show -l envs
+XMAKE_RAMDIR            Set the ramdisk directory.
+                        <empty>
+XMAKE_GLOBALDIR         Set the global config directory of xmake.
+                        /Users/ruki/.xmake
+XMAKE_ROOT              Allow xmake to run under root.
+                        <empty>
+XMAKE_COLORTERM         Set the color terminal environment.
+                        <empty>
+XMAKE_PKG_INSTALLDIR    Set the install directory of packages.
+                        <empty>
+XMAKE_TMPDIR            Set the temporary directory.
+                        /var/folders/vn/ppcrrcm911v8b4510klg9xw80000gn/T/.xmake501/211104
+XMAKE_PKG_CACHEDIR      Set the cache directory of packages.
+                        <empty>
+XMAKE_PROGRAM_DIR       Set the program scripts directory of xmake.
+                        /Users/ruki/.local/share/xmake
+XMAKE_PROFILE           Start profiler, e.g. perf, trace.
+                        <empty>
+XMAKE_RCFILES           Set the runtime configuration files.
+
+XMAKE_CONFIGDIR         Set the local config directory of project.
+                        /Users/ruki/projects/personal/xmake-docs/.xmake/macosx/x86_64
+XMAKE_LOGFILE           Set the log output file path.
+                        <empty>
+```
+
+### XMAKE_RAMDIR
+
+- 设置 ramdisk 目录路径
+
+ramdisk 目录是内存文件系统的目录位置，通常 `os.tmpdir()` 接口会用到，xmake 内部使用的临时文件，如果用户设置 ramdisk 路径，则会优先存储在这个上面，提升整体编译速度。
+
+### XMAKE_TMPDIR
+
+- 设置用户的临时目录
+
+默认 xmake 会使用 `/tmp/.xmake` 和 `%TEMP%/.xmake`，当然用户可以通过这个变量去修改默认路径。
+
+### XMAKE_GLOBALDIR
+
+- 设置全局配置文件根目录
+
+也就是 `xmake g/global` 全局配置的存储目录，还有安装包，缓存等其他全局文件，默认都会存储在这个目录下。
+
+默认路径为：`~/.xmake`。
+
+### XMAKE_ROOT
+
+- 允许用户在 root 模式下运行
+
+通常 xmake 是默认禁止在 root 下运行，这非常不安全。但是如果用户非要在 root 下运行，也可以设置这个变量，强制开启。
+
+```console
+export XMAKE_ROOT=y
+```
+
+### XMAKE_COLORTERM
+
+- 设置 Terminal 的色彩输出
+
+目前可以设置这几个值：
+
+| 值        | 描述           |
+| ---       | ---            |
+| nocolor   | 禁用彩色输出   |
+| color8    | 8 色输出支持   |
+| color256  | 256 色输出支持 |
+| truecolor | 真彩色输出支持 |
+
+通常，用户不需要设置它们，xmake 会自动探测用户终端支持的色彩范围，如果用户不想输出色彩，可以设置 nocolor 来全局禁用。
+
+或者用 `xmake g --theme=plain` 也可以全局禁用。
+
+### XMAKE_PKG_INSTALLDIR
+
+- 设置依赖包的安装根目录
+
+xmake 的远程包安装的全局目录默认是 `~/.xmake/packages`，但是用户也可以设置这个变量，去单独修改它。
+
+### XMAKE_PKG_CACHEDIR      Set the cache directory of packages.
+
+- 设置依赖包的缓存目录
+
+默认路径在 `~/.xmake/cache` 目录，存储包安装过程中的各种缓存文件，比较占存储空间，用户也可以单独设置它。
+
+当然，xmake 在每个月都会自动清理上个月的所有缓存文件。
+
+### XMAKE_PROGRAM_DIR
+
+- 设置 xmake 的脚本目录
+
+xmake 的所有 lua 脚本随安装程序一起安装，默认都在安装目录下，但是如果想要切到自己下载的脚本目录下，方便本地修改调试，可以设置次变量。
+
+如果要查看当前 xmake 在使用的脚本目录，可以执行：
+
+```console
+$ xmake l os.programdir
+/Users/ruki/.local/share/xmake
+```
+
+### XMAKE_PROFILE
+
+- 开启性能分析
+
+这仅仅对 xmake 的开发者开放，用于分析 xmake 运行过程中的耗时情况，追踪调用过程。
+
+它有两种模式，一种性能分析模式，将每个函数的耗时排序显示出来。
+
+```console
+$ XMAKE_PROFILE=perf xmake
+[ 25%]: ccache compiling.release src/main.cpp
+[ 50%]: linking.release test
+[100%]: build ok!
+ 0.238,  97.93%,       1, runloop                       : @programdir/core/base/scheduler.lua: 805
+ 0.180,  74.04%,      25, _resume                       : [C]: -1
+ 0.015,   6.34%,      50, _co_groups_resume             : @programdir/core/base/scheduler.lua: 299
+ 0.011,   4.37%,      48, wait                          : @programdir/core/base/poller.lua: 111
+ 0.004,   1.70%,      62, status                        : @programdir/core/base/scheduler.lua: 71
+ 0.004,   1.53%,      38, is_dead                       : @programdir/core/base/scheduler.lua: 76
+ 0.003,   1.44%,      50, next                          : @programdir/core/base/timer.lua: 74
+ 0.003,   1.33%,      48, delay                         : @programdir/core/base/timer.lua: 60
+ 0.002,   1.02%,      24, is_suspended                  : @programdir/core/base/scheduler.lua: 86
+```
+
+另外一种是追踪 xmake 的运行过程：
+
+```console
+$ XMAKE_PROFILE=trace xmake
+func                          : @programdir/core/base/scheduler.lua: 457
+is_suspended                  : @programdir/core/base/scheduler.lua: 86
+status                        : @programdir/core/base/scheduler.lua: 71
+thread                        : @programdir/core/base/scheduler.lua: 66
+thread                        : @programdir/core/base/scheduler.lua: 66
+length                        : @programdir/core/base/heap.lua: 120
+```
+
+### XMAKE_RCFILES
+
+- 设置全局配置文件
+
+我们可以设置一些 xmakerc.lua 全局配置文件，在用户编译项目的时候，全局引入它们，比如全局引入一些用户自定义的帮助脚本，工具链什么的。
+
+```console
+$ export XMAKE_RCFILES=xmakerc.lua
+$ xmake
+```
+
+如果不设置，默认路径为：`~/.xmake/xmakerc.lua`。
+
+### XMAKE_CONFIGDIR
+
+- 设置本地工程配置目录
+
+每个项目的本地编译配置，默认会存储在当前项目根目录的 `.xmake` 路径下，然后根据不同的平台，架构区分，例如：
+
+```console
+.xmake/macosx/x86_64
+```
+
+我们如果不想存储在项目根目录，也可以自己设置到其他路径，比如 build 目录下等等。
+
+### XMAKE_LOGFILE
+
+- 设置日志文件路径
+
+默认 xmake 会回显输出到终端，我们在可以通过设置这个路径，开启日志自动存储到指定文件，但它不会影响终端的正常回显输出。
+
+### XMAKE_STATS
+
+- 开启或禁用用户量统计
+
+由于目前 xmake 还在发展初期，我们需要知道大概的用户量增长情况，以便于提供我们持续更新 xmake 的动力。
+
+因此 xmake 默认每天的第一次项目构建，会在后台进程自动 git clone 一个空仓库：https://github.com/xmake-io/xmake-stats
+
+然后借用 github 自身提供的 Traffic 统计图表来获取大概的用户量。
+
+对于每个项目，每天只会统计一次，并且不会泄露任何用户隐私，因为仅仅只是多了一次额外的 git clone 操作，另外我们 clone 的是一个空仓库，不会耗费用户多少流量。
+
+当然，并不是每个用户都希望这么做，用户完全有权利去禁用这个行为，我们只需要设置：
+
+```console
+export XMAKE_STATS=n
+```
+
+就可以完全禁用它，另外我们也会在 ci 上自动禁用这个行为。
+
+什么时候移除它？
+
+这个行为并不会永久存在，等到 xmake 有了足够多的用户量，或者有了其他更好的统计方式，我们会考虑移除相关统计代码。
+
+当然，如果有非常多的用户反馈不愿意接受它，我们也会考虑移除它。
+
+关于这个的相关 issues 见：[#1795](https://github.com/xmake-io/xmake/issues/1795)
