@@ -106,251 +106,7 @@ option("test")
 option("test2")
     -- ...
 </code></pre>
-<p><p class="tip"><br><code>option</code>域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用<a href="#option_end">option_end</a>接口。<br></p>
-
-
-</p>
-<table>
-<thead>
-<tr>
-<th>接口</th>
-<th>描述</th>
-<th>支持版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#option">option</a></td>
-<td>定义选项</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#option_end">option_end</a></td>
-<td>结束定义选项</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="#optionadd_deps">add_deps</a></td>
-<td>添加选项依赖</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#optionbefore_check">before_check</a></td>
-<td>选项检测之前执行此脚本</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#optionon_check">on_check</a></td>
-<td>自定义选项检测脚本</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#optionafter_check">after_check</a></td>
-<td>选项检测之后执行此脚本</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#optionset_values">set_values</a></td>
-<td>设置选项值列表</td>
-<td>>= 2.1.9</td>
-</tr>
-<tr>
-<td><a href="#optionset_default">set_default</a></td>
-<td>设置默认值</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionset_showmenu">set_showmenu</a></td>
-<td>设置是否启用菜单显示</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionset_category">set_category</a></td>
-<td>设置选项分类，仅用于菜单显示</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionset_description">set_description</a></td>
-<td>设置菜单显示描述</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionadd_links">add_links</a></td>
-<td>添加链接库检测</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionadd_linkdirs">add_linkdirs</a></td>
-<td>添加链接库检测需要的搜索目录</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionadd_rpathdirs">add_rpathdirs</a></td>
-<td>添加运行时候动态链接库搜索目录</td>
-<td>>= 2.1.3</td>
-</tr>
-<tr>
-<td><a href="#optionadd_cincludes">add_cincludes</a></td>
-<td>添加c头文件检测</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionadd_cxxincludes">add_cxxincludes</a></td>
-<td>添加c++头文件检测</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionadd_ctypes">add_ctypes</a></td>
-<td>添加c类型检测</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionadd_cxxtypes">add_cxxtypes</a></td>
-<td>添加c++类型检测</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="#optionadd_csnippets">add_csnippets</a></td>
-<td>添加c代码片段检测</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#optionadd_cxxsnippets">add_cxxsnippets</a></td>
-<td>添加c++代码片段检测</td>
-<td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetset_warnings">set_warnings</a></td>
-<td>设置警告级别</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetset_optimize">set_optimize</a></td>
-<td>设置优化级别</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetset_languages">set_languages</a></td>
-<td>设置代码语言标准</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_includedirs">add_includedirs</a></td>
-<td>添加头文件搜索目录</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_defines">add_defines</a></td>
-<td>添加宏定义</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_undefines">add_undefines</a></td>
-<td>取消宏定义</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_cflags">add_cflags</a></td>
-<td>添加c编译选项</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_cxflags">add_cxflags</a></td>
-<td>添加c/c++编译选项</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_cxxflags">add_cxxflags</a></td>
-<td>添加c++编译选项</td>
-<td>>= 1.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_mflags">add_mflags</a></td>
-<td>添加objc编译选项</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_mxflags">add_mxflags</a></td>
-<td>添加objc/objc++编译选项</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_mxxflags">add_mxxflags</a></td>
-<td>添加objc++编译选项</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_scflags">add_scflags</a></td>
-<td>添加swift编译选项</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_asflags">add_asflags</a></td>
-<td>添加汇编编译选项</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_gcflags">add_gcflags</a></td>
-<td>添加go编译选项</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_dcflags">add_dcflags</a></td>
-<td>添加dlang编译选项</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_rcflags">add_rcflags</a></td>
-<td>添加rust编译选项</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_cuflags">add_cuflags</a></td>
-<td>添加cuda编译选项</td>
-<td>>= 2.2.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_culdflags">add_culdflags</a></td>
-<td>添加cuda设备链接选项</td>
-<td>>= 2.2.7</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_ldflags">add_ldflags</a></td>
-<td>添加链接选项</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_arflags">add_arflags</a></td>
-<td>添加静态库归档选项</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_shflags">add_shflags</a></td>
-<td>添加动态库链接选项</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_languages">add_languages</a></td>
-<td>添加语言标准</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_vectorexts">add_vectorexts</a></td>
-<td>添加向量扩展指令</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_frameworks">add_frameworks</a></td>
-<td>添加链接框架</td>
-<td>>= 2.1.1</td>
-</tr>
-<tr>
-<td><a href="/mirror/zh-cn/manual/project_target.html#targetadd_frameworkdirs">add_frameworkdirs</a></td>
-<td>添加链接框架</td>
-<td>>= 2.1.5</td>
-</tr>
-</tbody>
-</table>
+<p>!> <code>option</code>域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用<a href="#option_end">option_end</a>接口。</p>
 <h3 id="option">option</h3>
 <h4 id="">定义选项</h4>
 <p>定义和设置选项开关，可用于自定义编译配置选项、开关设置。</p>
@@ -700,6 +456,33 @@ target("test")
     -- xxx
 end
 </code></pre>
+<h3 id="optionadd_cfuncs">option:add_cfuncs</h3>
+<h4 id="c">添加c库函数检测</h4>
+<pre><code class="lang-lua">option("setjmp")
+    set_default(false)
+    add_cincludes("setjmp.h")
+    add_cfuncs("sigsetjmp", "setjmp")
+    add_defines("HAVE_SETJMP")
+
+target("test")
+    add_options("setjmp")
+</code></pre>
+<p>此选项检测是否存在<code>setjmp</code>的一些接口，如果检测通过那么<code>test</code> 目标程序将会加上 <code>HAVE_SETJMP</code> 的宏定义。</p>
+<p>里面的函数片段支持下面几种语法格式：</p>
+<pre><code class="lang-lua">-- 单纯检测函数地址是否存在，内部会尝试去它的地址来判断
+sigsetjmp
+
+-- 如果有些函数是宏定义 wrap 的，可以通过这种方式绕通过检测
+sigsetjmp((void*)0, 0)
+
+-- 也可以指定一个完整函数语句，例如：funcname{codebody}
+sigsetjmp{sigsetjmp((void*)0, 0);}
+sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}
+</code></pre>
+<p>注意，检测的函数通常需要附带 <code>add_cincludes</code> 确保函数能够被正常 include 进来，否则检测会失败。</p>
+<h3 id="optionadd_cxxfuncs">option:add_cxxfuncs</h3>
+<h4 id="c">添加c++库函数检测</h4>
+<p>用法跟 <a href="#optionadd_cxxfuncs">option:add_cfuncs</a> 一致。</p>
 </article>
 </body>
 </html>

@@ -1,10 +1,8 @@
 
 Define and set option switches. Each `option` corresponds to an option that can be used to customize the build configuration options and switch settings.
 
-<p class="tip">
-All domain interfaces except `target`, such as `option`, `task`, etc., cannot be placed in the outer global scope by default (unless some interfaces are shared with the target).
+!> All domain interfaces except `target`, such as `option`, `task`, etc., cannot be placed in the outer global scope by default (unless some interfaces are shared with the target).
 If you want to set the value to affect all options such as `option`, `task`, you can set it by anonymous global domain.
-</p>
 
 E.g:
 
@@ -21,59 +19,7 @@ option("test2")
     -- ...
 ```
 
-<p class="tip">
-The `option` field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the [option_end](#option_end) interface.
-</p>
-
-
-| Interface                                             | Description                                       | Supported Versions |
-| ----------------------------------------------------- | --------------------------------------------      | --------           |
-| [option](#option)                                     | Define Options                                    | >= 2.0.1           |
-| [option_end](#option_end)                             | End Definition Options                            | >= 2.1.1           |
-| [add_deps](#optionadd_deps)                           | Add Options Dependencies                          | >= 2.1.5           |
-| [before_check](#optionbefore_check)                   | Execute this script before option detection       | >= 2.1.5           |
-| [on_check](#optionon_check)                           | Custom Option Detection Script                    | >= 2.1.5           |
-| [after_check](#optionafter_check)                     | Execute this script after option detection        | >= 2.1.5           |
-| [set_values](#optionset_values)                       | Setting the list of option values ​​    | >= 2.1.9           |
-| [set_default](#optionset_default)                     | Set Defaults                                      | >= 2.0.1           |
-| [set_showmenu](#optionset_showmenu)                   | Set whether to enable menu display                | >= 1.0.1           |
-| [set_category](#optionset_category)                   | Set option categories, only for menu display      | >= 1.0.1           |
-| [set_description](#optionset_description)             | Settings Menu Display Description                 | >= 1.0.1           |
-| [add_links](#optionadd_links)                         | Add Linked Library Detection                      | >= 1.0.1           |
-| [add_linkdirs](#optionadd_linkdirs)                   | Add a search directory for link library detection | >= 1.0.1           |
-| [add_rpathdirs](#optionadd_rpathdirs)                 | Add runtime dynamic link library search directory | >= 2.1.3           |
-| [add_cincludes](#optionadd_cincludes)                 | Add c header file detection                       | >= 1.0.1           |
-| [add_cxxincludes](#optionadd_cxxincludes)             | Add c++ header file detection                     | >= 1.0.1           |
-| [add_ctypes](#optionadd_ctypes)                       | Add c type detection                              | >= 1.0.1           |
-| [add_cxxtypes](#optionadd_cxxtypes)                   | Add c++ type detection                            | >= 1.0.1           |
-| [add_csnippets](#optionadd_csnippets)                   | Add c-code snippets detection                     | >= 2.1.5           |
-| [add_cxxsnippets](#optionadd_cxxsnippets)               | Add c++ code snippet detection                    | >= 2.1.5           |
-| [set_warnings](/manual/project_target?id=targetset_warnings)                   | Setting the warning level                         | >= 1.0.1           |
-| [set_optimize](/manual/project_target?id=targetset_optimize)                   | Setting the optimization level                    | >= 1.0.1           |
-| [set_languages](/manual/project_target?id=targetset_languages)                 | Setting the Code Language Standard                | >= 1.0.1           |
-| [add_includedirs](/manual/project_target?id=targetadd_includedirs)             | Add Header Search Directory                       | >= 1.0.1           |
-| [add_defines](/manual/project_target?id=targetadd_defines)                     | Add Macro Definition                              | >= 1.0.1           |
-| [add_undefines](/manual/project_target?id=targetadd_undefines)                 | Cancel Macro Definition                           | >= 1.0.1           |
-| [add_cflags](/manual/project_target?id=targetadd_cflags)                       | Add c Compile Options                             | >= 1.0.1           |
-| [add_cxflags](/manual/project_target?id=targetadd_cxflags)                     | Add c/c++ Compile Options                         | >= 1.0.1           |
-| [add_cxxflags](/manual/project_target?id=targetadd_cxxflags)                   | Add c++ Compile Options                           | >= 1.0.1           |
-| [add_mflags](/manual/project_target?id=targetadd_mflags)                       | Add objc compile options                          | >= 2.0.1           |
-| [add_mxflags](/manual/project_target?id=targetadd_mxflags)                     | Add objc/objc++ Compile Options                   | >= 2.0.1           |
-| [add_mxxflags](/manual/project_target?id=targetadd_mxxflags)                   | Add objc++ Compile Options                        | >= 2.0.1           |
-| [add_scflags](/manual/project_target?id=targetadd_scflags)                     | Add swift compile options                         | >= 2.1.1           |
-| [add_asflags](/manual/project_target?id=targetadd_asflags)                     | Add assembly compile options                      | >= 2.1.1           |
-| [add_gcflags](/manual/project_target?id=targetadd_gcflags)                     | Add go compile options                            | >= 2.1.1           |
-| [add_dcflags](/manual/project_target?id=targetadd_dcflags)                     | Add dlang compile options                         | >= 2.1.1           |
-| [add_rcflags](/manual/project_target?id=targetadd_rcflags)                     | Add rust compile option                           | >= 2.1.1           |
-| [add_cuflags](/manual/project_target?id=targetadd_cuflags)                     | Add cuda compile options                          | >= 2.2.1           |
-| [add_culdflags](/manual/project_target?id=targetadd_culdflags)                 | Add cuda device-link options                      | >= 2.2.7           |
-| [add_ldflags](/manual/project_target?id=targetadd_ldflags)                     | Add Link Options                                  | >= 2.1.1           |
-| [add_arflags](/manual/project_target?id=targetadd_arflags)                     | Add Static Library Archive Options                | >= 2.1.1           |
-| [add_shflags](/manual/project_target?id=targetadd_shflags)                     | Add Dynamic Library Link Options                  | >= 2.0.1           |
-| [add_languages](/manual/project_target?id=targetadd_languages)                 | Add Language Standards                            | >= 2.0.1           |
-| [add_vectorexts](/manual/project_target?id=targetadd_vectorexts)               | Add Vector Extension Instructions                 | >= 2.0.1           |
-| [add_frameworks](/manual/project_target?id=targetadd_frameworks)               | Add Linked Framework                              | >= 2.1.1           |
-| [add_frameworkdirs](/manual/project_target?id=targetadd_frameworkdirs)         | Add Linked Framework                              | >= 2.1.5           |
+!> The `option` field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the [option_end](#option_end) interface.
 
 ### option
 
@@ -604,3 +550,41 @@ if is_config("test", "8") tben
 end
 ```
 
+### option:add_cfuncs
+
+#### Add c library function detection
+
+```lua
+option("setjmp")
+    set_default(false)
+    add_cincludes("setjmp.h")
+    add_cfuncs("sigsetjmp", "setjmp")
+    add_defines("HAVE_SETJMP")
+
+target("test")
+    add_options("setjmp")
+```
+
+This option detects whether there are some interfaces of `setjmp`. If the test passes, the target program of `test` will add the macro definition of `HAVE_SETJMP`.
+
+The function fragments inside support the following syntax formats:
+
+```lua
+-- Simply detect whether the function address exists, and internally will try to determine its address
+sigsetjmp
+
+-- If some functions are defined by macro wrap, the detection can be bypassed in this way
+sigsetjmp((void*)0, 0)
+
+-- You can also specify a complete function statement, for example: funcname{codebody}
+sigsetjmp{sigsetjmp((void*)0, 0);}
+sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}
+```
+
+Note that the detected function usually needs to be accompanied by `add_cincludes` to ensure that the function can be included normally, otherwise the detection will fail.
+
+### option:add_cxxfuncs
+
+#### Add c++ library function detection
+
+The usage is consistent with [option:add_cfuncs](#optionadd_cxxfuncs).

@@ -21,59 +21,8 @@ option("test2")
     -- ...
 ```
 
-<p class="tip">
-`option`域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用[option_end](#option_end)接口。
-</p>
+!> `option`域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用[option_end](#option_end)接口。
 
-
-| 接口                                                                         | 描述                                         | 支持版本 |
-| -----------------------------------------------------                        | -------------------------------------------- | -------- |
-| [option](#option)                                                            | 定义选项                                     | >= 2.0.1 |
-| [option_end](#option_end)                                                    | 结束定义选项                                 | >= 2.1.1 |
-| [add_deps](#optionadd_deps)                                                  | 添加选项依赖                                 | >= 2.1.5 |
-| [before_check](#optionbefore_check)                                          | 选项检测之前执行此脚本                       | >= 2.1.5 |
-| [on_check](#optionon_check)                                                  | 自定义选项检测脚本                           | >= 2.1.5 |
-| [after_check](#optionafter_check)                                            | 选项检测之后执行此脚本                       | >= 2.1.5 |
-| [set_values](#optionset_values)                                              | 设置选项值列表                               | >= 2.1.9 |
-| [set_default](#optionset_default)                                            | 设置默认值                                   | >= 2.0.1 |
-| [set_showmenu](#optionset_showmenu)                                          | 设置是否启用菜单显示                         | >= 1.0.1 |
-| [set_category](#optionset_category)                                          | 设置选项分类，仅用于菜单显示                 | >= 1.0.1 |
-| [set_description](#optionset_description)                                    | 设置菜单显示描述                             | >= 1.0.1 |
-| [add_links](#optionadd_links)                                                | 添加链接库检测                               | >= 1.0.1 |
-| [add_linkdirs](#optionadd_linkdirs)                                          | 添加链接库检测需要的搜索目录                 | >= 1.0.1 |
-| [add_rpathdirs](#optionadd_rpathdirs)                                        | 添加运行时候动态链接库搜索目录               | >= 2.1.3 |
-| [add_cincludes](#optionadd_cincludes)                                        | 添加c头文件检测                              | >= 1.0.1 |
-| [add_cxxincludes](#optionadd_cxxincludes)                                    | 添加c++头文件检测                            | >= 1.0.1 |
-| [add_ctypes](#optionadd_ctypes)                                              | 添加c类型检测                                | >= 1.0.1 |
-| [add_cxxtypes](#optionadd_cxxtypes)                                          | 添加c++类型检测                              | >= 1.0.1 |
-| [add_csnippets](#optionadd_csnippets)                                          | 添加c代码片段检测                            | >= 2.1.5 |
-| [add_cxxsnippets](#optionadd_cxxsnippets)                                      | 添加c++代码片段检测                          | >= 2.1.5 |
-| [set_warnings](/zh-cn/manual/project_target?id=targetset_warnings)           | 设置警告级别                                 | >= 1.0.1 |
-| [set_optimize](/zh-cn/manual/project_target?id=targetset_optimize)           | 设置优化级别                                 | >= 1.0.1 |
-| [set_languages](/zh-cn/manual/project_target?id=targetset_languages)         | 设置代码语言标准                             | >= 1.0.1 |
-| [add_includedirs](/zh-cn/manual/project_target?id=targetadd_includedirs)     | 添加头文件搜索目录                           | >= 1.0.1 |
-| [add_defines](/zh-cn/manual/project_target?id=targetadd_defines)             | 添加宏定义                                   | >= 1.0.1 |
-| [add_undefines](/zh-cn/manual/project_target?id=targetadd_undefines)         | 取消宏定义                                   | >= 1.0.1 |
-| [add_cflags](/zh-cn/manual/project_target?id=targetadd_cflags)               | 添加c编译选项                                | >= 1.0.1 |
-| [add_cxflags](/zh-cn/manual/project_target?id=targetadd_cxflags)             | 添加c/c++编译选项                            | >= 1.0.1 |
-| [add_cxxflags](/zh-cn/manual/project_target?id=targetadd_cxxflags)           | 添加c++编译选项                              | >= 1.0.1 |
-| [add_mflags](/zh-cn/manual/project_target?id=targetadd_mflags)               | 添加objc编译选项                             | >= 2.0.1 |
-| [add_mxflags](/zh-cn/manual/project_target?id=targetadd_mxflags)             | 添加objc/objc++编译选项                      | >= 2.0.1 |
-| [add_mxxflags](/zh-cn/manual/project_target?id=targetadd_mxxflags)           | 添加objc++编译选项                           | >= 2.0.1 |
-| [add_scflags](/zh-cn/manual/project_target?id=targetadd_scflags)             | 添加swift编译选项                            | >= 2.1.1 |
-| [add_asflags](/zh-cn/manual/project_target?id=targetadd_asflags)             | 添加汇编编译选项                             | >= 2.1.1 |
-| [add_gcflags](/zh-cn/manual/project_target?id=targetadd_gcflags)             | 添加go编译选项                               | >= 2.1.1 |
-| [add_dcflags](/zh-cn/manual/project_target?id=targetadd_dcflags)             | 添加dlang编译选项                            | >= 2.1.1 |
-| [add_rcflags](/zh-cn/manual/project_target?id=targetadd_rcflags)             | 添加rust编译选项                             | >= 2.1.1 |
-| [add_cuflags](/zh-cn/manual/project_target?id=targetadd_cuflags)             | 添加cuda编译选项                             | >= 2.2.1 |
-| [add_culdflags](/zh-cn/manual/project_target?id=targetadd_culdflags)         | 添加cuda设备链接选项                         | >= 2.2.7 |
-| [add_ldflags](/zh-cn/manual/project_target?id=targetadd_ldflags)             | 添加链接选项                                 | >= 2.1.1 |
-| [add_arflags](/zh-cn/manual/project_target?id=targetadd_arflags)             | 添加静态库归档选项                           | >= 2.1.1 |
-| [add_shflags](/zh-cn/manual/project_target?id=targetadd_shflags)             | 添加动态库链接选项                           | >= 2.0.1 |
-| [add_languages](/zh-cn/manual/project_target?id=targetadd_languages)         | 添加语言标准                                 | >= 2.0.1 |
-| [add_vectorexts](/zh-cn/manual/project_target?id=targetadd_vectorexts)       | 添加向量扩展指令                             | >= 2.0.1 |
-| [add_frameworks](/zh-cn/manual/project_target?id=targetadd_frameworks)       | 添加链接框架                                 | >= 2.1.1 |
-| [add_frameworkdirs](/zh-cn/manual/project_target?id=targetadd_frameworkdirs) | 添加链接框架                                 | >= 2.1.5 |
 
 ### option
 
@@ -547,3 +496,42 @@ if is_config("test", "8") tben
     -- xxx
 end
 ```
+
+### option:add_cfuncs
+
+#### 添加c库函数检测
+
+```lua
+option("setjmp")
+    set_default(false)
+    add_cincludes("setjmp.h")
+    add_cfuncs("sigsetjmp", "setjmp")
+    add_defines("HAVE_SETJMP")
+
+target("test")
+    add_options("setjmp")
+```
+
+此选项检测是否存在`setjmp`的一些接口，如果检测通过那么`test` 目标程序将会加上 `HAVE_SETJMP` 的宏定义。
+
+里面的函数片段支持下面几种语法格式：
+
+```lua
+-- 单纯检测函数地址是否存在，内部会尝试去它的地址来判断
+sigsetjmp
+
+-- 如果有些函数是宏定义 wrap 的，可以通过这种方式绕通过检测
+sigsetjmp((void*)0, 0)
+
+-- 也可以指定一个完整函数语句，例如：funcname{codebody}
+sigsetjmp{sigsetjmp((void*)0, 0);}
+sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}
+```
+
+注意，检测的函数通常需要附带 `add_cincludes` 确保函数能够被正常 include 进来，否则检测会失败。
+
+### option:add_cxxfuncs
+
+#### 添加c++库函数检测
+
+用法跟 [option:add_cfuncs](#optionadd_cxxfuncs) 一致。
