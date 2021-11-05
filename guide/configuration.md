@@ -880,6 +880,18 @@ The ramdisk directory is the directory location of the memory file system. Usual
 
 By default, xmake will use `/tmp/.xmake` and `%TEMP%/.xmake`. Of course, users can modify the default path through this variable.
 
+### XMAKE_CONFIGDIR
+
+- Set local project configuration directory
+
+The local compilation configuration of each project will be stored in the `.xmake` path in the root directory of the current project by default, and then differentiated according to different platforms and architectures, for example:
+
+```console
+.xmake/macosx/x86_64
+```
+
+If we don't want to store it in the root directory of the project, we can also set it to other paths ourselves, such as the build directory and so on.
+
 ### XMAKE_GLOBALDIR
 
 - Set the root directory of the global configuration file
@@ -921,7 +933,7 @@ Or use `xmake g --theme=plain` to disable it globally.
 
 The default global directory for xmake's remote package installation is `~/.xmake/packages`, but users can also set this variable to modify it individually.
 
-### XMAKE_PKG_CACHEDIR Set the cache directory of packages.
+### XMAKE_PKG_CACHEDIR
 
 - Set the cache directory of dependent packages
 
@@ -990,18 +1002,6 @@ $ xmake
 ```
 
 If not set, the default path is: `~/.xmake/xmakerc.lua`.
-
-### XMAKE_CONFIGDIR
-
-- Set local project configuration directory
-
-The local compilation configuration of each project will be stored in the `.xmake` path in the root directory of the current project by default, and then differentiated according to different platforms and architectures, for example:
-
-```console
-.xmake/macosx/x86_64
-```
-
-If we don't want to store it in the root directory of the project, we can also set it to other paths ourselves, such as the build directory and so on.
 
 ### XMAKE_LOGFILE
 
