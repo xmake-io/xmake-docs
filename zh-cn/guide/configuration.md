@@ -905,6 +905,18 @@ ramdisk 目录是内存文件系统的目录位置，通常 `os.tmpdir()` 接口
 
 默认 xmake 会使用 `/tmp/.xmake` 和 `%TEMP%/.xmake`，当然用户可以通过这个变量去修改默认路径。
 
+### XMAKE_CONFIGDIR
+
+- 设置本地工程配置目录
+
+每个项目的本地编译配置，默认会存储在当前项目根目录的 `.xmake` 路径下，然后根据不同的平台，架构区分，例如：
+
+```console
+.xmake/macosx/x86_64
+```
+
+我们如果不想存储在项目根目录，也可以自己设置到其他路径，比如 build 目录下等等。
+
 ### XMAKE_GLOBALDIR
 
 - 设置全局配置文件根目录
@@ -946,7 +958,7 @@ export XMAKE_ROOT=y
 
 xmake 的远程包安装的全局目录默认是 `~/.xmake/packages`，但是用户也可以设置这个变量，去单独修改它。
 
-### XMAKE_PKG_CACHEDIR      Set the cache directory of packages.
+### XMAKE_PKG_CACHEDIR
 
 - 设置依赖包的缓存目录
 
@@ -1015,18 +1027,6 @@ $ xmake
 ```
 
 如果不设置，默认路径为：`~/.xmake/xmakerc.lua`。
-
-### XMAKE_CONFIGDIR
-
-- 设置本地工程配置目录
-
-每个项目的本地编译配置，默认会存储在当前项目根目录的 `.xmake` 路径下，然后根据不同的平台，架构区分，例如：
-
-```console
-.xmake/macosx/x86_64
-```
-
-我们如果不想存储在项目根目录，也可以自己设置到其他路径，比如 build 目录下等等。
 
 ### XMAKE_LOGFILE
 
