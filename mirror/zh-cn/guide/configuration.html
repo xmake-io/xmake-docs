@@ -809,6 +809,14 @@ XMAKE_LOGFILE           Set the log output file path.
 <li>设置用户的临时目录</li>
 </ul>
 <p>默认 xmake 会使用 <code>/tmp/.xmake</code> 和 <code>%TEMP%/.xmake</code>，当然用户可以通过这个变量去修改默认路径。</p>
+<h3 id="xmake_configdir">XMAKE_CONFIGDIR</h3>
+<ul>
+<li>设置本地工程配置目录</li>
+</ul>
+<p>每个项目的本地编译配置，默认会存储在当前项目根目录的 <code>.xmake</code> 路径下，然后根据不同的平台，架构区分，例如：</p>
+<pre><code class="lang-console">.xmake/macosx/x86_64
+</code></pre>
+<p>我们如果不想存储在项目根目录，也可以自己设置到其他路径，比如 build 目录下等等。</p>
 <h3 id="xmake_globaldir">XMAKE_GLOBALDIR</h3>
 <ul>
 <li>设置全局配置文件根目录</li>
@@ -860,7 +868,7 @@ XMAKE_LOGFILE           Set the log output file path.
 <li>设置依赖包的安装根目录</li>
 </ul>
 <p>xmake 的远程包安装的全局目录默认是 <code>~/.xmake/packages</code>，但是用户也可以设置这个变量，去单独修改它。</p>
-<h3 id="xmake_pkg_cachedirsetthecachedirectoryofpackages">XMAKE_PKG_CACHEDIR      Set the cache directory of packages.</h3>
+<h3 id="xmake_pkg_cachedir">XMAKE_PKG_CACHEDIR</h3>
 <ul>
 <li>设置依赖包的缓存目录</li>
 </ul>
@@ -913,14 +921,6 @@ length                        : @programdir/core/base/heap.lua: 120
 $ xmake
 </code></pre>
 <p>如果不设置，默认路径为：<code>~/.xmake/xmakerc.lua</code>。</p>
-<h3 id="xmake_configdir">XMAKE_CONFIGDIR</h3>
-<ul>
-<li>设置本地工程配置目录</li>
-</ul>
-<p>每个项目的本地编译配置，默认会存储在当前项目根目录的 <code>.xmake</code> 路径下，然后根据不同的平台，架构区分，例如：</p>
-<pre><code class="lang-console">.xmake/macosx/x86_64
-</code></pre>
-<p>我们如果不想存储在项目根目录，也可以自己设置到其他路径，比如 build 目录下等等。</p>
 <h3 id="xmake_logfile">XMAKE_LOGFILE</h3>
 <ul>
 <li>设置日志文件路径</li>

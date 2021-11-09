@@ -802,6 +802,14 @@ XMAKE_LOGFILE Set the log output file path.
 <li>Set the user&#39;s temporary directory</li>
 </ul>
 <p>By default, xmake will use <code>/tmp/.xmake</code> and <code>%TEMP%/.xmake</code>. Of course, users can modify the default path through this variable.</p>
+<h3 id="xmake_configdir">XMAKE_CONFIGDIR</h3>
+<ul>
+<li>Set local project configuration directory</li>
+</ul>
+<p>The local compilation configuration of each project will be stored in the <code>.xmake</code> path in the root directory of the current project by default, and then differentiated according to different platforms and architectures, for example:</p>
+<pre><code class="lang-console">.xmake/macosx/x86_64
+</code></pre>
+<p>If we don&#39;t want to store it in the root directory of the project, we can also set it to other paths ourselves, such as the build directory and so on.</p>
 <h3 id="xmake_globaldir">XMAKE_GLOBALDIR</h3>
 <ul>
 <li>Set the root directory of the global configuration file</li>
@@ -851,7 +859,7 @@ XMAKE_LOGFILE Set the log output file path.
 <li>Set the installation root directory of the dependent package</li>
 </ul>
 <p>The default global directory for xmake&#39;s remote package installation is <code>~/.xmake/packages</code>, but users can also set this variable to modify it individually.</p>
-<h3 id="xmake_pkg_cachedirsetthecachedirectoryofpackages">XMAKE_PKG_CACHEDIR Set the cache directory of packages.</h3>
+<h3 id="xmake_pkg_cachedir">XMAKE_PKG_CACHEDIR</h3>
 <ul>
 <li>Set the cache directory of dependent packages</li>
 </ul>
@@ -902,14 +910,6 @@ length: @programdir/core/base/heap.lua: 120
 $ xmake
 </code></pre>
 <p>If not set, the default path is: <code>~/.xmake/xmakerc.lua</code>.</p>
-<h3 id="xmake_configdir">XMAKE_CONFIGDIR</h3>
-<ul>
-<li>Set local project configuration directory</li>
-</ul>
-<p>The local compilation configuration of each project will be stored in the <code>.xmake</code> path in the root directory of the current project by default, and then differentiated according to different platforms and architectures, for example:</p>
-<pre><code class="lang-console">.xmake/macosx/x86_64
-</code></pre>
-<p>If we don&#39;t want to store it in the root directory of the project, we can also set it to other paths ourselves, such as the build directory and so on.</p>
 <h3 id="xmake_logfile">XMAKE_LOGFILE</h3>
 <ul>
 <li>Set the log file path</li>
