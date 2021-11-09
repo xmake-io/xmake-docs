@@ -933,6 +933,8 @@ Or use `xmake g --theme=plain` to disable it globally.
 
 The default global directory for xmake's remote package installation is `~/.xmake/packages`, but users can also set this variable to modify it individually.
 
+We can also use `xmake g --pkg_installdir=/xxx` to set it, the effect is the same.
+
 ### XMAKE_PKG_CACHEDIR
 
 - Set the cache directory of dependent packages
@@ -945,7 +947,7 @@ Of course, xmake will automatically clean up all cache files of the previous mon
 
 - Set the script directory of xmake
 
-All lua scripts of xmake are installed with the installer. By default, they are in the installation directory. However, if you want to switch to the script directory you downloaded to facilitate local modification and debugging, you can set the secondary variable.
+All lua scripts of xmake are installed with the installer. By default, they are in the installation directory. However, if you want to switch to the script directory you downloaded to facilitate local modification and debugging, you can set the this variable.
 
 If you want to view the script directory currently used by xmake, you can execute:
 

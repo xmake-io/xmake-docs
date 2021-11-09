@@ -868,6 +868,7 @@ XMAKE_LOGFILE           Set the log output file path.
 <li>设置依赖包的安装根目录</li>
 </ul>
 <p>xmake 的远程包安装的全局目录默认是 <code>~/.xmake/packages</code>，但是用户也可以设置这个变量，去单独修改它。</p>
+<p>我们也可以使用 <code>xmake g --pkg_installdir=/xxx</code> 去设置它，效果是一样的。</p>
 <h3 id="xmake_pkg_cachedir">XMAKE_PKG_CACHEDIR</h3>
 <ul>
 <li>设置依赖包的缓存目录</li>
@@ -878,7 +879,7 @@ XMAKE_LOGFILE           Set the log output file path.
 <ul>
 <li>设置 xmake 的脚本目录</li>
 </ul>
-<p>xmake 的所有 lua 脚本随安装程序一起安装，默认都在安装目录下，但是如果想要切到自己下载的脚本目录下，方便本地修改调试，可以设置次变量。</p>
+<p>xmake 的所有 lua 脚本随安装程序一起安装，默认都在安装目录下，但是如果想要切到自己下载的脚本目录下，方便本地修改调试，可以设置此变量。</p>
 <p>如果要查看当前 xmake 在使用的脚本目录，可以执行：</p>
 <pre><code class="lang-console">$ xmake l os.programdir
 /Users/ruki/.local/share/xmake

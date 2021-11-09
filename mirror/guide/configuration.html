@@ -859,6 +859,7 @@ XMAKE_LOGFILE Set the log output file path.
 <li>Set the installation root directory of the dependent package</li>
 </ul>
 <p>The default global directory for xmake&#39;s remote package installation is <code>~/.xmake/packages</code>, but users can also set this variable to modify it individually.</p>
+<p>We can also use <code>xmake g --pkg_installdir=/xxx</code> to set it, the effect is the same.</p>
 <h3 id="xmake_pkg_cachedir">XMAKE_PKG_CACHEDIR</h3>
 <ul>
 <li>Set the cache directory of dependent packages</li>
@@ -869,7 +870,7 @@ XMAKE_LOGFILE Set the log output file path.
 <ul>
 <li>Set the script directory of xmake</li>
 </ul>
-<p>All lua scripts of xmake are installed with the installer. By default, they are in the installation directory. However, if you want to switch to the script directory you downloaded to facilitate local modification and debugging, you can set the secondary variable.</p>
+<p>All lua scripts of xmake are installed with the installer. By default, they are in the installation directory. However, if you want to switch to the script directory you downloaded to facilitate local modification and debugging, you can set the this variable.</p>
 <p>If you want to view the script directory currently used by xmake, you can execute:</p>
 <pre><code class="lang-console">$ xmake l os.programdir
 /Users/ruki/.local/share/xmake
