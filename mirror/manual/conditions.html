@@ -174,9 +174,9 @@ if is_arch("armv7", "arm64", "armv7s", "armv7-a") then
     -- ...
 end
 </code></pre>
-<p>And you can also use the wildcard: <code>*</code> to check all matched architectures.</p>
+<p>And you can also use the lua regular expression: <code>.*</code> to check all matched architectures.</p>
 <pre><code class="lang-lua">-- if the current architecture is arm which contains armv7, arm64, armv7s and armv7-a ...
-if is_arch("arm*") then
+if is_arch("arm.*") then
     -- ...
 end
 </code></pre>

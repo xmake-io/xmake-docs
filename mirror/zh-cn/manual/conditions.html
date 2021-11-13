@@ -175,13 +175,13 @@ if is_arch("armv7", "arm64", "armv7s", "armv7-a") then
     -- ...
 end
 </code></pre>
-<p>如果像上面那样一个个去判断所有arm架构，也许会很繁琐，毕竟每个平台的架构类型很多，xmake提供了类似<a href="#targetadd_files">add_files</a>中的通配符匹配模式，来更加简洁的进行判断：</p>
+<p>如果像上面那样一个个去判断所有arm架构，也许会很繁琐，毕竟每个平台的架构类型很多，xmake提供了比<a href="#targetadd_files">add_files</a>更强的lua正则表达式匹配模式，来更加简洁的进行判断：</p>
 <pre><code class="lang-lua">--如果当前平台是arm平台
-if is_arch("arm*") then
+if is_arch("arm.*") then
     -- ...
 end
 </code></pre>
-<p>用<code>*</code>就可以匹配所有了。。</p>
+<p>用<code>.*</code>就可以匹配所有了。</p>
 <h3 id="is_plat">is_plat</h3>
 <h4 id="">判断当前编译平台</h4>
 <p>用于检测编译配置：<code>xmake f -p iphoneos</code></p>
