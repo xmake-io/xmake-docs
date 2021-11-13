@@ -128,6 +128,53 @@ Version 2.1.5 adds two new properties: `import("xxx.xxx", {try = true, anonymous
 If the try is true, the imported module does not exist, only return nil, and will not interrupt xmake after throwing an exception.
 If anonymous is true, the imported module will not introduce the current scope, only the imported object reference will be returned in the import interface.
 
+#### Custom extension module
+
+Through import, we can import not only many built-in extension modules of xmake, but also user-defined extension modules.
+
+Just put your own module in the project directory and import it according to the import method described above.
+
+So, what if you want to define a module? xmake has a set of convention rules for module writing specifications, and does not follow Lua's native require import mechanism, and there is no need to use return in the module to return it globally.
+
+If we have a module file foo.lua, its content is as follows:
+
+```lua
+function _foo(a, b)
+    return a + b
+end
+
+function add(a, b)
+    _foo(a, b)
+end
+
+function main(a, b)
+    add(a, b)
+end
+```
+
+Among them main is the entry function, optional, if set, the module foo can be called directly, for example:
+
+```lua
+import("foo")
+foo(1, 2)
+```
+
+Or directly like this:
+
+```lua
+import("foo")(1, 2)
+```
+
+
+Others without underscore are public module interface functions, such as add.
+
+```lua
+import("foo")
+foo.add(1, 2)
+```
+
+The underscore prefixed `_foo` is a private function that is used internally by the module and is not exported, so users cannot call it outside.
+
 ### inherit
 
 #### Import and inherit base class modules

@@ -179,6 +179,35 @@ end
 <p>This is not a reference to the module, but all the public interfaces of the module imported, so that it will be merged with the interface of the current module to achieve inheritance between modules.</p>
 <p>Version 2.1.5 adds two new properties: `import("xxx.xxx", {try = true, anonymous = true}).</p>
 <p>If the try is true, the imported module does not exist, only return nil, and will not interrupt xmake after throwing an exception.<br>If anonymous is true, the imported module will not introduce the current scope, only the imported object reference will be returned in the import interface.</p>
+<h4 id="customextensionmodule">Custom extension module</h4>
+<p>Through import, we can import not only many built-in extension modules of xmake, but also user-defined extension modules.</p>
+<p>Just put your own module in the project directory and import it according to the import method described above.</p>
+<p>So, what if you want to define a module? xmake has a set of convention rules for module writing specifications, and does not follow Lua&#39;s native require import mechanism, and there is no need to use return in the module to return it globally.</p>
+<p>If we have a module file foo.lua, its content is as follows:</p>
+<pre><code class="lang-lua">function _foo(a, b)
+    return a + b
+end
+
+function add(a, b)
+    _foo(a, b)
+end
+
+function main(a, b)
+    add(a, b)
+end
+</code></pre>
+<p>Among them main is the entry function, optional, if set, the module foo can be called directly, for example:</p>
+<pre><code class="lang-lua">import("foo")
+foo(1, 2)
+</code></pre>
+<p>Or directly like this:</p>
+<pre><code class="lang-lua">import("foo")(1, 2)
+</code></pre>
+<p>Others without underscore are public module interface functions, such as add.</p>
+<pre><code class="lang-lua">import("foo")
+foo.add(1, 2)
+</code></pre>
+<p>The underscore prefixed <code>_foo</code> is a private function that is used internally by the module and is not exported, so users cannot call it outside.</p>
 <h3 id="inherit">inherit</h3>
 <h4 id="importandinheritbaseclassmodules">Import and inherit base class modules</h4>
 <p>This is equivalent to the <code>inherit</code> mode of the <a href="#import">import</a> interface, which is:</p>

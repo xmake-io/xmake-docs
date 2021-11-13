@@ -126,6 +126,53 @@ import("xxx.xxx", {inherit = true})
 try为true，则导入的模块不存在的话，仅仅返回nil，并不会抛异常后中断xmake.
 anonymous为true，则导入的模块不会引入当前作用域，仅仅在import接口返回导入的对象引用。
 
+#### 自定义扩展模块
+
+通过 import 我们除了可以导入 xmake 内置的很多扩展模块，还可以导入用户自己定义的扩展模块。
+
+只需要将自己的模块放到工程目录下，按照上文介绍的导入方式进行导入即可。
+
+那么，如果去定义模块呢？xmake 对模块的编写规范是有一套约定规则的，并没有沿用 lua 原生的 require 导入机制，并不需要在模块中使用 return 来全局返回它。
+
+假如我们有一个模块文件 foo.lua，它的内容如下：
+
+```lua
+function _foo(a, b)
+    return a + b
+end
+
+function add(a, b)
+    _foo(a, b)
+end
+
+function main(a, b)
+    add(a, b)
+end
+```
+
+其中 main 为入口函数，可选，如果设置，模块 foo 可以直接被调用，例如：
+
+```lua
+import("foo")
+foo(1, 2)
+```
+
+或者直接这样：
+
+```lua
+import("foo")(1, 2)
+```
+
+
+其他不带下划线的为 public 模块接口函数，例如 add。
+
+```lua
+import("foo")
+foo.add(1, 2)
+```
+
+而里面带下划线前缀的 `_foo` 是私有函数，模块内部使用，不对外导出，所以在外面用户是不能够调用它的。
+
 ### inherit
 
 #### 导入并继承基类模块
