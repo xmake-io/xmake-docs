@@ -50,16 +50,16 @@ if is_arch("armv7", "arm64", "armv7s", "armv7-a") then
 end
 ```
 
-如果像上面那样一个个去判断所有arm架构，也许会很繁琐，毕竟每个平台的架构类型很多，xmake提供了类似[add_files](#targetadd_files)中的通配符匹配模式，来更加简洁的进行判断：
+如果像上面那样一个个去判断所有arm架构，也许会很繁琐，毕竟每个平台的架构类型很多，xmake提供了比[add_files](#targetadd_files)更强的lua正则表达式匹配模式，来更加简洁的进行判断：
 
 ```lua
 --如果当前平台是arm平台
-if is_arch("arm*") then
+if is_arch("arm.*") then
     -- ...
 end
 ```
 
-用`*`就可以匹配所有了。。
+用`.*`就可以匹配所有了。
 
 ### is_plat
 
