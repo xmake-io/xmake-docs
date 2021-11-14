@@ -123,6 +123,114 @@ target:add("links", "sdl2")
 -- add defined macros
 target:add("defines", "SDL_MAIN_HANDLED")
 </code></pre>
+<h4 id="targetkind">target:kind</h4>
+<ul>
+<li>获取目标程序类型</li>
+</ul>
+<p>对应 <code>set_kind</code> 描述域接口设置。目标类型主要有：binary, static, shared, phony, object, headeronly。</p>
+<h4 id="targettargetfile">target:targetfile</h4>
+<ul>
+<li>获取目标文件路径</li>
+</ul>
+<p>主要用于获取 static, shared, binary 目标程序文件的输出路径。</p>
+<pre><code class="lang-lua">os.cp(target:targetfile(), "/tmp/")
+</code></pre>
+<h4 id="targettargetdir">target:targetdir</h4>
+<ul>
+<li>获取目标文件的输出目录</li>
+</ul>
+<p>也就是 target:targetfile() 对应的存储目录。</p>
+<h4 id="targetbasename">target:basename</h4>
+<ul>
+<li>获取目标文件的 base 名</li>
+</ul>
+<p>也就是 libfoo.a，foo.dll, foo.exe 中的 <code>foo</code>。</p>
+<h4 id="targetfilename">target:filename</h4>
+<ul>
+<li>获取目标文件名</li>
+</ul>
+<p>目标文件的完整文件名，等价于 <code>path.filename(target:targetfile())</code>。</p>
+<h4 id="targetinstalldir">target:installdir</h4>
+<ul>
+<li>获取目标文件的安装目录</li>
+</ul>
+<p>通常用于 <code>xmake install/uninstall</code> 的 after_install 等脚本中获取对应的安装目录路径，可以用于用户自定义安装脚本。</p>
+<h4 id="targetautogendir">target:autogendir</h4>
+<ul>
+<li>获取自动生成目录</li>
+</ul>
+<p>这个通常用于一些自定义规则脚本中，存放一些特定于 target 的自动生成文件，路径通常在 <code>build/.gens/target</code> 下面。</p>
+<p>比如，我们在处理 lex/yacc 自动生成一些源码文件，就可以存放在这个目录下，方便之后去处理它。</p>
+<h4 id="targetobjectfile">target:objectfile</h4>
+<ul>
+<li>获取对象文件路径</li>
+</ul>
+<p>通常用于自定义脚本中，获取源文件对应的目标文件路径，例如</p>
+<pre><code class="lang-lua">local objectfile = target:objectfile(sourcefile)
+</code></pre>
+<h4 id="targetsourcebatches">target:sourcebatches</h4>
+<ul>
+<li>获取所有源文件</li>
+</ul>
+<p>它可以获取到 <code>add_files</code> 添加的所有源文件，并且根据不同源文件类型，分别存储。</p>
+<p>大概结构如下：</p>
+<pre><code class="lang-lua">{
+  "c++.build" = {
+    objectfiles = {
+      "build/.objs/test/macosx/x86_64/release/src/main.cpp.o"
+    },
+    rulename = "c++.build",
+    sourcekind = "cxx",
+    sourcefiles = {
+      "src/main.cpp"
+    },
+    dependfiles = {
+      "build/.deps/test/macosx/x86_64/release/src/main.cpp.o.d"
+    }
+  },
+  "asm.build" = {
+    objectfiles = {
+      "build/.objs/test/macosx/x86_64/release/src/test.S.o"
+    },
+    rulename = "asm.build",
+    sourcekind = "as",
+    sourcefiles = {
+      "src/test.S"
+    },
+    dependfiles = {
+      "build/.deps/test/macosx/x86_64/release/src/test.S.o.d"
+    }
+  }
+}
+</code></pre>
+<p>我们可以通过遍历去获取处理每种类型的源文件。</p>
+<pre><code class="lang-lua">for _, sourcebatch in pairs(target:sourcebatches()) do
+    local sourcekind = sourcebatch.sourcekind
+    if sourcekind == "cc" or sourcekind == "cxx" or sourcekind == "as" then
+        for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
+            -- TODO
+        end
+    end
+end
+</code></pre>
+<p>其中 sourcekind 是每种源文件的类型，cc 是 c 文件类型，cxx 是 c++ 源文件，as 是 asm 源文件。</p>
+<p>sourcebatch 对应每种类型的源文件 batch，对应一批同类型源文件。</p>
+<p>sourcebatch.sourcefiles 是源文件列表，sourcebatch.objectfiles 是对象文件列表，sourcebatch.rulename 是对应的规则名。</p>
+<h4 id="targetobjectfiles">target:objectfiles</h4>
+<ul>
+<li>获取所有对象文件列表</li>
+</ul>
+<p>尽管 <code>target:sourcebatches()</code> 也可以获取所有对象文件，但是它们是根据源文件类型分类过的，且不直接参与最终链接。</p>
+<p>如果我们想动态修改最终链接的对象文件列表，可以修改 <code>target:objectfiles()</code>，它是一个数组列表。</p>
+<h4 id="targetheaderfiles">target:headerfiles</h4>
+<ul>
+<li>获取所有的头文件列表</li>
+</ul>
+<p>可以获取到 <code>add_headerfiles()</code> 接口设置的所有头文件列表。</p>
+<pre><code class="lang-lua">for _, headerfile in ipairs(target:headerfiles()) do
+    -- TODO
+end
+</code></pre>
 <p>!> 此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新</p>
 </article>
 </body>

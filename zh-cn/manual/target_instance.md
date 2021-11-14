@@ -40,5 +40,141 @@ target:add("links", "sdl2")
 target:add("defines", "SDL_MAIN_HANDLED")
 ```
 
-!> 此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新
+#### target:kind
 
+- 获取目标程序类型
+
+对应 `set_kind` 描述域接口设置。目标类型主要有：binary, static, shared, phony, object, headeronly。
+
+#### target:targetfile
+
+- 获取目标文件路径
+
+主要用于获取 static, shared, binary 目标程序文件的输出路径。
+
+```lua
+os.cp(target:targetfile(), "/tmp/")
+```
+
+#### target:targetdir
+
+- 获取目标文件的输出目录
+
+也就是 target:targetfile() 对应的存储目录。
+
+#### target:basename
+
+- 获取目标文件的 base 名
+
+也就是 libfoo.a，foo.dll, foo.exe 中的 `foo`。
+
+#### target:filename
+
+- 获取目标文件名
+
+目标文件的完整文件名，等价于 `path.filename(target:targetfile())`。
+
+#### target:installdir
+
+- 获取目标文件的安装目录
+
+通常用于 `xmake install/uninstall` 的 after_install 等脚本中获取对应的安装目录路径，可以用于用户自定义安装脚本。
+
+#### target:autogendir
+
+- 获取自动生成目录
+
+这个通常用于一些自定义规则脚本中，存放一些特定于 target 的自动生成文件，路径通常在 `build/.gens/target` 下面。
+
+比如，我们在处理 lex/yacc 自动生成一些源码文件，就可以存放在这个目录下，方便之后去处理它。
+
+#### target:objectfile
+
+- 获取对象文件路径
+
+通常用于自定义脚本中，获取源文件对应的目标文件路径，例如
+
+```lua
+local objectfile = target:objectfile(sourcefile)
+```
+
+#### target:sourcebatches
+
+- 获取所有源文件
+
+它可以获取到 `add_files` 添加的所有源文件，并且根据不同源文件类型，分别存储。
+
+大概结构如下：
+
+```lua
+{
+  "c++.build" = {
+    objectfiles = {
+      "build/.objs/test/macosx/x86_64/release/src/main.cpp.o"
+    },
+    rulename = "c++.build",
+    sourcekind = "cxx",
+    sourcefiles = {
+      "src/main.cpp"
+    },
+    dependfiles = {
+      "build/.deps/test/macosx/x86_64/release/src/main.cpp.o.d"
+    }
+  },
+  "asm.build" = {
+    objectfiles = {
+      "build/.objs/test/macosx/x86_64/release/src/test.S.o"
+    },
+    rulename = "asm.build",
+    sourcekind = "as",
+    sourcefiles = {
+      "src/test.S"
+    },
+    dependfiles = {
+      "build/.deps/test/macosx/x86_64/release/src/test.S.o.d"
+    }
+  }
+}
+```
+
+我们可以通过遍历去获取处理每种类型的源文件。
+
+```lua
+for _, sourcebatch in pairs(target:sourcebatches()) do
+    local sourcekind = sourcebatch.sourcekind
+    if sourcekind == "cc" or sourcekind == "cxx" or sourcekind == "as" then
+        for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
+            -- TODO
+        end
+    end
+end
+```
+
+其中 sourcekind 是每种源文件的类型，cc 是 c 文件类型，cxx 是 c++ 源文件，as 是 asm 源文件。
+
+sourcebatch 对应每种类型的源文件 batch，对应一批同类型源文件。
+
+sourcebatch.sourcefiles 是源文件列表，sourcebatch.objectfiles 是对象文件列表，sourcebatch.rulename 是对应的规则名。
+
+#### target:objectfiles
+
+- 获取所有对象文件列表
+
+尽管 `target:sourcebatches()` 也可以获取所有对象文件，但是它们是根据源文件类型分类过的，且不直接参与最终链接。
+
+如果我们想动态修改最终链接的对象文件列表，可以修改 `target:objectfiles()`，它是一个数组列表。
+
+#### target:headerfiles
+
+- 获取所有的头文件列表
+
+可以获取到 `add_headerfiles()` 接口设置的所有头文件列表。
+
+```lua
+for _, headerfile in ipairs(target:headerfiles()) do
+    -- TODO
+end
+```
+
+
+!> 此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新
