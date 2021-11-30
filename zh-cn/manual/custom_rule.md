@@ -600,7 +600,7 @@ v2.5.7 以上版本可以使用此规则，在项目中引入一些二进制文�
 
 ```lua
 target("console")
-    set_kind("binart")
+    set_kind("binary")
     add_rules("utils.bin2c", {extensions = {".png", ".jpg"}})
     add_files("src/*.c")
     add_files("res/*.png", "res/*.jpg")

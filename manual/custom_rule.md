@@ -598,7 +598,7 @@ For example, we can embed some png/jpg resource files into the code in the proje
 
 ```lua
 target("console")
-    set_kind("binart")
+    set_kind("binary")
     add_rules("utils.bin2c", {extensions = {".png", ".jpg"}})
     add_files("src/*.c")
     add_files("res/*.png", "res/*.jpg")

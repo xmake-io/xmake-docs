@@ -480,7 +480,7 @@ target("test")
 <p>This rule can be used in versions above v2.5.7 to introduce some binary files into the project, and see them as c/c++ header files for developers to use to obtain the data of these files.</p>
 <p>For example, we can embed some png/jpg resource files into the code in the project.</p>
 <pre><code class="lang-lua">target("console")
-    set_kind("binart")
+    set_kind("binary")
     add_rules("utils.bin2c", {extensions = {".png", ".jpg"}})
     add_files("src/*.c")
     add_files("res/*.png", "res/*.jpg")
