@@ -483,7 +483,7 @@ target("test")
 <p>v2.5.7 以上版本可以使用此规则，在项目中引入一些二进制文件，并见他们作为 c/c++ 头文件的方式提供开发者使用，获取这些文件的数据。</p>
 <p>比如，我们可以在项目中，内嵌一些 png/jpg 资源文件到代码中。</p>
 <pre><code class="lang-lua">target("console")
-    set_kind("binart")
+    set_kind("binary")
     add_rules("utils.bin2c", {extensions = {".png", ".jpg"}})
     add_files("src/*.c")
     add_files("res/*.png", "res/*.jpg")
