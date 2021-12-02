@@ -629,6 +629,64 @@ cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
   0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
 ```
 
+#### utils.glsl2spv
+
+v2.6.1 以上版本可以使用次规则，在项目中引入 `*.vert/*.frag` 等 glsl shader 文件，然后实现自动编译生成 `*.spv` 文件。
+
+另外，我们还支持以 C/C++ 头文件的方式，二进制内嵌 spv 文件数据，方便程序使用。
+
+##### 编译生成 spv 文件
+
+xmake 会自动调用 glslangValidator 或者 glslc 去编译 shaders 生成 .spv 文件，然后输出到指定的 `{outputdir = "build"}` 目录下。
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("glslang", {configs = {binaryonly = true}})
+
+target("test")
+    set_kind("binary")
+    add_rules("utils.glsl2spv", {outputdir = "build"})
+    add_files("src/*.c")
+    add_files("src/*.vert", "src/*.frag")
+    add_packages("glslang")
+```
+
+注，这里的 `add_packages("glslang")` 主要用于引入和绑定 glslang 包中的 glslangValidator，确保 xmake 总归能够使用它。
+
+当然，如果用户自己系统上已经安装了它，也可以不用额外绑定这个包，不过我还是建议添加一下。
+
+##### 编译生成 c/c++ 头文件
+
+我们也可以内部借助 bin2c 模块，将编译后的 spv 文件生成对应的二进制头文件，方便用户代码中直接引入，我们只需要启用 `{bin2c = true}`。:w
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("glslang", {configs = {binaryonly = true}})
+
+target("test")
+    set_kind("binary")
+    add_rules("utils.glsl2spv", {bin2c = true})
+    add_files("src/*.c")
+    add_files("src/*.vert", "src/*.frag")
+    add_packages("glslang")
+```
+
+然后我们可以在代码这么引入：
+
+```c
+static unsigned char g_test_vert_spv_data[] = {
+    #include "test.vert.spv.h"
+};
+
+static unsigned char g_test_frag_spv_data[] = {
+    #include "test.frag.spv.h"
+};
+```
+
+跟 bin2c 规则的使用方式类似，完整例子见：[glsl2spv example](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/glsl2spv)
+
 ### rule
 
 #### 定义规则

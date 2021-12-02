@@ -641,6 +641,94 @@ target("test")
     add_files("src/*.rs")
 </code></pre>
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/rust">Rust Examples</a></p>
+<h3 id="cargo">添加 Cargo 包依赖</h3>
+<p>例子: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cargo_deps">https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cargo_deps</a></p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("cargo::base64 0.13.0")
+add_requires("cargo::flate2 1.0.17", {configs = {features = "zlib"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.rs")
+    add_packages("cargo::base64", "cargo::flate2")
+</code></pre>
+<h3 id="cxxbridgecrust">使用 cxxbridge 在 c++ 中调用 rust</h3>
+<p>例子: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library">https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library</a></p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("cargo::cxx 1.0")
+
+target("foo")
+    set_kind("static")
+    add_files("src/foo.rs")
+    set_values("rust.cratetype", "staticlib")
+    add_packages("cargo::cxx")
+
+target("test")
+    set_kind("binary")
+    add_rules("rust.cxxbridge")
+    add_deps("foo")
+    add_files("src/main.cc")
+    add_files("src/bridge.rsx")
+</code></pre>
+<p>foo.rs</p>
+<pre><code class="lang-rust">#[cxx::bridge]
+mod foo {
+    extern "Rust" {
+        fn add(a: i32, b: i32) -> i32;
+    }
+}
+
+pub fn add(a: i32, b: i32) -> i32 {
+    return a + b;
+}
+</code></pre>
+<p>我们还需要在 c++ 项目中添加桥接文件 bridge.rsx</p>
+<pre><code class="lang-rust">#[cxx::bridge]
+mod foo {
+    extern "Rust" {
+        fn add(a: i32, b: i32) -> i32;
+    }
+}
+</code></pre>
+<p>main.cc</p>
+<pre><code class="lang-c++">#include <stdio.h>
+#include "bridge.rs.h"
+
+int main(int argc, char** argv) {
+    printf("add(1, 2) == %d\n", add(1, 2));
+    return 0;
+}
+</code></pre>
+<h3 id="rustc">在 Rust 中调用 C++</h3>
+<p>例子: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/rust_call_cxx_library">https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/rust_call_cxx_library</a></p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("foo")
+    set_kind("static")
+    add_files("src/foo.cc")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.rs")
+</code></pre>
+<p>main.rs</p>
+<pre><code class="lang-rust">extern "C" {
+    fn add(a: i32, b: i32) -> i32;
+}
+
+fn main() {
+    unsafe {
+        println!("add(1, 2) = {}", add(1, 2));
+    }
+}
+</code></pre>
+<p>foo.cc</p>
+<pre><code class="lang-c++">extern "C" int add(int a, int b) {
+    return a + b;
+}
+</code></pre>
 <h2 id="swift">Swift程序</h2>
 <p>创建空工程：</p>
 <pre><code class="lang-console">$ xmake create -l swift -t console test

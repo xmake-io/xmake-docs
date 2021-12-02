@@ -839,6 +839,121 @@ target("test")
 
 For more examples, see: [Rust Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/rust)
 
+### Add cargo package dependences
+
+example: https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cargo_deps
+
+```lua
+add_rules("mode.release", "mode.debug")
+add_requires("cargo::base64 0.13.0")
+add_requires("cargo::flate2 1.0.17", {configs = {features = "zlib"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.rs")
+    add_packages("cargo::base64", "cargo::flate2")
+```
+
+### Use cxxbridge to call rust in c++
+
+example: https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("cargo::cxx 1.0")
+
+target("foo")
+    set_kind("static")
+    add_files("src/foo.rs")
+    set_values("rust.cratetype", "staticlib")
+    add_packages("cargo::cxx")
+
+target("test")
+    set_kind("binary")
+    add_rules("rust.cxxbridge")
+    add_deps("foo")
+    add_files("src/main.cc")
+    add_files("src/bridge.rsx")
+```
+
+foo.rs
+
+```rust
+#[cxx::bridge]
+mod foo {
+    extern "Rust" {
+        fn add(a: i32, b: i32) -> i32;
+    }
+}
+
+pub fn add(a: i32, b: i32) -> i32 {
+    return a + b;
+}
+```
+
+bridge interface file in c++, bridge.rsx
+
+```rust
+#[cxx::bridge]
+mod foo {
+    extern "Rust" {
+        fn add(a: i32, b: i32) -> i32;
+    }
+}
+```
+
+main.cc
+
+```c++
+#include <stdio.h>
+#include "bridge.rs.h"
+
+int main(int argc, char** argv) {
+    printf("add(1, 2) == %d\n", add(1, 2));
+    return 0;
+}
+```
+
+### Call c++ in rust
+
+example: https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/rust_call_cxx_library
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("foo")
+    set_kind("static")
+    add_files("src/foo.cc")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.rs")
+```
+
+main.rs
+
+```rust
+extern "C" {
+	fn add(a: i32, b: i32) -> i32;
+}
+
+fn main() {
+    unsafe {
+	    println!("add(1, 2) = {}", add(1, 2));
+    }
+}
+```
+
+foo.cc
+
+```c++
+extern "C" int add(int a, int b) {
+    return a + b;
+}
+```
+
 ## Swift Program
 
 Create an empty project:

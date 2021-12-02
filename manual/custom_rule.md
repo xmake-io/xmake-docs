@@ -627,6 +627,64 @@ cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
   0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
 ```
 
+#### utils.glsl2spv
+
+This rule can be used in v2.6.1 and above. Import glsl shader files such as `*.vert/*.frag` into the project, and then realize automatic compilation to generate `*.spv` files.
+
+In addition, we also support binary embedding spv file data in the form of C/C++ header file, which is convenient for program use.
+
+##### Compile and generate spv file
+
+xmake will automatically call glslangValidator or glslc to compile shaders to generate .spv files, and then output them to the specified `{outputdir = "build"}` directory.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("glslang", {configs = {binaryonly = true}})
+
+target("test")
+    set_kind("binary")
+    add_rules("utils.glsl2spv", {outputdir = "build"})
+    add_files("src/*.c")
+    add_files("src/*.vert", "src/*.frag")
+    add_packages("glslang")
+```
+
+Note that the `add_packages("glslang")` here is mainly used to import and bind the glslangValidator in the glslang package to ensure that xmake can always use it.
+
+Of course, if you have already installed it on your own system, you don’t need to bind this package additionally, but I still recommend adding it.
+
+##### Compile and generate c/c++ header files
+
+We can also use the bin2c module internally to generate the corresponding binary header file from the compiled spv file, which is convenient for direct import in user code. We only need to enable `{bin2c = true}`. :w
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("glslang", {configs = {binaryonly = true}})
+
+target("test")
+    set_kind("binary")
+    add_rules("utils.glsl2spv", {bin2c = true})
+    add_files("src/*.c")
+    add_files("src/*.vert", "src/*.frag")
+    add_packages("glslang")
+```
+
+Then we can introduce in the code like this:
+
+```c
+static unsigned char g_test_vert_spv_data[] = {
+    #include "test.vert.spv.h"
+};
+
+static unsigned char g_test_frag_spv_data[] = {
+    #include "test.frag.spv.h"
+};
+```
+
+Similar to the usage of bin2c rules, see the complete example: [glsl2spv example](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/glsl2spv)
+
 ### rule
 
 #### Defining rules

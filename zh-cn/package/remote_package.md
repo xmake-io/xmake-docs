@@ -281,6 +281,15 @@ target("test")
     add_packages("zlib", "pcre2")
 ```
 
+如果 vcpkg 包带有可选特性，我们也可以直接使用 vcpkg 的语法格式 `packagename[feature1,feature2]` 来安装包。
+
+例如：
+
+```lua
+add_requires("vcpkg::boost[core]")
+```
+
+
 ### 添加 conan 的依赖包
 
 ```lua
@@ -444,6 +453,25 @@ target("test")
     add_files("src/main.nim")
     add_packages("nimble::zip")
 ```
+
+### 添加 cargo 的依赖包
+
+Cargo 依赖包主要给 rust 项目集成使用，例如：
+
+```lua
+add_rules("mode.release", "mode.debug")
+add_requires("cargo::base64 0.13.0")
+add_requires("cargo::flate2 1.0.17", {configs = {features = "zlib"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.rs")
+    add_packages("cargo::base64", "cargo::flate2")
+```
+
+不过，我们也可以在 C++ 中通过 cxxbridge 的方式，调用 Rust 库接口，来变相复用所有的 Rust 包。
+
+完整例子见：[Call Rust in C++](https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library)
 
 ## 使用自建私有包仓库
 

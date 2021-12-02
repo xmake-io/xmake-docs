@@ -231,7 +231,7 @@ add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("pcre2", "zlib")
 </code></pre>
 <h3 id="addvcpkgdependencypackage">Add vcpkg dependency package</h3>
@@ -239,7 +239,7 @@ target("test")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 </code></pre>
 <p>We can also add a package alias name to simplify the use of <code>add_packages</code>:</p>
@@ -248,17 +248,21 @@ add_requires("vcpkg::pcre2", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("zlib", "pcre2")
+</code></pre>
+<p>If the vcpkg package has optional features, we can also directly use the vcpkg syntax format <code>packagename[feature1,feature2]</code> to install the package.</p>
+<p>e.g:</p>
+<pre><code class="lang-lua">add_requires("vcpkg::boost[core]")
 </code></pre>
 <h3 id="addconandependencypackage">Add conan dependency package</h3>
 <pre><code class="lang-lua">add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
-add_requires("conan::openssl/1.1.1g", {alias = "openssl", 
+add_requires("conan::openssl/1.1.1g", {alias = "openssl",
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("openssl", "zlib")
 </code></pre>
 <p>After executing xmake to compile:</p>
@@ -368,6 +372,19 @@ target("test")
      add_files("src/main.nim")
      add_packages("nimble::zip")
 </code></pre>
+<h3 id="addcargosdependencypackage">Add cargo&#39;s dependency package</h3>
+<p>Cargo dependency packages are mainly used for rust project integration, for example:</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("cargo::base64 0.13.0")
+add_requires("cargo::flate2 1.0.17", {configs = {features = "zlib"}})
+
+target("test")
+     set_kind("binary")
+     add_files("src/main.rs")
+     add_packages("cargo::base64", "cargo::flate2")
+</code></pre>
+<p>However, we can also use cxxbridge in C++ to call the Rust library interface to reuse all Rust packages in disguise.</p>
+<p>For a complete example, see: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library">Call Rust in C++</a></p>
 <h2 id="usingselfbuiltprivatepackagerepository">Using self-built private package repository</h2>
 <p>If the required package is not in the official repository <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>, we can submit the contribution code to the repository for support.<br>But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>For example, now we have a private repository repo:<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>
@@ -669,7 +686,7 @@ end
 <p>In the engineering project, we can also view a list of configurable parameters and values for a particular package:</p>
 <pre><code class="lang-bash">$ xmake require --info pcre2
 The package info of project:
-    require(pcre2): 
+    require(pcre2):
       -> description: A Perl Compatible Regular Expressions Library
       -> version: 10.31
       ...

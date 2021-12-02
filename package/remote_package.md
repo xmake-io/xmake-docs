@@ -227,7 +227,7 @@ add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("pcre2", "zlib")
 ```
 
@@ -238,7 +238,7 @@ add_requires("vcpkg::zlib", "vcpkg::pcre2")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 ```
 
@@ -250,20 +250,28 @@ add_requires("vcpkg::pcre2", {alias = "pcre2"})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("zlib", "pcre2")
+```
+
+If the vcpkg package has optional features, we can also directly use the vcpkg syntax format `packagename[feature1,feature2]` to install the package.
+
+e.g:
+
+```lua
+add_requires("vcpkg::boost[core]")
 ```
 
 ### Add conan dependency package
 
 ```lua
 add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
-add_requires("conan::openssl/1.1.1g", {alias = "openssl", 
+add_requires("conan::openssl/1.1.1g", {alias = "openssl",
     configs = {options = "OpenSSL:shared=True"}})
 
 target("test")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
     add_packages("openssl", "zlib")
 ```
 
@@ -418,6 +426,25 @@ target("test")
      add_packages("nimble::zip")
 ```
 
+### Add cargo's dependency package
+
+Cargo dependency packages are mainly used for rust project integration, for example:
+
+```lua
+add_rules("mode.release", "mode.debug")
+add_requires("cargo::base64 0.13.0")
+add_requires("cargo::flate2 1.0.17", {configs = {features = "zlib"}})
+
+target("test")
+     set_kind("binary")
+     add_files("src/main.rs")
+     add_packages("cargo::base64", "cargo::flate2")
+```
+
+However, we can also use cxxbridge in C++ to call the Rust library interface to reuse all Rust packages in disguise.
+
+For a complete example, see: [Call Rust in C++](https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library)
+
 ## Using self-built private package repository
 
 If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.
@@ -495,7 +522,7 @@ target("test")
     add_packages("libjpeg")
 ```
 
-## Package Management Command 
+## Package Management Command
 
 The package management command `$ xmake require` can be used to manually display the download, install, uninstall, retrieve, and view package information.
 
@@ -565,7 +592,7 @@ Will also search for pcre, pcre2 and other packages.
 $ xmake require --list
 ```
 
-## Repository Management Command 
+## Repository Management Command
 
 As mentioned above, adding a private repository is available (supporting local path addition):
 
@@ -743,7 +770,7 @@ package("zlib")
     on_install("linux", "macosx", function (package)
         import("package.tools.autoconf").install(package, {"--static"})
     end)
- 
+
     on_install("iphoneos", "android@linux,macosx", "mingw@linux,macosx", function (package)
         import("package.tools.autoconf").configure(package, {host = "", "--static"})
         io.gsub("Makefile", "\nAR=.-\n",      "\nAR=" .. (package:build_getenv("ar") or "") .. "\n")
@@ -905,7 +932,7 @@ In the engineering project, we can also view a list of configurable parameters a
 ```bash
 $ xmake require --info pcre2
 The package info of project:
-    require(pcre2): 
+    require(pcre2):
       -> description: A Perl Compatible Regular Expressions Library
       -> version: 10.31
       ...
