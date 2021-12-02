@@ -1036,6 +1036,34 @@ $ xmake
 
 默认 xmake 会回显输出到终端，我们在可以通过设置这个路径，开启日志自动存储到指定文件，但它不会影响终端的正常回显输出。
 
+### XMAKE_MAIN_REPO
+
+- 设置官方包主仓库地址
+
+xmake 默认内置了三个主仓库地址，它们是完全相同的，xmake 会根据当前网络状态选择最优的地址来使用。
+
+```
+https://github.com/xmake-io/xmake-repo.git
+https://gitlab.com/tboox/xmake-repo.git
+https://gitee.com/tboox/xmake-repo.git
+```
+
+但如果 xmake 选择错误，可能会导致仓库下载失败，而通过这个环境变量，我们可以自己设置固定使用指定的仓库地址，不再进行自动选择。
+
+```console
+$ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
+```
+
+### XMAKE_BINARY_REPO
+
+- 设置官方包预编译仓库地址
+
+类似 `XMAKE_MAIN_REPO`，唯一的区别是，这个用于切换预编译仓库的地址。
+
+```console
+$ export XMAKE_MAIN_REPO = https://github.com/xmake-mirror/build-artifacts.git
+```
+
 ### XMAKE_STATS
 
 - 开启或禁用用户量统计

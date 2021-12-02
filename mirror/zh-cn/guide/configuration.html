@@ -927,6 +927,24 @@ $ xmake
 <li>设置日志文件路径</li>
 </ul>
 <p>默认 xmake 会回显输出到终端，我们在可以通过设置这个路径，开启日志自动存储到指定文件，但它不会影响终端的正常回显输出。</p>
+<h3 id="xmake_main_repo">XMAKE_MAIN_REPO</h3>
+<ul>
+<li>设置官方包主仓库地址</li>
+</ul>
+<p>xmake 默认内置了三个主仓库地址，它们是完全相同的，xmake 会根据当前网络状态选择最优的地址来使用。</p>
+<pre><code>https://github.com/xmake-io/xmake-repo.git
+https://gitlab.com/tboox/xmake-repo.git
+https://gitee.com/tboox/xmake-repo.git
+</code></pre><p>但如果 xmake 选择错误，可能会导致仓库下载失败，而通过这个环境变量，我们可以自己设置固定使用指定的仓库地址，不再进行自动选择。</p>
+<pre><code class="lang-console">$ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
+</code></pre>
+<h3 id="xmake_binary_repo">XMAKE_BINARY_REPO</h3>
+<ul>
+<li>设置官方包预编译仓库地址</li>
+</ul>
+<p>类似 <code>XMAKE_MAIN_REPO</code>，唯一的区别是，这个用于切换预编译仓库的地址。</p>
+<pre><code class="lang-console">$ export XMAKE_MAIN_REPO = https://github.com/xmake-mirror/build-artifacts.git
+</code></pre>
 <h3 id="xmake_stats">XMAKE_STATS</h3>
 <ul>
 <li>开启或禁用用户量统计</li>

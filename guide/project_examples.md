@@ -700,6 +700,18 @@ target("calc")
 
 ## OpenMP Program
 
+After v2.6.1, the configuration of openmp has been improved, which is more simplified and unified. We no longer need to configure additional rules. The same effect can be achieved only through a common openmp package.
+
+```lua
+add_requires("openmp")
+target("loop")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     add_packages("openmp")
+```
+
+Before v2.5.9
+
 ```lua
 add_requires("libomp", {optional = true})
 target("loop")
@@ -1436,9 +1448,13 @@ target("hello")
      add_deps("foo")
      add_rules("mdk.console")
      add_files("src/*.c", "src/*.s")
-     add_defines("__EVAL", "__MICROLIB")
      add_includedirs("src/lib/cmsis")
+     set_runtimes("microlib")
 ```
+
+It should be noted that when some mdk programs all use the microlib library to run, it requires the compiler to add the `__MICROLIB` macro definition, and the linker to add various configurations such as `--library_type=microlib`.
+
+We can set directly to the microlib runtime library through `set_runtimes("microlib")`, and all relevant options can be set automatically.
 
 ### Static library program
 
@@ -1448,4 +1464,5 @@ add_rules("mode.debug", "mode.release")
 target("foo")
      add_rules("mdk.static")
      add_files("src/foo/*.c")
+     set_runtimes("microlib")
 ```

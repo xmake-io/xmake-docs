@@ -916,6 +916,24 @@ $ xmake
 <li>Set the log file path</li>
 </ul>
 <p>By default, xmake will echo the output to the terminal. We can turn on the automatic log storage to the specified file by setting this path, but it will not affect the normal echo output of the terminal.</p>
+<h3 id="xmake_main_repo">XMAKE_MAIN_REPO</h3>
+<ul>
+<li>Set the official package master warehouse address</li>
+</ul>
+<p>xmake has built-in three main warehouse addresses by default, they are exactly the same, xmake will choose the best address to use according to the current network status.</p>
+<pre><code>https://github.com/xmake-io/xmake-repo.git
+https://gitlab.com/tboox/xmake-repo.git
+https://gitee.com/tboox/xmake-repo.git
+</code></pre><p>However, if xmake chooses the wrong one, it may cause the warehouse download to fail. Through this environment variable, we can set and use the specified warehouse address by ourselves instead of automatically selecting it.</p>
+<pre><code class="lang-console">$ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
+</code></pre>
+<h3 id="xmake_binary_repo">XMAKE_BINARY_REPO</h3>
+<ul>
+<li>Set the official package pre-compiled warehouse address</li>
+</ul>
+<p>Similar to <code>XMAKE_MAIN_REPO</code>, the only difference is that this is used to switch the address of the pre-compiled warehouse.</p>
+<pre><code class="lang-console">$ export XMAKE_MAIN_REPO = https://github.com/xmake-mirror/build-artifacts.git
+</code></pre>
 <h3 id="xmake_stats">XMAKE_STATS</h3>
 <p>-Enable or disable user statistics</p>
 <p>Since xmake is still in the early stages of development, we need to know the approximate user growth in order to provide us with the motivation to continue to update xmake.</p>

@@ -1011,6 +1011,34 @@ If not set, the default path is: `~/.xmake/xmakerc.lua`.
 
 By default, xmake will echo the output to the terminal. We can turn on the automatic log storage to the specified file by setting this path, but it will not affect the normal echo output of the terminal.
 
+### XMAKE_MAIN_REPO
+
+- Set the official package master warehouse address
+
+xmake has built-in three main warehouse addresses by default, they are exactly the same, xmake will choose the best address to use according to the current network status.
+
+```
+https://github.com/xmake-io/xmake-repo.git
+https://gitlab.com/tboox/xmake-repo.git
+https://gitee.com/tboox/xmake-repo.git
+```
+
+However, if xmake chooses the wrong one, it may cause the warehouse download to fail. Through this environment variable, we can set and use the specified warehouse address by ourselves instead of automatically selecting it.
+
+```console
+$ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
+```
+
+### XMAKE_BINARY_REPO
+
+- Set the official package pre-compiled warehouse address
+
+Similar to `XMAKE_MAIN_REPO`, the only difference is that this is used to switch the address of the pre-compiled warehouse.
+
+```console
+$ export XMAKE_MAIN_REPO = https://github.com/xmake-mirror/build-artifacts.git
+```
+
 ### XMAKE_STATS
 
 -Enable or disable user statistics
