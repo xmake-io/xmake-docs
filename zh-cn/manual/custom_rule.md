@@ -631,7 +631,7 @@ cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
 
 #### utils.glsl2spv
 
-v2.6.1 以上版本可以使用次规则，在项目中引入 `*.vert/*.frag` 等 glsl shader 文件，然后实现自动编译生成 `*.spv` 文件。
+v2.6.1 以上版本可以使用此规则，在项目中引入 `*.vert/*.frag` 等 glsl shader 文件，然后实现自动编译生成 `*.spv` 文件。
 
 另外，我们还支持以 C/C++ 头文件的方式，二进制内嵌 spv 文件数据，方便程序使用。
 
