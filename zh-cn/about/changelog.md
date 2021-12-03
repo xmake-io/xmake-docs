@@ -1,3 +1,30 @@
+## v2.6.1
+
+### 新特性
+
+* [#1799](https://github.com/xmake-io/xmake/issues/1799): 支持混合 Rust 和 C++ 程序，以及集成 Cargo 依赖库
+* 添加 `utils.glsl2spv` 规则去编译 *.vert/*.frag shader 文件生成 spirv 文件和二进制 C 头文件
+
+### 改进
+
+* 默认切换到 Lua5.4 运行时
+* [#1776](https://github.com/xmake-io/xmake/issues/1776): 改进 system::find_package，支持从环境变量中查找系统库
+* [#1786](https://github.com/xmake-io/xmake/issues/1786): 改进 apt:find_package，支持查找 alias 包
+* [#1819](https://github.com/xmake-io/xmake/issues/1819): 添加预编译头到 cmake 生成器
+* 改进 C++20 Modules 为 msvc 支持 std 标准库
+* [#1792](https://github.com/xmake-io/xmake/issues/1792): 添加自定义命令到 vs 工程生成器
+* [#1835](https://github.com/xmake-io/xmake/issues/1835): 改进 MDK 程序构建支持，增加 `set_runtimes("microlib")`
+* [#1858](https://github.com/xmake-io/xmake/issues/1858): 改进构建 c++20 modules，修复跨 target 构建问题
+* 添加 $XMAKE_BINARY_REPO 和 $XMAKE_MAIN_REPO 仓库设置环境变量
+* [#1865](https://github.com/xmake-io/xmake/issues/1865): 改进 openmp 工程
+* [#1845](https://github.com/xmake-io/xmake/issues/1845): 为静态库安装 pdb 文件
+
+### Bugs 修复
+
+* 修复语义版本中解析带有 0 前缀的 build 字符串问题
+* [#50](https://github.com/libbpf/libbpf-bootstrap/issues/50): 修复 rule 和构建 bpf 程序 bug
+* [#1610](https://github.com/xmake-io/xmake/issues/1610): 修复 `xmake f --menu` 在 vscode 终端下按键无响应，并且支持 ConPTY 终端虚拟按键
+
 ## v2.5.9
 
 ### 新特性

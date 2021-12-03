@@ -90,7 +90,33 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v259">v2.5.9</h2>
+    <h2 id="v261">v2.6.1</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1799">#1799</a>: Support mixed rust &amp; c++ target and cargo dependences</li>
+<li>Add <code>utils.glsl2spv</code> rules to compile <em>.vert/</em>.frag shader files to spirv file and binary c header file</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Switch to Lua5.4 runtime by default</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1776">#1776</a>: Improve system::find_package, support to find package from envs</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1786">#1786</a>: Improve apt:find_package, support to find alias package</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1819">#1819</a>: Add precompiled header to cmake generator</li>
+<li>Improve C++20 module to support std libraries for msvc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1792">#1792</a>: Add custom command in vs project generator</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1835">#1835</a>: Improve MDK program supports and add <code>set_runtimes("microlib")</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1858">#1858</a>: Improve to build c++20 modules with libraries</li>
+<li>Add $XMAKE_BINARY_REPO and $XMAKE_MAIN_REPO repositories envs</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1865">#1865</a>: Improve openmp projects</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1845">#1845</a>: Install pdb files for static library</li>
+</ul>
+<h3 id="bugsfixed">Bugs Fixed</h3>
+<ul>
+<li>Fix semver to parse build string with zero prefix</li>
+<li><a href="https://github.com/libbpf/libbpf-bootstrap/issues/50">#50</a>: Fix rule and build bpf program errors</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1610">#1610</a>: Fix <code>xmake f --menu</code> not responding in vscode and support ConPTY terminal virtkeys</li>
+</ul>
+<h2 id="v259">v2.5.9</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/1736">#1736</a>: Support wasi-sdk toolchain</li>

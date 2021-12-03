@@ -1,3 +1,31 @@
+
+## v2.6.1
+
+### New features
+
+* [#1799](https://github.com/xmake-io/xmake/issues/1799): Support mixed rust & c++ target and cargo dependences
+* Add `utils.glsl2spv` rules to compile *.vert/*.frag shader files to spirv file and binary c header file
+
+### Changes
+
+* Switch to Lua5.4 runtime by default
+* [#1776](https://github.com/xmake-io/xmake/issues/1776): Improve system::find_package, support to find package from envs
+* [#1786](https://github.com/xmake-io/xmake/issues/1786): Improve apt:find_package, support to find alias package
+* [#1819](https://github.com/xmake-io/xmake/issues/1819): Add precompiled header to cmake generator
+* Improve C++20 module to support std libraries for msvc
+* [#1792](https://github.com/xmake-io/xmake/issues/1792): Add custom command in vs project generator
+* [#1835](https://github.com/xmake-io/xmake/issues/1835): Improve MDK program supports and add `set_runtimes("microlib")`
+* [#1858](https://github.com/xmake-io/xmake/issues/1858): Improve to build c++20 modules with libraries
+* Add $XMAKE_BINARY_REPO and $XMAKE_MAIN_REPO repositories envs
+* [#1865](https://github.com/xmake-io/xmake/issues/1865): Improve openmp projects
+* [#1845](https://github.com/xmake-io/xmake/issues/1845): Install pdb files for static library
+
+### Bugs Fixed
+
+* Fix semver to parse build string with zero prefix
+* [#50](https://github.com/libbpf/libbpf-bootstrap/issues/50): Fix rule and build bpf program errors
+* [#1610](https://github.com/xmake-io/xmake/issues/1610): Fix `xmake f --menu` not responding in vscode and support ConPTY terminal virtkeys
+
 ## v2.5.9
 
 ### New features
