@@ -241,7 +241,7 @@ $ xmake
 
 更多详情可以参考：[#159](https://github.com/xmake-io/xmake/issues/159)
 
-相关完整工程example见：[WDK examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/wdk)
+相关完整工程example见：[WDK examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/windows/driver)
 
 ### umdf驱动程序
 

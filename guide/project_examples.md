@@ -239,7 +239,7 @@ $ xmake
 
 If you want to known more information, you can see [#159](https://github.com/xmake-io/xmake/issues/159).
 
-And see [WDK examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/wdk)
+And see [WDK examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/windows/driver)
 
 ### UMDF Driver Program
 
