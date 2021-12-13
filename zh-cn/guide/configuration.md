@@ -1064,6 +1064,16 @@ $ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
 $ export XMAKE_MAIN_REPO = https://github.com/xmake-mirror/build-artifacts.git
 ```
 
+### XMAKE_THEME
+
+- 设置主题
+
+通常我们可以通过 `xmake g --theme=plain` 来设置颜色主题，但是它是全局的，如果想单独对当前终端会话设置，我们就可以使用这个环境变量来设置。
+
+```console
+$ export XMAKE_THEME=plain
+```
+
 ### XMAKE_STATS
 
 - 开启或禁用用户量统计

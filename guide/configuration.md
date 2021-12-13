@@ -1039,6 +1039,16 @@ Similar to `XMAKE_MAIN_REPO`, the only difference is that this is used to switch
 $ export XMAKE_MAIN_REPO = https://github.com/xmake-mirror/build-artifacts.git
 ```
 
+### XMAKE_THEME
+
+- Set theme
+
+Usually we can set the color theme through `xmake g --theme=plain`, but it is global. If we want to set the current terminal session individually, we can use this environment variable to set it.
+
+```console
+$ export XMAKE_THEME=plain
+```
+
 ### XMAKE_STATS
 
 -Enable or disable user statistics
