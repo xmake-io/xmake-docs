@@ -505,7 +505,7 @@ int main(int argc, char** argv)
   0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
 </code></pre>
 <h4 id="utilsglsl2spv">utils.glsl2spv</h4>
-<p>v2.6.1 以上版本可以使用次规则，在项目中引入 <code>*.vert/*.frag</code> 等 glsl shader 文件，然后实现自动编译生成 <code>*.spv</code> 文件。</p>
+<p>v2.6.1 以上版本可以使用此规则，在项目中引入 <code>*.vert/*.frag</code> 等 glsl shader 文件，然后实现自动编译生成 <code>*.spv</code> 文件。</p>
 <p>另外，我们还支持以 C/C++ 头文件的方式，二进制内嵌 spv 文件数据，方便程序使用。</p>
 <h5 id="spv">编译生成 spv 文件</h5>
 <p>xmake 会自动调用 glslangValidator 或者 glslc 去编译 shaders 生成 .spv 文件，然后输出到指定的 <code>{outputdir = "build"}</code> 目录下。</p>

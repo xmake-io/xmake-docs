@@ -934,6 +934,13 @@ https://gitee.com/tboox/xmake-repo.git
 <p>Similar to <code>XMAKE_MAIN_REPO</code>, the only difference is that this is used to switch the address of the pre-compiled warehouse.</p>
 <pre><code class="lang-console">$ export XMAKE_MAIN_REPO = https://github.com/xmake-mirror/build-artifacts.git
 </code></pre>
+<h3 id="xmake_theme">XMAKE_THEME</h3>
+<ul>
+<li>Set theme</li>
+</ul>
+<p>Usually we can set the color theme through <code>xmake g --theme=plain</code>, but it is global. If we want to set the current terminal session individually, we can use this environment variable to set it.</p>
+<pre><code class="lang-console">$ export XMAKE_THEME=plain
+</code></pre>
 <h3 id="xmake_stats">XMAKE_STATS</h3>
 <p>-Enable or disable user statistics</p>
 <p>Since xmake is still in the early stages of development, we need to know the approximate user growth in order to provide us with the motivation to continue to update xmake.</p>
