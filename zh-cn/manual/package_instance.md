@@ -96,7 +96,7 @@ package:is_plat("windows", "linux", "macosx")
 
 #### package:is_arch
 
-- 当前平台是否是给定平台之一
+- 当前架构是否是给定架构之一
 
 ```lua
 -- Is the current architecture x86

@@ -44,6 +44,36 @@ target:add("defines", "SDL_MAIN_HANDLED")
 
 Corresponding to `set_kind` description domain interface settings. The main target types are: binary, static, shared, phony, object, headeronly.
 
+#### target:is_plat
+
+- Whether the current platform is one of the given platforms
+
+Although we can also use the `is_plat` global interface to directly determine the platform, xmake supports the use of `set_plat` to set the compilation platform separately for a specific target.
+
+At this time, using the global interface is not applicable, so we usually recommend using the interface provided by the target to directly determine the compilation platform for the current target, which is more reliable.
+
+```lua
+- Is the current platform android?
+target:is_plat("android")
+- Is the current platform windows, linux or macosx?
+target:is_plat("windows", "linux", "macosx")
+```
+
+#### target:is_arch
+
+- Is the current architecture one of the given architectures
+
+Although we can also use the `is_arch` global interface to directly determine the architecture, xmake supports the use of `set_arch` to set the compilation architecture separately for a specific target.
+
+At this time, using the global interface is not applicable, so we usually recommend using the interface provided by the target to directly judge the compilation architecture of the current target, which is more reliable.
+
+```lua
+- Is the current architecture x86
+target:is_arch("x86")
+- Is the current architecture x64 or x86_64
+target:is_arch("x64", "x86_64")
+```
+
 #### target:targetfile
 
 - Get the target file path
@@ -174,5 +204,10 @@ for _, headerfile in ipairs(target:headerfiles()) do
 end
 ```
 
+#### target:scriptdir
+
+- Get the xmake.lua directory where the target definition is located
+
+This is usually used in custom rules. If you want to get the directory where the current target is actually defined in xmake.lua, it is convenient to reference some resource files. You can use this interface.
 
 !> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr

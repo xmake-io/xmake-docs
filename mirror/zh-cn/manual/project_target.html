@@ -2029,6 +2029,11 @@ ${define HAS_ZOO}
 </code></pre>
 <p>set_configvar 可以设置 number，string 和 boolean 类型值，如果是 string 值，默认生成的宏定义带有引号，如果要去掉引号，可以设置 <code>{quote = false}</code>。</p>
 <p>相关 issues 见：<a href="https://github.com/xmake-io/xmake/issues/1694">#1694</a></p>
+<p>对于，宏定义里面有路径，需要转义处理路径分隔符的，我们也可以配置开启路径字符转义。</p>
+<pre><code class="lang-lua">set_configvar("TEST", "C:\\hello", {escape = true})
+</code></pre>
+<p>它会自动转义成 <code>#define TEST "C:\\hello"</code> ，如果没开启转义，则会变成：<code>#define TEST "C:\hello"</code></p>
+<p>相关 issues 见：<a href="https://github.com/xmake-io/xmake/issues/1872">#1872</a></p>
 <h3 id="targetadd_configfiles">target:add_configfiles</h3>
 <h4 id="">添加模板配置文件</h4>
 <p>2.2.5版本新增接口，用于在编译前，添加一些需要预处理的配置文件。</p>

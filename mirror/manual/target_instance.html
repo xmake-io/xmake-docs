@@ -127,6 +127,28 @@ target:add("defines", "SDL_MAIN_HANDLED")
 <li>Get the target program type</li>
 </ul>
 <p>Corresponding to <code>set_kind</code> description domain interface settings. The main target types are: binary, static, shared, phony, object, headeronly.</p>
+<h4 id="targetis_plat">target:is_plat</h4>
+<ul>
+<li>Whether the current platform is one of the given platforms</li>
+</ul>
+<p>Although we can also use the <code>is_plat</code> global interface to directly determine the platform, xmake supports the use of <code>set_plat</code> to set the compilation platform separately for a specific target.</p>
+<p>At this time, using the global interface is not applicable, so we usually recommend using the interface provided by the target to directly determine the compilation platform for the current target, which is more reliable.</p>
+<pre><code class="lang-lua">- Is the current platform android?
+target:is_plat("android")
+- Is the current platform windows, linux or macosx?
+target:is_plat("windows", "linux", "macosx")
+</code></pre>
+<h4 id="targetis_arch">target:is_arch</h4>
+<ul>
+<li>Is the current architecture one of the given architectures</li>
+</ul>
+<p>Although we can also use the <code>is_arch</code> global interface to directly determine the architecture, xmake supports the use of <code>set_arch</code> to set the compilation architecture separately for a specific target.</p>
+<p>At this time, using the global interface is not applicable, so we usually recommend using the interface provided by the target to directly judge the compilation architecture of the current target, which is more reliable.</p>
+<pre><code class="lang-lua">- Is the current architecture x86
+target:is_arch("x86")
+- Is the current architecture x64 or x86_64
+target:is_arch("x64", "x86_64")
+</code></pre>
 <h4 id="targettargetfile">target:targetfile</h4>
 <ul>
 <li>Get the target file path</li>
@@ -230,6 +252,11 @@ end
     - TODO
 end
 </code></pre>
+<h4 id="targetscriptdir">target:scriptdir</h4>
+<ul>
+<li>Get the xmake.lua directory where the target definition is located</li>
+</ul>
+<p>This is usually used in custom rules. If you want to get the directory where the current target is actually defined in xmake.lua, it is convenient to reference some resource files. You can use this interface.</p>
 <p>!> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr</p>
 </article>
 </body>

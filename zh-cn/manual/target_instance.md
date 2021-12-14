@@ -46,6 +46,36 @@ target:add("defines", "SDL_MAIN_HANDLED")
 
 对应 `set_kind` 描述域接口设置。目标类型主要有：binary, static, shared, phony, object, headeronly。
 
+#### target:is_plat
+
+- 当前平台是否是给定平台之一
+
+尽管，我们也可以用 `is_plat` 全局接口直接判断平台，但是 xmake 支持使用 `set_plat` 针对特定 target 单独设置编译平台。
+
+这个时候，使用全局接口，就不适用了，所以通常我们推荐使用 target 提供的接口，来直接对当前 target 判断编译平台，更加可靠。
+
+```lua
+-- Is the current platform android?
+target:is_plat("android")
+-- Is the current platform windows, linux or macosx?
+target:is_plat("windows", "linux", "macosx")
+```
+
+#### target:is_arch
+
+- 当前架构是否是给定架构之一
+
+尽管，我们也可以用 `is_arch` 全局接口直接判断架构，但是 xmake 支持使用 `set_arch` 针对特定 target 单独设置编译架构。
+
+这个时候，使用全局接口，就不适用了，所以通常我们推荐使用 target 提供的接口，来直接对当前 target 判断编译架构，更加可靠。
+
+```lua
+-- Is the current architecture x86
+target:is_arch("x86")
+-- Is the current architecture x64 or x86_64
+target:is_arch("x64", "x86_64")
+```
+
 #### target:targetfile
 
 - 获取目标文件路径
@@ -175,6 +205,12 @@ for _, headerfile in ipairs(target:headerfiles()) do
     -- TODO
 end
 ```
+
+#### target:scriptdir
+
+- 获取目标定义所在的 xmake.lua 目录
+
+这通常在自定义规则中使用的比较多，想获取当前 target 实际被定义在哪个 xmake.lua 所在目录下，方便引用一些资源文件，可以用这个接口。
 
 
 !> 此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新

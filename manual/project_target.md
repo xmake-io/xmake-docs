@@ -2302,6 +2302,16 @@ set_configvar can set number, string and boolean type values. If it is a string 
 
 For related issues, see: [#1694](https://github.com/xmake-io/xmake/issues/1694)
 
+If there is a path in the macro definition, and the path separator needs to be escaped, we can also configure to enable path character escaping.
+
+```lua
+set_configvar("TEST", "C:\\hello", {escape = true})
+```
+
+It will be automatically escaped into `#define TEST "C:\\hello"`, if escaping is not turned on, it will become: `#define TEST "C:\hello"`
+
+For related issues, see: [#1872](https://github.com/xmake-io/xmake/issues/1872)
+
 ### target:add_configfiles
 
 #### Add template configuration files

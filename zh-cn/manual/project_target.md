@@ -2310,6 +2310,16 @@ set_configvar 可以设置 number，string 和 boolean 类型值，如果是 str
 
 相关 issues 见：[#1694](https://github.com/xmake-io/xmake/issues/1694)
 
+对于，宏定义里面有路径，需要转义处理路径分隔符的，我们也可以配置开启路径字符转义。
+
+```lua
+set_configvar("TEST", "C:\\hello", {escape = true})
+```
+
+它会自动转义成 `#define TEST "C:\\hello"` ，如果没开启转义，则会变成：`#define TEST "C:\hello"`
+
+相关 issues 见：[#1872](https://github.com/xmake-io/xmake/issues/1872)
+
 ### target:add_configfiles
 
 #### 添加模板配置文件
