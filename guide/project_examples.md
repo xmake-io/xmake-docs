@@ -846,7 +846,7 @@ add_rules("mode.debug", "mode.release")
 
 target("test")
     set_kind("binary")
-    add_files("src/*.rs")
+    add_files("src/main.rs")
 ```
 
 For more examples, see: [Rust Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/rust)
