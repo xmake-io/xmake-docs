@@ -27,6 +27,9 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay     | money  | comment                                                                 |
 |--          | --                                    | --      | --     | --                                                                      |
+| 2021.12.14 | SirLynix                                   | Github    |  $10  |                                                     |
+| 2021.12.14 | sytru                                   | alipay    |  ¥50  |                                                     |
+| 2021.12.14 | 翅膀                                   | wechat    |  ¥100  |                                                     |
 | 2021.11.15 | 朱*                                   | alipay    |  ¥50  | xmake非常好用，继续加油！                                                    |
 | 2021.10.04 | S*o                                   | wechat     |  ¥100  | 加油                                                    |
 | 2021.09.23 | fhhddgkhg                                   | alipay     |  ¥20  |                                                   |
