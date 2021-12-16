@@ -224,21 +224,21 @@ target("test")
 <pre><code class="lang-lua">add_requires("cmake::OpenCV 4.1.1", {system = true})
 </code></pre>
 <h4 id="">指定组件</h4>
-<pre><code class="lang-lua">add_requires("cmake::Boost", {configs = {components = {"regex", "system"}})}
+<pre><code class="lang-lua">add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"}})}
 </code></pre>
 <h4 id="">预设开关</h4>
-<pre><code class="lang-lua">add_requires("cmake::Boost", {configs = {components = {"regex", "system"},
-                                         presets = {Boost_USE_STATIC_LIB = true}})}
+<pre><code class="lang-lua">add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"},
+                                             presets = {Boost_USE_STATIC_LIB = true}}})
 </code></pre>
 <p>相当于内部调用 find_package 查找包之前，在 CMakeLists.txt 中预定义一些配置，控制 find_package 的查找策略和状态。</p>
 <pre><code>set(Boost_USE_STATIC_LIB ON) -- will be used in FindBoost.cmake
 find_package(Boost REQUIRED COMPONENTS regex system)
 </code></pre><h4 id="">设置环境变量</h4>
-<pre><code class="lang-lua">add_requires("cmake::OpenCV", {configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
+<pre><code class="lang-lua">add_requires("cmake::OpenCV", {system = true, configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
 </code></pre>
 <h4 id="findfoocmake">指定自定义 FindFoo.cmake 模块脚本目录</h4>
 <p>mydir/cmake_modules/FindFoo.cmake</p>
-<pre><code class="lang-lua">add_requires("cmake::Foo", {configs = {moduledirs = "mydir/cmake_modules"}})
+<pre><code class="lang-lua">add_requires("cmake::Foo", {system = true, configs = {moduledirs = "mydir/cmake_modules"}})
 </code></pre>
 <p>相关 issues: <a href="https://github.com/xmake-io/xmake/issues/1632">#1632</a></p>
 </article>

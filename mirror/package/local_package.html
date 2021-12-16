@@ -224,21 +224,21 @@ target("test")
 <pre><code class="lang-lua">add_requires("cmake::OpenCV 4.1.1", {system = true})
 </code></pre>
 <h4 id="specifiedcomponents">Specified components</h4>
-<pre><code class="lang-lua">add_requires("cmake::Boost", {configs = {components = {"regex", "system"}}))
+<pre><code class="lang-lua">add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"}}))
 </code></pre>
 <h4 id="defaultswitch">Default switch</h4>
-<pre><code class="lang-lua">add_requires("cmake::Boost", {configs = {components = {"regex", "system"},
-                                         presets = {Boost_USE_STATIC_LIB = true}})}
+<pre><code class="lang-lua">add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"},
+                                             presets = {Boost_USE_STATIC_LIB = true}}})
 </code></pre>
 <p>It is equivalent to predefine some configurations in CMakeLists.txt before calling find_package internally to find the package to control the find_package search strategy and status.</p>
 <pre><code>set(Boost_USE_STATIC_LIB ON) - will be used in FindBoost.cmake
 find_package(Boost REQUIRED COMPONENTS regex system)
 </code></pre><h4 id="setenvironmentvariables">Set environment variables</h4>
-<pre><code class="lang-lua">add_requires("cmake::OpenCV", {configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
+<pre><code class="lang-lua">add_requires("cmake::OpenCV", {system = true, configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
 </code></pre>
 <h4 id="specifycustomfindfoocmakemodulescriptdirectory">Specify custom FindFoo.cmake module script directory</h4>
 <p>mydir/cmake_modules/FindFoo.cmake</p>
-<pre><code class="lang-lua">add_requires("cmake::Foo", {configs = {moduledirs = "mydir/cmake_modules"}})
+<pre><code class="lang-lua">add_requires("cmake::Foo", {system = true, configs = {moduledirs = "mydir/cmake_modules"}})
 </code></pre>
 <p>Related issues: <a href="https://github.com/xmake-io/xmake/issues/1632">#1632</a></p>
 </article>

@@ -183,14 +183,14 @@ add_requires("cmake::OpenCV 4.1.1", {system = true})
 #### 指定组件
 
 ```lua
-add_requires("cmake::Boost", {configs = {components = {"regex", "system"}})}
+add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"}})}
 ```
 
 #### 预设开关
 
 ```lua
-add_requires("cmake::Boost", {configs = {components = {"regex", "system"},
-                                         presets = {Boost_USE_STATIC_LIB = true}})}
+add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"},
+                                             presets = {Boost_USE_STATIC_LIB = true}}})
 ```
 
 相当于内部调用 find_package 查找包之前，在 CMakeLists.txt 中预定义一些配置，控制 find_package 的查找策略和状态。
@@ -203,7 +203,7 @@ find_package(Boost REQUIRED COMPONENTS regex system)
 #### 设置环境变量
 
 ```lua
-add_requires("cmake::OpenCV", {configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
+add_requires("cmake::OpenCV", {system = true, configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
 ```
 
 #### 指定自定义 FindFoo.cmake 模块脚本目录
@@ -211,7 +211,7 @@ add_requires("cmake::OpenCV", {configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
 mydir/cmake_modules/FindFoo.cmake
 
 ```lua
-add_requires("cmake::Foo", {configs = {moduledirs = "mydir/cmake_modules"}})
+add_requires("cmake::Foo", {system = true, configs = {moduledirs = "mydir/cmake_modules"}})
 ```
 
 相关 issues: [#1632](https://github.com/xmake-io/xmake/issues/1632)

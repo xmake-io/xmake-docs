@@ -182,14 +182,14 @@ add_requires("cmake::OpenCV 4.1.1", {system = true})
 #### Specified components
 
 ```lua
-add_requires("cmake::Boost", {configs = {components = {"regex", "system"}}))
+add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"}}))
 ```
 
 #### Default switch
 
 ```lua
-add_requires("cmake::Boost", {configs = {components = {"regex", "system"},
-                                         presets = {Boost_USE_STATIC_LIB = true}})}
+add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"},
+                                             presets = {Boost_USE_STATIC_LIB = true}}})
 ```
 
 It is equivalent to predefine some configurations in CMakeLists.txt before calling find_package internally to find the package to control the find_package search strategy and status.
@@ -202,7 +202,7 @@ find_package(Boost REQUIRED COMPONENTS regex system)
 #### Set environment variables
 
 ```lua
-add_requires("cmake::OpenCV", {configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
+add_requires("cmake::OpenCV", {system = true, configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
 ```
 
 #### Specify custom FindFoo.cmake module script directory
@@ -210,7 +210,7 @@ add_requires("cmake::OpenCV", {configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
 mydir/cmake_modules/FindFoo.cmake
 
 ```lua
-add_requires("cmake::Foo", {configs = {moduledirs = "mydir/cmake_modules"}})
+add_requires("cmake::Foo", {system = true, configs = {moduledirs = "mydir/cmake_modules"}})
 ```
 
 Related issues: [#1632](https://github.com/xmake-io/xmake/issues/1632)
