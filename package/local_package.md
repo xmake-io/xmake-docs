@@ -158,23 +158,43 @@ $ xmake l find_package cmake::LibXml2
   }
 }
 ```
+#### Integrate the package in the project
+
+If we integrate and find cmake dependent packages in the xmake.lua project configuration, we usually don't need to use find_package directly, and we can use a more general and simple package integration method.
+
+```lua
+add_requires("cmake::ZLIB", {alias = "zlib", system = true})
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+```
+
+We specify `system = true` to tell xmake to force cmake to find the package from the system. If it cannot be found, the installation logic will not be followed, because cmake does not provide the installation function of package managers such as vcpkg/conan.
+Only the package search feature is provided.
 
 #### Specify version
 
 ```lua
-find_package("cmake::OpenCV", {required_version = "4.1.1"})
+add_requires("cmake::OpenCV 4.1.1", {system = true})
 ```
 
 #### Specified components
 
 ```lua
-find_package("cmake::Boost", {components = {"regex", "system"}})
+add_requires("cmake::Boost", {configs = {components = {"regex", "system"}}))
 ```
 
 #### Default switch
 
 ```lua
-find_package("cmake::Boost", {components = {"regex", "system"}, presets = {Boost_USE_STATIC_LIB = true}})
+add_requires("cmake::Boost", {configs = {components = {"regex", "system"},
+                                         presets = {Boost_USE_STATIC_LIB = true}})}
+```
+
+It is equivalent to predefine some configurations in CMakeLists.txt before calling find_package internally to find the package to control the find_package search strategy and status.
+
+```
 set(Boost_USE_STATIC_LIB ON) - will be used in FindBoost.cmake
 find_package(Boost REQUIRED COMPONENTS regex system)
 ```
@@ -182,7 +202,7 @@ find_package(Boost REQUIRED COMPONENTS regex system)
 #### Set environment variables
 
 ```lua
-find_package("cmake::OpenCV", {envs = {CMAKE_PREFIX_PATH = "xxx"}})
+add_requires("cmake::OpenCV", {configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
 ```
 
 #### Specify custom FindFoo.cmake module script directory
@@ -190,36 +210,7 @@ find_package("cmake::OpenCV", {envs = {CMAKE_PREFIX_PATH = "xxx"}})
 mydir/cmake_modules/FindFoo.cmake
 
 ```lua
-find_package("cmake::Foo", {moduledirs = "mydir/cmake_modules"})
-```
-
-#### Package dependency integration
-
-```lua
-package("xxx")
-    on_fetch(function (package, opt)
-         return package:find_package("cmake::xxx", opt)
-    end)
-package_end()
-
-add_requires("xxx")
-```
-
-#### Package dependency integration (optional component)
-
-```lua
-package("boost")
-    add_configs("regex", {description = "Enable regex.", default = false, type = "boolean"})
-    on_fetch(function (package, opt)
-         opt.components = {}
-         if package:config("regex") then
-             table.insert(opt.components, "regex")
-         end
-         return package:find_package("cmake::Boost", opt)
-    end)
-package_end()
-
-add_requires("boost", {configs = {regex = true}})
+add_requires("cmake::Foo", {configs = {moduledirs = "mydir/cmake_modules"}})
 ```
 
 Related issues: [#1632](https://github.com/xmake-io/xmake/issues/1632)

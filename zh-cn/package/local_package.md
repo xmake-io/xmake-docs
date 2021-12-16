@@ -159,22 +159,43 @@ $ xmake l find_package cmake::LibXml2
 }
 ```
 
+#### 在项目中集成包
+
+如果我们在 xmake.lua 项目配置中集成查找 cmake 的依赖包，通常不需要直接使用 find_package，我们可以用更加通用、简单的包集成方式。
+
+```lua
+add_requires("cmake::ZLIB", {alias = "zlib", system = true})
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+```
+
+我们指定 `system = true` 告诉 xmake 强制从系统中调用 cmake 查找包，如果找不到，不再走安装逻辑，因为 cmake 没有提供类似 vcpkg/conan 等包管理器的安装功能，
+只提供了包查找特性。
+
 #### 指定版本
 
 ```lua
-find_package("cmake::OpenCV", {required_version = "4.1.1"})
+add_requires("cmake::OpenCV 4.1.1", {system = true})
 ```
 
 #### 指定组件
 
 ```lua
-find_package("cmake::Boost", {components = {"regex", "system"}})
+add_requires("cmake::Boost", {configs = {components = {"regex", "system"}})}
 ```
 
 #### 预设开关
 
 ```lua
-find_package("cmake::Boost", {components = {"regex", "system"}, presets = {Boost_USE_STATIC_LIB = true}})
+add_requires("cmake::Boost", {configs = {components = {"regex", "system"},
+                                         presets = {Boost_USE_STATIC_LIB = true}})}
+```
+
+相当于内部调用 find_package 查找包之前，在 CMakeLists.txt 中预定义一些配置，控制 find_package 的查找策略和状态。
+
+```
 set(Boost_USE_STATIC_LIB ON) -- will be used in FindBoost.cmake
 find_package(Boost REQUIRED COMPONENTS regex system)
 ```
@@ -182,7 +203,7 @@ find_package(Boost REQUIRED COMPONENTS regex system)
 #### 设置环境变量
 
 ```lua
-find_package("cmake::OpenCV", {envs = {CMAKE_PREFIX_PATH = "xxx"}})
+add_requires("cmake::OpenCV", {configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
 ```
 
 #### 指定自定义 FindFoo.cmake 模块脚本目录
@@ -190,36 +211,7 @@ find_package("cmake::OpenCV", {envs = {CMAKE_PREFIX_PATH = "xxx"}})
 mydir/cmake_modules/FindFoo.cmake
 
 ```lua
-find_package("cmake::Foo", {moduledirs = "mydir/cmake_modules"})
-```
-
-#### 包依赖集成
-
-```lua
-package("xxx")
-    on_fetch(function (package, opt)
-         return package:find_package("cmake::xxx", opt)
-    end)
-package_end()
-
-add_requires("xxx")
-```
-
-#### 包依赖集成（可选组件）
-
-```lua
-package("boost")
-    add_configs("regex",   { description = "Enable regex.", default = false, type = "boolean"})
-    on_fetch(function (package, opt)
-         opt.components = {}
-         if package:config("regex") then
-             table.insert(opt.components, "regex")
-         end
-         return package:find_package("cmake::Boost", opt)
-    end)
-package_end()
-
-add_requires("boost", {configs = {regex = true}})
+add_requires("cmake::Foo", {configs = {moduledirs = "mydir/cmake_modules"}})
 ```
 
 相关 issues: [#1632](https://github.com/xmake-io/xmake/issues/1632)
