@@ -2290,7 +2290,8 @@ target("test")
 <p>Issues related to this api: <a href="https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681">#1071</a></p>
 <h3 id="targetset_group">target:set_group</h3>
 <h4 id="settargetgroup">Set target group</h4>
-<p>At present, this interface is only used to generate the vs/vsxmake project. The sub-project directory tree of the vs project is displayed in groups according to the specified structure, but grouping support may be added to other modules in the future.</p>
+<h5 id="usedforgroupdisplayofprojectfiles">Used for group display of project files</h5>
+<p>This interface can be used to generate the vs/vsxmake project. The directory tree of the internal subprojects of the vs project is grouped and displayed according to the specified structure. However, grouping support may be added to other modules in the future.</p>
 <p>For example, for the following grouping configuration:</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 
@@ -2325,6 +2326,36 @@ target("test6")
 <p>The effect of the generated VS project directory structure is as follows:</p>
 <p><img src="assets/img/manual/set_group.png" alt=""></p>
 <p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1026">#1026</a></p>
+<h5 id="compileandspecifyabatchoftargetprograms">Compile and specify a batch of target programs</h5>
+<p>We can use <code>set_group()</code> to mark a given target as <code>test/benchmark/...</code> and use <code>set_default(false)</code> to disable to build it by default.</p>
+<p>Then, through the <code>xmake -g xxx</code> command, you can specify to build a batch of target programs.</p>
+<p>For example, we can use this feature to build all tests.</p>
+<pre><code class="lang-lua">target("test1")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+
+target("test2")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+</code></pre>
+<pre><code class="lang-console">$ xmake -g test
+$ xmake --group=test
+</code></pre>
+<h5 id="runaspecifiedbatchoftargetprograms">Run a specified batch of target programs</h5>
+<p>We can also specify to run all test programs with the <code>test</code> group by setting the group.</p>
+<pre><code class="lang-console">$ xmake run -g test
+$ xmake run --group=test
+</code></pre>
+<p>In addition, we can also support grouped pattern matching:</p>
+<pre><code>$ xmake build -g test_*
+$ xmake run -g test/foo_*
+$ xmake build -g bench*
+$ xmake run -g bench*
+</code></pre><p>For more information: <a href="https://github.com/xmake-io/xmake/issues/1913">#1913</a></p>
 </article>
 </body>
 </html>

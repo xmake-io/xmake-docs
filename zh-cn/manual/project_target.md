@@ -2697,7 +2697,9 @@ target("test")
 
 #### 设置目标分组
 
-目前此接口目前仅用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。
+##### 用于工程文件分组展示
+
+此接口可用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。
 
 比如对于下面的分组配置：
 
@@ -2741,3 +2743,49 @@ target("test6")
 
 更多详情见：[#1026](https://github.com/xmake-io/xmake/issues/1026)
 
+##### 编译指定一批目标程序
+
+我们可以使用 `set_group()` 将给定的目标标记为 `test/benchmark/...` 并使用 `set_default(false)` 禁用来默认构建它。
+
+然后，通过 `xmake -g xxx` 命令就能指定构建一批目标程序了。
+
+比如，我们可以使用此功能来构建所有测试。
+
+```lua
+target("test1")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+
+target("test2")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+```
+
+```console
+$ xmake -g test
+$ xmake --group=test
+```
+
+##### 运行指定一批目标程序
+
+我们也可以通过设置分组，来指定运行所有带有 `test` 分组的测试程序。
+
+```console
+$ xmake run -g test
+$ xmake run --group=test
+```
+
+另外，我们还可以支持分组的模式匹配：
+
+```
+$ xmake build -g test_*
+$ xmake run -g test/foo_*
+$ xmake build -g bench*
+$ xmake run -g bench*
+```
+
+更多信息见：[#1913](https://github.com/xmake-io/xmake/issues/1913)

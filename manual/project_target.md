@@ -2689,7 +2689,9 @@ Issues related to this api: [#1071](https://github.com/xmake-io/xmake/issues/107
 
 #### Set target group
 
-At present, this interface is only used to generate the vs/vsxmake project. The sub-project directory tree of the vs project is displayed in groups according to the specified structure, but grouping support may be added to other modules in the future.
+##### Used for group display of project files
+
+This interface can be used to generate the vs/vsxmake project. The directory tree of the internal subprojects of the vs project is grouped and displayed according to the specified structure. However, grouping support may be added to other modules in the future.
 
 For example, for the following grouping configuration:
 
@@ -2730,3 +2732,50 @@ The effect of the generated VS project directory structure is as follows:
 ![](assets/img/manual/set_group.png)
 
 For more details, please see: [#1026](https://github.com/xmake-io/xmake/issues/1026)
+
+##### Compile and specify a batch of target programs
+
+We can use `set_group()` to mark a given target as `test/benchmark/...` and use `set_default(false)` to disable to build it by default.
+
+Then, through the `xmake -g xxx` command, you can specify to build a batch of target programs.
+
+For example, we can use this feature to build all tests.
+
+```lua
+target("test1")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+
+target("test2")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+```
+
+```console
+$ xmake -g test
+$ xmake --group=test
+```
+
+##### Run a specified batch of target programs
+
+We can also specify to run all test programs with the `test` group by setting the group.
+
+```console
+$ xmake run -g test
+$ xmake run --group=test
+```
+
+In addition, we can also support grouped pattern matching:
+
+```
+$ xmake build -g test_*
+$ xmake run -g test/foo_*
+$ xmake build -g bench*
+$ xmake run -g bench*
+```
+
+For more information: [#1913](https://github.com/xmake-io/xmake/issues/1913)

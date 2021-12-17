@@ -2310,7 +2310,8 @@ target("test")
 <p>与此 api 相关的 issue：<a href="https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681">#1071</a></p>
 <h3 id="targetset_group">target:set_group</h3>
 <h4 id="">设置目标分组</h4>
-<p>目前此接口目前仅用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。</p>
+<h5 id="">用于工程文件分组展示</h5>
+<p>此接口可用于 vs/vsxmake 工程生成，对 vs 工程内部子工程目录树按指定结构分组展示，不过后续也可能对其他模块增加分组支持。</p>
 <p>比如对于下面的分组配置：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 
@@ -2346,6 +2347,36 @@ target("test6")
 <p><img src="assets/img/manual/set_group.png" alt=""></p>
 <p>其中 <code>set_group("group1/group2")</code> 可以将 target 设置到二级分组中去。</p>
 <p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/1026">#1026</a></p>
+<h5 id="">编译指定一批目标程序</h5>
+<p>我们可以使用 <code>set_group()</code> 将给定的目标标记为 <code>test/benchmark/...</code> 并使用 <code>set_default(false)</code> 禁用来默认构建它。</p>
+<p>然后，通过 <code>xmake -g xxx</code> 命令就能指定构建一批目标程序了。</p>
+<p>比如，我们可以使用此功能来构建所有测试。</p>
+<pre><code class="lang-lua">target("test1")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+
+target("test2")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+</code></pre>
+<pre><code class="lang-console">$ xmake -g test
+$ xmake --group=test
+</code></pre>
+<h5 id="">运行指定一批目标程序</h5>
+<p>我们也可以通过设置分组，来指定运行所有带有 <code>test</code> 分组的测试程序。</p>
+<pre><code class="lang-console">$ xmake run -g test
+$ xmake run --group=test
+</code></pre>
+<p>另外，我们还可以支持分组的模式匹配：</p>
+<pre><code>$ xmake build -g test_*
+$ xmake run -g test/foo_*
+$ xmake build -g bench*
+$ xmake run -g bench*
+</code></pre><p>更多信息见：<a href="https://github.com/xmake-io/xmake/issues/1913">#1913</a></p>
 </article>
 </body>
 </html>
