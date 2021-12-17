@@ -90,7 +90,30 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v261">v2.6.1</h2>
+    <h2 id="v262">v2.6.2</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1902">#1902</a>: 支持构建 linux 内核驱动模块</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1913">#1913</a>: 通过 group 模式匹配，指定构建和运行一批目标程序</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1872">#1872</a>: 支持转义 set_configvar 中字符串值</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1888">#1888</a>: 改进 windows 安装器，避免错误删除其他安装目录下的文件</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1895">#1895</a>: 改进 <code>plugin.vsxmake.autoupdate</code> 规则</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1893">#1893</a>: 改进探测 icc 和 ifort 工具链</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1905">#1905</a>: 改进 msvc 对 external 头文件搜索探测支持</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1904">#1904</a>: 改进 vs201x 工程生成器</li>
+<li>添加 <code>XMAKE_THEME</code> 环境变量去切换主题配置</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1907">#1907</a>: 添加 <code>-f/--force</code> 参数使得 <code>xmake create</code> 可以在费控目录被强制创建</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/1917">#1917</a>: 改进 find_package 和配置</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/1885">#1885</a>: 修复 package:fetch_linkdeps 链接顺序问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/1903">#1903</a>: 修复包链接顺序</li>
+</ul>
+<h2 id="v261">v2.6.1</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/1799">#1799</a>: 支持混合 Rust 和 C++ 程序，以及集成 Cargo 依赖库</li>

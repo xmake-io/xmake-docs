@@ -1,4 +1,28 @@
 
+## v2.6.2
+
+### New features
+
+* [#1902](https://github.com/xmake-io/xmake/issues/1902): Support to build linux kernel driver modules
+* [#1913](https://github.com/xmake-io/xmake/issues/1913): Build and run targets with given group pattern
+
+### Change
+
+* [#1872](https://github.com/xmake-io/xmake/issues/1872): Escape characters for set_configvar
+* [#1888](https://github.com/xmake-io/xmake/issues/1888): Improve windows installer to avoid remove other files
+* [#1895](https://github.com/xmake-io/xmake/issues/1895): Improve `plugin.vsxmake.autoupdate` rule
+* [#1893](https://github.com/xmake-io/xmake/issues/1893): Improve to detect icc and ifort toolchains
+* [#1905](https://github.com/xmake-io/xmake/pull/1905): Add support of external headers without experimental for msvc
+* [#1904](https://github.com/xmake-io/xmake/pull/1904): Improve vs201x generator
+* Add `XMAKE_THEME` envirnoment variable to switch theme
+* [#1907](https://github.com/xmake-io/xmake/issues/1907): Add `-f/--force` to force to create project in a non-empty directory
+* [#1917](https://github.com/xmake-io/xmake/pull/1917): Improve to find_package and configurations
+
+### Bugs fixed
+
+* [#1885](https://github.com/xmake-io/xmake/issues/1885): Fix package:fetch_linkdeps
+* [#1903](https://github.com/xmake-io/xmake/issues/1903): Fix package link order
+
 ## v2.6.1
 
 ### New features

@@ -1,3 +1,28 @@
+
+## v2.6.2
+
+### 新特性
+
+* [#1902](https://github.com/xmake-io/xmake/issues/1902): 支持构建 linux 内核驱动模块
+* [#1913](https://github.com/xmake-io/xmake/issues/1913): 通过 group 模式匹配，指定构建和运行一批目标程序
+
+### 改进
+
+* [#1872](https://github.com/xmake-io/xmake/issues/1872): 支持转义 set_configvar 中字符串值
+* [#1888](https://github.com/xmake-io/xmake/issues/1888): 改进 windows 安装器，避免错误删除其他安装目录下的文件
+* [#1895](https://github.com/xmake-io/xmake/issues/1895): 改进 `plugin.vsxmake.autoupdate` 规则
+* [#1893](https://github.com/xmake-io/xmake/issues/1893): 改进探测 icc 和 ifort 工具链
+* [#1905](https://github.com/xmake-io/xmake/pull/1905): 改进 msvc 对 external 头文件搜索探测支持
+* [#1904](https://github.com/xmake-io/xmake/pull/1904): 改进 vs201x 工程生成器
+* 添加 `XMAKE_THEME` 环境变量去切换主题配置
+* [#1907](https://github.com/xmake-io/xmake/issues/1907): 添加 `-f/--force` 参数使得 `xmake create` 可以在费控目录被强制创建
+* [#1917](https://github.com/xmake-io/xmake/pull/1917): 改进 find_package 和配置
+
+### Bugs 修复
+
+* [#1885](https://github.com/xmake-io/xmake/issues/1885): 修复 package:fetch_linkdeps 链接顺序问题
+* [#1903](https://github.com/xmake-io/xmake/issues/1903): 修复包链接顺序
+
 ## v2.6.1
 
 ### 新特性
