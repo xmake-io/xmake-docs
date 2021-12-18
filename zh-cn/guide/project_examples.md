@@ -1523,6 +1523,48 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 
 如果没找到，xmake 也会自动下载它，然后自动配置构建带有 driver modules 的内核源码后，使用它继续构建内核模块。
 
+#### 自定义 linux-headers 路径
+
+自从 v2.6.2 版本发布，有很多用户反馈，大多数情况下，linux 内核驱动构建都是基于定制版的 linux kernel，因此需要能够自定义配置 linux-headers 路径，而不是走远程依赖包模式。
+
+其实，我们通过自己重写 linux-headers 包，也是可以做到这一点的。
+
+```lua
+package("linux-headers")
+    on_fetch(function (package, opt)
+        return {includedirs = "/usr/src/linux-headers-5.0/include"}
+    end)
+package_end()
+
+add_requires("linux-headers")
+
+target("test")
+    add_rules("platform.linux.driver")
+    add_rules("src/*.c")
+    add_packages("linux-headers")
+```
+
+不过这样，也许还有点繁琐，因此在 v2.6.3 版本，我们支持更加方便的设置 linux-headers 路径。
+
+```lua
+target("hello")
+    add_rules("platform.linux.driver")
+    add_files("src/*.c")
+    set_values("linux.driver.linux-headers", "/usr/src/linux-headers-5.11.0-41-generic")
+```
+
+我们也可以通过定义 option 选项，将 linux-headers 路径作为 `xmake f --linux-headers=/usr/src/linux-headers` 的方式传入。
+
+```lua
+option("linux-headers", {showmenu = true, description = "Set linux-headers path."})
+target("hello")
+    add_rules("platform.linux.driver")
+    add_files("src/*.c")
+    set_values("linux.driver.linux-headers", "$(linux-headers)")
+```
+
+更多详情见：[#1923](https://github.com/xmake-io/xmake/issues/1923)
+
 #### 交叉编译
 
 我们也支持内核驱动模块的交叉编译，比如在 Linux x86_64 上使用交叉编译工具链来构建 Linux Arm/Arm64 的驱动模块。

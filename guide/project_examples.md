@@ -1518,6 +1518,48 @@ Through the `add_requires("linux-headers", {configs = {driver_modules = true}})`
 
 If it is not found, xmake will also automatically download it, and then automatically configure and build the kernel source code with driver modules, and use it to continue building the kernel module.
 
+#### Custom linux-headers path
+
+Since the release of v2.6.2, there have been many feedbacks from users. In most cases, the linux kernel driver is built based on a customized version of the linux kernel, so it is necessary to be able to customize the configuration of the linux-headers path instead of using the remote dependency package mode.
+
+In fact, we can do this by rewriting the linux-headers package ourselves.
+
+```lua
+package("linux-headers")
+    on_fetch(function (package, opt)
+        return {includedirs = "/usr/src/linux-headers-5.0/include"}
+    end)
+package_end()
+
+add_requires("linux-headers")
+
+target("test")
+    add_rules("platform.linux.driver")
+    add_rules("src/*.c")
+    add_packages("linux-headers")
+```
+
+But this may be a bit cumbersome, so in v2.6.3, we support more convenient setting of the linux-headers path.
+
+```lua
+target("hello")
+    add_rules("platform.linux.driver")
+    add_files("src/*.c")
+    set_values("linux.driver.linux-headers", "/usr/src/linux-headers-5.11.0-41-generic")
+```
+
+We can also pass in the linux-headers path as `xmake f --linux-headers=/usr/src/linux-headers` by defining option options.
+
+```lua
+option("linux-headers", {showmenu = true, description = "Set linux-headers path."})
+target("hello")
+    add_rules("platform.linux.driver")
+    add_files("src/*.c")
+    set_values("linux.driver.linux-headers", "$(linux-headers)")
+```
+
+For more details, please see: [#1923](https://github.com/xmake-io/xmake/issues/1923)
+
 #### Cross compilation
 
 We also support cross-compilation of kernel driver modules, such as using cross-compilation tool chain on Linux x86_64 to build Linux Arm/Arm64 driver modules.
