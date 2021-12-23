@@ -193,6 +193,40 @@ function main(...)
     task.run("config", {plat="iphoneos", arch="armv7"})
 end
 </code></pre>
+<h3 id="corebasejson">core.base.json</h3>
+<p>xmake provides a built-in json module, based on the implementation of lua_cjson, we can use it to quickly and directly interoperate between json and lua table.</p>
+<p>We can use <code>import("core.base.json")</code> to directly import and use.</p>
+<p>There are also some examples here: <a href="https://github.com/xmake-io/xmake/blob/master/tests/modules/json/test.lua">Jsom Examples</a></p>
+<h4 id="jsondecode">json.decode</h4>
+<p>Obtain the lua table directly from the string decoding json.</p>
+<pre><code class="lang-lua">import("core.base.json")
+local luatable = json.decode(&#39;[1,"2", {"a":1, "b":true}]&#39;)
+print(luatable)
+</code></pre>
+<pre><code>{
+    1.0,
+    "2",
+    {
+      b = true,
+      a = 1.0
+    }
+  }
+</code></pre><p>!> If there is null in it, you can use <code>json.null</code> to judge</p>
+<h4 id="jsonencode">json.encode</h4>
+<p>We can also directly encode a lua table.</p>
+<pre><code class="lang-lua">local jsonstr = json.encode({1, "2", {a = 1}}
+</code></pre>
+<p>It should be noted that if you need to encode null, you need to use <code>json.null</code>, for example</p>
+<pre><code class="lang-lua">local jsonstr = json.encode({json.null, 1, "2", false, true})
+</code></pre>
+<h4 id="jsonloadfile">json.loadfile</h4>
+<p>Load the json file directly and parse it into a lua table.</p>
+<pre><code class="lang-lua">local luatable = json.loadfile("/tmp/xxx.json")
+</code></pre>
+<h4 id="jsonsavefile">json.savefile</h4>
+<p>Save the lua table to the specified json file.</p>
+<pre><code class="lang-lua">json.savefile("/tmp/xxx.json", {1, {a = 1}})
+</code></pre>
 <h3 id="coretoollinker">core.tool.linker</h3>
 <p>Linker related operations, often used for plugin development.</p>
 <h4 id="linkerlink">linker.link</h4>

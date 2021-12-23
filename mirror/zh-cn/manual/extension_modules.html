@@ -193,6 +193,40 @@ function main(...)
     task.run("config", {plat="iphoneos", arch="armv7"})
 emd
 </code></pre>
+<h3 id="corebasejson">core.base.json</h3>
+<p>xmake 提供了内置的 json 模块，基于 lua_cjson 实现，我们可以用它实现快速的在 json 和 lua table 直接相互操作。</p>
+<p>我们可以通过 <code>import("core.base.json")</code> 直接导入使用。</p>
+<p>这里也有一些例子：<a href="https://github.com/xmake-io/xmake/blob/master/tests/modules/json/test.lua">Jsom Examples</a></p>
+<h4 id="jsondecode">json.decode</h4>
+<p>直接从字符串解码 json 获取 lua table.</p>
+<pre><code class="lang-lua">import("core.base.json")
+local luatable = json.decode(&#39;[1,"2", {"a":1, "b":true}]&#39;)
+print(luatable)
+</code></pre>
+<pre><code>{
+    1.0,
+    "2",
+    {
+      b = true,
+      a = 1.0
+    }
+  }
+</code></pre><p>!> 如果里面有 null，可以用 <code>json.null</code> 来判断</p>
+<h4 id="jsonencode">json.encode</h4>
+<p>我们也可以直接对一个 lua table 进行编码。</p>
+<pre><code class="lang-lua">local jsonstr = json.encode({1, "2", {a = 1}}
+</code></pre>
+<p>需要注意的是，如果需要编码 null，需要使用 <code>json.null</code>，例如</p>
+<pre><code class="lang-lua">local jsonstr = json.encode({json.null, 1, "2", false, true})
+</code></pre>
+<h4 id="jsonloadfile">json.loadfile</h4>
+<p>直接加载 json 文件，并解析成 lua table。</p>
+<pre><code class="lang-lua">local luatable = json.loadfile("/tmp/xxx.json")
+</code></pre>
+<h4 id="jsonsavefile">json.savefile</h4>
+<p>保存 lua table 到指定 json 文件。</p>
+<pre><code class="lang-lua">json.savefile("/tmp/xxx.json", {1, {a = 1}})
+</code></pre>
 <h3 id="coretoollinker">core.tool.linker</h3>
 <p>链接器相关操作，常用于插件开发。</p>
 <h4 id="linkerlink">linker.link</h4>
