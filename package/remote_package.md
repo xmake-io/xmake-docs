@@ -725,6 +725,16 @@ $ xrepo install libpng
 > curl https://hub.fastgit.org/glennrp/libpng/archive/v1.6.37.zip -o v1.6.37.zip
 ```
 
+After v2.6.3, xmake provides some built-in images that can be used directly, such as github's image acceleration:
+
+````console
+$ xmake g --proxy_pac=github_mirror.lua
+````
+
+We don't have to write pac.lua ourselves, we can use it directly to speed up the download of github sources.
+
+More built-in mirrors can be viewed through `xmake g --help` under `--proxy_pac=`.
+
 ## Submit packages to the official repository
 
 ### Package structure in repository
