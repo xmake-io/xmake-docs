@@ -769,6 +769,20 @@ rule("test")
     end)
 ```
 
+### rule:on_config
+
+#### custom configuration script
+
+After `xmake config` is executed, this script is executed before Build, which is usually used for configuration work before compilation. It differs from on_load in that on_load is executed as soon as the target is loaded, and the execution timing is earlier.
+
+If some configuration cannot be configured prematurely in on_load, it can be configured in on_config.
+
+In addition, its execution time is earlier than before_build, and the approximate execution flow is as follows:
+
+```
+on_load -> after_load -> on_config -> before_build -> on_build -> after_build
+```
+
 ### rule:on_link
 
 #### Custom link script

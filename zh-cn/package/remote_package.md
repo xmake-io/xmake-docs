@@ -1456,3 +1456,105 @@ upgrading packages ..
   zlib: 1.2.10 -> 1.2.11
 1 package is upgraded!
 ```
+
+## 在 CMake 中使用 Xrepo 的依赖包管理
+
+我们新增了一个独立项目 [xrepo-cmake](https://github.com/xmake-io/xrepo-cmake)。
+
+它是一个基于 Xrepo/Xmake 的 C/C++ 包管理器的 CMake 包装器。
+
+这允许使用 CMake 来构建您的项目，同时使用 Xrepo 来管理依赖包。这个项目的部分灵感来自 [cmake-conan](https://github.com/conan-io/cmake-conan)。
+
+此项目的示例用例：
+
+- 想要使用 Xrepo 管理包的现有 CMake 项目。
+- 必须使用 CMake，但想使用 Xrepo 管理的新项目包。
+
+### 使用来自官方存储库的包
+
+Xrepo 官方仓库：[xmake-repo](https://github.com/xmake-io/xmake-repo)
+
+[xrepo.cmake](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) 提供`xrepo_package`函数来管理包。
+
+```cmake
+xrepo_package(
+    "foo 1.2.3"
+    [CONFIGS feature1=true,feature2=false]
+    [MODE debug|release]
+    [OUTPUT verbose|diagnosis|quiet]
+    [DIRECTORY_SCOPE]
+)
+```
+
+一些函数参数直接对应于 Xrepo 命令选项。
+
+调用 `xrepo_package(foo)` 后，有两种使用 `foo` 包的方法：
+
+- 如果包提供 cmake 模块来查找它，则调用 `find_package(foo)`, 参考 CMake [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) 文档了解更多详情
+- 如果包不提供 cmake 模块，`foo_INCLUDE_DIR` 和 `foo_LINK_DIR` 变量将设置为包包含和库路径。使用这些变量在 CMake 代码中设置包含和库路径。
+- 如果指定了 `DIRECTORY_SCOPE`，则 `xrepo_package` 将运行以下代码（这样用户只需要在 `target_link_libraries` 中指定库名称）
+
+```cmake
+include_directories(foo_INCLUDE_DIR)
+link_directories(foo_LINK_DIR)
+```
+
+这是一个使用 `gflags` 包版本 2.2.2 的示例 `CMakeLists.txt` 由 Xrepo 管理。
+
+```cmake
+cmake_minimum_required(VERSION 3.13.0)
+
+project(foo)
+
+# Download xrepo.cmake if not exists in build directory.
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/xrepo.cmake")
+    message(STATUS "Downloading xrepo.cmake from https://github.com/xmake-io/xrepo-cmake/")
+    # mirror https://cdn.jsdelivr.net/gh/xmake-io/xrepo-cmake@main/xrepo.cmake
+    file(DOWNLOAD "https://raw.githubusercontent.com/xmake-io/xrepo-cmake/main/xrepo.cmake"
+                  "${CMAKE_BINARY_DIR}/xrepo.cmake"
+                  TLS_VERIFY ON)
+endif()
+
+# Include xrepo.cmake so we can use xrepo_package function.
+include(${CMAKE_BINARY_DIR}/xrepo.cmake)
+
+# Call `xrepo_package` function to use gflags 2.2.2 with specific configs.
+xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
+
+# `xrepo_package` sets `gflags_DIR` variable in parent scope because gflags
+# provides cmake modules. So we can now call `find_package` to find gflags
+# package.
+find_package(gflags CONFIG COMPONENTS shared)
+```
+
+### 使用来自第三个存储库的包
+
+除了从官方维护的存储库安装软件包之外，Xrepo 还可以安装来自第三方包管理器的包，例如 vcpkg/conan/conda/pacman/homebrew/apt/dub/cargo。
+
+关于命令行的使用，我们可以参考文档：[Xrepo命令用法](https://xrepo.xmake.io/#/getting_started?id=install-packages-from-third-party-package-manager)
+
+我们也可以直接在 cmake 中使用它来安装来自第三方仓库的包，只需将仓库名称添加为命名空间即可。例如：`vcpkg::zlib`, `conan::pcre2`
+
+#### Conan
+
+```cmake
+xrepo_package("conan::gflags/2.2.2")
+```
+
+#### Conda
+
+```cmake
+xrepo_package("conda::gflags 2.2.2")
+```
+
+#### Vcpkg
+
+```cmake
+xrepo_package("vcpkg::gflags")
+```
+
+#### Homebrew
+
+```cmake
+xrepo_package("brew::gflags")
+```

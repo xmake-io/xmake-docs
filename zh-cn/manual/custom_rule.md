@@ -783,6 +783,20 @@ rule("test")
     end)
 ```
 
+### rule:on_config
+
+#### 自定义配置脚本
+
+在 `xmake config` 执行完成后，Build 之前会执行此脚本，通常用于编译前的配置工作。它与 on_load 不同的是，on_load 只要 target 被加载就会执行，执行时机更早。
+
+如果一些配置，无法在 on_load 中过早配置，那么都可以在 on_config 中去配置它。
+
+另外，它的执行时机比 before_build 还要早，大概的执行流程如下：
+
+```
+on_load -> after_load -> on_config -> before_build -> on_build -> after_build
+```
+
 ### rule:on_build
 
 #### 自定义编译脚本

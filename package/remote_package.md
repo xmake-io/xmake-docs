@@ -1482,3 +1482,111 @@ upgrading packages ..
   zlib: 1.2.10 -> 1.2.11
 1 package is upgraded!
 ```
+
+## Using Xrepo's package management in CMake
+
+CMake wrapper for [Xrepo](https://xrepo.xmake.io/) C and C++ package manager.
+
+This allows using CMake to build your project, while using Xrepo to manage
+dependent packages. This project is partially inspired by
+[cmake-conan](https://github.com/conan-io/cmake-conan).
+
+Example use cases for this project:
+
+- Existing CMake projects which want to use Xrepo to manage packages.
+- New projects which have to use CMake, but want to use Xrepo to manage
+  packages.
+
+### Use package from official repository
+
+Xrepo official repository: [xmake-repo](https://github.com/xmake-io/xmake-repo)
+
+[xrepo.cmake](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) provides `xrepo_package` function to manage packages.
+
+```cmake
+xrepo_package(
+    "foo 1.2.3"
+    [CONFIGS feature1=true,feature2=false]
+    [MODE debug|release]
+    [OUTPUT verbose|diagnosis|quiet]
+    [DIRECTORY_SCOPE]
+)
+```
+
+Some of the function arguments correspond directly to Xrepo command options.
+
+After calling `xrepo_package(foo)`, there are two ways to use `foo` package:
+
+- Call `find_package(foo)` if package provides cmake modules to find it
+  - Refer to CMake [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) documentation for more details
+- If the package does not provide cmake modules, `foo_INCLUDE_DIR` and
+  `foo_LINK_DIR` variables will be set to the package include and library paths.
+  Use these variables to setup include and library paths in your CMake code.
+  - If `DIRECTORY_SCOPE` is specified, `xrepo_package` will run following code
+    (so that user only need to specify lib name in `target_link_libraries`)
+  ```cmake
+    include_directories(foo_INCLUDE_DIR)
+    link_directories(foo_LINK_DIR)
+  ```
+
+Here's an example `CMakeLists.txt` that uses `gflags` package version 2.2.2
+managed by Xrepo.
+
+```cmake
+cmake_minimum_required(VERSION 3.13.0)
+
+project(foo)
+
+# Download xrepo.cmake if not exists in build directory.
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/xrepo.cmake")
+    message(STATUS "Downloading xrepo.cmake from https://github.com/xmake-io/xrepo-cmake/")
+    # mirror https://cdn.jsdelivr.net/gh/xmake-io/xrepo-cmake@main/xrepo.cmake
+    file(DOWNLOAD "https://raw.githubusercontent.com/xmake-io/xrepo-cmake/main/xrepo.cmake"
+                  "${CMAKE_BINARY_DIR}/xrepo.cmake"
+                  TLS_VERIFY ON)
+endif()
+
+# Include xrepo.cmake so we can use xrepo_package function.
+include(${CMAKE_BINARY_DIR}/xrepo.cmake)
+
+# Call `xrepo_package` function to use gflags 2.2.2 with specific configs.
+xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
+
+# `xrepo_package` sets `gflags_DIR` variable in parent scope because gflags
+# provides cmake modules. So we can now call `find_package` to find gflags
+# package.
+find_package(gflags CONFIG COMPONENTS shared)
+```
+
+### Use package from 3rd repository
+
+In addition to installing packages from officially maintained repository,
+Xrepo can also install packages from third-party package managers such as vcpkg/conan/conda/pacman/homebrew/apt/dub/cargo.
+
+For the use of the command line, we can refer to the documentation: [Xrepo command usage](https://xrepo.xmake.io/#/getting_started?id=install-packages-from-third-party-package-manager)
+
+We can also use it directly in cmake to install packages from third-party repositories, just add the repository name as a namespace. e.g. `vcpkg::zlib`, `conan::pcre2`
+
+#### Conan
+
+```cmake
+xrepo_package("conan::gflags/2.2.2")
+```
+
+#### Conda
+
+```cmake
+xrepo_package("conda::gflags 2.2.2")
+```
+
+#### Vcpkg
+
+```cmake
+xrepo_package("vcpkg::gflags")
+```
+
+#### Homebrew
+
+```cmake
+xrepo_package("brew::gflags")
+```
