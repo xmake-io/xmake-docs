@@ -685,6 +685,34 @@ static unsigned char g_test_frag_spv_data[] = {
 
 Similar to the usage of bin2c rules, see the complete example: [glsl2spv example](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/glsl2spv)
 
+#### python.library
+
+We can use this rule to generate python library modules with pybind11, which will adjust the module name of the python library.
+
+````lua
+add_rules("mode.release", "mode.debug")
+add_requires("pybind11")
+
+target("example")
+     add_rules("python.library")
+     add_files("src/*.cpp")
+     add_packages("pybind11")
+     set_languages("c++11")
+````
+
+with soabi:
+
+````lua
+add_rules("mode.release", "mode.debug")
+add_requires("pybind11")
+
+target("example")
+     add_rules("python.library", {soabi = true})
+     add_files("src/*.cpp")
+     add_packages("pybind11")
+     set_languages("c++11")
+````
+
 ### rule
 
 #### Defining rules

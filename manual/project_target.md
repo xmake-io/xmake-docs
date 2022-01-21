@@ -1355,7 +1355,7 @@ And after the 2.1.9 version, you can use the force parameter to force the automa
 add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 ```
 
-### target:del_files
+### target:remove_files
 
 #### Remove source files
 
@@ -1364,7 +1364,7 @@ Through this interface, you can delete the specified file from the list of files
 ```lua
 target("test")
     add_files("src/*.c")
-    del_files("src/test.c")
+    remove_files("src/test.c")
 ```
 
 In the above example, you can add all files except `test.c` from the `src` directory. Of course, this can also be done by `add_files("src/*.c|test.c").To achieve the same purpose, but this way is more flexible.
@@ -1374,15 +1374,31 @@ For example, we can conditionally determine which files to delete, and this inte
 ```lua
 target("test")
     add_files("src/**.c")
-    del_files("src/test*.c")
-    del_files("src/subdir/*.c|xxx.c")
+    remove_files("src/test*.c")
+    remove_files("src/subdir/*.c|xxx.c")
     if is_plat("iphoneos") then
         add_files("xxx.m")
     end
 ```
 
-Through the above example, we can see that `add_files` and `del_files` are added and deleted sequentially according to the calling sequence, and deleted by `del_files("src/subdir/*.c|xxx.c")` Batch file,
+Through the above example, we can see that `add_files` and `remove_files` are added and deleted sequentially according to the calling sequence, and deleted by `remove_files("src/subdir/*.c|xxx.c")` Batch file,
 And exclude `src/subdir/xxx.c` (that is, don't delete this file).
+
+Note: This interface is only available in version v2.6.3. The previous version was del_files, which has been abandoned.
+
+If you want to be compatible with the previous version, you can solve it through the following configuration.
+
+````lua
+remove_files = remove_files or del_files
+````
+
+### target:remove_headerfiles
+
+#### Remove the specified file from the preceding list of header files
+
+Mainly used to remove files from the list of header files set by `add_headerfiles`, similar to `remove_files`.
+
+This interface is only provided in v2.6.3 version.
 
 ### target:add_linkdirs
 

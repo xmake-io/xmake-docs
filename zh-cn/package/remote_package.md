@@ -289,6 +289,18 @@ target("test")
 add_requires("vcpkg::boost[core]")
 ```
 
+v2.6.3 之后，xmake 支持 vcpkg 新的清单模式，通过它，我们就能支持 vcpkg 包的版本选择，例如：
+
+```lua
+add_requires("vcpkg::zlib 1.2.11+10")
+add_requires("vcpkg::fmt >=8.0.1", {configs = {baseline = "50fd3d9957195575849a49fa591e645f1d8e7156"}})
+add_requires("vcpkg::libpng", {configs = {features = {"apng"}}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("vcpkg::zlib", "vcpkg::fmt", "vcpkg::libpng")
+```
 
 ### 添加 conan 的依赖包
 

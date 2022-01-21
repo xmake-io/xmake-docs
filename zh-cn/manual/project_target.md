@@ -1356,7 +1356,7 @@ target("test")
 add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 ```
 
-### target:del_files
+### target:remove_files
 
 #### 从前面的源代码文件列表中删除指定文件
 
@@ -1365,7 +1365,7 @@ add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 ```lua
 target("test")
     add_files("src/*.c")
-    del_files("src/test.c")
+    remove_files("src/test.c")
 ```
 
 上面的例子，可以从`src`目录下添加除`test.c`以外的所有文件，当然这个也可以通过`add_files("src/*.c|test.c")`来达到相同的目的，但是这种方式更加灵活。
@@ -1375,15 +1375,31 @@ target("test")
 ```lua
 target("test")
     add_files("src/**.c")
-    del_files("src/test*.c")
-    del_files("src/subdir/*.c|xxx.c")
+    remove_files("src/test*.c")
+    remove_files("src/subdir/*.c|xxx.c")
     if is_plat("iphoneos") then
         add_files("xxx.m")
     end
 ```
 
-通过上面的例子，我们可以看出`add_files`和`del_files`是根据调用顺序，进行顺序添加和删除的，并且通过`del_files("src/subdir/*.c|xxx.c")`删除一批文件，
+通过上面的例子，我们可以看出`add_files`和`remove_files`是根据调用顺序，进行顺序添加和删除的，并且通过`remove_files("src/subdir/*.c|xxx.c")`删除一批文件，
 并且排除`src/subdir/xxx.c`（就是说，不删除这个文件）。
+
+注： 这个接口 v2.6.3 版本才提供，之前的版本是 del_files，已经废弃。
+
+如果向下要兼容以前的版本，可以通过下面的配置解决。
+
+```lua
+remove_files = remove_files or del_files
+```
+
+### target:remove_headerfiles
+
+#### 从前面的头文件列表中删除指定文件
+
+主要用于从 `add_headerfiles` 设置的头文件列表中删除文件，用法与 `remove_files` 类似。
+
+这个接口，v2.6.3 版本才提供。
 
 ### target:add_linkdirs
 

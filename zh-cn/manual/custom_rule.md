@@ -687,6 +687,34 @@ static unsigned char g_test_frag_spv_data[] = {
 
 跟 bin2c 规则的使用方式类似，完整例子见：[glsl2spv example](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/glsl2spv)
 
+#### python.library
+
+我们可以用这个规则，配合 pybind11 生成 python 库模块，它会调整 python 库的模块名。
+
+```lua
+add_rules("mode.release", "mode.debug")
+add_requires("pybind11")
+
+target("example")
+    add_rules("python.library")
+    add_files("src/*.cpp")
+    add_packages("pybind11")
+    set_languages("c++11")
+```
+
+带有 soabi：
+
+```lua
+add_rules("mode.release", "mode.debug")
+add_requires("pybind11")
+
+target("example")
+    add_rules("python.library", {soabi = true})
+    add_files("src/*.cpp")
+    add_packages("pybind11")
+    set_languages("c++11")
+```
+
 ### rule
 
 #### 定义规则
