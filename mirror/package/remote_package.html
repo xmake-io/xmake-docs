@@ -255,6 +255,16 @@ target("test")
 <p>e.g:</p>
 <pre><code class="lang-lua">add_requires("vcpkg::boost[core]")
 </code></pre>
+<p>After v2.6.3, xmake supports the new manifest mode of vcpkg, through which we can support version selection of vcpkg package, for example:</p>
+<pre><code class="lang-lua">add_requires("vcpkg::zlib 1.2.11+10")
+add_requires("vcpkg::fmt >=8.0.1", {configs = {baseline = "50fd3d9957195575849a49fa591e645f1d8e7156"}})
+add_requires("vcpkg::libpng", {configs = {features = {"apng"}}})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     add_packages("vcpkg::zlib", "vcpkg::fmt", "vcpkg::libpng")
+</code></pre>
 <h3 id="addconandependencypackage">Add conan dependency package</h3>
 <pre><code class="lang-lua">add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
 add_requires("conan::openssl/1.1.1g", {alias = "openssl",
@@ -552,6 +562,11 @@ end
 <pre><code class="lang-console">$ xrepo install libpng
 > curl https://hub.fastgit.org/glennrp/libpng/archive/v1.6.37.zip -o v1.6.37.zip
 </code></pre>
+<p>After v2.6.3, xmake provides some built-in images that can be used directly, such as github&#39;s image acceleration:</p>
+<pre><code class="lang-console">$ xmake g --proxy_pac=github_mirror.lua
+</code></pre>
+<p>We don&#39;t have to write pac.lua ourselves, we can use it directly to speed up the download of github sources.</p>
+<p>More built-in mirrors can be viewed through <code>xmake g --help</code> under <code>--proxy_pac=</code>.</p>
 <h2 id="submitpackagestotheofficialrepository">Submit packages to the official repository</h2>
 <h3 id="packagestructureinrepository">Package structure in repository</h3>
 <p>Before making our own package, we need to understand the structure of the next package repository, whether it is the official package repository or the self-built private package repository, the structure is the same:</p>
@@ -1031,6 +1046,81 @@ xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
 upgrading packages ..
   zlib: 1.2.10 -> 1.2.11
 1 package is upgraded!
+</code></pre>
+<h2 id="usingxrepospackagemanagementincmake">Using Xrepo&#39;s package management in CMake</h2>
+<p>CMake wrapper for <a href="https://xrepo.xmake.io/">Xrepo</a> C and C++ package manager.</p>
+<p>This allows using CMake to build your project, while using Xrepo to manage<br>dependent packages. This project is partially inspired by<br><a href="https://github.com/conan-io/cmake-conan">cmake-conan</a>.</p>
+<p>Example use cases for this project:</p>
+<ul>
+<li>Existing CMake projects which want to use Xrepo to manage packages.</li>
+<li>New projects which have to use CMake, but want to use Xrepo to manage<br>packages.</li>
+</ul>
+<h3 id="usepackagefromofficialrepository">Use package from official repository</h3>
+<p>Xrepo official repository: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
+<p><a href="https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake">xrepo.cmake</a> provides <code>xrepo_package</code> function to manage packages.</p>
+<pre><code class="lang-cmake">xrepo_package(
+    "foo 1.2.3"
+    [CONFIGS feature1=true,feature2=false]
+    [MODE debug|release]
+    [OUTPUT verbose|diagnosis|quiet]
+    [DIRECTORY_SCOPE]
+)
+</code></pre>
+<p>Some of the function arguments correspond directly to Xrepo command options.</p>
+<p>After calling <code>xrepo_package(foo)</code>, there are two ways to use <code>foo</code> package:</p>
+<ul>
+<li>Call <code>find_package(foo)</code> if package provides cmake modules to find it<ul>
+<li>Refer to CMake <a href="https://cmake.org/cmake/help/latest/command/find_package.html"><code>find_package</code></a> documentation for more details</li>
+</ul>
+</li>
+<li>If the package does not provide cmake modules, <code>foo_INCLUDE_DIR</code> and<br><code>foo_LINK_DIR</code> variables will be set to the package include and library paths.<br>Use these variables to setup include and library paths in your CMake code.<ul>
+<li>If <code>DIRECTORY_SCOPE</code> is specified, <code>xrepo_package</code> will run following code<br>(so that user only need to specify lib name in <code>target_link_libraries</code>)<pre><code class="lang-cmake">include_directories(foo_INCLUDE_DIR)
+link_directories(foo_LINK_DIR)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>Here&#39;s an example <code>CMakeLists.txt</code> that uses <code>gflags</code> package version 2.2.2<br>managed by Xrepo.</p>
+<pre><code class="lang-cmake">cmake_minimum_required(VERSION 3.13.0)
+
+project(foo)
+
+# Download xrepo.cmake if not exists in build directory.
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/xrepo.cmake")
+    message(STATUS "Downloading xrepo.cmake from https://github.com/xmake-io/xrepo-cmake/")
+    # mirror https://cdn.jsdelivr.net/gh/xmake-io/xrepo-cmake@main/xrepo.cmake
+    file(DOWNLOAD "https://raw.githubusercontent.com/xmake-io/xrepo-cmake/main/xrepo.cmake"
+                  "${CMAKE_BINARY_DIR}/xrepo.cmake"
+                  TLS_VERIFY ON)
+endif()
+
+# Include xrepo.cmake so we can use xrepo_package function.
+include(${CMAKE_BINARY_DIR}/xrepo.cmake)
+
+# Call `xrepo_package` function to use gflags 2.2.2 with specific configs.
+xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
+
+# `xrepo_package` sets `gflags_DIR` variable in parent scope because gflags
+# provides cmake modules. So we can now call `find_package` to find gflags
+# package.
+find_package(gflags CONFIG COMPONENTS shared)
+</code></pre>
+<h3 id="usepackagefrom3rdrepository">Use package from 3rd repository</h3>
+<p>In addition to installing packages from officially maintained repository,<br>Xrepo can also install packages from third-party package managers such as vcpkg/conan/conda/pacman/homebrew/apt/dub/cargo.</p>
+<p>For the use of the command line, we can refer to the documentation: <a href="https://xrepo.xmake.io/#/getting_started?id=install-packages-from-third-party-package-manager">Xrepo command usage</a></p>
+<p>We can also use it directly in cmake to install packages from third-party repositories, just add the repository name as a namespace. e.g. <code>vcpkg::zlib</code>, <code>conan::pcre2</code></p>
+<h4 id="conan">Conan</h4>
+<pre><code class="lang-cmake">xrepo_package("conan::gflags/2.2.2")
+</code></pre>
+<h4 id="conda">Conda</h4>
+<pre><code class="lang-cmake">xrepo_package("conda::gflags 2.2.2")
+</code></pre>
+<h4 id="vcpkg">Vcpkg</h4>
+<pre><code class="lang-cmake">xrepo_package("vcpkg::gflags")
+</code></pre>
+<h4 id="homebrew">Homebrew</h4>
+<pre><code class="lang-cmake">xrepo_package("brew::gflags")
 </code></pre>
 </article>
 </body>

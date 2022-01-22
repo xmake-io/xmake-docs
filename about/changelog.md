@@ -1,4 +1,28 @@
 
+## v2.6.3
+
+### New features
+
+* [#1298](https://github.com/xmake-io/xmake/issues/1928): Support vcpkg manifest mode and select version for package/install
+* [#1896](https://github.com/xmake-io/xmake/issues/1896): Add `python.library` rule to build pybind modules
+* [#1939](https://github.com/xmake-io/xmake/issues/1939): Add `remove_files`, `remove_headerfiles` and mark `del_files` as deprecated
+* Made on_config as the official api for rule/target
+* Add riscv32/64 support
+* [#1970](https://github.com/xmake-io/xmake/issues/1970): Add CMake wrapper for Xrepo C and C++ package manager.
+* Add builtin github mirror pac files, `xmake g --proxy_pac=github_mirror.lua`
+
+### Changes
+
+* [#1923](https://github.com/xmake-io/xmake/issues/1923): Improve to build linux driver, support set custom linux-headers path
+* [#1962](https://github.com/xmake-io/xmake/issues/1962): Improve armclang toolchain to support to build asm
+* [#1959](https://github.com/xmake-io/xmake/pull/1959): Improve vstudio project generator
+* [#1969](https://github.com/xmake-io/xmake/issues/1969): Add default option description
+
+### Bugs fixed
+
+* [#1875](https://github.com/xmake-io/xmake/issues/1875): Fix deploy android qt apk issue
+* [#1973](https://github.com/xmake-io/xmake/issues/1973): Fix merge static archive
+
 ## v2.6.2
 
 ### New features

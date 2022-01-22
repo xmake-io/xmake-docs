@@ -542,6 +542,27 @@ static unsigned char g_test_frag_spv_data[] = {
 };
 </code></pre>
 <p>Similar to the usage of bin2c rules, see the complete example: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/other/glsl2spv">glsl2spv example</a></p>
+<h4 id="pythonlibrary">python.library</h4>
+<p>We can use this rule to generate python library modules with pybind11, which will adjust the module name of the python library.</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("pybind11")
+
+target("example")
+     add_rules("python.library")
+     add_files("src/*.cpp")
+     add_packages("pybind11")
+     set_languages("c++11")
+</code></pre>
+<p>with soabi:</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("pybind11")
+
+target("example")
+     add_rules("python.library", {soabi = true})
+     add_files("src/*.cpp")
+     add_packages("pybind11")
+     set_languages("c++11")
+</code></pre>
 <h3 id="rule">rule</h3>
 <h4 id="definingrules">Defining rules</h4>
 <pre><code class="lang-lua">rule("markdown")
@@ -581,7 +602,13 @@ target("test")
         target:add("defines", "-DTEST")
     end)
 </code></pre>
-<h3 id="ruleon_link">rule:on_link</h3>
+<h3 id="ruleon_config">rule:on_config</h3>
+<h4 id="customconfigurationscript">custom configuration script</h4>
+<p>After <code>xmake config</code> is executed, this script is executed before Build, which is usually used for configuration work before compilation. It differs from on_load in that on_load is executed as soon as the target is loaded, and the execution timing is earlier.</p>
+<p>If some configuration cannot be configured prematurely in on_load, it can be configured in on_config.</p>
+<p>In addition, its execution time is earlier than before_build, and the approximate execution flow is as follows:</p>
+<pre><code>on_load -> after_load -> on_config -> before_build -> on_build -> after_build
+</code></pre><h3 id="ruleon_link">rule:on_link</h3>
 <h4 id="customlinkscript">Custom link script</h4>
 <p>The link script used to implement the custom rules overrides the default link behavior of the applied target, for example:</p>
 <pre><code class="lang-lua">rule("test")

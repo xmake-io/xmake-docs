@@ -817,7 +817,13 @@ target("test")
     end)
 </code></pre>
 <p>可以在<code>on_load</code>里面，通过<code>target:set</code>, <code>target:add</code> 来动态添加各种target属性。</p>
-<h3 id="targeton_link">target:on_link</h3>
+<h3 id="targeton_config">target:on_config</h3>
+<h4 id="">自定义配置脚本</h4>
+<p>在 <code>xmake config</code> 执行完成后，Build 之前会执行此脚本，通常用于编译前的配置工作。它与 on_load 不同的是，on_load 只要 target 被加载就会执行，执行时机更早。</p>
+<p>如果一些配置，无法在 on_load 中过早配置，那么都可以在 on_config 中去配置它。</p>
+<p>另外，它的执行时机比 before_build 还要早，大概的执行流程如下：</p>
+<pre><code>on_load -> after_load -> on_config -> before_build -> on_build -> after_build
+</code></pre><h3 id="targeton_link">target:on_link</h3>
 <h4 id="">自定义链接脚本</h4>
 <p>这个是在v2.2.7之后新加的接口，用于定制化处理target的链接过程。</p>
 <pre><code class="lang-lua">target("test")
@@ -1346,24 +1352,32 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 <p>并且在2.1.9版本之后，可以通过force参数来强制禁用cxflags,cflags等编译选项的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：</p>
 <pre><code class="lang-lua">add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 </code></pre>
-<h3 id="targetdel_files">target:del_files</h3>
+<h3 id="targetremove_files">target:remove_files</h3>
 <h4 id="">从前面的源代码文件列表中删除指定文件</h4>
 <p>通过此接口，可以从前面<a href="targetadd_files">add_files</a>接口添加的文件列表中，删除指定的文件，例如：</p>
 <pre><code class="lang-lua">target("test")
     add_files("src/*.c")
-    del_files("src/test.c")
+    remove_files("src/test.c")
 </code></pre>
 <p>上面的例子，可以从<code>src</code>目录下添加除<code>test.c</code>以外的所有文件，当然这个也可以通过<code>add_files("src/*.c|test.c")</code>来达到相同的目的，但是这种方式更加灵活。</p>
 <p>例如，我们可以条件判断来控制删除哪些文件，并且此接口也支持<a href="targetadd_files">add_files</a>的匹配模式，过滤模式，进行批量移除。</p>
 <pre><code class="lang-lua">target("test")
     add_files("src/**.c")
-    del_files("src/test*.c")
-    del_files("src/subdir/*.c|xxx.c")
+    remove_files("src/test*.c")
+    remove_files("src/subdir/*.c|xxx.c")
     if is_plat("iphoneos") then
         add_files("xxx.m")
     end
 </code></pre>
-<p>通过上面的例子，我们可以看出<code>add_files</code>和<code>del_files</code>是根据调用顺序，进行顺序添加和删除的，并且通过<code>del_files("src/subdir/*.c|xxx.c")</code>删除一批文件，<br>并且排除<code>src/subdir/xxx.c</code>（就是说，不删除这个文件）。</p>
+<p>通过上面的例子，我们可以看出<code>add_files</code>和<code>remove_files</code>是根据调用顺序，进行顺序添加和删除的，并且通过<code>remove_files("src/subdir/*.c|xxx.c")</code>删除一批文件，<br>并且排除<code>src/subdir/xxx.c</code>（就是说，不删除这个文件）。</p>
+<p>注： 这个接口 v2.6.3 版本才提供，之前的版本是 del_files，已经废弃。</p>
+<p>如果向下要兼容以前的版本，可以通过下面的配置解决。</p>
+<pre><code class="lang-lua">remove_files = remove_files or del_files
+</code></pre>
+<h3 id="targetremove_headerfiles">target:remove_headerfiles</h3>
+<h4 id="">从前面的头文件列表中删除指定文件</h4>
+<p>主要用于从 <code>add_headerfiles</code> 设置的头文件列表中删除文件，用法与 <code>remove_files</code> 类似。</p>
+<p>这个接口，v2.6.3 版本才提供。</p>
 <h3 id="targetadd_linkdirs">target:add_linkdirs</h3>
 <h4 id="">添加链接库搜索目录</h4>
 <p>设置链接库的搜索目录，这个接口的使用方式如下：</p>

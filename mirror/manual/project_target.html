@@ -811,7 +811,13 @@ target("test")
     end)
 </code></pre>
 <p>You can dynamically add various target attributes in <code>on_load</code> via <code>target:set</code>, <code>target:add</code>.</p>
-<h3 id="targeton_link">target:on_link</h3>
+<h3 id="targeton_config">target:on_config</h3>
+<h4 id="customconfigurationscript">custom configuration script</h4>
+<p>After <code>xmake config</code> is executed, this script is executed before Build, which is usually used for configuration work before compilation. It differs from on_load in that on_load is executed as soon as the target is loaded, and the execution timing is earlier.</p>
+<p>If some configuration cannot be configured prematurely in on_load, it can be configured in on_config.</p>
+<p>In addition, its execution time is earlier than before_build, and the approximate execution flow is as follows:</p>
+<pre><code>on_load -> after_load -> on_config -> before_build -> on_build -> after_build
+</code></pre><h3 id="targeton_link">target:on_link</h3>
 <h4 id="runcustomlinktargetscript">Run custom link target script</h4>
 <p>This is a new interface after v2.2.7, which is used to customize the link process of the target.</p>
 <pre><code class="lang-lua">target("test")
@@ -1330,24 +1336,32 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 <p>And after the 2.1.9 version, you can use the force parameter to force the automatic detection of cxflags, cflags and other compile options, directly into the compiler, even if the compiler may not support, it will also be set:</p>
 <pre><code class="lang-lua">add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 </code></pre>
-<h3 id="targetdel_files">target:del_files</h3>
+<h3 id="targetremove_files">target:remove_files</h3>
 <h4 id="removesourcefiles">Remove source files</h4>
 <p>Through this interface, you can delete the specified file from the list of files added by the <a href="targetadd_files">add_files</a> interface, for example:</p>
 <pre><code class="lang-lua">target("test")
     add_files("src/*.c")
-    del_files("src/test.c")
+    remove_files("src/test.c")
 </code></pre>
 <p>In the above example, you can add all files except <code>test.c</code> from the <code>src</code> directory. Of course, this can also be done by `add_files("src/*.c|test.c").To achieve the same purpose, but this way is more flexible.</p>
 <p>For example, we can conditionally determine which files to delete, and this interface also supports the matching mode of <a href="targetadd_files">add_files</a>, filtering mode, and bulk removal.</p>
 <pre><code class="lang-lua">target("test")
     add_files("src/**.c")
-    del_files("src/test*.c")
-    del_files("src/subdir/*.c|xxx.c")
+    remove_files("src/test*.c")
+    remove_files("src/subdir/*.c|xxx.c")
     if is_plat("iphoneos") then
         add_files("xxx.m")
     end
 </code></pre>
-<p>Through the above example, we can see that <code>add_files</code> and <code>del_files</code> are added and deleted sequentially according to the calling sequence, and deleted by <code>del_files("src/subdir/*.c|xxx.c")</code> Batch file,<br>And exclude <code>src/subdir/xxx.c</code> (that is, don&#39;t delete this file).</p>
+<p>Through the above example, we can see that <code>add_files</code> and <code>remove_files</code> are added and deleted sequentially according to the calling sequence, and deleted by <code>remove_files("src/subdir/*.c|xxx.c")</code> Batch file,<br>And exclude <code>src/subdir/xxx.c</code> (that is, don&#39;t delete this file).</p>
+<p>Note: This interface is only available in version v2.6.3. The previous version was del_files, which has been abandoned.</p>
+<p>If you want to be compatible with the previous version, you can solve it through the following configuration.</p>
+<pre><code class="lang-lua">remove_files = remove_files or del_files
+</code></pre>
+<h3 id="targetremove_headerfiles">target:remove_headerfiles</h3>
+<h4 id="removethespecifiedfilefromtheprecedinglistofheaderfiles">Remove the specified file from the preceding list of header files</h4>
+<p>Mainly used to remove files from the list of header files set by <code>add_headerfiles</code>, similar to <code>remove_files</code>.</p>
+<p>This interface is only provided in v2.6.3 version.</p>
 <h3 id="targetadd_linkdirs">target:add_linkdirs</h3>
 <h4 id="addlinksearchdirectories">Add link search directories</h4>
 <p>Set the search directory of the link library. This interface is used as follows:</p>

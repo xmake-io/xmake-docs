@@ -1,4 +1,29 @@
 
+## v2.6.3
+
+### 新特性
+
+* [#1298](https://github.com/xmake-io/xmake/issues/1928): 支持 vcpkg 清单模式安装包，实现安装包的版本选择
+* [#1896](https://github.com/xmake-io/xmake/issues/1896): 添加 `python.library` 规则去构建 pybind 模块，并且支持 soabi
+* [#1939](https://github.com/xmake-io/xmake/issues/1939): 添加 `remove_files`, `remove_headerfiles` 并且标记 `del_files` 作为废弃接口
+* 将 on_config 作为正式的公开接口，用于 target 和 rule
+* 添加 riscv32/64 支持
+* [#1970](https://github.com/xmake-io/xmake/issues/1970): 添加 CMake wrapper 支持在 CMakelists 中去调用 xrepo 集成 C/C++ 包
+* 添加内置的 github 镜像加速 pac 代理文件, `xmake g --proxy_pac=github_mirror.lua`
+
+### 改进
+
+* [#1923](https://github.com/xmake-io/xmake/issues/1923): 改进构建 linux 驱动，支持设置自定义 linux-headers 路径
+* [#1962](https://github.com/xmake-io/xmake/issues/1962): 改进 armclang 工具链去支持构建 asm
+* [#1959](https://github.com/xmake-io/xmake/pull/1959): 改进 vstudio 工程生成器
+* [#1969](https://github.com/xmake-io/xmake/issues/1969): 添加默认的 option 描述
+
+### Bugs 修复
+
+* [#1875](https://github.com/xmake-io/xmake/issues/1875): 修复部署生成 Android Qt 程序包失败问题
+* [#1973](https://github.com/xmake-io/xmake/issues/1973): 修复合并静态库
+* [#1982](https://github.com/xmake-io/xmake/pull/1982): 修复 clang 下对 c++20 子模块的依赖构建
+
 ## v2.6.2
 
 ### 新特性
