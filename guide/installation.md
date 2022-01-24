@@ -69,7 +69,7 @@ brew install xmake
 ## Archlinux
 
 ```bash
-yaourt xmake
+yay -S xmake
 ```
 
 ## Ubuntu
