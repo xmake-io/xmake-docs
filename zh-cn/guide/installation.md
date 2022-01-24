@@ -88,7 +88,7 @@ bash <(curl -fsSL https://xmake.io/shget.text)
 ## Archlinux
 
 ```bash
-yaourt xmake
+yay -S xmake
 ```
 
 ## Ubuntu
