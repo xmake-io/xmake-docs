@@ -21,8 +21,8 @@ package("libxml2")
     end
 
     on_load(function (package)
-        package:addvar("includedirs", "include/libxml2")
-        package:addvar("links", "xml2")
+        package:add("includedirs", "include/libxml2")
+        package:add("links", "xml2")
     end)
 
     if is_plat("windows") and winos.version():gt("winxp") then
