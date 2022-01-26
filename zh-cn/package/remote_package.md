@@ -1470,9 +1470,9 @@ upgrading packages ..
 - 想要使用 Xrepo 管理包的现有 CMake 项目。
 - 必须使用 CMake，但想使用 Xrepo 管理的新项目包。
 
-### 使用来自官方存储库的包
+### Apis
 
-Xrepo 官方仓库：[xmake-repo](https://github.com/xmake-io/xmake-repo)
+#### xrepo_package
 
 [xrepo.cmake](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) 提供`xrepo_package`函数来管理包。
 
@@ -1481,6 +1481,7 @@ xrepo_package(
     "foo 1.2.3"
     [CONFIGS feature1=true,feature2=false]
     [MODE debug|release]
+    [ALIAS aliasname]
     [OUTPUT verbose|diagnosis|quiet]
     [DIRECTORY_SCOPE]
 )
@@ -1499,7 +1500,24 @@ include_directories(foo_INCLUDE_DIR)
 link_directories(foo_LINK_DIR)
 ```
 
+#### xrepo_target_packages
+
+将包 includedirs 和 links/linkdirs 添加到给定的目标。
+
+```cmake
+xrepo_target_packages(
+      target
+      package1 pacakge2...
+)
+```
+
+### 使用来自官方存储库的包
+
+Xrepo 官方仓库：[xmake-repo](https://github.com/xmake-io/xmake-repo)
+
 这是一个使用 `gflags` 包版本 2.2.2 的示例 `CMakeLists.txt` 由 Xrepo 管理。
+
+#### 集成 xrepo.cmake
 
 ```cmake
 cmake_minimum_required(VERSION 3.13.0)
@@ -1517,15 +1535,59 @@ endif()
 
 # Include xrepo.cmake so we can use xrepo_package function.
 include(${CMAKE_BINARY_DIR}/xrepo.cmake)
+```
 
-# Call `xrepo_package` function to use gflags 2.2.2 with specific configs.
+#### 添加包
+
+```cmake
+xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+xrepo_target_packages(example-bin gflags)
+```
+
+#### 添加带有 cmake 导入模块的包
+
+```cmake
 xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
 
 # `xrepo_package` sets `gflags_DIR` variable in parent scope because gflags
 # provides cmake modules. So we can now call `find_package` to find gflags
 # package.
 find_package(gflags CONFIG COMPONENTS shared)
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+target_link_libraries(example-bin gflags)
 ```
+
+#### 添加自定义包
+
+```cmake
+set(XREPO_XMAKEFILE ${CMAKE_CURRENT_SOURCE_DIR}/packages/xmake.lua)
+xrepo_package("myzlib")
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+xrepo_target_packages(example-bin myzlib)
+```
+
+在 packages/xmake.lua 中定义一个包：
+
+```lua
+package("myzlib")
+    -- ...
+```
+
+我们可以自定义一个包，具体定义方式，参考文档：[自定义 Xrepo 包](https://xmake.io/#/zh-cn/package/remote_package?id=package-description)。
+
 
 ### 使用来自第三个存储库的包
 

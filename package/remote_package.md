@@ -1497,17 +1497,19 @@ Example use cases for this project:
 - New projects which have to use CMake, but want to use Xrepo to manage
   packages.
 
-### Use package from official repository
+### Apis
 
-Xrepo official repository: [xmake-repo](https://github.com/xmake-io/xmake-repo)
+#### xrepo_package
 
-[xrepo.cmake](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) provides `xrepo_package` function to manage packages.
+[`xrepo.cmake`](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) provides `xrepo_package` function to manage
+packages.
 
 ```cmake
 xrepo_package(
     "foo 1.2.3"
     [CONFIGS feature1=true,feature2=false]
     [MODE debug|release]
+    [ALIAS aliasname]
     [OUTPUT verbose|diagnosis|quiet]
     [DIRECTORY_SCOPE]
 )
@@ -1525,12 +1527,29 @@ After calling `xrepo_package(foo)`, there are two ways to use `foo` package:
   - If `DIRECTORY_SCOPE` is specified, `xrepo_package` will run following code
     (so that user only need to specify lib name in `target_link_libraries`)
   ```cmake
-    include_directories(foo_INCLUDE_DIR)
-    link_directories(foo_LINK_DIR)
+    include_directories(${foo_INCLUDE_DIR})
+    link_directories(${foo_LINK_DIR})
   ```
+
+#### xrepo_target_packages
+
+Add package includedirs and links/linkdirs to the given target.
+
+```cmake
+xrepo_target_packages(
+    target
+    package1 package2 ...
+)
+```
+
+### Use package from official repository
+
+Xrepo official repository: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 Here's an example `CMakeLists.txt` that uses `gflags` package version 2.2.2
 managed by Xrepo.
+
+#### Integrate xrepo.cmake
 
 ```cmake
 cmake_minimum_required(VERSION 3.13.0)
@@ -1548,15 +1567,90 @@ endif()
 
 # Include xrepo.cmake so we can use xrepo_package function.
 include(${CMAKE_BINARY_DIR}/xrepo.cmake)
+```
 
-# Call `xrepo_package` function to use gflags 2.2.2 with specific configs.
+#### Add common packages
+
+```cmake
+xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+xrepo_target_packages(example-bin gflags)
+```
+
+#### Add packages with cmake modules
+
+```cmake
 xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
 
 # `xrepo_package` sets `gflags_DIR` variable in parent scope because gflags
 # provides cmake modules. So we can now call `find_package` to find gflags
 # package.
 find_package(gflags CONFIG COMPONENTS shared)
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+target_link_libraries(example-bin gflags)
 ```
+
+#### Add custom packages
+
+```cmake
+set(XREPO_XMAKEFILE ${CMAKE_CURRENT_SOURCE_DIR}/packages/xmake.lua)
+xrepo_package("myzlib")
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+xrepo_target_packages(example-bin myzlib)
+```
+
+Define myzlib package in packages/xmake.lua
+
+```lua
+package("myzlib")
+    -- ...
+```
+
+We can write a custom package in xmake.lua, please refer [Define Xrepo package](https://xmake.io/#/package/remote_package?id=package-description).
+
+### Options and variables for `xrepo.cmake`
+
+Following options can be speicified with `cmake -D<var>=<value>`.
+Or use `set(var value)` in `CMakeLists.txt`.
+
+- `XMAKE_CMD`: string, defaults to empty string
+  - Specify path to `xmake` command. Use this option if `xmake` is not installed
+    in standard location and can't be detected automatically.
+- `XREPO_PACKAGE_VERBOSE`: `[ON|OFF]`
+  - Enable verbose output for Xrepo Packages.
+- `XREPO_BOOTSTRAP_XMAKE`: `[ON|OFF]`
+  - If `ON`, `xrepo.cmake` will install `xmake` if it is not found.
+- `XREPO_PACKAGE_DISABLE`: `[ON|OFF]`
+  - Set this to `ON` to disable `xrepo_package` function.
+  - If setting this variable in `CMakeLists.txt`, please set it before including
+    `xrepo.cmake`.
+
+### Switching compiler and cross compilation
+
+Following variables controll cross compilation. Note: to specify a different compiler other than
+the default one on system, platform must be set to "cross".
+
+- `XREPO_TOOLCHAIN`: string, defaults to empty string
+  - Specify toolchain name. Run `xmake show -l toolchains` to see available toolchains.
+- `XREPO_PLATFORM`: string, defaults to empty string
+  - Specify platform name. If `XREPO_TOOLCHAIN` is specified and this is not,
+    `XREPO_PLATFORM` will be set to `cross`.
+- `XREPO_ARCH`: string, defaults to empty string
+  - Specify architecture name.
+- `XREPO_XMAKEFILE`: string, defaults to empty string
+  - Specify Xmake script file of Xrepo package.
 
 ### Use package from 3rd repository
 
@@ -1590,3 +1684,74 @@ xrepo_package("vcpkg::gflags")
 ```cmake
 xrepo_package("brew::gflags")
 ```
+
+## How does it work?
+
+[`xrepo.cmake`](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) module basically does the following tasks:
+
+- Call `xrepo install` to ensure specific package is installed.
+- Call `xrepo fetch` to get package information and setup various variables for
+  using the installed package in CMake.
+
+The following section is a short introduction to using Xrepo. It helps to
+understand how `xrepo.cmake` works and how to specify some of the options in
+`xrepo_package`.
+
+### Xrepo workflow
+
+Assmuing [Xmake](https://github.com/xmake-io/xmake/) is installed.
+
+Suppose we want to use `gflags` packages.
+
+First, search for `gflags` package in Xrepo.
+
+```
+$ xrepo search gflags
+The package names:
+    gflags:
+      -> gflags-v2.2.2: The gflags package contains a C++ library that implements commandline flags processing. (in builtin-repo)
+```
+
+It's already in Xrepo, so we can use it. If it's not in Xrepo, we can create it in
+[self-built repositories](https://xrepo.xmake.io/#/getting_started?id=suppory-distributed-repository).
+
+Let's see what configs are available for the package before using it:
+
+```
+$ xrepo info gflags
+...
+      -> configs:
+         -> mt: Build the multi-threaded gflags library. (default: false)
+      -> configs (builtin):
+         -> debug: Enable debug symbols. (default: false)
+         -> shared: Build shared library. (default: false)
+         -> pic: Enable the position independent code. (default: true)
+...
+```
+
+Suppose we want to use multi-threaded gflags shared library. We can install the package with following command:
+
+```
+xrepo install --mode=release --configs='mt=true,shared=true' 'gflags 2.2.2'
+```
+
+Only the first call to the above command will compile and install the package.
+To speed up cmake configuration, `xrepo` command will only be executed when the
+package is not installed or `xrepo_package` parameters have changed.
+
+After package installation, because we are using CMake instead of Xmake, we have
+to get package installation information by ourself. `xrepo fetch` command does
+exactly this:
+
+```
+xrepo fetch --mode=release --configs='mt=true,shared=true' 'gflags 2.2.2'
+```
+
+The above command will print out package's include, library directory along with
+other information. `xrepo_package` uses these information to setup variables to use
+the specified package.
+
+Currently, `xrepo_package` uses only the `--cflags` option to get package
+include directory. Library and cmake module directory are infered from that
+directory, so it maybe unreliable to detect the correct paths. We will improve
+this in the future.
