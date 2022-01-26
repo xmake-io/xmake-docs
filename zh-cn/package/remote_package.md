@@ -1540,6 +1540,18 @@ include(${CMAKE_BINARY_DIR}/xrepo.cmake)
 #### 添加包
 
 ```cmake
+xrepo_package("zlib")
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+xrepo_target_packages(example-bin zlib)
+```
+
+#### 添加带有配置的包
+
+```cmake
 xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
 
 add_executable(example-bin "")
