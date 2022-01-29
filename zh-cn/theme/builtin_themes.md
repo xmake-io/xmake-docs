@@ -10,7 +10,7 @@
 $ xmake g --theme=default
 ```
 
-## Ninja主题
+## Ninja 主题
 
 这个是v2.3.4之后版本提供的主题，构建进度风格类似ninja，采用单行进度条，不再回滚进度，用户可以根据自己的喜好设置。
 
@@ -22,7 +22,7 @@ $ xmake g --theme=ninja
 
 <img src="/assets/img/theme/ninja.png" width="60%" />
 
-## Emoji主题
+## Emoji 主题
 
 这个主题部分输出通过emoji字符代替之前的色彩输出。
 
@@ -32,7 +32,7 @@ $ xmake g --theme=emoji
 
 <img src="/assets/img/theme/emoji.png" width="60%" />
 
-## Dark主题
+## Dark 主题
 
 这个主题主要是对一些终端背景是浅色系（比如淡黄色等），导致一些警告输出（默认也是黄色）重合不可见，所以把主题配色变成深色系，提高可见性。
 
@@ -40,7 +40,15 @@ $ xmake g --theme=emoji
 $ xmake g --theme=dark
 ```
 
-## Plain主题
+## Light 主题
+
+这个主题主要是对一些终端背景是深色系，导致一些输出重合不可见，所以把主题配色变成浅色系，提高可见性。
+
+```bash
+$ xmake g --theme=light
+```
+
+## Plain 主题
 
 这个主题，其实就是完全禁用色彩、emoji输出，主要是应对一些不支持colors code的终端导致显示乱码的问题，也是最朴素的主题风格。
 
@@ -50,7 +58,7 @@ $ xmake g --theme=dark
 $ xmake g --theme=plain
 ```
 
-## Powershell主题
+## Powershell 主题
 
 win下powershell终端背景是蓝色的，而它的调色板配置似乎被改过的，其中magenta色居然显示成背景蓝色，很诡异，导致xmake的默认输出会有局部文本不可见（跟背景色重叠了）
 

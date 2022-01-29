@@ -40,6 +40,14 @@ This theme is mainly for some terminal backgrounds with a light color system (su
 $ xmake g --theme=dark
 ```
 
+## Light theme
+
+This theme is mainly for the dark background of some terminals, which makes some outputs overlap invisible, so change the theme color to light color to improve visibility.
+
+```bash
+$ xmake g --theme=light
+````
+
 ## Plain Theme
 
 In fact, this theme is to completely disable color and emoji output, mainly to deal with the problem of garbled display caused by some terminals that do not support colors code, and it is also the most simple theme style.
