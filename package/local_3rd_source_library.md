@@ -256,3 +256,26 @@ package("openssl")
 ```
 
 !> We can also directly use `os.vrunv("make", {})` to call the make/gmake program to build the library.
+
+### Integrate GN source library
+
+We can also use `package.tools.gn` to natively integrate third-party code maintained by GN.
+
+````lua
+package("skia")
+
+     set_sourcedir(path.join(os.scriptdir(), "3rd/openssl"))
+
+     add_deps("gn", "ninja")
+     add_deps("python", {kind = "binary"})
+
+     on_install("linux", "macosx", "windows", function (package)
+         import("package.tools.gn").install(package)
+     end)
+
+     on_test(function (package)
+         -- TODO
+     end)
+````
+
+Here is the complete script example: [Skia with GN](https://github.com/xmake-io/xmake-repo/blob/master/packages/s/skia/xmake.lua)

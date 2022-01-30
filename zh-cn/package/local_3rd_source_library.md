@@ -256,3 +256,27 @@ package("openssl")
 ```
 
 !> 我们也可以直接使用 `os.vrunv("make", {})` 来调用 make/gmake 程序来构建库。
+
+### 集成 Gn 代码库
+
+我们也可以使用 `package.tools.gn` 来本地集成带有 GN 维护的第三方代码库。
+
+```lua
+package("skia")
+
+    set_sourcedir(path.join(os.scriptdir(), "3rd/openssl"))
+
+    add_deps("gn", "ninja")
+    add_deps("python", {kind = "binary"})
+
+    on_install("linux", "macosx", "windows", function (package)
+        import("package.tools.gn").install(package)
+    end)
+
+    on_test(function (package)
+        -- TODO
+    end)
+```
+
+这里有完整的脚本例子：[Skia with GN](https://github.com/xmake-io/xmake-repo/blob/master/packages/s/skia/xmake.lua)
+
