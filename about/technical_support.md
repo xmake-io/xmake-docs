@@ -1,8 +1,7 @@
 
-We also provide paid technical support to help users quickly solve related problems. For details, please click the image link below:
+You can also consider sponsoring us to get extra technical support services via [[Github sponsor program](https://github.com/sponsors/waruqi)],
+then you can get access to [xmake-io/technical-support](https://github.com/xmake-io/technical-support) repository to get more consulting related information.
 
-<a href="https://xscode.com/waruqi/xmake">
-<img src="https://tboox.org/assets/img/xmake-xscode.png" width="650px" />
-</a>
+- [x] Handling Issues with higher priority
+- [x] One-to-one technical consulting service
 
-Or you can also consider sponsoring us to get technical support services, [[Become a sponsor](https://xmake.io/#/about/sponsor)]

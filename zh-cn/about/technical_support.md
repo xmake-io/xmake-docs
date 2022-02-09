@@ -1,8 +1,6 @@
 
-我们也提供付费的技术支持来为帮助用户快速解决相关问题，具体详情请点击下面的图片链接：
+你也可以考虑通过 [[Github 的赞助计划](https://github.com/sponsors/waruqi)] 赞助我们来获取额外的技术支持服务，然后你就能获取 [xmake-io/technical-support](https://github.com/xmake-io/technical-support) 仓库的访问权限，获取更多技术咨询相关的信息。
 
-<a href="https://xscode.com/waruqi/xmake">
-<img src="https://tboox.org/assets/img/xmake-xscode.png" width="650px" />
-</a>
+- [x] 更高优先级的 Issues 问题处理
+- [x] 一对一技术咨询服务
 
-或者你也可以考虑赞助我们也获取技术支持服务，[[成为赞助商](https://xmake.io/#/zh-cn/about/sponsor)]
