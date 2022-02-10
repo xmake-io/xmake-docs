@@ -4,6 +4,14 @@
 
 👉 [捐助页面](https://xmake.io/#/zh-cn/about/sponsor)
 
+## 技术支持
+
+你也可以考虑通过 [Github 的赞助计划](https://github.com/sponsors/waruqi) 赞助我们来获取额外的技术支持服务，然后你就能获取 [xmake-io/technical-support](https://github.com/xmake-io/technical-support) 仓库的访问权限，获取更多技术咨询相关的信息。
+
+- [x] 更高优先级的 Issues 问题处理
+- [x] 一对一技术咨询服务
+- [x] Review xmake.lua 并提供改进建议
+
 ## 课程（New）
 
 [Xmake 带你轻松构建 C/C++ 项目](https://www.lanqiao.cn/courses/2764) 是我们在实验楼上新推出的一门 xmake 入门和进阶课程（收费），以边学边做实验的方式快速学习 xmake 的使用。

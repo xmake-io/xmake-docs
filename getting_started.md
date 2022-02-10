@@ -4,6 +4,15 @@
 
 👉 [Sponsor Page](https://xmake.io/#/about/sponsor)
 
+## Technical support
+
+You can also consider sponsoring us to get extra technical support services via [Github sponsor program](https://github.com/sponsors/waruqi),
+then you can get access to [xmake-io/technical-support](https://github.com/xmake-io/technical-support) repository to get more consulting related information.
+
+- [x] Handling Issues with higher priority
+- [x] One-to-one technical consulting service
+- [x] Review your xmake.lua and provide suggestions for improvement
+
 ## Who is using Xmake?
 
 If you are using xmake, please click to edit [this page](https://github.com/xmake-io/xmake-docs/blob/master/about/who_is_using_xmake.md) to submit information to the following list to let more users know how many users are using xmake.
