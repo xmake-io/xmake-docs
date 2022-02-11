@@ -694,7 +694,7 @@ os.cp("$(curdir)/test/", "$(tmpdir)/test")
 The copy at the top will expand and copy all files to the specified directory, and lose the source directory hierarchy. If you want to copy according to the directory structure that maintains it, you can set the rootdir parameter:
 
 ```lua
-os.cp ("src/**.h", "/tmp/", {rootdir=""src"})
+os.cp ("src/**.h", "/tmp/", {rootdir="src"})
 ```
 
 The above script can press the root directory of `src` to copy all sub-files under src in the same directory structure.
