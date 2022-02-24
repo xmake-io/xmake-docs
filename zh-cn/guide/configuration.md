@@ -1061,7 +1061,7 @@ $ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
 类似 `XMAKE_MAIN_REPO`，唯一的区别是，这个用于切换预编译仓库的地址。
 
 ```console
-$ export XMAKE_MAIN_REPO = https://github.com/xmake-mirror/build-artifacts.git
+$ export XMAKE_BINARY_REPO = https://github.com/xmake-mirror/build-artifacts.git
 ```
 
 ### XMAKE_THEME

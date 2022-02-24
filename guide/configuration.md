@@ -1036,7 +1036,7 @@ $ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
 Similar to `XMAKE_MAIN_REPO`, the only difference is that this is used to switch the address of the pre-compiled warehouse.
 
 ```console
-$ export XMAKE_MAIN_REPO = https://github.com/xmake-mirror/build-artifacts.git
+$ export XMAKE_BINARY_REPO = https://github.com/xmake-mirror/build-artifacts.git
 ```
 
 ### XMAKE_THEME
