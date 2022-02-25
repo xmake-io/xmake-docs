@@ -353,12 +353,11 @@ target("test")
 #### OpenMP 程序
 
 ```lua
-add_requires("libomp", {optional = true})
+add_requires("openmp")
 target("loop")
     set_kind("binary")
     add_files("src/*.cpp")
-    add_rules("c++.openmp")
-    add_packages("libomp")
+    add_packages("openmp")
 ```
 
 #### Zig 程序
