@@ -22,8 +22,8 @@
 
   - [Local Package (Old)](package/local_package_old.md)
   - [Local Package (New)](package/local_package.md)
-  - [System Package](package/system_package.md)
   - [Remote Package](package/remote_package.md)
+  - [System Package](package/system_package.md)
   - [Local 3rd source code library](package/local_3rd_source_library.md)
   - [Xrepo C/C++ Package Manager](https://xrepo.xmake.io/#/getting_started)
 

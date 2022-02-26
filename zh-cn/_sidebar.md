@@ -24,8 +24,8 @@
 
   - [使用本地包 (Old)](zh-cn/package/local_package_old.md)
   - [使用本地包 (New)](zh-cn/package/local_package.md)
-  - [使用系统包](zh-cn/package/system_package.md)
   - [使用远程包](zh-cn/package/remote_package.md)
+  - [使用系统包](zh-cn/package/system_package.md)
   - [集成本地第三方源码库](zh-cn/package/local_3rd_source_library.md)
   - [Xrepo C/C++ 包管理器](https://xrepo.xmake.io/#/zh-cn/getting_started)
 
