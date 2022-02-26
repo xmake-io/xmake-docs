@@ -1308,6 +1308,8 @@ Source files used to add target projects, even library files, some file types cu
 | .rc                         | msvc resource file                                                               |
 | .manifest                   | windows manifest file                                                            |
 | .dll                        | windows export file                                                              |
+| .ld/.lds                    | linker scripts file for gcc/clang                                                |
+| .map/.ver                   | version script file for gcc/clang                                                |
 
 The wildcard `*` indicates that the file in the current directory is matched, and `**` matches the file in the multi-level directory.
 

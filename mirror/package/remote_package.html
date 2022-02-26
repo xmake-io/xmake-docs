@@ -736,6 +736,27 @@ target("test")
     end)
 </code></pre>
 <p>In addition, we can also use this method to improve the search for packages installed by other package managers such as homebrew/pacman, for example: <code>add_extsources("pacman::libusb-1.0")</code>.</p>
+<h4 id="set_base">set_base</h4>
+<p>This is a newly added interface in 2.6.4, through which we can inherit all the configuration of an existing package, and then rewrite some of the configuration on this basis.</p>
+<p>This is usually in the user&#39;s own project, it is more useful to modify the built-in package of the xmake-repo official repository, such as: repairing and changing urls, modifying the version list, installation logic, etc.</p>
+<p>For example, modify the url of the built-in zlib package to switch to your own zlib source address.</p>
+<pre><code class="lang-lua">package("myzlib")
+     set_base("zlib")
+     set_urls("https://github.com/madler/zlib.git")
+package_end()
+
+add_requires("myzlib", {system = false, alias = "zlib"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+</code></pre>
+<p>We can also use it to simply add an alias package.</p>
+<pre><code class="lang-lua">package("onetbb")
+     set_base("tbb")
+</code></pre>
+<p>We can install the tbb package through <code>add_requires("onetbb")</code> integration, but the package name is different.</p>
 <h4 id="on_load">on_load</h4>
 <p>This is an optional interface. If you want to be more flexible and dynamically judge various platform architectures, you can do it in this way, for example:</p>
 <pre><code class="lang-lua">on_load(function (package)
@@ -761,6 +782,15 @@ end)
 <p>To find out what methods are available to <code>package</code> look <a href="manual/package_interface.md">here</a>.</p>
 <h4 id="on_install">on_install</h4>
 <p>This interface is mainly used to add installation scripts. The preceding string parameters are used to set up supported platforms. Other script fields like <code>on_load</code>, <code>on_test</code> are also supported.</p>
+<h4 id="on_download">on_download</h4>
+<p>The download logic of the custom package, which is a new interface added in 2.6.4, is usually not used, and it is enough to use the built-in download of Xmake.</p>
+<p>If the user builds a private repository and has a more complex authentication mechanism and special processing logic for the download of the package, the internal download logic can be rewritten to achieve this.</p>
+<pre><code class="lang-lua">on_download(function (package, opt)
+     -- download packages:urls() to opt.sourcedir
+end)
+</code></pre>
+<p>In the opt parameter, you can get the destination source directory <code>opt.sourcedir</code> of the downloaded package. We only need to get the package address from <code>package:urls()</code> and download it.</p>
+<p>Then, add some custom processing logic as needed. In addition, you can add download cache processing and so on.</p>
 <h5 id="platformfiltering">Platform Filtering</h5>
 <p>The complete filtering syntax is as follows: <code>plat|arch1,arch2@host|arch1,arch2</code></p>
 <p>It looks very complicated, but it is very simple. Each stage is optional and can be partially omitted. Corresponding: `Compile Platform|Compile Architecture@Host Platform|Host Architecture</p>

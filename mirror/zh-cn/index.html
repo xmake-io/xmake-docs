@@ -416,12 +416,11 @@ target("app")
     add_files("src/Info.plist")
 </code></pre>
 <h4 id="openmp">OpenMP 程序</h4>
-<pre><code class="lang-lua">add_requires("libomp", {optional = true})
+<pre><code class="lang-lua">add_requires("openmp")
 target("loop")
     set_kind("binary")
     add_files("src/*.cpp")
-    add_rules("c++.openmp")
-    add_packages("libomp")
+    add_packages("openmp")
 </code></pre>
 <h4 id="zig">Zig 程序</h4>
 <pre><code class="lang-lua">target("test")

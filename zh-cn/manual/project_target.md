@@ -1297,18 +1297,20 @@ target("demo")
 
 用于添加目标工程的源文件，甚至库文件，目前支持的一些文件类型：
 
-| 支持的源文件类型   | 描述                               |
-| ------------------ | ---------------------------------- |
-| .c/.cpp/.cc/.cxx   | c++文件                            |
-| .s/.S/.asm         | 汇编文件                           |
-| .m/.mm             | objc文件                           |
-| .swift             | swift文件                          |
-| .go                | golang文件                         |
-| .o/.obj            | 对象文件                           |
-| .a/.lib            | 静态库文件，会自动合并库到目标程序 |
-| .rc                | msvc的资源文件                     |
-| .manifest          | windows manifest 文件              |
-| .def               | windows dll 导出文件               |
+| 支持的源文件类型   | 描述                                    |
+| ------------------ | ----------------------------------      |
+| .c/.cpp/.cc/.cxx   | c++文件                                 |
+| .s/.S/.asm         | 汇编文件                                |
+| .m/.mm             | objc文件                                |
+| .swift             | swift文件                               |
+| .go                | golang文件                              |
+| .o/.obj            | 对象文件                                |
+| .a/.lib            | 静态库文件，会自动合并库到目标程序      |
+| .rc                | msvc的资源文件                          |
+| .manifest          | windows manifest 文件                   |
+| .def               | windows dll 导出文件                    |
+| .ld/.lds           | linker scripts 文件，通常用于 gcc/clang |
+| .map/.ver          | version script 文件，通常用于 gcc/clang |
 
 其中通配符`*`表示匹配当前目录下文件，而`**`则匹配多级目录下的文件。
 
