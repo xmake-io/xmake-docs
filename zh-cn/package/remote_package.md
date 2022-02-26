@@ -1048,6 +1048,37 @@ package("libusb")
 
 另外，我们也可以通过这个方式，改进查找 homebrew/pacman 等其他包管理器安装的包，例如：`add_extsources("pacman::libusb-1.0")`。
 
+#### set_base
+
+这是 2.6.4 新加的接口，我们可以通过它去继承一个已有的包的全部配置，然后在此基础上重写部分配置。
+
+这通常在用户自己的项目中，修改 xmake-repo 官方仓库的内置包比较有用，比如：修复改 urls，修改版本列表，安装逻辑等等。
+
+例如，修改内置 zlib 包的 url，切到自己的 zlib 源码地址。
+
+```lua
+package("myzlib")
+    set_base("zlib")
+    set_urls("https://github.com/madler/zlib.git")
+package_end()
+
+add_requires("myzlib", {system = false, alias = "zlib"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+```
+
+我们也可以用来单纯添加一个别名包。
+
+```lua
+package("onetbb")
+    set_base("tbb")
+```
+
+我们可以通过 `add_requires("onetbb")` 集成安装 tbb 包，只是包名不同而已。
+
 #### on_load
 
 这是个可选的接口，如果要更加灵活的动态判断各种平台架构，针对性做设置，可以在这个里面完成，例如：
@@ -1267,6 +1298,22 @@ end)
 ```
 
 如果运行失败，那么测试不会通过。
+
+#### on_download
+
+自定义包的下载逻辑，这是 2.6.4 新加的接口，通常用不到，使用 Xmake 的内置下载就足够了。
+
+如果用户自建私有仓库，对包的下载有更复杂的鉴权机制，特殊处理逻辑，那么可以重写内部的下载逻辑来实现。
+
+```lua
+on_download(function (package, opt)
+    -- download packages:urls() to opt.sourcedir
+end)
+```
+
+opt 参数里面，可以获取到下载包的目的源码目录 `opt.sourcedir`，我们只需要从 `package:urls()` 获取到包地址，下载下来就可以了。
+
+然后，根据需要，添加一些自定义的处理逻辑。另外，自己可以添加下载缓存处理等等。
 
 ### 扩展配置参数
 

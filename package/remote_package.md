@@ -1008,6 +1008,37 @@ package("libusb")
 
 In addition, we can also use this method to improve the search for packages installed by other package managers such as homebrew/pacman, for example: `add_extsources("pacman::libusb-1.0")`.
 
+#### set_base
+
+This is a newly added interface in 2.6.4, through which we can inherit all the configuration of an existing package, and then rewrite some of the configuration on this basis.
+
+This is usually in the user's own project, it is more useful to modify the built-in package of the xmake-repo official repository, such as: repairing and changing urls, modifying the version list, installation logic, etc.
+
+For example, modify the url of the built-in zlib package to switch to your own zlib source address.
+
+```lua
+package("myzlib")
+     set_base("zlib")
+     set_urls("https://github.com/madler/zlib.git")
+package_end()
+
+add_requires("myzlib", {system = false, alias = "zlib"})
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+```
+
+We can also use it to simply add an alias package.
+
+```lua
+package("onetbb")
+     set_base("tbb")
+```
+
+We can install the tbb package through `add_requires("onetbb")` integration, but the package name is different.
+
 #### on_load
 
 This is an optional interface. If you want to be more flexible and dynamically judge various platform architectures, you can do it in this way, for example:
@@ -1046,6 +1077,22 @@ To find out what methods are available to `package` look [here](manual/package_i
 #### on_install
 
 This interface is mainly used to add installation scripts. The preceding string parameters are used to set up supported platforms. Other script fields like `on_load`, `on_test` are also supported.
+
+#### on_download
+
+The download logic of the custom package, which is a new interface added in 2.6.4, is usually not used, and it is enough to use the built-in download of Xmake.
+
+If the user builds a private repository and has a more complex authentication mechanism and special processing logic for the download of the package, the internal download logic can be rewritten to achieve this.
+
+```lua
+on_download(function (package, opt)
+     -- download packages:urls() to opt.sourcedir
+end)
+```
+
+In the opt parameter, you can get the destination source directory `opt.sourcedir` of the downloaded package. We only need to get the package address from `package:urls()` and download it.
+
+Then, add some custom processing logic as needed. In addition, you can add download cache processing and so on.
 
 ##### Platform Filtering
 
