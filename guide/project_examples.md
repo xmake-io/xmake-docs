@@ -1627,3 +1627,25 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 /mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL -maarch64elf -r --build-id=sha1 -T /home/ruki/.xmake /packages/l/linux-headers/5.10.46/8f80101835834bc2866f3a827836b5de/scripts/module.lds -o build/cross/arm64/release/hello.ko build/.objs/hello/cross/arm64/release/build/cross/ arm64/release/hello.ko.o build/.objs/hello/cross/arm64/release/build/cross/arm64/release/hello.ko.mod.o
 [100%]: build ok!
 ```
+
+## ASN.1 program
+
+ASN.1 programs need to use [ASN.1 Compiler](https://github.com/vlm/asn1c) to generate relevant .c files to participate in project compilation.
+
+While Xmake provides built-in `add_rules("asn1c")` rules to process `.c` file generation, `add_requires("asn1c")` automatically pulls and integrates ASN.1 compiler tools.
+
+Here is a basic configuration example:
+
+```lua
+add_rules("mode.debug", "mode.release")
+add_requires("asn1c")
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_files("src/*.asn1")
+     add_rules("asn1c")
+     add_packages("asn1c")
+```
+
+For details, see [Example Project](https://github.com/xmake-io/xmake/tree/master/tests/projects/c/asn1c).
