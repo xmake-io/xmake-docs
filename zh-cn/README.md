@@ -380,7 +380,7 @@ target("test")
     set_kind("binary")
     add_files("src/*.c)
     set_toolchains("llvm@llvm-10")
-````
+```
 
 #### 拉取交叉编译工具链
 

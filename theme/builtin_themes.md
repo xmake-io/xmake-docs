@@ -46,7 +46,7 @@ This theme is mainly for the dark background of some terminals, which makes some
 
 ```bash
 $ xmake g --theme=light
-````
+```
 
 ## Plain Theme
 

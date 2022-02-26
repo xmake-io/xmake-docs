@@ -261,7 +261,7 @@ package("openssl")
 
 We can also use `package.tools.gn` to natively integrate third-party code maintained by GN.
 
-````lua
+```lua
 package("skia")
 
      set_sourcedir(path.join(os.scriptdir(), "3rd/openssl"))
@@ -276,6 +276,6 @@ package("skia")
      on_test(function (package)
          -- TODO
      end)
-````
+```
 
 Here is the complete script example: [Skia with GN](https://github.com/xmake-io/xmake-repo/blob/master/packages/s/skia/xmake.lua)

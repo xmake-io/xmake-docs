@@ -156,7 +156,7 @@ config.h
 
 After v2.5.7, check_csnippets has been improved, adding `tryrun` and `output` parameters to try to run and capture output.
 
-````lua
+```lua
 includes("check_csnippets.lua")
 
 target("test")

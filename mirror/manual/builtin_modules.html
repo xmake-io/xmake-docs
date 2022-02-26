@@ -740,7 +740,7 @@ os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 os.cp("$(curdir)/test/", "$(tmpdir)/test")
 </code></pre>
 <p>The copy at the top will expand and copy all files to the specified directory, and lose the source directory hierarchy. If you want to copy according to the directory structure that maintains it, you can set the rootdir parameter:</p>
-<pre><code class="lang-lua">os.cp ("src/**.h", "/tmp/", {rootdir=""src"})
+<pre><code class="lang-lua">os.cp ("src/**.h", "/tmp/", {rootdir="src"})
 </code></pre>
 <p>The above script can press the root directory of <code>src</code> to copy all sub-files under src in the same directory structure.</p>
 <p>!> Try to use the <code>os.cp</code> interface instead of <code>os.run("cp ..")</code>, which will ensure platform consistency and cross-platform build description.</p>

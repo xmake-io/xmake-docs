@@ -1402,9 +1402,9 @@ Note: This interface is only available in version v2.6.3. The previous version w
 
 If you want to be compatible with the previous version, you can solve it through the following configuration.
 
-````lua
+```lua
 remove_files = remove_files or del_files
-````
+```
 
 ### target:remove_headerfiles
 

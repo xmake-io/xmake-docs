@@ -689,7 +689,7 @@ Similar to the usage of bin2c rules, see the complete example: [glsl2spv example
 
 We can use this rule to generate python library modules with pybind11, which will adjust the module name of the python library.
 
-````lua
+```lua
 add_rules("mode.release", "mode.debug")
 add_requires("pybind11")
 
@@ -698,11 +698,11 @@ target("example")
      add_files("src/*.cpp")
      add_packages("pybind11")
      set_languages("c++11")
-````
+```
 
 with soabi:
 
-````lua
+```lua
 add_rules("mode.release", "mode.debug")
 add_requires("pybind11")
 
@@ -711,7 +711,7 @@ target("example")
      add_files("src/*.cpp")
      add_packages("pybind11")
      set_languages("c++11")
-````
+```
 
 ### rule
 

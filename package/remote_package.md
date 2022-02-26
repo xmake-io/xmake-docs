@@ -264,7 +264,7 @@ add_requires("vcpkg::boost[core]")
 
 After v2.6.3, xmake supports the new manifest mode of vcpkg, through which we can support version selection of vcpkg package, for example:
 
-````lua
+```lua
 add_requires("vcpkg::zlib 1.2.11+10")
 add_requires("vcpkg::fmt >=8.0.1", {configs = {baseline = "50fd3d9957195575849a49fa591e645f1d8e7156"}})
 add_requires("vcpkg::libpng", {configs = {features = {"apng"}}})
@@ -273,7 +273,7 @@ target("test")
      set_kind("binary")
      add_files("src/*.cpp")
      add_packages("vcpkg::zlib", "vcpkg::fmt", "vcpkg::libpng")
-````
+```
 
 ### Add conan dependency package
 
@@ -740,9 +740,9 @@ $ xrepo install libpng
 
 After v2.6.3, xmake provides some built-in images that can be used directly, such as github's image acceleration:
 
-````console
+```console
 $ xmake g --proxy_pac=github_mirror.lua
-````
+```
 
 We don't have to write pac.lua ourselves, we can use it directly to speed up the download of github sources.
 

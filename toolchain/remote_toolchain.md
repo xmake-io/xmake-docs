@@ -15,7 +15,7 @@ target("test")
     set_kind("binary")
     add_files("src/*.c)
     set_toolchains("llvm@llvm-10")
-````
+```
 
 ### Pull cross compilation tool chain
 
