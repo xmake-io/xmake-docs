@@ -1508,9 +1508,10 @@ target("demo")
 
 更多关于这块的说明，见：[add_deps](#targetadd_deps)
 
-<p class="tip">
-如果不想在工程中写死，可以通过：`xmake f --includedirs=xxx`或者`xmake f --cxflags="-I/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
-</p>
+!> 如果不想在工程中写死，可以通过：`xmake f --includedirs=xxx`或者`xmake f --cxflags="-I/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
+
+!> 头文件默认不支持模式匹配，也不推荐这么做， 容易引入一些不需要的子目录，导致各种头文件引用冲突干扰，出了问题更难查。
+!> 如果用户非要这么做，可以通过 `add_includedirs(os.dirs(path.join(os.scriptdir(), "xxx/**")))` 来实现。
 
 ### target:add_sysincludedirs
 
