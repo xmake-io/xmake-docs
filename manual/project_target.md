@@ -1510,7 +1510,7 @@ For more on this block, see: [add_deps](#targetadd_deps)
 !> If you don't want to write to death in the project, you can set it by: `xmake f --includedirs=xxx` or `xmake f --cxflags="-I/xxx"`, of course, this manually set directory search priority. higher.
 
 !> The header file does not support pattern matching by default, and it is not recommended to do so. It is easy to introduce some unnecessary subdirectories, resulting in the interference of various header file reference conflicts, and it is more difficult to check if there is a problem.
-!> If the user insists on doing this, it can be achieved by `add_includedirs(os.dirs(path.join(os.scriptdir(), "xxx/**")))`.
+If the user insists on doing this, it can be achieved by `add_includedirs(os.dirs(path.join(os.scriptdir(), "xxx/**")))`.
 
 ### target:add_sysincludedirs
 
