@@ -27,16 +27,22 @@ target("hello")
     add_files("src/*.c") 
 ```
 
-Support languages:
+Supported Languages
 
-* c/c++
-* objc/c++
-* cuda
-* asm
-* swift
-* dlang
-* golang
-* rust
+* C
+* C++
+* Objective-C and Objective-C++
+* Swift
+* Assembly
+* Golang
+* Rust
+* Dlang
+* Fortran
+* Cuda
+* Zig
+* Vala
+* Pascal
+* Nim
 
 <p class="tip">
     If you want to known more options, please run: `xmake create --help`
