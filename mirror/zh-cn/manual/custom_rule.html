@@ -475,6 +475,23 @@ target("test")
     add_files("src/main.c")
 </code></pre>
 <p>相关 issue <a href="https://github.com/xmake-io/xmake/issues/1123">#1123</a></p>
+<h4 id="utilssymbolsexport_list">utils.symbols.export_list</h4>
+<p>我们可以在 xmake.lua 里面直接定义导出的符号列表，例如：</p>
+<pre><code class="lang-lua">target("foo")
+    set_kind("shared")
+    add_files("src/foo.c")
+    add_rules("utils.symbols.export_list", {symbols = {
+        "add",
+        "sub"}})
+</code></pre>
+<p>或者，在 <code>*.export.txt</code> 文件中添加导出的符号列表。</p>
+<pre><code class="lang-lua">target("foo2")
+    set_kind("shared")
+    add_files("src/foo.c")
+    add_files("src/foo.export.txt")
+    add_rules("utils.symbols.export_list")
+</code></pre>
+<p>完整的工程例子见：<a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/c/shared_library_export_list">导出符号例子</a></p>
 <h4 id="utilsinstallcmake_importfiles">utils.install.cmake_importfiles</h4>
 <p>v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 .cmake 文件，用于其他 cmake 项目的库导入和查找。</p>
 <h4 id="utilsinstallpkgconfig_importfiles">utils.install.pkgconfig_importfiles</h4>

@@ -1424,9 +1424,8 @@ target("demo")
     add_deps("test")
 </code></pre>
 <p>For more on this block, see: <a href="#targetadd_deps">add_deps</a></p>
-<p><p class="tip"><br>If you don&#39;t want to write to death in the project, you can set it by: <code>xmake f --includedirs=xxx</code> or <code>xmake f --cxflags="-I/xxx"</code>, of course, this manually set directory search priority. higher.<br></p>
-
-</p>
+<p>!>If you don&#39;t want it to be fixed in the project, you can set it by: xmake f --includedirs=xxx or xmake f --cxflags="-I/xxx". This manual setting has higher directory search priority.</p>
+<p>!> The header file does not support pattern matching by default, and it is not recommended to do so. It is easy to introduce some unnecessary subdirectories, resulting in the interference of various header file reference conflicts, and it is more difficult to check if there is a problem.<br>If the user insists on doing this, it can be achieved by <code>add_includedirs(os.dirs(path.join(os.scriptdir(), "xxx/**")))</code>.</p>
 <h3 id="targetadd_sysincludedirs">target:add_sysincludedirs</h3>
 <h4 id="addsystemheaderfilesearchdirectory">Add system header file search directory</h4>
 <p><code>add_includedirs</code> is usually used to add search directories for project header files. The introduction of some system library header files may trigger some internal warning messages, but these warnings may be unavoidable for users and cannot be fixed.</p>

@@ -472,6 +472,23 @@ target("test")
      add_files("src/main.c")
 </code></pre>
 <p>Related issue <a href="https://github.com/xmake-io/xmake/issues/1123">#1123</a></p>
+<h4 id="utilssymbolsexport_list">utils.symbols.export_list</h4>
+<p>We can define the list of exported symbols directly in xmake.lua, for example:</p>
+<pre><code class="lang-lua">target("foo")
+     set_kind("shared")
+     add_files("src/foo.c")
+     add_rules("utils.symbols.export_list", {symbols = {
+         "add",
+         "sub"}})
+</code></pre>
+<p>Alternatively, add a list of exported symbols in the <code>*.export.txt</code> file.</p>
+<pre><code class="lang-lua">target("foo2")
+     set_kind("shared")
+     add_files("src/foo.c")
+     add_files("src/foo.export.txt")
+     add_rules("utils.symbols.export_list")
+</code></pre>
+<p>For a complete project example, see: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/c/shared_library_export_list">Export Symbol Example</a></p>
 <h4 id="utilsinstallcmake_importfiles">utils.install.cmake_importfiles</h4>
 <p>We can use this rule to export the .cmake file when installing the target library file for the library import and search of other cmake projects.</p>
 <h4 id="utilsinstallpkgconfig_importfiles">utils.install.pkgconfig_importfiles</h4>

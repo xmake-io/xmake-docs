@@ -584,6 +584,31 @@ target("test")
 
 相关 issue [#1123](https://github.com/xmake-io/xmake/issues/1123)
 
+#### utils.symbols.export_list
+
+我们可以在 xmake.lua 里面直接定义导出的符号列表，例如：
+
+```lua
+target("foo")
+    set_kind("shared")
+    add_files("src/foo.c")
+    add_rules("utils.symbols.export_list", {symbols = {
+        "add",
+        "sub"}})
+```
+
+或者，在 `*.export.txt` 文件中添加导出的符号列表。
+
+```lua
+target("foo2")
+    set_kind("shared")
+    add_files("src/foo.c")
+    add_files("src/foo.export.txt")
+    add_rules("utils.symbols.export_list")
+```
+
+完整的工程例子见：[导出符号例子](https://github.com/xmake-io/xmake/tree/dev/tests/projects/c/shared_library_export_list)
+
 #### utils.install.cmake_importfiles
 
 v2.5.3 以上版本可以使用此规则在安装 target 目标库文件的时候，导出 .cmake 文件，用于其他 cmake 项目的库导入和查找。

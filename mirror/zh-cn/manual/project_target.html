@@ -1440,9 +1440,8 @@ target("demo")
     add_deps("test")
 </code></pre>
 <p>更多关于这块的说明，见：<a href="#targetadd_deps">add_deps</a></p>
-<p><p class="tip"><br>如果不想在工程中写死，可以通过：<code>xmake f --includedirs=xxx</code>或者<code>xmake f --cxflags="-I/xxx"</code>的方式来设置，当然这种手动设置的目录搜索优先级更高。<br></p>
-
-</p>
+<p>!> 如果不想在工程中写死，可以通过：<code>xmake f --includedirs=xxx</code>或者<code>xmake f --cxflags="-I/xxx"</code>的方式来设置，当然这种手动设置的目录搜索优先级更高。</p>
+<p>!> 头文件默认不支持模式匹配，也不推荐这么做， 容易引入一些不需要的子目录，导致各种头文件引用冲突干扰，出了问题更难查。<br>如果用户非要这么做，可以通过 <code>add_includedirs(os.dirs(path.join(os.scriptdir(), "xxx/**")))</code> 来实现。</p>
 <h3 id="targetadd_sysincludedirs">target:add_sysincludedirs</h3>
 <h4 id="">添加系统头文件搜索目录</h4>
 <p><code>add_includedirs</code> 通常用于添加工程头文件搜索目录，而一些系统库头文件的引入，有可能会触发一些内部的警告信息，但是这些警告对于用户来讲也许是无法避免，也修复不了的。</p>

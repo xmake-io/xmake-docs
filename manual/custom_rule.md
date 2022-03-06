@@ -582,6 +582,31 @@ target("test")
 
 Related issue [#1123](https://github.com/xmake-io/xmake/issues/1123)
 
+#### utils.symbols.export_list
+
+We can define the list of exported symbols directly in xmake.lua, for example:
+
+```lua
+target("foo")
+     set_kind("shared")
+     add_files("src/foo.c")
+     add_rules("utils.symbols.export_list", {symbols = {
+         "add",
+         "sub"}})
+```
+
+Alternatively, add a list of exported symbols in the `*.export.txt` file.
+
+```lua
+target("foo2")
+     set_kind("shared")
+     add_files("src/foo.c")
+     add_files("src/foo.export.txt")
+     add_rules("utils.symbols.export_list")
+```
+
+For a complete project example, see: [Export Symbol Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/c/shared_library_export_list)
+
 #### utils.install.cmake_importfiles
 
 We can use this rule to export the .cmake file when installing the target library file for the library import and search of other cmake projects.
