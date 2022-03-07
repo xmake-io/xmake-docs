@@ -1,10 +1,18 @@
-## Supporting the project
+## Support this project
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. 🙏
-
-- [Become a sponsor](https://xmake.io/#/about/sponsor)
+Support this project by [becoming a sponsor](https://xmake.io/#/about/sponsor). Your logo will show up here with a link to your website. 🙏
 
 <a href="https://opencollective.com/xmake#sponsors" target="_blank"><img src="https://opencollective.com/xmake/sponsors.svg?width=890"></a>
+<a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
+
+## Technical Support
+
+You can also consider sponsoring us to get extra technical support services via [Github sponsor program](https://github.com/sponsors/waruqi),
+then you can get access to [xmake-io/technical-support](https://github.com/xmake-io/technical-support) repository to get more consulting related information.
+
+- [x] Handling Issues with higher priority
+- [x] One-to-one technical consulting service
+- [x] Review your xmake.lua and provide suggestions for improvement
 
 ## Introduction
 
