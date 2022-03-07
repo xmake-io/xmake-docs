@@ -1,3 +1,32 @@
+## v2.6.4
+
+### 新特性
+
+* [#2011](https://github.com/xmake-io/xmake/issues/2011): 支持继承和局部修改官方包，例如对现有的包更换 urls 和 versions
+* 支持在 sparc, alpha, powerpc, s390x 和 sh4 上编译运行 xmake
+* 为 package() 添加 on_download 自定义下载
+* [#2021](https://github.com/xmake-io/xmake/issues/2021): 支持 Linux/Windows 下构建 Swift 程序
+* [#2024](https://github.com/xmake-io/xmake/issues/2024): 添加 asn1c 支持
+* [#2031](https://github.com/xmake-io/xmake/issues/2031): 为 add_files 增加 linker scripts 和 version scripts 支持
+* [#2033](https://github.com/xmake-io/xmake/issues/2033): 捕获 ctrl-c 去打印当前运行栈，用于调试分析卡死问题
+* [#2059](https://github.com/xmake-io/xmake/pull/2059): 添加 `xmake update --integrate` 命令去整合 shell
+* [#2070](https://github.com/xmake-io/xmake/issues/2070): 添加一些内置的 xrepo env 环境配置
+* [#2117](https://github.com/xmake-io/xmake/pull/2117): 支持为任意平台传递工具链到包
+* [#2121](https://github.com/xmake-io/xmake/issues/2121): 支持导出指定的符号列表，可用于减少动态库的大小
+
+### 改进
+
+* [#2036](https://github.com/xmake-io/xmake/issues/2036): 改进 xrepo 支持从配置文件批量安装包，例如：`xrepo install xxx.lua`
+* [#2039](https://github.com/xmake-io/xmake/issues/2039): 改进 vs generator 的 filter 目录展示
+* [#2025](https://github.com/xmake-io/xmake/issues/2025): 支持为 phony 和 headeronly 目标生成 vs 工程
+* 优化 vs 和 codesign 的探测速度
+* [#2077](https://github.com/xmake-io/xmake/issues/2077): 改进 vs 工程生成器去支持 cuda
+
+### Bugs 修复
+
+* [#2005](https://github.com/xmake-io/xmake/issues/2005): 修复 path.extension
+* [#2008](https://github.com/xmake-io/xmake/issues/2008): 修复 windows manifest 文件编译
+* [#2016](https://github.com/xmake-io/xmake/issues/2016): 修复 vs project generator 里，对象文件名冲突导致的编译失败
 
 ## v2.6.3
 

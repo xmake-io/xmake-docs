@@ -1,3 +1,32 @@
+## v2.6.4
+
+### New features
+
+* [#2011](https://github.com/xmake-io/xmake/issues/2011): Support to inherit base package
+* Support to build and run xmake on sparc, alpha, powerpc, s390x and sh4
+* Add on_download for package()
+* [#2021](https://github.com/xmake-io/xmake/issues/2021): Support Swift for linux and windows
+* [#2024](https://github.com/xmake-io/xmake/issues/2024): Add asn1c support
+* [#2031](https://github.com/xmake-io/xmake/issues/2031): Support linker scripts and version scripts for add_files
+* [#2033](https://github.com/xmake-io/xmake/issues/2033): Catch ctrl-c to get current backtrace for debugging stuck
+* [#2059](https://github.com/xmake-io/xmake/pull/2059): Add `xmake update --integrate` to integrate for shell
+* [#2070](https://github.com/xmake-io/xmake/issues/2070): Add built-in xrepo environments
+* [#2117](https://github.com/xmake-io/xmake/pull/2117): Support to pass toolchains to package for other platforms
+* [#2121](https://github.com/xmake-io/xmake/issues/2121): Support to export the given symbols list
+
+### Changes
+
+* [#2036](https://github.com/xmake-io/xmake/issues/2036): Improve xrepo to install packages from configuration file, e.g. `xrepo install xxx.lua`
+* [#2039](https://github.com/xmake-io/xmake/issues/2039): Improve filter directory for vs generator
+* [#2025](https://github.com/xmake-io/xmake/issues/2025): Support phony and headeronly target for vs generator
+* Improve to find vstudio and codesign speed
+* [#2077](https://github.com/xmake-io/xmake/issues/2077): Improve vs project generator to support cuda
+
+### Bugs fixed
+
+* [#2005](https://github.com/xmake-io/xmake/issues/2005): Fix path.extension
+* [#2008](https://github.com/xmake-io/xmake/issues/2008): Fix windows manifest
+* [#2016](https://github.com/xmake-io/xmake/issues/2016): Fix object filename confict for vs project generator
 
 ## v2.6.3
 
