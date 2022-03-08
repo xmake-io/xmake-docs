@@ -1527,6 +1527,8 @@ upgrading packages ..
 xrepo_package(
     "foo 1.2.3"
     [CONFIGS feature1=true,feature2=false]
+    [CONFIGS path/to/script.lua]
+    [DEPS]
     [MODE debug|release]
     [ALIAS aliasname]
     [OUTPUT verbose|diagnosis|quiet]
@@ -1536,16 +1538,34 @@ xrepo_package(
 
 一些函数参数直接对应于 Xrepo 命令选项。
 
-调用 `xrepo_package(foo)` 后，有两种使用 `foo` 包的方法：
+`xrepo_package` 将软件包安装目录添加到 `CMAKE_PREFIX_PATH`。所以`find_package`
+可以使用。如果 `CMAKE_MINIMUM_REQUIRED_VERSION` >= 3.1，cmake `pkgConfig` 也会搜索
+对于软件包安装目录下的 pkgconfig 文件。
 
-- 如果包提供 cmake 模块来查找它，则调用 `find_package(foo)`, 参考 CMake [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) 文档了解更多详情
-- 如果包不提供 cmake 模块，`foo_INCLUDE_DIR` 和 `foo_LINK_DIR` 变量将设置为包包含和库路径。使用这些变量在 CMake 代码中设置包含和库路径。
-- 如果指定了 `DIRECTORY_SCOPE`，则 `xrepo_package` 将运行以下代码（这样用户只需要在 `target_link_libraries` 中指定库名称）
+调用 `xrepo_package(foo)` 后，有 `foo` 包的三种使用方式：
 
-```cmake
-include_directories(foo_INCLUDE_DIR)
-link_directories(foo_LINK_DIR)
-```
+1. 如果包提供 cmake 配置文件，则调用 `find_package(foo)`。
+    - 有关详细信息，请参阅 CMake [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) 文档。
+2.如果包没有提供cmake配置文件或者找不到模块
+   - 以下变量可用于使用pacakge（cmake后的变量名
+     查找模块 [标准变量名称](https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html#standard-variable-names))
+     - `foo_INCLUDE_DIRS`
+     - `foo_LIBRARY_DIRS`
+     - `foo_LIBRARIES`
+     - `foo_DEFINITIONS`
+   - 如果指定了 `DIRECTORY_SCOPE`，则 `xrepo_package` 将运行以下代码
+     ```cmake
+     include_directories(${foo_INCLUDE_DIRS})
+     link_directories(${foo_LIBRARY_DIRS})
+     ```
+3. 使用`xrepo_target_packages`。请参阅以下部分。
+
+注意 `CONFIGS path/to/script.lua` 用于对包配置进行精细控制。
+例如：
+  - 排除系统上的包。
+  - 覆盖依赖包的默认配置，例如设置`shared=true`。
+
+如果指定了 `DEPS`，所有依赖库都将添加到 `CMAKE_PREFIX_PATH`，以及 include 和 libraries 那四个变量中。
 
 #### xrepo_target_packages
 
@@ -1553,8 +1573,10 @@ link_directories(foo_LINK_DIR)
 
 ```cmake
 xrepo_target_packages(
-      target
-      package1 pacakge2...
+    target
+    [NO_LINK_LIBRARIES]
+    [PRIVATE|PUBLIC|INTERFACE]
+    package1 package2 ...
 )
 ```
 

@@ -1069,6 +1069,8 @@ upgrading packages ..
 <pre><code class="lang-cmake">xrepo_package(
     "foo 1.2.3"
     [CONFIGS feature1=true,feature2=false]
+    [CONFIGS path/to/script.lua]
+    [DEPS]
     [MODE debug|release]
     [ALIAS aliasname]
     [OUTPUT verbose|diagnosis|quiet]
@@ -1076,20 +1078,39 @@ upgrading packages ..
 )
 </code></pre>
 <p>一些函数参数直接对应于 Xrepo 命令选项。</p>
-<p>调用 <code>xrepo_package(foo)</code> 后，有两种使用 <code>foo</code> 包的方法：</p>
-<ul>
-<li>如果包提供 cmake 模块来查找它，则调用 <code>find_package(foo)</code>, 参考 CMake <a href="https://cmake.org/cmake/help/latest/command/find_package.html"><code>find_package</code></a> 文档了解更多详情</li>
-<li>如果包不提供 cmake 模块，<code>foo_INCLUDE_DIR</code> 和 <code>foo_LINK_DIR</code> 变量将设置为包包含和库路径。使用这些变量在 CMake 代码中设置包含和库路径。</li>
-<li>如果指定了 <code>DIRECTORY_SCOPE</code>，则 <code>xrepo_package</code> 将运行以下代码（这样用户只需要在 <code>target_link_libraries</code> 中指定库名称）</li>
-</ul>
-<pre><code class="lang-cmake">include_directories(foo_INCLUDE_DIR)
-link_directories(foo_LINK_DIR)
+<p><code>xrepo_package</code> 将软件包安装目录添加到 <code>CMAKE_PREFIX_PATH</code>。所以<code>find_package</code><br>可以使用。如果 <code>CMAKE_MINIMUM_REQUIRED_VERSION</code> >= 3.1，cmake <code>pkgConfig</code> 也会搜索<br>对于软件包安装目录下的 pkgconfig 文件。</p>
+<p>调用 <code>xrepo_package(foo)</code> 后，有 <code>foo</code> 包的三种使用方式：</p>
+<ol>
+<li>如果包提供 cmake 配置文件，则调用 <code>find_package(foo)</code>。<ul>
+<li>有关详细信息，请参阅 CMake <a href="https://cmake.org/cmake/help/latest/command/find_package.html"><code>find_package</code></a> 文档。<br>2.如果包没有提供cmake配置文件或者找不到模块<ul>
+<li>以下变量可用于使用pacakge（cmake后的变量名<br>查找模块 <a href="https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html#standard-variable-names">标准变量名称</a>)</li>
+<li><code>foo_INCLUDE_DIRS</code></li>
+<li><code>foo_LIBRARY_DIRS</code></li>
+<li><code>foo_LIBRARIES</code></li>
+<li><code>foo_DEFINITIONS</code></li>
+<li>如果指定了 <code>DIRECTORY_SCOPE</code>，则 <code>xrepo_package</code> 将运行以下代码<pre><code class="lang-cmake">include_directories(${foo_INCLUDE_DIRS})
+link_directories(${foo_LIBRARY_DIRS})
 </code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用<code>xrepo_target_packages</code>。请参阅以下部分。</li>
+</ol>
+<p>注意 <code>CONFIGS path/to/script.lua</code> 用于对包配置进行精细控制。<br>例如：</p>
+<ul>
+<li>排除系统上的包。</li>
+<li>覆盖依赖包的默认配置，例如设置<code>shared=true</code>。</li>
+</ul>
+<p>如果指定了 <code>DEPS</code>，所有依赖库都将添加到 <code>CMAKE_PREFIX_PATH</code>，以及 include 和 libraries 那四个变量中。</p>
 <h4 id="xrepo_target_packages">xrepo_target_packages</h4>
 <p>将包 includedirs 和 links/linkdirs 添加到给定的目标。</p>
 <pre><code class="lang-cmake">xrepo_target_packages(
-      target
-      package1 pacakge2...
+    target
+    [NO_LINK_LIBRARIES]
+    [PRIVATE|PUBLIC|INTERFACE]
+    package1 package2 ...
 )
 </code></pre>
 <h3 id="">使用来自官方存储库的包</h3>
