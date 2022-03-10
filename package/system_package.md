@@ -5,7 +5,7 @@ Xmake unifies the use of remote packages and system packages, and all use the `a
 And if we just want to find and use the system library and don't want to download it remotely, we can configure it like this:
 
 ```lua
-add_requires("zlib", {system = false})
+add_requires("zlib", {system = true})
 
 target("test")
      set_kind("binary")
@@ -13,12 +13,12 @@ target("test")
      add_packages("zlib")
 ```
 
-Remote download can be forcibly disabled by `{system = false}`. At this time, it is equivalent to `find_package` of Xmake/CMake, but it is simpler and easier to use, and it is exactly the same as the use of remote packages.
+Remote download can be forcibly disabled by `{system = true}`. At this time, it is equivalent to `find_package` of Xmake/CMake, but it is simpler and easier to use, and it is exactly the same as the use of remote packages.
 
 By default, if the system library is not found, it will prompt failure. If the package is optional, you can additionally configure the `{optional = true}` option.
 
 ```lua
-add_requires("zlib", {system = false, optional = true})
+add_requires("zlib", {system = true, optional = true})
 ```
 
 ## Test command for finding package
