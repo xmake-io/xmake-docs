@@ -5,7 +5,7 @@ Xmake 对远程包和系统包的使用进行了统一，全部使用 `add_requi
 而如果我们仅仅想查找使用系统库，不想远程下载，可以这么配置：
 
 ```lua
-add_requires("zlib", {system = false})
+add_requires("zlib", {system = true})
 
 target("test")
     set_kind("binary")
@@ -13,12 +13,12 @@ target("test")
     add_packages("zlib")
 ```
 
-通过 `{system = false}` 就可以强制禁用远程下载，这时候，他就等价于 Xmake/CMake 的 `find_package`，但是更加简单易用，并且和远程包使用方式完全一致。
+通过 `{system = true}` 就可以强制禁用远程下载，这时候，他就等价于 Xmake/CMake 的 `find_package`，但是更加简单易用，并且和远程包使用方式完全一致。
 
 默认情况下，如果找不到系统库，就是提示失败，如果这个包是可选的，那么可以额外配置 `{optional = true}` 选项。
 
 ```lua
-add_requires("zlib", {system = false, optional = true})
+add_requires("zlib", {system = true, optional = true})
 ```
 
 ## 查找包快速测试
