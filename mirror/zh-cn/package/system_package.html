@@ -93,16 +93,16 @@
     <h2 id="">查找使用系统包</h2>
 <p>Xmake 对远程包和系统包的使用进行了统一，全部使用 <code>add_requires("zlib")</code> 接口来描述集成，而默认的配置方式，它会优先从系统上查找库，如果没有，会自动下载安装集成。</p>
 <p>而如果我们仅仅想查找使用系统库，不想远程下载，可以这么配置：</p>
-<pre><code class="lang-lua">add_requires("zlib", {system = false})
+<pre><code class="lang-lua">add_requires("zlib", {system = true})
 
 target("test")
     set_kind("binary")
     add_files("src/*.c")
     add_packages("zlib")
 </code></pre>
-<p>通过 <code>{system = false}</code> 就可以强制禁用远程下载，这时候，他就等价于 Xmake/CMake 的 <code>find_package</code>，但是更加简单易用，并且和远程包使用方式完全一致。</p>
+<p>通过 <code>{system = true}</code> 就可以强制禁用远程下载，这时候，他就等价于 Xmake/CMake 的 <code>find_package</code>，但是更加简单易用，并且和远程包使用方式完全一致。</p>
 <p>默认情况下，如果找不到系统库，就是提示失败，如果这个包是可选的，那么可以额外配置 <code>{optional = true}</code> 选项。</p>
-<pre><code class="lang-lua">add_requires("zlib", {system = false, optional = true})
+<pre><code class="lang-lua">add_requires("zlib", {system = true, optional = true})
 </code></pre>
 <h2 id="">查找包快速测试</h2>
 <p>我们可以使用下面的命令，快速检测系统上指定的包信息：</p>

@@ -93,16 +93,16 @@
     <h2 id="findusingsystempackages">Find using system packages</h2>
 <p>Xmake unifies the use of remote packages and system packages, and all use the <code>add_requires("zlib")</code> interface to describe the integration, and the default configuration method, it will first find the library from the system, if not, it will automatically download and install integrated.</p>
 <p>And if we just want to find and use the system library and don&#39;t want to download it remotely, we can configure it like this:</p>
-<pre><code class="lang-lua">add_requires("zlib", {system = false})
+<pre><code class="lang-lua">add_requires("zlib", {system = true})
 
 target("test")
      set_kind("binary")
      add_files("src/*.c")
      add_packages("zlib")
 </code></pre>
-<p>Remote download can be forcibly disabled by <code>{system = false}</code>. At this time, it is equivalent to <code>find_package</code> of Xmake/CMake, but it is simpler and easier to use, and it is exactly the same as the use of remote packages.</p>
+<p>Remote download can be forcibly disabled by <code>{system = true}</code>. At this time, it is equivalent to <code>find_package</code> of Xmake/CMake, but it is simpler and easier to use, and it is exactly the same as the use of remote packages.</p>
 <p>By default, if the system library is not found, it will prompt failure. If the package is optional, you can additionally configure the <code>{optional = true}</code> option.</p>
-<pre><code class="lang-lua">add_requires("zlib", {system = false, optional = true})
+<pre><code class="lang-lua">add_requires("zlib", {system = true, optional = true})
 </code></pre>
 <h2 id="testcommandforfindingpackage">Test command for finding package</h2>
 <p>We can use the following command to quickly detect the package information specified on the system:</p>
