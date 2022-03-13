@@ -1154,9 +1154,10 @@ xrepo_target_packages(example-bin gflags)
 <h4 id="cmake">添加带有 cmake 导入模块的包</h4>
 <pre><code class="lang-cmake">xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
 
-# `xrepo_package` sets `gflags_DIR` variable in parent scope because gflags
-# provides cmake modules. So we can now call `find_package` to find gflags
-# package.
+# `xrepo_package` 会将 gflags 安装目录添加到 CMAKE_PREFIX_PATH.
+# `find_package(gflags)` 会从 CMAKE_PREFIX_PATH 包含的目录中找到 gflags 提供的
+# config-file 文件。
+# 参考 https://cmake.org/cmake/help/latest/command/find_package.html#search-modes
 find_package(gflags CONFIG COMPONENTS shared)
 
 add_executable(example-bin "")
