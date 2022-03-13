@@ -1680,6 +1680,7 @@ xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
 # `xrepo_package` add gflags install directory to CMAKE_PREFIX_PATH.
 # As gflags provides cmake config-files, we can now call `find_package` to find
 # gflags package.
+# Refer to https://cmake.org/cmake/help/latest/command/find_package.html#search-modes
 find_package(gflags CONFIG COMPONENTS shared)
 
 add_executable(example-bin "")
