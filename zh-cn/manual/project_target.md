@@ -2407,7 +2407,7 @@ target("test")
 
     set_configvar("VAR2", 2)
     add_configfiles("config.h.in", {variables = {hello = "xmake"}})
-    add_configfiles("*.man", {copyonly = true})
+    add_configfiles("*.man", {onlycopy = true})
 ```
 
 通过[set_configvar](#targetset_configvar)接口设置模板变量，裹着通过`{variables = {xxx = ""}}`中设置的变量进行替换处理。
@@ -2420,7 +2420,7 @@ target("test")
 #define HELLO "xmake"
 ```
 
-而`{copyonly = true}`设置，会强制将`*.man`作为普通文件处理，仅在预处理阶段copy文件，不进行变量替换。
+而`{onlycopy = true}`设置，会强制将`*.man`作为普通文件处理，仅在预处理阶段copy文件，不进行变量替换。
 
 默认的模板变量匹配模式为`${var}`，当然我们也可以设置其他的匹配模式，例如，改为`@var@`匹配规则：
 

@@ -2399,7 +2399,7 @@ target("test")
 
     set_configvar("VAR2", 2)
     add_configfiles("config.h.in", {variables = {hello = "xmake"}})
-    add_configfiles("*.man", {copyonly = true})
+    add_configfiles("*.man", {onlycopy = true})
 ```
 
 The template variable is set via the [set_configvar](#targetset_configvar) interface, and the substitution is handled by the variable set in `{variables = {xxx = ""}}`.
@@ -2412,7 +2412,7 @@ The preprocessed file `config.h` is:
 #define HELLO "xmake"
 ```
 
-The `{copyonly = true}` setting will force `*.man` to be treated as a normal file, copying files only during the preprocessing stage, and not replacing variables.
+The `{onlycopy = true}` setting will force `*.man` to be treated as a normal file, copying files only during the preprocessing stage, and not replacing variables.
 
 The default template variable matching mode is `${var}`, of course we can also set other matching modes, for example, to `@var@` matching rules:
 
