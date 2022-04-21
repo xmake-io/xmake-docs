@@ -2088,14 +2088,14 @@ target("test")
 
     set_configvar("VAR2", 2)
     add_configfiles("config.h.in", {variables = {hello = "xmake"}})
-    add_configfiles("*.man", {copyonly = true})
+    add_configfiles("*.man", {onlycopy = true})
 </code></pre>
 <p>通过<a href="#targetset_configvar">set_configvar</a>接口设置模板变量，裹着通过<code>{variables = {xxx = ""}}</code>中设置的变量进行替换处理。</p>
 <p>预处理后的文件<code>config.h</code>内容为：</p>
 <pre><code>#define VAR1 "1"
 #define VAR2 "2"
 #define HELLO "xmake"
-</code></pre><p>而<code>{copyonly = true}</code>设置，会强制将<code>*.man</code>作为普通文件处理，仅在预处理阶段copy文件，不进行变量替换。</p>
+</code></pre><p>而<code>{onlycopy = true}</code>设置，会强制将<code>*.man</code>作为普通文件处理，仅在预处理阶段copy文件，不进行变量替换。</p>
 <p>默认的模板变量匹配模式为<code>${var}</code>，当然我们也可以设置其他的匹配模式，例如，改为<code>@var@</code>匹配规则：</p>
 <pre><code class="lang-lua">target("test")
     add_configfiles("config.h.in", {pattern = "@(.-)@"})
