@@ -660,6 +660,19 @@ target("test")
     add_files("src/main.rs")
     add_packages("cargo::base64", "cargo::flate2")
 </code></pre>
+<h3 id="cargotoml">集成 Cargo.toml 的依赖包</h3>
+<p>上面直接使用 <code>add_requires("cargo::base64 0.13.0")</code> 的方式集成依赖，会有一个问题：</p>
+<p>如果依赖很多，并且有几个依赖都共同依赖了相同的子依赖，那么会出现重定义问题，因此如果我们使用完整的 Cargo.toml 去管理依赖就不会存在这个问题。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("cargo::test", {configs = {cargo_toml = path.join(os.projectdir(), "Cargo.toml")}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.rs")
+    add_packages("cargo::test")
+</code></pre>
+<p>完整例子见：<a href="https://github.com/xmake-io/xmake/blob/dev/tests/projects/rust/cargo_deps_with_toml/xmake.lua">cargo_deps_with_toml</a></p>
 <h3 id="cxxbridgecrust">使用 cxxbridge 在 c++ 中调用 rust</h3>
 <p>例子: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library">https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library</a></p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")

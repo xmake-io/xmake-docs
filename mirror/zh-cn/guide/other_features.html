@@ -803,6 +803,133 @@ int bar()
     add_files("src/*.c", "src/*.cpp")
 </code></pre>
 <p>处理全局变量，还有全局的重名宏定义，函数什么的，都可以采用这种方式来避免冲突。</p>
+<h2 id="">远程编译</h2>
+<p>2.6.5 版本提供了远程编译支持，我们可以通过它可以远程服务器上编译代码，远程运行和调试。</p>
+<p>服务器可以部署在 Linux/MacOS/Windows 上，实现跨平台编译，例如：在 Linux 上编译运行 Windows 程序，在 Windows 上编译运行 macOS/Linux 程序。</p>
+<p>相比 ssh 远程登入编译，它更加的稳定，使用更加流畅，不会因为网络不稳定导致 ssh 终端输入卡顿，也可以实现本地快速编辑代码文件。</p>
+<p>甚至我们可以在 vs/sublime/vscode/idea 等编辑器和IDE 中无缝实现远程编译，而不需要依赖 IDE 本身对远程编译的支持力度。</p>
+<h3 id="">开启服务</h3>
+<pre><code class="lang-console">$ xmake service
+<remote_build_server>: listening 0.0.0.0:90091 ..
+</code></pre>
+<p>我们也可以开启服务的同时，回显详细日志信息。</p>
+<pre><code class="lang-console">$ xmake service -vD
+<remote_build_server>: listening 0.0.0.0:90091 ..
+</code></pre>
+<h3 id="daemon">以 Daemon 模式开启服务</h3>
+<pre><code class="lang-console">$ xmake service --start
+$ xmake service --restart
+$ xmake service --stop
+</code></pre>
+<h3 id="">配置服务端</h3>
+<p>我们首先，运行 <code>xmake service</code> 命令，它会自动生成一个默认的 <code>service.conf</code> 配置文件，存储到 <code>~/.xmake/service.conf</code>。</p>
+<p>然后，我们编辑它，修复服务器的监听端口（可选）。</p>
+<pre><code class="lang-lua">{
+    logfile = "/Users/ruki/.xmake/service/logs.txt",
+    remote_build = {
+        server = {
+            listen = "0.0.0.0:90091"
+        }
+    }
+}
+</code></pre>
+<h3 id="">配置客户端</h3>
+<p>我们还是编辑这个文件 <code>~/.xmake/service.conf</code>，配置客户端需要连接的服务器地址。</p>
+<pre><code class="lang-lua">{
+    logfile = "/Users/ruki/.xmake/service/logs.txt",
+    remote_build = {
+        client = {
+            connect = "192.168.56.101:90091",
+        }
+    }
+}
+</code></pre>
+<h3 id="">导入给定的配置文件</h3>
+<p>我们也可以通过下面的命令，导入指定的配置文件。</p>
+<pre><code class="lang-console">$ xmake service --config=/tmp/service.conf
+</code></pre>
+<h3 id="">连接远程的服务器</h3>
+<p>接下来，我们只需要进入需要远程编译的工程根目录，执行 <code>xmake service --connect</code> 命令，进行连接。</p>
+<pre><code class="lang-console">$ xmake create test
+$ cd test
+$ xmake service --connect 
+<remote_build_client>: connect 192.168.56.110:90091 ..
+<remote_build_client>: connected!
+<remote_build_client>: sync files in 192.168.56.110:90091 ..
+Scanning files ..
+Comparing 3 files ..
+    [+]: src/main.cpp
+    [+]: .gitignore
+    [+]: xmake.lua
+3 files has been changed!
+Archiving files ..
+Uploading files with 1372 bytes ..
+<remote_build_client>: sync files ok!
+</code></pre>
+<h3 id="">远程构建工程</h3>
+<p>连接成功后，我们就可以像正常本地编译一样，进行远程编译。</p>
+<pre><code class="lang-console">$ xmake
+<remote_build_client>: run xmake in 192.168.56.110:90091 ..
+checking for platform ... macosx
+checking for architecture ... x86_64
+checking for Xcode directory ... /Applications/Xcode.app
+checking for Codesign Identity of Xcode ... Apple Development: waruqi@gmail.com (T3NA4MRVPU)
+checking for SDK version of Xcode for macosx (x86_64) ... 11.3
+checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
+[ 25%]: ccache compiling.release src/main.cpp
+[ 50%]: linking.release test
+[100%]: build ok!
+<remote_build_client>: run command ok!
+</code></pre>
+<h3 id="">远程运行目标程序</h3>
+<p>我们也可以像本地运行调试那样，远程运行调试编译的目标程序。</p>
+<pre><code class="lang-console">$ xmake run
+<remote_build_client>: run xmake run in 192.168.56.110:90091 ..
+hello world!
+<remote_build_client>: run command ok!
+</code></pre>
+<h3 id="">远程重建工程</h3>
+<pre><code class="lang-console">$ xmake -rv
+<remote_build_client>: run xmake -rv in 192.168.56.110:90091 ..
+[ 25%]: ccache compiling.release src/main.cpp
+/usr/local/bin/ccache /usr/bin/xcrun -sdk macosx clang -c -Qunused-arguments -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src/main.cpp
+[ 50%]: linking.release test
+"/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/test build/.objs/test/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -stdlib=libc++ -Wl,-x -lz
+[100%]: build ok!
+<remote_build_client>: run command ok!
+</code></pre>
+<h3 id="">远程配置编译参数</h3>
+<pre><code class="lang-console">$ xmake f --xxx --yy
+</code></pre>
+<h3 id="">手动同步工程文件</h3>
+<p>连接的时候，会自动同步一次代码，后期代码改动，可以执行此命令来手动同步改动的文件。</p>
+<pre><code class="lang-console">$ xmake service --sync
+<remote_build_client>: sync files in 192.168.56.110:90091 ..
+Scanning files ..
+Comparing 3 files ..
+    [+]: src/main.cpp
+    [+]: .gitignore
+    [+]: xmake.lua
+3 files has been changed!
+Archiving files ..
+Uploading files with 1372 bytes ..
+<remote_build_client>: sync files ok!
+`
+</code></pre>
+<h3 id="">断开远程连接</h3>
+<p>针对当前工程，断开连接，这仅仅影响当前工程，其他项目还是可以同时连接和编译。</p>
+<pre><code class="lang-console">$ xmake service --disconnect
+<remote_build_client>: disconnect 192.168.56.110:90091 ..
+<remote_build_client>: disconnected!
+</code></pre>
+<h3 id="">查看服务器日志</h3>
+<pre><code class="lang-console">$ xmake service --logs
+</code></pre>
+<h3 id="">清理远程服务缓存和构建文件</h3>
+<p>我们也可以手动清理远程的任何缓存和构建生成的文件。</p>
+<pre><code class="lang-console">$ cd projectdir
+$ xmake service --clean
+</code></pre>
 </article>
 </body>
 </html>

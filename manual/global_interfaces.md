@@ -176,6 +176,14 @@ add_requires("tbox dev")
 If the specified dependent package is not supported by the current platform, or the compilation and installation fails, then xmake will compile an error. This is reasonable for some projects that must rely on certain packages to work.
 But if some packages are optional dependencies and can be compiled and used normally even if not, they can be set as optional packages:
 
+##### Git commit selection
+
+With version 2.6.5, we can select a version by specifying git commit directly for packages maintained by git.
+
+```lua
+add_requires("tbox e807230557aac69e4d583c75626e3a7ebdb922f8")
+```
+
 ##### Optional package
 
 ```lua

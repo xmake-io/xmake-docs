@@ -2822,3 +2822,61 @@ $ xmake run -g bench*
 ```
 
 更多信息见：[#1913](https://github.com/xmake-io/xmake/issues/1913)
+
+### target:add_filegroups
+
+#### 添加源文件分组
+
+这个接口目前主要用于对 vs/vsxmake/cmakelists generator 生成的工程文件进行源文件分组展示。
+
+如果不设置分组展示，Xmake 也会默认按照树状模式展示，但是有些极端情况下，目录层级显示不是很好，例如：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("../../../../src/**.cpp")
+```
+
+![Snip20220419_5](https://user-images.githubusercontent.com/151335/164029801-d870428c-0db2-469b-862b-d14455e0d39d.png)
+
+目前主要支持两种展示模式：
+
+- plain: 平坦模式
+- tree: 树形展示，这也是默认模式
+
+另外，它也支持对 `add_headerfiles` 添加的文件进行分组。
+
+##### 设置分组并指定根目录
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("../../../../src/**.cpp")
+    add_filegroups("group1/group2", {rootdir = "../../../../"})
+```
+
+![image](https://user-images.githubusercontent.com/151335/164028707-bfc1c493-63cf-47d7-a002-0eafd9065f15.png)
+
+
+##### 设置分组并指定文件匹配模式
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("../../../../src/**.cpp")
+    add_filegroups("group1/group2", {rootdir = "../../../../", files = {"src/**.cpp"}})
+```
+
+##### 作为平坦模式展示
+
+这种模式下，所有源文件忽略嵌套的目录层级，在分组下同一层级展示。
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("../../../../src/**.cpp")
+    add_filegroups("group1/group2", {rootdir = "../../../../", mode = "plain"})
+```
+
+![image](https://user-images.githubusercontent.com/151335/164030138-2134c14e-b51c-4129-b4ff-2036b9b636e6.png)
+

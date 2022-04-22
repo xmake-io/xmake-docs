@@ -118,6 +118,11 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p iphoneos [-a armv7|armv7s|arm64|i386|x86_64]
 $ xmake
 </code></pre>
+<p>由于 m1 设备上模拟器也支持 arm64 架构，因此之前单纯从 arch 去区分是否为模拟器，已无法满足需求。<br>因此，2.6.5 版本，我们新增了一个参数配置去区分是否为模拟器目标。</p>
+<pre><code class="lang-bash">$ xmake f -p iphoneos --appledev=simulator
+$ xmake f -p watchos --appledev=simulator
+$ xmake f -p appletvos --appledev=simulator
+</code></pre>
 <h3 id="windows">Windows</h3>
 <pre><code class="lang-bash">$ xmake f -p windows [-a x86|x64]
 $ xmake

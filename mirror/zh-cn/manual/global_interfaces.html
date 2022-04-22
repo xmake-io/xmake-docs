@@ -196,6 +196,10 @@ add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 add_requires("tbox dev")
 </code></pre>
 <p>如果指定的依赖包当前平台不支持，或者编译安装失败了，那么xmake会编译报错，这对于有些必须要依赖某些包才能工作的项目，这是合理的。<br>但是如果有些包是可选的依赖，即使没有也可以正常编译使用的话，可以设置为可选包：</p>
+<h5 id="gitcommit">Git commit 选择</h5>
+<p>2.6.5 版本，我们可以对 git 维护的包直接指定 git commit 来选择版本。</p>
+<pre><code class="lang-lua">add_requires("tbox e807230557aac69e4d583c75626e3a7ebdb922f8")
+</code></pre>
 <h5 id="">可选包</h5>
 <pre><code class="lang-lua">add_requires("zlib", {optional = true})
 </code></pre>

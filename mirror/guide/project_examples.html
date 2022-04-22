@@ -657,6 +657,19 @@ target("test")
     add_files("src/main.rs")
     add_packages("cargo::base64", "cargo::flate2")
 </code></pre>
+<h3 id="integratingcargotomldependencypackages">Integrating Cargo.toml dependency packages</h3>
+<p>Integrating dependencies directly using <code>add_requires("cargo::base64 0.13.0")</code> above has a problem.</p>
+<p>If there are a lot of dependencies and several dependencies all depend on the same child dependencies, then there will be a redefinition problem, so if we use the full Cargo.toml to manage the dependencies we won&#39;t have this problem.</p>
+<p>For example</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("cargo::test", {configs = {cargo_toml = path.join(os.projectdir(), "Cargo.toml")}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.rs")
+    add_packages("cargo::test")
+</code></pre>
+<p>For a complete example see: <a href="https://github.com/xmake-io/xmake/blob/dev/tests/projects/rust/cargo_deps_with_toml/xmake.lua">cargo_deps_with_toml</a></p>
 <h3 id="usecxxbridgetocallrustinc">Use cxxbridge to call rust in c++</h3>
 <p>example: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library">https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library</a></p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")

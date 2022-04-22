@@ -54,6 +54,17 @@ $ xmake f -p iphoneos [-a armv7|armv7s|arm64|i386|x86_64]
 $ xmake
 ```
 
+Since the emulator on the m1 device also supports the arm64 architecture, it is no longer possible to distinguish the emulator from the arch alone.
+Therefore, in version 2.6.5, we have added a new parameter to distinguish between emulator targets and emulator targets.
+
+```bash
+$ xmake f -p iphoneos --appledev=simulator
+$ xmake f -p watchos --appledev=simulator
+$ xmake f -p appletvos --appledev=simulator
+```
+
+Translated with www.DeepL.com/Translator (free version)
+
 ### Windows
 
 ```bash

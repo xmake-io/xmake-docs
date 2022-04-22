@@ -200,7 +200,8 @@ package:sourcehash(package:url_alias(package:urls()[1]))
   + binary
   + toolchain (is also binary)
   + library (default)
-
+  + template [#2138](https://github.com/xmake-io/xmake/issues/2138)
+  + headeronly
 
 #### package:is_binary
 

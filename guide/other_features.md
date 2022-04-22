@@ -901,3 +901,180 @@ target("test")
 ```
 
 Dealing with global variables, as well as global macro definitions with the same name, functions, etc., can be used in this way to avoid conflicts.
+
+
+## Remote Compilation
+
+v2.6.5 provides remote compilation support, through which we can compile code on a remote server, run and debug remotely.
+
+The server can be deployed on Linux/MacOS/Windows for cross-platform compilation, e.g. compile and run Windows programs on Linux, and compile and run macOS/Linux programs on Windows.
+
+Compared to ssh remote login compilation, it is more stable and smoother to use, no lagging of ssh terminal input due to network instability, and fast local editing of code files.
+
+We can even seamlessly implement remote compilation in editors and IDEs such as vs/sublime/vscode/idea without relying on the IDE's own support for remote compilation.
+
+### Start service
+
+```console
+$ xmake service
+<remote_build_server>: listening 0.0.0.0:90091 ..
+```
+
+with verbose logs
+
+```console
+$ xmake service -vD
+<remote_build_server>: listening 0.0.0.0:90091 ..
+```
+
+### Start and stop service with daemon mode
+
+```console
+$ xmake service --start
+$ xmake service --restart
+$ xmake service --stop
+```
+
+### Configure service on server side
+
+run `xmake service` will generate a default `service.conf` file in `~/.xmake/service.conf`
+
+```lua
+{
+    logfile = "/Users/ruki/.xmake/service/logs.txt",
+    remote_build = {
+        server = {
+            listen = "0.0.0.0:90091"
+        }
+    }
+}
+```
+
+### Configure service on client side
+
+`~/.xmake/service.conf`
+
+```lua
+{
+    logfile = "/Users/ruki/.xmake/service/logs.txt",
+    remote_build = {
+        client = {
+            connect = "192.168.56.101:90091",
+        }
+    }
+}
+```
+
+### Import the given configuration file
+
+```console
+$ xmake service --config=/tmp/service.conf
+```
+
+### Connect remote build service on client side
+
+enter project directory
+
+```console
+$ xmake create test
+$ cd test
+$ xmake service --connect 
+<remote_build_client>: connect 192.168.56.110:90091 ..
+<remote_build_client>: connected!
+<remote_build_client>: sync files in 192.168.56.110:90091 ..
+Scanning files ..
+Comparing 3 files ..
+    [+]: src/main.cpp
+    [+]: .gitignore
+    [+]: xmake.lua
+3 files has been changed!
+Archiving files ..
+Uploading files with 1372 bytes ..
+<remote_build_client>: sync files ok!
+```
+
+### Build project with remote mode
+
+```console
+$ xmake
+<remote_build_client>: run xmake in 192.168.56.110:90091 ..
+checking for platform ... macosx
+checking for architecture ... x86_64
+checking for Xcode directory ... /Applications/Xcode.app
+checking for Codesign Identity of Xcode ... Apple Development: waruqi@gmail.com (T3NA4MRVPU)
+checking for SDK version of Xcode for macosx (x86_64) ... 11.3
+checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
+[ 25%]: ccache compiling.release src/main.cpp
+[ 50%]: linking.release test
+[100%]: build ok!
+<remote_build_client>: run command ok!
+```
+
+### Run target with remote mode
+
+```console
+$ xmake run
+<remote_build_client>: run xmake run in 192.168.56.110:90091 ..
+hello world!
+<remote_build_client>: run command ok!
+```
+
+### Rebuild target with remote mode
+
+```console
+$ xmake -rv
+<remote_build_client>: run xmake -rv in 192.168.56.110:90091 ..
+[ 25%]: ccache compiling.release src/main.cpp
+/usr/local/bin/ccache /usr/bin/xcrun -sdk macosx clang -c -Qunused-arguments -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src/main.cpp
+[ 50%]: linking.release test
+"/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/test build/.objs/test/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -stdlib=libc++ -Wl,-x -lz
+[100%]: build ok!
+<remote_build_client>: run command ok!
+```
+
+### Configure project with remote mode
+
+```console
+$ xmake f --xxx --yy
+```
+
+### Sync files to remote server
+
+```console
+$ xmake service --sync 
+<remote_build_client>: sync files in 192.168.56.110:90091 ..
+Scanning files ..
+Comparing 3 files ..
+    [+]: src/main.cpp
+    [+]: .gitignore
+    [+]: xmake.lua
+3 files has been changed!
+Archiving files ..
+Uploading files with 1372 bytes ..
+<remote_build_client>: sync files ok!
+````
+
+### Disconnect remote service for the current project
+
+```console
+$ xmake service --disconnect
+<remote_build_client>: disconnect 192.168.56.110:90091 ..
+<remote_build_client>: disconnected!
+```
+
+### View service logs
+
+```console
+$ xmake service --logs
+```
+
+### Clean all built and cache files for the current project on server
+
+```console
+$ cd projectdir
+$ xmake service --clean
+```
+
+### TODO
+
+- [ ] Pull built target files to local host

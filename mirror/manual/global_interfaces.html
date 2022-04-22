@@ -191,6 +191,10 @@ add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 add_requires("tbox dev")
 </code></pre>
 <p>If the specified dependent package is not supported by the current platform, or the compilation and installation fails, then xmake will compile an error. This is reasonable for some projects that must rely on certain packages to work.<br>But if some packages are optional dependencies and can be compiled and used normally even if not, they can be set as optional packages:</p>
+<h5 id="gitcommitselection">Git commit selection</h5>
+<p>With version 2.6.5, we can select a version by specifying git commit directly for packages maintained by git.</p>
+<pre><code class="lang-lua">add_requires("tbox e807230557aac69e4d583c75626e3a7ebdb922f8")
+</code></pre>
 <h5 id="optionalpackage">Optional package</h5>
 <pre><code class="lang-lua">add_requires("zlib", {optional = true})
 </code></pre>
