@@ -2837,7 +2837,7 @@ target("test")
     add_files("../../../../src/**.cpp")
 ```
 
-![Snip20220419_5](https://user-images.githubusercontent.com/151335/164029801-d870428c-0db2-469b-862b-d14455e0d39d.png)
+![](https://xmake.io/assets/img/manual/filegroup1.png)
 
 目前主要支持两种展示模式：
 
@@ -2855,7 +2855,7 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "../../../../"})
 ```
 
-![image](https://user-images.githubusercontent.com/151335/164028707-bfc1c493-63cf-47d7-a002-0eafd9065f15.png)
+![](https://xmake.io/assets/img/manual/filegroup2.png)
 
 
 ##### 设置分组并指定文件匹配模式
@@ -2878,5 +2878,5 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "../../../../", mode = "plain"})
 ```
 
-![image](https://user-images.githubusercontent.com/151335/164030138-2134c14e-b51c-4129-b4ff-2036b9b636e6.png)
+![](https://xmake.io/assets/img/manual/filegroup3.png)
 

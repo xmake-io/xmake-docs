@@ -1323,7 +1323,7 @@ add_files("src/**.c|impl/*.c")
 -- Add all cpp files under src, but not including src/test.cpp, src/hello.cpp, and all cpp files with xx_ prefix under src
 add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 </code></pre>
-<p>The separators after the <code>`</code> are all files that need to be excluded. These files also support the matching mode, and you can add multiple filtering modes at the same time, as long as the middle is separated by <code>|</code>. .</p>
+<p>The separators after the <code>`</code>are all files that need to be excluded. These files also support the matching mode, and you can add multiple filtering modes at the same time, as long as the middle is separated by <code>|</code>. .</p>
 <p>One of the benefits of supporting the filtering of some files when adding files is that they provide the basis for subsequent file additions based on different switching logic.</p>
 <p><p class="tip"><br>In order to make the description more streamlined, the filter descriptions after <code>|</code> are based on a schema: the directory before <code>*</code> in <code>src/*.cpp</code>.<br>So the above example is filtered after the file under src, this is to pay attention to.<br></p>
 
@@ -2385,7 +2385,7 @@ $ xmake run -g bench*
     set_kind("binary")
     add_files("... /... /... /... /src/**.cpp")
 </code></pre>
-<p>! <a href="https://user-images.githubusercontent.com/151335/164029801-d870428c-0db2-469b-862b-d14455e0d39d.png">Snip20220419_5</a></p>
+<p><img src="https://xmake.io/assets/img/manual/filegroup1.png" alt=""></p>
 <p>Two main presentation modes are currently supported.</p>
 <ul>
 <li>plain: flat mode</li>
@@ -2398,7 +2398,7 @@ $ xmake run -g bench*
     add_files("... /... /... /... /src/**.cpp")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /"})
 </code></pre>
-<p>! <a href="https://user-images.githubusercontent.com/151335/164028707-bfc1c493-63cf-47d7-a002-0eafd9065f15.png">image</a></p>
+<p><img src="https://xmake.io/assets/img/manual/filegroup2.png" alt=""></p>
 <h5 id="setthegroupandspecifiesthefilematchingpattern">Set the group and specifies the file matching pattern</h5>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -2412,8 +2412,7 @@ $ xmake run -g bench*
     add_files("... /... /... /... /src/**.cpp")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /", mode = "plain"})
 </code></pre>
-<p>! <a href="https://user-images.githubusercontent.com/151335/164030138-2134c14e-b51c-4129-b4ff-2036b9b636e6.png">image</a></p>
-<p>Translated with <a href="http://www.DeepL.com/Translator">www.DeepL.com/Translator</a> (free version)</p>
+<p><img src="https://xmake.io/assets/img/manual/filegroup3.png" alt=""></p>
 </article>
 </body>
 </html>

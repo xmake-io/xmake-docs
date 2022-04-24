@@ -1335,7 +1335,7 @@ add_files("src/**.c|impl/*.c")
 add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 ```
 
-The separators after the ``` are all files that need to be excluded. These files also support the matching mode, and you can add multiple filtering modes at the same time, as long as the middle is separated by `|`. .
+The separators after the ```are all files that need to be excluded. These files also support the matching mode, and you can add multiple filtering modes at the same time, as long as the middle is separated by `|`. .
 
 One of the benefits of supporting the filtering of some files when adding files is that they provide the basis for subsequent file additions based on different switching logic.
 
@@ -2827,7 +2827,7 @@ target("test")
     add_files("... /... /... /... /src/**.cpp")
 ```
 
-! [Snip20220419_5](https://user-images.githubusercontent.com/151335/164029801-d870428c-0db2-469b-862b-d14455e0d39d.png)
+![](https://xmake.io/assets/img/manual/filegroup1.png)
 
 Two main presentation modes are currently supported.
 
@@ -2845,12 +2845,12 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /"})
 ```
 
-! [image](https://user-images.githubusercontent.com/151335/164028707-bfc1c493-63cf-47d7-a002-0eafd9065f15.png)
+![](https://xmake.io/assets/img/manual/filegroup2.png)
 
 
 ##### Set the group and specifies the file matching pattern
 
-``` lua
+```lua
 target("test")
     set_kind("binary")
     add_files("... /... /... /... /src/**.cpp")
@@ -2861,14 +2861,11 @@ target("test")
 
 In this mode, all source files ignore the nested directory hierarchy and are displayed at the same level under grouping.
 
-``` lua
+```lua
 target("test")
     set_kind("binary")
     add_files("... /... /... /... /src/**.cpp")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /", mode = "plain"})
 ```
 
-! [image](https://user-images.githubusercontent.com/151335/164030138-2134c14e-b51c-4129-b4ff-2036b9b636e6.png)
-
-
-Translated with www.DeepL.com/Translator (free version)
+![](https://xmake.io/assets/img/manual/filegroup3.png)
