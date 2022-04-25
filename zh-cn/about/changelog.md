@@ -1,3 +1,29 @@
+
+## v2.6.5
+
+### 新特性
+
+* [#2138](https://github.com/xmake-io/xmake/issues/2138): 支持模板包
+* [#2185](https://github.com/xmake-io/xmake/issues/2185): 添加 `--appledev=simulator` 去改进 Apple 模拟器目标编译支持
+* [#2227](https://github.com/xmake-io/xmake/issues/2227): 改进 cargo 包，支持指定 Cargo.toml 文件
+* 改进 `add_requires` 支持 git command 作为版本
+* [#622](https://github.com/xmake-io/xmake/issues/622): 支持远程编译
+* [#2282](https://github.com/xmake-io/xmake/issues/2282): 添加 `add_filegroups` 接口为 vs/vsxmake/cmake generator 增加文件组支持
+
+### 改进
+
+* [#2137](https://github.com/xmake-io/xmake/pull/2137): 改进 path 模块
+* macOS 下，减少 50% 的 Xmake 二进制文件大小
+* 改进 tools/autoconf,cmake 去更好地支持工具链切换
+* [#2221](https://github.com/xmake-io/xmake/pull/2221): 改进注册表 api 去支持 unicode
+* [#2225](https://github.com/xmake-io/xmake/issues/2225): 增加对 protobuf 的依赖分析和构建支持
+* [#2265](https://github.com/xmake-io/xmake/issues/2265): 排序 CMakeLists.txt
+* 改进 os.files 的文件遍历速度
+
+### Bugs 修复
+
+* [#2233](https://github.com/xmake-io/xmake/issues/2233): 修复 c++ modules 依赖
+
 ## v2.6.4
 
 ### 新特性

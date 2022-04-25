@@ -1,3 +1,29 @@
+
+## v2.6.5
+
+### New features
+
+* [#2138](https://github.com/xmake-io/xmake/issues/2138): Support template package
+* [#2185](https://github.com/xmake-io/xmake/issues/2185): Add `--appledev=simulator` to improve apple simulator support
+* [#2227](https://github.com/xmake-io/xmake/issues/2227): Improve cargo package with Cargo.toml file
+* Improve `add_requires` to support git commit as version
+* [#622](https://github.com/xmake-io/xmake/issues/622): Support remote compilation
+* [#2282](https://github.com/xmake-io/xmake/issues/2282): Add `add_filegroups` to support file group for vs/vsxmake/cmake generator
+
+### Changes
+
+* [#2137](https://github.com/xmake-io/xmake/pull/2137): Improve path module
+* Reduce 50% xmake binary size on macOS
+* Improve tools/autoconf,cmake to support toolchain switching.
+* [#2221](https://github.com/xmake-io/xmake/pull/2221): Improve registry api to support unicode
+* [#2225](https://github.com/xmake-io/xmake/issues/2225): Support to parse import dependencies for protobuf
+* [#2265](https://github.com/xmake-io/xmake/issues/2265): Sort CMakeLists.txt
+* Speed up `os.files`
+
+### Bugs fixed
+
+* [#2233](https://github.com/xmake-io/xmake/issues/2233): Fix c++ modules deps
+
 ## v2.6.4
 
 ### New features
