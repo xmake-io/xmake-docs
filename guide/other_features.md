@@ -1052,7 +1052,7 @@ Comparing 3 files ..
 Archiving files ..
 Uploading files with 1372 bytes ..
 <remote_build_client>: sync files ok!
-````
+```
 
 ### Disconnect remote service for the current project
 
