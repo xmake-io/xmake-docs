@@ -917,14 +917,14 @@ We can even seamlessly implement remote compilation in editors and IDEs such as 
 
 ```console
 $ xmake service
-<remote_build_server>: listening 0.0.0.0:90091 ..
+<remote_build_server>: listening 0.0.0.0:9096 ..
 ```
 
 with verbose logs
 
 ```console
 $ xmake service -vD
-<remote_build_server>: listening 0.0.0.0:90091 ..
+<remote_build_server>: listening 0.0.0.0:9096 ..
 ```
 
 ### Start and stop service with daemon mode
@@ -944,7 +944,7 @@ run `xmake service` will generate a default `service.conf` file in `~/.xmake/ser
     logfile = "/Users/ruki/.xmake/service/logs.txt",
     remote_build = {
         server = {
-            listen = "0.0.0.0:90091"
+            listen = "0.0.0.0:9096"
         }
     }
 }
@@ -959,7 +959,7 @@ run `xmake service` will generate a default `service.conf` file in `~/.xmake/ser
     logfile = "/Users/ruki/.xmake/service/logs.txt",
     remote_build = {
         client = {
-            connect = "192.168.56.101:90091",
+            connect = "192.168.56.101:9096",
         }
     }
 }
@@ -979,9 +979,9 @@ enter project directory
 $ xmake create test
 $ cd test
 $ xmake service --connect 
-<remote_build_client>: connect 192.168.56.110:90091 ..
+<remote_build_client>: connect 192.168.56.110:9096 ..
 <remote_build_client>: connected!
-<remote_build_client>: sync files in 192.168.56.110:90091 ..
+<remote_build_client>: sync files in 192.168.56.110:9096 ..
 Scanning files ..
 Comparing 3 files ..
     [+]: src/main.cpp
@@ -997,7 +997,7 @@ Uploading files with 1372 bytes ..
 
 ```console
 $ xmake
-<remote_build_client>: run xmake in 192.168.56.110:90091 ..
+<remote_build_client>: run xmake in 192.168.56.110:9096 ..
 checking for platform ... macosx
 checking for architecture ... x86_64
 checking for Xcode directory ... /Applications/Xcode.app
@@ -1014,7 +1014,7 @@ checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
 
 ```console
 $ xmake run
-<remote_build_client>: run xmake run in 192.168.56.110:90091 ..
+<remote_build_client>: run xmake run in 192.168.56.110:9096 ..
 hello world!
 <remote_build_client>: run command ok!
 ```
@@ -1023,7 +1023,7 @@ hello world!
 
 ```console
 $ xmake -rv
-<remote_build_client>: run xmake -rv in 192.168.56.110:90091 ..
+<remote_build_client>: run xmake -rv in 192.168.56.110:9096 ..
 [ 25%]: ccache compiling.release src/main.cpp
 /usr/local/bin/ccache /usr/bin/xcrun -sdk macosx clang -c -Qunused-arguments -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src/main.cpp
 [ 50%]: linking.release test
@@ -1042,7 +1042,7 @@ $ xmake f --xxx --yy
 
 ```console
 $ xmake service --sync 
-<remote_build_client>: sync files in 192.168.56.110:90091 ..
+<remote_build_client>: sync files in 192.168.56.110:9096 ..
 Scanning files ..
 Comparing 3 files ..
     [+]: src/main.cpp
@@ -1058,7 +1058,7 @@ Uploading files with 1372 bytes ..
 
 ```console
 $ xmake service --disconnect
-<remote_build_client>: disconnect 192.168.56.110:90091 ..
+<remote_build_client>: disconnect 192.168.56.110:9096 ..
 <remote_build_client>: disconnected!
 ```
 

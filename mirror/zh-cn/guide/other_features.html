@@ -810,11 +810,11 @@ int bar()
 <p>甚至我们可以在 vs/sublime/vscode/idea 等编辑器和IDE 中无缝实现远程编译，而不需要依赖 IDE 本身对远程编译的支持力度。</p>
 <h3 id="">开启服务</h3>
 <pre><code class="lang-console">$ xmake service
-<remote_build_server>: listening 0.0.0.0:90091 ..
+<remote_build_server>: listening 0.0.0.0:9096 ..
 </code></pre>
 <p>我们也可以开启服务的同时，回显详细日志信息。</p>
 <pre><code class="lang-console">$ xmake service -vD
-<remote_build_server>: listening 0.0.0.0:90091 ..
+<remote_build_server>: listening 0.0.0.0:9096 ..
 </code></pre>
 <h3 id="daemon">以 Daemon 模式开启服务</h3>
 <pre><code class="lang-console">$ xmake service --start
@@ -828,7 +828,7 @@ $ xmake service --stop
     logfile = "/Users/ruki/.xmake/service/logs.txt",
     remote_build = {
         server = {
-            listen = "0.0.0.0:90091"
+            listen = "0.0.0.0:9096"
         }
     }
 }
@@ -839,7 +839,7 @@ $ xmake service --stop
     logfile = "/Users/ruki/.xmake/service/logs.txt",
     remote_build = {
         client = {
-            connect = "192.168.56.101:90091",
+            connect = "192.168.56.101:9096",
         }
     }
 }
@@ -853,9 +853,9 @@ $ xmake service --stop
 <pre><code class="lang-console">$ xmake create test
 $ cd test
 $ xmake service --connect 
-<remote_build_client>: connect 192.168.56.110:90091 ..
+<remote_build_client>: connect 192.168.56.110:9096 ..
 <remote_build_client>: connected!
-<remote_build_client>: sync files in 192.168.56.110:90091 ..
+<remote_build_client>: sync files in 192.168.56.110:9096 ..
 Scanning files ..
 Comparing 3 files ..
     [+]: src/main.cpp
@@ -869,7 +869,7 @@ Uploading files with 1372 bytes ..
 <h3 id="">远程构建工程</h3>
 <p>连接成功后，我们就可以像正常本地编译一样，进行远程编译。</p>
 <pre><code class="lang-console">$ xmake
-<remote_build_client>: run xmake in 192.168.56.110:90091 ..
+<remote_build_client>: run xmake in 192.168.56.110:9096 ..
 checking for platform ... macosx
 checking for architecture ... x86_64
 checking for Xcode directory ... /Applications/Xcode.app
@@ -884,13 +884,13 @@ checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
 <h3 id="">远程运行目标程序</h3>
 <p>我们也可以像本地运行调试那样，远程运行调试编译的目标程序。</p>
 <pre><code class="lang-console">$ xmake run
-<remote_build_client>: run xmake run in 192.168.56.110:90091 ..
+<remote_build_client>: run xmake run in 192.168.56.110:9096 ..
 hello world!
 <remote_build_client>: run command ok!
 </code></pre>
 <h3 id="">远程重建工程</h3>
 <pre><code class="lang-console">$ xmake -rv
-<remote_build_client>: run xmake -rv in 192.168.56.110:90091 ..
+<remote_build_client>: run xmake -rv in 192.168.56.110:9096 ..
 [ 25%]: ccache compiling.release src/main.cpp
 /usr/local/bin/ccache /usr/bin/xcrun -sdk macosx clang -c -Qunused-arguments -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src/main.cpp
 [ 50%]: linking.release test
@@ -904,7 +904,7 @@ hello world!
 <h3 id="">手动同步工程文件</h3>
 <p>连接的时候，会自动同步一次代码，后期代码改动，可以执行此命令来手动同步改动的文件。</p>
 <pre><code class="lang-console">$ xmake service --sync
-<remote_build_client>: sync files in 192.168.56.110:90091 ..
+<remote_build_client>: sync files in 192.168.56.110:9096 ..
 Scanning files ..
 Comparing 3 files ..
     [+]: src/main.cpp
@@ -914,12 +914,11 @@ Comparing 3 files ..
 Archiving files ..
 Uploading files with 1372 bytes ..
 <remote_build_client>: sync files ok!
-`
 </code></pre>
 <h3 id="">断开远程连接</h3>
 <p>针对当前工程，断开连接，这仅仅影响当前工程，其他项目还是可以同时连接和编译。</p>
 <pre><code class="lang-console">$ xmake service --disconnect
-<remote_build_client>: disconnect 192.168.56.110:90091 ..
+<remote_build_client>: disconnect 192.168.56.110:9096 ..
 <remote_build_client>: disconnected!
 </code></pre>
 <h3 id="">查看服务器日志</h3>

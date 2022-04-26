@@ -794,11 +794,11 @@ int bar()
 <p>We can even seamlessly implement remote compilation in editors and IDEs such as vs/sublime/vscode/idea without relying on the IDE&#39;s own support for remote compilation.</p>
 <h3 id="startservice">Start service</h3>
 <pre><code class="lang-console">$ xmake service
-<remote_build_server>: listening 0.0.0.0:90091 ..
+<remote_build_server>: listening 0.0.0.0:9096 ..
 </code></pre>
 <p>with verbose logs</p>
 <pre><code class="lang-console">$ xmake service -vD
-<remote_build_server>: listening 0.0.0.0:90091 ..
+<remote_build_server>: listening 0.0.0.0:9096 ..
 </code></pre>
 <h3 id="startandstopservicewithdaemonmode">Start and stop service with daemon mode</h3>
 <pre><code class="lang-console">$ xmake service --start
@@ -811,7 +811,7 @@ $ xmake service --stop
     logfile = "/Users/ruki/.xmake/service/logs.txt",
     remote_build = {
         server = {
-            listen = "0.0.0.0:90091"
+            listen = "0.0.0.0:9096"
         }
     }
 }
@@ -822,7 +822,7 @@ $ xmake service --stop
     logfile = "/Users/ruki/.xmake/service/logs.txt",
     remote_build = {
         client = {
-            connect = "192.168.56.101:90091",
+            connect = "192.168.56.101:9096",
         }
     }
 }
@@ -835,9 +835,9 @@ $ xmake service --stop
 <pre><code class="lang-console">$ xmake create test
 $ cd test
 $ xmake service --connect 
-<remote_build_client>: connect 192.168.56.110:90091 ..
+<remote_build_client>: connect 192.168.56.110:9096 ..
 <remote_build_client>: connected!
-<remote_build_client>: sync files in 192.168.56.110:90091 ..
+<remote_build_client>: sync files in 192.168.56.110:9096 ..
 Scanning files ..
 Comparing 3 files ..
     [+]: src/main.cpp
@@ -850,7 +850,7 @@ Uploading files with 1372 bytes ..
 </code></pre>
 <h3 id="buildprojectwithremotemode">Build project with remote mode</h3>
 <pre><code class="lang-console">$ xmake
-<remote_build_client>: run xmake in 192.168.56.110:90091 ..
+<remote_build_client>: run xmake in 192.168.56.110:9096 ..
 checking for platform ... macosx
 checking for architecture ... x86_64
 checking for Xcode directory ... /Applications/Xcode.app
@@ -864,13 +864,13 @@ checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
 </code></pre>
 <h3 id="runtargetwithremotemode">Run target with remote mode</h3>
 <pre><code class="lang-console">$ xmake run
-<remote_build_client>: run xmake run in 192.168.56.110:90091 ..
+<remote_build_client>: run xmake run in 192.168.56.110:9096 ..
 hello world!
 <remote_build_client>: run command ok!
 </code></pre>
 <h3 id="rebuildtargetwithremotemode">Rebuild target with remote mode</h3>
 <pre><code class="lang-console">$ xmake -rv
-<remote_build_client>: run xmake -rv in 192.168.56.110:90091 ..
+<remote_build_client>: run xmake -rv in 192.168.56.110:9096 ..
 [ 25%]: ccache compiling.release src/main.cpp
 /usr/local/bin/ccache /usr/bin/xcrun -sdk macosx clang -c -Qunused-arguments -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src/main.cpp
 [ 50%]: linking.release test
@@ -883,7 +883,7 @@ hello world!
 </code></pre>
 <h3 id="syncfilestoremoteserver">Sync files to remote server</h3>
 <pre><code class="lang-console">$ xmake service --sync 
-<remote_build_client>: sync files in 192.168.56.110:90091 ..
+<remote_build_client>: sync files in 192.168.56.110:9096 ..
 Scanning files ..
 Comparing 3 files ..
     [+]: src/main.cpp
@@ -893,11 +893,10 @@ Comparing 3 files ..
 Archiving files ..
 Uploading files with 1372 bytes ..
 <remote_build_client>: sync files ok!
-`
 </code></pre>
 <h3 id="disconnectremoteserviceforthecurrentproject">Disconnect remote service for the current project</h3>
 <pre><code class="lang-console">$ xmake service --disconnect
-<remote_build_client>: disconnect 192.168.56.110:90091 ..
+<remote_build_client>: disconnect 192.168.56.110:9096 ..
 <remote_build_client>: disconnected!
 </code></pre>
 <h3 id="viewservicelogs">View service logs</h3>
