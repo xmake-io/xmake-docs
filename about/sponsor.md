@@ -27,7 +27,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay            | money  | comment                                                                 |
 |--          | --                                    | --             | --     | --                                                                      |
-| 2022.04.28 | m*l                                   | 微信           | ¥99    |                                                                         |
+| 2022.04.28 | wendal                                | 微信           | ¥99    | 非常好用,非常感谢                                                        |
 | 2022.04.21 | 寻找地平线                            | 微信           | ¥128   |                                                                         |
 | 2022.04.09 | 子慧                                  | 支付宝         | ¥50    | 非常好用，简洁清晰                                                      |
 | 2022.04.07 | *                                     | 微信           | ¥100   |                                                                         |
