@@ -543,7 +543,7 @@ set_defaultplat("iphoneos")
 
 它等价于，`xmake f -p iphoneos`。
 
-### set_defaultarch
+### set_defaultarchs
 
 #### 设置默认的编译架构
 
@@ -551,7 +551,7 @@ v2.5.6 以上版本才支持，用于设置工程默认的编译架构，如果�
 
 ```lua
 set_defaultplat("iphoneos")
-set_defaultarch("arm64")
+set_defaultarchs("arm64")
 ```
 
 它等价于，`xmake f -p iphoneos -a arm64`。
@@ -559,7 +559,7 @@ set_defaultarch("arm64")
 我们也可以设置多个平台下的默认架构。
 
 ```lua
-set_defaultarch("iphoneos|arm64", "windows|x64")
+set_defaultarchs("iphoneos|arm64", "windows|x64")
 ```
 
 在 iphoneos 上默认编译 arm64 架构，在 windows 上默认编译 x64 架构。

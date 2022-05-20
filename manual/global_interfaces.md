@@ -518,7 +518,7 @@ set_defaultplat("iphoneos")
 
 It is equivalent to `xmake f -p iphoneos`.
 
-### set_defaultarch
+### set_defaultarchs
 
 #### Set the default compilation architecture
 
@@ -526,7 +526,7 @@ Only supported by v2.5.6 and above, it is used to set the default compilation ar
 
 ```lua
 set_defaultplat("iphoneos")
-set_defaultarch("arm64")
+set_defaultarchs("arm64")
 ```
 
 It is equivalent to `xmake f -p iphoneos -a arm64`.
@@ -534,7 +534,7 @@ It is equivalent to `xmake f -p iphoneos -a arm64`.
 We can also set the default architecture under multiple platforms.
 
 ```lua
-set_defaultarch("iphoneos|arm64", "windows|x64")
+set_defaultarchs("iphoneos|arm64", "windows|x64")
 ```
 
 The arm64 architecture is compiled by default on iphoneos, and the x64 architecture is compiled by default on windows.
