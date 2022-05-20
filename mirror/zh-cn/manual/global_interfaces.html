@@ -404,15 +404,15 @@ add_requireconfs("libwebp.*|cmake", {debug = true})
 <pre><code class="lang-lua">set_defaultplat("iphoneos")
 </code></pre>
 <p>它等价于，<code>xmake f -p iphoneos</code>。</p>
-<h3 id="set_defaultarch">set_defaultarch</h3>
+<h3 id="set_defaultarchs">set_defaultarchs</h3>
 <h4 id="">设置默认的编译架构</h4>
 <p>v2.5.6 以上版本才支持，用于设置工程默认的编译架构，如果没有设置，默认平台跟随当前系统架构，也就是 os.arch()。</p>
 <pre><code class="lang-lua">set_defaultplat("iphoneos")
-set_defaultarch("arm64")
+set_defaultarchs("arm64")
 </code></pre>
 <p>它等价于，<code>xmake f -p iphoneos -a arm64</code>。</p>
 <p>我们也可以设置多个平台下的默认架构。</p>
-<pre><code class="lang-lua">set_defaultarch("iphoneos|arm64", "windows|x64")
+<pre><code class="lang-lua">set_defaultarchs("iphoneos|arm64", "windows|x64")
 </code></pre>
 <p>在 iphoneos 上默认编译 arm64 架构，在 windows 上默认编译 x64 架构。</p>
 <h3 id="set_defaultmode">set_defaultmode</h3>

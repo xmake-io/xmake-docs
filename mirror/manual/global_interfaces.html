@@ -392,15 +392,15 @@ add_requireconfs("libwebp.*|cmake", {debug = true})
 <pre><code class="lang-lua">set_defaultplat("iphoneos")
 </code></pre>
 <p>It is equivalent to <code>xmake f -p iphoneos</code>.</p>
-<h3 id="set_defaultarch">set_defaultarch</h3>
+<h3 id="set_defaultarchs">set_defaultarchs</h3>
 <h4 id="setthedefaultcompilationarchitecture">Set the default compilation architecture</h4>
 <p>Only supported by v2.5.6 and above, it is used to set the default compilation architecture of the project. If it is not set, the default platform follows the current system architecture, which is os.arch().</p>
 <pre><code class="lang-lua">set_defaultplat("iphoneos")
-set_defaultarch("arm64")
+set_defaultarchs("arm64")
 </code></pre>
 <p>It is equivalent to <code>xmake f -p iphoneos -a arm64</code>.</p>
 <p>We can also set the default architecture under multiple platforms.</p>
-<pre><code class="lang-lua">set_defaultarch("iphoneos|arm64", "windows|x64")
+<pre><code class="lang-lua">set_defaultarchs("iphoneos|arm64", "windows|x64")
 </code></pre>
 <p>The arm64 architecture is compiled by default on iphoneos, and the x64 architecture is compiled by default on windows.</p>
 <h3 id="set_defaultmode">set_defaultmode</h3>

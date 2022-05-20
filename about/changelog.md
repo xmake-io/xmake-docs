@@ -210,7 +210,7 @@
 
 * [#1483](https://github.com/xmake-io/xmake/issues/1483): Add `os.joinenvs()` and improve package tools envirnoments
 * [#1523](https://github.com/xmake-io/xmake/issues/1523): Add `set_allowedmodes`, `set_allowedplats` and `set_allowedarchs`
-* [#1523](https://github.com/xmake-io/xmake/issues/1523): Add `set_defaultmode`, `set_defaultplat` and `set_defaultarch`
+* [#1523](https://github.com/xmake-io/xmake/issues/1523): Add `set_defaultmode`, `set_defaultplat` and `set_defaultarchs`
 
 ### Change
 
