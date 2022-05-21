@@ -15,15 +15,26 @@
 
 ## 简介
 
-xmake 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
+Xmake 是一个基于 Lua 的轻量级跨平台构建工具。
 
-虽然，简单易用是 xmake 的一大特色，但 xmake 的功能也是非常强大的，既能够像 Make/Ninja 那样可以直接编译项目，也可以像 CMake/Meson 那样生成工程文件，还有内置的包管理系统来帮助用户解决 C/C++依赖库的集成使用问题。
+它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。
 
-目前，xmake主要用于 C/C++ 项目的构建，但是同时也支持其他native语言的构建，可以实现跟C/C++进行混合编译，同时编译速度也是非常的快，可以跟Ninja持平。
+它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
+
+我们能够使用它像 Make/Ninja 那样可以直接编译项目，也可以像 CMake/Meson 那样生成工程文件，另外它还有内置的包管理系统来帮助用户解决 C/C++ 依赖库的集成使用问题。
+
+目前，Xmake 主要用于 C/C++ 项目的构建，但是同时也支持其他 native 语言的构建，可以实现跟 C/C++ 进行混合编译，同时编译速度也是非常的快，可以跟 Ninja 持平。
 
 ```
-Xmake = Build backend + Project Generator + Package Manager
+Xmake = Build backend + Project Generator + Package Manager + [Remote|Distributed] Build + Cache
 ```
+
+尽管不是很准确，但我们还是可以把 Xmake 按下面的方式来理解：
+
+```
+Xmake ~= Make/Ninja + CMake/Meson + Vcpkg/Conan + distcc + ccache
+```
+
 
 如果你想要了解更多，请参考：[在线文档](https://xmake.io/#/zh-cn/getting_started), [Github](https://github.com/xmake-io/xmake)以及[Gitee](https://gitee.com/tboox/xmake)，同时也欢迎加入我们的 [社区](https://xmake.io/#/zh-ch/about/contact).
 
@@ -54,6 +65,10 @@ bash <(wget https://xmake.io/shget.text -O -)
 ```powershell
 Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
 ```
+
+#### 其他安装方式
+
+如果不想使用脚本安装，也可以点击查看 [安装文档](https://xmake.io/#/zh-cn/guide/installation)，了解其他安装方法。
 
 ## 简单的工程描述
 
@@ -146,6 +161,7 @@ $ xmake f --menu
 * Dub (dub::log 0.4.3)
 * Portage on Gentoo/Linux (portage::libhandy)
 * Nimble for nimlang (nimble::zip >1.3)
+* Cargo for rust (cargo::base64 0.13.0)
 
 ### 包管理特性
 
@@ -179,7 +195,7 @@ $ xmake f --menu
 ```bash
 $ xmake show -l toolchains
 xcode         Xcode IDE
-vs            VisualStudio IDE
+msvc          Microsoft Visual C/C++ Compiler
 yasm          The Yasm Modular Assembler
 clang         A C language family frontend for LLVM
 go            Go Programming Language Compiler
@@ -187,9 +203,10 @@ dlang         D Programming Language Compiler
 gfortran      GNU Fortran Programming Language Compiler
 zig           Zig Programming Language Compiler
 sdcc          Small Device C Compiler
-cuda          CUDA Toolkit
+cuda          CUDA Toolkit (nvcc, nvc, nvc++, nvfortran)
 ndk           Android NDK
 rust          Rust Programming Language Compiler
+swift         Swift Programming Language Compiler
 llvm          A collection of modular and reusable compiler and toolchain technologies
 cross         Common cross compilation toolchain
 nasm          NASM Assembler
@@ -209,6 +226,7 @@ nim           Nim Programming Language Compiler
 circle        A new C++20 compiler
 armcc         ARM Compiler Version 5 of Keil MDK
 armclang      ARM Compiler Version 6 of Keil MDK
+c51           Keil development tools for the 8051 Microcontroller Architecture
 ```
 
 ## 支持语言
@@ -242,6 +260,9 @@ armclang      ARM Compiler Version 6 of Keil MDK
 * 增量编译支持，头文件依赖自动分析
 * 工具链的快速切换、定制化支持
 * 丰富的扩展模块支持
+* 远程编译支持
+* 分布式编译支持
+* 内置的本地和远程编译缓存支持
 
 ## 工程类型
 
@@ -250,7 +271,7 @@ armclang      ARM Compiler Version 6 of Keil MDK
 * 控制台程序
 * Cuda 程序
 * Qt 应用程序
-* WDK 驱动程序
+* WDK Windows 驱动程序
 * WinSDK 应用程序
 * MFC 应用程序
 * iOS/MacOS 应用程序（支持.metal）
@@ -260,6 +281,27 @@ armclang      ARM Compiler Version 6 of Keil MDK
 * Protobuf 程序
 * Lex/yacc 程序
 * C++20 模块
+* Linux 内核驱动模块
+
+## 分布式编译
+
+- [x] 跨平台支持
+- [x] 支持 msvc, clang, gcc 和交叉编译工具链
+- [x] 支持构建 android, ios, linux, win, macOS 程序
+- [x] 除了编译工具链，无任何其他依赖
+- [x] 支持编译服务器负载均衡调度
+- [x] 支持大文件实时压缩传输 (lz4)
+- [x] 几乎零配置成本，无需共享文件系统，更加方便和安全
+
+更多详情见：[#274](https://github.com/xmake-io/xmake/issues/274)
+
+## 远程编译
+
+更多详情见：[#622](https://github.com/xmake-io/xmake/issues/622)
+
+## 本地和远程编译缓存
+
+更多详情见: [#622](https://github.com/xmake-io/xmake/issues/2371)
 
 ## 更多例子
 
@@ -359,11 +401,12 @@ target("test")
 #### OpenMP 程序
 
 ```lua
-add_requires("openmp")
+add_requires("libomp", {optional = true})
 target("loop")
     set_kind("binary")
     add_files("src/*.cpp")
-    add_packages("openmp")
+    add_rules("c++.openmp")
+    add_packages("libomp")
 ```
 
 #### Zig 程序
@@ -386,7 +429,7 @@ target("test")
     set_kind("binary")
     add_files("src/*.c)
     set_toolchains("llvm@llvm-10")
-```
+````
 
 #### 拉取交叉编译工具链
 
@@ -418,11 +461,11 @@ target("test")
 
 ## 插件
 
-#### 生成IDE工程文件插件（makefile, vs2002 - vs2019, ...）
+#### 生成IDE工程文件插件（makefile, vs2002 - vs2022, ...）
 
 ```bash
-$ xmake project -k vsxmake -m "debug;release" # 新版vs工程生成插件（推荐）
-$ xmake project -k vs -m "debug;release"
+$ xmake project -k vsxmake -m "debug,release" # 新版vs工程生成插件（推荐）
+$ xmake project -k vs -m "debug,release"
 $ xmake project -k cmake
 $ xmake project -k ninja
 $ xmake project -k compile_commands
@@ -474,7 +517,7 @@ $ xmake l
 
 ```
 plugins {
-  id 'org.tboox.gradle-xmake-plugin' version '1.1.4'
+  id 'org.tboox.gradle-xmake-plugin' version '1.1.5'
 }
 
 android {
@@ -509,15 +552,17 @@ $ ./gradlew app:assembleDebug
 > Task :app:assembleDebug
 ```
 
-## 技术支持
+## CI 集成
 
-我们也提供付费的技术支持来为帮助用户快速解决相关问题，具体详情请点击下面的图片链接：
+### GitHub Action
 
-<a href="https://xscode.com/waruqi/xmake">
-<img src="https://tboox.org/assets/img/xmake-xscode.png" width="650px" />
-</a>
+我们可以使用 [github-action-setup-xmake](https://github.com/xmake-io/github-action-setup-xmake) 在 Github Action 上实现跨平台安装集成 Xmake。
 
-或者你也可以考虑赞助我们也获取技术支持服务，[[成为赞助商](https://xmake.io/#/zh-cn/about/sponsor)]
+```
+uses: xmake-io/github-action-setup-xmake@v1
+with:
+  xmake-version: latest
+```
 
 ## 谁在使用 Xmake?
 

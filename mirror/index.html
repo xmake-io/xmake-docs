@@ -101,10 +101,14 @@
 <li>[x] Review your xmake.lua and provide suggestions for improvement</li>
 </ul>
 <h2 id="introduction">Introduction</h2>
-<p>xmake is a lightweight cross-platform build utility based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more concise and intuitive. It is very friendly to novices and can quickly get started in a short time. Let users focus more on actual project development.</p>
-<p>It can compile the project directly like Make/Ninja, or generate project files like CMake/Meson, and it also has a built-in package management system to help users solve the integrated use of C/C++ dependent libraries.</p>
-<pre><code>Xmake = Build backend + Project Generator + Package Manager
-</code></pre><p>If you want to know more, please refer to: <a href="https://xmake.io/#/getting_started">Documents</a>, <a href="https://github.com/xmake-io/xmake">Github</a> and <a href="https://gitee.com/tboox/xmake">Gitee</a> and also welcome to join our <a href="https://xmake.io/#/about/contact">community</a>.</p>
+<p>Xmake is a lightweight, cross-platform build utility based on Lua.</p>
+<p>It is very lightweight and has no dependencies due to the integration of the Lua runtime.</p>
+<p>It uses xmake.lua to maintain project builds with a very simple and readable syntax.</p>
+<p>We can use it to build projects directly like Make/Ninja or generate project files like CMake/Meson. It also has a built-in package management system to help users integrate C/C++ dependencies.</p>
+<pre><code>Xmake = Build backend + Project Generator + Package Manager + [Remote|Distributed] Build + Cache
+</code></pre><p>Although not very precise, we can still understand Xmake in the following way:</p>
+<pre><code>Xmake ~= Make/Ninja + CMake/Meson + Vcpkg/Conan + distcc + ccache
+</code></pre><p>If you want to know more, please refer to: <a href="https://xmake.io/#/getting_started">Documents</a>, <a href="https://github.com/xmake-io/xmake">Github</a> and <a href="https://gitee.com/tboox/xmake">Gitee</a>. You are also welcome to join our <a href="https://xmake.io/#/about/contact">community</a>.</p>
 <p><img src="https://xmake.io/assets/img/index/xmake-basic-render.gif" alt=""></p>
 <h2 id="installation">Installation</h2>
 <h4 id="viacurl">via curl</h4>
@@ -116,11 +120,13 @@
 <h4 id="viapowershell">via powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
 </code></pre>
+<h4 id="otherinstallationmethods">Other installation methods</h4>
+<p>If you don&#39;t want to use the script to install xmake, see <a href="https://xmake.io/#/guide/installation">Installation Guide</a> for other installation methods.</p>
 <h2 id="simpledescription">Simple description</h2>
 <p><img src="https://xmake.io/assets/img/index/showcode1.png" width="340px" /></p>
 <h2 id="packagedependences">Package dependences</h2>
 <p><img src="https://xmake.io/assets/img/index/add_require.png" width="600px" /></p>
-<p>An official xmake package repository: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
+<p>An official xmake package repository exists at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <h2 id="buildproject">Build project</h2>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
@@ -234,17 +240,18 @@ $ xmake
 <li>Dub (dub::log 0.4.3)</li>
 <li>Portage on Gentoo/Linux (portage::libhandy)</li>
 <li>Nimble for nimlang (nimble::zip >1.3)</li>
+<li>Cargo for rust (cargo::base64 0.13.0)</li>
 </ul>
 <h3 id="packagemanagementfeatures">Package management features</h3>
 <ul>
-<li>The official repository provides nearly 500+ packages, one-click compilation on all platforms</li>
-<li>Full platform package support, support for cross-compiled dependent package integration</li>
-<li>Support package virtual environment, <code>xrepo env shell</code></li>
-<li>Precompiled package acceleration for windows</li>
-<li>Support self-built package repositories, private repository deployment</li>
-<li>Third-party package repository support, such as: vcpkg, conan, conda, etc.</li>
-<li>Support to pull using remote toolchain automatically</li>
-<li>Support to lock package dependency</li>
+<li>The official repository provides nearly 500+ packages with one-click compilation on all platforms</li>
+<li>Full platform package support, support for cross-compiled dependent packages</li>
+<li>Support package virtual environment using <code>xrepo env shell</code></li>
+<li>Precompiled package acceleration for Windows</li>
+<li>Support self-built package repositories and private repository deployment</li>
+<li>Third-party package repository support for repositories such as: vcpkg, conan, conda, etc.</li>
+<li>Supports automatic pulling of remote toolchains</li>
+<li>Supports dependency version locking</li>
 </ul>
 <h2 id="supportedplatforms">Supported platforms</h2>
 <ul>
@@ -265,7 +272,7 @@ $ xmake
 <h2 id="supportedtoolchains">Supported toolchains</h2>
 <pre><code class="lang-bash">$ xmake show -l toolchains
 xcode         Xcode IDE
-vs            VisualStudio IDE
+msvc          Microsoft Visual C/C++ Compiler
 yasm          The Yasm Modular Assembler
 clang         A C language family frontend for LLVM
 go            Go Programming Language Compiler
@@ -273,9 +280,10 @@ dlang         D Programming Language Compiler
 gfortran      GNU Fortran Programming Language Compiler
 zig           Zig Programming Language Compiler
 sdcc          Small Device C Compiler
-cuda          CUDA Toolkit
+cuda          CUDA Toolkit (nvcc, nvc, nvc++, nvfortran)
 ndk           Android NDK
 rust          Rust Programming Language Compiler
+swift         Swift Programming Language Compiler
 llvm          A collection of modular and reusable compiler and toolchain technologies
 cross         Common cross compilation toolchain
 nasm          NASM Assembler
@@ -295,6 +303,7 @@ nim           Nim Programming Language Compiler
 circle        A new C++20 compiler
 armcc         ARM Compiler Version 5 of Keil MDK
 armclang      ARM Compiler Version 6 of Keil MDK
+c51           Keil development tools for the 8051 Microcontroller Architecture
 </code></pre>
 <h2 id="supportedlanguages">Supported Languages</h2>
 <ul>
@@ -316,18 +325,21 @@ armclang      ARM Compiler Version 6 of Keil MDK
 <h2 id="supportedfeatures">Supported Features</h2>
 <ul>
 <li>The configuration grammar is simple and easy to use</li>
-<li>Quick installation, without any dependencies</li>
+<li>Quick, dependency-free installation</li>
 <li>One-click compilation for all platforms</li>
-<li>Support cross compilation, intelligent analysis of cross tool chain information</li>
-<li>Extremely fast, multi-task parallel compilation support</li>
-<li>C++20 Module support</li>
-<li>Support cross-platform C/C++ dependency package quick integration, built-in package manager</li>
-<li>Multi-language mixed compilation support</li>
-<li>Rich plug-in support, providing various project generators, such as: vs/makefile/cmakelists/compile_commands to generate plugins</li>
+<li>Supports cross compilation with intelligent analysis of cross toolchain information</li>
+<li>Extremely fast parallel compilation support</li>
+<li>C++20 module support</li>
+<li>Supports cross-platform C/C++ dependencies with built-in package manager</li>
+<li>Multi-language compilation support including mixed-language projects.</li>
+<li>Rich plug-in support with various project generators (ex. vs/makefile/cmakelists/compile_commands)</li>
 <li>REPL interactive execution support</li>
-<li>Incremental compilation support, automatic analysis of header files</li>
-<li>Quick switching and customization support of tool chain</li>
-<li>A large number of expansion modules support</li>
+<li>Incremental compilation support with automatic analysis of header files</li>
+<li>Quick toolchain management</li>
+<li>A large number of expansion modules</li>
+<li>Remote compilation support</li>
+<li>Distributed compilation support</li>
+<li>Local and remote build cache support</li>
 </ul>
 <h2 id="supportedprojects">Supported Projects</h2>
 <ul>
@@ -346,9 +358,25 @@ armclang      ARM Compiler Version 6 of Keil MDK
 <li>Protobuf Program</li>
 <li>Lex/yacc program</li>
 <li>C++20 Modules</li>
+<li>Linux Kernel Driver Modules</li>
 </ul>
+<h2 id="distributedcompilation">Distributed Compilation</h2>
+<ul>
+<li>[x] Cross-platform support</li>
+<li>[x] Support for msvc, clang, gcc and cross-compilation toolchain</li>
+<li>[x] Support for building android, ios, linux, win, macOS programs</li>
+<li>[x] No dependencies other than the compilation toolchain</li>
+<li>[x] Support for build server load balancing scheduling</li>
+<li>[x] Support for real time compressed transfer of large files (lz4)</li>
+<li>[x] Almost zero configuration cost, no shared filesystem required, more convenience and security</li>
+</ul>
+<p>For more details see: <a href="https://github.com/xmake-io/xmake/issues/274">#274</a></p>
+<h2 id="remotecompilation">Remote Compilation</h2>
+<p>For more details see: <a href="https://github.com/xmake-io/xmake/issues/622">#622</a></p>
+<h2 id="localremotebuildcache">Local/Remote Build Cache</h2>
+<p>For more details see: <a href="https://github.com/xmake-io/xmake/issues/2371">#622</a></p>
 <h2 id="moreexamples">More Examples</h2>
-<h4 id="debugandreleasemodes">Debug and release modes</h4>
+<h4 id="debugandreleaseprofiles">Debug and release profiles</h4>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 
 target("console")
@@ -376,7 +404,7 @@ target("test")
     add_files("src/*.c")
     add_packages("tbox", "libuv", "vcpkg::ffmpeg", "brew::pcre2/libpcre2-8", "openssl")
 </code></pre>
-<p>In addition, we can also use the <a href="https://github.com/xmake-io/xrepo">xrepo</a> command to quickly install dependent packages.</p>
+<p>In addition, we can also use the <a href="https://github.com/xmake-io/xrepo">xrepo</a> command to quickly install dependencies.</p>
 <h4 id="qtquickappprogram">Qt QuickApp Program</h4>
 <pre><code class="lang-lua">target("test")
     add_rules("qt.quickapp")
@@ -401,7 +429,7 @@ target("app")
     add_rules("wdk.binary", "wdk.env.umdf")
     add_files("exe/*.cpp")
 </code></pre>
-<p>More wdk driver program examples (umdf/kmdf/wdm), please see <a href="https://xmake.io/#/guide/project_examples?id=wdk-driver-program">WDK Program Examples</a></p>
+<p>More wdk driver program examples exist (umdf/kmdf/wdm), please see <a href="https://xmake.io/#/guide/project_examples?id=wdk-driver-program">WDK Program Examples</a></p>
 <h4 id="iosmacosapplication">iOS/MacOS Application</h4>
 <pre><code class="lang-lua">target("test")
     add_rules("xcode.application")
@@ -415,11 +443,12 @@ target("app")
     add_files("src/Info.plist")
 </code></pre>
 <h4 id="openmpprogram">OpenMP Program</h4>
-<pre><code class="lang-lua">add_requires("openmp")
+<pre><code class="lang-lua">add_requires("libomp", {optional = true})
 target("loop")
     set_kind("binary")
     add_files("src/*.cpp")
-    add_packages("openmp")
+    add_rules("c++.openmp")
+    add_packages("libomp")
 </code></pre>
 <h4 id="zigprogram">Zig Program</h4>
 <pre><code class="lang-lua">target("test")
@@ -427,24 +456,25 @@ target("loop")
     add_files("src/main.zig")
 </code></pre>
 <h3 id="automaticallyfetchremotetoolchain">Automatically fetch remote toolchain</h3>
-<h4 id="fetchthespecialversionofllvm">fetch the special version of llvm</h4>
-<p>We use clang in llvm-10 to compile the project.</p>
+<h4 id="fetchaspecialversionofllvm">fetch a special version of llvm</h4>
+<p>We use Clang in <code>llvm-10</code> to compile the project.</p>
 <pre><code class="lang-lua">add_requires("llvm 10.x", {alias = "llvm-10"})
 target("test")
     set_kind("binary")
-    add_files("src/*.c)
+    add_files("src/*.c")
     set_toolchains("llvm@llvm-10")
+`
 </code></pre>
 <h4 id="fetchcrosscompilationtoolchain">Fetch cross-compilation toolchain</h4>
-<p>We can also pull the specified cross-compilation tool chain to compile the project.</p>
+<p>We can also pull a specified cross-compilation toolchain to compile the project.</p>
 <pre><code class="lang-lua">add_requires("muslcc")
 target("test")
     set_kind("binary")
-    add_files("src/*.c)
+    add_files("src/*.c")
     set_toolchains("@muslcc")
 </code></pre>
 <h4 id="fetchtoolchainandpackages">Fetch toolchain and packages</h4>
-<p>We can also use the specified muslcc cross-compilation toolchain to compile and integrate all dependent packages</p>
+<p>We can also use the specified <code>muslcc</code> cross-compilation toolchain to compile and integrate all dependent packages</p>
 <pre><code class="lang-lua">add_requires("muslcc")
 add_requires("zlib", "libogg", {system = false})
 
@@ -456,14 +486,14 @@ target("test")
     add_packages("zlib", "libogg")
 </code></pre>
 <h2 id="plugins">Plugins</h2>
-<h4 id="generateideprojectfilepluginmakefilevs2002vs2019">Generate IDE project file plugin（makefile, vs2002 - vs2019 .. ）</h4>
-<pre><code class="lang-bash">$ xmake project -k vsxmake -m "debug;release" # New vsproj generator (Recommended)
-$ xmake project -k vs -m "debug;release"
+<h4 id="generateideprojectfilepluginmakefilevs2002vs2022">Generate IDE project file plugin（makefile, vs2002 - vs2022 .. ）</h4>
+<pre><code class="lang-bash">$ xmake project -k vsxmake -m "debug,release" # New vsproj generator (Recommended)
+$ xmake project -k vs -m "debug,release"
 $ xmake project -k cmake
 $ xmake project -k ninja
 $ xmake project -k compile_commands
 </code></pre>
-<h4 id="runthecustomluascriptplugin">Run the custom lua script plugin</h4>
+<h4 id="runacustomluascriptplugin">Run a custom lua script plugin</h4>
 <pre><code class="lang-bash">$ xmake l ./test.lua
 $ xmake l -c "print(&#39;hello xmake!&#39;)"
 $ xmake l lib.detect.find_tool gcc
@@ -476,8 +506,8 @@ $ xmake l
     3
   }
 </code></pre>
-<p>More builtin plugins, please see: <a href="https://xmake.io/#/plugin/builtin_plugins">Builtin plugins</a></p>
-<p>Please download and install more other plugins from the plugins repository <a href="https://github.com/xmake-io/xmake-plugins">xmake-plugins</a>.</p>
+<p>More builtin plugins exist, please see: <a href="https://xmake.io/#/plugin/builtin_plugins">Builtin plugins</a></p>
+<p>Please download and install other plugins from the plugins repository <a href="https://github.com/xmake-io/xmake-plugins">xmake-plugins</a>.</p>
 <h2 id="ideeditorintegration">IDE/Editor Integration</h2>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake-vscode">xmake-vscode</a></li>
@@ -500,9 +530,9 @@ $ xmake l
 </li>
 </ul>
 <h3 id="xmakegradlepluginjni">XMake Gradle Plugin (JNI)</h3>
-<p>We can uses <a href="https://github.com/xmake-io/xmake-gradle">xmake-gradle</a> plugin to compile JNI library in gradle.</p>
+<p>We can use the <a href="https://github.com/xmake-io/xmake-gradle">xmake-gradle</a> plugin to compile JNI libraries via gradle.</p>
 <pre><code>plugins {
-  id &#39;org.tboox.gradle-xmake-plugin&#39; version &#39;1.1.4&#39;
+  id &#39;org.tboox.gradle-xmake-plugin&#39; version &#39;1.1.5&#39;
 }
 
 android {
@@ -512,7 +542,7 @@ android {
         }
     }
 }
-</code></pre><p>The <code>xmakeBuild</code> will be injected to <code>assemble</code> task automatically if the gradle-xmake-plugin has been applied.</p>
+</code></pre><p>The <code>xmakeBuild</code> task will be injected into the <code>assemble</code> task automatically if the <code>gradle-xmake-plugin</code> has been applied.</p>
 <pre><code class="lang-console">$ ./gradlew app:assembleDebug
 > Task :nativelib:xmakeConfigureForArm64
 > Task :nativelib:xmakeBuildForArm64
@@ -532,14 +562,16 @@ android {
 > Task :nativelib:assemble
 > Task :app:assembleDebug
 </code></pre>
-<h2 id="technicalsupport">Technical Support</h2>
-<p>We also provide paid technical support to help users quickly solve related problems. For details, please click the image link below:</p>
-<p><a href="https://xscode.com/waruqi/xmake"><br><img src="https://tboox.org/assets/img/xmake-xscode.png" width="650px" /><br></a></p>
-<p>Or you can also consider sponsoring us to get technical support services, [<a href="https://xmake.io/#/about/sponsor">Become a sponsor</a>]</p>
-<h2 id="whoisusingxmake">Who is using Xmake?</h2>
-<p>Please click <a href="https://xmake.io/#/about/who_is_using_xmake">User List</a> to view the complete user list.</p>
-<p>If you are using xmake, welcome to submit the information to the above list through PR, so that let more users can known how many users are using xmake.</p>
-<p>Ihis also let users to use xmake more confidently, and we will also have more motivation to maintain it continuously,<br>so that the xmake project and the community will grow stronger.</p>
+<h2 id="ciintegration">CI Integration</h2>
+<h3 id="githubaction">GitHub Action</h3>
+<p>We can use <a href="https://github.com/xmake-io/github-action-setup-xmake">github-action-setup-xmake</a> to setup Xmake in Github Actions.</p>
+<pre><code>uses: xmake-io/github-action-setup-xmake@v1
+with:
+  xmake-version: latest
+</code></pre><h2 id="whoisusingxmake">Who is using Xmake?</h2>
+<p>The user list is available <a href="https://xmake.io/#/about/who_is_using_xmake">here</a></p>
+<p>If you are using xmake, you are welcome to submit your information to the above list through a PR, so that others can know how many users are using it.</p>
+<p>Ihis also let users to use xmake more confidently and give us motivation to continue to maintain it.<br>This will help the xmake project and it&#39;s community to grow stronger.</p>
 <h2 id="contacts">Contacts</h2>
 <ul>
 <li>Email：<a href="mailto:waruqi@gmail.com">waruqi@gmail.com</a></li>
@@ -562,6 +594,7 @@ android {
 <li><a href="https://github.com/uael">uael</a>: provide the semantic versioning library <a href="https://github.com/uael/sv">sv</a></li>
 <li><a href="https://github.com/OpportunityLiu">OpportunityLiu</a>: improve cuda, tests and ci</li>
 <li><a href="https://github.com/xq114">xq144</a>: Improve <code>xrepo env shell</code>, and contribute a lot of packages to the <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a> repository.</li>
+<li><code>enderger</code>: Helped smooth out the edges on the English translation of the README</li>
 </ul>
 </article>
 </body>
