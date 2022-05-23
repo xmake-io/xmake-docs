@@ -1336,9 +1336,9 @@ $cat ~/.xmake/service/client.conf
 
 ### User authorization
 
-For user authorization, please refer to [Remote Compilation/User Authorization](/#/zh-cn/guide/other_features?id=%e7%94%a8%e6%88%b7%e8%ae%a4% e8%af%81%e5%92%8c%e6%8e%88%e6%9d%83) The detailed description and usage are exactly the same.
+For user authorization, please refer to [Remote Compilation/User Authorization](/#/guide/other_features?id=user-authorization)
 
-### connect to the server
+### Connect to the server
 
 After configuring the authentication and server address, you can enter the following command to connect the current project to the configured server.
 
@@ -1646,9 +1646,9 @@ $cat ~/.xmake/service/client.conf
 
 ### User authorization
 
-For user authorization, please refer to [Remote Compilation/User Authorization](/#/zh-cn/guide/other_features?id=%e7%94%a8%e6%88%b7%e8%ae%a4% e8%af%81%e5%92%8c%e6%8e%88%e6%9d%83) The detailed description and usage are exactly the same.
+For user authorization, please refer to [Remote Compilation/User Authorization](/#/guide/other_features?id=user-authorization)
 
-### connect to the server
+### Connect to the server
 
 After configuring the authentication and server address, you can enter the following command to connect the current project to the configured server.
 
