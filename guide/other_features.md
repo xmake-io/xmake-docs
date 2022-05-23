@@ -902,32 +902,31 @@ target("test")
 
 Dealing with global variables, as well as global macro definitions with the same name, functions, etc., can be used in this way to avoid conflicts.
 
+## Remote compilation
 
-## Remote Compilation
+Version 2.6.5 provides remote compilation support, through which we can compile code on a remote server, run and debug remotely.
 
-v2.6.5 provides remote compilation support, through which we can compile code on a remote server, run and debug remotely.
+The server can be deployed on Linux/MacOS/Windows to achieve cross-platform compilation, for example: compile and run Windows programs on Linux, and compile and run macOS/Linux programs on Windows.
 
-The server can be deployed on Linux/MacOS/Windows for cross-platform compilation, e.g. compile and run Windows programs on Linux, and compile and run macOS/Linux programs on Windows.
+Compared with ssh remote login and compilation, it is more stable and smoother to use. It will not cause ssh terminal input to be stuck due to network instability, and it can also quickly edit code files locally.
 
-Compared to ssh remote login compilation, it is more stable and smoother to use, no lagging of ssh terminal input due to network instability, and fast local editing of code files.
+Even we can seamlessly implement remote compilation in editors and IDEs such as vs/sublime/vscode/idea without relying on the IDE's own support for remote compilation.
 
-We can even seamlessly implement remote compilation in editors and IDEs such as vs/sublime/vscode/idea without relying on the IDE's own support for remote compilation.
-
-### Start service
+### Start the service
 
 ```console
 $ xmake service
-<remote_build_server>: listening 0.0.0.0:9096 ..
+<remote_build_server>: listening 0.0.0.0:9091 ..
 ```
 
-with verbose logs
+We can also start the service and echo detailed log information.
 
 ```console
 $ xmake service -vD
-<remote_build_server>: listening 0.0.0.0:9096 ..
+<remote_build_server>: listening 0.0.0.0:9091 ..
 ```
 
-### Start and stop service with daemon mode
+### Start the service in Daemon mode
 
 ```console
 $ xmake service --start
@@ -935,53 +934,191 @@ $ xmake service --restart
 $ xmake service --stop
 ```
 
-### Configure service on server side
+### Configure the server
 
-run `xmake service` will generate a default `service.conf` file in `~/.xmake/service.conf`
+We first, run the `xmake service` command, it will automatically generate a default `server.conf` configuration file, stored in `~/.xmake/service/server.conf`.
 
-```lua
+!> Version 2.6.5, the configuration address is in `~/.xmake/service.conf`. Subsequent versions have made a lot of improvements and separated the configuration file. If you are using version 2.6.6 or above, please use the new configuration file.
+
+Then, we edit it, fixing the server's listening port (optional).
+
+```bash
+$ cat ~/.xmake/service/server.conf
 {
-    logfile = "/Users/ruki/.xmake/service/logs.txt",
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
     remote_build = {
-        server = {
-            listen = "0.0.0.0:9096"
-        }
+        listen = "0.0.0.0:9691",
+        workdir = "/Users/ruki/.xmake/service/server/remote_build"
+    },
+    tokens = {
+        "e438d816c95958667747c318f1532c0f"
     }
 }
 ```
 
-### Configure service on client side
+### Configure the client
 
-`~/.xmake/service.conf`
+The client configuration file is in `~/.xmake/service/client.conf`, where we can configure the server address that the client needs to connect to.
 
-```lua
-{
-    logfile = "/Users/ruki/.xmake/service/logs.txt",
-    remote_build = {
-        client = {
-            connect = "192.168.56.101:9096",
-        }
-    }
-}
-```
-
-### Import the given configuration file
+!> Version 2.6.5, the configuration address is in `~/.xmake/service.conf`. Subsequent versions have made a lot of improvements and separated the configuration file. If you are using version 2.6.6 or above, please use the new configuration file.
 
 ```console
-$ xmake service --config=/tmp/service.conf
+$ cat ~/.xmake/service/client.conf
+{
+    remote_build = {
+        connect = "127.0.0.1:9691",
+        token = "e438d816c95958667747c318f1532c0f"
+    }
+}
 ```
 
-### Connect remote build service on client side
+### User authorization
 
-enter project directory
+!> Version 2.6.6 and above only supports user authentication, and version 2.6.5 can only connect anonymously.
+
+Before the actual connection, we briefly introduce several authentication mechanisms currently provided by the services provided by xmake.
+
+1. Token authentication
+2. Password authentication
+3. Trusted host verification
+
+#### Token Authentication
+
+This is also the default recommended method, which is more secure, more convenient to configure and connect, and does not need to enter a password every time you connect.
+
+When we execute the `xmake service` command, a server and client configuration file will be generated by default, and a default token will be automatically generated, so the local direct connection does not require any configuration.
+
+##### Server authentication configuration
+
+The server can configure multiple tokens for authorizing connections to different user hosts, and of course, can share one token.
+
+```bash
+$ cat ~/.xmake/service/server.conf
+{
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    remote_build = {
+        listen = "0.0.0.0:9691",
+        workdir = "/Users/ruki/.xmake/service/server/remote_build"
+    },
+    tokens = {
+        "e438d816c95958667747c318f1532c0f"
+    }
+}
+```
+
+##### Client Authentication Configuration
+
+The client only needs to add the token on the server to the corresponding client configuration.
+
+```bash
+$ cat ~/.xmake/service/client.conf
+{
+    remote_build = {
+        connect = "127.0.0.1:9691",
+        token = "e438d816c95958667747c318f1532c0f"
+    }
+}
+```
+
+##### Manually generate new token
+
+We can also execute the following command to manually generate a new token and add it to the server configuration ourselves.
+
+```bash
+$ xmake service --gen-token
+New token a7b9fc2d3bfca1472aabc38bb5f5d612 is generated!
+```
+
+#### Password authentication
+
+We also provide an authorization mode of password authentication. Compared with token authentication, it requires users to enter a password every time they connect, and can only be connected after the verification is passed.
+
+##### Server authentication configuration
+
+For password authentication, we do not need to manually configure the token, just execute the following command to add a user. During the adding process, the user will be prompted to enter a password.
+
+```bash
+$ xmake service --add-user=ruki
+Please input user ruki password:
+123456
+Add user ruki ok!
+```
+
+Then, xmake will generate a new token from the username and password and add it to the token list of the server configuration.
+
+```bash
+$ cat ~/.xmake/service/server.conf
+{
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    remote_build = {
+        listen = "0.0.0.0:9691",
+        workdir = "/Users/ruki/.xmake/service/server/remote_build"
+    },
+    tokens = {
+        "e438d816c95958667747c318f1532c0f",
+        "7889e25402413e93fd37395a636bf942"
+    }
+}
+```
+
+Of course, we can also delete the specified user and password.
+
+```bash
+$xmake service --rm-user=ruki
+Please input user ruki password:
+123456
+Remove user ruki ok!
+```
+
+##### Client Authentication Configuration
+
+For the client, we no longer need to set the token of the server. We only need to add the user name that needs to be connected in the connection configuration to enable password authentication. The format is: `user@address:port`
+
+```bash
+$ cat ~/.xmake/service/client.conf
+{
+    remote_build = {
+        connect = "root@127.0.0.1:9691"
+  }
+}
+```
+
+!> If the username is removed and the token is not configured, it is anonymous mode. If the server is not configured with a token, the authentication is completely disabled and the connection is made directly.
+
+#### Trusted host verification
+
+In addition, in order to further improve security, we also provide server-side trusted host verification. If the server-configured known_hosts list is configured with the ip address of the client host that can be connected,
+Then only these hosts can successfully connect to this server, and other hosts' connections to it will be prompted to be untrusted and refuse the connection, even if token and password authentication are OK.
+
+```bash
+$ cat ~/.xmake/service/server.conf
+{
+    logfile = "/Users/ruki/.xmake/service/logs.txt",
+    server = {
+        tokens = {
+            "4b928c7563a0cba10ff4c3f5ca0c8e24"
+        },
+        known_hosts = { "127.0.0.1", "xx.xx.xx.xx"}
+    }
+}
+```
+
+### Connect to a remote server
+
+Next, we only need to enter the root directory of the project that needs to be compiled remotely, and execute the `xmake service --connect` command to connect.
+
+If it is the token authentication mode, then no additional password input is required, and the connection is directly connected.
 
 ```console
 $ xmake create test
 $ cd test
-$ xmake service --connect 
-<remote_build_client>: connect 192.168.56.110:9096 ..
+$ xmake service --connect
+<remote_build_client>: connect 192.168.56.110:9091 ..
 <remote_build_client>: connected!
-<remote_build_client>: sync files in 192.168.56.110:9096 ..
+<remote_build_client>: sync files in 192.168.56.110:9091 ..
 Scanning files ..
 Comparing 3 files ..
     [+]: src/main.cpp
@@ -993,12 +1130,44 @@ Uploading files with 1372 bytes ..
 <remote_build_client>: sync files ok!
 ```
 
-### Build project with remote mode
+If it is password authentication, the user will be prompted to enter the password to continue the connection.
+
+```bash
+$ xmake service --connect
+Please input user root password:
+000000
+<remote_build_client>: connect 127.0.0.1:9691 ..
+<remote_build_client>: connected!
+<remote_build_client>: sync files in 127.0.0.1:9691 ..
+Scanning files ..
+Comparing 3 files ..
+    [+]: xmake.lua
+    [+]: .gitignore
+    [+]: src/main.cpp
+3 files has been changed!
+Archiving files ..
+Uploading files with 1591 bytes ..
+<remote_build_client>: sync files ok!
+```
+
+If the password is incorrect, an error message will be displayed.
+
+```bash
+$ xmake service --connect
+Please input user root password:
+123
+<remote_build_client>: connect 127.0.0.1:9691 ..
+<remote_build_client>: connect 127.0.0.1:9691 failed, user and password are incorrect!
+```
+
+### Remote build project
+
+After the connection is successful, we can compile remotely like normal local compilation.
 
 ```console
 $ xmake
-<remote_build_client>: run xmake in 192.168.56.110:9096 ..
-checking for platform ... macosx
+<remote_build_client>: run xmake in 192.168.56.110:9091 ..
+checking for platform... macosx
 checking for architecture ... x86_64
 checking for Xcode directory ... /Applications/Xcode.app
 checking for Codesign Identity of Xcode ... Apple Development: waruqi@gmail.com (T3NA4MRVPU)
@@ -1010,39 +1179,43 @@ checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
 <remote_build_client>: run command ok!
 ```
 
-### Run target with remote mode
+### Run the target program remotely
+
+We can also run and debug the compiled target program remotely like running and debugging locally.
 
 ```console
 $ xmake run
-<remote_build_client>: run xmake run in 192.168.56.110:9096 ..
+<remote_build_client>: run xmake run in 192.168.56.110:9091 ..
 hello world!
 <remote_build_client>: run command ok!
 ```
 
-### Rebuild target with remote mode
+### Remote Rebuild Project
 
 ```console
 $ xmake -rv
-<remote_build_client>: run xmake -rv in 192.168.56.110:9096 ..
+<remote_build_client>: run xmake -rv in 192.168.56.110:9091 ..
 [ 25%]: ccache compiling.release src/main.cpp
-/usr/local/bin/ccache /usr/bin/xcrun -sdk macosx clang -c -Qunused-arguments -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src/main.cpp
+/usr/local/bin/ccache /usr/bin/xcrun -sdk macosx clang -c -Qunused-arguments -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/ MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src /main.cpp
 [ 50%]: linking.release test
-"/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/test build/.objs/test/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -stdlib=libc++ -Wl,-x -lz
+"/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/test build/.objs/test/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version -min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -stdlib=libc++ -Wl,-x -lz
 [100%]: build ok!
 <remote_build_client>: run command ok!
 ```
 
-### Configure project with remote mode
+### Remote configuration compilation parameters
 
 ```console
 $ xmake f --xxx --yy
 ```
 
-### Sync files to remote server
+### Manually sync project files
+
+When connecting, the code will be automatically synchronized once, and the code will be changed later. You can execute this command to manually synchronize the changed files.
 
 ```console
-$ xmake service --sync 
-<remote_build_client>: sync files in 192.168.56.110:9096 ..
+$ xmake service --sync
+<remote_build_client>: sync files in 192.168.56.110:9091 ..
 Scanning files ..
 Comparing 3 files ..
     [+]: src/main.cpp
@@ -1054,27 +1227,467 @@ Uploading files with 1372 bytes ..
 <remote_build_client>: sync files ok!
 ```
 
-### Disconnect remote service for the current project
+### Disconnect from remote
+
+For the current project, disconnect the connection, which only affects the current project, and other projects can still be connected and compiled at the same time.
 
 ```console
 $ xmake service --disconnect
-<remote_build_client>: disconnect 192.168.56.110:9096 ..
+<remote_build_client>: disconnect 192.168.56.110:9091 ..
 <remote_build_client>: disconnected!
 ```
 
-### View service logs
+### View server log
 
 ```console
 $ xmake service --logs
 ```
 
-### Clean all built and cache files for the current project on server
+### Clean remote service cache and build files
+
+We can also manually clean any caches and build generated files from the remote.
 
 ```console
 $ cd projectdir
 $ xmake service --clean
 ```
+## Distributed compilation
 
-### TODO
+Xmake provides a built-in distributed compilation service, usually it can cooperate with local compilation cache and remote compilation cache to achieve optimal compilation acceleration.
 
-- [ ] Pull built target files to local host
+Also, it is fully cross-platform supported, we not only support gcc/clang, but also Windows and msvc well.
+
+For cross-compilation, as long as the cross-toolchain supports, we do not require the system environment of the server. Even if the server resources of linux, macOS and Windows are mixed, distributed compilation can be well realized.
+
+### Start the service
+
+We can specify the `--distcc` parameter to enable the distributed compilation service. Of course, if this parameter is not specified, xmake will enable all server-configured services by default.
+
+```console
+$ xmake service --distcc
+<distcc_build_server>: listening 0.0.0.0:9093 ..
+```
+
+We can also start the service and echo detailed log information.
+
+```console
+$ xmake service --distcc -vD
+<distcc_build_server>: listening 0.0.0.0:9093 ..
+```
+
+### Start the service in Daemon mode
+
+```console
+$ xmake service --distcc --start
+$ xmake service --distcc --restart
+$ xmake service --distcc --stop
+```
+
+### Configure the server
+
+We first, run the `xmake service` command, it will automatically generate a default `server.conf` configuration file, stored in `~/.xmake/service/server.conf`.
+
+```bash
+$ xmake service
+generating the config file to /Users/ruki/.xmake/service/server.conf ..
+an token(590234653af52e91b9e438ed860f1a2b) is generated, we can use this token to connect service.
+generating the config file to /Users/ruki/.xmake/service/client.conf ..
+<distcc_build_server>: listening 0.0.0.0:9693 ..
+```
+
+Then, we edit it, fixing the server's listening port (optional).
+
+```bash
+$ cat ~/.xmake/service/server.conf
+{
+    distcc_build = {
+        listen = "0.0.0.0:9693",
+        workdir = "/Users/ruki/.xmake/service/server/distcc_build"
+    },
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    tokens = {
+        "590234653af52e91b9e438ed860f1a2b"
+    }
+}
+```
+
+### Configure the client
+
+The client configuration file is in `~/.xmake/service/client.conf`, where we can configure the server address that the client needs to connect to.
+
+We can configure multiple server addresses and corresponding tokens in the hosts list.
+
+!> Distributed compilation, it is recommended to use the token authentication mode, because the password mode requires a password to be entered for each server connection, which is very cumbersome.
+
+```console
+$cat ~/.xmake/service/client.conf
+{
+    distcc_build = {
+        hosts = {
+            {
+                connect = "127.0.0.1:9693",
+                token = "590234653af52e91b9e438ed860f1a2b"
+            }
+        }
+    }
+}
+```
+
+### User authorization
+
+For user authorization, please refer to [Remote Compilation/User Authorization](/#/zh-cn/guide/other_features?id=%e7%94%a8%e6%88%b7%e8%ae%a4% e8%af%81%e5%92%8c%e6%8e%88%e6%9d%83) The detailed description and usage are exactly the same.
+
+### connect to the server
+
+After configuring the authentication and server address, you can enter the following command to connect the current project to the configured server.
+
+We need to enter `--distcc` when connecting to specify that only distributed services are connected.
+
+```bash
+$ cd projectdir
+$ xmake service --connect --distcc
+<client>: connect 127.0.0.1:9693 ..
+<client>: 127.0.0.1:9693 connected!
+```
+
+We can also connect to multiple services at the same time, such as distributed compilation and remote compilation cache services.
+
+```hash
+$ xmake service --connect --distcc --ccache
+```
+
+!> If there is no parameter, the default connection is the remote compilation service.
+
+### Distributed compilation project
+
+After connecting to the server, we can perform distributed compilation like normal local compilation, for example:
+
+```bash
+$ xmake
+...
+[ 93%]: ccache compiling.release src/demo/network/unix_echo_client.c ----> local job
+[ 93%]: ccache compiling.release src/demo/network/ipv6.c
+[ 93%]: ccache compiling.release src/demo/network/ping.c
+[ 93%]: distcc compiling.release src/demo/network/unix_echo_server.c. ----> distcc job
+[93%]: distcc compiling.release src/demo/network/http.c
+[ 93%]: distcc compiling.release src/demo/network/unixaddr.c
+[ 93%]: distcc compiling.release src/demo/network/ipv4.c
+[ 94%]: distcc compiling.release src/demo/network/ipaddr.c
+[94%]: distcc compiling.release src/demo/math/fixed.c
+[94%]: distcc compiling.release src/demo/libm/float.c
+[ 95%]: ccache compiling.release src/demo/libm/double.c
+[ 95%]: ccache compiling.release src/demo/other/test.cpp
+[ 98%]: archiving.release libtbox.a
+[99%]: linking.release demo
+[100%]: build ok!
+```
+
+Among them, the words with distcc are remote compilation tasks, and the others are local compilation tasks. By default, xmake also enables local compilation caching to cache distributed compilation results to avoid frequent requests to the server.
+
+In addition, we can also open the remote compilation cache and share the compilation cache with others to further accelerate the compilation of multi-person collaborative development.
+
+### Disconnect
+
+```bash
+$ xmake service --disconnect --distcc
+```
+
+### Specify the number of parallel compilation tasks
+
+Let's briefly introduce the number of parallel tasks currently calculated by default based on the number of host cpu cores:
+
+```lua
+local default_njob = math.ceil(ncpu * 3 / 2)
+```
+
+Therefore, if distributed compilation is not enabled, the default maximum number of parallel compilation tasks is this default_njob.
+
+If distributed compilation is enabled, the default number of parallel compilation tasks is:
+
+```lua
+local maxjobs = default_njob + server_count * server_default_njob
+```
+
+#### Modify the number of local parallel tasks
+
+We only need to pass `-jN` to specify the number of local parallel tasks, but it will not affect the number of parallel tasks on the server side.
+
+```bash
+$ xmake -jN
+```
+
+#### Modify the number of parallel tasks on the server
+
+If you want to modify the number of parallel tasks on the server, you need to modify the configuration file of the client.
+
+```bash
+$cat ~/.xmake/service/client.conf
+{
+    distcc_build = {
+        hosts = {
+            {
+                connect = "127.0.0.1:9693",
+                token = "590234653af52e91b9e438ed860f1a2b",
+                njob = 8 <------- modify here
+            },
+            {
+                connect = "192.168.01:9693",
+                token = "590234653af52e91b9e438ed860f1a2b",
+                njob = 4
+            }
+        }
+    }
+}
+```
+
+For each server host, add the `njob = N` parameter configuration to specify the number of parallel jobs that this server can provide.
+
+### Distributed compilation of Android projects
+
+The distributed compilation service provided by xmake is completely cross-platform and supports Windows, Linux, macOS, Android, iOS and even cross-compilation.
+
+If you want to compile the Android project, you only need to add the `toolchains` toolchain configuration in the server configuration, and provide the path of the NDK.
+
+```bash
+$ cat ~/.xmake/service/server.conf
+{
+    distcc_build = {
+        listen = "0.0.0.0:9693",
+        toolchains = {
+            ndk = {
+                ndk = "~/files/android-ndk-r21e" <------------ here
+            }
+        },
+        workdir = "/Users/ruki/.xmake/service/server/distcc_build"
+    },
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    tokens = {
+        "590234653af52e91b9e438ed860f1a2b"
+    }
+}
+```
+
+Then, we can compile the Android project in a distributed way like normal local compilation, and even configure multiple Windowss, macOS, Linux and other different server hosts, as the resources of the distributed compilation service, to compile it.
+
+Just download the NDK for the corresponding platform.
+
+```bash
+$ xmake f -p android --ndk=~/files/xxxx
+$ xmake
+```
+
+### Distributed compilation of iOS projects
+
+Compiling iOS projects is easier, because Xmake can usually automatically detect Xcode, so just switch the platform to ios like a normal local.
+
+```bash
+$ xmake f -p iphoneos
+$ xmake
+```
+
+### Distributed cross compilation configuration
+
+If we want to distribute cross-compilation, we need to configure the toolchain sdk path on the server, for example:
+
+```bash
+$ cat ~/.xmake/service/server.conf
+{
+    distcc_build = {
+        listen = "0.0.0.0:9693",
+        toolchains = {
+            cross = {
+                sdkdir = "~/files/arm-linux-xxx" <------------ here
+            }
+        },
+        workdir = "/Users/ruki/.xmake/service/server/distcc_build"
+    },
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    tokens = {
+        "590234653af52e91b9e438ed860f1a2b"
+    }
+}
+```
+
+Among them, under toolchains, each item corresponds to a toolchain, here is configured as `cross = {}` cross toolchain, corresponding to `toolchain("cross")`.
+
+In the toolchain, we can configure `sdkdir`, `bindir`, `cross`, etc., corresponding to the interface configuration of `set_sdkdir`, `set_bindir` and `set_cross` in `toolchain("cross")`.
+
+If the cross toolchain is more standardized, we usually only need to configure `sdkdir`, and xmake can automatically detect it.
+
+And client-side compilation only needs to specify the sdk directory.
+
+```bash
+$ xmake f -p cross --sdk=/xxx/arm-linux-xxx
+$ xmake
+```
+
+### Clean the server cache
+
+The compilation of each project on the server side will generate some cache files, which are stored according to the project granularity. We can use the following command to clear the cache corresponding to each server for the current project.
+
+```bash
+$ xmake service --clean --distcc
+```
+
+### Some internal optimizations
+
+1. Cache server-side compilation results to avoid repeated compilation
+2. Local cache, remote cache optimization, avoid unnecessary server communication
+3. Server load balancing scheduling, rational allocation of server resources
+4. Small files are compiled directly locally after preprocessing, which is usually faster
+5. Real-time compression and transmission of large files, based on lz4 fast compression
+6. Internal state maintenance, compared to independent tools such as distcc, avoids frequent independent process loading and time-consuming, and avoids additional communication with the daemon process
+
+## Local compilation cache
+
+By default, Xmake will enable the local cache. The version before 2.6.5 uses the external ccache by default, and after 2.6.6, Xmake provides a built-in cross-platform local cache solution.
+
+Compared with third-party independent processes such as ccache, xmake's internal state maintenance is easier to optimize, and it also avoids frequent independent process loading and time-consuming, and avoids additional communication with the daemon process.
+
+In addition, the built-in cache can better support cross-platform, and msvc on Windows can also support well, while ccache only supports gcc/clang.
+
+Of course, we can also disable the cache with the following command.
+
+```bash
+$ xmake f --ccache=n
+```
+
+Note: Regardless of whether the built-in local cache is used, the configuration name is `--ccache=`, which means the c/c++ build cache, not just the name of the ccache tool.
+
+If we want to continue to use other external caching tools, we can also configure it in the following way.
+
+```bash
+$ xmake f --ccache=n --cxx="ccache gcc" --cc="ccache gcc"
+$ xmake
+```
+
+## Remote compilation cache
+
+In addition to local caching, we also provide remote caching services, similar to mozilla's sscache, which is usually not used if it is only for personal development.
+
+However, if a large-scale project is developed collaboratively by multiple people within the company, distributed compilation and local caching alone are not enough. We also need to cache the compiled object files to a separate server for sharing.
+
+In this way, even if other people compile it for the first time, they do not need to compile it distributedly every time, and directly pull the cache from the remote to speed up the compilation.
+
+In addition, the remote cache service provided by Xmake is also supported by all platforms, not only gcc/clang but also msvc.
+
+### Start the service
+
+We can specify the `--ccache` parameter to enable the remote compilation cache service. Of course, if this parameter is not specified, xmake will enable all server-configured services by default.
+
+```console
+$ xmake service --ccache
+<remote_cache_server>: listening 0.0.0.0:9092 ..
+```
+
+We can also start the service and echo detailed log information.
+
+```console
+$ xmake service --ccache -vD
+<remote_cache_server>: listening 0.0.0.0:9092 ..
+```
+
+### Start the service in Daemon mode
+
+```console
+$ xmake service --ccache --start
+$ xmake service --ccache --restart
+$ xmake service --ccache --stop
+```
+
+### Configure the server
+
+We first, run the `xmake service` command, it will automatically generate a default `server.conf` configuration file, stored in `~/.xmake/service/server.conf`.
+
+```bash
+$ xmake service
+generating the config file to /Users/ruki/.xmake/service/server.conf ..
+an token(590234653af52e91b9e438ed860f1a2b) is generated, we can use this token to connect service.
+generating the config file to /Users/ruki/.xmake/service/client.conf ..
+<remote_cache_server>: listening 0.0.0.0:9692 ..
+```
+
+Then, we edit it, fixing the server's listening port (optional).
+
+```bash
+$ cat ~/.xmake/service/server.conf
+{
+    distcc_build = {
+        listen = "0.0.0.0:9692",
+        workdir = "/Users/ruki/.xmake/service/server/remote_cache"
+    },
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    tokens = {
+        "590234653af52e91b9e438ed860f1a2b"
+    }
+}
+```
+
+### Configure the client
+
+The client configuration file is in `~/.xmake/service/client.conf`, where we can configure the server address that the client needs to connect to.
+
+We can configure multiple server addresses and corresponding tokens in the hosts list.
+
+```console
+$cat ~/.xmake/service/client.conf
+{
+    remote_cache = {
+            connect = "127.0.0.1:9692,
+            token = "590234653af52e91b9e438ed860f1a2b"
+        }
+    }
+}
+```
+
+### User authorization
+
+For user authorization, please refer to [Remote Compilation/User Authorization](/#/zh-cn/guide/other_features?id=%e7%94%a8%e6%88%b7%e8%ae%a4% e8%af%81%e5%92%8c%e6%8e%88%e6%9d%83) The detailed description and usage are exactly the same.
+
+### connect to the server
+
+After configuring the authentication and server address, you can enter the following command to connect the current project to the configured server.
+
+We need to enter `--ccache` when connecting to specify that only the remote compilation cache service is connected.
+
+```bash
+$ cd projectdir
+$ xmake service --connect --ccache
+<client>: connect 127.0.0.1:9692 ..
+<client>: 127.0.0.1:9692 connected!
+```
+
+We can also connect to multiple services at the same time, such as distributed compilation and remote compilation cache services.
+
+```hash
+$ xmake service --connect --distcc --ccache
+```
+
+!> If there is no parameter, the default connection is the remote compilation service.
+
+### Disconnect
+
+```bash
+$ xmake service --disconnect --ccache
+```
+
+### Clean the server cache
+
+We can also use the following command to clear the cache on the remote server corresponding to the current project.
+
+```bash
+$ xmake service --clean --ccache
+```
+
+And if we execute `xmake clean --all`, when the remote service is connected, all caches will be automatically cleaned up.
+
+### Some internal optimizations
+
+1. Pull the snapshot of the remote cache and send it back to the local through bloom filter + lz4, which is used to quickly determine whether the cache exists and avoid frequently querying the server cache information
+2. With the local cache, you can avoid frequent requests to the remote server and pull the cache.
+3. Internal state maintenance, compared with independent tools such as sscache, avoids frequent independent process loading and time-consuming, and avoids additional communication with the daemon process
+
