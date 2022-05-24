@@ -1461,7 +1461,7 @@ $ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 $ xmake
 ```
 
-### Console program
+### Executable program
 
 ```lua
 target("hello")
@@ -1487,11 +1487,22 @@ target("foo")
      set_runtimes("microlib")
 ```
 
-### Linux kernel driver module
+## Keil/C51 embedded programs
+
+### Executable programs
+
+```lua
+target("hello")
+    add_rules("c51.binary")
+    set_toolchains("c51")
+    add_files("src/main.c")
+```
+
+## Linux kernel driver module
 
 In version v2.6.2, xmake fully supports the construction of Linux kernel driver modules. This may be the first and only third-party build tool that supports compiling Linux kernel drivers.
 
-#### Hello world module
+### Hello world module
 
 Full example: [Linux Kernel Driver Modules](https://github.com/xmake-io/xmake/tree/master/tests/projects/linux/driver/hello)
 
@@ -1538,7 +1549,7 @@ Through the `add_requires("linux-headers", {configs = {driver_modules = true}})`
 
 If it is not found, xmake will also automatically download it, and then automatically configure and build the kernel source code with driver modules, and use it to continue building the kernel module.
 
-#### Custom linux-headers path
+### Custom linux-headers path
 
 Since the release of v2.6.2, there have been many feedbacks from users. In most cases, the linux kernel driver is built based on a customized version of the linux kernel, so it is necessary to be able to customize the configuration of the linux-headers path instead of using the remote dependency package mode.
 
@@ -1580,7 +1591,7 @@ target("hello")
 
 For more details, please see: [#1923](https://github.com/xmake-io/xmake/issues/1923)
 
-#### Cross compilation
+### Cross compilation
 
 We also support cross-compilation of kernel driver modules, such as using cross-compilation tool chain on Linux x86_64 to build Linux Arm/Arm64 driver modules.
 
@@ -1592,7 +1603,7 @@ For more, cross-compilation configuration documents, see: [Configure cross-compi
 
 !> Currently only supports arm/arm64 cross-compilation architecture, and more platform architectures will be supported in the future.
 
-##### Build Arm driver module
+#### Build Arm driver module
 
 ```console
 $ xmake f -p cross -a arm --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf -c
@@ -1621,7 +1632,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 
 ```
 
-##### Build Arm64 driver module
+#### Build Arm64 driver module
 
 ```console
 $ xmake f -p cross -a arm64 --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu -c

@@ -1086,7 +1086,7 @@ $ xmake
 <pre><code class="lang-console">$ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 $ xmake
 </code></pre>
-<h3 id="consoleprogram">Console program</h3>
+<h3 id="executableprogram">Executable program</h3>
 <pre><code class="lang-lua">target("hello")
      add_deps("foo")
      add_rules("mdk.console")
@@ -1104,9 +1104,16 @@ target("foo")
      add_files("src/foo/*.c")
      set_runtimes("microlib")
 </code></pre>
-<h3 id="linuxkerneldrivermodule">Linux kernel driver module</h3>
+<h2 id="keilc51embeddedprograms">Keil/C51 embedded programs</h2>
+<h3 id="executableprograms">Executable programs</h3>
+<pre><code class="lang-lua">target("hello")
+    add_rules("c51.binary")
+    set_toolchains("c51")
+    add_files("src/main.c")
+</code></pre>
+<h2 id="linuxkerneldrivermodule">Linux kernel driver module</h2>
 <p>In version v2.6.2, xmake fully supports the construction of Linux kernel driver modules. This may be the first and only third-party build tool that supports compiling Linux kernel drivers.</p>
-<h4 id="helloworldmodule">Hello world module</h4>
+<h3 id="helloworldmodule">Hello world module</h3>
 <p>Full example: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/linux/driver/hello">Linux Kernel Driver Modules</a></p>
 <p>Its configuration is very simple. You only need to configure the linux-headers package that supports the module, and then apply the <code>platform.linux.driver</code> build rule.</p>
 <pre><code class="lang-lua">add_requires("linux-headers", {configs = {driver_modules = true}})
@@ -1140,7 +1147,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 </code></pre>
 <p>Through the <code>add_requires("linux-headers", {configs = {driver_modules = true}})</code> configuration package, xmake will automatically find the corresponding linux-headers package from the system first.</p>
 <p>If it is not found, xmake will also automatically download it, and then automatically configure and build the kernel source code with driver modules, and use it to continue building the kernel module.</p>
-<h4 id="customlinuxheaderspath">Custom linux-headers path</h4>
+<h3 id="customlinuxheaderspath">Custom linux-headers path</h3>
 <p>Since the release of v2.6.2, there have been many feedbacks from users. In most cases, the linux kernel driver is built based on a customized version of the linux kernel, so it is necessary to be able to customize the configuration of the linux-headers path instead of using the remote dependency package mode.</p>
 <p>In fact, we can do this by rewriting the linux-headers package ourselves.</p>
 <pre><code class="lang-lua">package("linux-headers")
@@ -1170,13 +1177,13 @@ target("hello")
     set_values("linux.driver.linux-headers", "$(linux-headers)")
 </code></pre>
 <p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1923">#1923</a></p>
-<h4 id="crosscompilation">Cross compilation</h4>
+<h3 id="crosscompilation">Cross compilation</h3>
 <p>We also support cross-compilation of kernel driver modules, such as using cross-compilation tool chain on Linux x86_64 to build Linux Arm/Arm64 driver modules.</p>
 <p>We only need to prepare our own cross-compilation tool chain, specify its root directory through <code>--sdk=</code>, then switch to the <code>-p cross</code> platform configuration, and finally specify the architecture arm/arm64 to be built.</p>
 <p>The cross toolchain used here can be downloaded from here: <a href="https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/">Download toolchains</a></p>
 <p>For more, cross-compilation configuration documents, see: <a href="/mirror/guide/configuration.html#common-cross-compilation-configuration">Configure cross-compilation</a></p>
 <p>!> Currently only supports arm/arm64 cross-compilation architecture, and more platform architectures will be supported in the future.</p>
-<h5 id="buildarmdrivermodule">Build Arm driver module</h5>
+<h4 id="buildarmdrivermodule">Build Arm driver module</h4>
 <pre><code class="lang-console">$ xmake f -p cross -a arm --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf -c
 $ xmake -v
 checking for arm-linux-gnueabihf-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++
@@ -1202,7 +1209,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 [100%]: build ok!
 
 </code></pre>
-<h5 id="buildarm64drivermodule">Build Arm64 driver module</h5>
+<h4 id="buildarm64drivermodule">Build Arm64 driver module</h4>
 <pre><code class="lang-console">$ xmake f -p cross -a arm64 --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu -c
 checking for aarch64-linux-gnu-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++
 checking for the linker (ld) ... aarch64-linux-gnu-g++

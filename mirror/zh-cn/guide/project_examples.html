@@ -1089,10 +1089,10 @@ $ xmake
 <pre><code class="lang-console">$ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 $ xmake
 </code></pre>
-<h3 id="">控制台程序</h3>
+<h3 id="">可执行程序</h3>
 <pre><code class="lang-lua">target("hello")
     add_deps("foo")
-    add_rules("mdk.console")
+    add_rules("mdk.binary")
     add_files("src/*.c", "src/*.s")
     add_includedirs("src/lib/cmsis")
     set_runtimes("microlib")
@@ -1107,9 +1107,16 @@ target("foo")
     add_files("src/foo/*.c")
     set_runtimes("microlib")
 </code></pre>
-<h3 id="linux">Linux 内核驱动模块</h3>
+<h2 id="keilc51">Keil/C51 嵌入式程序</h2>
+<h3 id="">可执行程序</h3>
+<pre><code class="lang-lua">target("hello")
+    add_rules("c51.binary")
+    set_toolchains("c51")
+    add_files("src/main.c")
+</code></pre>
+<h2 id="linux">Linux 内核驱动模块</h2>
 <p>v2.6.2 版本，xmake 完整支持了 Linux 内核驱动模块的构建，这也许首个也是唯一一个支持编译 Linux 内核驱动的第三方构建工具了。</p>
-<h4 id="helloworld">Hello world 模块</h4>
+<h3 id="helloworld">Hello world 模块</h3>
 <p>完整例子：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/linux/driver/hello">Linux Kernel Driver Modules</a></p>
 <p>它的配置非常简单，只需要配置上支持模块的 linux-headers 包，然后应用 <code>platform.linux.driver</code> 构建规则就行了。</p>
 <pre><code class="lang-lua">add_requires("linux-headers", {configs = {driver_modules = true}})
@@ -1143,7 +1150,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 </code></pre>
 <p>通过 <code>add_requires("linux-headers", {configs = {driver_modules = true}})</code> 配置包，xmake 会自动优先从系统中查找对应的 linux-headers 包。</p>
 <p>如果没找到，xmake 也会自动下载它，然后自动配置构建带有 driver modules 的内核源码后，使用它继续构建内核模块。</p>
-<h4 id="linuxheaders">自定义 linux-headers 路径</h4>
+<h3 id="linuxheaders">自定义 linux-headers 路径</h3>
 <p>自从 v2.6.2 版本发布，有很多用户反馈，大多数情况下，linux 内核驱动构建都是基于定制版的 linux kernel，因此需要能够自定义配置 linux-headers 路径，而不是走远程依赖包模式。</p>
 <p>其实，我们通过自己重写 linux-headers 包，也是可以做到这一点的。</p>
 <pre><code class="lang-lua">package("linux-headers")
@@ -1173,13 +1180,13 @@ target("hello")
     set_values("linux.driver.linux-headers", "$(linux-headers)")
 </code></pre>
 <p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/1923">#1923</a></p>
-<h4 id="">交叉编译</h4>
+<h3 id="">交叉编译</h3>
 <p>我们也支持内核驱动模块的交叉编译，比如在 Linux x86_64 上使用交叉编译工具链来构建 Linux Arm/Arm64 的驱动模块。</p>
 <p>我们只需要准备好自己的交叉编译工具链，通过 <code>--sdk=</code> 指定它的根目录，然后配置切换到 <code>-p cross</code> 平台， 最后指定需要构建的架构 arm/arm64 即可。</p>
 <p>这里用到的交叉工具链，可以从这里下载: <a href="https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/">Download toolchains</a></p>
 <p>更多，交叉编译配置文档，见：<a href="/mirror/zh-cn/guide/configuration.html#common-cross-compilation-configuration">配置交叉编译</a></p>
 <p>!> 目前仅仅支持 arm/arm64 交叉编译架构，后续会支持更多的平台架构。</p>
-<h5 id="arm">构建 Arm 驱动模块</h5>
+<h4 id="arm">构建 Arm 驱动模块</h4>
 <pre><code class="lang-console">$ xmake f -p cross -a arm --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf -c
 $ xmake -v
 checking for arm-linux-gnueabihf-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++
@@ -1205,7 +1212,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 [100%]: build ok!
 
 </code></pre>
-<h5 id="arm64">构建 Arm64 驱动模块</h5>
+<h4 id="arm64">构建 Arm64 驱动模块</h4>
 <pre><code class="lang-console">$ xmake f -p cross -a arm64 --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu -c
 checking for aarch64-linux-gnu-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++
 checking for the linker (ld) ... aarch64-linux-gnu-g++

@@ -1466,12 +1466,12 @@ $ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 $ xmake
 ```
 
-### 控制台程序
+### 可执行程序
 
 ```lua
 target("hello")
     add_deps("foo")
-    add_rules("mdk.console")
+    add_rules("mdk.binary")
     add_files("src/*.c", "src/*.s")
     add_includedirs("src/lib/cmsis")
     set_runtimes("microlib")
@@ -1492,11 +1492,22 @@ target("foo")
     set_runtimes("microlib")
 ```
 
-### Linux 内核驱动模块
+## Keil/C51 嵌入式程序
+
+### 可执行程序
+
+```lua
+target("hello")
+    add_rules("c51.binary")
+    set_toolchains("c51")
+    add_files("src/main.c")
+```
+
+## Linux 内核驱动模块
 
 v2.6.2 版本，xmake 完整支持了 Linux 内核驱动模块的构建，这也许首个也是唯一一个支持编译 Linux 内核驱动的第三方构建工具了。
 
-#### Hello world 模块
+### Hello world 模块
 
 完整例子：[Linux Kernel Driver Modules](https://github.com/xmake-io/xmake/tree/master/tests/projects/linux/driver/hello)
 
@@ -1543,7 +1554,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 
 如果没找到，xmake 也会自动下载它，然后自动配置构建带有 driver modules 的内核源码后，使用它继续构建内核模块。
 
-#### 自定义 linux-headers 路径
+### 自定义 linux-headers 路径
 
 自从 v2.6.2 版本发布，有很多用户反馈，大多数情况下，linux 内核驱动构建都是基于定制版的 linux kernel，因此需要能够自定义配置 linux-headers 路径，而不是走远程依赖包模式。
 
@@ -1585,7 +1596,7 @@ target("hello")
 
 更多详情见：[#1923](https://github.com/xmake-io/xmake/issues/1923)
 
-#### 交叉编译
+### 交叉编译
 
 我们也支持内核驱动模块的交叉编译，比如在 Linux x86_64 上使用交叉编译工具链来构建 Linux Arm/Arm64 的驱动模块。
 
@@ -1597,7 +1608,7 @@ target("hello")
 
 !> 目前仅仅支持 arm/arm64 交叉编译架构，后续会支持更多的平台架构。
 
-##### 构建 Arm 驱动模块
+#### 构建 Arm 驱动模块
 
 ```console
 $ xmake f -p cross -a arm --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf -c
@@ -1626,7 +1637,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 
 ```
 
-##### 构建 Arm64 驱动模块
+#### 构建 Arm64 驱动模块
 
 ```console
 $ xmake f -p cross -a arm64 --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu -c
