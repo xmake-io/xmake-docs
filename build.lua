@@ -13,7 +13,7 @@ function header(url)
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link href="//cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" rel="stylesheet">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
   <style>
 	.markdown-body {
 		box-sizing: border-box;
