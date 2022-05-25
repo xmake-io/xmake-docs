@@ -1,4 +1,24 @@
 
+## v2.6.6
+
+### New features
+
+* [#2327](https://github.com/xmake-io/xmake/issues/2327): Support nvc/nvc++/nvfortran in nvidia-hpc-sdk
+* Add path instance interfaces
+* [#2344](https://github.com/xmake-io/xmake/pull/2344): Add lz4 compress module
+* [#2349](https://github.com/xmake-io/xmake/pull/2349): Add keil/c51 project support
+* [#274](https://github.com/xmake-io/xmake/issues/274): Distributed compilation support
+* Use builtin local cache instead of ccache
+
+### Changes
+
+* [#2309](https://github.com/xmake-io/xmake/issues/2309): Support user authorization for remote compilation
+* Improve remote compilation to support lz4 compression
+
+### Bugs fixed
+
+* Fix lua stack when select package versions
+
 ## v2.6.5
 
 ### New features

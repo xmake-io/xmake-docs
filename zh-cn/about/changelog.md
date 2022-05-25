@@ -1,4 +1,24 @@
 
+## v2.6.6
+
+### 新特性
+
+* [#2327](https://github.com/xmake-io/xmake/issues/2327): 支持 nvidia-hpc-sdk 工具链中的 nvc/nvc++/nvfortran 编译器
+* 添加 path 实例接口
+* [#2344](https://github.com/xmake-io/xmake/pull/2344): 添加 lz4 压缩模块
+* [#2349](https://github.com/xmake-io/xmake/pull/2349): 添加 keil/c51 工程支持
+* [#274](https://github.com/xmake-io/xmake/issues/274): 跨平台分布式编译支持
+* 使用内置的本地缓存替代 ccache
+
+### 改进
+
+* [#2309](https://github.com/xmake-io/xmake/issues/2309): 远程编译支持用户授权验证
+* 改进远程编译，增加对 lz4 压缩支持
+
+### Bugs 修复
+
+* 修复选择包版本时候 lua 栈不平衡导致的崩溃问题
+
 ## v2.6.5
 
 ### 新特性
