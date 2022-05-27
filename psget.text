@@ -9,7 +9,7 @@ param (
 )
 
 & {
-  $getscript = (Invoke-Webrequest 'https://raw.githubusercontent.com/xmake-io/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
+  $getscript = (Invoke-Webrequest 'https://fastly.jsdelivr.net/gh/xmake-io/xmake@master/scripts/get.ps1' -UseBasicParsing).Content
   if ($getscript -is [Byte[]]) {
     $getscript = [System.Text.Encoding]::UTF8.GetString($getscript)
   }
