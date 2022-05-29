@@ -2264,6 +2264,50 @@ target("test")
 <p>当然，如果有些特殊的target里面的构建源文件要依赖先前的target（尤其是一些自定义rules的情况，虽然很少遇到），我们也可以通过下面的设置禁用这个优化行为：</p>
 <pre><code class="lang-bash">set_policy("build.across_targets_in_parallel", false)
 </code></pre>
+<h5 id="buildmerge_archive">build.merge_archive</h5>
+<p>如果设置了这个策略，那么使用 <code>add_deps()</code> 依赖的目标库不再作为链接存在，而是直接把它们合并到父目标库中去。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("add")
+    set_kind("static")
+    add_files("src/add.c")
+    add_files("src/subdir/add.c")
+
+target("sub")
+    set_kind("static")
+    add_files("src/sub.c")
+    add_files("src/subdir/sub.c")
+
+target("mul")
+    set_kind("static")
+    add_deps("add", "sub")
+    add_files("src/mul.c")
+    set_policy("build.merge_archive", true)
+
+target("test")
+    add_deps("mul")
+    add_files("src/main.c")
+</code></pre>
+<p>libmul.a 静态库会自动合并 libadd.a 和 libsub.a 两个子依赖的静态库。</p>
+<h5 id="buildccache">build.ccache</h5>
+<p>Xmake 默认是开启内置的编译缓存的，通过设置这个策略，可以显式禁用缓存。</p>
+<pre><code class="lang-lua">set_policy("build.ccache", false)
+</code></pre>
+<p>当然，我们也可以命令行去禁用它。</p>
+<pre><code class="lang-bash">$ xmake f --ccache=n
+</code></pre>
+<p>或者</p>
+<pre><code class="lang-bash">$ xmake f --policies=build.ccache:n
+</code></pre>
+<h5 id="packagerequires_lock">package.requires_lock</h5>
+<p>可用于开启 <code>add_requires()</code> 引入的依赖包的版本锁定。</p>
+<h5 id="packageprecompiled">package.precompiled</h5>
+<p>可用于禁用 windows 下预编译依赖包的获取。</p>
+<h5 id="packagefetch_only">package.fetch_only</h5>
+<p>如果开启这个策略，那么所有的依赖包仅仅只会从系统获取，不会从远程下载安装。</p>
+<h5 id="packageinstall_only">package.install_only</h5>
+<p>如果开启这个策略，纳闷所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。</p>
 <h3 id="targetset_runtimes">target:set_runtimes</h3>
 <h4 id="">设置编译目标依赖的运行时库</h4>
 <p>这是 v2.5.1 开始新增的接口，用于抽象化设置编译目标依赖的运行时库，目前仅仅支持对 msvc 运行时库的抽象，但后续也许会扩展对其他编译器运行时库的映射。</p>

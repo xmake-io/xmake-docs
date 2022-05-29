@@ -2698,6 +2698,75 @@ set_policy("check.auto_map_flags", false)
 set_policy("build.across_targets_in_parallel", false)
 ```
 
+##### build.merge_archive
+
+如果设置了这个策略，那么使用 `add_deps()` 依赖的目标库不再作为链接存在，而是直接把它们合并到父目标库中去。
+
+例如：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("add")
+    set_kind("static")
+    add_files("src/add.c")
+    add_files("src/subdir/add.c")
+
+target("sub")
+    set_kind("static")
+    add_files("src/sub.c")
+    add_files("src/subdir/sub.c")
+
+target("mul")
+    set_kind("static")
+    add_deps("add", "sub")
+    add_files("src/mul.c")
+    set_policy("build.merge_archive", true)
+
+target("test")
+    add_deps("mul")
+    add_files("src/main.c")
+```
+
+libmul.a 静态库会自动合并 libadd.a 和 libsub.a 两个子依赖的静态库。
+
+
+##### build.ccache
+
+Xmake 默认是开启内置的编译缓存的，通过设置这个策略，可以显式禁用缓存。
+
+```lua
+set_policy("build.ccache", false)
+```
+
+当然，我们也可以命令行去禁用它。
+
+```bash
+$ xmake f --ccache=n
+```
+
+或者
+
+```bash
+$ xmake f --policies=build.ccache:n
+```
+
+##### package.requires_lock
+
+可用于开启 `add_requires()` 引入的依赖包的版本锁定。
+
+##### package.precompiled
+
+可用于禁用 windows 下预编译依赖包的获取。
+
+##### package.fetch_only
+
+如果开启这个策略，那么所有的依赖包仅仅只会从系统获取，不会从远程下载安装。
+
+##### package.install_only
+
+如果开启这个策略，纳闷所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。
+
 ### target:set_runtimes
 
 #### 设置编译目标依赖的运行时库

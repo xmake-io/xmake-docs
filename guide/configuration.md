@@ -63,8 +63,6 @@ $ xmake f -p watchos --appledev=simulator
 $ xmake f -p appletvos --appledev=simulator
 ```
 
-Translated with www.DeepL.com/Translator (free version)
-
 ### Windows
 
 ```bash

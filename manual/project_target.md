@@ -2617,8 +2617,6 @@ Or configure multiple policy values at the same time, separated by commas.
 $ xmake f --policies=package.precompiled:n,package.install_only
 ```
 
-Translated with www.DeepL.com/Translator (free version)
-
 ##### check.auto_ignore_flags
 
 By default, xmake will automatically detect all the original flags set by the `add_cxflags` and` add_ldflags` interfaces. If the current compiler and linker do not support them, they will be automatically ignored.
@@ -2691,6 +2689,75 @@ Of course, if the build source files in some special targets depend on previous 
 ```bash
 set_policy("build.across_targets_in_parallel", false)
 ```
+
+##### build.merge_archive
+
+If this policy is set, then the target libraries that are dependent on using `add_deps()` no longer exist as links, but are merged directly into the parent target library.
+
+Example.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("add")
+    set_kind("static")
+    add_files("src/add.c")
+    add_files("src/subdir/add.c")
+
+target("sub")
+    set_kind("static")
+    add_files("src/sub.c")
+    add_files("src/subdir/sub.c")
+
+target("mul")
+    set_kind("static")
+    add_deps("add", "sub")
+    add_files("src/mul.c")
+    set_policy("build.merge_archive", true)
+
+target("test")
+    add_deps("mul")
+    add_files("src/main.c")
+```
+
+The libmul.a static library automatically merges the libadd.a and libsub.a sub-dependent static libraries.
+
+
+##### build.ccache
+
+Xmake has a built-in build cache enabled by default, which can be explicitly disabled by setting this policy.
+
+```lua
+set_policy("build.ccache", false)
+```
+
+Of course, we can also disable it on the command line.
+
+```bash
+$ xmake f --ccache=n
+```
+
+or
+
+```bash
+$ xmake f --policies=build.ccache:n
+```
+
+##### package.requires_lock
+
+Can be used to enable version locking of dependency packages introduced by ``add_requires()`''.
+
+##### package.precompiled
+
+Can be used to disable fetching of precompiled dependency packages under windows.
+
+##### package.fetch_only
+
+If this policy is enabled, then all dependencies will only be fetched from the system and not downloaded and installed from a remote location.
+
+##### package.install_only
+
+If this policy is enabled, then all dependencies will only be downloaded and installed remotely, not fetched from the system.
 
 ### target:set_runtimes
 

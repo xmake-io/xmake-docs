@@ -2207,7 +2207,6 @@ ${define FOO_STRING}
 <p>Or configure multiple policy values at the same time, separated by commas.</p>
 <pre><code class="lang-bash">$ xmake f --policies=package.precompiled:n,package.install_only
 </code></pre>
-<p>Translated with <a href="http://www.DeepL.com/Translator">www.DeepL.com/Translator</a> (free version)</p>
 <h5 id="checkauto_ignore_flags">check.auto_ignore_flags</h5>
 <p>By default, xmake will automatically detect all the original flags set by the <code>add_cxflags</code> and<code>add_ldflags</code> interfaces. If the current compiler and linker do not support them, they will be automatically ignored.</p>
 <p>This is usually very useful. Like some optional compilation flags, it can be compiled normally even if it is not supported, but it is forced to set up. When compiling, other users may have a certain degree of difference due to the different support of the compiler. The compilation failed.</p>
@@ -2245,6 +2244,50 @@ target("test")
 <p>Of course, if the build source files in some special targets depend on previous targets (especially in the case of some custom rules, although rarely encountered), we can also disable this optimization behavior through the following settings:</p>
 <pre><code class="lang-bash">set_policy("build.across_targets_in_parallel", false)
 </code></pre>
+<h5 id="buildmerge_archive">build.merge_archive</h5>
+<p>If this policy is set, then the target libraries that are dependent on using <code>add_deps()</code> no longer exist as links, but are merged directly into the parent target library.</p>
+<p>Example.</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("add")
+    set_kind("static")
+    add_files("src/add.c")
+    add_files("src/subdir/add.c")
+
+target("sub")
+    set_kind("static")
+    add_files("src/sub.c")
+    add_files("src/subdir/sub.c")
+
+target("mul")
+    set_kind("static")
+    add_deps("add", "sub")
+    add_files("src/mul.c")
+    set_policy("build.merge_archive", true)
+
+target("test")
+    add_deps("mul")
+    add_files("src/main.c")
+</code></pre>
+<p>The libmul.a static library automatically merges the libadd.a and libsub.a sub-dependent static libraries.</p>
+<h5 id="buildccache">build.ccache</h5>
+<p>Xmake has a built-in build cache enabled by default, which can be explicitly disabled by setting this policy.</p>
+<pre><code class="lang-lua">set_policy("build.ccache", false)
+</code></pre>
+<p>Of course, we can also disable it on the command line.</p>
+<pre><code class="lang-bash">$ xmake f --ccache=n
+</code></pre>
+<p>or</p>
+<pre><code class="lang-bash">$ xmake f --policies=build.ccache:n
+</code></pre>
+<h5 id="packagerequires_lock">package.requires_lock</h5>
+<p>Can be used to enable version locking of dependency packages introduced by <code></code>add_requires()`&#39;&#39;.</p>
+<h5 id="packageprecompiled">package.precompiled</h5>
+<p>Can be used to disable fetching of precompiled dependency packages under windows.</p>
+<h5 id="packagefetch_only">package.fetch_only</h5>
+<p>If this policy is enabled, then all dependencies will only be fetched from the system and not downloaded and installed from a remote location.</p>
+<h5 id="packageinstall_only">package.install_only</h5>
+<p>If this policy is enabled, then all dependencies will only be downloaded and installed remotely, not fetched from the system.</p>
 <h3 id="targetset_runtimes">target:set_runtimes</h3>
 <h4 id="settheruntimelibraryofthecompilationtarget">Set the runtime library of the compilation target</h4>
 <p>This is a newly added interface since v2.5.1, which is used to abstractly set the runtime library that the compilation target depends on. Currently, only the abstraction of the msvc runtime library is supported, but the mapping to other compiler runtime libraries may be expanded in the future.</p>
