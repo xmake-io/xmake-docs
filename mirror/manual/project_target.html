@@ -2178,37 +2178,6 @@ ${define FOO_STRING}
     set_policy ("check.auto_ignore_flags", false)
 </code></pre>
 <p>!> In addition, if the set policy name is invalid, xmake will also have a warning prompt.</p>
-<p>Some of the currently supported strategy configurations are as follows:</p>
-<table>
-<thead>
-<tr>
-<th>Policy configuration name</th>
-<th>Description</th>
-<th>Default value</th>
-<th>Supported version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#checkauto_ignore_flags">check.auto_ignore_flags</a></td>
-<td>Automatically detect and ignore flags</td>
-<td>true</td>
-<td>> = 2.3.4</td>
-</tr>
-<tr>
-<td><a href="#checkauto_map_flags">check.auto_map_flags</a></td>
-<td>Automatically map flags</td>
-<td>true</td>
-<td>> = 2.3.4</td>
-</tr>
-<tr>
-<td><a href="#buildacross_targets_in_parallel">build.across_targets_in_parallel</a></td>
-<td>Parallel build across targets</td>
-<td>true</td>
-<td>> = 2.3.4</td>
-</tr>
-</tbody>
-</table>
 <p>If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:</p>
 <pre><code class="lang-bash">$ xmake l core.project.policy.policies
 {
@@ -2229,6 +2198,16 @@ ${define FOO_STRING}
   }
 }
 </code></pre>
+<p>We can also set up internal policy changes via the command line:</p>
+<pre><code class="lang-bash">$ xmake f --policies=package.fetch_only
+</code></pre>
+<p>The policy name is set by default, which is the enabled state, but we can of course specify to set other values to disable it.</p>
+<pre><code class="lang-bash">$ xmake f --policies=package.precompiled:n
+</code></pre>
+<p>Or configure multiple policy values at the same time, separated by commas.</p>
+<pre><code class="lang-bash">$ xmake f --policies=package.precompiled:n,package.install_only
+</code></pre>
+<p>Translated with <a href="http://www.DeepL.com/Translator">www.DeepL.com/Translator</a> (free version)</p>
 <h5 id="checkauto_ignore_flags">check.auto_ignore_flags</h5>
 <p>By default, xmake will automatically detect all the original flags set by the <code>add_cxflags</code> and<code>add_ldflags</code> interfaces. If the current compiler and linker do not support them, they will be automatically ignored.</p>
 <p>This is usually very useful. Like some optional compilation flags, it can be compiled normally even if it is not supported, but it is forced to set up. When compiling, other users may have a certain degree of difference due to the different support of the compiler. The compilation failed.</p>

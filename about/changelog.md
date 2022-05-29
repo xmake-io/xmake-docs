@@ -1,4 +1,24 @@
 
+## v2.6.7
+
+### New features
+
+* [#2318](https://github.com/xmake-io/xmake/issues/2318): Add `xmake f --policies=` config argument to modify project policies
+
+### Changes
+
+* fallback to source code build if the precompiled package is error
+* [#2387](https://github.com/xmake-io/xmake/issues/2387): Improve pkgconfig and find_package
+* Add `build.ccache` policy
+
+### Bugs fixed
+
+* [#2382](https://github.com/xmake-io/xmake/issues/2382): Fix headeronly package configs
+* [#2388](https://github.com/xmake-io/xmake/issues/2388): Fix path bug
+* [#2385](https://github.com/xmake-io/xmake/issues/2385): Fix cmake/find_package
+* [#2395](https://github.com/xmake-io/xmake/issues/2395): Fix c++modules
+* Fix find_qt bug
+
 ## v2.6.6
 
 ### New features

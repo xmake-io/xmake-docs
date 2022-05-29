@@ -2584,14 +2584,6 @@ target("test")
 
 !> 另外，如果设置的策略名是无效的，xmake也会有警告提示。
 
-目前支持的一些策略配置如下：
-
-| 策略配置名                                                           | 描述                                 | 默认值   | 支持版本 |
-| -----------------------------------                                  | ------------------------------------ | -------- | -------- |
-| [check.auto_ignore_flags](#checkauto_ignore_flags)                   | 自动检测和忽略flags                  | true     | >= 2.3.4 |
-| [check.auto_map_flags](#checkauto_map_flags)                         | 自动映射flags                        | true     | >= 2.3.4 |
-| [build.across_targets_in_parallel](#buildacross_targets_in_parallel) | 跨target间并行构建                   | true     | >= 2.3.4 |
-
 如果要获取当前xmake支持的所有策略配置列表和描述，可以执行下面的命令：
 
 ```bash
@@ -2613,6 +2605,24 @@ $ xmake l core.project.policy.policies
     default = true
   }
 }
+```
+
+我们也可以通过命令行的方式去设置修改内部的策略:
+
+```bash
+$ xmake f --policies=package.fetch_only
+```
+
+默认设置策略名，就是启用状态，当然我们也可以指定设置其他值，禁用它。
+
+```bash
+$ xmake f --policies=package.precompiled:n
+```
+
+或者同时配置多个策略值，用逗号分割。
+
+```bash
+$ xmake f --policies=package.precompiled:n,package.install_only
 ```
 
 ##### check.auto_ignore_flags

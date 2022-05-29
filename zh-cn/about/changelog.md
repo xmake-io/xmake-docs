@@ -1,4 +1,24 @@
 
+## v2.6.7
+
+### 新特性
+
+* [#2318](https://github.com/xmake-io/xmake/issues/2318): 添加 `xmake f --policies=` 配置参数去修改默认策略
+
+### 改进
+
+* 如果预编译包构建失败，自动回退到源码包构建
+* [#2387](https://github.com/xmake-io/xmake/issues/2387): 改进 pkgconfig 和 find_package
+* 添加 `build.ccache` 策略，用于在工程中配置编译缓存
+
+### Bugs 修复
+
+* [#2382](https://github.com/xmake-io/xmake/issues/2382): 修改 headeronly 包配置
+* [#2388](https://github.com/xmake-io/xmake/issues/2388): 修复路径问题
+* [#2385](https://github.com/xmake-io/xmake/issues/2385): 修复 cmake/find_package
+* [#2395](https://github.com/xmake-io/xmake/issues/2395): 修复 c++ modules
+* 修复 find_qt 问题
+
 ## v2.6.6
 
 ### 新特性

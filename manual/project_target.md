@@ -2576,14 +2576,6 @@ target ("test")
 
 !> In addition, if the set policy name is invalid, xmake will also have a warning prompt.
 
-Some of the currently supported strategy configurations are as follows:
-
-| Policy configuration name                                            | Description                           | Default value | Supported version |
-| -----------------------------------                                  | ------------- ----------------------- | --------      | --------          |
-| [check.auto_ignore_flags](#checkauto_ignore_flags)                   | Automatically detect and ignore flags | true          | > = 2.3.4         |
-| [check.auto_map_flags](#checkauto_map_flags)                         | Automatically map flags               | true          | > = 2.3.4         |
-| [build.across_targets_in_parallel](#buildacross_targets_in_parallel) | Parallel build across targets         | true          | > = 2.3.4         |
-
 If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:
 
 ```bash
@@ -2606,6 +2598,26 @@ $ xmake l core.project.policy.policies
   }
 }
 ```
+
+We can also set up internal policy changes via the command line:
+
+```bash
+$ xmake f --policies=package.fetch_only
+```
+
+The policy name is set by default, which is the enabled state, but we can of course specify to set other values to disable it.
+
+```bash
+$ xmake f --policies=package.precompiled:n
+```
+
+Or configure multiple policy values at the same time, separated by commas.
+
+```bash
+$ xmake f --policies=package.precompiled:n,package.install_only
+```
+
+Translated with www.DeepL.com/Translator (free version)
 
 ##### check.auto_ignore_flags
 

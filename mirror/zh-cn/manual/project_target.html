@@ -2198,37 +2198,6 @@ ${define FOO_STRING}
     set_policy("check.auto_ignore_flags", false)
 </code></pre>
 <p>!> 另外，如果设置的策略名是无效的，xmake也会有警告提示。</p>
-<p>目前支持的一些策略配置如下：</p>
-<table>
-<thead>
-<tr>
-<th>策略配置名</th>
-<th>描述</th>
-<th>默认值</th>
-<th>支持版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#checkauto_ignore_flags">check.auto_ignore_flags</a></td>
-<td>自动检测和忽略flags</td>
-<td>true</td>
-<td>>= 2.3.4</td>
-</tr>
-<tr>
-<td><a href="#checkauto_map_flags">check.auto_map_flags</a></td>
-<td>自动映射flags</td>
-<td>true</td>
-<td>>= 2.3.4</td>
-</tr>
-<tr>
-<td><a href="#buildacross_targets_in_parallel">build.across_targets_in_parallel</a></td>
-<td>跨target间并行构建</td>
-<td>true</td>
-<td>>= 2.3.4</td>
-</tr>
-</tbody>
-</table>
 <p>如果要获取当前xmake支持的所有策略配置列表和描述，可以执行下面的命令：</p>
 <pre><code class="lang-bash">$ xmake l core.project.policy.policies
 {
@@ -2248,6 +2217,15 @@ ${define FOO_STRING}
     default = true
   }
 }
+</code></pre>
+<p>我们也可以通过命令行的方式去设置修改内部的策略:</p>
+<pre><code class="lang-bash">$ xmake f --policies=package.fetch_only
+</code></pre>
+<p>默认设置策略名，就是启用状态，当然我们也可以指定设置其他值，禁用它。</p>
+<pre><code class="lang-bash">$ xmake f --policies=package.precompiled:n
+</code></pre>
+<p>或者同时配置多个策略值，用逗号分割。</p>
+<pre><code class="lang-bash">$ xmake f --policies=package.precompiled:n,package.install_only
 </code></pre>
 <h5 id="checkauto_ignore_flags">check.auto_ignore_flags</h5>
 <p>xmake默认会对所有<code>add_cxflags</code>, <code>add_ldflags</code>接口设置的原始flags进行自动检测，如果检测当前编译器和链接器不支持它们，就会自动忽略。</p>
