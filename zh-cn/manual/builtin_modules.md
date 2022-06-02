@@ -1388,7 +1388,7 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 | [path.basename](#pathbasename)                 | 获取路径最后不带后缀的文件名                 | >= 2.0.1 |
 | [path.filename](#pathfilename)                 | 获取路径最后带后缀的文件名                   | >= 2.0.1 |
 | [path.extension](#pathextension)               | 获取路径的后缀名                             | >= 2.0.1 |
-| [path.directory](#pathdirectory)               | 获取路径最后的目录名                         | >= 2.0.1 |
+| [path.directory](#pathdirectory)               | 获取路径的目录名                         | >= 2.0.1 |
 | [path.relative](#pathrelative)                 | 转换成相对路径                               | >= 2.0.1 |
 | [path.absolute](#pathabsolute)                 | 转换成绝对路径                               | >= 2.0.1 |
 | [path.is_absolute](#pathis_absolute)           | 判断是否为绝对路径                           | >= 2.0.1 |
@@ -1454,13 +1454,13 @@ print(path.extensione("$(tmpdir)/dir/file.txt"))
 
 #### path.directory
 
-- 获取路径最后的目录名
+- 获取路径的目录名
 
 ```lua
 print(path.directory("$(tmpdir)/dir/file.txt"))
 ```
 
-显示结果为：`dir`
+显示结果为：`$(tmpdir)/dir`
 
 #### path.relative
 
