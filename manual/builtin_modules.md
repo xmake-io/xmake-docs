@@ -1495,7 +1495,7 @@ The path operation module implements cross-platform path operations, which is a 
 | [path.basename](#pathbasename)                 | Get the file name with no suffix at the end             | >= 2.0.1           |
 | [path.filename](#pathfilename)                 | Get the file name with the last suffix of the path      | >= 2.0.1           |
 | [path.extension](#pathextension)               | Get the suffix of the path                              | >= 2.0.1           |
-| [path.directory](#pathdirectory)               | Get the last directory name of the path                 | >= 2.0.1           |
+| [path.directory](#pathdirectory)               | Get the directory name of the path                      | >= 2.0.1           |
 | [path.relative](#pathrelative)                 | Convert to relative path                                | >= 2.0.1           |
 | [path.absolute](#pathabsolute)                 | Convert to Absolute Path                                | >= 2.0.1           |
 | [path.is_absolute](#pathis_absolute)           | Determine if it is an absolute path                     | >= 2.0.1           |
@@ -1561,13 +1561,13 @@ The result is: `.txt`
 
 #### path.directory
 
-- Get the last directory name of the path
+- Get the directory name of the path
 
 ```lua
 Print(path.directory("$(tmpdir)/dir/file.txt"))
 ```
 
-The result is: `dir`
+The result is: `$(tmpdir)/dir`
 
 #### path.relative
 
