@@ -1496,7 +1496,7 @@ io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 </tr>
 <tr>
 <td><a href="#pathdirectory">path.directory</a></td>
-<td>Get the last directory name of the path</td>
+<td>Get the directory name of the path</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
@@ -1563,11 +1563,11 @@ print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
 <p>The result is: <code>.txt</code></p>
 <h4 id="pathdirectory">path.directory</h4>
 <ul>
-<li>Get the last directory name of the path</li>
+<li>Get the directory name of the path</li>
 </ul>
 <pre><code class="lang-lua">Print(path.directory("$(tmpdir)/dir/file.txt"))
 </code></pre>
-<p>The result is: <code>dir</code></p>
+<p>The result is: <code>$(tmpdir)/dir</code></p>
 <h4 id="pathrelative">path.relative</h4>
 <ul>
 <li>Convert to relative path</li>

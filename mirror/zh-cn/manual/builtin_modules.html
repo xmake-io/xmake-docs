@@ -1356,7 +1356,7 @@ io.tail("xxx.txt", 10)
 </tr>
 <tr>
 <td><a href="#pathdirectory">path.directory</a></td>
-<td>获取路径最后的目录名</td>
+<td>获取路径的目录名</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
@@ -1423,11 +1423,11 @@ print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
 <p>显示结果为：<code>.txt</code></p>
 <h4 id="pathdirectory">path.directory</h4>
 <ul>
-<li>获取路径最后的目录名</li>
+<li>获取路径的目录名</li>
 </ul>
 <pre><code class="lang-lua">print(path.directory("$(tmpdir)/dir/file.txt"))
 </code></pre>
-<p>显示结果为：<code>dir</code></p>
+<p>显示结果为：<code>$(tmpdir)/dir</code></p>
 <h4 id="pathrelative">path.relative</h4>
 <ul>
 <li>转换成相对路径</li>

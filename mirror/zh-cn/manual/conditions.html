@@ -208,7 +208,7 @@ end
 <p>当然你也可以自己扩展添加自己的平台，甚至直接指定自己的平台名：</p>
 <pre><code class="lang-bash">$ xmake f -p other --sdk=...
 </code></pre>
-<p>如果指定的平台名不存在，就会自动切到<code>cross</code>平台进行交叉编译，但是缺可以通过<code>is_plat("other")</code>来判断自己的平台逻辑。</p>
+<p>如果指定的平台名不存在，就会自动切到<code>cross</code>平台进行交叉编译，但是却可以通过<code>is_plat("other")</code>来判断自己的平台逻辑。</p>
 <h3 id="is_host">is_host</h3>
 <h4 id="">判断当前主机环境的操作系统</h4>
 <p>有些编译平台是可以在多个不同的操作系统进行构建的，例如：android的ndk就支持linux,macOS还有windows环境。</p>
