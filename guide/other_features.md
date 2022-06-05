@@ -210,6 +210,12 @@ please input: n (y/n)
 y
 ```
 
+In addition, when there are other build system identification files (such as CMakeLists.txt), the process of automatically generating xmake.lua will not be triggered, but [Automatically detect build system and compile](#Automatically detect build system and compile) will be triggered first. If you want to force trigger the process of automatically generating xmake.lua file, you can run:
+
+```bash
+$ xmake f -y
+```
+
 ### Compile open source libraries
 
 Although this approach has some limitations, but it is sufficient to complie and run some temporary codes for testing. 
