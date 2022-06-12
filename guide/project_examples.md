@@ -43,7 +43,7 @@ For a complete example, execute the following command to create:
 xmake create -l c -t static test
 ```
 
-## Share Library Program
+## Shared Library Program
 
 ```lua
 target("library")
@@ -56,7 +56,7 @@ target("test")
     add_deps("library")
 ```
 
-We use `add_deps` to link a share library to test target.
+We use `add_deps` to link a shared library to test target.
 
 For a complete example, execute the following command to create:
 
