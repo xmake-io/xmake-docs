@@ -389,7 +389,7 @@
 * [#1035](https://github.com/xmake-io/xmake/issues/1035): The graphics configuration menu fully supports mouse events, and support scroll bar
 * [#1098](https://github.com/xmake-io/xmake/issues/1098): Support stdin for os.execv
 * [#1079](https://github.com/xmake-io/xmake/issues/1079): Add autoupdate plugin rule for vsxmake, `add_rules("plugin.vsxmake.autoupdate")`
-* Add `xmake f --vs_runtime="MT"` and `set_runtimes("MT")` to set vs runtime for targets and packages
+* Add `xmake f --vs_runtime='MT'` and `set_runtimes("MT")` to set vs runtime for targets and packages
 * [#1032](https://github.com/xmake-io/xmake/issues/1032): Support to enum registry keys and values
 * [#1026](https://github.com/xmake-io/xmake/issues/1026): Support group for vs/vsxmake project
 * [#1178](https://github.com/xmake-io/xmake/issues/1178): Add `add_requireconfs()` api to rewrite configs of depend packages

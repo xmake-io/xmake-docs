@@ -2801,7 +2801,7 @@ target("test")
 
 当然，我们也可以通过 `add_requires("xx", {configs = {vs_runtime = "MD"}})` 对特定包修改 vs 运行时库。
 
-我们也可以通过 `xmake f --vs_runtime="MD"` 通过参数配置来全局切换它。
+我们也可以通过 `xmake f --vs_runtime='MD'` 通过参数配置来全局切换它。
 
 与此 api 相关的 issue：[#1071](https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681)
 
