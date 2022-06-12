@@ -2349,7 +2349,7 @@ target("test")
    add_files("src/*.c")
 </code></pre>
 <p>当然，我们也可以通过 <code>add_requires("xx", {configs = {vs_runtime = "MD"}})</code> 对特定包修改 vs 运行时库。</p>
-<p>我们也可以通过 <code>xmake f --vs_runtime=MD</code> 通过参数配置来全局切换它。</p>
+<p>我们也可以通过 <code>xmake f --vs_runtime="MD"</code> 通过参数配置来全局切换它。</p>
 <p>与此 api 相关的 issue：<a href="https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681">#1071</a></p>
 <h3 id="targetset_group">target:set_group</h3>
 <h4 id="">设置目标分组</h4>

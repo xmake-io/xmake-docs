@@ -232,6 +232,9 @@ note: xmake.lua not found, try generating it (pass -y or --confirm=y/n/d to skip
 please input: n (y/n)
 y
 </code></pre>
+<p>另外, 当存在其他构建系统标识性文件的时候(比如 CMakeLists.txt), 不会触发自动生成 xmake.lua 的流程, 而是首先触发 <a href="#自动探测构建系统并编译">自动探测构建系统并编译</a>, 如果要强制触发自动扫描生成 xmake.lua 的流程, 可运行: </p>
+<pre><code class="lang-bash">$ xmake f -y
+</code></pre>
 <h3 id="">开源代码的移植和编译</h3>
 <p>虽然这种方式，并不是非常智能，限制也不少，但是对于想临时写些代码进行编译运行，或者临时想交叉编译一些简单的开源库代码</p>
 <p>这种方式已经足够使用了，下面看下一个实际的例子：</p>

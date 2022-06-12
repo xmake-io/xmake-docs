@@ -2793,7 +2793,7 @@ target("test")
 
 Of course, we can also use `add_requires("xx", {configs = {vs_runtime = "MD"}})` to modify the vs runtime library for specific packages.
 
-We can also use `xmake f --vs_runtime=MD` to switch it globally through parameter configuration.
+We can also use `xmake f --vs_runtime="MD"` to switch it globally through parameter configuration.
 
 Issues related to this api: [#1071](https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681)
 

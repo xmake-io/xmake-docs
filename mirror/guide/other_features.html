@@ -227,6 +227,9 @@ note: xmake.lua not found, try generating it (pass -y or --confirm=y/n/d to skip
 please input: n (y/n)
 y
 </code></pre>
+<p>In addition, when there are other build system identification files (such as CMakeLists.txt), the process of automatically generating xmake.lua will not be triggered, but <a href="#Automatically detect build system and compile">Automatically detect build system and compile</a> will be triggered first. If you want to force trigger the process of automatically generating xmake.lua file, you can run:</p>
+<pre><code class="lang-bash">$ xmake f -y
+</code></pre>
 <h3 id="compileopensourcelibraries">Compile open source libraries</h3>
 <p>Although this approach has some limitations, but it is sufficient to complie and run some temporary codes for testing. </p>
 <p>For example, we downloaded a zlib-1.2.10 source and want to compile it.</p>
