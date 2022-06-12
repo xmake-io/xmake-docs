@@ -15,7 +15,6 @@
   - [Project Examples](guide/project_examples.md)
   - [Configuration](guide/configuration.md)
   - [Syntax Description](guide/syntax_description.md)
-  - [Other Features](guide/other_features.md)
   - [FAQ](guide/faq.md)
 
 - Package Management
@@ -54,6 +53,15 @@
   - [Option Instance](manual/option_instance.md)
   - [Builtin Modules](manual/builtin_modules.md)
   - [Extension Modules](manual/extension_modules.md)
+
+- Other features
+
+  - [Remote Build](features/remote_build.md)
+  - [Distributed Build](features/distcc_build.md)
+  - [Build Cache Acceleration](features/build_cache.md)
+  - [Unity Build Acceleration](features/unity_build.md)
+  - [Auto-scan Source Build](features/autogen.md)
+  - [Try to build with other build systems](features/trybuild.md)
 
 - Plugin
 

@@ -17,7 +17,6 @@
   - [工程例子](zh-cn/guide/project_examples.md)
   - [配置说明](zh-cn/guide/configuration.md)
   - [语法描述](zh-cn/guide/syntax_description.md)
-  - [其他特性](zh-cn/guide/other_features.md)
   - [问答](zh-cn/guide/faq.md)
 
 - 包依赖管理
@@ -56,6 +55,15 @@
   - [选项实例](zh-cn/manual/option_instance.md)
   - [内置模块](zh-cn/manual/builtin_modules.md)
   - [扩展模块](zh-cn/manual/extension_modules.md)
+
+- 其他特性
+
+  - [远程编译](zh-cn/features/remote_build.md)
+  - [分布式编译](zh-cn/features/distcc_build.md)
+  - [编译缓存加速](zh-cn/features/build_cache.md)
+  - [Unity 编译加速](zh-cn/features/unity_build.md)
+  - [自动扫描源码生成工程](zh-cn/features/autogen.md)
+  - [尝试使用其他构建系统构建](zh-cn/features/trybuild.md)
 
 - 插件介绍
 
