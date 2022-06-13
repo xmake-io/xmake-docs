@@ -34,13 +34,13 @@
 
 ## 示例
 
-* [Executable Program](https://xmake.io/#/home?id=executable-program)
-* [Static Library Program](https://xmake.io/#/home?id=static-library-program)
-* [Dynamic Library Program](https://xmake.io/#/home?id=shared-library-program)
-* [Qt Program](https://xmake.io/#/home?id=qt-program)
-* [Cuda Program](https://xmake.io/#/home?id=cuda-program)
-* [WDK Driver Program](https://xmake.io/#/home?id=wdk-driver-program)
-* [WinSDK Application Program](https://xmake.io/#/home?id=winsdk-application-program)
+* [Executable Program](https://xmake.io/#/guide/project_examples?id=executable-program)
+* [Static Library Program](https://xmake.io/#/guide/project_examples?id=static-library-program)
+* [Dynamic Library Program](https://xmake.io/#/guide/project_examples?id=share-library-program)
+* [Qt Program](https://xmake.io/#/guide/project_examples?id=qt-program)
+* [Cuda Program](https://xmake.io/#/guide/project_examples?id=cuda-program)
+* [WDK Driver Program](https://xmake.io/#/guide/project_examples?id=wdk-driver-program)
+* [WinSDK Application Program](https://xmake.io/#/guide/project_examples?id=winsdk-application-program)
 
 ## 包仓库
 
