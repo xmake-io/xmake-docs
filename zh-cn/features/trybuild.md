@@ -115,7 +115,7 @@ $ cmake \
     $OTHER_ARGS
 ```
 
-而对于 ios 平台，没找到简答的配置方式，就找到个第三方的 ios 工具链配置，很复杂：https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake
+而对于 ios 平台，没找到简单的配置方式，就找到个第三方的 ios 工具链配置，很复杂：https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake
 
 对于 mingw 又是另外一种方式，我又折腾了半天环境，很是折腾。
 
