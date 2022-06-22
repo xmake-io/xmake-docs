@@ -1,4 +1,32 @@
 
+## v2.6.8
+
+### New features
+
+* [#2447](https://github.com/xmake-io/xmake/pull/2447): Add qt.qmlplugin rule and support of qmltypesregistrar
+* [#2446](https://github.com/xmake-io/xmake/issues/2446): Support target group for `xmake install`
+* [#2469](https://github.com/xmake-io/xmake/issues/2469): Generate vcpkg-configuration.json
+
+### Changes
+
+* Add `preprocessor.linemarkers` policy to disable linemarkers to speed up ccache/distcc
+* [#2389](https://github.com/xmake-io/xmake/issues/2389): Improve `xmake run` to parallel running of targets
+* [#2417](https://github.com/xmake-io/xmake/issues/2417): Switch the default value of option/showmenu
+* [#2440](https://github.com/xmake-io/xmake/pull/2440): Improve package installation error messages
+* [#2438](https://github.com/xmake-io/xmake/pull/2438): Make sure the solution and project file unchanged by sorting those tables
+* [#2434](https://github.com/xmake-io/xmake/issues/2434): Improve plugins manager, allow to handle multiples plugin repositories
+* [#2421](https://github.com/xmake-io/xmake/issues/2421): Improve config option menu
+* [#2425](https://github.com/xmake-io/xmake/issues/2425): Add `preprocessor.gcc.directives_only` policy
+* [#2455](https://github.com/xmake-io/xmake/issues/2455): Improve optimize options for emcc
+* [#2467](https://github.com/xmake-io/xmake/issues/2467): Add compile fallback for msvc/ccache
+* [#2452](https://github.com/xmake-io/xmake/issues/2452): Add build.warning policy
+
+### Bugs Fixed
+
+* [#2435](https://github.com/xmake-io/xmake/pull/2435): fix the search bug when the package name has an extension name.
+* [#2445](https://github.com/xmake-io/xmake/issues/2445): Fix ccache bug for msvc
+* [#2452](https://github.com/xmake-io/xmake/issues/2452): Fix warnings output for ccache
+
 ## v2.6.7
 
 ### New features

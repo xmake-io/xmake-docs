@@ -90,7 +90,34 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v267">v2.6.7</h2>
+    <h2 id="v268">v2.6.8</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/2447">#2447</a>: Add qt.qmlplugin rule and support of qmltypesregistrar</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2446">#2446</a>: Support target group for <code>xmake install</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2469">#2469</a>: Generate vcpkg-configuration.json</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Add <code>preprocessor.linemarkers</code> policy to disable linemarkers to speed up ccache/distcc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2389">#2389</a>: Improve <code>xmake run</code> to parallel running of targets</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2417">#2417</a>: Switch the default value of option/showmenu</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2440">#2440</a>: Improve package installation error messages</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2438">#2438</a>: Make sure the solution and project file unchanged by sorting those tables</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2434">#2434</a>: Improve plugins manager, allow to handle multiples plugin repositories</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2421">#2421</a>: Improve config option menu</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2425">#2425</a>: Add <code>preprocessor.gcc.directives_only</code> policy</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2455">#2455</a>: Improve optimize options for emcc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2467">#2467</a>: Add compile fallback for msvc/ccache</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2452">#2452</a>: Add build.warning policy</li>
+</ul>
+<h3 id="bugsfixed">Bugs Fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/2435">#2435</a>: fix the search bug when the package name has an extension name.</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2445">#2445</a>: Fix ccache bug for msvc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2452">#2452</a>: Fix warnings output for ccache</li>
+</ul>
+<h2 id="v267">v2.6.7</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/2318">#2318</a>: Add <code>xmake f --policies=</code> config argument to modify project policies</li>

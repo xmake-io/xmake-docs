@@ -1,4 +1,32 @@
 
+## v2.6.8
+
+### 新特性
+
+* [#2447](https://github.com/xmake-io/xmake/pull/2447): 添加 qt.qmlplugin 规则和 qmltypesregistrar 支持
+* [#2446](https://github.com/xmake-io/xmake/issues/2446): 支持 target 分组安装
+* [#2469](https://github.com/xmake-io/xmake/issues/2469): 产生 vcpkg-configuration.json
+
+### 改进
+
+* 添加 `preprocessor.linemarkers` 策略去禁用 linemarkers 去加速 ccache/distcc
+* [#2389](https://github.com/xmake-io/xmake/issues/2389): 改进 `xmake run` 支持并行运行目标程序
+* [#2417](https://github.com/xmake-io/xmake/issues/2417): 切换 option/showmenu 的默认值，默认开启
+* [#2440](https://github.com/xmake-io/xmake/pull/2440): 改进安装包的失败错误信息
+* [#2438](https://github.com/xmake-io/xmake/pull/2438): 确保生成的 vsxmake 工程不会随机变动
+* [#2434](https://github.com/xmake-io/xmake/issues/2434): 改进插件管理器，允许多插件管理
+* [#2421](https://github.com/xmake-io/xmake/issues/2421): 改进配置选项菜单
+* [#2425](https://github.com/xmake-io/xmake/issues/2425): 添加 `preprocessor.gcc.directives_only` 策略
+* [#2455](https://github.com/xmake-io/xmake/issues/2455): 改进 emcc 的优化选项
+* [#2467](https://github.com/xmake-io/xmake/issues/2467): 支持回退到原始文件编译，兼容 msvc 预处理器的一些问题
+* [#2452](https://github.com/xmake-io/xmake/issues/2452): 添加 build.warning 策略
+
+### Bugs 修复
+
+* [#2435](https://github.com/xmake-io/xmake/pull/2435): 修复无法搜索带有 `.` 的包名
+* [#2445](https://github.com/xmake-io/xmake/issues/2445): 修复 windows 上 ccache 构建失败问题
+* [#2452](https://github.com/xmake-io/xmake/issues/2452): 修复 ccache 下，警告无法输出的问题
+
 ## v2.6.7
 
 ### 新特性

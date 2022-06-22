@@ -90,7 +90,34 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v267">v2.6.7</h2>
+    <h2 id="v268">v2.6.8</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/2447">#2447</a>: 添加 qt.qmlplugin 规则和 qmltypesregistrar 支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2446">#2446</a>: 支持 target 分组安装</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2469">#2469</a>: 产生 vcpkg-configuration.json</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li>添加 <code>preprocessor.linemarkers</code> 策略去禁用 linemarkers 去加速 ccache/distcc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2389">#2389</a>: 改进 <code>xmake run</code> 支持并行运行目标程序</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2417">#2417</a>: 切换 option/showmenu 的默认值，默认开启</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2440">#2440</a>: 改进安装包的失败错误信息</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2438">#2438</a>: 确保生成的 vsxmake 工程不会随机变动</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2434">#2434</a>: 改进插件管理器，允许多插件管理</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2421">#2421</a>: 改进配置选项菜单</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2425">#2425</a>: 添加 <code>preprocessor.gcc.directives_only</code> 策略</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2455">#2455</a>: 改进 emcc 的优化选项</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2467">#2467</a>: 支持回退到原始文件编译，兼容 msvc 预处理器的一些问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2452">#2452</a>: 添加 build.warning 策略</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/2435">#2435</a>: 修复无法搜索带有 <code>.</code> 的包名</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2445">#2445</a>: 修复 windows 上 ccache 构建失败问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2452">#2452</a>: 修复 ccache 下，警告无法输出的问题</li>
+</ul>
+<h2 id="v267">v2.6.7</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/2318">#2318</a>: 添加 <code>xmake f --policies=</code> 配置参数去修改默认策略</li>
