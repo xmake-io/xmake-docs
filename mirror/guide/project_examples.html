@@ -116,7 +116,7 @@ target("test")
 <p>For a complete example, execute the following command to create:</p>
 <pre><code class="lang-bash">xmake create -l c -t static test
 </code></pre>
-<h2 id="sharelibraryprogram">Share Library Program</h2>
+<h2 id="sharedlibraryprogram">Shared Library Program</h2>
 <pre><code class="lang-lua">target("library")
     set_kind("shared")
     add_files("src/library/*.c")
@@ -126,7 +126,7 @@ target("test")
     add_files("src/*.c")
     add_deps("library")
 </code></pre>
-<p>We use <code>add_deps</code> to link a share library to test target.</p>
+<p>We use <code>add_deps</code> to link a shared library to test target.</p>
 <p>For a complete example, execute the following command to create:</p>
 <pre><code class="lang-bash">xmake create -l c -t shared test
 </code></pre>

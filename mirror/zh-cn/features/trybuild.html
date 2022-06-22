@@ -172,7 +172,7 @@ $ make
     -DANDROID_NATIVE_API_LEVEL=$MINSDKVERSION \
     $OTHER_ARGS
 </code></pre>
-<p>而对于 ios 平台，没找到简答的配置方式，就找到个第三方的 ios 工具链配置，很复杂：<a href="https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake">https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake</a></p>
+<p>而对于 ios 平台，没找到简单的配置方式，就找到个第三方的 ios 工具链配置，很复杂：<a href="https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake">https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake</a></p>
 <p>对于 mingw 又是另外一种方式，我又折腾了半天环境，很是折腾。</p>
 <p>而对接了xmake后，不管是cmake还是autotools，交叉编译都是非常简单的，而且配置方式也完全一样，精简一致。</p>
 <h4 id="iphoneos">交叉编译iphoneos平台</h4>
