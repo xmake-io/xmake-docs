@@ -196,6 +196,17 @@ Build ok!
 </code></pre>
 <p>The effect is as follows:</p>
 <p><img src="/assets/img/guide/qt_quickapp.png" alt=""></p>
+<h3 id="quickplugin">Quick Plugin</h3>
+<p>For a full example see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/qt/quickplugin">quickplugin example</a></p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("demo")
+    add_rules("qt.qmlplugin")
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+
+    set_values("qt.qmlplugin.import_name", "My.Plugin")
+</code></pre>
 <h3 id="widgetsapplication">Widgets Application</h3>
 <p>v2.2.9 or higher:</p>
 <pre><code class="lang-lua">target("qt_widgetapp")

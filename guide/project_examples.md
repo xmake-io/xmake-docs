@@ -171,6 +171,21 @@ The effect is as follows:
 
 ![](/assets/img/guide/qt_quickapp.png)
 
+### Quick Plugin
+
+For a full example see: [quickplugin example](https://github.com/xmake-io/xmake/tree/master/tests/projects/qt/quickplugin)
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("demo")
+    add_rules("qt.qmlplugin")
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+
+    set_values("qt.qmlplugin.import_name", "My.Plugin")
+```
+
 ### Widgets Application
 
 v2.2.9 or higher:

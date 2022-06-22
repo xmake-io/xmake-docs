@@ -174,7 +174,7 @@ $ xmake create -l c++ -t quickapp_qt test
     add_rules("qt.console")
     add_files("src/*.cpp")
 </code></pre>
-<h3 id="quick">Quick应用程序</h3>
+<h3 id="quick">Quick 应用程序</h3>
 <p>v2.2.9以上版本：</p>
 <pre><code class="lang-lua">target("qt_quickapp")
     add_rules("qt.quickapp")
@@ -199,7 +199,18 @@ build ok!
 </code></pre>
 <p>效果如下：</p>
 <p><img src="/assets/img/guide/qt_quickapp.png" alt=""></p>
-<h3 id="widgets">Widgets应用程序</h3>
+<h3 id="quickplugin">Quick Plugin 程序</h3>
+<p>完整例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/qt/quickplugin">quickplugin example</a></p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("demo")
+    add_rules("qt.qmlplugin")
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+
+    set_values("qt.qmlplugin.import_name", "My.Plugin")
+</code></pre>
+<h3 id="widgets">Widgets 应用程序</h3>
 <p>v2.2.9以上版本：</p>
 <pre><code class="lang-lua">target("qt_widgetapp")
     add_rules("qt.widgetapp")
@@ -218,7 +229,7 @@ build ok!
 <p>!> 如果使用的自己编译的static版本QT SDK，那么需要切换到<code>add_rules("qt.widgetapp_static")</code>静态规则才行，因为链接的库是不同的，需要做静态链接。</p>
 <p>运行效果如下：</p>
 <p><img src="/assets/img/guide/qt_widgetapp.png" alt=""></p>
-<h3 id="android">Android应用程序</h3>
+<h3 id="android">Android 应用程序</h3>
 <p>2.2.6之后版本，可以直接切到android平台编译Quick/Widgets应用程序，生成apk包，并且可通过<code>xmake install</code>命令安装到设备。</p>
 <pre><code class="lang-console">$ xmake create -t quickapp_qt -l c++ appdemo
 $ cd appdemo

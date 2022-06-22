@@ -279,6 +279,19 @@ target("test")
     add_files("src/*.cpp")
     add_packages("vcpkg::zlib", "vcpkg::fmt", "vcpkg::libpng")
 </code></pre>
+<p>v2.6.8 之后，还可以额外配置私有仓库，仅清单模式有效。</p>
+<pre><code class="lang-lua">local registries = {
+    {
+        kind = "git",
+        repository = "https://github.com/SakuraEngine/vcpkg-registry",
+        baseline = "e0e1e83ec66e3c9b36066f79d133b01eb68049f7",
+        packages = {
+            "skrgamenetworkingsockets"
+        }
+    }
+}
+add_requires("vcpkg::skrgamenetworkingsockets >=1.4.0+1", {configs = {registries = registries}})
+</code></pre>
 <h3 id="conan">添加 conan 的依赖包</h3>
 <pre><code class="lang-lua">add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
 add_requires("conan::openssl/1.1.1g", {alias = "openssl",

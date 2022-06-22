@@ -137,7 +137,7 @@ target("qt_console")
     add_files("src/*.cpp")
 ```
 
-### Quick应用程序
+### Quick 应用程序
 
 v2.2.9以上版本：
 
@@ -175,7 +175,22 @@ $ xmake run
 
 ![](/assets/img/guide/qt_quickapp.png)
 
-### Widgets应用程序
+### Quick Plugin 程序
+
+完整例子见：[quickplugin example](https://github.com/xmake-io/xmake/tree/master/tests/projects/qt/quickplugin)
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("demo")
+    add_rules("qt.qmlplugin")
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+
+    set_values("qt.qmlplugin.import_name", "My.Plugin")
+```
+
+### Widgets 应用程序
 
 v2.2.9以上版本：
 
@@ -205,7 +220,7 @@ target("qt_widgetapp")
 
 ![](/assets/img/guide/qt_widgetapp.png)
 
-### Android应用程序
+### Android 应用程序
 
 2.2.6之后版本，可以直接切到android平台编译Quick/Widgets应用程序，生成apk包，并且可通过`xmake install`命令安装到设备。
 

@@ -228,6 +228,8 @@ Options:
     --test=TEST
 ```
 
+!> After 2.6.8, this option is enabled by default and there is usually no need to configure it additionally.
+
 ### option:set_category
 
 #### Setting option categories, only for menu display

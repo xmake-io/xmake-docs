@@ -2300,6 +2300,18 @@ target("test")
 <p>或者</p>
 <pre><code class="lang-bash">$ xmake f --policies=build.ccache:n
 </code></pre>
+<h5 id="buildwarning">build.warning</h5>
+<p>默认编译通常不会实时回显警告输出，我们通常需要使用 <code>xmake -w</code> 开启，或者通过 <code>xmake g --build_warning=y</code> 来全局开启它。</p>
+<p>现在，我们也可以在 xmake.lua 配置中去默认启用警告回显输出。</p>
+<pre><code class="lang-lua">set_policy("build.warning", true)
+set_warnings("all", "extra")
+</code></pre>
+<p>这个时候，即使我们执行 <code>xmake</code> 命令，也能直接回显警告输出。</p>
+<h5 id="preprocessorlinemarkers">preprocessor.linemarkers</h5>
+<p>通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。<br>也会提升缓存的处理效率，但是缺点就是会丢失源码行信息，如果遇到编译错误，将无法看到准确的出错代码行。</p>
+<h5 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h5>
+<p>这也是用于预处理器的策略，默认开启，这会提升 gcc 下编译缓存预处理的效率，但是如果源文件中包含 <code>__DATE__</code>, <code>__TIME__</code> 等宏，就会导致缓存出现不一致。</p>
+<p>因此，可以根据自身工程代码，按需关闭此策略，确保生成的结果一致。</p>
 <h5 id="packagerequires_lock">package.requires_lock</h5>
 <p>可用于开启 <code>add_requires()</code> 引入的依赖包的版本锁定。</p>
 <h5 id="packageprecompiled">package.precompiled</h5>

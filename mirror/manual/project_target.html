@@ -2280,8 +2280,20 @@ target("test")
 <p>or</p>
 <pre><code class="lang-bash">$ xmake f --policies=build.ccache:n
 </code></pre>
+<h5 id="buildwarning">build.warning</h5>
+<p>The default compilation usually does not echo the warning output in real time, we usually need to use <code>xmake -w</code> to turn it on, or to turn it on globally with <code>xmake g --build_warning=y</code>.</p>
+<p>Now, we can also enable warning echo output by default in the xmake.lua configuration.</p>
+<pre><code class="lang-lua">set_policy("build.warning", true)
+set_warnings("all", "extra")
+</code></pre>
+<p>At this time, even if we execute the <code>xmake</code> command, the warning output can be echoed directly.</p>
+<h5 id="preprocessorlinemarkers">preprocessor.linemarkers</h5>
+<p>If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.<br>This will greatly reduce the size of the preprocessor file and improve the efficiency of the cache, but the downside is that the source line information will be lost and if you encounter a compilation error, you will not be able to see the exact line of code that went wrong.</p>
+<h5 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h5>
+<p>This is also used as a preprocessor policy and is enabled by default. This will improve the efficiency of compile cache preprocessing under gcc, but can lead to cache inconsistencies if the source file contains macros such as <code>__DATE__</code>, <code>__TIME__</code>, etc.</p>
+<p>Therefore, you can turn this policy off as needed to ensure consistent results, depending on your project code.</p>
 <h5 id="packagerequires_lock">package.requires_lock</h5>
-<p>Can be used to enable version locking of dependency packages introduced by <code></code>add_requires()`&#39;&#39;.</p>
+<p>Can be used to enable version locking of dependency packages introduced by <code>add_requires()</code>.</p>
 <h5 id="packageprecompiled">package.precompiled</h5>
 <p>Can be used to disable fetching of precompiled dependency packages under windows.</p>
 <h5 id="packagefetch_only">package.fetch_only</h5>

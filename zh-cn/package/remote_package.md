@@ -302,6 +302,22 @@ target("test")
     add_packages("vcpkg::zlib", "vcpkg::fmt", "vcpkg::libpng")
 ```
 
+v2.6.8 之后，还可以额外配置私有仓库，仅清单模式有效。
+
+```lua
+local registries = {
+    {
+        kind = "git",
+        repository = "https://github.com/SakuraEngine/vcpkg-registry",
+        baseline = "e0e1e83ec66e3c9b36066f79d133b01eb68049f7",
+        packages = {
+            "skrgamenetworkingsockets"
+        }
+    }
+}
+add_requires("vcpkg::skrgamenetworkingsockets >=1.4.0+1", {configs = {registries = registries}})
+```
+
 ### 添加 conan 的依赖包
 
 ```lua

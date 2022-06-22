@@ -275,6 +275,22 @@ target("test")
      add_packages("vcpkg::zlib", "vcpkg::fmt", "vcpkg::libpng")
 ```
 
+After v2.6.8 it is also possible to additionally configure private repositories, which is only available in manifest mode.
+
+```lua
+local registries = {
+    {
+        kind = "git",
+        repository = "https://github.com/SakuraEngine/vcpkg-registry",
+        baseline = "e0e1e83ec66e3c9b36066f79d133b01eb68049f7",
+        packages = {
+            "skrgamenetworkingsockets"
+        }
+    }
+}
+add_requires("vcpkg::skrgamenetworkingsockets >=1.4.0+1", {configs = {registries = registries}})
+```
+
 ### Add conan dependency package
 
 ```lua

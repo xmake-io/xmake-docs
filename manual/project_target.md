@@ -2743,9 +2743,33 @@ or
 $ xmake f --policies=build.ccache:n
 ```
 
+##### build.warning
+
+The default compilation usually does not echo the warning output in real time, we usually need to use `xmake -w` to turn it on, or to turn it on globally with `xmake g --build_warning=y`.
+
+Now, we can also enable warning echo output by default in the xmake.lua configuration.
+
+```lua
+set_policy("build.warning", true)
+set_warnings("all", "extra")
+```
+
+At this time, even if we execute the `xmake` command, the warning output can be echoed directly.
+
+##### preprocessor.linemarkers
+
+If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.
+This will greatly reduce the size of the preprocessor file and improve the efficiency of the cache, but the downside is that the source line information will be lost and if you encounter a compilation error, you will not be able to see the exact line of code that went wrong.
+
+##### preprocessor.gcc.directives_only
+
+This is also used as a preprocessor policy and is enabled by default. This will improve the efficiency of compile cache preprocessing under gcc, but can lead to cache inconsistencies if the source file contains macros such as `__DATE__`, `__TIME__`, etc.
+
+Therefore, you can turn this policy off as needed to ensure consistent results, depending on your project code.
+
 ##### package.requires_lock
 
-Can be used to enable version locking of dependency packages introduced by ``add_requires()`''.
+Can be used to enable version locking of dependency packages introduced by `add_requires()`.
 
 ##### package.precompiled
 
