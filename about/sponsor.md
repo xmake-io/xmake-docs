@@ -27,6 +27,9 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay            | money  | comment                                                                 |
 |--          | --                                    | --             | --     | --                                                                      |
+| 2022.06.22 | 魏文*                                 | 支付宝         | ¥100   | 支持国产，C++开源界因xmake更美好~                                       |
+| 2022.06.14 | K*u                                   | 微信           | ¥10    |                                                                         |
+| 2022.06.08 | *                                     | 微信           | ¥81.54 |                                                                         |
 | 2022.05.11 | *庭                                   | 微信           | ¥50    |                                                                         |
 | 2022.04.28 | wendal                                | 微信           | ¥99    | 非常好用,非常感谢                                                        |
 | 2022.04.21 | 寻找地平线                            | 微信           | ¥128   |                                                                         |
