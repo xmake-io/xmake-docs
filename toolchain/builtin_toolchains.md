@@ -55,7 +55,7 @@ If it is a manually downloaded llvm sdk, we need to specify the llvm sdk root di
 
 ### Cirle
 
-v2.5.9 xmake adds support for the circle compiler. This is a new C++20 compiler with some interesting compile-time meta-programming features. Those who are interested can check it out on the official website: https://www .circle-lang.org/
+v2.5.9 xmake adds support for the circle compiler. This is a new C++20 compiler with some interesting compile-time meta-programming features. Those who are interested can check it out on the official website: https://www.circle-lang.org/
 
 ```console
 $ xmake f --toolchain=circle
