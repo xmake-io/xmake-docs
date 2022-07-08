@@ -1035,7 +1035,7 @@ https://gitee.com/tboox/xmake-repo.git
 However, if xmake chooses the wrong one, it may cause the warehouse download to fail. Through this environment variable, we can set and use the specified warehouse address by ourselves instead of automatically selecting it.
 
 ```console
-$ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
+$ export XMAKE_MAIN_REPO=https://github.com/xmake-io/xmake-repo.git
 ```
 
 ### XMAKE_BINARY_REPO
