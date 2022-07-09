@@ -27,6 +27,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay            | money  | comment                                                                 |
 |--          | --                                    | --             | --     | --                                                                      |
+| 2022.07.09 | *洋                                   | 微信           | ¥66    |                                                                         |
 | 2022.07.07 | 卷云舒                                | 支付宝         | ¥100   | 支持国产支持开源！加油兄弟！我是知乎上的                                |
 | 2022.07.07 | 魏文*                                 | 支付宝         | ¥100   | 体验比cmake丝滑多了                                                     |
 | 2022.06.30 | 小明                                  | 支付宝         | ¥30    | 加油                                                                    |
