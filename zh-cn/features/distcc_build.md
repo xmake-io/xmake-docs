@@ -80,6 +80,38 @@ $cat ~/.xmake/service/client.conf
 }
 ```
 
+#### 配置超时
+
+默认情况下，客户端连接，收发数据都是无限等待不超时的，但是如果访问服务端的网络不稳定，那么有可能会导致访问卡死，这个时候可以配置超时来解决。
+
+如果发生超时异常，就会自动退化到本地编译，不会永远卡死。
+
+我们可以配置，`send_timeout`, `recv_timeout` 和 `connect_timeout` 三种超时，如果在根节点设置，那么所有客户端服务都会生效。
+
+```console
+$ cat ~/.xmake/service/client.conf
+{
+    send_timeout = 5000,
+    recv_timeout = 5000,
+    connect_timeout = 5000
+}
+```
+
+我们也可以仅仅针对当前分布式构建服务配置超时，其他服务还是默认超时。
+
+```console
+$ cat ~/.xmake/service/client.conf
+{
+    distcc_build = {
+        send_timeout = 5000,
+        recv_timeout = 5000,
+        connect_timeout = 5000,
+    }
+}
+```
+
+!> 服务端配置同样支持超时配置。
+
 ### 用户认证和授权
 
 关于用户认证和授权，可以参考 [远程编译/用户认证和授权](/#/zh-cn/guide/other_features?id=%e7%94%a8%e6%88%b7%e8%ae%a4%e8%af%81%e5%92%8c%e6%8e%88%e6%9d%83) 里面的详细说明，用法是完全一致的。

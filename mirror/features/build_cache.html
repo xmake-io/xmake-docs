@@ -155,6 +155,28 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
     }
 }
 </code></pre>
+<h5 id="timeoutconfiguration">Timeout configuration</h5>
+<p>By default, clients connect, send and receive data with unlimited waiting without timeout, but if the network to access the server is unstable, then there is a chance that access may get stuck, and this can be solved by configuring a timeout.</p>
+<p>If a timeout exception occurs, it will automatically degrade to local cache and will not be stuck forever.</p>
+<p>We can configure, <code>send_timeout</code>, <code>recv_timeout</code> and <code>connect_timeout</code> to take effect for all client services if set at the root.</p>
+<pre><code class="lang-console">$ cat ~/.xmake/service/client.conf
+{
+    send_timeout = 5000,
+    recv_timeout = 5000,
+    connect_timeout = 5000
+}
+</code></pre>
+<p>We can also configure the timeout just for the current remote cache service, leaving the other services with the default timeout.</p>
+<pre><code class="lang-console">$ cat ~/.xmake/service/client.conf
+{
+    distcc_build = {
+        send_timeout = 5000,
+        recv_timeout = 5000,
+        connect_timeout = 5000,
+    }
+}
+</code></pre>
+<p>!> The server-side configuration also supports timeout configuration.</p>
 <h4 id="userauthorization">User authorization</h4>
 <p>For user authorization, please refer to <a href="/#/guide/other_features?id=user-authorization">Remote Compilation/User Authorization</a></p>
 <h4 id="connecttotheserver">Connect to the server</h4>

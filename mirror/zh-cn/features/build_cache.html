@@ -155,6 +155,28 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
     }
 }
 </code></pre>
+<h5 id="">配置超时</h5>
+<p>默认情况下，客户端连接，收发数据都是无限等待不超时的，但是如果访问服务端的网络不稳定，那么有可能会导致访问卡死，这个时候可以配置超时来解决。</p>
+<p>如果发生超时异常，就会自动退化到本地缓存，不会永远卡死。</p>
+<p>我们可以配置，<code>send_timeout</code>, <code>recv_timeout</code> 和 <code>connect_timeout</code> 三种超时，如果在根节点设置，那么所有客户端服务都会生效。</p>
+<pre><code class="lang-console">$ cat ~/.xmake/service/client.conf
+{
+    send_timeout = 5000,
+    recv_timeout = 5000,
+    connect_timeout = 5000
+}
+</code></pre>
+<p>我们也可以仅仅针对当前远程缓存服务配置超时，其他服务还是默认超时。</p>
+<pre><code class="lang-console">$ cat ~/.xmake/service/client.conf
+{
+    distcc_build = {
+        send_timeout = 5000,
+        recv_timeout = 5000,
+        connect_timeout = 5000,
+    }
+}
+</code></pre>
+<p>!> 服务端配置同样支持超时配置。</p>
 <h4 id="">用户认证和授权</h4>
 <p>关于用户认证和授权，可以参考 <a href="/#/zh-cn/guide/other_features?id=%e7%94%a8%e6%88%b7%e8%ae%a4%e8%af%81%e5%92%8c%e6%8e%88%e6%9d%83">远程编译/用户认证和授权</a> 里面的详细说明，用法是完全一致的。</p>
 <h4 id="">连接服务器</h4>

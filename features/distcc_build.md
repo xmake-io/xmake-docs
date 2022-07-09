@@ -80,6 +80,39 @@ $cat ~/.xmake/service/client.conf
 }
 ```
 
+#### Timeout configuration
+
+By default, clients connect, send and receive data with unlimited waiting without timeout, but if the network to access the server is unstable, then there is a chance that access may get stuck, and this can be solved by configuring a timeout.
+
+If a timeout exception occurs, it will automatically degrade to local compilation and will not be stuck forever.
+
+We can configure, `send_timeout`, `recv_timeout` and `connect_timeout` to take effect for all client services if set at the root.
+
+```console
+$ cat ~/.xmake/service/client.conf
+{
+    send_timeout = 5000,
+    recv_timeout = 5000,
+    connect_timeout = 5000
+}
+```
+
+We can also configure the timeout just for the current distributed build service, leaving the other services with the default timeout.
+
+```console
+$ cat ~/.xmake/service/client.conf
+{
+    distcc_build = {
+        send_timeout = 5000,
+        recv_timeout = 5000,
+        connect_timeout = 5000,
+    }
+}
+```
+
+!> The server-side configuration also supports timeout configuration.
+
+
 ### User authorization
 
 For user authorization, please refer to [Remote Compilation/User Authorization](/#/guide/other_features?id=user-authorization)
