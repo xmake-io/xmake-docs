@@ -930,14 +930,14 @@ $ xmake
 https://gitlab.com/tboox/xmake-repo.git
 https://gitee.com/tboox/xmake-repo.git
 </code></pre><p>However, if xmake chooses the wrong one, it may cause the warehouse download to fail. Through this environment variable, we can set and use the specified warehouse address by ourselves instead of automatically selecting it.</p>
-<pre><code class="lang-console">$ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
+<pre><code class="lang-console">$ export XMAKE_MAIN_REPO=https://github.com/xmake-io/xmake-repo.git
 </code></pre>
 <h3 id="xmake_binary_repo">XMAKE_BINARY_REPO</h3>
 <ul>
 <li>Set the official package pre-compiled warehouse address</li>
 </ul>
 <p>Similar to <code>XMAKE_MAIN_REPO</code>, the only difference is that this is used to switch the address of the pre-compiled warehouse.</p>
-<pre><code class="lang-console">$ export XMAKE_BINARY_REPO = https://github.com/xmake-mirror/build-artifacts.git
+<pre><code class="lang-console">$ export XMAKE_BINARY_REPO=https://github.com/xmake-mirror/build-artifacts.git
 </code></pre>
 <h3 id="xmake_theme">XMAKE_THEME</h3>
 <ul>

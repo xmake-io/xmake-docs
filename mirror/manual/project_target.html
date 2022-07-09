@@ -1941,7 +1941,7 @@ target("test")
 <h4 id="addcustomconfigurationvalues">Add custom configuration values</h4>
 <p>Usage is similar to <a href="#targetset_values">target:set_values</a>, the difference is that this interface is an additional setting, and will not override the settings each time.</p>
 <h3 id="targetset_rundir">target:set_rundir</h3>
-<h4 id="settingtherunningdirectory">Setting the running directory</h4>
+<h4 id="settherunningdirectory">Set the running directory</h4>
 <p>This interface is used to set the current running directory of the default running target program. If not set, by default, the target is loaded and run in the directory where the executable file is located.</p>
 <p>If the user wants to modify the load directory, one is to customize the run logic by <code>on_run()</code>, and to do the switch inside, but just to cut the directory, this is too cumbersome.</p>
 <p>Therefore, you can quickly switch settings to the default directory environment through this interface.</p>
@@ -1950,8 +1950,13 @@ target("test")
      add_files("src/*.c")
      set_rundir("$(projectdir)/xxx")
 </code></pre>
+<h3 id="targetset_runargs">target:set_runargs</h3>
+<h4 id="setthelistofrunparameters">Set the list of run parameters</h4>
+<p>2.6.9 New interface to set default run arguments for <code>xmake run</code>, with which we can avoid typing run arguments every time on the command line, <code>xmake run -x --arg1=val</code></p>
+<pre><code class="lang-lua">set_runargs("-x", "--arg1=val")
+</code></pre>
 <h3 id="targetadd_runenvs">target:add_runenvs</h3>
-<h4 id="addingruntimeenvironmentvariables">Adding runtime environment variables</h4>
+<h4 id="addruntimeenvironmentvariables">Add runtime environment variables</h4>
 <p>This interface is used to add an environment variable that sets the default running target program. Unlike <a href="#targetset_runenv">set_runenv</a>, this interface appends the value in the existing system env and does not overwrite it.</p>
 <p>Therefore, for PATH, it is very convenient to append values through this interface, and this interface supports multi-value settings, so it is usually used to set multi-value env with path sep. .</p>
 <pre><code class="lang-lua">target("test")
@@ -1961,7 +1966,7 @@ target("test")
     add_runenvs("LD_LIBRARY_PATH", "/tmp/lib", "xxx/lib")
 </code></pre>
 <h3 id="targetset_runenv">target:set_runenv</h3>
-<h4 id="settingtheruntimeenvironmentvariable">Setting the runtime environment variable</h4>
+<h4 id="settheruntimeenvironmentvariable">Set the runtime environment variable</h4>
 <p>This interface differs from <a href="#targetadd_runenvs">add_runenvs</a> in that <code>set_runenv</code> is an override setting for an environment variable that overrides the env value of the original system environment, and this interface is singular and cannot pass multiple parameters.</p>
 <p>So, if you want to override the env that sets the multipath in PATH, you need to splicing yourself:</p>
 <pre><code class="lang-lua">target("test")
@@ -2287,6 +2292,13 @@ target("test")
 set_warnings("all", "extra")
 </code></pre>
 <p>At this time, even if we execute the <code>xmake</code> command, the warning output can be echoed directly.</p>
+<h5 id="buildoptimizationlto">build.optimization.lto</h5>
+<p>xmake v2.6.9 has improved support for link-time optimisation (LTO), with adaptations for different platforms such as gcc/clang/msvc, simply by enabling this policy to enable LTO for specific targets.</p>
+<pre><code class="lang-lua">set_policy("build.optimization.lto")
+</code></pre>
+<p>We can also turn it on quickly via the command line option.</p>
+<pre><code class="lang-console">$ xmake f --policies=build.optimization.lto
+</code></pre>
 <h5 id="preprocessorlinemarkers">preprocessor.linemarkers</h5>
 <p>If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.<br>This will greatly reduce the size of the preprocessor file and improve the efficiency of the cache, but the downside is that the source line information will be lost and if you encounter a compilation error, you will not be able to see the exact line of code that went wrong.</p>
 <h5 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h5>

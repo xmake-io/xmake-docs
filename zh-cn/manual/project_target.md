@@ -2202,6 +2202,16 @@ target("test")
     set_rundir("$(projectdir)/xxx")
 ```
 
+### target:set_runargs
+
+#### 设置运行参数列表
+
+2.6.9 新增接口，可用于设置 `xmake run` 的默认运行参数，通过它，我们可以避免每次命令行输入运行参数，`xmake run -x --arg1=val`
+
+```lua
+set_runargs("-x", "--arg1=val")
+```
+
 ### target:add_runenvs
 
 #### 添加运行环境变量
@@ -2763,6 +2773,20 @@ set_warnings("all", "extra")
 ```
 
 这个时候，即使我们执行 `xmake` 命令，也能直接回显警告输出。
+
+##### build.optimization.lto
+
+2.6.9 版本 xmake 改进了对 LTO 链接时优化的支持，对 gcc/clang/msvc 等不同平台下都进行了适配，只需要启用这个策略，就能对特定 target 开启 LTO。
+
+```lua
+set_policy("build.optimization.lto")
+```
+
+我们也可以通过命令行选项快速开启。
+
+```console
+$ xmake f --policies=build.optimization.lto
+```
 
 ##### preprocessor.linemarkers
 

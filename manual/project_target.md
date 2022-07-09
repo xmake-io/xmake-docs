@@ -2183,7 +2183,7 @@ Usage is similar to [target:set_values](#targetset_values), the difference is th
 
 ### target:set_rundir
 
-#### Setting the running directory
+#### Set the running directory
 
 This interface is used to set the current running directory of the default running target program. If not set, by default, the target is loaded and run in the directory where the executable file is located.
 
@@ -2198,9 +2198,19 @@ target("test")
      set_rundir("$(projectdir)/xxx")
 ```
 
+### target:set_runargs
+
+#### Set the list of run parameters
+
+2.6.9 New interface to set default run arguments for ``xmake run``, with which we can avoid typing run arguments every time on the command line, ``xmake run -x --arg1=val``
+
+```lua
+set_runargs("-x", "--arg1=val")
+```
+
 ### target:add_runenvs
 
-#### Adding runtime environment variables
+#### Add runtime environment variables
 
 This interface is used to add an environment variable that sets the default running target program. Unlike [set_runenv](#targetset_runenv), this interface appends the value in the existing system env and does not overwrite it.
 
@@ -2216,7 +2226,7 @@ target("test")
 
 ### target:set_runenv
 
-#### Setting the runtime environment variable
+#### Set the runtime environment variable
 
 This interface differs from [add_runenvs](#targetadd_runenvs) in that `set_runenv` is an override setting for an environment variable that overrides the env value of the original system environment, and this interface is singular and cannot pass multiple parameters.
 
@@ -2755,6 +2765,20 @@ set_warnings("all", "extra")
 ```
 
 At this time, even if we execute the `xmake` command, the warning output can be echoed directly.
+
+##### build.optimization.lto
+
+xmake v2.6.9 has improved support for link-time optimisation (LTO), with adaptations for different platforms such as gcc/clang/msvc, simply by enabling this policy to enable LTO for specific targets.
+
+```lua
+set_policy("build.optimization.lto")
+```
+
+We can also turn it on quickly via the command line option.
+
+```console
+$ xmake f --policies=build.optimization.lto
+```
 
 ##### preprocessor.linemarkers
 

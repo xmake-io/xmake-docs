@@ -1968,6 +1968,11 @@ target("test")
     add_files("src/*.c")
     set_rundir("$(projectdir)/xxx")
 </code></pre>
+<h3 id="targetset_runargs">target:set_runargs</h3>
+<h4 id="">设置运行参数列表</h4>
+<p>2.6.9 新增接口，可用于设置 <code>xmake run</code> 的默认运行参数，通过它，我们可以避免每次命令行输入运行参数，<code>xmake run -x --arg1=val</code></p>
+<pre><code class="lang-lua">set_runargs("-x", "--arg1=val")
+</code></pre>
 <h3 id="targetadd_runenvs">target:add_runenvs</h3>
 <h4 id="">添加运行环境变量</h4>
 <p>此接口用于添加设置默认运行target程序的环境变量，跟<a href="#targetset_runenv">set_runenv</a>不同的是，此接口是对已有系统env中的值进行追加，并不会覆盖。</p>
@@ -2307,6 +2312,13 @@ target("test")
 set_warnings("all", "extra")
 </code></pre>
 <p>这个时候，即使我们执行 <code>xmake</code> 命令，也能直接回显警告输出。</p>
+<h5 id="buildoptimizationlto">build.optimization.lto</h5>
+<p>2.6.9 版本 xmake 改进了对 LTO 链接时优化的支持，对 gcc/clang/msvc 等不同平台下都进行了适配，只需要启用这个策略，就能对特定 target 开启 LTO。</p>
+<pre><code class="lang-lua">set_policy("build.optimization.lto")
+</code></pre>
+<p>我们也可以通过命令行选项快速开启。</p>
+<pre><code class="lang-console">$ xmake f --policies=build.optimization.lto
+</code></pre>
 <h5 id="preprocessorlinemarkers">preprocessor.linemarkers</h5>
 <p>通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。<br>也会提升缓存的处理效率，但是缺点就是会丢失源码行信息，如果遇到编译错误，将无法看到准确的出错代码行。</p>
 <h5 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h5>
