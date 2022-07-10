@@ -718,7 +718,8 @@ os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
 支持递归删除目录，批量删除操作，以及模式匹配和内置变量，例如：
 
 ```lua
-os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
+os.rm("$(buildir)/inc/**.h")
+os.rm("$(buildir)/lib/")
 ```
 
 #### os.trycp
