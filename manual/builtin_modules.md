@@ -728,7 +728,8 @@ os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
 Support for recursive deletion of directories, bulk delete operations, and pattern matching and built-in variables, such as:
 
 ```lua
-os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
+os.rm("$(buildir)/inc/**.h")
+os.rm("$(buildir)/lib/")
 ```
 
 #### os.trycp
