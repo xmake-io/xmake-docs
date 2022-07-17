@@ -721,7 +721,8 @@ os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
 <li>删除文件或目录树</li>
 </ul>
 <p>支持递归删除目录，批量删除操作，以及模式匹配和内置变量，例如：</p>
-<pre><code class="lang-lua">os.rm("$(buildir)/inc/**.h", "$(buildir)/lib/")
+<pre><code class="lang-lua">os.rm("$(buildir)/inc/**.h")
+os.rm("$(buildir)/lib/")
 </code></pre>
 <h4 id="ostrycp">os.trycp</h4>
 <ul>

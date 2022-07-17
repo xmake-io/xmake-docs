@@ -1,4 +1,28 @@
 
+## v2.6.9
+
+### 新特性
+
+* [#2474](https://github.com/xmake-io/xmake/issues/2474): 添加 icx 和 dpcpp 工具链
+* [#2523](https://github.com/xmake-io/xmake/issues/2523): 改进对 LTO 的支持
+* [#2527](https://github.com/xmake-io/xmake/issues/2527): 添加 set_runargs 接口
+
+### 改进
+
+* 改进 tools.cmake 支持 wasm 库构建
+* [#2491](https://github.com/xmake-io/xmake/issues/2491): 如果服务器不可访问，自动回退到本地编译和缓存
+* [#2514](https://github.com/xmake-io/xmake/issues/2514): 为工程生成器禁用 Unity Build
+* [#2473](https://github.com/xmake-io/xmake/issues/2473): 改进 apt::find_package，支持从 pc 文件中查找
+* [#2512](https://github.com/xmake-io/xmake/issues/2512): 改进远程服务支持超时配置
+
+### Bugs 修复
+
+* [#2488](https://github.com/xmake-io/xmake/issues/2488): 修复从 windows 到 linux 的远程编译路径问题
+* [#2504](https://github.com/xmake-io/xmake/issues/2504): 修复在 msys2 上远程编译失败问题
+* [#2525](https://github.com/xmake-io/xmake/issues/2525): 修复安装依赖包时候卡死问题
+* [#2557](https://github.com/xmake-io/xmake/issues/2557): 修复 cmake.find_package 查找 links 错误
+* 修复缓存导致的预处理文件路径冲突问题
+
 ## v2.6.8
 
 ### 新特性

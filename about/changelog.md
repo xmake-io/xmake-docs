@@ -1,4 +1,28 @@
 
+## v2.6.9
+
+### New features
+
+* [#2474](https://github.com/xmake-io/xmake/issues/2474): Add icx and dpcpp toolchains
+* [#2523](https://github.com/xmake-io/xmake/issues/2523): Improve LTO support
+* [#2527](https://github.com/xmake-io/xmake/issues/2527): Add set_runargs api
+
+### Changes
+
+* Improve tools.cmake to support wasm
+* [#2491](https://github.com/xmake-io/xmake/issues/2491): Fallback to local compiler/cache from remote if server is unreachable
+* [#2514](https://github.com/xmake-io/xmake/issues/2514): Disable Unity Build for project generator
+* [#2473](https://github.com/xmake-io/xmake/issues/2473): Improve apt::find_package to find it from pc files
+* [#2512](https://github.com/xmake-io/xmake/issues/2512): Improve remote service to support timeout configuration
+
+### Bugs fixed
+
+* [#2488](https://github.com/xmake-io/xmake/issues/2488): Fix remote compilation from windows to linux
+* [#2504](https://github.com/xmake-io/xmake/issues/2504): Fix remote build bug on msys2/cygwin
+* [#2525](https://github.com/xmake-io/xmake/issues/2525): Fix install package deps and stuck
+* [#2557](https://github.com/xmake-io/xmake/issues/2557): Fix cmake.find_package links bug
+* Fix cache-induced path conflicts in preprocessed files
+
 ## v2.6.8
 
 ### New features
