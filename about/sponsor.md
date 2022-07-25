@@ -27,6 +27,8 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay            | money  | comment                                                                 |
 |--          | --                                    | --             | --     | --                                                                      |
+| 2022.07.24 | 未来十年                              | 支付宝         | ¥50   | xmake 最终会统一 C++ 包管理                                                |
+| 2022.07.24 | *大                                   | 微信           | ¥50   | 赞助 xmake 项目                                                |
 | 2022.07.17 | 王逸涵                                | 支付宝         | ¥100   | 支持！！！                                                              |
 | 2022.07.17 | Quincy                                | 微信           | ¥200   | 开源不易，xmake 非常好用                                                |
 | 2022.07.09 | *洋                                   | 微信           | ¥66    |                                                                         |
