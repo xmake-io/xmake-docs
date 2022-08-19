@@ -459,7 +459,7 @@ end)
 This should be used in `on_test` like so:
 ```lua
 on_test(function (package)
-  assert(package:has_cincludes("foo.hpp"))
+  assert(package:has_cxxincludes("foo.hpp"))
 end)
 ```
 
