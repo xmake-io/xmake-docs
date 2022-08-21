@@ -153,7 +153,7 @@ $ xmake lua /tmp/test.lua
 ```
 
 <p class="tip">
-    You can also use `import` api to write a more advance lua script. 
+    You can also use `import` api to write a more advance lua script.
 </p>
 
 ### Run the builtin script
@@ -179,7 +179,7 @@ $ xmake lua cp /tmp/file /tmp/file2
 $ xmake lua versioninfo
 ```
 
-### Run interactive commands (REPL) 
+### Run interactive commands (REPL)
 
 Enter interactive mode:
 
@@ -325,7 +325,85 @@ Or run
 $ xmake show --help
 ```
 
-## Macros Recording and Playback 
+## Watching for file updates
+
+New in v2.7.1 is the `xmake watch` plugin command, which can automatically monitor project files for updates and then trigger an automatic build or run some custom commands.
+
+This is often used for personal development to enable fast, real-time incremental builds without the need to manually execute the build command each time, improving development efficiency.
+
+### Build automatically after a project update
+
+The default behaviour is to monitor the entire project root directory and any file changes will trigger an incremental build of the project.
+
+```bash
+$ xmake watch
+watching /private/tmp/test/src/** .
+watching /private/tmp/test/* ...
+/private/tmp/test/src/main.cpp modified
+[ 25%]: ccache compiling.release src/main.cpp
+[ 50%]: linking.release test
+[ 100%]: build ok!
+```''
+
+### Monitoring a specific directory
+
+We can also monitor specific code directories to narrow down the scope of monitoring and improve performance.
+
+```bash
+$ xmake watch -d src
+$ xmake watch -d "src;tests/*"
+```
+
+The above command will recursively watch all subdirectories. If you want to keep a tight watch on the files in the current directory and not do recursive monitoring, you can use the following command.
+
+```bash
+$ xmake watch -p src
+$ xmake watch -p "src;tests/*"
+```
+
+### Watch and run the specified command
+
+If you want to run the build automatically even after the automatic build, we can use a custom command set.
+
+```bash
+$ xmake watch -c "xmake; xmake run"
+```
+
+The above list of commands is passed as a string, which is not flexible enough for complex command arguments that need to be escaped rather tediously, so we can use the following for arbitrary commands.
+
+```bash
+$ xmake watch -- echo hello xmake!
+$ xmake watch -- xmake run --help
+```
+
+### Watching and running the target program
+
+Although we can automate the running of the target program with custom commands, we also provide more convenient arguments to achieve this behaviour.
+
+```bash
+$ xmake watch -r
+$ xmake watch --run
+[100%]: build ok!
+hello world!
+```
+
+### Watching and running lua scripts
+
+We can also watch for file updates and then run the specified lua script for more flexible and complex command customisation.
+
+```bash
+$ xmake watch -s /tmp/test.lua
+```
+
+We can also get a list of all updated file paths and events in the script again.
+
+```lua
+function main(events)
+    -- TODO handle events
+end
+```
+
+## Macros Recording and Playback
 
 ### Introduction
 
@@ -358,7 +436,7 @@ $ xmake f -p iphoneos -a x86_64
 $ xmake p
 
 # stop to record and  save as anonymous macro
-xmake macro --end 
+xmake macro --end
 ```
 
 ### Playback Macro
@@ -428,7 +506,7 @@ function main()
     os.exec("xmake f -p iphoneos -a i386")
     os.exec("xmake p")
     os.exec("xmake f -p iphoneos -a x86_64")
-    os.exec("xmake p")  
+    os.exec("xmake p")
 end
 ```
 
@@ -451,7 +529,7 @@ XMake supports some builtins macros to simplify our jobs.
 For example, we use `package` macro to package all architectures of the iphoneos platform just for once.
 
 ```bash
-$ xmake macro package -p iphoneos 
+$ xmake macro package -p iphoneos
 ```
 
 ### Advance Macro Script
@@ -476,7 +554,7 @@ local options =
 -- package all
 --
 -- .e.g
--- xmake m package 
+-- xmake m package
 -- xmake m package -f "-m debug"
 -- xmake m package -p linux
 -- xmake m package -p iphoneos -f "-m debug --xxx ..." -o /tmp/xxx
@@ -525,16 +603,16 @@ function main(argv)
             -- get all modes
             local modedirs = os.match(format("%s/%s.pkg/lib/*", outputdir, target:name()), true)
             for _, modedir in ipairs(modedirs) do
-                
+
                 -- get mode
                 local mode = path.basename(modedir)
 
                 -- make lipo arguments
                 local lipoargs = nil
                 for _, arch in ipairs(platform.archs(plat)) do
-                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile())) 
+                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile()))
                     if os.isfile(archfile) then
-                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile) 
+                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile)
                     end
                 end
                 if lipoargs then

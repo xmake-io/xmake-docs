@@ -314,6 +314,52 @@ The information of target(tbox):
 <p>或者运行：</p>
 <pre><code class="lang-bash">$ xmake show --help
 </code></pre>
+<h2 id="">监视文件更新</h2>
+<p>v2.7.1 版本新增了 <code>xmake watch</code> 插件命令，可以自动监视项目文件更新，然后触发自动构建，或者运行一些自定义命令。</p>
+<p>这通常用于个人开发时候，实现快速的实时增量编译，而不需要每次手动执行编译命令，提高开发效率。</p>
+<h3 id="">项目更新后自动构建</h3>
+<p>默认行为就是监视整个项目根目录，任何文件改动都会触发项目的增量编译。</p>
+<pre><code class="lang-bash">$ xmake watch
+watching /private/tmp/test/src/** ..
+watching /private/tmp/test/* ..
+/private/tmp/test/src/main.cpp modified
+[ 25%]: ccache compiling.release src/main.cpp
+[ 50%]: linking.release test
+[100%]: build ok!
+</code></pre>
+<h3 id="">监视指定目录</h3>
+<p>我们也可以监视指定的代码目录，缩小监视范围，提升监视性能。</p>
+<pre><code class="lang-bash">$ xmake watch -d src
+$ xmake watch -d "src;tests/*"
+</code></pre>
+<p>上面的命令，会去递归监视所有子目录，如果想要紧紧监视当前目录下的文件，不进行递归监视，可以使用下面的命令。</p>
+<pre><code class="lang-bash">$ xmake watch -p src
+$ xmake watch -p "src;tests/*"
+</code></pre>
+<h3 id="">监视并运行指定命令</h3>
+<p>如果想在自动构建后，还想自动运行构建的程序，我们可以使用自定义的命令集。</p>
+<pre><code class="lang-bash">$ xmake watch -c "xmake; xmake run"
+</code></pre>
+<p>上面的命令列表是作为字符串传递，这对于复杂命令参数，需要转义比较繁琐不够灵活，那么我们可以使用下面的方式进行任意命令的设置。</p>
+<pre><code class="lang-bash">$ xmake watch -- echo hello xmake!
+$ xmake watch -- xmake run --help
+</code></pre>
+<h3 id="">监视并运行目标程序</h3>
+<p>尽管我们可以通过自定义命令来实现目标程序的自动运行，但是我们也提供了更加方便的参数来实现这个行为。</p>
+<pre><code class="lang-bash">$ xmake watch -r
+$ xmake watch --run
+[100%]: build ok!
+hello world!
+</code></pre>
+<h3 id="lua">监视并运行 lua 脚本</h3>
+<p>我们还可以监视文件更新后，运行指定的 lua 脚本，实现更加灵活复杂的命令定制。</p>
+<pre><code class="lang-bash">$ xmake watch -s /tmp/test.lua
+</code></pre>
+<p>我们还可以再脚本中获取所有更新的文件路径列表和事件。</p>
+<pre><code class="lang-lua">function main(events)
+    -- TODO handle events
+end
+</code></pre>
 <h2 id="">宏记录和回放</h2>
 <h3 id="">简介</h3>
 <p>我们可以通过这个插件，快速记录和回放我们平常频繁使用到的一些xmake操作，来简化我们日常的开发工作。</p>
@@ -349,7 +395,7 @@ $ xmake f -p iphoneos -a x86_64
 $ xmake p
 
 # 结束宏记录，这里不设置宏名字，所以记录的是一个匿名宏
-xmake macro --end 
+xmake macro --end
 </code></pre>
 <h3 id="">回放</h3>
 <pre><code class="lang-console"># 回放一个匿名宏
@@ -396,7 +442,7 @@ $ xmake macro --export=/xxx/macrodir
     os.exec("xmake f -p iphoneos -a i386")
     os.exec("xmake p")
     os.exec("xmake f -p iphoneos -a x86_64")
-    os.exec("xmake p")  
+    os.exec("xmake p")
 end
 </code></pre>
 <p>导入到xmake，并且定义宏名字：</p>
@@ -408,7 +454,7 @@ end
 <h3 id="">内置的宏脚本</h3>
 <p>XMake 提供了一些内置的宏脚本，来简化我们的日常开发工作。</p>
 <p>例如，我们可以使用 <code>package</code> 宏来对<code>iphoneos</code>平台的所有架构，一次性批量构建和打包：</p>
-<pre><code class="lang-console">$ xmake macro package -p iphoneos 
+<pre><code class="lang-console">$ xmake macro package -p iphoneos
 </code></pre>
 <h3 id="">高级的宏脚本编写</h3>
 <p>以上面提到的<code>package</code>宏为例，我们看下其具体代码，里面通过<code>import</code>导入一些扩展模块，实现了复杂的脚本操作。</p>
@@ -429,7 +475,7 @@ local options =
 -- package all
 --
 -- .e.g
--- xmake m package 
+-- xmake m package
 -- xmake m package -f "-m debug"
 -- xmake m package -p linux
 -- xmake m package -p iphoneos -f "-m debug --xxx ..." -o /tmp/xxx
@@ -485,9 +531,9 @@ function main(argv)
                 -- make lipo arguments
                 local lipoargs = nil
                 for _, arch in ipairs(platform.archs(plat)) do
-                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile())) 
+                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile()))
                     if os.isfile(archfile) then
-                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile) 
+                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile)
                     end
                 end
                 if lipoargs then

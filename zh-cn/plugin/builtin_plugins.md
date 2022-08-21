@@ -335,6 +335,84 @@ $ xmake show -l rules
 $ xmake show --help
 ```
 
+## 监视文件更新
+
+v2.7.1 版本新增了 `xmake watch` 插件命令，可以自动监视项目文件更新，然后触发自动构建，或者运行一些自定义命令。
+
+这通常用于个人开发时候，实现快速的实时增量编译，而不需要每次手动执行编译命令，提高开发效率。
+
+### 项目更新后自动构建
+
+默认行为就是监视整个项目根目录，任何文件改动都会触发项目的增量编译。
+
+```bash
+$ xmake watch
+watching /private/tmp/test/src/** ..
+watching /private/tmp/test/* ..
+/private/tmp/test/src/main.cpp modified
+[ 25%]: ccache compiling.release src/main.cpp
+[ 50%]: linking.release test
+[100%]: build ok!
+```
+
+### 监视指定目录
+
+我们也可以监视指定的代码目录，缩小监视范围，提升监视性能。
+
+```bash
+$ xmake watch -d src
+$ xmake watch -d "src;tests/*"
+```
+
+上面的命令，会去递归监视所有子目录，如果想要紧紧监视当前目录下的文件，不进行递归监视，可以使用下面的命令。
+
+```bash
+$ xmake watch -p src
+$ xmake watch -p "src;tests/*"
+```
+
+### 监视并运行指定命令
+
+如果想在自动构建后，还想自动运行构建的程序，我们可以使用自定义的命令集。
+
+```bash
+$ xmake watch -c "xmake; xmake run"
+```
+
+上面的命令列表是作为字符串传递，这对于复杂命令参数，需要转义比较繁琐不够灵活，那么我们可以使用下面的方式进行任意命令的设置。
+
+```bash
+$ xmake watch -- echo hello xmake!
+$ xmake watch -- xmake run --help
+```
+
+### 监视并运行目标程序
+
+尽管我们可以通过自定义命令来实现目标程序的自动运行，但是我们也提供了更加方便的参数来实现这个行为。
+
+```bash
+$ xmake watch -r
+$ xmake watch --run
+[100%]: build ok!
+hello world!
+```
+
+### 监视并运行 lua 脚本
+
+我们还可以监视文件更新后，运行指定的 lua 脚本，实现更加灵活复杂的命令定制。
+
+```bash
+$ xmake watch -s /tmp/test.lua
+```
+
+我们还可以再脚本中获取所有更新的文件路径列表和事件。
+
+```lua
+function main(events)
+    -- TODO handle events
+end
+```
+
 ## 宏记录和回放
 
 ### 简介
@@ -375,7 +453,7 @@ $ xmake f -p iphoneos -a x86_64
 $ xmake p
 
 # 结束宏记录，这里不设置宏名字，所以记录的是一个匿名宏
-xmake macro --end 
+xmake macro --end
 ```
 
 ### 回放
@@ -447,7 +525,7 @@ function main()
     os.exec("xmake f -p iphoneos -a i386")
     os.exec("xmake p")
     os.exec("xmake f -p iphoneos -a x86_64")
-    os.exec("xmake p")  
+    os.exec("xmake p")
 end
 ```
 
@@ -470,7 +548,7 @@ XMake 提供了一些内置的宏脚本，来简化我们的日常开发工作�
 例如，我们可以使用 `package` 宏来对`iphoneos`平台的所有架构，一次性批量构建和打包：
 
 ```console
-$ xmake macro package -p iphoneos 
+$ xmake macro package -p iphoneos
 ```
 
 ### 高级的宏脚本编写
@@ -496,7 +574,7 @@ local options =
 -- package all
 --
 -- .e.g
--- xmake m package 
+-- xmake m package
 -- xmake m package -f "-m debug"
 -- xmake m package -p linux
 -- xmake m package -p iphoneos -f "-m debug --xxx ..." -o /tmp/xxx
@@ -545,16 +623,16 @@ function main(argv)
             -- get all modes
             local modedirs = os.match(format("%s/%s.pkg/lib/*", outputdir, target:name()), true)
             for _, modedir in ipairs(modedirs) do
-                
+
                 -- get mode
                 local mode = path.basename(modedir)
 
                 -- make lipo arguments
                 local lipoargs = nil
                 for _, arch in ipairs(platform.archs(plat)) do
-                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile())) 
+                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile()))
                     if os.isfile(archfile) then
-                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile) 
+                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile)
                     end
                 end
                 if lipoargs then

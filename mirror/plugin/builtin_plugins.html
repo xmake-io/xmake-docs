@@ -304,6 +304,56 @@ The information of target(tbox):
 <p>Or run</p>
 <pre><code class="lang-bash">$ xmake show --help
 </code></pre>
+<h2 id="watchingforfileupdates">Watching for file updates</h2>
+<p>New in v2.7.1 is the <code>xmake watch</code> plugin command, which can automatically monitor project files for updates and then trigger an automatic build or run some custom commands.</p>
+<p>This is often used for personal development to enable fast, real-time incremental builds without the need to manually execute the build command each time, improving development efficiency.</p>
+<h3 id="buildautomaticallyafteraprojectupdate">Build automatically after a project update</h3>
+<p>The default behaviour is to monitor the entire project root directory and any file changes will trigger an incremental build of the project.</p>
+<pre><code class="lang-bash">$ xmake watch
+watching /private/tmp/test/src/** .
+watching /private/tmp/test/* ...
+/private/tmp/test/src/main.cpp modified
+[ 25%]: ccache compiling.release src/main.cpp
+[ 50%]: linking.release test
+[ 100%]: build ok!
+```&#39;&#39;
+
+### Monitoring a specific directory
+
+We can also monitor specific code directories to narrow down the scope of monitoring and improve performance.
+
+```bash
+$ xmake watch -d src
+$ xmake watch -d "src;tests/*"
+</code></pre>
+<p>The above command will recursively watch all subdirectories. If you want to keep a tight watch on the files in the current directory and not do recursive monitoring, you can use the following command.</p>
+<pre><code class="lang-bash">$ xmake watch -p src
+$ xmake watch -p "src;tests/*"
+</code></pre>
+<h3 id="watchandrunthespecifiedcommand">Watch and run the specified command</h3>
+<p>If you want to run the build automatically even after the automatic build, we can use a custom command set.</p>
+<pre><code class="lang-bash">$ xmake watch -c "xmake; xmake run"
+</code></pre>
+<p>The above list of commands is passed as a string, which is not flexible enough for complex command arguments that need to be escaped rather tediously, so we can use the following for arbitrary commands.</p>
+<pre><code class="lang-bash">$ xmake watch -- echo hello xmake!
+$ xmake watch -- xmake run --help
+</code></pre>
+<h3 id="watchingandrunningthetargetprogram">Watching and running the target program</h3>
+<p>Although we can automate the running of the target program with custom commands, we also provide more convenient arguments to achieve this behaviour.</p>
+<pre><code class="lang-bash">$ xmake watch -r
+$ xmake watch --run
+[100%]: build ok!
+hello world!
+</code></pre>
+<h3 id="watchingandrunningluascripts">Watching and running lua scripts</h3>
+<p>We can also watch for file updates and then run the specified lua script for more flexible and complex command customisation.</p>
+<pre><code class="lang-bash">$ xmake watch -s /tmp/test.lua
+</code></pre>
+<p>We can also get a list of all updated file paths and events in the script again.</p>
+<pre><code class="lang-lua">function main(events)
+    -- TODO handle events
+end
+</code></pre>
 <h2 id="macrosrecordingandplayback">Macros Recording and Playback</h2>
 <h3 id="introduction">Introduction</h3>
 <p>We can record and playback our xmake commands and save as macro quickly using this plugin.</p>
@@ -331,7 +381,7 @@ $ xmake f -p iphoneos -a x86_64
 $ xmake p
 
 # stop to record and  save as anonymous macro
-xmake macro --end 
+xmake macro --end
 </code></pre>
 <h3 id="playbackmacro">Playback Macro</h3>
 <pre><code class="lang-bash"># playback the previous anonymous macro
@@ -377,7 +427,7 @@ $ xmake macro --export=/xxx/macrodir
     os.exec("xmake f -p iphoneos -a i386")
     os.exec("xmake p")
     os.exec("xmake f -p iphoneos -a x86_64")
-    os.exec("xmake p")  
+    os.exec("xmake p")
 end
 </code></pre>
 <p>Import this macro script to xmake.</p>
@@ -389,7 +439,7 @@ end
 <h3 id="builtinmacros">Builtin Macros</h3>
 <p>XMake supports some builtins macros to simplify our jobs.</p>
 <p>For example, we use <code>package</code> macro to package all architectures of the iphoneos platform just for once.</p>
-<pre><code class="lang-bash">$ xmake macro package -p iphoneos 
+<pre><code class="lang-bash">$ xmake macro package -p iphoneos
 </code></pre>
 <h3 id="advancemacroscript">Advance Macro Script</h3>
 <p>Let&#39;s see the <code>package</code> macro script:</p>
@@ -410,7 +460,7 @@ local options =
 -- package all
 --
 -- .e.g
--- xmake m package 
+-- xmake m package
 -- xmake m package -f "-m debug"
 -- xmake m package -p linux
 -- xmake m package -p iphoneos -f "-m debug --xxx ..." -o /tmp/xxx
@@ -466,9 +516,9 @@ function main(argv)
                 -- make lipo arguments
                 local lipoargs = nil
                 for _, arch in ipairs(platform.archs(plat)) do
-                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile())) 
+                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile()))
                     if os.isfile(archfile) then
-                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile) 
+                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile)
                     end
                 end
                 if lipoargs then
