@@ -937,6 +937,8 @@ target("class")
     add_files("src/*.cpp", "src/*.mpp")
 </code></pre>
 <p>For more examples, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules">C++ Modules</a></p>
+<p>The v2.7.1 release has refactored and upgraded the C++20 module implementation to include support for Headerunits,<br>which allows us to introduce Stl and user header modules into the module.</p>
+<p>The relevant patch is available at: <a href="https://github.com/xmake-io/xmake/pull/2641">#2641</a>.</p>
 <h3 id="mergestaticlibraries">Merge static libraries</h3>
 <h4 id="automaticallymergetargetlibraries">Automatically merge target libraries</h4>
 <p>After 2.5.8, we can enable automatic merging of all dependent static libraries by setting the <code>build.merge_archive</code> strategy, for example:</p>

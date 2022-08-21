@@ -940,6 +940,8 @@ target("class")
     add_files("src/*.cpp", "src/*.mpp")
 </code></pre>
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules">C++ Modules</a></p>
+<p>v2.7.1 版本对 C++20 模块的实现进行了重构和升级，新增了对 Headerunits 的支持，我们可以在模块中引入 Stl 和 用户头文件模块。</p>
+<p>相关的补丁见：<a href="https://github.com/xmake-io/xmake/pull/2641">#2641</a>。</p>
 <h3 id="">合并静态库</h3>
 <h4 id="target">自动合并 target 库</h4>
 <p>2.5.8 之后，我们可以通过设置 <code>build.merge_archive</code> 策略，启用自动合并依赖的所有静态库，例如：</p>

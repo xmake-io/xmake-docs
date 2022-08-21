@@ -1257,6 +1257,10 @@ target("class")
 
 更多例子见：[C++ Modules](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules)
 
+v2.7.1 版本对 C++20 模块的实现进行了重构和升级，新增了对 Headerunits 的支持，我们可以在模块中引入 Stl 和 用户头文件模块。
+
+相关的补丁见：[#2641](https://github.com/xmake-io/xmake/pull/2641)。
+
 ### 合并静态库
 
 #### 自动合并 target 库

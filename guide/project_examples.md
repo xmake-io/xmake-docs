@@ -1252,6 +1252,11 @@ target("class")
 
 For more examples, see: [C++ Modules](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules)
 
+The v2.7.1 release has refactored and upgraded the C++20 module implementation to include support for Headerunits,
+which allows us to introduce Stl and user header modules into the module.
+
+The relevant patch is available at: [#2641](https://github.com/xmake-io/xmake/pull/2641).
+
 ### Merge static libraries
 
 #### Automatically merge target libraries
