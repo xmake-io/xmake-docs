@@ -2311,6 +2311,15 @@ target("test")
     add_headerfiles("src/(tbox/*.h)", {prefixdir = "include"})
 ```
 
+v2.7.1 之后，我们可以通过 `{install = false}` 参数，禁用默认的头文件安装行为，仅仅对设置的头文件用于 project generator 的文件列表展示和编辑，例如 vs project。
+
+```lua
+add_headerfiles("src/foo.h")
+add_headerfiles("src/test.h", {install = false})
+```
+
+上面两个头文件，在 vs 工程中都会展示出来，但是仅仅 foo.h 会被发布安装到系统。
+
 ### target:set_configdir
 
 #### 设置模板配置文件的输出目录

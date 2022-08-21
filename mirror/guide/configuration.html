@@ -99,9 +99,7 @@
 <h3 id="currenthost">Current Host</h3>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
-<p><p class="tip"><br>    XMake will detect the current host platform automatically and build project.<br></p>
-
-</p>
+<p>!> XMake will detect the current host platform automatically and build project.</p>
 <h3 id="linux">Linux</h3>
 <pre><code class="lang-bash">$ xmake f -p linux [-a i386|x86_64]
 $ xmake
@@ -124,6 +122,11 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p iphoneos --appledev=simulator
 $ xmake f -p watchos --appledev=simulator
 $ xmake f -p appletvos --appledev=simulator
+</code></pre>
+<h3 id="maccatalyst">Mac Catalyst</h3>
+<p>We can also specify to build Mac Catalyst programs.</p>
+<pre><code class="lang-bash">$ xmake f --appledev=catalyst
+`
 </code></pre>
 <h3 id="windows">Windows</h3>
 <pre><code class="lang-bash">$ xmake f -p windows [-a x86|x64]

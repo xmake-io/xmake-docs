@@ -321,6 +321,12 @@ Archiving files ..
 Uploading files with 1372 bytes ..
 <remote_build_client>: sync files ok!
 </code></pre>
+<h3 id="pullremotefiles">Pull remote files</h3>
+<p>In version v2.7.1, we added a parameter to pull the remote specified file.<br>Usually, we can use it to pull the target file after the build and download the compiled library file to the local.</p>
+<p>For example:</p>
+<pre><code class="lang-bash">xmake service --pull &#39;build/**&#39; outputdir
+</code></pre>
+<p>We can specify the remote path <code>build/**</code> to pull all matching files to the local outputdir directory.</p>
 <h3 id="disconnectfromremote">Disconnect from remote</h3>
 <p>For the current project, disconnect the connection, which only affects the current project, and other projects can still be connected and compiled at the same time.</p>
 <pre><code class="lang-console">$ xmake service --disconnect

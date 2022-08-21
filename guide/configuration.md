@@ -17,9 +17,7 @@ And if you want to known more options, please run: `xmake f --help`。
 $ xmake
 ```
 
-<p class="tip">
-    XMake will detect the current host platform automatically and build project.
-</p>
+!> XMake will detect the current host platform automatically and build project.
 
 ### Linux
 
@@ -62,6 +60,14 @@ $ xmake f -p iphoneos --appledev=simulator
 $ xmake f -p watchos --appledev=simulator
 $ xmake f -p appletvos --appledev=simulator
 ```
+
+### Mac Catalyst
+
+We can also specify to build Mac Catalyst programs.
+
+```bash
+$ xmake f --appledev=catalyst
+````
 
 ### Windows
 

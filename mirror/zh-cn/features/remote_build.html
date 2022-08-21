@@ -321,6 +321,12 @@ Archiving files ..
 Uploading files with 1372 bytes ..
 <remote_build_client>: sync files ok!
 </code></pre>
+<h3 id="">拉取远程文件</h3>
+<p>v2.7.1 版本我们新增了一个参数用于拉取远程指定的文件，通常我们可以用来完成构建后目标文件的拉取，将编译后的库文件下载到本地。</p>
+<p>例如：</p>
+<pre><code class="lang-bash">xmake service --pull &#39;build/**&#39; outputdir
+</code></pre>
+<p>我们可以指定远程路径 <code>build/**</code> ，将所有匹配的文件全部拉取到本地 outputdir 目录下。</p>
 <h3 id="">断开远程连接</h3>
 <p>针对当前工程，断开连接，这仅仅影响当前工程，其他项目还是可以同时连接和编译。</p>
 <pre><code class="lang-console">$ xmake service --disconnect

@@ -98,9 +98,7 @@
 <h3 id="">主机平台</h3>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
-<p><p class="tip"><br>    xmake将会自动探测当前主机平台，默认自动生成对应的目标程序。<br></p>
-
-</p>
+<p>!> xmake将会自动探测当前主机平台，默认自动生成对应的目标程序。</p>
 <h3 id="linux">Linux</h3>
 <pre><code class="lang-bash">$ xmake f -p linux [-a i386|x86_64]
 $ xmake
@@ -122,6 +120,10 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p iphoneos --appledev=simulator
 $ xmake f -p watchos --appledev=simulator
 $ xmake f -p appletvos --appledev=simulator
+</code></pre>
+<h3 id="maccatalyst">Mac Catalyst</h3>
+<p>我们也可以指定构建 Mac Catalyst 程序。</p>
+<pre><code class="lang-bash">$ xmake f --appledev=catalyst
 </code></pre>
 <h3 id="windows">Windows</h3>
 <pre><code class="lang-bash">$ xmake f -p windows [-a x86|x64]

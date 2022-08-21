@@ -2009,6 +2009,11 @@ target("test")
 <pre><code class="lang-lua">target("test")
     add_headerfiles("src/(tbox/*.h)", {prefixdir = "include"})
 </code></pre>
+<p>After v2.7.1, we can disable the default header file installation behavior through the <code>{install = false}</code> parameter,<br>and only display and edit the set header files for the project generator&#39;s file list, such as vs project.</p>
+<pre><code class="lang-lua">add_headerfiles("src/foo.h")
+add_headerfiles("src/test.h", {install = false})
+</code></pre>
+<p>The above two header files will be displayed in the vs project, but only foo.h will be distributed and installed on the system.</p>
 <h3 id="targetset_configdir">target:set_configdir</h3>
 <h4 id="settheoutputdirectoryofconfigurationfiles">Set the output directory of configuration files</h4>
 <p>Version 2.2.5 adds a new interface, mainly used for the output directory of the template configuration file set by the <a href="#targetadd_configfiles">add_configfiles</a> interface.</p>

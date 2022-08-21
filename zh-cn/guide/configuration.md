@@ -15,9 +15,7 @@
 $ xmake
 ```
 
-<p class="tip">
-    xmake将会自动探测当前主机平台，默认自动生成对应的目标程序。
-</p>
+!> xmake将会自动探测当前主机平台，默认自动生成对应的目标程序。
 
 ### Linux
 
@@ -57,6 +55,14 @@ $ xmake
 $ xmake f -p iphoneos --appledev=simulator
 $ xmake f -p watchos --appledev=simulator
 $ xmake f -p appletvos --appledev=simulator
+```
+
+### Mac Catalyst
+
+我们也可以指定构建 Mac Catalyst 程序。
+
+```bash
+$ xmake f --appledev=catalyst
 ```
 
 ### Windows

@@ -2303,6 +2303,16 @@ target("test")
     add_headerfiles("src/(tbox/*.h)", {prefixdir = "include"})
 ```
 
+After v2.7.1, we can disable the default header file installation behavior through the `{install = false}` parameter,
+and only display and edit the set header files for the project generator's file list, such as vs project.
+
+```lua
+add_headerfiles("src/foo.h")
+add_headerfiles("src/test.h", {install = false})
+```
+
+The above two header files will be displayed in the vs project, but only foo.h will be distributed and installed on the system.
+
 ### target:set_configdir
 
 #### Set the output directory of configuration files
