@@ -1257,6 +1257,22 @@ which allows us to introduce Stl and user header modules into the module.
 
 The relevant patch is available at: [#2641](https://github.com/xmake-io/xmake/pull/2641).
 
+Note: Normally we need to add at least one `.mpp` file to enable C++20 modules compilation, if we only have a cpp file, module compilation will not be enabled by default.
+
+However, if we just want to use the module's Headerunits feature in the cpp file, e.g. by introducing some stl Headerunits into the cpp, then we can also set `set_policy` to `.mpp`.
+then we can also force C++ Modules compilation by setting `set_policy("build.c++.modules", true)`, for example:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_languages("c++20")
+    set_policy("build.c++.modules", true)
+```
+
+
 ### Merge static libraries
 
 #### Automatically merge target libraries

@@ -1261,6 +1261,21 @@ v2.7.1 版本对 C++20 模块的实现进行了重构和升级，新增了对 He
 
 相关的补丁见：[#2641](https://github.com/xmake-io/xmake/pull/2641)。
 
+注：通常我们至少需要添加一个 `.mpp` 文件，才能开启 C++20 modules 编译，如果只有 cpp 文件，默认是不会开启模块编译的。
+
+但是，如果我们仅仅只是想在 cpp 文件中使用模块的 Headerunits 特性，比如引入一些 stl Headerunits 在 cpp 中使用，
+那么我们也可以通过设置 `set_policy("build.c++.modules", true)` 来强行开启 C++ Modules 编译，例如：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    set_languages("c++20")
+    set_policy("build.c++.modules", true)
+```
+
 ### 合并静态库
 
 #### 自动合并 target 库
