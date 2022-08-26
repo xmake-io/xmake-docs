@@ -961,10 +961,13 @@ rule("lex")
 
         -- add deps
         batchcmds:add_depfiles(sourcefile_lex)
-        batchcmds:set_depmtime(os.mtime(objectfile))
-        batchcmds:set_depcache(target:dependfile(objectfile))
+        local dependfile = target:dependfile(objectfile)
+        batchcmds:set_depmtime(os.mtime(dependfile))
+        batchcmds:set_depcache(dependfile)
     end)
 ```
+
+`add_depfiles` 设置这个目标文件依赖的源文件。`set_depmtime` 设置目标文件的修改时间，如果有任意源文件的修改时间大于它，则认为需要重新生成这个目标文件。这里使用 dependfile 而不是 objectfile 的原因见 [issues 748](https://github.com/xmake-io/xmake/issues/748)。`set_depcache` 设置存储依赖信息的文件。
 
 关于这个的详细说明和背景，见：[issue 1246](https://github.com/xmake-io/xmake/issues/1246)
 
