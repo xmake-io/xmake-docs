@@ -214,3 +214,35 @@ add_requires("cmake::Foo", {system = true, configs = {moduledirs = "mydir/cmake_
 ```
 
 Related issues: [#1632](https://github.com/xmake-io/xmake/issues/1632)
+
+#### Specifying links
+
+For cmake packages, we have added the ``link_libraries`` configuration option to allow users to customize the configuration of package dependencies and even support for target links when looking to use cmake packages.
+
+```lua
+add_requires("cmake::xxx", {configs = {link_libraries = {"abc::lib1", "abc::lib2"}}})
+```
+
+xmake automatically appends the following configuration to improve the extraction of links libraries when looking for cmake packages.
+
+```cmake
+target_link_libraries(test PRIVATE ABC::lib1 ABC::lib2)
+```
+
+#### Specify the search mode
+
+In addition, we add the following search mode configuration.
+
+```lua
+add_requires("cmake::xxx", {configs = {search_mode = "config"}})
+add_requires("cmake::xxx", {configs = {search_mode = "module"}})
+add_requires("cmake::xxx") -- both
+```
+
+Specify config search mode, for example, to tell cmake to look for packages from `XXXConfig.cmake`.
+
+xmake will automatically append the following configuration internally when it looks for cmake packages.
+
+```cmake
+find_package(ABC CONFIG REQUIRED)
+```

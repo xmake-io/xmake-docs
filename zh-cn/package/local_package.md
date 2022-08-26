@@ -215,3 +215,35 @@ add_requires("cmake::Foo", {system = true, configs = {moduledirs = "mydir/cmake_
 ```
 
 相关 issues: [#1632](https://github.com/xmake-io/xmake/issues/1632)
+
+#### 指定链接项
+
+对于 cmake 包，我们新增了 `link_libraries` 配置选项，让用户在查找使用 cmake 包的时候，可以自定义配置包依赖的链接库，甚至对 target 链接的支持。
+
+```lua
+add_requires("cmake::xxx", {configs = {link_libraries = {"abc::lib1", "abc::lib2"}}})
+```
+
+xmake 在查找 cmake 包的时候，会自动追加下面的配置，改进对 links 库的提取。
+
+```cmake
+target_link_libraries(test PRIVATE ABC::lib1 ABC::lib2)
+```
+
+#### 指定搜索模式
+
+另外，我们增加的搜索模式配置：
+
+```lua
+add_requires("cmake::xxx", {configs = {search_mode = "config"}})
+add_requires("cmake::xxx", {configs = {search_mode = "module"}})
+add_requires("cmake::xxx") -- both
+```
+
+比如指定 config 搜索模式，告诉 cmake 从 `XXXConfig.cmake` 中查找包。
+
+xmake 在查找 cmake 包的时候，内部会自动追加下面的配置。
+
+```cmake
+find_package(ABC CONFIG REQUIRED)
+```
