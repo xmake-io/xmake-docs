@@ -28,3 +28,4 @@ so that the xmake project and the community will grow stronger.
 | [Alvin](https://github.com/idealvin) | [co](https://github.com/idealvin/co) | A go-style coroutine library in C++11. Xmake is nice! |
 | [ekko](https://github.com/ekkone) | 电网融合终端linux应用，个人使用 | 相比Makefile和Cmake简洁易懂太多了，构建十分高效，并发编译速度比公司用的cmake快一个数量级，希望发展越来越好 |
 | [合宙通信](https://www.openluat.com/) | https://gitee.com/openLuat/luatos-soc-air101                 | xmake 是非常简洁，高效，方便的C/C++构建工具，节省很多时间 |
+| [Akselmo](https://codeberg.org/akselmo) | [Artificial Rage](https://codeberg.org/akselmo/artificial-rage), a simple FPS game and (probably) an FPS game engine in future | Switched from cmake to xmake. The ease of use is great, and being able to generate cmake files for tools that require it is a cherry on top. Highly recommend!
