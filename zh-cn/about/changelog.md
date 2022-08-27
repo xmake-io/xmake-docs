@@ -1,4 +1,34 @@
 
+## v2.7.1
+
+### 新特性
+
+* [#2555](https://github.com/xmake-io/xmake/issues/2555): 添加 fwatcher 模块和 `xmake watch` 插件命令
+* 添加 `xmake service --pull 'build/**' outputdir` 命令去拉取远程构建服务器上的文件
+* [#2641](https://github.com/xmake-io/xmake/pull/2641): 改进 C++20 模块, 支持 headerunits 和 project 生成
+* [#2679](https://github.com/xmake-io/xmake/issues/2679): 支持 Mac Catalyst 构建
+
+### 改进
+
+* [#2576](https://github.com/xmake-io/xmake/issues/2576): 改进从 cmake 中查找包，提供更过灵活的可选配置
+* [#2577](https://github.com/xmake-io/xmake/issues/2577): 改进 add_headerfiles()，增加 `{install = false}` 支持
+* [#2603](https://github.com/xmake-io/xmake/issues/2603): 为 ccache 默认禁用 `-fdirectives-only`
+* [#2580](https://github.com/xmake-io/xmake/issues/2580): 设置 stdout 到 line 缓冲输出
+* [#2571](https://github.com/xmake-io/xmake/issues/2571): 改进分布式编译的调度算法，增加 cpu/memory 状态权重
+* [#2410](https://github.com/xmake-io/xmake/issues/2410): 改进 cmakelists 生成
+* [#2690](https://github.com/xmake-io/xmake/issues/2690): 改机传递 toolchains 到包
+* [#2686](https://github.com/xmake-io/xmake/issues/2686): 改进 armcc/armclang 支持增量编译
+* [#2562](https://github.com/xmake-io/xmake/issues/2562): 改进 rc.exe 对引用文件依赖的解析和增量编译支持
+* 改进默认的并行构建任务数
+
+### Bugs 修复
+
+* [#2614](https://github.com/xmake-io/xmake/issues/2614): 为 msvc 修复构建 submodules2 测试工程
+* [#2620](https://github.com/xmake-io/xmake/issues/2620): 修复构建缓存导致的增量编译问题
+* [#2177](https://github.com/xmake-io/xmake/issues/2177): 修复 python.library 在 macOS 上段错误崩溃
+* [#2708](https://github.com/xmake-io/xmake/issues/2708): 修复 mode.coverage 规则的链接错误
+* 修复 ios/macOS framework 和 application 的 rpath 加载路径
+
 ## v2.6.9
 
 ### 新特性

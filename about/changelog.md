@@ -1,4 +1,34 @@
 
+## v2.7.1
+
+### New features
+
+* [#2555](https://github.com/xmake-io/xmake/issues/2555): Add fwatcher module and `xmake watch` plugin command
+* Add `xmake service --pull 'build/**' outputdir` to pull the given files in remote server
+* [#2641](https://github.com/xmake-io/xmake/pull/2641): Improve C++20 modules, support headerunits and project generators
+* [#2679](https://github.com/xmake-io/xmake/issues/2679): Support Mac Catalyst
+
+### Changes
+
+* [#2576](https://github.com/xmake-io/xmake/issues/2576): More flexible package fetching from cmake
+* [#2577](https://github.com/xmake-io/xmake/issues/2577): Improve add_headerfiles(), add `{install = false}` support
+* [#2603](https://github.com/xmake-io/xmake/issues/2603): Disable `-fdirectives-only` for ccache by default
+* [#2580](https://github.com/xmake-io/xmake/issues/2580): Set stdout to line buffering
+* [#2571](https://github.com/xmake-io/xmake/issues/2571): Improve task scheduling for parallel and distributed compilation based on memory/cpu usage
+* [#2410](https://github.com/xmake-io/xmake/issues/2410): Improve cmakelists generator
+* [#2690](https://github.com/xmake-io/xmake/issues/2690): Improve to pass toolchains to packages
+* [#2686](https://github.com/xmake-io/xmake/issues/2686): Support for incremental compilation and parse header file deps for keil/armcc/armclang
+* [#2562](https://github.com/xmake-io/xmake/issues/2562): Improve include deps for rc.exe
+* Improve the default parallel building jobs number
+
+### Bugs fixed
+
+* [#2614](https://github.com/xmake-io/xmake/issues/2614): Fix building submodules2 tests for msvc
+* [#2620](https://github.com/xmake-io/xmake/issues/2620): Fix build cache for incremental compilation
+* [#2177](https://github.com/xmake-io/xmake/issues/2177): Fix python.library segmentation fault for macosx
+* [#2708](https://github.com/xmake-io/xmake/issues/2708): Fix link error for mode.coverage rule
+* Fix rpath for macos/iphoneos frameworks and application
+
 ## v2.6.9
 
 ### New features

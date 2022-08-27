@@ -90,7 +90,36 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v269">v2.6.9</h2>
+    <h2 id="v271">v2.7.1</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/2555">#2555</a>: Add fwatcher module and <code>xmake watch</code> plugin command</li>
+<li>Add <code>xmake service --pull &#39;build/**&#39; outputdir</code> to pull the given files in remote server</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2641">#2641</a>: Improve C++20 modules, support headerunits and project generators</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2679">#2679</a>: Support Mac Catalyst</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/2576">#2576</a>: More flexible package fetching from cmake</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2577">#2577</a>: Improve add_headerfiles(), add <code>{install = false}</code> support</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2603">#2603</a>: Disable <code>-fdirectives-only</code> for ccache by default</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2580">#2580</a>: Set stdout to line buffering</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2571">#2571</a>: Improve task scheduling for parallel and distributed compilation based on memory/cpu usage</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2410">#2410</a>: Improve cmakelists generator</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2690">#2690</a>: Improve to pass toolchains to packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2686">#2686</a>: Support for incremental compilation and parse header file deps for keil/armcc/armclang</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2562">#2562</a>: Improve include deps for rc.exe</li>
+<li>Improve the default parallel building jobs number</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/2614">#2614</a>: Fix building submodules2 tests for msvc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2620">#2620</a>: Fix build cache for incremental compilation</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2177">#2177</a>: Fix python.library segmentation fault for macosx</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2708">#2708</a>: Fix link error for mode.coverage rule</li>
+<li>Fix rpath for macos/iphoneos frameworks and application</li>
+</ul>
+<h2 id="v269">v2.6.9</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/2474">#2474</a>: Add icx and dpcpp toolchains</li>
