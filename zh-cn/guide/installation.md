@@ -113,6 +113,15 @@ sudo dnf copr enable waruqi/xmake
 sudo dnf install xmake
 ```
 
+## Gentoo
+
+1. 参考[这里](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users)将GURU添加到你的系统仓库
+2. 安装dev-util/xmake
+
+```bash
+sudo emerge -a --autounmask dev-util/xmake
+```
+
 ## 其他Linux
 
 先从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载xmake-x.x.x.gz.run自安装包
