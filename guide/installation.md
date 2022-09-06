@@ -96,6 +96,15 @@ sudo dnf copr enable waruqi/xmake
 sudo dnf install xmake
 ```
 
+## Gentoo
+
+1. Refer to [here](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) to add GURU to your system repository
+2. Install dev-util/xmake
+
+```bash
+sudo emerge -a --autounmask dev-util/xmake
+```
+
 ## Other Linux
 
 Download xmake `xmake-x.x.x.gz.run` install package from [Releases](https://github.com/xmake-io/xmake/releases) 
