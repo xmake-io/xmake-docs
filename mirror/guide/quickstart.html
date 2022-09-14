@@ -127,12 +127,18 @@
 
 </p>
 <h2 id="buildproject">Build Project</h2>
-<pre><code class="lang-bash">$ xmake
+<pre><code class="lang-bash">$ cd hello
+$ xmake
 </code></pre>
 <h2 id="runprogram">Run Program</h2>
 <pre><code class="lang-bash">$ xmake run hello
 </code></pre>
 <h2 id="debugprogram">Debug Program</h2>
+<p>To debug the hello, you need change to the debug mode and build it.</p>
+<pre><code class="lang-bash">$ xmake config -m debug 
+$ xmake
+</code></pre>
+<p>Then run the following command to debug target program.</p>
 <pre><code class="lang-bash">$ xmake run -d hello 
 </code></pre>
 <p>It will start the debugger (.e.g lldb, gdb, windbg, vsjitdebugger, ollydbg ..) to load our program.</p>
@@ -152,9 +158,8 @@ hello`main:
     0x100000f5b <+11>: callq  0x100000f64               ; symbol stub for: puts
 [lldb]$
 </code></pre>
-<p><p class="tip"><br>    You can also use short command option, for example: <code>xmake r</code> or <code>xmake run</code><br></p>
-
-</p>
+<p>To study more debug command, please click the url <a href="https://lldb.llvm.org/use/map.html">GDB to LLDB command map</a></p>
+<p>!> You can also use short command option, for example: <code>xmake r</code> or <code>xmake run</code></p>
 </article>
 </body>
 </html>

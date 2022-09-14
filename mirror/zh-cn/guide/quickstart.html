@@ -117,19 +117,23 @@
 <li>golang</li>
 <li>rust</li>
 </ul>
-<p><p class="tip"><br>    如果你想了解更多参数选项，请运行: <code>xmake create --help</code><br></p>
-
-</p>
+<p>!> 如果你想了解更多参数选项，请运行: <code>xmake create --help</code></p>
 <h2 id="">构建工程</h2>
-<pre><code class="lang-bash">$ xmake
+<pre><code class="lang-bash">$ cd hello
+$ xmake
 </code></pre>
 <h2 id="">运行程序</h2>
 <pre><code class="lang-bash">$ xmake run hello
 </code></pre>
 <h2 id="">调试程序</h2>
+<p>首先你需要切换到 debug 模式去重新编译程序。</p>
+<pre><code class="lang-bash">$ xmake config -m debug 
+$ xmake
+</code></pre>
+<p>然后执行下面的命令去开始调试：</p>
 <pre><code class="lang-bash">$ xmake run -d hello 
 </code></pre>
-<p>xmake将会使用系统自带的调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。</p>
+<p>Xmake 将会使用系统自带的调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。</p>
 <pre><code class="lang-bash">[lldb]$target create "build/hello"
 Current executable set to &#39;build/hello&#39; (x86_64).
 [lldb]$b main
@@ -146,9 +150,7 @@ hello`main:
     0x100000f5b <+11>: callq  0x100000f64               ; symbol stub for: puts
 [lldb]$
 </code></pre>
-<p><p class="tip"><br>    你也可以使用简写的命令行选项，例如: <code>xmake r</code> 或者 <code>xmake run</code><br></p>
-
-</p>
+<p>!> 你也可以使用简写的命令行选项，例如: <code>xmake r</code> 或者 <code>xmake run</code></p>
 </article>
 </body>
 </html>
