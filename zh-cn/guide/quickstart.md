@@ -59,7 +59,6 @@ $ xmake run hello
 
 为了更好的运行下方的 demo,你需要切换为 debug 模式,重新编译应用程序
 ```bash
-# xmake f -m debug, 短命令 f 是 config 的简短书写形式, demo 案例我们使用 config(加强记忆)
 $ xmake config -m debug 
 $ xmake
 ```
