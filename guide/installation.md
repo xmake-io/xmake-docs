@@ -209,7 +209,7 @@ sudo make uninstall
 Starting with v2.2.3, the `xmake update` command has been added to quickly update and upgrade itself. The default is to upgrade to the latest version. Of course, you can also specify to upgrade or roll back to a version:
 
 ```bash
-xmake update 2.2.4
+xmake update 2.7.1
 ```
 
 We can also specify an update to the master/dev branch version:

@@ -228,7 +228,7 @@ sudo make uninstall
 从v2.2.3版本开始，新增了`xmake update`命令，来快速进行自我更新和升级，默认是升级到最新版本，当然也可以指定升级或者回退到某个版本：
 
 ```bash
-xmake update 2.2.4
+xmake update 2.7.1
 ```
 
 我们也可以指定更新到master/dev分支版本：

@@ -38,13 +38,12 @@ target("hello")
 * golang
 * rust
 
-<p class="tip">
-    如果你想了解更多参数选项，请运行: `xmake create --help`
-</p>
+!> 如果你想了解更多参数选项，请运行: `xmake create --help`
 
 ## 构建工程
 
 ```bash
+$ cd hello
 $ xmake
 ```
 
@@ -56,11 +55,20 @@ $ xmake run hello
 
 ## 调试程序
 
+首先你需要切换到 debug 模式去重新编译程序。
+
+```bash
+$ xmake config -m debug 
+$ xmake
+```
+
+然后执行下面的命令去开始调试：
+
 ```bash
 $ xmake run -d hello 
 ```
 
-xmake将会使用系统自带的调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。
+Xmake 将会使用系统自带的调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。
 
 ```bash
 [lldb]$target create "build/hello"
@@ -80,7 +88,5 @@ hello`main:
 [lldb]$
 ```
 
-<p class="tip">
-    你也可以使用简写的命令行选项，例如: `xmake r` 或者 `xmake run`
-</p>
+!> 你也可以使用简写的命令行选项，例如: `xmake r` 或者 `xmake run`
 
