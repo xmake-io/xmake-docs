@@ -45,6 +45,7 @@ target("hello")
 ## 构建工程
 
 ```bash
+$ cd hello
 $ xmake
 ```
 
@@ -56,7 +57,15 @@ $ xmake run hello
 
 ## 调试程序
 
+to debug the hello,you can change the mode to debug
 ```bash
+# xmake f -m debug, 短命令 f 是 config 的简短书写形式, demo 案例我们使用 config(加强记忆)
+$ xmake config -m debug 
+$ xmake
+```
+
+```bash
+#如果使用 lldb 不能正常运行,可以使用下方命令检测一下 xmake l lib.detect.find_tool lldb
 $ xmake run -d hello 
 ```
 

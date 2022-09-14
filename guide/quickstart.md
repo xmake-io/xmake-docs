@@ -64,10 +64,9 @@ $ xmake run hello
 ## Debug Program
 to debug the hello,you can change the mode to debug
 ```bash
-$ xmake clean;
 # xmake f -m debug, the f is the short command for config
 $ xmake config -m debug 
-$ xmake;
+$ xmake
 ```
 
 ```bash
