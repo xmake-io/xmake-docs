@@ -1,6 +1,18 @@
-## Usage Video
+## Study xmake by docker img
 
-[![asciicast](https://asciinema.org/a/133693.png)](https://asciinema.org/a/133693)
+
+
+```bash
+$ git clone https://github.com/xmake-io/xmake-docs.git
+$ cd xmake-docs;
+$ git checkout -b v2.7.1 origin/v2.7.1
+$ cd docker;
+$ sh build.sh  build
+$ sh build.sh  
+$ xmake --version 
+```
+
+On Ubuntu, you can directly run the above example, and run the following demo in Docker. Based on the demo, you can unify the environment and avoid running failures caused by various dependencies. On other operating systems, you can directly execute the following example demo. 
 
 ## Create Project
 
@@ -51,6 +63,7 @@ Supported Languages
 ## Build Project
 
 ```bash
+$ cd hello;
 $ xmake
 ```
 
@@ -61,12 +74,23 @@ $ xmake run hello
 ```
 
 ## Debug Program
+to debug the hello,you can change the mode to debug
+```bash
+$ xmake clean;
+# xmake f -m debug, the f is the short command for config
+$ xmake config -m debug 
+$ xmake;
+```
 
 ```bash
+#default clang in docker ,run the next command view lldb
+#xmake l lib.detect.find_tool lldb
 $ xmake run -d hello 
 ```
 
 It will start the debugger (.e.g lldb, gdb, windbg, vsjitdebugger, ollydbg ..) to load our program.
+
+to study more debug command,please click the url [GDB to LLDB command map](https://lldb.llvm.org/use/map.html)
 
 ```bash
 [lldb]$target create "build/hello"
