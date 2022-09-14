@@ -69,8 +69,6 @@ $ xmake
 ```
 
 ```bash
-#default clang in docker ,run the next command view lldb
-#xmake l lib.detect.find_tool lldb
 $ xmake run -d hello 
 ```
 
