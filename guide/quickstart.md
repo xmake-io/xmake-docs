@@ -62,19 +62,21 @@ $ xmake run hello
 ```
 
 ## Debug Program
-to debug the hello,you can change the mode to debug
+
+To debug the hello, you need change to the debug mode and build it.
+
 ```bash
 $ xmake config -m debug 
 $ xmake
 ```
+
+Then run the following command to debug target program.
 
 ```bash
 $ xmake run -d hello 
 ```
 
 It will start the debugger (.e.g lldb, gdb, windbg, vsjitdebugger, ollydbg ..) to load our program.
-
-to study more debug command,please click the url [GDB to LLDB command map](https://lldb.llvm.org/use/map.html)
 
 ```bash
 [lldb]$target create "build/hello"
@@ -94,7 +96,7 @@ hello`main:
 [lldb]$
 ```
 
-<p class="tip">
-    You can also use short command option, for example: `xmake r` or `xmake run`
-</p>
+To study more debug command, please click the url [GDB to LLDB command map](https://lldb.llvm.org/use/map.html)
+
+!> You can also use short command option, for example: `xmake r` or `xmake run`
 
