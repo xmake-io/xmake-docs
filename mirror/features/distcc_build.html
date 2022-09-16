@@ -94,7 +94,7 @@
 <p>Also, it is fully cross-platform supported, we not only support gcc/clang, but also Windows and msvc well.</p>
 <p>For cross-compilation, as long as the cross-toolchain supports, we do not require the system environment of the server. Even if the server resources of linux, macOS and Windows are mixed, distributed compilation can be well realized.</p>
 <h3 id="starttheservice">Start the service</h3>
-<p>We can specify the <code>--distcc</code> parameter to enable the distributed compilation service. Of course, if this parameter is not specified, xmake will enable all server-configured services by default.</p>
+<p>We can specify the <code>--distcc</code> parameter to enable the distributed compilation service. Of course, if this parameter is not specified, xmake will enable all server-configured services by default.<br>Here we assume that there are 2 machines as a distributed compilation server cluster, the ip addresses are 192.168.22.168, 192.168.22.169, and the two servers execute the following scripts respectively</p>
 <pre><code class="lang-console">$ xmake service --distcc
 <distcc_build_server>: listening 0.0.0.0:9093 ..
 </code></pre>
@@ -138,9 +138,14 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
     distcc_build = {
         hosts = {
             {
-                connect = "127.0.0.1:9693",
+                connect = "192.168.22.168:9693",
+                token = "590234653af52e91b9e438ed860f1a2b"
+            },
+            {
+                connect = "192.168.22.169:9693",
                 token = "590234653af52e91b9e438ed860f1a2b"
             }
+        }
         }
     }
 }

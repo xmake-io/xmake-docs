@@ -94,7 +94,7 @@
 <p>另外，它是完全跨平台支持，我们不仅支持 gcc/clang，也能够很好地支持 Windows 和 msvc。</p>
 <p>对于交叉编译，只要交叉工具链支持，我们不要求服务器的系统环境，即使混用 linux, macOS 和 Windows 的服务器资源，也可以很好的实现分布式编译。</p>
 <h3 id="">开启服务</h3>
-<p>我们可以指定 <code>--distcc</code> 参数来开启分布式编译服务，当然如果不指定这个参数，xmake 会默认开启所有服务端配置的服务。</p>
+<p>我们可以指定 <code>--distcc</code> 参数来开启分布式编译服务，当然如果不指定这个参数，xmake 会默认开启所有服务端配置的服务。<br>这里我们假设有 2 台机器作为分布式的编译服务器集群,ip 地址分别是 192.168.22.168,192.168.22.169,两台服务器分别执行下面的脚本</p>
 <pre><code class="lang-console">$ xmake service --distcc
 <distcc_build_server>: listening 0.0.0.0:9093 ..
 </code></pre>
@@ -115,7 +115,7 @@ an token(590234653af52e91b9e438ed860f1a2b) is generated, we can use this token t
 generating the config file to /Users/ruki/.xmake/service/client.conf ..
 <distcc_build_server>: listening 0.0.0.0:9693 ..
 </code></pre>
-<p>然后，我们编辑它，修复服务器的监听端口（可选）。</p>
+<p>然后，我们编辑它，修复每台服务器的监听端口（可选）。</p>
 <pre><code class="lang-bash">$ cat ~/.xmake/service/server.conf
 {
     distcc_build = {
@@ -138,10 +138,15 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
     distcc_build = {
         hosts = {
             {
-                connect = "127.0.0.1:9693",
+                connect = "192.168.22.168:9693",
+                token = "590234653af52e91b9e438ed860f1a2b"
+            },
+            {
+                connect = "192.168.22.169:9693",
                 token = "590234653af52e91b9e438ed860f1a2b"
             }
         }
+
     }
 }
 </code></pre>
