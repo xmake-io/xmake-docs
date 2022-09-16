@@ -8,6 +8,7 @@ For cross-compilation, as long as the cross-toolchain supports, we do not requir
 ### Start the service
 
 We can specify the `--distcc` parameter to enable the distributed compilation service. Of course, if this parameter is not specified, xmake will enable all server-configured services by default.
+Here we assume that there are 2 machines as a distributed compilation server cluster, the ip addresses are 192.168.22.168, 192.168.22.169, and the two servers execute the following scripts respectively
 
 ```console
 $ xmake service --distcc
@@ -72,9 +73,14 @@ $cat ~/.xmake/service/client.conf
     distcc_build = {
         hosts = {
             {
-                connect = "127.0.0.1:9693",
+                connect = "192.168.22.168:9693",
+                token = "590234653af52e91b9e438ed860f1a2b"
+            },
+            {
+                connect = "192.168.22.169:9693",
                 token = "590234653af52e91b9e438ed860f1a2b"
             }
+        }
         }
     }
 }
