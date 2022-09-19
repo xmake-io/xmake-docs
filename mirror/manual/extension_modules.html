@@ -918,7 +918,7 @@ end
 <p>The result is: <code>cxx</code>, which is the <code>c++</code> type. For the corresponding list, see: <a href="#languagesourcekinds">language.sourcekinds</a></p>
 <h3 id="libdetect">lib.detect</h3>
 <p>This module provides very powerful probing capabilities for probing programs, compilers, language features, dependencies, and more.</p>
-<p>!> The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient, for example: <code>import("lib.detect.find_package")</code> instead of <code>import("lib.detect ")</code>Import all to call.</p>
+<p>!> The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient.</p>
 <h4 id="detectfind_file">detect.find_file</h4>
 <ul>
 <li>Find files</li>
@@ -1037,146 +1037,7 @@ local version = find_programver("ccache", {command = "--version", parse = functi
 <ul>
 <li>Find package files</li>
 </ul>
-<p>This interface is also used to find library files, but it is higher than <a href="#detectfind_library">lib.detect.find_library</a>, and it is more powerful and easy to use, because it is based on the strength of the package.</p>
-<p>So what is a complete package, it contains:</p>
-<ol>
-<li>Multiple static libraries or dynamic library files</li>
-<li>Library search directory</li>
-<li>Search directory for header files</li>
-<li>Optional compile link options, such as <code>defines</code></li>
-<li>Optional version number</li>
-</ol>
-<p>For example, we look for an openssl package:</p>
-<pre><code class="lang-lua">import("lib.detect.find_package")
-
-local package = find_package("openssl")
-</code></pre>
-<p>The returned results are as follows:</p>
-<pre><code class="lang-lua">{links = {"ssl", "crypto", "z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
-</code></pre>
-<p>If the search is successful, return a table containing all the package information, if it fails, return nil</p>
-<p>The return result here can be directly passed as the parameter of <code>target:add</code>, <code>option:add</code>, which is used to dynamically increase the configuration of <code>target/option</code>:</p>
-<pre><code class="lang-lua">option("zlib")
-    set_showmenu(true)
-    before_check(function (option)
-        import("lib.detect.find_package")
-        option:add(find_package("zlib"))
-    end)
-</code></pre>
-<pre><code class="lang-lua">target("test")
-    on_load(function (target)
-        import("lib.detect.find_package")
-        target:add(find_package("zlib"))
-    end)
-</code></pre>
-<p>If third-party tools such as <code>homebrew</code>, <code>pkg-config</code> are installed on the system, then this interface will try to use them to improve the search results.</p>
-<p>We can also choose to find the package of the specified version by specifying the version number (if the package does not get the version information or there is no matching version of the package, then return nil):</p>
-<pre><code class="lang-lua">local package = find_package("openssl", {version = "1.0.1"})
-</code></pre>
-<p>The packages that are looked up by default are matched to the platform, architecture, and mode according to the following rules:</p>
-<ol>
-<li>If the parameter passed in specifies <code>{plat = "iphoneos", arch = "arm64", mode = "release"}</code>, then match first, for example: <code>find_package("openssl", {plat = "iphoneos"} )</code>.</li>
-<li>If there is a configuration file in the current project environment, try to get it from <code>config.get("plat")</code>, <code>config.get("arch")</code> and <code>config.get("mode")</code> The platform architecture is matched.</li>
-<li>Finally, the matching is done from <code>os.host()</code> and <code>os.arch()</code>, which is the platform architecture environment of the current host.</li>
-</ol>
-<p>If the system&#39;s library directory and <code>pkg-config</code> are not enough to meet the requirements and the package cannot be found, you can manually set the search path yourself:</p>
-<pre><code class="lang-lua">local package = find_package("openssl", {linkdirs = {"/usr/lib", "/usr/local/lib"}, includedirs = "/usr/local/include"})
-</code></pre>
-<p>You can also specify the link name you want to search at the same time, the header file name:</p>
-<pre><code class="lang-lua">local package = find_package("openssl", {links = {"ssl", "crypto"}, includes = "ssl.h"}})
-</code></pre>
-<p>You can even specify xmake&#39;s <code>packagedir/*.pkg</code> package directory to find the corresponding <code>openssl.pkg</code> package, which is typically used to find local packages built into the project directory.</p>
-<p>For example, the tbox project has a built-in <code>pkg/openssl.pkg</code> local package project. We can use the following script to pass in the <code>{packagedirs = ""}</code> parameter to find the local package first. If it can&#39;t find it, go to the system. package.</p>
-<pre><code class="lang-lua">target("test")
-    on_load(function (target)
-        import("lib.detect.find_package")
-        target:add(find_package("openssl", {packagedirs = path.join(os.projectdir(), "pkg")}))
-    end)
-</code></pre>
-<p>To summarize, the current search order:</p>
-<ol>
-<li>If you specify the <code>{packagedirs = ""}</code> parameter, look for the local package <code>*.pkg</code> from the path specified by this parameter.</li>
-<li>If there is a <code>detect.packages.find_xxx</code> script under <code>xmake/modules</code>, try calling this script to improve the lookup results.</li>
-<li>If vcpkg exists in the system, obtain the package from the vcpkg package management system.</li>
-<li>If the system has <code>pkg-config</code> and you are looking for a library for the system environment, try to find it using the path and link information provided by <code>pkg-config</code></li>
-<li>If the system has <code>homebrew</code> and you are looking for a library for the system environment, try to find it using the information provided by <code>brew --prefix xxx</code></li>
-<li>Find from the pathes path specified in the parameter and some known system paths <code>/usr/lib</code>, <code>/usr/include</code></li>
-</ol>
-<p>Here we need to focus on the second point, through the <code>detect.packages.find_xxx</code> script to improve the search results, many times automatic packet detection is unable to fully detect the package path,<br>Especially for the windows platform, there is no default library directory, and there is no package management app. When many libraries are installed, they are placed in the system directory, or add a registry key.</p>
-<p>Therefore, there is no uniform rule for finding it. At this time, you can customize a search script to improve the lookup mechanism of <code>find_package</code> and perform more accurate search for the specified package.</p>
-<p>In the xmake/modules/detect/packages` directory that comes with xmake, there are already many built-in package scripts for better lookup support for commonly used packages.<br>Of course, this is not enough for all users. If the package that the user needs is still not found, then you can define a search script yourself, for example:</p>
-<p>To find a package named <code>openssl</code>, you can write a script for <code>find_openssl.lua</code> placed in the project directory:</p>
-<pre><code>Projectdir
- - xmake
-   - modules
-     - detect/package/find_openssl.lua
-</code></pre><p>Then specify the directory for this module at the beginning of the project&#39;s <code>xmake.lua</code> file:</p>
-<pre><code class="lang-lua">add_moduledirs("$(projectdir)/xmake/modules")
-</code></pre>
-<p>This way xmake will be able to find custom extensions.</p>
-<p>Next we look at the implementation of <code>find_openssl.lua</code>:</p>
-<pre><code class="lang-lua">-- imports
-import("lib.detect.find_path")
-import("lib.detect.find_library")
-
--- find openssl
---
--- @param opt the package options. e.g. see the options of find_package()
---
--- @return see the return value of find_package()
---
-function main(opt)
-
-    -- for windows platform
-    --
-    -- http://www.slproweb.com/products/Win32OpenSSL.html
-    --
-    if opt.plat == "windows" then
-
-        -- init bits
-        local bits = (opt.arch == "x64" and "64" or "32")
-
-        -- init search pathes
-        local pathes = {"$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\OpenSSL %(" .. bits .. "-bit%)_is1;Inno Setup: App Path)",
-                        "$(env PROGRAMFILES)/OpenSSL",
-                        "$(env PROGRAMFILES)/OpenSSL-Win" .. bits,
-                        "C:/OpenSSL",
-                        "C:/OpenSSL-Win" .. bits}
-
-        -- find library
-        local result = {links = {}, linkdirs = {}, includedirs = {}}
-        for _, name in ipairs({"libssl", "libcrypto"}) do
-            local linkinfo = find_library(name, pathes, {suffixes = "lib"})
-            if linkinfo then
-                table.insert(result.links, linkinfo.link)
-                table.insert(result.linkdirs, linkinfo.linkdir)
-            end
-        end
-
-        -- not found?
-        if #result.links ~= 2 then
-            return
-        end
-
-        -- find include
-        table.insert(result.includedirs, find_path("openssl/ssl.h", pathes, {suffixes = "include"}))
-
-        -- ok
-        return result
-        end
-    end
-</code></pre>
-<p>Inside the windows platform to read the registry, to find the<br>specified library file, the bottom layer is actually called<br><a href="#detectfind_library">find_library</a> and other interfaces.</p>
-<p>!> In order to speed up the efficiency of frequent<br>lookups, this interface is self-contained by default. If you want to<br>disable the cache, you can execute <code>xmake f -c</code> in the project<br>directory to clear the local cache.  You can also disable the cache by<br>specifying the force parameter, forcing a re-find:</p>
-<p><code>find_package("openssl", {force = true})</code></p>
-<p>We can also test quickly with <code>xmake lua lib.detect.find_package openssl</code>.</p>
-<p>After the 2.2.5 version, the built-in interface <a href="#find_packages">find_packages</a> has been added, which can find multiple packages at<br>the same time, and can be used directly without importing by import.</p>
-<p>And after this release, support for explicitly looking for packages<br>from a specified third-party package manager, for example:</p>
-<pre><code class="lang-lua">find_package("brew::pcre2/libpcre2-8")
-</code></pre>
-<p>Since the package name of each third-party package manager is not<br>completely consistent, for example, pcre2 has three library versions<br>in homebrew, we can specify the library corresponding to libpcre2-8<br>version by the above method.</p>
-<p>In addition, for vcpkg, conan can also specify the library inside by<br>adding the <code>vcpkg::</code>, <code>conan::</code> package namespace.</p>
-<p>v2.5.9 We can also use cmake to find some packages through <code>find_package("cmake::xxx")</code>.</p>
+<p>After 2.6.x this interface is not recommended for direct use (internal use only), for library integration, please use <code>add_requires()</code> and <code>add_packages()</code> as much as possible.</p>
 <h4 id="detectfind_tool">detect.find_tool</h4>
 <ul>
 <li>Find tool</li>

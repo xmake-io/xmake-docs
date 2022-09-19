@@ -496,16 +496,6 @@ $ xmake --version
 <pre><code class="lang-lua">if (errors) raise(errors)
 </code></pre>
 <p>如果在try块中抛出异常，就会在catch和finally中进行errors信息捕获，具体见：<a href="#try-catch-finally">try-catch</a></p>
-<h3 id="find_packages">find_packages</h3>
-<h4 id="">查找依赖包</h4>
-<p>此接口是对<a href="/mirror/zh-cn/manual/extension_modules.html#detectfind_package">lib.detect.find_package</a>接口的封装，提供多个依赖包的查找支持，例如：</p>
-<pre><code class="lang-lua">target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    on_load(function (target)
-        target:add(find_packages("openssl", "zlib"))
-    end)
-</code></pre>
 <h3 id="os">os</h3>
 <p>系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
 <p>此模块也是lua的原生模块，xmake在其基础上进行了扩展，提供更多实用的接口。</p>

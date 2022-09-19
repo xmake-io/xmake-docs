@@ -497,16 +497,6 @@ $ xmake --version
 <pre><code class="lang-lua">if (errors) raise(errors)
 </code></pre>
 <p>If an exception is thrown in the try block, the error information is captured in catch and finally. See: <a href="#try-catch-finally">try-catch</a></p>
-<h3 id="find_packages">find_packages</h3>
-<h4 id="findingdependencies">Finding dependencies</h4>
-<p>This interface is a wrapper around the <a href="/mirror/manual/extension_modules.html#detectfind_package">lib.detect.find_package</a> interface and provides lookup support for multiple dependencies, for example:</p>
-<pre><code class="lang-lua">target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    on_load(function (target)
-        target:add(find_packages("openssl", "zlib"))
-    end)
-</code></pre>
 <h3 id="os">os</h3>
 <p>The system operation module belongs to the built-in module. It can be called directly by the script scope without using <a href="#import">import</a> import.</p>
 <p>This module is also a native module of lua, and xmake has been extended to provide more practical interfaces.</p>

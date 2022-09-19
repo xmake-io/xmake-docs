@@ -924,7 +924,7 @@ end
 <p>显示结果为：<code>cxx</code>，也就是<code>c++</code>类型，具体对应列表见：<a href="#languagesourcekinds">language.sourcekinds</a></p>
 <h3 id="libdetect">lib.detect</h3>
 <p>此模块提供了非常强大的探测功能，用于探测程序、编译器、语言特性、依赖包等。</p>
-<p>!> 此模块的接口分散在多个模块目录中，尽量通过导入单个接口来使用，这样效率更高，例如：<code>import("lib.detect.find_package")</code>，而不是通过<code>import("lib.detect")</code>导入所有来调用。</p>
+<p>!> 此模块的接口分散在多个模块目录中，尽量通过导入单个接口来使用，这样效率更高。</p>
 <h4 id="detectfind_file">detect.find_file</h4>
 <ul>
 <li>查找文件</li>
@@ -1045,145 +1045,7 @@ local version = find_programver("ccache", {command = "--version", parse = functi
 <ul>
 <li>查找包文件</li>
 </ul>
-<p>此接口也是用于查找库文件，但是比<a href="#detectfind_library">lib.detect.find_library</a>更加上层，也更为强大和简单易用，因为它是以包为力度进行查找。</p>
-<p>那怎样算是一个完整的包，它包含：</p>
-<ol>
-<li>多个静态库或者动态库文件</li>
-<li>库的搜索目录</li>
-<li>头文件的搜索目录</li>
-<li>可选的编译链接选项，例如：<code>defines</code>等</li>
-<li>可选的版本号</li>
-</ol>
-<p>例如我们查找一个openssl包：</p>
-<pre><code class="lang-lua">import("lib.detect.find_package")
-
-local package = find_package("openssl")
-</code></pre>
-<p>返回的结果如下：</p>
-<pre><code class="lang-lua">{links = {"ssl", "crypto", "z"}, linkdirs = {"/usr/local/lib"}, includedirs = {"/usr/local/include"}}
-</code></pre>
-<p>如果查找成功，则返回一个包含所有包信息的table，如果失败返回nil</p>
-<p>这里的返回结果可以直接作为<code>target:add</code>, <code>option:add</code>的参数传入，用于动态增加<code>target/option</code>的配置：</p>
-<pre><code class="lang-lua">option("zlib")
-    set_showmenu(true)
-    before_check(function (option)
-        import("lib.detect.find_package")
-        option:add(find_package("zlib"))
-    end)
-</code></pre>
-<pre><code class="lang-lua">target("test")
-    on_load(function (target)
-        import("lib.detect.find_package")
-        target:add(find_package("zlib"))
-    end)
-</code></pre>
-<p>如果系统上装有<code>homebrew</code>, <code>pkg-config</code>等第三方工具，那么此接口会尝试使用它们去改进查找结果。</p>
-<p>我们也可以通过指定版本号，来选择查找指定版本的包（如果这个包获取不到版本信息或者没有匹配版本的包，则返回nil）：</p>
-<pre><code class="lang-lua">local package = find_package("openssl", {version = "1.0.1"})
-</code></pre>
-<p>默认情况下查找的包是根据如下规则匹配平台，架构和模式的：</p>
-<ol>
-<li>如果参数传入指定了<code>{plat = "iphoneos", arch = "arm64", mode = "release"}</code>，则优先匹配，例如：<code>find_package("openssl", {plat = "iphoneos"})</code>。</li>
-<li>如果是在当前工程环境，存在配置文件，则优先尝试从<code>config.get("plat")</code>, <code>config.get("arch")</code>和<code>config.get("mode")</code>获取平台架构进行匹配。</li>
-<li>最后从<code>os.host()</code>和<code>os.arch()</code>中进行匹配，也就是当前主机的平台架构环境。</li>
-</ol>
-<p>如果系统的库目录以及<code>pkg-config</code>都不能满足需求，找不到包，那么可以自己手动设置搜索路径：</p>
-<pre><code class="lang-lua">local package = find_package("openssl", {linkdirs = {"/usr/lib", "/usr/local/lib"}, includedirs = "/usr/local/include"})
-</code></pre>
-<p>也可以同时指定需要搜索的链接名，头文件名：</p>
-<pre><code class="lang-lua">local package = find_package("openssl", {links = {"ssl", "crypto"}, includes = "ssl.h"}})
-</code></pre>
-<p>甚至可以指定xmake的<code>packagedir/*.pkg</code>包目录，用于查找对应的<code>openssl.pkg</code>包，一般用于查找内置在工程目录中的本地包。</p>
-<p>例如，tbox工程内置了<code>pkg/openssl.pkg</code>本地包载项目中，我们可以通过下面的脚本，传入<code>{packagedirs = ""}</code>参数优先查找本地包，如果找不到再去找系统包。</p>
-<pre><code class="lang-lua">target("test")
-    on_load(function (target)
-        import("lib.detect.find_package")
-        target:add(find_package("openssl", {packagedirs = path.join(os.projectdir(), "pkg")}))
-    end)
-</code></pre>
-<p>总结下，现在的查找顺序：</p>
-<ol>
-<li>如果指定<code>{packagedirs = ""}</code>参数，优先从这个参数指定的路径中查找本地包<code>*.pkg</code></li>
-<li>如果在<code>xmake/modules</code>下面存在<code>detect.packages.find_xxx</code>脚本，那么尝试调用此脚本来改进查找结果</li>
-<li>如果系统存在vcpkg，优先从vcpkg的包管理系统中去获取包</li>
-<li>如果系统存在<code>pkg-config</code>，并且查找的是系统环境的库，则尝试使用<code>pkg-config</code>提供的路径和链接信息进行查找</li>
-<li>如果系统存在<code>homebrew</code>，并且查找的是系统环境的库，则尝试使用<code>brew --prefix xxx</code>提供的信息进行查找</li>
-<li>从参数中指定的pathes路径和一些已知的系统路径<code>/usr/lib</code>, <code>/usr/include</code>中进行查找</li>
-</ol>
-<p>这里需要着重说下第二点，通过在<code>detect.packages.find_xxx</code>脚本来改进查找结果，很多时候自动的包探测是没法完全探测到包路径的，<br>尤其是针对windows平台，没有默认的库目录，也没有包管理app，很多库装的时候，都是自己所处放置在系统目录，或者添加注册表项。</p>
-<p>因此查找起来没有统一的规则，这个时候，就可以自定义一个查找脚本，去改进<code>find_package</code>的查找机制，对指定包进行更精准的查找。</p>
-<p>在xmake自带的<code>xmake/modules/detect/packages</code>目录下，已经有许多的内置包脚本，来对常用的包进行更好的查找支持。<br>当然这不可能满足所有用户的需求，如果用户需要的包还是找不到，那么可以自己定义一个查找脚本，例如：</p>
-<p>查找一个名为<code>openssl</code>的包，可以编写一个<code>find_openssl.lua</code>的脚本放置在工程目录：</p>
-<pre><code>projectdir
- - xmake
-   - modules
-     - detect/package/find_openssl.lua
-</code></pre><p>然后在工程的<code>xmake.lua</code>文件的开头指定下这个modules的目录：</p>
-<pre><code class="lang-lua">add_moduledirs("$(projectdir)/xmake/modules")
-</code></pre>
-<p>这样xmake就能找到自定义的扩展模块了。</p>
-<p>接下来我们看下<code>find_openssl.lua</code>的实现：</p>
-<pre><code class="lang-lua">-- imports
-import("lib.detect.find_path")
-import("lib.detect.find_library")
-
--- find openssl
---
--- @param opt   the package options. e.g. see the options of find_package()
---
--- @return      see the return value of find_package()
---
-function main(opt)
-
-    -- for windows platform
-    --
-    -- http://www.slproweb.com/products/Win32OpenSSL.html
-    --
-    if opt.plat == "windows" then
-
-        -- init bits
-        local bits = (opt.arch == "x64" and "64" or "32")
-
-        -- init search pathes
-        local pathes = {"$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\OpenSSL %(" .. bits .. "-bit%)_is1;Inno Setup: App Path)",
-                        "$(env PROGRAMFILES)/OpenSSL",
-                        "$(env PROGRAMFILES)/OpenSSL-Win" .. bits,
-                        "C:/OpenSSL",
-                        "C:/OpenSSL-Win" .. bits}
-
-        -- find library
-        local result = {links = {}, linkdirs = {}, includedirs = {}}
-        for _, name in ipairs({"libssl", "libcrypto"}) do
-            local linkinfo = find_library(name, pathes, {suffixes = "lib"})
-            if linkinfo then
-                table.insert(result.links, linkinfo.link)
-                table.insert(result.linkdirs, linkinfo.linkdir)
-            end
-        end
-
-        -- not found?
-        if #result.links ~= 2 then
-            return
-        end
-
-        -- find include
-        table.insert(result.includedirs, find_path("openssl/ssl.h", pathes, {suffixes = "include"}))
-
-        -- ok
-        return result
-    end
-end
-</code></pre>
-<p>里面对windows平台进行注册表读取，去查找指定的库文件，其底层其实也是调用的<a href="#detectfind_library">find_library</a>等接口。</p>
-<p>!> 为了加速频发查找的效率，此接口是默认自带cache的，如果要禁用cache，可以在工程目录执行<code>xmake f -c</code>清除本地cache。<br>也可以通过指定force参数，来禁用cache，强制重新查找：<code>find_package("openssl", {force = true})</code></p>
-<p>我们也可以通过<code>xmake lua lib.detect.find_package openssl</code> 来快速测试。</p>
-<p>2.2.5版本之后，新增了内置接口<a href="#find_packages">find_packages</a>，可以同时查找多个包，并且不需要通过import导入即可直接使用。</p>
-<p>并且此版本之后，支持显式的从指定第三方包管理器中查找包，例如：</p>
-<pre><code class="lang-lua">find_package("brew::pcre2/libpcre2-8")
-</code></pre>
-<p>由于每个第三方包管理器的包名不完全一致，比如pcre2在homebrew中有三个库版本，我们可以通过上面的方式，指定查找对应libpcre2-8版本的库。</p>
-<p>另外，对于vcpkg, conan也可以通过加上<code>vcpkg::</code>, <code>conan::</code>包命名空间来指定查找里面的库。</p>
-<p>v2.5.9 我们也可以通过 <code>find_package("cmake::xxx")</code> 去借助 cmake 来找一些包。</p>
+<p>2.6.x 之后，这个接口不推荐直接使用（仅供内部使用），库集成，请尽量使用 <code>add_requires()</code> 和 <code>add_packages()</code>。</p>
 <h4 id="detectfind_tool">detect.find_tool</h4>
 <ul>
 <li>查找工具</li>

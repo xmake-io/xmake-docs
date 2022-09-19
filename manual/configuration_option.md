@@ -88,14 +88,9 @@ After the detection of the dependent small option is completed, the state of the
 
 Execute this script before option detection
 
-For example: before testing, find the package by [find_package](#detect-find_package), and add information such as `links`, `includedirs` and `linkdirs` to the option.
-Then start the option detection, and then automatically link to the target after passing.
-
 ```lua
 option("zlib")
     before_check(function (option)
-        import("lib.detect.find_package")
-        option:add(find_package("zlib"))
     end)
 ```
 

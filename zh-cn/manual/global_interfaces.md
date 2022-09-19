@@ -98,18 +98,6 @@ set_xmakever("2.1.0")
 xmake内置的扩展模块都在`xmake/modules`目录下，可通过[import](#import)来导入他们，如果自己在工程里面实现了一些扩展模块，
 可以放置在这个接口指定的目录下，import也就会能找到，并且优先进行导入。
 
-例如定义一个`find_openssl.lua`的扩展模块，用于扩展内置的[lib.detect.find_package](#detect-find_package)接口，则只需要将它放置在：
-
-```
-projectdir/xmake/modules/detect/packages/find_openssl.lua
-```
-
-然后在工程`xmake.lua`下指定这个模块目录，`find_package`就可以自动找到了：
-
-```lua
-add_moduledirs("projectdir/xmake/modules")
-```
-
 ### add_plugindirs
 
 #### 添加插件目录

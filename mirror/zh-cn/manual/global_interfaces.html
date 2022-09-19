@@ -148,11 +148,6 @@ set_xmakever("2.1.0")
 <h3 id="add_moduledirs">add_moduledirs</h3>
 <h4 id="">添加模块目录</h4>
 <p>xmake内置的扩展模块都在<code>xmake/modules</code>目录下，可通过<a href="#import">import</a>来导入他们，如果自己在工程里面实现了一些扩展模块，<br>可以放置在这个接口指定的目录下，import也就会能找到，并且优先进行导入。</p>
-<p>例如定义一个<code>find_openssl.lua</code>的扩展模块，用于扩展内置的<a href="#detect-find_package">lib.detect.find_package</a>接口，则只需要将它放置在：</p>
-<pre><code>projectdir/xmake/modules/detect/packages/find_openssl.lua
-</code></pre><p>然后在工程<code>xmake.lua</code>下指定这个模块目录，<code>find_package</code>就可以自动找到了：</p>
-<pre><code class="lang-lua">add_moduledirs("projectdir/xmake/modules")
-</code></pre>
 <h3 id="add_plugindirs">add_plugindirs</h3>
 <h4 id="">添加插件目录</h4>
 <p>xmake内置的插件都是放在<code>xmake/plugins</code>目录下，但是对于用户自定义的一些特定工程的插件，如果不想放置在xmake安装目录下，那么可以在<code>xmake.lua</code>中进行配置指定的其他插件路径。</p>

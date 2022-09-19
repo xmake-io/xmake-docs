@@ -597,21 +597,6 @@ if (errors) raise(errors)
 
 如果在try块中抛出异常，就会在catch和finally中进行errors信息捕获，具体见：[try-catch](#try-catch-finally)
 
-### find_packages
-
-#### 查找依赖包
-
-此接口是对[lib.detect.find_package](/zh-cn/manual/extension_modules?id=detectfind_package)接口的封装，提供多个依赖包的查找支持，例如：
-
-```lua
-target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    on_load(function (target)
-        target:add(find_packages("openssl", "zlib"))
-    end)
-```
-
 ### os
 
 系统操作模块，属于内置模块，无需使用[import](#import)导入，可直接脚本域调用其接口。

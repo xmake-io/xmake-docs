@@ -91,14 +91,9 @@ option("test")
 
 #### 选项检测之前执行此脚本
 
-例如：在检测之前，通过[find_package](#detect-find_package)来查找包，将`links`, `includedirs`和`linkdirs`等信息添加到option中去，
-然后开始选项检测，通过后就会自动链接到target上。
-
 ```lua
 option("zlib")
     before_check(function (option)
-        import("lib.detect.find_package")
-        option:add(find_package("zlib"))
     end)
 ```
 

@@ -150,11 +150,8 @@ option("test")
 <p>!> 由于 on_check 只有在没有设置 default 值的情况下才会被执行，因此如果设置了 default 值，那么可以在 after_check 阶段处理自定义逻辑。</p>
 <h3 id="optionbefore_check">option:before_check</h3>
 <h4 id="">选项检测之前执行此脚本</h4>
-<p>例如：在检测之前，通过<a href="#detect-find_package">find_package</a>来查找包，将<code>links</code>, <code>includedirs</code>和<code>linkdirs</code>等信息添加到option中去，<br>然后开始选项检测，通过后就会自动链接到target上。</p>
 <pre><code class="lang-lua">option("zlib")
     before_check(function (option)
-        import("lib.detect.find_package")
-        option:add(find_package("zlib"))
     end)
 </code></pre>
 <h3 id="optionon_check">option:on_check</h3>

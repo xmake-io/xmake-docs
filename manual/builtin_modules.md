@@ -599,21 +599,6 @@ if (errors) raise(errors)
 
 If an exception is thrown in the try block, the error information is captured in catch and finally. See: [try-catch](#try-catch-finally)
 
-### find_packages
-
-#### Finding dependencies
-
-This interface is a wrapper around the [lib.detect.find_package](/manual/extension_modules?id=detectfind_package) interface and provides lookup support for multiple dependencies, for example:
-
-```lua
-target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    on_load(function (target)
-        target:add(find_packages("openssl", "zlib"))
-    end)
-```
-
 ### os
 
 The system operation module belongs to the built-in module. It can be called directly by the script scope without using [import](#import) import.
