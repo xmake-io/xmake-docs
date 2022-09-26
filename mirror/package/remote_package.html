@@ -193,14 +193,6 @@ add_requires("tbox dev")
 <p>Among them, configs is the configurable parameters provided by the spdlog package itself, and the configs part with builtin below is the built-in configuration parameters that all packages will have.<br>The top required section is the current configuration value of the project.</p>
 <p>!> <code>vs_runtime</code> is the setting for vs runtime under msvc. In v2.2.9, it also supports automatic inheritance of all static dependencies. That is to say, if spdlog is set to MD, then the fmt package it depends on will also inherit automatically. Set the MD.</p>
 <p>It can be seen that we have been able to customize the required packages very conveniently, but each package may have a lot of dependencies. If these dependencies are also customized, what should I do?</p>
-<p>Or take <code>spdlog->fmt</code> as an example. For <code>vs_runtime</code> this can automatically inherit the configuration, because it is a built-in configuration item, many private configurations can not be processed.</p>
-<p>At this time, we can add the fmt package by <code>add_requires</code> in advance in the outer project xmake.lua (this time you can set various configuration of your own).<br>Make sure that spdlog has been installed by <code>add_requires</code> before installation. If spdlog is installed, it will be detected automatically and used directly. It will not continue to install fmt dependencies internally.</p>
-<p>e.g:</p>
-<pre><code class="lang-lua">add_requires("fmt", {system = false, configs = {cxflags = "-fPIC"}})
-add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags = "-fPIC"}})
-</code></pre>
-<p>Our project requires spdlog to enable fPIC compilation, then its fmt dependency package also needs to be enabled, then we can add the fmt package first on the spdlog, and also set the fPIC to install it in advance.</p>
-<p>In this way, spdlog corresponds to the internal fmt dependency package, we can also flexibly set various complex custom configurations in the upper layer through <code>add_requires</code>.</p>
 <h3 id="installanyversionofthepackage">Install any version of the package</h3>
 <p>By default, <code>add_requires("zlib >1.2.x")</code> can only select the package version that exists in the <code>xmake-repo</code> repository, because each version of the package will have a sha256 check value. Use To check the integrity of the package.</p>
 <p>Therefore, there is no check value for packages of unknown version, and xmake will not let you choose to use it by default, which is not safe.</p>

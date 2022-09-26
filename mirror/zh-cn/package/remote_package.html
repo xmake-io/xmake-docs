@@ -207,14 +207,7 @@ add_requires("tbox dev")
 <p>其中，configs里面就是spdlog包自身提供的可配置参数，而下面带有builtin的configs部分，是所有包都会有的内置配置参数。<br>最上面requires部分，是项目当前配置值。</p>
 <p>!> <code>vs_runtime</code>是用于msvc下vs runtime的设置，v2.2.9版本中，还支持所有static依赖包的自动继承，也就是说spdlog如果设置了MD，那么它依赖的fmt包也会自动继承设置MD。</p>
 <p>可以看到，我们已经能够很方便的定制化获取需要的包，但是每个包自身也许有很多依赖，如果这些依赖也要各种定制化配置，怎么办？</p>
-<p>还是拿<code>spdlog->fmt</code>为例，对于<code>vs_runtime</code>这种可以自动继承配置，因为它是内置配置项，很多私有配置就没法处理了。</p>
-<p>这个时候，我们可以通过在外层项目xmake.lua提前通过<code>add_requires</code>添加fmt包（这个时候你可以设置各种自己的配置），<br>确保spdlog在在安装之前，fmt已经通过<code>add_requires</code>的配置完成了安装，那么在安装spdlog的时候，就会自动检测到，并直接使用，不会在内部继续安装fmt依赖。</p>
-<p>例如：</p>
-<pre><code class="lang-lua">add_requires("fmt", {system = false, configs = {cxflags = "-fPIC"}})
-add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags = "-fPIC"}})
-</code></pre>
-<p>我们的项目需要spdlog启用fPIC编译，那么它的fmt依赖包也需要启用，那么我们可以在spdlog的上面优先添加fmt包，也设置上fPIC提前安装掉即可。</p>
-<p>通过这种方式，spdlog对应内部的fmt依赖包，我们也可以在上层通过<code>add_requires</code>灵活的设置各种复杂的自定义配置。</p>
+<p>可以通过 <code>add_requireconfs</code> 去重写内部依赖包的配置参数。</p>
 <h3 id="">安装任意版本的包</h3>
 <p>默认情况下，<code>add_requires("zlib >1.2.x")</code> 只能选择到 <code>xmake-repo</code> 仓库中存在的包版本，因为每个版本的包，它们都会有一个sha256的校验值，用于包的完整性校验。</p>
 <p>因此，未知版本的包不存在校验值，xmake 默认是不让选择使用的，这并不安全。</p>

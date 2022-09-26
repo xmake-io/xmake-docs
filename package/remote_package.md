@@ -156,22 +156,6 @@ The top required section is the current configuration value of the project.
 
 It can be seen that we have been able to customize the required packages very conveniently, but each package may have a lot of dependencies. If these dependencies are also customized, what should I do?
 
-Or take `spdlog->fmt` as an example. For `vs_runtime` this can automatically inherit the configuration, because it is a built-in configuration item, many private configurations can not be processed.
-
-At this time, we can add the fmt package by `add_requires` in advance in the outer project xmake.lua (this time you can set various configuration of your own).
-Make sure that spdlog has been installed by `add_requires` before installation. If spdlog is installed, it will be detected automatically and used directly. It will not continue to install fmt dependencies internally.
-
-e.g:
-
-```lua
-add_requires("fmt", {system = false, configs = {cxflags = "-fPIC"}})
-add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags = "-fPIC"}})
-```
-
-Our project requires spdlog to enable fPIC compilation, then its fmt dependency package also needs to be enabled, then we can add the fmt package first on the spdlog, and also set the fPIC to install it in advance.
-
-In this way, spdlog corresponds to the internal fmt dependency package, we can also flexibly set various complex custom configurations in the upper layer through `add_requires`.
-
 ### Install any version of the package
 
 By default, `add_requires("zlib >1.2.x")` can only select the package version that exists in the `xmake-repo` repository, because each version of the package will have a sha256 check value. Use To check the integrity of the package.

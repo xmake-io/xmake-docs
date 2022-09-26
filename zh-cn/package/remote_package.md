@@ -183,21 +183,7 @@ xmake require --info spdlog
 
 可以看到，我们已经能够很方便的定制化获取需要的包，但是每个包自身也许有很多依赖，如果这些依赖也要各种定制化配置，怎么办？
 
-还是拿`spdlog->fmt`为例，对于`vs_runtime`这种可以自动继承配置，因为它是内置配置项，很多私有配置就没法处理了。
-
-这个时候，我们可以通过在外层项目xmake.lua提前通过`add_requires`添加fmt包（这个时候你可以设置各种自己的配置），
-确保spdlog在在安装之前，fmt已经通过`add_requires`的配置完成了安装，那么在安装spdlog的时候，就会自动检测到，并直接使用，不会在内部继续安装fmt依赖。
-
-例如：
-
-```lua
-add_requires("fmt", {system = false, configs = {cxflags = "-fPIC"}})
-add_requires("spdlog", {system = false, configs = {fmt_external = true, cxflags = "-fPIC"}})
-```
-
-我们的项目需要spdlog启用fPIC编译，那么它的fmt依赖包也需要启用，那么我们可以在spdlog的上面优先添加fmt包，也设置上fPIC提前安装掉即可。
-
-通过这种方式，spdlog对应内部的fmt依赖包，我们也可以在上层通过`add_requires`灵活的设置各种复杂的自定义配置。
+可以通过 `add_requireconfs` 去重写内部依赖包的配置参数。
 
 ### 安装任意版本的包
 
