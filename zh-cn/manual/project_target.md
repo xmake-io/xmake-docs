@@ -2824,6 +2824,40 @@ $ xmake f --policies=build.optimization.lto
 
 如果开启这个策略，纳闷所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。
 
+##### package.librarydeps.strict_compatibility
+
+默认禁用，如果启用它，那么当前包和它的所有库依赖包之间会保持严格的兼容性，任何依赖包的版本更新，都会强制触发当前包的重新编译安装。
+
+以确保所有的包都是二进制兼容的，不会因为某个依赖包接口改动，导致和其他已被安装的其他包一起链接时候，发生链接和运行错误。
+
+```lua
+package("foo")
+    add_deps("bar", "zoo")
+    set_policy("package.librarydeps.strict_compatibility", true)
+```
+
+例如，如果 bar 或者 zoo 的版本有更新，那么 foo 也会重新编译安装。
+
+#### package.strict_compatibility
+
+默认禁用，如果启用它，那么当前包和其他所有依赖它的包之间会保持严格的兼容性，这个包的版本更新，都会强制触发其他父包的重新编译安装。
+
+以确保所有的包都是二进制兼容的，不会因为某个依赖包接口改动，导致和其他已被安装的其他包一起链接时候，发生链接和运行错误。
+
+
+```lua
+package("foo")
+    set_policy("package.strict_compatibility", true)
+
+package("bar")
+    add_deps("foo")
+
+package("zoo")
+    add_deps("foo")
+```
+
+例如，如果 foo 的版本有更新，那么 bar 和 zoo 都会被强制重新编译安装。
+
 ### target:set_runtimes
 
 #### 设置编译目标依赖的运行时库

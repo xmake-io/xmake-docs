@@ -2817,6 +2817,40 @@ If this policy is enabled, then all dependencies will only be fetched from the s
 
 If this policy is enabled, then all dependencies will only be downloaded and installed remotely, not fetched from the system.
 
+##### package.librarydeps.strict_compatibility
+
+Disabled by default, if enabled then strict compatibility is maintained between the current package and all its library dependencies, any version update of a dependent package will force a recompile install of the current package.
+
+This ensures that all packages are binary compatible and that no linking and runtime errors occur when linking with other installed packages due to changes to the interface of a dependent package.
+
+```lua
+package("foo")
+    add_deps("bar", "zoo")
+    set_policy("package.librarydeps.strict_compatibility", true)
+```
+
+For example, if there is an updated version of bar or zoo, then foo will also be recompiled and installed.
+
+#### package.strict_compatibility
+
+is disabled by default, if it is enabled then strict compatibility is maintained between the current package and all other packages that depend on it, and any version update of this package will force a recompile and install of the other parent packages.
+
+This ensures that all packages are binary compatible and that no linking and runtime errors occur when linking with other installed packages due to changes in the interface of a dependent package.
+
+
+```lua
+package("foo")
+    set_policy("package.strict_compatibility", true)
+
+package("bar")
+    add_deps("foo")
+
+package("zoo")
+    add_deps("foo")
+```
+
+For example, if there is an updated version of foo, then both bar and zoo will be forced to be recompiled and installed.
+
 ### target:set_runtimes
 
 #### Set the runtime library of the compilation target

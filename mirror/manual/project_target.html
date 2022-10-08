@@ -2317,6 +2317,27 @@ set_warnings("all", "extra")
 <p>If this policy is enabled, then all dependencies will only be fetched from the system and not downloaded and installed from a remote location.</p>
 <h5 id="packageinstall_only">package.install_only</h5>
 <p>If this policy is enabled, then all dependencies will only be downloaded and installed remotely, not fetched from the system.</p>
+<h5 id="packagelibrarydepsstrict_compatibility">package.librarydeps.strict_compatibility</h5>
+<p>Disabled by default, if enabled then strict compatibility is maintained between the current package and all its library dependencies, any version update of a dependent package will force a recompile install of the current package.</p>
+<p>This ensures that all packages are binary compatible and that no linking and runtime errors occur when linking with other installed packages due to changes to the interface of a dependent package.</p>
+<pre><code class="lang-lua">package("foo")
+    add_deps("bar", "zoo")
+    set_policy("package.librarydeps.strict_compatibility", true)
+</code></pre>
+<p>For example, if there is an updated version of bar or zoo, then foo will also be recompiled and installed.</p>
+<h4 id="packagestrict_compatibility">package.strict_compatibility</h4>
+<p>is disabled by default, if it is enabled then strict compatibility is maintained between the current package and all other packages that depend on it, and any version update of this package will force a recompile and install of the other parent packages.</p>
+<p>This ensures that all packages are binary compatible and that no linking and runtime errors occur when linking with other installed packages due to changes in the interface of a dependent package.</p>
+<pre><code class="lang-lua">package("foo")
+    set_policy("package.strict_compatibility", true)
+
+package("bar")
+    add_deps("foo")
+
+package("zoo")
+    add_deps("foo")
+</code></pre>
+<p>For example, if there is an updated version of foo, then both bar and zoo will be forced to be recompiled and installed.</p>
 <h3 id="targetset_runtimes">target:set_runtimes</h3>
 <h4 id="settheruntimelibraryofthecompilationtarget">Set the runtime library of the compilation target</h4>
 <p>This is a newly added interface since v2.5.1, which is used to abstractly set the runtime library that the compilation target depends on. Currently, only the abstraction of the msvc runtime library is supported, but the mapping to other compiler runtime libraries may be expanded in the future.</p>
