@@ -1060,6 +1060,54 @@ upgrading packages ..
   zlib: 1.2.10 -> 1.2.11
 1 package is upgraded!
 </code></pre>
+<h2 id="">分发和使用自定义包规则</h2>
+<p>2.7.2 版本之后，我们可以在包管理仓库中，添加自定义构架规则脚本，实现跟随包进行动态下发和安装。</p>
+<p>我们需要将自定义规则放到仓库的 <code>packages/x/xxx/rules</code> 目录中，它会跟随包一起被安装。</p>
+<ul>
+<li>在包中规则，我们不能添加 <code>on_load</code>, <code>after_load</code> 脚本，但是通常我们可以使用 <code>on_config</code> 来代替。</li>
+</ul>
+<h3 id="">添加包规则</h3>
+<p>我们需要将规则脚本添加到 rules 固定目录下，例如：packages/z/zlib/rules/foo.lua</p>
+<pre><code class="lang-lua">rule("foo")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+</code></pre>
+<h3 id="">应用包规则</h3>
+<p>使用规则的方式跟之前类似，唯一的区别就是，我们需要通过 <code>@packagename/</code> 前缀去指定访问哪个包里面的规则。</p>
+<p>具体格式：<code>add_rules("@packagename/rulename")</code>，例如：<code>add_rules("@zlib/foo")</code>。</p>
+<pre><code class="lang-lua">add_requires("zlib", {system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib")
+    add_rules("@zlib/foo")
+</code></pre>
+<h3 id="">通过包别名引用规则</h3>
+<p>如果存在一个包的别名，xmake 将优先考虑包的别名来获得规则。</p>
+<pre><code class="lang-lua">add_requires("zlib", {alias = "zlib2", system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib2")
+    add_rules("@zlib2/foo")
+</code></pre>
+<h3 id="">添加包规则依赖</h3>
+<p>我们可以使用<code>add_deps("@bar")</code>来添加相对于当前包目录的其他规则。</p>
+<p>然而，我们不能添加来自其他包的规则依赖，它们是完全隔离的，我们只能参考用户项目中由<code>add_requires</code>导入的其他包的规则。</p>
+<p>packages/z/zlib/rules/foo.lua</p>
+<pre><code class="lang-lua">rule("foo")
+    add_deps("@bar")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+</code></pre>
+<p>packages/z/zlib/rules/bar.lua</p>
+<pre><code class="lang-lua">rule("bar")
+    on_config(function (target)
+        print("bar: on_config %s", target:name())
+    end)
+</code></pre>
 <h2 id="cmakexrepo">在 CMake 中使用 Xrepo 的依赖包管理</h2>
 <p>我们新增了一个独立项目 <a href="https://github.com/xmake-io/xrepo-cmake">xrepo-cmake</a>。</p>
 <p>它是一个基于 Xrepo/Xmake 的 C/C++ 包管理器的 CMake 包装器。</p>

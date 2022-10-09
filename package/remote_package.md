@@ -1530,6 +1530,78 @@ upgrading packages ..
 1 package is upgraded!
 ```
 
+## Distributing and using custom package rules
+
+Since version 2.7.2 we have been able to add custom build rule scripts to the package management repository to enable dynamic distribution and installation following packages.
+
+We need to place the custom rules in the `packages/x/xxx/rules` directory of the repository and it will follow the package as it is installed.
+
+- For in-package rules, we cannot add `on_load`, `after_load` scripts, but we can usually use `on_config` instead.
+
+### Adding package rules
+
+We need to add the rules script to the rules fixed directory, for example: packages/z/zlib/rules/foo.lua
+
+```lua
+rule("foo")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+```
+
+### Applying package rules
+
+The rules are used in a similar way as before, the only difference being that we need to specify which package's rules to access by prefixing them with `@packagename/`.
+
+The exact format: ``add_rules("@packagename/rulename")`, e.g.: ``add_rules("@zlib/foo")`.
+
+``lua
+add_requires("zlib", {system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib")
+    add_rules("@zlib/foo")
+```
+
+### Referencing rules by package alias
+
+If a package alias exists, xmake will give preference to the package alias to get the rules.
+
+``` lua
+add_requires("zlib", {alias = "zlib2", system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib2")
+    add_rules("@zlib2/foo")
+```
+
+### Adding package rule dependencies
+
+We can use `add_deps("@bar")` to add additional rules relative to the current package directory.
+
+However, we cannot add rule dependencies from other packages, they are completely isolated and we can only refer to rules from other packages imported by `add_requires` in the user project.
+
+packages/z/zlib/rules/foo.lua
+
+```lua
+rule("foo")
+    add_deps("@bar")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+```
+
+packages/z/zlib/rules/bar.lua
+
+```lua
+rule("bar")
+    on_config(function (target)
+        print("bar: on_config %s", target:name())
+    end)
+```
+
 ## Using Xrepo's package management in CMake
 
 CMake wrapper for [Xrepo](https://xrepo.xmake.io/) C and C++ package manager.

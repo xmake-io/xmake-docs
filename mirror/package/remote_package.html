@@ -1082,6 +1082,51 @@ upgrading packages ..
   zlib: 1.2.10 -> 1.2.11
 1 package is upgraded!
 </code></pre>
+<h2 id="distributingandusingcustompackagerules">Distributing and using custom package rules</h2>
+<p>Since version 2.7.2 we have been able to add custom build rule scripts to the package management repository to enable dynamic distribution and installation following packages.</p>
+<p>We need to place the custom rules in the <code>packages/x/xxx/rules</code> directory of the repository and it will follow the package as it is installed.</p>
+<ul>
+<li>For in-package rules, we cannot add <code>on_load</code>, <code>after_load</code> scripts, but we can usually use <code>on_config</code> instead.</li>
+</ul>
+<h3 id="addingpackagerules">Adding package rules</h3>
+<p>We need to add the rules script to the rules fixed directory, for example: packages/z/zlib/rules/foo.lua</p>
+<pre><code class="lang-lua">rule("foo")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+</code></pre>
+<h3 id="applyingpackagerules">Applying package rules</h3>
+<p>The rules are used in a similar way as before, the only difference being that we need to specify which package&#39;s rules to access by prefixing them with <code>@packagename/</code>.</p>
+<p>The exact format: <code>add_rules("@packagename/rulename")`, e.g.:</code>add_rules("@zlib/foo")`.</p>
+<p><code></code>lua<br>add_requires("zlib", {system = false})<br>target("test")<br>    set_kind("binary")<br>    add_files("src/*.cpp")<br>    add_packages("zlib")<br>    add_rules("@zlib/foo")</p>
+<pre><code>
+### Referencing rules by package alias
+
+If a package alias exists, xmake will give preference to the package alias to get the rules.
+
+``` lua
+add_requires("zlib", {alias = "zlib2", system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib2")
+    add_rules("@zlib2/foo")
+</code></pre><h3 id="addingpackageruledependencies">Adding package rule dependencies</h3>
+<p>We can use <code>add_deps("@bar")</code> to add additional rules relative to the current package directory.</p>
+<p>However, we cannot add rule dependencies from other packages, they are completely isolated and we can only refer to rules from other packages imported by <code>add_requires</code> in the user project.</p>
+<p>packages/z/zlib/rules/foo.lua</p>
+<pre><code class="lang-lua">rule("foo")
+    add_deps("@bar")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+</code></pre>
+<p>packages/z/zlib/rules/bar.lua</p>
+<pre><code class="lang-lua">rule("bar")
+    on_config(function (target)
+        print("bar: on_config %s", target:name())
+    end)
+</code></pre>
 <h2 id="usingxrepospackagemanagementincmake">Using Xrepo&#39;s package management in CMake</h2>
 <p>CMake wrapper for <a href="https://xrepo.xmake.io/">Xrepo</a> C and C++ package manager.</p>
 <p>This allows using CMake to build your project, while using Xrepo to manage<br>dependent packages. This project is partially inspired by<br><a href="https://github.com/conan-io/cmake-conan">cmake-conan</a>.</p>

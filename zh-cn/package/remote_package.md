@@ -1506,6 +1506,78 @@ upgrading packages ..
 1 package is upgraded!
 ```
 
+## 分发和使用自定义包规则
+
+2.7.2 版本之后，我们可以在包管理仓库中，添加自定义构架规则脚本，实现跟随包进行动态下发和安装。
+
+我们需要将自定义规则放到仓库的 `packages/x/xxx/rules` 目录中，它会跟随包一起被安装。
+
+- 在包中规则，我们不能添加 `on_load`, `after_load` 脚本，但是通常我们可以使用 `on_config` 来代替。
+
+### 添加包规则
+
+我们需要将规则脚本添加到 rules 固定目录下，例如：packages/z/zlib/rules/foo.lua
+
+```lua
+rule("foo")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+```
+
+### 应用包规则
+
+使用规则的方式跟之前类似，唯一的区别就是，我们需要通过 `@packagename/` 前缀去指定访问哪个包里面的规则。
+
+具体格式：`add_rules("@packagename/rulename")`，例如：`add_rules("@zlib/foo")`。
+
+```lua
+add_requires("zlib", {system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib")
+    add_rules("@zlib/foo")
+```
+
+### 通过包别名引用规则
+
+如果存在一个包的别名，xmake 将优先考虑包的别名来获得规则。
+
+```lua
+add_requires("zlib", {alias = "zlib2", system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib2")
+    add_rules("@zlib2/foo")
+```
+
+### 添加包规则依赖
+
+我们可以使用`add_deps("@bar")`来添加相对于当前包目录的其他规则。
+
+然而，我们不能添加来自其他包的规则依赖，它们是完全隔离的，我们只能参考用户项目中由`add_requires`导入的其他包的规则。
+
+packages/z/zlib/rules/foo.lua
+
+```lua
+rule("foo")
+    add_deps("@bar")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+```
+
+packages/z/zlib/rules/bar.lua
+
+```lua
+rule("bar")
+    on_config(function (target)
+        print("bar: on_config %s", target:name())
+    end)
+```
+
 ## 在 CMake 中使用 Xrepo 的依赖包管理
 
 我们新增了一个独立项目 [xrepo-cmake](https://github.com/xmake-io/xrepo-cmake)。
