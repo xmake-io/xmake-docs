@@ -1512,6 +1512,8 @@ upgrading packages ..
 
 我们需要将自定义规则放到仓库的 `packages/x/xxx/rules` 目录中，它会跟随包一起被安装。
 
+但是，它也存在一些限制：
+
 - 在包中规则，我们不能添加 `on_load`, `after_load` 脚本，但是通常我们可以使用 `on_config` 来代替。
 
 ### 添加包规则

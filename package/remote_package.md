@@ -1536,6 +1536,8 @@ Since version 2.7.2 we have been able to add custom build rule scripts to the pa
 
 We need to place the custom rules in the `packages/x/xxx/rules` directory of the repository and it will follow the package as it is installed.
 
+But it has also some limits:
+
 - For in-package rules, we cannot add `on_load`, `after_load` scripts, but we can usually use `on_config` instead.
 
 ### Adding package rules

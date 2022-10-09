@@ -1085,6 +1085,7 @@ upgrading packages ..
 <h2 id="distributingandusingcustompackagerules">Distributing and using custom package rules</h2>
 <p>Since version 2.7.2 we have been able to add custom build rule scripts to the package management repository to enable dynamic distribution and installation following packages.</p>
 <p>We need to place the custom rules in the <code>packages/x/xxx/rules</code> directory of the repository and it will follow the package as it is installed.</p>
+<p>But it has also some limits:</p>
 <ul>
 <li>For in-package rules, we cannot add <code>on_load</code>, <code>after_load</code> scripts, but we can usually use <code>on_config</code> instead.</li>
 </ul>

@@ -1063,6 +1063,7 @@ upgrading packages ..
 <h2 id="">分发和使用自定义包规则</h2>
 <p>2.7.2 版本之后，我们可以在包管理仓库中，添加自定义构架规则脚本，实现跟随包进行动态下发和安装。</p>
 <p>我们需要将自定义规则放到仓库的 <code>packages/x/xxx/rules</code> 目录中，它会跟随包一起被安装。</p>
+<p>但是，它也存在一些限制：</p>
 <ul>
 <li>在包中规则，我们不能添加 <code>on_load</code>, <code>after_load</code> 脚本，但是通常我们可以使用 <code>on_config</code> 来代替。</li>
 </ul>
