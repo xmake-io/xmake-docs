@@ -750,6 +750,70 @@ rule("markdown")
     end)
 ```
 
+### rule:add_deps
+
+#### Adding rule dependencies
+
+Associated dependencies can bind a batch of rules, i.e. instead of adding rules one by one to a target using `add_rules()`, just apply a rule that will take effect for it and all its dependencies.
+
+For example
+
+```lua
+rule("foo")
+    add_deps("bar")
+
+rule("bar")
+   ...
+```
+
+We only need `add_rules("foo")` to apply both foo and bar rules.
+
+However, by default there is no order of execution between dependencies, and scripts such as `on_build_file` for foo and bar are executed in parallel, in an undefined order.
+
+To strictly control the order of execution, you can configure `add_deps("bar", {order = true})` to tell xmake that we need to execute scripts at the same level according to the order of dependencies.
+
+Example.
+
+```lua
+rule("foo")
+    add_deps("bar", {order = true})
+    on_build_file(function (target, sourcefile)
+    end)
+
+rule("bar")
+    on_build_file(function (target, sourcefile)
+    end)
+```
+
+bar's `on_build_file` will be executed first.
+
+!> To control the order of dependencies, we need xmake 2.7.2 or above to support this.
+
+However, this way of controlling dependencies only works if both foo and bar rules are custom rules, and this does not work if you want to insert your own rules to be executed before xmake's built-in rules.
+
+In this case, we need to use a more flexible dynamic rule creation and injection approach to modify the built-in rules.
+
+For example, if we want to execute the `on_build_file` script for a custom cppfront rule before the built-in `c++.build` rule, we can do this in the following way.
+
+```lua
+rule("cppfront")
+    set_extensions(".cpp2")
+    on_load(function (target)
+        local rule = target:rule("c++.build"):clone()
+        rule:add("deps", "cppfront", {order = true})
+        target:rule_add(rule)
+    end)
+    on_build_file(function (target, sourcefile, opt)
+        print("build cppfront file")
+    end)
+
+target("test")
+    set_kind("binary")
+    add_rules("cppfront")
+    add_files("src/*.cpp")
+    add_files("src/*.cpp2")
+```
+
 ### rule:add_imports
 
 #### Add imported modules for all custom scripts
