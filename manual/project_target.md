@@ -2831,7 +2831,7 @@ package("foo")
 
 For example, if there is an updated version of bar or zoo, then foo will also be recompiled and installed.
 
-#### package.strict_compatibility
+##### package.strict_compatibility
 
 is disabled by default, if it is enabled then strict compatibility is maintained between the current package and all other packages that depend on it, and any version update of this package will force a recompile and install of the other parent packages.
 

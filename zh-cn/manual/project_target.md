@@ -2838,7 +2838,7 @@ package("foo")
 
 例如，如果 bar 或者 zoo 的版本有更新，那么 foo 也会重新编译安装。
 
-#### package.strict_compatibility
+##### package.strict_compatibility
 
 默认禁用，如果启用它，那么当前包和其他所有依赖它的包之间会保持严格的兼容性，这个包的版本更新，都会强制触发其他父包的重新编译安装。
 
