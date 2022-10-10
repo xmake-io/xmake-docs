@@ -2858,6 +2858,40 @@ package("zoo")
 
 例如，如果 foo 的版本有更新，那么 bar 和 zoo 都会被强制重新编译安装。
 
+##### package.install_always
+
+每次运行 `xmake f -c` 重新配置的时候，总是会重新安装包，这对于本地第三方源码包集成时候比较有用。
+
+因为，用户可能随时需要修改第三方源码，然后重新编译集成它们。
+
+之前只能通过每次修改包版本号，来触发重新编译，但是有了这个策略，就能每次都会触发重编。
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+package("foo")
+    add_deps("cmake")
+    set_sourcedir(path.join(os.scriptdir(), "foo"))
+    set_policy("package.install_always", true)
+    on_install(function (package)
+        local configs = {}
+        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
+        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
+        import("package.tools.cmake").install(package, configs)
+    end)
+    on_test(function (package)
+        assert(package:has_cfuncs("add", {includes = "foo.h"}))
+    end)
+package_end()
+
+add_requires("foo")
+
+target("demo")
+    set_kind("binary")
+    add_files("src/main.c")
+    add_packages("foo")
+```
+
 ### target:set_runtimes
 
 #### 设置编译目标依赖的运行时库

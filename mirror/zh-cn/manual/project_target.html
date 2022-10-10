@@ -2345,7 +2345,7 @@ set_warnings("all", "extra")
     set_policy("package.librarydeps.strict_compatibility", true)
 </code></pre>
 <p>例如，如果 bar 或者 zoo 的版本有更新，那么 foo 也会重新编译安装。</p>
-<h4 id="packagestrict_compatibility">package.strict_compatibility</h4>
+<h5 id="packagestrict_compatibility">package.strict_compatibility</h5>
 <p>默认禁用，如果启用它，那么当前包和其他所有依赖它的包之间会保持严格的兼容性，这个包的版本更新，都会强制触发其他父包的重新编译安装。</p>
 <p>以确保所有的包都是二进制兼容的，不会因为某个依赖包接口改动，导致和其他已被安装的其他包一起链接时候，发生链接和运行错误。</p>
 <pre><code class="lang-lua">package("foo")
@@ -2358,6 +2358,34 @@ package("zoo")
     add_deps("foo")
 </code></pre>
 <p>例如，如果 foo 的版本有更新，那么 bar 和 zoo 都会被强制重新编译安装。</p>
+<h5 id="packageinstall_always">package.install_always</h5>
+<p>每次运行 <code>xmake f -c</code> 重新配置的时候，总是会重新安装包，这对于本地第三方源码包集成时候比较有用。</p>
+<p>因为，用户可能随时需要修改第三方源码，然后重新编译集成它们。</p>
+<p>之前只能通过每次修改包版本号，来触发重新编译，但是有了这个策略，就能每次都会触发重编。</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+package("foo")
+    add_deps("cmake")
+    set_sourcedir(path.join(os.scriptdir(), "foo"))
+    set_policy("package.install_always", true)
+    on_install(function (package)
+        local configs = {}
+        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
+        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
+        import("package.tools.cmake").install(package, configs)
+    end)
+    on_test(function (package)
+        assert(package:has_cfuncs("add", {includes = "foo.h"}))
+    end)
+package_end()
+
+add_requires("foo")
+
+target("demo")
+    set_kind("binary")
+    add_files("src/main.c")
+    add_packages("foo")
+</code></pre>
 <h3 id="targetset_runtimes">target:set_runtimes</h3>
 <h4 id="">设置编译目标依赖的运行时库</h4>
 <p>这是 v2.5.1 开始新增的接口，用于抽象化设置编译目标依赖的运行时库，目前仅仅支持对 msvc 运行时库的抽象，但后续也许会扩展对其他编译器运行时库的映射。</p>

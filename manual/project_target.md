@@ -2851,6 +2851,42 @@ package("zoo")
 
 For example, if there is an updated version of foo, then both bar and zoo will be forced to be recompiled and installed.
 
+##### package.install_always
+
+This is useful for local integration of third-party source packages,
+as the package will always be reinstalled each time `xmake f -c` is run to reconfigure it.
+
+As the user may at any time need to modify the third party source code and recompile it for integration.
+
+Previously it was only possible to trigger a recompile by changing the package version number each time,
+but with this strategy it is possible to trigger a recompile each time.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+package("foo")
+    add_deps("cmake")
+    set_sourcedir(path.join(os.scriptdir(), "foo"))
+    set_policy("package.install_always", true)
+    on_install(function (package)
+        local configs = {}
+        table.insert(configs, "-DCMAKE_BUILD_TYPE=" . (package:debug() and "Debug" or "Release"))
+        table.insert(configs, "-DBUILD_SHARED_LIBS=" ... (package:config("shared") and "ON" or "OFF"))
+        import("package.tools.cmake").install(package, configs)
+    end)
+    on_test(function (package)
+        assert(package:has_cfuncs("add", {includes = "foo.h"}))
+    end)
+package_end()
+
+add_requires("foo")
+
+target("demo")
+    set_kind("binary")
+    add_files("src/main.c")
+    add_packages("foo")
+```
+
 ### target:set_runtimes
 
 #### Set the runtime library of the compilation target
