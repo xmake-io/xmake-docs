@@ -1,3 +1,38 @@
+## v2.7.2
+
+### 新特性
+
+* [#2140](https://github.com/xmake-io/xmake/issues/2140): 支持 Windows Arm64
+* [#2719](https://github.com/xmake-io/xmake/issues/2719): 添加 `package.librarydeps.strict_compatibility` 策略严格限制包依赖兼容性
+* [#2810](https://github.com/xmake-io/xmake/pull/2810): 支持 os.execv 去执行 shell 脚本文件
+* [#2817](https://github.com/xmake-io/xmake/pull/2817): 改进规则支持依赖顺序执行
+* [#2824](https://github.com/xmake-io/xmake/pull/2824): 传递 cross-file 交叉编译环境给 meson.install 和 trybuild
+* [#2856](https://github.com/xmake-io/xmake/pull/2856): xrepo 支持从当前指定源码目录调试程序
+* [#2859](https://github.com/xmake-io/xmake/issues/2859): 改进对三方库的 trybuild 构建，利用 xmake-repo 仓库脚本更加智能化地构建三方库
+* [#2879](https://github.com/xmake-io/xmake/issues/2879): 更好的动态创建和配置 target 和 rule
+* [#2374](https://github.com/xmake-io/xmake/issues/2374): 允许 xmake 包中引入自定义规则
+* 添加 clang-cl 工具链
+
+### 改进
+
+* [#2745](https://github.com/xmake-io/xmake/pull/2745): 改进 os.cp 支持符号链接复制
+* [#2773](https://github.com/xmake-io/xmake/pull/2773): 改进 vcpkg 包安装，支持 freebsd 平台
+* [#2778](https://github.com/xmake-io/xmake/pull/2778): 改进 xrepo.env 支持 target 的运行环境加载
+* [#2783](https://github.com/xmake-io/xmake/issues/2783): 添加摘要算法选项到 WDK 的 signtool 签名工具
+* [#2787](https://github.com/xmake-io/xmake/pull/2787): 改进 json 支持空数组
+* [#2782](https://github.com/xmake-io/xmake/pull/2782): 改进查找 matlib sdk 和运行时
+* [#2793](https://github.com/xmake-io/xmake/issues/2793): 改进 mconfdialog 配置操作体验
+* [#2804](https://github.com/xmake-io/xmake/issues/2804): 安装依赖包支持 macOS arm64/x86_64 交叉编译
+* [#2809](https://github.com/xmake-io/xmake/issues/2809): 改进 msvc 的编译优化选项
+* 改进 trybuild 模式，为 meson/autoconf/cmake 提供更好的交叉编译支持
+* [#2846](https://github.com/xmake-io/xmake/discussions/2846): 改进对 configfiles 的生成
+* [#2866](https://github.com/xmake-io/xmake/issues/2866): 更好地控制 rule 规则执行顺序
+
+### Bugs 修复
+
+* [#2740](https://github.com/xmake-io/xmake/issues/2740): 修复 msvc 构建 C++ modules 卡死问题
+* [#2875](https://github.com/xmake-io/xmake/issues/2875): 修复构建 linux 驱动错误
+* [#2885](https://github.com/xmake-io/xmake/issues/2885): 修复 ccache 下，msvc 编译 pch 失败问题
 
 ## v2.7.1
 

@@ -90,7 +90,42 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v271">v2.7.1</h2>
+    <h2 id="v272">v2.7.2</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/2140">#2140</a>: Support Windows Arm64</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2719">#2719</a>: Add <code>package.librarydeps.strict_compatibility</code> to strict compatibility for package linkdeps</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2810">#2810</a>: Support os.execv to run shell script file</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2817">#2817</a>: Improve rule to support dependence order</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2824">#2824</a>: Pass cross-file to meson.install and trybuild</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2856">#2856</a>: Improve to debug package using the debug source directory</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2859">#2859</a>: Improve trybuild to build 3rd source library using xmake-repo scripts</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2879">#2879</a>: Support for dynamic creation and injection of rules and targets in script scope</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2374">#2374</a>: Allow xmake package to embed rules and scripts</li>
+<li>Add clang-cl toolchain</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/2745">#2745</a>: Improve os.cp to support symlink</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2773">#2773</a>: Improve vcpkg packages to support freebsd</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2778">#2778</a>: Improve Improve xrepo.env for target</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2783">#2783</a>: Add digest algorithm option for wdk signtool</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2787">#2787</a>: Improve json to support empty array</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2782">#2782</a>: Improve to find matlab and runtime</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2793">#2793</a>: Improve mconfdialog</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2804">#2804</a>: Support macOS arm64/x86_64 cross-compilation for installing packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2809">#2809</a>: Improve cl optimization option</li>
+<li>Improve trybuild for meson/cmake/autoconf</li>
+<li><a href="https://github.com/xmake-io/xmake/discussions/2846">#2846</a>: Improve to generate config files</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2866">#2866</a>: Better control over the order of execution of rules</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/2740">#2740</a>: Fix build c++ modules stuck and slower for msvc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2875">#2875</a>: Fix build linux driver error</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2885">#2885</a>: Fix pch not found with msvc/ccache</li>
+</ul>
+<h2 id="v271">v2.7.1</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/2555">#2555</a>: Add fwatcher module and <code>xmake watch</code> plugin command</li>

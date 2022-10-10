@@ -1,3 +1,38 @@
+## v2.7.2
+
+### New features
+
+* [#2140](https://github.com/xmake-io/xmake/issues/2140): Support Windows Arm64
+* [#2719](https://github.com/xmake-io/xmake/issues/2719): Add `package.librarydeps.strict_compatibility` to strict compatibility for package linkdeps
+* [#2810](https://github.com/xmake-io/xmake/pull/2810): Support os.execv to run shell script file
+* [#2817](https://github.com/xmake-io/xmake/pull/2817): Improve rule to support dependence order
+* [#2824](https://github.com/xmake-io/xmake/pull/2824): Pass cross-file to meson.install and trybuild
+* [#2856](https://github.com/xmake-io/xmake/pull/2856): Improve to debug package using the debug source directory
+* [#2859](https://github.com/xmake-io/xmake/issues/2859): Improve trybuild to build 3rd source library using xmake-repo scripts
+* [#2879](https://github.com/xmake-io/xmake/issues/2879): Support for dynamic creation and injection of rules and targets in script scope
+* [#2374](https://github.com/xmake-io/xmake/issues/2374): Allow xmake package to embed rules and scripts
+* Add clang-cl toolchain
+
+### Changes
+
+* [#2745](https://github.com/xmake-io/xmake/pull/2745): Improve os.cp to support symlink
+* [#2773](https://github.com/xmake-io/xmake/pull/2773): Improve vcpkg packages to support freebsd
+* [#2778](https://github.com/xmake-io/xmake/pull/2778): Improve Improve xrepo.env for target
+* [#2783](https://github.com/xmake-io/xmake/issues/2783): Add digest algorithm option for wdk signtool
+* [#2787](https://github.com/xmake-io/xmake/pull/2787): Improve json to support empty array
+* [#2782](https://github.com/xmake-io/xmake/pull/2782): Improve to find matlab and runtime
+* [#2793](https://github.com/xmake-io/xmake/issues/2793): Improve mconfdialog
+* [#2804](https://github.com/xmake-io/xmake/issues/2804): Support macOS arm64/x86_64 cross-compilation for installing packages
+* [#2809](https://github.com/xmake-io/xmake/issues/2809): Improve cl optimization option
+* Improve trybuild for meson/cmake/autoconf
+* [#2846](https://github.com/xmake-io/xmake/discussions/2846): Improve to generate config files
+* [#2866](https://github.com/xmake-io/xmake/issues/2866): Better control over the order of execution of rules
+
+### Bugs fixed
+
+* [#2740](https://github.com/xmake-io/xmake/issues/2740): Fix build c++ modules stuck and slower for msvc
+* [#2875](https://github.com/xmake-io/xmake/issues/2875): Fix build linux driver error
+* [#2885](https://github.com/xmake-io/xmake/issues/2885): Fix pch not found with msvc/ccache
 
 ## v2.7.1
 
