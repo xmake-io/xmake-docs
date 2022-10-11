@@ -379,6 +379,21 @@ add_files("*.c")
 <p>The above two methods are the same in effect, but in understanding, the first one is more intuitive. At first glance, you know that <code>add_files</code> is only set for target, not global.</p>
 <p>Therefore, proper indentation helps to better maintain xmake.lua</p>
 <p>Finally attached, tbox&#39;s <a href="https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua">xmake.lua</a> description, for reference only. .</p>
+<h3 id="codeformatting">Code formatting</h3>
+<p>The default indentation of the description field configuration syntax does not conform to the lua formatting specification, so the lua language server does not support formatting it.</p>
+<p>If you want the IDE, the editor, to support formatting indentation of the configuration better, you can do so by writing <code>do end</code> as follows</p>
+<pre><code class="lang-lua">target("bar") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+
+target("foo") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+</code></pre>
+<p>This allows the Lua LSP to format it correctly as standard lua code, whether this is required or not depends on the user&#39;s needs.</p>
+<p>If you don&#39;t have a habit of using automatic code formatting, then you don&#39;t need to do this.</p>
 <h2 id="multilevelconfiguration">Multi-level Configuration</h2>
 <p>In the script field we can import various rich extension modules by import, and in the description field we can introduce the project subdirectory through the <a href="/#/zh-cn/manual/global_interfaces?id=includes">includes</a> interface. The xmake.lua configuration.</p>
 <p>Remember: xmake&#39;s includes handles the configuration relationship according to the tree structure. The target configuration in xmake.lua in the subdirectory inherits the root domain configuration in the parent xmake.lua, for example:</p>

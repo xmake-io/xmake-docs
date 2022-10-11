@@ -375,6 +375,21 @@ add_files("*.c")
 <p>上述两种方式，效果上都是一样的，但是理解上，第一种更加直观，一看就知道<code>add_files</code>仅仅只是针对 target 设置的，并不是全局设置</p>
 <p>因此，适当的进行缩进，有助于更好的维护xmake.lua</p>
 <p>最后附上，tbox的<a href="https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua">xmake.lua</a>描述，仅供参考。。</p>
+<h3 id="">代码格式化</h3>
+<p>由于默认的描述域配置语法的缩进并不符合 lua 格式规范，因此 lua language server 是不支持对它进行格式化处理的。</p>
+<p>如果想要让 IDE，编辑器更好的对配置进行格式化缩进支持，我么可以通过 <code>do end</code> 的写法来处理：</p>
+<pre><code class="lang-lua">target("bar") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+
+target("foo") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+</code></pre>
+<p>这样，Lua LSP 就能把它作为标准的 lua 代码进行正确的格式化，是否需要这么做，看用户自己的需求。</p>
+<p>如果没有代码自动格式化的使用习惯，那就不需要这么做。</p>
 <h2 id="">多级配置</h2>
 <p>在脚本域我们可以通过import导入各种丰富的扩展模块来使用，而在描述域我们可以通过<a href="/#/zh-cn/manual/global_interfaces?id=includes">includes</a>接口，来引入项目子目录下的xmake.lua配置。</p>
 <p>记住：xmake的includes是按照tree结构来处理配置关系的，子目录下的xmake.lua里面的target配置会继承父xmake.lua中的根域配置，例如：</p>

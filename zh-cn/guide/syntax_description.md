@@ -407,6 +407,28 @@ add_files("*.c")
 
 最后附上，tbox的[xmake.lua](https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua)描述，仅供参考。。
 
+### 代码格式化
+
+由于默认的描述域配置语法的缩进并不符合 lua 格式规范，因此 lua language server 是不支持对它进行格式化处理的。
+
+如果想要让 IDE，编辑器更好的对配置进行格式化缩进支持，我么可以通过 `do end` 的写法来处理：
+
+```lua
+target("bar") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+
+target("foo") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+```
+
+这样，Lua LSP 就能把它作为标准的 lua 代码进行正确的格式化，是否需要这么做，看用户自己的需求。
+
+如果没有代码自动格式化的使用习惯，那就不需要这么做。
+
 ## 多级配置
 
 在脚本域我们可以通过import导入各种丰富的扩展模块来使用，而在描述域我们可以通过[includes](/#/zh-cn/manual/global_interfaces?id=includes)接口，来引入项目子目录下的xmake.lua配置。

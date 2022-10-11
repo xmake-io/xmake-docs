@@ -407,6 +407,28 @@ Therefore, proper indentation helps to better maintain xmake.lua
 
 Finally attached, tbox's [xmake.lua](https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua) description, for reference only. .
 
+### Code formatting
+
+The default indentation of the description field configuration syntax does not conform to the lua formatting specification, so the lua language server does not support formatting it.
+
+If you want the IDE, the editor, to support formatting indentation of the configuration better, you can do so by writing `do end` as follows
+
+```lua
+target("bar") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+
+target("foo") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+```
+
+This allows the Lua LSP to format it correctly as standard lua code, whether this is required or not depends on the user's needs.
+
+If you don't have a habit of using automatic code formatting, then you don't need to do this.
+
 ## Multi-level Configuration
 
 In the script field we can import various rich extension modules by import, and in the description field we can introduce the project subdirectory through the [includes](/#/zh-cn/manual/global_interfaces?id=includes) interface. The xmake.lua configuration.
