@@ -529,5 +529,14 @@ target("demo")
 target("demo", {kind = "binary", files = "src/*.c"})
 ```
 
+或者
+
+```lua
+target("demo", {
+    kind = "binary",
+    files = "src/*.c"
+})
+```
+
 当然，如果配置需求比较复杂的，还是原有的多行设置方式更加方便，这个就看自己的需求来评估到底使用哪种方式了。
 

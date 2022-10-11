@@ -529,5 +529,14 @@ Simplified to:
 target("demo", {kind = "binary", files = "src/*.c"})
 ```
 
+or
+
+```lua
+target("demo", {
+    kind = "binary",
+    files = "src/*.c"
+})
+```
+
 Of course, if the configuration requirements are more complicated, or the original multi-line setting method is more convenient, this depends on your own needs to evaluate which method is used.
 
