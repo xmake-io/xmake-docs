@@ -540,3 +540,45 @@ target("demo", {
 
 当然，如果配置需求比较复杂的，还是原有的多行设置方式更加方便，这个就看自己的需求来评估到底使用哪种方式了。
 
+## 可选的域配置语法
+
+我们默认约定的域配置语法，尽管非常简洁，但是对自动格式化缩进和IDE不是很友好。
+
+```lua
+target("foo")
+    set_kind("binary")
+    add_files("src/*.cpp")
+target_end()
+```
+
+另外，它不能自动结束当前 target 作用域，用户需要显式调用 `target_end()`。
+
+虽然，上面我们提到，可以使用 `do end` 模式来解决自动缩进问题，但是需要 `target_end()` 的问题还是存在。
+
+```lua
+target("bar") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+target_end()
+```
+
+在 2.7.3 版本中，我们提供了一种更好的可选域配置语法，来解决自动缩进，target 域隔离问题，例如：
+
+```lua
+add_defines("ROOT")
+
+target("foo", function ()
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_defines("FOO")
+end)
+
+target("bar", function ()
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_defines("BAR")
+end)
+```
+
+foo 和 bar 两个域是完全隔离的，我们即使在它们中间配置其他设置，也不会影响它们，另外，它还对 LSP 非常友好。

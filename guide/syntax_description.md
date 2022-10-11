@@ -540,3 +540,45 @@ target("demo", {
 
 Of course, if the configuration requirements are more complicated, or the original multi-line setting method is more convenient, this depends on your own needs to evaluate which method is used.
 
+## Optional Scope Configuration Syntax
+
+Our default convention for domain configuration syntax, although very concise, is not very friendly to auto-formatted indentation and IDEs.
+
+```lua
+target("foo")
+    set_kind("binary")
+    add_files("src/*.cpp")
+target_end()
+```
+
+Also, it does not automatically end the current target scope, the user needs to explicitly call `target_end()`.
+
+Although, as we mentioned above, the `do end` pattern can be used to solve the auto-indentation problem, the problem of needing `target_end()` still exists.
+
+```lua
+target("bar") do
+    set_kind("binary")
+    add_files("src/*.cpp")
+end
+target_end()
+```
+
+In version 2.7.3, we provide a better optional domain configuration syntax to solve the auto-indent, target domain isolation problem, e.g.
+
+```lua
+add_defines("ROOT")
+
+target("foo", function ()
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_defines("FOO")
+end)
+
+target("bar", function ()
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_defines("BAR")
+end)
+```
+
+The foo and bar domains are completely isolated and we can configure other settings between them without affecting them, plus it is very LSP friendly.
