@@ -360,58 +360,6 @@ When you see this menu, the user can clearly know the specific use of the define
 $ xmake f --mode=release
 ```
 
-### option:add_bindings
-
-#### Add forward association option, sync enable and disable
-
-<p class="tip">
-After the 2.1.5 version has been deprecated, please use [add_deps](#optionadd_deps), [on_check](#optionon_check), [after_check](#optionafter_check) and other interfaces instead.
-</p>
-
-Bind association options, for example I want to configure a `smallest` parameter on the command line: `xmake f --smallest=y`
-
-At this time, it is necessary to disable multiple other option switches at the same time to prohibit compiling multiple modules. This is the requirement, which is equivalent to the linkage between one option and other options.
-
-This interface is used to set some association options that need to be forward bound, for example:
-
-```lua
--- Define option switches: --smallest=y|n
-option("smallest")
-
-    -- Add forward binding. If smallest is enabled, all of the following option switches will also be enabled synchronously.
-    add_bindings("nozip", "noxml", "nojson")
-```
-
-### option:add_rbindings
-
-#### Add reverse association option, sync enable and disable
-
-<p class="tip">
-After the 2.1.5 version has been deprecated, please use [add_deps](#optionadd_deps), [on_check](#optionon_check), [after_check](#optionafter_check) and other interfaces instead.
-</p>
-
-Reverse binding association options, the switch state of the associated option is reversed.
-
-```lua
--- Define option switches: --smallest=y|n
-option("smallest")
-
-    -- Add reverse binding, if smallest is enabled, all modules below are disabled
-    add_rbindings("xml", "zip", "asio", "regex", "object", "thread", "network", "charset", "database")
-    add_rbindings("zlib", "mysql", "sqlite3", "openssl", "polarssl", "pcre2", "pcre", "base")
-```
-
-<p class="warn">
-It should be noted that the command line configuration is sequential. You can disable all modules by enabling smallest and then add other options to enable them one by one.
-</p>
-
-E.g:
-
-```bash
--- disable all modules and then only enable xml and zip modules
-$ xmake f --smallest=y --xml=y --zip=y
-```
-
 ### option:add_links
 
 #### Add Link Library Detection

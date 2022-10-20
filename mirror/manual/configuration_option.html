@@ -377,40 +377,6 @@ option("test4")
 </code></pre><p>When you see this menu, the user can clearly know the specific use of the defined <code>mode</code> option and how to use it:</p>
 <pre><code class="lang-bash">$ xmake f --mode=release
 </code></pre>
-<h3 id="optionadd_bindings">option:add_bindings</h3>
-<h4 id="addforwardassociationoptionsyncenableanddisable">Add forward association option, sync enable and disable</h4>
-<p><p class="tip"><br>After the 2.1.5 version has been deprecated, please use <a href="#optionadd_deps">add_deps</a>, <a href="#optionon_check">on_check</a>, <a href="#optionafter_check">after_check</a> and other interfaces instead.<br></p>
-
-</p>
-<p>Bind association options, for example I want to configure a <code>smallest</code> parameter on the command line: <code>xmake f --smallest=y</code></p>
-<p>At this time, it is necessary to disable multiple other option switches at the same time to prohibit compiling multiple modules. This is the requirement, which is equivalent to the linkage between one option and other options.</p>
-<p>This interface is used to set some association options that need to be forward bound, for example:</p>
-<pre><code class="lang-lua">-- Define option switches: --smallest=y|n
-option("smallest")
-
-    -- Add forward binding. If smallest is enabled, all of the following option switches will also be enabled synchronously.
-    add_bindings("nozip", "noxml", "nojson")
-</code></pre>
-<h3 id="optionadd_rbindings">option:add_rbindings</h3>
-<h4 id="addreverseassociationoptionsyncenableanddisable">Add reverse association option, sync enable and disable</h4>
-<p><p class="tip"><br>After the 2.1.5 version has been deprecated, please use <a href="#optionadd_deps">add_deps</a>, <a href="#optionon_check">on_check</a>, <a href="#optionafter_check">after_check</a> and other interfaces instead.<br></p>
-
-</p>
-<p>Reverse binding association options, the switch state of the associated option is reversed.</p>
-<pre><code class="lang-lua">-- Define option switches: --smallest=y|n
-option("smallest")
-
-    -- Add reverse binding, if smallest is enabled, all modules below are disabled
-    add_rbindings("xml", "zip", "asio", "regex", "object", "thread", "network", "charset", "database")
-    add_rbindings("zlib", "mysql", "sqlite3", "openssl", "polarssl", "pcre2", "pcre", "base")
-</code></pre>
-<p><p class="warn"><br>It should be noted that the command line configuration is sequential. You can disable all modules by enabling smallest and then add other options to enable them one by one.<br></p>
-
-</p>
-<p>E.g:</p>
-<pre><code class="lang-bash">-- disable all modules and then only enable xml and zip modules
-$ xmake f --smallest=y --xml=y --zip=y
-</code></pre>
 <h3 id="optionadd_links">option:add_links</h3>
 <h4 id="addlinklibrarydetection">Add Link Library Detection</h4>
 <p>If the specified link library is passed, this option will be enabled and the associated target will automatically be added to this link, for example:</p>
