@@ -113,13 +113,13 @@ $ xmake
 </code></pre>
 <p>If it fails again, please add <code>-v</code> or <code>--verbose</code> options to get more verbose info.</p>
 <p>For example:</p>
-<pre><code class="lang-hash">$ xmake [-v|--verbose] 
+<pre><code class="lang-hash">$ xmake [-v|--verbose]
 </code></pre>
 <p>And add <code>-D</code> to get the verbose backtrace and diagnosis info, then you can submit these infos to <a href="https://github.com/xmake-io/xmake/issues">issues</a>.</p>
 <pre><code class="lang-bash">$ xmake -v -D
 </code></pre>
 <h2 id="howtoseeverbosecompilingwarnings">How to see verbose compiling warnings?</h2>
-<pre><code class="lang-bash">$ xmake [-w|--warning] 
+<pre><code class="lang-bash">$ xmake [-w|--warning]
 </code></pre>
 <h2 id="howtoscansourcecodeandgeneratexmakeluaautomatically">How to scan source code and generate xmake.lua automatically?</h2>
 <p>You only need run the following command:</p>
@@ -137,6 +137,87 @@ $ xmake
 <p>Xmake.lua is divided into description fields and script fields. In the description field, various configuration fields are parsed multiple times in stages, and it is possible to execute multiple times. Therefore, do not write complex scripts in the description field.</p>
 <p>If you want to write a variety of complex scripts, please configure them in the script domain. The script domain of <code>target/on_load</code> can also flexibly configure various target related settings and provide more powerful lua script module support.</p>
 <p>See: <a href="/mirror/guide/syntax_description.html">Description of Syntax Description</a> for more details.</p>
+<h2 id="howtodebugxmakesourcecode">How to debug Xmake source code?</h2>
+<h3 id="downloadingsourcecode">Downloading source code</h3>
+<p>Since Xmake uses git submodules to maintain submodules, we can pull the full source code in several ways.</p>
+<h4 id="pullingwithgit">pulling with git</h4>
+<pre><code class="lang-bash">$ git clone --recursive https://github.com/xmake-io/xmake.git
+</code></pre>
+<p>or</p>
+<pre><code class="lang-bash">$ git clone https://github.com/xmake-io/xmake.git
+$ git submodule update --init
+</code></pre>
+<h4 id="downloadingsourcepackagesfromgithubreleases">Downloading source packages from Github Releases</h4>
+<p>Because github&#39;s own downloads attachments do not support archiving submodules, Xmake packages an extra tarball of source code for each release and uploads it to Releases.</p>
+<p>Therefore, do not download the wrong link address</p>
+<ul>
+<li>Incomplete source code: <a href="https://github.com/xmake-io/xmake/archive/refs/tags/v2.7.2.tar.gz">https://github.com/xmake-io/xmake/archive/refs/tags/v2.7.2.tar.gz</a></li>
+<li>Full source package: <a href="https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz">https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz</a></li>
+</ul>
+<pre><code class="lang-bash">wget https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
+tar -xvf xmake-v2.7.2.tar.gz -C xmake
+cd xmake
+</code></pre>
+<p>! > The Xmake tarball does not have a top-level xmake root directory, so it is best to unpack it with <code>-C xmake</code> to specify the output directory.</p>
+<h3 id="compilingsourcecode">Compiling source code</h3>
+<h4 id="compilingonwindows">Compiling on Windows</h4>
+<p>If you are compiling Xmake source code on Windows, you will need to bootstrap it with an existing Xmake pre-build.</p>
+<p>Therefore we need to first install Xmake by referring to the <a href="https://xmake.io/#/zh-cn/guide/installation?id=windows">Installing Xmake on Windows</a> documentation.</p>
+<p>Then go to the Xmake source directory and compile.</p>
+<pre><code class="lang-bash">cd xmake
+cd core
+xmake
+</code></pre>
+<p>! > We need to go into the core subdirectory of Xmake and execute the xmake command.</p>
+<h4 id="compilingonlinuxmacosfreebsd">Compiling on Linux/macOS/FreeBSD</h4>
+<p>To compile Xmake on other unix-like environments, we just need to execute make in the source root.</p>
+<pre><code class="lang-bash">$ cd xmake
+$ make
+</code></pre>
+<h3 id="loadingdebugging">Loading debugging</h3>
+<p>If the compilation is complete, we can load the Xmake binary core we just compiled and run the local Lua script.</p>
+<h4 id="loadingthelocaldebuggingenvironmentonwindows">Loading the local debugging environment on Windows</h4>
+<p>Go to the <code>xmake/scripts</code> directory and double-click on the srcenv.bat script, which will automatically load the local Xmake program and scripts and open a cmd terminal.</p>
+<p>From this terminal, we can then enable debugging.</p>
+<p>We can also run</p>
+<pre><code class="lang-bash">$ xmake l os.programdir
+</code></pre>
+<p>to verify that we have actually loaded the local Lua scripting environment.</p>
+<h4 id="loadingalocaldebuggingenvironmentonotherplatforms">Loading a local debugging environment on other platforms</h4>
+<p>On Linux/macOS/FreeBSD it&#39;s a bit easier to just run.</p>
+<pre><code class="lang-bash">$ cd xmake
+$ source scripts/srcenv.profile
+</code></pre>
+<p>to get into the local source debugging environment.</p>
+<h3 id="debuggingcorebinary">Debugging core binary</h3>
+<p>Normally, to debug Xmake&#39;s Lua scripts, you just need to modify the Lua scripts in the current source directory, which takes effect in real time, and we don&#39;t need to recompile the core binary.</p>
+<p>However, if there is a problem with Xmake&#39;s C-side core program and you need to debug it or add modules to it, you will need to recompile it.</p>
+<p>The compilation is done, also in real time, and can be done in the C code with</p>
+<pre><code class="lang-c">tb_trace_i("hello %s", "xmake");
+</code></pre>
+<p>to format the various outputs for printing.</p>
+<p>If there is a problem with the various submodules that Xmake relies on, such as tbox, and you need to debug it.</p>
+<p>We can also go directly to the submodule source code, modify it and recompile it for execution.</p>
+<p>However, if we need to contribute a patch, we need to commit pr to the submodule&#39;s repository and the patch will be merged and synced to the Xmake source repository by the author at a specific time.</p>
+<h2 id="howtodebugrepositorypackages">How to debug repository packages?</h2>
+<p>There are many different ways to debug, here I will focus on the most common debugging method used by the author, which is to pull the xmake-repo repository directly to debug.</p>
+<pre><code class="lang-bash">$ git clone https://github.com/xmake-io/xmake-repo.git
+$ xmake l scripts/test.lua -vD --shallow zlib
+</code></pre>
+<p>Using the test.lua script command above to debug packages, we can repeatedly install and test the specified package. <code></code> --shallow` tells Xmake not to repeat the full installation of all its dependencies for each test, but only to test the current package.</p>
+<p>We can also test specific platforms, architectures, build modes, vs_runtime and dynamic libraries, static libraries etc.</p>
+<pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow -p mingw --mingw=/xxx/sdk zlib
+$ xmake l scripts/test.lua -vD --shallow -p iphoneos -a arm64 zlib
+$ xmake l scripts/test.lua -vD --shallow -k shared --vs_runtime=MD zlib
+$ xmake l scripts/test.lua -vD --shallow -m debug zlib
+</code></pre>
+<h3 id="debugginglocalpackagesourcecode">Debugging local package source code</h3>
+<p>Sometimes, due to problems with the package source and build scripts, we need to modify some code in order to continue testing the installation, and it would be very tedious to go through the debugging changes in on_install by adding_patches/io.replace.</p>
+<p>Therefore, we can specify <code>-d package_sourcedir</code> to allow the test script to go directly to our pre-downloaded package source directory and test the build installation without our code changes being reset each time.</p>
+<p><code>bash
+$ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
+`</code></p>
+<p>Once the changes have been debugged, we then generate a patch file based on the changes via <code>git diff > fix.patch</code> and configure the patch package to be applied via <code>add_patches</code> to fix the package installation.</p>
 </article>
 </body>
 </html>
