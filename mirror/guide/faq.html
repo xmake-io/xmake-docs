@@ -204,7 +204,7 @@ $ source scripts/srcenv.profile
 <pre><code class="lang-bash">$ git clone https://github.com/xmake-io/xmake-repo.git
 $ xmake l scripts/test.lua -vD --shallow zlib
 </code></pre>
-<p>Using the test.lua script command above to debug packages, we can repeatedly install and test the specified package. <code></code> --shallow` tells Xmake not to repeat the full installation of all its dependencies for each test, but only to test the current package.</p>
+<p>Using the test.lua script command above to debug packages, we can repeatedly install and test the specified package. <code>--shallow</code> tells Xmake not to repeat the full installation of all its dependencies for each test, but only to test the current package.</p>
 <p>We can also test specific platforms, architectures, build modes, vs_runtime and dynamic libraries, static libraries etc.</p>
 <pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow -p mingw --mingw=/xxx/sdk zlib
 $ xmake l scripts/test.lua -vD --shallow -p iphoneos -a arm64 zlib
@@ -212,12 +212,23 @@ $ xmake l scripts/test.lua -vD --shallow -k shared --vs_runtime=MD zlib
 $ xmake l scripts/test.lua -vD --shallow -m debug zlib
 </code></pre>
 <h3 id="debugginglocalpackagesourcecode">Debugging local package source code</h3>
-<p>Sometimes, due to problems with the package source and build scripts, we need to modify some code in order to continue testing the installation, and it would be very tedious to go through the debugging changes in on_install by adding_patches/io.replace.</p>
-<p>Therefore, we can specify <code>-d package_sourcedir</code> to allow the test script to go directly to our pre-downloaded package source directory and test the build installation without our code changes being reset each time.</p>
-<p><code>bash
-$ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
-`</code></p>
-<p>Once the changes have been debugged, we then generate a patch file based on the changes via <code>git diff > fix.patch</code> and configure the patch package to be applied via <code>add_patches</code> to fix the package installation.</p>
+<p>Sometimes, due to problems with the package source and build scripts, we need to modify some code in order to continue testing the installation,<br>and it would be very tedious to go through the debugging changes in on_install by adding_patches/io.replace.</p>
+<p>Therefore, we can specify <code>-d package_sourcedir</code> to allow the test script to go directly to<br>our pre-downloaded package source directory and test the build installation without our code changes being reset each time.</p>
+<pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
+</code></pre>
+<p>Once the changes have been debugged, we then generate a patch file based on the changes via <code>git diff > fix.patch</code><br>and configure the patch package to be applied via <code>add_patches</code> to fix the package installation.</p>
+<h2 id="whatshouldidoifthedownloadpackagepromptsforacertificateverificationfailure">What should I do if the download package prompts for a certificate verification failure?</h2>
+<pre><code class="lang-bash">curl: (60) SSL certificate problem: unable to get local issuer certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+To learn more about this situation and
+To learn more about this situation and how to fix it, please visit the web page mentioned above.
+</code></pre>
+<p>If you encounter the above certificate validation problem when using Xmake to install dependencies, you can try updating the curl certificate to fix it, or just disable certificate validation in the global configuration to bypass it.</p>
+<pre><code class="lang-bash">$ xmake g --insecure-ssl=y
+</code></pre>
+<p>Of course, disabling certificate validation poses some security risks, but the good news is that packages in the xmake-repo repository have a strict sha256 checksum.<br>Even if the download is hijacked, it will eventually be detected by xmake&#39;s sha256 checksum and treated as an invalid download.</p>
 </article>
 </body>
 </html>

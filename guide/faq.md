@@ -213,7 +213,7 @@ $ git clone https://github.com/xmake-io/xmake-repo.git
 $ xmake l scripts/test.lua -vD --shallow zlib
 ```
 
-Using the test.lua script command above to debug packages, we can repeatedly install and test the specified package. `` --shallow` tells Xmake not to repeat the full installation of all its dependencies for each test, but only to test the current package.
+Using the test.lua script command above to debug packages, we can repeatedly install and test the specified package. `--shallow` tells Xmake not to repeat the full installation of all its dependencies for each test, but only to test the current package.
 
 We can also test specific platforms, architectures, build modes, vs_runtime and dynamic libraries, static libraries etc.
 
@@ -226,12 +226,35 @@ $ xmake l scripts/test.lua -vD --shallow -m debug zlib
 
 ### Debugging local package source code
 
-Sometimes, due to problems with the package source and build scripts, we need to modify some code in order to continue testing the installation, and it would be very tedious to go through the debugging changes in on_install by adding_patches/io.replace.
+Sometimes, due to problems with the package source and build scripts, we need to modify some code in order to continue testing the installation,
+and it would be very tedious to go through the debugging changes in on_install by adding_patches/io.replace.
 
-Therefore, we can specify `-d package_sourcedir` to allow the test script to go directly to our pre-downloaded package source directory and test the build installation without our code changes being reset each time.
+Therefore, we can specify `-d package_sourcedir` to allow the test script to go directly to
+our pre-downloaded package source directory and test the build installation without our code changes being reset each time.
 
-``bash
+```bash
 $ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 ```
 
-Once the changes have been debugged, we then generate a patch file based on the changes via ``git diff > fix.patch`` and configure the patch package to be applied via ``add_patches`` to fix the package installation.
+Once the changes have been debugged, we then generate a patch file based on the changes via `git diff > fix.patch`
+and configure the patch package to be applied via `add_patches` to fix the package installation.
+
+## What should I do if the download package prompts for a certificate verification failure?
+
+```bash
+curl: (60) SSL certificate problem: unable to get local issuer certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+To learn more about this situation and
+To learn more about this situation and how to fix it, please visit the web page mentioned above.
+```
+
+If you encounter the above certificate validation problem when using Xmake to install dependencies, you can try updating the curl certificate to fix it, or just disable certificate validation in the global configuration to bypass it.
+
+```bash
+$ xmake g --insecure-ssl=y
+```
+
+Of course, disabling certificate validation poses some security risks, but the good news is that packages in the xmake-repo repository have a strict sha256 checksum.
+Even if the download is hijacked, it will eventually be detected by xmake's sha256 checksum and treated as an invalid download.

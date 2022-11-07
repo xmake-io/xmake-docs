@@ -237,3 +237,24 @@ $ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 ```
 
 等修改调试通过后，我们再根据改动，通过 `git diff > fix.patch` 生成补丁文件，通过 `add_patches` 配置应用补丁包，来修复包的安装。
+
+## 下载包提示证书校验失败怎么办？
+
+```bash
+curl: (60) SSL certificate problem: unable to get local issuer certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+```
+
+如果你在使用 Xmake 安装依赖包时候，遇到上面的证书验证问题，你可以尝试更新 curl 证书去修复它，或者直接全局配置禁用证书验证来绕过它。
+
+```bash
+$ xmake g --insecure-ssl=y
+```
+
+当然，禁用证书验证会带来一定的安全性风险，不过好在 xmake-repo 仓库中的包，有严格的 sha256 校验，
+即使下载被劫持，最终也会 xmake 的 sha256 校验检测到，作为无效下载。
+
