@@ -513,25 +513,31 @@ $ xmake run
 target("console_c")
     set_kind("binary")
     add_packages("protobuf-c")
-
+    add_rules("protobuf.c")
     add_files("src/*.c")
-    add_files("src/*.proto", {rules = "protobuf.c"})
+    add_files("src/*.proto")
 </code></pre>
-<p>2.5.5 版本，我们还可以设置 <code>proto_public = true</code> 来导出 proto 的头文件搜索目录，开放给其他父 target 继承使用。</p>
-<pre><code class="lang-lua">    add_files("src/**.proto", {rules = "protobuf.c", proto_public = true})
+<p>我们还可以设置 <code>proto_public = true</code> 来导出 proto 的头文件搜索目录，开放给其他父 target 继承使用。</p>
+<pre><code class="lang-lua">    add_packages("protobuf-c", {public = true})
+    add_files("src/**.proto", {proto_public = true})
 </code></pre>
+<p>注：由于 protobuf 生成的头文件引用了 protobuf-c 包的头文件，因此，我们也需要将包的头文件标记为 <code>{public = true}</code> 对外导出它。</p>
 <h3 id="c">使用c++库</h3>
 <pre><code class="lang-lua">add_requires("protobuf-cpp")
 
 target("console_c++")
     set_kind("binary")
     set_languages("c++11")
-
     add_packages("protobuf-cpp")
-
+    add_rules("protobuf.cpp")
     add_files("src/*.cpp")
-    add_files("src/*.proto", {rules = "protobuf.cpp"})
+    add_files("src/*.proto")
 </code></pre>
+<p>我们还可以设置 <code>proto_public = true</code> 来导出 proto 的头文件搜索目录，开放给其他父 target 继承使用。</p>
+<pre><code class="lang-lua">    add_packages("protobuf-cpp", {public = true})
+    add_files("src/**.proto", {proto_public = true})
+</code></pre>
+<p>注：由于 protobuf 生成的头文件引用了 protobuf-cpp 包的头文件，因此，我们也需要将包的头文件标记为 <code>{public = true}</code> 对外导出它。</p>
 <h2 id="cuda">Cuda程序</h2>
 <p>创建一个空工程：</p>
 <pre><code class="lang-console">$ xmake create -P test -l cuda
