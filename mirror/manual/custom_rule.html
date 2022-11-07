@@ -580,6 +580,15 @@ target("example")
      add_packages("pybind11")
      set_languages("c++11")
 </code></pre>
+<h4 id="utilsipsc">utils.ipsc</h4>
+<p>The ipsc compiler rules are supported and are used as follows.</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_rules("utils.ispc", {header_extension = "_ispc.h"})
+    set_values("ispc.flags", "--target=host")
+    add_files("src/*.ispc")
+    add_files("src/*.cpp")
+</code></pre>
 <h3 id="rule">rule</h3>
 <h4 id="definingrules">Defining rules</h4>
 <pre><code class="lang-lua">rule("markdown")

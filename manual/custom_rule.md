@@ -738,6 +738,19 @@ target("example")
      set_languages("c++11")
 ```
 
+#### utils.ipsc
+
+The ipsc compiler rules are supported and are used as follows.
+
+```lua
+target("test")
+    set_kind("binary")
+    add_rules("utils.ispc", {header_extension = "_ispc.h"})
+    set_values("ispc.flags", "--target=host")
+    add_files("src/*.ispc")
+    add_files("src/*.cpp")
+```
+
 ### rule
 
 #### Defining rules

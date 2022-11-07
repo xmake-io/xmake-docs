@@ -740,6 +740,19 @@ target("example")
     set_languages("c++11")
 ```
 
+#### utils.ipsc
+
+ipsc 编译器规则支持，使用方式如下：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_rules("utils.ispc", {header_extension = "_ispc.h"})
+    set_values("ispc.flags", "--target=host")
+    add_files("src/*.ispc")
+    add_files("src/*.cpp")
+```
+
 ### rule
 
 #### 定义规则
