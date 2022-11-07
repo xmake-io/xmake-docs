@@ -1050,6 +1050,64 @@ package("libusb")
 
 另外，我们也可以通过这个方式，改进查找 homebrew/pacman 等其他包管理器安装的包，例如：`add_extsources("pacman::libusb-1.0")`。
 
+#### add_deps
+
+添加包依赖接口，通过配置包之间的依赖关系，我们能够在安装包的同时，自动安装它的所有依赖包。
+
+另外，默认情况下，我们只要配置了依赖关系，cmake/autoconf 就能够自动找到所有依赖包的库和头文件。
+
+当然，如果由于一些特殊原因，导致当前包的 cmake 脚本没能够正常找到依赖包，那么我们也可以通过 `{packagedeps = "xxx"}` 来强行打入依赖包信息。
+
+例如：
+
+```lua
+package("foo")
+    add_deps("cmake", "bar")
+    on_install(function (package)
+        local configs = {}
+        import("package.tools.cmake").install(package, configs)
+    end)
+```
+
+foo 包是使用 CMakeLists.txt 维护的，它在安装过程中，依赖 bar 包，因此，xmake 会优先安装 bar，并且让 cmake.install 在调用 cmake 时候，自动找到 bar 安装后的库。
+
+但是，如果 foo 的 CMakeLists.txt 还是无法自动找到 bar，那么我们可以修改成下面的配置，强制将 bar 的 includedirs/links 等信息通过 flags 的方式，传入 foo。
+
+```lua
+package("foo")
+    add_deps("cmake", "bar")
+    on_install(function (package)
+        local configs = {}
+        import("package.tools.cmake").install(package, configs, {packages = "bar"})
+    end)
+```
+
+#### add_components
+
+这是 2.7.3 新加的接口，用于支持包的组件化配置，详情见：[#2636](https://github.com/xmake-io/xmake/issues/2636)。
+
+通过这个接口，我们可以配置当前包实际可以提供的组件列表。
+
+```lua
+package("sfml")
+    add_components("graphics")
+    add_components("audio", "network", "window")
+    add_components("system")
+```
+
+在用户端，我们可以通过下面的方式来使用包的特定组件。
+
+```lua
+add_requires("sfml")
+
+target("test")
+    add_packages("sfml", {components = "graphics")
+```
+
+!> 注：除了配置可用的组件列表，我们还需要对每个组件进行详细配置，才能正常使用，因此，它通常和 `on_componment` 接口配合使用。
+
+一个关于包组件的配置和使用的完整例子见：[components example](https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua)
+
 #### set_base
 
 这是 2.6.4 新加的接口，我们可以通过它去继承一个已有的包的全部配置，然后在此基础上重写部分配置。
@@ -1316,6 +1374,154 @@ end)
 opt 参数里面，可以获取到下载包的目的源码目录 `opt.sourcedir`，我们只需要从 `package:urls()` 获取到包地址，下载下来就可以了。
 
 然后，根据需要，添加一些自定义的处理逻辑。另外，自己可以添加下载缓存处理等等。
+
+#### on_componment
+
+这是 2.7.3 新加的接口，用于支持包的组件化配置，详情见：[#2636](https://github.com/xmake-io/xmake/issues/2636)。
+
+通过这个接口，我们可以配置当前包，指定组件的详细信息，比如组件的链接，依赖等等。
+
+##### 配置组件链接信息
+
+```lua
+package("sfml")
+    add_components("graphics")
+    add_components("audio", "network", "window")
+    add_components("system")
+
+    on_component("graphics", function (package, component)
+        local e = package:config("shared") and "" or "-s"
+        component:add("links", "sfml-graphics" .. e)
+        if package:is_plat("windows", "mingw") and not package:config("shared") then
+            component:add("links", "freetype")
+            component:add("syslinks", "opengl32", "gdi32", "user32", "advapi32")
+        end
+    end)
+
+    on_component("window", function (package, component)
+        local e = package:config("shared") and "" or "-s"
+        component:add("links", "sfml-window" .. e)
+        if package:is_plat("windows", "mingw") and not package:config("shared") then
+            component:add("syslinks", "opengl32", "gdi32", "user32", "advapi32")
+        end
+    end)
+
+    ...
+```
+
+在用户端，我们可以通过下面的方式来使用包的特定组件。
+
+```lua
+add_requires("sfml")
+
+target("test")
+    add_packages("sfml", {components = "graphics")
+```
+
+!> 注：除了配置组件信息，我们还需要配置可用的组件列表，才能正常使用，因此，它通常和 `add_components` 接口配合使用。
+
+一个关于包组件的配置和使用的完整例子见：[components example](https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua)
+
+##### 配置组件的编译信息
+
+我们不仅可以配置每个组件的链接信息，还有 includedirs, defines 等等编译信息，我们也可以对每个组件单独配置。
+
+```lua
+package("sfml")
+    on_component("graphics", function (package, component)
+        package:add("defines", "TEST")
+    end)
+```
+
+##### 配置组件依赖
+
+```lua
+package("sfml")
+    add_components("graphics")
+    add_components("audio", "network", "window")
+    add_components("system")
+
+    on_component("graphics", function (package, component)
+          component:add("deps", "window", "system")
+    end)
+```
+
+上面的配置，告诉包，我们的 graphics 组件还会额外依赖 `window` 和 `system` 两个组件。
+
+因此，在用户端，我们对 graphics 的组件使用，可以从
+
+```lua
+    add_packages("sfml", {components = {"graphics", "window", "system"})
+```
+
+简化为：
+
+```lua
+    add_packages("sfml", {components = "graphics")
+```
+
+因为，只要我们开启了 graphics 组件，它也会自动启用依赖的 window 和 system 组件。
+
+另外，我们也可以通过 `add_components("graphics", {deps = {"window", "system"}})` 来配置组件依赖关系。
+
+##### 从系统库中查找组件
+
+我们知道，在包配置中，配置 `add_extsources` 可以改进包在系统中的查找，比如从 apt/pacman 等系统包管理器中找库。
+
+当然，我们也可以让每个组件也能通过 `extsources` 配置，去优先从系统库中找到它们。
+
+例如，sfml 包，它在 homebrew 中其实也是组件化的，我们完全可以让包从系统库中，找到对应的每个组件，而不需要每次源码安装它们。
+
+```bash
+$ ls -l /usr/local/opt/sfml/lib/pkgconfig
+-r--r--r--  1 ruki  admin  317 10 19 17:52 sfml-all.pc
+-r--r--r--  1 ruki  admin  534 10 19 17:52 sfml-audio.pc
+-r--r--r--  1 ruki  admin  609 10 19 17:52 sfml-graphics.pc
+-r--r--r--  1 ruki  admin  327 10 19 17:52 sfml-network.pc
+-r--r--r--  1 ruki  admin  302 10 19 17:52 sfml-system.pc
+-r--r--r--  1 ruki  admin  562 10 19 17:52 sfml-window.pc
+```
+
+我们只需要，对每个组件配置它的 extsources：
+
+```lua
+    if is_plat("macosx") then
+        add_extsources("brew::sfml/sfml-all")
+    end
+
+    on_component("graphics", function (package, component)
+        -- ...
+        component:add("extsources", "brew::sfml/sfml-graphics")
+    end)
+```
+
+##### 默认的全局组件配置
+
+除了通过指定组件名的方式，配置特定组件，如果我们没有指定组件名，默认就是全局配置所有组件。
+
+```lua
+package("sfml")
+    on_component(function (package, component)
+        -- configure all components
+    end)
+```
+
+当然，我们也可以通过下面的方式，指定配置 graphics 组件，剩下的组件通过默认的全局配置接口进行配置：
+
+```lua
+package("sfml")
+    add_components("graphics")
+    add_components("audio", "network", "window")
+    add_components("system")
+
+    on_component("graphics", function (package, component)
+        -- configure graphics
+    end)
+
+    on_component(function (package, component)
+        -- component audio, network, window, system
+    end)
+```
 
 ### 扩展配置参数
 

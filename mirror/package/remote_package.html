@@ -741,6 +741,43 @@ target("test")
     end)
 </code></pre>
 <p>In addition, we can also use this method to improve the search for packages installed by other package managers such as homebrew/pacman, for example: <code>add_extsources("pacman::libusb-1.0")</code>.</p>
+<h4 id="add_deps">add_deps</h4>
+<p>The Add Package Dependencies interface allows us to automatically install all dependencies of a package when we install it by configuring the dependencies between packages.</p>
+<p>Also, by default, cmake/autoconf will automatically find the libraries and headers of all dependent packages as soon as we have configured the dependencies.</p>
+<p>Of course, if for some special reason the cmake script for the current package does not find the dependencies properly, then we can also force the dependencies to be typed in with <code>{packagedeps = "xxx"}</code>.</p>
+<p>Example.</p>
+<pre><code class="lang-lua">package("foo")
+    add_deps("cmake", "bar")
+    on_install(function (package)
+        local configs = {}
+        import("package.tools.cmake").install(package, configs)
+    end)
+</code></pre>
+<p>The foo package is maintained using CMakeLists.txt and it relies on the bar package during installation, so xmake will install bar first and have cmake.install automatically find the bar installed library when it calls cmake.</p>
+<p>However, if foo&#39;s CMakeLists.txt still does not automatically find bar, then we can change it to the following configuration to force bar&#39;s includedirs/links etc. to be passed into foo by way of flags.</p>
+<pre><code class="lang-lua">package("foo")
+    add_deps("cmake", "bar")
+    on_install(function (package)
+        local configs = {}
+        import("package.tools.cmake").install(package, configs, {packages = "bar"})
+    end)
+</code></pre>
+<h4 id="add_components">add_components</h4>
+<p>This is a new interface added in 2.7.3 to support componentized configuration of packages, see: <a href="https://github.com/xmake-io/xmake/issues/2636">#2636</a> for details.</p>
+<p>With this interface we can configure the list of components that are actually available for the current package.</p>
+<pre><code class="lang-lua">package("sfml")
+    add_components("graphics")
+    add_components("audio", "network", "window")
+    add_components("system")
+</code></pre>
+<p>On the user side, we can use package specific components in the following way.</p>
+<pre><code class="lang-lua">add_requires("sfml")
+
+target("test")
+    add_packages("sfml", {components = "graphics")
+</code></pre>
+<p>! > Note: In addition to configuring the list of available components, we also need to configure each component in detail for it to work properly, so it is usually used in conjunction with the <code>on_componment</code> interface.</p>
+<p>A full example of the configuration and use of package components can be found at: <a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua">components example</a></p>
 <h4 id="set_base">set_base</h4>
 <p>This is a newly added interface in 2.6.4, through which we can inherit all the configuration of an existing package, and then rewrite some of the configuration on this basis.</p>
 <p>This is usually in the user&#39;s own project, it is more useful to modify the built-in package of the xmake-repo official repository, such as: repairing and changing urls, modifying the version list, installation logic, etc.</p>
@@ -956,6 +993,112 @@ end)
 end)
 </code></pre>
 <p>if the run fails, the test will not pass.</p>
+<h4 id="on_componment">on_componment</h4>
+<p>This is a new interface added in 2.7.3 to support component-based configuration of packages, see: <a href="https://github.com/xmake-io/xmake/issues/2636">#2636</a> for details.</p>
+<p>Through this interface we can configure the current package, specifying component details such as links to components, dependencies etc.</p>
+<h5 id="configuringcomponentlinkinformation">Configuring component link information</h5>
+<pre><code class="lang-lua">package("sfml")
+    add_components("graphics")
+    add_components("audio", "network", "window")
+    add_components("system")
+
+    on_component("graphics", function (package, component)
+        local e = package:config("shared") and "" or "-s"
+        component:add("links", "sfml-graphics" ... e)
+        if package:is_plat("windows", "mingw") and not package:config("shared") then
+            component:add("links", "freetype")
+            component:add("syslinks", "opengl32", "gdi32", "user32", "advapi32")
+        end
+    end)
+
+    on_component("window", function (package, component)
+        local e = package:config("shared") and "" or "-s"
+        component:add("links", "sfml-window" ... e)
+        if package:is_plat("windows", "mingw") and not package:config("shared") then
+            component:add("syslinks", "opengl32", "gdi32", "user32", "advapi32")
+        end
+    end)
+
+    ...
+</code></pre>
+<p>On the user side, we can use package specific components in the following way.</p>
+<pre><code class="lang-lua">add_requires("sfml")
+
+target("test")
+    add_packages("sfml", {components = "graphics")
+</code></pre>
+<p>! > Note: In addition to configuring the component information, we also need to configure the list of available components in order to use it properly, so it is usually used in conjunction with the <code>add_components</code> interface.</p>
+<p>A full example of the configuration and use of package components can be found at: <a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua">components example</a></p>
+<h5 id="configuringcompilationinformationforcomponents">Configuring compilation information for components</h5>
+<p>We can configure not only the linking information for each component, but also the compilation information for includedirs, defines etc. We can also configure each component individually.</p>
+<pre><code class="lang-lua">package("sfml")
+    on_component("graphics", function (package, component)
+        package:add("defines", "TEST")
+    end)
+</code></pre>
+<h5 id="configuringcomponentdependencies">Configuring component dependencies</h5>
+<pre><code class="lang-lua">package("sfml")
+    add_components("graphics")
+    add_components("audio", "network", "window")
+    add_components("system")
+
+    on_component("graphics", function (package, component)
+          component:add("deps", "window", "system")
+    end)
+</code></pre>
+<p>The above configuration tells the package that our graphics component will have additional dependencies on the <code>window</code> and <code>system</code> components.</p>
+<p>So, on the user side, our use of the graphics component can be done from the</p>
+<pre><code class="lang-lua">    add_packages("sfml", {components = {"graphics", "window", "system"})
+</code></pre>
+<p>Simplified to.</p>
+<pre><code class="lang-lua">    add_packages("sfml", {components = "graphics")
+</code></pre>
+<p>Because, as soon as we turn on the graphics component, it will also automatically enable the dependent window and system components.</p>
+<p>Alternatively, we can configure component dependencies with <code>add_components("graphics", {deps = {"window", "system"}})</code>.</p>
+<h5 id="findingcomponentsfromthesystemlibrary">Finding components from the system library</h5>
+<p>We know that configuring <code>add_extsources</code> in the package configuration can improve package discovery on the system, for example by finding libraries from system package managers such as apt/pacman.</p>
+<p>Of course, we can also make it possible for each component to prioritise finding them from the system repositories via the <code>extsources</code> configuration as well.</p>
+<p>For example, the sfml package, which is actually also componentized in homebrew, can be made to find each component from the system repository without having to install them in source each time.</p>
+<pre><code class="lang-bash">$ ls -l /usr/local/opt/sfml/lib/pkgconfig
+-r--r--r-- 1 ruki admin 317 10 19 17:52 sfml-all.pc
+-r--r--r-- 1 ruki admin 534 10 19 17:52 sfml-audio.pc
+-r--r--r-- 1 ruki admin 609 10 19 17:52 sfml-graphics.pc
+-r--r--r-- 1 ruki admin 327 10 19 17:52 sfml-network.pc
+-r--r--r-- 1 ruki admin 302 10 19 17:52 sfml-system.pc
+-r--r--r-- 1 ruki admin 562 10 19 17:52 sfml-window.pc
+`
+</code></pre>
+<p>We just need, for each component, to configure its extsources: the</p>
+<pre><code class="lang-lua">    if is_plat("macosx") then
+        add_extsources("brew::sfml/sfml-all")
+    end
+
+    on_component("graphics", function (package, component)
+        -- ...
+        component:add("extsources", "brew::sfml/sfml-graphics")
+    end)
+</code></pre>
+<h5 id="defaultglobalcomponentconfiguration">Default global component configuration</h5>
+<p>In addition to configuring specific components by specifying component names, if we don&#39;t specify a component name, the default is to globally configure all components.</p>
+<pre><code class="lang-lua">package("sfml")
+    on_component(function (package, component)
+        -- configure all components
+    end)
+</code></pre>
+<p>Of course, we could also specify the configuration of the graphics component and the rest of the components would be configured via the default global configuration interface in the following way.</p>
+<pre><code class="lang-lua">package("sfml")
+    add_components("graphics")
+    add_components("audio", "network", "window")
+    add_components("system")
+
+    on_component("graphics", function (package, component)
+        -- configure graphics
+    end)
+
+    on_component(function (package, component)
+        -- component audio, network, window, system
+    end)
+</code></pre>
 <h3 id="extendedconfigurationparameters">Extended configuration parameters</h3>
 <p>See: <a href="#add_configs">add_configs</a> for details.</p>
 <h3 id="builtinconfigurationparameters">Built-in configuration parameters</h3>
