@@ -1603,6 +1603,24 @@ Add compilation options to c/c++ code at the same time
 
 Add compilation options only to c++ code
 
+##### Add compiler-specific flags
+
+In version 2.7.3, we have improved all flags adding interfaces to specify flags only for specific compilers, e.g.
+
+```lua
+add_cxxflags("clang::-stdlib=libc++")
+add_cxxflags("gcc::-stdlib=libc++")
+```
+
+Or.
+
+```lua
+add_cxxflags("-stdlib=libc++", {tools = "clang"})
+add_cxxflags("-stdlib=libc++", {tools = "gcc"})
+```
+
+!> Not just for compile flags, but also for link flags such as add_ldflags, which also work.
+
 ### target:add_mflags
 
 #### Add objc compilation flags
@@ -3076,3 +3094,53 @@ target("test")
 ```
 
 ![](https://xmake.io/assets/img/manual/filegroup3.png)
+
+### target:set_exceptions
+
+#### Enabling or disabling exceptions
+
+We can configure C++/Objc exceptions to be enabled and disabled via this configuration.
+
+Normally, if we configure them via the add_cxxflags interface, it would be cumbersome for the compiler to handle them separately, depending on the platform.
+
+For example
+
+```lua
+    on_config(function (target)
+        if (target:has_tool("cxx", "cl")) then
+            target:add("cxflags", "/EHsc", {force = true})
+            target:add("defines", "_HAS_EXCEPTIONS=1", {force = true})
+        elseif(target:has_tool("cxx", "clang") or target:has_tool("cxx", "clang-cl")) then
+            target:add("cxflags", "-fexceptions", {force = true})
+            target:add("cxflags", "-fcxx-exceptions", {force = true})
+        end
+    end)
+```
+
+And with this interface, we can abstract to configure them in a compiler-independent way.
+
+Enabling C++ exceptions:
+
+```lua
+set_exceptions("cxx")
+```
+
+Disable C++ exceptions:
+
+```lua
+set_exceptions("no-cxx")
+```
+
+We can also configure to turn on objc exceptions at the same time.
+
+```lua
+set_exceptions("cxx", "objc")
+```
+
+or disable them.
+
+```lua
+set_exceptions("no-cxx", "no-objc")
+```
+
+Xmake will automatically adapt the flags internally to the different compilers.

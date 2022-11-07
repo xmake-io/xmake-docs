@@ -776,7 +776,7 @@ target("test")
 target("test")
     add_packages("sfml", {components = "graphics")
 </code></pre>
-<p>! > Note: In addition to configuring the list of available components, we also need to configure each component in detail for it to work properly, so it is usually used in conjunction with the <code>on_componment</code> interface.</p>
+<p>!> Note: In addition to configuring the list of available components, we also need to configure each component in detail for it to work properly, so it is usually used in conjunction with the <code>on_componment</code> interface.</p>
 <p>A full example of the configuration and use of package components can be found at: <a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua">components example</a></p>
 <h4 id="set_base">set_base</h4>
 <p>This is a newly added interface in 2.6.4, through which we can inherit all the configuration of an existing package, and then rewrite some of the configuration on this basis.</p>
@@ -1027,7 +1027,7 @@ end)
 target("test")
     add_packages("sfml", {components = "graphics")
 </code></pre>
-<p>! > Note: In addition to configuring the component information, we also need to configure the list of available components in order to use it properly, so it is usually used in conjunction with the <code>add_components</code> interface.</p>
+<p>!> Note: In addition to configuring the component information, we also need to configure the list of available components in order to use it properly, so it is usually used in conjunction with the <code>add_components</code> interface.</p>
 <p>A full example of the configuration and use of package components can be found at: <a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua">components example</a></p>
 <h5 id="configuringcompilationinformationforcomponents">Configuring compilation information for components</h5>
 <p>We can configure not only the linking information for each component, but also the compilation information for includedirs, defines etc. We can also configure each component individually.</p>

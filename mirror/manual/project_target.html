@@ -1471,6 +1471,16 @@ target("demo")
 <h3 id="targetadd_cxxflags">target:add_cxxflags</h3>
 <h4 id="addccompilationflags">Add c++ compilation flags</h4>
 <p>Add compilation options only to c++ code</p>
+<h5 id="addcompilerspecificflags">Add compiler-specific flags</h5>
+<p>In version 2.7.3, we have improved all flags adding interfaces to specify flags only for specific compilers, e.g.</p>
+<pre><code class="lang-lua">add_cxxflags("clang::-stdlib=libc++")
+add_cxxflags("gcc::-stdlib=libc++")
+</code></pre>
+<p>Or.</p>
+<pre><code class="lang-lua">add_cxxflags("-stdlib=libc++", {tools = "clang"})
+add_cxxflags("-stdlib=libc++", {tools = "gcc"})
+</code></pre>
+<p>!> Not just for compile flags, but also for link flags such as add_ldflags, which also work.</p>
 <h3 id="targetadd_mflags">target:add_mflags</h3>
 <h4 id="addobjccompilationflags">Add objc compilation flags</h4>
 <p>Add compilation options only to objc code</p>
@@ -2513,6 +2523,35 @@ $ xmake run -g bench*
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /", mode = "plain"})
 </code></pre>
 <p><img src="https://xmake.io/assets/img/manual/filegroup3.png" alt=""></p>
+<h3 id="targetset_exceptions">target:set_exceptions</h3>
+<h4 id="enablingordisablingexceptions">Enabling or disabling exceptions</h4>
+<p>We can configure C++/Objc exceptions to be enabled and disabled via this configuration.</p>
+<p>Normally, if we configure them via the add_cxxflags interface, it would be cumbersome for the compiler to handle them separately, depending on the platform.</p>
+<p>For example</p>
+<pre><code class="lang-lua">    on_config(function (target)
+        if (target:has_tool("cxx", "cl")) then
+            target:add("cxflags", "/EHsc", {force = true})
+            target:add("defines", "_HAS_EXCEPTIONS=1", {force = true})
+        elseif(target:has_tool("cxx", "clang") or target:has_tool("cxx", "clang-cl")) then
+            target:add("cxflags", "-fexceptions", {force = true})
+            target:add("cxflags", "-fcxx-exceptions", {force = true})
+        end
+    end)
+</code></pre>
+<p>And with this interface, we can abstract to configure them in a compiler-independent way.</p>
+<p>Enabling C++ exceptions:</p>
+<pre><code class="lang-lua">set_exceptions("cxx")
+</code></pre>
+<p>Disable C++ exceptions:</p>
+<pre><code class="lang-lua">set_exceptions("no-cxx")
+</code></pre>
+<p>We can also configure to turn on objc exceptions at the same time.</p>
+<pre><code class="lang-lua">set_exceptions("cxx", "objc")
+</code></pre>
+<p>or disable them.</p>
+<pre><code class="lang-lua">set_exceptions("no-cxx", "no-objc")
+</code></pre>
+<p>Xmake will automatically adapt the flags internally to the different compilers.</p>
 </article>
 </body>
 </html>

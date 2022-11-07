@@ -1581,11 +1581,8 @@ add_undefines("DEBUG")
 add_cflags("-g", "-O2", "-DDEBUG")
 ```
 
-<p class="warn">
-所有选项值都基于gcc的定义为标准，如果其他编译器不兼容（例如：vc），xmake会自动内部将其转换成对应编译器支持的选项值。
+!> 所有选项值都基于gcc的定义为标准，如果其他编译器不兼容（例如：vc），xmake会自动内部将其转换成对应编译器支持的选项值。
 用户无需操心其兼容性，如果其他编译器没有对应的匹配值，那么xmake会自动忽略器设置。
-</p>
-
 
 在2.1.9版本之后，可以通过force参数来强制禁用flags的自动检测，直接传入编译器，哪怕编译器有可能不支持，也会设置：
 
@@ -1597,13 +1594,31 @@ add_cflags("-g", "-O2", {force = true})
 
 #### 添加c/c++编译选项
 
-同时对c/c++代码添加编译选项
+同时对c/c++代码添加编译选项，用法跟 add_cflags 一致。
 
 ### target:add_cxxflags
 
 #### 添加c++编译选项
 
-仅对c++代码添加编译选项
+仅对c++代码添加编译选项，用法跟 add_cflags 一致。
+
+##### 添加特定编译器 flags
+
+2.7.3 版本中，我们改进了所有 flags 添加接口，可以仅仅对特定编译器指定 flags，例如：
+
+```lua
+add_cxxflags("clang::-stdlib=libc++")
+add_cxxflags("gcc::-stdlib=libc++")
+```
+
+或者：
+
+```lua
+add_cxxflags("-stdlib=libc++", {tools = "clang"})
+add_cxxflags("-stdlib=libc++", {tools = "gcc"})
+```
+
+!> 不仅仅是编译flags，对 add_ldflags 等链接 flags，也是同样生效的。
 
 ### target:add_mflags
 
@@ -3084,3 +3099,52 @@ target("test")
 
 ![](https://xmake.io/assets/img/manual/filegroup3.png)
 
+### target:set_exceptions
+
+#### 启用或者禁用异常
+
+我们可以通过这个配置，配置启用和禁用 C++/Objc 的异常。
+
+通常，如果我们通过 add_cxxflags 接口去配置它们，需要根据不同的平台，编译器分别处理它们，非常繁琐。
+
+例如：
+
+```lua
+    on_config(function (target)
+        if (target:has_tool("cxx", "cl")) then
+            target:add("cxflags", "/EHsc", {force = true})
+            target:add("defines", "_HAS_EXCEPTIONS=1", {force = true})
+        elseif(target:has_tool("cxx", "clang") or target:has_tool("cxx", "clang-cl")) then
+            target:add("cxflags", "-fexceptions", {force = true})
+            target:add("cxflags", "-fcxx-exceptions", {force = true})
+        end
+    end)
+```
+
+而通过这个接口，我们就可以抽象化成编译器无关的方式去配置它们。
+
+开启 C++ 异常:
+
+```lua
+set_exceptions("cxx")
+```
+
+禁用 C++ 异常:
+
+```lua
+set_exceptions("no-cxx")
+```
+
+我们也可以同时配置开启 objc 异常。
+
+```lua
+set_exceptions("cxx", "objc")
+```
+
+或者禁用它们。
+
+```lua
+set_exceptions("no-cxx", "no-objc")
+```
+
+Xmake 会在内部自动根据不同的编译器，去适配对应的 flags。

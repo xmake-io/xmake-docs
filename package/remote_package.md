@@ -1062,7 +1062,7 @@ target("test")
     add_packages("sfml", {components = "graphics")
 ```
 
-! > Note: In addition to configuring the list of available components, we also need to configure each component in detail for it to work properly, so it is usually used in conjunction with the `on_componment` interface.
+!> Note: In addition to configuring the list of available components, we also need to configure each component in detail for it to work properly, so it is usually used in conjunction with the `on_componment` interface.
 
 A full example of the configuration and use of package components can be found at: [components example](https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua)
 
@@ -1444,7 +1444,7 @@ target("test")
     add_packages("sfml", {components = "graphics")
 ```
 
-! > Note: In addition to configuring the component information, we also need to configure the list of available components in order to use it properly, so it is usually used in conjunction with the `add_components` interface.
+!> Note: In addition to configuring the component information, we also need to configure the list of available components in order to use it properly, so it is usually used in conjunction with the `add_components` interface.
 
 A full example of the configuration and use of package components can be found at: [components example](https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua)
 
