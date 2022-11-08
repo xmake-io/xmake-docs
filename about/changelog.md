@@ -1,3 +1,33 @@
+
+## v2.7.3
+
+### New features
+
+* A new optional configuration syntax. It is LSP friendly, automatically calls target_end() to achieve scope isolation.
+* [#2944](https://github.com/xmake-io/xmake/issues/2944): Add `gnu-rm.binary` and `gnu-rm.static` rules and tests for embed project
+* [#2636](https://github.com/xmake-io/xmake/issues/2636): Support package components
+* Support armasm/armasm64 for msvc
+* [#3023](https://github.com/xmake-io/xmake/pull/3023): Add support for debugging with renderdoc
+* [#3022](https://github.com/xmake-io/xmake/issues/3022): Add flags for specific compilers and linkers
+* [#3025](https://github.com/xmake-io/xmake/pull/3025): C++ exception enabled/disabled switch method
+* [#3017](https://github.com/xmake-io/xmake/pull/3017): Support ispc compiler
+
+### Changes
+
+* [#2925](https://github.com/xmake-io/xmake/issues/2925): Improve doxygen plugin
+* [#2948](https://github.com/xmake-io/xmake/issues/2948): Support OpenBSD
+* Add `xmake g --insecure-ssl=y` option to disable ssl certificate when downloading packages
+* [#2971](https://github.com/xmake-io/xmake/pull/2971): Stabilize vs and vsxmake project generation
+* [#3000](https://github.com/xmake-io/xmake/issues/3000): Incremental compilation support for modules
+* [#3016](https://github.com/xmake-io/xmake/pull/3016): Improve clang/msvc to better support std modules
+
+### Bugs fixed
+
+* [#2949](https://github.com/xmake-io/xmake/issues/2949): Fix vs group
+* [#2952](https://github.com/xmake-io/xmake/issues/2952): Fix armlink for long args
+* [#2954](https://github.com/xmake-io/xmake/issues/2954): Fix c++ module partitions path issue
+* [#3033](https://github.com/xmake-io/xmake/issues/3033): Detect circular modules dependency
+
 ## v2.7.2
 
 ### New features

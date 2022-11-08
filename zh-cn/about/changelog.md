@@ -1,3 +1,33 @@
+
+## v2.7.3
+
+### 新特性
+
+* 一种新的可选域配置语法，对 LSP 友好，并且支持域隔离。
+* [#2944](https://github.com/xmake-io/xmake/issues/2944): 为嵌入式工程添加 `gnu-rm.binary` 和 `gnu-rm.static` 规则和测试工程
+* [#2636](https://github.com/xmake-io/xmake/issues/2636): 支持包组件
+* 支持 msvc 的 armasm/armasm64
+* [#3023](https://github.com/xmake-io/xmake/pull/3023): 改进 xmake run -d，添加 renderdoc 调试器支持
+* [#3022](https://github.com/xmake-io/xmake/issues/3022): 为特定编译器添加 flags
+* [#3025](https://github.com/xmake-io/xmake/pull/3025): 新增 C++ 异常接口配置
+* [#3017](https://github.com/xmake-io/xmake/pull/3017): 支持 ispc 编译器规则
+
+### 改进
+
+* [#2925](https://github.com/xmake-io/xmake/issues/2925): 改进 doxygen 插件
+* [#2948](https://github.com/xmake-io/xmake/issues/2948): 支持 OpenBSD
+* 添加 `xmake g --insecure-ssl=y` 配置选项去禁用 ssl 证书检测
+* [#2971](https://github.com/xmake-io/xmake/pull/2971): 使 vs/vsxmake 工程生成的结果每次保持一致
+* [#3000](https://github.com/xmake-io/xmake/issues/3000): 改进 C++ 模块构建支持，实现增量编译支持
+* [#3016](https://github.com/xmake-io/xmake/pull/3016): 改进 clang/msvc 去更好地支持 std 模块
+
+### Bugs 修复
+
+* [#2949](https://github.com/xmake-io/xmake/issues/2949): 修复 vs 分组
+* [#2952](https://github.com/xmake-io/xmake/issues/2952): 修复 armlink 处理长命令失败问题
+* [#2954](https://github.com/xmake-io/xmake/issues/2954): 修复 c++ module partitions 路径无效问题
+* [#3033](https://github.com/xmake-io/xmake/issues/3033): 探测循环模块依赖
+
 ## v2.7.2
 
 ### 新特性

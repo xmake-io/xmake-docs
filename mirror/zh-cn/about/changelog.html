@@ -90,7 +90,35 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v272">v2.7.2</h2>
+    <h2 id="v273">v2.7.3</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li>一种新的可选域配置语法，对 LSP 友好，并且支持域隔离。</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2944">#2944</a>: 为嵌入式工程添加 <code>gnu-rm.binary</code> 和 <code>gnu-rm.static</code> 规则和测试工程</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2636">#2636</a>: 支持包组件</li>
+<li>支持 msvc 的 armasm/armasm64</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3023">#3023</a>: 改进 xmake run -d，添加 renderdoc 调试器支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3022">#3022</a>: 为特定编译器添加 flags</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3025">#3025</a>: 新增 C++ 异常接口配置</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3017">#3017</a>: 支持 ispc 编译器规则</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/2925">#2925</a>: 改进 doxygen 插件</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2948">#2948</a>: 支持 OpenBSD</li>
+<li>添加 <code>xmake g --insecure-ssl=y</code> 配置选项去禁用 ssl 证书检测</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/2971">#2971</a>: 使 vs/vsxmake 工程生成的结果每次保持一致</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3000">#3000</a>: 改进 C++ 模块构建支持，实现增量编译支持</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3016">#3016</a>: 改进 clang/msvc 去更好地支持 std 模块</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/2949">#2949</a>: 修复 vs 分组</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2952">#2952</a>: 修复 armlink 处理长命令失败问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2954">#2954</a>: 修复 c++ module partitions 路径无效问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3033">#3033</a>: 探测循环模块依赖</li>
+</ul>
+<h2 id="v272">v2.7.2</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/2140">#2140</a>: 支持 Windows Arm64</li>
