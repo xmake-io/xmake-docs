@@ -11,9 +11,9 @@ target("test")
 
 ## Configuration Separation
 
-Xmake.lua uses the 28th principle to implement a two-layer separate configuration of the description domain and the script domain.
+Xmake.lua uses the 80:20 rule (aka [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle)) to implement a two-layer separate configuration of the description domain and the script domain.
 
-What is the 28th principle? In short, most of the project configuration, 80% of the cases, are basic basic configurations, such as: `add_cxflags`, `add_links`, etc.
+What is the 80:20 rule? In short, most of the project configuration, 80% of the cases, are basic basic configurations, such as: `add_cxflags`, `add_links`, etc.
 Only less than 20% of the space needs to be extra complex to meet some special configuration needs.
 
 The remaining 20% of the configuration is usually more complicated. if it is directly flooded in the whole xmake.lua, the whole project configuration will be very confusing and very unreadable.
@@ -22,7 +22,7 @@ Therefore, xmake isolates 80% of simple configuration and 20% of complex configu
 
 ### Description Scope
 
-for beginners who are just getting started, or just to maintain some simple small projects, the requirements are fully met by describing the configuration completely. What is the description domain? It looks like this:
+For beginners who are just getting started, or just to maintain some simple small projects, the requirements are fully met by describing the configuration completely. What is the description domain? It looks like this:
 
 ```lua
 target("test")
