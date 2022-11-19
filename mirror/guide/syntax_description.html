@@ -97,12 +97,12 @@
     add_files("src/*.c")
 </code></pre>
 <h2 id="configurationseparation">Configuration Separation</h2>
-<p>Xmake.lua uses the 28th principle to implement a two-layer separate configuration of the description domain and the script domain.</p>
-<p>What is the 28th principle? In short, most of the project configuration, 80% of the cases, are basic basic configurations, such as: <code>add_cxflags</code>, <code>add_links</code>, etc.<br>Only less than 20% of the space needs to be extra complex to meet some special configuration needs.</p>
+<p>Xmake.lua uses the 80:20 rule (aka <a href="https://en.wikipedia.org/wiki/Pareto_principle">Pareto principle</a>) to implement a two-layer separate configuration of the description domain and the script domain.</p>
+<p>What is the 80:20 rule? In short, most of the project configuration, 80% of the cases, are basic basic configurations, such as: <code>add_cxflags</code>, <code>add_links</code>, etc.<br>Only less than 20% of the space needs to be extra complex to meet some special configuration needs.</p>
 <p>The remaining 20% of the configuration is usually more complicated. if it is directly flooded in the whole xmake.lua, the whole project configuration will be very confusing and very unreadable.</p>
 <p>Therefore, xmake isolates 80% of simple configuration and 20% of complex configuration by describing two different configurations of domain and script domain, making the whole xmake.lua look very clear and intuitive, readable and maintainable. Get the best.</p>
 <h3 id="descriptionscope">Description Scope</h3>
-<p>for beginners who are just getting started, or just to maintain some simple small projects, the requirements are fully met by describing the configuration completely. What is the description domain? It looks like this:</p>
+<p>For beginners who are just getting started, or just to maintain some simple small projects, the requirements are fully met by describing the configuration completely. What is the description domain? It looks like this:</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
     add_files("src/*.c")
