@@ -984,7 +984,7 @@ os.setenv("HOME", "/tmp/")
 Consistent with the result of [$(tmpdir)](#var-tmpdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
 ```lua
-print(path.join(os.tmpdir(), "file.txt"))
+print((os.tmpdir(), "file.txt"))
 ```
 
 Equivalent to:
@@ -1476,6 +1476,7 @@ The path operation module implements cross-platform path operations, which is a 
 
 | Interface                                       | Description                                             | Supported Versions |
 | ----------------------------------------------- | --------------------------------------------            | --------           |
+| [path.new](#pathnew)                           | Create a new path instance                              | >= 2.0.1           |
 | [path.join](#pathjoin)                         | Stitching Path                                          | >= 2.0.1           |
 | [path.translate](#pathtranslate)               | Convert path to the path style of the current platform  | >= 2.0.1           |
 | [path.basename](#pathbasename)                 | Get the file name with no suffix at the end             | >= 2.0.1           |
@@ -1483,11 +1484,28 @@ The path operation module implements cross-platform path operations, which is a 
 | [path.extension](#pathextension)               | Get the suffix of the path                              | >= 2.0.1           |
 | [path.directory](#pathdirectory)               | Get the directory name of the path                      | >= 2.0.1           |
 | [path.relative](#pathrelative)                 | Convert to relative path                                | >= 2.0.1           |
-| [path.absolute](#pathabsolute)                 | Convert to Absolute Path                                | >= 2.0.1           |
+| [path.absolute](#pathabsolute)                 | Convert to absolute path                                | >= 2.0.1           |
 | [path.is_absolute](#pathis_absolute)           | Determine if it is an absolute path                     | >= 2.0.1           |
-| [path.splitenv](#pathsplitenv)                 | Split a envienment variable value of an array of pathes | >= 2.2.7           |
+| [path.split](#pathsplit)                       | Split by the separator                                  | >= 2.0.1           |
+| [path.sep](#pathsep)                           | Get the separator character                             | >= 2.0.1           |
+| [path.islastsep](#pathislastsep)               | Get if the last character is a separator                | >= 2.0.1           |
+| [path.splitenv](#pathsplitenv)                 | Split a environment variable value of an array of pathes| >= 2.2.7           |
+| [path.joinenv](#pathjoinenv)                   | Concat environment variable with environment separator  | >= 2.2.7           |
+| [path.envsep](#pathenvsep)                     | Get the path seperator of environment variable          | >= 2.2.7           |
+| [path.cygwin_path](#pathcygwin_path)           | Get the converted MSYS2/Cygwin style path               | >= 2.2.7           |
+| [path.pattern](#pathpattern)                   | Convert a path pattern to a lua pattern                 | >= 2.2.7           |
+#### 
 
-#### path.join
+#### path.new
+
+- Create a new path instance
+
+```lua
+local p = path.new("/tmp/file.txt")
+print(p:filename())
+```
+
+The result is: `file.txt`
 
 - Stitching path
 
@@ -1603,9 +1621,38 @@ if path.is_absolute("/tmp/file.txt") then
 end
 ```
 
+#### path.split
+
+- Split the path by the separator 
+
+```lua
+print(path.split("/tmp/file.txt"))
+```
+The result is: `{ "tmp", "file.txt" }`
+
+#### path.sep
+
+- Return the current separator, usually `/` 
+
+```lua
+print(path.sep("/tmp/file.txt"))
+```
+
+The result is: `/`
+
+#### path.islastsep
+
+- Get if the last character is a separator
+
+```lua
+if (path.islastsep("/tmp/dir/")) then
+    -- if the last character is a separator
+end
+```
+
 #### path.splitenv
 
-- Split a envienment variable value of an array of pathes
+- Split a environment variable value of an array of pathes
 
 ```lua
 local pathes = path.splitenv(vformat("$(env PATH)"))
@@ -1621,6 +1668,44 @@ local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 
 The result is an array of strings, each item is a path in the input string.
 
+#### path.joinenv
+
+- Concat two environment variable by the environment separator
+
+```lua 
+print(path.joinenv({"/tmp/dir", "/tmp/dir2"}))
+```
+The result is: `/tmp/dir;/tmp/dir2` (on Windows)
+
+#### path.envsep
+
+- Get the environment separator
+
+```lua
+print(path.envsep())
+```
+
+The result is: `;`
+
+#### path.cygwin_path
+
+-  Get the converted MSYS2/Cygwin style path 
+
+```lua
+print(path.cygwin_path("C:\\Windows"))
+```
+The result is: `/C/Windows`
+ 
+#### path.pattern
+
+
+- Convert path pattern to lua pattern
+
+```lua
+print(path.pattern("/tmp/file.txt"))
+```
+
+The result is: `/[tT][mM][pP]/[fF][iI][lL][eE]%.[tT][xX][tT]`
 
 ### table
 
