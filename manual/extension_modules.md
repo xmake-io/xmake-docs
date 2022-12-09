@@ -692,7 +692,7 @@ end
 Returns all compilation targets for the current project, for example:
 
 ```lua
-for targetname, target in pairs(project.targets())
+for targetname, target in pairs(project.targets()) do
     print(target:targetfile())
 end
 ```
