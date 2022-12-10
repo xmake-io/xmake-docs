@@ -785,7 +785,7 @@ end
 <li>Get a list of project target objects</li>
 </ul>
 <p>Returns all compilation targets for the current project, for example:</p>
-<pre><code class="lang-lua">for targetname, target in pairs(project.targets())
+<pre><code class="lang-lua">for targetname, target in pairs(project.targets()) do
     print(target:targetfile())
 end
 </code></pre>

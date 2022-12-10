@@ -1461,6 +1461,11 @@ io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 </thead>
 <tbody>
 <tr>
+<td><a href="#pathnew">path.new</a></td>
+<td>Create a new path instance</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
 <td><a href="#pathjoin">path.join</a></td>
 <td>Stitching Path</td>
 <td>>= 2.0.1</td>
@@ -1497,7 +1502,7 @@ io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 </tr>
 <tr>
 <td><a href="#pathabsolute">path.absolute</a></td>
-<td>Convert to Absolute Path</td>
+<td>Convert to absolute path</td>
 <td>>= 2.0.1</td>
 </tr>
 <tr>
@@ -1506,12 +1511,56 @@ io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 <td>>= 2.0.1</td>
 </tr>
 <tr>
+<td><a href="#pathsplit">path.split</a></td>
+<td>Split by the separator</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathsep">path.sep</a></td>
+<td>Get the separator character</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#pathislastsep">path.islastsep</a></td>
+<td>Get if the last character is a separator</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
 <td><a href="#pathsplitenv">path.splitenv</a></td>
-<td>Split a envienment variable value of an array of pathes</td>
+<td>Split a environment variable value of an array of pathes</td>
+<td>>= 2.2.7</td>
+</tr>
+<tr>
+<td><a href="#pathjoinenv">path.joinenv</a></td>
+<td>Concat environment variable with environment separator</td>
+<td>>= 2.2.7</td>
+</tr>
+<tr>
+<td><a href="#pathenvsep">path.envsep</a></td>
+<td>Get the path seperator of environment variable</td>
+<td>>= 2.2.7</td>
+</tr>
+<tr>
+<td><a href="#pathcygwin_path">path.cygwin_path</a></td>
+<td>Get the converted MSYS2/Cygwin style path</td>
+<td>>= 2.2.7</td>
+</tr>
+<tr>
+<td><a href="#pathpattern">path.pattern</a></td>
+<td>Convert a path pattern to a lua pattern</td>
 <td>>= 2.2.7</td>
 </tr>
 </tbody>
 </table>
+<p>#### </p>
+<h4 id="pathnew">path.new</h4>
+<ul>
+<li>Create a new path instance</li>
+</ul>
+<pre><code class="lang-lua">local p = path.new("/tmp/file.txt")
+print(p:filename())
+</code></pre>
+<p>The result is: <code>file.txt</code></p>
 <h4 id="pathjoin">path.join</h4>
 <ul>
 <li>Stitching path</li>
@@ -1591,9 +1640,31 @@ print(path.absolute("dir/file.txt"))
     -- if it is an absolute path
 end
 </code></pre>
+<h4 id="pathsplit">path.split</h4>
+<ul>
+<li>Split the path by the separator </li>
+</ul>
+<pre><code class="lang-lua">print(path.split("/tmp/file.txt"))
+</code></pre>
+<p>The result is: <code>{ "tmp", "file.txt" }</code></p>
+<h4 id="pathsep">path.sep</h4>
+<ul>
+<li>Return the current separator, usually <code>/</code> </li>
+</ul>
+<pre><code class="lang-lua">print(path.sep("/tmp/file.txt"))
+</code></pre>
+<p>The result is: <code>/</code></p>
+<h4 id="pathislastsep">path.islastsep</h4>
+<ul>
+<li>Get if the last character is a separator</li>
+</ul>
+<pre><code class="lang-lua">if (path.islastsep("/tmp/dir/")) then
+    -- if the last character is a separator
+end
+</code></pre>
 <h4 id="pathsplitenv">path.splitenv</h4>
 <ul>
-<li>Split a envienment variable value of an array of pathes</li>
+<li>Split a environment variable value of an array of pathes</li>
 </ul>
 <pre><code class="lang-lua">local pathes = path.splitenv(vformat("$(env PATH)"))
 
@@ -1606,6 +1677,34 @@ local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 -- got { "/usr/bin", "/usr/local/bin" }
 </code></pre>
 <p>The result is an array of strings, each item is a path in the input string.</p>
+<h4 id="pathjoinenv">path.joinenv</h4>
+<ul>
+<li>Concat two environment variable by the environment separator</li>
+</ul>
+<pre><code class="lang-lua">print(path.joinenv({"/tmp/dir", "/tmp/dir2"}))
+</code></pre>
+<p>The result is: <code>/tmp/dir;/tmp/dir2</code> (on Windows)</p>
+<h4 id="pathenvsep">path.envsep</h4>
+<ul>
+<li>Get the environment separator</li>
+</ul>
+<pre><code class="lang-lua">print(path.envsep())
+</code></pre>
+<p>The result is: <code>;</code></p>
+<h4 id="pathcygwin_path">path.cygwin_path</h4>
+<ul>
+<li>Get the converted MSYS2/Cygwin style path </li>
+</ul>
+<pre><code class="lang-lua">print(path.cygwin_path("C:\\Windows"))
+</code></pre>
+<p>The result is: <code>/C/Windows</code></p>
+<h4 id="pathpattern">path.pattern</h4>
+<ul>
+<li>Convert path pattern to lua pattern</li>
+</ul>
+<pre><code class="lang-lua">print(path.pattern("/tmp/file.txt"))
+</code></pre>
+<p>The result is: <code>/[tT][mM][pP]/[fF][iI][lL][eE]%.[tT][xX][tT]</code></p>
 <h3 id="table">table</h3>
 <p>Table belongs to the module provided by Lua native. For the native interface, you can refer to: <a href="https://www.lua.org/manual/5.1/manual.html#5.5">lua official document</a></p>
 <p>It has been extended in xmake to add some extension interfaces:</p>
