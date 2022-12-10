@@ -984,7 +984,7 @@ os.setenv("HOME", "/tmp/")
 Consistent with the result of [$(tmpdir)](#var-tmpdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
 ```lua
-print((os.tmpdir(), "file.txt"))
+print(path.join(os.tmpdir(), "file.txt"))
 ```
 
 Equivalent to:
@@ -1506,6 +1506,8 @@ print(p:filename())
 ```
 
 The result is: `file.txt`
+
+#### path.join
 
 - Stitching path
 
