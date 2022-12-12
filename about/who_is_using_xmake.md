@@ -29,3 +29,4 @@ so that the xmake project and the community will grow stronger.
 | [ekko](https://github.com/ekkone) | 电网融合终端linux应用，个人使用 | 相比Makefile和Cmake简洁易懂太多了，构建十分高效，并发编译速度比公司用的cmake快一个数量级，希望发展越来越好 |
 | [合宙通信](https://www.openluat.com/) | https://gitee.com/openLuat/luatos-soc-air101                 | xmake 是非常简洁，高效，方便的C/C++构建工具，节省很多时间 |
 | [Akselmo](https://codeberg.org/akselmo) | [Artificial Rage](https://codeberg.org/akselmo/artificial-rage), a simple FPS game and (probably) an FPS game engine in future | Switched from cmake to xmake. The ease of use is great, and being able to generate cmake files for tools that require it is a cherry on top. Highly recommend!
+| [JackLan](https://github.com/lanjackg2003) | 目前,尝试在个人嵌入式项目中使用 | 在几年前,使用make与makefile实现了与XMake类似的C/C++项目构建功能。现在回想起来,从零到有,整个流程也并非那么一帆风顺。最近想使用CMake重新实现这套构建,无意中发现了XMake。让我眼前一亮的是,他使用LUA语法(早些年从合宙的GSM模块玩起来),容易上手。我将之前的Make项目移植使用XMake工具,也就是几小时,这个过程也只是我从第一次参考官方说明做起。所以确实省时省力。希望XMake能够让更多的开发者知道与使用,成为更加主流的构建工具!
