@@ -1610,8 +1610,6 @@ In version 2.7.3, we have improved all flags adding interfaces to specify flags 
 ```lua
 add_cxxflags("clang::-stdlib=libc++")
 add_cxxflags("gcc::-stdlib=libc++")
-add_cxxflags("cl::/GR-")
-add_cxxflags("clang_cl::/GR-")
 ```
 
 Or.
@@ -1619,7 +1617,6 @@ Or.
 ```lua
 add_cxxflags("-stdlib=libc++", {tools = "clang"})
 add_cxxflags("-stdlib=libc++", {tools = "gcc"})
-add_cxxflags("/GR-", {tools = {"clang_cl", "cl"}})
 ```
 
 !> Not just for compile flags, but also for link flags such as add_ldflags, which also work.
