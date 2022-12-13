@@ -1609,6 +1609,8 @@ add_cflags("-g", "-O2", {force = true})
 ```lua
 add_cxxflags("clang::-stdlib=libc++")
 add_cxxflags("gcc::-stdlib=libc++")
+add_cxxflags("cl::/GR-")
+add_cxxflags("clang_cl::/GR-")
 ```
 
 或者：
@@ -1616,6 +1618,7 @@ add_cxxflags("gcc::-stdlib=libc++")
 ```lua
 add_cxxflags("-stdlib=libc++", {tools = "clang"})
 add_cxxflags("-stdlib=libc++", {tools = "gcc"})
+add_cxxflags("/GR-", {tools = {"clang_cl", "cl"}})
 ```
 
 !> 不仅仅是编译flags，对 add_ldflags 等链接 flags，也是同样生效的。
