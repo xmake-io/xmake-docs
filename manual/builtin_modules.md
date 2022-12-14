@@ -624,31 +624,52 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.dirs](#osdirs) | Traversing to get all directories under the specified directory | >= 2.0.1 |
 | [os.files](#osfiles) | Traversing to get all the files in the specified directory | >= 2.0.1 |
 | [os.filedirs](#osfiledirs) | Traversing to get all files or directories under the specified directory | >= 2.0.1 |
+| [os.exit](#osexit) | Exit the program | >= 2.3.1 |
+| [os.isexec](#osisexec) | Test if a file is executable | >= 2.0.1 |
 | [os.run](#osrun) | Quiet running program | >= 2.0.1 |
 | [os.runv](#osrunv) | Quiet running program with parameter list | >= 2.1.5 |
 | [os.exec](#osexec) | Evoke Run Program | >= 2.0.1 |
 | [os.execv](#osexecv) | Echo running program with parameter list | >= 2.1.5 |
 | [os.iorun](#osiorun) | Run and get the program output | >= 2.0.1 |
 | [os.iorunv](#osiorunv) | Run and get the program output with parameter list | >= 2.1.5 |
-| [os.getenv](#osgetenv) | Get Environment Variables | >= 2.0.1 |
-| [os.setenv](#ossetenv) | Setting environment variables | >= 2.0.1 |
 | [os.tmpdir](#ostmpdir) | Get Temp directory path | >= 2.0.1 |
 | [os.tmpfile](#ostmpfile) | Get Temporary File Path | >= 2.0.1 |
 | [os.curdir](#oscurdir) | Get current directory path | >= 2.0.1 |
 | [os.filesize](#osfilesize) | Get File Size | >= 2.1.9 |
 | [os.scriptdir](#osscriptdir) | Get script directory path | >= 2.0.1 |
 | [os.programdir](#osprogramdir) | Get xmake install main program script directory | >= 2.1.5 |
-| [os.projectdir](#osprojectdir) | Get Project Home | |= 2.1.5 |
+| [os.programfile](#osprogramfile) | Get the path of the xmake executable | >= 2.1.5 |
+| [os.projectdir](#osprojectdir) | Get Project Home | >= 2.1.5 |
 | [os.arch](#osarch) | Get Current System Architecture | >= 2.0.1 |
 | [os.host](#oshost) | Get Current Host System | >= 2.0.1 |
-| [os.ln](#osln) | Link file or directory to the new symfile | >= 2.2.2 |
-| [os.raise](#osraise) | Raise an exception and abort the current script | >= 2.2.8 |
 | [os.subhost](#ossubhost) | Get Subsystem host, e.g. msys, cygwin on windows | >= 2.3.1 |
 | [os.subarch](#ossubarch) | Get Subsystem host architecture | >= 2.3.1 |
+| [os.is_host](#osis_host) | Test if a given host is the current | >= 2.3.1 |
+| [os.is_arch](#osis_arch) | Test if a given arch is the current | >= 2.3.1 |
+| [os.is_subhost](#osis_subhost) | Test if a given sub host is the current | >= 2.3.1 |
+| [os.is_subarch](#osis_subarch) | Test if a given sub arch is the current | >= 2.3.1 |
+| [os.ln](#osln) | Link file or directory to the new symfile | >= 2.2.2 |
+| [os.readlink](#osreadlink) | Read the content of a symlink | >= 2.2.2 |
+| [os.raise](#osraise) | Raise an exception and abort the current script | >= 2.2.8 |
+| [os.raiselevel](#raiselevel) | Raise an exception and abort the current script | >= 2.2.8 |
 | [os.features](#osfeatures) | Get features | >= 2.3.1 |
 | [os.getenvs](#osgetenvs) | Get all current environment variables | >= 2.2.6 |
-| [os.addenv](#osaddenv) | Add values to environment variable | >= 2.1.5 |
+| [os.setenvs](#ossetenvs) | Set a environment variable | >= 2.2.6 |
+| [os.addenvs](#osaddenvs) | Add environment variables to current envs| >= 2.5.6 |
+| [os.joinenvs](#osjoinenvs) | Join environment variables | >= 2.5.6 |
+| [os.getenv](#osgetenv) | Get Environment Variables | >= 2.0.1 |
+| [os.setenv](#ossetenv) | Setting environment variables | >= 2.0.1 |
+| [os.addenv](#osaddenv) | Add values to one environment variable | >= 2.1.5 |
+| [os.setenvp](#ossetenvp) | Setting environment variables with a given separator | >= 2.1.5 |
+| [os.addenvp](#osaddenvp) | Add values to one environment variable with a given separator | >= 2.1.5 |
 | [os.workingdir](#osworkingdir) | Get the working directory | >= 2.1.9 |
+| [os.match](#osmatch) | Match files or directories | >= 2.3.1 |
+| [os.isroot](#osisroot) | Test if xmake is running as root | >= 2.1.9 |
+| [os.fscase](#osfscase) | Test if the os has a case sensitive filesystem | >= 2.1.9 |
+| [os.term](#osterm) | Get current terminal | >= 2.7.3 |
+| [os.shell](#osshell) | Get current shell | >= 2.7.3 |
+| [os.cpuinfo](#oscpuinfo) | Get cpu information | >= 2.1.5
+| [os.meminfo](#osmeminfo) | Get memory information | >= 2.1.5
 
 #### os.cp
 
@@ -873,6 +894,20 @@ for _, filedir in ipairs(os.filedirs("$(buildir)/**")) do
 end
 ```
 
+#### os.exit
+
+- Exit the program
+
+#### os.isexec
+
+- Test if a file is executable
+
+```lua
+if os.isexec("path/to/file.exe") then
+    os.run("path/to/file.exe")
+end
+```
+
 #### os.run
 
 - Quietly running native shell commands
@@ -961,22 +996,6 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"})
 local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 ```
 
-#### os.getenv
-
-- Get system environment variables
-
-```lua
-print(os.getenv("PATH"))
-```
-
-#### os.setenv
-
-- Set system environment variables
-
-```lua
-os.setenv("HOME", "/tmp/")
-```
-
 #### os.tmpdir
 
 - Get temporary directory
@@ -1029,6 +1048,10 @@ Usage reference: [os.tmpdir](#ostmpdir).
 
 Consistent with the result of [$(programdir)](#var-programdir), it is just a direct get returned to a variable, which can be maintained with subsequent strings.
 
+#### os.programfile
+
+- Get the path of the xmake executable
+
 #### os.projectdir
 
 - Get the project home directory
@@ -1047,6 +1070,30 @@ That is the default architecture of the current host system, for example, I exec
 
 Consistent with the result of [$(host)](#var-host), for example, if I execute xmake on `linux x86_64` to build, the return value is: `linux`
 
+#### os.subhost
+
+- Get Subsystem host, e.g. msys, cygwin on windows
+
+#### os.subarch
+
+- Get Subsystem host architecture
+
+#### os.is_host
+
+- Test if a given host is the current
+
+#### os.is_arch
+
+- Test if a given arch is the current
+
+#### os.is_subhost
+
+- Test if a given sub host is the current
+
+#### os.is_subarch
+
+- Test if a given sub arch is the current
+
 #### os.ln
 
 - Create a symlink to a file or directory
@@ -1056,7 +1103,11 @@ Consistent with the result of [$(host)](#var-host), for example, if I execute xm
 os.ln("xxx.txt", "xxx.txt.ln")
 ```
 
-### os.raise
+#### os.readlink
+
+- Read the content of a symlink
+
+#### os.raise
 
 - Raise an exception and abort the current script
 
@@ -1065,19 +1116,20 @@ os.ln("xxx.txt", "xxx.txt.ln")
 os.raise("an error occurred")
 ```
 
-### os.subhost
+#### os.raiselevel
 
-- Get Subsystem host, e.g. msys, cygwin on windows
+- Similar to [os.raise](#osraise) but you can specify the level of the error
 
-### os.subarch
+```lua
+-- Raise exception with message "an error occurred"
+os.raiselevel(3,"an error occurred")
+```
 
-- Get Subsystem host architecture
-
-### os.features
+#### os.features
 
 - Get features
 
-### os.getenvs
+#### os.getenvs
 
 - Get all current environment variables
 
@@ -1087,18 +1139,166 @@ local envs = os.getenvs()
 print(envs["HOME"])
 ```
 
-### os.addenv
+#### os.setenvs
 
-- Add values to environment variable
+- Set environment variables. Replace the current envs by a new one
+
+#### os.addenvs
+
+- Add environment variables to current envs, return the old one
+
+```lua
+os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
+
+local oldenvs = os.addenvs({CUSTOM = "some/path/"})
+print(os.getenvs()["EXAMPLE"]) --got some/path/;a/path
+print(oldenvs["EXAMPLE"]) -- got a/path
+```
+
+#### os.joinenvs
+
+- Join environment variables. Similar to [os.addenvs](#osaddenvs) but with two envs variable
+
+```lua
+local envs = {CUSTOM = "a/path"}
+local envs2 = {CUSTOM = "some/path/"}
+print(os.joinenvs(envs, envs2))
+```
+
+The result is: `{ CUSTOM = "a/path;some/path/" }`
+ 
+#### os.getenv
+
+- Get system environment variables
+
+```lua
+print(os.getenv("PATH"))
+```
+
+#### os.setenv
+
+- Set system environment variables
+
+```lua
+os.setenv("HOME", "/tmp/")
+```
+
+#### os.addenv
+
+- Add values to one environment variable
 
 ```lua
 -- Add 'bin' to PATH
 os.addenv("PATH", "bin")
 ```
 
-### os.workingdir
+#### os.setenvp
+
+- Setting environment variables with a given separator
+
+#### os.addenvp
+
+- Add values to one environment variable with a given separator
+
+#### os.workingdir
 
 - Get the working directory
+
+#### os.match
+
+- Match files or directories with a pattern
+
+```lua
+-- @param pattern   the search pattern
+--                  uses "*" to match any part of a file or directory name,
+--                  uses "**" to recurse into subdirectories.
+--
+-- @param mode      the match mode
+--                  - only find file:           'f' or false or nil
+--                  - only find directory:      'd' or true
+--                  - find file and directory:  'a'
+-- @return          the result array and count
+
+local files, count = os.match("./about/*", false)
+print(files)
+-- In xmake-docs repo
+-- got { 
+--   "about\awesome.md",
+--   "about\changelog.md",
+--   "about\contact.md",
+--   "about\introduction.md",
+--   "about\sponsor.md",
+--   "about\technical_support.md",
+--   "about\who_is_using_xmake.md"
+-- }
+
+local dirs, count = os.match("./assets/*", true)
+print(dirs)
+-- In xmake-docs repo
+-- got {
+--   "assets\img",
+--   "assets\npm",
+--   "assets\scripts"
+-- }
+```
+
+#### os.isroot
+
+- Test if xmake is running as root
+
+#### os.fscase
+
+- Test if the os has a case sensitive filesystem
+
+#### os.term
+
+- Get current terminal (windows-terminal, vscode, ... )
+
+```lua
+print(os.term())
+-- got vscode
+```
+ 
+#### os.shell
+
+- Get current shell  (pwsh, cmd, ...)
+
+```lua
+print(os.shell())
+-- got pwsh
+```
+
+#### os.cpuinfo
+
+- Get cpu information
+
+```lua
+print(os.cpuinfo())
+-- got { 
+--   ncpu = 8,
+--   usagerate = 0.0,
+--   model_name = "Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz",
+--   march = "Kaby Lake",
+--   vendor = "GenuineIntel",
+--   model = 158,
+--   family = 6
+-- }
+print(os.cpuinfo("march")) -- got Kaby Lake
+```
+
+#### os.meminfo
+
+- Get memory information
+
+```lua
+print(os.meminfo())
+-- got { 
+--   usagerate = 0.53490080822924,
+--   totalsize = 16332,
+--   availsize = 7596,
+--   pagesize = 4096
+-- }
+```
 
 ### winos
 
@@ -1493,8 +1693,7 @@ The path operation module implements cross-platform path operations, which is a 
 | [path.joinenv](#pathjoinenv)                   | Concat environment variable with environment separator  | >= 2.2.7           |
 | [path.envsep](#pathenvsep)                     | Get the path seperator of environment variable          | >= 2.2.7           |
 | [path.cygwin_path](#pathcygwin_path)           | Get the converted MSYS2/Cygwin style path               | >= 2.2.7           |
-| [path.pattern](#pathpattern)                   | Convert a path pattern to a lua pattern                 | >= 2.2.7           |
-#### 
+| [path.pattern](#pathpattern)                   | Convert a path pattern to a lua pattern                 | >= 2.2.7           | 
 
 #### path.new
 
