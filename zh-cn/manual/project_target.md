@@ -2117,9 +2117,9 @@ target("test")
 
 #### 设置指定目标的编译平台
 
-通常配合[set_arch](#target_setarch)使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。
+通常配合[set_arch](#targetset_arch)使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。
 
-一般用于需要同时编译host平台目标、交叉编译目标的场景，更多详情见：[set_toolchains](#target_settoolchains)
+一般用于需要同时编译host平台目标、交叉编译目标的场景，更多详情见：[set_toolchains](#targetset_toolchains)
 
 例如：
 
