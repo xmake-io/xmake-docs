@@ -154,6 +154,7 @@ xmake
 
 ```bash
 $ cd xmake
+$ ./configure
 $ make
 ```
 

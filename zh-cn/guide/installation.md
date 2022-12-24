@@ -152,7 +152,8 @@ pkg install xmake
 ```bash
 git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
-make build
+./configure
+make
 ./scripts/get.sh __local__ __install_only__
 source ~/.xmake/profile
 ```
@@ -172,17 +173,12 @@ source ~/.xmake/profile
 git clone https://github.com/xmake-io/xmake.git
 cd ./xmake
 git submodule update --init
-make build
+./configure
+make
 ./scripts/get.sh __local__ __install_only__
 ```
 
 !> `./get.sh __local__`是安装到`~/.local/xmake`下，然后通过`source ~/.xmake/profile`方式来加载的，所以安装完，当前终端如果执行xmake失败，提示找不到，就手动执行下 `source ~/.xmake/profile`，而下次打开终端就不需要了。
-
-### 卸载
-
-```bash
-./scripts/get.sh __uninstall__
-```
 
 ### 仅仅更新安装lua脚本
 
@@ -201,26 +197,22 @@ xmake不推荐root下安装使用，因为这很不安全，如果用户非要ro
 1. 如果遇到readline相关问题，请装下readline-devel或者libreadline-dev依赖，这个是可选的，仅仅`xmake lua`命令执行REPL时候才需要。
 2. 如果想要提速编译，可以装下ccache，xmake会自动检测并使用，这也是可选的。
 
-## 其他安装方式 
+## 其他安装方式
 
 !> 这种也是源码编译安装，但是安装路径会直接写入`/usr/`下，需要root权限，因此除非特殊情况，不推荐这种安装方式，建议采用上文提供的`./get.sh __local__`方式来安装，这两种安装方式的安装路径是不同的，不要混用。
 
 通过make进行编译安装:
 
 ```bash
-make build; sudo make install
+./configure
+make
+sudo make install
 ```
 
 安装到其他指定目录:
 
 ```bash
-sudo make install prefix=/usr/local
-```
-
-卸载:
-
-```bash
-sudo make uninstall
+sudo make install PREFIX=/usr/local
 ```
 
 ## 更新升级

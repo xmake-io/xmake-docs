@@ -133,7 +133,8 @@ pkg install xmake
 ```bash
 git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
-make build
+./configure
+make
 ./scripts/get.sh __local__ __install_only__
 source ~/.xmake/profile
 ```
@@ -153,17 +154,12 @@ If you forget to add `--recursive` when git clone, you can also execute `git sub
 git clone https://github.com/xmake-io/xmake.git
 cd ./xmake
 git submodule update --init
-make build
+./configure
+make
 ./scripts/get.sh __local__ __install_only__
 ```
 
 !> `./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.
-
-### Uninstall
-
-```bash
-./scripts/get.sh __uninstall__
-```
 
 ### Only update the lua script
 
@@ -189,19 +185,15 @@ Xmake is not recommended for root installation, because this is very insecure. I
 Compile and install via make:
 
 ```bash
-make build; sudo make install
+./configure
+make
+sudo make install
 ```
 
 Install to other specified directories:
 
 ```bash
-sudo make install prefix=/usr/local
-```
-
-Uninstall:
-
-```bash
-sudo make uninstall
+sudo make install PREFIX=/usr/local
 ```
 
 ## Update Upgrade
