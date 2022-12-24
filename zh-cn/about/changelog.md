@@ -1,4 +1,37 @@
 
+## v2.7.4
+
+### 新特性
+
+* [#3049](https://github.com/xmake-io/xmake/pull/3049): 添加 `xmake format` 插件
+* 添加 `plugin.compile_commands.autoupdate` 规则
+* [#3172](https://github.com/xmake-io/xmake/pull/3172): 添加 xmake.sh
+* [#3168](https://github.com/xmake-io/xmake/pull/3168): 为 msvc 添加 C++23 标准模块支持
+
+### 改进
+
+* [#3056](https://github.com/xmake-io/xmake/issues/3056): 改进 Zig 支持
+* [#3060](https://github.com/xmake-io/xmake/issues/3060): 改进支持 msys2 的环境探测
+* [#3071](https://github.com/xmake-io/xmake/issues/3071): 为 llvm/clang 工具链支持 rc 编译
+* [#3122](https://github.com/xmake-io/xmake/pull/3122): 改进 c++20 模块依赖图的源码分析，支持预处理
+* [#3125](https://github.com/xmake-io/xmake/pull/3125): 增加私有 C++20 模块的编译支持
+* [#3133](https://github.com/xmake-io/xmake/pull/3133): 增加 internal partitions 模块支持
+* [#3146](https://github.com/xmake-io/xmake/issues/3146): 添加默认包组件支持
+* [#3192](https://github.com/xmake-io/xmake/issues/3192): 为 auto complete 增加 json 输出支持
+
+### Bugs 修复
+
+* 修复 requires-lock 问题
+* [#3065](https://github.com/xmake-io/xmake/issues/3065): 修复部分依赖包没有被安装的问题
+* [#3082](https://github.com/xmake-io/xmake/issues/3082): 修复 build.ninja 生成器
+* [#3092](https://github.com/xmake-io/xmake/issues/3092): 修复 xrepo add-repo 添加失败逻辑
+* [#3013](https://github.com/xmake-io/xmake/issues/3013): 修复支持 windows UNC 路径
+* [#2902](https://github.com/xmake-io/xmake/issues/2902): 修复文件被其他子进程占用问题
+* [#3074](https://github.com/xmake-io/xmake/issues/3074): 修复 CMakelists 生成器链接参数设置不对问题
+* [#3141](https://github.com/xmake-io/xmake/pull/3141): 修复 C++ 模块的导入顺序
+* 修复 tools/xmake 包安装构建目录
+* [#3159](https://github.com/xmake-io/xmake/issues/3159): 为 CLion 修复 compile_commands
+
 ## v2.7.3
 
 ### 新特性
