@@ -566,7 +566,7 @@ target("test")
 #### utils.symbols.export_all
 
 v2.5.2 以上版本提供，我们可以用它自动导出所有的动态库符号，目前仅支持 windows dll 目标程序的符号导出，即使没有在代码中通过 `__declspec(dllexport)` 导出接口，
-xmake 也会自动导出所有 c 接口符号（c++ 类库符号太多，暂时没有导出它）。
+xmake 也会自动导出所有 c/c++ 接口符号。
 
 ```lua
 add_rules("mode.release", "mode.debug")
@@ -580,6 +580,11 @@ target("test")
     set_kind("binary")
     add_deps("foo")
     add_files("src/main.c")
+```
+
+c++
+```lua
+add_rules("utils.symbols.export_all", {export_classes = true})
 ```
 
 相关 issue [#1123](https://github.com/xmake-io/xmake/issues/1123)
