@@ -39,7 +39,7 @@
 
 ### 使用LSP提高开发体验
 
-为了更好的C++语法提示体验，xmake提供了对[Language Server Protocol(https://microsoft.github.io/language-server-protocol/)（简称LSP）的支持，在vscode中，可以使用 >XMake: UpdateIntellisense 命令生成.vscode/compile_commands.json（通常在修改xmake.lua时该文件会自动生成）。与此同时，我们可以选择安装支持LSP的语法提示插件，如LLVM推出的[clangd](https://clangd.llvm.org/)，其功能稳定且提示流畅，并通过LSP标准完成对不同编译工具链的支持。
+为了更好的C++语法提示体验，xmake提供了对[Language Server Protocol](https://microsoft.github.io/language-server-protocol/)（简称LSP）的支持，在vscode中，可以使用 `>XMake: UpdateIntellisense` 命令生成.vscode/compile_commands.json（通常在修改xmake.lua时该文件会自动生成）。与此同时，我们可以选择安装支持LSP的语法提示插件，如LLVM推出的[clangd](https://clangd.llvm.org/)，其功能稳定且提示流畅，并通过LSP标准完成对不同编译工具链的支持。
 
 使用clangd时，可能与上述的C/C++插件的提示功能有冲突，可以在.vscode/settings.json中添加设置将C/C++的语法提示功能关闭:
 
