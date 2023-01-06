@@ -350,7 +350,7 @@ $ xmake watch
 watching /private/tmp/test/src/** ..
 watching /private/tmp/test/* ..
 /private/tmp/test/src/main.cpp modified
-[ 25%]: ccache compiling.release src/main.cpp
+[ 25%]: cache compiling.release src/main.cpp
 [ 50%]: linking.release test
 [100%]: build ok!
 ```

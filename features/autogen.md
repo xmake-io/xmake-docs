@@ -109,21 +109,21 @@ configure
 }
 configure ok!
 clean ok!
-[00%]: ccache compiling.release ./adler32.c
-[06%]: ccache compiling.release ./compress.c
-[13%]: ccache compiling.release ./crc32.c
-[20%]: ccache compiling.release ./deflate.c
-[26%]: ccache compiling.release ./gzclose.c
-[33%]: ccache compiling.release ./gzlib.c
-[40%]: ccache compiling.release ./gzread.c
-[46%]: ccache compiling.release ./gzwrite.c
-[53%]: ccache compiling.release ./infback.c
-[60%]: ccache compiling.release ./inffast.c
-[66%]: ccache compiling.release ./inflate.c
-[73%]: ccache compiling.release ./inftrees.c
-[80%]: ccache compiling.release ./trees.c
-[86%]: ccache compiling.release ./uncompr.c
-[93%]: ccache compiling.release ./zutil.c
+[00%]: cache compiling.release ./adler32.c
+[06%]: cache compiling.release ./compress.c
+[13%]: cache compiling.release ./crc32.c
+[20%]: cache compiling.release ./deflate.c
+[26%]: cache compiling.release ./gzclose.c
+[33%]: cache compiling.release ./gzlib.c
+[40%]: cache compiling.release ./gzread.c
+[46%]: cache compiling.release ./gzwrite.c
+[53%]: cache compiling.release ./infback.c
+[60%]: cache compiling.release ./inffast.c
+[66%]: cache compiling.release ./inflate.c
+[73%]: cache compiling.release ./inftrees.c
+[80%]: cache compiling.release ./trees.c
+[86%]: cache compiling.release ./uncompr.c
+[93%]: cache compiling.release ./zutil.c
 [100%]: archiving.release libzlib-1.2.a
 build ok!👌
 ```
@@ -283,11 +283,11 @@ configure
 }
 configure ok!
 clean ok!
-[00%]: ccache compiling.release ./FMDatabase.m
-[20%]: ccache compiling.release ./FMDatabaseAdditions.m
-[40%]: ccache compiling.release ./FMDatabasePool.m
-[60%]: ccache compiling.release ./FMDatabaseQueue.m
-[80%]: ccache compiling.release ./FMResultSet.m
+[00%]: cache compiling.release ./FMDatabase.m
+[20%]: cache compiling.release ./FMDatabaseAdditions.m
+[40%]: cache compiling.release ./FMDatabasePool.m
+[60%]: cache compiling.release ./FMDatabaseQueue.m
+[80%]: cache compiling.release ./FMResultSet.m
 [100%]: archiving.release libFMDB.a
 build ok!👌
 ```
@@ -426,83 +426,83 @@ configure
 }
 configure ok!
 clean ok!
-[00%]: ccache compiling.release ./cdjpeg.c
-[00%]: ccache compiling.release ./example.c
-[00%]: ccache compiling.release ./jcapimin.c
-[00%]: ccache compiling.release ./jcapistd.c
-[00%]: ccache compiling.release ./jccoefct.c
-[00%]: ccache compiling.release ./jccolor.c
-[01%]: ccache compiling.release ./jcdctmgr.c
-[01%]: ccache compiling.release ./jchuff.c
-[01%]: ccache compiling.release ./jcinit.c
-[01%]: ccache compiling.release ./jcmainct.c
-[01%]: ccache compiling.release ./jcmarker.c
-[02%]: ccache compiling.release ./jcmaster.c
-[02%]: ccache compiling.release ./jcomapi.c
-[02%]: ccache compiling.release ./jcparam.c
-[02%]: ccache compiling.release ./jcphuff.c
-[02%]: ccache compiling.release ./jcprepct.c
-[03%]: ccache compiling.release ./jcsample.c
-[03%]: ccache compiling.release ./jctrans.c
-[03%]: ccache compiling.release ./jdapimin.c
-[03%]: ccache compiling.release ./jdapistd.c
-[03%]: ccache compiling.release ./jdatadst.c
-[04%]: ccache compiling.release ./jdatasrc.c
-[04%]: ccache compiling.release ./jdcoefct.c
-[04%]: ccache compiling.release ./jdcolor.c
-[04%]: ccache compiling.release ./jddctmgr.c
-[04%]: ccache compiling.release ./jdhuff.c
-[05%]: ccache compiling.release ./jdinput.c
-[05%]: ccache compiling.release ./jdmainct.c
-[05%]: ccache compiling.release ./jdmarker.c
-[05%]: ccache compiling.release ./jdmaster.c
-[05%]: ccache compiling.release ./jdmerge.c
-[06%]: ccache compiling.release ./jdphuff.c
-[06%]: ccache compiling.release ./jdpostct.c
-[06%]: ccache compiling.release ./jdsample.c
-[06%]: ccache compiling.release ./jdtrans.c
-[06%]: ccache compiling.release ./jerror.c
-[07%]: ccache compiling.release ./jfdctflt.c
-[07%]: ccache compiling.release ./jfdctfst.c
-[07%]: ccache compiling.release ./jfdctint.c
-[07%]: ccache compiling.release ./jidctflt.c
-[07%]: ccache compiling.release ./jidctfst.c
-[08%]: ccache compiling.release ./jidctint.c
-[08%]: ccache compiling.release ./jidctred.c
-[08%]: ccache compiling.release ./jmemansi.c
-[08%]: ccache compiling.release ./jmemmgr.c
-[08%]: ccache compiling.release ./jmemname.c
-[09%]: ccache compiling.release ./jmemnobs.c
-[09%]: ccache compiling.release ./jquant1.c
-[09%]: ccache compiling.release ./jquant2.c
-[09%]: ccache compiling.release ./jutils.c
-[09%]: ccache compiling.release ./rdbmp.c
-[10%]: ccache compiling.release ./rdcolmap.c
-[10%]: ccache compiling.release ./rdgif.c
-[10%]: ccache compiling.release ./rdppm.c
-[10%]: ccache compiling.release ./rdrle.c
-[10%]: ccache compiling.release ./rdswitch.c
-[11%]: ccache compiling.release ./rdtarga.c
-[11%]: ccache compiling.release ./transupp.c
-[11%]: ccache compiling.release ./wrbmp.c
-[11%]: ccache compiling.release ./wrgif.c
-[11%]: ccache compiling.release ./wrppm.c
-[12%]: ccache compiling.release ./wrrle.c
-[12%]: ccache compiling.release ./wrtarga.c
+[00%]: cache compiling.release ./cdjpeg.c
+[00%]: cache compiling.release ./example.c
+[00%]: cache compiling.release ./jcapimin.c
+[00%]: cache compiling.release ./jcapistd.c
+[00%]: cache compiling.release ./jccoefct.c
+[00%]: cache compiling.release ./jccolor.c
+[01%]: cache compiling.release ./jcdctmgr.c
+[01%]: cache compiling.release ./jchuff.c
+[01%]: cache compiling.release ./jcinit.c
+[01%]: cache compiling.release ./jcmainct.c
+[01%]: cache compiling.release ./jcmarker.c
+[02%]: cache compiling.release ./jcmaster.c
+[02%]: cache compiling.release ./jcomapi.c
+[02%]: cache compiling.release ./jcparam.c
+[02%]: cache compiling.release ./jcphuff.c
+[02%]: cache compiling.release ./jcprepct.c
+[03%]: cache compiling.release ./jcsample.c
+[03%]: cache compiling.release ./jctrans.c
+[03%]: cache compiling.release ./jdapimin.c
+[03%]: cache compiling.release ./jdapistd.c
+[03%]: cache compiling.release ./jdatadst.c
+[04%]: cache compiling.release ./jdatasrc.c
+[04%]: cache compiling.release ./jdcoefct.c
+[04%]: cache compiling.release ./jdcolor.c
+[04%]: cache compiling.release ./jddctmgr.c
+[04%]: cache compiling.release ./jdhuff.c
+[05%]: cache compiling.release ./jdinput.c
+[05%]: cache compiling.release ./jdmainct.c
+[05%]: cache compiling.release ./jdmarker.c
+[05%]: cache compiling.release ./jdmaster.c
+[05%]: cache compiling.release ./jdmerge.c
+[06%]: cache compiling.release ./jdphuff.c
+[06%]: cache compiling.release ./jdpostct.c
+[06%]: cache compiling.release ./jdsample.c
+[06%]: cache compiling.release ./jdtrans.c
+[06%]: cache compiling.release ./jerror.c
+[07%]: cache compiling.release ./jfdctflt.c
+[07%]: cache compiling.release ./jfdctfst.c
+[07%]: cache compiling.release ./jfdctint.c
+[07%]: cache compiling.release ./jidctflt.c
+[07%]: cache compiling.release ./jidctfst.c
+[08%]: cache compiling.release ./jidctint.c
+[08%]: cache compiling.release ./jidctred.c
+[08%]: cache compiling.release ./jmemansi.c
+[08%]: cache compiling.release ./jmemmgr.c
+[08%]: cache compiling.release ./jmemname.c
+[09%]: cache compiling.release ./jmemnobs.c
+[09%]: cache compiling.release ./jquant1.c
+[09%]: cache compiling.release ./jquant2.c
+[09%]: cache compiling.release ./jutils.c
+[09%]: cache compiling.release ./rdbmp.c
+[10%]: cache compiling.release ./rdcolmap.c
+[10%]: cache compiling.release ./rdgif.c
+[10%]: cache compiling.release ./rdppm.c
+[10%]: cache compiling.release ./rdrle.c
+[10%]: cache compiling.release ./rdswitch.c
+[11%]: cache compiling.release ./rdtarga.c
+[11%]: cache compiling.release ./transupp.c
+[11%]: cache compiling.release ./wrbmp.c
+[11%]: cache compiling.release ./wrgif.c
+[11%]: cache compiling.release ./wrppm.c
+[12%]: cache compiling.release ./wrrle.c
+[12%]: cache compiling.release ./wrtarga.c
 [12%]: archiving.release libjpeg-6b.a
-[12%]: ccache compiling.release ./wrjpgcom.c
+[12%]: cache compiling.release ./wrjpgcom.c
 [25%]: linking.release wrjpgcom
-[25%]: ccache compiling.release ./ansi2knr.c
+[25%]: cache compiling.release ./ansi2knr.c
 [37%]: linking.release ansi2knr
-[37%]: ccache compiling.release ./jpegtran.c
+[37%]: cache compiling.release ./jpegtran.c
 [50%]: linking.release jpegtran
-[50%]: ccache compiling.release ./djpeg.c
+[50%]: cache compiling.release ./djpeg.c
 [62%]: linking.release djpeg
-[62%]: ccache compiling.release ./ckconfig.c
+[62%]: cache compiling.release ./ckconfig.c
 [75%]: linking.release ckconfig
-[75%]: ccache compiling.release ./rdjpgcom.c
+[75%]: cache compiling.release ./rdjpgcom.c
 [87%]: linking.release rdjpgcom
-[87%]: ccache compiling.release ./cjpeg.c
+[87%]: cache compiling.release ./cjpeg.c
 [100%]: linking.release cjpeg
 build ok!👌
 ```
