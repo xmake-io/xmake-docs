@@ -150,9 +150,9 @@ $ xmake service --connect --distcc --ccache
 ```bash
 $ xmake
 ...
-[ 93%]: ccache compiling.release src/demo/network/unix_echo_client.c         ----> local job
-[ 93%]: ccache compiling.release src/demo/network/ipv6.c
-[ 93%]: ccache compiling.release src/demo/network/ping.c
+[ 93%]: cache compiling.release src/demo/network/unix_echo_client.c         ----> local job
+[ 93%]: cache compiling.release src/demo/network/ipv6.c
+[ 93%]: cache compiling.release src/demo/network/ping.c
 [ 93%]: distcc compiling.release src/demo/network/unix_echo_server.c.         ----> distcc job
 [ 93%]: distcc compiling.release src/demo/network/http.c
 [ 93%]: distcc compiling.release src/demo/network/unixaddr.c
@@ -160,8 +160,8 @@ $ xmake
 [ 94%]: distcc compiling.release src/demo/network/ipaddr.c
 [ 94%]: distcc compiling.release src/demo/math/fixed.c
 [ 94%]: distcc compiling.release src/demo/libm/float.c
-[ 95%]: ccache compiling.release src/demo/libm/double.c
-[ 95%]: ccache compiling.release src/demo/other/test.cpp
+[ 95%]: cache compiling.release src/demo/libm/double.c
+[ 95%]: cache compiling.release src/demo/other/test.cpp
 [ 98%]: archiving.release libtbox.a
 [ 99%]: linking.release demo
 [100%]: build ok!

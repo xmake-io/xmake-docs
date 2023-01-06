@@ -36,12 +36,12 @@ target("test")
 
 ```console
 $ xmake -r
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_642A245F.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_bar.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_73161A20.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_F905F036.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_foo.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/main.c
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_642A245F.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_bar.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_73161A20.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_F905F036.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_foo.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/main.c
 [ 77%]: linking.release test
 [100%]: build ok
 ```

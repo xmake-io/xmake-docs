@@ -145,14 +145,14 @@ $ ./gradlew app:assembleDebug
 > Task :nativelib:xmakeConfigureForArm64
 > Task :nativelib:xmakeBuildForArm64
 >> xmake build
-[ 50%]: ccache compiling.debug nativelib.cc
+[ 50%]: cache compiling.debug nativelib.cc
 [ 75%]: linking.debug libnativelib.so
 [100%]: build ok!
 >> install artifacts to /Users/ruki/projects/personal/xmake-gradle/nativelib/libs/arm64-v8a
 > Task :nativelib:xmakeConfigureForArmv7
 > Task :nativelib:xmakeBuildForArmv7
 >> xmake build
-[ 50%]: ccache compiling.debug nativelib.cc
+[ 50%]: cache compiling.debug nativelib.cc
 [ 75%]: linking.debug libnativelib.so
 [100%]: build ok!
 >> install artifacts to /Users/ruki/projects/personal/xmake-gradle/nativelib/libs/armeabi-v7a

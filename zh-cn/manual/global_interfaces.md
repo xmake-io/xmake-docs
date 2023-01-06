@@ -339,7 +339,7 @@ please input: y (y/n)
   => installing conan::zlib/1.2.11 .. ok
   => installing conan::openssl/1.1.1g .. ok
 
-[  0%]: ccache compiling.release src/main.c
+[  0%]: cache compiling.release src/main.c
 [100%]: linking.release test
 ```
 

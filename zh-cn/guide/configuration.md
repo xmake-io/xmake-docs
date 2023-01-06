@@ -489,7 +489,7 @@ configure
     clean = true
     bin = /usr/local/opt/mingw-w64/bin
 }
-[  0%]: ccache compiling.release src/main.cpp
+[  0%]: cache compiling.release src/main.cpp
 /usr/local/bin/ccache /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-gcc -c -fvisibility=hidden -O3 -m64 -o build/.objs/test/mingw/x86_64/release/src/main.cpp.obj src/main.cpp
 [100%]: linking.release test.exe
 /usr/local/opt/mingw-w64/bin/x86_64-w64-mingw32-g++ -o build/mingw/x86_64/release/test.exe build/.objs/test/mingw/x86_64/release/src/main.cpp.obj -s -fvisibility=hidden -m64
@@ -1006,7 +1006,7 @@ $ xmake l os.programdir
 
 ```console
 $ XMAKE_PROFILE=perf xmake
-[ 25%]: ccache compiling.release src/main.cpp
+[ 25%]: cache compiling.release src/main.cpp
 [ 50%]: linking.release test
 [100%]: build ok!
  0.238,  97.93%,       1, runloop                       : @programdir/core/base/scheduler.lua: 805
