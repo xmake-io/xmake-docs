@@ -15,6 +15,7 @@
   - [Project Examples](guide/project_examples.md)
   - [Configuration](guide/configuration.md)
   - [Syntax Description](guide/syntax_description.md)
+  - [Use xmake in VSCode](guide/use_in_vscode.md)
   - [FAQ](guide/faq.md)
 
 - Package Management
