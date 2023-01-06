@@ -17,6 +17,7 @@
   - [工程例子](zh-cn/guide/project_examples.md)
   - [配置说明](zh-cn/guide/configuration.md)
   - [语法描述](zh-cn/guide/syntax_description.md)
+  - [在VSCode中使用xmake](zh-cn/guide/use_in_vscode.md)
   - [问答](zh-cn/guide/faq.md)
 
 - 包依赖管理
