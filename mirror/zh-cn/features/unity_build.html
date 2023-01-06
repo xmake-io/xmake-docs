@@ -111,12 +111,12 @@ add_rules("c++.unity_build")
 <p>我们可以额外通过设置 <code>{batchsize = 2}</code> 参数到规则，来指定每个合并 Batch 的大小数量，这里也就是每两个 C++ 文件自动合并编译。</p>
 <p>编译效果大概如下：</p>
 <pre><code class="lang-console">$ xmake -r
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_642A245F.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_bar.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_73161A20.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_F905F036.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/unity_foo.cpp
-[ 11%]: ccache compiling.release build/.gens/test/unity_build/main.c
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_642A245F.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_bar.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_73161A20.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_F905F036.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/unity_foo.cpp
+[ 11%]: cache compiling.release build/.gens/test/unity_build/main.c
 [ 77%]: linking.release test
 [100%]: build ok
 </code></pre>

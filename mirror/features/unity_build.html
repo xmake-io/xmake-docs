@@ -111,12 +111,12 @@ add_rules("c++.unity_build")
 <p>We can additionally specify the size of each merged Batch by setting the <code>{batchsize = 2}</code> parameter to the rule, which means that every two C++ files are automatically merged and compiled.</p>
 <p>The compilation effect is roughly as follows:</p>
 <pre><code class="lang-console">$ xmake -r
-[11%]: ccache compiling.release build/.gens/test/unity_build/unity_642A245F.cpp
-[11%]: ccache compiling.release build/.gens/test/unity_build/unity_bar.cpp
-[11%]: ccache compiling.release build/.gens/test/unity_build/unity_73161A20.cpp
-[11%]: ccache compiling.release build/.gens/test/unity_build/unity_F905F036.cpp
-[11%]: ccache compiling.release build/.gens/test/unity_build/unity_foo.cpp
-[11%]: ccache compiling.release build/.gens/test/unity_build/main.c
+[11%]: cache compiling.release build/.gens/test/unity_build/unity_642A245F.cpp
+[11%]: cache compiling.release build/.gens/test/unity_build/unity_bar.cpp
+[11%]: cache compiling.release build/.gens/test/unity_build/unity_73161A20.cpp
+[11%]: cache compiling.release build/.gens/test/unity_build/unity_F905F036.cpp
+[11%]: cache compiling.release build/.gens/test/unity_build/unity_foo.cpp
+[11%]: cache compiling.release build/.gens/test/unity_build/main.c
 [77%]: linking.release test
 [100%]: build ok
 </code></pre>

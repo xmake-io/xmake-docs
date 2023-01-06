@@ -282,7 +282,7 @@ checking for Xcode directory ... /Applications/Xcode.app
 checking for Codesign Identity of Xcode ... Apple Development: waruqi@gmail.com (T3NA4MRVPU)
 checking for SDK version of Xcode for macosx (x86_64) ... 11.3
 checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
-[ 25%]: ccache compiling.release src/main.cpp
+[ 25%]: cache compiling.release src/main.cpp
 [ 50%]: linking.release test
 [100%]: build ok!
 <remote_build_client>: run command ok!
@@ -297,7 +297,7 @@ hello world!
 <h3 id="remoterebuildproject">Remote Rebuild Project</h3>
 <pre><code class="lang-console">$ xmake -rv
 <remote_build_client>: run xmake -rv in 192.168.56.110:9091 ..
-[ 25%]: ccache compiling.release src/main.cpp
+[ 25%]: cache compiling.release src/main.cpp
 /usr/local/bin/ccache /usr/bin/xcrun -sdk macosx clang -c -Qunused-arguments -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/ MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src /main.cpp
 [ 50%]: linking.release test
 "/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/test build/.objs/test/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version -min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -stdlib=libc++ -Wl,-x -lz
