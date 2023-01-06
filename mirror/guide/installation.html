@@ -127,7 +127,7 @@
 <pre><code class="lang-bash">brew install xmake
 </code></pre>
 <h2 id="archlinux">Archlinux</h2>
-<pre><code class="lang-bash">yay -S xmake
+<pre><code class="lang-bash">sudo pacman -Sy xmake
 </code></pre>
 <h2 id="ubuntu">Ubuntu</h2>
 <h3 id="viaapt">via apt</h3>
@@ -167,7 +167,8 @@ sudo dnf install xmake
 <p>!> Note! xmake is not recommended to install under root!</p>
 <pre><code class="lang-bash">git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
-make build
+./configure
+make
 ./scripts/get.sh __local__ __install_only__
 source ~/.xmake/profile
 </code></pre>
@@ -180,13 +181,11 @@ git clone --recursive https://gitlab.com/tboox/xmake.git
 <pre><code class="lang-bash">git clone https://github.com/xmake-io/xmake.git
 cd ./xmake
 git submodule update --init
-make build
+./configure
+make
 ./scripts/get.sh __local__ __install_only__
 </code></pre>
 <p>!> <code>./get.sh __local__</code> is installed to <code>~/.local/xmake</code>, and then loaded by <code>source ~/.xmake/profile</code>, so after the installation, the current terminal fails to execute xmake, If the prompt is not found, manually execute <code>source ~/.xmake/profile</code>, and the next time you open the terminal, you don&#39;t need it.</p>
-<h3 id="uninstall">Uninstall</h3>
-<pre><code class="lang-bash">./scripts/get.sh __uninstall__
-</code></pre>
 <h3 id="onlyupdatetheluascript">Only update the lua script</h3>
 <p>This developer needs to debug the xmake source locally:</p>
 <pre><code class="lang-bash">./scripts/get.sh __local__ __install_only__
@@ -201,13 +200,12 @@ make build
 <h2 id="otherinstallationmethods">Other installation methods</h2>
 <p>!> This is also the source code compilation and installation, but the installation path will be written directly to <code>/usr/</code>, which requires root privileges, so unless special circumstances, this installation method is not recommended, it is recommended to use the <code>./get. Sh __local__</code> way to install, the installation path of the two installation methods is different, do not mix.</p>
 <p>Compile and install via make:</p>
-<pre><code class="lang-bash">make build; sudo make install
+<pre><code class="lang-bash">./configure
+make
+sudo make install
 </code></pre>
 <p>Install to other specified directories:</p>
-<pre><code class="lang-bash">sudo make install prefix=/usr/local
-</code></pre>
-<p>Uninstall:</p>
-<pre><code class="lang-bash">sudo make uninstall
+<pre><code class="lang-bash">sudo make install PREFIX=/usr/local
 </code></pre>
 <h2 id="updateupgrade">Update Upgrade</h2>
 <p>Starting with v2.2.3, the <code>xmake update</code> command has been added to quickly update and upgrade itself. The default is to upgrade to the latest version. Of course, you can also specify to upgrade or roll back to a version:</p>

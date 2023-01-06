@@ -141,7 +141,7 @@ brew install xmake --HEAD
 bash <(curl -fsSL https://xmake.io/shget.text)
 </code></pre>
 <h2 id="archlinux">Archlinux</h2>
-<pre><code class="lang-bash">yay -S xmake
+<pre><code class="lang-bash">sudo pacman -Sy xmake
 </code></pre>
 <h2 id="ubuntu">Ubuntu</h2>
 <h3 id="apt">使用apt安装</h3>
@@ -181,7 +181,8 @@ sudo dnf install xmake
 <p>!> 切记，xmake不建议在root下安装和使用，所以尽量不要在root下拉取源码编译安装！</p>
 <pre><code class="lang-bash">git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
-make build
+./configure
+make
 ./scripts/get.sh __local__ __install_only__
 source ~/.xmake/profile
 </code></pre>
@@ -193,13 +194,11 @@ source ~/.xmake/profile
 <pre><code class="lang-bash">git clone https://github.com/xmake-io/xmake.git
 cd ./xmake
 git submodule update --init
-make build
+./configure
+make
 ./scripts/get.sh __local__ __install_only__
 </code></pre>
 <p>!> <code>./get.sh __local__</code>是安装到<code>~/.local/xmake</code>下，然后通过<code>source ~/.xmake/profile</code>方式来加载的，所以安装完，当前终端如果执行xmake失败，提示找不到，就手动执行下 <code>source ~/.xmake/profile</code>，而下次打开终端就不需要了。</p>
-<h3 id="">卸载</h3>
-<pre><code class="lang-bash">./scripts/get.sh __uninstall__
-</code></pre>
 <h3 id="lua">仅仅更新安装lua脚本</h3>
 <p>这个开发者本地调试xmake源码才需要：</p>
 <pre><code class="lang-bash">./scripts/get.sh __local__ __install_only__
@@ -214,13 +213,12 @@ make build
 <h2 id="">其他安装方式</h2>
 <p>!> 这种也是源码编译安装，但是安装路径会直接写入<code>/usr/</code>下，需要root权限，因此除非特殊情况，不推荐这种安装方式，建议采用上文提供的<code>./get.sh __local__</code>方式来安装，这两种安装方式的安装路径是不同的，不要混用。</p>
 <p>通过make进行编译安装:</p>
-<pre><code class="lang-bash">make build; sudo make install
+<pre><code class="lang-bash">./configure
+make
+sudo make install
 </code></pre>
 <p>安装到其他指定目录:</p>
-<pre><code class="lang-bash">sudo make install prefix=/usr/local
-</code></pre>
-<p>卸载:</p>
-<pre><code class="lang-bash">sudo make uninstall
+<pre><code class="lang-bash">sudo make install PREFIX=/usr/local
 </code></pre>
 <h2 id="">更新升级</h2>
 <p>从v2.2.3版本开始，新增了<code>xmake update</code>命令，来快速进行自我更新和升级，默认是升级到最新版本，当然也可以指定升级或者回退到某个版本：</p>

@@ -1489,10 +1489,13 @@ target("demo")
 <p>2.7.3 版本中，我们改进了所有 flags 添加接口，可以仅仅对特定编译器指定 flags，例如：</p>
 <pre><code class="lang-lua">add_cxxflags("clang::-stdlib=libc++")
 add_cxxflags("gcc::-stdlib=libc++")
+add_cxxflags("cl::/GR-")
+add_cxxflags("clang_cl::/GR-")
 </code></pre>
 <p>或者：</p>
 <pre><code class="lang-lua">add_cxxflags("-stdlib=libc++", {tools = "clang"})
 add_cxxflags("-stdlib=libc++", {tools = "gcc"})
+add_cxxflags("/GR-", {tools = {"clang_cl", "cl"}})
 </code></pre>
 <p>!> 不仅仅是编译flags，对 add_ldflags 等链接 flags，也是同样生效的。</p>
 <h3 id="targetadd_mflags">target:add_mflags</h3>
@@ -1851,8 +1854,8 @@ $ xmake
 <p>通常，我们更推荐使用 <code>set_arch</code> 来对整个target实现架构切换。</p>
 <h3 id="targetset_plat">target:set_plat</h3>
 <h4 id="">设置指定目标的编译平台</h4>
-<p>通常配合<a href="#target_setarch">set_arch</a>使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。</p>
-<p>一般用于需要同时编译host平台目标、交叉编译目标的场景，更多详情见：<a href="#target_settoolchains">set_toolchains</a></p>
+<p>通常配合<a href="#targetset_arch">set_arch</a>使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。</p>
+<p>一般用于需要同时编译host平台目标、交叉编译目标的场景，更多详情见：<a href="#targetset_toolchains">set_toolchains</a></p>
 <p>例如：</p>
 <pre><code class="lang-console">$ xmake f -p android --ndk=/xxx
 </code></pre>

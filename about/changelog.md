@@ -1,4 +1,37 @@
 
+## v2.7.4
+
+### New features
+
+* [#3049](https://github.com/xmake-io/xmake/pull/3049): Add `xmake format` plugin
+* Add `plugin.compile_commands.autoupdate` rule
+* [#3172](https://github.com/xmake-io/xmake/pull/3172): Add xmake.sh
+* [#3168](https://github.com/xmake-io/xmake/pull/3168): add support of C++23 standard modules on msvc
+
+### Changes
+
+* [#3056](https://github.com/xmake-io/xmake/issues/3056): Improve zig support
+* [#3060](https://github.com/xmake-io/xmake/issues/3060): Improve to detect msys2 for clang toolchains envirnoment
+* [#3071](https://github.com/xmake-io/xmake/issues/3071): Support rc for llvm/clang toolchain
+* [#3122](https://github.com/xmake-io/xmake/pull/3122): Generate dependencies of preprocessed modules to avoid importing #ifdef import
+* [#3125](https://github.com/xmake-io/xmake/pull/3125): Compile private C++20 modules
+* [#3133](https://github.com/xmake-io/xmake/pull/3133): Add support of internal partitions
+* [#3146](https://github.com/xmake-io/xmake/issues/3146): Add default components for packages
+* [#3192](https://github.com/xmake-io/xmake/issues/3192): JSON output for auto complete
+
+### Bugs fixed
+
+* Fix requires-lock bug
+* [#3065](https://github.com/xmake-io/xmake/issues/3065): Fix missing package dependences
+* [#3082](https://github.com/xmake-io/xmake/issues/3082): Fix build.ninja generator
+* [#3092](https://github.com/xmake-io/xmake/issues/3092): Fix xrepo add-repo error handing
+* [#3013](https://github.com/xmake-io/xmake/issues/3013): Fix and support windows UNC path
+* [#2902](https://github.com/xmake-io/xmake/issues/2902): Fix file not access by another process occupied
+* [#3074](https://github.com/xmake-io/xmake/issues/3074): Fix CMakelists generator
+* [#3141](https://github.com/xmake-io/xmake/pull/3141): Fix import order on GCC and force it on clang and msvc #3141
+* Fix tools/xmake package build directory
+* [#3159](https://github.com/xmake-io/xmake/issues/3159): Fix compile_commands for CLion
+
 ## v2.7.3
 
 ### New features

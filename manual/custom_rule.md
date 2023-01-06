@@ -564,7 +564,7 @@ target("test")
 #### utils.symbols.export_all
 
 Provided in v2.5.2 and above, we can use it to automatically export all dynamic library symbols. Currently, only the symbol export of windows dll target programs is supported, even if there is no export interface through `__declspec(dllexport)` in the code.
-xmake will also automatically export all c interface symbols (there are too many c++ class library symbols, so I haven't exported them yet).
+xmake will also automatically export all c/c++ interface symbols.
 
 ```lua
 add_rules("mode.release", "mode.debug")
@@ -578,6 +578,11 @@ target("test")
      set_kind("binary")
      add_deps("foo")
      add_files("src/main.c")
+```
+
+c++
+```lua
+add_rules("utils.symbols.export_all", {export_classes = true})
 ```
 
 Related issue [#1123](https://github.com/xmake-io/xmake/issues/1123)

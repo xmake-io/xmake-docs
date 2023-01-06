@@ -152,6 +152,7 @@ To compile Xmake on other unix-like environments, we just need to execute make i
 
 ```bash
 $ cd xmake
+$ ./configure
 $ make
 ```
 

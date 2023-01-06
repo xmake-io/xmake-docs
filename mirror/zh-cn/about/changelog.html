@@ -90,7 +90,39 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v273">v2.7.3</h2>
+    <h2 id="v274">v2.7.4</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/3049">#3049</a>: 添加 <code>xmake format</code> 插件</li>
+<li>添加 <code>plugin.compile_commands.autoupdate</code> 规则</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3172">#3172</a>: 添加 xmake.sh</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3168">#3168</a>: 为 msvc 添加 C++23 标准模块支持</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3056">#3056</a>: 改进 Zig 支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3060">#3060</a>: 改进支持 msys2 的环境探测</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3071">#3071</a>: 为 llvm/clang 工具链支持 rc 编译</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3122">#3122</a>: 改进 c++20 模块依赖图的源码分析，支持预处理</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3125">#3125</a>: 增加私有 C++20 模块的编译支持</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3133">#3133</a>: 增加 internal partitions 模块支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3146">#3146</a>: 添加默认包组件支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3192">#3192</a>: 为 auto complete 增加 json 输出支持</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li>修复 requires-lock 问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3065">#3065</a>: 修复部分依赖包没有被安装的问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3082">#3082</a>: 修复 build.ninja 生成器</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3092">#3092</a>: 修复 xrepo add-repo 添加失败逻辑</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3013">#3013</a>: 修复支持 windows UNC 路径</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2902">#2902</a>: 修复文件被其他子进程占用问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3074">#3074</a>: 修复 CMakelists 生成器链接参数设置不对问题</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3141">#3141</a>: 修复 C++ 模块的导入顺序</li>
+<li>修复 tools/xmake 包安装构建目录</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3159">#3159</a>: 为 CLion 修复 compile_commands</li>
+</ul>
+<h2 id="v273">v2.7.3</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li>一种新的可选域配置语法，对 LSP 友好，并且支持域隔离。</li>

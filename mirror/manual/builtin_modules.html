@@ -586,6 +586,16 @@ $ xmake --version
 <td>>= 2.0.1</td>
 </tr>
 <tr>
+<td><a href="#osexit">os.exit</a></td>
+<td>Exit the program</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osisexec">os.isexec</a></td>
+<td>Test if a file is executable</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
 <td><a href="#osrun">os.run</a></td>
 <td>Quiet running program</td>
 <td>>= 2.0.1</td>
@@ -614,16 +624,6 @@ $ xmake --version
 <td><a href="#osiorunv">os.iorunv</a></td>
 <td>Run and get the program output with parameter list</td>
 <td>>= 2.1.5</td>
-</tr>
-<tr>
-<td><a href="#osgetenv">os.getenv</a></td>
-<td>Get Environment Variables</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#ossetenv">os.setenv</a></td>
-<td>Setting environment variables</td>
-<td>>= 2.0.1</td>
 </tr>
 <tr>
 <td><a href="#ostmpdir">os.tmpdir</a></td>
@@ -656,10 +656,14 @@ $ xmake --version
 <td>>= 2.1.5</td>
 </tr>
 <tr>
+<td><a href="#osprogramfile">os.programfile</a></td>
+<td>Get the path of the xmake executable</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
 <td><a href="#osprojectdir">os.projectdir</a></td>
 <td>Get Project Home</td>
-<td></td>
-<td>= 2.1.5</td>
+<td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#osarch">os.arch</a></td>
@@ -672,16 +676,6 @@ $ xmake --version
 <td>>= 2.0.1</td>
 </tr>
 <tr>
-<td><a href="#osln">os.ln</a></td>
-<td>Link file or directory to the new symfile</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#osraise">os.raise</a></td>
-<td>Raise an exception and abort the current script</td>
-<td>>= 2.2.8</td>
-</tr>
-<tr>
 <td><a href="#ossubhost">os.subhost</a></td>
 <td>Get Subsystem host, e.g. msys, cygwin on windows</td>
 <td>>= 2.3.1</td>
@@ -690,6 +684,46 @@ $ xmake --version
 <td><a href="#ossubarch">os.subarch</a></td>
 <td>Get Subsystem host architecture</td>
 <td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osis_host">os.is_host</a></td>
+<td>Test if a given host is the current</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osis_arch">os.is_arch</a></td>
+<td>Test if a given arch is the current</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osis_subhost">os.is_subhost</a></td>
+<td>Test if a given sub host is the current</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osis_subarch">os.is_subarch</a></td>
+<td>Test if a given sub arch is the current</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osln">os.ln</a></td>
+<td>Link file or directory to the new symfile</td>
+<td>>= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#osreadlink">os.readlink</a></td>
+<td>Read the content of a symlink</td>
+<td>>= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#osraise">os.raise</a></td>
+<td>Raise an exception and abort the current script</td>
+<td>>= 2.2.8</td>
+</tr>
+<tr>
+<td><a href="#raiselevel">os.raiselevel</a></td>
+<td>Raise an exception and abort the current script</td>
+<td>>= 2.2.8</td>
 </tr>
 <tr>
 <td><a href="#osfeatures">os.features</a></td>
@@ -702,14 +736,84 @@ $ xmake --version
 <td>>= 2.2.6</td>
 </tr>
 <tr>
+<td><a href="#ossetenvs">os.setenvs</a></td>
+<td>Set a environment variable</td>
+<td>>= 2.2.6</td>
+</tr>
+<tr>
+<td><a href="#osaddenvs">os.addenvs</a></td>
+<td>Add environment variables to current envs</td>
+<td>>= 2.5.6</td>
+</tr>
+<tr>
+<td><a href="#osjoinenvs">os.joinenvs</a></td>
+<td>Join environment variables</td>
+<td>>= 2.5.6</td>
+</tr>
+<tr>
+<td><a href="#osgetenv">os.getenv</a></td>
+<td>Get Environment Variables</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ossetenv">os.setenv</a></td>
+<td>Setting environment variables</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
 <td><a href="#osaddenv">os.addenv</a></td>
-<td>Add values to environment variable</td>
+<td>Add values to one environment variable</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#ossetenvp">os.setenvp</a></td>
+<td>Setting environment variables with a given separator</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osaddenvp">os.addenvp</a></td>
+<td>Add values to one environment variable with a given separator</td>
 <td>>= 2.1.5</td>
 </tr>
 <tr>
 <td><a href="#osworkingdir">os.workingdir</a></td>
 <td>Get the working directory</td>
 <td>>= 2.1.9</td>
+</tr>
+<tr>
+<td><a href="#osmatch">os.match</a></td>
+<td>Match files or directories</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osisroot">os.isroot</a></td>
+<td>Test if xmake is running as root</td>
+<td>>= 2.1.9</td>
+</tr>
+<tr>
+<td><a href="#osfscase">os.fscase</a></td>
+<td>Test if the os has a case sensitive filesystem</td>
+<td>>= 2.1.9</td>
+</tr>
+<tr>
+<td><a href="#osterm">os.term</a></td>
+<td>Get current terminal</td>
+<td>>= 2.7.3</td>
+</tr>
+<tr>
+<td><a href="#osshell">os.shell</a></td>
+<td>Get current shell</td>
+<td>>= 2.7.3</td>
+</tr>
+<tr>
+<td><a href="#oscpuinfo">os.cpuinfo</a></td>
+<td>Get cpu information</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osmeminfo">os.meminfo</a></td>
+<td>Get memory information</td>
+<td>>= 2.1.5</td>
 </tr>
 </tbody>
 </table>
@@ -875,6 +979,18 @@ for _, filedir in ipairs(os.filedirs("$(buildir)/**")) do
     print(filedir)
 end
 </code></pre>
+<h4 id="osexit">os.exit</h4>
+<ul>
+<li>Exit the program</li>
+</ul>
+<h4 id="osisexec">os.isexec</h4>
+<ul>
+<li>Test if a file is executable</li>
+</ul>
+<pre><code class="lang-lua">if os.isexec("path/to/file.exe") then
+    os.run("path/to/file.exe")
+end
+</code></pre>
 <h4 id="osrun">os.run</h4>
 <ul>
 <li>Quietly running native shell commands</li>
@@ -934,18 +1050,6 @@ os.run("ls -l $(buildir)")
 <pre><code class="lang-lua">local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"})
 local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH="..."}})
 </code></pre>
-<h4 id="osgetenv">os.getenv</h4>
-<ul>
-<li>Get system environment variables</li>
-</ul>
-<pre><code class="lang-lua">print(os.getenv("PATH"))
-</code></pre>
-<h4 id="ossetenv">os.setenv</h4>
-<ul>
-<li>Set system environment variables</li>
-</ul>
-<pre><code class="lang-lua">os.setenv("HOME", "/tmp/")
-</code></pre>
 <h4 id="ostmpdir">os.tmpdir</h4>
 <ul>
 <li>Get temporary directory</li>
@@ -984,6 +1088,10 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 <li>Get the xmake installation main program script directory</li>
 </ul>
 <p>Consistent with the result of <a href="#var-programdir">$(programdir)</a>, it is just a direct get returned to a variable, which can be maintained with subsequent strings.</p>
+<h4 id="osprogramfile">os.programfile</h4>
+<ul>
+<li>Get the path of the xmake executable</li>
+</ul>
 <h4 id="osprojectdir">os.projectdir</h4>
 <ul>
 <li>Get the project home directory</li>
@@ -999,6 +1107,30 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 <li>Get the operating system of the current host</li>
 </ul>
 <p>Consistent with the result of <a href="#var-host">$(host)</a>, for example, if I execute xmake on <code>linux x86_64</code> to build, the return value is: <code>linux</code></p>
+<h4 id="ossubhost">os.subhost</h4>
+<ul>
+<li>Get Subsystem host, e.g. msys, cygwin on windows</li>
+</ul>
+<h4 id="ossubarch">os.subarch</h4>
+<ul>
+<li>Get Subsystem host architecture</li>
+</ul>
+<h4 id="osis_host">os.is_host</h4>
+<ul>
+<li>Test if a given host is the current</li>
+</ul>
+<h4 id="osis_arch">os.is_arch</h4>
+<ul>
+<li>Test if a given arch is the current</li>
+</ul>
+<h4 id="osis_subhost">os.is_subhost</h4>
+<ul>
+<li>Test if a given sub host is the current</li>
+</ul>
+<h4 id="osis_subarch">os.is_subarch</h4>
+<ul>
+<li>Test if a given sub arch is the current</li>
+</ul>
 <h4 id="osln">os.ln</h4>
 <ul>
 <li>Create a symlink to a file or directory</li>
@@ -1006,26 +1138,29 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 <pre><code class="lang-lua">-- creates a symlink file "xxx.txt.ln" which is pointing to "xxx.txt"
 os.ln("xxx.txt", "xxx.txt.ln")
 </code></pre>
-<h3 id="osraise">os.raise</h3>
+<h4 id="osreadlink">os.readlink</h4>
+<ul>
+<li>Read the content of a symlink</li>
+</ul>
+<h4 id="osraise">os.raise</h4>
 <ul>
 <li>Raise an exception and abort the current script</li>
 </ul>
 <pre><code class="lang-lua">-- Raise exception with message "an error occurred"
 os.raise("an error occurred")
 </code></pre>
-<h3 id="ossubhost">os.subhost</h3>
+<h4 id="osraiselevel">os.raiselevel</h4>
 <ul>
-<li>Get Subsystem host, e.g. msys, cygwin on windows</li>
+<li>Similar to <a href="#osraise">os.raise</a> but you can specify the level of the error</li>
 </ul>
-<h3 id="ossubarch">os.subarch</h3>
-<ul>
-<li>Get Subsystem host architecture</li>
-</ul>
-<h3 id="osfeatures">os.features</h3>
+<pre><code class="lang-lua">-- Raise exception with message "an error occurred"
+os.raiselevel(3,"an error occurred")
+</code></pre>
+<h4 id="osfeatures">os.features</h4>
 <ul>
 <li>Get features</li>
 </ul>
-<h3 id="osgetenvs">os.getenvs</h3>
+<h4 id="osgetenvs">os.getenvs</h4>
 <ul>
 <li>Get all current environment variables</li>
 </ul>
@@ -1033,17 +1168,146 @@ os.raise("an error occurred")
 --- home directory (on linux)
 print(envs["HOME"])
 </code></pre>
-<h3 id="osaddenv">os.addenv</h3>
+<h4 id="ossetenvs">os.setenvs</h4>
 <ul>
-<li>Add values to environment variable</li>
+<li>Set environment variables. Replace the current envs by a new one</li>
+</ul>
+<h4 id="osaddenvs">os.addenvs</h4>
+<ul>
+<li>Add environment variables to current envs, return the old one</li>
+</ul>
+<pre><code class="lang-lua">os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
+
+local oldenvs = os.addenvs({CUSTOM = "some/path/"})
+print(os.getenvs()["EXAMPLE"]) --got some/path/;a/path
+print(oldenvs["EXAMPLE"]) -- got a/path
+</code></pre>
+<h4 id="osjoinenvs">os.joinenvs</h4>
+<ul>
+<li>Join environment variables. Similar to <a href="#osaddenvs">os.addenvs</a> but with two envs variable</li>
+</ul>
+<pre><code class="lang-lua">local envs = {CUSTOM = "a/path"}
+local envs2 = {CUSTOM = "some/path/"}
+print(os.joinenvs(envs, envs2))
+</code></pre>
+<p>The result is: <code>{ CUSTOM = "a/path;some/path/" }</code></p>
+<h4 id="osgetenv">os.getenv</h4>
+<ul>
+<li>Get system environment variables</li>
+</ul>
+<pre><code class="lang-lua">print(os.getenv("PATH"))
+</code></pre>
+<h4 id="ossetenv">os.setenv</h4>
+<ul>
+<li>Set system environment variables</li>
+</ul>
+<pre><code class="lang-lua">os.setenv("HOME", "/tmp/")
+</code></pre>
+<h4 id="osaddenv">os.addenv</h4>
+<ul>
+<li>Add values to one environment variable</li>
 </ul>
 <pre><code class="lang-lua">-- Add &#39;bin&#39; to PATH
 os.addenv("PATH", "bin")
 </code></pre>
-<h3 id="osworkingdir">os.workingdir</h3>
+<h4 id="ossetenvp">os.setenvp</h4>
+<ul>
+<li>Setting environment variables with a given separator</li>
+</ul>
+<h4 id="osaddenvp">os.addenvp</h4>
+<ul>
+<li>Add values to one environment variable with a given separator</li>
+</ul>
+<h4 id="osworkingdir">os.workingdir</h4>
 <ul>
 <li>Get the working directory</li>
 </ul>
+<h4 id="osmatch">os.match</h4>
+<ul>
+<li>Match files or directories with a pattern</li>
+</ul>
+<pre><code class="lang-lua">-- @param pattern   the search pattern
+--                  uses "*" to match any part of a file or directory name,
+--                  uses "**" to recurse into subdirectories.
+--
+-- @param mode      the match mode
+--                  - only find file:           &#39;f&#39; or false or nil
+--                  - only find directory:      &#39;d&#39; or true
+--                  - find file and directory:  &#39;a&#39;
+-- @return          the result array and count
+
+local files, count = os.match("./about/*", false)
+print(files)
+-- In xmake-docs repo
+-- got { 
+--   "about\awesome.md",
+--   "about\changelog.md",
+--   "about\contact.md",
+--   "about\introduction.md",
+--   "about\sponsor.md",
+--   "about\technical_support.md",
+--   "about\who_is_using_xmake.md"
+-- }
+
+local dirs, count = os.match("./assets/*", true)
+print(dirs)
+-- In xmake-docs repo
+-- got {
+--   "assets\img",
+--   "assets\npm",
+--   "assets\scripts"
+-- }
+</code></pre>
+<h4 id="osisroot">os.isroot</h4>
+<ul>
+<li>Test if xmake is running as root</li>
+</ul>
+<h4 id="osfscase">os.fscase</h4>
+<ul>
+<li>Test if the os has a case sensitive filesystem</li>
+</ul>
+<h4 id="osterm">os.term</h4>
+<ul>
+<li>Get current terminal (windows-terminal, vscode, ... )</li>
+</ul>
+<pre><code class="lang-lua">print(os.term())
+-- got vscode
+</code></pre>
+<h4 id="osshell">os.shell</h4>
+<ul>
+<li>Get current shell  (pwsh, cmd, ...)</li>
+</ul>
+<pre><code class="lang-lua">print(os.shell())
+-- got pwsh
+</code></pre>
+<h4 id="oscpuinfo">os.cpuinfo</h4>
+<ul>
+<li>Get cpu information</li>
+</ul>
+<pre><code class="lang-lua">print(os.cpuinfo())
+-- got { 
+--   ncpu = 8,
+--   usagerate = 0.0,
+--   model_name = "Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz",
+--   march = "Kaby Lake",
+--   vendor = "GenuineIntel",
+--   model = 158,
+--   family = 6
+-- }
+print(os.cpuinfo("march")) -- got Kaby Lake
+</code></pre>
+<h4 id="osmeminfo">os.meminfo</h4>
+<ul>
+<li>Get memory information</li>
+</ul>
+<pre><code class="lang-lua">print(os.meminfo())
+-- got { 
+--   usagerate = 0.53490080822924,
+--   totalsize = 16332,
+--   availsize = 7596,
+--   pagesize = 4096
+-- }
+</code></pre>
 <h3 id="winos">winos</h3>
 <p>The windows system operation module is a built-in module, no need to use <a href="#import">import</a> to import, you can directly call its interface in the script domain.</p>
 <table>
@@ -1552,7 +1816,6 @@ io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 </tr>
 </tbody>
 </table>
-<p>#### </p>
 <h4 id="pathnew">path.new</h4>
 <ul>
 <li>Create a new path instance</li>

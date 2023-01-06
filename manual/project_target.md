@@ -2116,9 +2116,9 @@ Generally, we recommend using `set_arch` to switch the architecture of the entir
 
 #### Set the compilation platform for the specified target
 
-Usually used with [set_arch](#target_setarch) to switch the compilation platform of the specified target to the specified platform, xmake will automatically select the appropriate tool chain according to the switched platform.
+Usually used with [set_arch](#targetset_arch) to switch the compilation platform of the specified target to the specified platform, xmake will automatically select the appropriate tool chain according to the switched platform.
 
-Generally used in scenarios where the host platform target and cross-compilation target need to be compiled at the same time. For more details, see: [set_toolchains](#target_settoolchains)
+Generally used in scenarios where the host platform target and cross-compilation target need to be compiled at the same time. For more details, see: [set_toolchains](#targetset_toolchains)
 
 E.g:
 

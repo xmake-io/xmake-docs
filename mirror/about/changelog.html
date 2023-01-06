@@ -90,7 +90,39 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v273">v2.7.3</h2>
+    <h2 id="v274">v2.7.4</h2>
+<h3 id="newfeatures">New features</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/3049">#3049</a>: Add <code>xmake format</code> plugin</li>
+<li>Add <code>plugin.compile_commands.autoupdate</code> rule</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3172">#3172</a>: Add xmake.sh</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3168">#3168</a>: add support of C++23 standard modules on msvc</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3056">#3056</a>: Improve zig support</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3060">#3060</a>: Improve to detect msys2 for clang toolchains envirnoment</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3071">#3071</a>: Support rc for llvm/clang toolchain</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3122">#3122</a>: Generate dependencies of preprocessed modules to avoid importing #ifdef import</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3125">#3125</a>: Compile private C++20 modules</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3133">#3133</a>: Add support of internal partitions</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3146">#3146</a>: Add default components for packages</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3192">#3192</a>: JSON output for auto complete</li>
+</ul>
+<h3 id="bugsfixed">Bugs fixed</h3>
+<ul>
+<li>Fix requires-lock bug</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3065">#3065</a>: Fix missing package dependences</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3082">#3082</a>: Fix build.ninja generator</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3092">#3092</a>: Fix xrepo add-repo error handing</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3013">#3013</a>: Fix and support windows UNC path</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2902">#2902</a>: Fix file not access by another process occupied</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3074">#3074</a>: Fix CMakelists generator</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3141">#3141</a>: Fix import order on GCC and force it on clang and msvc #3141</li>
+<li>Fix tools/xmake package build directory</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3159">#3159</a>: Fix compile_commands for CLion</li>
+</ul>
+<h2 id="v273">v2.7.3</h2>
 <h3 id="newfeatures">New features</h3>
 <ul>
 <li>A new optional configuration syntax. It is LSP friendly, automatically calls target_end() to achieve scope isolation.</li>
