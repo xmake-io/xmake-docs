@@ -1,4 +1,25 @@
 
+## v2.7.5
+
+### New features
+
+* [#3201](https://github.com/xmake-io/xmake/pull/3201): Add completer and xrepo complete
+* [#3233](https://github.com/xmake-io/xmake/issues/3233): Add MASM32 sdk toolchain
+
+### Changes
+
+* [#3216](https://github.com/xmake-io/xmake/pull/3216): Add intel one api toolkits detection
+* [#3020](https://github.com/xmake-io/xmake/issues/3020): Add `--lsp=clangd` to improve to generate compile_commands.json
+* [#3215](https://github.com/xmake-io/xmake/issues/3215): Add includedirs and defines to c51
+* [#3251](https://github.com/xmake-io/xmake/issues/3251): Improve to build zig and c program
+
+### Bugs fixed
+
+* [#3203](https://github.com/xmake-io/xmake/issues/3203): Fix compile_commands
+* [#3222](https://github.com/xmake-io/xmake/issues/3222): Fix precompiled headers in ObjC
+* [#3240](https://github.com/xmake-io/xmake/pull/3240): Fix target run with single arguments
+* [#3238](https://github.com/xmake-io/xmake/pull/3238): Fix clang module mapper
+
 ## v2.7.4
 
 ### New features

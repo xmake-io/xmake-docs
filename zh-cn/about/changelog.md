@@ -1,4 +1,25 @@
 
+## v2.7.5
+
+### 新特性
+
+* [#3201](https://github.com/xmake-io/xmake/pull/3201): 为 xrepo 添加命令自动补全
+* [#3233](https://github.com/xmake-io/xmake/issues/3233): 添加 MASM32 sdk 工具链
+
+### 改进
+
+* [#3216](https://github.com/xmake-io/xmake/pull/3216): 改进 intel one api toolkits 探测
+* [#3020](https://github.com/xmake-io/xmake/issues/3020): 添加 `--lsp=clangd` 去改进 compile_commands.json 的生成
+* [#3215](https://github.com/xmake-io/xmake/issues/3215): 添加 includedirs 和 defines 到 c51 编译器
+* [#3251](https://github.com/xmake-io/xmake/issues/3251): 改进 zig and c 混合编译
+
+### Bugs 修复
+
+* [#3203](https://github.com/xmake-io/xmake/issues/3203): 修复 compile_commands
+* [#3222](https://github.com/xmake-io/xmake/issues/3222): 修复 objc 的预编译头支持
+* [#3240](https://github.com/xmake-io/xmake/pull/3240): 修复 `xmake run` 处理单个参数不正确问题
+* [#3238](https://github.com/xmake-io/xmake/pull/3238): 修复 clang 构建 module 时候，并行写入 mapper 冲突问题
+
 ## v2.7.4
 
 ### 新特性
