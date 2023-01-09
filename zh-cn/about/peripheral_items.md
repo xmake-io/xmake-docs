@@ -15,4 +15,4 @@
 实物：
 
 <img src="/assets/img/xmake-cup2.jpeg" width="35%" height="35%">
-<img src="/assets/img/xmake-cup3.png" width="30%" height="30%">
+<img src="/assets/img/xmake-cup4.jpeg" width="30%" height="30%">
