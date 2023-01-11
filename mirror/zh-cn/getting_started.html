@@ -119,9 +119,13 @@
 <h4 id="">其他安装方式</h4>
 <p>如果不想使用脚本安装，也可以点击查看 <a href="https://xmake.io/#/zh-cn/guide/installation">安装文档</a>，了解其他安装方法。</p>
 <h2 id="">简单的工程描述</h2>
-<p><img src="https://xmake.io/assets/img/index/showcode1.png" width="340px" /></p>
+<pre><code class="lang-lua">target("hello")
+    set_kind("binary")
+    add_files("src/*.cpp")
+</code></pre>
 <h2 id="">包依赖描述</h2>
-<p><img src="https://xmake.io/assets/img/index/add_require.png" width="600px" /></p>
+<pre><code class="lang-lua">add_requires("tbox 1.6.*", "zlib", "libpng ~1.6")
+</code></pre>
 <p>官方的xmake包管理仓库: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <h2 id="">构建工程</h2>
 <pre><code class="lang-bash">$ xmake

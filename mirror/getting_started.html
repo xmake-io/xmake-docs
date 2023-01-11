@@ -115,9 +115,13 @@
 <h4 id="otherinstallationways">Other installation ways</h4>
 <p>If you don&#39;t want to use script to install xmake, you can also click <a href="https://xmake.io/#/guide/installation">Installation Guide</a> to get other installation ways.</p>
 <h2 id="simpledescription">Simple description</h2>
-<p><img src="https://xmake.io/assets/img/index/showcode1.png" width="340px" /></p>
+<pre><code class="lang-lua">target("hello")
+    set_kind("binary")
+    add_files("src/*.cpp")
+</code></pre>
 <h2 id="packagedependences">Package dependences</h2>
-<p><img src="https://xmake.io/assets/img/index/add_require.png" width="600px" /></p>
+<pre><code class="lang-lua">add_requires("tbox 1.6.*", "zlib", "libpng ~1.6")
+</code></pre>
 <p>An official xmake package repository: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <h2 id="buildproject">Build project</h2>
 <pre><code class="lang-bash">$ xmake
