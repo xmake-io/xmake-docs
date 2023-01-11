@@ -27,6 +27,7 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay            | money  | comment                                                                 |
 |--          | --                                    | --             | --     | --                                                                      |
+| 2023.01.11 | 熊猫儿沈浪                            | 微信           | ¥100   |                                                 |
 | 2022.12.22 | 我出趟远门                            | 支付宝           | ¥100   |                                                 |
 | 2022.12.14 | 1*1                                   | 微信           | ¥77   |                                                 |
 | 2022.12.02 | l*u                                   | 微信           | ¥16.8   | 加油                                                |
