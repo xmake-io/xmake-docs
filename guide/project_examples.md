@@ -1613,7 +1613,7 @@ add_requires("linux-headers")
 
 target("test")
     add_rules("platform.linux.driver")
-    add_rules("src/*.c")
+    add_files("src/*.c")
     add_packages("linux-headers")
 ```
 

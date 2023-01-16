@@ -1192,7 +1192,7 @@ add_requires("linux-headers")
 
 target("test")
     add_rules("platform.linux.driver")
-    add_rules("src/*.c")
+    add_files("src/*.c")
     add_packages("linux-headers")
 </code></pre>
 <p>不过这样，也许还有点繁琐，因此在 v2.6.3 版本，我们支持更加方便的设置 linux-headers 路径。</p>
