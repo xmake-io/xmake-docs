@@ -27,6 +27,9 @@ If you would like to support the development of xmake, welcome to donate to us.
 
 | date       | supporter                             | pay            | money  | comment                                                                 |
 |--          | --                                    | --             | --     | --                                                                      |
+| 2023.01.17 | Maxwell                            | 微信           | ¥1024   |                                                 |
+| 2023.01.16 | 繁星明                            | 微信           | ¥50   | 好用                                                 |
+| 2023.01.11 | 知而无知                            | 微信           | ¥50   | xmake加油！                                                 |
 | 2023.01.11 | 熊猫儿沈浪                            | 微信           | ¥100   |                                                 |
 | 2022.12.22 | 我出趟远门                            | 支付宝           | ¥100   |                                                 |
 | 2022.12.14 | 1*1                                   | 微信           | ¥77   |                                                 |
