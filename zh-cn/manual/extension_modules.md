@@ -1556,13 +1556,37 @@ local branches = git.branches(url)
 
 ### utils.archive
 
-此模块用于压缩和解压缩文件。
+此模块用于压缩和解压文件。支持大部分常用压缩格式的解压缩，它会自动检测系统提供了哪些压缩工具，然后会使用最合适的压缩工具进行操作。
+
+#### archive.archive
+
+- 压缩文件
+
+```lua
+import("utils.archive")
+
+archive.archive("/tmp/outputdir", "/tmp/a.zip")
+archive.archive("/tmp/outputdir", "/tmp/a.7z")
+archive.archive("/tmp/outputdir", "/tmp/a.gzip")
+archive.archive("/tmp/outputdir", "/tmp/a.tar.bz2")
+```
+
+还可以添加一些配置选项，如递归目录，压缩质量，排除文件等。
+
+```lua
+import("utils.archive")
+
+local options = {}
+options.curdir = "/tmp"
+options.recurse = true
+options.compress = "fastest|faster|default|better|best"
+options.excludes = {"*/dir/*", "dir/*"}
+archive.archive("/tmp/outputdir", "/tmp/a.zip", options)
+```
 
 #### archive.extract
 
 - 解压文件
-
-支持大部分常用压缩文件的解压，它会自动检测系统提供了哪些解压工具，然后适配到最合适的解压器对指定压缩文件进行解压操作。
 
 ```lua
 import("utils.archive")

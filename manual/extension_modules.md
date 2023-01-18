@@ -1575,13 +1575,37 @@ local branches = git.branches(url)
 
 ### utils.archive
 
-This module is used to compress and decompress files.
+This module is used to compress and decompress files. It supports decompression of most common compression formats. It will automatically detect which compression tools are provided by the system, and then will use the most appropriate compression tool for the operation.
+
+#### archive.archive
+
+- zip files
+
+```lua
+import("utils.archive")
+
+archive.archive("/tmp/outputdir", "/tmp/a.zip")
+archive.archive("/tmp/outputdir", "/tmp/a.7z")
+archive.archive("/tmp/outputdir", "/tmp/a.gzip")
+archive.archive("/tmp/outputdir", "/tmp/a.tar.bz2")
+```
+
+Some configuration options can also be added, such as recursive directories, compression quality, exclude files, etc.
+
+```lua
+import("utils.archive")
+
+local options = {}
+options.curdir = "/tmp"
+options.recurse = true
+options.compress = "fastest|faster|default|better|best"
+options.excludes = {"*/dir/*", "dir/*"}
+archive.archive("/tmp/outputdir", "/tmp/a.zip", options)
+```
 
 #### archive.extract
 
 - unzip files
-
-Supports the decompression of most commonly used compressed files. It automatically detects which decompression tools are provided by the system, and then adapts them to the most suitable decompressor to decompress the specified compressed files.
 
 ```lua
 import("utils.archive")
