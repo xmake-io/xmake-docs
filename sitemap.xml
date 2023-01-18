@@ -12,502 +12,502 @@
 
 <url>
   <loc>https://xmake.io/mirror/guide/project_examples.html</loc>
-  <lastmod>2023-01-18T15:31:31+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:20+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/guide/quickstart.html</loc>
-  <lastmod>2023-01-18T15:31:31+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:20+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/guide/faq.html</loc>
-  <lastmod>2023-01-18T15:31:31+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:21+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/guide/configuration.html</loc>
-  <lastmod>2023-01-18T15:31:31+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:21+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/guide/syntax_description.html</loc>
-  <lastmod>2023-01-18T15:31:31+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:21+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/guide/installation.html</loc>
-  <lastmod>2023-01-18T15:31:32+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:21+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/features/remote_build.html</loc>
-  <lastmod>2023-01-18T15:31:32+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:21+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/features/unity_build.html</loc>
-  <lastmod>2023-01-18T15:31:32+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:22+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/features/distcc_build.html</loc>
-  <lastmod>2023-01-18T15:31:32+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:22+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/features/trybuild.html</loc>
-  <lastmod>2023-01-18T15:31:32+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:22+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/features/autogen.html</loc>
-  <lastmod>2023-01-18T15:31:33+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:22+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/features/build_cache.html</loc>
-  <lastmod>2023-01-18T15:31:33+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:22+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/plugin/plugin_development.html</loc>
-  <lastmod>2023-01-18T15:31:33+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:23+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/plugin/more_plugins.html</loc>
-  <lastmod>2023-01-18T15:31:33+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:23+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/plugin/builtin_plugins.html</loc>
-  <lastmod>2023-01-18T15:31:33+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:23+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/about/awesome.html</loc>
-  <lastmod>2023-01-18T15:31:34+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:23+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/about/technical_support.html</loc>
-  <lastmod>2023-01-18T15:31:34+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:23+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/about/changelog.html</loc>
-  <lastmod>2023-01-18T15:31:34+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:24+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/about/contact.html</loc>
-  <lastmod>2023-01-18T15:31:34+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:24+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/about/introduction.html</loc>
-  <lastmod>2023-01-18T15:31:34+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:24+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/about/who_is_using_xmake.html</loc>
-  <lastmod>2023-01-18T15:31:35+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:24+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/about/sponsor.html</loc>
-  <lastmod>2023-01-18T15:31:35+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:24+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/index.html</loc>
-  <lastmod>2023-01-18T15:31:35+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:25+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/guide/project_examples.html</loc>
-  <lastmod>2023-01-18T15:31:35+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:25+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/guide/quickstart.html</loc>
-  <lastmod>2023-01-18T15:31:35+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:25+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/guide/faq.html</loc>
-  <lastmod>2023-01-18T15:31:36+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:25+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/guide/configuration.html</loc>
-  <lastmod>2023-01-18T15:31:36+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:25+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/guide/syntax_description.html</loc>
-  <lastmod>2023-01-18T15:31:36+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:26+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/guide/installation.html</loc>
-  <lastmod>2023-01-18T15:31:36+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:26+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/features/remote_build.html</loc>
-  <lastmod>2023-01-18T15:31:36+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:26+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/features/unity_build.html</loc>
-  <lastmod>2023-01-18T15:31:37+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:26+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/features/distcc_build.html</loc>
-  <lastmod>2023-01-18T15:31:37+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:26+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/features/trybuild.html</loc>
-  <lastmod>2023-01-18T15:31:37+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:27+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/features/autogen.html</loc>
-  <lastmod>2023-01-18T15:31:37+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:27+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/features/build_cache.html</loc>
-  <lastmod>2023-01-18T15:31:37+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:27+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/plugin/plugin_development.html</loc>
-  <lastmod>2023-01-18T15:31:37+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:27+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/plugin/more_plugins.html</loc>
-  <lastmod>2023-01-18T15:31:38+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:27+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/plugin/builtin_plugins.html</loc>
-  <lastmod>2023-01-18T15:31:38+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:28+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/about/awesome.html</loc>
-  <lastmod>2023-01-18T15:31:38+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:28+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/about/technical_support.html</loc>
-  <lastmod>2023-01-18T15:31:38+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:28+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/about/changelog.html</loc>
-  <lastmod>2023-01-18T15:31:38+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:28+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/about/contact.html</loc>
-  <lastmod>2023-01-18T15:31:39+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:28+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/about/peripheral_items.html</loc>
-  <lastmod>2023-01-18T15:31:39+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:29+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/about/introduction.html</loc>
-  <lastmod>2023-01-18T15:31:39+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:29+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/about/who_is_using_xmake.html</loc>
-  <lastmod>2023-01-18T15:31:39+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:29+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/about/sponsor.html</loc>
-  <lastmod>2023-01-18T15:31:39+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:29+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/about/course.html</loc>
-  <lastmod>2023-01-18T15:31:40+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:29+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/index.html</loc>
-  <lastmod>2023-01-18T15:31:40+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:30+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/getting_started.html</loc>
-  <lastmod>2023-01-18T15:31:40+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:30+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/specification.html</loc>
-  <lastmod>2023-01-18T15:31:40+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:30+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/builtin_variables.html</loc>
-  <lastmod>2023-01-18T15:31:41+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:30+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/conditions.html</loc>
-  <lastmod>2023-01-18T15:31:41+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:30+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/custom_rule.html</loc>
-  <lastmod>2023-01-18T15:31:41+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:31+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/target_instance.html</loc>
-  <lastmod>2023-01-18T15:31:41+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:31+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/project_target.html</loc>
-  <lastmod>2023-01-18T15:31:41+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:31+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/builtin_modules.html</loc>
-  <lastmod>2023-01-18T15:31:42+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:31+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/custom_toolchain.html</loc>
-  <lastmod>2023-01-18T15:31:42+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:31+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/plugin_task.html</loc>
-  <lastmod>2023-01-18T15:31:42+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:32+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/package_dependencies.html</loc>
-  <lastmod>2023-01-18T15:31:42+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:32+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/configuration_option.html</loc>
-  <lastmod>2023-01-18T15:31:42+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:32+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/extension_modules.html</loc>
-  <lastmod>2023-01-18T15:31:43+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:32+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/helper_interfaces.html</loc>
-  <lastmod>2023-01-18T15:31:43+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:32+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/global_interfaces.html</loc>
-  <lastmod>2023-01-18T15:31:43+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:33+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/package_instance.html</loc>
-  <lastmod>2023-01-18T15:31:43+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:33+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/manual/option_instance.html</loc>
-  <lastmod>2023-01-18T15:31:43+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:33+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/theme/builtin_themes.html</loc>
-  <lastmod>2023-01-18T15:31:44+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:33+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/theme/switch_theme.html</loc>
-  <lastmod>2023-01-18T15:31:44+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:33+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/package/local_3rd_source_library.html</loc>
-  <lastmod>2023-01-18T15:31:44+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:34+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/package/local_package_old.html</loc>
-  <lastmod>2023-01-18T15:31:44+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:34+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/package/local_package.html</loc>
-  <lastmod>2023-01-18T15:31:44+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:34+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/package/system_package.html</loc>
-  <lastmod>2023-01-18T15:31:45+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:34+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/package/remote_package.html</loc>
-  <lastmod>2023-01-18T15:31:45+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:34+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/toolchain/remote_toolchain.html</loc>
-  <lastmod>2023-01-18T15:31:45+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:35+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/zh-cn/toolchain/builtin_toolchains.html</loc>
-  <lastmod>2023-01-18T15:31:45+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:35+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/getting_started.html</loc>
-  <lastmod>2023-01-18T15:31:45+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:35+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/specification.html</loc>
-  <lastmod>2023-01-18T15:31:46+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:35+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/builtin_variables.html</loc>
-  <lastmod>2023-01-18T15:31:46+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:35+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/conditions.html</loc>
-  <lastmod>2023-01-18T15:31:46+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:36+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/custom_rule.html</loc>
-  <lastmod>2023-01-18T15:31:46+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:36+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/target_instance.html</loc>
-  <lastmod>2023-01-18T15:31:47+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:36+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/project_target.html</loc>
-  <lastmod>2023-01-18T15:31:47+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:36+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/builtin_modules.html</loc>
-  <lastmod>2023-01-18T15:31:47+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:36+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/custom_toolchain.html</loc>
-  <lastmod>2023-01-18T15:31:47+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:37+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/plugin_task.html</loc>
-  <lastmod>2023-01-18T15:31:47+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:37+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/package_dependencies.html</loc>
-  <lastmod>2023-01-18T15:31:48+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:37+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/configuration_option.html</loc>
-  <lastmod>2023-01-18T15:31:48+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:37+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/extension_modules.html</loc>
-  <lastmod>2023-01-18T15:31:48+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:38+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/helper_interfaces.html</loc>
-  <lastmod>2023-01-18T15:31:48+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:38+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/global_interfaces.html</loc>
-  <lastmod>2023-01-18T15:31:49+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:38+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/package_instance.html</loc>
-  <lastmod>2023-01-18T15:31:49+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:38+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/manual/option_instance.html</loc>
-  <lastmod>2023-01-18T15:31:49+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:38+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/theme/builtin_themes.html</loc>
-  <lastmod>2023-01-18T15:31:49+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:38+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/theme/switch_theme.html</loc>
-  <lastmod>2023-01-18T15:31:49+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:39+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/package/local_3rd_source_library.html</loc>
-  <lastmod>2023-01-18T15:31:50+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:39+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/package/local_package_old.html</loc>
-  <lastmod>2023-01-18T15:31:50+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:39+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/package/local_package.html</loc>
-  <lastmod>2023-01-18T15:31:50+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:39+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/package/system_package.html</loc>
-  <lastmod>2023-01-18T15:31:50+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:39+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/package/remote_package.html</loc>
-  <lastmod>2023-01-18T15:31:51+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:40+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/toolchain/remote_toolchain.html</loc>
-  <lastmod>2023-01-18T15:31:51+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:40+08:00</lastmod>
 </url>
 
 <url>
   <loc>https://xmake.io/mirror/toolchain/builtin_toolchains.html</loc>
-  <lastmod>2023-01-18T15:31:51+08:00</lastmod>
+  <lastmod>2023-01-18T17:38:40+08:00</lastmod>
 </url>
 
 </urlset>
