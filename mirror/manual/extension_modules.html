@@ -1448,12 +1448,32 @@ local tags = git.tags(url)
 local branches = git.branches(url)
 </code></pre>
 <h3 id="utilsarchive">utils.archive</h3>
-<p>This module is used to compress and decompress files.</p>
+<p>This module is used to compress and decompress files. It supports decompression of most common compression formats. It will automatically detect which compression tools are provided by the system, and then will use the most appropriate compression tool for the operation.</p>
+<h4 id="archivearchive">archive.archive</h4>
+<ul>
+<li>zip files</li>
+</ul>
+<pre><code class="lang-lua">import("utils.archive")
+
+archive.archive("/tmp/outputdir", "/tmp/a.zip")
+archive.archive("/tmp/outputdir", "/tmp/a.7z")
+archive.archive("/tmp/outputdir", "/tmp/a.gzip")
+archive.archive("/tmp/outputdir", "/tmp/a.tar.bz2")
+</code></pre>
+<p>Some configuration options can also be added, such as recursive directories, compression quality, exclude files, etc.</p>
+<pre><code class="lang-lua">import("utils.archive")
+
+local options = {}
+options.curdir = "/tmp"
+options.recurse = true
+options.compress = "fastest|faster|default|better|best"
+options.excludes = {"*/dir/*", "dir/*"}
+archive.archive("/tmp/outputdir", "/tmp/a.zip", options)
+</code></pre>
 <h4 id="archiveextract">archive.extract</h4>
 <ul>
 <li>unzip files</li>
 </ul>
-<p>Supports the decompression of most commonly used compressed files. It automatically detects which decompression tools are provided by the system, and then adapts them to the most suitable decompressor to decompress the specified compressed files.</p>
 <pre><code class="lang-lua">import("utils.archive")
 
 archive.extract("/tmp/a.zip", "/tmp/outputdir")

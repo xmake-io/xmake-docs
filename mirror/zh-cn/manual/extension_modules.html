@@ -1453,12 +1453,32 @@ local tags = git.tags(url)
 local branches = git.branches(url)
 </code></pre>
 <h3 id="utilsarchive">utils.archive</h3>
-<p>此模块用于压缩和解压缩文件。</p>
+<p>此模块用于压缩和解压文件。支持大部分常用压缩格式的解压缩，它会自动检测系统提供了哪些压缩工具，然后会使用最合适的压缩工具进行操作。</p>
+<h4 id="archivearchive">archive.archive</h4>
+<ul>
+<li>压缩文件</li>
+</ul>
+<pre><code class="lang-lua">import("utils.archive")
+
+archive.archive("/tmp/outputdir", "/tmp/a.zip")
+archive.archive("/tmp/outputdir", "/tmp/a.7z")
+archive.archive("/tmp/outputdir", "/tmp/a.gzip")
+archive.archive("/tmp/outputdir", "/tmp/a.tar.bz2")
+</code></pre>
+<p>还可以添加一些配置选项，如递归目录，压缩质量，排除文件等。</p>
+<pre><code class="lang-lua">import("utils.archive")
+
+local options = {}
+options.curdir = "/tmp"
+options.recurse = true
+options.compress = "fastest|faster|default|better|best"
+options.excludes = {"*/dir/*", "dir/*"}
+archive.archive("/tmp/outputdir", "/tmp/a.zip", options)
+</code></pre>
 <h4 id="archiveextract">archive.extract</h4>
 <ul>
 <li>解压文件</li>
 </ul>
-<p>支持大部分常用压缩文件的解压，它会自动检测系统提供了哪些解压工具，然后适配到最合适的解压器对指定压缩文件进行解压操作。</p>
 <pre><code class="lang-lua">import("utils.archive")
 
 archive.extract("/tmp/a.zip", "/tmp/outputdir")
