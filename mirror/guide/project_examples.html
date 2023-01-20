@@ -1277,6 +1277,132 @@ target("test")
      add_packages("asn1c")
 </code></pre>
 <p>For details, see <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/c/asn1c">Example Project</a>.</p>
+<h2 id="verilogprogram">Verilog Program</h2>
+<h3 id="iverilogsimulator">iVerilog Simulator</h3>
+<p>Through <code>add_requires("iverilog")</code> configuration, we can automatically pull the iverilog toolchain package, and then use <code>set_toolchains("@iverilog")</code> to automatically bind the toolchain to compile the project.</p>
+<pre><code class="lang-lua">add_requires("iverilog")
+target("hello")
+     add_rules("iverilog. binary")
+     set_toolchains("@iverilog")
+     add_files("src/*.v")
+</code></pre>
+<h4 id="setabstractconfiguration">Set abstract configuration</h4>
+<pre><code class="lang-Lua">add_requires("iverilog")
+target("hello")
+     add_rules("iverilog. binary")
+     set_toolchains("@iverilog")
+     add_files("src/*.v")
+     add_defines("TEST")
+     add_includedirs("inc")
+     set_languages("v1800-2009")
+</code></pre>
+<p>We can use <code>set_languages("v1800-2009")</code> to set the language standard for switching Verilog.</p>
+<p>Currently supported values and mappings are as follows:</p>
+<pre><code class="lang-lua">["v1364-1995"] = "-g1995"
+["v1364-2001"] = "-g2001"
+["v1364-2005"] = "-g2005"
+["v1800-2005"] = "-g2005-sv"
+["v1800-2009"] = "-g2009"
+["v1800-2012"] = "-g2012"
+</code></pre>
+<h4 id="setcustomflags">Set custom flags</h4>
+<pre><code class="lang-lua">add_requires("iverilog")
+target("hello")
+     add_rules("iverilog. binary")
+     set_toolchains("@iverilog")
+     add_files("src/*.v")
+     add_values("iverilogs.flags", "-DTEST")
+</code></pre>
+<h4 id="buildtheproject">Build the project</h4>
+<pre><code class="lang-console">$ xmake
+check iverilog... iverilog
+check vvp... vvp
+[50%]: linking.iverilog hello.vvp
+[100%]: build ok!
+</code></pre>
+<h4 id="runtheprogram">Run the program</h4>
+<pre><code class="lang-console">$ xmake run
+hello world!
+LXT2 INFO: dumpfile hello.vcd opened, ready for output.
+src/main.v:6: $finish called at 0 (1s)
+</code></pre>
+<p>More complete examples: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/iverilog">iVerilog Examples</a></p>
+<h3 id="verilatorsimulator">Verilator Simulator</h3>
+<p>Through <code>add_requires("verilator")</code> configuration, we can automatically pull the verilator toolchain package, and then use <code>set_toolchains("@verilator")</code> to automatically bind to the toolchain to compile the project.</p>
+<pre><code class="lang-lua">add_requires("verilator")
+target("Hello")
+     add_rules("verilator. binary")
+     set_toolchains("@verilator")
+     add_files("src/*.v")
+     add_files("src/*.cpp")
+</code></pre>
+<p>verilator project, we need an additional <code>sim_main.cpp</code> file to participate in the compilation, as the entry code of the program.</p>
+<pre><code class="lang-c">#include "hello.h"
+#include "verilated.h" (Simplified Chinese)
+
+int main(int argc, char** argv) {
+     VerilatedContext* contextp = new VerilatedContext;
+     contextp->commandArgs(argc, argv);
+     hello* top = new hello{contextp};
+     while (!contextp->gotFinish()) { top->eval(); }
+     remove top.
+     Remove contextp.
+     returns 0.
+}
+</code></pre>
+<h4 id="setabstractconfiguration">Set abstract configuration</h4>
+<pre><code class="lang-lua">add_requires("verilator")
+target("Hello")
+     add_rules("verilator. binary")
+     set_toolchains("@verilator")
+     add_files("src/*.v")
+     add_defines("TEST")
+     add_includedirs("inc")
+     set_languages("v1800-2009")
+</code></pre>
+<p>We can use <code>set_languages("v1800-2009")</code> to set the language standard for switching Verilog.</p>
+<p>Currently supported values and mappings are as follows.</p>
+<pre><code class="lang-lua">--Verilog
+["v1364-1995"] = "+1364-1995ext+v".
+["v1364-2001"] = "+1364-2001ext+v".
+["v1364-2005"] = "+1364-2005ext+v".
+--system-Verilog
+["v1800-2005"] = "+1800-2005ext+v".
+["v1800-2009"] = "+1800-2009ext+v".
+["v1800-2012"] = "+1800-2012ext+v",
+["v1800-2017"] = "+1800-2017ext+v".
+</code></pre>
+<h4 id="setcustomflags">Set custom flags</h4>
+<pre><code class="lang-lua">add_requires("verilator")
+target("Hello")
+     add_rules("verilator. binary")
+     set_toolchains("@verilator")
+     add_files("src/*.v")
+     add_files("src/*.cpp")
+     add_values("verilator.flags", "--trace", "--timing")
+</code></pre>
+<h4 id="buildtheproject">Build the project</h4>
+<pre><code class="lang-console">$ xmake
+[ 0%]: compiling.verilog src/main.v
+[ 15%]: cache compiling.release /Users/ruki/.xmake/packages/v/verilator/2023.1.10/cd2268409c1d44799288c7759b3cbd56/share/verilator/include/verilated.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello___024root__Slow.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello___024root__DepSet_h9053a130__0__Slow.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello.cpp
+[ 15%]: cache compiling.release /Users/ruki/.xmake/packages/v/verilator/2023.1.10/cd2268409c1d44799288c7759b3cbd56/share/verilator/include/verilated_threads.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello__Syms.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello___024root__DepSet_h07139e86__0.cpp
+[15%]: cache compiling.release src/sim_main.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello___024root__DepSet_h9053a130__0.cpp
+[84%]: linking. release hello
+[100%]: build ok!
+</code></pre>
+<h4 id="runtheprogram">Run the program</h4>
+<pre><code class="lang-console">$ xmake run
+ruki-2:hello ruki$ xmake run
+hello world!
+- src/main.v:4:Verilog $finish
+</code></pre>
+<p>A more complete example: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/verilator">Verilator</a></p>
 </article>
 </body>
 </html>

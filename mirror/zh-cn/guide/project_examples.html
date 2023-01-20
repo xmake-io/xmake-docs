@@ -1280,6 +1280,131 @@ target("test")
     add_packages("asn1c")
 </code></pre>
 <p>具体见 <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/c/asn1c">完整例子工程</a>。</p>
+<h2 id="verilog">Verilog 仿真程序</h2>
+<h3 id="iverilog">iVerilog 仿真器</h3>
+<p>通过 <code>add_requires("iverilog")</code> 配置，我们能够自动拉取 iverilog 工具链包，然后使用 <code>set_toolchains("@iverilog")</code> 自动绑定工具链来编译工程。</p>
+<pre><code class="lang-lua">add_requires("iverilog")
+target("hello")
+    add_rules("iverilog.binary")
+    set_toolchains("@iverilog")
+    add_files("src/*.v")
+</code></pre>
+<h4 id="">设置抽象配置</h4>
+<pre><code class="lang-lua">add_requires("iverilog")
+target("hello")
+    add_rules("iverilog.binary")
+    set_toolchains("@iverilog")
+    add_files("src/*.v")
+    add_defines("TEST")
+    add_includedirs("inc")
+    set_languages("v1800-2009")
+</code></pre>
+<p>我们可以通过 <code>set_languages("v1800-2009")</code> 来设置切换 Verilog 的语言标准。</p>
+<p>目前支持的一些取值和映射关系如下：</p>
+<pre><code class="lang-lua">["v1364-1995"] = "-g1995"
+["v1364-2001"] = "-g2001"
+["v1364-2005"] = "-g2005"
+["v1800-2005"] = "-g2005-sv"
+["v1800-2009"] = "-g2009"
+["v1800-2012"] = "-g2012"
+</code></pre>
+<h4 id="flags">设置自定义 flags</h4>
+<pre><code class="lang-lua">add_requires("iverilog")
+target("hello")
+    add_rules("iverilog.binary")
+    set_toolchains("@iverilog")
+    add_files("src/*.v")
+    add_values("iverilogs.flags", "-DTEST")
+</code></pre>
+<h4 id="">构建工程</h4>
+<pre><code class="lang-console">$ xmake
+checking for iverilog ... iverilog
+checking for vvp ... vvp
+[ 50%]: linking.iverilog hello.vvp
+[100%]: build ok!
+</code></pre>
+<h4 id="">运行程序</h4>
+<pre><code class="lang-console">$ xmake run
+hello world!
+LXT2 info: dumpfile hello.vcd opened for output.
+src/main.v:6: $finish called at 0 (1s)
+</code></pre>
+<p>更多完整例子：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/iverilog">iVerilog Examples</a></p>
+<h3 id="verilator">Verilator 仿真器</h3>
+<p>通过 <code>add_requires("verilator")</code> 配置，我们能够自动拉取 verilator 工具链包，然后使用 <code>set_toolchains("@verilator")</code> 自动绑定到工具链来编译工程。</p>
+<pre><code class="lang-lua">add_requires("verilator")
+target("hello")
+    add_rules("verilator.binary")
+    set_toolchains("@verilator")
+    add_files("src/*.v")
+    add_files("src/*.cpp")
+</code></pre>
+<p>verilator 工程，我们需要一个额外的 <code>sim_main.cpp</code> 文件参与编译，作为程序的入口代码。</p>
+<pre><code>#include "hello.h"
+#include "verilated.h"
+
+int main(int argc, char** argv) {
+    VerilatedContext* contextp = new VerilatedContext;
+    contextp->commandArgs(argc, argv);
+    hello* top = new hello{contextp};
+    while (!contextp->gotFinish()) { top->eval(); }
+    delete top;
+    delete contextp;
+    return 0;
+}
+</code></pre><h4 id="">设置抽象配置</h4>
+<pre><code class="lang-lua">add_requires("verilator")
+target("hello")
+    add_rules("verilator.binary")
+    set_toolchains("@verilator")
+    add_files("src/*.v")
+    add_defines("TEST")
+    add_includedirs("inc")
+    set_languages("v1800-2009")
+</code></pre>
+<p>我们可以通过 <code>set_languages("v1800-2009")</code> 来设置切换 Verilog 的语言标准。</p>
+<p>目前支持的一些取值和映射关系如下：</p>
+<pre><code class="lang-lua">-- Verilog
+["v1364-1995"] = "+1364-1995ext+v",
+["v1364-2001"] = "+1364-2001ext+v",
+["v1364-2005"] = "+1364-2005ext+v",
+-- SystemVerilog
+["v1800-2005"] = "+1800-2005ext+v",
+["v1800-2009"] = "+1800-2009ext+v",
+["v1800-2012"] = "+1800-2012ext+v",
+["v1800-2017"] = "+1800-2017ext+v",
+</code></pre>
+<h4 id="flags">设置自定义 flags</h4>
+<pre><code class="lang-lua">add_requires("verilator")
+target("hello")
+    add_rules("verilator.binary")
+    set_toolchains("@verilator")
+    add_files("src/*.v")
+    add_files("src/*.cpp")
+    add_values("verilator.flags", "--trace", "--timing")
+</code></pre>
+<h4 id="">构建工程</h4>
+<pre><code class="lang-console">$ xmake
+[  0%]: compiling.verilog src/main.v
+[ 15%]: cache compiling.release /Users/ruki/.xmake/packages/v/verilator/2023.1.10/cd2268409c1d44799288c7759b3cbd56/share/verilator/include/verilated.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello___024root__Slow.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello___024root__DepSet_h9053a130__0__Slow.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello.cpp
+[ 15%]: cache compiling.release /Users/ruki/.xmake/packages/v/verilator/2023.1.10/cd2268409c1d44799288c7759b3cbd56/share/verilator/include/verilated_threads.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello__Syms.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello___024root__DepSet_h07139e86__0.cpp
+[ 15%]: cache compiling.release src/sim_main.cpp
+[ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello___024root__DepSet_h9053a130__0.cpp
+[ 84%]: linking.release hello
+[100%]: build ok!
+</code></pre>
+<h4 id="">运行程序</h4>
+<pre><code class="lang-console">$ xmake run
+ruki-2:hello ruki$ xmake run
+hello world!
+- src/main.v:4: Verilog $finish
+</code></pre>
+<p>更多完整例子：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/verilator">Verilator</a></p>
 </article>
 </body>
 </html>
