@@ -1,4 +1,27 @@
 
+## v2.7.6
+
+### New features
+
+* [#3228](https://github.com/xmake-io/xmake/pull/3228): Add support of importing modules from packages
+* [#3257](https://github.com/xmake-io/xmake/issues/3257): Add support for iverilog and verilator
+* Support for xp and vc6.0
+* [#3214](https://github.com/xmake-io/xmake/pull/3214): Completion on xrepo install packages
+
+### Changes
+
+* [#3255](https://github.com/xmake-io/xmake/pull/3225): Improve clang libc++ module support
+* Support for compiling xmake using mingw
+* Improve compatibility issues with xmake running on win xp
+* Add pure lua json implementation instead of lua-cjson if the external dependencies are enabled
+
+### Bugs fixed
+
+* [#3229](https://github.com/xmake-io/xmake/issues/3229): Fix find rc.exe for vs2015
+* [#3271](https://github.com/xmake-io/xmake/issues/3271): Fix macro defines with spaces
+* [#3273](https://github.com/xmake-io/xmake/issues/3273): Fix nim link error
+* [#3286](https://github.com/xmake-io/xmake/issues/3286): Fix compile_commands for clangd
+
 ## v2.7.5
 
 ### New features

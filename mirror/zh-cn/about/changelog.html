@@ -90,7 +90,29 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v275">v2.7.5</h2>
+    <h2 id="v276">v2.7.6</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/3228">#3228</a>: C++ modules 的安装发布，以及从包中导入 C++ modules 支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3257">#3257</a>: 增加对 iverilog 和 verilator 的支持</li>
+<li>支持 xp 和 vc6.0</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3214">#3214</a>: xrepo install 的自动补全支持</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/3225">#3255</a>: 改进 clang libc++ 模块支持</li>
+<li>支持使用 mingw 编译 xmake</li>
+<li>改进 xmake 在 win xp 上的兼容性</li>
+<li>如果外部依赖被启用，切换 json 模块到纯 lua 实现，移除对 lua-cjson 的依赖</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3229">#3229</a>: 修复 vs2015 下找不到 rc.exe 问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3271">#3271</a>: 修复支持带有空格的宏定义</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3273">#3273</a>: 修复 nim 链接错误</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3286">#3286</a>: 修复 compile_commands 对 clangd 的支持</li>
+</ul>
+<h2 id="v275">v2.7.5</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/pull/3201">#3201</a>: 为 xrepo 添加命令自动补全</li>
