@@ -98,5 +98,12 @@ hello`main:
 
 To study more debug command, please click the url [GDB to LLDB command map](https://lldb.llvm.org/use/map.html)
 
+If you want to use the specify debugger, try
+
+```bash
+$ xmake f --debugger=gdb
+$ xmake run -d hello
+```
+
 !> You can also use short command option, for example: `xmake r` or `xmake run`
 
