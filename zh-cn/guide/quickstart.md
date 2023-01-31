@@ -55,10 +55,10 @@ $ xmake run hello
 
 ## 调试程序
 
-首先你需要切换到 debug 模式并指定调试器，然后编译程序。
+首先你需要切换到 debug 模式去重新编译程序。
 
 ```bash
-$ xmake config -m debug --debugger=lldb
+$ xmake config -m debug 
 $ xmake
 ```
 
@@ -88,5 +88,11 @@ hello`main:
 [lldb]$
 ```
 
-!> 你也可以使用简写的命令行选项，例如: `xmake r` 或者 `xmake run`
+如果想要使用指定的调试器：
 
+```bash
+$ xmake f --debugger=gdb
+$ xmake run -d hello
+```
+
+!> 你也可以使用简写的命令行选项，例如: `xmake r` 或者 `xmake run`
