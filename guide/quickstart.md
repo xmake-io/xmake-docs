@@ -63,10 +63,10 @@ $ xmake run hello
 
 ## Debug Program
 
-To debug the hello, you need change to the debug mode and build it.
+To debug the hello, you need change to the debug mode and specify the debugger, then build it.
 
 ```bash
-$ xmake config -m debug 
+$ xmake config -m debug --debugger=lldb
 $ xmake
 ```
 

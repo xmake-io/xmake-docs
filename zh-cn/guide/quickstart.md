@@ -55,10 +55,10 @@ $ xmake run hello
 
 ## 调试程序
 
-首先你需要切换到 debug 模式去重新编译程序。
+首先你需要切换到 debug 模式并指定调试器，然后编译程序。
 
 ```bash
-$ xmake config -m debug 
+$ xmake config -m debug --debugger=lldb
 $ xmake
 ```
 
