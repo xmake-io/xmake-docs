@@ -68,7 +68,7 @@ $ xmake
 $ xmake run -d hello 
 ```
 
-Xmake 将会使用系统自带的调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。
+Xmake 将会使用调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。
 
 ```bash
 [lldb]$target create "build/hello"
