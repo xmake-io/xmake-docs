@@ -4,6 +4,10 @@
 
 👉 [捐助页面](https://xmake.io/#/zh-cn/about/sponsor)
 
+也可以通过购买周边纪念物品的方式，来支持我们的项目发展。
+
+👉 [周边物品](https://xmake.io/#/zh-cn/about/peripheral_items)
+
 ## 技术支持
 
 你也可以考虑通过 [Github 的赞助计划](https://github.com/sponsors/waruqi) 赞助我们来获取额外的技术支持服务，然后你就能获取 [xmake-io/technical-support](https://github.com/xmake-io/technical-support) 仓库的访问权限，获取更多技术咨询相关的信息。
