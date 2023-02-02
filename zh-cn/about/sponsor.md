@@ -1,5 +1,9 @@
 
-xmake项目属于个人开源项目，它的发展需要您的帮助，如果您愿意支持xmake项目的开发，欢迎为其捐赠，支持它的发展。
+Xmake 项目属于个人开源项目，它的发展需要您的帮助，如果您愿意支持xmake项目的开发，欢迎为其捐赠，支持它的发展。
+
+欢迎联系我们，获取更多赞助详情。
+
+- [联系方式](https://xmake.io/#/zh-cn/about/contact)
 
 ## 支付宝
 
@@ -22,6 +26,58 @@ xmake项目属于个人开源项目，它的发展需要您的帮助，如果您
 ## OpenCollective
 
 [[Become a sponsor](https://opencollective.com/xmake#sponsor)]
+
+## Sponsor tiers
+
+### $5 a month
+
+☕️ - Buy me a coffee every month.
+
+- You will receive a Sponsor badge on your profile!
+
+### $10 a month
+
+🙏 - Thank you so much! For sponsoring me you'll receive:
+
+- All previous tier rewards
+- Membership in Discord channel is marked as sponsor
+- Add your name to the backers section on my personal website
+
+### $20 a month
+
+🍨 - Thank you so much! For sponsoring me you'll receive:
+
+- All previous tier rewards
+- Handling Issues with higher priority
+
+### $50 a month
+
+🐹 - Thank you so much! For sponsoring me you'll receive:
+
+- All previous tier rewards
+- Review your xmake.lua and provide suggestions for improvement
+
+### $200 a month
+
+🐴 - Thank you so much! For sponsoring me you'll receive:
+
+- All previous tier rewards
+- Add a logo and link to the README.md of my major open source projects
+- One-to-one technical consulting service, see [Technical Support](https://xmake.io/#/about/technical_support)
+
+### $500 a month
+
+🐬 - Thank you so much! For sponsoring me you'll receive:
+
+- All previous tier rewards
+- Add a large logo and link to the websites of my major open source projects
+
+### $1000 a month
+
+❤️ - Wow, thank you so much!
+
+- All previous tier rewards
+- Please contact me to discuss what you want for this tier!
 
 ## 支持者
 
