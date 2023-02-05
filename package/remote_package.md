@@ -873,6 +873,14 @@ add_versions("home:4.0.2", "346c51735f42c37e0712e0b3d2f6476c86ac15863e4445d9e823
 add_versions("github:4.0.2", "4df1ef0bf73b7148caea1270539ef7bd06607e0ea8aa2fbf1bb34062a097f026")
 ```
 
+We can also set the http headers for the specified urls:
+
+```lua
+add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
+    http_headers = {"TEST1: foo", "TEST2: bar"}
+})
+```
+
 #### add_versions
 
 Used to set the version of each source package and the corresponding sha256 value, as described in [add_urls](#add_urls)

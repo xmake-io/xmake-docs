@@ -2910,6 +2910,23 @@ target("demo")
     add_packages("foo")
 ```
 
+##### 设置包下载的 http headers
+
+如果有些包的 url 下载，需要设置特定 http headers，才能通过下载，可以通过这个策略来指定。
+
+```lua
+package("xxx")
+    set_policy("package.download.http_headers", "TEST1: foo", "TEST2: bar")
+```
+
+我们也可以设置指定的 urls 的 http headers：
+
+```lua
+add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
+    http_headers = {"TEST1: foo", "TEST2: bar"}
+})
+```
+
 ### target:set_runtimes
 
 #### 设置编译目标依赖的运行时库

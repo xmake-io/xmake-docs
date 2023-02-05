@@ -2908,6 +2908,23 @@ target("demo")
     add_packages("foo")
 ```
 
+##### Setting http headers for package downloads
+
+If some packages have url downloads that require specific http headers to be set in order to pass the download, this policy can be specified.
+
+```lua
+package("xxx")
+    set_policy("package.download.http_headers", "TEST1: foo", "TEST2: bar")
+```
+
+We can also set the http headers for the specified urls:
+
+```lua
+add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
+    http_headers = {"TEST1: foo", "TEST2: bar"}
+})
+```
+
 ### target:set_runtimes
 
 #### Set the runtime library of the compilation target

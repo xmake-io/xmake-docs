@@ -2396,6 +2396,16 @@ target("demo")
     add_files("src/main.c")
     add_packages("foo")
 </code></pre>
+<h5 id="httpheaders">设置包下载的 http headers</h5>
+<p>如果有些包的 url 下载，需要设置特定 http headers，才能通过下载，可以通过这个策略来指定。</p>
+<pre><code class="lang-lua">package("xxx")
+    set_policy("package.download.http_headers", "TEST1: foo", "TEST2: bar")
+</code></pre>
+<p>我们也可以设置指定的 urls 的 http headers：</p>
+<pre><code class="lang-lua">add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
+    http_headers = {"TEST1: foo", "TEST2: bar"}
+})
+</code></pre>
 <h3 id="targetset_runtimes">target:set_runtimes</h3>
 <h4 id="">设置编译目标依赖的运行时库</h4>
 <p>这是 v2.5.1 开始新增的接口，用于抽象化设置编译目标依赖的运行时库，目前仅仅支持对 msvc 运行时库的抽象，但后续也许会扩展对其他编译器运行时库的映射。</p>

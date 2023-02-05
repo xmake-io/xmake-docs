@@ -2379,6 +2379,16 @@ target("demo")
     add_files("src/main.c")
     add_packages("foo")
 </code></pre>
+<h5 id="settinghttpheadersforpackagedownloads">Setting http headers for package downloads</h5>
+<p>If some packages have url downloads that require specific http headers to be set in order to pass the download, this policy can be specified.</p>
+<pre><code class="lang-lua">package("xxx")
+    set_policy("package.download.http_headers", "TEST1: foo", "TEST2: bar")
+</code></pre>
+<p>We can also set the http headers for the specified urls:</p>
+<pre><code class="lang-lua">add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
+    http_headers = {"TEST1: foo", "TEST2: bar"}
+})
+</code></pre>
 <h3 id="targetset_runtimes">target:set_runtimes</h3>
 <h4 id="settheruntimelibraryofthecompilationtarget">Set the runtime library of the compilation target</h4>
 <p>This is a newly added interface since v2.5.1, which is used to abstractly set the runtime library that the compilation target depends on. Currently, only the abstraction of the msvc runtime library is supported, but the mapping to other compiler runtime libraries may be expanded in the future.</p>
