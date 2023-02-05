@@ -354,6 +354,132 @@ hello world!
     -- TODO handle events
 end
 </code></pre>
+<h2 id="checkprojectconfigurationsandcodes">Check project configurations and codes</h2>
+<h3 id="checkprojectconfiguration">Check project configuration</h3>
+<h4 id="checkallapivaluesinxmakeluabydefault">Check all api values in xmake.lua by default</h4>
+<pre><code class="lang-lua">set_lanuages("c91") -- typo
+</code></pre>
+<pre><code class="lang-console">$ xmake check
+./xmake.lua:15: warning: unknown language value &#39;c91&#39;, it may be &#39;c90&#39;
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<p>we can also run a given group</p>
+<pre><code class="lang-console">$ xmake check api
+$ xmake check api.target
+</code></pre>
+<h4 id="verboseoutput">Verbose output</h4>
+<pre><code class="lang-console">$ xmake check -v
+./xmake.lua:15: warning: unknown language value &#39;cxx91&#39;, it may be &#39;cxx98&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;mbedtls&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;polarssl&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;openssl&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;pcre2&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;pcre&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;zlib&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;mysql&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;sqlite3&#39;
+8 notes, 1 warnings, 0 errors
+</code></pre>
+<h4 id="checkthegivenapi">Check the given api</h4>
+<pre><code class="lang-console">$ xmake check api.target.languages
+./xmake.lua:15: warning: unknown language value &#39;cxx91&#39;, it may be &#39;cxx98&#39;
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<h4 id="checkcompilerflags">Check compiler flags</h4>
+<pre><code class="lang-console">$ xmake check
+./xmake.lua:10: warning: clang: unknown c compiler flag &#39;-Ox&#39;
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<h4 id="checkincludedirs">Check includedirs</h4>
+<pre><code class="lang-console">$ xmake check
+./xmake.lua:11: warning: includedir &#39;xxx&#39; not found
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<h3 id="checkprojectcodeclangtidy">Check project code (clang-tidy)</h3>
+<h4 id="listclangtidychecks">List clang-tidy checks</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --list
+Enabled checks:
+    clang-analyzer-apiModeling.StdCLibraryFunctions
+    clang-analyzer-apiModeling.TrustNonnull
+    clang-analyzer-apiModeling.google.GTest
+    clang-analyzer-apiModeling.llvm.CastValue
+    clang-analyzer-apiModeling.llvm.ReturnValue
+    ...
+</code></pre>
+<h4 id="checksourcecodeintargets">Check source code in targets</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy
+1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: &#39;iostr&#39; file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy -p compile_commands.json /private/tmp/test2/src
+/main.cpp) failed(1)
+</code></pre>
+<h4 id="checkcodewiththegivenchecks">Check code with the given checks</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --checks="*"
+6 warnings and 1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: &#39;iostr&#39; file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+/tmp/test2/src/main.cpp:3:1: warning: do not use namespace using-directives; use using-declarat
+ions instead [google-build-using-namespace]
+using namespace std;
+^
+/tmp/test2/src/main.cpp:3:17: warning: declaration must be declared within the &#39;__llvm_libc&#39; na
+mespace [llvmlibc-implementation-in-namespace]
+using namespace std;
+                ^
+/tmp/test2/src/main.cpp:5:5: warning: declaration must be declared within the &#39;__llvm_libc&#39; nam
+espace [llvmlibc-implementation-in-namespace]
+int main(int argc, char **argv) {
+    ^
+/tmp/test2/src/main.cpp:5:5: warning: use a trailing return type for this function [modernize-u
+se-trailing-return-type]
+int main(int argc, char **argv) {
+~~~ ^
+auto                            -> int
+/tmp/test2/src/main.cpp:5:14: warning: parameter &#39;argc&#39; is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+             ^~~~
+              /*argc*/
+/tmp/test2/src/main.cpp:5:27: warning: parameter &#39;argv&#39; is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+                          ^~~~
+                           /*argv*/
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy --checks=* -p compile_commands.json /private/tm
+p/test2/src/main.cpp) failed(1)
+</code></pre>
+<h4 id="checkcodewiththegiventargetname">Check code with the given target name</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy [targetname]
+</code></pre>
+<h4 id="checkcodewiththegivensourcefiles">Check code with the given source files</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy -f src/main.c
+$ xmake check clang.tidy -f &#39;src/*.c:src/**.cpp&#39;
+</code></pre>
+<h4 id="setthegivenclangtidyconfigfile">Set the given .clang-tidy config file</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --configfile=/tmp/.clang-tidy
+</code></pre>
+<h4 id="createanewclangtidyconfigfile">Create a new .clang-tidy config file</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --checks="*" --create
+$ cat .clang-tidy
+---
+Checks:          &#39;clang-diagnostic-*,clang-analyzer-*,*&#39;
+WarningsAsErrors: &#39;&#39;
+HeaderFilterRegex: &#39;&#39;
+AnalyzeTemporaryDtors: false
+FormatStyle:     none
+User:            ruki
+CheckOptions:
+  - key:             readability-suspicious-call-argument.PrefixSimilarAbove
+    value:           &#39;30&#39;
+  - key:             cppcoreguidelines-no-malloc.Reallocations
+    value:           &#39;::realloc&#39;
+
+</code></pre>
 <h2 id="macrosrecordingandplayback">Macros Recording and Playback</h2>
 <h3 id="introduction">Introduction</h3>
 <p>We can record and playback our xmake commands and save as macro quickly using this plugin.</p>

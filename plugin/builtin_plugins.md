@@ -403,6 +403,177 @@ function main(events)
 end
 ```
 
+## Check project configurations and codes
+
+### Check project configuration
+
+#### Check all api values in xmake.lua by default
+
+```lua
+set_lanuages("c91") -- typo
+```
+
+```console
+$ xmake check
+./xmake.lua:15: warning: unknown language value 'c91', it may be 'c90'
+0 notes, 1 warnings, 0 errors
+```
+
+we can also run a given group
+
+```console
+$ xmake check api
+$ xmake check api.target
+```
+
+#### Verbose output
+
+```console
+$ xmake check -v
+./xmake.lua:15: warning: unknown language value 'cxx91', it may be 'cxx98'
+./src/tbox/xmake.lua:43: note: unknown package value 'mbedtls'
+./src/tbox/xmake.lua:43: note: unknown package value 'polarssl'
+./src/tbox/xmake.lua:43: note: unknown package value 'openssl'
+./src/tbox/xmake.lua:43: note: unknown package value 'pcre2'
+./src/tbox/xmake.lua:43: note: unknown package value 'pcre'
+./src/tbox/xmake.lua:43: note: unknown package value 'zlib'
+./src/tbox/xmake.lua:43: note: unknown package value 'mysql'
+./src/tbox/xmake.lua:43: note: unknown package value 'sqlite3'
+8 notes, 1 warnings, 0 errors
+```
+
+#### Check the given api
+
+```console
+$ xmake check api.target.languages
+./xmake.lua:15: warning: unknown language value 'cxx91', it may be 'cxx98'
+0 notes, 1 warnings, 0 errors
+```
+
+#### Check compiler flags
+
+```console
+$ xmake check
+./xmake.lua:10: warning: clang: unknown c compiler flag '-Ox'
+0 notes, 1 warnings, 0 errors
+```
+
+#### Check includedirs
+
+
+```console
+$ xmake check
+./xmake.lua:11: warning: includedir 'xxx' not found
+0 notes, 1 warnings, 0 errors
+```
+
+### Check project code (clang-tidy)
+
+#### List clang-tidy checks
+
+```console
+$ xmake check clang.tidy --list
+Enabled checks:
+    clang-analyzer-apiModeling.StdCLibraryFunctions
+    clang-analyzer-apiModeling.TrustNonnull
+    clang-analyzer-apiModeling.google.GTest
+    clang-analyzer-apiModeling.llvm.CastValue
+    clang-analyzer-apiModeling.llvm.ReturnValue
+    ...
+```
+
+#### Check source code in targets
+
+```console
+$ xmake check clang.tidy
+1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: 'iostr' file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy -p compile_commands.json /private/tmp/test2/src
+/main.cpp) failed(1)
+```
+
+#### Check code with the given checks
+
+```console
+$ xmake check clang.tidy --checks="*"
+6 warnings and 1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: 'iostr' file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+/tmp/test2/src/main.cpp:3:1: warning: do not use namespace using-directives; use using-declarat
+ions instead [google-build-using-namespace]
+using namespace std;
+^
+/tmp/test2/src/main.cpp:3:17: warning: declaration must be declared within the '__llvm_libc' na
+mespace [llvmlibc-implementation-in-namespace]
+using namespace std;
+                ^
+/tmp/test2/src/main.cpp:5:5: warning: declaration must be declared within the '__llvm_libc' nam
+espace [llvmlibc-implementation-in-namespace]
+int main(int argc, char **argv) {
+    ^
+/tmp/test2/src/main.cpp:5:5: warning: use a trailing return type for this function [modernize-u
+se-trailing-return-type]
+int main(int argc, char **argv) {
+~~~ ^
+auto                            -> int
+/tmp/test2/src/main.cpp:5:14: warning: parameter 'argc' is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+             ^~~~
+              /*argc*/
+/tmp/test2/src/main.cpp:5:27: warning: parameter 'argv' is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+                          ^~~~
+                           /*argv*/
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy --checks=* -p compile_commands.json /private/tm
+p/test2/src/main.cpp) failed(1)
+```
+
+#### Check code with the given target name
+
+```console
+$ xmake check clang.tidy [targetname]
+```
+
+#### Check code with the given source files
+
+```console
+$ xmake check clang.tidy -f src/main.c
+$ xmake check clang.tidy -f 'src/*.c:src/**.cpp'
+```
+
+#### Set the given .clang-tidy config file
+
+```console
+$ xmake check clang.tidy --configfile=/tmp/.clang-tidy
+```
+
+#### Create a new .clang-tidy config file
+
+```console
+$ xmake check clang.tidy --checks="*" --create
+$ cat .clang-tidy
+---
+Checks:          'clang-diagnostic-*,clang-analyzer-*,*'
+WarningsAsErrors: ''
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
+FormatStyle:     none
+User:            ruki
+CheckOptions:
+  - key:             readability-suspicious-call-argument.PrefixSimilarAbove
+    value:           '30'
+  - key:             cppcoreguidelines-no-malloc.Reallocations
+    value:           '::realloc'
+
+```
+
 ## Macros Recording and Playback
 
 ### Introduction

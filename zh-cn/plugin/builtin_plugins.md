@@ -5,9 +5,7 @@
 
 XMake跟`cmake`, `premake`等其他一些构建工具的区别在于：
 
-<p class="warn">
-`xmake`默认是直接构建运行的，生成第三方的IDE的工程文件仅仅作为`插件`来提供。
-</p>
+!> `xmake`默认是直接构建运行的，生成第三方的IDE的工程文件仅仅作为`插件`来提供。
 
 这样做的一个好处是：插件更加容易扩展，维护也更加独立和方便。
 
@@ -411,6 +409,184 @@ $ xmake watch -s /tmp/test.lua
 function main(events)
     -- TODO handle events
 end
+```
+
+## 分析诊断工程配置和代码
+
+### 检测工程配置
+
+#### 默认检测所有 API
+
+```lua
+set_lanuages("c91") -- typo
+```
+
+```console
+$ xmake check
+./xmake.lua:15: warning: unknown language value 'c91', it may be 'c90'
+0 notes, 1 warnings, 0 errors
+```
+
+默认也可以指定检测特定组：
+
+```console
+$ xmake check api
+$ xmake check api.target
+```
+
+#### 显示详细输出
+
+这会额外提供 note 级别的检测信息。
+
+```console
+$ xmake check -v
+./xmake.lua:15: warning: unknown language value 'cxx91', it may be 'cxx98'
+./src/tbox/xmake.lua:43: note: unknown package value 'mbedtls'
+./src/tbox/xmake.lua:43: note: unknown package value 'polarssl'
+./src/tbox/xmake.lua:43: note: unknown package value 'openssl'
+./src/tbox/xmake.lua:43: note: unknown package value 'pcre2'
+./src/tbox/xmake.lua:43: note: unknown package value 'pcre'
+./src/tbox/xmake.lua:43: note: unknown package value 'zlib'
+./src/tbox/xmake.lua:43: note: unknown package value 'mysql'
+./src/tbox/xmake.lua:43: note: unknown package value 'sqlite3'
+8 notes, 1 warnings, 0 errors
+```
+
+#### 检测指定的 API
+
+```console
+$ xmake check api.target.languages
+./xmake.lua:15: warning: unknown language value 'cxx91', it may be 'cxx98'
+0 notes, 1 warnings, 0 errors
+```
+
+#### 检测编译 flags
+
+```console
+$ xmake check
+./xmake.lua:10: warning: clang: unknown c compiler flag '-Ox'
+0 notes, 1 warnings, 0 errors
+```
+
+#### 检测 includedirs
+
+除了 includedirs，还有 linkdirs 等路径都会去检测。
+
+
+```console
+$ xmake check
+./xmake.lua:11: warning: includedir 'xxx' not found
+0 notes, 1 warnings, 0 errors
+```
+
+
+### 检测工程代码（clang-tidy）
+
+#### 显示 clang-tidy 检测列表
+
+```console
+$ xmake check clang.tidy --list
+Enabled checks:
+    clang-analyzer-apiModeling.StdCLibraryFunctions
+    clang-analyzer-apiModeling.TrustNonnull
+    clang-analyzer-apiModeling.google.GTest
+    clang-analyzer-apiModeling.llvm.CastValue
+    clang-analyzer-apiModeling.llvm.ReturnValue
+    ...
+```
+
+#### 检测所有 targets 中的源码
+
+```console
+$ xmake check clang.tidy
+1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: 'iostr' file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy -p compile_commands.json /private/tmp/test2/src
+/main.cpp) failed(1)
+```
+
+#### 指定检测类型
+
+我们可以在 `--check=` 中指定需要检测的类型，具体用法可以参考 `clang-tidy` 的 `--check=` 参数，完全一致的。
+
+```console
+$ xmake check clang.tidy --checks="*"
+6 warnings and 1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: 'iostr' file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+/tmp/test2/src/main.cpp:3:1: warning: do not use namespace using-directives; use using-declarat
+ions instead [google-build-using-namespace]
+using namespace std;
+^
+/tmp/test2/src/main.cpp:3:17: warning: declaration must be declared within the '__llvm_libc' na
+mespace [llvmlibc-implementation-in-namespace]
+using namespace std;
+                ^
+/tmp/test2/src/main.cpp:5:5: warning: declaration must be declared within the '__llvm_libc' nam
+espace [llvmlibc-implementation-in-namespace]
+int main(int argc, char **argv) {
+    ^
+/tmp/test2/src/main.cpp:5:5: warning: use a trailing return type for this function [modernize-u
+se-trailing-return-type]
+int main(int argc, char **argv) {
+~~~ ^
+auto                            -> int
+/tmp/test2/src/main.cpp:5:14: warning: parameter 'argc' is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+             ^~~~
+              /*argc*/
+/tmp/test2/src/main.cpp:5:27: warning: parameter 'argv' is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+                          ^~~~
+                           /*argv*/
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy --checks=* -p compile_commands.json /private/tm
+p/test2/src/main.cpp) failed(1)
+```
+
+#### 检测指定 target 的代码
+
+```console
+$ xmake check clang.tidy [targetname]
+```
+
+#### 检测给定的源文件列表
+
+```console
+$ xmake check clang.tidy -f src/main.c
+$ xmake check clang.tidy -f 'src/*.c:src/**.cpp'
+```
+
+#### 设置 .clang-tidy 配置文件
+
+```console
+$ xmake check clang.tidy --configfile=/tmp/.clang-tidy
+```
+
+#### 创建 .clang-tidy 配置文件
+
+```console
+$ xmake check clang.tidy --checks="*" --create
+$ cat .clang-tidy
+---
+Checks:          'clang-diagnostic-*,clang-analyzer-*,*'
+WarningsAsErrors: ''
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
+FormatStyle:     none
+User:            ruki
+CheckOptions:
+  - key:             readability-suspicious-call-argument.PrefixSimilarAbove
+    value:           '30'
+  - key:             cppcoreguidelines-no-malloc.Reallocations
+    value:           '::realloc'
+
 ```
 
 ## 宏记录和回放

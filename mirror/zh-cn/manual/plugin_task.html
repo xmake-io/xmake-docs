@@ -171,7 +171,7 @@
         local modes = ""
         for _, mode in ipairs({"bright", "dim", "blink", "reverse"}) do
             if option.get(mode) then
-                modes = modes .. " " .. mode 
+                modes = modes .. " " .. mode
             end
         end
 
@@ -188,25 +188,25 @@
             ,   description = "Echo the given info!"
 
                 -- 设置菜单选项，如果没有选项，可以设置为{}
-            ,   options = 
+            ,   options =
                 {
                     -- 设置k模式作为key-only型bool参数
-                    {&#39;b&#39;, "bright",     "k",  nil,       "Enable bright."               }      
-                ,   {&#39;d&#39;, "dim",        "k",  nil,       "Enable dim."                  }      
-                ,   {&#39;-&#39;, "blink",      "k",  nil,       "Enable blink."                }      
-                ,   {&#39;r&#39;, "reverse",    "k",  nil,       "Reverse color."               }      
+                    {&#39;b&#39;, "bright",     "k",  nil,       "Enable bright."               }
+                ,   {&#39;d&#39;, "dim",        "k",  nil,       "Enable dim."                  }
+                ,   {&#39;-&#39;, "blink",      "k",  nil,       "Enable blink."                }
+                ,   {&#39;r&#39;, "reverse",    "k",  nil,       "Reverse color."               }
 
                     -- 菜单显示时，空白一行
                 ,   {}
 
                     -- 设置kv作为key-value型参数，并且设置默认值：black
                 ,   {&#39;c&#39;, "color",      "kv", "black",   "Set the output color."
-                                                     ,   "    - red"   
+                                                     ,   "    - red"
                                                      ,   "    - blue"
                                                      ,   "    - yellow"
                                                      ,   "    - green"
                                                      ,   "    - magenta"
-                                                     ,   "    - cyan" 
+                                                     ,   "    - cyan"
                                                      ,   "    - white"                  }
 
                     -- 设置`vs`作为values多值型参数，还有`v`单值类型
@@ -214,7 +214,7 @@
                 ,   {}
                 ,   {nil, "contents",   "vs", nil,       "The info contents."           }
                 }
-            } 
+            }
 </code></pre>
 <p>定义完这个任务后，执行<code>xmake --help</code>，就会多出一个任务项来：</p>
 <pre><code>Tasks:
@@ -236,7 +236,7 @@
 
 Echo the given info!
 
-Options: 
+Options:
     -v, --verbose                          Print lots of verbose information.
         --backtrace                        Print backtrace information for debugging.
         --profile                          Print performance data for debugging.
@@ -279,11 +279,9 @@ Options:
 <h3 id="taskset_category">task:set_category</h3>
 <h4 id="">设置任务类别</h4>
 <p>仅仅用于菜单的分组显示，当然插件默认会用<code>plugin</code>，内置任务默认会用：<code>action</code>，但也仅仅只是个约定。</p>
-<p><p class="tip"><br>你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为<code>plugin</code>，就会显示到xmake的Plugins分组中去。<br></p>
-
-</p>
+<p>!> 你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为<code>plugin</code>，就会显示到xmake的Plugins分组中去。</p>
 <p>例如：</p>
-<pre><code class="lang-lua">Plugins: 
+<pre><code class="lang-lua">Plugins:
     l, lua               Run the lua script.
     m, macro             Run the given macro.
        doxygen           Generate the doxygen document.

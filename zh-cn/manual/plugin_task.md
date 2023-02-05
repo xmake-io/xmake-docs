@@ -36,7 +36,7 @@ task("hello")
 target("test")
 
     after_build(function (target)
- 
+
         -- 导入task模块
         import("core.project.task")
 
@@ -72,7 +72,7 @@ task("echo")
         local modes = ""
         for _, mode in ipairs({"bright", "dim", "blink", "reverse"}) do
             if option.get(mode) then
-                modes = modes .. " " .. mode 
+                modes = modes .. " " .. mode
             end
         end
 
@@ -89,25 +89,25 @@ task("echo")
             ,   description = "Echo the given info!"
 
                 -- 设置菜单选项，如果没有选项，可以设置为{}
-            ,   options = 
+            ,   options =
                 {
                     -- 设置k模式作为key-only型bool参数
-                    {'b', "bright",     "k",  nil,       "Enable bright."               }      
-                ,   {'d', "dim",        "k",  nil,       "Enable dim."                  }      
-                ,   {'-', "blink",      "k",  nil,       "Enable blink."                }      
-                ,   {'r', "reverse",    "k",  nil,       "Reverse color."               }      
+                    {'b', "bright",     "k",  nil,       "Enable bright."               }
+                ,   {'d', "dim",        "k",  nil,       "Enable dim."                  }
+                ,   {'-', "blink",      "k",  nil,       "Enable blink."                }
+                ,   {'r', "reverse",    "k",  nil,       "Reverse color."               }
 
                     -- 菜单显示时，空白一行
                 ,   {}
 
                     -- 设置kv作为key-value型参数，并且设置默认值：black
                 ,   {'c', "color",      "kv", "black",   "Set the output color."
-                                                     ,   "    - red"   
+                                                     ,   "    - red"
                                                      ,   "    - blue"
                                                      ,   "    - yellow"
                                                      ,   "    - green"
                                                      ,   "    - magenta"
-                                                     ,   "    - cyan" 
+                                                     ,   "    - cyan"
                                                      ,   "    - white"                  }
 
                     -- 设置`vs`作为values多值型参数，还有`v`单值类型
@@ -115,7 +115,7 @@ task("echo")
                 ,   {}
                 ,   {nil, "contents",   "vs", nil,       "The info contents."           }
                 }
-            } 
+            }
 ```
 
 定义完这个任务后，执行`xmake --help`，就会多出一个任务项来：
@@ -151,25 +151,25 @@ Usage: $xmake echo [options]
 
 Echo the given info!
 
-Options: 
+Options:
     -v, --verbose                          Print lots of verbose information.
         --backtrace                        Print backtrace information for debugging.
         --profile                          Print performance data for debugging.
         --version                          Print the version number and exit.
     -h, --help                             Print this help message and exit.
-                                           
+
     -F FILE, --file=FILE                   Read a given xmake.lua file.
     -P PROJECT, --project=PROJECT          Change to the given project directory.
                                            Search priority:
                                                1. The Given Command Argument
                                                2. The Envirnoment Variable: XMAKE_PROJECT_DIR
                                                3. The Current Directory
-                                           
+
     -b, --bright                           Enable bright.
     -d, --dim                              Enable dim.
     --, --blink                            Enable blink.
     -r, --reverse                          Reverse color.
-                                           
+
     -c COLOR, --color=COLOR                Set the output color. (default: black)
                                                - red
                                                - blue
@@ -178,7 +178,7 @@ Options:
                                                - magenta
                                                - cyan
                                                - white
-                                           
+
     contents ...                           The info contents.
 ```
 
@@ -206,14 +206,12 @@ $ xmake echo --color=red --bright hello xmake!
 
 仅仅用于菜单的分组显示，当然插件默认会用`plugin`，内置任务默认会用：`action`，但也仅仅只是个约定。
 
-<p class="tip">
-你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为`plugin`，就会显示到xmake的Plugins分组中去。
-</p>
+!> 你可以使用任何自己定义的名字，相同名字会分组归类到一起显示，如果设置为`plugin`，就会显示到xmake的Plugins分组中去。
 
 例如：
 
 ```lua
-Plugins: 
+Plugins:
     l, lua               Run the lua script.
     m, macro             Run the given macro.
        doxygen           Generate the doxygen document.

@@ -93,9 +93,7 @@
     <h2 id="ide">生成IDE工程文件</h2>
 <h3 id="">简介</h3>
 <p>XMake跟<code>cmake</code>, <code>premake</code>等其他一些构建工具的区别在于：</p>
-<p><p class="warn"><br><code>xmake</code>默认是直接构建运行的，生成第三方的IDE的工程文件仅仅作为<code>插件</code>来提供。<br></p>
-
-</p>
+<p>!> <code>xmake</code>默认是直接构建运行的，生成第三方的IDE的工程文件仅仅作为<code>插件</code>来提供。</p>
 <p>这样做的一个好处是：插件更加容易扩展，维护也更加独立和方便。</p>
 <h3 id="makefile">生成Makefile</h3>
 <pre><code class="lang-console">$ xmake project -k makefile
@@ -359,6 +357,135 @@ hello world!
 <pre><code class="lang-lua">function main(events)
     -- TODO handle events
 end
+</code></pre>
+<h2 id="">分析诊断工程配置和代码</h2>
+<h3 id="">检测工程配置</h3>
+<h4 id="api">默认检测所有 API</h4>
+<pre><code class="lang-lua">set_lanuages("c91") -- typo
+</code></pre>
+<pre><code class="lang-console">$ xmake check
+./xmake.lua:15: warning: unknown language value &#39;c91&#39;, it may be &#39;c90&#39;
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<p>默认也可以指定检测特定组：</p>
+<pre><code class="lang-console">$ xmake check api
+$ xmake check api.target
+</code></pre>
+<h4 id="">显示详细输出</h4>
+<p>这会额外提供 note 级别的检测信息。</p>
+<pre><code class="lang-console">$ xmake check -v
+./xmake.lua:15: warning: unknown language value &#39;cxx91&#39;, it may be &#39;cxx98&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;mbedtls&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;polarssl&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;openssl&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;pcre2&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;pcre&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;zlib&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;mysql&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;sqlite3&#39;
+8 notes, 1 warnings, 0 errors
+</code></pre>
+<h4 id="api">检测指定的 API</h4>
+<pre><code class="lang-console">$ xmake check api.target.languages
+./xmake.lua:15: warning: unknown language value &#39;cxx91&#39;, it may be &#39;cxx98&#39;
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<h4 id="flags">检测编译 flags</h4>
+<pre><code class="lang-console">$ xmake check
+./xmake.lua:10: warning: clang: unknown c compiler flag &#39;-Ox&#39;
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<h4 id="includedirs">检测 includedirs</h4>
+<p>除了 includedirs，还有 linkdirs 等路径都会去检测。</p>
+<pre><code class="lang-console">$ xmake check
+./xmake.lua:11: warning: includedir &#39;xxx&#39; not found
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<h3 id="clangtidy">检测工程代码（clang-tidy）</h3>
+<h4 id="clangtidy">显示 clang-tidy 检测列表</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --list
+Enabled checks:
+    clang-analyzer-apiModeling.StdCLibraryFunctions
+    clang-analyzer-apiModeling.TrustNonnull
+    clang-analyzer-apiModeling.google.GTest
+    clang-analyzer-apiModeling.llvm.CastValue
+    clang-analyzer-apiModeling.llvm.ReturnValue
+    ...
+</code></pre>
+<h4 id="targets">检测所有 targets 中的源码</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy
+1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: &#39;iostr&#39; file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy -p compile_commands.json /private/tmp/test2/src
+/main.cpp) failed(1)
+</code></pre>
+<h4 id="">指定检测类型</h4>
+<p>我们可以在 <code>--check=</code> 中指定需要检测的类型，具体用法可以参考 <code>clang-tidy</code> 的 <code>--check=</code> 参数，完全一致的。</p>
+<pre><code class="lang-console">$ xmake check clang.tidy --checks="*"
+6 warnings and 1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: &#39;iostr&#39; file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+/tmp/test2/src/main.cpp:3:1: warning: do not use namespace using-directives; use using-declarat
+ions instead [google-build-using-namespace]
+using namespace std;
+^
+/tmp/test2/src/main.cpp:3:17: warning: declaration must be declared within the &#39;__llvm_libc&#39; na
+mespace [llvmlibc-implementation-in-namespace]
+using namespace std;
+                ^
+/tmp/test2/src/main.cpp:5:5: warning: declaration must be declared within the &#39;__llvm_libc&#39; nam
+espace [llvmlibc-implementation-in-namespace]
+int main(int argc, char **argv) {
+    ^
+/tmp/test2/src/main.cpp:5:5: warning: use a trailing return type for this function [modernize-u
+se-trailing-return-type]
+int main(int argc, char **argv) {
+~~~ ^
+auto                            -> int
+/tmp/test2/src/main.cpp:5:14: warning: parameter &#39;argc&#39; is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+             ^~~~
+              /*argc*/
+/tmp/test2/src/main.cpp:5:27: warning: parameter &#39;argv&#39; is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+                          ^~~~
+                           /*argv*/
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy --checks=* -p compile_commands.json /private/tm
+p/test2/src/main.cpp) failed(1)
+</code></pre>
+<h4 id="target">检测指定 target 的代码</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy [targetname]
+</code></pre>
+<h4 id="">检测给定的源文件列表</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy -f src/main.c
+$ xmake check clang.tidy -f &#39;src/*.c:src/**.cpp&#39;
+</code></pre>
+<h4 id="clangtidy">设置 .clang-tidy 配置文件</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --configfile=/tmp/.clang-tidy
+</code></pre>
+<h4 id="clangtidy">创建 .clang-tidy 配置文件</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --checks="*" --create
+$ cat .clang-tidy
+---
+Checks:          &#39;clang-diagnostic-*,clang-analyzer-*,*&#39;
+WarningsAsErrors: &#39;&#39;
+HeaderFilterRegex: &#39;&#39;
+AnalyzeTemporaryDtors: false
+FormatStyle:     none
+User:            ruki
+CheckOptions:
+  - key:             readability-suspicious-call-argument.PrefixSimilarAbove
+    value:           &#39;30&#39;
+  - key:             cppcoreguidelines-no-malloc.Reallocations
+    value:           &#39;::realloc&#39;
+
 </code></pre>
 <h2 id="">宏记录和回放</h2>
 <h3 id="">简介</h3>
