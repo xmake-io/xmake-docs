@@ -264,34 +264,106 @@ envs          Environment variables toolchain
 fasm          Flat Assembler
 </code></pre>
 <h3 id="showtheinformationofthegiventarget">Show the information of the given target</h3>
-<pre><code class="lang-bash">$ xmake show --target=tbox
+<p>We can use it to quickly trace the location of some specific configurations.</p>
+<pre><code class="lang-bash">$ xmake show -t tbox
 The information of target(tbox):
+    at: /Users/ruki/projects/personal/tbox/src/tbox/xmake.lua
     kind: static
     targetfile: build/macosx/x86_64/release/libtbox.a
-    rules: mode.release, mode.debug, mode.profile, mode.coverage
-    options: info, float, wchar, exception, force-utf8, deprecated, xml, zip, hash, regex, coroutine, object, charset, database
-    packages: mbedtls, polarssl, openssl, pcre2, pcre, zlib, mysql, sqlite3
-    links: pthread
-    syslinks: pthread, dl, m, c
-    cxflags: -Wno-error=deprecated-declarations, -fno-strict-aliasing, -Wno-error=expansion-to-defined, -fno-stack-protector
-    defines: __tb_small__, __tb_prefix__="tbox"
-    mxflags: -Wno-error=deprecated-declarations, -fno-strict-aliasing, -Wno-error=expansion-to-defined
-    headerfiles: src/(tbox/**.h)|**/impl/**.h, src/(tbox/prefix/**/prefix.S), src/(tbox/math/impl/*.h), src/(tbox/utils/impl/*.h), build/macosx/x86_64/release/tbox.config.h
-    includedirs: src, build/macosx/x86_64/release
-    at: /Users/ruki/projects/personal/tbox/src/tbox/xmake.lua
-    sourcebatch(cc): with rule(c.build)
-      -> src/tbox/string/static_string.c
-         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o
-         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/string/static_string.c.o.d
-      -> src/tbox/platform/sched.c
-         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o
-         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/platform/sched.c.o.d
-      -> src/tbox/stream/stream.c
-         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o
-         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/stream/stream.c.o.d
-      -> src/tbox/utils/base32.c
-         -> build/.objs/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o
-         -> build/.deps/tbox/macosx/x86_64/release/src/tbox/utils/base32.c.o.d
+    rules:
+      -> mode.release -> ./xmake.lua:26
+      -> mode.debug -> ./xmake.lua:26
+      -> mode.profile -> ./xmake.lua:26
+      -> mode.coverage -> ./xmake.lua:26
+      -> utils.install.cmake_importfiles -> ./src/tbox/xmake.lua:15
+      -> utils.install.pkgconfig_importfiles -> ./src/tbox/xmake.lua:16
+    options:
+      -> info -> ./src/tbox/xmake.lua:50
+      -> float -> ./src/tbox/xmake.lua:50
+      -> wchar -> ./src/tbox/xmake.lua:50
+      -> exception -> ./src/tbox/xmake.lua:50
+      -> force-utf8 -> ./src/tbox/xmake.lua:50
+      -> deprecated -> ./src/tbox/xmake.lua:50
+      -> xml -> ./src/tbox/xmake.lua:53
+      -> zip -> ./src/tbox/xmake.lua:53
+      -> hash -> ./src/tbox/xmake.lua:53
+      -> regex -> ./src/tbox/xmake.lua:53
+      -> coroutine -> ./src/tbox/xmake.lua:53
+      -> object -> ./src/tbox/xmake.lua:53
+      -> charset -> ./src/tbox/xmake.lua:53
+      -> database -> ./src/tbox/xmake.lua:53
+    packages:
+      -> mbedtls -> ./src/tbox/xmake.lua:43
+      -> polarssl -> ./src/tbox/xmake.lua:43
+      -> openssl -> ./src/tbox/xmake.lua:43
+      -> pcre2 -> ./src/tbox/xmake.lua:43
+      -> pcre -> ./src/tbox/xmake.lua:43
+      -> zlib -> ./src/tbox/xmake.lua:43
+      -> mysql -> ./src/tbox/xmake.lua:43
+      -> sqlite3 -> ./src/tbox/xmake.lua:43
+    links:
+      -> pthread -> option(__keyword_thread_local) -> @programdir/includes/check_csnippets.lua:100
+    syslinks:
+      -> pthread -> ./xmake.lua:71
+      -> dl -> ./xmake.lua:71
+      -> m -> ./xmake.lua:71
+      -> c -> ./xmake.lua:71
+    defines:
+      -> __tb_small__ -> ./xmake.lua:42
+      -> __tb_prefix__="tbox" -> ./src/tbox/xmake.lua:19
+      -> _GNU_SOURCE=1 -> option(__systemv_semget) -> @programdir/includes/check_cfuncs.lua:104
+    cxflags:
+      -> -Wno-error=deprecated-declarations -> ./xmake.lua:22
+      -> -fno-strict-aliasing -> ./xmake.lua:22
+      -> -Wno-error=expansion-to-defined -> ./xmake.lua:22
+      -> -fno-stack-protector -> ./xmake.lua:51
+    frameworks:
+      -> CoreFoundation -> ./src/tbox/xmake.lua:38
+      -> CoreServices -> ./src/tbox/xmake.lua:38
+    mxflags:
+      -> -Wno-error=deprecated-declarations -> ./xmake.lua:23
+      -> -fno-strict-aliasing -> ./xmake.lua:23
+      -> -Wno-error=expansion-to-defined -> ./xmake.lua:23
+    includedirs:
+      -> src -> ./src/tbox/xmake.lua:26
+      -> build/macosx/x86_64/release -> ./src/tbox/xmake.lua:27
+    headerfiles:
+      -> src/(tbox/**.h)|**/impl/**.h -> ./src/tbox/xmake.lua:30
+      -> src/(tbox/prefix/**/prefix.S) -> ./src/tbox/xmake.lua:31
+      -> src/(tbox/math/impl/*.h) -> ./src/tbox/xmake.lua:32
+      -> src/(tbox/utils/impl/*.h) -> ./src/tbox/xmake.lua:33
+      -> build/macosx/x86_64/release/tbox.config.h -> ./src/tbox/xmake.lua:34
+    files:
+      -> src/tbox/*.c -> ./src/tbox/xmake.lua:56
+      -> src/tbox/hash/bkdr.c -> ./src/tbox/xmake.lua:57
+      -> src/tbox/hash/fnv32.c -> ./src/tbox/xmake.lua:57
+      -> src/tbox/hash/adler32.c -> ./src/tbox/xmake.lua:57
+      -> src/tbox/math/**.c -> ./src/tbox/xmake.lua:58
+      -> src/tbox/libc/**.c|string/impl/**.c -> ./src/tbox/xmake.lua:59
+      -> src/tbox/utils/*.c|option.c -> ./src/tbox/xmake.lua:60
+      -> src/tbox/prefix/**.c -> ./src/tbox/xmake.lua:61
+      -> src/tbox/memory/**.c -> ./src/tbox/xmake.lua:62
+      -> src/tbox/string/**.c -> ./src/tbox/xmake.lua:63
+      -> src/tbox/stream/**.c|**/charset.c|**/zip.c -> ./src/tbox/xmake.lua:64
+      -> src/tbox/network/**.c|impl/ssl/*.c -> ./src/tbox/xmake.lua:65
+      -> src/tbox/algorithm/**.c -> ./src/tbox/xmake.lua:66
+      -> src/tbox/container/**.c|element/obj.c -> ./src/tbox/xmake.lua:67
+      -> src/tbox/libm/impl/libm.c -> ./src/tbox/xmake.lua:68
+      -> src/tbox/libm/idivi8.c -> ./src/tbox/xmake.lua:73
+      -> src/tbox/libm/ilog2i.c -> ./src/tbox/xmake.lua:70
+      -> src/tbox/libm/isqrti.c -> ./src/tbox/xmake.lua:71
+      -> src/tbox/libm/isqrti64.c -> ./src/tbox/xmake.lua:72
+      -> src/tbox/platform/*.c|context.c|exception.c -> ./src/tbox/xmake.lua:74
+      -> src/tbox/platform/impl/*.c|charset.c|poller_fwatcher.c -> ./src/tbox/xmake.lua:74
+      -> src/tbox/libm/*.c -> ./src/tbox/xmake.lua:77
+    compiler (cc): /usr/bin/xcrun -sdk macosx clang
+      -> -Qunused-arguments -target x86_64-apple-macos12.6 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk
+    linker (ar): /usr/bin/xcrun -sdk macosx ar
+      -> -cr
+    compflags (cc):
+      -> -Qunused-arguments -target x86_64-apple-macos12.6 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk -Wall -Werror -Oz -std=c99 -Isrc -Ibuild/macosx/x86_64/release -D__tb_small__ -D__tb_prefix__=\"tbox\" -D_GNU_SOURCE=1 -framework CoreFoundation -framework CoreServices -Wno-error=deprecated-declarations -fno-strict-aliasing -Wno-error=expansion-to-defined -fno-stack-protector
+    linkflags (ar):
+      -> -cr
 </code></pre>
 <h3 id="showbuiltincompilationmodeslist">Show builtin compilation modes list</h3>
 <pre><code class="lang-bash">$ xmake show -l buildmodes
