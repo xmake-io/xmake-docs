@@ -1173,12 +1173,12 @@ package("zlib")
      add_versions("v1.2.10", "42cd7b2bdaf1c4570e0877e61f2fdc0bce8019492431d054d3d86925e5058dc5")
 
      on_download(function (package, opt)
-         import("net. http")
-         import("utils. archive")
+         import("net.http")
+         import("utils.archive")
 
          local url = opt.url
          local sourcedir = opt.sourcedir
-         local packagefile = path. filename(url)
+         local packagefile = path.filename(url)
          local sourcehash = package:sourcehash(opt.url_alias)
 
          local cached = true
@@ -1186,7 +1186,7 @@ package("zlib")
              cached = false
 
              -- attempt to remove package file first
-             os. tryrm(packagefile)
+             os.tryrm(packagefile)
              http.download(url, packagefile)
 
              -- check hash
@@ -1202,8 +1202,8 @@ package("zlib")
              os.rm(sourcedir)
              os.mv(sourcedir_tmp, sourcedir)
          else
-             -- if it is not archive file, we need only create empty source file and use package: originfile()
-             os. tryrm(sourcedir)
+             -- if it is not archive file, we need only create empty source file and use package:originfile()
+             os.tryrm(sourcedir)
              os.mkdir(sourcedir)
          end
 
