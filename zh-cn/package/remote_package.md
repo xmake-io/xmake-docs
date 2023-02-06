@@ -1375,13 +1375,69 @@ end)
 
 ```lua
 on_download(function (package, opt)
-    -- download packages:urls() to opt.sourcedir
+    local url = opt.url
+    local sourcedir = opt.sourcedir
+
+    -- download url to the current directory
+    -- and extract it's source code to sourcedir
+    -- ...
 end)
 ```
 
-opt 参数里面，可以获取到下载包的目的源码目录 `opt.sourcedir`，我们只需要从 `package:urls()` 获取到包地址，下载下来就可以了。
+opt 参数里面，可以获取到下载包的目的源码目录 `opt.sourcedir`，我们只需要从 `opt.url` 获取到包地址，下载下来就可以了。
 
 然后，根据需要，添加一些自定义的处理逻辑。另外，自己可以添加下载缓存处理等等。
+
+下面是一个自定义下载 tar.gz 文件，并且实现缓存和源文件目录解压的例子，可以参考下：
+
+```lua
+package("zlib")
+    add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz")
+    add_versions("v1.2.10", "42cd7b2bdaf1c4570e0877e61f2fdc0bce8019492431d054d3d86925e5058dc5")
+
+    on_download(function (package, opt)
+        import("net.http")
+        import("utils.archive")
+
+        local url = opt.url
+        local sourcedir = opt.sourcedir
+        local packagefile = path.filename(url)
+        local sourcehash = package:sourcehash(opt.url_alias)
+
+        local cached = true
+        if not os.isfile(packagefile) or sourcehash ~= hash.sha256(packagefile) then
+            cached = false
+
+            -- attempt to remove package file first
+            os.tryrm(packagefile)
+            http.download(url, packagefile)
+
+            -- check hash
+            if sourcehash and sourcehash ~= hash.sha256(packagefile) then
+                raise("unmatched checksum, current hash(%s) != original hash(%s)", hash.sha256(packagefile):sub(1, 8), sourcehash:sub(1, 8))
+            end
+        end
+
+        -- extract package file
+        local sourcedir_tmp = sourcedir .. ".tmp"
+        os.rm(sourcedir_tmp)
+        if archive.extract(packagefile, sourcedir_tmp) then
+            os.rm(sourcedir)
+            os.mv(sourcedir_tmp, sourcedir)
+        else
+            -- if it is not archive file, we need only create empty source file and use package:originfile()
+            os.tryrm(sourcedir)
+            os.mkdir(sourcedir)
+        end
+
+        -- save original file path
+        package:originfile_set(path.absolute(packagefile))
+    end)
+```
+
+自定义下载需要用户完全自己控制下载逻辑，会比较复杂，除非必要，不推荐这么做。
+
+如果仅仅只是想增加自定义 http headers 去获取下载授权，可以使用 [设置包下载的 http headers](https://xmake.io/#/zh-cn/manual/project_target?id=%e8%ae%be%e7%bd%ae%e5%8c%85%e4%b8%8b%e8%bd%bd%e7%9a%84-http-headers)
 
 #### on_componment
 

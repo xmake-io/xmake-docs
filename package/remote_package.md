@@ -1152,13 +1152,69 @@ If the user builds a private repository and has a more complex authentication me
 
 ```lua
 on_download(function (package, opt)
-     -- download packages:urls() to opt.sourcedir
+    local url = opt.url
+    local sourcedir = opt.sourcedir
+
+    -- download url to the current directory
+    -- and extract it's source code to sourcedir
+    -- ...
 end)
 ```
 
-In the opt parameter, you can get the destination source directory `opt.sourcedir` of the downloaded package. We only need to get the package address from `package:urls()` and download it.
+In the opt parameter, you can get the destination source directory `opt.sourcedir` of the downloaded package. We only need to get the package address from `opt.url` and download it.
 
 Then, add some custom processing logic as needed. In addition, you can add download cache processing and so on.
+
+The following is an example of custom downloading a tar.gz file, and implementing caching and decompression of source file directories, you can refer to the following:
+
+```lua
+package("zlib")
+     add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz")
+     add_versions("v1.2.10", "42cd7b2bdaf1c4570e0877e61f2fdc0bce8019492431d054d3d86925e5058dc5")
+
+     on_download(function (package, opt)
+         import("net. http")
+         import("utils. archive")
+
+         local url = opt.url
+         local sourcedir = opt.sourcedir
+         local packagefile = path. filename(url)
+         local sourcehash = package:sourcehash(opt.url_alias)
+
+         local cached = true
+         if not os.isfile(packagefile) or sourcehash ~= hash.sha256(packagefile) then
+             cached = false
+
+             -- attempt to remove package file first
+             os. tryrm(packagefile)
+             http.download(url, packagefile)
+
+             -- check hash
+             if sourcehash and sourcehash ~= hash.sha256(packagefile) then
+                 raise("unmatched checksum, current hash(%s) != original hash(%s)", hash.sha256(packagefile):sub(1, 8), sourcehash:sub(1, 8))
+             end
+         end
+
+         -- extract package file
+         local sourcedir_tmp = sourcedir .. ".tmp"
+         os.rm(sourcedir_tmp)
+         if archive.extract(packagefile, sourcedir_tmp) then
+             os.rm(sourcedir)
+             os.mv(sourcedir_tmp, sourcedir)
+         else
+             -- if it is not archive file, we need only create empty source file and use package: originfile()
+             os. tryrm(sourcedir)
+             os.mkdir(sourcedir)
+         end
+
+         -- save original file path
+         package:originfile_set(path.absolute(packagefile))
+     end)
+```
+
+Custom download requires the user to fully control the download logic, which will be more complicated, and is not recommended unless necessary.
+
+If you just want to add custom http headers to obtain download authorization, you can see [Set http headers when downloading package](https://xmake.io/#/manual/project_target?id=setting-http-headers-for-package-downloads)
 
 ##### Platform Filtering
 
