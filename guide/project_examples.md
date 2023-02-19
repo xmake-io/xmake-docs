@@ -708,10 +708,11 @@ If you want to disable device-link, you can set it with `add_values("cuda.build.
 
 !> Device functions in cuda source files should be device-linked once and only once. On targets with kind `binary` or `shared` xmake will automatically perform the device-link which takes the static libraries they depend into account, while for `static` targets by default will not be device-linked. However, if the final `binary` or `shared` target do not contain any cuda files, the device-link stage could be missing, resulting in an undefined reference error. In this case the static target should be set `add_values("cuda.build.devlink", true)` manually.
 
-xmake will detect Cuda SDK automatically and we can also set the SDK directory manually.
+xmake will detect Cuda SDK automatically and we can also set the SDK directory (or SDK version for default installations) manually.
 
 ```console
 $ xmake f --cuda=/usr/local/cuda-9.1/
+$ xmake f --cuda=9.1
 $ xmake
 ```
 
