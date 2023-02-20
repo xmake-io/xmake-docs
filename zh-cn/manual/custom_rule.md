@@ -563,6 +563,17 @@ target("test")
     add_files("src/*.c")
 ```
 
+#### plugin.compile_commands.autoupdate
+
+我们也可以使用这个规则来自动更新生成 compile_commandss.json
+
+```lua
+add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
 #### utils.symbols.export_all
 
 v2.5.2 以上版本提供，我们可以用它自动导出所有的动态库符号，目前仅支持 windows dll 目标程序的符号导出，即使没有在代码中通过 `__declspec(dllexport)` 导出接口，

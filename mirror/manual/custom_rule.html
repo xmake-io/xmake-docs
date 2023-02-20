@@ -457,6 +457,13 @@ target("test")
      set_kind("binary")
      add_files("src/*.c")
 </code></pre>
+<h4 id="plugincompile_commandsautoupdate">plugin.compile_commands.autoupdate</h4>
+<p>We can also use this rule to automatically update the generated compile_commandss.json</p>
+<pre><code class="lang-lua">add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+</code></pre>
 <h4 id="utilssymbolsexport_all">utils.symbols.export_all</h4>
 <p>Provided in v2.5.2 and above, we can use it to automatically export all dynamic library symbols. Currently, only the symbol export of windows dll target programs is supported, even if there is no export interface through <code>__declspec(dllexport)</code> in the code.<br>xmake will also automatically export all c/c++ interface symbols.</p>
 <pre><code class="lang-lua">add_rules("mode.release", "mode.debug")

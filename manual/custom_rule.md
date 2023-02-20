@@ -561,6 +561,17 @@ target("test")
      add_files("src/*.c")
 ```
 
+#### plugin.compile_commands.autoupdate
+
+We can also use this rule to automatically update the generated compile_commandss.json
+
+```lua
+add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
 #### utils.symbols.export_all
 
 Provided in v2.5.2 and above, we can use it to automatically export all dynamic library symbols. Currently, only the symbol export of windows dll target programs is supported, even if there is no export interface through `__declspec(dllexport)` in the code.
