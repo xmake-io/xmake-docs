@@ -1,6 +1,4 @@
 
-### Build policies
-
 Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users' habits and needs.
 
 Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy, which is open to users to a certain degree of configurability.
@@ -63,7 +61,7 @@ Or configure multiple policy values at the same time, separated by commas.
 $ xmake f --policies=package.precompiled:n,package.install_only
 ```
 
-#### check.auto_ignore_flags
+### check.auto_ignore_flags
 
 By default, xmake will automatically detect all the original flags set by the `add_cxflags` and` add_ldflags` interfaces. If the current compiler and linker do not support them, they will be automatically ignored.
 
@@ -95,7 +93,7 @@ target("test")
 
 Then we can set various original flags at will, xmake will not automatically detect and ignore them.
 
-#### check.auto_map_flags
+### check.auto_map_flags
 
 This is another intelligent analysis and processing of flags by xmake. Usually, the configuration set by xmake built-in APIs like `add_links`,` add_defines` is cross-platform, and different compiler platforms will automatically process them into corresponding Original flags.
 
@@ -123,7 +121,7 @@ Some users do not like this automatic mapping behavior, so we can completely dis
 set_policy("check.auto_map_flags", false)
 ```
 
-#### build.across_targets_in_parallel
+### build.across_targets_in_parallel
 
 This strategy is also enabled by default and is mainly used to perform parallel builds between targets. In versions prior to v2.3.3, parallel builds can only target all source files within a single target.
 For cross-target compilation, you must wait until the previous target is fully linked before you can execute the compilation of the next target, which will affect the compilation speed to a certain extent.
@@ -136,7 +134,7 @@ Of course, if the build source files in some special targets depend on previous 
 set_policy("build.across_targets_in_parallel", false)
 ```
 
-#### build.merge_archive
+### build.merge_archive
 
 If this policy is set, then the target libraries that are dependent on using `add_deps()` no longer exist as links, but are merged directly into the parent target library.
 
@@ -169,7 +167,7 @@ target("test")
 The libmul.a static library automatically merges the libadd.a and libsub.a sub-dependent static libraries.
 
 
-#### build.ccache
+### build.ccache
 
 Xmake has a built-in build cache enabled by default, which can be explicitly disabled by setting this policy.
 
@@ -189,7 +187,7 @@ or
 $ xmake f --policies=build.ccache:n
 ```
 
-#### build.warning
+### build.warning
 
 The default compilation usually does not echo the warning output in real time, we usually need to use `xmake -w` to turn it on, or to turn it on globally with `xmake g --build_warning=y`.
 
@@ -202,7 +200,7 @@ set_warnings("all", "extra")
 
 At this time, even if we execute the `xmake` command, the warning output can be echoed directly.
 
-#### build.optimization.lto
+### build.optimization.lto
 
 xmake v2.6.9 has improved support for link-time optimisation (LTO), with adaptations for different platforms such as gcc/clang/msvc, simply by enabling this policy to enable LTO for specific targets.
 
@@ -216,7 +214,7 @@ We can also turn it on quickly via the command line option.
 $ xmake f --policies=build.optimization.lto
 ```
 
-#### build.cuda.devlink
+### build.cuda.devlink
 
 Version 2.7.7 can be configured to show that device links to specific targets are turned on.
 
@@ -232,34 +230,34 @@ Whereas by default Cuda binary/shared is devlink enabled, we can also disable it
 
 For a detailed background on this, see: [#1976](https://github.com/xmake-io/xmake/issues/1976)
 
-#### preprocessor.linemarkers
+### preprocessor.linemarkers
 
 If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.
 This will greatly reduce the size of the preprocessor file and improve the efficiency of the cache, but the downside is that the source line information will be lost and if you encounter a compilation error, you will not be able to see the exact line of code that went wrong.
 
-#### preprocessor.gcc.directives_only
+### preprocessor.gcc.directives_only
 
 This is also used as a preprocessor policy and is enabled by default. This will improve the efficiency of compile cache preprocessing under gcc, but can lead to cache inconsistencies if the source file contains macros such as `__DATE__`, `__TIME__`, etc.
 
 Therefore, you can turn this policy off as needed to ensure consistent results, depending on your project code.
 
-#### package.requires_lock
+### package.requires_lock
 
 Can be used to enable version locking of dependency packages introduced by `add_requires()`.
 
-#### package.precompiled
+### package.precompiled
 
 Can be used to disable fetching of precompiled dependency packages under windows.
 
-#### package.fetch_only
+### package.fetch_only
 
 If this policy is enabled, then all dependencies will only be fetched from the system and not downloaded and installed from a remote location.
 
-#### package.install_only
+### package.install_only
 
 If this policy is enabled, then all dependencies will only be downloaded and installed remotely, not fetched from the system.
 
-#### package.librarydeps.strict_compatibility
+### package.librarydeps.strict_compatibility
 
 Disabled by default, if enabled then strict compatibility is maintained between the current package and all its library dependencies, any version update of a dependent package will force a recompile install of the current package.
 
@@ -273,7 +271,7 @@ package("foo")
 
 For example, if there is an updated version of bar or zoo, then foo will also be recompiled and installed.
 
-#### package.strict_compatibility
+### package.strict_compatibility
 
 is disabled by default, if it is enabled then strict compatibility is maintained between the current package and all other packages that depend on it, and any version update of this package will force a recompile and install of the other parent packages.
 
@@ -293,7 +291,7 @@ package("zoo")
 
 For example, if there is an updated version of foo, then both bar and zoo will be forced to be recompiled and installed.
 
-#### package.install_always
+### package.install_always
 
 This is useful for local integration of third-party source packages,
 as the package will always be reinstalled each time `xmake f -c` is run to reconfigure it.
@@ -329,7 +327,7 @@ target("demo")
     add_packages("foo")
 ```
 
-#### package.download.http_headers
+### package.download.http_headers
 
 Setting http headers for package downloads
 

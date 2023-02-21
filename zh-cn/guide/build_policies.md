@@ -1,6 +1,4 @@
 
-### 构建策略
-
 xmake 有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。
 
 因此，从v2.3.4开始，xmake 提供默认构建策略的修改设置，开放给用户一定程度上的可配置性。
@@ -65,7 +63,7 @@ $ xmake f --policies=package.precompiled:n
 $ xmake f --policies=package.precompiled:n,package.install_only
 ```
 
-#### check.auto_ignore_flags
+### check.auto_ignore_flags
 
 xmake默认会对所有`add_cxflags`, `add_ldflags`接口设置的原始flags进行自动检测，如果检测当前编译器和链接器不支持它们，就会自动忽略。
 
@@ -97,7 +95,7 @@ target("test")
 
 然后我们就可以随意设置各种原始flags，xmake不会去自动检测和忽略他们了。
 
-#### check.auto_map_flags
+### check.auto_map_flags
 
 这是xmake的另外一个对flags的智能分析处理，通常像`add_links`, `add_defines`这种xmake内置的api去设置的配置，是具有跨平台特性的，不同编译器平台会自动处理成对应的原始flags。
 
@@ -125,7 +123,7 @@ add_cxflags("-O0")
 set_policy("check.auto_map_flags", false)
 ```
 
-#### build.across_targets_in_parallel
+### build.across_targets_in_parallel
 
 这个策略也是默认开启的，主要用于跨target间执行并行构建，v2.3.3之前的版本，并行构建只能针对单个target内部的所有源文件，
 跨target的编译，必须要要等先前的target完全link成功，才能执行下一个target的编译，这在一定程度上会影响编译速度。
@@ -138,7 +136,7 @@ set_policy("check.auto_map_flags", false)
 set_policy("build.across_targets_in_parallel", false)
 ```
 
-#### build.merge_archive
+### build.merge_archive
 
 如果设置了这个策略，那么使用 `add_deps()` 依赖的目标库不再作为链接存在，而是直接把它们合并到父目标库中去。
 
@@ -171,7 +169,7 @@ target("test")
 libmul.a 静态库会自动合并 libadd.a 和 libsub.a 两个子依赖的静态库。
 
 
-#### build.ccache
+### build.ccache
 
 Xmake 默认是开启内置的编译缓存的，通过设置这个策略，可以显式禁用缓存。
 
@@ -191,7 +189,7 @@ $ xmake f --ccache=n
 $ xmake f --policies=build.ccache:n
 ```
 
-#### build.warning
+### build.warning
 
 默认编译通常不会实时回显警告输出，我们通常需要使用 `xmake -w` 开启，或者通过 `xmake g --build_warning=y` 来全局开启它。
 
@@ -204,7 +202,7 @@ set_warnings("all", "extra")
 
 这个时候，即使我们执行 `xmake` 命令，也能直接回显警告输出。
 
-#### build.optimization.lto
+### build.optimization.lto
 
 2.6.9 版本 xmake 改进了对 LTO 链接时优化的支持，对 gcc/clang/msvc 等不同平台下都进行了适配，只需要启用这个策略，就能对特定 target 开启 LTO。
 
@@ -218,7 +216,7 @@ set_policy("build.optimization.lto")
 $ xmake f --policies=build.optimization.lto
 ```
 
-#### build.cuda.devlink
+### build.cuda.devlink
 
 2.7.7 版本可以通过这个配置，显示开启对特定目标的设备链接。
 
@@ -234,34 +232,34 @@ target("test")
 
 关于这个的详细背景说明，见：[#1976](https://github.com/xmake-io/xmake/issues/1976)
 
-#### preprocessor.linemarkers
+### preprocessor.linemarkers
 
 通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。
 也会提升缓存的处理效率，但是缺点就是会丢失源码行信息，如果遇到编译错误，将无法看到准确的出错代码行。
 
-#### preprocessor.gcc.directives_only
+### preprocessor.gcc.directives_only
 
 这也是用于预处理器的策略，默认开启，这会提升 gcc 下编译缓存预处理的效率，但是如果源文件中包含 `__DATE__`, `__TIME__` 等宏，就会导致缓存出现不一致。
 
 因此，可以根据自身工程代码，按需关闭此策略，确保生成的结果一致。
 
-#### package.requires_lock
+### package.requires_lock
 
 可用于开启 `add_requires()` 引入的依赖包的版本锁定。
 
-#### package.precompiled
+### package.precompiled
 
 可用于禁用 windows 下预编译依赖包的获取。
 
-#### package.fetch_only
+### package.fetch_only
 
 如果开启这个策略，那么所有的依赖包仅仅只会从系统获取，不会从远程下载安装。
 
-#### package.install_only
+### package.install_only
 
 如果开启这个策略，纳闷所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。
 
-#### package.librarydeps.strict_compatibility
+### package.librarydeps.strict_compatibility
 
 默认禁用，如果启用它，那么当前包和它的所有库依赖包之间会保持严格的兼容性，任何依赖包的版本更新，都会强制触发当前包的重新编译安装。
 
@@ -275,7 +273,7 @@ package("foo")
 
 例如，如果 bar 或者 zoo 的版本有更新，那么 foo 也会重新编译安装。
 
-#### package.strict_compatibility
+### package.strict_compatibility
 
 默认禁用，如果启用它，那么当前包和其他所有依赖它的包之间会保持严格的兼容性，这个包的版本更新，都会强制触发其他父包的重新编译安装。
 
@@ -295,7 +293,7 @@ package("zoo")
 
 例如，如果 foo 的版本有更新，那么 bar 和 zoo 都会被强制重新编译安装。
 
-#### package.install_always
+### package.install_always
 
 每次运行 `xmake f -c` 重新配置的时候，总是会重新安装包，这对于本地第三方源码包集成时候比较有用。
 
@@ -329,7 +327,7 @@ target("demo")
     add_packages("foo")
 ```
 
-#### package.download.http_headers
+### package.download.http_headers
 
 设置包下载的 http headers
 

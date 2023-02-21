@@ -90,8 +90,7 @@
   line-height: 1;
 }
 </style>
-    <h3 id="">构建策略</h3>
-<p>xmake 有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。</p>
+    <p>xmake 有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。</p>
 <p>因此，从v2.3.4开始，xmake 提供默认构建策略的修改设置，开放给用户一定程度上的可配置性。</p>
 <p>它主要通过 <a href="https://xmake.io/#/zh-cn/manual/project_target?id=targetset_policy">set_policy</a> 接口来配置。</p>
 <p>我们通常可以用它来配置修改 target，package 以及工程整体的一些行为策略。</p>
@@ -132,7 +131,7 @@
 <p>或者同时配置多个策略值，用逗号分割。</p>
 <pre><code class="lang-bash">$ xmake f --policies=package.precompiled:n,package.install_only
 </code></pre>
-<h4 id="checkauto_ignore_flags">check.auto_ignore_flags</h4>
+<h3 id="checkauto_ignore_flags">check.auto_ignore_flags</h3>
 <p>xmake默认会对所有<code>add_cxflags</code>, <code>add_ldflags</code>接口设置的原始flags进行自动检测，如果检测当前编译器和链接器不支持它们，就会自动忽略。</p>
 <p>这通常是很有用的，像一些可选的编译flags，即使不支持也能正常编译，但是强行设置上去，其他用户在编译的时候，有可能会因为编译器的支持力度不同，出现一定程度的编译失败。</p>
 <p>但，由于自动检测并不保证100%可靠，有时候会有一定程度的误判，所以某些用户并不喜欢这个设定（尤其是针对交叉编译工具链，更容易出现失败）。</p>
@@ -149,7 +148,7 @@ target("test")
     add_ldflags("-static")
 </code></pre>
 <p>然后我们就可以随意设置各种原始flags，xmake不会去自动检测和忽略他们了。</p>
-<h4 id="checkauto_map_flags">check.auto_map_flags</h4>
+<h3 id="checkauto_map_flags">check.auto_map_flags</h3>
 <p>这是xmake的另外一个对flags的智能分析处理，通常像<code>add_links</code>, <code>add_defines</code>这种xmake内置的api去设置的配置，是具有跨平台特性的，不同编译器平台会自动处理成对应的原始flags。</p>
 <p>但是，有些情况，用户还是需要自己通过add_cxflags, add_ldflags设置原始的编译链接flags，这些flags并不能很好的跨编译器</p>
 <p>就拿<code>-O0</code>的编译优化flags来说，虽然有<code>set_optimize</code>来实现跨编译器配置，但如果用户直接设置<code>add_cxflags("-O0")</code>呢？gcc/clang下可以正常处理，但是msvc下就不支持了</p>
@@ -163,13 +162,13 @@ target("test")
 <p>也有部分用户并不喜欢这种自动映射行为，那么我们可以通过下面的设置完全禁用这个默认的行为：</p>
 <pre><code class="lang-bash">set_policy("check.auto_map_flags", false)
 </code></pre>
-<h4 id="buildacross_targets_in_parallel">build.across_targets_in_parallel</h4>
+<h3 id="buildacross_targets_in_parallel">build.across_targets_in_parallel</h3>
 <p>这个策略也是默认开启的，主要用于跨target间执行并行构建，v2.3.3之前的版本，并行构建只能针对单个target内部的所有源文件，<br>跨target的编译，必须要要等先前的target完全link成功，才能执行下一个target的编译，这在一定程度上会影响编译速度。</p>
 <p>然而每个target的源文件是可以完全并行化处理的，最终在一起执行link过程，v2.3.3之后的版本通过这个优化，构建速度提升了30%。</p>
 <p>当然，如果有些特殊的target里面的构建源文件要依赖先前的target（尤其是一些自定义rules的情况，虽然很少遇到），我们也可以通过下面的设置禁用这个优化行为：</p>
 <pre><code class="lang-bash">set_policy("build.across_targets_in_parallel", false)
 </code></pre>
-<h4 id="buildmerge_archive">build.merge_archive</h4>
+<h3 id="buildmerge_archive">build.merge_archive</h3>
 <p>如果设置了这个策略，那么使用 <code>add_deps()</code> 依赖的目标库不再作为链接存在，而是直接把它们合并到父目标库中去。</p>
 <p>例如：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
@@ -195,7 +194,7 @@ target("test")
     add_files("src/main.c")
 </code></pre>
 <p>libmul.a 静态库会自动合并 libadd.a 和 libsub.a 两个子依赖的静态库。</p>
-<h4 id="buildccache">build.ccache</h4>
+<h3 id="buildccache">build.ccache</h3>
 <p>Xmake 默认是开启内置的编译缓存的，通过设置这个策略，可以显式禁用缓存。</p>
 <pre><code class="lang-lua">set_policy("build.ccache", false)
 </code></pre>
@@ -205,21 +204,21 @@ target("test")
 <p>或者</p>
 <pre><code class="lang-bash">$ xmake f --policies=build.ccache:n
 </code></pre>
-<h4 id="buildwarning">build.warning</h4>
+<h3 id="buildwarning">build.warning</h3>
 <p>默认编译通常不会实时回显警告输出，我们通常需要使用 <code>xmake -w</code> 开启，或者通过 <code>xmake g --build_warning=y</code> 来全局开启它。</p>
 <p>现在，我们也可以在 xmake.lua 配置中去默认启用警告回显输出。</p>
 <pre><code class="lang-lua">set_policy("build.warning", true)
 set_warnings("all", "extra")
 </code></pre>
 <p>这个时候，即使我们执行 <code>xmake</code> 命令，也能直接回显警告输出。</p>
-<h4 id="buildoptimizationlto">build.optimization.lto</h4>
+<h3 id="buildoptimizationlto">build.optimization.lto</h3>
 <p>2.6.9 版本 xmake 改进了对 LTO 链接时优化的支持，对 gcc/clang/msvc 等不同平台下都进行了适配，只需要启用这个策略，就能对特定 target 开启 LTO。</p>
 <pre><code class="lang-lua">set_policy("build.optimization.lto")
 </code></pre>
 <p>我们也可以通过命令行选项快速开启。</p>
 <pre><code class="lang-console">$ xmake f --policies=build.optimization.lto
 </code></pre>
-<h4 id="buildcudadevlink">build.cuda.devlink</h4>
+<h3 id="buildcudadevlink">build.cuda.devlink</h3>
 <p>2.7.7 版本可以通过这个配置，显示开启对特定目标的设备链接。</p>
 <p>这通常用于 Cuda 项目的构建，以及非 Cuda binary/shared 依赖 Cuda static 目标的情况，这个时候，Cuda static 目标就需要显示配置这个，开启设备链接。</p>
 <pre><code class="lang-lua">target("test")
@@ -228,20 +227,20 @@ set_warnings("all", "extra")
 </code></pre>
 <p>而默认 Cuda binary/shared 是开启 devlink 的，我们也可以通过策略显示禁用它。</p>
 <p>关于这个的详细背景说明，见：<a href="https://github.com/xmake-io/xmake/issues/1976">#1976</a></p>
-<h4 id="preprocessorlinemarkers">preprocessor.linemarkers</h4>
+<h3 id="preprocessorlinemarkers">preprocessor.linemarkers</h3>
 <p>通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。<br>也会提升缓存的处理效率，但是缺点就是会丢失源码行信息，如果遇到编译错误，将无法看到准确的出错代码行。</p>
-<h4 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h4>
+<h3 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h3>
 <p>这也是用于预处理器的策略，默认开启，这会提升 gcc 下编译缓存预处理的效率，但是如果源文件中包含 <code>__DATE__</code>, <code>__TIME__</code> 等宏，就会导致缓存出现不一致。</p>
 <p>因此，可以根据自身工程代码，按需关闭此策略，确保生成的结果一致。</p>
-<h4 id="packagerequires_lock">package.requires_lock</h4>
+<h3 id="packagerequires_lock">package.requires_lock</h3>
 <p>可用于开启 <code>add_requires()</code> 引入的依赖包的版本锁定。</p>
-<h4 id="packageprecompiled">package.precompiled</h4>
+<h3 id="packageprecompiled">package.precompiled</h3>
 <p>可用于禁用 windows 下预编译依赖包的获取。</p>
-<h4 id="packagefetch_only">package.fetch_only</h4>
+<h3 id="packagefetch_only">package.fetch_only</h3>
 <p>如果开启这个策略，那么所有的依赖包仅仅只会从系统获取，不会从远程下载安装。</p>
-<h4 id="packageinstall_only">package.install_only</h4>
+<h3 id="packageinstall_only">package.install_only</h3>
 <p>如果开启这个策略，纳闷所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。</p>
-<h4 id="packagelibrarydepsstrict_compatibility">package.librarydeps.strict_compatibility</h4>
+<h3 id="packagelibrarydepsstrict_compatibility">package.librarydeps.strict_compatibility</h3>
 <p>默认禁用，如果启用它，那么当前包和它的所有库依赖包之间会保持严格的兼容性，任何依赖包的版本更新，都会强制触发当前包的重新编译安装。</p>
 <p>以确保所有的包都是二进制兼容的，不会因为某个依赖包接口改动，导致和其他已被安装的其他包一起链接时候，发生链接和运行错误。</p>
 <pre><code class="lang-lua">package("foo")
@@ -249,7 +248,7 @@ set_warnings("all", "extra")
     set_policy("package.librarydeps.strict_compatibility", true)
 </code></pre>
 <p>例如，如果 bar 或者 zoo 的版本有更新，那么 foo 也会重新编译安装。</p>
-<h4 id="packagestrict_compatibility">package.strict_compatibility</h4>
+<h3 id="packagestrict_compatibility">package.strict_compatibility</h3>
 <p>默认禁用，如果启用它，那么当前包和其他所有依赖它的包之间会保持严格的兼容性，这个包的版本更新，都会强制触发其他父包的重新编译安装。</p>
 <p>以确保所有的包都是二进制兼容的，不会因为某个依赖包接口改动，导致和其他已被安装的其他包一起链接时候，发生链接和运行错误。</p>
 <pre><code class="lang-lua">package("foo")
@@ -262,7 +261,7 @@ package("zoo")
     add_deps("foo")
 </code></pre>
 <p>例如，如果 foo 的版本有更新，那么 bar 和 zoo 都会被强制重新编译安装。</p>
-<h4 id="packageinstall_always">package.install_always</h4>
+<h3 id="packageinstall_always">package.install_always</h3>
 <p>每次运行 <code>xmake f -c</code> 重新配置的时候，总是会重新安装包，这对于本地第三方源码包集成时候比较有用。</p>
 <p>因为，用户可能随时需要修改第三方源码，然后重新编译集成它们。</p>
 <p>之前只能通过每次修改包版本号，来触发重新编译，但是有了这个策略，就能每次都会触发重编。</p>
@@ -290,7 +289,7 @@ target("demo")
     add_files("src/main.c")
     add_packages("foo")
 </code></pre>
-<h4 id="packagedownloadhttp_headers">package.download.http_headers</h4>
+<h3 id="packagedownloadhttp_headers">package.download.http_headers</h3>
 <p>设置包下载的 http headers</p>
 <p>如果有些包的 url 下载，需要设置特定 http headers，才能通过下载，可以通过这个策略来指定。</p>
 <pre><code class="lang-lua">package("xxx")
