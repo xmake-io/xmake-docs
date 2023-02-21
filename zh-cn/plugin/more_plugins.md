@@ -37,11 +37,101 @@
 
 其他xmake的选项也同样可以在settings.json中完成设置。修改后可通过 >XMake: Configure 命令刷新配置。
 
-### 使用LSP提高开发体验
+### 配置 Intellsence
 
-为了更好的C++语法提示体验，xmake提供了对[Language Server Protocol](https://microsoft.github.io/language-server-protocol/)（简称LSP）的支持，在vscode中，可以使用 `>XMake: UpdateIntellisense` 命令生成.vscode/compile_commands.json（通常在修改xmake.lua时该文件会自动生成）。与此同时，我们可以选择安装支持LSP的语法提示插件，如LLVM推出的[clangd](https://clangd.llvm.org/)，其功能稳定且提示流畅，并通过LSP标准完成对不同编译工具链的支持。
+为了更好的 C++ 语法提示体验，xmake提供了对[Language Server Protocol](https://microsoft.github.io/language-server-protocol/)（简称LSP）的支持。
 
-使用clangd时，可能与上述的C/C++插件的提示功能有冲突，可以在.vscode/settings.json中添加设置将C/C++的语法提示功能关闭:
+在 vscode 中，我们可以通过使用 vscode-cpptools 或者 clangd 来提供 intellsence 支持。
+
+另外，为了支持 intellsence，xmake 提供了 compile_commands.json 的生成支持。
+
+#### 生成 compile_commands
+
+##### 自动触发生成
+
+通常在修改 xmake.lua 后点击保存，xmake-vscode 插件就会触发自动生成 compile_commands.json，默认存储在 .vscode 目录下。
+
+这也是推荐方式，通常装完 xmake-vscode 插件，打开带有 xmake.lua 的工程后，只需要编辑 xmake.lua 保存即可触发，不需要任何其他额外操作。
+
+##### 手动触发生成
+
+当然，如果没看到文件被生成，我们也可以在 vscode 中，可以使用 `>XMake: UpdateIntellisense` 命令手动触发生成 .vscode/compile_commands.json。
+
+##### 配置 xmake.lua 自动生成
+
+或者，我们也可以使用这个规则来自动更新生成 compile_commandss.json
+
+```lua
+add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
+这会使得在每次 build 后，自动更新此文件。
+
+##### 手动执行命令生成
+
+如果上述方式都无效，我们也可以执行命令来生成。
+
+```console
+$ xmake project -k compile_commands .vscode
+```
+
+#### vscode-cpptools
+
+如果我们使用 vscode-cpptools 插件来提供 intellsence 支持，需要先去 vscode 插件市场，搜下 C++，默认第一个插件就是，安装下。
+
+装完后，这个插件提供了 intellsence 和 调试支持。
+
+然后，我们需要配置下 c_cpp_properties.json 文件，关联上我们生成的 `.vscode/compile_commands.json`。
+
+```
+{
+  "env": {
+    "myDefaultIncludePath": ["${workspaceFolder}", "${workspaceFolder}/include"],
+    "myCompilerPath": "/usr/local/bin/gcc-7"
+  },
+  "configurations": [
+    {
+      "name": "Mac",
+      "intelliSenseMode": "clang-x64",
+      "includePath": ["${myDefaultIncludePath}", "/another/path"],
+      "macFrameworkPath": ["/System/Library/Frameworks"],
+      "defines": ["FOO", "BAR=100"],
+      "forcedInclude": ["${workspaceFolder}/include/config.h"],
+      "compilerPath": "/usr/bin/clang",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "compileCommands": "/path/to/compile_commands.json",
+      "browse": {
+        "path": ["${workspaceFolder}"],
+        "limitSymbolsToIncludedHeaders": true,
+        "databaseFilename": ""
+      }
+    }
+  ],
+  "version": 4
+}
+```
+
+也就是上面的 `"compileCommands": "/path/to/compile_commands.json"` 配置项。
+
+关于如果打开这个配置文件，以及更多的配置说明，见：
+
+- https://code.visualstudio.com/docs/cpp/configure-intellisense-crosscompilation
+- https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference
+
+当然，理论上可以做到 xmake-vscode 插件自动关联设置这个文件，但是考虑到用户不一定使用 cpptools，有可能还会使用 clangd。
+
+因此，默认自动配置并不是很好，而且作者暂时也没时间精力去改进它。
+
+#### clangd
+
+与此同时，我们可以选择安装支持 LSP 的语法提示插件，如 LLVM 推出的[clangd](https://clangd.llvm.org/)，其功能稳定且提示流畅，
+并通过 LSP 标准完成对不同编译工具链的支持。
+
+使用 clangd 时，可能与上述的C/C++插件的提示功能有冲突，可以在 .vscode/settings.json 中添加设置将C/C++的语法提示功能关闭:
 
 ```
 {
@@ -56,7 +146,7 @@
 }
 ```
 
-同时由于XMake生成的compile_commands.json在.vscode目录，还需要设置clangd传参使其在正确位置寻找:
+同时由于 XMake 生成的 compile_commands.json 在 .vscode 目录，还需要设置 clangd 传参使其在正确位置寻找:
 
 ```
 {
@@ -67,6 +157,8 @@
 ...
 }
 ```
+
+如果配置后，还是没生效，可以尝试重启 vscode 和 clangd 进程，再验证下。
 
 ## Sublime 插件
 

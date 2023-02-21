@@ -116,9 +116,68 @@
 ...
 }
 </code></pre><p>Other xmake options can also be setted in settings.json. After modification, the configuration can be refreshed through the >XMake: Configure command.</p>
-<h3 id="improvethedevelopmentexperiencewithlsp">Improve the development experience with LSP</h3>
-<p>For a better C++ intellisense experience, xmake provides support for <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a> (LSP for short). In vscode, you can use the >XMake: UpdateIntellisense command to generate .vscode/compile_commands.json (usually when modifying xmake.lua, this file will be generated automatically). At the same time, we can choose to install a intellisense plug-in that supports LSP, such as <a href="https://clangd.llvm.org/">clangd</a> published by LLVM, which is stable and efficient, and support different tool-chain through the LSP standard.</p>
-<p>When using clangd, there may be conflicts with the C/C++ plug-in, you can add settings in .vscode/settings.json: </p>
+<h3 id="configureintellsence">Configure Intellsence</h3>
+<p>For a better C++ syntax prompt experience, xmake provides support for <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a> (LSP for short).</p>
+<p>In vscode, we can provide intellsence support by using vscode-cpptools or clangd.</p>
+<p>In addition, in order to support intellsence, xmake provides compile_commands.json generation support.</p>
+<h4 id="generatecompile_commands">generate compile_commands</h4>
+<h5 id="automatictriggergeneration">Automatic trigger generation</h5>
+<p>Usually after modifying xmake.lua and clicking Save, the xmake-vscode plugin will trigger the automatic generation of compile_commands.json, which is stored in the .vscode directory by default.</p>
+<p>This is also the recommended way. Usually after installing the xmake-vscode plug-in and opening the project with xmake.lua, you only need to edit xmake.lua to save and trigger without any other additional operations.</p>
+<h5 id="manuallytriggergeneration">Manually trigger generation</h5>
+<p>Of course, if we don’t see the file being generated, we can also use the <code>>XMake: UpdateIntellisense</code> command to manually trigger the generation of .vscode/compile_commands.json in vscode.</p>
+<h5 id="configurexmakeluatogenerateautomatically">Configure xmake.lua to generate automatically</h5>
+<p>Alternatively, we can also use this rule to automatically update and generate compile_commandss.json</p>
+<pre><code class="lang-lua">add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+</code></pre>
+<p>This will automatically update this file after each build.</p>
+<h5 id="manualexecutioncommandgeneration">Manual execution command generation</h5>
+<p>If the above methods are invalid, we can also execute the command to generate.</p>
+<pre><code class="lang-console">$ xmake project -k compile_commands .vscode
+</code></pre>
+<h4 id="vscodecpptools">vscode-cpptools</h4>
+<p>If we use the vscode-cpptools plug-in to provide intellsence support, we need to go to the vscode plug-in market first, search for C++, the default first plug-in is to install it.</p>
+<p>When installed, this plugin provides intellsence and debugging support.</p>
+<p>Then, we need to configure the c_cpp_properties.json file and associate it with the <code>.vscode/compile_commands.json</code> we generated.</p>
+<pre><code>{
+   "env": {
+     "myDefaultIncludePath": ["${workspaceFolder}", "${workspaceFolder}/include"],
+     "myCompilerPath": "/usr/local/bin/gcc-7"
+   },
+   "configurations": [
+     {
+       "name": "Mac",
+       "intelliSenseMode": "clang-x64",
+       "includePath": ["${myDefaultIncludePath}", "/another/path"],
+       "macFrameworkPath": ["/System/Library/Frameworks"],
+       "defines": ["FOO", "BAR=100"],
+       "forcedInclude": ["${workspaceFolder}/include/config.h"],
+       "compilerPath": "/usr/bin/clang",
+       "cStandard": "c11",
+       "cppStandard": "c++17",
+       "compileCommands": "/path/to/compile_commands.json",
+       "browse": {
+         "path": ["${workspaceFolder}"],
+         "limitSymbolsToIncludedHeaders": true,
+         "databaseFilename": ""
+       }
+     }
+   ],
+   "version": 4
+}
+</code></pre><p>That is the <code>"compileCommands": "/path/to/compile_commands.json"</code> configuration item above.</p>
+<p>For how to open this configuration file, and more configuration instructions, see:</p>
+<ul>
+<li><a href="https://code.visualstudio.com/docs/cpp/configure-intellisense-crosscompilation">https://code.visualstudio.com/docs/cpp/configure-intellisense-crosscompilation</a></li>
+<li><a href="https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference">https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference</a></li>
+</ul>
+<p>Of course, in theory, the xmake-vscode plugin can automatically associate and set this file, but considering that users do not necessarily use cpptools, they may also use clangd.</p>
+<p>Therefore, the default automatic configuration is not very good, and the author has no time and energy to improve it.</p>
+<h4 id="clangd">clangd</h4>
+<p>When using clangd, there may be conflicts with the C/C++ plug-in, you can add settings in .vscode/settings.json:</p>
 <pre><code>{
   "C_Cpp.codeAnalysis.runAutomatically": false,
   "C_Cpp.intelliSenseEngine": "Disabled",
@@ -129,7 +188,7 @@
   "C_Cpp.errorSquiggles": "Disabled",
 ...
 }
-</code></pre><p>Also, since the compile_commands.json generated by XMake is in the .vscode directory, you need to set the clangd parameter to look for it in the correct location: </p>
+</code></pre><p>Also, since the compile_commands.json generated by XMake is in the .vscode directory, you need to set the clangd parameter to look for it in the correct location:</p>
 <pre><code>{
   "clangd.arguments": [
     "--compile-commands-dir=.vscode",
