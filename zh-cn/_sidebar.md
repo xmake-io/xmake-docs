@@ -17,6 +17,7 @@
   - [工程例子](zh-cn/guide/project_examples.md)
   - [配置说明](zh-cn/guide/configuration.md)
   - [语法描述](zh-cn/guide/syntax_description.md)
+  - [构建策略](zh-cn/guide/build_policies.md)
   - [问答](zh-cn/guide/faq.md)
 
 - 包依赖管理
