@@ -1876,9 +1876,7 @@ target("test")
     set_values("markdown.flags", "xxx", "xxx")
 </code></pre>
 <p>In the above code example, it can be seen that when the target applies the markdown rule, some flag values are set by set_values and provided to the markdown rule for processing.<br>In the rule script, you can get the extended flag value set in the target by <code>target:values("markdown.flags")</code>.</p>
-<p><p class="tip"><br>The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: <a href="#built-in rules">built-in rules</a><br></p>
-
-</p>
+<p>!> The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: <a href="#built-in rules">built-in rules</a></p>
 <p>The following is a list of some built-in extended configuration items currently supported by xmake.</p>
 <table>
 <thead>
@@ -1915,10 +1913,6 @@ target("test")
 <tr>
 <td>xcode.codesign_identity</td>
 <td>Set the code signing identity of the xcode toolchain</td>
-</tr>
-<tr>
-<td>cuda.build.devlink</td>
-<td>Set to enable or disable cuda&#39;s device link</td>
 </tr>
 <tr>
 <td>wdk.env.winver</td>
@@ -2317,6 +2311,15 @@ set_warnings("all", "extra")
 <p>We can also turn it on quickly via the command line option.</p>
 <pre><code class="lang-console">$ xmake f --policies=build.optimization.lto
 </code></pre>
+<h5 id="buildcudadevlink">build.cuda.devlink</h5>
+<p>Version 2.7.7 can be configured to show that device links to specific targets are turned on.</p>
+<p>This is typically used for Cuda project builds, and for non-Cuda binary/shared dependencies on Cuda static targets, where the Cuda static target needs to show this configuration to turn on device linking.</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("static")
+    set_policy("build.cuda.devlink", true)
+</code></pre>
+<p>Whereas by default Cuda binary/shared is devlink enabled, we can also disable it via the policy display.</p>
+<p>For a detailed background on this, see: <a href="https://github.com/xmake-io/xmake/issues/1976">#1976</a></p>
 <h5 id="preprocessorlinemarkers">preprocessor.linemarkers</h5>
 <p>If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.<br>This will greatly reduce the size of the preprocessor file and improve the efficiency of the cache, but the downside is that the source line information will be lost and if you encounter a compilation error, you will not be able to see the exact line of code that went wrong.</p>
 <h5 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h5>
@@ -2379,7 +2382,8 @@ target("demo")
     add_files("src/main.c")
     add_packages("foo")
 </code></pre>
-<h5 id="settinghttpheadersforpackagedownloads">Setting http headers for package downloads</h5>
+<h5 id="packagedownloadhttp_headers">package.download.http_headers</h5>
+<p>Setting http headers for package downloads</p>
 <p>If some packages have url downloads that require specific http headers to be set in order to pass the download, this policy can be specified.</p>
 <pre><code class="lang-lua">package("xxx")
     set_policy("package.download.http_headers", "TEST1: foo", "TEST2: bar")

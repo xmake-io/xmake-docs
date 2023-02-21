@@ -1891,9 +1891,7 @@ target("test")
     set_values("markdown.flags", "xxx", "xxx")
 </code></pre>
 <p>上述代码例子中，可以看出，在target应用markdown规则的时候，通过set_values去设置一些flags值，提供给markdown规则去处理。<br>在规则脚本中可以通过<code>target:values("markdown.flags")</code>获取到target中设置的扩展flags值。</p>
-<p><p class="tip"><br>具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：<a href="#内建规则">内建规则</a><br></p>
-
-</p>
+<p>!> 具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：<a href="#内建规则">内建规则</a></p>
 <p>下面是一些 xmake 目前支持的一些内置的扩展配置项列表。</p>
 <table>
 <thead>
@@ -1930,10 +1928,6 @@ target("test")
 <tr>
 <td>xcode.codesign_identity</td>
 <td>设置 xcode 工具链的代码签名标识</td>
-</tr>
-<tr>
-<td>cuda.build.devlink</td>
-<td>设置启用或禁用 cuda 的设备链接</td>
 </tr>
 <tr>
 <td>wdk.env.winver</td>
@@ -2334,6 +2328,15 @@ set_warnings("all", "extra")
 <p>我们也可以通过命令行选项快速开启。</p>
 <pre><code class="lang-console">$ xmake f --policies=build.optimization.lto
 </code></pre>
+<h5 id="buildcudadevlink">build.cuda.devlink</h5>
+<p>2.7.7 版本可以通过这个配置，显示开启对特定目标的设备链接。</p>
+<p>这通常用于 Cuda 项目的构建，以及非 Cuda binary/shared 依赖 Cuda static 目标的情况，这个时候，Cuda static 目标就需要显示配置这个，开启设备链接。</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("static")
+    set_policy("build.cuda.devlink", true)
+</code></pre>
+<p>而默认 Cuda binary/shared 是开启 devlink 的，我们也可以通过策略显示禁用它。</p>
+<p>关于这个的详细背景说明，见：<a href="https://github.com/xmake-io/xmake/issues/1976">#1976</a></p>
 <h5 id="preprocessorlinemarkers">preprocessor.linemarkers</h5>
 <p>通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。<br>也会提升缓存的处理效率，但是缺点就是会丢失源码行信息，如果遇到编译错误，将无法看到准确的出错代码行。</p>
 <h5 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h5>
@@ -2396,7 +2399,8 @@ target("demo")
     add_files("src/main.c")
     add_packages("foo")
 </code></pre>
-<h5 id="httpheaders">设置包下载的 http headers</h5>
+<h5 id="packagedownloadhttp_headers">package.download.http_headers</h5>
+<p>设置包下载的 http headers</p>
 <p>如果有些包的 url 下载，需要设置特定 http headers，才能通过下载，可以通过这个策略来指定。</p>
 <pre><code class="lang-lua">package("xxx")
     set_policy("package.download.http_headers", "TEST1: foo", "TEST2: bar")

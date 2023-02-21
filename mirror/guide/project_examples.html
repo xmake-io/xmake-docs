@@ -550,7 +550,7 @@ target("cuda_console")
     -- generate PTX code for the virtual architecture to guarantee compatibility
     add_cugencodes("compute_30")
 </code></pre>
-<p>!> Starting with v2.2.7, the default build will enable device-link. (see <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">Separate Compilation and Linking of CUDA C++ Device Code</a>)<br>If you want to disable device-link, you can set it with <code>add_values("cuda.build.devlink", false)</code>.</p>
+<p>!> Starting with v2.2.7, the default build will enable device-link. (see <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">Separate Compilation and Linking of CUDA C++ Device Code</a>)<br>If you want to disable device-link, you can set it with <code>set_policy("build.cuda.devlink", false)</code>.</p>
 <p>!> Device functions in cuda source files should be device-linked once and only once. On targets with kind <code>binary</code> or <code>shared</code> xmake will automatically perform the device-link which takes the static libraries they depend into account, while for <code>static</code> targets by default will not be device-linked. However, if the final <code>binary</code> or <code>shared</code> target do not contain any cuda files, the device-link stage could be missing, resulting in an undefined reference error. In this case the static target should be set <code>add_values("cuda.build.devlink", true)</code> manually.</p>
 <p>xmake will detect Cuda SDK automatically and we can also set the SDK directory (or SDK version for default installations) manually.</p>
 <pre><code class="lang-console">$ xmake f --cuda=/usr/local/cuda-9.1/

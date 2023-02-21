@@ -2173,9 +2173,7 @@ target("test")
 上述代码例子中，可以看出，在target应用markdown规则的时候，通过set_values去设置一些flags值，提供给markdown规则去处理。
 在规则脚本中可以通过`target:values("markdown.flags")`获取到target中设置的扩展flags值。
 
-<p class="tip">
-具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](#内建规则)
-</p>
+!> 具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](#内建规则)
 
 下面是一些 xmake 目前支持的一些内置的扩展配置项列表。
 
@@ -2188,7 +2186,6 @@ target("test")
 | xcode.bundle_identifier | 设置 xcode 工具链的 Bundle Identifier |
 | xcode.mobile_provision  | 设置 xcode 工具链的证书信息           |
 | xcode.codesign_identity | 设置 xcode 工具链的代码签名标识       |
-| cuda.build.devlink      | 设置启用或禁用 cuda 的设备链接        |
 | wdk.env.winver          | 设置 wdk 的 win 支持版本              |
 | wdk.umdf.sdkver         | 设置 wdk 的 umdf sdk 版本             |
 | wdk.kmdf.sdkver         | 设置 wdk 的 kmdf sdk 版本             |
@@ -2815,6 +2812,22 @@ set_policy("build.optimization.lto")
 $ xmake f --policies=build.optimization.lto
 ```
 
+##### build.cuda.devlink
+
+2.7.7 版本可以通过这个配置，显示开启对特定目标的设备链接。
+
+这通常用于 Cuda 项目的构建，以及非 Cuda binary/shared 依赖 Cuda static 目标的情况，这个时候，Cuda static 目标就需要显示配置这个，开启设备链接。
+
+```lua
+target("test")
+    set_kind("static")
+    set_policy("build.cuda.devlink", true)
+```
+
+而默认 Cuda binary/shared 是开启 devlink 的，我们也可以通过策略显示禁用它。
+
+关于这个的详细背景说明，见：[#1976](https://github.com/xmake-io/xmake/issues/1976)
+
 ##### preprocessor.linemarkers
 
 通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。
@@ -2910,7 +2923,9 @@ target("demo")
     add_packages("foo")
 ```
 
-##### 设置包下载的 http headers
+##### package.download.http_headers
+
+设置包下载的 http headers
 
 如果有些包的 url 下载，需要设置特定 http headers，才能通过下载，可以通过这个策略来指定。
 

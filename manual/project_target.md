@@ -2172,9 +2172,7 @@ target("test")
 In the above code example, it can be seen that when the target applies the markdown rule, some flag values are set by set_values and provided to the markdown rule for processing.
 In the rule script, you can get the extended flag value set in the target by `target:values("markdown.flags")`.
 
-<p class="tip">
-The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](#built-in rules)
-</p>
+!> The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](#built-in rules)
 
 The following is a list of some built-in extended configuration items currently supported by xmake.
 
@@ -2187,7 +2185,6 @@ The following is a list of some built-in extended configuration items currently 
 | xcode.bundle_identifier     | Set the Bundle Identifier of the xcode toolchain       |
 | xcode.mobile_provision      | Set the certificate information of the xcode toolchain |
 | xcode.codesign_identity     | Set the code signing identity of the xcode toolchain   |
-| cuda.build.devlink          | Set to enable or disable cuda's device link            |
 | wdk.env.winver              | Set the win support version of wdk                     |
 | wdk.umdf.sdkver             | Set the umdf sdk version of wdk                        |
 | wdk.kmdf.sdkver             | Set the kmdf sdk version of wdk                        |
@@ -2811,6 +2808,22 @@ We can also turn it on quickly via the command line option.
 $ xmake f --policies=build.optimization.lto
 ```
 
+##### build.cuda.devlink
+
+Version 2.7.7 can be configured to show that device links to specific targets are turned on.
+
+This is typically used for Cuda project builds, and for non-Cuda binary/shared dependencies on Cuda static targets, where the Cuda static target needs to show this configuration to turn on device linking.
+
+```lua
+target("test")
+    set_kind("static")
+    set_policy("build.cuda.devlink", true)
+```
+
+Whereas by default Cuda binary/shared is devlink enabled, we can also disable it via the policy display.
+
+For a detailed background on this, see: [#1976](https://github.com/xmake-io/xmake/issues/1976)
+
 ##### preprocessor.linemarkers
 
 If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.
@@ -2908,7 +2921,9 @@ target("demo")
     add_packages("foo")
 ```
 
-##### Setting http headers for package downloads
+##### package.download.http_headers
+
+Setting http headers for package downloads
 
 If some packages have url downloads that require specific http headers to be set in order to pass the download, this policy can be specified.
 
