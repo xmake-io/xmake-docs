@@ -1,3 +1,24 @@
+## v2.7.7
+
+### 新特性
+
+* 添加 Haiku 支持
+* [#3326](https://github.com/xmake-io/xmake/issues/3326): 添加 `xmake check` 去检测工程代码 (clang-tidy) 和 API 参数配置
+* [#3332](https://github.com/xmake-io/xmake/pull/3332): 在包中配置添加自定义 http headers
+
+### 改进
+
+* [#3318](https://github.com/xmake-io/xmake/pull/3318): 改进 dlang 工具链
+* [#2591](https://github.com/xmake-io/xmake/issues/2591): 改进 target 配置来源分析
+* 为 dmd/ldc2 改进 strip/optimization
+* [#3342](https://github.com/xmake-io/xmake/issues/3342): 改进配置构建目录，支持外置目录构建，保持远吗目录更加干净
+* [#3373](https://github.com/xmake-io/xmake/issues/3373): 为 clang-17 改进 std 模块支持
+
+### Bugs 修复
+
+* [#3317](https://github.com/xmake-io/xmake/pull/3317): 针对 Qt 工程，修复 lanuages 设置
+* [#3321](https://github.com/xmake-io/xmake/issues/3321): 修复隔天 configfiles 重新生成导致重编问题
+* [#3296](https://github.com/xmake-io/xmake/issues/3296): 修复 macOS arm64 上构建失败
 
 ## v2.7.6
 

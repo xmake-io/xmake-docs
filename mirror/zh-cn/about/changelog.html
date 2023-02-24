@@ -90,7 +90,28 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v276">v2.7.6</h2>
+    <h2 id="v277">v2.7.7</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li>添加 Haiku 支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3326">#3326</a>: 添加 <code>xmake check</code> 去检测工程代码 (clang-tidy) 和 API 参数配置</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3332">#3332</a>: 在包中配置添加自定义 http headers</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/3318">#3318</a>: 改进 dlang 工具链</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/2591">#2591</a>: 改进 target 配置来源分析</li>
+<li>为 dmd/ldc2 改进 strip/optimization</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3342">#3342</a>: 改进配置构建目录，支持外置目录构建，保持远吗目录更加干净</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3373">#3373</a>: 为 clang-17 改进 std 模块支持</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/3317">#3317</a>: 针对 Qt 工程，修复 lanuages 设置</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3321">#3321</a>: 修复隔天 configfiles 重新生成导致重编问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3296">#3296</a>: 修复 macOS arm64 上构建失败</li>
+</ul>
+<h2 id="v276">v2.7.6</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/pull/3228">#3228</a>: C++ modules 的安装发布，以及从包中导入 C++ modules 支持</li>

@@ -1,3 +1,24 @@
+## v2.7.7
+
+### New features
+
+* Add Haiku support
+* [#3326](https://github.com/xmake-io/xmake/issues/3326): Add `xmake check` to check project code (clang-tidy) and configuration
+* [#3332](https://github.com/xmake-io/xmake/pull/3332): add custom http headers when downloading packages
+
+### Changes
+
+* [#3318](https://github.com/xmake-io/xmake/pull/3318): Improve dlang toolchains
+* [#2591](https://github.com/xmake-io/xmake/issues/2591): Improve target analysis
+* [#3342](https://github.com/xmake-io/xmake/issues/3342): Improve to configure working and build directories
+* [#3373](https://github.com/xmake-io/xmake/issues/3373): Improve std modules support for clang-17
+* Improve to strip/optimization for dmd/ldc2
+
+### Bugs fixed
+
+* [#3317](https://github.com/xmake-io/xmake/pull/3317): Fix languages for qt project.
+* [#3321](https://github.com/xmake-io/xmake/issues/3321): Fix dependfile when generating configiles
+* [#3296](https://github.com/xmake-io/xmake/issues/3296): Fix build error on macOS arm64
 
 ## v2.7.6
 
