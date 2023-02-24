@@ -82,13 +82,6 @@ sudo apt update
 sudo apt install xmake
 ```
 
-### via deb
-
-Download deb package to install it:
-
-1. Download xmake `.deb` install package from [Releases](https://github.com/xmake-io/xmake/releases) 
-2. Run `dpkg -i xmake-xxxx.deb`
-
 ## Fedora/RHEL/OpenSUSE/CentOS
 
 ```bash

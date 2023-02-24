@@ -101,11 +101,6 @@ sudo apt update
 sudo apt install xmake
 ```
 
-### 下载deb包安装
-
-1. 从 [Releases](https://github.com/xmake-io/xmake/releases) 上下载deb安装包
-2. 运行: `dpkg -i xmake-xxxx.deb`
-
 ## Fedora/RHEL/OpenSUSE/CentOS
 
 ```bash
