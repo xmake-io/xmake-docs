@@ -93,13 +93,21 @@
     <h2 id="master">Master</h2>
 <p>!> Note! xmake is not recommended to install under root!</p>
 <h4 id="viacurl">via curl</h4>
-<pre><code class="lang-bash">bash <(curl -fsSL https://xmake.io/shget.text)
+<pre><code class="lang-bash">curl -fsSL https://xmake.io/shget.text | bash
+</code></pre>
+<p>If you want to install a specific version and branch, you can append the version number and branch parameters later</p>
+<pre><code class="lang-bash">curl -fsSL https://xmake.io/shget.text | bash -s dev
+curl -fsSL https://xmake.io/shget.text | bash -s v2.7.7
 </code></pre>
 <h4 id="viawget">via wget</h4>
-<pre><code class="lang-bash">bash <(wget https://xmake.io/shget.text -O -)
+<pre><code class="lang-bash">wget https://xmake.io/shget.text -O - | bash
 </code></pre>
 <h4 id="viapowershell">via powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
+</code></pre>
+<p>If you want to install a specific version and branch, you can append the version number and branch parameters later</p>
+<pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content dev
+Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content v2.7.7
 </code></pre>
 <p>!> If the ps script execution prompt fails, you can try to execute in administrator mode.</p>
 <h2 id="windows">Windows</h2>

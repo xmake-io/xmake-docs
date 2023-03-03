@@ -93,13 +93,21 @@
     <h2 id="master">Master版本</h2>
 <p>!> 切记，xmake不建议在root下安装和使用，所以尽量不要在root下拉取源码编译安装！</p>
 <h4 id="curl">使用curl</h4>
-<pre><code class="lang-bash">bash <(curl -fsSL https://xmake.io/shget.text)
+<pre><code class="lang-bash">curl -fsSL https://xmake.io/shget.text | bash
+</code></pre>
+<p>如果要安装指定版本和分支，后面可以追加版本号和分支参数</p>
+<pre><code class="lang-bash">curl -fsSL https://xmake.io/shget.text | bash -s dev
+curl -fsSL https://xmake.io/shget.text | bash -s v2.7.7
 </code></pre>
 <h4 id="wget">使用wget</h4>
-<pre><code class="lang-bash">bash <(wget https://xmake.io/shget.text -O -)
+<pre><code class="lang-bash">wget https://xmake.io/shget.text -O - | bash
 </code></pre>
 <h4 id="powershell">使用powershell</h4>
 <pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content
+</code></pre>
+<p>如果要安装指定版本和分支，后面可以追加版本号和分支参数</p>
+<pre><code class="lang-powershell">Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content dev
+Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseBasicParsing).Content v2.7.7
 </code></pre>
 <p>!> 如果ps脚本执行提示失败，可以尝试在管理员模式下执行</p>
 <h2 id="windows">Windows</h2>

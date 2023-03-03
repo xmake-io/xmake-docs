@@ -5,19 +5,33 @@
 #### via curl
 
 ```bash
-bash <(curl -fsSL https://xmake.io/shget.text)
+curl -fsSL https://xmake.io/shget.text | bash
+```
+
+If you want to install a specific version and branch, you can append the version number and branch parameters later
+
+```bash
+curl -fsSL https://xmake.io/shget.text | bash -s dev
+curl -fsSL https://xmake.io/shget.text | bash -s v2.7.7
 ```
 
 #### via wget
 
 ```bash
-bash <(wget https://xmake.io/shget.text -O -)
+wget https://xmake.io/shget.text -O - | bash
 ```
 
 #### via powershell
 
 ```powershell
 Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
+```
+
+If you want to install a specific version and branch, you can append the version number and branch parameters later
+
+```powershell
+Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content dev
+Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content v2.7.7
 ```
 
 !> If the ps script execution prompt fails, you can try to execute in administrator mode.

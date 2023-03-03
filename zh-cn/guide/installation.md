@@ -6,19 +6,33 @@
 #### 使用curl
 
 ```bash
-bash <(curl -fsSL https://xmake.io/shget.text)
+curl -fsSL https://xmake.io/shget.text | bash
+```
+
+如果要安装指定版本和分支，后面可以追加版本号和分支参数
+
+```bash
+curl -fsSL https://xmake.io/shget.text | bash -s dev
+curl -fsSL https://xmake.io/shget.text | bash -s v2.7.7
 ```
 
 #### 使用wget
 
 ```bash
-bash <(wget https://xmake.io/shget.text -O -)
+wget https://xmake.io/shget.text -O - | bash
 ```
 
 #### 使用powershell
 
 ```powershell
 Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
+```
+
+如果要安装指定版本和分支，后面可以追加版本号和分支参数
+
+```powershell
+Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content dev
+Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content v2.7.7
 ```
 
 !> 如果ps脚本执行提示失败，可以尝试在管理员模式下执行
