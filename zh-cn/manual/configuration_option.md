@@ -367,7 +367,6 @@ $ xmake f --mode=release
 
 ```lua
 option("pthread")
-    set_default(false)
     add_links("pthread")
     add_linkdirs("/usr/local/lib")
 
@@ -398,7 +397,6 @@ target("test")
 
 ```lua
 option("pthread")
-    set_default(false)
     add_cincludes("pthread.h")
     add_defines("ENABLE_PTHREAD")
 
@@ -424,7 +422,6 @@ target("test")
 
 ```lua
 option("wchar")
-    set_default(false)
     add_ctypes("wchar_t")
     add_defines("HAVE_WCHAR")
 
@@ -500,7 +497,6 @@ end
 
 ```lua
 option("setjmp")
-    set_default(false)
     add_cincludes("setjmp.h")
     add_cfuncs("sigsetjmp", "setjmp")
     add_defines("HAVE_SETJMP")
