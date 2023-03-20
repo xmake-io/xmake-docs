@@ -213,7 +213,7 @@ set_warnings("all", "extra")
 <p>这个时候，即使我们执行 <code>xmake</code> 命令，也能直接回显警告输出。</p>
 <h3 id="buildoptimizationlto">build.optimization.lto</h3>
 <p>2.6.9 版本 xmake 改进了对 LTO 链接时优化的支持，对 gcc/clang/msvc 等不同平台下都进行了适配，只需要启用这个策略，就能对特定 target 开启 LTO。</p>
-<pre><code class="lang-lua">set_policy("build.optimization.lto")
+<pre><code class="lang-lua">set_policy("build.optimization.lto", true)
 </code></pre>
 <p>我们也可以通过命令行选项快速开启。</p>
 <pre><code class="lang-console">$ xmake f --policies=build.optimization.lto

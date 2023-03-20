@@ -381,7 +381,6 @@ option("test4")
 <h4 id="addlinklibrarydetection">Add Link Library Detection</h4>
 <p>If the specified link library is passed, this option will be enabled and the associated target will automatically be added to this link, for example:</p>
 <pre><code class="lang-lua">option("pthread")
-    set_default(false)
     add_links("pthread")
     add_linkdirs("/usr/local/lib")
 
@@ -399,7 +398,6 @@ target("test")
 <h4 id="addcheaderfiledetection">Add c header file detection</h4>
 <p>This option will be enabled if the c header file is passed, for example:</p>
 <pre><code class="lang-lua">option("pthread")
-    set_default(false)
     add_cincludes("pthread.h")
     add_defines("ENABLE_PTHREAD")
 
@@ -415,7 +413,6 @@ target("test")
 <h4 id="addctypedetection">Add c type detection</h4>
 <p>This option will be enabled if the c type is passed, for example:</p>
 <pre><code class="lang-lua">option("wchar")
-    set_default(false)
     add_ctypes("wchar_t")
     add_defines("HAVE_WCHAR")
 
@@ -458,7 +455,6 @@ end
 <h3 id="optionadd_cfuncs">option:add_cfuncs</h3>
 <h4 id="addclibraryfunctiondetection">Add c library function detection</h4>
 <pre><code class="lang-lua">option("setjmp")
-    set_default(false)
     add_cincludes("setjmp.h")
     add_cfuncs("sigsetjmp", "setjmp")
     add_defines("HAVE_SETJMP")

@@ -380,7 +380,6 @@ option("test4")
 <h4 id="">添加链接库检测</h4>
 <p>如果指定的链接库检测通过，此选项将被启用，并且对应关联的target会自动加上此链接，例如：</p>
 <pre><code class="lang-lua">option("pthread")
-    set_default(false)
     add_links("pthread")
     add_linkdirs("/usr/local/lib")
 
@@ -398,7 +397,6 @@ target("test")
 <h4 id="c">添加c头文件检测</h4>
 <p>如果c头文件检测通过，此选项将被启用，例如：</p>
 <pre><code class="lang-lua">option("pthread")
-    set_default(false)
     add_cincludes("pthread.h")
     add_defines("ENABLE_PTHREAD")
 
@@ -414,7 +412,6 @@ target("test")
 <h4 id="c">添加c类型检测</h4>
 <p>如果c类型检测通过，此选项将被启用，例如：</p>
 <pre><code class="lang-lua">option("wchar")
-    set_default(false)
     add_ctypes("wchar_t")
     add_defines("HAVE_WCHAR")
 
@@ -457,7 +454,6 @@ end
 <h3 id="optionadd_cfuncs">option:add_cfuncs</h3>
 <h4 id="c">添加c库函数检测</h4>
 <pre><code class="lang-lua">option("setjmp")
-    set_default(false)
     add_cincludes("setjmp.h")
     add_cfuncs("sigsetjmp", "setjmp")
     add_defines("HAVE_SETJMP")

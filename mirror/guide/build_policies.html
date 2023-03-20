@@ -212,7 +212,7 @@ set_warnings("all", "extra")
 <p>At this time, even if we execute the <code>xmake</code> command, the warning output can be echoed directly.</p>
 <h3 id="buildoptimizationlto">build.optimization.lto</h3>
 <p>xmake v2.6.9 has improved support for link-time optimisation (LTO), with adaptations for different platforms such as gcc/clang/msvc, simply by enabling this policy to enable LTO for specific targets.</p>
-<pre><code class="lang-lua">set_policy("build.optimization.lto")
+<pre><code class="lang-lua">set_policy("build.optimization.lto", true)
 </code></pre>
 <p>We can also turn it on quickly via the command line option.</p>
 <pre><code class="lang-console">$ xmake f --policies=build.optimization.lto
