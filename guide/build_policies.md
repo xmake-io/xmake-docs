@@ -205,7 +205,7 @@ At this time, even if we execute the `xmake` command, the warning output can be 
 xmake v2.6.9 has improved support for link-time optimisation (LTO), with adaptations for different platforms such as gcc/clang/msvc, simply by enabling this policy to enable LTO for specific targets.
 
 ```lua
-set_policy("build.optimization.lto")
+set_policy("build.optimization.lto", true)
 ```
 
 We can also turn it on quickly via the command line option.

@@ -207,7 +207,7 @@ set_warnings("all", "extra")
 2.6.9 版本 xmake 改进了对 LTO 链接时优化的支持，对 gcc/clang/msvc 等不同平台下都进行了适配，只需要启用这个策略，就能对特定 target 开启 LTO。
 
 ```lua
-set_policy("build.optimization.lto")
+set_policy("build.optimization.lto", true)
 ```
 
 我们也可以通过命令行选项快速开启。
