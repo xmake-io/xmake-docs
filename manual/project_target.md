@@ -113,6 +113,8 @@ Set the target type, currently supported types are:
 | object | Only compile a collection of objects |
 | headeronly | header file collection only |
 
+> Note: target:set_kind is NOT available in on_config.
+
 ##### binary
 
 - Executable file type

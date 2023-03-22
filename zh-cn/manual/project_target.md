@@ -112,6 +112,8 @@ target("test2")
 | object | 仅仅编译对象集合 |
 | headeronly | 仅仅头文件集合 |
 
+> 注意：target:set_kind在on_config中不可用。
+
 ##### binary
 
 - 可执行文件类型
