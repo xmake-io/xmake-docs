@@ -247,6 +247,8 @@ target("test")
 
 可用于开启 `add_requires()` 引入的依赖包的版本锁定。
 
+具体看下：[依赖包的锁定和升级](https://xmake.io/#/zh-cn/package/remote_package?id=%e4%be%9d%e8%b5%96%e5%8c%85%e7%9a%84%e9%94%81%e5%ae%9a%e5%92%8c%e5%8d%87%e7%ba%a7)
+
 ### package.precompiled
 
 可用于禁用 windows 下预编译依赖包的获取。

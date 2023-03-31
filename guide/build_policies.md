@@ -245,6 +245,8 @@ Therefore, you can turn this policy off as needed to ensure consistent results, 
 
 Can be used to enable version locking of dependency packages introduced by `add_requires()`.
 
+see [Dependent package lock and upgrade](https://xmake.io/#/package/remote_package?id=dependent-package-lock-and-upgrade)
+
 ### package.precompiled
 
 Can be used to disable fetching of precompiled dependency packages under windows.
