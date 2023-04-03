@@ -552,6 +552,12 @@ CheckOptions:
     value:           &#39;::realloc&#39;
 
 </code></pre>
+<h4 id="automaticallyfixingerrorcodes">Automatically fixing error codes</h4>
+<p>We can use the following command parameters to automatically fix problematic code detected by clang tidy.</p>
+<pre><code class="lang-console">$ xmake check clang.tidy --fix
+$ xmake check clang.tidy --fix_errors
+$ xmake check clang.tidy --fix_notes
+</code></pre>
 <h2 id="macrosrecordingandplayback">Macros Recording and Playback</h2>
 <h3 id="introduction">Introduction</h3>
 <p>We can record and playback our xmake commands and save as macro quickly using this plugin.</p>

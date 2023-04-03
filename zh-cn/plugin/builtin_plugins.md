@@ -662,6 +662,16 @@ CheckOptions:
 
 ```
 
+#### 自动修复错误代码
+
+我们可以使用下面的命令参数，自动修复 clang tidy 检测出来的问题代码。
+
+``` console
+$ xmake check clang.tidy --fix
+$ xmake check clang.tidy --fix_errors
+$ xmake check clang.tidy --fix_notes
+```
+
 ## 宏记录和回放
 
 ### 简介

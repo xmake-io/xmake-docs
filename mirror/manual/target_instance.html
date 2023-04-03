@@ -91,6 +91,7 @@
 }
 </style>
     <p>This page describes the interface for <code>target</code> of functions like <code>on_load()</code>, <code>before_build()</code> or <code>after_install()</code> of the <a href="manual/project_target.md">Project target</a></p>
+<p>!> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr</p>
 <h4 id="targetname">target:name</h4>
 <ul>
 <li>Get the name of the target</li>
@@ -257,7 +258,111 @@ end
 <li>Get the xmake.lua directory where the target definition is located</li>
 </ul>
 <p>This is usually used in custom rules. If you want to get the directory where the current target is actually defined in xmake.lua, it is convenient to reference some resource files. You can use this interface.</p>
-<p>!> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr</p>
+<h4 id="targethas_cxxfuncs">target:has_cxxfuncs</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C++ function</li>
+</ul>
+<p>The usage is similar to <a href="#targethas_cfuncs">target:has_cfuncs</a>, except that it is mainly used to detect C++ functions.</p>
+<p>However, while detecting functions, we can also additionally configure std languages to assist detection.</p>
+<pre><code>target:has_cxxfuncs("foo", {includes = "foo.h", configs = {languages = "cxx17"}})
+</code></pre><h4 id="targethas_ctypes">target:has_ctypes</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C type</li>
+</ul>
+<p>This should be used in <code>on_config</code> like this:</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+     on_config(function(target)
+         if target:has_ctypes("z_stream", {includes = "zlib.h"}) then
+             target:add("defines", "HAVE_ZSTEAM_T")
+         end
+     end)
+</code></pre>
+<h4 id="targethas_cxxtypes">target:has_cxxtypes</h4>
+<ul>
+<li>Check whether the target compilation configuration can get the given C++ type</li>
+</ul>
+<p>The usage is similar to <a href="#targethas_ctypes">target:has_ctypes</a>, except that it is mainly used to detect the type of C++.</p>
+<h4 id="targethas_cincludes">target:has_cincludes</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C header file</li>
+</ul>
+<p>This should be used in <code>on_config</code>, for example, it can be used to determine whether the current target can obtain the zlib.h header file of the zlib dependency package, and then automatically define <code>HAVE_INFLATE</code>:</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+     on_config(function(target)
+         if target:has_cincludes("zlib.h") then
+             target:add("defines", "HAVE_ZLIB_H")
+         end
+     end)
+</code></pre>
+<h4 id="targethas_cxxincludes">target:has_cxxincludes</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C++ header file</li>
+</ul>
+<p>The usage is similar to <a href="#targethas_cincludes">target:has_cincludes</a>, except that it is mainly used to detect C++ header files.</p>
+<h4 id="targetcheck_csnippets">target:check_csnippets</h4>
+<ul>
+<li>Detect whether a given piece of C code can be compiled and linked</li>
+</ul>
+<p>The usage is similar to <a href="#targetcheck_cxxsnippets">target:check_cxxsnippets</a>, except that it is mainly used to detect C code snippets.</p>
+<h4 id="targetcheck_cxxsnippets">target:check_cxxsnippets</h4>
+<ul>
+<li>Detect if a given piece of C++ code can be compiled and linked</li>
+</ul>
+<p>This should be used in <code>on_config</code> like this:</p>
+<pre><code class="lang-lua">add_requires("libtins")
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     add_packages("libtins")
+     on_config(function(target)
+         local has_snippet = target:check_cxxsnippets({test = [[
+             #include <string>
+             using namespace Tins;
+             void test() {
+                 std::string name = NetworkInterface::default_interface().name();
+                 printf("%s\n", name.c_str());
+             }
+         ]]}, {configs = {languages = "c++11"}, includes = {"tins/tins.h"}}))
+         if has_snippet then
+             target:add("defines", "HAS_XXX")
+         end
+     end)
+</code></pre>
+<p>By default, it only checks whether the compilation link is passed. If you want to try the runtime check, you can set <code>tryrun = true</code>.</p>
+<pre><code class="lang-lua">target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         local has_int_4 = target:check_cxxsnippets({test = [[
+             return (sizeof(int) == 4)? 0 : -1;
+         ]]}, {configs = {languages = "c++11"}, tryrun = true}))
+         if has_int_4 then
+             target:add("defines", "HAS_INT4")
+         end
+     end)
+</code></pre>
+<p>We can also continue to capture the running output of the detection by setting <code>output = true</code>, and add a custom <code>main</code> entry to achieve a complete test code, not just a code snippet.</p>
+<pre><code class="lang-lua">target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         local int_size = target:check_cxxsnippets({test = [[
+             #include <stdio.h>
+             int main(int argc, char** argv) {
+                 printf("%d", sizeof(int)); return 0;
+                 return 0;
+             }
+         ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
+     end)
+</code></pre>
 </article>
 </body>
 </html>

@@ -559,6 +559,12 @@ CheckOptions:
     value:           &#39;::realloc&#39;
 
 </code></pre>
+<h4 id="">自动修复错误代码</h4>
+<p>我们可以使用下面的命令参数，自动修复 clang tidy 检测出来的问题代码。</p>
+<pre><code class="lang-console">$ xmake check clang.tidy --fix
+$ xmake check clang.tidy --fix_errors
+$ xmake check clang.tidy --fix_notes
+</code></pre>
 <h2 id="">宏记录和回放</h2>
 <h3 id="">简介</h3>
 <p>我们可以通过这个插件，快速记录和回放我们平常频繁使用到的一些xmake操作，来简化我们日常的开发工作。</p>

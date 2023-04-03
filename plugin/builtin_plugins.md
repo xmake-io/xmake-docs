@@ -647,6 +647,16 @@ CheckOptions:
 
 ```
 
+#### Automatically fixing error codes
+
+We can use the following command parameters to automatically fix problematic code detected by clang tidy.
+
+``` console
+$ xmake check clang.tidy --fix
+$ xmake check clang.tidy --fix_errors
+$ xmake check clang.tidy --fix_notes
+```
+
 ## Macros Recording and Playback
 
 ### Introduction

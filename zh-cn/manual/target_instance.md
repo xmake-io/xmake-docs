@@ -1,6 +1,8 @@
 
 此页面描述了 [工程目标](zh-cn/manual/project_target.md) 的 `on_load()`、`before_build()` 或 `after_install()` 等函数的 `target` 接口
 
+!> 此处文档还不完整，你也可以通过赞助或者提 pr 来加速文档的更新
+
 #### target:name
 
 - 获取目标的名字
@@ -212,5 +214,156 @@ end
 
 这通常在自定义规则中使用的比较多，想获取当前 target 实际被定义在哪个 xmake.lua 所在目录下，方便引用一些资源文件，可以用这个接口。
 
+#### target:has_cfuncs
 
-!> 此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新
+- 检测目标编译配置能否获取给定的 C 函数
+
+这应该在 `on_config` 中使用，比如可以用它来判断当前目标能否获取到 zlib 依赖包的一些函数接口，然后自动定义 `HAVE_INFLATE`：
+
+```lua
+add_requires("zlib")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+    on_config(function (target)
+        if target:has_cfuncs("inflate", {includes = "zlib.h"}) then
+            target:add("defines", "HAVE_INFLATE")
+        end
+    end)
+```
+
+尽管 option 也提供了类似的检测功能，但 option 的检测使用的是全局的平台工具链，它无法附带上 target 相关的一些编译配置，
+也无法根据 target 设置不同编译工具链来适配检测，并且无法检测包里面的一些接口。
+
+如果我们仅仅是想粗粒度的检测函数接口，并且 target 没有额外设置不同的工具链，那么 option 提供的检测功能已经足够使用了。
+
+如果想要更细粒度控制检测，可以使用 target 实例接口提供的检测特性。
+
+#### target:has_cxxfuncs
+
+- 检测目标编译配置能否获取给定的 C++ 函数
+
+用法跟 [target:has_cfuncs](#targethas_cfuncs) 类似，只是这里主要用于检测 C++ 的函数。
+
+不过，在检测函数的同时，我们还可以额外配置 std languages，来辅助检测。
+
+```
+target:has_cxxfuncs("foo", {includes = "foo.h", configs = {languages = "cxx17"}})
+```
+
+#### target:has_ctypes
+
+- 检测目标编译配置能否获取给定的 C 类型
+
+这应该在 `on_config` 中使用，如下所示：
+
+```lua
+add_requires("zlib")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+    on_config(function (target)
+        if target:has_ctypes("z_stream", {includes = "zlib.h"}) then
+            target:add("defines", "HAVE_ZSTEAM_T")
+        end
+    end)
+```
+
+#### target:has_cxxtypes
+
+- 检测目标编译配置能否获取给定的 C++ 类型
+
+用法跟 [target:has_ctypes](#targethas_ctypes) 类似，只是这里主要用于检测 C++ 的类型。
+
+#### target:has_cincludes
+
+- 检测目标编译配置能否获取给定的 C 头文件
+
+这应该在 `on_config` 中使用，比如可以用它来判断当前目标能否获取到 zlib 依赖包的 zlib.h 头文件，然后自动定义 `HAVE_INFLATE`：
+
+```lua
+add_requires("zlib")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+    on_config(function (target)
+        if target:has_cincludes("zlib.h") then
+            target:add("defines", "HAVE_ZLIB_H")
+        end
+    end)
+```
+
+#### target:has_cxxincludes
+
+- 检测目标编译配置能否获取给定的 C++ 头文件
+
+用法跟 [target:has_cincludes](#targethas_cincludes) 类似，只是这里主要用于检测 C++ 的头文件。
+
+#### target:check_csnippets
+
+- 检测是否可以编译和链接给定的 C 代码片段
+
+用法跟 [target:check_cxxsnippets](#targetcheck_cxxsnippets) 类似，只是这里主要用于检测 C 的代码片段。
+
+#### target:check_cxxsnippets
+
+- 检测是否可以编译和链接给定的 C++ 代码片段
+
+这应该在 `on_config` 中使用，如下所示：
+
+```lua
+add_requires("libtins")
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("libtins")
+    on_config(function (target)
+        local has_snippet = target:check_cxxsnippets({test = [[
+            #include <string>
+            using namespace Tins;
+            void test() {
+                std::string name = NetworkInterface::default_interface().name();
+                printf("%s\n", name.c_str());
+            }
+        ]]}, {configs = {languages = "c++11"}, includes = {"tins/tins.h"}}))
+        if has_snippet then
+            target:add("defines", "HAS_XXX")
+        end
+    end)
+```
+
+默认仅仅检测编译链接是否通过，如果想要尝试运行时检测，可以再设置 `tryrun = true`。
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        local has_int_4 = target:check_cxxsnippets({test = [[
+            return (sizeof(int) == 4)? 0 : -1;
+        ]]}, {configs = {languages = "c++11"}, tryrun = true}))
+        if has_int_4 then
+            target:add("defines", "HAS_INT4")
+        end
+    end)
+```
+
+我们也可以继续通过设置 `output = true` 来捕获检测的运行输出，并且加上自定义的 `main` 入口，实现完整的测试代码，而不仅仅是代码片段。
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        local int_size = target:check_cxxsnippets({test = [[
+            #include <stdio.h>
+            int main(int argc, char** argv) {
+                printf("%d", sizeof(int)); return 0;
+                return 0;
+            }
+        ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
+    end)
+```

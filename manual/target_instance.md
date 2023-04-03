@@ -1,6 +1,8 @@
 
 This page describes the interface for `target` of functions like `on_load()`, `before_build()` or `after_install()` of the [Project target](manual/project_target.md)
 
+!> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr
+
 #### target:name
 
 - Get the name of the target
@@ -210,4 +212,130 @@ end
 
 This is usually used in custom rules. If you want to get the directory where the current target is actually defined in xmake.lua, it is convenient to reference some resource files. You can use this interface.
 
-!> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr
+#### target:has_cxxfuncs
+
+- Check whether the target compilation configuration can obtain the given C++ function
+
+The usage is similar to [target:has_cfuncs](#targethas_cfuncs), except that it is mainly used to detect C++ functions.
+
+However, while detecting functions, we can also additionally configure std languages to assist detection.
+
+```
+target:has_cxxfuncs("foo", {includes = "foo.h", configs = {languages = "cxx17"}})
+```
+
+#### target:has_ctypes
+
+- Check whether the target compilation configuration can obtain the given C type
+
+This should be used in `on_config` like this:
+
+```lua
+add_requires("zlib")
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+     on_config(function(target)
+         if target:has_ctypes("z_stream", {includes = "zlib.h"}) then
+             target:add("defines", "HAVE_ZSTEAM_T")
+         end
+     end)
+```
+
+#### target:has_cxxtypes
+
+- Check whether the target compilation configuration can get the given C++ type
+
+The usage is similar to [target:has_ctypes](#targethas_ctypes), except that it is mainly used to detect the type of C++.
+
+#### target:has_cincludes
+
+- Check whether the target compilation configuration can obtain the given C header file
+
+This should be used in `on_config`, for example, it can be used to determine whether the current target can obtain the zlib.h header file of the zlib dependency package, and then automatically define `HAVE_INFLATE`:
+
+```lua
+add_requires("zlib")
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+     on_config(function(target)
+         if target:has_cincludes("zlib.h") then
+             target:add("defines", "HAVE_ZLIB_H")
+         end
+     end)
+```
+
+#### target:has_cxxincludes
+
+- Check whether the target compilation configuration can obtain the given C++ header file
+
+The usage is similar to [target:has_cincludes](#targethas_cincludes), except that it is mainly used to detect C++ header files.
+
+#### target:check_csnippets
+
+- Detect whether a given piece of C code can be compiled and linked
+
+The usage is similar to [target:check_cxxsnippets](#targetcheck_cxxsnippets), except that it is mainly used to detect C code snippets.
+
+#### target:check_cxxsnippets
+
+- Detect if a given piece of C++ code can be compiled and linked
+
+This should be used in `on_config` like this:
+
+```lua
+add_requires("libtins")
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     add_packages("libtins")
+     on_config(function(target)
+         local has_snippet = target:check_cxxsnippets({test = [[
+             #include <string>
+             using namespace Tins;
+             void test() {
+                 std::string name = NetworkInterface::default_interface().name();
+                 printf("%s\n", name.c_str());
+             }
+         ]]}, {configs = {languages = "c++11"}, includes = {"tins/tins.h"}}))
+         if has_snippet then
+             target:add("defines", "HAS_XXX")
+         end
+     end)
+```
+
+By default, it only checks whether the compilation link is passed. If you want to try the runtime check, you can set `tryrun = true`.
+
+```lua
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         local has_int_4 = target:check_cxxsnippets({test = [[
+             return (sizeof(int) == 4)? 0 : -1;
+         ]]}, {configs = {languages = "c++11"}, tryrun = true}))
+         if has_int_4 then
+             target:add("defines", "HAS_INT4")
+         end
+     end)
+```
+
+We can also continue to capture the running output of the detection by setting `output = true`, and add a custom `main` entry to achieve a complete test code, not just a code snippet.
+
+```lua
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         local int_size = target:check_cxxsnippets({test = [[
+             #include <stdio.h>
+             int main(int argc, char** argv) {
+                 printf("%d", sizeof(int)); return 0;
+                 return 0;
+             }
+         ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
+     end)
+```

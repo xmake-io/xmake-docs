@@ -91,6 +91,7 @@
 }
 </style>
     <p>此页面描述了 <a href="zh-cn/manual/project_target.md">工程目标</a> 的 <code>on_load()</code>、<code>before_build()</code> 或 <code>after_install()</code> 等函数的 <code>target</code> 接口</p>
+<p>!> 此处文档还不完整，你也可以通过赞助或者提 pr 来加速文档的更新</p>
 <h4 id="targetname">target:name</h4>
 <ul>
 <li>获取目标的名字</li>
@@ -258,7 +259,130 @@ end
 <li>获取目标定义所在的 xmake.lua 目录</li>
 </ul>
 <p>这通常在自定义规则中使用的比较多，想获取当前 target 实际被定义在哪个 xmake.lua 所在目录下，方便引用一些资源文件，可以用这个接口。</p>
-<p>!> 此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新</p>
+<h4 id="targethas_cfuncs">target:has_cfuncs</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C 函数</li>
+</ul>
+<p>这应该在 <code>on_config</code> 中使用，比如可以用它来判断当前目标能否获取到 zlib 依赖包的一些函数接口，然后自动定义 <code>HAVE_INFLATE</code>：</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+    on_config(function (target)
+        if target:has_cfuncs("inflate", {includes = "zlib.h"}) then
+            target:add("defines", "HAVE_INFLATE")
+        end
+    end)
+</code></pre>
+<p>尽管 option 也提供了类似的检测功能，但 option 的检测使用的是全局的平台工具链，它无法附带上 target 相关的一些编译配置，<br>也无法根据 target 设置不同编译工具链来适配检测，并且无法检测包里面的一些接口。</p>
+<p>如果我们仅仅是想粗粒度的检测函数接口，并且 target 没有额外设置不同的工具链，那么 option 提供的检测功能已经足够使用了。</p>
+<p>如果想要更细粒度控制检测，可以使用 target 实例接口提供的检测特性。</p>
+<h4 id="targethas_cxxfuncs">target:has_cxxfuncs</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C++ 函数</li>
+</ul>
+<p>用法跟 <a href="#targethas_cfuncs">target:has_cfuncs</a> 类似，只是这里主要用于检测 C++ 的函数。</p>
+<p>不过，在检测函数的同时，我们还可以额外配置 std languages，来辅助检测。</p>
+<pre><code>target:has_cxxfuncs("foo", {includes = "foo.h", configs = {languages = "cxx17"}})
+</code></pre><h4 id="targethas_ctypes">target:has_ctypes</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C 类型</li>
+</ul>
+<p>这应该在 <code>on_config</code> 中使用，如下所示：</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+    on_config(function (target)
+        if target:has_ctypes("z_stream", {includes = "zlib.h"}) then
+            target:add("defines", "HAVE_ZSTEAM_T")
+        end
+    end)
+</code></pre>
+<h4 id="targethas_cxxtypes">target:has_cxxtypes</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C++ 类型</li>
+</ul>
+<p>用法跟 <a href="#targethas_ctypes">target:has_ctypes</a> 类似，只是这里主要用于检测 C++ 的类型。</p>
+<h4 id="targethas_cincludes">target:has_cincludes</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C 头文件</li>
+</ul>
+<p>这应该在 <code>on_config</code> 中使用，比如可以用它来判断当前目标能否获取到 zlib 依赖包的 zlib.h 头文件，然后自动定义 <code>HAVE_INFLATE</code>：</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+    on_config(function (target)
+        if target:has_cincludes("zlib.h") then
+            target:add("defines", "HAVE_ZLIB_H")
+        end
+    end)
+</code></pre>
+<h4 id="targethas_cxxincludes">target:has_cxxincludes</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C++ 头文件</li>
+</ul>
+<p>用法跟 <a href="#targethas_cincludes">target:has_cincludes</a> 类似，只是这里主要用于检测 C++ 的头文件。</p>
+<h4 id="targetcheck_csnippets">target:check_csnippets</h4>
+<ul>
+<li>检测是否可以编译和链接给定的 C 代码片段</li>
+</ul>
+<p>用法跟 <a href="#targetcheck_cxxsnippets">target:check_cxxsnippets</a> 类似，只是这里主要用于检测 C 的代码片段。</p>
+<h4 id="targetcheck_cxxsnippets">target:check_cxxsnippets</h4>
+<ul>
+<li>检测是否可以编译和链接给定的 C++ 代码片段</li>
+</ul>
+<p>这应该在 <code>on_config</code> 中使用，如下所示：</p>
+<pre><code class="lang-lua">add_requires("libtins")
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("libtins")
+    on_config(function (target)
+        local has_snippet = target:check_cxxsnippets({test = [[
+            #include <string>
+            using namespace Tins;
+            void test() {
+                std::string name = NetworkInterface::default_interface().name();
+                printf("%s\n", name.c_str());
+            }
+        ]]}, {configs = {languages = "c++11"}, includes = {"tins/tins.h"}}))
+        if has_snippet then
+            target:add("defines", "HAS_XXX")
+        end
+    end)
+</code></pre>
+<p>默认仅仅检测编译链接是否通过，如果想要尝试运行时检测，可以再设置 <code>tryrun = true</code>。</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        local has_int_4 = target:check_cxxsnippets({test = [[
+            return (sizeof(int) == 4)? 0 : -1;
+        ]]}, {configs = {languages = "c++11"}, tryrun = true}))
+        if has_int_4 then
+            target:add("defines", "HAS_INT4")
+        end
+    end)
+</code></pre>
+<p>我们也可以继续通过设置 <code>output = true</code> 来捕获检测的运行输出，并且加上自定义的 <code>main</code> 入口，实现完整的测试代码，而不仅仅是代码片段。</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        local int_size = target:check_cxxsnippets({test = [[
+            #include <stdio.h>
+            int main(int argc, char** argv) {
+                printf("%d", sizeof(int)); return 0;
+                return 0;
+            }
+        ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
+    end)
+</code></pre>
 </article>
 </body>
 </html>
