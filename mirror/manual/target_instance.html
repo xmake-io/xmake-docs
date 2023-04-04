@@ -286,6 +286,24 @@ target("test")
 <li>Check whether the target compilation configuration can get the given C++ type</li>
 </ul>
 <p>The usage is similar to <a href="#targethas_ctypes">target:has_ctypes</a>, except that it is mainly used to detect the type of C++.</p>
+<h4 id="targethas_cflags">target:has_cflags</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C compilation flags</li>
+</ul>
+<pre><code class="lang-lua">target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         if target:has_cxxflags("-fPIC") then
+             target:add("defines", "HAS_PIC")
+         end
+     end)
+</code></pre>
+<h4 id="targethas_cxxflags">target:has_cxxflags</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C++ compilation flags</li>
+</ul>
+<p>The usage is similar to <a href="#targethas_cflags">target:has_cflags</a>, except that it is mainly used to detect the compilation flags of C++.</p>
 <h4 id="targethas_cincludes">target:has_cincludes</h4>
 <ul>
 <li>Check whether the target compilation configuration can obtain the given C header file</li>
@@ -363,6 +381,22 @@ target("test")
          ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
      end)
 </code></pre>
-</article>
+<h4 id="targethas_features">target:has_features</h4>
+<ul>
+<li>Detect if specified C/C++ compiler feature</li>
+</ul>
+<p>It is faster than using <code>check_cxxsnippets</code>, because it only performs preprocessing once to check all compiler features, instead of calling the compiler every time to try to compile.</p>
+<pre><code>target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         if target:has_features("c_static_assert") then
+             target:add("defines", "HAS_STATIC_ASSERT")
+         end
+         if target:has_features("cxx_constexpr") then
+             target:add("defines", "HAS_CXX_CONSTEXPR")
+         end
+     end)
+</code></pre></article>
 </body>
 </html>

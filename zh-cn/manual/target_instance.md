@@ -277,6 +277,28 @@ target("test")
 
 用法跟 [target:has_ctypes](#targethas_ctypes) 类似，只是这里主要用于检测 C++ 的类型。
 
+#### target:has_cflags
+
+- 检测目标编译配置能否获取给定的 C 编译 flags
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        if target:has_cxxflags("-fPIC") then
+            target:add("defines", "HAS_PIC")
+        end
+    end)
+```
+
+#### target:has_cxxflags
+
+- 检测目标编译配置能否获取给定的 C++ 编译 flags
+
+用法跟 [target:has_cflags](#targethas_cflags) 类似，只是这里主要用于检测 C++ 的编译 flags。
+
+
 #### target:has_cincludes
 
 - 检测目标编译配置能否获取给定的 C 头文件
@@ -365,5 +387,25 @@ target("test")
                 return 0;
             }
         ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
+    end)
+```
+
+#### target:has_features
+
+- 检测是否指定的 C/C++ 编译特性
+
+它相比使用 `check_cxxsnippets` 来检测，会更加快一些，因为它仅仅执行一次预处理就能检测所有的编译器特性，而不是每次都去调用编译器尝试编译。
+
+```
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        if target:has_features("c_static_assert") then
+            target:add("defines", "HAS_STATIC_ASSERT")
+        end
+        if target:has_features("cxx_constexpr") then
+            target:add("defines", "HAS_CXX_CONSTEXPR")
+        end
     end)
 ```

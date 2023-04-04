@@ -249,6 +249,27 @@ target("test")
 
 The usage is similar to [target:has_ctypes](#targethas_ctypes), except that it is mainly used to detect the type of C++.
 
+#### target:has_cflags
+
+- Check whether the target compilation configuration can obtain the given C compilation flags
+
+```lua
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         if target:has_cxxflags("-fPIC") then
+             target:add("defines", "HAS_PIC")
+         end
+     end)
+```
+
+#### target:has_cxxflags
+
+- Check whether the target compilation configuration can obtain the given C++ compilation flags
+
+The usage is similar to [target:has_cflags](#targethas_cflags), except that it is mainly used to detect the compilation flags of C++.
+
 #### target:has_cincludes
 
 - Check whether the target compilation configuration can obtain the given C header file
@@ -337,5 +358,25 @@ target("test")
                  return 0;
              }
          ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
+     end)
+```
+
+#### target:has_features
+
+- Detect if specified C/C++ compiler feature
+
+It is faster than using `check_cxxsnippets`, because it only performs preprocessing once to check all compiler features, instead of calling the compiler every time to try to compile.
+
+```
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         if target:has_features("c_static_assert") then
+             target:add("defines", "HAS_STATIC_ASSERT")
+         end
+         if target:has_features("cxx_constexpr") then
+             target:add("defines", "HAS_CXX_CONSTEXPR")
+         end
      end)
 ```
