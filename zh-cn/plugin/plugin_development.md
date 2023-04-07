@@ -55,16 +55,18 @@ task("hello")
 这个插件的文件结构如下：
 
 ```
-hello
- - xmake.lua
-
+plugins
+|-- hello
+|  |-- xmake.lua
+|...
+| plugins目录下无需xmake.lua
 ``` 
 
 现在一个最简单的插件写完了，那怎么让它被xmake检测到呢，有三种方式：
 
 1. 把 hello 这个文件夹放置在 xmake的插件安装目录 `xmake/plugins`，这个里面都是些内建的插件
 2. 把 hello 文件夹放置在 `~/.xmake/plugins` 用户全局目录，这样对当前xmake 全局生效
-3. 把 hello 文件夹放置在任意地方，通过在工程描述文件xmake.lua中调用`add_plugindirs("./hello")` 添加当前的工程的插件搜索目录，这样只对当前工程生效
+3. 把 hello 文件夹放置在当前工程的`./plugins`目录下，通过在工程描述文件xmake.lua中调用`add_plugindirs("plugins")` 添加当前的工程的插件搜索目录，这样只对当前工程生效
 
 ## 运行插件
 
