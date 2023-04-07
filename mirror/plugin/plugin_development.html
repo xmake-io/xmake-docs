@@ -134,14 +134,16 @@ task("hello")
             }
 </code></pre>
 <p>The file tree of this plugin:</p>
-<pre><code>hello
- - xmake.lua
-
+<pre><code>plugins
+|-- hello
+|  |-- xmake.lua
+|...
+| notice no xmake.lua in plugins directory
 </code></pre><p>Now one of the most simple plugin finished, how was it to be xmake detected it, there are three ways:</p>
 <ol>
 <li>Put this plugin directory into xmake/plugins the source codes as the builtin plugin.</li>
 <li>Put this plugin directory into ~/.xmake/plugins as the global user plugin.</li>
-<li>Put this plugin directory to anywhere and call <code>add_plugindirs("./hello")</code> in xmake.lua as the local project plugin.</li>
+<li>Put this plugin directory (hello) to the <code>./plugins</code> directory of the current project and call <code>add_plugindirs("plugins")</code> in xmake.lua as the local project plugin.</li>
 </ol>
 <h2 id="runplugin">Run Plugin</h2>
 <p>Next we run this plugin</p>
