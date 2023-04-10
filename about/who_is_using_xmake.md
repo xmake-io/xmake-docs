@@ -33,3 +33,4 @@ so that the xmake project and the community will grow stronger.
 | [XmacsLabs](https://github.com/XmacsLabs) | [mogan](https://github.com/XmacsLabs/mogan) | autotool和CMake开发环境不易配置，vcpkg等CMake包管理器存在不少兼容性问题，极度影响开发体验，导致墨者实验室失去了一大批潜在开发者。xmake为老旧软件的维护提供了紧凑易用的工具，有效简化了添加新类库的流程，减少了无谓的工作量。
 | [Dozingfiretruck](https://github.com/Dozingfiretruck) | C语言实现的NES模拟器 GitHub地址: https://github.com/Dozingfiretruck     Gitee地址: https://gitee.com/Dozingfiretruck/nes            | xmake 可以使你极其方便的部署C/C++构建，节省大量时间从而将精力放在代码编写上而非项目构建上 |
 | [WSSDude](https://github.com/WSSDude) | [Hitman Audio Tool](https://github.com/WSSDude/HitmanAudioTool) | Very easy to use build system with what I believe is currently the best package management integrated within. Definitely plan to include it in my other future projects (both personal and public). Using it since 2020 and counting.
+
