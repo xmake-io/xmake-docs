@@ -18,7 +18,7 @@ Plugins:
 * macro: 这个很实用，宏脚本插件，可以手动录制多条xmake命令并且回放，也可以通过脚本实现一些复杂的宏脚本，这个我们后续会更加详细的介绍
 * doxygen：一键生成doxygen文档的插件
 * hello: 插件demo，仅仅显示一句话：'hello xmake!'
-* project： 生成工程文件的插件，目前仅支持(makefile)，后续还会支持(vs,xcode等工程)的生成
+* project： 生成工程文件的插件，目前已经支持make, cmake, ninja, xcode (需要 cmake) 和 vs 的工程文件以及 compile_commands.json 和 compile_flags.txt 文件的生成
 
 ## 快速开始
 
