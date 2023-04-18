@@ -17,7 +17,7 @@ Plugins:
 * macro: Record and playback some xmake commands repeatably.
 * doxygen：Generate doxygen document automatically.
 * hello:  The demo plugin and only print: 'hello xmake!'
-* project：Generate project file for IDE, only generate makefile now and will generate vs, xcode project in the future
+* project：Generate project file for IDE, and now it can generate make, cmake, vs, xcode (need cmake), ninja project file and compile_commands.json and compile_flags.txt
 
 ## Quick Start
 
