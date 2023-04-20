@@ -936,7 +936,8 @@ target("example")
     add_files("src/example.cpp")
     add_packages("python")
 </code></pre>
-<h3 id="c20module">C++20 Module</h3>
+<h2 id="c20module">C++20 Module</h2>
+<h3 id="quickstart">Quick Start</h3>
 <p>xmake uses <code>.mpp</code> as the default module extension, but also supports <code>.ixx</code>, <code>.cppm</code>, <code>.mxx</code> and other extensions.</p>
 <p>At present, xmake has fully supported the C++20 Modules construction support of gcc11/clang/msvc,<br>and can automatically analyze the dependencies between modules to maximize parallel compilation.</p>
 <pre><code class="lang-lua">set_languages("c++20")
@@ -945,6 +946,7 @@ target("class")
     add_files("src/*.cpp", "src/*.mpp")
 </code></pre>
 <p>For more examples, see: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules">C++ Modules</a></p>
+<h3 id="cpponlyproject">Cpp-only project</h3>
 <p>The v2.7.1 release has refactored and upgraded the C++20 module implementation to include support for Headerunits,<br>which allows us to introduce Stl and user header modules into the module.</p>
 <p>The relevant patch is available at: <a href="https://github.com/xmake-io/xmake/pull/2641">#2641</a>.</p>
 <p>Note: Normally we need to add at least one <code>.mpp</code> file to enable C++20 modules compilation, if we only have a cpp file, module compilation will not be enabled by default.</p>
@@ -957,8 +959,95 @@ target("test")
     set_languages("c++20")
     set_policy("build.c++.modules", true)
 </code></pre>
-<h3 id="mergestaticlibraries">Merge static libraries</h3>
-<h4 id="automaticallymergetargetlibraries">Automatically merge target libraries</h4>
+<h3 id="cmoduledistribution">C++ Module distribution</h3>
+<p>Many thanks to <a href="https://github.com/Arthapz">Arthapz</a> for continuing to help improve xmake&#39;s support for C++ Modules in this new release.</p>
+<p>We can now distribute C++ Modules as packages for quick integration and reuse in other projects.</p>
+<p>This is a prototype implementation based on the draft design for module distribution in <a href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2473r1.pdf">p2473r1</a>.</p>
+<h4 id="creatingacmodulespackagefordistribution">Creating a C++ Modules package for distribution</h4>
+<p>We start by maintaining a build of the modules using xmake.lua and telling xmake which module files to install for external distribution by specifying <code></code>{install = true}`&#39;&#39;.</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+set_languages("c++20")
+
+target("foo")
+    set_kind("static")
+    add_files("*.cpp")
+    add_files("*.mpp", { install = true })
+</code></pre>
+<p>We then make it into a package that we can commit to the <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a> repository, or of course directly into a local package, or a private repository package.</p>
+<p>Here, for testing purposes, we just make it a local package via <code>set_sourcedir</code>.</p>
+<pre><code class="lang-lua">package("foo")
+    set_sourcedir(path.join(os.scriptdir(), "src"))
+    on_install(function(package)
+        import("package.tools.xmake").install(package, {})
+    end)
+`
+</code></pre>
+<h4 id="integratingthecmodulespackage">Integrating the C++ Modules package</h4>
+<p>We then quickly integrate the C++ Modules package for use via the package integration interface with <code>add_requires("foo")</code>.</p>
+<p>Since the modules packages for foo are defined in a private repository, we introduce our own package repository via <code>add_repositories("my-repo my-repo")</code>.</p>
+<p>If the package has already been committed to the official xmake-repo repository, there is no need to configure it additionally.</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+set_languages("c++20")
+
+add_repositories("my-repo my-repo")
+add_requires("foo", "bar")
+
+target("packages")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("foo", "bar")
+    set_policy("build.c++.modules", true)
+</code></pre>
+<p>Once the packages are integrated, we can run the <code></code>xmake`&#39;&#39; command to download, compile and integrate the C++ Modules package for use with one click.</p>
+<pre><code class="lang-bash">$ xmake
+checking for platform ... linux
+checking for architecture ... x86_64
+note: install or modify (m) these packages (pass -y to skip confirm)?
+in my-repo:
+  -> foo latest
+  -> bar latest
+please input: y (y/n/m)
+
+  => install bar latest ... ok
+  => install foo latest ... ok
+[ 0%]: generating.module.deps src/main.cpp
+[ 0%]: generating.module.deps /mnt/xmake/tests/projects/c++/modules/packages/build/.packages/b/bar/latest/ 4e0143c97b65425b855ad5fd03038b6a/modules/bar/bar.mpp
+[ 0%]: generating.module.deps /mnt/xmake/tests/projects/c++/modules/packages/build/.packages/f/foo/latest/ 4e0143c97b65425b855ad5fd03038b6a/modules/foo/foo.mpp
+[ 14%]: compiling.module.release bar
+[ 14%]: compiling.module.release foo
+[ 57%]: compiling.release src/main.cpp
+[ 71%]: linking.release packages
+[ 100%]: build ok!
+```&#39;&#39;
+
+Note: After each package is installed, a meta-info file for the maintenance module is stored in the package path, this is a format specification agreed in ``p2473r1.pdf``, it may not be the final standard, but this does not affect our ability to use the distribution of the module now.
+
+```bash
+$ cat . /build/.packages/f/f/foo/latest/4e0143c97b65425b855ad5fd03038b6a/modules/foo/foo.mpp.meta-info
+{"_VENDOR_extension":{"xmake":{"name": "foo", "file": "foo.mpp"}}, "definitions":{}, "include_paths":{}}
+</code></pre>
+<p>The full example project is available at: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules/packages">C++ Modules package distribution example project</a></p>
+<h3 id="supportforc23stdmodules">Support for C++23 Std Modules</h3>
+<p><a href="https://github.com/Arthapz">Arthapz</a> has also helped to improve support for C++23 Std Modules.</p>
+<p>It is currently supported by three compilers in progress.</p>
+<h4 id="msvc">Msvc</h4>
+<p>The latest Visual Studio 17.5 preview already supports it, and the non-standard ifc std modules will be deprecated.</p>
+<p>For the standard C++23 std modules, this is how we introduced them.</p>
+<pre><code class="lang-c">import std;
+</code></pre>
+<p>Whereas for ifc std modules, we need to write it like this.</p>
+<pre><code>import std.core;
+</code></pre><p>This is not a C++23 standard, it is only provided by msvc, it is not compatible with other compilers and will be deprecated in new versions of msvc.<br>Therefore the new version of Xmake will only support C++23 std modules and not the deprecated ifc std modules.</p>
+<h4 id="clang">Clang</h4>
+<p>It seems that the latest clang does not yet fully support C++23 std modules either, and is still in draft patch status, <a href="https://reviews.llvm.org/D135507">#D135507</a>.</p>
+<p>However, Xmake does support it, so if you want to try it out, you can merge in the patch and test it with xmake.</p>
+<p>There is also experimental support for non-standard std modules in lower versions of clang.</p>
+<p>It is still possible to experiment with xmake to build std modules in lower versions of clang, even though it is probably still a toy (and will encounter many problems).</p>
+<p>For a discussion see: <a href="https://github.com/xmake-io/xmake/pull/3255">#3255</a></p>
+<h4 id="gcc">Gcc</h4>
+<p>It is not currently supported.</p>
+<h2 id="mergestaticlibraries">Merge static libraries</h2>
+<h3 id="automaticallymergetargetlibraries">Automatically merge target libraries</h3>
 <p>After 2.5.8, we can enable automatic merging of all dependent static libraries by setting the <code>build.merge_archive</code> strategy, for example:</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 
@@ -980,7 +1069,7 @@ target("mul")
 </code></pre>
 <p>The mul static library automatically merges the add and sub static libraries to generate a complete libmul.a library containing add/sub code.</p>
 <p>This merge is relatively stable and complete, supports ar and msvc/lib.exe, also supports the merge of static libraries generated by the cross-compilation tool chain, and also supports static libraries with the same name obj file.</p>
-<h4 id="mergespecifiedstaticlibraryfiles">Merge specified static library files</h4>
+<h3 id="mergespecifiedstaticlibraryfiles">Merge specified static library files</h3>
 <p>If the automatic merge does not meet the requirements, we can also actively call the <code>utils.archive.merge_archive</code> module to merge the specified static library list in the <code>after_link</code> stage.</p>
 <pre><code class="lang-lua">target("test")
     after_link(function (target)
@@ -988,7 +1077,7 @@ target("mul")
         merge_staticlib(target, "libout.a", {"libfoo.a", "libbar.a"})
     end)
 </code></pre>
-<h4 id="useadd_filestomergestaticlibraries">Use add_files to merge static libraries</h4>
+<h3 id="useadd_filestomergestaticlibraries">Use add_files to merge static libraries</h3>
 <p>In fact, our previous version already supports merging static libraries through <code>add_files("*.a")</code>.</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
