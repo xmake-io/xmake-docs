@@ -1290,6 +1290,12 @@ target("test")
     set_policy("build.c++.modules", true)
 ```
 
+作为静态库需要给模块文件设定`{ install = true }`
+```lua
+set_kind("static")
+add_files("*.mpp", { install = true }) 
+```
+
 ### 合并静态库
 
 #### 自动合并 target 库
