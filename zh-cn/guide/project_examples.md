@@ -1290,7 +1290,7 @@ target("test")
     set_policy("build.c++.modules", true)
 ```
 
-作为静态库需要给模块文件设定`{ install = true }`
+作为静态库作为包 对外分发的时候需要给模块文件设定`{ install = true }`
 ```lua
 set_kind("static")
 add_files("*.mpp", { install = true }) 
