@@ -4,7 +4,7 @@
 
 > A cross-platform build utility based on Lua
 
-- *Simple, Fast and lightweight*
+- *Simple, Fast and Lightweight*
 - *Modern C/C++ build tools, Powerful dependency package integration*
 
 [Gitee](https://gitee.com/tboox/xmake/)

@@ -1,19 +1,20 @@
+# FAQ (F&Q)
 
-## How to get verbose command-line arguments info?
+## How to get command-line arguments information?
 
-Get the help info of the main command.
+Get the help info of the main command:
 
 ```bash
 $ xmake [-h|--help]
 ```
 
-Get the help info of the configuration command.
+Get the help info of the configuration command:
 
 ```bash
 $ xmake f [-h|--help]
 ```
 
-Get the help info of the given action or plugin command.
+Get the help info of the given action or plugin command:
 
 ```bash
 $ xmake [action|plugin] [-h|--help]
@@ -31,7 +32,7 @@ $ xmake run --help
 $ xmake [-q|--quiet]
 ```
 
-## How to do if xmake fails?
+## What do do if Xmake fails?
 
 Please attempt to clean configuration and rebuild it first.
 
@@ -44,11 +45,11 @@ If it fails again, please add `-v` or `--verbose` options to get more verbose in
 
 For example:
 
-```hash
+```bash
 $ xmake [-v|--verbose]
 ```
 
-And add `-D` to get the verbose backtrace and diagnosis info, then you can submit these infos to [issues](https://github.com/xmake-io/xmake/issues).
+And add `-D` to get the verbose backtrace and diagnosis info, then you can submit this to [issues](https://github.com/xmake-io/xmake/issues).
 
 ```bash
 $ xmake -v -D
@@ -60,7 +61,7 @@ $ xmake -v -D
 $ xmake [-w|--warning]
 ```
 
-## How to scan source code and generate xmake.lua automatically?
+## How to scan source code and generate `xmake.lua` automatically?
 
 You only need run the following command:
 
@@ -68,7 +69,7 @@ You only need run the following command:
 $ xmake
 ```
 
-xmake will scan all source code in current directory and build it automatically.
+Xmake will scan all source code in current directory and build it automatically.
 
 And we can run it directly.
 
@@ -76,13 +77,13 @@ And we can run it directly.
 $ xmake run
 ```
 
-If we only want to generate xmake.lua file, we can run:
+If we only want to generate `xmake.lua` file, we can run:
 
 ```bash
 $ xmake f -y
 ```
 
-If you want to known more information please see [Scan source codes and build project without makefile](https://tboox.org/2017/01/07/build-without-makefile/)
+If you want to get more information, please see [Scan source codes and build project without makefile](https://tboox.org/2017/01/07/build-without-makefile/).
 
 ## Why is xmake.lua being executed multiple times?
 
@@ -98,7 +99,7 @@ See: [Description of Syntax Description](/guide/syntax_description) for more det
 
 Since Xmake uses git submodules to maintain submodules, we can pull the full source code in several ways.
 
-#### pulling with git
+#### Cloning with git
 
 ```bash
 $ git clone --recursive https://github.com/xmake-io/xmake.git
@@ -121,9 +122,9 @@ Therefore, do not download the wrong link address
 - Full source package: https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
 
 ```bash
-wget https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
-tar -xvf xmake-v2.7.2.tar.gz -C xmake
-cd xmake
+$ wget https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
+$ tar -xvf xmake-v2.7.2.tar.gz -C xmake
+$ cd xmake
 ```
 
 ! > The Xmake tarball does not have a top-level xmake root directory, so it is best to unpack it with `-C xmake` to specify the output directory.
@@ -156,6 +157,8 @@ $ ./configure
 $ make
 ```
 
+!> On macOS, you may need to run `export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)` before configuration so header files can be found at build time.
+
 ### Loading debugging
 
 If the compilation is complete, we can load the Xmake binary core we just compiled and run the local Lua script.
@@ -166,17 +169,17 @@ Go to the `xmake/scripts` directory and double-click on the srcenv.bat script, w
 
 From this terminal, we can then enable debugging.
 
-We can also run
+We can also run:
 
 ```bash
 $ xmake l os.programdir
 ```
 
-to verify that we have actually loaded the local Lua scripting environment.
+...to verify that we have actually loaded the local Lua scripting environment.
 
 #### Loading a local debugging environment on other platforms
 
-On Linux/macOS/FreeBSD it's a bit easier to just run.
+On Linux/macOS/FreeBSD it's a bit easier! Just run.
 
 ```bash
 $ cd xmake
@@ -191,19 +194,15 @@ Normally, to debug Xmake's Lua scripts, you just need to modify the Lua scripts 
 
 However, if there is a problem with Xmake's C-side core program and you need to debug it or add modules to it, you will need to recompile it.
 
-The compilation is done, also in real time, and can be done in the C code with
+You can use Xmake's internal logging functions like so to aide in debugging:
 
 ```c
 tb_trace_i("hello %s", "xmake");
 ```
 
-to format the various outputs for printing.
+If there is a problem with the various submodules that Xmake relies on, such as tbox, and you need to debug it, you can also go directly to the submodule source code, modify it and recompile it for execution.
 
-If there is a problem with the various submodules that Xmake relies on, such as tbox, and you need to debug it.
-
-We can also go directly to the submodule source code, modify it and recompile it for execution.
-
-However, if we need to contribute a patch, we need to commit pr to the submodule's repository and the patch will be merged and synced to the Xmake source repository by the author at a specific time.
+However, if we need to contribute a patch, we need to commit PR to the submodule's repository and the patch will be merged and synced to the Xmake source repository by the author at a later date and time.
 
 ## How to debug repository packages?
 
@@ -214,7 +213,7 @@ $ git clone https://github.com/xmake-io/xmake-repo.git
 $ xmake l scripts/test.lua -vD --shallow zlib
 ```
 
-Using the test.lua script command above to debug packages, we can repeatedly install and test the specified package. `--shallow` tells Xmake not to repeat the full installation of all its dependencies for each test, but only to test the current package.
+Using the `test.lua` script command above to debug packages, we can repeatedly install and test the specified package. `--shallow` tells Xmake not to repeat the full installation of all its dependencies for each test, but only to test the current package.
 
 We can also test specific platforms, architectures, build modes, vs_runtime and dynamic libraries, static libraries etc.
 
@@ -240,7 +239,7 @@ $ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 Once the changes have been debugged, we then generate a patch file based on the changes via `git diff > fix.patch`
 and configure the patch package to be applied via `add_patches` to fix the package installation.
 
-## What should I do if the download package prompts for a certificate verification failure?
+## What should I do if the download package failed to get the local issuer certificate?
 
 ```bash
 curl: (60) SSL certificate problem: unable to get local issuer certificate
@@ -251,11 +250,10 @@ To learn more about this situation and
 To learn more about this situation and how to fix it, please visit the web page mentioned above.
 ```
 
-If you encounter the above certificate validation problem when using Xmake to install dependencies, you can try updating the curl certificate to fix it, or just disable certificate validation in the global configuration to bypass it.
+If you encounter the above certificate validation problem when using Xmake to install dependencies, you can try updating the cURL certificate to fix it, or just disable certificate validation in the global configuration to bypass it.
 
 ```bash
 $ xmake g --insecure-ssl=y
 ```
 
-Of course, disabling certificate validation poses some security risks, but the good news is that packages in the xmake-repo repository have a strict sha256 checksum.
-Even if the download is hijacked, it will eventually be detected by xmake's sha256 checksum and treated as an invalid download.
+Of course, disabling certificate validation poses some security risks, but the good news is that packages in the xmake-repo repository have a strict sha256 checksum. Even if the download is hijacked, it will eventually be detected by xmake's sha256 checksum and treated as an invalid download.

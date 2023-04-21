@@ -1,21 +1,22 @@
+# Autogeneration
 
-we need not write any make-like file (xmake.lua, makefile.am, cmakelist.txt, etc.) and also build it directly.
+Xmake supports the autogeneration of project files, including it's own! While it won't work for every project (as is the nature of these things), it should work for basic and medium complexity projects. You do not need to write any "make-like" file (`xmake.lua`, `makefile`, `CMakeLists.txt`, etc.).
 
-It will scan all source files and generate xmake.lua automatically for building project.
+The fool will scan all of the source files and generate an `xmake.lua` automatically based on your product structure. Xmake will try to detect a `main` function in the source files to distinguish between the source code for libraries and executable programs.
 
-And xmake will detect 'main' function in source file in order to distinguish between static libraries and executable programs.
+If autogeneration succeeds, you should still look through the generated `xmake.lua` and make any changes you need, and make sure everything worked well.
 
-(Currently, only projects with single-level directory are supported)
+Currently, projects that use directories in multiple levels are *not* supported. Appologies.
 
-### Used scenes
+## Use cases
 
 1. Temporarily quickly compile and run some scattered test code
-2. Try porting and compiling other open source libraries
-3. Quickly create a new xmake project based on existing code
+2. A starting point to porting and compiling open source code
+3. Quickly create a new Xmake project based on existing code
 
-### How to use it
+## How to use it
 
-Execute xmake directly in the directory with the source code (no xmake.lua), and follow the prompts:
+Execute Xmake directly in the directory with the source code (no xmake.lua), and follow the prompts:
 
 ```bash
 $ xmake
@@ -24,7 +25,7 @@ please input: n (y/n)
 y
 ```
 
-In addition, when there are other build system identification files (such as CMakeLists.txt), the process of automatically generating xmake.lua will not be triggered, but [Automatically detect build system and compile](#Automatically detect build system and compile) will be triggered first. If you want to force trigger the process of automatically generating xmake.lua file, you can run:
+In addition, when there are other build system identification files (such as `CMakeLists.txt`), the process of automatically generating an `xmake.lua` file will not be triggered. Instead, it will attemp to [automatically detect build system and compile](#Automatically detect build system and compile) the code. If you want to force trigger the process of automatically generating `xmake.lua` file, you can run:
 
 ```bash
 $ xmake f -y
@@ -32,11 +33,9 @@ $ xmake f -y
 
 ### Compile open source libraries
 
-Although this approach has some limitations, but it is sufficient to complie and run some temporary codes for testing. 
+Although this approach has some limitations, but it is already sufficient to generate for existing libraries.
 
-For example, we downloaded a zlib-1.2.10 source and want to compile it.
-
-We only need to enter the zlib source directory and run the following command:
+For example, if you download the source code for zlib-1.2.10 and want to compile it, you only need to enter the zlib source directory and run the following command:
 
 ```bash
 $ cd zlib-1.2.10
@@ -46,7 +45,7 @@ please input: n (y/n)
 y
 ```
 
-It's done, the output results: 
+It's done! the output results:
 
 ```
 target(zlib-1.2): static
@@ -128,13 +127,9 @@ clean ok!
 build ok!👌
 ```
 
-Xmake will scan the current directory to detect all source codes and it do not found main function.
+Xmake will scan the current directory to detect all source codes and it do not found main function. As such, detect that it is a static library, and thus it will build it as a static library (with an output/artifact of `libzlib-1.2.a`).
 
-So it should be static library project and we build it as a static library: libzlib-1.2.a
-
-We did not write any make-like files (xmake.lua, ..) and did not use the makefile of zlib project.
-
-It is compiled directly and a xmake.lua file was generated which we can edit this xmake.lua to build more complicated project. 
+We did not write any make-like files (Xmake.lua, ..) and did not use the makefile of zlib project. Isn't that neat? It is compiled directly and a `xmake.lua` file was generated which we can edit this xmake.lua to build more complicated project.
 
 The content of the generated xmake.lua:
 
@@ -163,53 +158,64 @@ target("zlib-1.2")
     add_files("./zutil.c")
 ```
 
-### Fastly compile and run testing code
+As you can see, it's pretty human readable.
 
-For example, I want to write a simple program in the main.c only to echo 'hello world!'.
+### Compile and run testing code... fast!
 
-If we use gcc to compile and run it, need run two commands: 
+Let's say you want to write a simple program, with one source file (`main.c`), solely to print "Hello, world!" to stdout.
+
+```c
+/* main.c */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    printf("Hello, world!");
+
+    return EXIT_SUCCESS;
+}
+```
+
+If we use GCC to compile and run it, need run two commands:
 
 ```bash
-gcc ./main.c -o demo
-./demo
+$ gcc ./main.c -o main
+$ ./main
 ```
 
-If we use xmake to run it, only need run:
+If we use xmake to run it, only need to run:
 
 ```bash
-xmake run
+$ xmake run
 ```
 
-Or
+Or even:
 
 ```bash
-xmake r
+$ xmake r
 ```
 
-It's done, the output results is:
+As we expect, we see...
 
 ```
-hello world!
+Hello, world!
 ```
 
-If we have a lot of code files, need also run only one command:
-
+...printed to the console! Even if we have a lot of source files, you only need to run one command:
 
 ```bash
-xmake run
+$ xmake run
 ```
 
-It's so easy and convenient.
+How easy and convenient!
 
 ### Multi-language support
 
-This feature of code detection and real-time compilation not only supports c/c++, also supports objc/swift 
-and it will support golang in future.
-
-For example, we downloaded a ios open source framework code 'fmdb':
-
+This feature of autogeneration of project files not only supports C/C++, also supports Objective-C and Swift, and it will support Go in future. For example, if you download the `fmdb` library, an iOS library which wraps SQLite:
 
 ```
+# Files:
 .
 ├── FMDB.h
 ├── FMDatabase.h
@@ -224,16 +230,13 @@ For example, we downloaded a ios open source framework code 'fmdb':
 └── FMResultSet.m
 ```
 
-There are no any make-like files in it's project directory.
-
-We uses xmake to build it directly as a ios static library:
-
+You can see that there aren't any make-like files in the project directory. "Whatever will we do?" I think you know. We can use Xmake to build it directly as a iOS static library:
 
 ```bash
 $ xmake f -p iphoneos; xmake
 ```
 
-The output results are:
+The output is:
 
 ```
 xmake.lua not found, scanning files ..
@@ -292,12 +295,14 @@ clean ok!
 build ok!👌
 ```
 
+and of course we also get a `libFMDB.a` static library.
+
 ### Compile multiple executables at the same time
 
+Let's say you downloaded the "sixth public release of the Independent JPEG Group's free JPEG software", and wanted to build it. You could do it yourself, or you could run:
 
 ```bash
-$ cd jpeg-6b
-$ xmake
+xmake
 ```
 
 The output results are:
@@ -526,13 +531,16 @@ target(wrjpgcom): binary
     [+]: ./wrjpgcom.c
 ```
 
-#### Manual configuration
+Neat!
 
-we need add them before compiling if the source code requires some special compiler options
+### Manual configuration
 
-For example:
+If we want to add some manual configuration options. we need add them before compiling. For example:
 
 ```bash
-$ xmake f --cxflags="" --ldflags="" --includedirs="" --linkdirs=""; xmake
-```
+# Specify our options
+$ xmake f --cxflags="--cxx-flag" --ldflags="--link-flag" --includedirs="include/" --linkdirs="lib/"
 
+# Build!
+$ xmake
+```
