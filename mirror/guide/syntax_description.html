@@ -90,7 +90,8 @@
   line-height: 1;
 }
 </style>
-    <p>xmake&#39;s project description file xmake.lua is based on the lua syntax, but in order to make the project build logic more convenient and concise, xmake encapsulates it, making writing xmake.lua not as cumbersome as some makefiles.</p>
+    <h1 id="syntaxdescription">Syntax description</h1>
+<p>Xmake&#39;s project description file <code>xmake.lua</code> is based on the lua syntax, but in order to make the project build logic more convenient and concise, Xmake encapsulates it, making writing <code>xmake.lua</code> not as cumbersome as some makefiles.</p>
 <p>Basically write a simple project build description, just three lines, for example:</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -99,8 +100,8 @@
 <h2 id="configurationseparation">Configuration Separation</h2>
 <p>Xmake.lua uses the 80:20 rule (aka <a href="https://en.wikipedia.org/wiki/Pareto_principle">Pareto principle</a>) to implement a two-layer separate configuration of the description domain and the script domain.</p>
 <p>What is the 80:20 rule? In short, most of the project configuration, 80% of the cases, are basic basic configurations, such as: <code>add_cxflags</code>, <code>add_links</code>, etc.<br>Only less than 20% of the space needs to be extra complex to meet some special configuration needs.</p>
-<p>The remaining 20% of the configuration is usually more complicated. if it is directly flooded in the whole xmake.lua, the whole project configuration will be very confusing and very unreadable.</p>
-<p>Therefore, xmake isolates 80% of simple configuration and 20% of complex configuration by describing two different configurations of domain and script domain, making the whole xmake.lua look very clear and intuitive, readable and maintainable. Get the best.</p>
+<p>The remaining 20% of the configuration is usually more complicated. if it is directly flooded in the whole <code>xmake.lua</code>, the whole project configuration will be very confusing and very unreadable.</p>
+<p>Therefore, Xmake isolates 80% of simple configuration and 20% of complex configuration by describing two different configurations of domain and script domain, making the whole <code>xmake.lua</code> look very clear and intuitive, readable and maintainable. Get the best.</p>
 <h3 id="descriptionscope">Description Scope</h3>
 <p>For beginners who are just getting started, or just to maintain some simple small projects, the requirements are fully met by describing the configuration completely. What is the description domain? It looks like this:</p>
 <pre><code class="lang-lua">target("test")
@@ -137,14 +138,13 @@
         add_links(name)
     end
 </code></pre>
-<p>Is this looking a bit like lua? Although, it can usually be regarded as a common configuration problem, but xmake is based on lua after all, so the description domain still supports the basic language features of lua.</p>
+<p>Is this looking a bit like lua? Although, it can usually be regarded as a common configuration problem, but Xmake is based on lua after all, so the description domain still supports the basic language features of lua.</p>
 <p>!> However, it should be noted that although the description field supports lua script syntax, try not to write too complicated lua scripts in the description field, such as some time-consuming function calls and for loops.</p>
-<p>And in the description field, the main purpose is to set the configuration item, so xmake does not completely open all module interfaces, many interfaces are forbidden to be called in the description field.<br>Even open callable interfaces are completely read-only, and time-consuming security interfaces such as <code>os.getenv()</code> read some general system information for configuration logic control.</p>
-<p>!> Also note that xmake.lua is parsed multiple times to resolve different configuration fields at different stages: for example: <code>option()</code>, <code>target()</code>, etc.</p>
-<p>So, don&#39;t think about writing complex lua scripts in the description field of xmake.lua, and don&#39;t call print in the description field to display the information, because it will be executed multiple times, remember: it will be executed multiple times! ! !</p>
+<p>And in the description field, the main purpose is to set the configuration item, so Xmake does not completely open all module interfaces, many interfaces are forbidden to be called in the description field.<br>Even open callable interfaces are completely read-only, and time-consuming security interfaces such as <code>os.getenv()</code> read some general system information for configuration logic control.</p>
+<p>!> Also note that <code>xmake.lua</code> is parsed multiple times to resolve different configuration fields at different stages: for example: <code>option()</code>, <code>target()</code>, etc.</p>
+<p>So, don&#39;t think about writing complex lua scripts in the description field of <code>xmake.lua</code>, and don&#39;t call print in the description field to display the information, because it will be executed multiple times, remember: it will be executed multiple times! ! !</p>
 <h3 id="scriptscope">Script Scope</h3>
-<p>Restrict the description field to write complex lua, all kinds of lua modules and interfaces are not used? How to do? This time is the time for the script domain to appear.</p>
-<p>if the user is already fully familiar with xmake&#39;s description domain configuration and feels that some of the special configuration maintenance on the project is not met, then we can do more complex configuration logic in the script domain:</p>
+<p>Restrict the description field to write complex lua, all kinds of lua modules and interfaces are not used? How to do? This time is the time for the script domain to appear. If the user is already fully familiar with Xmake&#39;s description domain configuration and feels that some of the special configuration maintenance on the project is not met, then we can do more complex configuration logic in the script domain:</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
     add_files("src/*.c")
@@ -161,9 +161,9 @@
     end)
 </code></pre>
 <p>As long as it is similar: <code>on_xxx</code>, <code>after_xxx</code>, <code>before_xxx</code>, etc. The script inside the function body belongs to the script field.</p>
-<p>In the script domain, the user can do anything, xmake provides an import interface to import various lua modules built into xmake, and can also import user-supplied lua scripts.</p>
+<p>In the script domain, the user can do anything, Xmake provides an import interface to import various lua modules built into Xmake, and can also import user-supplied lua scripts.</p>
 <p>We can implement any function you want to implement in the script domain, even if you write a separate project.</p>
-<p>for some script fragments, it is not very bloated, such as the above built-in writing is enough, if you need to implement more complex scripts, do not want to be filled in a xmake.lua, you can separate the script into a separate lua file for maintenance.</p>
+<p>for some script fragments, it is not very bloated, such as the above built-in writing is enough, if you need to implement more complex scripts, do not want to be filled in a <code>xmake.lua</code>, you can separate the script into a separate lua file for maintenance.</p>
 <p>E.g:</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
@@ -171,7 +171,7 @@
     on_load("modules.test.load")
     on_install("modules.test.install")
 </code></pre>
-<p>We can place the custom scripts in the corresponding directory of xmake.lua, and maintain them independently in <code>modules/test/load.lua</code> and <code>modules/test/install.lua</code>.</p>
+<p>We can place the custom scripts in the corresponding directory of <code>xmake.lua</code>, and maintain them independently in <code>modules/test/load.lua</code> and <code>modules/test/install.lua</code>.</p>
 <p>In these independent lua scripts, we can also import various built-in modules and custom modules through <a href="/mirror/zh-cn/manual/builtin_modules.html#import">import</a>, just like to write lua, java is no different. .</p>
 <p>for the different stages of the script&#39;s domain, <code>on_load</code> is mainly used for target loading, do some dynamic configuration, not like the description field, it will only be executed once!!!</p>
 <p>In other stages, there are many, such as: <code>on/after/before</code>_<code>build/install/package/run</code>, etc. See the target api manual section later, so I won’t go into details here.</p>
@@ -187,17 +187,17 @@ target("test2")
 </code></pre>
 <p>In the above configuration, the target belongs to the configuration domain, and all the <code>set_xx</code>/<code>add_xxx</code> interface configurations below it belong to the configuration item, which is partially effective for this target.</p>
 <p>We can understand it as a local scope, similar to the block block in c:</p>
-<pre><code>target("test1")
-{
+<pre><code class="lang-c">target("test1") {
     set_kind("binary")
     add_files("src/*.c")
 }
-target("test2")
-{
+
+target("test2") {
     set_kind("binary")
     add_files("src/*.c")
 }
-</code></pre><p>However, in order to simplify the writing, xmake stipulates that each newly defined target field starts, and the last configuration field ends automatically. Of course, if the user feels troubled, you can manually configure the leaving domain:</p>
+</code></pre>
+<p>However, in order to simplify the writing, Xmake stipulates that each newly defined target field starts, and the last configuration field ends automatically. Of course, if the user feels troubled, you can manually configure the leaving domain:</p>
 <pre><code class="lang-lua">target("test1")
     set_kind("binary")
     add_files("src/*.c")
@@ -215,7 +215,7 @@ target_end()
 <p>As long as the configuration with the words <code>set_xxx</code> and <code>add_xxx</code> is a configuration item, multiple configuration items can be set in one configuration field.</p>
 <p>for a description of the configuration items, see: <a href="/mirror/manual/specification.html">Interface Specifications</a></p>
 <h2 id="scope">Scope</h2>
-<p>The description syntax of xmake is divided by scope, which is mainly divided into:</p>
+<p>The description syntax of Xmake is divided by scope, which is mainly divided into:</p>
 <ul>
 <li>external scope</li>
 <li>Internal scope</li>
@@ -271,7 +271,7 @@ target("demo")
 <li>print</li>
 <li>os</li>
 </ul>
-<p>Of course, although the built-in lua api does not provide much, xmake also provides a lot of extension APIs. It is not much to describe the api. For details, please refer to: <a href="/mirror/manual.html">API Manual</a></p>
+<p>Of course, although the built-in lua api does not provide much, Xmake also provides a lot of extension APIs. It is not much to describe the api. For details, please refer to: <a href="/mirror/manual.html">API Manual</a></p>
 <p>There are also some auxiliary apis, for example:</p>
 <ul>
 <li>dirs: scan to get all the directories in the currently specified path</li>
@@ -287,7 +287,7 @@ target("demo")
         add_files("src/test/*.c")
     end
 </code></pre>
-<p>It should be noted that the variable definition is divided into global variables and local variables. The local variables are only valid for the current xmake.lua, and do not affect the child xmake.lua.</p>
+<p>It should be noted that the variable definition is divided into global variables and local variables. The local variables are only valid for the current <code>xmake.lua</code>, and do not affect the child <code>xmake.lua</code>.</p>
 <pre><code class="lang-lua">-- local variables, only valid for current xmake.lua
 local var1 = 0
 
@@ -312,7 +312,7 @@ task("hello")
         -- Internal scope
         end)
 </code></pre>
-<p>In this scope, not only can you use most lua apis, but you can also use many extension modules provided by xmake. All extension modules are imported through import.</p>
+<p>In this scope, not only can you use most lua apis, but you can also use many extension modules provided by Xmake. All extension modules are imported through import.</p>
 <p>For details, please refer to: <a href="/mirror/manual/builtin_modules.html#import">import module document</a></p>
 <p>Here we give a simple example, after the compilation is complete, ldid signature on the ios target program:</p>
 <pre><code class="lang-lua">target("iosdemo")
@@ -324,7 +324,7 @@ task("hello")
         os.run("ldid -S$(projectdir)/entitlements.plist %s", target:targetfile())
     end)
 </code></pre>
-<p>It should be noted that in the internal scope, all calls are enabled with the exception catching mechanism. if the operation is wrong, xmake will be automatically interrupted and an error message will be given.</p>
+<p>It should be noted that in the internal scope, all calls are enabled with the exception catching mechanism. if the operation is wrong, Xmake will be automatically interrupted and an error message will be given.</p>
 <p>Therefore, the script is written without the cumbersome <code>if retval then</code> judgment, and the script logic is more clear.</p>
 <h3 id="interfacescope">Interface Scope</h3>
 <p>All descriptions of api settings in the external scope are also scoped. They are called in different places and have different scopes of influence, for example:</p>
@@ -377,7 +377,7 @@ set_kind("binary")
 add_files("*.c")
 </code></pre>
 <p>The above two methods are the same in effect, but in understanding, the first one is more intuitive. At first glance, you know that <code>add_files</code> is only set for target, not global.</p>
-<p>Therefore, proper indentation helps to better maintain xmake.lua</p>
+<p>Therefore, proper indentation helps to better maintain <code>xmake.lua</code>.</p>
 <p>Finally attached, tbox&#39;s <a href="https://github.com/tboox/tbox/blob/master/src/tbox/xmake.lua">xmake.lua</a> description, for reference only. .</p>
 <h3 id="codeformatting">Code formatting</h3>
 <p>The default indentation of the description field configuration syntax does not conform to the lua formatting specification, so the lua language server does not support formatting it.</p>
@@ -395,14 +395,14 @@ end
 <p>This allows the Lua LSP to format it correctly as standard lua code, whether this is required or not depends on the user&#39;s needs.</p>
 <p>If you don&#39;t have a habit of using automatic code formatting, then you don&#39;t need to do this.</p>
 <h2 id="multilevelconfiguration">Multi-level Configuration</h2>
-<p>In the script field we can import various rich extension modules by import, and in the description field we can introduce the project subdirectory through the <a href="/#/zh-cn/manual/global_interfaces?id=includes">includes</a> interface. The xmake.lua configuration.</p>
-<p>Remember: xmake&#39;s includes handles the configuration relationship according to the tree structure. The target configuration in xmake.lua in the subdirectory inherits the root domain configuration in the parent xmake.lua, for example:</p>
+<p>In the script field we can import various rich extension modules by import, and in the description field we can introduce the project subdirectory through the <a href="/#/zh-cn/manual/global_interfaces?id=includes">includes</a> interface. </p>
+<p>Remember: Xmake&#39;s includes handles the configuration relationship according to the tree structure. The target configuration in <code>xmake.lua</code> in the subdirectory inherits the root domain configuration in the parent <code>xmake.lua</code>, for example:</p>
 <p>Currently there are the following project structures:</p>
 <pre><code>Projectdir
     - xmake.lua
     - src
       - xmake.lua
-</code></pre><p><code>projectdir/xmake.lua</code> is the project&#39;s root xmake.lua configuration, and <code>src/xmake.lua</code> is a sub-configuration of the project.</p>
+</code></pre><p><code>projectdir/xmake.lua</code> is the project&#39;s root <code>xmake.lua</code> configuration, and <code>src/xmake.lua</code> is a sub-configuration of the project.</p>
 <p><code>projectdir/xmake.lua</code> content:</p>
 <pre><code class="lang-lua">add_defines("ROOT")
 
@@ -418,7 +418,7 @@ target("test2")
 
 Includes("src")
 </code></pre>
-<p>The global root domain is configured with <code>add_defines("ROOT")</code>, which affects all target configurations below, including all target configurations in the sub-xmake.lua of includes, so this is the global total configuration.</p>
+<p>The global root domain is configured with <code>add_defines("ROOT")</code>, which affects all target configurations below, including all target configurations in the <code>sub-xmake.lua</code> of includes, so this is the global total configuration.</p>
 <p>The <code>add_defines("TEST1")</code> and <code>add_defines("TEST2")</code> in test1/test2 belong to the local configuration and only take effect on the current target.</p>
 <p><code>src/xmake.lua</code> content:</p>
 <pre><code class="lang-lua">add_defines("ROOT2")
@@ -428,13 +428,13 @@ target("test3")
     add_files("src/*.c")
     add_defines("TEST3")
 </code></pre>
-<p>In the <code>src/xmake.lua</code> sub-configuration, there is also a global root domain, configured with <code>add_defines("ROOT2")</code>, which belongs to the sub-configuration root domain and only takes effect on all targets in the current sub-xmake.lua. For the target xmake.lua in the lower level includes the target, because previously said, xmake is the configuration inheritance relationship of the tree structure.</p>
+<p>In the <code>src/xmake.lua</code> sub-configuration, there is also a global root domain, configured with <code>add_defines("ROOT2")</code>, which belongs to the sub-configuration root domain and only takes effect on all targets in the current <code>sub-xmake.lua</code>. For the target <code>xmake.lua</code> in the lower level includes the target, because previously said, Xmake is the configuration inheritance relationship of the tree structure.</p>
 <p>Therefore, the final configuration results of these targets are:</p>
 <pre><code>target("test1"): -DROOT -DTEST1
 target("test2"): -DROOT -DTEST2
 target("test3"): -DROOT -DROOT2 -DTEST3
 </code></pre><h2 id="syntaxsimplification">Syntax simplification</h2>
-<p>The configuration field syntax of xmake.lua is very flexible and can be used in a variety of complex and flexible configurations in the relevant domain, but for many streamlined small block configurations, this time is slightly redundant:</p>
+<p>The configuration field syntax of <code>xmake.lua</code> is very flexible and can be used in a variety of complex and flexible configurations in the relevant domain, but for many streamlined small block configurations, this time is slightly redundant:</p>
 <pre><code class="lang-lua">option("test1")
     set_default(true)
     set_showmenu(true)
@@ -447,7 +447,7 @@ option("test2")
 option("test3")
     set_default("hello")
 </code></pre>
-<p>xmake 2.2.6 or later, for the above small block option domain settings, we can simplify the description into a single line:</p>
+<p>Xmake 2.2.6 or later, for the above small block option domain settings, we can simplify the description into a single line:</p>
 <pre><code class="lang-lua">option("test1", {default = true, showmenu = true, description = "test1 option"})
 option("test2", {default = true, showmenu = true})
 option("test3", {default = "hello"})

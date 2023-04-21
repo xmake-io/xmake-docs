@@ -90,14 +90,15 @@
   line-height: 1;
 }
 </style>
-    <h2 id="howtogetverbosecommandlineargumentsinfo">How to get verbose command-line arguments info?</h2>
-<p>Get the help info of the main command.</p>
+    <h1 id="faqfq">FAQ (F&amp;Q)</h1>
+<h2 id="howtogetcommandlineargumentsinformation">How to get command-line arguments information?</h2>
+<p>Get the help info of the main command:</p>
 <pre><code class="lang-bash">$ xmake [-h|--help]
 </code></pre>
-<p>Get the help info of the configuration command.</p>
+<p>Get the help info of the configuration command:</p>
 <pre><code class="lang-bash">$ xmake f [-h|--help]
 </code></pre>
-<p>Get the help info of the given action or plugin command.</p>
+<p>Get the help info of the given action or plugin command:</p>
 <pre><code class="lang-bash">$ xmake [action|plugin] [-h|--help]
 </code></pre>
 <p>For example:</p>
@@ -106,33 +107,33 @@
 <h2 id="howtosuppressalloutputinfo">How to suppress all output info?</h2>
 <pre><code class="lang-bash">$ xmake [-q|--quiet]
 </code></pre>
-<h2 id="howtodoifxmakefails">How to do if xmake fails?</h2>
+<h2 id="whatdodoifxmakefails">What do do if Xmake fails?</h2>
 <p>Please attempt to clean configuration and rebuild it first.</p>
 <pre><code class="lang-bash">$ xmake f -c
 $ xmake
 </code></pre>
 <p>If it fails again, please add <code>-v</code> or <code>--verbose</code> options to get more verbose info.</p>
 <p>For example:</p>
-<pre><code class="lang-hash">$ xmake [-v|--verbose]
+<pre><code class="lang-bash">$ xmake [-v|--verbose]
 </code></pre>
-<p>And add <code>-D</code> to get the verbose backtrace and diagnosis info, then you can submit these infos to <a href="https://github.com/xmake-io/xmake/issues">issues</a>.</p>
+<p>And add <code>-D</code> to get the verbose backtrace and diagnosis info, then you can submit this to <a href="https://github.com/xmake-io/xmake/issues">issues</a>.</p>
 <pre><code class="lang-bash">$ xmake -v -D
 </code></pre>
 <h2 id="howtoseeverbosecompilingwarnings">How to see verbose compiling warnings?</h2>
 <pre><code class="lang-bash">$ xmake [-w|--warning]
 </code></pre>
-<h2 id="howtoscansourcecodeandgeneratexmakeluaautomatically">How to scan source code and generate xmake.lua automatically?</h2>
+<h2 id="howtoscansourcecodeandgeneratexmakeluaautomatically">How to scan source code and generate <code>xmake.lua</code> automatically?</h2>
 <p>You only need run the following command:</p>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
-<p>xmake will scan all source code in current directory and build it automatically.</p>
+<p>Xmake will scan all source code in current directory and build it automatically.</p>
 <p>And we can run it directly.</p>
 <pre><code class="lang-bash">$ xmake run
 </code></pre>
-<p>If we only want to generate xmake.lua file, we can run:</p>
+<p>If we only want to generate <code>xmake.lua</code> file, we can run:</p>
 <pre><code class="lang-bash">$ xmake f -y
 </code></pre>
-<p>If you want to known more information please see <a href="https://tboox.org/2017/01/07/build-without-makefile/">Scan source codes and build project without makefile</a></p>
+<p>If you want to get more information, please see <a href="https://tboox.org/2017/01/07/build-without-makefile/">Scan source codes and build project without makefile</a>.</p>
 <h2 id="whyisxmakeluabeingexecutedmultipletimes">Why is xmake.lua being executed multiple times?</h2>
 <p>Xmake.lua is divided into description fields and script fields. In the description field, various configuration fields are parsed multiple times in stages, and it is possible to execute multiple times. Therefore, do not write complex scripts in the description field.</p>
 <p>If you want to write a variety of complex scripts, please configure them in the script domain. The script domain of <code>target/on_load</code> can also flexibly configure various target related settings and provide more powerful lua script module support.</p>
@@ -140,7 +141,7 @@ $ xmake
 <h2 id="howtodebugxmakesourcecode">How to debug Xmake source code?</h2>
 <h3 id="downloadingsourcecode">Downloading source code</h3>
 <p>Since Xmake uses git submodules to maintain submodules, we can pull the full source code in several ways.</p>
-<h4 id="pullingwithgit">pulling with git</h4>
+<h4 id="cloningwithgit">Cloning with git</h4>
 <pre><code class="lang-bash">$ git clone --recursive https://github.com/xmake-io/xmake.git
 </code></pre>
 <p>or</p>
@@ -154,9 +155,9 @@ $ git submodule update --init
 <li>Incomplete source code: <a href="https://github.com/xmake-io/xmake/archive/refs/tags/v2.7.2.tar.gz">https://github.com/xmake-io/xmake/archive/refs/tags/v2.7.2.tar.gz</a></li>
 <li>Full source package: <a href="https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz">https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz</a></li>
 </ul>
-<pre><code class="lang-bash">wget https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
-tar -xvf xmake-v2.7.2.tar.gz -C xmake
-cd xmake
+<pre><code class="lang-bash">$ wget https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
+$ tar -xvf xmake-v2.7.2.tar.gz -C xmake
+$ cd xmake
 </code></pre>
 <p>! > The Xmake tarball does not have a top-level xmake root directory, so it is best to unpack it with <code>-C xmake</code> to specify the output directory.</p>
 <h3 id="compilingsourcecode">Compiling source code</h3>
@@ -175,17 +176,18 @@ xmake
 $ ./configure
 $ make
 </code></pre>
+<p>!> On macOS, you may need to run <code>export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)</code> before configuration so header files can be found at build time.</p>
 <h3 id="loadingdebugging">Loading debugging</h3>
 <p>If the compilation is complete, we can load the Xmake binary core we just compiled and run the local Lua script.</p>
 <h4 id="loadingthelocaldebuggingenvironmentonwindows">Loading the local debugging environment on Windows</h4>
 <p>Go to the <code>xmake/scripts</code> directory and double-click on the srcenv.bat script, which will automatically load the local Xmake program and scripts and open a cmd terminal.</p>
 <p>From this terminal, we can then enable debugging.</p>
-<p>We can also run</p>
+<p>We can also run:</p>
 <pre><code class="lang-bash">$ xmake l os.programdir
 </code></pre>
-<p>to verify that we have actually loaded the local Lua scripting environment.</p>
+<p>...to verify that we have actually loaded the local Lua scripting environment.</p>
 <h4 id="loadingalocaldebuggingenvironmentonotherplatforms">Loading a local debugging environment on other platforms</h4>
-<p>On Linux/macOS/FreeBSD it&#39;s a bit easier to just run.</p>
+<p>On Linux/macOS/FreeBSD it&#39;s a bit easier! Just run.</p>
 <pre><code class="lang-bash">$ cd xmake
 $ source scripts/srcenv.profile
 </code></pre>
@@ -193,19 +195,17 @@ $ source scripts/srcenv.profile
 <h3 id="debuggingcorebinary">Debugging core binary</h3>
 <p>Normally, to debug Xmake&#39;s Lua scripts, you just need to modify the Lua scripts in the current source directory, which takes effect in real time, and we don&#39;t need to recompile the core binary.</p>
 <p>However, if there is a problem with Xmake&#39;s C-side core program and you need to debug it or add modules to it, you will need to recompile it.</p>
-<p>The compilation is done, also in real time, and can be done in the C code with</p>
+<p>You can use Xmake&#39;s internal logging functions like so to aide in debugging:</p>
 <pre><code class="lang-c">tb_trace_i("hello %s", "xmake");
 </code></pre>
-<p>to format the various outputs for printing.</p>
-<p>If there is a problem with the various submodules that Xmake relies on, such as tbox, and you need to debug it.</p>
-<p>We can also go directly to the submodule source code, modify it and recompile it for execution.</p>
-<p>However, if we need to contribute a patch, we need to commit pr to the submodule&#39;s repository and the patch will be merged and synced to the Xmake source repository by the author at a specific time.</p>
+<p>If there is a problem with the various submodules that Xmake relies on, such as tbox, and you need to debug it, you can also go directly to the submodule source code, modify it and recompile it for execution.</p>
+<p>However, if we need to contribute a patch, we need to commit PR to the submodule&#39;s repository and the patch will be merged and synced to the Xmake source repository by the author at a later date and time.</p>
 <h2 id="howtodebugrepositorypackages">How to debug repository packages?</h2>
 <p>There are many different ways to debug, here I will focus on the most common debugging method used by the author, which is to pull the xmake-repo repository directly to debug.</p>
 <pre><code class="lang-bash">$ git clone https://github.com/xmake-io/xmake-repo.git
 $ xmake l scripts/test.lua -vD --shallow zlib
 </code></pre>
-<p>Using the test.lua script command above to debug packages, we can repeatedly install and test the specified package. <code>--shallow</code> tells Xmake not to repeat the full installation of all its dependencies for each test, but only to test the current package.</p>
+<p>Using the <code>test.lua</code> script command above to debug packages, we can repeatedly install and test the specified package. <code>--shallow</code> tells Xmake not to repeat the full installation of all its dependencies for each test, but only to test the current package.</p>
 <p>We can also test specific platforms, architectures, build modes, vs_runtime and dynamic libraries, static libraries etc.</p>
 <pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow -p mingw --mingw=/xxx/sdk zlib
 $ xmake l scripts/test.lua -vD --shallow -p iphoneos -a arm64 zlib
@@ -218,7 +218,7 @@ $ xmake l scripts/test.lua -vD --shallow -m debug zlib
 <pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 </code></pre>
 <p>Once the changes have been debugged, we then generate a patch file based on the changes via <code>git diff > fix.patch</code><br>and configure the patch package to be applied via <code>add_patches</code> to fix the package installation.</p>
-<h2 id="whatshouldidoifthedownloadpackagepromptsforacertificateverificationfailure">What should I do if the download package prompts for a certificate verification failure?</h2>
+<h2 id="whatshouldidoifthedownloadpackagefailedtogetthelocalissuercertificate">What should I do if the download package failed to get the local issuer certificate?</h2>
 <pre><code class="lang-bash">curl: (60) SSL certificate problem: unable to get local issuer certificate
 More details here: https://curl.se/docs/sslcerts.html
 
@@ -226,10 +226,10 @@ curl failed to verify the legitimacy of the server and therefore could not
 To learn more about this situation and
 To learn more about this situation and how to fix it, please visit the web page mentioned above.
 </code></pre>
-<p>If you encounter the above certificate validation problem when using Xmake to install dependencies, you can try updating the curl certificate to fix it, or just disable certificate validation in the global configuration to bypass it.</p>
+<p>If you encounter the above certificate validation problem when using Xmake to install dependencies, you can try updating the cURL certificate to fix it, or just disable certificate validation in the global configuration to bypass it.</p>
 <pre><code class="lang-bash">$ xmake g --insecure-ssl=y
 </code></pre>
-<p>Of course, disabling certificate validation poses some security risks, but the good news is that packages in the xmake-repo repository have a strict sha256 checksum.<br>Even if the download is hijacked, it will eventually be detected by xmake&#39;s sha256 checksum and treated as an invalid download.</p>
+<p>Of course, disabling certificate validation poses some security risks, but the good news is that packages in the xmake-repo repository have a strict sha256 checksum. Even if the download is hijacked, it will eventually be detected by xmake&#39;s sha256 checksum and treated as an invalid download.</p>
 </article>
 </body>
 </html>

@@ -90,16 +90,15 @@
   line-height: 1;
 }
 </style>
-    <p>Set compilation configuration before building project with command <code>xmake f|config</code>.</p>
-<p>And if you want to known more options, please run: <code>xmake f --help</code>。</p>
+    <h1 id="configuration">Configuration</h1>
+<p>Set compilation configuration before building project with command <code>xmake f|config</code>. If you want to known more options, please run: <code>xmake f --help</code>。</p>
 <p><p class="tip"><br>    You can use short or long command option, for example: <br><br>    <code>xmake f</code> or <code>xmake config</code>.<br><br>    <code>xmake f -p linux</code> or <code>xmake config --plat=linux</code>.<br></p>
 
 </p>
-<h2 id="targetplatforms">Target Platforms</h2>
 <h3 id="currenthost">Current Host</h3>
 <pre><code class="lang-bash">$ xmake
 </code></pre>
-<p>!> XMake will detect the current host platform automatically and build project.</p>
+<p>!> Xmake will detect the current host platform automatically and build project.</p>
 <h3 id="linux">Linux</h3>
 <pre><code class="lang-bash">$ xmake f -p linux [-a i386|x86_64]
 $ xmake
@@ -126,23 +125,22 @@ $ xmake f -p appletvos --appledev=simulator
 <h3 id="maccatalyst">Mac Catalyst</h3>
 <p>We can also specify to build Mac Catalyst programs.</p>
 <pre><code class="lang-bash">$ xmake f --appledev=catalyst
-`
 </code></pre>
 <h3 id="windows">Windows</h3>
 <pre><code class="lang-bash">$ xmake f -p windows [-a x86|x64]
 $ xmake
 </code></pre>
-<h3 id="mingw">Mingw</h3>
+<h3 id="mingw">MinGW</h3>
 <p>In addition to supporting Msys2/MingW, MingW for macOS/linux, xmake also supports the llvm-mingw tool chain, which can switch the arm/arm64 architecture to compile.</p>
 <pre><code class="lang-bash">$ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64|arm|arm64]
 $ xmake
 </code></pre>
-<h3 id="wasmwebassembly">Wasm (WebAssembly)</h3>
+<h3 id="wasmwebassembly">WASM (WebAssembly)</h3>
 <p>This platform is used to compile WebAssembly programs (emcc toolchain is used internally). Before switching this platform, we need to enter the Emscripten toolchain environment to ensure that emcc and other compilers are available.</p>
 <pre><code class="lang-bash">$ xmake f -p wasm
 $ xmake
 </code></pre>
-<p>xmake also supports Qt for wasm compilation, you only need:</p>
+<p>Xmake also supports Qt for wasm compilation, you only need:</p>
 <pre><code class="lang-bash">$ xmake f -p wasm [--qt=~/Qt]
 $ xmake
 </code></pre>
@@ -179,16 +177,16 @@ arm-linux-armeabi-strip
 </code></pre><p>The <code>arm-linux-armeabi-</code> prefix is cross, which is used to mark the target platform and architecture, and is mainly used to distinguish it from the host&#39;s own gcc/clang.</p>
 <p>The gcc/g++ inside is the c/c++ compiler, which can also be used as a linker. When linking, it will internally call ld to link, and automatically add some c++ libraries.<br>Cpp is a preprocessor, as is an assembler, ar is used to generate a static library, and strip is used to crop out some symbol information, making the target program smaller. nm is used to view the list of exported symbols.</p>
 <h3 id="automaticdetectionandcompilation">Automatic detection and compilation</h3>
-<p>If our cross-compilation tool chain is the above structure, xmake will automatically detect and identify the structure of the SDK, extract the cross and include/lib path location, users usually do not need to do additional parameter settings, just configure the SDK The root directory can be compiled, for example:</p>
+<p>If our cross-compilation tool chain is the above structure, Xmake will automatically detect and identify the structure of the SDK, extract the cross and include/lib path location, users usually do not need to do additional parameter settings, just configure the SDK The root directory can be compiled, for example:</p>
 <pre><code class="lang-bash">$ xmake f -p cross --sdk=/home/toolchains_sdkdir
 $ xmake
 </code></pre>
 <p>Among them, <code>-p cross</code> is used to specify that the current platform is a cross-compilation platform, and <code>--sdk=</code> is used to specify the root directory of the cross toolchain.</p>
-<p>Note: We can also specify the <code>-p linux</code> platform to configure cross compilation, the effect is the same, the only difference is that the name of the linux platform is additionally identified, which is convenient for xmake.lua to determine the platform by<code>is_plat ("linux")</code> .</p>
-<p>At this time, xmake will automatically detect the prefix name cross of gcc and other compilers: <code>arm-linux-armeabi-</code>, and when compiling, it will also automatically add search options for<code>link library</code> and <code>header files</code> :</p>
+<p>Note: We can also specify the <code>-p linux</code> platform to configure cross compilation, the effect is the same, the only difference is that the name of the linux platform is additionally identified, which is convenient for <code>xmake.lua</code> to determine the platform by<code>is_plat ("linux")</code> .</p>
+<p>At this time, Xmake will automatically detect the prefix name cross of gcc and other compilers: <code>arm-linux-armeabi-</code>, and when compiling, it will also automatically add search options for<code>link library</code> and <code>header files</code> :</p>
 <pre><code>-I/home/toolchains_sdkdir/include
 -L/home/toolchains_sdkdir/lib
-</code></pre><p>These are handled automatically by xmake, there is no need to configure them manually.</p>
+</code></pre><p>These are handled automatically by Xmake, there is no need to configure them manually.</p>
 <h3 id="manuallyconfigureandcompile">Manually configure and compile</h3>
 <p>If the above automatic detection fails to completely compile for some tool chains, you need to manually set some configuration parameters related to cross compilation to adjust to these special tool chains. I will explain how to configure them one by one.</p>
 <h3 id="settoolchainbindirectory">Set toolchain bin directory</h3>
@@ -199,7 +197,7 @@ $ xmake
 $ xmake
 </code></pre>
 <h3 id="settoolprefixforcrosstoolchain">Set tool prefix for cross toolchain</h3>
-<p>Like aarch64-linux-android-, usually if you configure --sdk or --bin, xmake will automatically detect it, you don&#39;t need to set it manually.</p>
+<p>Like aarch64-linux-android-, usually if you configure --sdk or --bin, Xmake will automatically detect it, you don&#39;t need to set it manually.</p>
 <p>But for some very special tool chains, if there are multiple cross prefix tool bins in a directory at the same time, you need to manually set this configuration to distinguish which bin you need to choose.</p>
 <p>For example, there are two different compilers in the bin directory of toolchains:</p>
 <pre><code>/opt/bin
@@ -215,12 +213,12 @@ $ xmake
 <p>Of course, we can also specify the full path of the compiler.</p>
 <p><code>--cc</code> is used to specify the name of the c compiler, and <code>--cxx</code> is used to specify the name of the c++ compiler.</p>
 <p>Note: If the cc/cxx environment variable exists, the value specified in the current environment variable will be used first.</p>
-<p>If the specified compiler name is not a name recognized by xmake (with gcc, clang, etc.), then the compiler tool detection will fail.</p>
+<p>If the specified compiler name is not a name recognized by Xmake (with gcc, clang, etc.), then the compiler tool detection will fail.</p>
 <p>At this time we can pass:</p>
 <pre><code class="lang-bash">xmake f --cxx=clang++@/home/xxx/c++mips.exe
 </code></pre>
 <p>Set the c ++ mips.exe compiler as the clang ++-like way to compile.</p>
-<p>That is to say, while specifying the compiler as <code>c++mips.exe</code>, tell xmake that it is basically the same as clang ++ usage and parameter options.</p>
+<p>That is to say, while specifying the compiler as <code>c++mips.exe</code>, tell Xmake that it is basically the same as clang ++ usage and parameter options.</p>
 <h3 id="setthecclinker">Set the c/c++ linker</h3>
 <p>If you want to continue to subdivide and select the linker, continue to add related linker options, for example:</p>
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
@@ -257,7 +255,7 @@ $ xmake
     set_toolchains("clang", "yasm")
 </code></pre>
 <h4 id="set_toolset">set_toolset</h4>
-<p>If you feel that it is more complicated to configure through the command line each time, some configurations can be pre-configured in xmake.lua to simplify the command configuration. For example, the specification of the compiler can be set individually for each target through set_toolset.</p>
+<p>If you feel that it is more complicated to configure through the command line each time, some configurations can be pre-configured in <code>xmake.lua</code> to simplify the command configuration. For example, the specification of the compiler can be set individually for each target through set_toolset.</p>
 <pre><code class="lang-lua">target("test")
     set_kind("binary")
     set_toolset("cxx", "clang")
@@ -271,19 +269,19 @@ set_config("sdk", "/home/xxx/tooksdk")
 set_config("cc", "gcc")
 set_config("ld", "g++")
 </code></pre>
-<p>However, we can still use xmake f --name = value` to modify the default configuration in xmake.lua.</p>
+<p>However, we can still use <code>xmake f --name = value</code> to modify the default configuration in <code>xmake.lua</code>.</p>
 <h3 id="custombuildplatform">Custom build platform</h3>
-<p>If the target program has a corresponding platform to be specified after a cross tool chain is compiled, and it needs to be configured in xmake.lua according to different cross compilation platforms, and some additional compilation parameters need to be configured, then the <code>-p cross</code> setting above Can not meet the demand.</p>
+<p>If the target program has a corresponding platform to be specified after a cross tool chain is compiled, and it needs to be configured in <code>xmake.lua</code> according to different cross compilation platforms, and some additional compilation parameters need to be configured, then the <code>-p cross</code> setting above Can not meet the demand.</p>
 <p>In fact, the <code>-p/-plat=</code> parameter can also be set to other custom values. You only need to maintain the corresponding relationship with <code>is_plat</code>. All non-built-in platform names will default to cross-compilation mode, for example:</p>
 <pre><code class="lang-bash">$ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/
 $ xmake
 </code></pre>
-<p>We passed in the myplat custom platform name as the current cross-toolchain compilation platform, and then we set the corresponding settings for this platform in xmake.lua:</p>
+<p>We passed in the myplat custom platform name as the current cross-toolchain compilation platform, and then we set the corresponding settings for this platform in <code>xmake.lua</code>:</p>
 <pre><code class="lang-lua">if is_plat("myplat") then
     add_defines("TEST")
 end
 </code></pre>
-<p>In this way, xmake can be easily extended to deal with various compilation platforms, users can extend their own support for freebsd, netbsd, sunos and other cross-compiling platforms.</p>
+<p>In this way, Xmake can be easily extended to deal with various compilation platforms, users can extend their own support for freebsd, netbsd, sunos and other cross-compiling platforms.</p>
 <p>I excerpted a cross-compilation configuration written before porting libuv, and intuitively feel:</p>
 <pre><code class="lang-lua">-- for gragonfly/freebsd/netbsd/openbsd platform
 if is_plat("gragonfly", "freebsd", "netbsd", "openbsd") then
@@ -330,7 +328,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f --toolchain=llvm --sdk=/xxx/llvm
 $ xmake
 </code></pre>
-<p>The specific tool chains supported by xmake can be viewed with the following command:</p>
+<p>The specific tool chains supported by Xmake can be viewed with the following command:</p>
 <pre><code class="lang-bash">$ xmake show -l toolchains
 xcode         Xcode IDE
 vs            VisualStudio IDE
@@ -352,7 +350,7 @@ envs          Environment variables toolchain
 fasm          Flat Assembler
 </code></pre>
 <h4 id="customtoolchain">Custom toolchain</h4>
-<p>In addition, we can also customize the toolchain in xmake.lua, and then specify the switch through <code>xmake f --toolchain=myclang</code>, for example:</p>
+<p>In addition, we can also customize the toolchain in <code>xmake.lua</code>, and then specify the switch through <code>xmake f --toolchain=myclang</code>, for example:</p>
 <pre><code class="lang-lua">toolchain("myclang")
     set_kind("standalone")
     set_toolset("cc", "clang")
@@ -371,8 +369,8 @@ fasm          Flat Assembler
 <p>For details about this piece, you can go to the <a href="/mirror/manual/custom_toolchain.html">Custom Toolchain</a>.</p>
 <p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/780">#780</a></p>
 <h4 id="mingwtoolchain">MingW Toolchain</h4>
-<p>Compiling with the mingw toolchain is actually cross-compilation, but because this is more commonly used, xmake specifically adds a mingw platform to quickly handle compilation using the mingw toolchain.</p>
-<p>Therefore, xmake&#39;s toolchain detection for mingw will be more perfect. Under macos, basically even the sdk path does not need to be configured, and can be directly detected, only need to switch to the mingw platform to compile.</p>
+<p>Compiling with the mingw toolchain is actually cross-compilation, but because this is more commonly used, Xmake specifically adds a mingw platform to quickly handle compilation using the mingw toolchain.</p>
+<p>Therefore, Xmake&#39;s toolchain detection for mingw will be more perfect. Under macos, basically even the sdk path does not need to be configured, and can be directly detected, only need to switch to the mingw platform to compile.</p>
 <pre><code class="lang-bash">$ xmake f -p mingw
 $ xmake -v
 configure
@@ -649,7 +647,7 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p linux --sdk=/home/toolchains_sdkdir
 $ xmake
 </code></pre>
-<p>xmake will detect the prefix: arm-linux- and add the include and library search directory automatically.</p>
+<p>Xmake will detect the prefix: arm-linux- and add the include and library search directory automatically.</p>
 <pre><code>-I/home/toolchains_sdkdir/include -L/home/toolchains_sdkdir/lib
 </code></pre><h4 id="bin">--bin</h4>
 <ul>
@@ -757,24 +755,24 @@ $ xmake
 <h2 id="importandexportconfiguration">Import and export configuration</h2>
 <p>After 2.5.5, we can also import and export the configured configuration set to facilitate rapid configuration migration.</p>
 <h3 id="exportconfiguration">Export configuration</h3>
-<pre><code class="lang-console">$ xmake f --export=/tmp/config.txt
+<pre><code class="lang-bash">$ xmake f --export=/tmp/config.txt
 $ xmake f -m debug --xxx=y --export=/tmp/config.txt
 </code></pre>
 <h3 id="importconfiguration">Import configuration</h3>
-<pre><code class="lang-console">$ xmake f --import=/tmp/config.txt
+<pre><code class="lang-bash">$ xmake f --import=/tmp/config.txt
 $ xmake f -m debug --xxx=y --import=/tmp/config.txt
 </code></pre>
 <h3 id="exportconfigurationwithmenu">Export configuration (with menu)</h3>
-<pre><code class="lang-console">$ xmake f --menu --export=/tmp/config.txt
+<pre><code class="lang-bash">$ xmake f --menu --export=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
 </code></pre>
 <h3 id="importconfigurationwithmenu">Import configuration (with menu)</h3>
-<pre><code class="lang-console">$ xmake f --menu --import=/tmp/config.txt
+<pre><code class="lang-bash">$ xmake f --menu --import=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
 </code></pre>
 <h2 id="environmentvariables">Environment variables</h2>
 <p>We can execute the following command to get all the environment variables used by xmake and the currently set values.</p>
-<pre><code class="lang-console">$ xmake show -l envs
+<pre><code class="lang-bash">$ xmake show -l envs
 XMAKE_RAMDIR Set the ramdisk directory.
                         <empty>
 XMAKE_GLOBALDIR Set the global config directory of xmake.
@@ -860,7 +858,7 @@ XMAKE_LOGFILE Set the log output file path.
 </tr>
 </tbody>
 </table>
-<p>Generally, users don&#39;t need to set them, xmake will automatically detect the color range supported by the user terminal. If the user doesn&#39;t want to output colors, they can set nocolor to disable them globally.</p>
+<p>Generally, users don&#39;t need to set them, Xmake will automatically detect the color range supported by the user terminal. If the user doesn&#39;t want to output colors, they can set nocolor to disable them globally.</p>
 <p>Or use <code>xmake g --theme=plain</code> to disable it globally.</p>
 <h3 id="xmake_pkg_installdir">XMAKE_PKG_INSTALLDIR</h3>
 <ul>
@@ -873,21 +871,21 @@ XMAKE_LOGFILE Set the log output file path.
 <li>Set the cache directory of dependent packages</li>
 </ul>
 <p>The default path is in the <code>~/.xmake/cache</code> directory, which stores various cache files during the package installation process, which takes up more storage space, and the user can also set it separately.</p>
-<p>Of course, xmake will automatically clean up all cache files of the previous month every month.</p>
+<p>Of course, Xmake will automatically clean up all cache files of the previous month every month.</p>
 <h3 id="xmake_program_dir">XMAKE_PROGRAM_DIR</h3>
 <ul>
-<li>Set the script directory of xmake</li>
+<li>Set the script directory of Xmake</li>
 </ul>
-<p>All lua scripts of xmake are installed with the installer. By default, they are in the installation directory. However, if you want to switch to the script directory you downloaded to facilitate local modification and debugging, you can set the this variable.</p>
-<p>If you want to view the script directory currently used by xmake, you can execute:</p>
+<p>All lua scripts of Xmake are installed with the installer. By default, they are in the installation directory. However, if you want to switch to the script directory you downloaded to facilitate local modification and debugging, you can set the this variable.</p>
+<p>If you want to view the script directory currently used by Xmake, you can execute:</p>
 <pre><code class="lang-console">$ xmake l os.programdir
 /Users/ruki/.local/share/xmake
 </code></pre>
 <h3 id="xmake_profile">XMAKE_PROFILE</h3>
 <p>-Turn on performance analysis</p>
-<p>This is only open to the developers of xmake, and is used to analyze the time-consuming situation of xmake running and track the calling process.</p>
+<p>This is only open to the developers of Xmake, and is used to analyze the time-consuming situation of Xmake running and track the calling process.</p>
 <p>It has two modes, a performance analysis mode, which displays the time-consuming order of each function.</p>
-<pre><code class="lang-console">$ XMAKE_PROFILE=perf xmake
+<pre><code class="lang-bash">$ XMAKE_PROFILE=perf xmake
 [25%]: cache compiling.release src/main.cpp
 [50%]: linking.release test
 [100%]: build ok!
@@ -901,8 +899,8 @@ XMAKE_LOGFILE Set the log output file path.
  0.003, 1.33%, 48, delay: @programdir/core/base/timer.lua: 60
  0.002, 1.02%, 24, is_suspended: @programdir/core/base/scheduler.lua: 86
 </code></pre>
-<p>The other is to track the running process of xmake:</p>
-<pre><code class="lang-console">$ XMAKE_PROFILE=trace xmake
+<p>The other is to track the running process of Xmake:</p>
+<pre><code class="lang-bash">$ XMAKE_PROFILE=trace xmake
 func: @programdir/core/base/scheduler.lua: 457
 is_suspended: @programdir/core/base/scheduler.lua: 86
 status: @programdir/core/base/scheduler.lua: 71
@@ -914,7 +912,7 @@ length: @programdir/core/base/heap.lua: 120
 <ul>
 <li>Set up a global configuration file</li>
 </ul>
-<p>We can set up some xmakerc.lua global configuration files, and introduce them globally when users compile the project, such as global introduction of some user-defined help scripts, tool chains and so on.</p>
+<p>We can set up some <code>xmakerc.lua</code> global configuration files, and introduce them globally when users compile the project, such as global introduction of some user-defined help scripts, tool chains and so on.</p>
 <pre><code class="lang-console">$ export XMAKE_RCFILES=xmakerc.lua
 $ xmake
 </code></pre>
@@ -923,16 +921,18 @@ $ xmake
 <ul>
 <li>Set the log file path</li>
 </ul>
-<p>By default, xmake will echo the output to the terminal. We can turn on the automatic log storage to the specified file by setting this path, but it will not affect the normal echo output of the terminal.</p>
+<p>By default, Xmake will echo the output to the terminal. We can turn on the automatic log storage to the specified file by setting this path, but it will not affect the normal echo output of the terminal.</p>
 <h3 id="xmake_main_repo">XMAKE_MAIN_REPO</h3>
 <ul>
 <li>Set the official package master warehouse address</li>
 </ul>
-<p>xmake has built-in three main warehouse addresses by default, they are exactly the same, xmake will choose the best address to use according to the current network status.</p>
-<pre><code>https://github.com/xmake-io/xmake-repo.git
-https://gitlab.com/tboox/xmake-repo.git
-https://gitee.com/tboox/xmake-repo.git
-</code></pre><p>However, if xmake chooses the wrong one, it may cause the warehouse download to fail. Through this environment variable, we can set and use the specified warehouse address by ourselves instead of automatically selecting it.</p>
+<p>Xmake has built-in three main warehouse addresses by default, they are exactly the same, Xmake will choose the best address to use according to the current network status.</p>
+<ol>
+<li><a href="https://github.com/xmake-io/xmake-repo.git">https://github.com/xmake-io/xmake-repo.git</a></li>
+<li><a href="https://gitlab.com/tboox/xmake-repo.git">https://gitlab.com/tboox/xmake-repo.git</a></li>
+<li><a href="https://gitee.com/tboox/xmake-repo.git">https://gitee.com/tboox/xmake-repo.git</a></li>
+</ol>
+<p>However, if Xmake chooses the wrong one, it may cause the warehouse download to fail. Through this environment variable, we can set and use the specified warehouse address by ourselves instead of automatically selecting it.</p>
 <pre><code class="lang-console">$ export XMAKE_MAIN_REPO=https://github.com/xmake-io/xmake-repo.git
 </code></pre>
 <h3 id="xmake_binary_repo">XMAKE_BINARY_REPO</h3>
@@ -950,19 +950,18 @@ https://gitee.com/tboox/xmake-repo.git
 <pre><code class="lang-console">$ export XMAKE_THEME=plain
 </code></pre>
 <h3 id="xmake_stats">XMAKE_STATS</h3>
-<p>-Enable or disable user statistics</p>
-<p>Since xmake is still in the early stages of development, we need to know the approximate user growth in order to provide us with the motivation to continue to update xmake.</p>
-<p>Therefore, xmake defaults to the first project build every day, and it will automatically git clone an empty warehouse in the background process: <a href="https://github.com/xmake-io/xmake-stats">https://github.com/xmake-io/xmake-stats</a></p>
+<ul>
+<li>Enable or disable user statistics</li>
+</ul>
+<p>Since Xmake is still in the early stages of development, we need to know the approximate user growth in order to provide us with the motivation to continue to update Xmake. Therefore, Xmake defaults to the first project build every day, and it will automatically git clone an empty warehouse in the background process: <a href="https://github.com/xmake-io/xmake-stats">https://github.com/xmake-io/xmake-stats</a></p>
 <p>Then borrow the Traffic statistics chart provided by github itself to get the approximate number of users.</p>
-<p>For each project, we will only count once a day, and will not disclose any user privacy, because there is only one additional git clone operation. In addition, we cloned an empty warehouse, which will not consume much user traffic.</p>
-<p>Of course, not every user wants to do this, user has right to disable this behavior, we only need to set:</p>
-<pre><code class="lang-console">export XMAKE_STATS=n
+<p>For each project, we will only count once a day, and will not disclose any user privacy, because there is only one additional git clone operation. In addition, we cloned an empty warehouse, which will not consume much user traffic. Of course, not every user wants to do this, user has right to disable this behavior, we only need to set:</p>
+<pre><code class="lang-bash">export XMAKE_STATS=false
 </code></pre>
 <p>It can be completely disabled, and we will also automatically disable this behavior on ci.</p>
 <p>When will it be removed?</p>
-<p>This behavior will not exist forever. When xmake has enough users, or there are other better statistical methods, we will consider removing the relevant statistical code.</p>
-<p>Of course, if a lot of user feedback is unwilling to accept it, we will also consider removing it.</p>
-<p>For related issues about this, see: <a href="https://github.com/xmake-io/xmake/issues/1795">#1795</a></p>
+<p>This behavior will not exist forever. When Xmake has enough users, or there are other better statistical methods, we will consider removing the relevant statistical code. Of course, if a lot of user feedback is unwilling to accept it, we will also consider removing it.</p>
+<p>For related issues about this, see <a href="https://github.com/xmake-io/xmake/issues/1795">#1795</a> and <a href="https://github.com/orgs/xmake-io/discussions/1802">#1803</a>.</p>
 </article>
 </body>
 </html>

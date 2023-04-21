@@ -90,37 +90,37 @@
   line-height: 1;
 }
 </style>
-    <p>we need not write any make-like file (xmake.lua, makefile.am, cmakelist.txt, etc.) and also build it directly.</p>
-<p>It will scan all source files and generate xmake.lua automatically for building project.</p>
-<p>And xmake will detect &#39;main&#39; function in source file in order to distinguish between static libraries and executable programs.</p>
-<p>(Currently, only projects with single-level directory are supported)</p>
-<h3 id="usedscenes">Used scenes</h3>
+    <h1 id="autogeneration">Autogeneration</h1>
+<p>Xmake supports the autogeneration of project files, including it&#39;s own! While it won&#39;t work for every project (as is the nature of these things), it should work for basic and medium complexity projects. You do not need to write any "make-like" file (<code>xmake.lua</code>, <code>makefile</code>, <code>CMakeLists.txt</code>, etc.).</p>
+<p>The fool will scan all of the source files and generate an <code>xmake.lua</code> automatically based on your product structure. Xmake will try to detect a <code>main</code> function in the source files to distinguish between the source code for libraries and executable programs.</p>
+<p>If autogeneration succeeds, you should still look through the generated <code>xmake.lua</code> and make any changes you need, and make sure everything worked well.</p>
+<p>Currently, projects that use directories in multiple levels are <em>not</em> supported. Appologies.</p>
+<h2 id="usecases">Use cases</h2>
 <ol>
 <li>Temporarily quickly compile and run some scattered test code</li>
-<li>Try porting and compiling other open source libraries</li>
-<li>Quickly create a new xmake project based on existing code</li>
+<li>A starting point to porting and compiling open source code</li>
+<li>Quickly create a new Xmake project based on existing code</li>
 </ol>
-<h3 id="howtouseit">How to use it</h3>
-<p>Execute xmake directly in the directory with the source code (no xmake.lua), and follow the prompts:</p>
+<h2 id="howtouseit">How to use it</h2>
+<p>Execute Xmake directly in the directory with the source code (no xmake.lua), and follow the prompts:</p>
 <pre><code class="lang-bash">$ xmake
 note: xmake.lua not found, try generating it (pass -y or --confirm=y/n/d to skip confirm)?
 please input: n (y/n)
 y
 </code></pre>
-<p>In addition, when there are other build system identification files (such as CMakeLists.txt), the process of automatically generating xmake.lua will not be triggered, but <a href="#Automatically detect build system and compile">Automatically detect build system and compile</a> will be triggered first. If you want to force trigger the process of automatically generating xmake.lua file, you can run:</p>
+<p>In addition, when there are other build system identification files (such as <code>CMakeLists.txt</code>), the process of automatically generating an <code>xmake.lua</code> file will not be triggered. Instead, it will attemp to <a href="#Automatically detect build system and compile">automatically detect build system and compile</a> the code. If you want to force trigger the process of automatically generating <code>xmake.lua</code> file, you can run:</p>
 <pre><code class="lang-bash">$ xmake f -y
 </code></pre>
 <h3 id="compileopensourcelibraries">Compile open source libraries</h3>
-<p>Although this approach has some limitations, but it is sufficient to complie and run some temporary codes for testing. </p>
-<p>For example, we downloaded a zlib-1.2.10 source and want to compile it.</p>
-<p>We only need to enter the zlib source directory and run the following command:</p>
+<p>Although this approach has some limitations, but it is already sufficient to generate for existing libraries.</p>
+<p>For example, if you download the source code for zlib-1.2.10 and want to compile it, you only need to enter the zlib source directory and run the following command:</p>
 <pre><code class="lang-bash">$ cd zlib-1.2.10
 $ xmake
 note: xmake.lua not found, try generating it (pass -y or --confirm=y/n/d to skip confirm)?
 please input: n (y/n)
 y
 </code></pre>
-<p>It&#39;s done, the output results: </p>
+<p>It&#39;s done! the output results:</p>
 <pre><code>target(zlib-1.2): static
     [+]: ./adler32.c
     [+]: ./compress.c
@@ -198,10 +198,8 @@ clean ok!
 [93%]: cache compiling.release ./zutil.c
 [100%]: archiving.release libzlib-1.2.a
 build ok!👌
-</code></pre><p>Xmake will scan the current directory to detect all source codes and it do not found main function.</p>
-<p>So it should be static library project and we build it as a static library: libzlib-1.2.a</p>
-<p>We did not write any make-like files (xmake.lua, ..) and did not use the makefile of zlib project.</p>
-<p>It is compiled directly and a xmake.lua file was generated which we can edit this xmake.lua to build more complicated project. </p>
+</code></pre><p>Xmake will scan the current directory to detect all source codes and it do not found main function. As such, detect that it is a static library, and thus it will build it as a static library (with an output/artifact of <code>libzlib-1.2.a</code>).</p>
+<p>We did not write any make-like files (Xmake.lua, ..) and did not use the makefile of zlib project. Isn&#39;t that neat? It is compiled directly and a <code>xmake.lua</code> file was generated which we can edit this xmake.lua to build more complicated project.</p>
 <p>The content of the generated xmake.lua:</p>
 <pre><code class="lang-lua">-- define target
 target("zlib-1.2")
@@ -226,28 +224,40 @@ target("zlib-1.2")
     add_files("./uncompr.c")
     add_files("./zutil.c")
 </code></pre>
-<h3 id="fastlycompileandruntestingcode">Fastly compile and run testing code</h3>
-<p>For example, I want to write a simple program in the main.c only to echo &#39;hello world!&#39;.</p>
-<p>If we use gcc to compile and run it, need run two commands: </p>
-<pre><code class="lang-bash">gcc ./main.c -o demo
-./demo
+<p>As you can see, it&#39;s pretty human readable.</p>
+<h3 id="compileandruntestingcodefast">Compile and run testing code... fast!</h3>
+<p>Let&#39;s say you want to write a simple program, with one source file (<code>main.c</code>), solely to print "Hello, world!" to stdout.</p>
+<pre><code class="lang-c">/* main.c */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    printf("Hello, world!");
+
+    return EXIT_SUCCESS;
+}
 </code></pre>
-<p>If we use xmake to run it, only need run:</p>
-<pre><code class="lang-bash">xmake run
+<p>If we use GCC to compile and run it, need run two commands:</p>
+<pre><code class="lang-bash">$ gcc ./main.c -o main
+$ ./main
 </code></pre>
-<p>Or</p>
-<pre><code class="lang-bash">xmake r
+<p>If we use xmake to run it, only need to run:</p>
+<pre><code class="lang-bash">$ xmake run
 </code></pre>
-<p>It&#39;s done, the output results is:</p>
-<pre><code>hello world!
-</code></pre><p>If we have a lot of code files, need also run only one command:</p>
-<pre><code class="lang-bash">xmake run
+<p>Or even:</p>
+<pre><code class="lang-bash">$ xmake r
 </code></pre>
-<p>It&#39;s so easy and convenient.</p>
+<p>As we expect, we see...</p>
+<pre><code>Hello, world!
+</code></pre><p>...printed to the console! Even if we have a lot of source files, you only need to run one command:</p>
+<pre><code class="lang-bash">$ xmake run
+</code></pre>
+<p>How easy and convenient!</p>
 <h3 id="multilanguagesupport">Multi-language support</h3>
-<p>This feature of code detection and real-time compilation not only supports c/c++, also supports objc/swift<br>and it will support golang in future.</p>
-<p>For example, we downloaded a ios open source framework code &#39;fmdb&#39;:</p>
-<pre><code>.
+<p>This feature of autogeneration of project files not only supports C/C++, also supports Objective-C and Swift, and it will support Go in future. For example, if you download the <code>fmdb</code> library, an iOS library which wraps SQLite:</p>
+<pre><code># Files:
+.
 ├── FMDB.h
 ├── FMDatabase.h
 ├── FMDatabase.m
@@ -259,11 +269,10 @@ target("zlib-1.2")
 ├── FMDatabaseQueue.m
 ├── FMResultSet.h
 └── FMResultSet.m
-</code></pre><p>There are no any make-like files in it&#39;s project directory.</p>
-<p>We uses xmake to build it directly as a ios static library:</p>
+</code></pre><p>You can see that there aren&#39;t any make-like files in the project directory. "Whatever will we do?" I think you know. We can use Xmake to build it directly as a iOS static library:</p>
 <pre><code class="lang-bash">$ xmake f -p iphoneos; xmake
 </code></pre>
-<p>The output results are:</p>
+<p>The output is:</p>
 <pre><code>xmake.lua not found, scanning files ..
 target(FMDB): static
     [+]: ./FMDatabase.m
@@ -318,9 +327,10 @@ clean ok!
 [80%]: cache compiling.release ./FMResultSet.m
 [100%]: archiving.release libFMDB.a
 build ok!👌
-</code></pre><h3 id="compilemultipleexecutablesatthesametime">Compile multiple executables at the same time</h3>
-<pre><code class="lang-bash">$ cd jpeg-6b
-$ xmake
+</code></pre><p>and of course we also get a <code>libFMDB.a</code> static library.</p>
+<h3 id="compilemultipleexecutablesatthesametime">Compile multiple executables at the same time</h3>
+<p>Let&#39;s say you downloaded the "sixth public release of the Independent JPEG Group&#39;s free JPEG software", and wanted to build it. You could do it yourself, or you could run:</p>
+<pre><code class="lang-bash">xmake
 </code></pre>
 <p>The output results are:</p>
 <pre><code>xmake.lua not found, scanning files ..
@@ -540,10 +550,14 @@ target(rdjpgcom): binary
     [+]: ./rdjpgcom.c
 target(wrjpgcom): binary
     [+]: ./wrjpgcom.c
-</code></pre><h4 id="manualconfiguration">Manual configuration</h4>
-<p>we need add them before compiling if the source code requires some special compiler options</p>
-<p>For example:</p>
-<pre><code class="lang-bash">$ xmake f --cxflags="" --ldflags="" --includedirs="" --linkdirs=""; xmake
+</code></pre><p>Neat!</p>
+<h3 id="manualconfiguration">Manual configuration</h3>
+<p>If we want to add some manual configuration options. we need add them before compiling. For example:</p>
+<pre><code class="lang-bash"># Specify our options
+$ xmake f --cxflags="--cxx-flag" --ldflags="--link-flag" --includedirs="include/" --linkdirs="lib/"
+
+# Build!
+$ xmake
 </code></pre>
 </article>
 </body>

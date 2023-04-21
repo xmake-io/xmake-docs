@@ -90,9 +90,9 @@
   line-height: 1;
 }
 </style>
-    <p>Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users&#39; habits and needs.</p>
-<p>Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy, which is open to users to a certain degree of configurability.</p>
-<p>It is mainly configured through the <a href="https://xmake.io/#/manual/project_target?id=targetset_policy">set_policy</a> interface.</p>
+    <h1 id="buildpolicies">Build policies</h1>
+<p>Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users&#39; habits and needs.</p>
+<p>Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy, which is open to users to a certain degree of configurability. It is mainly configured through the <a href="https://xmake.io/#/manual/project_target?id=targetset_policy">set_policy</a> interface.</p>
 <p>The usage is as follows:</p>
 <pre><code class="lang-lua">set_policy("check.auto_ignore_flags", false)
 </code></pre>
@@ -102,8 +102,7 @@
 </code></pre>
 <p>!> In addition, if the set policy name is invalid, xmake will also have a warning prompt.</p>
 <p>If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:</p>
-<pre><code class="lang-bash">$ xmake l core.project.policy.policies
-{
+<pre><code class="lang-bash">{
   "check.auto_map_flags" = {
     type = "boolean",
     description = "Enable map gcc flags to the current compiler and linker automatically.",
@@ -135,9 +134,8 @@
 <p>This is usually very useful. Like some optional compilation flags, it can be compiled normally even if it is not supported, but it is forced to set up. When compiling, other users may have a certain degree of difference due to the different support of the compiler. The compilation failed.</p>
 <p>However, because automatic detection does not guarantee 100% reliability, sometimes there will be a certain degree of misjudgment, so some users do not like this setting (especially for cross-compilation tool chains, which are more likely to fail).</p>
 <p>At present, if the detection fails in v2.3.4, there will be a warning prompt to prevent users from lying inexplicably, for example:</p>
-<pre><code class="lang-bash">warning: add_ldflags("-static") is ignored, please pass `{force = true}` or call `set_policy("check.auto_ignore_flags", false)` if you want to set it.
-</code></pre>
-<p>According to the prompt, we can analyze and judge ourselves whether it is necessary to set this flags. One way is to pass:</p>
+<pre><code>warning: add_ldflags("-static") is ignored, please pass `{force = true}` or call `set_policy("check.auto_ignore_flags", false)` if you want to set it.
+</code></pre><p>According to the prompt, we can analyze and judge ourselves whether it is necessary to set this flags. One way is to pass:</p>
 <pre><code class="lang-lua">add_ldflags("-static", {force = true})
 </code></pre>
 <p>To display the mandatory settings, skip automatic detection, which is an effective and fast way to deal with occasional flags failure, but for cross-compilation, if a bunch of flags settings cannot be detected, each set force Too tedious.</p>
