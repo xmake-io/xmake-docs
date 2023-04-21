@@ -627,4 +627,3 @@ This project exists thanks to all the people who have [contributed](CONTRIBUTING
 * [OpportunityLiu](https://github.com/OpportunityLiu): Improve cuda, tests and ci
 * [xq144](https://github.com/xq114): Improve `xrepo env shell`, and contribute a lot of packages to the [xmake-repo](https://github.com/xmake-io/xmake-repo) repository.
 * `enderger`: Helped smooth out the edges on the English translation of the README
-* [IsaccBarker](https://github.com/IsaccBarker): Smoothed English translation of Documentation pages
