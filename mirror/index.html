@@ -126,6 +126,20 @@
 </code></pre>
 <h3 id="otherinstallationmethods">Other installation methods</h3>
 <p>If you don&#39;t want to use the above scripts to install Xmake, visit the <a href="https://xmake.io/#/guide/installation">Installation Guide</a> for other installation methods (building from source, package managers, etc.).</p>
+<h2 id="simpleprojectdescription">Simple Project Description</h2>
+<pre><code class="lang-lua">target("console")
+    set_kind("binary")
+    add_files("src/*.c")
+</code></pre>
+<p>Creates a new target <code>console</code> of kind <code>binary</code>, and adds all the files ending in <code>.c</code> in the <code>src</code> directory.</p>
+<h2 id="packagedependences">Package dependences</h2>
+<pre><code class="lang-lua">add_requires("tbox 1.6.*", "zlib", "libpng ~1.6")
+</code></pre>
+<p>Adds a requirement of tbox v1.6, zlib (any version), and libpng v1.6.</p>
+<p>The official xmake package repository exists at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
+<p><p align="center"><br><img src="https://github.com/xmake-io/xmake-docs/raw/master/assets/img/index/package.gif" width="650px" /><br></p>
+
+</p>
 <h2 id="commandlineinterfacereference">Commandline interface reference</h2>
 <p>The below assumes you are currently in the project&#39;s root directory.</p>
 <h3 id="buildaproject">Build a project</h3>
@@ -403,16 +417,6 @@ $ xmake
 </tbody>
 </table>
 <h2 id="moreexamples">More Examples</h2>
-<h3 id="simpleprojectdescription">Simple Project Description</h3>
-<pre><code class="lang-lua">target("console")
-    set_kind("binary")
-    add_files("src/*.c")
-</code></pre>
-<p>Creates a new target <code>console</code> of kind <code>binary</code>, and adds all the files ending in <code>.c</code> in the <code>src</code> directory.</p>
-<h3 id="packagedependences">Package dependences</h3>
-<pre><code class="lang-lua">add_requires("tbox 1.6.*", "libtask", "libpng ~1.6")
-</code></pre>
-<p>Adds a requirement of tbox v1.6, libtask (any version), and libpng v1.6.</p>
 <h3 id="debugandreleaseprofiles">Debug and release profiles</h3>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 

@@ -63,6 +63,30 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 
 If you don't want to use the above scripts to install Xmake, visit the [Installation Guide](https://xmake.io/#/guide/installation) for other installation methods (building from source, package managers, etc.).
 
+## Simple Project Description
+
+```lua
+target("console")
+    set_kind("binary")
+    add_files("src/*.c")
+```
+
+Creates a new target `console` of kind `binary`, and adds all the files ending in `.c` in the `src` directory.
+
+## Package dependences
+
+```lua
+add_requires("tbox 1.6.*", "zlib", "libpng ~1.6")
+```
+
+Adds a requirement of tbox v1.6, zlib (any version), and libpng v1.6.
+
+The official xmake package repository exists at: [xmake-repo](https://github.com/xmake-io/xmake-repo)
+
+<p align="center">
+<img src="https://github.com/xmake-io/xmake-docs/raw/master/assets/img/index/package.gif" width="650px" />
+</p>
+
 ## Commandline interface reference
 
 The below assumes you are currently in the project's root directory.
@@ -321,24 +345,6 @@ Xmake's speed on is par with Ninja! The test project: [xmake-core](https://githu
 | cmake(gen+ninja) | 4.458s+1m54.868s | cmake(gen+ninja) | 0.988s+38.022s |
 
 ## More Examples
-
-### Simple Project Description
-
-```lua
-target("console")
-    set_kind("binary")
-    add_files("src/*.c")
-```
-
-Creates a new target `console` of kind `binary`, and adds all the files ending in `.c` in the `src` directory.
-
-### Package dependences
-
-```lua
-add_requires("tbox 1.6.*", "libtask", "libpng ~1.6")
-```
-
-Adds a requirement of tbox v1.6, libtask (any version), and libpng v1.6.
 
 ### Debug and release profiles
 
