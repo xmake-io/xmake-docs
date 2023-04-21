@@ -1,20 +1,22 @@
+# Unity building
 
-We know that C++ code compilation speed is usually very slow, because each code file needs to parse the imported header file.
+C++ compilation speed is usually very slow, because each file most likely includes headers, which include more headers, which include more headers, etc... In the end, a single C++ source file can exceed megabytes, all of which must be parsed for each file. That's a lot of duplicate work!
 
-With Unity Build, we accelerate the compilation of the project by combining multiple cpp files into one. The main benefit is to reduce the repetitive work of parsing and compiling the contents of the header files contained in multiple source files. The contents of the header files are usually It accounts for most of the code in the source file after preprocessing.
+With unity builds, we accelerate the compilation of the project by combining multiple cpp files into one. The main benefit is to reduce the repetitive work of parsing and compiling the contents of the header files contained in multiple source files. The contents of the header files are usually It accounts for most of the code in the source file after preprocessing.
 
 Unity build also reduces the overhead caused by having a large number of small source files by reducing the number of object files created and processed by the compilation chain, and allows inter-procedural analysis and optimization across files that form a unified build task (similar to optimization during effect linking ).
 
-It can greatly improve the compilation speed of C/C++ code, usually by 30%. However, depending on the complexity of the project, the benefits it brings depend on the situation of the project.
-
-xmake has also supported this build mode in v2.5.9. For related issues, see [#1019](https://github.com/xmake-io/xmake/issues/1019).
+It can greatly improve the compilation speed of C/C++ code, usually by 30%. However, depending on the complexity of the project, the benefits it brings depend on the situation of the project. Xmake has also supported this build mode in v2.5.9. For related issues, see [#1019](https://github.com/xmake-io/xmake/issues/1019).
 
 ### How to enable it?
 
 We provide two built-in rules to handle Unity Build for C and C++ code respectively.
 
 ```lua
+-- Enable unity building for C
 add_rules("c.unity_build")
+
+-- Enable unity building for C++
 add_rules("c++.unity_build")
 ```
 
@@ -30,11 +32,9 @@ target("test")
     add_files("src/*.c", "src/*.cpp")
 ```
 
-We can additionally specify the size of each merged Batch by setting the `{batchsize = 2}` parameter to the rule, which means that every two C++ files are automatically merged and compiled.
+We can additionally specify the size of each merged Batch by setting the `{batchsize = 2}` parameter to the rule, which means that every two C++ files are automatically merged and compiled. The compilation effect is roughly as follows:
 
-The compilation effect is roughly as follows:
-
-```console
+```bash
 $ xmake -r
 [11%]: cache compiling.release build/.gens/test/unity_build/unity_642A245F.cpp
 [11%]: cache compiling.release build/.gens/test/unity_build/unity_bar.cpp
@@ -46,9 +46,7 @@ $ xmake -r
 [100%]: build ok
 ```
 
-Since we only enabled the Unity Build of C++, the C code is still compiled one by one normally. In addition, in the Unity Build mode, we can still speed up the parallel compilation as much as possible without conflicting each other.
-
-If the `batchsize` parameter is not set, all files will be merged into one file for compilation by default.
+Since we only enabled the Unity Build of C++, the C code is still compiled one by one normally. In addition, in the Unity Build mode, we can still speed up the parallel compilation as much as possible without conflicting each other. If the `batchsize` parameter is not set, all files will be merged into one file for compilation by default.
 
 ### Group Mode
 
@@ -96,36 +94,30 @@ target("test")
 
 ### Unique ID
 
-Although the benefits of Unity Build are good, we still encounter some unexpected situations. For example, in our two code files, under the global namespace, there are global variables and functions with the same name.
+Although the benefits of Unity Build are good, we still encounter some unexpected situations. For example, in our two code files, under the global namespace, there are global variables and functions with the same name. Then, merge compilation will bring about compilation conflicts, and the compiler usually reports global variable redefinition errors.
 
-Then, merge compilation will bring about compilation conflicts, and the compiler usually reports global variable redefinition errors.
+In order to solve this problem, we need to make some modifications to the user code, and then cooperate with the build tool to solve it. For example, our `foo.cpp` and `bar.cpp` both have global variable i.
 
-In order to solve this problem, we need to make some modifications to the user code, and then cooperate with the build tool to solve it.
+```cpp
+/* foo.cpp */
 
-For example, our foo.cpp and bar.cpp both have global variable i.
-
-foo.cpp
-
-```c
 namespace {
     int i = 42;
-}
+};
 
-int foo()
-{
+int foo(void) {
     return i;
 }
 ```
 
-bar.cpp
+```cpp
+/* bar.cpp */
 
-```c
 namespace {
     int i = 42;
-}
+};
 
-int bar()
-{
+int bar(void) {
     return i;
 }
 ```
@@ -133,28 +125,26 @@ int bar()
 Then, our merge compilation will conflict, and we can introduce a Unique ID to isolate the global anonymous space.
 
 
-foo.cpp
+```cpp
+/* foo.cpp */
 
-```c
 namespace MY_UNITY_ID {
     int i = 42;
-}
+};
 
-int foo()
-{
+int foo(void) {
     return MY_UNITY_ID::i;
 }
 ```
 
 bar.cpp
 
-```c
+```cpp
 namespace MY_UNITY_ID {
     int i = 42;
-}
+};
 
-int bar()
-{
+int bar(void) {
     return MY_UNITY_ID::i;
 }
 ```
@@ -170,7 +160,7 @@ Next, we also need to ensure that after the code is merged, the definitions of `
 #undef MY_UNITY_ID
 ```
 
-This may seem troublesome, but the user does not need to care about these, xmake will automatically process them when merging, the user only needs to specify the name of the Unique ID, for example, the following:
+This may seem troublesome, but the user does not need to care about these, Xmake will automatically process them when merging! The user only needs to specify the name of the Unique ID, for example, the following:
 
 
 ```lua
@@ -182,4 +172,3 @@ target("test")
 ```
 
 Dealing with global variables, as well as global macro definitions with the same name, functions, etc., can be used in this way to avoid conflicts.
-

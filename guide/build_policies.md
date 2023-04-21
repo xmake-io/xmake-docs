@@ -1,9 +1,8 @@
+# Build policies
 
 Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users' habits and needs.
 
-Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy, which is open to users to a certain degree of configurability.
-
-It is mainly configured through the [set_policy](https://xmake.io/#/manual/project_target?id=targetset_policy) interface.
+Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy, which is open to users to a certain degree of configurability. It is mainly configured through the [set_policy](https://xmake.io/#/manual/project_target?id=targetset_policy) interface.
 
 The usage is as follows:
 
@@ -23,7 +22,6 @@ target ("test")
 If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:
 
 ```bash
-$ xmake l core.project.policy.policies
 {
   "check.auto_map_flags" = {
     type = "boolean",
@@ -71,7 +69,7 @@ However, because automatic detection does not guarantee 100% reliability, someti
 
 At present, if the detection fails in v2.3.4, there will be a warning prompt to prevent users from lying inexplicably, for example:
 
-```bash
+```
 warning: add_ldflags("-static") is ignored, please pass `{force = true}` or call `set_policy("check.auto_ignore_flags", false)` if you want to set it.
 ```
 

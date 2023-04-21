@@ -1,9 +1,10 @@
+# Introduction
 
-xmake is a lightweight cross-platform build utility based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more concise and intuitive. It is very friendly to novices and can quickly get started in a short time. Let users focus more on actual project development.
+Xmake is a lightweight cross-platform build utility based on Lua. It uses a Lua script to maintain project builds, but is driven by a dependency free core program written in C. Compared with Makefiles or CMake, the configuration syntax is much concise and intuitive. As such, it's friendly to novices while still maintaining the flexibly required in a build system. With Xmake, you can focus on your project instead of the build.
 
-It can compile the project directly like Make/Ninja, or generate project files like CMake/Meson, and it also has a built-in package management system to help users solve the integrated use of C/C++ dependent libraries.
+Xmake can be used to directly build source code (like with Make or Ninja), or it can generate project source files like CMake or Meson. It also has a *built-in* package management system to help users integrate C/C++ dependencies.
 
-If you want to know more, please refer to: [Documents](https://xmake.io/#/home), [Github](https://github.com/xmake-io/xmake) and [Gitee](https://gitee.com/tboox/xmake) and also welcome to join our [community](https://xmake.io/#/about/contact).
+If you want to know more, please refer to: the [Documentation](https://xmake.io/#/getting_started), [GitHub](https://github.com/xmake-io/xmake) or [Gitee](https://gitee.com/tboox/xmake). You are also welcome to join our [community](https://xmake.io/#/about/contact).
 
 ![](https://xmake.io/assets/img/index/xmake-basic-render.gif)
 

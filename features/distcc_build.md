@@ -1,30 +1,32 @@
+# Distributed Building
 
-Xmake provides a built-in distributed compilation service, usually it can cooperate with local compilation cache and remote compilation cache to achieve optimal compilation acceleration.
+Xmake provides a built-in distributed compilation service, usually it can cooperate with local compilation cache and remote compilation cache to achieve optimal compilation acceleration. It is fully cross-platform supported, we not only support GCC and Clang, but also Windows and MSVC as well.
 
-Also, it is fully cross-platform supported, we not only support gcc/clang, but also Windows and msvc well.
-
-For cross-compilation, as long as the cross-toolchain supports, we do not require the system environment of the server. Even if the server resources of linux, macOS and Windows are mixed, distributed compilation can be well realized.
+For cross-compilation, as long as the cross-toolchain supports it, we do not require the system environment of the server. Even if the server resources of linux, macOS and Windows are mixed, distributed compilation can be realized to its fullest potensial!
 
 ### Start the service
 
-We can specify the `--distcc` parameter to enable the distributed compilation service. Of course, if this parameter is not specified, xmake will enable all server-configured services by default.
-Here we assume that there are 2 machines as a distributed compilation server cluster, the ip addresses are 192.168.22.168, 192.168.22.169, and the two servers execute the following scripts respectively
+We can specify the `--distcc` parameter to enable the distributed compilation service. Of course, if this parameter is not specified, Xmake will enable all server-configured services by default.
 
-```console
+Here we assume that there are two machines as a distributed compilation server cluster, with the IP addresses `192.168.22.168` and `192.168.22.169`. On the two servers execute the following command:
+
+```bash
 $ xmake service --distcc
 <distcc_build_server>: listening 0.0.0.0:9093 ..
 ```
 
-We can also start the service and echo detailed log information.
+Or for a more verbose experience with more detailed log messages, run it with the `-vD` flag.
 
-```console
+```bash
 $ xmake service --distcc -vD
 <distcc_build_server>: listening 0.0.0.0:9093 ..
 ```
 
 ### Start the service in Daemon mode
 
-```console
+To start the service in daemon mode, and control it, run:
+
+```bash
 $ xmake service --distcc --start
 $ xmake service --distcc --restart
 $ xmake service --distcc --stop
@@ -45,7 +47,6 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
 Then, we edit it, fixing the server's listening port (optional).
 
 ```bash
-$ cat ~/.xmake/service/server.conf
 {
     distcc_build = {
         listen = "0.0.0.0:9693",
@@ -61,14 +62,11 @@ $ cat ~/.xmake/service/server.conf
 
 ### Configure the client
 
-The client configuration file is in `~/.xmake/service/client.conf`, where we can configure the server address that the client needs to connect to.
+The client configuration file is in `~/.xmake/service/client.conf`, where we can configure the server address that the client needs to connect to. We can configure multiple server addresses and corresponding tokens in the hosts list.
 
-We can configure multiple server addresses and corresponding tokens in the hosts list.
+With distributed compilation, it is recommended to use the token authentication mode, because the password mode requires a password to be entered for each server connection, which can become very annoying very fast.
 
-!> Distributed compilation, it is recommended to use the token authentication mode, because the password mode requires a password to be entered for each server connection, which is very cumbersome.
-
-```console
-$cat ~/.xmake/service/client.conf
+```bash
 {
     distcc_build = {
         hosts = {
@@ -88,14 +86,11 @@ $cat ~/.xmake/service/client.conf
 
 #### Timeout configuration
 
-By default, clients connect, send and receive data with unlimited waiting without timeout, but if the network to access the server is unstable, then there is a chance that access may get stuck, and this can be solved by configuring a timeout.
-
-If a timeout exception occurs, it will automatically degrade to local compilation and will not be stuck forever.
+By default, clients connect, send and receive data with unlimited waiting without timeout, but if the network to access the server is unstable, then there is a chance that access may get stuck, and this can be solved by configuring a timeout. If a timeout exception occurs, it will automatically degrade to local compilation and will not be stuck forever.
 
 We can configure, `send_timeout`, `recv_timeout` and `connect_timeout` to take effect for all client services if set at the root.
 
-```console
-$ cat ~/.xmake/service/client.conf
+```bash
 {
     send_timeout = 5000,
     recv_timeout = 5000,
@@ -105,8 +100,7 @@ $ cat ~/.xmake/service/client.conf
 
 We can also configure the timeout just for the current distributed build service, leaving the other services with the default timeout.
 
-```console
-$ cat ~/.xmake/service/client.conf
+```bash
 {
     distcc_build = {
         send_timeout = 5000,
@@ -116,12 +110,11 @@ $ cat ~/.xmake/service/client.conf
 }
 ```
 
-!> The server-side configuration also supports timeout configuration.
-
+The server-side configuration also supports timeout configuration.
 
 ### User authorization
 
-For user authorization, please refer to [Remote Compilation/User Authorization](/#/guide/other_features?id=user-authorization)
+For user authorization, please refer to [Remote Compilation/User Authorization](/#/guide/other_features?id=user-authorization).
 
 ### Connect to the server
 
@@ -138,15 +131,15 @@ $ xmake service --connect --distcc
 
 We can also connect to multiple services at the same time, such as distributed compilation and remote compilation cache services.
 
-```hash
+```bash
 $ xmake service --connect --distcc --ccache
 ```
 
-!> If there is no parameter, the default connection is the remote compilation service.
+If there is no parameter, the default connection is the remote compilation service.
 
 ### Distributed compilation project
 
-After connecting to the server, we can perform distributed compilation like normal local compilation, for example:
+After connecting to the server, we can perform distributed compilation transparently (e.g. just like normal local compilation). For example:
 
 ```bash
 $ xmake
@@ -174,6 +167,8 @@ In addition, we can also open the remote compilation cache and share the compila
 
 ### Disconnect
 
+You can disconnect from a compilation server with:
+
 ```bash
 $ xmake service --disconnect --distcc
 ```
@@ -183,20 +178,24 @@ $ xmake service --disconnect --distcc
 Let's briefly introduce the number of parallel tasks currently calculated by default based on the number of host cpu cores:
 
 ```lua
+-- let n = number of CPUs
+-- let deafult_njob = ⌈(3n) / 2⌉
 local default_njob = math.ceil(ncpu * 3 / 2)
 ```
 
-Therefore, if distributed compilation is not enabled, the default maximum number of parallel compilation tasks is this default_njob.
-
-If distributed compilation is enabled, the default number of parallel compilation tasks is:
+Therefore, if distributed compilation is not enabled, the default maximum number of parallel compilation tasks is `default_njob`. If distributed compilation is enabled, the default number of parallel compilation tasks is:
 
 ```lua
+-- let n = default number of jobs
+-- let c = server count
+-- let d = server's default number of jobs
+-- let maxjobs = (n + c)d
 local maxjobs = default_njob + server_count * server_default_njob
 ```
 
 #### Modify the number of local parallel tasks
 
-We only need to pass `-jN` to specify the number of local parallel tasks, but it will not affect the number of parallel tasks on the server side.
+We only need to pass `-jN` to specify the number of local parallel tasks (just like in Make), but it will not affect the number of parallel tasks on the server side.
 
 ```bash
 $ xmake -jN
@@ -207,7 +206,6 @@ $ xmake -jN
 If you want to modify the number of parallel tasks on the server, you need to modify the configuration file of the client.
 
 ```bash
-$cat ~/.xmake/service/client.conf
 {
     distcc_build = {
         hosts = {
@@ -230,12 +228,11 @@ For each server host, add the `njob = N` parameter configuration to specify the 
 
 ### Distributed compilation of Android projects
 
-The distributed compilation service provided by xmake is completely cross-platform and supports Windows, Linux, macOS, Android, iOS and even cross-compilation.
+The distributed compilation service provided by Xmake is completely cross-platform and supports Windows, Linux, macOS, Android, iOS. It even supports cross compilation, so you can have a network of servers used for cross compilation that might be running macOS, Linux, or Windows. No lock in!
 
-If you want to compile the Android project, you only need to add the `toolchains` toolchain configuration in the server configuration, and provide the path of the NDK.
+If you want to compile an Android project, for example, you only need to add the `toolchains` toolchain configuration in the server configuration, and provide the path of the NDK.
 
 ```bash
-$ cat ~/.xmake/service/server.conf
 {
     distcc_build = {
         listen = "0.0.0.0:9693",
@@ -254,7 +251,7 @@ $ cat ~/.xmake/service/server.conf
 }
 ```
 
-Then, we can compile the Android project in a distributed way like normal local compilation, and even configure multiple Windowss, macOS, Linux and other different server hosts, as the resources of the distributed compilation service, to compile it.
+Then, we can compile the Android project in a distributed way like normal local compilation, and even configure multiple Windows, macOS, Linux and other different server hosts, as the resources of the distributed compilation service, to compile it.
 
 Just download the NDK for the corresponding platform.
 
@@ -265,7 +262,7 @@ $ xmake
 
 ### Distributed compilation of iOS projects
 
-Compiling iOS projects is easier, because Xmake can usually automatically detect Xcode, so just switch the platform to ios like a normal local.
+Compiling iOS projects is easier, because Xmake can usually automatically detect Xcode, so just switch the platform to iOS like you would normally do for local development.
 
 ```bash
 $ xmake f -p iphoneos
@@ -274,10 +271,9 @@ $ xmake
 
 ### Distributed cross compilation configuration
 
-If we want to distribute cross-compilation, we need to configure the toolchain sdk path on the server, for example:
+If we want to distribute cross-compilation, we need to configure the toolchain SDK path on the server, for example:
 
 ```bash
-$ cat ~/.xmake/service/server.conf
 {
     distcc_build = {
         listen = "0.0.0.0:9693",
@@ -296,13 +292,11 @@ $ cat ~/.xmake/service/server.conf
 }
 ```
 
-Among them, under toolchains, each item corresponds to a toolchain, here is configured as `cross = {}` cross toolchain, corresponding to `toolchain("cross")`.
-
-In the toolchain, we can configure `sdkdir`, `bindir`, `cross`, etc., corresponding to the interface configuration of `set_sdkdir`, `set_bindir` and `set_cross` in `toolchain("cross")`.
+Among them, under toolchains, each item corresponds to a toolchain, here is configured as `cross = {}` cross toolchain, corresponding to `toolchain("cross")`. In the toolchain, we can configure `sdkdir`, `bindir`, `cross`, etc., corresponding to the interface configuration of `set_sdkdir`, `set_bindir` and `set_cross` in `toolchain("cross")`.
 
 If the cross toolchain is more standardized, we usually only need to configure `sdkdir`, and xmake can automatically detect it.
 
-And client-side compilation only needs to specify the sdk directory.
+On the client side, \compilation only needs to specify the SDK directory.
 
 ```bash
 $ xmake f -p cross --sdk=/xxx/arm-linux-xxx

@@ -1,3 +1,5 @@
+# Changelog
+
 ## v2.7.7
 
 ### New features

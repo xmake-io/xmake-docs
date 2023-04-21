@@ -1,6 +1,6 @@
 ## Master
 
-!> Note! xmake is not recommended to install under root!
+!> Note! Xmake is not recommended to install under root!
 
 #### via curl
 
@@ -40,7 +40,7 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 
 ### via installer
 
-1. Download xmake windows installer from [Releases](https://github.com/xmake-io/xmake/releases)
+1. Download the Xmake windows installer from [Releases](https://github.com/xmake-io/xmake/releases)
 2. Run xmake-[version].[win32|win64].exe
 
 !> Releases/xmake-[version].[win32|win64].zip has not installer, we need unzip it and add PATH environment variables by ourself.
@@ -135,11 +135,12 @@ pkg install xmake
  
 ### Installation
 
-!> Note! xmake is not recommended to install under root!
+!> Note! Xmake is not recommended to install under root!
 
 ```bash
 git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
+# On macOS, you may need to run: export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 ./configure
 make
 ./scripts/get.sh __local__ __install_only__
@@ -153,7 +154,7 @@ git clone --recursive https://gitee.com/tboox/xmake.git
 git clone --recursive https://gitlab.com/tboox/xmake.git
 ```
 
-!> Since the current xmake source maintains dependencies via git submodule, it is necessary to add the `--recursive` parameter to pull all submodules at the same time. Please do not download the tar.gz source directly, because github does not automatically package submodules. Code.
+!> Since the current Xmake source maintains dependencies via git submodule, it is necessary to add the `--recursive` parameter to pull all submodules at the same time. Please do not download the tar.gz source directly, because github does not automatically package submodules. Code.
 
 If you forget to add `--recursive` when git clone, you can also execute `git submodule update --init` to pull all submodules, for example:
 
@@ -166,11 +167,11 @@ make
 ./scripts/get.sh __local__ __install_only__
 ```
 
-!> `./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.
+!> `./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute Xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.
 
 ### Only update the lua script
 
-This developer needs to debug the xmake source locally:
+This developer needs to debug the Xmake source locally:
 
 ```bash
 ./scripts/get.sh __local__ __install_only__
@@ -178,12 +179,12 @@ This developer needs to debug the xmake source locally:
 
 ### Root installation
 
-Xmake is not recommended for root installation, because this is very insecure. If the user has to download the root, if the prompt xmake fails to run, please pass the `--root` parameter as prompted or set `XMAKE_ROOT=y`. The environment variable is forcibly enabled, provided that the user needs to pay attention to the risk of incorrect operating system file files under root.
+Xmake is not recommended for root installation, because this is very insecure. If the user has to download the root, if the prompt Xmake fails to run, please pass the `--root` parameter as prompted or set `XMAKE_ROOT=y`. The environment variable is forcibly enabled, provided that the user needs to pay attention to the risk of incorrect operating system file files under root.
 
 ### Dependency issues
 
 1. If you encounter problems with readline, please install readline-devel or libreadline-dev dependencies. This is optional. It is only needed when the `xmake lua` command executes REPL.
-2. If you want to speed up compilation, you can install ccache, xmake will automatically detect and use, which is also optional.
+2. If you want to speed up compilation, you can install ccache, Xmake will automatically detect and use, which is also optional.
 
 ## Other installation methods
 
@@ -231,5 +232,4 @@ If just update the xaake lua script changes, you can add `-s/--scriptonly` to qu
 xmake update -s dev
 ```
 
-Finally, if we want to uninstall xmake, it is also supported: `xmake update --uninstall`
-
+Finally, if we want to uninstall Xmake, we're sorry to see you go! Still, it is supported: `xmake update --uninstall`.
