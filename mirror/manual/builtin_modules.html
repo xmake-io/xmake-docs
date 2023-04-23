@@ -1682,7 +1682,10 @@ io.tail("xxx.txt", 10)
 <li>Read all lines from file</li>
 </ul>
 <p>Returns all lines from a given file name</p>
-<pre><code class="lang-lua">io.lines("xxx.txt")
+<pre><code class="lang-lua">local lines = io.lines("xxx.txt")
+for line in lines do
+    print(line)
+end
 </code></pre>
 <h3 id="iostdfile">io.stdfile</h3>
 <ul>
@@ -1690,18 +1693,21 @@ io.tail("xxx.txt", 10)
 </ul>
 <p>Returns a file for a given std file name</p>
 <pre><code class="lang-lua">-- returns stdin
-io.stdfile("/dev/stdin")
+io.stdin
 -- returns stdout
-io.stdfile("/dev/stdout")
+io.stdout
 -- returns stderr
-io.stdfile("/dev/stderr")
+io.stderr
 </code></pre>
 <h3 id="ioopenlock">io.openlock</h3>
 <ul>
 <li>Open a lock of a file</li>
 </ul>
 <p>Returns a file lock object when successfully locking the file</p>
-<pre><code class="lang-lua">io.openlock("xxx.txt")
+<pre><code class="lang-lua">local lock = io.openlock("xxx.txt")
+lock:lock()
+lock:unlock()
+lock:close()
 </code></pre>
 <h3 id="ioreplace">io.replace</h3>
 <ul>

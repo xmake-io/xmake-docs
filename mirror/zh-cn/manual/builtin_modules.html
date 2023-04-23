@@ -1196,6 +1196,26 @@ end
 <td>无换行格式化输出内容到文件</td>
 <td>>= 2.0.1</td>
 </tr>
+<tr>
+<td><a href="#iolines">io.lines</a></td>
+<td>读取文件的所有行</td>
+<td>>= 2.2.9</td>
+</tr>
+<tr>
+<td><a href="#iostdfile">io.stdfile</a></td>
+<td>获取标准输入输出文件</td>
+<td>>= 2.2.9</td>
+</tr>
+<tr>
+<td><a href="#ioopenlock">io.openlock</a></td>
+<td>创建一把文件锁</td>
+<td>>= 2.2.9</td>
+</tr>
+<tr>
+<td><a href="#ioreplace">io.replace</a></td>
+<td>根据表达式替换文件内容</td>
+<td>>= 2.3.8</td>
+</tr>
 </tbody>
 </table>
 <h4 id="ioopen">io.open</h4>
@@ -1309,6 +1329,52 @@ io.tail("xxx.txt", 10)
 <p>直接格式化传参输出一行字符串到文件，不带换行，例如：</p>
 <pre><code class="lang-lua">io.printf("xxx.txt", "hello %s!\n", "xmake")
 </code></pre>
+<h4 id="iolines">io.lines</h4>
+<ul>
+<li>读取文件的所有行</li>
+</ul>
+<p>根据文件名返回该文件的所有行的内容</p>
+<pre><code class="lang-lua">local lines = io.lines("xxx.txt")
+for line in lines do
+    print(line)
+end
+</code></pre>
+<h4 id="iostdfile">io.stdfile</h4>
+<ul>
+<li>获取标准输入输出文件</li>
+</ul>
+<p>根据文件名返回标准输入输出文件</p>
+<pre><code class="lang-lua">-- 标准输入
+io.stdin
+-- 标准输出
+io.stdout
+-- 标准错误
+io.stderr
+</code></pre>
+<h4 id="ioopenlock">io.openlock</h4>
+<ul>
+<li>创建一把文件锁</li>
+</ul>
+<p>为给定的文件返回一个文件锁对象</p>
+<pre><code class="lang-lua">local lock = io.openlock("xxx.txt")
+lock:lock()
+lock:unlock()
+lock:close()
+</code></pre>
+<h4 id="ioreplace">io.replace</h4>
+<ul>
+<li>根据表达式替换文件内容</li>
+</ul>
+<p>根据表达式和参数对文件进行全文替换</p>
+<pre><code class="lang-lua">io.replace(filepath, pattern, replace, opt)
+io.replace("xxx.txt", "test", "xmake", { plain = true, encoding = "UTF-8" })
+io.replace("xxx.txt", "%d[^\n]*", "xmake")
+</code></pre>
+<p>关于参数 <code>opt</code> 成员的解释：</p>
+<blockquote>
+<p>.plain: 若为 true，使用pattern进行简单匹配；为 false，则进行模式匹配；</p>
+<p>.encoding: 指定文件编码格式</p>
+</blockquote>
 <h3 id="path">path</h3>
 <p>路径操作模块，实现跨平台的路径操作，这是xmake的一个自定义的模块。</p>
 <table>
