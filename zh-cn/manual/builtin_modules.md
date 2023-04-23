@@ -1387,9 +1387,12 @@ end
 根据文件名返回标准输入输出文件
 
 ```lua
-io.stdfile("/dev/stdin")
-io.stdfile("/dev/stdout")
-io.stdfile("/dev/stderr")
+-- 标准输入
+io.stdin
+-- 标准输出
+io.stdout
+-- 标准错误
+io.stderr
 ```
 
 #### io.openlock
