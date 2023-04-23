@@ -658,7 +658,6 @@ if (errors) raise(errors)
 | [os.setenvp](#ossetenvp) | 使用给定分隔符设置环境变量 | >= 2.1.5 |
 | [os.addenvp](#osaddenvp) | 使用给定分隔符向环境变量添加新值 | >= 2.1.5 |
 | [os.workingdir](#osworkingdir) | 获取工作路径 | >= 2.1.9 |
-| [os.match](#osmatch) | 匹配文件或目录 | >= 2.3.1 |
 | [os.isroot](#osisroot) | 判断当前xmake是否以管理员权限运行 | >= 2.1.9 |
 | [os.fscase](#osfscase) | 判断当前系统的文件系统是否大小写敏感 | >= 2.1.9 |
 | [os.term](#osterm) | 获取当前终端 | >= 2.7.3 |
@@ -1184,43 +1183,43 @@ print(os.joinenvs(envs0, envs1)) -- result is : { CUSTION = "a/path;some/path/" 
 
 - 获取工作目录
 
-#### os.match
-
-- 使用模式串匹配文件或目录
-
-```lua
--- @param pattern   匹配模式串
---                  使用 "*" 匹配文件名或目录名的任意部分
---                  使用 "**" 递归搜索子目录
---
--- @param mode      匹配模式
---                  - 仅匹配文件        'f' 或 false 或 nil
---                  - 仅匹配目录        'd' 或 true
---                  - 匹配目录和文件    'a'
--- @return          结果列表和数量
-
-local files, count = os.match("./about/*", false)
-print(files)
--- In xmake-docs repo
--- got { 
---   "about\awesome.md",
---   "about\changelog.md",
---   "about\contact.md",
---   "about\introduction.md",
---   "about\sponsor.md",
---   "about\technical_support.md",
---   "about\who_is_using_xmake.md"
--- }
-
-local dirs, count = os.match("./assets/*", true)
-print(dirs)
--- In xmake-docs repo
--- got {
---   "assets\img",
---   "assets\npm",
---   "assets\scripts"
--- }
-```
+% #### os.match
+%
+%- 使用模式串匹配文件或目录
+%
+%```lua
+%-- @param pattern   匹配模式串
+%--                  使用 "*" 匹配文件名或目录名的任意部分
+%--                  使用 "**" 递归搜索子目录
+%--
+%-- @param mode      匹配模式
+%--                  - 仅匹配文件        'f' 或 false 或 nil
+%--                  - 仅匹配目录        'd' 或 true
+%--                  - 匹配目录和文件    'a'
+%-- @return          结果列表和数量
+%
+%local files, count = os.match("./about/*", false)
+%print(files)
+%-- In xmake-docs repo
+%-- got { 
+%--   "about\awesome.md",
+%--   "about\changelog.md",
+%--   "about\contact.md",
+%--   "about\introduction.md",
+%--   "about\sponsor.md",
+%--   "about\technical_support.md",
+%--   "about\who_is_using_xmake.md"
+%-- }
+%
+%local dirs, count = os.match("./assets/*", true)
+%print(dirs)
+%-- In xmake-docs repo
+%-- got {
+%--   "assets\img",
+%--   "assets\npm",
+%--   "assets\scripts"
+%-- }
+%```
 
 #### os.isroot
 
