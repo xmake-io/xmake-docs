@@ -1119,6 +1119,8 @@ os.ln("xxx.txt", "xxx.txt.ln")
 os.raise("an error occurred")
 ```
 
+!> 推荐使用与 `os.raise` 等价的内置接口 `raise`，用法与 `os.raise` 一致
+
 #### os.raiselevel
 
 - 与 [os.raise](#osraise) 类似但是可以指定异常等级
