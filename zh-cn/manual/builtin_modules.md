@@ -1212,7 +1212,7 @@ io操作模块，扩展了lua内置的io模块，提供更多易用的接口。
 | [io.cat](#iocat)                                | 读取和显示文件的所有内容                     | >= 2.0.1 |
 | [io.print](#ioprint)                            | 带换行格式化输出内容到文件                   | >= 2.0.1 |
 | [io.printf](#ioprintf)                          | 无换行格式化输出内容到文件                   | >= 2.0.1 |
-| [io.replace](#io.replace)                       | 根据表达式替换文件内容                      | >= 2.3.8 |
+| [io.replace](#ioreplace)                        | 根据表达式替换文件内容                      | >= 2.3.8 |
 
 #### io.open
 
@@ -1378,10 +1378,9 @@ io.replace("xxx.txt", "%d[^\n]*", "xmake")
 
 关于参数 `opt` 成员的解释：
 
-```
-.plain: 若为 true，使用pattern进行简单匹配；为 false，则进行模式匹配；
-.encoding: 指定文件编码格式
-```
+> .plain: 若为 true，使用pattern进行简单匹配；为 false，则进行模式匹配；
+> 
+> .encoding: 指定文件编码格式
 
 ### path
 
