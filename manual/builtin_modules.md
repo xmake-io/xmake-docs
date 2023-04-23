@@ -1640,11 +1640,11 @@ Returns a file for a given std file name
 
 ```lua
 -- returns stdin
-io.stdfile("/dev/stdin")
+io.stdin
 -- returns stdout
-io.stdfile("/dev/stdout")
+io.stdout
 -- returns stderr
-io.stdfile("/dev/stderr")
+io.stderr
 ```
 
 ### io.openlock
