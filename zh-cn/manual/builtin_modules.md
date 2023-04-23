@@ -1374,7 +1374,7 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 根据文件名返回该文件的所有行的内容
 
 ```lua
-lines = io.lines("xxx.txt")
+local lines = io.lines("xxx.txt")
 for line in lines do
     print(line)
 end
@@ -1387,9 +1387,9 @@ end
 根据文件名返回标准输入输出文件
 
 ```lua
-stdin = io.stdfile("/dev/stdin")
-stdout = io.stdfile("/dev/stdout")
-stderr = io.stdfile("/dev/stderr")
+io.stdfile("/dev/stdin")
+io.stdfile("/dev/stdout")
+io.stdfile("/dev/stderr")
 ```
 
 #### io.openlock
@@ -1399,9 +1399,10 @@ stderr = io.stdfile("/dev/stderr")
 为给定的文件返回一个文件锁对象
 
 ```lua
-lock = io.openlock("xxx.txt")
+local lock = io.openlock("xxx.txt")
 lock:lock()
 lock:unlock()
+lock:close()
 ```
 
 #### io.replace
