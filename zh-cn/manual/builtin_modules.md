@@ -1212,6 +1212,9 @@ io操作模块，扩展了lua内置的io模块，提供更多易用的接口。
 | [io.cat](#iocat)                                | 读取和显示文件的所有内容                     | >= 2.0.1 |
 | [io.print](#ioprint)                            | 带换行格式化输出内容到文件                   | >= 2.0.1 |
 | [io.printf](#ioprintf)                          | 无换行格式化输出内容到文件                   | >= 2.0.1 |
+| [io.lines](#iolines)                            | 读取文件的所有行                            | >= 2.2.9 |
+| [io.stdfile](#iostdfile)                        | 获取标准输入输出文件                        | >= 2.2.9 |
+| [io.openlock](#ioopenlock)                      | 创建一把文件锁                             | >= 2.2.9 |
 | [io.replace](#ioreplace)                        | 根据表达式替换文件内容                      | >= 2.3.8 |
 
 #### io.open
@@ -1362,6 +1365,43 @@ io.print("xxx.txt", "hello %s!", "xmake")
 
 ```lua
 io.printf("xxx.txt", "hello %s!\n", "xmake")
+```
+
+#### io.lines
+
+- 读取文件的所有行
+
+根据文件名返回该文件的所有行的内容
+
+```lua
+lines = io.lines("xxx.txt")
+for line in lines do
+    print(line)
+end
+```
+
+#### io.stdfile
+
+- 获取标准输入输出文件
+
+根据文件名返回标准输入输出文件
+
+```lua
+stdin = io.stdfile("/dev/stdin")
+stdout = io.stdfile("/dev/stdout")
+stderr = io.stdfile("/dev/stderr")
+```
+
+#### io.openlock
+
+- 创建一把文件锁
+
+为给定的文件返回一个文件锁对象
+
+```lua
+lock = io.openlock("xxx.txt")
+lock:lock()
+lock:unlock()
 ```
 
 #### io.replace
