@@ -1150,7 +1150,7 @@ print(envs["HOME"])
 ```lua
 os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
 
-local oldenvs = os.addenvs({CUSTOM = "some/path/"})
+local oldenvs = os.addenvs({EXAMPLE = "some/path/"})
 print(os.getenvs()["EXAMPLE"]) --got some/path/;a/path
 print(oldenvs["EXAMPLE"]) -- got a/path
 ```
