@@ -1141,7 +1141,7 @@ print(envs["HOME"])
 
 #### os.setenvs
 
-- Set environment variables. Replace the current envs by a new one
+- Set environment variables. Replace the current envs by a new one and return old envs
 
 #### os.addenvs
 
