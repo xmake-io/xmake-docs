@@ -1205,44 +1205,6 @@ os.addenv("PATH", "bin")
 
 - Get the working directory
 
-%#### os.match
-%
-%- Match files or directories with a pattern
-%
-%```lua
-%-- @param pattern   the search pattern
-%--                  uses "*" to match any part of a file or directory name,
-%--                  uses "**" to recurse into subdirectories.
-%--
-%-- @param mode      the match mode
-%--                  - only find file:           'f' or false or nil
-%--                  - only find directory:      'd' or true
-%--                  - find file and directory:  'a'
-%-- @return          the result array and count
-%
-%local files, count = os.match("./about/*", false)
-%print(files)
-%-- In xmake-docs repo
-%-- got { 
-%--   "about\awesome.md",
-%--   "about\changelog.md",
-%--   "about\contact.md",
-%--   "about\introduction.md",
-%--   "about\sponsor.md",
-%--   "about\technical_support.md",
-%--   "about\who_is_using_xmake.md"
-%-- }
-%
-%local dirs, count = os.match("./assets/*", true)
-%print(dirs)
-%-- In xmake-docs repo
-%-- got {
-%--   "assets\img",
-%--   "assets\npm",
-%--   "assets\scripts"
-%-- }
-%```
-
 #### os.isroot
 
 - Test if xmake is running as root
