@@ -654,7 +654,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.raiselevel](#raiselevel) | Raise an exception and abort the current script | >= 2.2.8 |
 | [os.features](#osfeatures) | Get features | >= 2.3.1 |
 | [os.getenvs](#osgetenvs) | Get all current environment variables | >= 2.2.6 |
-| [os.setenvs](#ossetenvs) | Set a environment variable | >= 2.2.6 |
+| [os.setenvs](#ossetenvs) | Set environment variables | >= 2.2.6 |
 | [os.addenvs](#osaddenvs) | Add environment variables to current envs| >= 2.5.6 |
 | [os.joinenvs](#osjoinenvs) | Join environment variables | >= 2.5.6 |
 | [os.getenv](#osgetenv) | Get Environment Variables | >= 2.0.1 |
