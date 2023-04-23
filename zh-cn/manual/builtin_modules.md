@@ -895,7 +895,7 @@ os.runv("echo", {"hello", "xmake!"})
 另外，此接口也支持envs参数设置：
 
 ```lua
-os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}})
 ```
 
 #### os.exec
