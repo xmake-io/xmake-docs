@@ -1145,7 +1145,7 @@ print(envs["HOME"])
 
 #### os.addenvs
 
-- Add environment variables to current envs, return the old one
+- Add environment variables to current envs, return the all old envs
 
 ```lua
 os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
