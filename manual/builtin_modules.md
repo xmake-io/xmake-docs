@@ -1283,7 +1283,7 @@ print(os.cpuinfo())
 --   model = 158,
 --   family = 6
 -- }
-print(os.cpuinfo("march")) -- got Kaby Lake
+print(os.cpuinfo("march")) -- got "Kaby Lake"
 ```
 
 #### os.meminfo
