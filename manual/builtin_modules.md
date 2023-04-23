@@ -1629,7 +1629,10 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 Returns all lines from a given file name
 
 ```lua
-io.lines("xxx.txt")
+local lines = io.lines("xxx.txt")
+for line in lines do
+    print(line)
+end
 ```
 
 ### io.stdfile
@@ -1640,11 +1643,11 @@ Returns a file for a given std file name
 
 ```lua
 -- returns stdin
-io.stdfile("/dev/stdin")
+io.stdin
 -- returns stdout
-io.stdfile("/dev/stdout")
+io.stdout
 -- returns stderr
-io.stdfile("/dev/stderr")
+io.stderr
 ```
 
 ### io.openlock
@@ -1654,7 +1657,10 @@ io.stdfile("/dev/stderr")
 Returns a file lock object when successfully locking the file
 
 ```lua
-io.openlock("xxx.txt")
+local lock = io.openlock("xxx.txt")
+lock:lock()
+lock:unlock()
+lock:close()
 ```
 
 ### io.replace
