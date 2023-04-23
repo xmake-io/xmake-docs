@@ -1161,9 +1161,16 @@ print(oldenvs["EXAMPLE"]) -- got a/path
 
 #### os.joinenvs
 
-- 拼接系统变量，与 [os.addenvs](#osaddenvs) 类似，但是不会对当前环境变量产生影响，若第二个参数为 `nil`，则向原有使用原有环境变量
+- 拼接系统变量，与 [os.addenvs](#osaddenvs) 类似，但是不会对当前环境变量产生影响，若第二个参数为 `nil`，则使用原有环境变量
 
 ```lua
+-- os.joinenvs(newenvs, oldenvs)
+--
+-- @param newenvs   table 类型，新插入的环境变量
+--
+-- @param oldenvs   table 类型，被插入的环境变量，若为 nil, 则为原有系统变量
+--
+-- @return          table 类型，拼接后的环境变量
 local envs0 = {CUSTOM = "a/path"}
 local envs1 = {CUSTOM = "some/path/"}
 print(os.joinenvs(envs0, envs1)) -- result is : { CUSTION = "a/path;some/path/" }
