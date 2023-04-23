@@ -636,9 +636,35 @@ if (errors) raise(errors)
 | [os.filesize](#osfilesize)                     | 获取文件大小                                 | >= 2.1.9 |
 | [os.scriptdir](#osscriptdir)                   | 获取脚本目录路径                             | >= 2.0.1 |
 | [os.programdir](#osprogramdir)                 | 获取xmake安装主程序脚本目录                  | >= 2.1.5 |
+| [os.programfile](#osprogramfile)               | 获取xmake可执行文件路径                      | >= 2.1.5 |
 | [os.projectdir](#osprojectdir)                 | 获取工程主目录                               | >= 2.1.5 |
 | [os.arch](#osarch)                             | 获取当前系统架构                             | >= 2.0.1 |
 | [os.host](#oshost)                             | 获取当前主机系统                             | >= 2.0.1 |
+| [os.subhost](#ossubhost) | 获取子系统 | >= 2.3.1 |
+| [os.subarch](#ossubarch) | 获取子系统架构 | >= 2.3.1 |
+| [os.is_host](#osis_host) | 判断给定系统是否正确 | >= 2.3.1 |
+| [os.is_arch](#osis_arch) | 判断给定架构是否正确 | >= 2.3.1 |
+| [os.is_subhost](#osis_subhost) | 判断给定子系统是否正确 | >= 2.3.1 |
+| [os.is_subarch](#osis_subarch) | 判断子系统架构是否正确 | >= 2.3.1 |
+| [os.ln](#osln) | 创建指向文件或文件夹的符号链接 | >= 2.2.2 |
+| [os.readline](#osreadlink) | 读取符号链接 | >= 2.2.2 |
+| [os.raise](#osraise) | 抛出一个异常并中止脚本运行 | >= 2.2.8 |
+| [os.raise](#osraiselevel) | 抛出一个异常并中止脚本运行 | >= 2.2.8 |
+| [os.features](#osfeatures) | 获取系统特性 | >= 2.3.1 |
+| [os.getenvs](#osgetenvs) | 获取所有环境变量 | >= 2.2.6 |
+| [os.setenvs](#ossetenvs) | 替换当前所有环境变量 | >= 2.2.6 |
+| [os.addenvs](#osaddenvs) | 向当前环境变量中添加新值 | >= 2.5.6 |
+| [os.joinenvs](#osjoinenvs) | 拼接环境变量 | >= 2.5.6 |
+| [os.setenvp](#ossetenvp) | 使用给定分隔符设置环境变量 | >= 2.1.5 |
+| [os.addenvp](#osaddenvp) | 使用给定分隔符向环境变量添加新值 | >= 2.1.5 |
+| [os.workingdir](#osworkingdir) | 获取工作路径 | >= 2.1.9 |
+| [os.match](#osmatch) | 匹配文件或目录 | >= 2.3.1 |
+| [os.isroot](#osisroot) | 判断当前xmake是否以管理员权限运行 | >= 2.1.9 |
+| [os.fscase](#osfscase) | 判断当前系统的文件系统是否大小写敏感 | >= 2.1.9 |
+| [os.term](#osterm) | 获取当前终端 | >= 2.7.3 |
+| [os.shell](#osshell) | 获取当前shell | >= 2.7.3 |
+| [os.cpuinfo](#oscpuinfo) | 获取CPU信息 | >= 2.1.5 |
+| [os.meminfo](#osmeminfo) | 获取内存信息 | >= 2.1.5 |
 
 #### os.cp
 
