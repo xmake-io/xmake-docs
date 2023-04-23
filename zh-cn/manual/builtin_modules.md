@@ -647,7 +647,7 @@ if (errors) raise(errors)
 | [os.is_subhost](#osis_subhost) | 判断给定子系统是否正确 | >= 2.3.1 |
 | [os.is_subarch](#osis_subarch) | 判断子系统架构是否正确 | >= 2.3.1 |
 | [os.ln](#osln) | 创建指向文件或文件夹的符号链接 | >= 2.2.2 |
-| [os.readline](#osreadlink) | 读取符号链接 | >= 2.2.2 |
+| [os.readlink](#osreadlink) | 读取符号链接 | >= 2.2.2 |
 | [os.raise](#osraise) | 抛出一个异常并中止脚本运行 | >= 2.2.8 |
 | [os.raiselevel](#osraiselevel) | 抛出一个异常并中止脚本运行 | >= 2.2.8 |
 | [os.features](#osfeatures) | 获取系统特性 | >= 2.3.1 |
