@@ -1052,6 +1052,10 @@ print(os.filesize("/tmp/a"))
 
 跟[$(programdir)](#var-programdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
+#### os.programfile
+
+- 获取xmake可执行文件路径
+
 #### os.projectdir
 
 - 获取工程主目录
@@ -1069,6 +1073,196 @@ print(os.filesize("/tmp/a"))
 - 获取当前主机的操作系统
 
 跟[$(host)](#var-host)结果一致，例如我在`linux x86_64`上执行xmake进行构建，那么返回值是：`linux`
+
+#### os.subhost
+
+- 获取当前子系统，如：在Windows上的msys、cygwin
+
+#### os.subarch
+
+- 获取子系统架构
+
+#### os.is_host
+
+- 判断给定系统是否为当前系统
+
+#### os.is_arch
+
+- 判断给定架构是否为当前架构
+
+#### os.is_subhost
+
+- 判断给定子系统是否为当前子系统
+
+#### os.is_subarch
+
+- 判断给定子系统架构是否为当前子系统架构
+
+#### os.ln
+
+- 为一个文件或目录创建符号链接
+
+```lua
+-- 创建一个指向 "tmp.txt" 文件的符号链接 "tmp.txt.ln"
+os.ln("xxx.txt", "xxx.txt.ln")
+```
+
+#### os.readlink
+
+- 读取符号链接内容
+
+#### os.raise
+
+- 抛出一个异常并且中止当前脚本运行
+
+```lua
+-- 抛出一个带 "an error occurred" 信息的异常
+os.raise("an error occurred")
+```
+
+#### os.raiselevel
+
+- 与 [os.raise](#osraise) 类似但是可以指定异常等级
+
+```lua
+-- 抛出一个带 "an error occurred" 信息的异常
+os.raise(3, "an error occurred")
+```
+
+#### os.features
+
+- 获取系统特性
+
+#### os.getenvs
+
+- 获取所有当前系统变量
+
+```lua
+local envs = os.getenvs()
+-- home directory (on linux)
+print(envs["HOME"])
+```
+
+#### os.setenvs
+
+- 使用给定系统变量替换当前所有系统变量，并返回旧系统变量
+
+#### os.addenvs
+
+- 向当前系统变量添加新变量，并且返回所有旧系统变量
+
+```lua
+os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
+
+local oldenvs = os.addenvs({EXAMPLE = "some/path/"})
+print(os.getenvs()["EXAMPLE"]) --got some/path/;a/path
+print(oldenvs["EXAMPLE"]) -- got a/path
+```
+
+#### os.joinenvs
+
+- 拼接系统变量，与 [os.addenvs](#osaddenvs) 类似，但是不会对当前环境变量产生影响，若第二个参数为 `nil`，则向原有使用原有环境变量
+
+```lua
+local envs0 = {CUSTOM = "a/path"}
+local envs1 = {CUSTOM = "some/path/"}
+print(os.joinenvs(envs0, envs1)) -- result is : { CUSTION = "a/path;some/path/" }
+```
+
+#### os.setenvp
+
+- 使用给定分隔符设置环境变量
+
+#### os.workingdir
+
+- 获取工作目录
+
+#### os.match
+
+- 使用模式串匹配文件或目录
+
+```lua
+-- @param pattern   匹配模式串
+--                  使用 "*" 匹配文件名或目录名的任意部分
+--                  使用 "**" 递归搜索子目录
+--
+-- @param mode      匹配模式
+--                  - 仅匹配文件        'f' 或 false 或 nil
+--                  - 仅匹配目录        'd' 或 true
+--                  - 匹配目录和文件    'a'
+-- @return          结果列表和数量
+
+local files, count = os.match("./about/*", false)
+print(files)
+-- In xmake-docs repo
+-- got { 
+--   "about\awesome.md",
+--   "about\changelog.md",
+--   "about\contact.md",
+--   "about\introduction.md",
+--   "about\sponsor.md",
+--   "about\technical_support.md",
+--   "about\who_is_using_xmake.md"
+-- }
+
+local dirs, count = os.match("./assets/*", true)
+print(dirs)
+-- In xmake-docs repo
+-- got {
+--   "assets\img",
+--   "assets\npm",
+--   "assets\scripts"
+-- }
+```
+
+#### os.isroot
+
+- 判断xmake是否以管理员权限运行
+
+#### os.fscase
+
+- 判断操作系统的文件系统是否大小写敏感
+
+#### os.term
+
+- 获取当前终端 (windows-terminal, vscode, xterm, ...)
+
+#### os.shell
+
+- 获取当前shell (pwsh, cmd, bash, zsh, ...)
+
+#### os.cpuinfo
+
+- 获取当前CPU信息
+
+```lua
+print(os.cpuinfo())
+-- probably got {
+--   march = "Alder Lake",
+--   model = 154,
+--   ncpu = 20,
+--   model_name = "12th Gen Intel(R) Core(TM) i9-12900H",
+--   usagerate = 0.041839182376862,
+--   vendor = "GenuineIntel",
+--   family = 6
+-- }
+print(os.cpuinfo("march")) -- probably got "Alder Lake"
+```
+
+#### os.meminfo
+
+- 获取内存信息
+
+```lua
+print(os.meminfo())
+-- probably got {
+--   pagesize = 4096,
+--   usagerate = 0.60694103194103,
+--   availsize = 12798,
+--   totalsize = 32560
+-- }
+print(os.meminfo("pagesize")) -- probably got 4096
+```
 
 ### winos
 
