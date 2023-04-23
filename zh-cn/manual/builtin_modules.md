@@ -649,7 +649,7 @@ if (errors) raise(errors)
 | [os.ln](#osln) | 创建指向文件或文件夹的符号链接 | >= 2.2.2 |
 | [os.readline](#osreadlink) | 读取符号链接 | >= 2.2.2 |
 | [os.raise](#osraise) | 抛出一个异常并中止脚本运行 | >= 2.2.8 |
-| [os.raise](#osraiselevel) | 抛出一个异常并中止脚本运行 | >= 2.2.8 |
+| [os.raiselevel](#osraiselevel) | 抛出一个异常并中止脚本运行 | >= 2.2.8 |
 | [os.features](#osfeatures) | 获取系统特性 | >= 2.3.1 |
 | [os.getenvs](#osgetenvs) | 获取所有环境变量 | >= 2.2.6 |
 | [os.setenvs](#ossetenvs) | 替换当前所有环境变量 | >= 2.2.6 |
