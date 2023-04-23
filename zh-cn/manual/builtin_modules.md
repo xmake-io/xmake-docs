@@ -636,9 +636,34 @@ if (errors) raise(errors)
 | [os.filesize](#osfilesize)                     | 获取文件大小                                 | >= 2.1.9 |
 | [os.scriptdir](#osscriptdir)                   | 获取脚本目录路径                             | >= 2.0.1 |
 | [os.programdir](#osprogramdir)                 | 获取xmake安装主程序脚本目录                  | >= 2.1.5 |
+| [os.programfile](#osprogramfile)               | 获取xmake可执行文件路径                      | >= 2.1.5 |
 | [os.projectdir](#osprojectdir)                 | 获取工程主目录                               | >= 2.1.5 |
 | [os.arch](#osarch)                             | 获取当前系统架构                             | >= 2.0.1 |
 | [os.host](#oshost)                             | 获取当前主机系统                             | >= 2.0.1 |
+| [os.subhost](#ossubhost) | 获取子系统 | >= 2.3.1 |
+| [os.subarch](#ossubarch) | 获取子系统架构 | >= 2.3.1 |
+| [os.is_host](#osis_host) | 判断给定系统是否正确 | >= 2.3.1 |
+| [os.is_arch](#osis_arch) | 判断给定架构是否正确 | >= 2.3.1 |
+| [os.is_subhost](#osis_subhost) | 判断给定子系统是否正确 | >= 2.3.1 |
+| [os.is_subarch](#osis_subarch) | 判断子系统架构是否正确 | >= 2.3.1 |
+| [os.ln](#osln) | 创建指向文件或文件夹的符号链接 | >= 2.2.2 |
+| [os.readlink](#osreadlink) | 读取符号链接 | >= 2.2.2 |
+| [os.raise](#osraise) | 抛出一个异常并中止脚本运行 | >= 2.2.8 |
+| [os.raiselevel](#osraiselevel) | 抛出一个异常并中止脚本运行 | >= 2.2.8 |
+| [os.features](#osfeatures) | 获取系统特性 | >= 2.3.1 |
+| [os.getenvs](#osgetenvs) | 获取所有环境变量 | >= 2.2.6 |
+| [os.setenvs](#ossetenvs) | 替换当前所有环境变量 | >= 2.2.6 |
+| [os.addenvs](#osaddenvs) | 向当前环境变量中添加新值 | >= 2.5.6 |
+| [os.joinenvs](#osjoinenvs) | 拼接环境变量 | >= 2.5.6 |
+| [os.setenvp](#ossetenvp) | 使用给定分隔符设置环境变量 | >= 2.1.5 |
+| [os.addenvp](#osaddenvp) | 使用给定分隔符向环境变量添加新值 | >= 2.1.5 |
+| [os.workingdir](#osworkingdir) | 获取工作路径 | >= 2.1.9 |
+| [os.isroot](#osisroot) | 判断当前xmake是否以管理员权限运行 | >= 2.1.9 |
+| [os.fscase](#osfscase) | 判断当前系统的文件系统是否大小写敏感 | >= 2.1.9 |
+| [os.term](#osterm) | 获取当前终端 | >= 2.7.3 |
+| [os.shell](#osshell) | 获取当前shell | >= 2.7.3 |
+| [os.cpuinfo](#oscpuinfo) | 获取CPU信息 | >= 2.1.5 |
+| [os.meminfo](#osmeminfo) | 获取内存信息 | >= 2.1.5 |
 
 #### os.cp
 
@@ -895,7 +920,7 @@ os.runv("echo", {"hello", "xmake!"})
 另外，此接口也支持envs参数设置：
 
 ```lua
-os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}})
 ```
 
 #### os.exec
@@ -1026,6 +1051,10 @@ print(os.filesize("/tmp/a"))
 
 跟[$(programdir)](#var-programdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
+#### os.programfile
+
+- 获取xmake可执行文件路径
+
 #### os.projectdir
 
 - 获取工程主目录
@@ -1043,6 +1072,167 @@ print(os.filesize("/tmp/a"))
 - 获取当前主机的操作系统
 
 跟[$(host)](#var-host)结果一致，例如我在`linux x86_64`上执行xmake进行构建，那么返回值是：`linux`
+
+#### os.subhost
+
+- 获取当前子系统，如：在Windows上的msys、cygwin
+
+#### os.subarch
+
+- 获取子系统架构
+
+#### os.is_host
+
+- 判断给定系统是否为当前系统
+
+#### os.is_arch
+
+- 判断给定架构是否为当前架构
+
+#### os.is_subhost
+
+- 判断给定子系统是否为当前子系统
+
+#### os.is_subarch
+
+- 判断给定子系统架构是否为当前子系统架构
+
+#### os.ln
+
+- 为一个文件或目录创建符号链接
+
+```lua
+-- 创建一个指向 "tmp.txt" 文件的符号链接 "tmp.txt.ln"
+os.ln("xxx.txt", "xxx.txt.ln")
+```
+
+#### os.readlink
+
+- 读取符号链接内容
+
+#### os.raise
+
+- 抛出一个异常并且中止当前脚本运行
+
+```lua
+-- 抛出一个带 "an error occurred" 信息的异常
+os.raise("an error occurred")
+```
+
+!> 推荐使用与 `os.raise` 等价的内置接口 `raise`，用法与 `os.raise` 一致
+
+#### os.raiselevel
+
+- 与 [os.raise](#osraise) 类似但是可以指定异常等级
+
+```lua
+-- 抛出一个带 "an error occurred" 信息的异常
+os.raise(3, "an error occurred")
+```
+
+#### os.features
+
+- 获取系统特性
+
+#### os.getenvs
+
+- 获取所有当前系统变量
+
+```lua
+local envs = os.getenvs()
+-- home directory (on linux)
+print(envs["HOME"])
+```
+
+#### os.setenvs
+
+- 使用给定系统变量替换当前所有系统变量，并返回旧系统变量
+
+#### os.addenvs
+
+- 向当前系统变量添加新变量，并且返回所有旧系统变量
+
+```lua
+os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
+
+local oldenvs = os.addenvs({EXAMPLE = "some/path/"})
+print(os.getenvs()["EXAMPLE"]) --got some/path/;a/path
+print(oldenvs["EXAMPLE"]) -- got a/path
+```
+
+#### os.joinenvs
+
+- 拼接系统变量，与 [os.addenvs](#osaddenvs) 类似，但是不会对当前环境变量产生影响，若第二个参数为 `nil`，则使用原有环境变量
+
+```lua
+-- os.joinenvs(envs, oldenvs)
+--
+-- @param envs      table 类型，新插入的环境变量
+--
+-- @param oldenvs   table 类型，被插入的环境变量，若为 nil, 则为原有环境变量
+--
+-- @return          table 类型，拼接后的环境变量
+local envs0 = {CUSTOM = "a/path"}
+local envs1 = {CUSTOM = "some/path/"}
+print(os.joinenvs(envs0, envs1)) -- result is : { CUSTION = "a/path;some/path/" }
+```
+
+#### os.setenvp
+
+- 使用给定分隔符设置环境变量
+
+#### os.workingdir
+
+- 获取工作目录
+
+#### os.isroot
+
+- 判断xmake是否以管理员权限运行
+
+#### os.fscase
+
+- 判断操作系统的文件系统是否大小写敏感
+
+#### os.term
+
+- 获取当前终端 (windows-terminal, vscode, xterm, ...)
+
+#### os.shell
+
+- 获取当前shell (pwsh, cmd, bash, zsh, ...)
+
+#### os.cpuinfo
+
+- 获取当前CPU信息
+
+```lua
+print(os.cpuinfo())
+-- probably got {
+--   march = "Alder Lake",
+--   model = 154,
+--   ncpu = 20,
+--   model_name = "12th Gen Intel(R) Core(TM) i9-12900H",
+--   usagerate = 0.041839182376862,
+--   vendor = "GenuineIntel",
+--   family = 6
+-- }
+print(os.cpuinfo("march")) -- probably got "Alder Lake"
+```
+
+#### os.meminfo
+
+- 获取内存信息
+
+```lua
+print(os.meminfo())
+-- probably got {
+--   pagesize = 4096,
+--   usagerate = 0.60694103194103,
+--   availsize = 12798,
+--   totalsize = 32560
+-- }
+print(os.meminfo("pagesize")) -- probably got 4096
+```
 
 ### winos
 

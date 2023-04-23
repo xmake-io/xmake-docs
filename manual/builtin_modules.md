@@ -654,7 +654,7 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.raiselevel](#raiselevel) | Raise an exception and abort the current script | >= 2.2.8 |
 | [os.features](#osfeatures) | Get features | >= 2.3.1 |
 | [os.getenvs](#osgetenvs) | Get all current environment variables | >= 2.2.6 |
-| [os.setenvs](#ossetenvs) | Set a environment variable | >= 2.2.6 |
+| [os.setenvs](#ossetenvs) | Set environment variables | >= 2.2.6 |
 | [os.addenvs](#osaddenvs) | Add environment variables to current envs| >= 2.5.6 |
 | [os.joinenvs](#osjoinenvs) | Join environment variables | >= 2.5.6 |
 | [os.getenv](#osgetenv) | Get Environment Variables | >= 2.0.1 |
@@ -663,7 +663,6 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.setenvp](#ossetenvp) | Setting environment variables with a given separator | >= 2.1.5 |
 | [os.addenvp](#osaddenvp) | Add values to one environment variable with a given separator | >= 2.1.5 |
 | [os.workingdir](#osworkingdir) | Get the working directory | >= 2.1.9 |
-| [os.match](#osmatch) | Match files or directories | >= 2.3.1 |
 | [os.isroot](#osisroot) | Test if xmake is running as root | >= 2.1.9 |
 | [os.fscase](#osfscase) | Test if the os has a case sensitive filesystem | >= 2.1.9 |
 | [os.term](#osterm) | Get current terminal | >= 2.7.3 |
@@ -1116,6 +1115,8 @@ os.ln("xxx.txt", "xxx.txt.ln")
 os.raise("an error occurred")
 ```
 
+!> recommanded to use builtin function `raise` instead of `os.raise`
+
 #### os.raiselevel
 
 - Similar to [os.raise](#osraise) but you can specify the level of the error
@@ -1141,16 +1142,16 @@ print(envs["HOME"])
 
 #### os.setenvs
 
-- Set environment variables. Replace the current envs by a new one
+- Set environment variables. Replace the current envs by a new one and return old envs
 
 #### os.addenvs
 
-- Add environment variables to current envs, return the old one
+- Add environment variables to current envs, return the all old envs
 
 ```lua
 os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
 
-local oldenvs = os.addenvs({CUSTOM = "some/path/"})
+local oldenvs = os.addenvs({EXAMPLE = "some/path/"})
 print(os.getenvs()["EXAMPLE"]) --got some/path/;a/path
 print(oldenvs["EXAMPLE"]) -- got a/path
 ```
@@ -1204,44 +1205,6 @@ os.addenv("PATH", "bin")
 
 - Get the working directory
 
-#### os.match
-
-- Match files or directories with a pattern
-
-```lua
--- @param pattern   the search pattern
---                  uses "*" to match any part of a file or directory name,
---                  uses "**" to recurse into subdirectories.
---
--- @param mode      the match mode
---                  - only find file:           'f' or false or nil
---                  - only find directory:      'd' or true
---                  - find file and directory:  'a'
--- @return          the result array and count
-
-local files, count = os.match("./about/*", false)
-print(files)
--- In xmake-docs repo
--- got { 
---   "about\awesome.md",
---   "about\changelog.md",
---   "about\contact.md",
---   "about\introduction.md",
---   "about\sponsor.md",
---   "about\technical_support.md",
---   "about\who_is_using_xmake.md"
--- }
-
-local dirs, count = os.match("./assets/*", true)
-print(dirs)
--- In xmake-docs repo
--- got {
---   "assets\img",
---   "assets\npm",
---   "assets\scripts"
--- }
-```
-
 #### os.isroot
 
 - Test if xmake is running as root
@@ -1283,7 +1246,7 @@ print(os.cpuinfo())
 --   model = 158,
 --   family = 6
 -- }
-print(os.cpuinfo("march")) -- got Kaby Lake
+print(os.cpuinfo("march")) -- got "Kaby Lake"
 ```
 
 #### os.meminfo
