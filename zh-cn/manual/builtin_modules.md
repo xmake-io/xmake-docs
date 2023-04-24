@@ -664,6 +664,7 @@ if (errors) raise(errors)
 | [os.shell](#osshell) | 获取当前shell | >= 2.7.3 |
 | [os.cpuinfo](#oscpuinfo) | 获取CPU信息 | >= 2.1.5 |
 | [os.meminfo](#osmeminfo) | 获取内存信息 | >= 2.1.5 |
+| [os.default_njob](#osdefault_njob) | 获取默认编译任务数 | >= 2.5.8 |
 
 #### os.cp
 
@@ -1233,6 +1234,10 @@ print(os.meminfo())
 -- }
 print(os.meminfo("pagesize")) -- probably got 4096
 ```
+
+#### os.default_njob
+
+- 获取默认编译任务数
 
 ### winos
 
