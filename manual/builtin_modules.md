@@ -667,8 +667,8 @@ This module is also a native module of lua, and xmake has been extended to provi
 | [os.fscase](#osfscase) | Test if the os has a case sensitive filesystem | >= 2.1.9 |
 | [os.term](#osterm) | Get current terminal | >= 2.7.3 |
 | [os.shell](#osshell) | Get current shell | >= 2.7.3 |
-| [os.cpuinfo](#oscpuinfo) | Get cpu information | >= 2.1.5
-| [os.meminfo](#osmeminfo) | Get memory information | >= 2.1.5
+| [os.cpuinfo](#oscpuinfo) | Get cpu information | >= 2.1.5 |
+| [os.meminfo](#osmeminfo) | Get memory information | >= 2.1.5 |
 
 #### os.cp
 
