@@ -1873,7 +1873,7 @@ Through `add_requires("iverilog")` configuration, we can automatically pull the 
 ```lua
 add_requires("iverilog")
 target("hello")
-     add_rules("iverilog. binary")
+     add_rules("iverilog.binary")
      set_toolchains("@iverilog")
      add_files("src/*.v")
 ```
@@ -1883,7 +1883,7 @@ target("hello")
 ```Lua
 add_requires("iverilog")
 target("hello")
-     add_rules("iverilog. binary")
+     add_rules("iverilog.binary")
      set_toolchains("@iverilog")
      add_files("src/*.v")
      add_defines("TEST")
@@ -1910,7 +1910,7 @@ Currently supported values and mappings are as follows:
 ```lua
 add_requires("iverilog")
 target("hello")
-     add_rules("iverilog. binary")
+     add_rules("iverilog.binary")
      set_toolchains("@iverilog")
      add_files("src/*.v")
      add_values("iverilogs.flags", "-DTEST")
@@ -1944,7 +1944,7 @@ Through `add_requires("verilator")` configuration, we can automatically pull the
 ```lua
 add_requires("verilator")
 target("Hello")
-     add_rules("verilator. binary")
+     add_rules("verilator.binary")
      set_toolchains("@verilator")
      add_files("src/*.v")
      add_files("src/*.cpp")
@@ -1972,7 +1972,7 @@ int main(int argc, char** argv) {
 ```lua
 add_requires("verilator")
 target("Hello")
-     add_rules("verilator. binary")
+     add_rules("verilator.binary")
      set_toolchains("@verilator")
      add_files("src/*.v")
      add_defines("TEST")
@@ -2001,7 +2001,7 @@ Currently supported values and mappings are as follows.
 ```lua
 add_requires("verilator")
 target("Hello")
-     add_rules("verilator. binary")
+     add_rules("verilator.binary")
      set_toolchains("@verilator")
      add_files("src/*.v")
      add_files("src/*.cpp")
