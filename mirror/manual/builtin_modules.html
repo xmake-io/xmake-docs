@@ -737,7 +737,7 @@ $ xmake --version
 </tr>
 <tr>
 <td><a href="#ossetenvs">os.setenvs</a></td>
-<td>Set a environment variable</td>
+<td>Set environment variables</td>
 <td>>= 2.2.6</td>
 </tr>
 <tr>
@@ -781,11 +781,6 @@ $ xmake --version
 <td>>= 2.1.9</td>
 </tr>
 <tr>
-<td><a href="#osmatch">os.match</a></td>
-<td>Match files or directories</td>
-<td>>= 2.3.1</td>
-</tr>
-<tr>
 <td><a href="#osisroot">os.isroot</a></td>
 <td>Test if xmake is running as root</td>
 <td>>= 2.1.9</td>
@@ -814,6 +809,11 @@ $ xmake --version
 <td><a href="#osmeminfo">os.meminfo</a></td>
 <td>Get memory information</td>
 <td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osdefault_njob">os.default_njob</a></td>
+<td>Get default paralled jobs</td>
+<td>>= 2.5.8</td>
 </tr>
 </tbody>
 </table>
@@ -1149,6 +1149,7 @@ os.ln("xxx.txt", "xxx.txt.ln")
 <pre><code class="lang-lua">-- Raise exception with message "an error occurred"
 os.raise("an error occurred")
 </code></pre>
+<p>!> recommanded to use builtin function <code>raise</code> instead of <code>os.raise</code></p>
 <h4 id="osraiselevel">os.raiselevel</h4>
 <ul>
 <li>Similar to <a href="#osraise">os.raise</a> but you can specify the level of the error</li>
@@ -1170,15 +1171,15 @@ print(envs["HOME"])
 </code></pre>
 <h4 id="ossetenvs">os.setenvs</h4>
 <ul>
-<li>Set environment variables. Replace the current envs by a new one</li>
+<li>Set environment variables. Replace the current envs by a new one and return old envs</li>
 </ul>
 <h4 id="osaddenvs">os.addenvs</h4>
 <ul>
-<li>Add environment variables to current envs, return the old one</li>
+<li>Add environment variables to current envs, return the all old envs</li>
 </ul>
 <pre><code class="lang-lua">os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
 
-local oldenvs = os.addenvs({CUSTOM = "some/path/"})
+local oldenvs = os.addenvs({EXAMPLE = "some/path/"})
 print(os.getenvs()["EXAMPLE"]) --got some/path/;a/path
 print(oldenvs["EXAMPLE"]) -- got a/path
 </code></pre>
@@ -1222,42 +1223,6 @@ os.addenv("PATH", "bin")
 <ul>
 <li>Get the working directory</li>
 </ul>
-<h4 id="osmatch">os.match</h4>
-<ul>
-<li>Match files or directories with a pattern</li>
-</ul>
-<pre><code class="lang-lua">-- @param pattern   the search pattern
---                  uses "*" to match any part of a file or directory name,
---                  uses "**" to recurse into subdirectories.
---
--- @param mode      the match mode
---                  - only find file:           &#39;f&#39; or false or nil
---                  - only find directory:      &#39;d&#39; or true
---                  - find file and directory:  &#39;a&#39;
--- @return          the result array and count
-
-local files, count = os.match("./about/*", false)
-print(files)
--- In xmake-docs repo
--- got { 
---   "about\awesome.md",
---   "about\changelog.md",
---   "about\contact.md",
---   "about\introduction.md",
---   "about\sponsor.md",
---   "about\technical_support.md",
---   "about\who_is_using_xmake.md"
--- }
-
-local dirs, count = os.match("./assets/*", true)
-print(dirs)
--- In xmake-docs repo
--- got {
---   "assets\img",
---   "assets\npm",
---   "assets\scripts"
--- }
-</code></pre>
 <h4 id="osisroot">os.isroot</h4>
 <ul>
 <li>Test if xmake is running as root</li>
@@ -1294,7 +1259,7 @@ print(dirs)
 --   model = 158,
 --   family = 6
 -- }
-print(os.cpuinfo("march")) -- got Kaby Lake
+print(os.cpuinfo("march")) -- got "Kaby Lake"
 </code></pre>
 <h4 id="osmeminfo">os.meminfo</h4>
 <ul>
@@ -1308,6 +1273,10 @@ print(os.cpuinfo("march")) -- got Kaby Lake
 --   pagesize = 4096
 -- }
 </code></pre>
+<h4 id="osdefault_njob">os.default_njob</h4>
+<ul>
+<li>Get default paralled jobs</li>
+</ul>
 <h3 id="winos">winos</h3>
 <p>The windows system operation module is a built-in module, no need to use <a href="#import">import</a> to import, you can directly call its interface in the script domain.</p>
 <table>

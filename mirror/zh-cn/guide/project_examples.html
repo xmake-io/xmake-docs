@@ -247,6 +247,50 @@ installing build/android/release/appdemo.apk ..
 Success
 install ok!👌
 </code></pre>
+<h3 id="qtsdk">目前支持的 Qt SDK</h3>
+<h4 id="qtsdk">来自 Qt 官方提供的 SDK 安装包</h4>
+<p>在 macos/windows 上通常能自动探测到，但是也可以手动指定 Qt SDK 路径。</p>
+<pre><code class="lang-bash">$ xmake f --qt=[qt sdk path]
+</code></pre>
+<h4 id="unbuntuapt">来自 Unbuntu Apt 安装包</h4>
+<p>使用 qpt 安装完 Qt SDK，xmake 也能够自动检测到。</p>
+<pre><code class="lang-bash">$ sudo apt install -y qtcreator qtbase5-dev
+$ xmake
+</code></pre>
+<h4 id="msys2pacmanqtmingw">来自 msys2/pacman 的 Qt Mingw 安装包</h4>
+<p>xmake 也支持从 pacman 安装的 Qt Mingw SDK</p>
+<pre><code class="lang-bash">$ pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator
+$ xmake
+</code></pre>
+<h4 id="aqtinstallqtsdk">来自 aqtinstall 脚本的 Qt SDK 包</h4>
+<p><a href="https://github.com/miurahr/aqtinstall">aqtinstall</a> 安装的 Qt SDK 是完全基于官方 SDK 结构的，所以 xmake 也完全支持。</p>
+<p>但是，通常需要自己指定 SDK 路径。</p>
+<pre><code class="lang-bash">$ xmake f --qt=[Qt SDK]
+</code></pre>
+<h4 id="xmakerepoqt">来自 xmake-repo 仓库的 Qt 包</h4>
+<p>xmake 现在官方提供了 Qt5 SDK 的各种模块包，可以自动集成使用，无需任何手动安装。</p>
+<p>只需要配置集成包就行了，xmake 会自动处理 Qt 的安装集成，并且自动编译项目。</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("qt5widgets")
+
+target("test")
+    add_rules("qt.widgetapp")
+    add_packages("qt5widgets")
+
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    -- add files with Q_OBJECT meta (only for qt.moc)
+    add_files("src/mainwindow.h")
+</code></pre>
+<p>除了 <code>qt5widgets</code> 包，仓库还提供了 <code>qt5gui</code>, <code>qt5network</code> 等包，可以使用。</p>
+<p>配置完，只需要执行：</p>
+<pre><code class="lang-bash">$ xmake
+</code></pre>
+<p>!> Qt6 的包还在开发中，暂时仅仅只支持 Qt5</p>
+<h4 id="vcpkgconanqt">来自 vcpkg/conan 的 Qt 包</h4>
+<p>暂时还没时间支持，请尽量使用上面的方式集成 Qt SDK。</p>
 <h2 id="wdk">WDK驱动程序</h2>
 <p>默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：</p>
 <pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c

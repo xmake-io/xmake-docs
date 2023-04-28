@@ -245,6 +245,80 @@ Success
 install ok!👌
 ```
 
+### 目前支持的 Qt SDK
+
+#### 来自 Qt 官方提供的 SDK 安装包
+
+在 macos/windows 上通常能自动探测到，但是也可以手动指定 Qt SDK 路径。
+
+```bash
+$ xmake f --qt=[qt sdk path]
+```
+
+#### 来自 Unbuntu Apt 安装包
+
+使用 qpt 安装完 Qt SDK，xmake 也能够自动检测到。
+
+```bash
+$ sudo apt install -y qtcreator qtbase5-dev
+$ xmake
+```
+
+#### 来自 msys2/pacman 的 Qt Mingw 安装包
+
+xmake 也支持从 pacman 安装的 Qt Mingw SDK
+
+```bash
+$ pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator
+$ xmake
+```
+
+#### 来自 aqtinstall 脚本的 Qt SDK 包
+
+[aqtinstall](https://github.com/miurahr/aqtinstall) 安装的 Qt SDK 是完全基于官方 SDK 结构的，所以 xmake 也完全支持。
+
+但是，通常需要自己指定 SDK 路径。
+
+```bash
+$ xmake f --qt=[Qt SDK]
+```
+
+#### 来自 xmake-repo 仓库的 Qt 包
+
+xmake 现在官方提供了 Qt5 SDK 的各种模块包，可以自动集成使用，无需任何手动安装。
+
+只需要配置集成包就行了，xmake 会自动处理 Qt 的安装集成，并且自动编译项目。
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("qt5widgets")
+
+target("test")
+    add_rules("qt.widgetapp")
+    add_packages("qt5widgets")
+
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    -- add files with Q_OBJECT meta (only for qt.moc)
+    add_files("src/mainwindow.h")
+```
+
+除了 `qt5widgets` 包，仓库还提供了 `qt5gui`, `qt5network` 等包，可以使用。
+
+配置完，只需要执行：
+
+```bash
+$ xmake
+```
+
+!> Qt6 的包还在开发中，暂时仅仅只支持 Qt5
+
+#### 来自 vcpkg/conan 的 Qt 包
+
+暂时还没时间支持，请尽量使用上面的方式集成 Qt SDK。
+
 ## WDK驱动程序
 
 默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：

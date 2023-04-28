@@ -243,6 +243,80 @@ success
 install ok!👌
 ```
 
+### Supported Qt SDKs
+
+#### The official Qt SDK installation package
+
+This is usually detected automatically on macos/windows, but it is possible to specify the Qt SDK path manually.
+
+```bash
+$ xmake f --qt=[qt sdk path]
+```
+
+#### The Unbuntu Apt package
+
+After installing the Qt SDK using qpt, xmake will also be able to detect it automatically.
+
+```bash
+$ sudo apt install -y qtcreator qtbase5-dev
+$ xmake
+```
+
+#### Qt Mingw SDK from msys2/pacman
+
+xmake also supports the Qt Mingw SDK installed from pacman
+
+```bash
+$ pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator
+$ xmake
+```
+
+#### Qt SDK package from aqtinstall script
+
+The Qt SDK installed by [aqtinstall](https://github.com/miurahr/aqtinstall) is based entirely on the official SDK structure and is therefore fully supported by xmake.
+
+However, it is usually necessary to specify the SDK path yourself.
+
+```bash
+$ xmake f --qt=[Qt SDK]
+```
+
+#### Qt packages from the xmake-repo repository
+
+xmake now officially provides a variety of modules for the Qt5 SDK that can be integrated automatically without any manual installation.
+
+Just configure the integration packages and xmake will automatically handle the Qt installation and integration and compile the project automatically.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("qt5widgets")
+
+target("test")
+    add_rules("qt.widgetapp")
+    add_packages("qt5widgets")
+
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    -- add files with Q_OBJECT meta (only for qt.moc)
+    add_files("src/mainwindow.h")
+```
+
+In addition to the `qt5widgets` package, the repository also provides `qt5gui`, `qt5network` and other packages that can be used.
+
+Once configured, simply execute:
+
+```bash
+$ xmake
+```
+
+!> The Qt6 package is still under development and only supports Qt5 for now
+
+#### Qt packages from vcpkg/conan
+
+There is no time to support it yet, so please try to integrate the Qt SDK in the same way as above.
+
 ## WDK Driver Program
 
 xmake will detect WDK automatically and we can also set the WDK directory manually.

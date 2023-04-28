@@ -247,6 +247,50 @@ installing build/android/release/appdemo.apk ..
 success
 install ok!👌
 </code></pre>
+<h3 id="supportedqtsdks">Supported Qt SDKs</h3>
+<h4 id="theofficialqtsdkinstallationpackage">The official Qt SDK installation package</h4>
+<p>This is usually detected automatically on macos/windows, but it is possible to specify the Qt SDK path manually.</p>
+<pre><code class="lang-bash">$ xmake f --qt=[qt sdk path]
+</code></pre>
+<h4 id="theunbuntuaptpackage">The Unbuntu Apt package</h4>
+<p>After installing the Qt SDK using qpt, xmake will also be able to detect it automatically.</p>
+<pre><code class="lang-bash">$ sudo apt install -y qtcreator qtbase5-dev
+$ xmake
+</code></pre>
+<h4 id="qtmingwsdkfrommsys2pacman">Qt Mingw SDK from msys2/pacman</h4>
+<p>xmake also supports the Qt Mingw SDK installed from pacman</p>
+<pre><code class="lang-bash">$ pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator
+$ xmake
+</code></pre>
+<h4 id="qtsdkpackagefromaqtinstallscript">Qt SDK package from aqtinstall script</h4>
+<p>The Qt SDK installed by <a href="https://github.com/miurahr/aqtinstall">aqtinstall</a> is based entirely on the official SDK structure and is therefore fully supported by xmake.</p>
+<p>However, it is usually necessary to specify the SDK path yourself.</p>
+<pre><code class="lang-bash">$ xmake f --qt=[Qt SDK]
+</code></pre>
+<h4 id="qtpackagesfromthexmakereporepository">Qt packages from the xmake-repo repository</h4>
+<p>xmake now officially provides a variety of modules for the Qt5 SDK that can be integrated automatically without any manual installation.</p>
+<p>Just configure the integration packages and xmake will automatically handle the Qt installation and integration and compile the project automatically.</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("qt5widgets")
+
+target("test")
+    add_rules("qt.widgetapp")
+    add_packages("qt5widgets")
+
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    -- add files with Q_OBJECT meta (only for qt.moc)
+    add_files("src/mainwindow.h")
+</code></pre>
+<p>In addition to the <code>qt5widgets</code> package, the repository also provides <code>qt5gui</code>, <code>qt5network</code> and other packages that can be used.</p>
+<p>Once configured, simply execute:</p>
+<pre><code class="lang-bash">$ xmake
+</code></pre>
+<p>!> The Qt6 package is still under development and only supports Qt5 for now</p>
+<h4 id="qtpackagesfromvcpkgconan">Qt packages from vcpkg/conan</h4>
+<p>There is no time to support it yet, so please try to integrate the Qt SDK in the same way as above.</p>
 <h2 id="wdkdriverprogram">WDK Driver Program</h2>
 <p>xmake will detect WDK automatically and we can also set the WDK directory manually.</p>
 <pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
@@ -1374,14 +1418,14 @@ target("test")
 <p>Through <code>add_requires("iverilog")</code> configuration, we can automatically pull the iverilog toolchain package, and then use <code>set_toolchains("@iverilog")</code> to automatically bind the toolchain to compile the project.</p>
 <pre><code class="lang-lua">add_requires("iverilog")
 target("hello")
-     add_rules("iverilog. binary")
+     add_rules("iverilog.binary")
      set_toolchains("@iverilog")
      add_files("src/*.v")
 </code></pre>
 <h4 id="setabstractconfiguration">Set abstract configuration</h4>
 <pre><code class="lang-Lua">add_requires("iverilog")
 target("hello")
-     add_rules("iverilog. binary")
+     add_rules("iverilog.binary")
      set_toolchains("@iverilog")
      add_files("src/*.v")
      add_defines("TEST")
@@ -1400,7 +1444,7 @@ target("hello")
 <h4 id="setcustomflags">Set custom flags</h4>
 <pre><code class="lang-lua">add_requires("iverilog")
 target("hello")
-     add_rules("iverilog. binary")
+     add_rules("iverilog.binary")
      set_toolchains("@iverilog")
      add_files("src/*.v")
      add_values("iverilogs.flags", "-DTEST")
@@ -1423,7 +1467,7 @@ src/main.v:6: $finish called at 0 (1s)
 <p>Through <code>add_requires("verilator")</code> configuration, we can automatically pull the verilator toolchain package, and then use <code>set_toolchains("@verilator")</code> to automatically bind to the toolchain to compile the project.</p>
 <pre><code class="lang-lua">add_requires("verilator")
 target("Hello")
-     add_rules("verilator. binary")
+     add_rules("verilator.binary")
      set_toolchains("@verilator")
      add_files("src/*.v")
      add_files("src/*.cpp")
@@ -1445,7 +1489,7 @@ int main(int argc, char** argv) {
 <h4 id="setabstractconfiguration">Set abstract configuration</h4>
 <pre><code class="lang-lua">add_requires("verilator")
 target("Hello")
-     add_rules("verilator. binary")
+     add_rules("verilator.binary")
      set_toolchains("@verilator")
      add_files("src/*.v")
      add_defines("TEST")
@@ -1467,7 +1511,7 @@ target("Hello")
 <h4 id="setcustomflags">Set custom flags</h4>
 <pre><code class="lang-lua">add_requires("verilator")
 target("Hello")
-     add_rules("verilator. binary")
+     add_rules("verilator.binary")
      set_toolchains("@verilator")
      add_files("src/*.v")
      add_files("src/*.cpp")

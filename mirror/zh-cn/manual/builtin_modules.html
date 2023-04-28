@@ -655,6 +655,11 @@ $ xmake --version
 <td>>= 2.1.5</td>
 </tr>
 <tr>
+<td><a href="#osprogramfile">os.programfile</a></td>
+<td>获取xmake可执行文件路径</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
 <td><a href="#osprojectdir">os.projectdir</a></td>
 <td>获取工程主目录</td>
 <td>>= 2.1.5</td>
@@ -668,6 +673,131 @@ $ xmake --version
 <td><a href="#oshost">os.host</a></td>
 <td>获取当前主机系统</td>
 <td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#ossubhost">os.subhost</a></td>
+<td>获取子系统</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#ossubarch">os.subarch</a></td>
+<td>获取子系统架构</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osis_host">os.is_host</a></td>
+<td>判断给定系统是否正确</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osis_arch">os.is_arch</a></td>
+<td>判断给定架构是否正确</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osis_subhost">os.is_subhost</a></td>
+<td>判断给定子系统是否正确</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osis_subarch">os.is_subarch</a></td>
+<td>判断子系统架构是否正确</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osln">os.ln</a></td>
+<td>创建指向文件或文件夹的符号链接</td>
+<td>>= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#osreadlink">os.readlink</a></td>
+<td>读取符号链接</td>
+<td>>= 2.2.2</td>
+</tr>
+<tr>
+<td><a href="#osraise">os.raise</a></td>
+<td>抛出一个异常并中止脚本运行</td>
+<td>>= 2.2.8</td>
+</tr>
+<tr>
+<td><a href="#osraiselevel">os.raiselevel</a></td>
+<td>抛出一个异常并中止脚本运行</td>
+<td>>= 2.2.8</td>
+</tr>
+<tr>
+<td><a href="#osfeatures">os.features</a></td>
+<td>获取系统特性</td>
+<td>>= 2.3.1</td>
+</tr>
+<tr>
+<td><a href="#osgetenvs">os.getenvs</a></td>
+<td>获取所有环境变量</td>
+<td>>= 2.2.6</td>
+</tr>
+<tr>
+<td><a href="#ossetenvs">os.setenvs</a></td>
+<td>替换当前所有环境变量</td>
+<td>>= 2.2.6</td>
+</tr>
+<tr>
+<td><a href="#osaddenvs">os.addenvs</a></td>
+<td>向当前环境变量中添加新值</td>
+<td>>= 2.5.6</td>
+</tr>
+<tr>
+<td><a href="#osjoinenvs">os.joinenvs</a></td>
+<td>拼接环境变量</td>
+<td>>= 2.5.6</td>
+</tr>
+<tr>
+<td><a href="#ossetenvp">os.setenvp</a></td>
+<td>使用给定分隔符设置环境变量</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osaddenvp">os.addenvp</a></td>
+<td>使用给定分隔符向环境变量添加新值</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osworkingdir">os.workingdir</a></td>
+<td>获取工作路径</td>
+<td>>= 2.1.9</td>
+</tr>
+<tr>
+<td><a href="#osisroot">os.isroot</a></td>
+<td>判断当前xmake是否以管理员权限运行</td>
+<td>>= 2.1.9</td>
+</tr>
+<tr>
+<td><a href="#osfscase">os.fscase</a></td>
+<td>判断当前系统的文件系统是否大小写敏感</td>
+<td>>= 2.1.9</td>
+</tr>
+<tr>
+<td><a href="#osterm">os.term</a></td>
+<td>获取当前终端</td>
+<td>>= 2.7.3</td>
+</tr>
+<tr>
+<td><a href="#osshell">os.shell</a></td>
+<td>获取当前shell</td>
+<td>>= 2.7.3</td>
+</tr>
+<tr>
+<td><a href="#oscpuinfo">os.cpuinfo</a></td>
+<td>获取CPU信息</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osmeminfo">os.meminfo</a></td>
+<td>获取内存信息</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#osdefault_njob">os.default_njob</a></td>
+<td>获取默认编译任务数</td>
+<td>>= 2.5.8</td>
 </tr>
 </tbody>
 </table>
@@ -854,7 +984,7 @@ os.run("ls -l $(buildir)")
 <pre><code class="lang-lua">os.runv("echo", {"hello", "xmake!"})
 </code></pre>
 <p>另外，此接口也支持envs参数设置：</p>
-<pre><code class="lang-lua">os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
+<pre><code class="lang-lua">os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}})
 </code></pre>
 <h4 id="osexec">os.exec</h4>
 <ul>
@@ -944,6 +1074,10 @@ os.run("ls -l $(buildir)")
 <li>获取xmake安装主程序脚本目录</li>
 </ul>
 <p>跟<a href="#var-programdir">$(programdir)</a>结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。</p>
+<h4 id="osprogramfile">os.programfile</h4>
+<ul>
+<li>获取xmake可执行文件路径</li>
+</ul>
 <h4 id="osprojectdir">os.projectdir</h4>
 <ul>
 <li>获取工程主目录</li>
@@ -959,6 +1093,154 @@ os.run("ls -l $(buildir)")
 <li>获取当前主机的操作系统</li>
 </ul>
 <p>跟<a href="#var-host">$(host)</a>结果一致，例如我在<code>linux x86_64</code>上执行xmake进行构建，那么返回值是：<code>linux</code></p>
+<h4 id="ossubhost">os.subhost</h4>
+<ul>
+<li>获取当前子系统，如：在Windows上的msys、cygwin</li>
+</ul>
+<h4 id="ossubarch">os.subarch</h4>
+<ul>
+<li>获取子系统架构</li>
+</ul>
+<h4 id="osis_host">os.is_host</h4>
+<ul>
+<li>判断给定系统是否为当前系统</li>
+</ul>
+<h4 id="osis_arch">os.is_arch</h4>
+<ul>
+<li>判断给定架构是否为当前架构</li>
+</ul>
+<h4 id="osis_subhost">os.is_subhost</h4>
+<ul>
+<li>判断给定子系统是否为当前子系统</li>
+</ul>
+<h4 id="osis_subarch">os.is_subarch</h4>
+<ul>
+<li>判断给定子系统架构是否为当前子系统架构</li>
+</ul>
+<h4 id="osln">os.ln</h4>
+<ul>
+<li>为一个文件或目录创建符号链接</li>
+</ul>
+<pre><code class="lang-lua">-- 创建一个指向 "tmp.txt" 文件的符号链接 "tmp.txt.ln"
+os.ln("xxx.txt", "xxx.txt.ln")
+</code></pre>
+<h4 id="osreadlink">os.readlink</h4>
+<ul>
+<li>读取符号链接内容</li>
+</ul>
+<h4 id="osraise">os.raise</h4>
+<ul>
+<li>抛出一个异常并且中止当前脚本运行</li>
+</ul>
+<pre><code class="lang-lua">-- 抛出一个带 "an error occurred" 信息的异常
+os.raise("an error occurred")
+</code></pre>
+<p>!> 推荐使用与 <code>os.raise</code> 等价的内置接口 <code>raise</code>，用法与 <code>os.raise</code> 一致</p>
+<h4 id="osraiselevel">os.raiselevel</h4>
+<ul>
+<li>与 <a href="#osraise">os.raise</a> 类似但是可以指定异常等级</li>
+</ul>
+<pre><code class="lang-lua">-- 抛出一个带 "an error occurred" 信息的异常
+os.raise(3, "an error occurred")
+</code></pre>
+<h4 id="osfeatures">os.features</h4>
+<ul>
+<li>获取系统特性</li>
+</ul>
+<h4 id="osgetenvs">os.getenvs</h4>
+<ul>
+<li>获取所有当前系统变量</li>
+</ul>
+<pre><code class="lang-lua">local envs = os.getenvs()
+-- home directory (on linux)
+print(envs["HOME"])
+</code></pre>
+<h4 id="ossetenvs">os.setenvs</h4>
+<ul>
+<li>使用给定系统变量替换当前所有系统变量，并返回旧系统变量</li>
+</ul>
+<h4 id="osaddenvs">os.addenvs</h4>
+<ul>
+<li>向当前系统变量添加新变量，并且返回所有旧系统变量</li>
+</ul>
+<pre><code class="lang-lua">os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
+
+local oldenvs = os.addenvs({EXAMPLE = "some/path/"})
+print(os.getenvs()["EXAMPLE"]) --got some/path/;a/path
+print(oldenvs["EXAMPLE"]) -- got a/path
+</code></pre>
+<h4 id="osjoinenvs">os.joinenvs</h4>
+<ul>
+<li>拼接系统变量，与 <a href="#osaddenvs">os.addenvs</a> 类似，但是不会对当前环境变量产生影响，若第二个参数为 <code>nil</code>，则使用原有环境变量</li>
+</ul>
+<pre><code class="lang-lua">-- os.joinenvs(envs, oldenvs)
+--
+-- @param envs      table 类型，新插入的环境变量
+--
+-- @param oldenvs   table 类型，被插入的环境变量，若为 nil, 则为原有环境变量
+--
+-- @return          table 类型，拼接后的环境变量
+local envs0 = {CUSTOM = "a/path"}
+local envs1 = {CUSTOM = "some/path/"}
+print(os.joinenvs(envs0, envs1)) -- result is : { CUSTION = "a/path;some/path/" }
+</code></pre>
+<h4 id="ossetenvp">os.setenvp</h4>
+<ul>
+<li>使用给定分隔符设置环境变量</li>
+</ul>
+<h4 id="osworkingdir">os.workingdir</h4>
+<ul>
+<li>获取工作目录</li>
+</ul>
+<h4 id="osisroot">os.isroot</h4>
+<ul>
+<li>判断xmake是否以管理员权限运行</li>
+</ul>
+<h4 id="osfscase">os.fscase</h4>
+<ul>
+<li>判断操作系统的文件系统是否大小写敏感</li>
+</ul>
+<h4 id="osterm">os.term</h4>
+<ul>
+<li>获取当前终端 (windows-terminal, vscode, xterm, ...)</li>
+</ul>
+<h4 id="osshell">os.shell</h4>
+<ul>
+<li>获取当前shell (pwsh, cmd, bash, zsh, ...)</li>
+</ul>
+<h4 id="oscpuinfo">os.cpuinfo</h4>
+<ul>
+<li>获取当前CPU信息</li>
+</ul>
+<pre><code class="lang-lua">print(os.cpuinfo())
+-- probably got {
+--   march = "Alder Lake",
+--   model = 154,
+--   ncpu = 20,
+--   model_name = "12th Gen Intel(R) Core(TM) i9-12900H",
+--   usagerate = 0.041839182376862,
+--   vendor = "GenuineIntel",
+--   family = 6
+-- }
+print(os.cpuinfo("march")) -- probably got "Alder Lake"
+</code></pre>
+<h4 id="osmeminfo">os.meminfo</h4>
+<ul>
+<li>获取内存信息</li>
+</ul>
+<pre><code class="lang-lua">print(os.meminfo())
+-- probably got {
+--   pagesize = 4096,
+--   usagerate = 0.60694103194103,
+--   availsize = 12798,
+--   totalsize = 32560
+-- }
+print(os.meminfo("pagesize")) -- probably got 4096
+</code></pre>
+<h4 id="osdefault_njob">os.default_njob</h4>
+<ul>
+<li>获取默认编译任务数</li>
+</ul>
 <h3 id="winos">winos</h3>
 <p>windows 系统操作模块，属于内置模块，无需使用<a href="#import">import</a>导入，可直接脚本域调用其接口。</p>
 <table>
