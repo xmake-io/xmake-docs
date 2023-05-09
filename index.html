@@ -15,6 +15,10 @@
     nav.app-nav li ul {
       min-width: 100px;
     }
+    /* for wwads */
+    .content {
+      max-width: 70%;
+    }
   </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <!--
@@ -94,10 +98,25 @@
             return editHtml
               + html
               + '\n\n----\n\n'
-              + '<div class="wwads-cn wwads-horizontal" data-id="239" style="max-width:100%"></div>'
-              + '\n\n----\n\n'
               + '<a href="https://tboox.org" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Copyright (c) 2015-present xmake.io and tboox.org</a>'
           })
+          hook.afterEach(function (html) {
+            html += '<div id="floating-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px"></div>';
+            return html;
+          });
+          hook.doneEach(function () {
+            var panel = document.getElementById('floating-panel');
+            var content = document.querySelector('.content');
+            var contentRect = content.getBoundingClientRect();
+            panel.style.bottom = '20px';
+            panel.style.right = '20px';
+            panel.style.width = '200px';
+            panel.style.height = '200px';
+            panel.style.position = 'fixed';
+            panel.style.background = '#fff';
+            panel.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+            panel.innerHTML = '<p></p>';
+          });
         },
         DocsifyCarbon.create('CE7I52QU', 'xmakeio')
       ]
