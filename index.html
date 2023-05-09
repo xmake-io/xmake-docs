@@ -32,7 +32,7 @@
 </head>
 <body>
   <div id="app">Loading ...</div>
-  <div id="wwads-panel"></div>
+  <div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px"></div>
   <script>
     window.$docsify = {
       name: 'xmake',
@@ -102,10 +102,6 @@
               + '<a href="https://tboox.org" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Copyright (c) 2015-present xmake.io and tboox.org</a>'
           })
           /* wwads */
-          hook.afterEach(function (html) {
-            html += '<div id="floating-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px"></div>';
-            return html;
-          });
           hook.doneEach(function () {
             var panel = document.getElementById('wwads-panel');
             var cover = document.querySelector('.cover');
