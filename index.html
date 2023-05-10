@@ -96,8 +96,15 @@
               url = 'https://github.com/xmake-io/xmake-docs/blob/master/' + vm.route.file
             }
             var editHtml = '[:memo: Edit Document](' + url + ')\n'
+            var wwads = ''
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                wwads += '\n\n----\n\n';
+                wwads += '<div class="wwads-cn wwads-horizontal" data-id="239" style="max-width:100%"></div>';
+            }
             return editHtml
               + html
+              + wwads
               + '\n\n----\n\n'
               + '<a href="https://tboox.org" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Copyright (c) 2015-present xmake.io and tboox.org</a>'
           })
