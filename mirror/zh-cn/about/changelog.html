@@ -92,7 +92,52 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v277">v2.7.7</h2>
+    <h2 id="v279">v2.7.9</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3613">#3613</a>: 添加 <code>wasm.preloadfiles</code> 扩展配置</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3703">#3703</a>: 支持 conan >=2.0.5</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3669">#3669</a>: 改进 cmake 生成器支持特定工具的 cxflags</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3679">#3679</a>: 改进 <code>xrepo clean</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3662">#3662</a>: 改进 cmake/make 生成器去更好的支持 lex/yacc 工程</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3662">#3697</a>: 改进 trybuild/cmake</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3730">#3730</a>: 改进 c++modules 包安装，解决不同目录同名文件分发冲突问题</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3596">#3596</a>: 修复 check_cxxfuncs 和 check_cxxsnippets</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3603">#3603</a>: 修复 xmake update 的无效 url</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3614">#3614</a>: 修复 xmake run 对 Qt 环境的加载</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3628">#3628</a>: 修复 msys2/mingw 下 os.exec 总是优先查找错误的可执行程序</li>
+<li>修复 msys/mingw 下环境变量设置问题</li>
+</ul>
+<h2 id="v278">v2.7.8</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3518">#3518</a>: 分析编译和链接性能</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3522">#3522</a>: 为 target 添加 has_cflags, has_xxx 等辅助接口</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3537">#3537</a>: 为 clang.tidy 检测器添加 <code>--fix</code> 自动修复</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3433">#3433</a>: 改进 QT 在 msys2/mingw64 和 wasm 上的构建支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3419">#3419</a>: 支持 fish shell 环境</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3455">#3455</a>: Dlang 增量编译支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3498">#3498</a>: 改进绑定包虚拟环境</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3504">#3504</a>: 添加 swig java 支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3508">#3508</a>: 改进 trybuild/cmake 去支持工具链切换</li>
+<li>为 msvc 禁用 build cache 加速，因为 msvc 的预处理器太慢，反而极大影响构建性能。</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3436">#3436</a>: 修复自动补全和 menuconf</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3463">#3463</a>: 修复 c++modules 缓存问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3545">#3545</a>: 修复 armcc 的头文件依赖解析</li>
+</ul>
+<h2 id="v277">v2.7.7</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li>添加 Haiku 支持</li>

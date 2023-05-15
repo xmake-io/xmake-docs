@@ -1,3 +1,51 @@
+
+## v2.7.9
+
+### 新特性
+
+* [#3613](https://github.com/xmake-io/xmake/issues/3613): 添加 `wasm.preloadfiles` 扩展配置
+* [#3703](https://github.com/xmake-io/xmake/pull/3703): 支持 conan >=2.0.5
+
+### 改进
+
+* [#3669](https://github.com/xmake-io/xmake/issues/3669): 改进 cmake 生成器支持特定工具的 cxflags
+* [#3679](https://github.com/xmake-io/xmake/issues/3679): 改进 `xrepo clean`
+* [#3662](https://github.com/xmake-io/xmake/issues/3662): 改进 cmake/make 生成器去更好的支持 lex/yacc 工程
+* [#3697](https://github.com/xmake-io/xmake/issues/3662): 改进 trybuild/cmake
+* [#3730](https://github.com/xmake-io/xmake/issues/3730): 改进 c++modules 包安装，解决不同目录同名文件分发冲突问题
+
+### Bugs 修复
+
+* [#3596](https://github.com/xmake-io/xmake/issues/3596): 修复 check_cxxfuncs 和 check_cxxsnippets
+* [#3603](https://github.com/xmake-io/xmake/issues/3603): 修复 xmake update 的无效 url
+* [#3614](https://github.com/xmake-io/xmake/issues/3614): 修复 xmake run 对 Qt 环境的加载
+* [#3628](https://github.com/xmake-io/xmake/issues/3628): 修复 msys2/mingw 下 os.exec 总是优先查找错误的可执行程序
+* 修复 msys/mingw 下环境变量设置问题
+
+## v2.7.8
+
+### 新特性
+
+* [#3518](https://github.com/xmake-io/xmake/issues/3518): 分析编译和链接性能
+* [#3522](https://github.com/xmake-io/xmake/issues/3522): 为 target 添加 has_cflags, has_xxx 等辅助接口
+* [#3537](https://github.com/xmake-io/xmake/issues/3537): 为 clang.tidy 检测器添加 `--fix` 自动修复
+
+### 改进
+
+* [#3433](https://github.com/xmake-io/xmake/issues/3433): 改进 QT 在 msys2/mingw64 和 wasm 上的构建支持
+* [#3419](https://github.com/xmake-io/xmake/issues/3419): 支持 fish shell 环境
+* [#3455](https://github.com/xmake-io/xmake/issues/3455): Dlang 增量编译支持
+* [#3498](https://github.com/xmake-io/xmake/issues/3498): 改进绑定包虚拟环境
+* [#3504](https://github.com/xmake-io/xmake/pull/3504): 添加 swig java 支持
+* [#3508](https://github.com/xmake-io/xmake/issues/3508): 改进 trybuild/cmake 去支持工具链切换
+* 为 msvc 禁用 build cache 加速，因为 msvc 的预处理器太慢，反而极大影响构建性能。
+
+### Bugs 修复
+
+* [#3436](https://github.com/xmake-io/xmake/issues/3436): 修复自动补全和 menuconf
+* [#3463](https://github.com/xmake-io/xmake/issues/3463): 修复 c++modules 缓存问题
+* [#3545](https://github.com/xmake-io/xmake/issues/3545): 修复 armcc 的头文件依赖解析
+
 ## v2.7.7
 
 ### 新特性

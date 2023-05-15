@@ -1,5 +1,52 @@
 # Changelog
 
+## v2.7.9
+
+### New features
+
+* [#3613](https://github.com/xmake-io/xmake/issues/3613): Add `wasm.preloadfiles` configuration for wasm
+* [#3703](https://github.com/xmake-io/xmake/pull/3703): Support for conan >=2.0.5
+
+### Changes
+
+* [#3669](https://github.com/xmake-io/xmake/issues/3669): Improve cmake generator to support add_cxflags with the given tool
+* [#3679](https://github.com/xmake-io/xmake/issues/3679): Improve `xrepo clean`
+* [#3662](https://github.com/xmake-io/xmake/issues/3662): Improve cmake/make generator for lex/yacc project
+* [#3697](https://github.com/xmake-io/xmake/issues/3662): Improve trybuild/cmake
+* [#3730](https://github.com/xmake-io/xmake/issues/3730): Improve c++modules package installation
+
+### Bugs fixed
+
+* [#3596](https://github.com/xmake-io/xmake/issues/3596): Fix check_cxxfuncs and check_cxxsnippets
+* [#3603](https://github.com/xmake-io/xmake/issues/3603): Fix `xmake update`
+* [#3614](https://github.com/xmake-io/xmake/issues/3614): Fix qt envirnoment when running target
+* [#3628](https://github.com/xmake-io/xmake/issues/3628): Fix msys2/mingw setenv and os.exec issue
+* Fix setenv for msys/mingw
+
+## v2.7.8
+
+### New features
+
+* [#3518](https://github.com/xmake-io/xmake/issues/3518): Profile compile and link performance
+* [#3522](https://github.com/xmake-io/xmake/issues/3522): Add has_cflags, has_xxx for target
+* [#3537](https://github.com/xmake-io/xmake/issues/3537): Add --fix for clang.tidy checker
+
+### Changes
+
+* [#3433](https://github.com/xmake-io/xmake/issues/3433): Improve to build Qt project on msys2/mingw64 and wasm
+* [#3419](https://github.com/xmake-io/xmake/issues/3419): Support fish shell envirnoment
+* [#3455](https://github.com/xmake-io/xmake/issues/3455): Dlang incremental build support
+* [#3498](https://github.com/xmake-io/xmake/issues/3498): Improve to bind package virtual envirnoments
+* [#3504](https://github.com/xmake-io/xmake/pull/3504): Add swig java support
+* [#3508](https://github.com/xmake-io/xmake/issues/3508): Improve trybuild/cmake to support for switching toolchain
+* disable build cache for msvc, because msvc's preprocessor is too slow.
+
+### Bugs fixed
+
+* [#3436](https://github.com/xmake-io/xmake/issues/3436): Fix complete and menuconf
+* [#3463](https://github.com/xmake-io/xmake/issues/3463): Fix c++modules cache issue
+* [#3545](https://github.com/xmake-io/xmake/issues/3545): Fix parsedeps for armcc
+
 ## v2.7.7
 
 ### New features
