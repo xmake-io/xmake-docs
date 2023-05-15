@@ -132,7 +132,20 @@ target("test")
 <p>完整例子请执行下面的命令来创建：</p>
 <pre><code class="lang-bash">xmake create -l c -t shared test
 </code></pre>
-<h2 id="qt">Qt程序</h2>
+<h2 id="wasm">Wasm 程序</h2>
+<p>所有 c/c++ 程序，我们都可以编译成 Wasm，无需任何 xmake.lua 配置改动，只需要切换到 wasm 编译平台进行编译。</p>
+<pre><code class="lang-console">$ xmake f -p wasm
+$ xmake
+</code></pre>
+<p>详细的 Wasm 编译配置见：<a href="/mirror/zh-cn/guide/configuration.html#wasm">Wasm 配置</a></p>
+<p>另外，在编译带有 <code>--preload-file assets/xxx.md</code> 设置的文件时候，我们也可以通过配置，简化对它的设置。</p>
+<pre><code class="lang-lua">target("test5")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_values("wasm.preloadfiles", "src/xxx.md")
+    add_values("wasm.preloadfiles", "src/xxx2.md")
+</code></pre>
+<h2 id="qt">Qt 程序</h2>
 <p>创建一个空工程：</p>
 <p>v2.2.9以上版本：</p>
 <pre><code class="lang-console">$ xmake create -t qt.console test

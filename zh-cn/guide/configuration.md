@@ -113,6 +113,13 @@ $ xmake
 
 更多详情见：[https://github.com/xmake-io/xmake/issues/956](https://github.com/xmake-io/xmake/issues/956)
 
+除了 emscripten 以外，还有一个常用的wasm工具链 wasi-sdk，用于构建基于wasi的程序，我们仅仅只需要切换工具链即可。
+
+```console
+$ xmake f -p wasm --toolchain=wasi
+$ xmake
+```
+
 ## 交叉编译配置
 
 通常，如果我们需要在当前pc环境编译生成其他设备上才能运行的目标文件时候，就需要通过对应的交叉编译工具链来编译生成它们，比如在win/macos上编译linux的程序，或者在linux上编译其他嵌入式设备的目标文件等。

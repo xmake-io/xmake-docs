@@ -107,6 +107,14 @@ Regarding the version correspondence, you can see: [https://wiki.qt.io/Qt_for_We
 
 For more details, please see: [https://github.com/xmake-io/xmake/issues/956](https://github.com/xmake-io/xmake/issues/956)
 
+In addition to emscripten, there is a common wasi-sdk toolchain for building wasi-based programs, and we just need to switch between toolchains.
+
+```console
+$ xmake f -p wasm --toolchain=wasi
+$ xmake
+```
+
+
 ### Apple WatchOS
 
 ```bash

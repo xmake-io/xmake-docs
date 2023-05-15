@@ -150,6 +150,10 @@ $ xmake
 <p>One thing to note is that there is a correspondence between the versions of Emscripten and Qt SDK. If the version does not match, there may be compatibility issues between Qt/Wasm.</p>
 <p>Regarding the version correspondence, you can see: <a href="https://wiki.qt.io/Qt_for_WebAssembly">https://wiki.qt.io/Qt_for_WebAssembly</a></p>
 <p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/956">https://github.com/xmake-io/xmake/issues/956</a></p>
+<p>In addition to emscripten, there is a common wasi-sdk toolchain for building wasi-based programs, and we just need to switch between toolchains.</p>
+<pre><code class="lang-console">$ xmake f -p wasm --toolchain=wasi
+$ xmake
+</code></pre>
 <h3 id="applewatchos">Apple WatchOS</h3>
 <pre><code class="lang-bash">$ xmake f -p watchos [-a i386|armv7k]
 $ xmake

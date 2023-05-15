@@ -153,6 +153,10 @@ $ xmake
 <p>需要注意的一点是，Emscripten 和 Qt SDK 的版本是有对应关系的，不匹配的版本，可能会有Qt/Wasm之间的兼容问题。</p>
 <p>关于版本对应关系，可以看下：<a href="https://wiki.qt.io/Qt_for_WebAssembly">https://wiki.qt.io/Qt_for_WebAssembly</a></p>
 <p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/956">https://github.com/xmake-io/xmake/issues/956</a></p>
+<p>除了 emscripten 以外，还有一个常用的wasm工具链 wasi-sdk，用于构建基于wasi的程序，我们仅仅只需要切换工具链即可。</p>
+<pre><code class="lang-console">$ xmake f -p wasm --toolchain=wasi
+$ xmake
+</code></pre>
 <h2 id="">交叉编译配置</h2>
 <p>通常，如果我们需要在当前pc环境编译生成其他设备上才能运行的目标文件时候，就需要通过对应的交叉编译工具链来编译生成它们，比如在win/macos上编译linux的程序，或者在linux上编译其他嵌入式设备的目标文件等。</p>
 <p>通常的交叉编译工具链都是基于gcc/clang的，大都具有类似如下的结构：</p>
