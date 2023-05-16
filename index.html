@@ -32,7 +32,6 @@
 </head>
 <body>
   <div id="app">Loading ...</div>
-  <div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px"></div>
   <script>
     window.$docsify = {
       name: 'xmake',
@@ -101,6 +100,8 @@
             if (isMobile) {
                 wwads += '\n\n----\n\n';
                 wwads += '<div class="wwads-cn wwads-horizontal" data-id="239" style="max-width:100%;background:#fff"></div>';
+            } else {
+                wwads += '<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px"></div>';
             }
             return editHtml
               + html
