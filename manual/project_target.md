@@ -1622,7 +1622,8 @@ add_cxxflags("-stdlib=libc++", {tools = "gcc"})
 add_cxxflags("/GR-", {tools = {"clang_cl", "cl"}})
 ```
 
-!> Not just for compile flags, but also for link flags such as add_ldflags, which also work.
+!> Not just for compile flags, but also for link flags such as add_ldflags, which also work. For link flags, the user must specify
+if they want to target the C or C++ linker, such as "clang" for C and "clangxx" for C++.
 
 ### target:add_mflags
 
