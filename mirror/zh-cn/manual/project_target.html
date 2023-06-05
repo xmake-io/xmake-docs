@@ -1893,7 +1893,7 @@ target("test")
     set_values("markdown.flags", "xxx", "xxx")
 </code></pre>
 <p>上述代码例子中，可以看出，在target应用markdown规则的时候，通过set_values去设置一些flags值，提供给markdown规则去处理。<br>在规则脚本中可以通过<code>target:values("markdown.flags")</code>获取到target中设置的扩展flags值。</p>
-<p>!> 具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：<a href="#内建规则">内建规则</a></p>
+<p>!> 具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：<a href="/mirror/zh-cn/manual/custom_rule.html#内建规则">内建规则</a></p>
 <p>下面是一些 xmake 目前支持的一些内置的扩展配置项列表。</p>
 <table>
 <thead>
@@ -1930,6 +1930,10 @@ target("test")
 <tr>
 <td>xcode.codesign_identity</td>
 <td>设置 xcode 工具链的代码签名标识</td>
+</tr>
+<tr>
+<td>wasm.preloadfiles</td>
+<td>设置 wasm 打包的预加载文件（preload file）</td>
 </tr>
 <tr>
 <td>wdk.env.winver</td>

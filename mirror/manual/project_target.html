@@ -1485,7 +1485,7 @@ add_cxxflags("clang_cl::/GR-")
 add_cxxflags("-stdlib=libc++", {tools = "gcc"})
 add_cxxflags("/GR-", {tools = {"clang_cl", "cl"}})
 </code></pre>
-<p>!> Not just for compile flags, but also for link flags such as add_ldflags, which also work.</p>
+<p>!> Not just for compile flags, but also for link flags such as add_ldflags, which also work. For link flags, the user must specify<br>if they want to target the C or C++ linker, such as "clang" for C and "clangxx" for C++.</p>
 <h3 id="targetadd_mflags">target:add_mflags</h3>
 <h4 id="addobjccompilationflags">Add objc compilation flags</h4>
 <p>Add compilation options only to objc code</p>
@@ -1878,7 +1878,7 @@ target("test")
     set_values("markdown.flags", "xxx", "xxx")
 </code></pre>
 <p>In the above code example, it can be seen that when the target applies the markdown rule, some flag values are set by set_values and provided to the markdown rule for processing.<br>In the rule script, you can get the extended flag value set in the target by <code>target:values("markdown.flags")</code>.</p>
-<p>!> The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: <a href="#built-in rules">built-in rules</a></p>
+<p>!> The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: <a href="/mirror/manual/custom_rule.html#built-in-rules">built-in rules</a></p>
 <p>The following is a list of some built-in extended configuration items currently supported by xmake.</p>
 <table>
 <thead>
@@ -1915,6 +1915,10 @@ target("test")
 <tr>
 <td>xcode.codesign_identity</td>
 <td>Set the code signing identity of the xcode toolchain</td>
+</tr>
+<tr>
+<td>wasm.preloadfiles</td>
+<td>Set the preload file (and path mapping) of wasm build</td>
 </tr>
 <tr>
 <td>wdk.env.winver</td>
