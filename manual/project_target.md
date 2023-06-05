@@ -2173,7 +2173,7 @@ target("test")
 In the above code example, it can be seen that when the target applies the markdown rule, some flag values are set by set_values and provided to the markdown rule for processing.
 In the rule script, you can get the extended flag value set in the target by `target:values("markdown.flags")`.
 
-!> The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](#built-in rules)
+!> The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](/manual/custom_rule?id=built-in-rules)
 
 The following is a list of some built-in extended configuration items currently supported by xmake.
 
@@ -2186,6 +2186,7 @@ The following is a list of some built-in extended configuration items currently 
 | xcode.bundle_identifier     | Set the Bundle Identifier of the xcode toolchain       |
 | xcode.mobile_provision      | Set the certificate information of the xcode toolchain |
 | xcode.codesign_identity     | Set the code signing identity of the xcode toolchain   |
+| wasm.preloadfiles           | Set the preload file (and path mapping) of wasm build  |
 | wdk.env.winver              | Set the win support version of wdk                     |
 | wdk.umdf.sdkver             | Set the umdf sdk version of wdk                        |
 | wdk.kmdf.sdkver             | Set the kmdf sdk version of wdk                        |

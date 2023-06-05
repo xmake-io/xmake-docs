@@ -2173,7 +2173,7 @@ target("test")
 上述代码例子中，可以看出，在target应用markdown规则的时候，通过set_values去设置一些flags值，提供给markdown规则去处理。
 在规则脚本中可以通过`target:values("markdown.flags")`获取到target中设置的扩展flags值。
 
-!> 具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](#内建规则)
+!> 具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](/zh-cn/manual/custom_rule?id=内建规则)
 
 下面是一些 xmake 目前支持的一些内置的扩展配置项列表。
 
@@ -2186,6 +2186,7 @@ target("test")
 | xcode.bundle_identifier | 设置 xcode 工具链的 Bundle Identifier |
 | xcode.mobile_provision  | 设置 xcode 工具链的证书信息           |
 | xcode.codesign_identity | 设置 xcode 工具链的代码签名标识       |
+| wasm.preloadfiles       | 设置 wasm 打包的预加载文件（preload file） |
 | wdk.env.winver          | 设置 wdk 的 win 支持版本              |
 | wdk.umdf.sdkver         | 设置 wdk 的 umdf sdk 版本             |
 | wdk.kmdf.sdkver         | 设置 wdk 的 kmdf sdk 版本             |
