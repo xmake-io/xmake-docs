@@ -147,14 +147,6 @@ make
 source ~/.xmake/profile
 ```
 
-If you already install xmake, you can use below command.
-
-```bash
-git clone --recursive https://github.com/xmake-io/xmake.git
-cd ./xmake/core
-xmake
-```
-
 If you think the source of github is too slow, you can pull it through the mirror source of gitee or gitlab: 
 
 ```bash
@@ -176,6 +168,14 @@ make
 ```
 
 !> `./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute Xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.
+
+### Source compilation in Windows platform
+
+```bash
+git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake/core
+xmake
+```
 
 ### Only update the lua script
 
