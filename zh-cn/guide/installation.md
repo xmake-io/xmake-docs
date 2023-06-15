@@ -167,6 +167,15 @@ make
 source ~/.xmake/profile
 ```
 
+如果已经安装xmake，可以用如下命令进行编译。
+
+```bash
+git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake/core
+xmake
+```
+
+
 如果觉得github的源太慢，可以通过gitee的镜像源拉取：`clone --recursive https://gitee.com/tboox/xmake.git`
 也可以如下修改~/.gitconfig，永久解决github clone慢的问题
 ```
