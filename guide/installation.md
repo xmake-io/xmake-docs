@@ -169,6 +169,14 @@ make
 
 !> `./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute Xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.
 
+### Source compilation in Windows platform
+
+```bash
+git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake/core
+xmake
+```
+
 ### Only update the lua script
 
 This developer needs to debug the Xmake source locally:
