@@ -147,6 +147,14 @@ make
 source ~/.xmake/profile
 ```
 
+If you already install xmake, you can use below command.
+
+```bash
+git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake/core
+xmake
+```
+
 If you think the source of github is too slow, you can pull it through the mirror source of gitee or gitlab: 
 
 ```bash
