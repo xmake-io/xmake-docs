@@ -167,15 +167,6 @@ make
 source ~/.xmake/profile
 ```
 
-如果已经安装xmake，可以用如下命令进行编译。
-
-```bash
-git clone --recursive https://github.com/xmake-io/xmake.git
-cd ./xmake/core
-xmake
-```
-
-
 如果觉得github的源太慢，可以通过gitee的镜像源拉取：`clone --recursive https://gitee.com/tboox/xmake.git`
 也可以如下修改~/.gitconfig，永久解决github clone慢的问题
 ```
@@ -197,6 +188,14 @@ make
 ```
 
 !> `./get.sh __local__`是安装到`~/.local/xmake`下，然后通过`source ~/.xmake/profile`方式来加载的，所以安装完，当前终端如果执行xmake失败，提示找不到，就手动执行下 `source ~/.xmake/profile`，而下次打开终端就不需要了。
+
+### Windows平台源码安装
+
+```bash
+git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake/core
+xmake
+```
 
 ### 仅仅更新安装lua脚本
 
