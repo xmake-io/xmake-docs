@@ -204,6 +204,11 @@ make
 ./scripts/get.sh __local__ __install_only__
 </code></pre>
 <p>!> <code>./get.sh __local__</code>是安装到<code>~/.local/xmake</code>下，然后通过<code>source ~/.xmake/profile</code>方式来加载的，所以安装完，当前终端如果执行xmake失败，提示找不到，就手动执行下 <code>source ~/.xmake/profile</code>，而下次打开终端就不需要了。</p>
+<h3 id="windows">Windows平台源码安装</h3>
+<pre><code class="lang-bash">git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake/core
+xmake
+</code></pre>
 <h3 id="lua">仅仅更新安装lua脚本</h3>
 <p>这个开发者本地调试xmake源码才需要：</p>
 <pre><code class="lang-bash">./scripts/get.sh __local__ __install_only__

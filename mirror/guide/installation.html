@@ -191,6 +191,11 @@ make
 ./scripts/get.sh __local__ __install_only__
 </code></pre>
 <p>!> <code>./get.sh __local__</code> is installed to <code>~/.local/xmake</code>, and then loaded by <code>source ~/.xmake/profile</code>, so after the installation, the current terminal fails to execute Xmake, If the prompt is not found, manually execute <code>source ~/.xmake/profile</code>, and the next time you open the terminal, you don&#39;t need it.</p>
+<h3 id="sourcecompilationinwindowsplatform">Source compilation in Windows platform</h3>
+<pre><code class="lang-bash">git clone --recursive https://github.com/xmake-io/xmake.git
+cd ./xmake/core
+xmake
+</code></pre>
 <h3 id="onlyupdatetheluascript">Only update the lua script</h3>
 <p>This developer needs to debug the Xmake source locally:</p>
 <pre><code class="lang-bash">./scripts/get.sh __local__ __install_only__
