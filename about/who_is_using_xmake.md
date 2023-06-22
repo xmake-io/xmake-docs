@@ -35,5 +35,5 @@ so that the Xmake project and the community will grow stronger.
 | [Dozingfiretruck](https://github.com/Dozingfiretruck) | C语言实现的NES模拟器 GitHub地址: https://github.com/Dozingfiretruck     Gitee地址: https://gitee.com/Dozingfiretruck/nes            | xmake 可以使你极其方便的部署C/C++构建，节省大量时间从而将精力放在代码编写上而非项目构建上 |
 | [WSSDude](https://github.com/WSSDude) | [Hitman Audio Tool](https://github.com/WSSDude/HitmanAudioTool) | Very easy to use build system with what I believe is currently the best package management integrated within. Definitely plan to include it in my other future projects (both personal and public). Using it since 2020 and counting.
 | Meidozuki | [VBAO](https://github.com/Meidozuki/VBAO)  | 个人开发项目，用于构建MVVM开发框架的utility library，提供C++和python接口。xmake的语法相比cmake十分简洁，在该项目中我用cmake写了一百多行脚本而xmake只需要十几行，尤其是处理包依赖问题时。此外期待主流IDE对于xmake更好的支持
-| Luisa-Group | [Luisa-Compute](https://luisa-render.com/) | 跨平台高性能通用流处理器计算框架。凭借xmake良好的跨平台能力和lua DSL强大的表达能力，极大提升了项目开发效率和编译体验。
+| Luisa-Group | [Luisa-Compute](https://luisa-render.com/) | A general-purpose, high-performance, cross-platform computing framework for streaming-architectures. Thanks to xmake's cross-platform ability and lua DSL's flexible expressioness, the development efficiency and compilation experience has been greatly improved.
 
