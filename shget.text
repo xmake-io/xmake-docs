@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 remote_get_content() {
     if curl --version >/dev/null 2>&1
@@ -10,4 +10,4 @@ remote_get_content() {
     fi
 }
 
-bash <(remote_get_content https://fastly.jsdelivr.net/gh/xmake-io/xmake@dev/scripts/get.sh) $@
+remote_get_content https://fastly.jsdelivr.net/gh/xmake-io/xmake@dev/scripts/get.sh | sh -- $@
