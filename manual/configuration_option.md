@@ -384,7 +384,7 @@ If the test passes, the `test` target will be automatically added when it is com
 
 This is optional. Generally, the system library does not need to add this, and it can also pass the test. If it is not found, you can add the search directory yourself to improve the detection pass rate. For details, see: [add_links](#optionadd_links)
 
-### optiOn:add_rpathdirs
+### option:add_rpathdirs
 
 #### Adding a load search directory for a dynamic library at runtime
 
