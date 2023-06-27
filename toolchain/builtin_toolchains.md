@@ -42,6 +42,15 @@ $ xmake f --cc=clang-cl --cxx=clang-cl -c
 $ xmake
 ```
 
+Since xmake v2.7.2, there's also a dedicated clang-cl toolchain. The advantage of using the clang-cl toolchain over the msvc one is that on windows, the
+`--vs_toolset` option will be handled correctly.
+You can use it by running:
+
+```console
+$ xmake f --toolchain=clang-cl
+$ xmake
+```
+
 ### LLVM
 
 In addition to the independent clang compiler, if the user installs a complete llvm tool chain, we can also switch to it, including tools such as `llvm-ar`.
