@@ -86,6 +86,7 @@ Feel free to contact us for more details on sponsorship.
 
 | date       | supporter                             | pay            | money  | comment                                                                 |
 |--          | --                                    | --             | --     | --                                                                      |
+| 2023.06.21 | 小鸡快跑                                  | 微信         | ¥10   | 是比 cmake 更好用的构建工具                                                             |
 | 2023.06.20 | 阿诺                                  | 支付宝         | ¥200   | 希望 xmake 越来越好                                                             |
 | 2023.06.17 | 葡*                                   | 微信           | ¥29.9  |                                                             |
 | 2023.06.06 | 蓝颜                                  | 支付宝         | ¥50   | xmake 很好用，已经推荐给朋友们用                                                             |
