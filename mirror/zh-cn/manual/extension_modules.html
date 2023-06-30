@@ -1008,15 +1008,15 @@ local program = find_program("ccache")
 </code></pre>
 <p>上述代码犹如没有传递搜索目录，所以它会尝试直接执行指定程序，如果运行ok，那么直接返回：<code>ccache</code>，表示查找成功。</p>
 <p>指定搜索目录，修改尝试运行的检测命令参数（默认是：<code>ccache --version</code>）：</p>
-<pre><code class="lang-lua">local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = "--help"})
+<pre><code class="lang-lua">local program = find_program("ccache", {paths = {"/usr/bin", "/usr/local/bin"}, check = "--help"})
 </code></pre>
 <p>上述代码会尝试运行：<code>/usr/bin/ccache --help</code>，如果运行成功，则返回：<code>/usr/bin/ccache</code>。</p>
 <p>如果<code>--help</code>也没法满足需求，有些程序没有<code>--version/--help</code>参数，那么可以自定义运行脚本，来运行检测：</p>
-<pre><code class="lang-lua">local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = function (program) os.run("%s -h", program) end})
+<pre><code class="lang-lua">local program = find_program("ccache", {paths = {"/usr/bin", "/usr/local/bin"}, check = function (program) os.run("%s -h", program) end})
 </code></pre>
 <p>同样，搜索路径列表支持内建变量和自定义脚本：</p>
-<pre><code class="lang-lua">local program = find_program("ccache", {pathes = {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"}})
-local program = find_program("ccache", {pathes = {"$(env PATH)", function () return "/usr/local/bin" end}})
+<pre><code class="lang-lua">local program = find_program("ccache", {paths = {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"}})
+local program = find_program("ccache", {paths = {"$(env PATH)", function () return "/usr/local/bin" end}})
 </code></pre>
 <p><p class="tip"><br>为了加速频发查找的效率，此接口是默认自带cache的，所以就算频繁查找相同的程序，也不会花太多时间。<br>如果要禁用cache，可以在工程目录执行<code>xmake f -c</code>清除本地cache。<br></p>
 
@@ -1095,7 +1095,7 @@ local tool = find_tool("clang")
 <p>返回的结果为：<code>{name = "clang", program = "gcc"}</code></p>
 <p>通过这个结果就可以看的区别来了，工具名实际会被标示为clang，但是可执行的命令用的是gcc。</p>
 <p>我们也可以指定<code>{version = true}</code>参数去获取工具的版本，并且指定一个自定义的搜索路径，也支持内建变量和自定义脚本哦：</p>
-<pre><code class="lang-lua">local tool = find_tool("clang", {version = true, {pathes = {"/usr/bin", "/usr/local/bin", "$(env PATH)", function () return "/usr/xxx/bin" end}})
+<pre><code class="lang-lua">local tool = find_tool("clang", {version = true, paths = {"/usr/bin", "/usr/local/bin", "$(env PATH)", function () return "/usr/xxx/bin" end}})
 </code></pre>
 <p>返回的结果为：<code>{name = "clang", program = "/usr/bin/clang", version = "4.0"}</code></p>
 <p>这个接口是对<code>find_program</code>的上层封装，因此也支持自定义脚本检测：</p>
