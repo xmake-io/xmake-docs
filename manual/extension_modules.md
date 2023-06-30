@@ -1003,7 +1003,7 @@ The above code is like not passing the search directory, so it will try to execu
 Specify the search directory and modify the test command parameters that are attempted to run (default: `ccache --version`):
 
 ```lua
-localProgram = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = "--help"})
+localProgram = find_program("ccache", {paths = {"/usr/bin", "/usr/local/bin"}, check = "--help"})
 ```
 
 The above code will try to run: `/usr/bin/ccache --help`, if it runs successfully, it returns: `/usr/bin/ccache`.
@@ -1011,14 +1011,14 @@ The above code will try to run: `/usr/bin/ccache --help`, if it runs successfull
 If `--help` can't satisfy the requirement, some programs don't have the `--version/--help` parameter, then you can customize the run script to run the test:
 
 ```lua
-local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = function (program) os.run("%s -h", program) end })
+local program = find_program("ccache", {paths = {"/usr/bin", "/usr/local/bin"}, check = function (program) os.run("%s -h", program) end })
 ```
 
 Similarly, the search path list supports built-in variables and custom scripts:
 
 ```lua
-local program = find_program("ccache", {pathes = {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"}})
-local program = find_program("ccache", {pathes = {"$(env PATH)", function () return "/usr/local/bin" end}})
+local program = find_program("ccache", {paths = {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"}})
+local program = find_program("ccache", {paths = {"$(env PATH)", function () return "/usr/local/bin" end}})
 ```
 
 !> In order to speed up the efficiency of frequent lookups, this interface comes with a default cache, so even if you frequently find the same program, it will not take too much time.
@@ -1130,7 +1130,7 @@ version of the tool, and specify a custom search path. It also
 supports built-in variables and custom scripts:
 
 ```lua
-local tool = find_tool("clang", {version = true, {pathes = {"/usr/bin", "/usr/local/bin", "$(env PATH)", function () return "/usr/xxx/bin" end}})
+local tool = find_tool("clang", {version = true, paths = {"/usr/bin", "/usr/local/bin", "$(env PATH)", function () return "/usr/xxx/bin" end}})
 ```
 
 The result returned is: `{name = "clang", program = "/usr/bin/clang",
