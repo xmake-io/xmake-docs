@@ -1009,7 +1009,7 @@ local program = find_program("ccache")
 指定搜索目录，修改尝试运行的检测命令参数（默认是：`ccache --version`）：
 
 ```lua
-local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = "--help"})
+local program = find_program("ccache", {paths = {"/usr/bin", "/usr/local/bin"}, check = "--help"})
 ```
 
 上述代码会尝试运行：`/usr/bin/ccache --help`，如果运行成功，则返回：`/usr/bin/ccache`。
@@ -1017,14 +1017,14 @@ local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"},
 如果`--help`也没法满足需求，有些程序没有`--version/--help`参数，那么可以自定义运行脚本，来运行检测：
 
 ```lua
-local program = find_program("ccache", {pathes = {"/usr/bin", "/usr/local/bin"}, check = function (program) os.run("%s -h", program) end})
+local program = find_program("ccache", {paths = {"/usr/bin", "/usr/local/bin"}, check = function (program) os.run("%s -h", program) end})
 ```
 
 同样，搜索路径列表支持内建变量和自定义脚本：
 
 ```lua
-local program = find_program("ccache", {pathes = {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"}})
-local program = find_program("ccache", {pathes = {"$(env PATH)", function () return "/usr/local/bin" end}})
+local program = find_program("ccache", {paths = {"$(env PATH)", "$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger)"}})
+local program = find_program("ccache", {paths = {"$(env PATH)", function () return "/usr/local/bin" end}})
 ```
 
 <p class="tip">
@@ -1123,7 +1123,7 @@ local tool = find_tool("gcc")
 我们也可以指定`{version = true}`参数去获取工具的版本，并且指定一个自定义的搜索路径，也支持内建变量和自定义脚本哦：
 
 ```lua
-local tool = find_tool("clang", {version = true, {pathes = {"/usr/bin", "/usr/local/bin", "$(env PATH)", function () return "/usr/xxx/bin" end}})
+local tool = find_tool("clang", {version = true, paths = {"/usr/bin", "/usr/local/bin", "$(env PATH)", function () return "/usr/xxx/bin" end}})
 ```
 
 返回的结果为：`{name = "clang", program = "/usr/bin/clang", version = "4.0"}`
