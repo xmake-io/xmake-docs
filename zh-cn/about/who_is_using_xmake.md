@@ -31,6 +31,6 @@
 | [JackLan](https://github.com/lanjackg2003) | 目前,尝试在个人嵌入式项目中使用 | 在几年前,使用make与makefile实现了与XMake类似的C/C++项目构建功能。现在回想起来,从零到有,整个流程也并非那么一帆风顺。最近想使用CMake重新实现这套构建,无意中发现了XMake。让我眼前一亮的是,他使用LUA语法(早些年从合宙的GSM模块玩起来),容易上手。我将之前的Make项目移植使用XMake工具,也就是几小时,这个过程也只是我从第一次参考官方说明做起。所以确实省时省力。希望XMake能够让更多的开发者知道与使用,成为更加主流的构建工具!
 | [XmacsLabs](https://github.com/XmacsLabs) | [mogan](https://github.com/XmacsLabs/mogan) | autotool和CMake开发环境不易配置，vcpkg等CMake包管理器存在不少兼容性问题，极度影响开发体验，导致墨者实验室失去了一大批潜在开发者。xmake为老旧软件的维护提供了紧凑易用的工具，有效简化了添加新类库的流程，减少了无谓的工作量。
 | [Dozingfiretruck](https://github.com/Dozingfiretruck) | C语言实现的NES模拟器 GitHub地址: https://github.com/Dozingfiretruck     Gitee地址: https://gitee.com/Dozingfiretruck/nes            | xmake 可以使你极其方便的部署C/C++构建，节省大量时间从而将精力放在代码编写上而非项目构建上 |
-| [WSSDude](https://github.com/WSSDude) | [Hitman Audio Tool](https://github.com/WSSDude/HitmanAudioTool) | Very easy to use build system with what I believe is currently the best package management integrated within. Definitely plan to include it in my other future projects (both personal and public). Using it since 2020 and counting.
-| Luisa-Group | [Luisa-Compute](https://luisa-render.com/) | 跨平台高性能通用流处理器计算框架。凭借xmake良好的跨平台能力和lua DSL强大的表达能力，极大提升了项目开发效率和编译体验。
-
+| [WSSDude](https://github.com/WSSDude) | [Hitman Audio Tool](https://github.com/WSSDude/HitmanAudioTool) | Very easy to use build system with what I believe is currently the best package management integrated within. Definitely plan to include it in my other future projects (both personal and public). Using it since 2020 and counting.|
+| Luisa-Group | [Luisa-Compute](https://luisa-render.com/) | 跨平台高性能通用流处理器计算框架。凭借xmake良好的跨平台能力和lua DSL强大的表达能力，极大提升了项目开发效率和编译体验。|
+| [Sunrisepeak](https://github.com/Sunrisepeak) | [DStruct](https://github.com/Sunrisepeak/DStruct) (an easy-to-port/learn/use C++ data structure template library) | DStruct 是一个平台无关(易于移植)且结构简洁的数据结构模板库, 可使用xmake进行快速构建&测试 |
