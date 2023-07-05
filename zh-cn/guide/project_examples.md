@@ -1719,7 +1719,7 @@ echo zlibVersion()
 
 ## Keil/MDK 嵌入式程序
 
-相关例子工程：[Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/mdk/hello)
+相关例子工程：[Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/embed/mdk/hello)
 
 xmake 会自动探测 Keil/MDK 安装的编译器，相关 issues [#1753](https://github.com/xmake-io/xmake/issues/1753)。
 
