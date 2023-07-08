@@ -1172,6 +1172,20 @@ target("demo")
 <pre><code class="lang-lua">target("test")
     set_pcxxheader("header.h")
 </code></pre>
+<h3 id="targetset_pmheader">target:set_pmheader</h3>
+<h4 id="setprecompiledobjcheaderfile">Set pre-compiled objc header file</h4>
+<p>Xmake supports accelerating objc program compilation by precompiling header files. Currently supported compilers are: gcc, clang, and msvc.</p>
+<p>The usage is as follows:</p>
+<pre><code class="lang-lua">target("test")
+    set_pmheader("header.h")
+</code></pre>
+<h3 id="targetset_pmxxheader">target:set_pmxxheader</h3>
+<h4 id="setprecompiledobjcheaderfile">Set pre-compiled objc++ header file</h4>
+<p>Xmake supports precompiled header files to speed up ObjC++ program compilation. Currently supported compilers are: gcc, clang, and msvc.</p>
+<p>The usage is as follows:</p>
+<pre><code class="lang-lua">target("test")
+    set_pmxxheader("header.h")
+</code></pre>
 <h3 id="targetadd_deps">target:add_deps</h3>
 <h4 id="addtargetdependencies">Add target dependencies</h4>
 <p>Add the dependency target of the current target. When compiling, it will first compile the target of the dependency and then compile the current target. . .</p>

@@ -1170,7 +1170,7 @@ target("test")
 
 ### target:set_pcheader
 
-#### 设置c预编译头文件
+#### 设置 C 预编译头文件
 
 xmake支持通过预编译头文件去加速c程序编译，目前支持的编译器有：gcc, clang和msvc。
 
@@ -1183,7 +1183,7 @@ target("test")
 
 ### target:set_pcxxheader
 
-#### 设置c++预编译头文件
+#### 设置 C++ 预编译头文件
 
 xmake支持通过预编译头文件去加速c++程序编译，目前支持的编译器有：gcc, clang和msvc。
 
@@ -1192,6 +1192,32 @@ xmake支持通过预编译头文件去加速c++程序编译，目前支持的编
 ```lua
 target("test")
     set_pcxxheader("header.h")
+```
+
+### target:set_pmheader
+
+#### 设置 ObjC 预编译头文件
+
+xmake支持通过预编译头文件去加速 ObjC 程序编译，目前支持的编译器有：gcc, clang和msvc。
+
+使用方式如下：
+
+```lua
+target("test")
+    set_pmheader("header.h")
+```
+
+### target:set_pmxxheader
+
+#### 设置 ObjC++ 预编译头文件
+
+xmake支持通过预编译头文件去加速 ObjC++ 程序编译，目前支持的编译器有：gcc, clang和msvc。
+
+使用方式如下：
+
+```lua
+target("test")
+    set_pmxxheader("header.h")
 ```
 
 ### target:add_deps

@@ -1191,11 +1191,35 @@ target("test")
     set_pcxxheader("header.h")
 ```
 
+### target:set_pmheader
+
+#### Set pre-compiled objc header file
+
+Xmake supports accelerating objc program compilation by precompiling header files. Currently supported compilers are: gcc, clang, and msvc.
+
+The usage is as follows:
+
+```lua
+target("test")
+    set_pmheader("header.h")
+```
+
+### target:set_pmxxheader
+
+#### Set pre-compiled objc++ header file
+
+Xmake supports precompiled header files to speed up ObjC++ program compilation. Currently supported compilers are: gcc, clang, and msvc.
+
+The usage is as follows:
+
+```lua
+target("test")
+    set_pmxxheader("header.h")
+```
+
 ### target:add_deps
 
 #### Add target dependencies
-
-
 
 Add the dependency target of the current target. When compiling, it will first compile the target of the dependency and then compile the current target. . .
 

@@ -1168,18 +1168,32 @@ target("demo")
     end)
 </code></pre>
 <h3 id="targetset_pcheader">target:set_pcheader</h3>
-<h4 id="c">设置c预编译头文件</h4>
+<h4 id="c">设置 C 预编译头文件</h4>
 <p>xmake支持通过预编译头文件去加速c程序编译，目前支持的编译器有：gcc, clang和msvc。</p>
 <p>使用方式如下：</p>
 <pre><code class="lang-lua">target("test")
     set_pcheader("header.h")
 </code></pre>
 <h3 id="targetset_pcxxheader">target:set_pcxxheader</h3>
-<h4 id="c">设置c++预编译头文件</h4>
+<h4 id="c">设置 C++ 预编译头文件</h4>
 <p>xmake支持通过预编译头文件去加速c++程序编译，目前支持的编译器有：gcc, clang和msvc。</p>
 <p>使用方式如下：</p>
 <pre><code class="lang-lua">target("test")
     set_pcxxheader("header.h")
+</code></pre>
+<h3 id="targetset_pmheader">target:set_pmheader</h3>
+<h4 id="objc">设置 ObjC 预编译头文件</h4>
+<p>xmake支持通过预编译头文件去加速 ObjC 程序编译，目前支持的编译器有：gcc, clang和msvc。</p>
+<p>使用方式如下：</p>
+<pre><code class="lang-lua">target("test")
+    set_pmheader("header.h")
+</code></pre>
+<h3 id="targetset_pmxxheader">target:set_pmxxheader</h3>
+<h4 id="objc">设置 ObjC++ 预编译头文件</h4>
+<p>xmake支持通过预编译头文件去加速 ObjC++ 程序编译，目前支持的编译器有：gcc, clang和msvc。</p>
+<p>使用方式如下：</p>
+<pre><code class="lang-lua">target("test")
+    set_pmxxheader("header.h")
 </code></pre>
 <h3 id="targetadd_deps">target:add_deps</h3>
 <h4 id="">添加子工程目标依赖</h4>
