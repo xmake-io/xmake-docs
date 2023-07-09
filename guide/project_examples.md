@@ -1721,7 +1721,7 @@ echo zlibVersion()
 
 ## Keil/MDK Embedded Program
 
-Related example project: [Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/mdk/hello)
+Related example project: [Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/embed/mdk/hello)
 
 xmake will automatically detect the compiler installed by Keil/MDK, related issues [#1753](https://github.com/xmake-io/xmake/issues/1753).
 
