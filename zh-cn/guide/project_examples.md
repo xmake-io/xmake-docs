@@ -276,9 +276,9 @@ install ok!👌
 $ xmake f --qt=[qt sdk path]
 ```
 
-#### 来自 Unbuntu Apt 安装包
+#### 来自 Ubuntu Apt 安装包
 
-使用 qpt 安装完 Qt SDK，xmake 也能够自动检测到。
+使用 apt 安装完 Qt SDK，xmake 也能够自动检测到。
 
 ```bash
 $ sudo apt install -y qtcreator qtbase5-dev
