@@ -274,9 +274,9 @@ This is usually detected automatically on macos/windows, but it is possible to s
 $ xmake f --qt=[qt sdk path]
 ```
 
-#### The Unbuntu Apt package
+#### The Ubuntu Apt package
 
-After installing the Qt SDK using qpt, xmake will also be able to detect it automatically.
+After installing the Qt SDK using apt, xmake will also be able to detect it automatically.
 
 ```bash
 $ sudo apt install -y qtcreator qtbase5-dev
