@@ -1,5 +1,35 @@
 # Changelog
 
+## v2.8.1
+
+### New features
+
+* [#3821](https://github.com/xmake-io/xmake/pull/3821): Add longpath option for windows installer
+* [#3828](https://github.com/xmake-io/xmake/pull/3828): Add support for zypper package manager
+* [#3871](https://github.com/xmake-io/xmake/issues/3871): Improve tools.msbuild to support for upgrading vsproj
+* [#3148](https://github.com/xmake-io/xmake/issues/3148): Support grpc for protobuf
+* [#3889](https://github.com/xmake-io/xmake/issues/3889): Support to add library path for add_links
+* [#3912](https://github.com/orgs/xmake-io/issues/3912): Add set_pmxxheader to support objc precompiled header
+* add_links support library file path
+
+### Changes
+
+* [#3752](https://github.com/xmake-io/xmake/issues/3752): Improve os.getenvs for windows
+* [#3371](https://github.com/xmake-io/xmake/issues/3371): Improve tools.cmake to support ninja generator for wasm
+* [#3777](https://github.com/xmake-io/xmake/issues/3777): Improve to find package from pkg-config
+* [#3815](https://github.com/xmake-io/xmake/pull/3815): Improve tools.xmake to pass toolchains for windows
+* [#3857](https://github.com/xmake-io/xmake/issues/3857): Improve to generate compile_commands.json
+* [#3892](https://github.com/xmake-io/xmake/issues/3892): Improve to search packages from description
+* [#3916](https://github.com/xmake-io/xmake/issues/3916): Improve to build swift program, support for multiple modules
+* Update lua runtime to 5.4.6
+
+### Bugs fixed
+
+* [#3755](https://github.com/xmake-io/xmake/pull/3755): Fix find_tool from xmake/packages
+* [#3787](https://github.com/xmake-io/xmake/issues/3787): Fix packages from conan 2.x
+* [#3839](https://github.com/orgs/xmake-io/discussions/3839): Fix vs_runtime for conan 2.x
+
+
 ## v2.7.9
 
 ### New features

@@ -1269,6 +1269,7 @@ target("test")
     -- 添加链接搜索目录
     add_linkdirs("$(buildir)/lib")
 </code></pre>
+<p>2.8.1 版本开始，add_links 还支持添加库的完整路径，例如：<code>add_links("/tmp/libfoo.a")</code>，显式的指定库文件。</p>
 <h3 id="targetadd_syslinks">target:add_syslinks</h3>
 <h4 id="">添加系统链接库名</h4>
 <p>这个接口使用上跟<a href="#targetadd_links">add_links</a>类似，唯一的区别就是，通过这个接口添加的链接库顺序在所有<code>add_links</code>之后。</p>

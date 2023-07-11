@@ -1,3 +1,31 @@
+## v2.8.1
+
+### 新特性
+
+* [#3821](https://github.com/xmake-io/xmake/pull/3821): windows 安装器添加长路径支持选项
+* [#3828](https://github.com/xmake-io/xmake/pull/3828): 添加 zypper 包管理器支持
+* [#3871](https://github.com/xmake-io/xmake/issues/3871): 改进 tools.msbuild 支持对 vsproj 进行自动升级
+* [#3148](https://github.com/xmake-io/xmake/issues/3148): 改进 protobuf 支持 grpc
+* [#3889](https://github.com/xmake-io/xmake/issues/3889): add_links 支持库路径添加
+* [#3912](https://github.com/orgs/xmake-io/issues/3912): 添加 set_pmxxheader 去支持 objc 预编译头
+* add_links 支持库文件路径
+
+### 改进
+
+* [#3752](https://github.com/xmake-io/xmake/issues/3752): 改进 windows 上 os.getenvs 的获取
+* [#3371](https://github.com/xmake-io/xmake/issues/3371): 改进 tools.cmake 支持使用 ninja 去构建 wasm 包
+* [#3777](https://github.com/xmake-io/xmake/issues/3777): 改进从 pkg-config 中查找包
+* [#3815](https://github.com/xmake-io/xmake/pull/3815): 改进 tools.xmake 支持为 windows 平台传递工具链
+* [#3857](https://github.com/xmake-io/xmake/issues/3857): 改进生成 compile_commands.json
+* [#3892](https://github.com/xmake-io/xmake/issues/3892): 改进包搜索，支持从描述中找包
+* [#3916](https://github.com/xmake-io/xmake/issues/3916): 改进构建 swift 程序，支持模块间符号调用
+* 更新 lua 运行时到 5.4.6
+
+### Bugs 修复
+
+* [#3755](https://github.com/xmake-io/xmake/pull/3755): 修复 find_tool 从 xmake/packages 中查找程序
+* [#3787](https://github.com/xmake-io/xmake/issues/3787): 修复从 conan 2.x 中使用包
+* [#3839](https://github.com/orgs/xmake-io/discussions/3839): 修复 conan 2.x 包的 vs_runtime 设置
 
 ## v2.7.9
 

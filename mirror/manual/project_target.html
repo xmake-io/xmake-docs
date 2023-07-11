@@ -1253,6 +1253,7 @@ target("test")
     -- Add link search directory
     add_linkdirs("$(buildir)/lib")
 </code></pre>
+<p>Starting with version 2.8.1, add_links also supports adding the full path to the library, e.g. <code>add_links("/tmp/libfoo.a")</code>, explicitly specifying the library file.</p>
 <h3 id="targetadd_syslinks">target:add_syslinks</h3>
 <h4 id="addsystemlinklibraries">Add system link libraries</h4>
 <p>This interface is similar to <a href="#targetadd_links">add_links</a>. The only difference is that the link library added through this interface is in the order of all <code>add_links</code>.</p>

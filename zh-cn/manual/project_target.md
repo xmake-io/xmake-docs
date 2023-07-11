@@ -1300,6 +1300,8 @@ target("demo")
     add_linkdirs("$(buildir)/lib")
 ```
 
+2.8.1 版本开始，add_links 还支持添加库的完整路径，例如：`add_links("/tmp/libfoo.a")`，显式的指定库文件。
+
 ### target:add_syslinks
 
 #### 添加系统链接库名

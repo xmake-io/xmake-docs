@@ -1297,6 +1297,8 @@ target("demo")
     add_linkdirs("$(buildir)/lib")
 ```
 
+Starting with version 2.8.1, add_links also supports adding the full path to the library, e.g. `add_links("/tmp/libfoo.a")`, explicitly specifying the library file.
+
 ### target:add_syslinks
 
 #### Add system link libraries
