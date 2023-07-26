@@ -192,7 +192,7 @@ $ xmake
 这个时候，我们可以在设置了sdk参数的基础上追加bin目录的参数设置，来调整工具链的bin目录。
 
 ```bash
-$ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
+$ xmake f -p cross --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
 $ xmake
 ```
 
@@ -213,7 +213,7 @@ $ xmake
 我们现在想要选用armv7的版本，那么我们可以追加`--cross=`配置编译工具前缀名，例如：
 
 ```bash
-$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
+$ xmake f -p cross --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 ```
 
 ### 设置c/c++编译器
@@ -221,7 +221,7 @@ $ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：
 
 ```bash
-$ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-clang++
+$ xmake f -p cross --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-clang++
 ```
 
 当然，我们也可以指定编译器全路径。
@@ -247,7 +247,7 @@ xmake f --cxx=clang++@/home/xxx/c++mips.exe
 如果还要继续细分选择链接器，则继续追加相关链接器选项，例如：
 
 ```bash
-$ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
+$ xmake f -p cross --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
 ```
 
 ld指定可执行程序链接器，sh指定共享库程序链接器，ar指定生成静态库的归档器。
@@ -259,7 +259,7 @@ ld指定可执行程序链接器，sh指定共享库程序链接器，ar指定�
 如果sdk里面还有额外的其他include/lib目录不在标准的结构中，导致交叉编译找不到库和头文件，那么我们可以通过`--includedirs`和`--linkdirs`来追加搜索路径，然后通过`--links`添加额外的链接库。
 
 ```bash
-$ xmake f -p linux --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --linkdirs=/usr/toolsdk/xxx/lib --links=pthread
+$ xmake f -p cross --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --linkdirs=/usr/toolsdk/xxx/lib --links=pthread
 ```
 
 注：如果要指定多个搜索目录，可以通过`:`或者`;`来分割，也就是不同主机平台的路径分隔符，linux/macos下用`:`，win下用`;`。
@@ -279,7 +279,7 @@ $ xmake f -p linux --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --l
 例如：
 
 ```bash
-$ xmake f -p linux --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread"
+$ xmake f -p cross --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread"
 ```
 
 ### 项目描述设置

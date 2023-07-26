@@ -194,7 +194,7 @@ For example: for some special cross toolchains, the compiler bin directory is no
 At this time, we can add the parameter setting of the bin directory on the basis of setting the sdk parameter to adjust the bin directory of the tool chain.
 
 ```bash
-$ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
+$ xmake f -p cross --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
 $ xmake
 ```
 
@@ -215,7 +215,7 @@ For example, there are two different compilers in the bin directory of toolchain
 We now want to choose the armv7 version, then we can append `--cross=` to configure the compiler tool prefix name, for example:
 
 ```bash
-$ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
+$ xmake f -p cross --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 ```
 
 ### Set the c/c++ compiler
@@ -223,7 +223,7 @@ $ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 If you want to continue to subdivide and select compilers, continue to add relevant compiler options, for example:
 
 ```bash
-$ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-clang++
+$ xmake f -p cross --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-clang++
 ```
 
 Of course, we can also specify the full path of the compiler.
@@ -249,7 +249,7 @@ That is to say, while specifying the compiler as `c++mips.exe`, tell Xmake that 
 If you want to continue to subdivide and select the linker, continue to add related linker options, for example:
 
 ```bash
-$ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
+$ xmake f -p cross --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
 ```
 
 ld specifies the executable program linker, sh specifies the shared library program linker, and ar specifies the archiver that generates the static library.
@@ -261,7 +261,7 @@ Note: If there are ld/sh/ar environment variables, the value specified in the cu
 If there are additional other include/lib directories in the SDK that are not in the standard structure, resulting in cross compilation can not find the library and header files, then we can append the search path through `--includedirs` and` --linkdirs`, and then Add additional link libraries via `--links`.
 
 ```bash
-$ xmake f -p linux --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --linkdirs=/usr/toolsdk/xxx/lib --links=pthread
+$ xmake f -p cross --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --linkdirs=/usr/toolsdk/xxx/lib --links=pthread
 ```
 
 Note: If you want to specify multiple search directories, you can use `:` or `;` to separate, which is the path separator of different host platforms, use `:` under linux / macos, and `;` under win.
@@ -281,7 +281,7 @@ We can also configure some additional compilation and linking options through `-
 e.g:
 
 ```bash
-$ xmake f -p linux --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread"
+$ xmake f -p cross --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread"
 ```
 
 ### Project description settings
