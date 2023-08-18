@@ -290,6 +290,10 @@ $ xmake l
 
 <img src="https://raw.githubusercontent.com/xmake-io/xmake-idea/master/res/problem.gif" width="650px" />
 
+* [xmake.nvim](https://github.com/Mythos-404/xmake.nvim) (第三方开发, 感谢[@Mythos_404](https://github.com/Mythos-404))
+
+<img src="https://raw.githubusercontent.com/Mythos-404/xmake.nvim/main/assets/XmakePreview.gif" width="650px" />
+
 * [xmake.vim](https://github.com/luzhlon/xmake.vim) (third-party, thanks [@luzhlon](https://github.com/luzhlon))
 
 * [xmake-gradle](https://github.com/xmake-io/xmake-gradle): 一个无缝整合xmake的gradle插件

@@ -61,6 +61,7 @@
 * [xmake-sublime](https://github.com/xmake-io/xmake-sublime): A Sublime Text 2/3 plugin for Xmake.
 * [xmake-idea](https://github.com/xmake-io/xmake-idea): A Intellij-IDEA plugin for Xmake.
 * [xmake.vim](https://github.com/luzhlon/xmake.vim): (third-party, thanks [@luzhlon](https://github.com/luzhlon)).
+* [xmake.nvim](https://github.com/Mythos-404/xmake.nvim) (third-party, thanks [@Mythos_404](https://github.com/Mythos-404))
 * [xmake-gradle](https://github.com/xmake-io/xmake-gradle): A gradle plugin that integrates xmake seamlessly.
 * [xmake-visualstudio](https://github.com/HelloWorld886/xmake-visualstudio) (third-party, thanks [@HelloWorld886](https://github.com/HelloWorld886)).
 * [xmake-qtcreator](https://github.com/Arthapz/xmake-project-manager) (third-party, thanks [@Arthapz](https://github.com/Arthapz)).

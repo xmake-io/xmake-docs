@@ -457,6 +457,10 @@ Please download and install more other plugins from the plugins repository [xmak
 
 <img src="https://raw.githubusercontent.com/xmake-io/xmake-idea/master/res/problem.gif" width="650px" />
 
+* [xmake.nvim](https://github.com/Mythos-404/xmake.nvim) (third-party, thanks [@Mythos_404](https://github.com/Mythos-404))
+
+<img src="https://raw.githubusercontent.com/Mythos-404/xmake.nvim/main/assets/XmakePreview.gif" width="650px" />
+
 * [xmake.vim](https://github.com/luzhlon/xmake.vim) (third-party, thanks [@luzhlon](https://github.com/luzhlon))
 
 * [xmake-visualstudio](https://github.com/HelloWorld886/xmake-visualstudio) (third-party, thanks [@HelloWorld886](https://github.com/HelloWorld886))
