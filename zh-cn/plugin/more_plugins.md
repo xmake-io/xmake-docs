@@ -174,7 +174,15 @@ $ xmake project -k compile_commands .vscode
 
 ## Vim 插件
 
-* [xmake.vim](https://github.com/luzhlon/xmake.vim) (third-party, thanks [@luzhlon](https://github.com/luzhlon))
+* [xmake.vim](https://github.com/luzhlon/xmake.vim) (第三方开发, 感谢[@luzhlon](https://github.com/luzhlon))
+
+## Neovim 插件
+
+* [xmake.nvim](https://github.com/Mythos-404/xmake.nvim) (第三方开发, 感谢[@Mythos_404](https://github.com/Mythos-404))
+
+该插件提供了易用的配置UI和自动生成*compile_commands.json*文件
+
+<img src="https://raw.githubusercontent.com/Mythos-404/xmake.nvim/main/assets/XmakePreview.gif" width="650px" />
 
 ## Gradle插件（JNI）
 

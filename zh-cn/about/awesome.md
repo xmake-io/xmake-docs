@@ -59,6 +59,7 @@
 * [xmake-sublime](https://github.com/xmake-io/xmake-sublime): Sublime Text 2/3 编辑器插件
 * [xmake-idea](https://github.com/xmake-io/xmake-idea): Intellij-IDEA/CLion/Android Studio等IDE插件
 * [xmake.vim](https://github.com/luzhlon/xmake.vim): 第三方vim插件, 感谢[@luzhlon](https://github.com/luzhlon)
+* [xmake.nvim](https://github.com/Mythos-404/xmake.nvim) (第三方neovim插件, 感谢[@Mythos_404](https://github.com/Mythos-404))
 * [xmake-gradle](https://github.com/xmake-io/xmake-gradle): 一个无缝集成xmake的gradle开发插件
 * [xmake-visualstudio](https://github.com/HelloWorld886/xmake-visualstudio) (third-party, thanks [@HelloWorld886](https://github.com/HelloWorld886))
 * [xmake-qtcreator](https://github.com/Arthapz/xmake-project-manager) (third-party, thanks [@Arthapz](https://github.com/Arthapz))
