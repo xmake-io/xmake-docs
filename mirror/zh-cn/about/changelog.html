@@ -92,7 +92,35 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v279">v2.7.9</h2>
+    <h2 id="v281">v2.8.1</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/3821">#3821</a>: windows 安装器添加长路径支持选项</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3828">#3828</a>: 添加 zypper 包管理器支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3871">#3871</a>: 改进 tools.msbuild 支持对 vsproj 进行自动升级</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3148">#3148</a>: 改进 protobuf 支持 grpc</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3889">#3889</a>: add_links 支持库路径添加</li>
+<li><a href="https://github.com/orgs/xmake-io/issues/3912">#3912</a>: 添加 set_pmxxheader 去支持 objc 预编译头</li>
+<li>add_links 支持库文件路径</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/3752">#3752</a>: 改进 windows 上 os.getenvs 的获取</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3371">#3371</a>: 改进 tools.cmake 支持使用 ninja 去构建 wasm 包</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3777">#3777</a>: 改进从 pkg-config 中查找包</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/3815">#3815</a>: 改进 tools.xmake 支持为 windows 平台传递工具链</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3857">#3857</a>: 改进生成 compile_commands.json</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3892">#3892</a>: 改进包搜索，支持从描述中找包</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3916">#3916</a>: 改进构建 swift 程序，支持模块间符号调用</li>
+<li>更新 lua 运行时到 5.4.6</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/3755">#3755</a>: 修复 find_tool 从 xmake/packages 中查找程序</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3787">#3787</a>: 修复从 conan 2.x 中使用包</li>
+<li><a href="https://github.com/orgs/xmake-io/discussions/3839">#3839</a>: 修复 conan 2.x 包的 vs_runtime 设置</li>
+</ul>
+<h2 id="v279">v2.7.9</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/3613">#3613</a>: 添加 <code>wasm.preloadfiles</code> 扩展配置</li>

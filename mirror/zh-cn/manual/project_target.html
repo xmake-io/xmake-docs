@@ -1660,12 +1660,13 @@ target("test")
 <p>添加扩展指令优化选项，目前支持以下几种扩展指令集：</p>
 <pre><code class="lang-lua">add_vectorexts("mmx")
 add_vectorexts("neon")
-add_vectorexts("avx", "avx2")
-add_vectorexts("sse", "sse2", "sse3", "ssse3")
+add_vectorexts("avx", "avx2", "avx512")
+add_vectorexts("sse", "sse2", "sse3", "ssse3", "sse4.2")
 </code></pre>
-<p><p class="tip"><br>如果当前设置的指令集编译器不支持，xmake会自动忽略掉，所以不需要用户手动去判断维护，只需要将你需要的指令集全部设置上就行了。<br></p>
-
-</p>
+<p>!> 如果当前设置的指令集编译器不支持，xmake会自动忽略掉，所以不需要用户手动去判断维护，只需要将你需要的指令集全部设置上就行了。</p>
+<p>2.8.2 新增了一个 <code>all</code> 配置项，可以用于尽可能的开启所有扩展指令优化。</p>
+<pre><code class="lang-lua">add_vectorexts("all")
+</code></pre>
 <h3 id="targetadd_frameworks">target:add_frameworks</h3>
 <h4 id="">添加链接框架</h4>
 <p>目前主要用于<code>ios</code>和<code>macosx</code>平台的<code>objc</code>和<code>swift</code>程序，例如：</p>
@@ -2410,6 +2411,50 @@ $ xmake run -g bench*
 <pre><code class="lang-lua">set_exceptions("no-cxx", "no-objc")
 </code></pre>
 <p>Xmake 会在内部自动根据不同的编译器，去适配对应的 flags。</p>
+<h3 id="targetset_encodings">target:set_encodings</h3>
+<h4 id="">设置编码</h4>
+<p>这是 2.8.2 版本新增的接口，我们可以用这个接口设置源文件、目标执行文件的编码。</p>
+<p>默认情况下，我们仅仅指定编码，是会同时对源文件，目标文件生效。</p>
+<pre><code class="lang-lua">-- for all source/target encodings
+set_encodings("utf-8") -- msvc: /utf-8
+</code></pre>
+<p>它等价于：</p>
+<pre><code class="lang-lua">set_encodings("source:utf-8", "target:utf-8")
+</code></pre>
+<p>并且，目前仅仅支持设置成 utf-8 编码，将来会不断扩展。</p>
+<p>如果，我们仅仅想单独设置源文件编码，或者目标文件编码，也是可以的。</p>
+<h5 id="">设置源文件编码</h5>
+<p>通常指的是编译的代码源文件的编码，我们可以这么设置。</p>
+<pre><code class="lang-lua">-- gcc/clang: -finput-charset=UTF-8, msvc: -source-charset=utf-8
+set_encodings("source:utf-8")
+</code></pre>
+<h5 id="">设置目标文件编码</h5>
+<p>它通常指的是目标可执行文件的运行输出编码。</p>
+<pre><code class="lang-lua">-- gcc/clang: -fexec-charset=UTF-8, msvc: -target-charset=utf-8
+set_encodings("target:utf-8")
+</code></pre>
+<h3 id="targetadd_forceincludes">target:add_forceincludes</h3>
+<h4 id="includes">强制添加 includes</h4>
+<p>这是 2.8.2 新增的接口，用于在配置文件中直接强制添加 <code>includes</code> 头文件。</p>
+<pre><code class="lang-lua">add_forceincludes("config.h")
+</code></pre>
+<p>它的效果类似于 <code>#include <config.h></code>，但是不需要在源码中显式添加它了。</p>
+<p>另外，它的搜索路径也是需要通过 <code>add_includedirs</code> 来控制，而不是直接配置文件路径。</p>
+<pre><code class="lang-lua">add_forceincludes("config.h")
+add_includedirs("src")
+</code></pre>
+<p>默认 add_forceincludes 匹配 c/c++/objc。如果仅仅只想匹配 c++ 可以这么配置：</p>
+<pre><code class="lang-lua">add_forceincludes("config.h", {sourcekinds = "cxx"})
+</code></pre>
+<p>如果想同时匹配多个源文件类型，也是可以的：</p>
+<pre><code class="lang-lua">add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
+</code></pre>
+<h3 id="targetadd_extrafiles">target:add_extrafiles</h3>
+<h4 id="">添加额外的文件</h4>
+<p>这个接口也是 2.8.2 新加的，主要用于 vs/vsxmake project generator 生成的工程中，添加额外的文件到工程列表中去，这样，用户也可以快速点击编辑它们，尽管它们不是代码文件。</p>
+<p>将来，我们也可能用此接口做更多其他的事情。</p>
+<pre><code class="lang-lua">add_extrafiles("assets/other.txt")
+</code></pre>
 </article>
 </body>
 </html>

@@ -197,10 +197,12 @@ end
 </code></pre>
 <h3 id="corebasejson">core.base.json</h3>
 <p>xmake provides a built-in json module, based on the implementation of lua_cjson, we can use it to quickly and directly interoperate between json and lua table.</p>
-<p>We can use <code>import("core.base.json")</code> to directly import and use.</p>
+<p>We can use <code>import("core.base.json")</code> for direct import and use.</p>
 <p>There are also some examples here: <a href="https://github.com/xmake-io/xmake/blob/master/tests/modules/json/test.lua">Jsom Examples</a></p>
 <h4 id="jsondecode">json.decode</h4>
-<p>Obtain the lua table directly from the string decoding json.</p>
+<ul>
+<li>Get the lua table directly from the string decoding json</li>
+</ul>
 <pre><code class="lang-lua">import("core.base.json")
 local luatable = json.decode(&#39;[1,"2", {"a":1, "b":true}]&#39;)
 print(luatable)
@@ -215,19 +217,172 @@ print(luatable)
   }
 </code></pre><p>!> If there is null in it, you can use <code>json.null</code> to judge</p>
 <h4 id="jsonencode">json.encode</h4>
-<p>We can also directly encode a lua table.</p>
-<pre><code class="lang-lua">local jsonstr = json.encode({1, "2", {a = 1}}
+<ul>
+<li>Encode a lua table</li>
+</ul>
+<pre><code class="lang-lua">local jsonstr = json.encode({1, "2", {a = 1}})
 </code></pre>
 <p>It should be noted that if you need to encode null, you need to use <code>json.null</code>, for example</p>
 <pre><code class="lang-lua">local jsonstr = json.encode({json.null, 1, "2", false, true})
 </code></pre>
 <h4 id="jsonloadfile">json.loadfile</h4>
-<p>Load the json file directly and parse it into a lua table.</p>
+<ul>
+<li>Load the json file directly and parse it into a lua table</li>
+</ul>
 <pre><code class="lang-lua">local luatable = json.loadfile("/tmp/xxx.json")
 </code></pre>
 <h4 id="jsonsavefile">json.savefile</h4>
-<p>Save the lua table to the specified json file.</p>
+<ul>
+<li>Save the lua table to the specified json file</li>
+</ul>
 <pre><code class="lang-lua">json.savefile("/tmp/xxx.json", {1, {a = 1}})
+</code></pre>
+<h3 id="corebasesemver">core.base.semver</h3>
+<p>A module to work with semantic versionning (semver). It allows you to parse version strings and access various components of a version such as major, minor, ... </p>
+<p>We can use <code>import("core.base.semver")</code> for direct import and use.</p>
+<h4 id="semvernew">semver.new</h4>
+<ul>
+<li>Create a new semver instance from a version string. Raise an error if the parsing failed</li>
+</ul>
+<pre><code class="lang-lua">local version = semver.new("v2.1.0")
+</code></pre>
+<h4 id="semvertry_parse">semver.try_parse</h4>
+<ul>
+<li>Same as new, but return a nil value if the parsing failed</li>
+</ul>
+<pre><code class="lang-lua">local version = semver.try_parse("v2.1.0")
+</code></pre>
+<h4 id="semvermatch">semver.match</h4>
+<ul>
+<li>Match a valid version from the string</li>
+</ul>
+<pre><code class="lang-lua">print(semver.match("v2.1.0", 1)) -- start from position 1
+print(semver.match("v2.1.0", 0, "%d+%.%d+"))
+</code></pre>
+<pre><code>2.1.0
+2.1
+</code></pre><h4 id="semveris_valid">semver.is_valid</h4>
+<ul>
+<li>Get if a given string version is valid, by testing if the version can be parsed</li>
+</ul>
+<pre><code class="lang-lua">print(semver.is_valid("536f2bd6a092eba91315b7d1e120dff63392a11d"))
+print(semver.is_valid("v2.1.0-pre"))
+</code></pre>
+<pre><code>false
+true
+</code></pre><h4 id="semveris_valid_range">semver.is_valid_range</h4>
+<ul>
+<li>Test if the given range is a valid one</li>
+</ul>
+<pre><code class="lang-lua">print(semver.is_valid_range(">2.1.0"))
+print(semver.is_valid_range(">v2.1.0"))
+print(semver.is_valid_range("2.0.0 - <2.1.0"))
+print(semver.is_valid_range("1.0 || 2.1"))
+</code></pre>
+<pre><code>true
+false
+false
+true
+</code></pre><h4 id="semvercompare">semver.compare</h4>
+<ul>
+<li>Compare two versions, return a number between 1 and -1</li>
+</ul>
+<pre><code class="lang-lua">print(semver.compare("v2.2", "v2.2.0"))
+print(semver.compare("v2.2.0", "v2.1.0"))
+print(semver.compare("v2.1.1", "v2.1.0"))
+print(semver.compare("v2.1.0", "v2.2.0"))
+</code></pre>
+<pre><code>0
+1
+1
+-1
+</code></pre><h4 id="semversatisfies">semver.satisfies</h4>
+<ul>
+<li>Check if a version satisfies a range version</li>
+</ul>
+<pre><code class="lang-lua">print(semver.satisfies("v2.1.0", ">= 2.1"))
+print(semver.satisfies("v2.1.0", ">1.0 <2.1"))
+print(semver.satisfies("v2.1.0", ">1.0 || <2.1"))
+print(semver.satisfies("v2.1.0", ">=2.x || 3.x - 4.x"))
+</code></pre>
+<pre><code>true
+false
+true
+true
+</code></pre><h4 id="semverselect">semver.select</h4>
+<ul>
+<li>Select required version from versions, tags and branches</li>
+</ul>
+<pre><code class="lang-lua">local version, source = semver.select(">=1.5.0 <1.6", {"1.5.0", "1.5.1"}, {"v1.5.0"}, {"master", "dev"})
+print(semver.select(">=1.5.0 <1.6", {"1.5.0", "1.5.1"}, {"v1.5.0"}, {"master", "dev"}))
+print(semver.select("v1.5.0", {"1.5.0", "1.5.1"}, {"v1.5.0"}, {"master", "dev"}))
+print(semver.select("master", {"1.5.0", "1.5.1"}, {"v1.5.0"}, {"master", "dev"}))
+</code></pre>
+<pre><code>1.5.1 version
+v1.5.0 tag
+master branch
+</code></pre><h4 id="semverget">semver:get</h4>
+<ul>
+<li>Get a value from the informations table</li>
+</ul>
+<pre><code class="lang-lua">local version = semver.new("v2.1.0+build")
+print(version["_INFO"])
+print(version:get("major"))
+</code></pre>
+<pre><code>{ 
+  prerelease = { },
+  build = {
+    "build"
+  },
+  version = "v2.1.0+build",
+  raw = "v2.1.0+build",
+  patch = 0,
+  minor = 1,
+  major = 2
+}
+
+2
+</code></pre><h4 id="semvermajor">semver:major</h4>
+<ul>
+<li>Get the major version</li>
+</ul>
+<pre><code class="lang-lua">semver.new("v2.1.0"):major() -- return 2
+</code></pre>
+<h4 id="semverminor">semver:minor</h4>
+<ul>
+<li>Get the minor version</li>
+</ul>
+<pre><code class="lang-lua">semver.new("v2.1.0"):minor() -- return 1
+</code></pre>
+<h4 id="semverpatch">semver:patch</h4>
+<ul>
+<li>Get the patch version</li>
+</ul>
+<pre><code class="lang-lua">semver.new("v2.1.0"):patch() -- return 0
+</code></pre>
+<h4 id="semverbuild">semver:build</h4>
+<ul>
+<li>Get the build version</li>
+</ul>
+<pre><code class="lang-lua">semver.new("v2.1.0+build"):build() -- return {"build"}
+</code></pre>
+<h4 id="semverprerelease">semver:prerelease</h4>
+<ul>
+<li>Get the prerelease version</li>
+</ul>
+<pre><code class="lang-lua">semver.new("v2.1.0-prerelease"):prerelease() -- return {"prerelease"}
+</code></pre>
+<h4 id="semverrawstr">semver:rawstr</h4>
+<ul>
+<li>Get the raw string</li>
+</ul>
+<pre><code class="lang-lua">semver.new("v2.1.0+build"):rawstr() -- return v2.1.0+build
+</code></pre>
+<h4 id="semvershortstr">semver:shortstr</h4>
+<ul>
+<li>Get the short version string</li>
+</ul>
+<pre><code class="lang-lua">semver.new("v2.1.0+build"):shortstr() -- return 2.1.0
 </code></pre>
 <h3 id="coretoollinker">core.tool.linker</h3>
 <p>Linker related operations, often used for plugin development.</p>
