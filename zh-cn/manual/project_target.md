@@ -1923,13 +1923,17 @@ target("test")
 ```lua
 add_vectorexts("mmx")
 add_vectorexts("neon")
-add_vectorexts("avx", "avx2")
-add_vectorexts("sse", "sse2", "sse3", "ssse3")
+add_vectorexts("avx", "avx2", "avx512")
+add_vectorexts("sse", "sse2", "sse3", "ssse3", "sse4.2")
 ```
 
-<p class="tip">
-如果当前设置的指令集编译器不支持，xmake会自动忽略掉，所以不需要用户手动去判断维护，只需要将你需要的指令集全部设置上就行了。
-</p>
+!> 如果当前设置的指令集编译器不支持，xmake会自动忽略掉，所以不需要用户手动去判断维护，只需要将你需要的指令集全部设置上就行了。
+
+2.8.2 新增了一个 `all` 配置项，可以用于尽可能的开启所有扩展指令优化。
+
+```lua
+add_vectorexts("all")
+```
 
 ### target:add_frameworks
 
@@ -2888,3 +2892,89 @@ set_exceptions("no-cxx", "no-objc")
 ```
 
 Xmake 会在内部自动根据不同的编译器，去适配对应的 flags。
+
+### target:set_encodings
+
+#### 设置编码
+
+这是 2.8.2 版本新增的接口，我们可以用这个接口设置源文件、目标执行文件的编码。
+
+默认情况下，我们仅仅指定编码，是会同时对源文件，目标文件生效。
+
+```lua
+-- for all source/target encodings
+set_encodings("utf-8") -- msvc: /utf-8
+```
+
+它等价于：
+
+```lua
+set_encodings("source:utf-8", "target:utf-8")
+```
+
+并且，目前仅仅支持设置成 utf-8 编码，将来会不断扩展。
+
+如果，我们仅仅想单独设置源文件编码，或者目标文件编码，也是可以的。
+
+##### 设置源文件编码
+
+通常指的是编译的代码源文件的编码，我们可以这么设置。
+
+```lua
+-- gcc/clang: -finput-charset=UTF-8, msvc: -source-charset=utf-8
+set_encodings("source:utf-8")
+```
+
+##### 设置目标文件编码
+
+它通常指的是目标可执行文件的运行输出编码。
+
+```lua
+-- gcc/clang: -fexec-charset=UTF-8, msvc: -target-charset=utf-8
+set_encodings("target:utf-8")
+```
+
+### target:add_forceincludes
+
+#### 强制添加 includes
+
+这是 2.8.2 新增的接口，用于在配置文件中直接强制添加 `includes` 头文件。
+
+```lua
+add_forceincludes("config.h")
+```
+
+它的效果类似于 `#include <config.h>`，但是不需要在源码中显式添加它了。
+
+另外，它的搜索路径也是需要通过 `add_includedirs` 来控制，而不是直接配置文件路径。
+
+```lua
+add_forceincludes("config.h")
+add_includedirs("src")
+```
+
+默认 add_forceincludes 匹配 c/c++/objc。如果仅仅只想匹配 c++ 可以这么配置：
+
+```lua
+add_forceincludes("config.h", {sourcekinds = "cxx"})
+```
+
+如果想同时匹配多个源文件类型，也是可以的：
+
+
+```lua
+add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
+```
+
+### target:add_extrafiles
+
+#### 添加额外的文件
+
+这个接口也是 2.8.2 新加的，主要用于 vs/vsxmake project generator 生成的工程中，添加额外的文件到工程列表中去，这样，用户也可以快速点击编辑它们，尽管它们不是代码文件。
+
+将来，我们也可能用此接口做更多其他的事情。
+
+```lua
+add_extrafiles("assets/other.txt")
+```
+
