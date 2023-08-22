@@ -62,19 +62,55 @@ set_version("1.5.1")
 
 #### 设置工程版本
 
-设置项目版本，可以放在xmake.lua任何地方，一般放在最开头，例如：
+设置项目版本，可以放在 xmake.lua 任何地方，一般放在最开头，例如：
 
 ```lua
 set_version("1.5.1")
 ```
 
-2.1.7版本支持buildversion的配置：
+2.1.7 版本支持 buildversion 的配置：
 
 ```lua
 set_version("1.5.1", {build = "%Y%m%d%H%M"})
 ```
 
 我们也能够添加版本宏定义到头文件，请参考：[add_configfiles](/manual/project_target?id=add-template-configuration-files)
+
+!> 我们可以全局设置版本，但现在我们也可以在 target 域去单独设置它。
+
+2.8.2 版本新增了 soname 版本支持，用于控制 so/dylib 动态库的版本兼容性控制。
+
+我们可以配置 soname 的版本后缀名称，xmake 会在编译、安装动态库的时候，自动生成符号链接，执行指定版本的动态库。
+
+例如，如果我们配置：
+
+```lua
+set_version("1.0.1", {soname = true})
+```
+
+xmake 会自动解析版本号的 major 版本作为 soname 版本，生成的结构如下：
+
+```
+└── lib
+    ├── libfoo.1.0.1.dylib
+    ├── libfoo.1.dylib -> libfoo.1.0.1.dylib
+    └── libfoo.dylib -> libfoo.1.dylib
+```
+
+当然，我们也可以指定 soname 到特定的版本命名：
+
+```lua
+set_version("1.0.1", {soname = "1.0"}) -> libfoo.so.1.0, libfoo.1.0.dylib
+set_version("1.0.1", {soname = "1"}) -> libfoo.so.1, libfoo.1.dylib
+set_version("1.0.1", {soname = "A"}) -> libfoo.so.A, libfoo.A.dylib
+set_version("1.0.1", {soname = ""}) -> libfoo.so, libfoo.dylib
+```
+
+而如果没设置 soname，那么默认不开启 soname 版本兼容控制：
+
+```lua
+set_version("1.0.1") -> libfoo.so, libfoo.dylib
+```
 
 ### set_xmakever
 

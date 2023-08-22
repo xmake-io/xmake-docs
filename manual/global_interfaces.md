@@ -76,6 +76,42 @@ set_version("1.5.1", {build = "%Y%m%d%H%M"})
 
 We can also add version to the config header files, @see [add_configfiles](/manual/project_target?id=add-template-configuration-files)
 
+!> We can set the version globally, but now we can also set it individually in the target field.
+
+Version 2.8.2 adds soname versioning support for version compatibility control of so/dylib dynamic libraries.
+
+You can configure the soname version suffix, and xmake will automatically generate a symbolic link to execute the specified version of the library when compiling and installing it.
+
+For example, if we configure:
+
+```lua
+set_version("1.0.1", {soname = true})
+```
+
+xmake will automatically resolve the major version of the version number as the soname version, generating the following structure:
+
+```
+└── lib
+    ├── libfoo.1.0.1.dylib
+    ├── libfoo.1.0.1.dylib -> libfoo.1.0.1.dylib
+    └── libfoo.dylib -> libfoo.1.dylib
+```
+
+Of course, we can also specify soname to a specific version naming:
+
+```lua
+set_version("1.0.1", {soname = "1.0"}) -> libfoo.so.1.0, libfoo.1.0.dylib
+set_version("1.0.1", {soname = "1"}) -> libfoo.so.1, libfoo.1.dylib
+set_version("1.0.1", {soname = "A"}) -> libfoo.so.A, libfoo.A.dylib
+set_version("1.0.1", {soname = ""}) -> libfoo.so, libfoo.dylib
+```
+
+And if soname is not set, then soname version control is not enabled by default:
+
+```lua
+set_version("1.0.1") -> libfoo.so, libfoo.dylib
+```
+
 ### set_xmakever
 
 #### Set minimal xmake version
