@@ -1,3 +1,28 @@
+
+## v2.8.2
+
+### 新特性
+
+* [#4002](https://github.com/xmake-io/xmake/issues/4002): 增加 soname 支持
+* [#1613](https://github.com/xmake-io/xmake/issues/1613): 为 add_vectorexts 增加 avx512 和 sse4.2 支持
+* [#2471](https://github.com/xmake-io/xmake/issues/2471): 添加 set_encodings API 去设置源文件和目标文件的编码
+* [#4071](https://github.com/xmake-io/xmake/pull/4071): 支持 sdcc 的 stm8 汇编器
+* [#4101](https://github.com/xmake-io/xmake/issues/4101): 为 c/c++ 添加 force includes
+* [#2384](https://github.com/xmake-io/xmake/issues/2384): 为 vs/vsxmake 生成器添加 add_extrafiles 接口
+
+### 改进
+
+* [#3960](https://github.com/xmake-io/xmake/issues/3960): 改进 msys2/crt64 支持
+* [#4032](https://github.com/xmake-io/xmake/pull/4032): 移除一些非常老的废弃接口
+* 改进 tools.msbuild 升级 vcproj 文件
+* 支持 add_requires("xmake::xxx") 包
+* [#4049](https://github.com/xmake-io/xmake/issues/4049): 改进 Rust 支持交叉编译
+* 改进 clang 下 c++ modules 支持
+
+### Bugs 修复
+
+* 修复 macOS/Linux 上子子进程无法快速退出问题
+
 ## v2.8.1
 
 ### 新特性

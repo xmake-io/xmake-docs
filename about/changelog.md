@@ -1,5 +1,29 @@
 # Changelog
 
+## v2.8.2
+
+### New features
+
+* [#4002](https://github.com/xmake-io/xmake/issues/4002): Add soname and version support
+* [#1613](https://github.com/xmake-io/xmake/issues/1613): Add avx512 and sse4.2 for add_vectorexts
+* [#2471](https://github.com/xmake-io/xmake/issues/2471): Add set_encodings to set source/target encodings
+* [#4071](https://github.com/xmake-io/xmake/pull/4071): Support the stm8 assembler on the sdcc toolchain.
+* [#4101](https://github.com/xmake-io/xmake/issues/4101): Add force includes for c/c++
+* [#2384](https://github.com/xmake-io/xmake/issues/2384): Add extrafiles for vs/vsxmake generator
+
+### Changes
+
+* [#3960](https://github.com/xmake-io/xmake/issues/3960): Improve msys2/crt64 support
+* [#4032](https://github.com/xmake-io/xmake/pull/4032): Remove some old deprecated apis
+* Improve to upgrade vcproj files in tools.msbuild
+* Support add_requires("xmake::xxx") package
+* [#4049](https://github.com/xmake-io/xmake/issues/4049): Improve rust to support cross-compilation
+* Improve clang modules support
+
+### Bugs fixed
+
+* Fix exit all child processes on macOS/Linux
+
 ## v2.8.1
 
 ### New features
