@@ -1025,9 +1025,9 @@ rule("foo")
 
 The rules are used in a similar way as before, the only difference being that we need to specify which package's rules to access by prefixing them with `@packagename/`.
 
-The exact format: ``add_rules("@packagename/rulename")`, e.g.: ``add_rules("@zlib/foo")`.
+The exact format: `add_rules("@packagename/rulename")`, e.g.: `add_rules("@zlib/foo")`.
 
-``lua
+```lua
 add_requires("zlib", {system = false})
 target("test")
     set_kind("binary")
