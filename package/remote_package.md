@@ -1040,7 +1040,7 @@ target("test")
 
 If a package alias exists, xmake will give preference to the package alias to get the rules.
 
-``` lua
+```lua
 add_requires("zlib", {alias = "zlib2", system = false})
 target("test")
     set_kind("binary")
