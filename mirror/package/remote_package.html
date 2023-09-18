@@ -764,21 +764,24 @@ upgrading packages ..
 </code></pre>
 <h3 id="applyingpackagerules">Applying package rules</h3>
 <p>The rules are used in a similar way as before, the only difference being that we need to specify which package&#39;s rules to access by prefixing them with <code>@packagename/</code>.</p>
-<p>The exact format: <code>add_rules("@packagename/rulename")`, e.g.:</code>add_rules("@zlib/foo")`.</p>
-<p><code></code>lua<br>add_requires("zlib", {system = false})<br>target("test")<br>    set_kind("binary")<br>    add_files("src/*.cpp")<br>    add_packages("zlib")<br>    add_rules("@zlib/foo")</p>
-<pre><code>
-### Referencing rules by package alias
-
-If a package alias exists, xmake will give preference to the package alias to get the rules.
-
-``` lua
-add_requires("zlib", {alias = "zlib2", system = false})
+<p>The exact format: <code>add_rules("@packagename/rulename")</code>, e.g.: <code>add_rules("@zlib/foo")</code>.</p>
+<pre><code class="lang-lua">add_requires("zlib", {system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib")
+    add_rules("@zlib/foo")
+</code></pre>
+<h3 id="referencingrulesbypackagealias">Referencing rules by package alias</h3>
+<p>If a package alias exists, xmake will give preference to the package alias to get the rules.</p>
+<pre><code class="lang-lua">add_requires("zlib", {alias = "zlib2", system = false})
 target("test")
     set_kind("binary")
     add_files("src/*.cpp")
     add_packages("zlib2")
     add_rules("@zlib2/foo")
-</code></pre><h3 id="addingpackageruledependencies">Adding package rule dependencies</h3>
+</code></pre>
+<h3 id="addingpackageruledependencies">Adding package rule dependencies</h3>
 <p>We can use <code>add_deps("@bar")</code> to add additional rules relative to the current package directory.</p>
 <p>However, we cannot add rule dependencies from other packages, they are completely isolated and we can only refer to rules from other packages imported by <code>add_requires</code> in the user project.</p>
 <p>packages/z/zlib/rules/foo.lua</p>
