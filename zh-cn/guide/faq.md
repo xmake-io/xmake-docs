@@ -207,6 +207,79 @@ tb_trace_i("hello %s", "xmake");
 
 但是，如果需要贡献修复补丁，我们需要提交 pr 给子模块的仓库才行，补丁合并后，作者会在特定时间同步到到 Xmake 源码仓库。
 
+### 断点调试
+
+2.8.3 版本，我们新增了 Lua 断点调试支持，配合 [VSCode-EmmyLua](https://github.com/EmmyLua/VSCode-EmmyLua) 插件，我们可以很方便的在 VSCode 中断点调试 Xmake 自身源码。
+
+首先，我们需要在 VSCode 的插件市场安装 VSCode-EmmyLua 插件，然后执行下面的命令更新下 xmake-repo 仓库保持最新。
+
+```bash
+xrepo update-repo
+```
+
+!> Xmake 也需要保持最新版本。
+
+然后，在自己的工程目录下执行以下命令：
+
+```bash
+$ xrepo env -b emmylua_debugger -- xmake build
+```
+
+其中 `xrepo env -b emmylua_debugger` 用于绑定 EmmyLua 调试器插件环境，而 `--` 后面的参数，就是我们实际需要被调试的 xmake 命令。
+
+通常我们仅仅调试 `xmake build` 构建，如果想要调试其他命令，可以自己调整，比如想要调试 `xmake install -o /tmp` 安装命令，那么可以改成：
+
+```bash
+$ xrepo env -b emmylua_debugger -- xmake install -o /tmp
+```
+
+执行完上面的命令后，它不会立即退出，会一直处于等待调试状态，有可能没有任何输出。
+
+这个时候，我们不要急着退出它，继续打开 VSCode，并在 VSCode 中打开 Xmake 的 Lua 脚本源码目录。
+
+也就是这个目录：[Xmake Lua Scripts](https://github.com/xmake-io/xmake/tree/master/xmake)，我们可以下载的本地，也可以直接打开 Xmake 安装目录中的 lua 脚本目录。
+
+然后切换到 VSCode 的调试 Tab 页，点击 `RunDebug` -> `Emmylua New Debug` 就能连接到我们的 `xmake build` 命令调试端，开启调试。
+
+如下图所示，默认的起始断点会自动中断到 `debugger:_start_emmylua_debugger` 内部，我们可以点击单步跳出当前函数，就能进入 main 入口。
+
+![](/assets/img/manual/xmake-debug.png)
+
+然后设置自己的断点，点击继续运行，就能中断到自己想要调试的代码位置。
+
+我们也可以在项目工程的配置脚本中设置断点，也可以实现快速调试自己的配置脚本，而不仅仅是 Xmake 自身源码。
+
+![](/assets/img/manual/xmake-debug2.png)
+
+### 远程调试
+
+2.8.3 版本现在也能支持远程调试，其实这个功能主要是给作者用的，因为作者本人的开发电脑是 mac，但是有时候还是需要能够在 windows 上调试 xmake 源码脚本。
+
+但是在虚拟机中调试，太卡，体验不好，并且作者本人的电脑磁盘空间不够，因此我通常会远程连到单独的 windows 主机上去调试 xmake 源码。
+
+我们先在 windows 机器上开启远程编译服务：
+
+```bash
+$ xmake service
+```
+
+然后本机打开需要构建的工程目录，执行远程连接，然后执行 `xmake service --sync --xmakesrc=` 去同步本地源码：
+
+```bash
+$ xmake service --connect
+$ xmake service --sync --xmakesrc=~/projects/personal/xmake/xmake/
+$ xmake build
+$ xmake run
+```
+
+这样，我们就能本地修改 xmake 脚本源码，然后同步到远程 windows 机器上，然后远程执行 xmake 构建命令，获取对应的调试输出，以及分析构建行为。
+
+我们也能够通过 `xmake service --pull=` 命令，回拉远程的文件到本地，进行分析。
+
+注：详细的远程编译特性说明，见 [远程编译文档](http://xmake.io/#/zh-cn/features/remote_build)。
+
+![](/assets/img/manual/xmake-remote.png)
+
 ## 如何调试仓库包?
 
 调试的方式有很多种，这里我主要介绍作者最常使用的调试方式，那就是直接拉取 xmake-repo 仓库来调试。
@@ -238,6 +311,20 @@ $ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 ```
 
 等修改调试通过后，我们再根据改动，通过 `git diff > fix.patch` 生成补丁文件，通过 `add_patches` 配置应用补丁包，来修复包的安装。
+
+### 远程调试包源码
+
+我们也可以远程调试包，先开启远程服务：
+
+```bash
+$ xmake service
+```
+
+然后传入 `--remote` 参数，即可实现远程包编译测试。
+
+```bash
+$ xmake l scripts/test.lua -vD --shallow --remote /tmp/zlib-1.2.11 zlib
+```
 
 ## 下载包提示证书校验失败怎么办？
 

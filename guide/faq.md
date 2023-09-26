@@ -204,6 +204,79 @@ If there is a problem with the various submodules that Xmake relies on, such as 
 
 However, if we need to contribute a patch, we need to commit PR to the submodule's repository and the patch will be merged and synced to the Xmake source repository by the author at a later date and time.
 
+### Breakpoint Debugging
+
+In version 2.8.3, we added Lua breakpoint debugging support, with [VSCode-EmmyLua](https://github.com/EmmyLua/VSCode-EmmyLua) plugin, we can easily debug Xmake source code in VSCode breakpoints.
+
+First of all, we need to install VSCode-EmmyLua plugin in VSCode's plugin market, and then run the following command to update the xmake-repo repository to keep it up-to-date.
+
+```bash
+xrepo update-repo
+```
+
+!> Xmake also needs to be kept up to date.
+
+Then, execute the following command in your own project directory:
+
+```bash
+$ xrepo env -b emmylua_debugger -- xmake build
+```
+
+The `xrepo env -b emmylua_debugger` is used to bind the EmmyLua debugger plugin environment, and the arguments after `--` are the actual xmake commands we need to debug.
+
+Usually we just debug the `xmake build` build, but if you want to debug other commands, you can tweak it yourself, for example, if you want to debug the `xmake install -o /tmp` install command, you can change it to:
+
+```bash
+$ xrepo env -b emmylua_debugger -- xmake install -o /tmp
+```
+
+After executing the above command, it will not exit immediately, it will remain in a waiting debugging state, possibly without any output.
+
+At this point, instead of exiting it, let's go ahead and open VSCode and open Xmake's Lua script source directory in VSCode.
+
+That is, this directory: [Xmake Lua Scripts](https://github.com/xmake-io/xmake/tree/master/xmake), which we can download locally or directly open the lua script directory in the Xmake installation directory.
+
+Then switch to VSCode's debugging tab and click `RunDebug` -> `Emmylua New Debug` to connect to our `xmake build` command debugger and start debugging.
+
+As you can see below, the default start breakpoint will automatically break inside `debugger:_start_emmylua_debugger`, and we can click on the single-step to jump out of the current function, which will take us to the main entry.
+
+![](/assets/img/manual/xmake-debug.png)
+
+Then set your own breakpoint and click Continue to Run to break to the code location you want to debug.
+
+We can also set breakpoints in our project's configuration scripts, which also allows us to quickly debug our own configuration scripts, not just Xmake's own source code.
+
+![](/assets/img/manual/xmake-debug2.png)
+
+### Remote debugging
+
+Version 2.8.3 now supports remote debugging, but this feature is mainly for the author, because the author's development computer is a mac, but sometimes he still needs to be able to debug xmake source scripts on windows.
+
+But debugging in a virtual machine is too laggy, not good experience, and the author's own computer does not have enough disk space, so I usually connect to a separate windows host to debug xmake source code remotely.
+
+Let's start the remote compilation service on the windows machine:
+
+```bash
+$ xmake service
+```
+
+Then locally, open the project directory where you want to build, make a remote connection, and then run `xmake service --sync --xmakesrc=` to synchronise the local source:
+
+```bash
+$ xmake service --connect
+$ xmake service --sync --xmakesrc=~/projects/personal/xmake/xmake/
+$ xmake build
+$ xmake run
+```
+
+This way, we can modify the xmake script source locally, sync it to a remote windows machine, and then execute the xmake build command remotely to get the corresponding debug output and analyse the build behaviour.
+
+We can also pull the remote files back to the local machine for analysis with the `xmake service --pull=` command.
+
+Note: See [Remote Build Documentation](http://xmake.io/#/features/remote_build) for a detailed description of remote build features.
+
+![](/assets/img/manual/xmake-remote.png)
+
 ## How to debug repository packages?
 
 There are many different ways to debug, here I will focus on the most common debugging method used by the author, which is to pull the xmake-repo repository directly to debug.
@@ -238,6 +311,20 @@ $ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 
 Once the changes have been debugged, we then generate a patch file based on the changes via `git diff > fix.patch`
 and configure the patch package to be applied via `add_patches` to fix the package installation.
+
+### Remote debugging package source code
+
+We can also debug the package remotely, by first enabling the remote service:
+
+```bash
+$ xmake service
+```
+
+Then pass in the `--remote` parameter to compile and test the package remotely.
+
+```bash
+$ xmake l scripts/test.lua -vD --shallow --remote /tmp/zlib-1.2.11 zlib
+```
 
 ## What should I do if the download package failed to get the local issuer certificate?
 

@@ -202,6 +202,44 @@ $ source scripts/srcenv.profile
 </code></pre>
 <p>If there is a problem with the various submodules that Xmake relies on, such as tbox, and you need to debug it, you can also go directly to the submodule source code, modify it and recompile it for execution.</p>
 <p>However, if we need to contribute a patch, we need to commit PR to the submodule&#39;s repository and the patch will be merged and synced to the Xmake source repository by the author at a later date and time.</p>
+<h3 id="breakpointdebugging">Breakpoint Debugging</h3>
+<p>In version 2.8.3, we added Lua breakpoint debugging support, with <a href="https://github.com/EmmyLua/VSCode-EmmyLua">VSCode-EmmyLua</a> plugin, we can easily debug Xmake source code in VSCode breakpoints.</p>
+<p>First of all, we need to install VSCode-EmmyLua plugin in VSCode&#39;s plugin market, and then run the following command to update the xmake-repo repository to keep it up-to-date.</p>
+<pre><code class="lang-bash">xrepo update-repo
+</code></pre>
+<p>!> Xmake also needs to be kept up to date.</p>
+<p>Then, execute the following command in your own project directory:</p>
+<pre><code class="lang-bash">$ xrepo env -b emmylua_debugger -- xmake build
+</code></pre>
+<p>The <code>xrepo env -b emmylua_debugger</code> is used to bind the EmmyLua debugger plugin environment, and the arguments after <code>--</code> are the actual xmake commands we need to debug.</p>
+<p>Usually we just debug the <code>xmake build</code> build, but if you want to debug other commands, you can tweak it yourself, for example, if you want to debug the <code>xmake install -o /tmp</code> install command, you can change it to:</p>
+<pre><code class="lang-bash">$ xrepo env -b emmylua_debugger -- xmake install -o /tmp
+</code></pre>
+<p>After executing the above command, it will not exit immediately, it will remain in a waiting debugging state, possibly without any output.</p>
+<p>At this point, instead of exiting it, let&#39;s go ahead and open VSCode and open Xmake&#39;s Lua script source directory in VSCode.</p>
+<p>That is, this directory: <a href="https://github.com/xmake-io/xmake/tree/master/xmake">Xmake Lua Scripts</a>, which we can download locally or directly open the lua script directory in the Xmake installation directory.</p>
+<p>Then switch to VSCode&#39;s debugging tab and click <code>RunDebug</code> -> <code>Emmylua New Debug</code> to connect to our <code>xmake build</code> command debugger and start debugging.</p>
+<p>As you can see below, the default start breakpoint will automatically break inside <code>debugger:_start_emmylua_debugger</code>, and we can click on the single-step to jump out of the current function, which will take us to the main entry.</p>
+<p><img src="/assets/img/manual/xmake-debug.png" alt=""></p>
+<p>Then set your own breakpoint and click Continue to Run to break to the code location you want to debug.</p>
+<p>We can also set breakpoints in our project&#39;s configuration scripts, which also allows us to quickly debug our own configuration scripts, not just Xmake&#39;s own source code.</p>
+<p><img src="/assets/img/manual/xmake-debug2.png" alt=""></p>
+<h3 id="remotedebugging">Remote debugging</h3>
+<p>Version 2.8.3 now supports remote debugging, but this feature is mainly for the author, because the author&#39;s development computer is a mac, but sometimes he still needs to be able to debug xmake source scripts on windows.</p>
+<p>But debugging in a virtual machine is too laggy, not good experience, and the author&#39;s own computer does not have enough disk space, so I usually connect to a separate windows host to debug xmake source code remotely.</p>
+<p>Let&#39;s start the remote compilation service on the windows machine:</p>
+<pre><code class="lang-bash">$ xmake service
+</code></pre>
+<p>Then locally, open the project directory where you want to build, make a remote connection, and then run <code>xmake service --sync --xmakesrc=</code> to synchronise the local source:</p>
+<pre><code class="lang-bash">$ xmake service --connect
+$ xmake service --sync --xmakesrc=~/projects/personal/xmake/xmake/
+$ xmake build
+$ xmake run
+</code></pre>
+<p>This way, we can modify the xmake script source locally, sync it to a remote windows machine, and then execute the xmake build command remotely to get the corresponding debug output and analyse the build behaviour.</p>
+<p>We can also pull the remote files back to the local machine for analysis with the <code>xmake service --pull=</code> command.</p>
+<p>Note: See <a href="http://xmake.io/#/features/remote_build">Remote Build Documentation</a> for a detailed description of remote build features.</p>
+<p><img src="/assets/img/manual/xmake-remote.png" alt=""></p>
 <h2 id="howtodebugrepositorypackages">How to debug repository packages?</h2>
 <p>There are many different ways to debug, here I will focus on the most common debugging method used by the author, which is to pull the xmake-repo repository directly to debug.</p>
 <pre><code class="lang-bash">$ git clone https://github.com/xmake-io/xmake-repo.git
@@ -220,6 +258,13 @@ $ xmake l scripts/test.lua -vD --shallow -m debug zlib
 <pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 </code></pre>
 <p>Once the changes have been debugged, we then generate a patch file based on the changes via <code>git diff > fix.patch</code><br>and configure the patch package to be applied via <code>add_patches</code> to fix the package installation.</p>
+<h3 id="remotedebuggingpackagesourcecode">Remote debugging package source code</h3>
+<p>We can also debug the package remotely, by first enabling the remote service:</p>
+<pre><code class="lang-bash">$ xmake service
+</code></pre>
+<p>Then pass in the <code>--remote</code> parameter to compile and test the package remotely.</p>
+<pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow --remote /tmp/zlib-1.2.11 zlib
+</code></pre>
 <h2 id="whatshouldidoifthedownloadpackagefailedtogetthelocalissuercertificate">What should I do if the download package failed to get the local issuer certificate?</h2>
 <pre><code class="lang-bash">curl: (60) SSL certificate problem: unable to get local issuer certificate
 More details here: https://curl.se/docs/sslcerts.html
