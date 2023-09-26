@@ -571,6 +571,19 @@ static unsigned char g_test_frag_spv_data[] = {
 };
 </code></pre>
 <p>Similar to the usage of bin2c rules, see the complete example: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/other/glsl2spv">glsl2spv example</a></p>
+<h4 id="utilshlsl2spv">utils.hlsl2spv</h4>
+<p>In addition to the <code>utils.glsl2spv</code> rule, we now support the <code>utils.hlsl2spv</code> rule.</p>
+<pre><code class="lang-bash">add_rules("mode.debug", "mode.release")
+
+add_requires("glslang", {configs = {binaryonly = true}})
+
+target("test")
+    set_kind("binary")
+    add_rules("utils.hlsl2spv", {bin2c = true})
+    add_files("src/*.c")
+    add_files("src/*.hlsl", "src/*.hlsl")
+    add_packages("directxshadercompiler")
+</code></pre>
 <h4 id="pythonlibrary">python.library</h4>
 <p>We can use this rule to generate python library modules with pybind11, which will adjust the module name of the python library.</p>
 <pre><code class="lang-lua">add_rules("mode.release", "mode.debug")

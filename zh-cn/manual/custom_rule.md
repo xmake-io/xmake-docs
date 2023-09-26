@@ -728,6 +728,23 @@ static unsigned char g_test_frag_spv_data[] = {
 
 跟 bin2c 规则的使用方式类似，完整例子见：[glsl2spv example](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/glsl2spv)
 
+#### utils.hlsl2spv
+
+除了 `utils.glsl2spv` 规则，我们现在还支持 `utils.hlsl2spv` 规则。
+
+```bash
+add_rules("mode.debug", "mode.release")
+
+add_requires("glslang", {configs = {binaryonly = true}})
+
+target("test")
+    set_kind("binary")
+    add_rules("utils.hlsl2spv", {bin2c = true})
+    add_files("src/*.c")
+    add_files("src/*.hlsl", "src/*.hlsl")
+    add_packages("directxshadercompiler")
+```
+
 #### python.library
 
 我们可以用这个规则，配合 pybind11 生成 python 库模块，它会调整 python 库的模块名。
