@@ -208,7 +208,7 @@ set_policy("build.optimization.lto", true)
 
 We can also turn it on quickly via the command line option.
 
-```console
+```bash
 $ xmake f --policies=build.optimization.lto
 ```
 
@@ -227,6 +227,74 @@ target("test")
 Whereas by default Cuda binary/shared is devlink enabled, we can also disable it via the policy display.
 
 For a detailed background on this, see: [#1976](https://github.com/xmake-io/xmake/issues/1976)
+
+### build.sanitizer.address
+
+Address Sanitizer (ASan) is a fast memory error detection tool that is built-in by the compiler, and usually requires `-fsanitize-address` to be configured in both the build and link flags to enable it correctly.
+
+We can quickly enable it globally by turning on this policy, which will result in compiled programs that directly support ASan detection.
+
+For example, we can enable it from the command line:
+
+```bash
+$ xmake f --policies=build.sanitizer.address
+```
+
+It can also be enabled globally via the interface configuration:
+
+```lua
+set_policy("build.sanitizer.address", true)
+```
+
+Of course, we can also enable it for a specific target individually.
+
+Also, if we configure it globally, we can enable it for all dependencies at the same time.
+
+```lua
+set_policy("build.sanitizer.address", true)
+
+add_requires("zlib")
+add_requires("libpng")
+```
+
+It is equivalent to setting the asan configuration for each package in turn.
+
+```lua
+add_requires("zlib", {configs = {asan = true}})
+add_requires("libpng", {configs = {asan = true}})
+```
+
+!> `add_rules("mode.asan", "mode.tsan", "mode.ubsan", "mode.msan")` will be deprecated, and these new strategies will be used whenever possible, as these build modes cannot take effect on dependent packages simultaneously.
+
+Alternatively, we can validate multiple sanitizer inspections at the same time, e.g.:
+
+
+```lua
+set_policy("build.sanitizer.address", true)
+set_policy("build.sanitizer.undefined", true)
+```
+
+or
+
+```bash
+$ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
+```
+
+### build.sanitizer.thread
+
+Similar to [build.sanitizer.address](https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress) for detecting thread safety issues.
+
+### build.sanitizer.memory
+
+Similar to [build.sanitizer.address](https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress) for detecting memory issues.
+
+### build.sanitizer.leak
+
+Similar to [build.sanitizer.address](https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress) for detecting memory leaks.
+
+### build.sanitizer.undefined
+
+Similar to [build.sanitizer.address](https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress) for detecting undefined issues.
 
 ### preprocessor.linemarkers
 

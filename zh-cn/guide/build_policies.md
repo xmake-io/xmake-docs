@@ -212,7 +212,7 @@ set_policy("build.optimization.lto", true)
 
 我们也可以通过命令行选项快速开启。
 
-```console
+```bash
 $ xmake f --policies=build.optimization.lto
 ```
 
@@ -231,6 +231,74 @@ target("test")
 而默认 Cuda binary/shared 是开启 devlink 的，我们也可以通过策略显示禁用它。
 
 关于这个的详细背景说明，见：[#1976](https://github.com/xmake-io/xmake/issues/1976)
+
+### build.sanitizer.address
+
+Address Sanitizer（ASan）是一个快速的内存错误检测工具，由编译器内置支持，通常我们需要在编译和链接的 flags 中同时配置 `-fsanitize-address` 才能正确开启。
+
+而我们可以通过开启这个策略，就可以快速全局启用它，这会使得编译出来的程序，直接支持 ASan 检测。
+
+例如，我们可以通过命令行的方式去启用：
+
+```bash
+$ xmake f --policies=build.sanitizer.address
+```
+
+也可以通过接口配置去全局启用：
+
+```lua
+set_policy("build.sanitizer.address", true)
+```
+
+当然，我们也可以单独对某个特定的 target 去配置开启。
+
+另外，如果全局配置它，我们就可以同时对所有依赖包也生效。
+
+```lua
+set_policy("build.sanitizer.address", true)
+
+add_requires("zlib")
+add_requires("libpng")
+```
+
+它等价于，对每个包依次设置 asan 配置。
+
+```lua
+add_requires("zlib", {configs = {asan = true}})
+add_requires("libpng", {configs = {asan = true}})
+```
+
+!> `add_rules("mode.asan", "mode.tsan", "mode.ubsan", "mode.msan")` 将被废弃，尽可能使用这些新的策略，因为这些构建模式无法同步对依赖包生效。
+
+另外，我们也可以同时生效多个 sanitizer 检测，例如：
+
+
+```lua
+set_policy("build.sanitizer.address", true)
+set_policy("build.sanitizer.undefined", true)
+```
+
+或者
+
+```
+$ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
+```
+
+### build.sanitizer.thread
+
+与 [build.sanitizer.address](https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress) 类似，用于检测线程安全问题。
+
+### build.sanitizer.memory
+
+与 [build.sanitizer.address](https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress) 类似，用于检测内存问题。
+
+### build.sanitizer.leak
+
+与 [build.sanitizer.address](https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress) 类似，用于检测内存泄漏问题。
+
+### build.sanitizer.undefined
+
+与 [build.sanitizer.address](https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress) 类似，用于检测 undefined 问题。
 
 ### preprocessor.linemarkers
 

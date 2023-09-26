@@ -215,7 +215,7 @@ set_warnings("all", "extra")
 <pre><code class="lang-lua">set_policy("build.optimization.lto", true)
 </code></pre>
 <p>We can also turn it on quickly via the command line option.</p>
-<pre><code class="lang-console">$ xmake f --policies=build.optimization.lto
+<pre><code class="lang-bash">$ xmake f --policies=build.optimization.lto
 </code></pre>
 <h3 id="buildcudadevlink">build.cuda.devlink</h3>
 <p>Version 2.7.7 can be configured to show that device links to specific targets are turned on.</p>
@@ -226,6 +226,42 @@ set_warnings("all", "extra")
 </code></pre>
 <p>Whereas by default Cuda binary/shared is devlink enabled, we can also disable it via the policy display.</p>
 <p>For a detailed background on this, see: <a href="https://github.com/xmake-io/xmake/issues/1976">#1976</a></p>
+<h3 id="buildsanitizeraddress">build.sanitizer.address</h3>
+<p>Address Sanitizer (ASan) is a fast memory error detection tool that is built-in by the compiler, and usually requires <code>-fsanitize-address</code> to be configured in both the build and link flags to enable it correctly.</p>
+<p>We can quickly enable it globally by turning on this policy, which will result in compiled programs that directly support ASan detection.</p>
+<p>For example, we can enable it from the command line:</p>
+<pre><code class="lang-bash">$ xmake f --policies=build.sanitizer.address
+</code></pre>
+<p>It can also be enabled globally via the interface configuration:</p>
+<pre><code class="lang-lua">set_policy("build.sanitizer.address", true)
+</code></pre>
+<p>Of course, we can also enable it for a specific target individually.</p>
+<p>Also, if we configure it globally, we can enable it for all dependencies at the same time.</p>
+<pre><code class="lang-lua">set_policy("build.sanitizer.address", true)
+
+add_requires("zlib")
+add_requires("libpng")
+</code></pre>
+<p>It is equivalent to setting the asan configuration for each package in turn.</p>
+<pre><code class="lang-lua">add_requires("zlib", {configs = {asan = true}})
+add_requires("libpng", {configs = {asan = true}})
+</code></pre>
+<p>!> <code>add_rules("mode.asan", "mode.tsan", "mode.ubsan", "mode.msan")</code> will be deprecated, and these new strategies will be used whenever possible, as these build modes cannot take effect on dependent packages simultaneously.</p>
+<p>Alternatively, we can validate multiple sanitizer inspections at the same time, e.g.:</p>
+<pre><code class="lang-lua">set_policy("build.sanitizer.address", true)
+set_policy("build.sanitizer.undefined", true)
+</code></pre>
+<p>or</p>
+<pre><code class="lang-bash">$ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
+</code></pre>
+<h3 id="buildsanitizerthread">build.sanitizer.thread</h3>
+<p>Similar to <a href="https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> for detecting thread safety issues.</p>
+<h3 id="buildsanitizermemory">build.sanitizer.memory</h3>
+<p>Similar to <a href="https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> for detecting memory issues.</p>
+<h3 id="buildsanitizerleak">build.sanitizer.leak</h3>
+<p>Similar to <a href="https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> for detecting memory leaks.</p>
+<h3 id="buildsanitizerundefined">build.sanitizer.undefined</h3>
+<p>Similar to <a href="https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> for detecting undefined issues.</p>
 <h3 id="preprocessorlinemarkers">preprocessor.linemarkers</h3>
 <p>If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.<br>This will greatly reduce the size of the preprocessor file and improve the efficiency of the cache, but the downside is that the source line information will be lost and if you encounter a compilation error, you will not be able to see the exact line of code that went wrong.</p>
 <h3 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h3>

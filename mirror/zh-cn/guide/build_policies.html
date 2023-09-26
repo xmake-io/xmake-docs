@@ -218,7 +218,7 @@ set_warnings("all", "extra")
 <pre><code class="lang-lua">set_policy("build.optimization.lto", true)
 </code></pre>
 <p>我们也可以通过命令行选项快速开启。</p>
-<pre><code class="lang-console">$ xmake f --policies=build.optimization.lto
+<pre><code class="lang-bash">$ xmake f --policies=build.optimization.lto
 </code></pre>
 <h3 id="buildcudadevlink">build.cuda.devlink</h3>
 <p>2.7.7 版本可以通过这个配置，显示开启对特定目标的设备链接。</p>
@@ -229,6 +229,41 @@ set_warnings("all", "extra")
 </code></pre>
 <p>而默认 Cuda binary/shared 是开启 devlink 的，我们也可以通过策略显示禁用它。</p>
 <p>关于这个的详细背景说明，见：<a href="https://github.com/xmake-io/xmake/issues/1976">#1976</a></p>
+<h3 id="buildsanitizeraddress">build.sanitizer.address</h3>
+<p>Address Sanitizer（ASan）是一个快速的内存错误检测工具，由编译器内置支持，通常我们需要在编译和链接的 flags 中同时配置 <code>-fsanitize-address</code> 才能正确开启。</p>
+<p>而我们可以通过开启这个策略，就可以快速全局启用它，这会使得编译出来的程序，直接支持 ASan 检测。</p>
+<p>例如，我们可以通过命令行的方式去启用：</p>
+<pre><code class="lang-bash">$ xmake f --policies=build.sanitizer.address
+</code></pre>
+<p>也可以通过接口配置去全局启用：</p>
+<pre><code class="lang-lua">set_policy("build.sanitizer.address", true)
+</code></pre>
+<p>当然，我们也可以单独对某个特定的 target 去配置开启。</p>
+<p>另外，如果全局配置它，我们就可以同时对所有依赖包也生效。</p>
+<pre><code class="lang-lua">set_policy("build.sanitizer.address", true)
+
+add_requires("zlib")
+add_requires("libpng")
+</code></pre>
+<p>它等价于，对每个包依次设置 asan 配置。</p>
+<pre><code class="lang-lua">add_requires("zlib", {configs = {asan = true}})
+add_requires("libpng", {configs = {asan = true}})
+</code></pre>
+<p>!> <code>add_rules("mode.asan", "mode.tsan", "mode.ubsan", "mode.msan")</code> 将被废弃，尽可能使用这些新的策略，因为这些构建模式无法同步对依赖包生效。</p>
+<p>另外，我们也可以同时生效多个 sanitizer 检测，例如：</p>
+<pre><code class="lang-lua">set_policy("build.sanitizer.address", true)
+set_policy("build.sanitizer.undefined", true)
+</code></pre>
+<p>或者</p>
+<pre><code>$ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
+</code></pre><h3 id="buildsanitizerthread">build.sanitizer.thread</h3>
+<p>与 <a href="https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> 类似，用于检测线程安全问题。</p>
+<h3 id="buildsanitizermemory">build.sanitizer.memory</h3>
+<p>与 <a href="https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> 类似，用于检测内存问题。</p>
+<h3 id="buildsanitizerleak">build.sanitizer.leak</h3>
+<p>与 <a href="https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> 类似，用于检测内存泄漏问题。</p>
+<h3 id="buildsanitizerundefined">build.sanitizer.undefined</h3>
+<p>与 <a href="https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> 类似，用于检测 undefined 问题。</p>
 <h3 id="preprocessorlinemarkers">preprocessor.linemarkers</h3>
 <p>通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。<br>也会提升缓存的处理效率，但是缺点就是会丢失源码行信息，如果遇到编译错误，将无法看到准确的出错代码行。</p>
 <h3 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h3>
