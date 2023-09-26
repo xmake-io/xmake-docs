@@ -300,6 +300,23 @@ $ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
 
 与 [build.sanitizer.address](https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress) 类似，用于检测 undefined 问题。
 
+### run.autobuild
+
+这个策略用于调整 `xmake run` 的行为，默认情况下，执行 `xmake run` 并不会自动构建目标程序，如果程序还没被编译，就是提示用户手动构建一下。
+
+而开启这个策略，我们就可以在运行程序前，先自动构建对应的目标程序。
+
+```bash
+$ xmake f --policies=run.autobuild
+$ xmake run
+```
+
+如果想要全局生效这个策略，可以全局开启它。
+
+```bash
+$ xmake g --policies=run.autobuild
+```
+
 ### preprocessor.linemarkers
 
 通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。

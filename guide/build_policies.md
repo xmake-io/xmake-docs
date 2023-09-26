@@ -296,6 +296,23 @@ Similar to [build.sanitizer.address](https://xmake.io/#/guide/build_policies?id=
 
 Similar to [build.sanitizer.address](https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress) for detecting undefined issues.
 
+### run.autobuild
+
+This policy is used to adjust the behaviour of `xmake run`. By default, running `xmake run` does not build the target program automatically, but prompts the user to build it manually if it has not been compiled yet.
+
+By turning on this policy, we can automatically build the target program before running it.
+
+```bash
+$ xmake f --policies=run.autobuild
+$ xmake run
+```
+
+If you want this policy to take effect globally, you can turn it on globally.
+
+```bash
+$ xmake g --policies=run.autobuild
+```
+
 ### preprocessor.linemarkers
 
 If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.

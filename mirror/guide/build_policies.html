@@ -262,6 +262,15 @@ set_policy("build.sanitizer.undefined", true)
 <p>Similar to <a href="https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> for detecting memory leaks.</p>
 <h3 id="buildsanitizerundefined">build.sanitizer.undefined</h3>
 <p>Similar to <a href="https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> for detecting undefined issues.</p>
+<h3 id="runautobuild">run.autobuild</h3>
+<p>This policy is used to adjust the behaviour of <code>xmake run</code>. By default, running <code>xmake run</code> does not build the target program automatically, but prompts the user to build it manually if it has not been compiled yet.</p>
+<p>By turning on this policy, we can automatically build the target program before running it.</p>
+<pre><code class="lang-bash">$ xmake f --policies=run.autobuild
+$ xmake run
+</code></pre>
+<p>If you want this policy to take effect globally, you can turn it on globally.</p>
+<pre><code class="lang-bash">$ xmake g --policies=run.autobuild
+</code></pre>
 <h3 id="preprocessorlinemarkers">preprocessor.linemarkers</h3>
 <p>If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.<br>This will greatly reduce the size of the preprocessor file and improve the efficiency of the cache, but the downside is that the source line information will be lost and if you encounter a compilation error, you will not be able to see the exact line of code that went wrong.</p>
 <h3 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h3>

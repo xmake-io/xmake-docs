@@ -264,6 +264,15 @@ set_policy("build.sanitizer.undefined", true)
 <p>与 <a href="https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> 类似，用于检测内存泄漏问题。</p>
 <h3 id="buildsanitizerundefined">build.sanitizer.undefined</h3>
 <p>与 <a href="https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> 类似，用于检测 undefined 问题。</p>
+<h3 id="runautobuild">run.autobuild</h3>
+<p>这个策略用于调整 <code>xmake run</code> 的行为，默认情况下，执行 <code>xmake run</code> 并不会自动构建目标程序，如果程序还没被编译，就是提示用户手动构建一下。</p>
+<p>而开启这个策略，我们就可以在运行程序前，先自动构建对应的目标程序。</p>
+<pre><code class="lang-bash">$ xmake f --policies=run.autobuild
+$ xmake run
+</code></pre>
+<p>如果想要全局生效这个策略，可以全局开启它。</p>
+<pre><code class="lang-bash">$ xmake g --policies=run.autobuild
+</code></pre>
 <h3 id="preprocessorlinemarkers">preprocessor.linemarkers</h3>
 <p>通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。<br>也会提升缓存的处理效率，但是缺点就是会丢失源码行信息，如果遇到编译错误，将无法看到准确的出错代码行。</p>
 <h3 id="preprocessorgccdirectives_only">preprocessor.gcc.directives_only</h3>
