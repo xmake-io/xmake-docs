@@ -134,7 +134,7 @@ target("test")
 </code></pre>
 <h2 id="wasm">Wasm 程序</h2>
 <p>所有 c/c++ 程序，我们都可以编译成 Wasm，无需任何 xmake.lua 配置改动，只需要切换到 wasm 编译平台进行编译。</p>
-<pre><code class="lang-console">$ xmake f -p wasm
+<pre><code class="lang-bash">$ xmake f -p wasm
 $ xmake
 </code></pre>
 <p>详细的 Wasm 编译配置见：<a href="/mirror/zh-cn/guide/configuration.html#wasm">Wasm 配置</a></p>
@@ -148,7 +148,7 @@ $ xmake
 <h2 id="qt">Qt 程序</h2>
 <p>创建一个空工程：</p>
 <p>v2.2.9以上版本：</p>
-<pre><code class="lang-console">$ xmake create -t qt.console test
+<pre><code class="lang-bash">$ xmake create -t qt.console test
 $ xmake create -t qt.static test
 $ xmake create -t qt.shared test
 $ xmake create -t qt.quickapp test
@@ -156,21 +156,21 @@ $ xmake create -t qt.widgetapp test
 </code></pre>
 <p>更多工程模板见：<code>xmake create --help</code></p>
 <p>v2.2.8以前老版本：</p>
-<pre><code class="lang-console">$ xmake create -l c++ -t console_qt test
+<pre><code class="lang-bash">$ xmake create -l c++ -t console_qt test
 $ xmake create -l c++ -t static_qt test
 $ xmake create -l c++ -t shared_qt test
 $ xmake create -l c++ -t quickapp_qt test
 </code></pre>
 <p>默认会自动探测Qt环境，当然也可以指定Qt SDK环境目录：</p>
-<pre><code class="lang-console">$ xmake f --qt=~/Qt/Qt5.9.1
+<pre><code class="lang-bash">$ xmake f --qt=~/Qt/Qt5.9.1
 </code></pre>
 <p>如果想要使用 windows 下 MingW 的 Qt 环境，可以切到mingw的平台配置，并且指定下mingw编译环境的sdk路径即可，例如：</p>
-<pre><code class="lang-console">$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
+<pre><code class="lang-bash">$ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 </code></pre>
 <p>上述指定的 MingW SDK 用的是Qt下Tools目录自带的环境，当然如果有其他第三方 MingW 编译环境，也可以手动指定, 具体可以参考：<a href="/mirror/zh-cn/guide/configuration.html#mingw">MingW 编译配置</a>。</p>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/160">#160</a></p>
 <p>另外，当前xmake也支持Qt/Wasm，详情见：<a href="/mirror/zh-cn/guide/configuration.html#wasm">Wasm 配置</a></p>
-<pre><code class="lang-console">$ xmake f -p wasm
+<pre><code class="lang-bash">$ xmake f -p wasm
 </code></pre>
 <h3 id="">静态库程序</h3>
 <pre><code class="lang-lua">target("qt_static_library")
@@ -246,7 +246,7 @@ target("demo")
 <p><img src="/assets/img/guide/qt_widgetapp.png" alt=""></p>
 <h3 id="android">Android 应用程序</h3>
 <p>2.2.6之后版本，可以直接切到android平台编译Quick/Widgets应用程序，生成apk包，并且可通过<code>xmake install</code>命令安装到设备。</p>
-<pre><code class="lang-console">$ xmake create -t quickapp_qt -l c++ appdemo
+<pre><code class="lang-bash">$ xmake create -t quickapp_qt -l c++ appdemo
 $ cd appdemo
 $ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c
 $ xmake
@@ -256,7 +256,7 @@ $ xmake
 [100%]: generating.qt.app appdemo.apk
 </code></pre>
 <p>然后安装到设备：</p>
-<pre><code class="lang-console">$ xmake install
+<pre><code class="lang-bash">$ xmake install
 installing appdemo ...
 installing build/android/release/appdemo.apk ..
 Success
@@ -308,7 +308,7 @@ target("test")
 <p>暂时还没时间支持，请尽量使用上面的方式集成 Qt SDK。</p>
 <h2 id="wdk">WDK驱动程序</h2>
 <p>默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：</p>
-<pre><code class="lang-console">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
+<pre><code class="lang-bash">$ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 </code></pre>
 <p>更多详情可以参考：<a href="https://github.com/xmake-io/xmake/issues/159">#159</a></p>
@@ -355,7 +355,7 @@ target("app")
 </code></pre>
 <h3 id="">生成驱动包</h3>
 <p>可以通过以下命令生成.cab驱动包：</p>
-<pre><code class="lang-console">$ xmake [p|package]
+<pre><code class="lang-bash">$ xmake [p|package]
 $ xmake [p|package] -o outputdir
 </code></pre>
 <p>输出的目录结构如下：</p>
@@ -408,7 +408,7 @@ set_values("wdk.env.winver", "win7_sp2")
 set_values("wdk.env.winver", "win7_sp3")
 </code></pre>
 <p>我们也可以手动指定编译的目标程序支持的windows版本：</p>
-<pre><code class="lang-console">$ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
+<pre><code class="lang-bash">$ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 </code></pre>
 <h2 id="winsdk">WinSDK程序</h2>
@@ -451,11 +451,11 @@ $ xmake
 <p>!> 2.5.7 之后，可以支持直接添加 <code>*.metal</code> 文件，xmake 会自动生成 default.metallib 提供给应用程序加载使用。</p>
 <h4 id="">创建工程</h4>
 <p>我们也可以通过模板工程快速创建：</p>
-<pre><code class="lang-console">$ xmake create -t xcode.macapp -l objc test
+<pre><code class="lang-bash">$ xmake create -t xcode.macapp -l objc test
 $ xmake create -t xcode.iosapp -l objc test
 </code></pre>
 <h4 id="">编译</h4>
-<pre><code class="lang-console">$ xmake f -p [iphoneos|macosx]
+<pre><code class="lang-bash">$ xmake f -p [iphoneos|macosx]
 $ xmake
 [ 18%]: compiling.xcode.release src/Assets.xcassets
 [ 27%]: processing.xcode.release src/Info.plist
@@ -471,7 +471,7 @@ $ xmake
 </code></pre>
 <h4 id="">配置签名</h4>
 <p>对于iOS程序，默认会检测系统先用可用签名来签名app，当然我们也可以手动指定其他签名证书：</p>
-<pre><code class="lang-console">$ xmake f -p iphoneos --xcode_codesign_identity=&#39;Apple Development: xxx@gmail.com (T3NA4MRVPU)&#39; --xcode_mobile_provision=&#39;iOS Team Provisioning Profile: org.tboox.test --xcode_bundle_identifier=org.tboox.test&#39;
+<pre><code class="lang-bash">$ xmake f -p iphoneos --xcode_codesign_identity=&#39;Apple Development: xxx@gmail.com (T3NA4MRVPU)&#39; --xcode_mobile_provision=&#39;iOS Team Provisioning Profile: org.tboox.test --xcode_bundle_identifier=org.tboox.test&#39;
 $ xmake
 </code></pre>
 <p>如果每次这么配置签名觉得繁琐的话，可以设置到<code>xmake global</code>全局配置中，也可以在xmake.lua中对每个target单独设置：</p>
@@ -484,7 +484,7 @@ $ xmake
     add_values("xcode.mobile_provision", "iOS Team Provisioning Profile: org.tboox.test")
 </code></pre>
 <p>那如何知道我们需要的签名配置呢？一种就是在xcode里面查看，另外xmake也提供了一些辅助工具可以dump出当前可用的所有签名配置：</p>
-<pre><code class="lang-console">$ xmake l private.tools.codesign.dump
+<pre><code class="lang-bash">$ xmake l private.tools.codesign.dump
 ==================================== codesign identities ====================================
 {
   "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" = "AF73C231A0C35335B72761BD3759694739D34EB1"
@@ -504,39 +504,39 @@ $ xmake
 ...
 </code></pre>
 <p>我们也提供了其他辅助工具来对已有的ipa/app程序进行重签名，例如：</p>
-<pre><code class="lang-console">$ xmake l utils.ipa.resign test.ipa|test.app [codesign_identity] [mobile_provision] [bundle_identifier]
+<pre><code class="lang-bash">$ xmake l utils.ipa.resign test.ipa|test.app [codesign_identity] [mobile_provision] [bundle_identifier]
 </code></pre>
 <p>其中，后面的签名参数都是可选的，如果没设置，那么默认会探测使用一个有效的签名：</p>
-<pre><code class="lang-console">$ xmake l utils.ipa.resign test.ipa
+<pre><code class="lang-bash">$ xmake l utils.ipa.resign test.ipa
 $ xmake l utils.ipa.resign test.app "Apple Development: waruqi@gmail.com (T3NA4MRVPU)"
 $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" iOS Team Provisioning Profile: org.tboox.test" org.tboox.test
 </code></pre>
 <h4 id="">运行应用程序</h4>
 <p>目前仅支持运行macos程序：</p>
-<pre><code class="lang-console">$ xmake run
+<pre><code class="lang-bash">$ xmake run
 </code></pre>
 <p>效果如下：</p>
 <p><img src="/assets/img/guide/macapp.png" alt=""></p>
 <h4 id="">生成程序包</h4>
 <p>如果是iOS程序会生成ipa安装包，如果是macos会生成dmg包（dmg包生成暂时还在开发中）。</p>
-<pre><code class="lang-console">$ xmake package
+<pre><code class="lang-bash">$ xmake package
 output: build/iphoneos/release/arm64/test.ipa
 package ok!
 </code></pre>
 <p>我们也提供了辅助工具，来对指定app程序进行打包：</p>
-<pre><code class="lang-console">$ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
+<pre><code class="lang-bash">$ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 </code></pre>
 <h4 id="">安装</h4>
 <p>如果是iOS程序会安装ipa到设备，如果是macos会安装app到/Applications目录。</p>
-<pre><code class="lang-console">$ xmake install
+<pre><code class="lang-bash">$ xmake install
 </code></pre>
 <p>我们也提供了辅助工具，来对指定ipa/app程序安装到设备：</p>
-<pre><code class="lang-console">$ xmake l utils.ipa.install test.app
+<pre><code class="lang-bash">$ xmake l utils.ipa.install test.app
 $ xmake l utils.ipa.install test.ipa
 </code></pre>
 <h4 id="">卸载</h4>
 <p>!> 目前仅支持macos程序卸载</p>
-<pre><code class="lang-console">$ xmake uninstall
+<pre><code class="lang-bash">$ xmake uninstall
 </code></pre>
 <h3 id="framework">Framework库程序</h3>
 <pre><code class="lang-lua">target("test")
@@ -545,11 +545,11 @@ $ xmake l utils.ipa.install test.ipa
     add_files("src/Info.plist")
 </code></pre>
 <p>我们也可以通过模板工程快速创建：</p>
-<pre><code class="lang-console">$ xmake create -t xcode.framework -l objc test
+<pre><code class="lang-bash">$ xmake create -t xcode.framework -l objc test
 </code></pre>
 <p>另外，xmake v2.3.9 以上版本，xmake 还提供了带有 framework 库使用的完整 iosapp/macapp 空工程模板，可以完整体验 framework 的编译，依赖使用以及集成到 app 应用程序中。</p>
 <p>同时，如果我们开启了模拟器，xmake 可以支持直接 <code>xmake install</code> 和 <code>xmake run</code> 将 app 安装到模拟器并加载运行。</p>
-<pre><code class="lang-console">$ xmake create -t xcode.iosapp_with_framework -l objc testapp
+<pre><code class="lang-bash">$ xmake create -t xcode.iosapp_with_framework -l objc testapp
 $ cd testapp
 $ xmake f -p iphoneos -a x86_64
 $ xmake
@@ -563,7 +563,7 @@ $ xmake run
     add_files("src/Info.plist")
 </code></pre>
 <p>我们也可以通过模板工程快速创建：</p>
-<pre><code class="lang-console">$ xmake create -t xcode.bundle -l objc test
+<pre><code class="lang-bash">$ xmake create -t xcode.bundle -l objc test
 </code></pre>
 <h2 id="protobuf">Protobuf程序</h2>
 <h3 id="c">使用c库</h3>
@@ -599,7 +599,7 @@ target("console_c++")
 <p>注：由于 protobuf 生成的头文件引用了 protobuf-cpp 包的头文件，因此，我们也需要将包的头文件标记为 <code>{public = true}</code> 对外导出它。</p>
 <h2 id="cuda">Cuda程序</h2>
 <p>创建一个空工程：</p>
-<pre><code class="lang-console">$ xmake create -P test -l cuda
+<pre><code class="lang-bash">$ xmake create -P test -l cuda
 $ cd test
 $ xmake
 </code></pre>
@@ -615,7 +615,7 @@ target("cuda_console")
 <p>!> 从v2.2.7版本开始，默认构建会启用device-link。（参见 <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">Separate Compilation and Linking of CUDA C++ Device Code</a>）<br>如果要显式禁用device-link，可以通过 <code>set_policy("build.cuda.devlink", false)</code> 来设置。</p>
 <p>!> cuda 源文件中的 device 函数需要被 device-link 且只 device-link 一次。在 <code>shared</code> 或 <code>binary</code> 的 target 上 xmake 会自动进行 device-link ，这时它们依赖的 <code>static</code> target 也会同时被 device-link ，因此默认情况下 <code>static</code> target 不会被 device-link。然而，如果最终的 <code>shared</code> 或 <code>binary</code> 的 target 不包含任何 cuda 源文件，则不会发生 device-link 阶段，导致出现 undefined reference 错误。这种情况下，需要手动为 <code>static</code> target 指定 <code>add_values("cuda.build.devlink", true)</code>.</p>
 <p>默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录，或者指定cuda版本（此时将在默认安装目录进行查找）：</p>
-<pre><code class="lang-console">$ xmake f --cuda=/usr/local/cuda-9.1/
+<pre><code class="lang-bash">$ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake f --cuda=9.1
 $ xmake
 </code></pre>
@@ -646,7 +646,7 @@ target("loop")
 <h2 id="fortran">Fortran程序</h2>
 <p>v2.3.6之后版本开始支持gfortran编译器来编译fortran项目，我们可以通过下面的命令，快速创建一个基于fortran的空工程：</p>
 <p>v2.3.8之后，xmake 还支持 Intel Fortran Compiler，只需要切换下工具链即可：<code>xmake f --toolchain=ifort</code></p>
-<pre><code class="lang-console">$ xmake create -l fortran -t console test
+<pre><code class="lang-bash">$ xmake create -l fortran -t console test
 </code></pre>
 <p>它的xmake.lua内容如下：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
@@ -658,7 +658,7 @@ target("test")
 <p>更多代码例子可以到这里查看：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/fortran">Fortran Examples</a></p>
 <h2 id="go">Go程序</h2>
 <p>xmake也支持go程序的构建，也提供了空工程的创建命令支持:</p>
-<pre><code class="lang-console">$ xmake create -l go -t console test
+<pre><code class="lang-bash">$ xmake create -l go -t console test
 </code></pre>
 <p>xmake.lua内容如下:</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
@@ -668,7 +668,7 @@ target("test")
     add_files("src/*.go")
 </code></pre>
 <p>v2.3.6版本，xmake对其的构建支持做了一些改进，对go的交叉编译也进行了支持，例如我们可以在macOS和linux上编译windows程序：</p>
-<pre><code class="lang-console">$ xmake f -p windows -a x86
+<pre><code class="lang-bash">$ xmake f -p windows -a x86
 </code></pre>
 <p>另外，新版本对go的第三方依赖包管理也进行了初步支持：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
@@ -690,7 +690,7 @@ target("test")
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/go">Go Examples</a></p>
 <h2 id="dlang">Dlang程序</h2>
 <p>创建空工程：</p>
-<pre><code class="lang-console">$ xmake create -l dlang -t console test
+<pre><code class="lang-bash">$ xmake create -l dlang -t console test
 </code></pre>
 <p>xmake.lua内容：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
@@ -717,7 +717,7 @@ target("test")
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/dlang">Dlang Examples</a></p>
 <h2 id="rust">Rust程序</h2>
 <p>创建空工程：</p>
-<pre><code class="lang-console">$ xmake create -l rust -t console test
+<pre><code class="lang-bash">$ xmake create -l rust -t console test
 </code></pre>
 <p>xmake.lua内容：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
@@ -830,7 +830,7 @@ fn main() {
 </code></pre>
 <h2 id="swift">Swift程序</h2>
 <p>创建空工程：</p>
-<pre><code class="lang-console">$ xmake create -l swift -t console test
+<pre><code class="lang-bash">$ xmake create -l swift -t console test
 </code></pre>
 <p>xmake.lua内容：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
@@ -842,7 +842,7 @@ target("test")
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/swift">Swift Examples</a></p>
 <h2 id="objc">Objc程序</h2>
 <p>创建空工程：</p>
-<pre><code class="lang-console">$ xmake create -l objc -t console test
+<pre><code class="lang-bash">$ xmake create -l objc -t console test
 </code></pre>
 <p>xmake.lua内容：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
@@ -854,7 +854,7 @@ target("test")
 <p>更多例子见：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/objc++">Objc Examples</a></p>
 <h2 id="zig">Zig程序</h2>
 <p>创建空工程：</p>
-<pre><code class="lang-console">$ xmake create -l zig -t console test
+<pre><code class="lang-bash">$ xmake create -l zig -t console test
 </code></pre>
 <p>xmake.lua内容：</p>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
@@ -1145,7 +1145,7 @@ target("mul")
 <p>v2.5.9 之后，我们新增了对 Nimlang 项目的支持，相关 issues 见：<a href="https://github.com/xmake-io/xmake/issues/1756">#1756</a></p>
 <h3 id="">创建空工程</h3>
 <p>我们可以使用 <code>xmake create</code> 命令创建空工程。</p>
-<pre><code class="lang-console">xmake create -l nim -t console test
+<pre><code class="lang-bash">xmake create -l nim -t console test
 xmake create -l nim -t static test
 xmake create -l nim -t shared test
 </code></pre>
@@ -1156,7 +1156,7 @@ target("test")
     set_kind("binary")
     add_files("src/main.nim")
 </code></pre>
-<pre><code class="lang-console">$ xmake -v
+<pre><code class="lang-bash">$ xmake -v
 [ 33%]: linking.release test
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/test/macosx/x86_64/release/nimcache -o:b
 uild/macosx/x86_64/release/test src/main.nim
@@ -1174,7 +1174,7 @@ target("test")
     add_deps("foo")
     add_files("src/main.nim")
 </code></pre>
-<pre><code class="lang-console">$ xmake -v
+<pre><code class="lang-bash">$ xmake -v
 [ 33%]: linking.release libfoo.a
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
 :staticlib --noMain --passC:-DNimMain=NimMain_B6D5BD02 --passC:-DNimMainInner=NimMainInner_B6D5B
@@ -1197,7 +1197,7 @@ target("test")
     add_deps("foo")
     add_files("src/main.nim")
 </code></pre>
-<pre><code class="lang-console">$ xmake -rv
+<pre><code class="lang-bash">$ xmake -rv
 [ 33%]: linking.release libfoo.dylib
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
 :lib --noMain -o:build/macosx/x86_64/release/libfoo.dylib src/foo.nim
@@ -1254,11 +1254,11 @@ echo zlibVersion()
 <p>相关例子工程：<a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/embed/mdk/hello">Example</a></p>
 <p>xmake 会自动探测 Keil/MDK 安装的编译器，相关 issues <a href="https://github.com/xmake-io/xmake/issues/1753">#1753</a>。</p>
 <p>使用 armcc 编译</p>
-<pre><code class="lang-console">$ xmake f -p cross -a cortex-m3 --toolchain=armcc -c
+<pre><code class="lang-bash">$ xmake f -p cross -a cortex-m3 --toolchain=armcc -c
 $ xmake
 </code></pre>
 <p>使用 armclang 编译</p>
-<pre><code class="lang-console">$ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
+<pre><code class="lang-bash">$ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 $ xmake
 </code></pre>
 <h3 id="">可执行程序</h3>
@@ -1300,14 +1300,14 @@ target("hello")
     set_license("GPL-2.0")
 </code></pre>
 <p>然后直接执行 xmake 命令，一键编译，生成内核驱动模块 hello.ko。</p>
-<pre><code class="lang-console">$ xmake
+<pre><code class="lang-bash">$ xmake
 [ 20%]: cache compiling.release src/add.c
 [ 20%]: cache compiling.release src/hello.c
 [ 60%]: linking.release build/linux/x86_64/release/hello.ko
 [100%]: build ok!
 </code></pre>
 <p>我们也可以看完整构建命令参数。</p>
-<pre><code class="lang-console">$ xmake -v
+<pre><code class="lang-bash">$ xmake -v
 [ 20%]: cache compiling.release src/add.c
 /usr/bin/ccache /usr/bin/gcc -c -m64 -O2 -std=gnu89 -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include/generated -I/usr/src/linux-headers-5.11.0-41-generic/include -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include/uapi -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include/generated/uapi -I/usr/src/linux-headers-5.11.0-41-generic/include/uapi -I/usr/src/linux-headers-5.11.0-41-generic/include/generated/uapi -D__KERNEL__ -DMODULE -DKBUILD_MODNAME=\"hello\" -DCONFIG_X86_X32_ABI -isystem /usr/lib/gcc/x86_64-linux-gnu/10/include -include /usr/src/linux-headers-5.11.0-41-generic/include/linux/kconfig.h -include /usr/src/linux-headers-5.11.0-41-generic/include/linux/compiler_types.h -nostdinc -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -mindirect-branch=thunk-extern -mindirect-branch-register -mrecord-mcount -fmacro-prefix-map=./= -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -fcf-protection=none -falign-jumps=1 -falign-loops=1 -fno-asynchronous-unwind-tables -fno-jump-tables -fno-delete-null-pointer-checks -fno-allow-store-data-races -fno-reorder-blocks -fno-ipa-cp-clone -fno-partial-inlining -fstack-protector-strong -fno-inline-functions-called-once -falign-functions=32 -fno-strict-overflow -fno-stack-check -fconserve-stack -DKBUILD_BASENAME=\"add\" -o build/.objs/hello/linux/x86_64/release/src/add.c.o src/add.c
 [ 20%]: cache compiling.release src/hello.c
@@ -1359,7 +1359,7 @@ target("hello")
 <p>更多，交叉编译配置文档，见：<a href="/mirror/zh-cn/guide/configuration.html#common-cross-compilation-configuration">配置交叉编译</a></p>
 <p>!> 目前仅仅支持 arm/arm64 交叉编译架构，后续会支持更多的平台架构。</p>
 <h4 id="arm">构建 Arm 驱动模块</h4>
-<pre><code class="lang-console">$ xmake f -p cross -a arm --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf -c
+<pre><code class="lang-bash">$ xmake f -p cross -a arm --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf -c
 $ xmake -v
 checking for arm-linux-gnueabihf-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++
 checking for the linker (ld) ... arm-linux-gnueabihf-g++
@@ -1385,7 +1385,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 
 </code></pre>
 <h4 id="arm64">构建 Arm64 驱动模块</h4>
-<pre><code class="lang-console">$ xmake f -p cross -a arm64 --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu -c
+<pre><code class="lang-bash">$ xmake f -p cross -a arm64 --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu -c
 checking for aarch64-linux-gnu-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++
 checking for the linker (ld) ... aarch64-linux-gnu-g++
 checking for /mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++ ... ok
@@ -1460,14 +1460,14 @@ target("hello")
     add_values("iverilogs.flags", "-DTEST")
 </code></pre>
 <h4 id="">构建工程</h4>
-<pre><code class="lang-console">$ xmake
+<pre><code class="lang-bash">$ xmake
 checking for iverilog ... iverilog
 checking for vvp ... vvp
 [ 50%]: linking.iverilog hello.vvp
 [100%]: build ok!
 </code></pre>
 <h4 id="">运行程序</h4>
-<pre><code class="lang-console">$ xmake run
+<pre><code class="lang-bash">$ xmake run
 hello world!
 LXT2 info: dumpfile hello.vcd opened for output.
 src/main.v:6: $finish called at 0 (1s)
@@ -1527,7 +1527,7 @@ target("hello")
     add_values("verilator.flags", "--trace", "--timing")
 </code></pre>
 <h4 id="">构建工程</h4>
-<pre><code class="lang-console">$ xmake
+<pre><code class="lang-bash">$ xmake
 [  0%]: compiling.verilog src/main.v
 [ 15%]: cache compiling.release /Users/ruki/.xmake/packages/v/verilator/2023.1.10/cd2268409c1d44799288c7759b3cbd56/share/verilator/include/verilated.cpp
 [ 15%]: cache compiling.release build/.gens/hello/macosx/x86_64/release/rules/verilator/hello___024root__Slow.cpp
@@ -1542,12 +1542,23 @@ target("hello")
 [100%]: build ok!
 </code></pre>
 <h4 id="">运行程序</h4>
-<pre><code class="lang-console">$ xmake run
+<pre><code class="lang-bash">$ xmake run
 ruki-2:hello ruki$ xmake run
 hello world!
 - src/main.v:4: Verilog $finish
 </code></pre>
 <p>更多完整例子：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/verilator">Verilator</a></p>
+<h2 id="cppfront">Cppfront 程序</h2>
+<pre><code class="lang-bash">add_rules("mode.debug", "mode.release")
+
+add_requires("cppfront")
+
+target("test")
+    add_rules("cppfront")
+    set_kind("binary")
+    add_files("src/*.cpp2")
+    add_packages("cppfront")
+</code></pre>
 </article>
 </body>
 </html>

@@ -68,7 +68,7 @@ xmake create -l c -t shared test
 
 所有 c/c++ 程序，我们都可以编译成 Wasm，无需任何 xmake.lua 配置改动，只需要切换到 wasm 编译平台进行编译。
 
-```console
+```bash
 $ xmake f -p wasm
 $ xmake
 ```
@@ -91,7 +91,7 @@ target("test5")
 
 v2.2.9以上版本：
 
-```console
+```bash
 $ xmake create -t qt.console test
 $ xmake create -t qt.static test
 $ xmake create -t qt.shared test
@@ -103,7 +103,7 @@ $ xmake create -t qt.widgetapp test
 
 v2.2.8以前老版本：
 
-```console
+```bash
 $ xmake create -l c++ -t console_qt test
 $ xmake create -l c++ -t static_qt test
 $ xmake create -l c++ -t shared_qt test
@@ -112,13 +112,13 @@ $ xmake create -l c++ -t quickapp_qt test
 
 默认会自动探测Qt环境，当然也可以指定Qt SDK环境目录：
 
-```console
+```bash
 $ xmake f --qt=~/Qt/Qt5.9.1
 ```
 
 如果想要使用 windows 下 MingW 的 Qt 环境，可以切到mingw的平台配置，并且指定下mingw编译环境的sdk路径即可，例如：
 
-```console
+```bash
 $ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 ```
 
@@ -128,7 +128,7 @@ $ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 
 另外，当前xmake也支持Qt/Wasm，详情见：[Wasm 配置](/zh-cn/guide/configuration?id=wasm)
 
-```console
+```bash
 $ xmake f -p wasm
 ```
 
@@ -245,7 +245,7 @@ target("qt_widgetapp")
 
 2.2.6之后版本，可以直接切到android平台编译Quick/Widgets应用程序，生成apk包，并且可通过`xmake install`命令安装到设备。
 
-```console
+```bash
 $ xmake create -t quickapp_qt -l c++ appdemo
 $ cd appdemo
 $ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c
@@ -258,7 +258,7 @@ $ xmake
 
 然后安装到设备：
 
-```console
+```bash
 $ xmake install
 installing appdemo ...
 installing build/android/release/appdemo.apk ..
@@ -344,7 +344,7 @@ $ xmake
 
 默认会自动探测wdk所在环境，当然也可以指定wdk sdk环境目录：
 
-```console
+```bash
 $ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 ```
@@ -408,7 +408,7 @@ target("msdsm")
 
 可以通过以下命令生成.cab驱动包：
 
-```console
+```bash
 $ xmake [p|package]
 $ xmake [p|package] -o outputdir
 ```
@@ -491,7 +491,7 @@ set_values("wdk.env.winver", "win7_sp3")
 
 我们也可以手动指定编译的目标程序支持的windows版本：
 
-```console
+```bash
 $ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 ```
@@ -561,14 +561,14 @@ target("test")
 
 我们也可以通过模板工程快速创建：
 
-```console
+```bash
 $ xmake create -t xcode.macapp -l objc test
 $ xmake create -t xcode.iosapp -l objc test
 ```
 
 #### 编译
 
-```console
+```bash
 $ xmake f -p [iphoneos|macosx]
 $ xmake
 [ 18%]: compiling.xcode.release src/Assets.xcassets
@@ -588,7 +588,7 @@ $ xmake
 
 对于iOS程序，默认会检测系统先用可用签名来签名app，当然我们也可以手动指定其他签名证书：
 
-```console
+```bash
 $ xmake f -p iphoneos --xcode_codesign_identity='Apple Development: xxx@gmail.com (T3NA4MRVPU)' --xcode_mobile_provision='iOS Team Provisioning Profile: org.tboox.test --xcode_bundle_identifier=org.tboox.test'
 $ xmake
 ```
@@ -607,7 +607,7 @@ target("test")
 
 那如何知道我们需要的签名配置呢？一种就是在xcode里面查看，另外xmake也提供了一些辅助工具可以dump出当前可用的所有签名配置：
 
-```console
+```bash
 $ xmake l private.tools.codesign.dump
 ==================================== codesign identities ====================================
 {
@@ -630,13 +630,13 @@ $ xmake l private.tools.codesign.dump
 
 我们也提供了其他辅助工具来对已有的ipa/app程序进行重签名，例如：
 
-```console
+```bash
 $ xmake l utils.ipa.resign test.ipa|test.app [codesign_identity] [mobile_provision] [bundle_identifier]
 ```
 
 其中，后面的签名参数都是可选的，如果没设置，那么默认会探测使用一个有效的签名：
 
-```console
+```bash
 $ xmake l utils.ipa.resign test.ipa
 $ xmake l utils.ipa.resign test.app "Apple Development: waruqi@gmail.com (T3NA4MRVPU)"
 $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" iOS Team Provisioning Profile: org.tboox.test" org.tboox.test
@@ -646,7 +646,7 @@ $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4M
 
 目前仅支持运行macos程序：
 
-```console
+```bash
 $ xmake run
 ```
 
@@ -658,7 +658,7 @@ $ xmake run
 
 如果是iOS程序会生成ipa安装包，如果是macos会生成dmg包（dmg包生成暂时还在开发中）。
 
-```console
+```bash
 $ xmake package
 output: build/iphoneos/release/arm64/test.ipa
 package ok!
@@ -666,7 +666,7 @@ package ok!
 
 我们也提供了辅助工具，来对指定app程序进行打包：
 
-```console
+```bash
 $ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 ```
 
@@ -674,13 +674,13 @@ $ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 
 如果是iOS程序会安装ipa到设备，如果是macos会安装app到/Applications目录。
 
-```console
+```bash
 $ xmake install
 ```
 
 我们也提供了辅助工具，来对指定ipa/app程序安装到设备：
 
-```console
+```bash
 $ xmake l utils.ipa.install test.app
 $ xmake l utils.ipa.install test.ipa
 ```
@@ -689,7 +689,7 @@ $ xmake l utils.ipa.install test.ipa
 
 !> 目前仅支持macos程序卸载
 
-```console
+```bash
 $ xmake uninstall
 ```
 
@@ -704,7 +704,7 @@ target("test")
 
 我们也可以通过模板工程快速创建：
 
-```console
+```bash
 $ xmake create -t xcode.framework -l objc test
 ```
 
@@ -712,7 +712,7 @@ $ xmake create -t xcode.framework -l objc test
 
 同时，如果我们开启了模拟器，xmake 可以支持直接 `xmake install` 和 `xmake run` 将 app 安装到模拟器并加载运行。
 
-```console
+```bash
 $ xmake create -t xcode.iosapp_with_framework -l objc testapp
 $ cd testapp
 $ xmake f -p iphoneos -a x86_64
@@ -732,7 +732,7 @@ target("test")
 
 我们也可以通过模板工程快速创建：
 
-```console
+```bash
 $ xmake create -t xcode.bundle -l objc test
 ```
 
@@ -787,7 +787,7 @@ target("console_c++")
 
 创建一个空工程：
 
-```console
+```bash
 $ xmake create -P test -l cuda
 $ cd test
 $ xmake
@@ -811,7 +811,7 @@ target("cuda_console")
 
 默认会自动探测cuda环境，当然也可以指定Cuda SDK环境目录，或者指定cuda版本（此时将在默认安装目录进行查找）：
 
-```console
+```bash
 $ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake f --cuda=9.1
 $ xmake
@@ -859,7 +859,7 @@ v2.3.6之后版本开始支持gfortran编译器来编译fortran项目，我们�
 
 v2.3.8之后，xmake 还支持 Intel Fortran Compiler，只需要切换下工具链即可：`xmake f --toolchain=ifort`
 
-```console
+```bash
 $ xmake create -l fortran -t console test
 ```
 
@@ -879,7 +879,7 @@ target("test")
 
 xmake也支持go程序的构建，也提供了空工程的创建命令支持:
 
-```console
+```bash
 $ xmake create -l go -t console test
 ```
 
@@ -895,7 +895,7 @@ target("test")
 
 v2.3.6版本，xmake对其的构建支持做了一些改进，对go的交叉编译也进行了支持，例如我们可以在macOS和linux上编译windows程序：
 
-```console
+```bash
 $ xmake f -p windows -a x86
 ```
 
@@ -926,7 +926,7 @@ target("test")
 
 创建空工程：
 
-```console
+```bash
 $ xmake create -l dlang -t console test
 ```
 
@@ -965,7 +965,7 @@ target("test")
 
 创建空工程：
 
-```console
+```bash
 $ xmake create -l rust -t console test
 ```
 
@@ -1120,7 +1120,7 @@ extern "C" int add(int a, int b) {
 
 创建空工程：
 
-```console
+```bash
 $ xmake create -l swift -t console test
 ```
 
@@ -1140,7 +1140,7 @@ target("test")
 
 创建空工程：
 
-```console
+```bash
 $ xmake create -l objc -t console test
 ```
 
@@ -1160,7 +1160,7 @@ target("test")
 
 创建空工程：
 
-```console
+```bash
 $ xmake create -l zig -t console test
 ```
 
@@ -1578,7 +1578,7 @@ v2.5.9 之后，我们新增了对 Nimlang 项目的支持，相关 issues 见�
 
 我们可以使用 `xmake create` 命令创建空工程。
 
-```console
+```bash
 xmake create -l nim -t console test
 xmake create -l nim -t static test
 xmake create -l nim -t shared test
@@ -1594,7 +1594,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```console
+```bash
 $ xmake -v
 [ 33%]: linking.release test
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/test/macosx/x86_64/release/nimcache -o:b
@@ -1617,7 +1617,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```console
+```bash
 $ xmake -v
 [ 33%]: linking.release libfoo.a
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
@@ -1645,7 +1645,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```console
+```bash
 $ xmake -rv
 [ 33%]: linking.release libfoo.dylib
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
@@ -1725,14 +1725,14 @@ xmake 会自动探测 Keil/MDK 安装的编译器，相关 issues [#1753](https:
 
 使用 armcc 编译
 
-```console
+```bash
 $ xmake f -p cross -a cortex-m3 --toolchain=armcc -c
 $ xmake
 ```
 
 使用 armclang 编译
 
-```console
+```bash
 $ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 $ xmake
 ```
@@ -1796,7 +1796,7 @@ target("hello")
 
 然后直接执行 xmake 命令，一键编译，生成内核驱动模块 hello.ko。
 
-```console
+```bash
 $ xmake
 [ 20%]: cache compiling.release src/add.c
 [ 20%]: cache compiling.release src/hello.c
@@ -1806,7 +1806,7 @@ $ xmake
 
 我们也可以看完整构建命令参数。
 
-```console
+```bash
 $ xmake -v
 [ 20%]: cache compiling.release src/add.c
 /usr/bin/ccache /usr/bin/gcc -c -m64 -O2 -std=gnu89 -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include/generated -I/usr/src/linux-headers-5.11.0-41-generic/include -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include/uapi -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include/generated/uapi -I/usr/src/linux-headers-5.11.0-41-generic/include/uapi -I/usr/src/linux-headers-5.11.0-41-generic/include/generated/uapi -D__KERNEL__ -DMODULE -DKBUILD_MODNAME=\"hello\" -DCONFIG_X86_X32_ABI -isystem /usr/lib/gcc/x86_64-linux-gnu/10/include -include /usr/src/linux-headers-5.11.0-41-generic/include/linux/kconfig.h -include /usr/src/linux-headers-5.11.0-41-generic/include/linux/compiler_types.h -nostdinc -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -mindirect-branch=thunk-extern -mindirect-branch-register -mrecord-mcount -fmacro-prefix-map=./= -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -fcf-protection=none -falign-jumps=1 -falign-loops=1 -fno-asynchronous-unwind-tables -fno-jump-tables -fno-delete-null-pointer-checks -fno-allow-store-data-races -fno-reorder-blocks -fno-ipa-cp-clone -fno-partial-inlining -fstack-protector-strong -fno-inline-functions-called-once -falign-functions=32 -fno-strict-overflow -fno-stack-check -fconserve-stack -DKBUILD_BASENAME=\"add\" -o build/.objs/hello/linux/x86_64/release/src/add.c.o src/add.c
@@ -1881,7 +1881,7 @@ target("hello")
 
 #### 构建 Arm 驱动模块
 
-```console
+```bash
 $ xmake f -p cross -a arm --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf -c
 $ xmake -v
 checking for arm-linux-gnueabihf-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++
@@ -1910,7 +1910,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 
 #### 构建 Arm64 驱动模块
 
-```console
+```bash
 $ xmake f -p cross -a arm64 --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu -c
 checking for aarch64-linux-gnu-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++
 checking for the linker (ld) ... aarch64-linux-gnu-g++
@@ -2011,7 +2011,7 @@ target("hello")
 
 #### 构建工程
 
-```console
+```bash
 $ xmake
 checking for iverilog ... iverilog
 checking for vvp ... vvp
@@ -2021,7 +2021,7 @@ checking for vvp ... vvp
 
 #### 运行程序
 
-```console
+```bash
 $ xmake run
 hello world!
 LXT2 info: dumpfile hello.vcd opened for output.
@@ -2103,7 +2103,7 @@ target("hello")
 
 #### 构建工程
 
-```console
+```bash
 $ xmake
 [  0%]: compiling.verilog src/main.v
 [ 15%]: cache compiling.release /Users/ruki/.xmake/packages/v/verilator/2023.1.10/cd2268409c1d44799288c7759b3cbd56/share/verilator/include/verilated.cpp
@@ -2121,7 +2121,7 @@ $ xmake
 
 #### 运行程序
 
-```console
+```bash
 $ xmake run
 ruki-2:hello ruki$ xmake run
 hello world!
@@ -2129,3 +2129,17 @@ hello world!
 ```
 
 更多完整例子：[Verilator](https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/verilator)
+
+## Cppfront 程序
+
+```bash
+add_rules("mode.debug", "mode.release")
+
+add_requires("cppfront")
+
+target("test")
+    add_rules("cppfront")
+    set_kind("binary")
+    add_files("src/*.cpp2")
+    add_packages("cppfront")
+```

@@ -68,7 +68,7 @@ xmake create -l c -t shared test
 
 All c/c++ programs can be compiled to Wasm without any xmake.lua configuration changes, just switch to the wasm compilation platform and compile.
 
-```console
+```bash
 $ xmake f -p wasm
 $ xmake
 ```
@@ -91,7 +91,7 @@ Create an empty project:
 
 v2.2.9 or higher:
 
-```console
+```bash
 $ xmake create -t qt.console test
 $ xmake create -t qt.static test
 $ xmake create -t qt.shared test
@@ -103,7 +103,7 @@ For more project templates see: `xmake create --help`
 
 Older version of v2.2.8:
 
-```console
+```bash
 $ xmake create -l c++ -t console_qt test
 $ xmake create -l c++ -t static_qt test
 $ xmake create -l c++ -t shared_qt test
@@ -112,7 +112,7 @@ $ xmake create -l c++ -t quickapp_qt test
 
 xmake will detect Qt SDK automatically and we can also set the SDK directory manually.
 
-```console
+```bash
 $ xmake f --qt=~/Qt/Qt5.9.1
 ```
 
@@ -123,7 +123,7 @@ For more details, please refer to: [#160](https://github.com/xmake-io/xmake/issu
 
 In addition, currently xmake also supports Qt/Wasm. For details, see: [Wasm Configuration](/guide/configuration?id=wasm)
 
-```console
+```bash
 $ xmake f -p wasm
 ```
 
@@ -243,7 +243,7 @@ The effect is as follows:
 
 After the 2.2.6 version, you can directly switch to the android platform to compile the Quick/Widgets application, generate the apk package, and install it to the device via the `xmake install` command.
 
-```console
+```bash
 $ xmake create -t quickapp_qt -l c ++ appdemo
 $ cd appdemo
 $ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c
@@ -256,7 +256,7 @@ $ xmake
 
 Then install to the device:
 
-```console
+```bash
 $ xmake install
 installing appdemo ...
 installing build/android/release/appdemo.apk ..
@@ -342,7 +342,7 @@ There is no time to support it yet, so please try to integrate the Qt SDK in the
 
 xmake will detect WDK automatically and we can also set the WDK directory manually.
 
-```console
+```bash
 $ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 ```
@@ -406,7 +406,7 @@ target("msdsm")
 
 We can run the following command to generate a .cab driver package.
 
-```console
+```bash
 $ xmake [p|package]
 $ xmake [p|package] -o outputdir
 ```
@@ -485,7 +485,7 @@ set_values("wdk.env.winver", "win7_sp3")
 
 We can also set windows version for WDK driver program:
 
-```console
+```bash
 $ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 ```
@@ -555,14 +555,14 @@ target("test")
 
 We can also quickly create project through template:
 
-```console
+```bash
 $ xmake create -t xcode.macapp -l objc test
 $ xmake create -t xcode.iosapp -l objc test
 ```
 
 #### Build Program
 
-```console
+```bash
 $ xmake f -p [iphoneos|macosx]
 $ xmake
 [ 18%]: compiling.xcode.release src/Assets.xcassets
@@ -582,7 +582,7 @@ $ xmake
 
 For iOS programs, it will detect that the system first signs the app with available signatures. Of course, we can also manually specify other signature certificates:
 
-```console
+```bash
 $ xmake f -p iphoneos --xcode_codesign_identity='Apple Development: xxx@gmail.com (T3NA4MRVPU)' --xcode_mobile_provision='iOS Team Provisioning Profile: org.tboox.test --xcode_bundle_identifier=org.tboox.test'
 $ xmake
 ```
@@ -601,7 +601,7 @@ target("test")
 
 How do we know the signature configuration we need? One is to view it in xcode. In addition, xmake also provides some auxiliary tools to dump all currently available signature configurations:
 
-```console
+```bash
 $ xmake l private.tools.codesign.dump
 ==================================== codesign identities ====================================
 {
@@ -624,13 +624,13 @@ $ xmake l private.tools.codesign.dump
 
 We also provide other auxiliary tools to re-sign existing ipa / app programs, for example:
 
-```console
+```bash
 $ xmake l utils.ipa.resign test.ipa | test.app [codesign_identity] [mobile_provision] [bundle_identifier]
 ```
 
 Among them, the following signature parameters are optional, if not set, then a valid signature will be detected by default:
 
-```console
+```bash
 $ xmake l utils.ipa.resign test.ipa
 $ xmake l utils.ipa.resign test.app "Apple Development: waruqi@gmail.com (T3NA4MRVPU)"
 $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" iOS Team Provisioning Profile: org.tboox.test" org.tboox.test
@@ -652,7 +652,7 @@ The effect is as follows:
 
 If it is an iOS program, it will generate an ipa installation package, if it is macOS, it will generate a dmg package (dmg package generation is still under development for the time being).
 
-```console
+```bash
 $ xmake package
 output: build/iphoneos/release/arm64/test.ipa
 package ok!
@@ -660,7 +660,7 @@ package ok!
 
 We also provide auxiliary tools to package the specified app program:
 
-```console
+```bash
 $ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 ```
 
@@ -668,13 +668,13 @@ $ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 
 If it is an iOS program, it will install ipa to the device, if it is macos, it will install the app to the `/Applications` directory.
 
-```console
+```bash
 $ xmake install
 ```
 
 We also provide auxiliary tools to install the specified ipa/app program to the device:
 
-```console
+```bash
 $ xmake l utils.ipa.install test.app
 $ xmake l utils.ipa.install test.ipa
 ```
@@ -683,7 +683,7 @@ $ xmake l utils.ipa.install test.ipa
 
 !> Currently only the macos program is supported
 
-```console
+```bash
 $ xmake uninstall
 ```
 
@@ -698,7 +698,7 @@ target("test")
 
 We can also quickly create project through template:
 
-```console
+```bash
 $ xmake create -t xcode.framework -l objc test
 ```
 
@@ -706,7 +706,7 @@ In addition, xmake v2.3.9 and above, xmake also provides a complete iosapp/macap
 
 At the same time, if we turn on the emulator, xmake can support directly `xmake install` and `xmake run` to install the app to the emulator and load and run it.
 
-```console
+```bash
 $ xmake create -t xcode.iosapp_with_framework -l objc testapp
 $ cd testapp
 $ xmake f -p iphoneos -a x86_64
@@ -726,7 +726,7 @@ target("test")
 
 We can also quickly create project through template:
 
-```console
+```bash
 $ xmake create -t xcode.bundle -l objc test
 ```
 
@@ -781,7 +781,7 @@ Note: Since the headers generated by protobuf reference the headers of the proto
 
 Create an empty project:
 
-```console
+```bash
 $ xmake create -P test -l cuda
 $ cd test
 $ xmake
@@ -805,7 +805,7 @@ If you want to disable device-link, you can set it with `set_policy("build.cuda.
 
 xmake will detect Cuda SDK automatically and we can also set the SDK directory (or SDK version for default installations) manually.
 
-```console
+```bash
 $ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake f --cuda=9.1
 $ xmake
@@ -853,7 +853,7 @@ After v2.3.6, the gfortran compiler is supported to compile fortran projects. We
 
 After v2.3.8, xmake also supports Intel Fortran Compiler, you only need to switch the toolchain: `xmake f --toolchain=ifort`
 
-```console
+```bash
 $ xmake create -l fortran -t console test
 ```
 
@@ -873,7 +873,7 @@ More code examples can be viewed here: [Fortran Examples](https://github.com/xma
 
 xmake also supports the construction of go programs, and also provides command support for creating empty projects:
 
-```console
+```bash
 $ xmake create -l go -t console test
 ```
 
@@ -889,7 +889,7 @@ target("test")
 
 In v2.3.6 version, xmake has made some improvements to its build support, and also supports cross compilation of go. For example, we can compile windows programs on macOS and linux:
 
-```console
+```bash
 $ xmake f -p windows -a x86
 ```
 
@@ -920,7 +920,7 @@ For more examples, see: [Go Examples](https://github.com/xmake-io/xmake/tree/mas
 
 Create an empty project:
 
-```console
+```bash
 $ xmake create -l dlang -t console test
 ```
 
@@ -959,7 +959,7 @@ For more examples, see: [Dlang Examples](https://github.com/xmake-io/xmake/tree/
 
 Create an empty project:
 
-```console
+```bash
 $ xmake create -l rust -t console test
 ```
 
@@ -1114,7 +1114,7 @@ extern "C" int add(int a, int b) {
 
 Create an empty project:
 
-```console
+```bash
 $ xmake create -l swift -t console test
 ```
 
@@ -1134,7 +1134,7 @@ For more examples, see: [Swift Examples](https://github.com/xmake-io/xmake/tree/
 
 Create an empty project:
 
-```console
+```bash
 $ xmake create -l objc -t console test
 ```
 
@@ -1154,7 +1154,7 @@ For more examples, see: [Objc Examples](https://github.com/xmake-io/xmake/tree/m
 
 Create an empty project:
 
-```console
+```bash
 $ xmake create -l zig -t console test
 ```
 
@@ -1580,7 +1580,7 @@ After v2.5.9, we have added support for the Nimlang project. For related issues,
 
 We can use the `xmake create` command to create an empty project.
 
-```console
+```bash
 xmake create -l nim -t console test
 xmake create -l nim -t static test
 xmake create -l nim -t shared test
@@ -1596,7 +1596,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```console
+```bash
 $ xmake -v
 [33%]: linking.release test
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/test/macosx/x86_64/release/nimcache -o:b
@@ -1619,7 +1619,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```console
+```bash
 $ xmake -v
 [33%]: linking.release libfoo.a
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
@@ -1647,7 +1647,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```console
+```bash
 $ xmake -rv
 [33%]: linking.release libfoo.dylib
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
@@ -1727,14 +1727,14 @@ xmake will automatically detect the compiler installed by Keil/MDK, related issu
 
 Compile with armcc
 
-```console
+```bash
 $ xmake f -p cross -a cortex-m3 --toolchain=armcc -c
 $ xmake
 ```
 
 Compile with armclang
 
-```console
+```bash
 $ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 $ xmake
 ```
@@ -1798,7 +1798,7 @@ target("hello")
 
 Then directly execute the xmake command, compile with one key, and generate the kernel driver module hello.ko.
 
-```console
+```bash
 $ xmake
 [20%]: cache compiling.release src/add.c
 [20%]: cache compiling.release src/hello.c
@@ -1808,7 +1808,7 @@ $ xmake
 
 We can also look at the complete build command parameters.
 
-```console
+```bash
 $ xmake -v
 [20%]: cache compiling.release src/add.c
 /usr/bin/ccache /usr/bin/gcc -c -m64 -O2 -std=gnu89 -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include -I/usr /src/linux-headers-5.11.0-41-generic/arch/x86/include/generated -I/usr/src/linux-headers-5.11.0-41-generic/include -I/usr/src/linux -headers-5.11.0-41-generic/arch/x86/include/uapi -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include/generated/uapi -I/usr /src/linux-headers-5.11.0-41-generic/include/uapi -I/usr/src/linux-headers-5.11.0-41-generic/include/generated/uapi -D__KERNEL__ -DMODULE -DKBUILD_MODNAME=\ "hello\" -DCONFIG_X86_X32_ABI -isystem /usr/lib/gcc/x86_64-linux-gnu/10/include -include /usr/src/linux-headers-5.11.0-41-generic/include/linux/kconfig.h -include /usr/src/linux-headers-5.11.0-41-generic/include/linux/compiler_types.h -nostdinc -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -mno -80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -mindirect-branch=thunk-extern -mindirect -branch-re gister -mrecord-mcount -fmacro-prefix-map=./= -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -fcf-protection=none -falign-jumps=1 -falign-loops= 1 -fno-asynchronous-unwind-tables -fno-jump-tables -fno-delete-null-pointer-checks -fno-allow-store-data-races -fno-reorder-blocks -fno-ipa-cp-clone- fno-partial-inlining -fstack-protector-strong -fno-inline-functions-called-once -falign-functions=32 -fno-strict-overflow -fno-stack-check -fconserve-stack -DKBUILD_BASENAME=\"add\ "-o build/.objs/hello/linux/x86_64/release/src/add.co src/add.c
@@ -1883,7 +1883,7 @@ For more, cross-compilation configuration documents, see: [Configure cross-compi
 
 #### Build Arm driver module
 
-```console
+```bash
 $ xmake f -p cross -a arm --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf -c
 $ xmake -v
 checking for arm-linux-gnueabihf-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++
@@ -1912,7 +1912,7 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 
 #### Build Arm64 driver module
 
-```console
+```bash
 $ xmake f -p cross -a arm64 --sdk=/mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu -c
 checking for aarch64-linux-gnu-g++ ... /mnt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++
 checking for the linker (ld) ... aarch64-linux-gnu-g++
@@ -2013,7 +2013,7 @@ target("hello")
 
 #### Build the project
 
-```console
+```bash
 $ xmake
 check iverilog... iverilog
 check vvp... vvp
@@ -2023,7 +2023,7 @@ check vvp... vvp
 
 #### Run the program
 
-```console
+```bash
 $ xmake run
 hello world!
 LXT2 INFO: dumpfile hello.vcd opened, ready for output.
@@ -2105,7 +2105,7 @@ target("Hello")
 
 #### Build the project
 
-```console
+```bash
 $ xmake
 [ 0%]: compiling.verilog src/main.v
 [ 15%]: cache compiling.release /Users/ruki/.xmake/packages/v/verilator/2023.1.10/cd2268409c1d44799288c7759b3cbd56/share/verilator/include/verilated.cpp
@@ -2123,7 +2123,7 @@ $ xmake
 
 #### Run the program
 
-```console
+```bash
 $ xmake run
 ruki-2:hello ruki$ xmake run
 hello world!
@@ -2131,3 +2131,17 @@ hello world!
 ```
 
 A more complete example: [Verilator](https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/verilator)
+
+## Cppfront Program
+
+```bash
+add_rules("mode.debug", "mode.release")
+
+add_requires("cppfront")
+
+target("test")
+    add_rules("cppfront")
+    set_kind("binary")
+    add_files("src/*.cpp2")
+    add_packages("cppfront")
+```

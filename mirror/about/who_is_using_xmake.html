@@ -224,7 +224,7 @@
 <tr>
 <td style="text-align:left">Meidozuki</td>
 <td style="text-align:left"><a href="https://github.com/Meidozuki/VBAO">VBAO</a></td>
-<td style="text-align:left">个人开发项目，用于构建MVVM开发框架的utility library，提供C++和python接口。xmake的语法相比cmake十分简洁，在该项目中我用cmake写了一百多行脚本而xmake只需要十几行，尤其是处理包依赖问题时。此外期待主流IDE对于xmake更好的支持</td>
+<td style="text-align:left">个人开发项目，用于构建MVVM开发框架的utility library，提供C++和python接口。xmake的语法相比cmake十分简洁，尤其是处理包依赖问题时：cmake的find_package(尤其是Config Mode)依赖于第三方库作者的水平，xmake接入了Conan包管理，大大简化了这一过程；对于Makefile-only的项目，cmake需要额外了解IMPORTED library target的概念，十分别扭，xmake的写法就很舒服。虽然xmake的命令行已经足够简洁了，不过还是期待主流IDE对于xmake更好的支持</td>
 </tr>
 <tr>
 <td style="text-align:left">Luisa-Group</td>
