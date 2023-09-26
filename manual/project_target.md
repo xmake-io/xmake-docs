@@ -451,8 +451,10 @@ Set the warning level of the compilation of the current target, generally suppor
 | none       | disable all warnings                      | -w                                    | -W0                           |
 | less       | Enable fewer warnings                     | -W1                                   | -W1                           |
 | more       | Enable more warnings                      | -W3                                   | -W3                           |
+| extra      | Enable extra warnings                     | -Wextra                               |                               |
+| pedantic   | Enable non-standard warnings              | -Wpedantic                            |                               |
 | all        | Enable all warnings                       | -Wall                                 | -W3                           |
-| allextra   | Enable all warnings + additional warnings | -Wall -Wextra                         | -W4                           |
+| allextra   | Enable all warnings + extra warnings      | -Wall -Wextra                         | -W4                           |
 | everything | Enable all supported warnings             | -Wall -Wextra -Weffc++ / -Weverything | -Wall                         |
 | error      | Use all warnings as compilation errors    | -Werror                               | -WX                           |
 
