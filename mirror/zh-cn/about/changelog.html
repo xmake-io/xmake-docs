@@ -92,7 +92,36 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v282">v2.8.2</h2>
+    <h2 id="v283">v2.8.3</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/4122">#4122</a>: 支持 Lua 调试 (EmmyLua)</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/4132">#4132</a>: 支持 cppfront</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/4147">#4147</a>: 添加 hlsl2spv 规则</li>
+<li>添加 lib.lua.package 模块</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/4226">#4226</a>: 新增 asan 相关策略和对包的支持</li>
+<li>添加 <code>run.autobuild</code> 策略开启运行前自动构建</li>
+<li>添加全局策略 <code>xmake g --policies=</code></li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/4119">#4119</a>: 改进支持 emcc 工具链和 emscripten 包的整合</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/4154">#4154</a>: 添加 <code>xmake -r --shallow target</code> 去改进重建目标，避免重建所有依赖目标</li>
+<li>添加全局 ccache 存储目录</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/4137">#4137</a>: 改进 Qt，支持 Qt6 for Wasm</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/4173">#4173</a>: 添加 recheck 参数到 on_config</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/4200">#4200</a>: 改进远程构建，支持调试本地 xmake 源码</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/4209">#4209</a>: 添加 extra 和 pedantic 警告</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/4110">#4110</a>: 修复 extrafiles</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/4115">#4115</a>: 修复 compile_commands 生成器</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/4199">#4199</a>: 修复 compile_commands 生成器对 c++ modules 的支持</li>
+<li>修复 os.mv 在 windows 上跨驱动盘失败问题</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/4214">#4214</a>: 修复 rust workspace 构建问题</li>
+</ul>
+<h2 id="v282">v2.8.2</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/4002">#4002</a>: 增加 soname 支持</li>

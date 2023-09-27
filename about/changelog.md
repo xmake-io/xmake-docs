@@ -1,5 +1,35 @@
 # Changelog
 
+## v2.8.3
+
+### New features
+
+* [#4122](https://github.com/xmake-io/xmake/issues/4122): Support Lua Debugger (EmmyLua)
+* [#4132](https://github.com/xmake-io/xmake/pull/4132): Support cppfront
+* [#4147](https://github.com/xmake-io/xmake/issues/4147): Add hlsl2spv rule
+* [#4226](https://github.com/xmake-io/xmake/issues/4226): Support sanitizers for package and policy
+* Add lib.lua.package module
+* Add `run.autobuild` policy
+* Add global policies `xmake g --policies=`
+
+### Changes
+
+* [#4119](https://github.com/xmake-io/xmake/issues/4119): Improve to support emcc toolchain and emscripten package
+* [#4154](https://github.com/xmake-io/xmake/issues/4154): Add `xmake -r --shallow target` to rebuild target without deps
+* Add global ccache storage directory
+* [#4137](https://github.com/xmake-io/xmake/issues/4137): Support Qt6 for Wasm
+* [#4173](https://github.com/xmake-io/xmake/issues/4173): Add recheck argument to on_config
+* [#4200](https://github.com/xmake-io/xmake/pull/4200): Improve remote build to support debugging xmake source code.
+* [#4209](https://github.com/xmake-io/xmake/issues/4209): Add extra and pedantic warnings
+
+### Bugs fixed
+
+* [#4110](https://github.com/xmake-io/xmake/issues/4110): Fix extrafiles
+* [#4115](https://github.com/xmake-io/xmake/issues/4115): Fix compile_commands generator for clangd
+* [#4199](https://github.com/xmake-io/xmake/pull/4199): Fix compile_commands generator for c++ modules
+* Fix os.mv fail on window
+* [#4214](https://github.com/xmake-io/xmake/issues/4214): Fix rust workspace build error
+
 ## v2.8.2
 
 ### New features

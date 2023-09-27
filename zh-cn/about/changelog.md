@@ -1,4 +1,34 @@
 
+## v2.8.3
+
+### 新特性
+
+* [#4122](https://github.com/xmake-io/xmake/issues/4122): 支持 Lua 调试 (EmmyLua)
+* [#4132](https://github.com/xmake-io/xmake/pull/4132): 支持 cppfront
+* [#4147](https://github.com/xmake-io/xmake/issues/4147): 添加 hlsl2spv 规则
+* 添加 lib.lua.package 模块
+* [#4226](https://github.com/xmake-io/xmake/issues/4226): 新增 asan 相关策略和对包的支持
+* 添加 `run.autobuild` 策略开启运行前自动构建
+* 添加全局策略 `xmake g --policies=`
+
+### 改进
+
+* [#4119](https://github.com/xmake-io/xmake/issues/4119): 改进支持 emcc 工具链和 emscripten 包的整合
+* [#4154](https://github.com/xmake-io/xmake/issues/4154): 添加 `xmake -r --shallow target` 去改进重建目标，避免重建所有依赖目标
+* 添加全局 ccache 存储目录
+* [#4137](https://github.com/xmake-io/xmake/issues/4137): 改进 Qt，支持 Qt6 for Wasm
+* [#4173](https://github.com/xmake-io/xmake/issues/4173): 添加 recheck 参数到 on_config
+* [#4200](https://github.com/xmake-io/xmake/pull/4200): 改进远程构建，支持调试本地 xmake 源码
+* [#4209](https://github.com/xmake-io/xmake/issues/4209): 添加 extra 和 pedantic 警告
+
+### Bugs 修复
+
+* [#4110](https://github.com/xmake-io/xmake/issues/4110): 修复 extrafiles
+* [#4115](https://github.com/xmake-io/xmake/issues/4115): 修复 compile_commands 生成器
+* [#4199](https://github.com/xmake-io/xmake/pull/4199): 修复 compile_commands 生成器对 c++ modules 的支持
+* 修复 os.mv 在 windows 上跨驱动盘失败问题
+* [#4214](https://github.com/xmake-io/xmake/issues/4214): 修复 rust workspace 构建问题
+
 ## v2.8.2
 
 ### 新特性
