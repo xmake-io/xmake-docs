@@ -96,6 +96,8 @@ sudo apt update
 sudo apt install xmake
 ```
 
+Also, Xmake has recently been added to the official Debian repositories: https://packages.debian.org/sid/xmake
+
 ## Fedora/RHEL/OpenSUSE/CentOS
 
 ```bash

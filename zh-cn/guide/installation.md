@@ -115,6 +115,8 @@ sudo apt update
 sudo apt install xmake
 ```
 
+另外，近期 Xmake 已经被收入到 Debian 官方仓库：https://packages.debian.org/sid/xmake
+
 ## Fedora/RHEL/OpenSUSE/CentOS
 
 ```bash
