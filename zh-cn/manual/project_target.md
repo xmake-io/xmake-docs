@@ -762,9 +762,7 @@ target("test")
     end)
 ```
 
-<p class="tip">
-一旦对这个target目标设置了自己的build过程，那么xmake默认的构建过程将不再被执行。
-</p>
+!> 一旦对这个target目标设置了自己的build过程，那么xmake默认的构建过程将不再被执行。
 
 
 ### target:on_build_file
@@ -778,11 +776,8 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     on_build_file(function (target, sourcefile, opt)
-        opt.origin(target, sourcefile, opt)
     end)
 ```
-
-上面代码中的`opt.origin`存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用`opt.origin`就行了。
 
 如果不想重写内置的编译脚本，仅仅只是在编译前后添加一些自己的处理，其实用：[target.before_build_file](#targetbefore_build_file)和[target.after_build_file](#targetafter_build_file)会更加方便，不需要调用`opt.origin`。
 
@@ -797,7 +792,6 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     on_build_files(function (target, sourcebatch, opt)
-        opt.origin(target, sourcebatch, opt)
     end)
 ```
 
@@ -809,8 +803,6 @@ target("test")
 * `sourcebatch.sourcefiles()`: 获取源文件列表
 * `sourcebatch.objectfiles()`: 获取对象文件列表
 * `sourcebatch.dependfiles()`: 获取对应依赖文件列表，存有源文件中编译依赖信息，例如：xxx.d
-
-上面代码中的`opt.origin`存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用`opt.origin`就行了。
 
 ### target:on_clean
 

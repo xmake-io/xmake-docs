@@ -773,11 +773,8 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     on_build_file(function (target, sourcefile, opt)
-        opt.origin(target, sourcefile, opt)
     end)
 ```
-
-The `opt.origin` in the above code has a built-in build script. If you want to call the built-in build script to compile the source file after hooking, just continue to call `opt.origin`.
 
 If you don't want to rewrite the built-in build script, just add some of your own processing before and after compiling. Its utility: [target.before_build_file](#targetbefore_build_file) and [target.after_build_file](#targetafter_build_file) will be more convenient and you don't need to call it. Opt.origin`.
 
@@ -792,7 +789,6 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     on_build_files(function (target, sourcebatch, opt)
-        opt.origin(target, sourcebatch, opt)
     end)
 ```
 
@@ -804,8 +800,6 @@ Where sourcebatch describes the same source files of the same type:
 * `sourcebatch.sourcefiles()`: get the list of source files
 * `sourcebatch.objectfiles()`: get the list of object files
 * `sourcebatch.dependfiles()`: Get the list of corresponding dependent files, compile dependency information in the stored source file, for example: xxx.d
-
-The `opt.origin` in the above code has a built-in build script. If you want to call the built-in build script to compile the source file after hooking, just continue to call `opt.origin`.
 
 ### target:on_clean
 

@@ -869,10 +869,7 @@ target("test")
         print("build for windows")
     end)
 </code></pre>
-<p><p class="tip"><br>一旦对这个target目标设置了自己的build过程，那么xmake默认的构建过程将不再被执行。<br></p>
-
-
-</p>
+<p>!> 一旦对这个target目标设置了自己的build过程，那么xmake默认的构建过程将不再被执行。</p>
 <h3 id="targeton_build_file">target:on_build_file</h3>
 <h4 id="">自定义编译脚本, 实现单文件构建</h4>
 <p>通过此接口，可以用来hook指定target内置的构建过程，替换每个源文件编译过程：</p>
@@ -880,10 +877,8 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     on_build_file(function (target, sourcefile, opt)
-        opt.origin(target, sourcefile, opt)
     end)
 </code></pre>
-<p>上面代码中的<code>opt.origin</code>存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用<code>opt.origin</code>就行了。</p>
 <p>如果不想重写内置的编译脚本，仅仅只是在编译前后添加一些自己的处理，其实用：<a href="#targetbefore_build_file">target.before_build_file</a>和<a href="#targetafter_build_file">target.after_build_file</a>会更加方便，不需要调用<code>opt.origin</code>。</p>
 <h3 id="targeton_build_files">target:on_build_files</h3>
 <h4 id="">自定义编译脚本, 实现多文件构建</h4>
@@ -892,7 +887,6 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     on_build_files(function (target, sourcebatch, opt)
-        opt.origin(target, sourcebatch, opt)
     end)
 </code></pre>
 <p>设置此接口后，对应源文件列表中文件，就不会出现在自定义的<a href="#targeton_build_file">target.on_build_file</a>了，因为这个是包含关系。</p>
@@ -903,7 +897,6 @@ target("test")
 <li><code>sourcebatch.objectfiles()</code>: 获取对象文件列表</li>
 <li><code>sourcebatch.dependfiles()</code>: 获取对应依赖文件列表，存有源文件中编译依赖信息，例如：xxx.d</li>
 </ul>
-<p>上面代码中的<code>opt.origin</code>存有内置的构建脚本，如果hook后还是想调用内置的构建脚本去编译源文件，那么直接继续调用<code>opt.origin</code>就行了。</p>
 <h3 id="targeton_clean">target:on_clean</h3>
 <h4 id="">自定义清理脚本</h4>
 <p>覆盖target目标的<code>xmake [c|clean}</code>的清理操作，实现自定义清理过程。</p>

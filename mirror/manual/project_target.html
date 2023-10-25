@@ -871,10 +871,8 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     on_build_file(function (target, sourcefile, opt)
-        opt.origin(target, sourcefile, opt)
     end)
 </code></pre>
-<p>The <code>opt.origin</code> in the above code has a built-in build script. If you want to call the built-in build script to compile the source file after hooking, just continue to call <code>opt.origin</code>.</p>
 <p>If you don&#39;t want to rewrite the built-in build script, just add some of your own processing before and after compiling. Its utility: <a href="#targetbefore_build_file">target.before_build_file</a> and <a href="#targetafter_build_file">target.after_build_file</a> will be more convenient and you don&#39;t need to call it. Opt.origin`.</p>
 <h3 id="targeton_build_files">target:on_build_files</h3>
 <h4 id="runcustombuildfilesscript">Run custom build files script</h4>
@@ -883,7 +881,6 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
     on_build_files(function (target, sourcebatch, opt)
-        opt.origin(target, sourcebatch, opt)
     end)
 </code></pre>
 <p>After setting this interface, the corresponding file in the source file list will not appear in the custom <a href="#targeton_build_file">target.on_build_file</a>, because this is an inclusion relationship.</p>
@@ -894,7 +891,6 @@ target("test")
 <li><code>sourcebatch.objectfiles()</code>: get the list of object files</li>
 <li><code>sourcebatch.dependfiles()</code>: Get the list of corresponding dependent files, compile dependency information in the stored source file, for example: xxx.d</li>
 </ul>
-<p>The <code>opt.origin</code> in the above code has a built-in build script. If you want to call the built-in build script to compile the source file after hooking, just continue to call <code>opt.origin</code>.</p>
 <h3 id="targeton_clean">target:on_clean</h3>
 <h4 id="runcustomcleanfilesscript">Run custom clean files script</h4>
 <p>Override the cleanup operation of the target target&#39;s <code>xmake [c|clean}</code> to implement a custom cleanup process.</p>
