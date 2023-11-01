@@ -1312,6 +1312,166 @@ target("demo")
 
 The above configuration, even if `add_syslinks` is set in advance, the final link order is still: `-la -lb -lpthread -lm -ldl`
 
+### target:add_linkorders
+
+#### Adjust link order
+
+This is a feature only supported by xmake 2.8.5 and later, and is mainly used to adjust the link order within the target.
+
+Since xmake provides `add_links`, `add_deps`, `add_packages`, `add_options` interfaces, you can configure targets, dependencies, links in packages and options.
+
+However, the link order between them was previously less controllable and could only be generated in a fixed order, which was a bit overwhelming for some complex projects.
+
+For more details and background see: [#1452](https://github.com/xmake-io/xmake/issues/1452)
+
+##### Sort links
+
+In order to more flexibly adjust the various link orders within the target, we have added the `add_linkorders` interface, which is used to configure various link orders introduced by the target, dependencies, packages, options, and link groups.
+
+For example:
+
+```lua
+add_links("a", "b", "c", "d", "e")
+-- e -> b -> a
+add_linkorders("e", "b", "a")
+--e->d
+add_linkorders("e", "d")
+```
+
+add_links is the configured initial link order, and then we configure two local link dependencies `e -> b -> a` and `e -> d` through add_linkorders.
+
+xmake will internally generate a DAG graph based on these configurations, and use topological sorting to generate the final link sequence and provide it to the linker.
+
+Of course, if there is a circular dependency and a cycle is created, it will also provide warning information.
+
+##### Sorting links and link groups
+
+In addition, we can also solve the problem of circular dependencies by configuring link groups through `add_linkgroups`.
+
+And `add_linkorders` can also sort link groups.
+
+```lua
+add_links("a", "b", "c", "d", "e")
+add_linkgroups("c", "d", {name = "foo", group = true})
+add_linkorders("e", "linkgroup::foo")
+```
+
+If we want to sort link groups, we need to give each link group a name, `{name = "foo"}`, and then we can reference the configuration through `linkgroup::foo` in `add_linkorders`.
+
+##### Sort links and frameworks
+
+We can also sort links and frameworks for macOS/iPhoneOS.
+
+```lua
+add_links("a", "b", "c", "d", "e")
+add_frameworks("Foundation", "CoreFoundation")
+add_linkorders("e", "framework::CoreFoundation")
+```
+
+##### Complete example
+
+For a complete example, we can look at:
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("libpng")
+
+target("bar")
+     set_kind("shared")
+     add_files("src/foo.cpp")
+     add_linkgroups("m", "pthread", {whole = true})
+
+target("foo")
+     set_kind("static")
+     add_files("src/foo.cpp")
+     add_packages("libpng", {public = true})
+
+target("demo")
+     set_kind("binary")
+     add_deps("foo")
+     add_files("src/main.cpp")
+     if is_plat("linux", "macosx") then
+         add_syslinks("pthread", "m", "dl")
+     end
+     if is_plat("macosx") then
+         add_frameworks("Foundation", "CoreFoundation")
+     end
+     add_linkorders("framework::Foundation", "png16", "foo")
+     add_linkorders("dl", "linkgroup::syslib")
+     add_linkgroups("m", "pthread", {name = "syslib", group = true})
+```
+
+The complete project is at: [linkorders example](https://github.com/xmake-io/xmake/blob/master/tests/projects/c%2B%2B/linkorders/xmake.lua)
+
+### target:add_linkgroups
+
+#### Add link group
+
+This is a feature only supported by versions after xmake 2.8.5. This link group feature is currently mainly used for compilation on the Linux platform and only supports the gcc/clang compiler.
+
+It should be noted that the concept of link group in gcc/clang mainly refers to: `-Wl,--start-group`
+
+xmake is aligned and encapsulated, further abstracted, and is not only used to process `-Wl,--start-group`, but also `-Wl,--whole-archive` and `-Wl,-Bstatic` .
+
+Below we will explain them one by one.
+
+For more details, see: [#1452](https://github.com/xmake-io/xmake/issues/1452)
+
+##### --start-group support
+
+`-Wl,--start-group` and `-Wl,--end-group` are linker options for handling complex library dependencies, ensuring that the linker can resolve symbolic dependencies and successfully connect multiple libraries.
+
+In xmake, we can achieve this in the following way:
+
+```lua
+add_linkgroups("a", "b", {group = true})
+```
+
+It will generate the corresponding `-Wl,--start-group -la -lb -Wl,--end-group` link options.
+
+If there is a symbolic circular dependency between libraries a and b, no link error will be reported and the link can be successful.
+
+For unsupported platforms and compilations, it will fall back to `-la -lb`
+
+##### --whole-archive support
+
+`--whole-archive` is a linker option commonly used when dealing with static libraries.
+Its function is to tell the linker to include all object files in the specified static library into the final executable file, not just the object files that satisfy the current symbol dependencies.
+This can be used to ensure that all code for certain libraries is linked, even if they are not directly referenced in the current symbol dependencies.
+
+For more information, please refer to the gcc/clang documentation.
+
+In xmake, we can achieve this in the following way:
+
+```lua
+add_linkgroups("a", "b", {whole = true})
+```
+
+It will generate the corresponding `-Wl,--whole-archive -la -lb -Wl,--no-whole-archive` link options.
+
+For unsupported platforms and compilations, it will fall back to `-la -lb`
+
+Additionally, we can configure group/whole at the same time:
+
+```lua
+add_linkgroups("a", "b", {whole = true, group = true})
+```
+
+##### -Bstatic support
+
+`-Bstatic` is also an option for compilers (such as gcc) to instruct the compiler to use only static libraries and not shared libraries when linking.
+
+For more information, please refer to the gcc/clang documentation.
+
+In xmake, we can achieve this in the following way:
+
+```lua
+add_linkgroups("a", "b", {static = true})
+```
+
+It will generate the corresponding `-Wl,-Bstatic -la -lb -Wl,-Bdynamic` linkage options.
+
 ### target:add_files
 
 #### Add source files

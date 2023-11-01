@@ -1272,6 +1272,102 @@ target("demo")
     add_linkdirs("$(buildir)/lib")
 </code></pre>
 <p>The above configuration, even if <code>add_syslinks</code> is set in advance, the final link order is still: <code>-la -lb -lpthread -lm -ldl</code></p>
+<h3 id="targetadd_linkorders">target:add_linkorders</h3>
+<h4 id="adjustlinkorder">Adjust link order</h4>
+<p>This is a feature only supported by xmake 2.8.5 and later, and is mainly used to adjust the link order within the target.</p>
+<p>Since xmake provides <code>add_links</code>, <code>add_deps</code>, <code>add_packages</code>, <code>add_options</code> interfaces, you can configure targets, dependencies, links in packages and options.</p>
+<p>However, the link order between them was previously less controllable and could only be generated in a fixed order, which was a bit overwhelming for some complex projects.</p>
+<p>For more details and background see: <a href="https://github.com/xmake-io/xmake/issues/1452">#1452</a></p>
+<h5 id="sortlinks">Sort links</h5>
+<p>In order to more flexibly adjust the various link orders within the target, we have added the <code>add_linkorders</code> interface, which is used to configure various link orders introduced by the target, dependencies, packages, options, and link groups.</p>
+<p>For example:</p>
+<pre><code class="lang-lua">add_links("a", "b", "c", "d", "e")
+-- e -> b -> a
+add_linkorders("e", "b", "a")
+--e->d
+add_linkorders("e", "d")
+</code></pre>
+<p>add_links is the configured initial link order, and then we configure two local link dependencies <code>e -> b -> a</code> and <code>e -> d</code> through add_linkorders.</p>
+<p>xmake will internally generate a DAG graph based on these configurations, and use topological sorting to generate the final link sequence and provide it to the linker.</p>
+<p>Of course, if there is a circular dependency and a cycle is created, it will also provide warning information.</p>
+<h5 id="sortinglinksandlinkgroups">Sorting links and link groups</h5>
+<p>In addition, we can also solve the problem of circular dependencies by configuring link groups through <code>add_linkgroups</code>.</p>
+<p>And <code>add_linkorders</code> can also sort link groups.</p>
+<pre><code class="lang-lua">add_links("a", "b", "c", "d", "e")
+add_linkgroups("c", "d", {name = "foo", group = true})
+add_linkorders("e", "linkgroup::foo")
+</code></pre>
+<p>If we want to sort link groups, we need to give each link group a name, <code>{name = "foo"}</code>, and then we can reference the configuration through <code>linkgroup::foo</code> in <code>add_linkorders</code>.</p>
+<h5 id="sortlinksandframeworks">Sort links and frameworks</h5>
+<p>We can also sort links and frameworks for macOS/iPhoneOS.</p>
+<pre><code class="lang-lua">add_links("a", "b", "c", "d", "e")
+add_frameworks("Foundation", "CoreFoundation")
+add_linkorders("e", "framework::CoreFoundation")
+</code></pre>
+<h5 id="completeexample">Complete example</h5>
+<p>For a complete example, we can look at:</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("libpng")
+
+target("bar")
+     set_kind("shared")
+     add_files("src/foo.cpp")
+     add_linkgroups("m", "pthread", {whole = true})
+
+target("foo")
+     set_kind("static")
+     add_files("src/foo.cpp")
+     add_packages("libpng", {public = true})
+
+target("demo")
+     set_kind("binary")
+     add_deps("foo")
+     add_files("src/main.cpp")
+     if is_plat("linux", "macosx") then
+         add_syslinks("pthread", "m", "dl")
+     end
+     if is_plat("macosx") then
+         add_frameworks("Foundation", "CoreFoundation")
+     end
+     add_linkorders("framework::Foundation", "png16", "foo")
+     add_linkorders("dl", "linkgroup::syslib")
+     add_linkgroups("m", "pthread", {name = "syslib", group = true})
+</code></pre>
+<p>The complete project is at: <a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/c%2B%2B/linkorders/xmake.lua">linkorders example</a></p>
+<h3 id="targetadd_linkgroups">target:add_linkgroups</h3>
+<h4 id="addlinkgroup">Add link group</h4>
+<p>This is a feature only supported by versions after xmake 2.8.5. This link group feature is currently mainly used for compilation on the Linux platform and only supports the gcc/clang compiler.</p>
+<p>It should be noted that the concept of link group in gcc/clang mainly refers to: <code>-Wl,--start-group</code></p>
+<p>xmake is aligned and encapsulated, further abstracted, and is not only used to process <code>-Wl,--start-group</code>, but also <code>-Wl,--whole-archive</code> and <code>-Wl,-Bstatic</code> .</p>
+<p>Below we will explain them one by one.</p>
+<p>For more details, see: <a href="https://github.com/xmake-io/xmake/issues/1452">#1452</a></p>
+<h5 id="startgroupsupport">--start-group support</h5>
+<p><code>-Wl,--start-group</code> and <code>-Wl,--end-group</code> are linker options for handling complex library dependencies, ensuring that the linker can resolve symbolic dependencies and successfully connect multiple libraries.</p>
+<p>In xmake, we can achieve this in the following way:</p>
+<pre><code class="lang-lua">add_linkgroups("a", "b", {group = true})
+</code></pre>
+<p>It will generate the corresponding <code>-Wl,--start-group -la -lb -Wl,--end-group</code> link options.</p>
+<p>If there is a symbolic circular dependency between libraries a and b, no link error will be reported and the link can be successful.</p>
+<p>For unsupported platforms and compilations, it will fall back to <code>-la -lb</code></p>
+<h5 id="wholearchivesupport">--whole-archive support</h5>
+<p><code>--whole-archive</code> is a linker option commonly used when dealing with static libraries.<br>Its function is to tell the linker to include all object files in the specified static library into the final executable file, not just the object files that satisfy the current symbol dependencies.<br>This can be used to ensure that all code for certain libraries is linked, even if they are not directly referenced in the current symbol dependencies.</p>
+<p>For more information, please refer to the gcc/clang documentation.</p>
+<p>In xmake, we can achieve this in the following way:</p>
+<pre><code class="lang-lua">add_linkgroups("a", "b", {whole = true})
+</code></pre>
+<p>It will generate the corresponding <code>-Wl,--whole-archive -la -lb -Wl,--no-whole-archive</code> link options.</p>
+<p>For unsupported platforms and compilations, it will fall back to <code>-la -lb</code></p>
+<p>Additionally, we can configure group/whole at the same time:</p>
+<pre><code class="lang-lua">add_linkgroups("a", "b", {whole = true, group = true})
+</code></pre>
+<h5 id="bstaticsupport">-Bstatic support</h5>
+<p><code>-Bstatic</code> is also an option for compilers (such as gcc) to instruct the compiler to use only static libraries and not shared libraries when linking.</p>
+<p>For more information, please refer to the gcc/clang documentation.</p>
+<p>In xmake, we can achieve this in the following way:</p>
+<pre><code class="lang-lua">add_linkgroups("a", "b", {static = true})
+</code></pre>
+<p>It will generate the corresponding <code>-Wl,-Bstatic -la -lb -Wl,-Bdynamic</code> linkage options.</p>
 <h3 id="targetadd_files">target:add_files</h3>
 <h4 id="addsourcefiles">Add source files</h4>
 <p>Source files used to add target projects, even library files, some file types currently supported:</p>

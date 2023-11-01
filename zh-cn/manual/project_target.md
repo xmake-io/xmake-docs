@@ -1313,6 +1313,166 @@ target("demo")
 
 上面的配置，即使`add_syslinks`被优先提前设置了，但最后的链接顺序依然是：`-la -lb -lpthread -lm -ldl`
 
+### target:add_linkorders
+
+#### 调整链接顺序
+
+这是 xmake 2.8.5 以后得版本才支持的特性，主要用于调整 target 内部的链接顺序。
+
+由于 xmake 提供了 `add_links`, `add_deps`, `add_packages`, `add_options` 接口，可以配置目标、依赖，包和选项中的链接。
+
+但是它们之间的链接顺序，在之前可控性比较弱，只能按固定顺序生成，这对于一些复杂的项目，就有点显得力不从心了。
+
+更多详情和背景见：[#1452](https://github.com/xmake-io/xmake/issues/1452)
+
+##### 排序链接
+
+为了更加灵活的调整 target 内部的各种链接顺序，我们新增了 `add_linkorders` 接口，用于配置目标、依赖、包、选项、链接组引入的各种链接顺序。
+
+例如：
+
+```lua
+add_links("a", "b", "c", "d", "e")
+-- e -> b -> a
+add_linkorders("e", "b", "a")
+-- e -> d
+add_linkorders("e", "d")
+```
+
+add_links 是配置的初始链接顺序，然后我们通过 add_linkorders 配置了两个局部链接依赖 `e -> b -> a` 和 `e -> d` 后。
+
+xmake 内部就会根据这些配置，生成 DAG 图，通过拓扑排序的方式，生成最终的链接顺序，提供给链接器。
+
+当然，如果存在循环依赖，产生了环，它也会提供警告信息。
+
+##### 排序链接和链接组
+
+另外，对于循环依赖，我们也可以通过 `add_linkgroups` 配置链接组的方式也解决。
+
+并且 `add_linkorders` 也能够对链接组进行排序。
+
+```lua
+add_links("a", "b", "c", "d", "e")
+add_linkgroups("c", "d", {name = "foo", group = true})
+add_linkorders("e", "linkgroup::foo")
+```
+
+如果要排序链接组，我们需要对每个链接组取个名，`{name = "foo"}` ，然后就能在 `add_linkorders` 里面通过 `linkgroup::foo` 去引用配置了。
+
+##### 排序链接和frameworks
+
+我们也可以排序链接和 macOS/iPhoneOS 的 frameworks。
+
+```lua
+add_links("a", "b", "c", "d", "e")
+add_frameworks("Foundation", "CoreFoundation")
+add_linkorders("e", "framework::CoreFoundation")
+```
+
+##### 完整例子
+
+相关的完整例子，我们可以看下：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("libpng")
+
+target("bar")
+    set_kind("shared")
+    add_files("src/foo.cpp")
+    add_linkgroups("m", "pthread", {whole = true})
+
+target("foo")
+    set_kind("static")
+    add_files("src/foo.cpp")
+    add_packages("libpng", {public = true})
+
+target("demo")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.cpp")
+    if is_plat("linux", "macosx") then
+        add_syslinks("pthread", "m", "dl")
+    end
+    if is_plat("macosx") then
+        add_frameworks("Foundation", "CoreFoundation")
+    end
+    add_linkorders("framework::Foundation", "png16", "foo")
+    add_linkorders("dl", "linkgroup::syslib")
+    add_linkgroups("m", "pthread", {name = "syslib", group = true})
+```
+
+完整工程在：[linkorders example](https://github.com/xmake-io/xmake/blob/master/tests/projects/c%2B%2B/linkorders/xmake.lua)
+
+### target:add_linkgroups
+
+#### 添加链接组
+
+这是 xmake 2.8.5 以后得版本才支持的特性，这个链接组的特性，目前主要用于 linux 平台的编译，仅支持 gcc/clang 编译器。
+
+需要注意的是 gcc/clang 里面的链接组概念主要特指：`-Wl,--start-group`
+
+而 xmake 对齐进行了封装，做了进一步抽象，并且不仅仅用于处理 `-Wl,--start-group`，还可以处理 `-Wl,--whole-archive` 和 `-Wl,-Bstatic`。
+
+下面我们会一一对其进行讲解。
+
+更多详情见：[#1452](https://github.com/xmake-io/xmake/issues/1452)
+
+##### --start-group 支持
+
+`-Wl,--start-group` 和 `-Wl,--end-group` 是用于处理复杂库依赖关系的链接器选项，确保链接器可以解决符号依赖并成功连接多个库。
+
+在 xmake 中，我们可以通过下面的方式实现：
+
+```lua
+add_linkgroups("a", "b", {group = true})
+```
+
+它会对应生成 `-Wl,--start-group -la -lb -Wl,--end-group` 链接选项。
+
+如果 a 和 b 库之间有符号的循环依赖，也不会报链接错误，能够正常链接成功。
+
+对于不支持的平台和编译，会退化成 `-la -lb`
+
+##### --whole-archive 支持
+
+`--whole-archive` 是一个链接器选项，通常用于处理静态库。
+它的作用是告诉链接器将指定的静态库中的所有目标文件都包含到最终可执行文件中，而不仅仅是满足当前符号依赖的目标文件。
+这可以用于确保某些库的所有代码都被链接，即使它们在当前的符号依赖关系中没有直接引用。
+
+更多信息，可以参考 gcc/clang 的文档。
+
+在 xmake 中，我们可以通过下面的方式实现：
+
+```lua
+add_linkgroups("a", "b", {whole = true})
+```
+
+它会对应生成 `-Wl,--whole-archive -la -lb -Wl,--no-whole-archive` 链接选项。
+
+对于不支持的平台和编译，会退化成 `-la -lb`
+
+另外，我们可以同时配置 group/whole：
+
+```lua
+add_linkgroups("a", "b", {whole = true, group = true})
+```
+
+##### -Bstatic 支持
+
+`-Bstatic` 也是用于编译器（如gcc）的选项，用于指示编译器在链接时只使用静态库而不使用共享库。
+
+更多信息，可以参考 gcc/clang 的文档。
+
+在 xmake 中，我们可以通过下面的方式实现：
+
+```lua
+add_linkgroups("a", "b", {static = true})
+```
+
+它会对应生成 `-Wl,-Bstatic -la -lb -Wl,-Bdynamic` 链接选项。
+
 ### target:add_files
 
 #### 添加源代码文件
