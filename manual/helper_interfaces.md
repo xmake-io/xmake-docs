@@ -13,10 +13,26 @@ For related issues, see:
 -[#342](https://github.com/xmake-io/xmake/issues/342)
 -[#1715](https://github.com/xmake-io/xmake/issues/1715)
 
+
+Note: Instead of introducing these interfaces separately via `includes("check_links.lua")`,
+for versions 2.8.5 and above, you can use the more convenient
+
+```lua
+includes("@builtin/check")
+```
+
+to bring in all the checking interfaces at once, but of course we can also bring in individual scripts on an as-needed basis:
+
+```lua
+includes("@builtin/check/check_links.lua")
+```
+
+The original introduction path, which does not distinguish whether it is a user path or not, is not easy to manage and maintain,
+and is easily interfered by user configurations, so it will be gradually deprecated later.
+
 #### Check links
 
 We can check whether the specified links pass or not by trying to link.
-
 
 ```lua
 includes("check_links.lua")
