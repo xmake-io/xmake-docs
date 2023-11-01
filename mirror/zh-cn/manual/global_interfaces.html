@@ -121,6 +121,21 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 </code></pre>
+<p>2.8.5 版本可以 includes 包含内置的一些辅助配置脚本，例如：</p>
+<pre><code class="lang-lua">includes("@builtin/check")
+</code></pre>
+<p>会引入内置提供的一些检测辅助接口。</p>
+<p>还有</p>
+<pre><code class="lang-lua">includes("@builtin/qt")
+</code></pre>
+<p>会引入一些内置的 Qt 相关辅助接口。</p>
+<p>其中 <code>@builtin</code> 是告诉 xmake 从内置的 includes 目录中引入配置脚本。</p>
+<p>也就是这个路径下的配置文件：<a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">includes</a></p>
+<p>我们可以向上面那样，按目录整个引入，也可以引入单个配置文件，例如：</p>
+<pre><code class="lang-lua">includes("@builtin/check/check_cfuncs.lua")
+</code></pre>
+<p>仅仅引入 check 目录下 check_cfuncs 相关的辅助脚本。</p>
+<p>而通过 <code>@builtin</code> 我们就能很好的区分是引入当前用户工程目录下的文件，还是 xmake 安装目录下的内置文件。</p>
 <h3 id="set_project">set_project</h3>
 <h4 id="">设置工程名</h4>
 <p>设置工程名，在doxygen自动文档生成插件、工程文件生成插件中会用到，一般设置在xmake.lua的最开头，当然放在其他地方也是可以的</p>

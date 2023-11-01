@@ -121,6 +121,21 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 </code></pre>
+<p>Above v2.8.5 can includes include some built-in helper configuration scripts, e.g.:</p>
+<pre><code class="lang-lua">includes("@builtin/check")
+</code></pre>
+<p>will bring in some of the detection helper interfaces provided by the built-in.</p>
+<p>There&#39;s also</p>
+<pre><code class="lang-lua">includes("@builtin/qt")
+</code></pre>
+<p>will introduce some built-in Qt-related helper interfaces.</p>
+<p>Where <code>@builtin</code> tells xmake to bring in configuration scripts from the built-in includes directory.</p>
+<p>That is, the configuration file in this path: <a href="https://github.com/xmake-io/xmake/tree/master/xmake/includes">includes</a></p>
+<p>We can bring in the whole thing by directory as above, or we can bring in individual configuration files, e.g.:</p>
+<pre><code class="lang-lua">includes("@builtin/check/check_cfuncs.lua")
+</code></pre>
+<p>only introduces the helper scripts related to check_cfuncs in the check directory.</p>
+<p>With <code>@builtin</code> we can distinguish between the files in the current user&#39;s project directory and the built-in files in the xmake installation directory.</p>
 <h3 id="set_project">set_project</h3>
 <h4 id="setprojectname">Set project name</h4>
 <p>Set the whole project name, we can set it at the beginning of <code>xmake.lua</code>.</p>

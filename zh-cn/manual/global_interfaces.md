@@ -44,6 +44,36 @@ target("test")
     add_files("src/*.c")
 ```
 
+2.8.5 版本可以 includes 包含内置的一些辅助配置脚本，例如：
+
+```lua
+includes("@builtin/check")
+```
+
+会引入内置提供的一些检测辅助接口。
+
+还有
+
+```lua
+includes("@builtin/qt")
+```
+
+会引入一些内置的 Qt 相关辅助接口。
+
+其中 `@builtin` 是告诉 xmake 从内置的 includes 目录中引入配置脚本。
+
+也就是这个路径下的配置文件：[includes](https://github.com/xmake-io/xmake/tree/master/xmake/includes)
+
+我们可以向上面那样，按目录整个引入，也可以引入单个配置文件，例如：
+
+```lua
+includes("@builtin/check/check_cfuncs.lua")
+```
+
+仅仅引入 check 目录下 check_cfuncs 相关的辅助脚本。
+
+而通过 `@builtin` 我们就能很好的区分是引入当前用户工程目录下的文件，还是 xmake 安装目录下的内置文件。
+
 ### set_project
 
 #### 设置工程名
