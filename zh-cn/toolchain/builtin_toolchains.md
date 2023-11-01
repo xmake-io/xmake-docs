@@ -35,7 +35,7 @@ $ xmake
 
 ### Clang-cl
 
-如果只是单纯的切换使用 clang-cl.exe 编译器，剩下的链接操作还是用 msvc，那么我们不需要整个工具链切换，仅仅切花 c/c++ 编译器。
+如果只是单纯的切换使用 clang-cl.exe 编译器，剩下的链接操作还是用 msvc，那么我们不需要整个工具链切换，仅仅切换 c/c++ 编译器。
 
 ```console
 $ xmake f --cc=clang-cl --cxx=clang-cl -c
