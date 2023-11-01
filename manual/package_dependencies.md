@@ -170,6 +170,30 @@ else
 end
 ```
 
+### package:add_linkorders
+
+#### Adjust the link order within the package
+
+For specific details, please see the target's internal documentation for `add_linkorders`, [target/add_linkorders](https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkorders).
+
+```lua
+package("libpng")
+     add_linkorders("png16", "png", "linkgroup::foo")
+     add_linkgroups("dl", {name = "foo", group = true})
+```
+
+### package:add_linkgroups
+
+#### Configure the link group of the package
+
+For specific details, please see the target's internal documentation for `add_linkgroups`, [target/add_linkgroups](https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkgroups).
+
+```lua
+package("libpng")
+     add_linkorders("png16", "png", "linkgroup::foo")
+     add_linkgroups("dl", {name = "foo", group = true})
+```
+
 ### package:add_frameworks
 
 #### Add frameworks

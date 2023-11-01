@@ -201,7 +201,21 @@ elseif is_plat("windows") then
 else
     add_syslinks("pthread")
 end
-</code></pre><h3 id="packageadd_frameworks">package:add_frameworks</h3>
+</code></pre><h3 id="packageadd_linkorders">package:add_linkorders</h3>
+<h4 id="">调整包内部的链接顺序</h4>
+<p>具体详情可以看下 target 内部对 <code>add_linkorders</code> 的文档说明，<a href="https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkorders">target/add_linkorders</a>。</p>
+<pre><code class="lang-lua">package("libpng")
+    add_linkorders("png16", "png", "linkgroup::foo")
+    add_linkgroups("dl", {name = "foo", group = true})
+</code></pre>
+<h3 id="packageadd_linkgroups">package:add_linkgroups</h3>
+<h4 id="">配置包的链接组</h4>
+<p>具体详情可以看下 target 内部对 <code>add_linkgroups</code> 的文档说明，<a href="https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkgroups">target/add_linkgroups</a>。</p>
+<pre><code class="lang-lua">package("libpng")
+    add_linkorders("png16", "png", "linkgroup::foo")
+    add_linkgroups("dl", {name = "foo", group = true})
+</code></pre>
+<h3 id="packageadd_frameworks">package:add_frameworks</h3>
 <h4 id="frameworks">添加依赖的系统 frameworks 链接</h4>
 <p>示例见：<a href="#packageadd_syslinks">add_syslinks</a></p>
 <h3 id="packageadd_linkdirs">package:add_linkdirs</h3>

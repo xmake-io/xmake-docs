@@ -167,6 +167,30 @@ else
 end
 ```
 
+### package:add_linkorders
+
+#### 调整包内部的链接顺序
+
+具体详情可以看下 target 内部对 `add_linkorders` 的文档说明，[target/add_linkorders](https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkorders)。
+
+```lua
+package("libpng")
+    add_linkorders("png16", "png", "linkgroup::foo")
+    add_linkgroups("dl", {name = "foo", group = true})
+```
+
+### package:add_linkgroups
+
+#### 配置包的链接组
+
+具体详情可以看下 target 内部对 `add_linkgroups` 的文档说明，[target/add_linkgroups](https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkgroups)。
+
+```lua
+package("libpng")
+    add_linkorders("png16", "png", "linkgroup::foo")
+    add_linkgroups("dl", {name = "foo", group = true})
+```
+
 ### package:add_frameworks
 
 #### 添加依赖的系统 frameworks 链接
