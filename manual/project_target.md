@@ -3126,4 +3126,419 @@ In the future, we may use this interface for more other things as well.
 
 ```lua
 add_extrafiles("assets/other.txt")
-``
+```
+
+### target:add_tests
+
+#### Add test case
+
+Starting from version 2.8.5, we have added a built-in test command: `xmake test`. We only need to configure some test cases through add_tests on the target that needs to be tested to automatically execute the test.
+
+Even if the current target is set to `set_default(false)`, when executing tests, xmake will still automatically compile them first, and then automatically run all tests.
+
+We can first look at an overall example to get a rough idea of what it looks like.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+for _, file in ipairs(os.files("src/test_*.cpp")) do
+     local name = path.basename(file)
+     target(name)
+         set_kind("binary")
+         set_default(false)
+         add_files("src/" .. name .. ".cpp")
+         add_tests("default")
+         add_tests("args", {runargs = {"foo", "bar"}})
+         add_tests("pass_output", {trim_output = true, runargs = "foo", pass_outputs = "hello foo"})
+         add_tests("fail_output", {fail_outputs = {"hello2 .*", "hello xmake"}})
+end
+```
+
+This example automatically scans the `test_*.cpp` source files in the source code directory, and then automatically creates a test target for each file. It is set to `set_default(false)`, which means that under normal circumstances, it will not be compiled by default. they.
+
+However, if you execute `xmake test` for testing, they will be automatically compiled and then tested. The running effect is as follows:
+
+```bash
+ruki-2:test ruki$ xmake test
+running tests ...
+[  2%]: test_1/args        .................................... passed 7.000s
+[  5%]: test_1/default     .................................... passed 5.000s
+[  8%]: test_1/fail_output .................................... passed 5.000s
+[ 11%]: test_1/pass_output .................................... passed 6.000s
+[ 13%]: test_2/args        .................................... passed 7.000s
+[ 16%]: test_2/default     .................................... passed 6.000s
+[ 19%]: test_2/fail_output .................................... passed 6.000s
+[ 22%]: test_2/pass_output .................................... passed 6.000s
+[ 25%]: test_3/args        .................................... passed 7.000s
+[ 27%]: test_3/default     .................................... passed 7.000s
+[ 30%]: test_3/fail_output .................................... passed 6.000s
+[ 33%]: test_3/pass_output .................................... passed 6.000s
+[ 36%]: test_4/args        .................................... passed 6.000s
+[ 38%]: test_4/default     .................................... passed 6.000s
+[ 41%]: test_4/fail_output .................................... passed 5.000s
+[ 44%]: test_4/pass_output .................................... passed 6.000s
+[ 47%]: test_5/args        .................................... passed 5.000s
+[ 50%]: test_5/default     .................................... passed 6.000s
+[ 52%]: test_5/fail_output .................................... failed 6.000s
+[ 55%]: test_5/pass_output .................................... failed 5.000s
+[ 58%]: test_6/args        .................................... passed 7.000s
+[ 61%]: test_6/default     .................................... passed 6.000s
+[ 63%]: test_6/fail_output .................................... passed 6.000s
+[ 66%]: test_6/pass_output .................................... passed 6.000s
+[ 69%]: test_7/args        .................................... failed 6.000s
+[ 72%]: test_7/default     .................................... failed 7.000s
+[ 75%]: test_7/fail_output .................................... failed 6.000s
+[ 77%]: test_7/pass_output .................................... failed 5.000s
+[ 80%]: test_8/args        .................................... passed 7.000s
+[ 83%]: test_8/default     .................................... passed 6.000s
+[ 86%]: test_8/fail_output .................................... passed 6.000s
+[ 88%]: test_8/pass_output .................................... failed 5.000s
+[ 91%]: test_9/args        .................................... passed 6.000s
+[ 94%]: test_9/default     .................................... passed 6.000s
+[ 97%]: test_9/fail_output .................................... passed 6.000s
+[100%]: test_9/pass_output .................................... passed 6.000s
+
+80% tests passed, 7 tests failed out of 36, spent 0.242s
+```
+
+![](/assets/img/manual/xmake-test1.png)
+
+We can also execute `xmake test -vD` to view detailed test failure error messages:
+
+![](/assets/img/manual/xmake-test2.png)
+
+##### Run the specified test target
+
+We can also specify to run a test with a specified target:
+
+```bash
+$ xmake test targetname/testname
+```
+
+Or run all tests of a target or a batch of tests by pattern matching:
+
+```bash
+$ xmake test targetname/*
+$ xmake test targetname/foo*
+```
+
+You can also run tests with the same name for all targets:
+
+```bash
+$ xmake test */testname
+```
+
+##### Parallelize running tests
+
+In fact, the default is to run in parallel, but we can adjust the parallelism of the operation through `-jN`.
+
+```bash
+$ xmake test -jN
+```
+
+##### Run tests in groups
+
+```bash
+$ xmake test -g "foo"
+$ xmake test -g "foo*"
+```
+
+##### Add test to target (no parameters)
+
+If no parameters are configured, and only the test name is configured to `add_tests`, then it is only tested whether the target program will fail to run, and whether the test passes is judged based on the exit code.
+
+```
+target("test")
+     add_tests("testname")
+```
+
+##### Configure running parameters
+
+We can also use `{runargs = {"arg1", "arg2"}}` to configure `add_tests` to specify the parameters that the test needs to run.
+
+In addition, a target can be configured with multiple test cases at the same time, and each test case can be run independently without conflicting with each other.
+
+```lua
+target("test")
+     add_tests("testname", {runargs = "arg1"})
+     add_tests("testname", {runargs = {"arg1", "arg2"}})
+```
+
+If we do not configure runargs to `add_tests`, then we will also try to get the running parameters set by `set_runargs` from the bound target.
+
+```lua
+target("test")
+     add_tests("testname")
+     set_runargs("arg1", "arg2")
+```
+
+##### Configure running directory
+
+We can also set the current working directory of the test run through rundir, for example:
+
+```lua
+targett("test")
+     add_tests("testname", {rundir = os.projectdir()})
+```
+
+If we do not configure rundir to `add_tests`, then we will also try to obtain the running directory set by `set_rundir` from the bound target.
+
+```lua
+target("test")
+     add_tests("testname")
+     set_rundir("$(projectdir)")
+```
+
+##### Configure the running environment
+
+We can also set some runtime environment variables through runenvs, for example:
+
+```lua
+target("test")
+     add_tests("testname", {runenvs = {LD_LIBRARY_PATH = "/lib"}})
+```
+
+If we do not configure runenvs to `add_tests`, then we will also try to obtain the running environment set by `add_runenvs` from the bound target.
+
+```lua
+target("test")
+     add_tests("testname")
+     add_runenvs("LD_LIBRARY_PATH", "/lib")
+```
+
+##### Matching output results
+
+By default, `xmake test` will determine whether the test passed based on whether the exit code of the test run is 0.
+
+Of course, we can also determine whether the test passes by configuring whether the output result of the test run meets our specified matching pattern.
+
+Mainly controlled by these two parameters:
+
+| Parameters | Description |
+| --- | --- |
+| pass_outputs | The test passes if the outputs match |
+| fail_outputs | If the outputs match, the test fails |
+
+What is passed into `pass_outputs` and `fail_outputs` is a list of lua matching patterns, but the patterns are slightly simplified, such as the processing of `*`.
+
+If the match is successful, the test passes and can be configured like this:
+
+```lua
+target("test")
+     add_tests("testname1", {pass_outputs = "hello"})
+     add_tests("testname2", {pass_outputs = "hello *"})
+     add_tests("testname3", {pass_outputs = {"hello", "hello *"}})
+```
+
+If the match is successful, the test fails. You can configure it like this:
+
+```lua
+target("test")
+     add_tests("testname1", {fail_outputs = "hello"})
+     add_tests("testname2", {fail_outputs = "hello *"})
+     add_tests("testname3", {fail_outputs = {"hello", "hello *"}})
+```
+
+We can also configure them simultaneously:
+
+```lua
+target("test")
+     add_tests("testname", {pass_outputs = "foo", fail_outputs = "hello"})
+```
+
+Since some test output results will have some newline or other blank characters at the end, which interferes with the matching mode, we can configure `trim_output = true` to truncate the blank characters before matching.
+
+```lua
+target("test")
+     add_tests("testname", {trim_output = true, pass_outputs = "foo", fail_outputs = "hello"})
+```
+
+We can also configure `{plain = true}` to disable lua pattern matching and only do the most basic flat text matching.
+
+```lua
+target("test")
+     add_tests("testname", {plain = true, pass_outputs = "foo", fail_outputs = "hello"})
+```
+
+##### Configure test group
+
+We can also configure a test group through `group = "foo"` for group testing:
+
+```lua
+target("test")
+     add_tests("testname1", {group = "foo"})
+     add_tests("testname2", {group = "foo"})
+     add_tests("testname3", {group = "bar"})
+     add_tests("testname4", {group = "bae"})
+```
+
+Where testname1/testname2 is a group foo, and the other two are in another group.
+
+Then, we can use `xmake test -g groupname` to perform group testing.
+
+```bash
+$ xmake test -g "foo"
+$ xmake test -g "foo*"
+```
+
+!> Running grouping also supports pattern matching.
+
+In addition, if the `group` parameter is not set to `add_tests`, we can also get the group name bound to the target by default.
+
+```lua
+target("test")
+     add_tests("testname")
+     set_group("foo")
+```
+
+##### Custom test script
+
+We have also added `before_test`, `on_test` and `after_test` configuration scripts. Users can customize them in the rule and target fields to implement customized test execution.
+
+```lua
+target("test")
+      on_test(function (target, opt)
+         print(opt.name, opt.runenvs, opt.runargs, opt.pass_outputs)
+
+         -- do test
+         --...
+
+         -- passed
+         return true
+
+         -- failed
+         return false, errors
+      end)
+```
+
+Among them, all parameters passed into `add_tests` can be obtained in opt. We customize the test logic in on_test, and then return true to indicate that the test passed, return false to indicate that the test failed, and then continue to return the error message of test failure.
+
+
+##### Automated build
+
+Since the test target usually does not need to be built during the normal development build phase, we will set `set_default(false)`.
+
+```lua
+target("test")
+     add_tests("testname")
+     set_default(false)
+```
+
+However, when running `xmake test` for testing, the targets corresponding to these tests will still be automatically built to ensure that they can be run.
+
+```bash
+$ xmake test
+[25%]: cache compiling.release src/main.cpp
+[50%]: linking.release test
+running tests...
+[100%]: test/testname ............................. passed 6.000s
+
+100% tests passed, 0 tests failed out of 1, spent 0.006s
+```
+
+##### Terminate if the first test fails
+
+By default, `xmake test` will wait until all tests have been run, no matter how many of them failed.
+
+Sometimes, we want to interrupt the test directly if the first test fails, then we can enable it through the following configuration:
+
+```lua
+set_policy("test.return_zero_on_failure", true)
+```
+
+##### If the test fails, return zero
+
+By default, as long as a test fails, it will return a non-zero exit code when `xmake test` is completed. This is very useful for some CI environments and can interrupt other CI scripts to continue running.
+
+Then the trigger signal tells CI that we need to generate test reports and alarms.
+
+Then, if we want to suppress this behavior, we can force the exit code of `xmake test` to always be set to 0.
+
+```lua
+set_policy("test.return_zero_on_failure", true)
+```
+
+##### Only test compilation
+
+Sometimes, we just want to test whether the code compiles or fails without running them. This can be achieved by configuring `build_should_pass` and `build_should_fail`.
+
+```lua
+target("test_10")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/compile.cpp")
+     add_tests("compile_fail", {build_should_fail = true})
+
+target("test_11")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/compile.cpp")
+     add_tests("compile_pass", {build_should_pass = true})
+```
+
+This is usually used in scenarios with `static_assert` in some test code, for example:
+
+```c++
+template <typename T>
+bool foo(T val) {
+   if constexpr (std::is_same_v<T, int>) {
+     printf("int!\n");
+   } else if constexpr (std::is_same_v<T, float>) {
+     printf("float!\n");
+   } else {
+     static_assert(false, "unsupported type");
+   }
+}
+
+int main(int, char**) {
+   foo("BAD");
+   return 0;
+}
+```
+
+##### Configure additional code compilation
+
+When configuring test cases, we can also configure additional code that needs to be compiled for each test, as well as some macro definitions to implement inline testing.
+
+xmake will compile an independent executable program for each test to run it, but this will not affect the compilation results of the target in the production environment.
+
+```lua
+target("test_13")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/test_1.cpp")
+     add_tests("stub_1", {files = "tests/stub_1.cpp", defines = "STUB_1"})
+
+target("test_14")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/test_2.cpp")
+     add_tests("stub_2", {files = "tests/stub_2.cpp", defines = "STUB_2"})
+
+target("test_15")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/test_1.cpp")
+     add_tests("stub_n", {files = "tests/stub_n*.cpp", defines = "STUB_N"})
+```
+
+##### Test dynamic library
+
+Usually, `add_tests` is only used to run tests on executable programs. Running dynamic libraries requires an additional main entry, so we need to configure an additional executable program to load it, for example:
+
+```lua
+target("foo")
+     set_kind("shared")
+     add_files("src/foo.cpp")
+
+target("foo_test")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/main.cpp")
+     add_deps("foo")
+     add_tests("foo_test1", { files = "tests/doctest_stub1.cpp" })
+     add_tests("foo_test2", { files = "tests/doctest_stub2.cpp" })
+     add_packages("doctest")
+```
+
+One advantage of this is that foo_test, as a test target, will not be compiled by default, and any configuration inside will not affect the compilation results of the dynamic library target foo in the production environment.

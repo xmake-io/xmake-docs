@@ -102,6 +102,13 @@
 <li><a href="https://github.com/xmake-io/xmake/issues/342">#342</a></li>
 <li><a href="https://github.com/xmake-io/xmake/issues/1715">#1715</a></li>
 </ul>
+<p>注：如果是 2.8.5 以上版本，就不需要通过 <code>includes("check_links.lua")</code> 分别引入这些接口了，而是使用更加方便的</p>
+<pre><code class="lang-lua">includes("@builtin/check")
+</code></pre>
+<p>一次性引入所有检测接口，当然我们也可以按需引入单个脚本：</p>
+<pre><code class="lang-lua">includes("@builtin/check/check_links.lua")
+</code></pre>
+<p>而原有的引入路径，没有区分是否为用户路径，不方便管理维护，且容易被用户配置干扰，后面会逐步废弃。</p>
 <h4 id="links">检测 links</h4>
 <p>我们可以通过尝试链接来检测指定的 links 是否通过。</p>
 <pre><code class="lang-lua">includes("check_links.lua")

@@ -3132,3 +3132,417 @@ add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
 add_extrafiles("assets/other.txt")
 ```
 
+### target:add_tests
+
+#### 添加测试用例
+
+2.8.5 版本开始，我们增加了内置的测试命令：`xmake test`，我们只需要在需要测试的 target 上通过 add_tests 配置一些测试用例，就可以自动执行测试。
+
+即使当前 target 被设置成了 `set_default(false)`，在执行测试的时候，xmake 也还是会先自动编译它们，然后自动运行所有的测试。
+
+我们可以先看个整体的例子，大概知道下它是怎么样子的。
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+for _, file in ipairs(os.files("src/test_*.cpp")) do
+    local name = path.basename(file)
+    target(name)
+        set_kind("binary")
+        set_default(false)
+        add_files("src/" .. name .. ".cpp")
+        add_tests("default")
+        add_tests("args", {runargs = {"foo", "bar"}})
+        add_tests("pass_output", {trim_output = true, runargs = "foo", pass_outputs = "hello foo"})
+        add_tests("fail_output", {fail_outputs = {"hello2 .*", "hello xmake"}})
+end
+```
+
+这个例子，自动扫描源码目录下的 `test_*.cpp` 源文件，然后每个文件自动创建一个测试目标，它被设置成了 `set_default(false)`，也就是正常情况下，默认不会编译它们。
+
+但是，如果执行 `xmake test` 进行测试，它们就会被自动编译，然后测试运行，运行效果如下：
+
+```bash
+ruki-2:test ruki$ xmake test
+running tests ...
+[  2%]: test_1/args        .................................... passed 7.000s
+[  5%]: test_1/default     .................................... passed 5.000s
+[  8%]: test_1/fail_output .................................... passed 5.000s
+[ 11%]: test_1/pass_output .................................... passed 6.000s
+[ 13%]: test_2/args        .................................... passed 7.000s
+[ 16%]: test_2/default     .................................... passed 6.000s
+[ 19%]: test_2/fail_output .................................... passed 6.000s
+[ 22%]: test_2/pass_output .................................... passed 6.000s
+[ 25%]: test_3/args        .................................... passed 7.000s
+[ 27%]: test_3/default     .................................... passed 7.000s
+[ 30%]: test_3/fail_output .................................... passed 6.000s
+[ 33%]: test_3/pass_output .................................... passed 6.000s
+[ 36%]: test_4/args        .................................... passed 6.000s
+[ 38%]: test_4/default     .................................... passed 6.000s
+[ 41%]: test_4/fail_output .................................... passed 5.000s
+[ 44%]: test_4/pass_output .................................... passed 6.000s
+[ 47%]: test_5/args        .................................... passed 5.000s
+[ 50%]: test_5/default     .................................... passed 6.000s
+[ 52%]: test_5/fail_output .................................... failed 6.000s
+[ 55%]: test_5/pass_output .................................... failed 5.000s
+[ 58%]: test_6/args        .................................... passed 7.000s
+[ 61%]: test_6/default     .................................... passed 6.000s
+[ 63%]: test_6/fail_output .................................... passed 6.000s
+[ 66%]: test_6/pass_output .................................... passed 6.000s
+[ 69%]: test_7/args        .................................... failed 6.000s
+[ 72%]: test_7/default     .................................... failed 7.000s
+[ 75%]: test_7/fail_output .................................... failed 6.000s
+[ 77%]: test_7/pass_output .................................... failed 5.000s
+[ 80%]: test_8/args        .................................... passed 7.000s
+[ 83%]: test_8/default     .................................... passed 6.000s
+[ 86%]: test_8/fail_output .................................... passed 6.000s
+[ 88%]: test_8/pass_output .................................... failed 5.000s
+[ 91%]: test_9/args        .................................... passed 6.000s
+[ 94%]: test_9/default     .................................... passed 6.000s
+[ 97%]: test_9/fail_output .................................... passed 6.000s
+[100%]: test_9/pass_output .................................... passed 6.000s
+
+80% tests passed, 7 tests failed out of 36, spent 0.242s
+```
+
+![](/assets/img/manual/xmake-test1.png)
+
+我们也可以执行 `xmake test -vD` 查看详细的测试失败的错误信息：
+
+![](/assets/img/manual/xmake-test2.png)
+
+##### 运行指定测试目标
+
+我们也可以指定运行指定 target 的某个测试：
+
+```bash
+$ xmake test targetname/testname
+```
+
+或者按模式匹配的方式，运行一个 target 的所有测试，或者一批测试：
+
+```bash
+$ xmake test targetname/*
+$ xmake test targetname/foo*
+```
+
+也可以运行所有 target 的同名测试：
+
+```bash
+$ xmake test */testname
+```
+
+##### 并行化运行测试
+
+其实，默认就是并行化运行的，但是我们可以通过 `-jN` 调整运行的并行度。
+
+```bash
+$ xmake test -jN
+```
+
+##### 分组运行测试
+
+```bash
+$ xmake test -g "foo"
+$ xmake test -g "foo*"
+```
+
+##### 添加测试到目标（无参数）
+
+如果没有配置任何参数，仅仅配置了测试名到 `add_tests`，那么仅仅测试这个目标程序的是否会运行失败，根据退出代码来判断是否通过测试。
+
+```
+target("test")
+    add_tests("testname")
+```
+
+##### 配置运行参数
+
+我们也可以通过 `{runargs = {"arg1", "arg2"}}` 的方式，给 `add_tests` 配置指定测试需要运行的参数。
+
+另外，一个 target 可以同时配置多个测试用例，每个测试用例可独立运行，互不冲突。
+
+```lua
+target("test")
+    add_tests("testname", {runargs = "arg1"})
+    add_tests("testname", {runargs = {"arg1", "arg2"}})
+```
+
+如果我们没有配置 runargs 到 `add_tests`，那么我们也会尝试从被绑定的 target 中，获取 `set_runargs` 设置的运行参数。
+
+```lua
+target("test")
+    add_tests("testname")
+    set_runargs("arg1", "arg2")
+```
+
+##### 配置运行目录
+
+我们也可以通过 rundir 设置测试运行的当前工作目录，例如：
+
+```lua
+target("test")
+    add_tests("testname", {rundir = os.projectdir()})
+```
+
+如果我们没有配置 rundir 到 `add_tests`，那么我们也会尝试从被绑定的 target 中，获取 `set_rundir` 设置的运行目录。
+
+```lua
+target("test")
+    add_tests("testname")
+    set_rundir("$(projectdir)")
+```
+
+##### 配置运行环境
+
+我们也可以通过 runenvs 设置一些运行时候的环境变量，例如：
+
+```lua
+target("test")
+    add_tests("testname", {runenvs = {LD_LIBRARY_PATH = "/lib"}})
+```
+
+如果我们没有配置 runenvs 到 `add_tests`，那么我们也会尝试从被绑定的 target 中，获取 `add_runenvs` 设置的运行环境。
+
+```lua
+target("test")
+    add_tests("testname")
+    add_runenvs("LD_LIBRARY_PATH", "/lib")
+```
+
+##### 匹配输出结果
+
+默认情况下，`xmake test` 会根据测试运行的退出代码是否为 0，来判断是否测试通过。
+
+当然，我们也可以通过配置测试运行的输出结果是否满足我们的指定的匹配模式，来判断是否测试通过。
+
+主要通过这两个参数控制：
+
+| 参数 | 说明 |
+| --- | --- |
+| pass_outputs | 如果输出匹配，则测试通过 |
+| fail_outputs | 如果输出匹配，则测试失败 |
+
+传入 `pass_outputs` 和 `fail_outputs` 的是一个 lua 匹配模式的列表，但模式稍微做了一些简化，比如对 `*` 的处理。
+
+如果要匹配成功，则测试通过，可以这么配置：
+
+```lua
+target("test")
+    add_tests("testname1", {pass_outputs = "hello"})
+    add_tests("testname2", {pass_outputs = "hello *"})
+    add_tests("testname3", {pass_outputs = {"hello", "hello *"}})
+```
+
+如果要匹配成功，则测试失败，可以这么配置：
+
+```lua
+target("test")
+    add_tests("testname1", {fail_outputs = "hello"})
+    add_tests("testname2", {fail_outputs = "hello *"})
+    add_tests("testname3", {fail_outputs = {"hello", "hello *"}})
+```
+
+我们也可以同时配置它们：
+
+```lua
+target("test")
+    add_tests("testname", {pass_outputs = "foo", fail_outputs = "hello"})
+```
+
+由于一些测试输出的结果，尾部会有一些换行什么的空白字符，干扰匹配模式，我们可以再配置 `trim_output = true`，先截断空白字符后，再做匹配。
+
+```lua
+target("test")
+    add_tests("testname", {trim_output = true, pass_outputs = "foo", fail_outputs = "hello"})
+```
+
+我们还可以配置 `{plain = true}` 是禁用 lua 模式匹配，仅仅做最基础的平坦文本匹配。
+
+```lua
+target("test")
+    add_tests("testname", {plain = true, pass_outputs = "foo", fail_outputs = "hello"})
+```
+
+##### 配置测试组
+
+我们也可以通过 `group = "foo"` 来配置一个测试组，进行分组测试：
+
+```lua
+target("test")
+    add_tests("testname1", {group = "foo"})
+    add_tests("testname2", {group = "foo"})
+    add_tests("testname3", {group = "bar"})
+    add_tests("testname4", {group = "bae"})
+```
+
+其中 testname1/testname2 是一个组 foo，另外两个是在另外一个组。
+
+然后，我们就可以使用 `xmake test -g groupname` 来进行分组测试了。
+
+```bash
+$ xmake test -g "foo"
+$ xmake test -g "foo*"
+```
+
+!> 运行分组，也是支持模式匹配的。
+
+另外，如果没有设置 `group` 参数给 `add_tests`，我们也可以默认获取绑定到 target 的组名。
+
+```lua
+target("test")
+    add_tests("testname")
+    set_group("foo")
+```
+
+##### 自定义测试脚本
+
+我们还新增了 `before_test`, `on_test` 和 `after_test` 配置脚本，用户可以在 rule 和 target 域，自定义配置它们实现定制化的测试执行。
+
+```lua
+target("test")
+     on_test(function (target, opt)
+        print(opt.name, opt.runenvs, opt.runargs, opt.pass_outputs)
+
+        -- do test
+        -- ...
+
+        -- passed
+        return true
+
+        -- failied
+        return false, errors
+     end)
+```
+
+其中，opt 里面可以获取到所有传入 `add_tests` 的参数，我们在 on_test 里面自定义测试逻辑，然后返回 true 就是测试通过，返回 false 就是测试失败，然后继续返回测试失败的错误信息。
+
+
+##### 自动化构建
+
+由于测试目标在正常开发构建阶段，通常是不需要被构建的，因此我们会设置 `set_default(false)`。
+
+```lua
+target("test")
+    add_tests("testname")
+    set_default(false)
+```
+
+但是运行 `xmake test` 进行测试时候，这些测试对应的 target 还是会被自动构建，确保能够被运行。
+
+```bash
+$ xmake test
+[ 25%]: cache compiling.release src/main.cpp
+[ 50%]: linking.release test
+running tests ...
+[100%]: test/testname .................................... passed 6.000s
+
+100% tests passed, 0 tests failed out of 1, spent 0.006s
+```
+
+##### 首次测试失败就终止
+
+默认情况下，`xmake test` 会等到所有测试都运行完，不管里面有多少是没通过的。
+
+而有时候，我们想在第一个测试没通过，就直接中断测试，那么我们可以通过下面的配置启用：
+
+```lua
+set_policy("test.return_zero_on_failure", true)
+```
+
+##### 测试失败返回0
+
+默认情况下，只要有一个测试没通过，等到 `xmake test` 运行完成，它都会返回非0退出代码，这对于一些 CI 环境非常有用，可以中断 CI 的其他脚本继续运行。
+
+然后触发信号告诉 CI，我们需要生成测试报告和告警了。
+
+然后，如果我们想要压制这种行为，可以强制将 `xmake test` 的退出代码总是设置成 0。
+
+```lua
+set_policy("test.return_zero_on_failure", true)
+```
+
+##### 仅仅测试编译
+
+有时候，我们仅仅想要测试代码是否通过编译，或者没有通过编译，不需要运行它们，那么可以通过配置 `build_should_pass` 和 `build_should_fail` 来实现。
+
+```lua
+target("test_10")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/compile.cpp")
+    add_tests("compile_fail", {build_should_fail = true})
+
+target("test_11")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/compile.cpp")
+    add_tests("compile_pass", {build_should_pass = true})
+```
+
+这通常用于一些测试代码中带有 `static_assert` 的场景，例如：
+
+```c++
+template <typename T>
+bool foo(T val) {
+  if constexpr (std::is_same_v<T, int>) {
+    printf("int!\n");
+  } else if constexpr (std::is_same_v<T, float>) {
+    printf("float!\n");
+  } else {
+    static_assert(false, "unsupported type");
+  }
+}
+
+int main(int, char**) {
+  foo("BAD");
+  return 0;
+}
+```
+
+##### 配置额外的代码编译
+
+我们还可以在配置测试用例的时候，对每个测试配置额外需要编译的代码，以及一些宏定义，实现内联测试。
+
+xmake 会为每个测试单独编译一个独立的可执行程序去运行它，但这并不会影响到 target 在生产环境的编译结果。
+
+```lua
+target("test_13")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/test_1.cpp")
+    add_tests("stub_1", {files = "tests/stub_1.cpp", defines = "STUB_1"})
+
+target("test_14")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/test_2.cpp")
+    add_tests("stub_2", {files = "tests/stub_2.cpp", defines = "STUB_2"})
+
+target("test_15")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/test_1.cpp")
+    add_tests("stub_n", {files = "tests/stub_n*.cpp", defines = "STUB_N"})
+```
+
+##### 测试动态库
+
+通常，`add_tests` 仅用于对可执行程序进行运行测试，运行动态库需要有一个额外的 main 主入口，因此我们需要额外配置一个可执行程序去加载它，例如：
+
+```lua
+target("foo")
+    set_kind("shared")
+    add_files("src/foo.cpp")
+
+target("foo_test")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/main.cpp")
+    add_deps("foo")
+    add_tests("foo_test1", { files = "tests/doctest_stub1.cpp" })
+    add_tests("foo_test2", { files = "tests/doctest_stub2.cpp" })
+    add_packages("doctest")
+```
+
+这样一个好处是，foo_test 作为测试目标，默认不会被编译，而且里面的任何配置，都不会影响到 foo 这个动态库目标在生产环境的编译结果。

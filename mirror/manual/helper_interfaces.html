@@ -99,6 +99,13 @@
 <p>And <code>check_xxx</code> only defines related macros to participate in compilation, but it will not be persisted in <code>config.h.in</code>.</p>
 <p>For related issues, see:</p>
 <p>-<a href="https://github.com/xmake-io/xmake/issues/342">#342</a><br>-<a href="https://github.com/xmake-io/xmake/issues/1715">#1715</a></p>
+<p>Note: Instead of introducing these interfaces separately via <code>includes("check_links.lua")</code>,<br>for versions 2.8.5 and above, you can use the more convenient</p>
+<pre><code class="lang-lua">includes("@builtin/check")
+</code></pre>
+<p>to bring in all the checking interfaces at once, but of course we can also bring in individual scripts on an as-needed basis:</p>
+<pre><code class="lang-lua">includes("@builtin/check/check_links.lua")
+</code></pre>
+<p>The original introduction path, which does not distinguish whether it is a user path or not, is not easy to manage and maintain,<br>and is easily interfered by user configurations, so it will be gradually deprecated later.</p>
 <h4 id="checklinks">Check links</h4>
 <p>We can check whether the specified links pass or not by trying to link.</p>
 <pre><code class="lang-lua">includes("check_links.lua")
