@@ -3526,23 +3526,79 @@ target("test_15")
     add_tests("stub_n", {files = "tests/stub_n*.cpp", defines = "STUB_N"})
 ```
 
+以 doctest 为例，我们可以在不修改任何 main.cpp 的情况下，外置单元测试：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("doctest")
+
+target("doctest")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    for _, testfile in ipairs(os.files("tests/*.cpp")) do
+        add_tests(path.basename(testfile), {
+            files = testfile,
+            remove_files = "src/main.cpp",
+            languages = "c++11",
+            packages = "doctest",
+            defines = "DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN"})
+    end
+```
+
+定义 DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 会引入额外的 main 入口函数，因此我们需要配置 remove_files 去移除已有的 main.cpp 文件。
+
+运行效果如下：
+
+```bash
+ruki-2:doctest ruki$ xmake test
+running tests ...
+[ 50%]: doctest/test_1 .................................... failed 0.009s
+[100%]: doctest/test_2 .................................... passed 0.009s
+
+50% tests passed, 1 tests failed out of 2, spent 0.019s
+ruki-2:doctest ruki$ xmake test -v
+running tests ...
+[ 50%]: doctest/test_1 .................................... failed 0.026s
+[doctest] doctest version is "2.4.11"
+[doctest] run with "--help" for options
+===============================================================================
+tests/test_1.cpp:7:
+TEST CASE:  testing the factorial function
+
+tests/test_1.cpp:8: ERROR: CHECK( factorial(1) == 10 ) is NOT correct!
+  values: CHECK( 1 == 10 )
+
+===============================================================================
+[doctest] test cases: 1 | 0 passed | 1 failed | 0 skipped
+[doctest] assertions: 4 | 3 passed | 1 failed |
+[doctest] Status: FAILURE!
+
+run failed, exit code: 1
+[100%]: doctest/test_2 .................................... passed 0.010s
+
+50% tests passed, 1 tests failed out of 2, spent 0.038s
+```
+
 ##### 测试动态库
 
 通常，`add_tests` 仅用于对可执行程序进行运行测试，运行动态库需要有一个额外的 main 主入口，因此我们需要额外配置一个可执行程序去加载它，例如：
 
 ```lua
-target("foo")
+
+target("doctest_shared")
     set_kind("shared")
     add_files("src/foo.cpp")
-
-target("foo_test")
-    set_kind("binary")
-    set_default(false)
-    add_files("src/main.cpp")
-    add_deps("foo")
-    add_tests("foo_test1", { files = "tests/doctest_stub1.cpp" })
-    add_tests("foo_test2", { files = "tests/doctest_stub2.cpp" })
-    add_packages("doctest")
+    for _, testfile in ipairs(os.files("tests/*.cpp")) do
+        add_tests(path.basename(testfile), {
+            kind = "binary",
+            files = testfile,
+            languages = "c++11",
+            packages = "doctest",
+            defines = "DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN"})
+    end
 ```
 
-这样一个好处是，foo_test 作为测试目标，默认不会被编译，而且里面的任何配置，都不会影响到 foo 这个动态库目标在生产环境的编译结果。
+通过 `kind = "binary"` 可以将每个单元测试改为 binary 可执行程序，并通过 DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 引入 main 入口函数。
+
+这样就能实现动态库目标中外置可运行的单元测试。

@@ -2822,22 +2822,70 @@ target("test_15")
      add_files("src/test_1.cpp")
      add_tests("stub_n", {files = "tests/stub_n*.cpp", defines = "STUB_N"})
 </code></pre>
+<p>Taking doctest as an example, we can externally unit test without modifying any main.cpp:</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("doctest")
+
+target("doctest")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     for _, testfile in ipairs(os.files("tests/*.cpp")) do
+         add_tests(path.basename(testfile), {
+             files = testfile,
+             remove_files = "src/main.cpp",
+             languages = "c++11",
+             packages = "doctest",
+             defines = "DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN"})
+     end
+</code></pre>
+<p>Defining DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN will introduce additional main entry function, so we need to configure remove_files to remove the existing main.cpp file.</p>
+<p>The running effect is as follows:</p>
+<pre><code class="lang-bash">ruki-2:doctest ruki$ xmake test
+running tests...
+[50%]: doctest/test_1 ........................ failed 0.009s
+[100%]: doctest/test_2 ........................ passed 0.009s
+
+50% tests passed, 1 tests failed out of 2, spent 0.019s
+ruki-2:doctest ruki$ xmake test -v
+running tests...
+[50%]: doctest/test_1 ........................ failed 0.026s
+[doctest] doctest version is "2.4.11"
+[doctest] run with "--help" for options
+================================================== =============================
+tests/test_1.cpp:7:
+TEST CASE: testing the factorial function
+
+tests/test_1.cpp:8: ERROR: CHECK( factorial(1) == 10 ) is NOT correct!
+   values: CHECK( 1 == 10 )
+
+================================================== =============================
+[doctest] test cases: 1 | 0 passed | 1 failed | 0 skipped
+[doctest] assertions: 4 | 3 passed | 1 failed |
+[doctest] Status: FAILURE!
+
+run failed, exit code: 1
+[100%]: doctest/test_2 ........................ passed 0.010s
+
+50% tests passed, 1 tests failed out of 2, spent 0.038s
+</code></pre>
 <h5 id="testdynamiclibrary">Test dynamic library</h5>
 <p>Usually, <code>add_tests</code> is only used to run tests on executable programs. Running dynamic libraries requires an additional main entry, so we need to configure an additional executable program to load it, for example:</p>
-<pre><code class="lang-lua">target("foo")
+<pre><code class="lang-lua">
+target("doctest_shared")
      set_kind("shared")
      add_files("src/foo.cpp")
-
-target("foo_test")
-     set_kind("binary")
-     set_default(false)
-     add_files("src/main.cpp")
-     add_deps("foo")
-     add_tests("foo_test1", { files = "tests/doctest_stub1.cpp" })
-     add_tests("foo_test2", { files = "tests/doctest_stub2.cpp" })
-     add_packages("doctest")
+     for _, testfile in ipairs(os.files("tests/*.cpp")) do
+         add_tests(path.basename(testfile), {
+             kind = "binary",
+             files = testfile,
+             languages = "c++11",
+             packages = "doctest",
+             defines = "DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN"})
+     end
 </code></pre>
-<p>One advantage of this is that foo_test, as a test target, will not be compiled by default, and any configuration inside will not affect the compilation results of the dynamic library target foo in the production environment.</p>
+<p>Each unit test can be changed to a binary executable program through <code>kind = "binary"</code>, and the main entry function can be introduced through DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN.</p>
+<p>This enables external runnable unit tests in dynamic library targets.</p>
 </article>
 </body>
 </html>
