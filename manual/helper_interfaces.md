@@ -365,3 +365,37 @@ configvar_check_macros("NO_GCC", "__GNUC__", {defined = false})
 - Detect macro conditions
 configvar_check_macros("HAS_CXX20", "__cplusplus >= 202002L", {languages = "c++20"})
 ```
+
+#### Detect type size
+
+In previous versions, type detection was possible with ``check_csnippets`` and ``output = true``.
+
+```lua
+check_csnippets("INT_SIZE", 'printf("%d", sizeof(int)); return 0;', {output = true, number = true})
+```
+
+This way, however, extracts the type size information by trying to run the test code and then getting the run output.
+
+This doesn't work for cross-compilation.
+
+In version 2.8.5, we added the ``check_sizeof`` helper interface, which allows you to extract type size information by parsing the binary file of the test program directly.
+
+Since there is no need to run tests, this approach not only supports cross-compilation, but also greatly improves the efficiency of testing and is much easier to use.
+
+```lua
+includes("@builtin/check")
+
+target("test")
+    set_kind("static")
+    add_files("*.cpp")
+    check_sizeof("LONG_SIZE", "long")
+    check_sizeof("STRING_SIZE", "std::string", {includes = "string"})
+```
+
+```bash
+$ xmake f -c
+checking for LONG_SIZE ... 8
+checking for STRING_SIZE ... 24
+```
+
+Alternatively, I can check for it in the script field with `target:check_sizeof`.

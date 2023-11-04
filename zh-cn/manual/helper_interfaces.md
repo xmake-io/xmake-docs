@@ -364,3 +364,37 @@ configvar_check_macros("NO_GCC", "__GNUC__", {defined = false})
 -- 检测宏条件
 configvar_check_macros("HAS_CXX20", "__cplusplus >= 202002L", {languages = "c++20"})
 ```
+
+#### 检测类型大小
+
+在先前的版本中，我们可以通过 `check_csnippets` 和 `output = true` 的方式，来实现类型检测。
+
+```lua
+check_csnippets("INT_SIZE", 'printf("%d", sizeof(int)); return 0;', {output = true, number = true})
+```
+
+但是这种方式，是通过尝试运行测试代码，然后获取运行输出结果，提取类型大小信息。
+
+这对于交叉编译，就不适用了。
+
+在 2.8.5 版本中，我们新增了 `check_sizeof` 辅助接口，可以通过直接解析测试程序的二进制文件，提取类型大小信息。
+
+由于不需要运行测试，这种方式不仅可以支持交叉编译，而且对检测效率也有极大的提升，使用也更加的简单。
+
+```lua
+includes("@builtin/check")
+
+target("test")
+    set_kind("static")
+    add_files("*.cpp")
+    check_sizeof("LONG_SIZE", "long")
+    check_sizeof("STRING_SIZE", "std::string", {includes = "string"})
+```
+
+```bash
+$ xmake f -c
+checking for LONG_SIZE ... 8
+checking for STRING_SIZE ... 24
+```
+
+另外，我也可以通过 `target:check_sizeof` 在脚本域进行检测。
