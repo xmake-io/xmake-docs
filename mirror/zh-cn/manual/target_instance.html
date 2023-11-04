@@ -403,6 +403,27 @@ target("test")
         ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
     end)
 </code></pre>
+<h4 id="targetcheck_sizeof">target:check_sizeof</h4>
+<ul>
+<li>检测类型大小</li>
+</ul>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        print("sizeof(long) = %s", target:check_sizeof("long"))
+        print("sizeof(string) = %s", target:check_sizeof("std::string", {includes = "string"}))
+        if target:check_size("long") == 8 then
+            target:add("defines", "LONG64")
+        end
+    end)
+</code></pre>
+<pre><code class="lang-bash">$ xmake
+sizeof(long) = 8
+sizeof(string) = 24
+</code></pre>
 <h4 id="targethas_features">target:has_features</h4>
 <ul>
 <li>检测是否指定的 C/C++ 编译特性</li>

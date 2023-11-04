@@ -361,6 +361,31 @@ target("test")
      end)
 ```
 
+#### target:check_sizeof
+
+- Detect type size
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        print("sizeof(long) = %s", target:check_sizeof("long"))
+        print("sizeof(string) = %s", target:check_sizeof("std::string", {includes = "string"}))
+        if target:check_size("long") == 8 then
+            target:add("defines", "LONG64")
+        end
+    end)
+```
+
+```bash
+$ xmake
+sizeof(long) = 8
+sizeof(string) = 24
+```
+
 #### target:has_features
 
 - Detect if specified C/C++ compiler feature
