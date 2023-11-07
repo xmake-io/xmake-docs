@@ -347,6 +347,44 @@ target("demo")
     http_headers = {"TEST1: foo", "TEST2: bar"}
 })
 </code></pre>
+<h3 id="windowsmanifestuac">windows.manifest.uac</h3>
+<p>通过这个策略，我们可以快速方便的设置并启用 Windows UAC。</p>
+<p>它支持以下几个 Level：</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Flag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>invoker</td>
+<td>asInvoker</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>requireAdministrator</td>
+</tr>
+<tr>
+<td>highest</td>
+<td>highestAvailable</td>
+</tr>
+</tbody>
+</table>
+<p>例如：</p>
+<pre><code class="lang-lua">set_policy("windows.manifest.uac", "admin")
+</code></pre>
+<p>它等价于设置</p>
+<pre><code class="lang-lua">if is_plat("windows") then
+    add_ldflags("/MANIFEST", {"/MANIFESTUAC:level=&#39;requireAdministrator&#39; uiAccess=&#39;false&#39;"}, {force = true, expand = false})
+end
+</code></pre>
+<p>但是更加方便简洁，并且不需要判断平台，其他平台自动忽略。</p>
+<h3 id="windowsmanifestuacui">windows.manifest.uac.ui</h3>
+<p>设置 Windows UAC 的 uiAccess，如果没有设置它，默认是 false。</p>
+<pre><code class="lang-lua">set_policy("windows.manifest.uac.ui", true)
+</code></pre>
 </article>
 </body>
 </html>

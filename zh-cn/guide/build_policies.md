@@ -433,3 +433,38 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 })
 ```
 
+### windows.manifest.uac
+
+通过这个策略，我们可以快速方便的设置并启用 Windows UAC。
+
+它支持以下几个 Level：
+
+| Level | Flag |
+| --- | --- |
+| invoker | asInvoker |
+| admin | requireAdministrator |
+| highest | highestAvailable |
+
+例如：
+
+```lua
+set_policy("windows.manifest.uac", "admin")
+```
+
+它等价于设置
+
+```lua
+if is_plat("windows") then
+    add_ldflags("/MANIFEST", {"/MANIFESTUAC:level='requireAdministrator' uiAccess='false'"}, {force = true, expand = false})
+end
+```
+
+但是更加方便简洁，并且不需要判断平台，其他平台自动忽略。
+
+### windows.manifest.uac.ui
+
+设置 Windows UAC 的 uiAccess，如果没有设置它，默认是 false。
+
+```lua
+set_policy("windows.manifest.uac.ui", true)
+```

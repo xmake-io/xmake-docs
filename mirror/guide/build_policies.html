@@ -345,6 +345,44 @@ target("demo")
     http_headers = {"TEST1: foo", "TEST2: bar"}
 })
 </code></pre>
+<h3 id="windowsmanifestuac">windows.manifest.uac</h3>
+<p>This policy allows us to quickly and easily setup and enable Windows UAC.</p>
+<p>It supports the following levels:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Flag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>invoker</td>
+<td>asInvoker</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>requireAdministrator</td>
+</tr>
+<tr>
+<td>highest</td>
+<td>highestAvailable</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code class="lang-lua">set_policy("windows.manifest.uac", "admin")
+</code></pre>
+<p>It is equivalent to setting</p>
+<pre><code class="lang-lua">if is_plat("windows") then
+    add_ldflags("/MANIFEST", {"/MANIFESTUAC:level=&#39;requireAdministrator&#39; uiAccess=&#39;false&#39;"}, {force = true, expand = false})
+end
+</code></pre>
+<p>But it&#39;s easier and cleaner, and doesn&#39;t need to judge the platform, other platforms are automatically ignored.</p>
+<h3 id="windowsmanifestuacui">windows.manifest.uac.ui</h3>
+<p>Sets uiAccess for Windows UAC, defaults to false if it is not set.</p>
+<pre><code class="lang-lua">set_policy("windows.manifest.uac.ui", true)
+</code></pre>
 </article>
 </body>
 </html>
