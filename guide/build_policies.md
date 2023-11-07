@@ -453,7 +453,7 @@ It is equivalent to setting
 
 ```lua
 if is_plat("windows") then
-    add_ldflags("/MANIFEST", {"/MANIFESTUAC:level='requireAdministrator' uiAccess='false'"}, {force = true, expand = false})
+    add_ldflags("/manifest:embed", {"/manifestuac:level='requireAdministrator' uiAccess='false'"}, {force = true, expand = false})
 end
 ```
 
