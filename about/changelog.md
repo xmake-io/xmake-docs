@@ -1,5 +1,26 @@
 # Changelog
 
+## v2.8.5
+
+### New features
+
+* [#1452](https://github.com/xmake-io/xmake/issues/1452): Improve link mechanism and order
+* [#1438](https://github.com/xmake-io/xmake/issues/1438): Support code amalgamation
+* [#3381](https://github.com/xmake-io/xmake/issues/3381): Add `xmake test` support
+* [#4276](https://github.com/xmake-io/xmake/issues/4276): Support custom scope api
+* [#4286](https://github.com/xmake-io/xmake/pull/4286): Add Apple XROS support
+* [#4345](https://github.com/xmake-io/xmake/issues/4345): Support check sizeof
+* [#4369](https://github.com/xmake-io/xmake/pull/4369): Add windows.manifest.uac policy
+
+### Changes
+
+* [#4284](https://github.com/xmake-io/xmake/issues/4284): Improve builtin includes
+
+### Bugs fixed
+
+* [#4256](https://github.com/xmake-io/xmake/issues/4256): Fix intellisense for vsxmake/c++modules
+
+
 ## v2.8.3
 
 ### New features

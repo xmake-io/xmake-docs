@@ -377,7 +377,7 @@ target("demo")
 </code></pre>
 <p>它等价于设置</p>
 <pre><code class="lang-lua">if is_plat("windows") then
-    add_ldflags("/MANIFEST", {"/MANIFESTUAC:level=&#39;requireAdministrator&#39; uiAccess=&#39;false&#39;"}, {force = true, expand = false})
+    add_ldflags("/manifest:embed", {"/manifestuac:level=&#39;requireAdministrator&#39; uiAccess=&#39;false&#39;"}, {force = true, expand = false})
 end
 </code></pre>
 <p>但是更加方便简洁，并且不需要判断平台，其他平台自动忽略。</p>
