@@ -18,7 +18,7 @@
 | [SirLynix](https://github.com/SirLynix) | [BurgWar](https://github.com/DigitalPulseSoftware/BurgWar) (Video game) & [obs-kinect](https://github.com/SirLynix/obs-kinect) (plugin for OBS) | After programming for more than 12 years in C++, I can say xmake is a life changer. It's to C++ what Cargo is to Rust, a truly helpful tool (especially with external dependencies) you won't want to give up.
 | [yamashi](https://github.com/yamashi) | [Cyber Engine Tweaks](https://github.com/yamashi/CyberEngineTweaks) (Mod for Cyberpunk 2077) | Dll injection to add Lua scripting, imgui user interface, console cheats and other hacks to Cyberpunk 2077.
 | [Tilted Phoques](https://github.com/tiltedphoques) | [Skyrim/Fallout Together](https://github.com/tiltedphoques/TiltedOnline/) (Mod for Skyrim & Fallout 4) | Dll injection to add multiplayer to CreationKit games such as Skyrim and Fallout 4.
-| 武汉凌久微电子有限公司 | 内部嵌入式图形驱动项目 | 支持多种国产嵌入式实时操作系统的GP系列国产GPU OpenGL/ES驱动 |
+| [武汉凌久微电子有限公司](http://www.ljmicro.cn) | 内部嵌入式图形驱动项目 | 支持翼辉、天脉、锐华等多种国产嵌入式实时操作系统的GP100/200系列国产GPU OpenGL/ES驱动 |
 | [yecate](https://github.com/yecate) | 个人项目 | 跨平台构建的利器,xmake在我日常开发工作中提供了很大的便利 |
 | [fasiondog](https://github.com/fasiondog) | [Hikyuu Quant Framework](https://github.com/fasiondog/hikyuu) 基于C++/Python的开源量化交易研究框架 | xmake 的简洁高效是C/C++跨平台工程的解放 |
 | [KnightJun](https://github.com/knightjun) | [BingW](https://github.com/knightjun/BingW)(bing wallpaper) | xmake is an excellent, simple, easy-to-use and powerful build tool.
