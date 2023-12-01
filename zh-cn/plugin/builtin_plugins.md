@@ -672,6 +672,238 @@ $ xmake check clang.tidy --fix_errors
 $ xmake check clang.tidy --fix_notes
 ```
 
+## 生成安装包
+
+### 简介
+
+这个插件可以帮助用户快速生成不同平台的安装包，源码包，它会生成下面一些安装包格式：
+
+- Windows NSIS 二进制安装包
+- runself (shell) 自编译安装包
+- zip/tar.gz 二进制包
+- zip/tar.gz 源码包
+- RPM 二进制安装包（待支持）
+- SRPM 源码安装包（待支持）
+- DEB 二进制安装包（待支持）
+
+下面是一个完整例子，我们可以先简单看下：
+
+```lua
+set_version("1.0.0")
+add_rules("mode.debug", "mode.release")
+
+includes("@builtin/xpack")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+
+xpack("test")
+    set_formats("nsis", "zip", "targz", "runself")
+    set_title("hello")
+    set_author("ruki")
+    set_description("A test installer.")
+    set_homepage("https://xmake.io")
+    set_licensefile("LICENSE.md")
+    add_targets("test")
+    add_installfiles("src/(assets/*.png)", {prefixdir = "images"})
+    add_sourcefiles("(src/**)")
+    set_iconfile("src/assets/xmake.ico")
+
+    after_installcmd(function (package, batchcmds)
+        batchcmds:mkdir(package:installdir("resources"))
+        batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+        batchcmds:mkdir(package:installdir("stub"))
+    end)
+
+    after_uninstallcmd(function (package, batchcmds)
+        batchcmds:rmdir(package:installdir("resources"))
+        batchcmds:rmdir(package:installdir("stub"))
+    end)
+```
+
+我们通过 `includes("@builtin/xpack")` 引入 xpack 的所有配置接口，包括 xpack 配置域，以及它的所有域接口。
+
+然后我们执行：
+
+```bash
+$ xmake pack
+```
+
+即可生成所有安装包。
+
+### 生成 NSIS 安装包
+
+只要配置了 `set_formats("nsis")` 格式，然后执行 `xmake pack` 命令，就能生成 NSIS 格式的安装包。
+
+另外，xmake 还会自动安装生成 NSIS 包所需的工具，实现真正的一键打包。
+
+```bash
+$ xmake pack
+note: install or modify (m) these packages (pass -y to skip confirm)?
+in xmake-repo:
+  -> nsis 3.09
+please input: y (y/n/m)
+
+  => install nsis 3.09 .. ok
+
+[ 25%]: compiling.release src\main.cpp
+[ 37%]: compiling.release src\main.cpp
+[ 50%]: linking.release foo.dll
+[ 62%]: linking.release test.exe
+packing build\xpack\test\test-windows-x64-v1.0.0.exe
+pack ok
+```
+
+`test-windows-x64-v1.0.0.exe` 就是我们生成的安装包，双击运行它，就能安装我们的二进制文件到指定目录。
+
+![](/assets/img/manual/nsis_1.png)
+![](/assets/img/manual/nsis_2.png)
+![](/assets/img/manual/nsis_3.png)
+
+#### 增加组件安装
+
+我们还可以给 NSIS 增加组件安装命令，只有当用户选择指定组件的时候，它的安装命令才会被执行。
+
+```lua
+xpack("test")
+    add_components("LongPath")
+
+xpack_component("LongPath")
+    set_default(false)
+    set_title("Enable Long Path")
+    set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
+    on_installcmd(function (component, batchcmds)
+        batchcmds:rawcmd("nsis", [[
+  ${If} $NoAdmin == "false"
+    ; Enable long path
+    WriteRegDWORD ${HKLM} "SYSTEM\CurrentControlSet\Control\FileSystem" "LongPathsEnabled" 1
+  ${EndIf}]])
+    end)
+```
+
+这个例子中，我们在里面添加了一个 NSIS 特有的自定义命令，去实现对长路径的支持。
+
+![](/assets/img/manual/nsis_4.png)
+
+### 生成自安装包
+
+我们也可以生成基于 shell 脚本的自编译安装包。我们需要配置 runself 打包格式，然后通过 `add_sourcefiles` 添加需要参与编译安装的源文件。
+
+接着，我们需要自定义 on_installcmd 安装脚本，里面去配置如果编译源码包，我们可以简单的调用一个内置的编译安装脚本文件，也可以直接配置 `make install` 等编译安装命令。
+
+例如：
+
+```lua
+xpack("test")
+    set_formats("runself")
+    add_sourcefiles("(src/**)")
+    on_installcmd(function (package, batchcmds)
+        batchcmds:runv("make", {"install"})
+    end)
+```
+
+然后，我们执行 `xmake pack` 命令，就可以生成一个自安装的 xxx.gz.run 包，默认采用 gzip 压缩。
+
+```bash
+$ xmake pack
+packing build/xpack/test/test-macosx-src-v1.0.0.gz.run
+pack ok
+```
+
+我们可以使用 sh 去加载运行它来安装我们的程序。
+
+```bash
+$ sh ./build/xpack/test/test-macosx-src-v1.0.0.gz.run
+```
+
+我们也可以看一个比较完整的例子：
+
+```lua
+xpack("xmakesrc")
+    set_formats("runself")
+    set_basename("xmake-v$(version)")
+    set_prefixdir("xmake-$(version)")
+    before_package(function (package)
+        import("devel.git")
+
+        local rootdir = path.join(os.tmpfile(package:basename()) .. ".dir", "repo")
+        if not os.isdir(rootdir) then
+            os.tryrm(rootdir)
+            os.cp(path.directory(os.projectdir()), rootdir)
+
+            git.clean({repodir = rootdir, force = true, all = true})
+            git.reset({repodir = rootdir, hard = true})
+            if os.isfile(path.join(rootdir, ".gitmodules")) then
+                git.submodule.clean({repodir = rootdir, force = true, all = true})
+                git.submodule.reset({repodir = rootdir, hard = true})
+            end
+        end
+
+        local extraconf = {rootdir = rootdir}
+        package:add("sourcefiles", path.join(rootdir, "core/**|src/pdcurses/**|src/luajit/**|src/tbox/tbox/src/demo/**"), extraconf)
+        package:add("sourcefiles", path.join(rootdir, "xmake/**"), extraconf)
+        package:add("sourcefiles", path.join(rootdir, "*.md"), extraconf)
+        package:add("sourcefiles", path.join(rootdir, "configure"), extraconf)
+        package:add("sourcefiles", path.join(rootdir, "scripts/*.sh"), extraconf)
+        package:add("sourcefiles", path.join(rootdir, "scripts/man/**"), extraconf)
+        package:add("sourcefiles", path.join(rootdir, "scripts/debian/**"), extraconf)
+        package:add("sourcefiles", path.join(rootdir, "scripts/msys/**"), extraconf)
+    end)
+
+    on_installcmd(function (package, batchcmds)
+        batchcmds:runv("./scripts/get.sh", {"__local__"})
+    end)
+```
+
+它是 xmake 自身源码的安装包配置脚本，更完整的配置可以参考：[xpack.lua](https://github.com/xmake-io/xmake/blob/master/core/xpack.lua)
+
+这里，它通过调用源码包内置的 `./scripts/get.sh` 安装脚本去执行编译安装。
+
+### 生成源码归档包
+
+另外，我们也可以配置 `srczip` 和 `srctargz` 格式，来生成源码压缩包，它不是完整的安装包，也没有安装命令，仅仅用于源码包分发。
+
+```lua
+xpack("test")
+    set_formats("srczip", "srctargz")
+    add_sourcefiles("(src/**)")
+```
+
+```bash
+$ xmake pack
+packing build/xpack/test/test-macosx-src-v1.0.0.zip ..
+packing build/xpack/test/test-macosx-src-v1.0.0.tar.gz ..
+pack ok
+```
+
+### 生成二进制归档包
+
+我们也可以配置 `zip` 和 `targz` 来生成二进制的压缩包，它会先自动编译所有绑定的 target 目标程序，将所有需要的二进制程序，库文件打包到 zip/tar.gz 格式。
+
+这通常用于制作绿色版的安装包，内部不太任何自动安装脚本，用户需要自己设置 PATH 等环境变量。
+
+```lua
+xpack("test")
+    set_formats("zip", "targz")
+    add_installfiles("(src/**)")
+```
+
+```bash
+$ xmake pack
+packing build/xpack/test/test-macosx-v1.0.0.zip ..
+packing build/xpack/test/test-macosx-v1.0.0.tar.gz ..
+pack ok
+```
+
+!> 需要注意的是，打二进制文件到包里，使用的是 `add_installfiles` 而不是 `add_sourcefiles`。
+
+我们也可以通过 `add_targets` 去绑定需要安装的 target 目标程序和库。更多详情见下面关于 `add_targets` 的接口描述。
+
+### 打包命令参数
+
+### 接口描述
+
 ## 宏记录和回放
 
 ### 简介
