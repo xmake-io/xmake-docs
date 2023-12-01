@@ -902,6 +902,40 @@ pack ok
 
 ### 打包命令参数
 
+#### 指定打包格式
+
+如果我们在配置文件中已经使用 `set_formats` 配置了多个打包格式，那么默认情况下，`xmake pack` 会自动生成所有这些格式的包。
+
+当然，我们也可以通过 `xmake pack --formats=nsis,targz` 来选择性指定当前需要打哪些格式的包。
+
+#### 修改打包文件名
+
+我们可以在配置文件中，通过 `set_basename()` 来修改包名，也可以通过命令行去修改它。
+
+```bash
+$ xmake pack --basename="foo"
+packing build/xpack/test/foo.zip ..
+pack ok
+```
+
+#### 指定输出目录
+
+默认的输出目录是在 build 目录下，但我们也可以修改输出的路径。
+
+```bash
+$ xmake pack -o /tmp/output
+```
+
+#### 禁用自动构建
+
+如果是打 NSIS 等二进制包，`xmake pack` 会先自动编译所有被绑定的 target 目标文件，然后再去执行打包逻辑。
+
+但是如果我们已经编译过了，不想每次都去编译它，而是直接去打包，可以通过下面的参数禁用自动构建。
+
+```bash
+$ xmake pack --autobuild=n
+```
+
 ### 接口描述
 
 ## 宏记录和回放
