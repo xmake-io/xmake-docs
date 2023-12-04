@@ -92,7 +92,36 @@
   line-height: 1;
 }
 </style>
-    <h3 id="xpackset_version">xpack:set_version</h3>
+    <h2 id="">打包接口</h2>
+<p>xpack 作为插件形式提供，它的所有 API 我们需要通过 <code>includes("@builtin/xpack")</code> 方式来引入。</p>
+<pre><code class="lang-lua">includes("@builtin/xpack")
+
+xpack("test")
+    set_version("1.0")
+    set_homepage("https://xmake.io")
+    add_installfiles("...")
+</code></pre>
+<h3 id="xpackset_version">xpack:set_version</h3>
+<h4 id="">设置包版本</h4>
+<p>这个接口用于设置生成的安装包的版本：</p>
+<pre><code class="lang-lua">xpack("test")
+    set_version("1.0")
+    -- ...
+</code></pre>
+<p>如果我们没有设置，但是通过 <code>set_targets</code> 绑定了安装的目标程序，那么也会使用 target 中的版本配置。</p>
+<pre><code class="lang-lua">target("foo")
+    set_version("1.0")
+
+xpack("test")
+    set_targets("foo")
+    -- ...
+</code></pre>
+<p>我们也可以使用全局工程的版本，如果没有绑定任何 targets。</p>
+<pre><code class="lang-lua">set_version("1.0")
+
+xpack("test")
+    -- ...
+</code></pre>
 <h3 id="xpackset_homepage">xpack:set_homepage</h3>
 <h3 id="xpackset_title">xpack:set_title</h3>
 <h3 id="xpackset_author">xpack:set_author</h3>
@@ -127,6 +156,7 @@
 <h3 id="xpackafter_installcmd">xpack:after_installcmd</h3>
 <h3 id="xpackafter_uninstallcmd">xpack:after_uninstallcmd</h3>
 <h3 id="xpackset_specvar">xpack:set_specvar</h3>
+<h2 id="">组件接口</h2>
 <h3 id="xpack_componentset_title">xpack_component:set_title</h3>
 <h3 id="xpack_componentset_description">xpack_component:set_description</h3>
 <h3 id="xpack_componentset_default">xpack_component:set_default</h3>

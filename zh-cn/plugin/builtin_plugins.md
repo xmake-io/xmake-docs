@@ -672,7 +672,7 @@ $ xmake check clang.tidy --fix_errors
 $ xmake check clang.tidy --fix_notes
 ```
 
-## 生成安装包
+## 生成安装包 (XPack)
 
 ### 简介
 

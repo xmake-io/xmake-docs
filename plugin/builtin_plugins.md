@@ -657,7 +657,7 @@ $ xmake check clang.tidy --fix_errors
 $ xmake check clang.tidy --fix_notes
 ```
 
-## Generate installation package
+## Generate installation package (XPack)
 
 ### Introduction
 
@@ -925,7 +925,7 @@ $ xmake pack --autobuild=n
 
 ### Interface description
 
-For more descriptions of the XPack packaging interface, see: [XPack Packaging Interface Document](https://xmake.io/#/zh-cn/manual/xpack).
+For more descriptions of the XPack packaging interface, see: [XPack Packaging Interface Document](https://xmake.io/#/manual/xpack).
 
 ## Macros Recording and Playback
 

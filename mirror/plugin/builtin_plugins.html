@@ -560,6 +560,199 @@ CheckOptions:
 $ xmake check clang.tidy --fix_errors
 $ xmake check clang.tidy --fix_notes
 </code></pre>
+<h2 id="generateinstallationpackagexpack">Generate installation package (XPack)</h2>
+<h3 id="introduction">Introduction</h3>
+<p>This plug-in can help users quickly generate installation packages and source code packages for different platforms. It will generate the following installation package formats:</p>
+<ul>
+<li>Windows NSIS binary installation package</li>
+<li>runself (shell) self-compile installation package</li>
+<li>zip/tar.gz binary package</li>
+<li>zip/tar.gz source package</li>
+<li>RPM binary installation package (to be supported)</li>
+<li>SRPM source code installation package (to be supported)</li>
+<li>DEB binary installation package (to be supported)</li>
+</ul>
+<p>Here is a complete example, we can take a brief look at it first:</p>
+<pre><code class="lang-lua">set_version("1.0.0")
+add_rules("mode.debug", "mode.release")
+
+includes("@builtin/xpack")
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+
+xpack("test")
+     set_formats("nsis", "zip", "targz", "runself")
+     set_title("hello")
+     set_author("ruki")
+     set_description("A test installer.")
+     set_homepage("https://xmake.io")
+     set_licensefile("LICENSE.md")
+     add_targets("test")
+     add_installfiles("src/(assets/*.png)", {prefixdir = "images"})
+     add_sourcefiles("(src/**)")
+     set_iconfile("src/assets/xmake.ico")
+
+     after_installcmd(function (package, batchcmds)
+         batchcmds:mkdir(package:installdir("resources"))
+         batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+         batchcmds:mkdir(package:installdir("stub"))
+     end)
+
+     after_uninstallcmd(function (package, batchcmds)
+         batchcmds:rmdir(package:installdir("resources"))
+         batchcmds:rmdir(package:installdir("stub"))
+     end)
+</code></pre>
+<p>We introduce all configuration interfaces of xpack through <code>includes("@builtin/xpack")</code>, including the xpack configuration domain and all its domain interfaces.</p>
+<p>Then we execute:</p>
+<pre><code class="lang-bash">$xmakepack
+</code></pre>
+<p>All installation packages will be generated.</p>
+<h3 id="generatensisinstallationpackage">Generate NSIS installation package</h3>
+<p>As long as you configure the <code>set_formats("nsis")</code> format and then execute the <code>xmake pack</code> command, you can generate an installation package in NSIS format.</p>
+<p>In addition, xmake will also automatically install the tools required to generate NSIS packages to achieve true one-click packaging.</p>
+<pre><code class="lang-bash">$xmakepack
+note: install or modify (m) these packages (pass -y to skip confirm)?
+in xmake-repo:
+   -> nsis 3.09
+please input: y (y/n/m)
+
+   => install nsis 3.09 .. ok
+
+[25%]: compiling.release src\main.cpp
+[37%]: compiling.release src\main.cpp
+[50%]: linking.release foo.dll
+[62%]: linking.release test.exe
+packing build\xpack\test\test-windows-x64-v1.0.0.exe
+pack ok
+</code></pre>
+<p><code>test-windows-x64-v1.0.0.exe</code> is the installation package we generated. Double-click to run it to install our binary files to the specified directory.</p>
+<p><img src="/assets/img/manual/nsis_1.png" alt=""><br><img src="/assets/img/manual/nsis_2.png" alt=""><br><img src="/assets/img/manual/nsis_3.png" alt=""></p>
+<h4 id="addcomponentinstallation">Add component installation</h4>
+<p>We can also add component installation commands to NSIS. Only when the user selects the specified component, its installation command will be executed.</p>
+<pre><code class="lang-lua">xpack("test")
+     add_components("LongPath")
+
+xpack_component("LongPath")
+     set_default(false)
+     set_title("Enable Long Path")
+     set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
+     on_installcmd(function (component, batchcmds)
+         batchcmds:rawcmd("nsis", [[
+   ${If} $NoAdmin == "false"
+     ; Enable long path
+     WriteRegDWORD ${HKLM} "SYSTEM\CurrentControlSet\Control\FileSystem" "LongPathsEnabled" 1
+   ${EndIf}]])
+     end)
+</code></pre>
+<p>In this example, we added an NSIS-specific custom command to support long paths.</p>
+<p><img src="/assets/img/manual/nsis_4.png" alt=""></p>
+<h3 id="generateselfinstallationpackage">Generate self-installation package</h3>
+<p>We can also generate self-compiled installation packages based on shell scripts. We need to configure the runself packaging format, and then add the source files that need to participate in compilation and installation through <code>add_sourcefiles</code>.</p>
+<p>Next, we need to customize the on_installcmd installation script to configure if we compile the source code package, we can simply call a built-in compilation and installation script file, or directly configure compilation and installation commands such as <code>make install</code>.</p>
+<p>For example:</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("runself")
+     add_sourcefiles("(src/**)")
+     on_installcmd(function (package, batchcmds)
+         batchcmds:runv("make", {"install"})
+     end)
+</code></pre>
+<p>Then, we execute the <code>xmake pack</code> command to generate a self-installed xxx.gz.run package, which uses gzip compression by default.</p>
+<pre><code class="lang-bash">$xmakepack
+packing build/xpack/test/test-macosx-src-v1.0.0.gz.run
+pack ok
+</code></pre>
+<p>We can use sh to load and run it to install our program.</p>
+<pre><code class="lang-bash">$ sh ./build/xpack/test/test-macosx-src-v1.0.0.gz.run
+</code></pre>
+<p>We can also look at a more complete example:</p>
+<pre><code class="lang-lua">xpack("xmakesrc")
+     set_formats("runself")
+     set_basename("xmake-v$(version)")
+     set_prefixdir("xmake-$(version)")
+     before_package(function (package)
+         import("devel.git")
+
+         local rootdir = path.join(os.tmpfile(package:basename()) .. ".dir", "repo")
+         if not os.isdir(rootdir) then
+             os.tryrm(rootdir)
+             os.cp(path.directory(os.projectdir()), rootdir)
+
+             git.clean({repodir = rootdir, force = true, all = true})
+             git.reset({repodir = rootdir, hard = true})
+             if os.isfile(path.join(rootdir, ".gitmodules")) then
+                 git.submodule.clean({repodir = rootdir, force = true, all = true})
+                 git.submodule.reset({repodir = rootdir, hard = true})
+             end
+         end
+
+         local extraconf = {rootdir = rootdir}
+         package:add("sourcefiles", path.join(rootdir, "core/**|src/pdcurses/**|src/luajit/**|src/tbox/tbox/src/demo/**"), extraconf )
+         package:add("sourcefiles", path.join(rootdir, "xmake/**"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "*.md"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "configure"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "scripts/*.sh"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "scripts/man/**"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "scripts/debian/**"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "scripts/msys/**"), extraconf)
+     end)
+
+     on_installcmd(function (package, batchcmds)
+         batchcmds:runv("./scripts/get.sh", {"__local__"})
+     end)
+</code></pre>
+<p>It is the installation package configuration script of xmake&#39;s own source code, which is more complete.</p>
+<p>For configuration, please refer to: <a href="https://github.com/xmake-io/xmake/blob/master/core/xpack.lua">xpack.lua</a></p>
+<p>Here, it performs compilation and installation by calling the <code>./scripts/get.sh</code> installation script built into the source package.</p>
+<h3 id="generatesourcecodearchivepackage">Generate source code archive package</h3>
+<p>In addition, we can also configure the <code>srczip</code> and <code>srctargz</code> formats to generate source code compression packages. It is not a complete installation package and has no installation commands. It is only used for source code package distribution.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srczip", "srctargz")
+     add_sourcefiles("(src/**)")
+</code></pre>
+<pre><code class="lang-bash">$xmakepack
+packing build/xpack/test/test-macosx-src-v1.0.0.zip ..
+packing build/xpack/test/test-macosx-src-v1.0.0.tar.gz ..
+pack ok
+</code></pre>
+<h3 id="generatebinaryarchivepackage">Generate binary archive package</h3>
+<p>We can also configure <code>zip</code> and <code>targz</code> to generate binary compressed packages. It will automatically compile all bound target target programs and package all required binary programs and library files into zip/tar.gz format.</p>
+<p>This is usually used to create a green version of the installation package. There is no automatic installation script inside. Users need to set environment variables such as PATH themselves.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("zip", "targz")
+     add_installfiles("(src/**)")
+</code></pre>
+<pre><code class="lang-bash">$xmakepack
+packing build/xpack/test/test-macosx-v1.0.0.zip ..
+packing build/xpack/test/test-macosx-v1.0.0.tar.gz ..
+pack ok
+</code></pre>
+<p>!> It should be noted that to add binary files to the package, use <code>add_installfiles</code> instead of <code>add_sourcefiles</code>.</p>
+<p>We can also use <code>add_targets</code> to bind the target target programs and libraries that need to be installed. See the interface description for <code>add_targets</code> below for more details.</p>
+<h3 id="packagingcommand">Packaging command</h3>
+<h4 id="specifypackagingformat">Specify packaging format</h4>
+<p>If we have configured multiple packaging formats using <code>set_formats</code> in the configuration file, then <code>xmake pack</code> will automatically generate packages for all these formats by default.</p>
+<p>Of course, we can also use <code>xmake pack --formats=nsis,targz</code> to selectively specify which formats of packages currently need to be packaged.</p>
+<h4 id="modifythepackagefilename">Modify the package file name</h4>
+<p>We can modify the package name through <code>set_basename()</code> in the configuration file, or we can modify it through the command line.</p>
+<pre><code class="lang-bash">$ xmake pack --basename="foo"
+packing build/xpack/test/foo.zip ..
+pack ok
+</code></pre>
+<h4 id="specifyoutputdirectory">Specify output directory</h4>
+<p>The default output directory is in the build directory, but we can also modify the output path.</p>
+<pre><code class="lang-bash">$ xmake pack -o /tmp/output
+</code></pre>
+<h4 id="disableautomaticbuild">Disable automatic build</h4>
+<p>If you are building a binary package such as NSIS, <code>xmake pack</code> will automatically compile all bound target files first, and then execute the packaging logic.</p>
+<p>But if we have already compiled it and don&#39;t want to compile it every time, but package it directly, we can disable automatic building through the following parameters.</p>
+<pre><code class="lang-bash">$ xmake pack --autobuild=n
+</code></pre>
+<h3 id="interfacedescription">Interface description</h3>
+<p>For more descriptions of the XPack packaging interface, see: <a href="https://xmake.io/#/manual/xpack">XPack Packaging Interface Document</a>.</p>
 <h2 id="macrosrecordingandplayback">Macros Recording and Playback</h2>
 <h3 id="introduction">Introduction</h3>
 <p>We can record and playback our xmake commands and save as macro quickly using this plugin.</p>
