@@ -48,6 +48,7 @@
   - [自定义工具链](zh-cn/manual/custom_toolchain.md)
   - [包依赖管理](zh-cn/manual/package_dependencies.md)
   - [内置变量](zh-cn/manual/builtin_variables.md)
+  - [XPack 打包](zh-cn/manual/xpack.md)
 
 - API手册（脚本域）
 

@@ -46,6 +46,7 @@
   - [Custom Toolchain](manual/custom_toolchain.md)
   - [Package Dependencies](manual/package_dependencies.md)
   - [Builtin Variables](manual/builtin_variables.md)
+  - [XPack Interfaces](zh-cn/manual/xpack.md)
 
 - API Manual (Script Scope)
 

@@ -938,6 +938,7 @@ $ xmake pack --autobuild=n
 
 ### 接口描述
 
+
 ## 宏记录和回放
 
 ### 简介
@@ -1177,9 +1178,7 @@ function main(argv)
 end
 ```
 
-<p class="tip">
-    如果你想要获取更多宏参数选项信息，请运行： `xmake macro --help`
-</p>
+!> 如果你想要获取更多宏参数选项信息，请运行： `xmake macro --help`
 
 ## 生成doxygen文档
 
