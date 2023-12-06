@@ -42,19 +42,98 @@ xpack("test")
 ```lua
 set_version("1.0")
 
-xpack("test")
+xpack("xmake")
     -- ...
 ```
 
 
 ### xpack:set_homepage
+
+#### 设置主页信息
+
+```lua
+xpack("xmake")
+    set_homepage("https://xmake.io")
+```
+
 ### xpack:set_title
-### xpack:set_author
-### xpack:set_maintainer
+
+#### 设置标题信息
+
+通常用于配置安装包的简单描述，相比 `set_description` 更加简短。
+
+```lua
+xpack("xmake")
+    set_title("Xmake build utility ($(arch))")
+```
+
 ### xpack:set_description
-### xpack:set_inputkind
+
+#### 设置详细描述
+
+这个接口可以设置安装包更加详细的描述信息，可以用一到两句话详细描述下包。
+
+```lua
+xpack("xmake")
+    set_description("A cross-platform build utility based on Lua.")
+```
+
+### xpack:set_author
+
+#### 设置作者信息
+
+我们可以设置邮箱，姓名等来描述这个包的作者。
+
+```lua
+xpack("xmake")
+    set_author("waruqi@gmail.com")
+```
+
+### xpack:set_maintainer
+
+#### 设置维护者信息
+
+我们可以设置邮箱，姓名等来描述这个包的维护者。
+
+维护者跟作者有可能是同一个人，也可能不是一个人。
+
+```lua
+xpack("xmake")
+    set_maintainer("waruqi@gmail.com")
+```
+
 ### xpack:set_copyright
+
+#### 设置包的版权信息
+
+```lua
+xpack("xmake")
+    set_copyright("Copyright (C) 2015-present, TBOOX Open Source Group")
+```
+
+### xpack:set_licensefile
+
+#### 设置包的 License 文件
+
+我们可以设置 LICENSE 所在的文件路径，像 NSIS 的安装包，它还会额外将 LICENSE 页面展示给安装用户。
+
+```lua
+xpack("xmake")
+    set_licensefile("../LICENSE.md")
+```
+
 ### xpack:set_company
+
+#### 设置包所属的公司
+
+我们可以用这个接口设置包所属的公司和组织名。
+
+```lua
+xpack("xmake")
+    set_company("tboox.org")
+```
+
+### xpack:set_inputkind
 ### xpack:set_formats
 ### xpack:set_basename
 ### xpack:set_extension
@@ -67,7 +146,6 @@ xpack("test")
 ### xpack:set_nsis_displayicon
 ### xpack:set_specfile
 ### xpack:set_iconfile
-### xpack:set_licensefile
 ### xpack:add_sourcefiles
 ### xpack:add_installfiles
 ### xpack:on_load
