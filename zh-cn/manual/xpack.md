@@ -134,6 +134,39 @@ xpack("xmake")
 ```
 
 ### xpack:set_inputkind
+
+#### 设置打包的输入源类型
+
+这是个可选接口，可用于标识当前打包的输入源类型
+
+- binary: 从二进制文件作为输入源打包，通常使用 `add_installfiles`
+- source: 从源文件作为输入源开始打包，通常使用 `add_sourcefiles`
+
+这一般用于自定义的打包格式，而对于内置的格式，比如: nsis, zip, srczip 等等，
+其实已经能够判断获取到当前打包的输入源是从源码开始打包，还是直接从二进制源开始打包。
+
+因此，除非必要（比如要自定义打包格式），通常我们不需要设置它。
+
+而我们在脚本域中，也可以通过 `package:from_source()` 和 `package:from_binary()` 来判断当前的输入源。
+
+```lua
+xpack("test")
+    set_formats("nsis", "zip", "targz", "srczip", "srctargz", "runself")
+    add_installfiles("src/(assets/*.png)", {prefixdir = "images"})
+    add_sourcefiles("(src/**)")
+    on_load(function (package)
+        if package:from_source() then
+            package:set("basename", "test-$(plat)-src-v$(version)")
+        else
+            package:set("basename", "test-$(plat)-$(arch)-v$(version)")
+        end
+    end)
+```
+
+如果上面的打包配置，如果是 nsis 包，默认从二进制文件作为输入源，进行打包，会去打包 `add_installfiles` 配置的文件。
+
+而 `srczip`, `srctargz` 和 `runself` 是从源文件开始打包，会去打包 `add_sourcefiles` 中的文件，然后再执行打包脚本。
+
 ### xpack:set_formats
 ### xpack:set_basename
 ### xpack:set_extension
