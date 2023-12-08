@@ -514,6 +514,22 @@ xpack("test")
 ```
 
 ### xpack:on_load
+
+#### 自定义加载脚本
+
+如果在描述域中配置无法满足我们的需求，还可以在 on_load 自定义脚本域中，进一步灵活的配置包。
+
+这个接口会在每个 XPack 包初始化加载期间就被调用，可以在里面做一些基础配置。
+
+例如在里面动态地修改包文件名：
+
+```lua
+xpack("test")
+    on_load(function (package)
+        package:set("basename", "test-" .. package:version())
+    end)
+```
+
 ### xpack:before_package
 ### xpack:on_package
 ### xpack:after_package
