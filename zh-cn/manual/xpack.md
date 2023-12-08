@@ -457,6 +457,16 @@ VIAddVersionKey /LANG=0 ProductName      "${FOO}"
 
 
 ### xpack:set_iconfile
+
+#### 设置图标文件路径
+
+我们可以额外配置一个 ico 的图标文件，可以用于设置 NSIS 等一些支持图标自定义的安装包的图标。
+
+```lua
+xpack("xmake")
+    set_iconfile("xmake.ico")
+```
+
 ### xpack:add_sourcefiles
 ### xpack:add_installfiles
 ### xpack:on_load
