@@ -269,12 +269,193 @@ xpack("test")
 而且我们还可以在 target 和它的 rules 中通过 `on_installcmd`, `after_installcmd` 等自定义打包安装脚本，也会被一起执行。
 
 ### xpack:add_components
+
+#### 添加安装包组件
+
+我们也支持为安装包添加自定义组件，按组件模式进行选择安装。目前仅仅对 NSIS 包会有比较的支持效果。
+
+我们可以通过 `xpack_component()` 定义一个组件域，然后使用 `add_components()` 加指定的组件跟包进行关联绑定。
+
+而在组件中，我们可以通过 `on_installcmd()` 编写一些自定义的安装脚本，只有当这个组件被启用的情况下，才会被执行安装。
+
+
+```lua
+xpack("test")
+    add_components("LongPath")
+
+xpack_component("LongPath")
+    set_default(false)
+    set_title("Enable Long Path")
+    set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
+    on_installcmd(function (component, batchcmds)
+        batchcmds:rawcmd("nsis", [[
+  ${If} $NoAdmin == "false"
+    ; Enable long path
+    WriteRegDWORD ${HKLM} "SYSTEM\CurrentControlSet\Control\FileSystem" "LongPathsEnabled" 1
+  ${EndIf}]])
+    end)
+```
+
+这里，我们使用 `batchcmds:rawcmd("nsis", "...")` 添加了一个 nsis 特有的安装命令，开启长路径支持。效果如下：
+
+![](/assets/img/manual/nsis_4.png)
+
+只有当我们勾选 LongPath 后，才会启用，当然，我们也可以通过 `set_default()` 配置组件默认是否处于启用状态。
+
+除了 NSIS 包，其他包尽管没有对组件有完善的支持，但是同样会执行组件里面的脚本实现打包，仅仅可能无法显示对应的组件 UI 和勾选框。
+
 ### xpack:set_bindir
+
+#### 设置包的二进制安装目录
+
+通常生成的安装包都会有一个安装根目录，而我们可以通过这个配置指定安装目录下的 bin 目录位置。
+
+如果没有指定，默认在 `installdir/bin`。
+
+如果配置了
+
+```lua
+xpack("xmake")
+    set_bindir("mybin")
+```
+
+那么会将可执行文件安装在 `installdir/mybin` 下面，如果是 NSIS 包，安装后，还会自动设置此路径到 `%PATH%`。
+
 ### xpack:set_libdir
+
+#### 设置包的库安装目录
+
+通常生成的安装包都会有一个安装根目录，而我们可以通过这个配置指定安装目录下的 lib 目录位置。
+
+如果没有指定，默认在 `installdir/lib`。
+
+如果配置了
+
+```lua
+xpack("xmake")
+    set_libdir("mylib")
+```
+
+那么会将静态库文件安装在 `installdir/mylib` 下面。
+
+
 ### xpack:set_includedir
+
+#### 设置包的头文件安装目录
+
+通常生成的安装包都会有一个安装根目录，而我们可以通过这个配置指定安装目录下的 include 目录位置。
+
+如果没有指定，默认在 `installdir/include`。
+
+如果配置了
+
+```lua
+xpack("xmake")
+    set_includedir("myinc")
+```
+
+那么会将头文件安装在 `installdir/myinc` 下面。
+
 ### xpack:set_prefixdir
-### xpack:set_nsis_displayicon
+
+#### 设置包的安装前缀目录
+
+如果配置了
+
+```lua
+xpack("xmake")
+    set_prefixdir("prefix")
+```
+
+那么会将所有安装文件，安装在 `installdir/prefix` 下面，例如：
+
+```
+installdir
+  - prefix
+    - include
+    - lib
+    - bin
+```
+
 ### xpack:set_specfile
+
+#### 设置包 spec 文件路径
+
+有些包格式的生成，需要先生成特定的 spec 文件，然后才能调用第三方打包工具去生成包。
+
+比如 NSIS 包，需要先通过 xmake 根据 xpack 配置，生成 NSIS 特有的 `.nsi` 配置文件，然后 xmake 会再调用 `makensis.exe` 去根据这个 `.nsi` 文件生成 NSIS 包。
+
+而 deb/rpm 等包都有特定的 spec 文件。
+
+xmake 在打包的时候，默认会自动生成一个 spec 文件，但是如果我们想更加深度定制化一些特有包的配置，可以通过这个接口，
+
+配置一个自己的 spec 文件，里面用户自己维护了一些包配置定义，然后可以在里面定义一些 `${PACKAGE_NAME}`, `${VERSION}` 包特有的内置变量，就可以实现包信息替换。
+
+```lua
+xpack("xmake")
+    set_formats("nsis")
+    set_specfile("makensis.nsi")
+```
+
+makensis.nsi
+
+```
+VIProductVersion                         "${VERSION}.0"
+VIFileVersion                            "${VERSION}.0"
+VIAddVersionKey /LANG=0 ProductName      "${PACKAGE_NAME}"
+VIAddVersionKey /LANG=0 Comments         "${PACKAGE_DESCRIPTION}"
+VIAddVersionKey /LANG=0 CompanyName      "${PACKAGE_COMPANY}"
+VIAddVersionKey /LANG=0 LegalCopyright   "${PACKAGE_COPYRIGHT}"
+VIAddVersionKey /LANG=0 FileDescription  "${PACKAGE_NAME} Installer - v${VERSION}"
+VIAddVersionKey /LANG=0 OriginalFilename "${PACKAGE_FILENAME}"
+```
+
+下面是一些内置的常用包变量：
+
+| 变量名 | 描述 |
+| ------ | ---- |
+| PACKAGE_ARCH        | 包二进制文件的架构 |
+| PACKAGE_PLAT        | 包二进制文件的平台 |
+| PACKAGE_NAME        | 包名 |
+| PACKAGE_TITLE       | 包的简单描述 |
+| PACKAGE_DESCRIPTION | 包的详细描述 |
+| PACKAGE_FILENAME    | 包文件名 |
+| PACKAGE_AUTHOR      | 包作者 |
+| PACKAGE_MAINTAINER  | 包维护者 |
+| PACKAGE_HOMEPAGE    | 包主页地址 |
+| PACKAGE_COPYRIGHT   | 包的版权信息 |
+| PACKAGE_COMPANY     | 包所属的公司名 |
+| PACKAGE_ICONFILE    | 包的图标文件路劲 |
+| PACKAGE_LICENSEFILE | 包的 LICENSE 文件路径 |
+| PACKAGE_VERSION_MAJOR | 包的 major 版本 |
+| PACKAGE_VERSION_MINOR | 包的 minor 版本 |
+| PACKAGE_VERSION_ALTER | 包的 alter 版本 |
+| PACKAGE_VERSION_BUILD | 包的 build 版本 |
+
+除了内置变量，我们也可以通过 `set_specvar` 接口去配置一些自定义的模版变量。
+
+### xpack:set_specvar
+
+#### 设置包 spec 文件的自定义变量
+
+通常配合 `set_specfile` 接口一起使用，用于在自定义的 spec 模版文件里面，设置一些自定义的包变量。
+
+```lua
+xpack("xmake")
+    set_formats("nsis")
+    set_specfile("makensis.nsi")
+    set_specvar("FOO", "hello")
+```
+
+makensis.nsi
+
+```
+VIAddVersionKey /LANG=0 ProductName      "${FOO}"
+```
+
+在生成包之前，xmake 会替换 `${FOO}` 成 hello，然后再调用 `makensis.exe` 命令根据这个文件生成 NSIS 安装包。
+
+
 ### xpack:set_iconfile
 ### xpack:add_sourcefiles
 ### xpack:add_installfiles
@@ -288,7 +469,7 @@ xpack("test")
 ### xpack:on_uninstallcmd
 ### xpack:after_installcmd
 ### xpack:after_uninstallcmd
-### xpack:set_specvar
+### xpack:set_nsis_displayicon
 
 ## 组件接口
 
