@@ -168,8 +168,84 @@ xpack("test")
 而 `srczip`, `srctargz` 和 `runself` 是从源文件开始打包，会去打包 `add_sourcefiles` 中的文件，然后再执行打包脚本。
 
 ### xpack:set_formats
+
+#### 设置打包格式
+
+配置当前 XPack 包需要生成的打包格式，可以同时配置多个，`xmake pack` 命令会一次性全部生成。
+
+!> 有些格式如果当前平台不支持生成，会自动忽略。
+
+```lua
+xpack("test")
+    set_formats("nsis", "zip", "targz", "srczip", "srctargz", "runself")
+```
+
+我们也可以通过命令，指定生成其中部分格式，而不是一次性全部生成。
+
+```bash
+$ xmake pack -f "nsis,zip"
+```
+
+通过逗号分隔，指定生成 NSIS 和 zip 包，暂时忽略其他格式包。
+
+目前支持的格式有：
+
+| 格式     | 说明                              |
+| ----     | ----                              |
+| nsis     | Windows NSIS 安装包，二进制安装   |
+| zip      | 二进制 zip 包，不包含安装脚本     |
+| targz    | 二进制 tar.gz 包，不包含安装脚本  |
+| srczip   | zip 源码包                        |
+| srctargz | tar.gz 源码包                     |
+| runself  | 自运行 shell 脚本包，源码编译安装 |
+| srpm     | rpm 源码安装包（待支持）          |
+| deb      | deb 二进制安装包 （待支持）       |
+| 其他     | 可自定义格式和安装脚本            |
+
 ### xpack:set_basename
+
+#### 设置包文件名
+
+设置生成包的文件名，但不包含后缀名。
+
+```lua
+xpack("xmake")
+    set_basename("xmake-v$(version)")
+```
+
+我们也可以在其中配置 `$(version)`, `$(plat)`, `$(arch)` 等变量。
+
+另外，想要更灵活的配置，可以再 on_load 脚本中去配置它。
+
+```lua
+xpack("xmake")
+    on_load(function (package)
+        package:set("basename", "xmake-v" .. package:version())
+    end)
+```
+
 ### xpack:set_extension
+
+#### 设置安装包的扩展名
+
+通常我们并不需要修改生成包的扩展名，因为指定了 `nsis`, `zip` 等格式后，都会有一个默认的后缀名，例如：`.exe`, `.zip`。
+
+但是，如果我们正在自定义包格式，需要生成一个自定义的包，那么我们可能需要配置它。
+
+```lua
+xpack("mypack")
+    set_format("myformat")
+    set_extension(".myf")
+    on_package(function (package)
+        local outputfile = package:outputfile()
+        -- TODO
+    end)
+```
+
+例如，这里我们自定义了一个 myformat 包格式，采用 `.myf` 的自定义后缀名，然后我们就可以在 on_package 中生成它，
+
+`package:outputfile()` 返回的包输出文件名中就会包含这个后缀名。
+
 ### xpack:add_targets
 ### xpack:add_components
 ### xpack:set_bindir
