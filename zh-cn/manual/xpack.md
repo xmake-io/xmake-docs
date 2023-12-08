@@ -468,7 +468,51 @@ xpack("xmake")
 ```
 
 ### xpack:add_sourcefiles
+
+#### 添加源文件
+
+这通常用于源码包，也就是 `srczip`, `srctargz` 这种纯源码包，以及 `runself` 格式的源码安装包。
+
+如果是自定义的包格式，我们需要配置 `set_inputkind("source")` 开启源码包。
+
+通过这个接口，可以自定义配置那些源文件需要被打入包中，用于后期的编译安装。
+
+它的详细用法跟 `add_installfiles` 类似，可以参考它的文档描述。
+
 ### xpack:add_installfiles
+
+#### 添加二进制文件
+
+这通常用于二进制包，也就是 `nsis`, `deb` 等格式的包，这些包会直接安装二进制文件。
+
+因此，我们可以通过这个接口额外配置一些需要被安装的二进制文件，比如：可执行文件，资源文件等等。
+
+比如我们可以指定安装各种类型的文件到安装目录：
+
+```lua
+xpack("test")
+    add_installfiles("src/*.h")
+    add_installfiles("doc/*.md")
+```
+
+我们也可以指定安装到特定子目录：
+
+```lua
+xpack("test")
+    add_installfiles("src/*.h", {prefixdir = "include"})
+    add_installfiles("doc/*.md", {prefixdir = "share/doc"})
+```
+
+上面的设置，我们会安装到`installdir/include/*.h`, `installdir/share/doc/*.md`。
+
+注：默认安装不会保留目录结构，会完全展开，当然我们也可以通过`()`去提取源文件中的子目录结构来安装，例如：
+
+```lua
+xpack("test")
+    add_installfiles("src/(tbox/*.h)", {prefixdir = "include"})
+    add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
+```
+
 ### xpack:on_load
 ### xpack:before_package
 ### xpack:on_package
