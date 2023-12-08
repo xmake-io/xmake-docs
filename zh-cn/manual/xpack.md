@@ -247,6 +247,27 @@ xpack("mypack")
 `package:outputfile()` 返回的包输出文件名中就会包含这个后缀名。
 
 ### xpack:add_targets
+
+#### 关联目标程序
+
+我们可以通过这个接口，配置关联需要被安装的目标 target。
+
+```lua
+target("foo")
+    set_kind("shared")
+    add_files("src/*.cpp")
+    add_headerfiles("include/(*.h)")
+
+xpack("test")
+    set_formats("nsis")
+    add_targets("foo")
+```
+
+当生成 test 安装包的时候，被关联的 foo 目标的可执行程序，动态库等待都会被一起打包安装。
+另外，target 中通过 `add_headerfiles` 和 `add_installfiles` 配置的自定义安装文件也会被打入安装包，一起被安装。
+
+而且我们还可以在 target 和它的 rules 中通过 `on_installcmd`, `after_installcmd` 等自定义打包安装脚本，也会被一起执行。
+
 ### xpack:add_components
 ### xpack:set_bindir
 ### xpack:set_libdir
