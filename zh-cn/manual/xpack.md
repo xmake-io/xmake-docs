@@ -531,8 +531,45 @@ xpack("test")
 ```
 
 ### xpack:before_package
+
+#### 自定义打包之前的脚本
+
+我们可以通过这个接口配置打包之前的自定义脚本。
+
+```lua
+xpack("test")
+    before_package(function (package)
+        -- TODO
+    end)
+```
+
 ### xpack:on_package
+
+#### 自定义打包脚本
+
+我们可以通过这个接口配置打包自定义脚本，这将会重写整个内置的打包逻辑。通常用于自定义包格式。
+
+```lua
+xpack("test")
+    set_formats("xxx")
+    on_package(function (package)
+        -- TODO
+    end)
+```
+
 ### xpack:after_package
+
+#### 自定义打包之后的脚本
+
+我们可以通过这个接口配置打包之后的自定义脚本。
+
+```lua
+xpack("test")
+    after_package(function (package)
+        -- TODO
+    end)
+```
+
 ### xpack:before_installcmd
 ### xpack:before_uninstallcmd
 ### xpack:on_installcmd
@@ -544,8 +581,35 @@ xpack("test")
 ## 组件接口
 
 ### xpack_component:set_title
+
+#### 设置包组件的简单描述
+
+```lua
+xpack_component("LongPath")
+    set_title("Enable Long Path")
+```
+
 ### xpack_component:set_description
+
+#### 设置包组件的详细描述
+
+```lua
+xpack_component("LongPath")
+    set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
+```
+
 ### xpack_component:set_default
+
+#### 设置包组件的默认启用状态
+
+通常包组件都会被默认启用，但是我们也可以使用这个接口，默认禁用这个组件，仅仅当用户安装包时候，选择勾选此组件，才会被启用安装。
+
+```lua
+xpack_component("LongPath")
+    set_default(false)
+    set_title("Enable Long Path")
+```
+
 ### xpack_component:on_load
 ### xpack_component:before_installcmd
 ### xpack_component:before_uninstallcmd
