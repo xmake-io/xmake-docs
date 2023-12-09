@@ -576,7 +576,21 @@ xpack("test")
 ### xpack:on_uninstallcmd
 ### xpack:after_installcmd
 ### xpack:after_uninstallcmd
+
 ### xpack:set_nsis_displayicon
+
+#### 设置 NSIS 的显示图标
+
+这是一个 NSIS 专有 API，可以用于配置 NSIS 的显示图标：
+
+```lua
+xpack("test")
+    set_nsis_displayicon("bin/foo.exe")
+```
+
+我们需要配置带有 icon 的可执行文件路径，这是使得安装包的显示 icon 跟它保持一致。
+
+这是一个可选配置，即使我们不配置它，xmake 也会默认使用被关联的 target 中的可执行文件中图标。
 
 ## 组件接口
 
@@ -611,6 +625,19 @@ xpack_component("LongPath")
 ```
 
 ### xpack_component:on_load
+
+#### 自定义加载脚本
+
+我们可以在 on_load 自定义脚本域中，进一步灵活的配置包组件。
+
+```lua
+xpack_component("test")
+    on_load(function (component)
+        local package = component:package()
+        -- TODO
+    end)
+```
+
 ### xpack_component:before_installcmd
 ### xpack_component:before_uninstallcmd
 ### xpack_component:on_installcmd
