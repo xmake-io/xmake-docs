@@ -571,11 +571,62 @@ xpack("test")
 ```
 
 ### xpack:before_installcmd
-### xpack:before_uninstallcmd
+
+#### 添加安装之前的脚本
+
+它不会重写整个安装脚本，但是会在现有的安装脚本执行之前，新增一些自定义的安装脚本：
+
+```lua
+xpack("test")
+    before_installcmd(function (package, batchcmds)
+        batchcmds:mkdir(package:installdir("resources"))
+        batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+        batchcmds:mkdir(package:installdir("stub"))
+    end)
+```
+
+需要注意的是，通过 `batchcmds` 添加的 cp, mkdir 等命令都不会被立即执行，而是仅仅生成一个命令列表，后面实际生成包的时候，会将这些命令，翻译成打包命令。
+
 ### xpack:on_installcmd
-### xpack:on_uninstallcmd
+
+#### 自定义安装脚本
+
+这回完全重写内置默认的安装脚本，包括内部对 `add_installfiles` 配置的文件的自动安装，用户需要完全自己处理所有的安装逻辑。
+
 ### xpack:after_installcmd
+
+#### 添加安装之后的脚本
+
+它不会重写整个安装脚本，但是会在现有的安装脚本执行之后，新增一些自定义的安装脚本：
+
+```lua
+xpack("test")
+    after_installcmd(function (package, batchcmds)
+        batchcmds:mkdir(package:installdir("resources"))
+        batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+        batchcmds:mkdir(package:installdir("stub"))
+    end)
+```
+
+需要注意的是，通过 `batchcmds` 添加的 cp, mkdir 等命令都不会被立即执行，而是仅仅生成一个命令列表，后面实际生成包的时候，会将这些命令，翻译成打包命令。
+
+### xpack:before_uninstallcmd
+
+#### 添加卸载之前的脚本
+
+跟 before_installcmd 类似，请参考 before_installcmd 说明。
+
+### xpack:on_uninstallcmd
+
+#### 自定义卸载脚本
+
+跟 on_installcmd 类似，请参考 on_installcmd 说明。
+
 ### xpack:after_uninstallcmd
+
+#### 添加卸载之后的脚本
+
+跟 after_installcmd 类似，请参考 after_installcmd 说明。
 
 ### xpack:set_nsis_displayicon
 
@@ -639,11 +690,98 @@ xpack_component("test")
 ```
 
 ### xpack_component:before_installcmd
-### xpack_component:before_uninstallcmd
+
+#### 添加组件安装之前的脚本
+
+它不会重写整个安装脚本，但是会在现有的安装脚本执行之前，新增一些自定义的安装脚本：
+
+```lua
+xpack_component("test")
+    before_installcmd(function (component, batchcmds)
+        batchcmds:mkdir(package:installdir("resources"))
+        batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+        batchcmds:mkdir(package:installdir("stub"))
+    end)
+```
+
+需要注意的是，通过 `batchcmds` 添加的 cp, mkdir 等命令都不会被立即执行，而是仅仅生成一个命令列表，后面实际生成包的时候，会将这些命令，翻译成打包命令。
+
+它跟 xpack 的 before_installcmd 使用是完全一样的，唯一的区别是，仅仅当这个组件被启用时候，才会执行这里的安装脚本。
+
 ### xpack_component:on_installcmd
-### xpack_component:on_uninstallcmd
+
+#### 重写组件的安装脚本
+
+这会重写整个组件的安装脚本，类似 xpack 的 on_installcmd。
+
+```lua
+xpack_component("test")
+    on_installcmd(function (component, batchcmds)
+        -- TODO
+    end)
+```
+
 ### xpack_component:after_installcmd
+
+#### 添加组件安装之后的脚本
+
+在组件安装之后，会执行这里的脚本，类似 xpack 的 after_installcmd。
+
+```lua
+xpack_component("test")
+    after_installcmd(function (component, batchcmds)
+        -- TODO
+    end)
+```
+
+### xpack_component:before_uninstallcmd
+
+#### 添加组件卸载之前的脚本
+
+在组件安装之后，会执行这里的脚本，类似 xpack 的 before_uninstallcmd。
+
+```lua
+xpack_component("test")
+    before_uninstallcmd(function (component, batchcmds)
+        -- TODO
+    end)
+```
+
+### xpack_component:on_uninstallcmd
+
+#### 重写组件卸载的脚本
+
+这会重写整个组件的卸载脚本，类似 xpack 的 on_uninstallcmd。
+
+```lua
+xpack_component("test")
+    on_uninstallcmd(function (component, batchcmds)
+        -- TODO
+    end)
+```
+
 ### xpack_component:after_uninstallcmd
+
+#### 添加组件卸载之后的脚本
+
+在组件卸载之后，会执行这里的脚本，类似 xpack 的 before_uninstallcmd。
+
+```lua
+xpack_component("test")
+    before_uninstallcmd(function (component, batchcmds)
+        -- TODO
+    end)
+```
+
 ### xpack_component:add_sourcefiles
+
+#### 添加组件源文件
+
+这类似于 xpack 的 add_sourcefiles，但这里仅仅当组件被启用后，才会将这些源文件打入安装包。
+
 ### xpack_component:add_installfiles
+
+#### 添加组件二进制安装文件
+
+这类似于 xpack 的 add_installfiles，但这里仅仅当组件被启用后，才会将这些二进制文件打入安装包。
 

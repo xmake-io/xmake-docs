@@ -509,28 +509,157 @@ VIAddVersionKey /LANG=0 OriginalFilename "${PACKAGE_FILENAME}"
     end)
 </code></pre>
 <h3 id="xpackbefore_package">xpack:before_package</h3>
+<h4 id="">自定义打包之前的脚本</h4>
+<p>我们可以通过这个接口配置打包之前的自定义脚本。</p>
+<pre><code class="lang-lua">xpack("test")
+    before_package(function (package)
+        -- TODO
+    end)
+</code></pre>
 <h3 id="xpackon_package">xpack:on_package</h3>
+<h4 id="">自定义打包脚本</h4>
+<p>我们可以通过这个接口配置打包自定义脚本，这将会重写整个内置的打包逻辑。通常用于自定义包格式。</p>
+<pre><code class="lang-lua">xpack("test")
+    set_formats("xxx")
+    on_package(function (package)
+        -- TODO
+    end)
+</code></pre>
 <h3 id="xpackafter_package">xpack:after_package</h3>
+<h4 id="">自定义打包之后的脚本</h4>
+<p>我们可以通过这个接口配置打包之后的自定义脚本。</p>
+<pre><code class="lang-lua">xpack("test")
+    after_package(function (package)
+        -- TODO
+    end)
+</code></pre>
 <h3 id="xpackbefore_installcmd">xpack:before_installcmd</h3>
-<h3 id="xpackbefore_uninstallcmd">xpack:before_uninstallcmd</h3>
+<h4 id="">添加安装之前的脚本</h4>
+<p>它不会重写整个安装脚本，但是会在现有的安装脚本执行之前，新增一些自定义的安装脚本：</p>
+<pre><code class="lang-lua">xpack("test")
+    before_installcmd(function (package, batchcmds)
+        batchcmds:mkdir(package:installdir("resources"))
+        batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+        batchcmds:mkdir(package:installdir("stub"))
+    end)
+</code></pre>
+<p>需要注意的是，通过 <code>batchcmds</code> 添加的 cp, mkdir 等命令都不会被立即执行，而是仅仅生成一个命令列表，后面实际生成包的时候，会将这些命令，翻译成打包命令。</p>
 <h3 id="xpackon_installcmd">xpack:on_installcmd</h3>
-<h3 id="xpackon_uninstallcmd">xpack:on_uninstallcmd</h3>
+<h4 id="">自定义安装脚本</h4>
+<p>这回完全重写内置默认的安装脚本，包括内部对 <code>add_installfiles</code> 配置的文件的自动安装，用户需要完全自己处理所有的安装逻辑。</p>
 <h3 id="xpackafter_installcmd">xpack:after_installcmd</h3>
+<h4 id="">添加安装之后的脚本</h4>
+<p>它不会重写整个安装脚本，但是会在现有的安装脚本执行之后，新增一些自定义的安装脚本：</p>
+<pre><code class="lang-lua">xpack("test")
+    after_installcmd(function (package, batchcmds)
+        batchcmds:mkdir(package:installdir("resources"))
+        batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+        batchcmds:mkdir(package:installdir("stub"))
+    end)
+</code></pre>
+<p>需要注意的是，通过 <code>batchcmds</code> 添加的 cp, mkdir 等命令都不会被立即执行，而是仅仅生成一个命令列表，后面实际生成包的时候，会将这些命令，翻译成打包命令。</p>
+<h3 id="xpackbefore_uninstallcmd">xpack:before_uninstallcmd</h3>
+<h4 id="">添加卸载之前的脚本</h4>
+<p>跟 before_installcmd 类似，请参考 before_installcmd 说明。</p>
+<h3 id="xpackon_uninstallcmd">xpack:on_uninstallcmd</h3>
+<h4 id="">自定义卸载脚本</h4>
+<p>跟 on_installcmd 类似，请参考 on_installcmd 说明。</p>
 <h3 id="xpackafter_uninstallcmd">xpack:after_uninstallcmd</h3>
+<h4 id="">添加卸载之后的脚本</h4>
+<p>跟 after_installcmd 类似，请参考 after_installcmd 说明。</p>
 <h3 id="xpackset_nsis_displayicon">xpack:set_nsis_displayicon</h3>
+<h4 id="nsis">设置 NSIS 的显示图标</h4>
+<p>这是一个 NSIS 专有 API，可以用于配置 NSIS 的显示图标：</p>
+<pre><code class="lang-lua">xpack("test")
+    set_nsis_displayicon("bin/foo.exe")
+</code></pre>
+<p>我们需要配置带有 icon 的可执行文件路径，这是使得安装包的显示 icon 跟它保持一致。</p>
+<p>这是一个可选配置，即使我们不配置它，xmake 也会默认使用被关联的 target 中的可执行文件中图标。</p>
 <h2 id="">组件接口</h2>
 <h3 id="xpack_componentset_title">xpack_component:set_title</h3>
+<h4 id="">设置包组件的简单描述</h4>
+<pre><code class="lang-lua">xpack_component("LongPath")
+    set_title("Enable Long Path")
+</code></pre>
 <h3 id="xpack_componentset_description">xpack_component:set_description</h3>
+<h4 id="">设置包组件的详细描述</h4>
+<pre><code class="lang-lua">xpack_component("LongPath")
+    set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
+</code></pre>
 <h3 id="xpack_componentset_default">xpack_component:set_default</h3>
+<h4 id="">设置包组件的默认启用状态</h4>
+<p>通常包组件都会被默认启用，但是我们也可以使用这个接口，默认禁用这个组件，仅仅当用户安装包时候，选择勾选此组件，才会被启用安装。</p>
+<pre><code class="lang-lua">xpack_component("LongPath")
+    set_default(false)
+    set_title("Enable Long Path")
+</code></pre>
 <h3 id="xpack_componenton_load">xpack_component:on_load</h3>
+<h4 id="">自定义加载脚本</h4>
+<p>我们可以在 on_load 自定义脚本域中，进一步灵活的配置包组件。</p>
+<pre><code class="lang-lua">xpack_component("test")
+    on_load(function (component)
+        local package = component:package()
+        -- TODO
+    end)
+</code></pre>
 <h3 id="xpack_componentbefore_installcmd">xpack_component:before_installcmd</h3>
-<h3 id="xpack_componentbefore_uninstallcmd">xpack_component:before_uninstallcmd</h3>
+<h4 id="">添加组件安装之前的脚本</h4>
+<p>它不会重写整个安装脚本，但是会在现有的安装脚本执行之前，新增一些自定义的安装脚本：</p>
+<pre><code class="lang-lua">xpack_component("test")
+    before_installcmd(function (component, batchcmds)
+        batchcmds:mkdir(package:installdir("resources"))
+        batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+        batchcmds:mkdir(package:installdir("stub"))
+    end)
+</code></pre>
+<p>需要注意的是，通过 <code>batchcmds</code> 添加的 cp, mkdir 等命令都不会被立即执行，而是仅仅生成一个命令列表，后面实际生成包的时候，会将这些命令，翻译成打包命令。</p>
+<p>它跟 xpack 的 before_installcmd 使用是完全一样的，唯一的区别是，仅仅当这个组件被启用时候，才会执行这里的安装脚本。</p>
 <h3 id="xpack_componenton_installcmd">xpack_component:on_installcmd</h3>
-<h3 id="xpack_componenton_uninstallcmd">xpack_component:on_uninstallcmd</h3>
+<h4 id="">重写组件的安装脚本</h4>
+<p>这会重写整个组件的安装脚本，类似 xpack 的 on_installcmd。</p>
+<pre><code class="lang-lua">xpack_component("test")
+    on_installcmd(function (component, batchcmds)
+        -- TODO
+    end)
+</code></pre>
 <h3 id="xpack_componentafter_installcmd">xpack_component:after_installcmd</h3>
+<h4 id="">添加组件安装之后的脚本</h4>
+<p>在组件安装之后，会执行这里的脚本，类似 xpack 的 after_installcmd。</p>
+<pre><code class="lang-lua">xpack_component("test")
+    after_installcmd(function (component, batchcmds)
+        -- TODO
+    end)
+</code></pre>
+<h3 id="xpack_componentbefore_uninstallcmd">xpack_component:before_uninstallcmd</h3>
+<h4 id="">添加组件卸载之前的脚本</h4>
+<p>在组件安装之后，会执行这里的脚本，类似 xpack 的 before_uninstallcmd。</p>
+<pre><code class="lang-lua">xpack_component("test")
+    before_uninstallcmd(function (component, batchcmds)
+        -- TODO
+    end)
+</code></pre>
+<h3 id="xpack_componenton_uninstallcmd">xpack_component:on_uninstallcmd</h3>
+<h4 id="">重写组件卸载的脚本</h4>
+<p>这会重写整个组件的卸载脚本，类似 xpack 的 on_uninstallcmd。</p>
+<pre><code class="lang-lua">xpack_component("test")
+    on_uninstallcmd(function (component, batchcmds)
+        -- TODO
+    end)
+</code></pre>
 <h3 id="xpack_componentafter_uninstallcmd">xpack_component:after_uninstallcmd</h3>
+<h4 id="">添加组件卸载之后的脚本</h4>
+<p>在组件卸载之后，会执行这里的脚本，类似 xpack 的 before_uninstallcmd。</p>
+<pre><code class="lang-lua">xpack_component("test")
+    before_uninstallcmd(function (component, batchcmds)
+        -- TODO
+    end)
+</code></pre>
 <h3 id="xpack_componentadd_sourcefiles">xpack_component:add_sourcefiles</h3>
+<h4 id="">添加组件源文件</h4>
+<p>这类似于 xpack 的 add_sourcefiles，但这里仅仅当组件被启用后，才会将这些源文件打入安装包。</p>
 <h3 id="xpack_componentadd_installfiles">xpack_component:add_installfiles</h3>
+<h4 id="">添加组件二进制安装文件</h4>
+<p>这类似于 xpack 的 add_installfiles，但这里仅仅当组件被启用后，才会将这些二进制文件打入安装包。</p>
 </article>
 </body>
 </html>
