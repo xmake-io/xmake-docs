@@ -100,6 +100,14 @@ Also, Xmake has recently been added to the official Debian repositories: https:/
 
 ## Fedora/RHEL/OpenSUSE/CentOS
 
+For Fedora 39 and above, you can install directly from the official repositories using the following command:
+
+```bash
+sudo dnf install xmake
+``
+
+We can also install from the Copr repository:
+
 ```bash
 sudo dnf copr enable waruqi/xmake
 sudo dnf install xmake

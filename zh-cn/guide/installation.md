@@ -119,6 +119,14 @@ sudo apt install xmake
 
 ## Fedora/RHEL/OpenSUSE/CentOS
 
+Fedora 39 以上版本，可以直接使用下面的命令从官方仓库安装：
+
+```bash
+sudo dnf install xmake
+```
+
+我们也可以从 Copr 仓库安装：
+
 ```bash
 sudo dnf copr enable waruqi/xmake
 sudo dnf install xmake
