@@ -157,6 +157,11 @@ xpack("xmake")
 <pre><code class="lang-lua">xpack("xmake")
      set_copyright("Copyright (C) 2015-present, TBOOX Open Source Group")
 </code></pre>
+<h3 id="xpackset_license">xpack:set_license</h3>
+<h4 id="setthepackagelicence">Set the package licence</h4>
+<p>Currently used by packages like srpm/rpm/deb to set the licence name.</p>
+<pre><code class="lang-lua">set_license("Apache-2.0")
+</code></pre>
 <h3 id="xpackset_licensefile">xpack:set_licensefile</h3>
 <h4 id="setthelicensefileofthepackage">Set the license file of the package</h4>
 <p>We can set the file path where LICENSE is located, like the NSIS installation package, it will also additionally display the LICENSE page to the installation user.</p>
@@ -238,12 +243,16 @@ xpack("xmake")
 <td>self-running shell script package, source code compilation and installation</td>
 </tr>
 <tr>
+<td>rpm</td>
+<td>rpm binary installation package</td>
+</tr>
+<tr>
 <td>srpm</td>
-<td>rpm source code installation package (to be supported)</td>
+<td>rpm source code installation package</td>
 </tr>
 <tr>
 <td>deb</td>
-<td>deb binary installation package (to be supported)</td>
+<td>deb binary installation package (TODO)</td>
 </tr>
 <tr>
 <td>Others</td>
@@ -498,6 +507,25 @@ VIAddVersionKey /LANG=0 OriginalFilename "${PACKAGE_FILENAME}"
      add_installfiles("src/(tbox/*.h)", {prefixdir = "include"})
      add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
 </code></pre>
+<h3 id="xpackadd_buildrequires">xpack:add_buildrequires</h3>
+<h4 id="addpackagebuilddependencies">Add package build dependencies</h4>
+<p>This is usually used for some source packages, such as srpm. Before installing these source code packages, you need to build the source code first, and building the source code may require the use of some other dependency packages.</p>
+<p>We can configure them through this interface.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     on_load(function (package)
+         local format = package:format()
+         if format == "srpm" then
+             package:add("buildrequires", "make")
+             package:add("buildrequires", "gcc")
+             package:add("buildrequires", "gcc-c++")
+         end
+     end)
+     on_buildcmd(function (package, batchcmds)
+         batchcmds:runv("make")
+     end)
+</code></pre>
+<p>Since different installation packages have some differences in their dependent package names, we need to configure them for different package formats in the on_load script domain.</p>
 <h3 id="xpackon_load">xpack:on_load</h3>
 <h4 id="customloadingscript">Custom loading script</h4>
 <p>If the configuration in the description field cannot meet our needs, we can further flexibly configure the package in the on_load custom script field.</p>

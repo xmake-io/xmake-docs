@@ -111,6 +111,16 @@ xpack("xmake")
     set_copyright("Copyright (C) 2015-present, TBOOX Open Source Group")
 ```
 
+### xpack:set_license
+
+#### 设置包的 License
+
+目前像 srpm/rpm/deb 等包会用到，用于设置 License 名。
+
+```lua
+set_license("Apache-2.0")
+```
+
 ### xpack:set_licensefile
 
 #### 设置包的 License 文件
@@ -198,7 +208,8 @@ $ xmake pack -f "nsis,zip"
 | srczip   | zip 源码包                        |
 | srctargz | tar.gz 源码包                     |
 | runself  | 自运行 shell 脚本包，源码编译安装 |
-| srpm     | rpm 源码安装包（待支持）          |
+| rpm      | rpm 二进制安装包                  |
+| srpm     | rpm 源码安装包                    |
 | deb      | deb 二进制安装包 （待支持）       |
 | 其他     | 可自定义格式和安装脚本            |
 
@@ -512,6 +523,32 @@ xpack("test")
     add_installfiles("src/(tbox/*.h)", {prefixdir = "include"})
     add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
 ```
+
+### xpack:add_buildrequires
+
+#### 添加包的构建依赖
+
+这通常用于一些源码包，例如 srpm。这些源码包在安装之前，需要先构建源码，而构建源码可能会需要用到一些其他的依赖包。
+
+我们可以通过这个接口去配置它们。
+
+```lua
+xpack("test")
+    set_formats("srpm")
+    on_load(function (package)
+        local format = package:format()
+        if format == "srpm" then
+            package:add("buildrequires", "make")
+            package:add("buildrequires", "gcc")
+            package:add("buildrequires", "gcc-c++")
+        end
+    end)
+    on_buildcmd(function (package, batchcmds)
+        batchcmds:runv("make")
+    end)
+```
+
+由于不同的安装包，它的依赖包名会有一些差异，所以我们需要在 on_load 脚本域针对不同的包格式，去配置它们。
 
 ### xpack:on_load
 

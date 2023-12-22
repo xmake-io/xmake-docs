@@ -157,6 +157,11 @@ xpack("xmake")
 <pre><code class="lang-lua">xpack("xmake")
     set_copyright("Copyright (C) 2015-present, TBOOX Open Source Group")
 </code></pre>
+<h3 id="xpackset_license">xpack:set_license</h3>
+<h4 id="license">设置包的 License</h4>
+<p>目前像 srpm/rpm/deb 等包会用到，用于设置 License 名。</p>
+<pre><code class="lang-lua">set_license("Apache-2.0")
+</code></pre>
 <h3 id="xpackset_licensefile">xpack:set_licensefile</h3>
 <h4 id="license">设置包的 License 文件</h4>
 <p>我们可以设置 LICENSE 所在的文件路径，像 NSIS 的安装包，它还会额外将 LICENSE 页面展示给安装用户。</p>
@@ -238,8 +243,12 @@ xpack("xmake")
 <td>自运行 shell 脚本包，源码编译安装</td>
 </tr>
 <tr>
+<td>rpm</td>
+<td>rpm 二进制安装包</td>
+</tr>
+<tr>
 <td>srpm</td>
-<td>rpm 源码安装包（待支持）</td>
+<td>rpm 源码安装包</td>
 </tr>
 <tr>
 <td>deb</td>
@@ -498,6 +507,25 @@ VIAddVersionKey /LANG=0 OriginalFilename "${PACKAGE_FILENAME}"
     add_installfiles("src/(tbox/*.h)", {prefixdir = "include"})
     add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
 </code></pre>
+<h3 id="xpackadd_buildrequires">xpack:add_buildrequires</h3>
+<h4 id="">添加包的构建依赖</h4>
+<p>这通常用于一些源码包，例如 srpm。这些源码包在安装之前，需要先构建源码，而构建源码可能会需要用到一些其他的依赖包。</p>
+<p>我们可以通过这个接口去配置它们。</p>
+<pre><code class="lang-lua">xpack("test")
+    set_formats("srpm")
+    on_load(function (package)
+        local format = package:format()
+        if format == "srpm" then
+            package:add("buildrequires", "make")
+            package:add("buildrequires", "gcc")
+            package:add("buildrequires", "gcc-c++")
+        end
+    end)
+    on_buildcmd(function (package, batchcmds)
+        batchcmds:runv("make")
+    end)
+</code></pre>
+<p>由于不同的安装包，它的依赖包名会有一些差异，所以我们需要在 on_load 脚本域针对不同的包格式，去配置它们。</p>
 <h3 id="xpackon_load">xpack:on_load</h3>
 <h4 id="">自定义加载脚本</h4>
 <p>如果在描述域中配置无法满足我们的需求，还可以在 on_load 自定义脚本域中，进一步灵活的配置包。</p>

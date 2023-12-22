@@ -111,6 +111,16 @@ xpack("xmake")
      set_copyright("Copyright (C) 2015-present, TBOOX Open Source Group")
 ```
 
+### xpack:set_license
+
+#### Set the package licence
+
+Currently used by packages like srpm/rpm/deb to set the licence name.
+
+```lua
+set_license("Apache-2.0")
+```
+
 ### xpack:set_licensefile
 
 #### Set the license file of the package
@@ -198,8 +208,9 @@ Currently supported formats are:
 | srczip | zip source package |
 | srctargz | tar.gz source package |
 | runself | self-running shell script package, source code compilation and installation |
-| srpm | rpm source code installation package (to be supported) |
-| deb | deb binary installation package (to be supported) |
+| rpm | rpm binary installation package |
+| srpm | rpm source code installation package |
+| deb | deb binary installation package (TODO) |
 | Others | Customizable formats and installation scripts |
 
 ### xpack:set_basename
@@ -512,6 +523,32 @@ xpack("test")
      add_installfiles("src/(tbox/*.h)", {prefixdir = "include"})
      add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
 ```
+
+### xpack:add_buildrequires
+
+#### Add package build dependencies
+
+This is usually used for some source packages, such as srpm. Before installing these source code packages, you need to build the source code first, and building the source code may require the use of some other dependency packages.
+
+We can configure them through this interface.
+
+```lua
+xpack("test")
+     set_formats("srpm")
+     on_load(function (package)
+         local format = package:format()
+         if format == "srpm" then
+             package:add("buildrequires", "make")
+             package:add("buildrequires", "gcc")
+             package:add("buildrequires", "gcc-c++")
+         end
+     end)
+     on_buildcmd(function (package, batchcmds)
+         batchcmds:runv("make")
+     end)
+```
+
+Since different installation packages have some differences in their dependent package names, we need to configure them for different package formats in the on_load script domain.
 
 ### xpack:on_load
 
