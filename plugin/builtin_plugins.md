@@ -667,8 +667,8 @@ This plug-in can help users quickly generate installation packages and source co
 - runself (shell) self-compile installation package
 - zip/tar.gz binary package
 - zip/tar.gz source package
-- RPM binary installation package (to be supported)
-- SRPM source code installation package (to be supported)
+- RPM binary installation package
+- SRPM source code installation package
 - DEB binary installation package (to be supported)
 
 Here is a complete example, we can take a brief look at it first:

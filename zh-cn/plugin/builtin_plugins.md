@@ -682,8 +682,8 @@ $ xmake check clang.tidy --fix_notes
 - runself (shell) 自编译安装包
 - zip/tar.gz 二进制包
 - zip/tar.gz 源码包
-- RPM 二进制安装包（待支持）
-- SRPM 源码安装包（待支持）
+- RPM 二进制安装包
+- SRPM 源码安装包
 - DEB 二进制安装包（待支持）
 
 下面是一个完整例子，我们可以先简单看下：
