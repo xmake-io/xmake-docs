@@ -575,8 +575,8 @@ $ xmake check clang.tidy --fix_notes
 <li>runself (shell) 自编译安装包</li>
 <li>zip/tar.gz 二进制包</li>
 <li>zip/tar.gz 源码包</li>
-<li>RPM 二进制安装包（待支持）</li>
-<li>SRPM 源码安装包（待支持）</li>
+<li>RPM 二进制安装包</li>
+<li>SRPM 源码安装包</li>
 <li>DEB 二进制安装包（待支持）</li>
 </ul>
 <p>下面是一个完整例子，我们可以先简单看下：</p>
@@ -738,6 +738,81 @@ pack ok
 </code></pre>
 <p>!> 需要注意的是，打二进制文件到包里，使用的是 <code>add_installfiles</code> 而不是 <code>add_sourcefiles</code>。</p>
 <p>我们也可以通过 <code>add_targets</code> 去绑定需要安装的 target 目标程序和库。更多详情见下面关于 <code>add_targets</code> 的接口描述。</p>
+<h3 id="srpm">生成 SRPM 源码安装包</h3>
+<p>它可以生成 <code>.src.rpm</code> 格式的源码安装包。</p>
+<p>我们可以通过配置 add_targets 关联需要构建的目标，在生成的 srpm 包中，它会自动调用 <code>xmake build</code> 和 <code>xmake install</code> 去构建和安装包。</p>
+<pre><code class="lang-lua">xpack("test")
+    set_homepage("https://xmake.io")
+    set_license("Apache-2.0")
+    set_description("A cross-platform build utility based on Lua.")
+
+    set_formats("srpm")
+    add_sourcefiles("(src/**)")
+    add_sourcefiles("./xmake.lua")
+
+    add_targets("demo")
+</code></pre>
+<p>它会生成类似下面的 spec 文件，然后自动调用 rpmbuild 去生成 <code>.src.rpm</code> 包。</p>
+<pre><code>Name:       test
+Version:    1.0.0
+Release:    1%{?dist}
+Summary:    hello
+
+License:    Apache-2.0
+URL:        https://xmake.io
+Source0:    test-linux-src-v1.0.0.tar.gz
+
+BuildRequires: xmake
+BuildRequires: gcc
+BuildRequires: gcc-c++
+
+%description
+A test installer.
+
+%prep
+%autosetup -n test-1.0.0 -p1
+
+%build
+xmake build -y test
+
+%install
+xmake install -o %{buildroot}/%{_exec_prefix} test
+cd %{buildroot}
+find . -type f | sed &#39;s!^\./!/!&#39; > %{_builddir}/_installedfiles.txt
+
+%check
+
+%files -f %{_builddir}/_installedfiles.txt
+
+%changelog
+* Fri Dec 22 2023 ruki - 1.0.0-1
+- Update to 1.0.0
+</code></pre><p>我们也可以通过 <code>on_buildcmd</code> 和 <code>on_installcmd</code> 自定义构建和安装脚本。</p>
+<pre><code class="lang-lua">xpack("test")
+    set_homepage("https://xmake.io")
+    set_license("Apache-2.0")
+    set_description("A cross-platform build utility based on Lua.")
+
+    set_formats("srpm")
+    add_sourcefiles("(src/**)")
+    add_sourcefiles("./configure")
+
+    on_buildcmd(function (package, batchcmds)
+        batchcmds:runv("./configure")
+        batchcmds:runv("make")
+    end)
+
+    on_installcmd(function (package, batchcmds)
+        batchcmds:runv("make", {"install", "PREFIX=%{buildroot}"})
+    end)
+</code></pre>
+<h3 id="rpm">生成 RPM 二进制安装包</h3>
+<p>RPM 包将会直接生成编译好的二进制安装包。xmake 会自动调用 <code>rpmbuild --rebuild</code> 命令去构建 SRPM 包生成它。</p>
+<p>而在 XPack 中，我们仅仅只需要配置 <code>set_formats("rpm")</code> 即可支持 rpm 包生成，其他配置与 srpm 包完全一致。</p>
+<pre><code class="lang-lua">xpack("test")
+    set_formats("rpm")
+    -- TODO
+</code></pre>
 <h3 id="">打包命令参数</h3>
 <h4 id="">指定打包格式</h4>
 <p>如果我们在配置文件中已经使用 <code>set_formats</code> 配置了多个打包格式，那么默认情况下，<code>xmake pack</code> 会自动生成所有这些格式的包。</p>

@@ -568,8 +568,8 @@ $ xmake check clang.tidy --fix_notes
 <li>runself (shell) self-compile installation package</li>
 <li>zip/tar.gz binary package</li>
 <li>zip/tar.gz source package</li>
-<li>RPM binary installation package (to be supported)</li>
-<li>SRPM source code installation package (to be supported)</li>
+<li>RPM binary installation package</li>
+<li>SRPM source code installation package</li>
 <li>DEB binary installation package (to be supported)</li>
 </ul>
 <p>Here is a complete example, we can take a brief look at it first:</p>
@@ -732,6 +732,81 @@ pack ok
 </code></pre>
 <p>!> It should be noted that to add binary files to the package, use <code>add_installfiles</code> instead of <code>add_sourcefiles</code>.</p>
 <p>We can also use <code>add_targets</code> to bind the target target programs and libraries that need to be installed. See the interface description for <code>add_targets</code> below for more details.</p>
+<h3 id="generatesrpmsourcecodeinstallationpackage">Generate SRPM source code installation package</h3>
+<p>It can generate source code installation packages in <code>.src.rpm</code> format.</p>
+<p>We can configure add_targets to associate the targets that need to be built. In the generated srpm package, it will automatically call <code>xmake build</code> and <code>xmake install</code> to build and install the package.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_homepage("https://xmake.io")
+     set_license("Apache-2.0")
+     set_description("A cross-platform build utility based on Lua.")
+
+     set_formats("srpm")
+     add_sourcefiles("(src/**)")
+     add_sourcefiles("./xmake.lua")
+
+     add_targets("demo")
+</code></pre>
+<p>It will generate a spec file similar to the following, and then automatically call rpmbuild to generate the <code>.src.rpm</code> package.</p>
+<pre><code>Name: test
+Version: 1.0.0
+Release: 1%{?dist}
+Summary: hello
+
+License: Apache-2.0
+URL: https://xmake.io
+Source0: test-linux-src-v1.0.0.tar.gz
+
+BuildRequires: xmake
+BuildRequires: gcc
+BuildRequires: gcc-c++
+
+%description
+A test installer.
+
+%prep
+%autosetup -n test-1.0.0 -p1
+
+%build
+xmake build -y test
+
+%install
+xmake install -o %{buildroot}/%{_exec_prefix} test
+cd %{buildroot}
+find . -type f | sed &#39;s!^\./!/!&#39; > %{_builddir}/_installedfiles.txt
+
+%check
+
+%files -f %{_builddir}/_installedfiles.txt
+
+%changelog
+* Fri Dec 22 2023 ruki - 1.0.0-1
+- Update to 1.0.0
+</code></pre><p>We can also customize build and installation scripts through <code>on_buildcmd</code> and <code>on_installcmd</code>.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_homepage("https://xmake.io")
+     set_license("Apache-2.0")
+     set_description("A cross-platform build utility based on Lua.")
+
+     set_formats("srpm")
+     add_sourcefiles("(src/**)")
+     add_sourcefiles("./configure")
+
+     on_buildcmd(function (package, batchcmds)
+         batchcmds:runv("./configure")
+         batchcmds:runv("make")
+     end)
+
+     on_installcmd(function (package, batchcmds)
+         batchcmds:runv("make", {"install", "PREFIX=%{buildroot}"})
+     end)
+</code></pre>
+<h3 id="generaterpmbinaryinstallationpackage">Generate RPM binary installation package</h3>
+<p>The RPM package will directly generate a compiled binary installation package. xmake will automatically call the <code>rpmbuild --rebuild</code> command to build the SRPM package and generate it.</p>
+<p>In XPack, we only need to configure <code>set_formats("rpm")</code> to support rpm package generation, and other configurations are exactly the same as srpm packages.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("rpm")
+     -- TODO
+</code></pre>
 <h3 id="packagingcommand">Packaging command</h3>
 <h4 id="specifypackagingformat">Specify packaging format</h4>
 <p>If we have configured multiple packaging formats using <code>set_formats</code> in the configuration file, then <code>xmake pack</code> will automatically generate packages for all these formats by default.</p>
