@@ -606,6 +606,64 @@ xpack("test")
      end)
 ```
 
+### xpack:on_buildcmd
+
+#### Custom build script
+
+For some source code build packages, we need to build the source code first before installation, such as srpm packages.
+
+Therefore, we can customize the build script through this interface, for example:
+
+```lua
+xpack("test")
+     set_formats("srpm")
+     add_sourcefiles("src/*.c")
+     add_sourcefiles("./configure")
+     on_buildcmd(function (package, batchcmds)
+         batchcmds:runv("./configure")
+         batchcmds:runv("make")
+     end)
+```
+
+If we associate target programs through add_targets, xpack will execute the `xmake build` command by default to build them even if we do not configure `on_buildcmd`.
+
+```lua
+xpack("test")
+     set_formats("srpm")
+     add_sourcefiles("src/*.c")
+     add_sourcefiles("./xmake.lua")
+```
+
+In addition, we can also use `add_buildrequires` to configure some build dependencies.
+
+### xpack:before_buildcmd
+
+#### Customize pre-build scripts
+
+Through this interface, we can configure pre-build scripts.
+
+```lua
+xpack("test")
+     set_formats("srpm")
+     before_buildcmd(function (package, batchcmds)
+         -- TODO
+     end)
+```
+
+### xpack:after_buildcmd
+
+#### Customize the script after the build
+
+Through this interface, we can configure the script after the build.
+
+```lua
+xpack("test")
+     set_formats("srpm")
+     after_buildcmd(function (package, batchcmds)
+         -- TODO
+     end)
+```
+
 ### xpack:before_installcmd
 
 #### Add script before installation

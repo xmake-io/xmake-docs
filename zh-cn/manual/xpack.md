@@ -624,6 +624,64 @@ xpack("test")
 
 需要注意的是，通过 `batchcmds` 添加的 cp, mkdir 等命令都不会被立即执行，而是仅仅生成一个命令列表，后面实际生成包的时候，会将这些命令，翻译成打包命令。
 
+### xpack:on_buildcmd
+
+#### 自定义构建脚本
+
+对于一些源码构建包，在安装之前，我们需要先构建源码，例如 srpm 包。
+
+因此，我们可以通过这个接口，自定义构建脚本，例如：
+
+```lua
+xpack("test")
+    set_formats("srpm")
+    add_sourcefiles("src/*.c")
+    add_sourcefiles("./configure")
+    on_buildcmd(function (package, batchcmds)
+        batchcmds:runv("./configure")
+        batchcmds:runv("make")
+    end)
+```
+
+如果我们通过 add_targets 关联了目标程序，即使我们没有配置 `on_buildcmd`，xpack 也会默认执行 `xmake build` 命令去构建它们。
+
+```lua
+xpack("test")
+    set_formats("srpm")
+    add_sourcefiles("src/*.c")
+    add_sourcefiles("./xmake.lua")
+```
+
+另外，我们也可以使用 `add_buildrequires` 去配置一些构建依赖。
+
+### xpack:before_buildcmd
+
+#### 自定义构建之前的脚本
+
+通过这个接口，我们可以配置构建之前的脚本。
+
+```lua
+xpack("test")
+    set_formats("srpm")
+    before_buildcmd(function (package, batchcmds)
+        -- TODO
+    end)
+```
+
+### xpack:after_buildcmd
+
+#### 自定义构建之后的脚本
+
+通过这个接口，我们可以配置构建之后的脚本。
+
+```lua
+xpack("test")
+    set_formats("srpm")
+    after_buildcmd(function (package, batchcmds)
+        -- TODO
+    end)
+```
+
 ### xpack:on_installcmd
 
 #### 自定义安装脚本

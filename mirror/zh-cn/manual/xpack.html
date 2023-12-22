@@ -572,6 +572,44 @@ VIAddVersionKey /LANG=0 OriginalFilename "${PACKAGE_FILENAME}"
     end)
 </code></pre>
 <p>需要注意的是，通过 <code>batchcmds</code> 添加的 cp, mkdir 等命令都不会被立即执行，而是仅仅生成一个命令列表，后面实际生成包的时候，会将这些命令，翻译成打包命令。</p>
+<h3 id="xpackon_buildcmd">xpack:on_buildcmd</h3>
+<h4 id="">自定义构建脚本</h4>
+<p>对于一些源码构建包，在安装之前，我们需要先构建源码，例如 srpm 包。</p>
+<p>因此，我们可以通过这个接口，自定义构建脚本，例如：</p>
+<pre><code class="lang-lua">xpack("test")
+    set_formats("srpm")
+    add_sourcefiles("src/*.c")
+    add_sourcefiles("./configure")
+    on_buildcmd(function (package, batchcmds)
+        batchcmds:runv("./configure")
+        batchcmds:runv("make")
+    end)
+</code></pre>
+<p>如果我们通过 add_targets 关联了目标程序，即使我们没有配置 <code>on_buildcmd</code>，xpack 也会默认执行 <code>xmake build</code> 命令去构建它们。</p>
+<pre><code class="lang-lua">xpack("test")
+    set_formats("srpm")
+    add_sourcefiles("src/*.c")
+    add_sourcefiles("./xmake.lua")
+</code></pre>
+<p>另外，我们也可以使用 <code>add_buildrequires</code> 去配置一些构建依赖。</p>
+<h3 id="xpackbefore_buildcmd">xpack:before_buildcmd</h3>
+<h4 id="">自定义构建之前的脚本</h4>
+<p>通过这个接口，我们可以配置构建之前的脚本。</p>
+<pre><code class="lang-lua">xpack("test")
+    set_formats("srpm")
+    before_buildcmd(function (package, batchcmds)
+        -- TODO
+    end)
+</code></pre>
+<h3 id="xpackafter_buildcmd">xpack:after_buildcmd</h3>
+<h4 id="">自定义构建之后的脚本</h4>
+<p>通过这个接口，我们可以配置构建之后的脚本。</p>
+<pre><code class="lang-lua">xpack("test")
+    set_formats("srpm")
+    after_buildcmd(function (package, batchcmds)
+        -- TODO
+    end)
+</code></pre>
 <h3 id="xpackon_installcmd">xpack:on_installcmd</h3>
 <h4 id="">自定义安装脚本</h4>
 <p>这回完全重写内置默认的安装脚本，包括内部对 <code>add_installfiles</code> 配置的文件的自动安装，用户需要完全自己处理所有的安装逻辑。</p>

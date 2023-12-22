@@ -560,6 +560,44 @@ VIAddVersionKey /LANG=0 OriginalFilename "${PACKAGE_FILENAME}"
          -- TODO
      end)
 </code></pre>
+<h3 id="xpackon_buildcmd">xpack:on_buildcmd</h3>
+<h4 id="custombuildscript">Custom build script</h4>
+<p>For some source code build packages, we need to build the source code first before installation, such as srpm packages.</p>
+<p>Therefore, we can customize the build script through this interface, for example:</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     add_sourcefiles("src/*.c")
+     add_sourcefiles("./configure")
+     on_buildcmd(function (package, batchcmds)
+         batchcmds:runv("./configure")
+         batchcmds:runv("make")
+     end)
+</code></pre>
+<p>If we associate target programs through add_targets, xpack will execute the <code>xmake build</code> command by default to build them even if we do not configure <code>on_buildcmd</code>.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     add_sourcefiles("src/*.c")
+     add_sourcefiles("./xmake.lua")
+</code></pre>
+<p>In addition, we can also use <code>add_buildrequires</code> to configure some build dependencies.</p>
+<h3 id="xpackbefore_buildcmd">xpack:before_buildcmd</h3>
+<h4 id="customizeprebuildscripts">Customize pre-build scripts</h4>
+<p>Through this interface, we can configure pre-build scripts.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     before_buildcmd(function (package, batchcmds)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpackafter_buildcmd">xpack:after_buildcmd</h3>
+<h4 id="customizethescriptafterthebuild">Customize the script after the build</h4>
+<p>Through this interface, we can configure the script after the build.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     after_buildcmd(function (package, batchcmds)
+         -- TODO
+     end)
+</code></pre>
 <h3 id="xpackbefore_installcmd">xpack:before_installcmd</h3>
 <h4 id="addscriptbeforeinstallation">Add script before installation</h4>
 <p>It will not rewrite the entire installation script, but will add some custom installation scripts before the existing installation scripts are executed:</p>
