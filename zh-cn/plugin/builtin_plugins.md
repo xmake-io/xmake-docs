@@ -900,6 +900,98 @@ pack ok
 
 我们也可以通过 `add_targets` 去绑定需要安装的 target 目标程序和库。更多详情见下面关于 `add_targets` 的接口描述。
 
+### 生成 SRPM 源码安装包
+
+它可以生成 `.src.rpm` 格式的源码安装包。
+
+我们可以通过配置 add_targets 关联需要构建的目标，在生成的 srpm 包中，它会自动调用 `xmake build` 和 `xmake install` 去构建和安装包。
+
+```lua
+xpack("test")
+    set_homepage("https://xmake.io")
+    set_license("Apache-2.0")
+    set_description("A cross-platform build utility based on Lua.")
+
+    set_formats("srpm")
+    add_sourcefiles("(src/**)")
+    add_sourcefiles("./xmake.lua")
+
+    add_targets("demo")
+```
+
+它会生成类似下面的 spec 文件，然后自动调用 rpmbuild 去生成 `.src.rpm` 包。
+
+```
+Name:       test
+Version:    1.0.0
+Release:    1%{?dist}
+Summary:    hello
+
+License:    Apache-2.0
+URL:        https://xmake.io
+Source0:    test-linux-src-v1.0.0.tar.gz
+
+BuildRequires: xmake
+BuildRequires: gcc
+BuildRequires: gcc-c++
+
+%description
+A test installer.
+
+%prep
+%autosetup -n test-1.0.0 -p1
+
+%build
+xmake build -y test
+
+%install
+xmake install -o %{buildroot}/%{_exec_prefix} test
+cd %{buildroot}
+find . -type f | sed 's!^\./!/!' > %{_builddir}/_installedfiles.txt
+
+%check
+
+%files -f %{_builddir}/_installedfiles.txt
+
+%changelog
+* Fri Dec 22 2023 ruki - 1.0.0-1
+- Update to 1.0.0
+```
+
+我们也可以通过 `on_buildcmd` 和 `on_installcmd` 自定义构建和安装脚本。
+
+```lua
+xpack("test")
+    set_homepage("https://xmake.io")
+    set_license("Apache-2.0")
+    set_description("A cross-platform build utility based on Lua.")
+
+    set_formats("srpm")
+    add_sourcefiles("(src/**)")
+    add_sourcefiles("./configure")
+
+    on_buildcmd(function (package, batchcmds)
+        batchcmds:runv("./configure")
+        batchcmds:runv("make")
+    end)
+
+    on_installcmd(function (package, batchcmds)
+        batchcmds:runv("make", {"install", "PREFIX=%{buildroot}"})
+    end)
+```
+
+### 生成 RPM 二进制安装包
+
+RPM 包将会直接生成编译好的二进制安装包。xmake 会自动调用 `rpmbuild --rebuild` 命令去构建 SRPM 包生成它。
+
+而在 XPack 中，我们仅仅只需要配置 `set_formats("rpm")` 即可支持 rpm 包生成，其他配置与 srpm 包完全一致。
+
+```lua
+xpack("test")
+    set_formats("rpm")
+    -- TODO
+```
+
 ### 打包命令参数
 
 #### 指定打包格式

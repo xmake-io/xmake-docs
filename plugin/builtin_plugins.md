@@ -887,6 +887,98 @@ pack ok
 
 We can also use `add_targets` to bind the target target programs and libraries that need to be installed. See the interface description for `add_targets` below for more details.
 
+### Generate SRPM source code installation package
+
+It can generate source code installation packages in `.src.rpm` format.
+
+We can configure add_targets to associate the targets that need to be built. In the generated srpm package, it will automatically call `xmake build` and `xmake install` to build and install the package.
+
+```lua
+xpack("test")
+     set_homepage("https://xmake.io")
+     set_license("Apache-2.0")
+     set_description("A cross-platform build utility based on Lua.")
+
+     set_formats("srpm")
+     add_sourcefiles("(src/**)")
+     add_sourcefiles("./xmake.lua")
+
+     add_targets("demo")
+```
+
+It will generate a spec file similar to the following, and then automatically call rpmbuild to generate the `.src.rpm` package.
+
+```
+Name: test
+Version: 1.0.0
+Release: 1%{?dist}
+Summary: hello
+
+License: Apache-2.0
+URL: https://xmake.io
+Source0: test-linux-src-v1.0.0.tar.gz
+
+BuildRequires: xmake
+BuildRequires: gcc
+BuildRequires: gcc-c++
+
+%description
+A test installer.
+
+%prep
+%autosetup -n test-1.0.0 -p1
+
+%build
+xmake build -y test
+
+%install
+xmake install -o %{buildroot}/%{_exec_prefix} test
+cd %{buildroot}
+find . -type f | sed 's!^\./!/!' > %{_builddir}/_installedfiles.txt
+
+%check
+
+%files -f %{_builddir}/_installedfiles.txt
+
+%changelog
+* Fri Dec 22 2023 ruki - 1.0.0-1
+- Update to 1.0.0
+```
+
+We can also customize build and installation scripts through `on_buildcmd` and `on_installcmd`.
+
+```lua
+xpack("test")
+     set_homepage("https://xmake.io")
+     set_license("Apache-2.0")
+     set_description("A cross-platform build utility based on Lua.")
+
+     set_formats("srpm")
+     add_sourcefiles("(src/**)")
+     add_sourcefiles("./configure")
+
+     on_buildcmd(function (package, batchcmds)
+         batchcmds:runv("./configure")
+         batchcmds:runv("make")
+     end)
+
+     on_installcmd(function (package, batchcmds)
+         batchcmds:runv("make", {"install", "PREFIX=%{buildroot}"})
+     end)
+```
+
+### Generate RPM binary installation package
+
+The RPM package will directly generate a compiled binary installation package. xmake will automatically call the `rpmbuild --rebuild` command to build the SRPM package and generate it.
+
+In XPack, we only need to configure `set_formats("rpm")` to support rpm package generation, and other configurations are exactly the same as srpm packages.
+
+```lua
+xpack("test")
+     set_formats("rpm")
+     -- TODO
+```
+
 ### Packaging command
 
 #### Specify packaging format
