@@ -22,6 +22,7 @@ target ("test")
 If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:
 
 ```bash
+$ xmake l core.project.policy.policies
 {
   "check.auto_map_flags" = {
     type = "boolean",
