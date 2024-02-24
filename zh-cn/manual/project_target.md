@@ -2814,12 +2814,20 @@ target("test")
 目前支持的一些配置值说明如下：
 
 
-| 值     | 描述                                      |
-| ------ | ----------------------------------------- |
-| MT     | msvc 运行时库：多线程静态库               |
-| MTd    | msvc 运行时库：多线程静态库（调试）       |
-| MD     | msvc 运行时库：多线程动态库               |
-| MDd    | msvc 运行时库：多线程动态库（调试）       |
+| 值             | 描述                                               |
+| ------         | -----------------------------------------          |
+| MT             | msvc 运行时库：多线程静态库                        |
+| MTd            | msvc 运行时库：多线程静态库（调试）                |
+| MD             | msvc 运行时库：多线程动态库                        |
+| MDd            | msvc 运行时库：多线程动态库（调试）                |
+| c++_static     | clang 的 c++ 运行时库，静态库                      |
+| c++_shared     | clang 的 c++ 运行时库，动态库                      |
+| stdc++_static  | gcc 的 c++ 运行时库，静态库                        |
+| stdc++_shared  | gcc 的 c++ 运行时库，动态库                        |
+| gnustl_static  | android 的 c++ 运行时库，静态库，高版本 NDK 已废弃 |
+| gnustl_shared  | android 的 c++ 运行时库，静态库，高版本 NDK 已废弃 |
+| stlport_static | android 的 c++ 运行时库，静态库，高版本 NDK 已废弃 |
+| stlport_static | android 的 c++ 运行时库，静态库，高版本 NDK 已废弃 |
 
 关于 vs 运行时，可以参考：[msvc 运行时说明](https://docs.microsoft.com/en-us/cpp/build/reference/md-mt-ld-use-run-time-library?view=msvc-160)
 

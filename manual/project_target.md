@@ -2812,12 +2812,20 @@ This is a newly added interface since v2.5.1, which is used to abstractly set th
 Some of the currently supported configuration values are described as follows:
 
 
-| Value  | Description                                                  |
-| ------ | -----------------------------------------                    |
-| MT     | msvc runtime library: multithreaded static library           |
-| MTd    | msvc runtime library: multithreaded static library (debug)   |
-| MD     | msvc runtime library: multi-threaded dynamic library         |
-| MDd    | msvc runtime library: multi-threaded dynamic library (debug) |
+| Value          | Description                                                                          |
+| ------         | -----------------------------------------                                            |
+| MT             | msvc runtime library: multithreaded static library                                   |
+| MTd            | msvc runtime library: multithreaded static library (debug)                           |
+| MD             | msvc runtime library: multi-threaded dynamic library                                 |
+| MDd            | msvc runtime library: multi-threaded dynamic library (debug)                         |
+| c++_static     | clang's c++ runtime library, static library                                          |
+| c++_shared     | c++ Runtime Library, Dynamic Libraries                                               |
+| stdc++_static  | c++ runtime library for gcc, static library                                          |
+| stdc++_shared  | c++ runtime library for gcc, dynamic libraries                                       |
+| gnustl_static  | c++ runtime library for android, static libraries, deprecated in higher NDK versions |
+| gnustl_shared  | c++ runtime library, static library for android, deprecated in higher NDK versions   |
+| stlport_static | c++ runtime library, static library for android, deprecated by NDK                   |
+| stlport_static | c++ Runtime Library for android, static library, deprecated in higher NDK versions   |
 
 About vs runtime, you can refer to: [msvc runtime description](https://docs.microsoft.com/en-us/cpp/build/reference/md-mt-ld-use-run-time-library?view =msvc-160)
 
