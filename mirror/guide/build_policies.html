@@ -263,6 +263,11 @@ set_policy("build.sanitizer.undefined", true)
 <p>Similar to <a href="https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> for detecting memory leaks.</p>
 <h3 id="buildsanitizerundefined">build.sanitizer.undefined</h3>
 <p>Similar to <a href="https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress">build.sanitizer.address</a> for detecting undefined issues.</p>
+<h3 id="buildalways_update_configfiles">build.always_update_configfiles</h3>
+<p>This policy is used for the automatic generation of <code>add_configfiles</code> configuration files. By default, xmake only triggers the regeneration of configfiles the first time <code>xmake config</code> is done, or if the xmake.lua configuration is changed.</p>
+<p>Each subsequent build will not regenerate configfiles as long as the configuration has not changed.</p>
+<p>However, if we use a variable such as GIT_COMMIT in our configfiles and want to always regenerate the latest configuration for each build, we can configure it.</p>
+<p>For background on how to use it, see: <a href="https://github.com/xmake-io/xmake/issues/4747">#4747</a></p>
 <h3 id="runautobuild">run.autobuild</h3>
 <p>This policy is used to adjust the behaviour of <code>xmake run</code>. By default, running <code>xmake run</code> does not build the target program automatically, but prompts the user to build it manually if it has not been compiled yet.</p>
 <p>By turning on this policy, we can automatically build the target program before running it.</p>

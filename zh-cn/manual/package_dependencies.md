@@ -125,6 +125,28 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 
 它也会设置对应的sha256值，具体描述见：[add_urls](#packageadd_urls)
 
+### package:add_versionfiles
+
+#### 添加包版本列表
+
+通常我们可以通过 `add_versions` 接口添加包版本，但是如果版本越来越多，就会导致包配置太过臃肿，这个时候，我们可以使用 `add_versionfiles` 接口将所有的版本列表，存储到单独的文件中去维护。
+
+例如：
+
+```lua
+package("libcurl")
+    add_versionfiles("versions.txt")
+```
+
+```bash
+8.5.0 ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b
+8.4.0 e5250581a9c032b1b6ed3cf2f9c114c811fc41881069e9892d115cc73f9e88c6
+8.0.1 9b6b1e96b748d04b968786b6bdf407aa5c75ab53a3d37c1c8c81cdb736555ccf
+7.87.0 5d6e128761b7110946d1276aff6f0f266f2b726f5e619f7e0a057a474155f307
+7.31.0 a73b118eececff5de25111f35d1d0aafe1e71afdbb83082a8e44d847267e3e08
+...
+```
+
 ### package:add_patches
 
 #### 设置包补丁

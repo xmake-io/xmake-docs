@@ -2886,6 +2886,20 @@ target("doctest_shared")
 </code></pre>
 <p>Each unit test can be changed to a binary executable program through <code>kind = "binary"</code>, and the main entry function can be introduced through DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN.</p>
 <p>This enables external runnable unit tests in dynamic library targets.</p>
+<h5 id="configureruntimeout">Configure run timeout</h5>
+<p>If some test programs get stuck if they run for a long time without exiting, we can force them to exit and return failure by configuring a timeout.</p>
+<pre><code class="lang-lua">target("test_timeout")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/run_timeout.cpp")
+    add_tests("run_timeout", {run_timeout = 1000})
+``
+
+```bash
+$ xmake test
+[100%]: test_timeout/run_timeout .................................... failed 1.006s
+run failed, exit code: -1, exit error: wait process timeout
+</code></pre>
 </article>
 </body>
 </html>

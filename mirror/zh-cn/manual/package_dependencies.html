@@ -176,6 +176,20 @@ add_versions("github:4.0.2", "4df1ef0bf73b7148caea1270539ef7bd06607e0ea8aa2fbf1b
 <h3 id="packageadd_versions">package:add_versions</h3>
 <h4 id="">设置每个源码包的版本</h4>
 <p>它也会设置对应的sha256值，具体描述见：<a href="#packageadd_urls">add_urls</a></p>
+<h3 id="packageadd_versionfiles">package:add_versionfiles</h3>
+<h4 id="">添加包版本列表</h4>
+<p>通常我们可以通过 <code>add_versions</code> 接口添加包版本，但是如果版本越来越多，就会导致包配置太过臃肿，这个时候，我们可以使用 <code>add_versionfiles</code> 接口将所有的版本列表，存储到单独的文件中去维护。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">package("libcurl")
+    add_versionfiles("versions.txt")
+</code></pre>
+<pre><code class="lang-bash">8.5.0 ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b
+8.4.0 e5250581a9c032b1b6ed3cf2f9c114c811fc41881069e9892d115cc73f9e88c6
+8.0.1 9b6b1e96b748d04b968786b6bdf407aa5c75ab53a3d37c1c8c81cdb736555ccf
+7.87.0 5d6e128761b7110946d1276aff6f0f266f2b726f5e619f7e0a057a474155f307
+7.31.0 a73b118eececff5de25111f35d1d0aafe1e71afdbb83082a8e44d847267e3e08
+...
+</code></pre>
 <h3 id="packageadd_patches">package:add_patches</h3>
 <h4 id="">设置包补丁</h4>
 <p>此接口用于针对源码包，在编译安装前，先打对应设置的补丁包，再对其进行编译，并且可支持同时打多个补丁。</p>

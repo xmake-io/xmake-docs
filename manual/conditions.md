@@ -141,6 +141,12 @@ In the msys/cygwin subsystem environment, the compiler architecture defaults to 
 
 We can also quickly view the current subsystem architecture by executing `xmake l os.subarch`.
 
+### is_cross
+
+#### Determines whether the current platform is cross-compiled or not.
+
+This interface returns true if the current target architecture and platform, which is not the current host platform, is cross-compiled.
+
 ### is_mode
 
 #### Is the current compilation mode

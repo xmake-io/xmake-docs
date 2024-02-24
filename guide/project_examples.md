@@ -2134,7 +2134,7 @@ A more complete example: [Verilator](https://github.com/xmake-io/xmake/tree/mast
 
 ## Cppfront Program
 
-```bash
+```lua
 add_rules("mode.debug", "mode.release")
 
 add_requires("cppfront")
@@ -2146,3 +2146,15 @@ target("test")
     add_packages("cppfront")
 ```
 
+## Cosmocc Program
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("cosmocc")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("@cosmocc")
+```

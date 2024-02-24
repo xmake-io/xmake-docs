@@ -3599,4 +3599,20 @@ Each unit test can be changed to a binary executable program through `kind = "bi
 
 This enables external runnable unit tests in dynamic library targets.
 
+##### Configure run timeout
 
+If some test programs get stuck if they run for a long time without exiting, we can force them to exit and return failure by configuring a timeout.
+
+```lua
+target("test_timeout")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/run_timeout.cpp")
+    add_tests("run_timeout", {run_timeout = 1000})
+``
+
+```bash
+$ xmake test
+[100%]: test_timeout/run_timeout .................................... failed 1.006s
+run failed, exit code: -1, exit error: wait process timeout
+```

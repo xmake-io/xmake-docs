@@ -297,6 +297,16 @@ Similar to [build.sanitizer.address](https://xmake.io/#/guide/build_policies?id=
 
 Similar to [build.sanitizer.address](https://xmake.io/#/guide/build_policies?id=buildsanitizeraddress) for detecting undefined issues.
 
+### build.always_update_configfiles
+
+This policy is used for the automatic generation of `add_configfiles` configuration files. By default, xmake only triggers the regeneration of configfiles the first time `xmake config` is done, or if the xmake.lua configuration is changed.
+
+Each subsequent build will not regenerate configfiles as long as the configuration has not changed.
+
+However, if we use a variable such as GIT_COMMIT in our configfiles and want to always regenerate the latest configuration for each build, we can configure it.
+
+For background on how to use it, see: [#4747](https://github.com/xmake-io/xmake/issues/4747)
+
 ### run.autobuild
 
 This policy is used to adjust the behaviour of `xmake run`. By default, running `xmake run` does not build the target program automatically, but prompts the user to build it manually if it has not been compiled yet.

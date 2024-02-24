@@ -300,6 +300,16 @@ $ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
 
 与 [build.sanitizer.address](https://xmake.io/#/zh-cn/guide/build_policies?id=buildsanitizeraddress) 类似，用于检测 undefined 问题。
 
+### build.always_update_configfiles
+
+这个策略用于对 `add_configfiles` 配置文件的自动生成行为。默认情况下，xmake 仅仅只会在首次 `xmake config` 时候，或者 xmake.lua 配置有改动的是否，才会触发 configfiles 的重新生成。
+
+之后的每次构建，只要配置没有变化，就不会重新生成 configfiles。
+
+但是，如果我们的 configfiles 中有使用 GIT_COMMIT 等变量，想要每次构建时候，总是重新生成最新的配置，那么可以配置它。
+
+具体使用背景，可以看下：[#4747](https://github.com/xmake-io/xmake/issues/4747)
+
 ### run.autobuild
 
 这个策略用于调整 `xmake run` 的行为，默认情况下，执行 `xmake run` 并不会自动构建目标程序，如果程序还没被编译，就是提示用户手动构建一下。

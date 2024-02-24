@@ -128,6 +128,28 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 
 Used to set the version of each source package and the corresponding sha256 value, as described in [add_urls](#add_urls)
 
+### package:add_versionfiles
+
+#### Adding a list of package versions
+
+Normally we can add package versions through the `add_versions` interface, but if there are more and more versions, the package configuration will be too bloated, at this time, we can use the `add_versionfiles` interface to store a list of all the versions in a separate file to maintain.
+
+For example:
+
+```lua
+package("libcurl")
+    add_versionfiles("versions.txt")
+```
+
+```bash
+8.5.0 ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b
+8.4.0 e5250581a9c032b1b6ed3cf2f9c114c811fc41881069e9892d115cc73f9e88c6
+8.0.1 9b6b1e96b748d04b968786b6bdf407aa5c75ab53a3d37c1c8c81cdb736555ccf
+7.87.0 5d6e128761b7110946d1276aff6f0f266f2b726f5e619f7e0a057a474155f307
+7.31.0 a73b118eececff5de25111f35d1d0aafe1e71afdbb83082a8e44d847267e3e08
+...
+```
+
 ### package:add_patches
 
 #### Add package patches

@@ -2132,7 +2132,7 @@ hello world!
 
 ## Cppfront 程序
 
-```bash
+```lua
 add_rules("mode.debug", "mode.release")
 
 add_requires("cppfront")
@@ -2144,3 +2144,15 @@ target("test")
     add_packages("cppfront")
 ```
 
+## Cosmocc 程序
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("cosmocc")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("@cosmocc")
+```

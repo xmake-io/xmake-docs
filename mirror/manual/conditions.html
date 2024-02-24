@@ -240,6 +240,9 @@ end
 <h4 id="determinethearchitectureofthecurrenthostsubsystemenvironment">Determine the architecture of the current host subsystem environment</h4>
 <p>At present, it is mainly used for the detection of the architecture under the subsystem environment such as cygwin and msys2 on the windows system. The msvc tool chain is usually used on the windows compilation platform, and the architecture is x64, x86.<br>In the msys/cygwin subsystem environment, the compiler architecture defaults to x86_64/i386, which is different.</p>
 <p>We can also quickly view the current subsystem architecture by executing <code>xmake l os.subarch</code>.</p>
+<h3 id="is_cross">is_cross</h3>
+<h4 id="determineswhetherthecurrentplatformiscrosscompiledornot">Determines whether the current platform is cross-compiled or not.</h4>
+<p>This interface returns true if the current target architecture and platform, which is not the current host platform, is cross-compiled.</p>
 <h3 id="is_mode">is_mode</h3>
 <h4 id="isthecurrentcompilationmode">Is the current compilation mode</h4>
 <p>You can use this api to check the configuration command: <code>xmake f -m debug</code></p>

@@ -3602,3 +3602,21 @@ target("doctest_shared")
 通过 `kind = "binary"` 可以将每个单元测试改为 binary 可执行程序，并通过 DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 引入 main 入口函数。
 
 这样就能实现动态库目标中外置可运行的单元测试。
+
+##### 配置运行超时
+
+如果一些测试程序长时间运行不退出，就会卡住，我们可以通过配置超时时间，强制退出，并返回失败。
+
+```lua
+target("test_timeout")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/run_timeout.cpp")
+    add_tests("run_timeout", {run_timeout = 1000})
+```
+
+```bash
+$ xmake test
+[100%]: test_timeout/run_timeout .................................... failed 1.006s
+run failed, exit code: -1, exit error: wait process timeout
+```

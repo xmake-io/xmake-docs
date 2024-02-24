@@ -92,63 +92,7 @@
   line-height: 1;
 }
 </style>
-    <p>条件判断的api，一般用于必须要处理特定平台的编译逻辑的场合。。通常跟lua的if语句配合使用。</p>
-<table>
-<thead>
-<tr>
-<th>接口</th>
-<th>描述</th>
-<th>支持版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#is_os">is_os</a></td>
-<td>判断当前构建目标的操作系统</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#is_arch">is_arch</a></td>
-<td>判断当前编译架构</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#is_plat">is_plat</a></td>
-<td>判断当前编译平台</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#is_host">is_host</a></td>
-<td>判断当前主机环境操作系统</td>
-<td>>= 2.1.4</td>
-</tr>
-<tr>
-<td><a href="#is_mode">is_mode</a></td>
-<td>判断当前编译模式</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#is_kind">is_kind</a></td>
-<td>判断当前编译类型</td>
-<td>>= 2.0.1</td>
-</tr>
-<tr>
-<td><a href="#is_config">is_config</a></td>
-<td>判断指定配置是否为给定的值</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#has_config">has_config</a></td>
-<td>判断配置是否启用或者存在</td>
-<td>>= 2.2.2</td>
-</tr>
-<tr>
-<td><a href="#has_package">has_package</a></td>
-<td>判断依赖包是否被启用或者存在</td>
-<td>>= 2.2.3</td>
-</tr>
-</tbody>
-</table>
+    <p>条件判断的api，一般用于必须要处理特定平台的编译逻辑的场合。。通常跟 lua 的 if 语句配合使用。</p>
 <h3 id="is_os">is_os</h3>
 <h4 id="">判断当前构建目标的操作系统</h4>
 <pre><code class="lang-lua">-- 如果当前操作系统是ios
@@ -248,6 +192,9 @@ end
 <h4 id="">判断当前主机子系统环境下的架构</h4>
 <p>目前主要用于 windows 系统上 cygwin, msys2 等子系统环境下架构的探测，通常在 windows 编译平台采用 msvc 工具链，那边编译架构时 x64，x86。<br>而在 msys/cygwin 子系统环境下，编译架构默认为 x86_64/i386，是有差异的。</p>
 <p>我们也可以通过执行 <code>xmake l os.subarch</code> 来快速查看当前的子系统架构。</p>
+<h3 id="is_cross">is_cross</h3>
+<h4 id="">判断当前平台是否为交叉编译</h4>
+<p>如果当前的目标架构和平台，不是当前的主机平台，属于交叉编译，这个接口就会返回 true。</p>
 <h3 id="is_mode">is_mode</h3>
 <h4 id="">判断当前编译模式</h4>
 <p>用于检测编译配置：<code>xmake f -m debug</code></p>
