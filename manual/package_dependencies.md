@@ -459,9 +459,164 @@ To find out what methods are available to `package` look [here](manual/package_i
 
 ### package:on_install
 
-#### Install package
+#### Installation package
 
-This interface is mainly used to add installation scripts. The preceding string parameters are used to set up supported platforms. Other script fields like `on_load`, `on_test` are also supported.
+This interface is mainly used to add installation scripts. The previous string parameters are used to set supported platforms. Other script fields such as `on_load`, `on_test` are also supported.
+
+##### Platform filtering
+
+The complete filtering syntax is as follows: `plat|arch1,arch2@host|arch1,arch2`
+
+It looks very complicated, but it is actually very simple. Each stage is optional and can be partially omitted, corresponding to: `Compilation platform|Compilation architecture@Host platform|Host architecture`
+
+If you do not set any platform filter conditions, all platforms will be supported by default, and the scripts inside will take effect on all platforms, for example:
+
+```lua
+on_install(function (package)
+     -- TODO
+end)
+```
+
+If the installation script is effective for a specific platform, then directly specify the corresponding compilation platform. You can specify multiple ones at the same time:
+
+```lua
+on_install("linux", "macosx", function (package)
+     -- TODO
+end)
+```
+
+If you need to subdivide it into a specific architecture to take effect, you can write like this:
+
+
+```lua
+on_install("linux|x86_64", "iphoneos|arm64", function (package)
+     -- TODO
+end)
+```
+
+If you also want to limit the execution host environment platform and architecture, you can append `@host|arch` behind, for example:
+
+```lua
+on_install("mingw@windows", function (package)
+     -- TODO
+end)
+```
+
+This means that it only takes effect when compiling the mingw platform under windows.
+
+We can also not specify which platform and architecture, but only set the host platform and architecture. This is usually used to describe some dependency packages related to compilation tools, which can only be run in the host environment.
+
+For example, the package we compile depends on cmake and needs to add the cmake package description. Then the compilation and installation environment can only be the host platform:
+
+```lua
+on_install("@windows", "@linux", "@macosx", function (package)
+     -- TODO
+end)
+```
+
+Some other examples:
+
+```lua
+-- `@linux`
+-- `@linux|x86_64`
+-- `@macosx,linux`
+-- `android@macosx,linux`
+-- `android|armeabi-v7a@macosx,linux`
+-- `android|armeabi-v7a@macosx,linux|x86_64`
+-- `android|armeabi-v7a@linux|x86_64`
+```
+
+In 2.8.7, we have improved pattern matching support and added the ability to exclude specific platforms and architectures, such as:
+
+```
+!plat|!arch@!subhost|!subarch
+```
+
+```bash
+@!linux
+@!linux|x86_64
+@!macosx,!linux
+!android@macosx,!linux
+android|!armeabi-v7a@macosx,!linux
+android|armeabi-v7a,!iphoneos@macosx,!linux|x86_64
+!android|armeabi-v7a@!linux|!x86_64
+!linux|*
+```
+
+At the same time, a built-in `native` architecture is also provided to match the local architecture of the current platform, mainly used to specify or exclude cross-compilation platforms.
+
+```lua
+on_install("macosx|native", ...)
+```
+
+The above configuration, if used on a macOS x86_64 device, will only match the local architecture compilation of `xmake f -a x86_64`.
+
+If it is cross-compiled with `xmake f -a arm64`, it will not be matched.
+
+In the same way, if you only want to match cross-compilation, you can use `macosx|!native` to negate and exclude.
+
+##### Compilation tools
+
+We have built-in scripts for installing common compilation tools to provide convenient architecture support for build tool chains with different source code dependencies, such as: autoconf, cmake, meson, etc.
+
+###### xmake
+
+If it is a dependency package based on xmake, it is very simple to integrate it. xmake has very good built-in integration support for it, and can directly support cross-platform compilation. Generally, you only need:
+
+```lua
+on_install(function (package)
+     import("package.tools.xmake").install(package)
+end)
+```
+
+If you want to pass some unique compilation configuration parameters:
+
+```lua
+on_install(function (package)
+     import("package.tools.xmake").install(package, {"--xxx=y"})
+end)
+```
+
+###### cmake
+
+If it is a package based on cmake, it is very simple to integrate. Usually you only need to set some configuration parameters, but you also need to add the cmake dependency first:
+
+```lua
+add_deps("cmake")
+on_install(function (package)
+     import("package.tools.cmake").install(package, {"-Dxxx=ON"})
+end)
+```
+
+###### autoconf
+
+If it is an autoconf-based package, the integration method is similar to cmake, except that the configuration parameters passed are different. However, usually, Unix systems have built-in autoconf series tools, so it is fine without adding related dependencies.
+
+```lua
+on_install(function (package)
+     import("package.tools.autoconf").install(package, {"--enable-shared=no"})
+end)
+```
+
+However, some source code packages may not be fully satisfied by the system's built-in autoconf, so you can add the autoconf series dependencies to build them:
+
+```lua
+add_deps("autoconf", "automake", "libtool", "pkg-config")
+on_install(function (package)
+     import("package.tools.autoconf").install(package, {"--enable-shared=no"})
+end)
+```
+
+###### meson
+
+If it is meson, you also need to add ninja dependencies to execute the build.
+
+```lua
+add_deps("meson", "ninja")
+on_install(function (package)
+     import("package.tools.meson").install(package, {"-Dxxx=ON"})
+end)
+```
 
 ### package:on_download
 

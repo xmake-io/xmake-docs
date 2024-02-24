@@ -386,8 +386,103 @@ end)
 </code></pre>
 <p>To find out what methods are available to <code>package</code> look <a href="manual/package_interface.md">here</a>.</p>
 <h3 id="packageon_install">package:on_install</h3>
-<h4 id="installpackage">Install package</h4>
-<p>This interface is mainly used to add installation scripts. The preceding string parameters are used to set up supported platforms. Other script fields like <code>on_load</code>, <code>on_test</code> are also supported.</p>
+<h4 id="installationpackage">Installation package</h4>
+<p>This interface is mainly used to add installation scripts. The previous string parameters are used to set supported platforms. Other script fields such as <code>on_load</code>, <code>on_test</code> are also supported.</p>
+<h5 id="platformfiltering">Platform filtering</h5>
+<p>The complete filtering syntax is as follows: <code>plat|arch1,arch2@host|arch1,arch2</code></p>
+<p>It looks very complicated, but it is actually very simple. Each stage is optional and can be partially omitted, corresponding to: <code>Compilation platform|Compilation architecture@Host platform|Host architecture</code></p>
+<p>If you do not set any platform filter conditions, all platforms will be supported by default, and the scripts inside will take effect on all platforms, for example:</p>
+<pre><code class="lang-lua">on_install(function (package)
+     -- TODO
+end)
+</code></pre>
+<p>If the installation script is effective for a specific platform, then directly specify the corresponding compilation platform. You can specify multiple ones at the same time:</p>
+<pre><code class="lang-lua">on_install("linux", "macosx", function (package)
+     -- TODO
+end)
+</code></pre>
+<p>If you need to subdivide it into a specific architecture to take effect, you can write like this:</p>
+<pre><code class="lang-lua">on_install("linux|x86_64", "iphoneos|arm64", function (package)
+     -- TODO
+end)
+</code></pre>
+<p>If you also want to limit the execution host environment platform and architecture, you can append <code>@host|arch</code> behind, for example:</p>
+<pre><code class="lang-lua">on_install("mingw@windows", function (package)
+     -- TODO
+end)
+</code></pre>
+<p>This means that it only takes effect when compiling the mingw platform under windows.</p>
+<p>We can also not specify which platform and architecture, but only set the host platform and architecture. This is usually used to describe some dependency packages related to compilation tools, which can only be run in the host environment.</p>
+<p>For example, the package we compile depends on cmake and needs to add the cmake package description. Then the compilation and installation environment can only be the host platform:</p>
+<pre><code class="lang-lua">on_install("@windows", "@linux", "@macosx", function (package)
+     -- TODO
+end)
+</code></pre>
+<p>Some other examples:</p>
+<pre><code class="lang-lua">-- `@linux`
+-- `@linux|x86_64`
+-- `@macosx,linux`
+-- `android@macosx,linux`
+-- `android|armeabi-v7a@macosx,linux`
+-- `android|armeabi-v7a@macosx,linux|x86_64`
+-- `android|armeabi-v7a@linux|x86_64`
+</code></pre>
+<p>In 2.8.7, we have improved pattern matching support and added the ability to exclude specific platforms and architectures, such as:</p>
+<pre><code>!plat|!arch@!subhost|!subarch
+</code></pre><pre><code class="lang-bash">@!linux
+@!linux|x86_64
+@!macosx,!linux
+!android@macosx,!linux
+android|!armeabi-v7a@macosx,!linux
+android|armeabi-v7a,!iphoneos@macosx,!linux|x86_64
+!android|armeabi-v7a@!linux|!x86_64
+!linux|*
+</code></pre>
+<p>At the same time, a built-in <code>native</code> architecture is also provided to match the local architecture of the current platform, mainly used to specify or exclude cross-compilation platforms.</p>
+<pre><code class="lang-lua">on_install("macosx|native", ...)
+</code></pre>
+<p>The above configuration, if used on a macOS x86_64 device, will only match the local architecture compilation of <code>xmake f -a x86_64</code>.</p>
+<p>If it is cross-compiled with <code>xmake f -a arm64</code>, it will not be matched.</p>
+<p>In the same way, if you only want to match cross-compilation, you can use <code>macosx|!native</code> to negate and exclude.</p>
+<h5 id="compilationtools">Compilation tools</h5>
+<p>We have built-in scripts for installing common compilation tools to provide convenient architecture support for build tool chains with different source code dependencies, such as: autoconf, cmake, meson, etc.</p>
+<h6 id="xmake">xmake</h6>
+<p>If it is a dependency package based on xmake, it is very simple to integrate it. xmake has very good built-in integration support for it, and can directly support cross-platform compilation. Generally, you only need:</p>
+<pre><code class="lang-lua">on_install(function (package)
+     import("package.tools.xmake").install(package)
+end)
+</code></pre>
+<p>If you want to pass some unique compilation configuration parameters:</p>
+<pre><code class="lang-lua">on_install(function (package)
+     import("package.tools.xmake").install(package, {"--xxx=y"})
+end)
+</code></pre>
+<h6 id="cmake">cmake</h6>
+<p>If it is a package based on cmake, it is very simple to integrate. Usually you only need to set some configuration parameters, but you also need to add the cmake dependency first:</p>
+<pre><code class="lang-lua">add_deps("cmake")
+on_install(function (package)
+     import("package.tools.cmake").install(package, {"-Dxxx=ON"})
+end)
+</code></pre>
+<h6 id="autoconf">autoconf</h6>
+<p>If it is an autoconf-based package, the integration method is similar to cmake, except that the configuration parameters passed are different. However, usually, Unix systems have built-in autoconf series tools, so it is fine without adding related dependencies.</p>
+<pre><code class="lang-lua">on_install(function (package)
+     import("package.tools.autoconf").install(package, {"--enable-shared=no"})
+end)
+</code></pre>
+<p>However, some source code packages may not be fully satisfied by the system&#39;s built-in autoconf, so you can add the autoconf series dependencies to build them:</p>
+<pre><code class="lang-lua">add_deps("autoconf", "automake", "libtool", "pkg-config")
+on_install(function (package)
+     import("package.tools.autoconf").install(package, {"--enable-shared=no"})
+end)
+</code></pre>
+<h6 id="meson">meson</h6>
+<p>If it is meson, you also need to add ninja dependencies to execute the build.</p>
+<pre><code class="lang-lua">add_deps("meson", "ninja")
+on_install(function (package)
+     import("package.tools.meson").install(package, {"-Dxxx=ON"})
+end)
+</code></pre>
 <h3 id="packageon_download">package:on_download</h3>
 <h4 id="customdownloadpackage">Custom download package</h4>
 <p>The download logic of the custom package, which is a new interface added in 2.6.4, is usually not used, and it is enough to use the built-in download of Xmake.</p>

@@ -421,6 +421,23 @@ end)
 -- `android|armeabi-v7a@macosx,linux|x86_64`
 -- `android|armeabi-v7a@linux|x86_64`
 </code></pre>
+<p>在 2.8.7 中，我们改进了模式匹配支持，新增排除指定平台和架构，例如：</p>
+<pre><code>!plat|!arch@!subhost|!subarch
+</code></pre><pre><code class="lang-bash">@!linux
+@!linux|x86_64
+@!macosx,!linux
+!android@macosx,!linux
+android|!armeabi-v7a@macosx,!linux
+android|armeabi-v7a,!iphoneos@macosx,!linux|x86_64
+!android|armeabi-v7a@!linux|!x86_64
+!linux|*
+</code></pre>
+<p>同时，还提供了一个内置的 <code>native</code> 架构，用于匹配当前平台的本地架构，主要用于指定或者排除交叉编译平台。</p>
+<pre><code class="lang-lua">on_install("macosx|native", ...)
+</code></pre>
+<p>上面的配置，如果在 macOS x86_64 的设备上，它仅仅只会匹配 <code>xmake f -a x86_64</code> 的本地架构编译。</p>
+<p>如果是 <code>xmake f -a arm64</code> 交叉编译，就不会被匹配到。</p>
+<p>同理，如果只想匹配交叉编译，可以使用 <code>macosx|!native</code> 进行取反排除就行了。</p>
 <h5 id="">编译工具</h5>
 <p>我们内置了一些安装常用编译工具脚本，用于针对不同源码依赖的构建工具链，进行方便的构架支持，例如：autoconf, cmake, meson等，</p>
 <h6 id="xmake">xmake</h6>
