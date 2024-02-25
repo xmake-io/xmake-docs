@@ -1,4 +1,33 @@
 
+## v2.8.7
+
+### 新特性
+
+* [#4544](https://github.com/xmake-io/xmake/issues/4544): 改进 `xmake test`，支持等待进程超时
+* [#4606](https://github.com/xmake-io/xmake/pull/4606): 为 package 添加 `add_versionfiles` 接口
+* [#4709](https://github.com/xmake-io/xmake/issues/4709): 添加 cosmocc 工具链支持
+* [#4715](https://github.com/xmake-io/xmake/issues/4715): 在描述域添加 is_cross() 接口
+* [#4747](https://github.com/xmake-io/xmake/issues/4747): 添加 `build.always_update_configfiles` 策略
+
+### 改进
+
+* [#4575](https://github.com/xmake-io/xmake/issues/4575): 检测无效的域参数
+* 添加更多的 loong64 支持
+* 改进 dlang/dmd 对 frameworks 的支持
+* [#4571](https://github.com/xmake-io/xmake/issues/4571): 改进 `xmake test` 的输出支持
+* [#4609](https://github.com/xmake-io/xmake/issues/4609): 改进探测 vs 构建工具环境
+* [#4614](https://github.com/xmake-io/xmake/issues/4614): 改进支持 android ndk 26b
+* [#4473](https://github.com/xmake-io/xmake/issues/4473): 默认启用警告输出
+* [#4477](https://github.com/xmake-io/xmake/issues/4477): 改进 runtimes 去支持 libc++/libstdc++
+* [#4657](https://github.com/xmake-io/xmake/issues/4657): 改进脚本的模式匹配
+* [#4673](https://github.com/xmake-io/xmake/pull/4673): 重构模块支持
+* [#4746](https://github.com/xmake-io/xmake/pull/4746): 为 cmake generator 添加原生 c++ modules 支持
+
+### Bugs 修复
+
+* [#4596](https://github.com/xmake-io/xmake/issues/4596): 修复远程构建缓存
+* [#4689](https://github.com/xmake-io/xmake/issues/4689): 修复目标依赖继承
+
 ## v2.8.6
 
 ### 新特性

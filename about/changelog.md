@@ -1,5 +1,34 @@
 # Changelog
 
+## v2.8.7
+
+### New features
+
+* [#4544](https://github.com/xmake-io/xmake/issues/4544): Support to wait process timeout for `xmake test`
+* [#4606](https://github.com/xmake-io/xmake/pull/4606): Add `add_versionfiles` api in package
+* [#4709](https://github.com/xmake-io/xmake/issues/4709): Add cosmocc toolchain support
+* [#4715](https://github.com/xmake-io/xmake/issues/4715): Add is_cross() api in description scope
+* [#4747](https://github.com/xmake-io/xmake/issues/4747): Add `build.always_update_configfiles` policy
+
+### Changes
+
+* [#4575](https://github.com/xmake-io/xmake/issues/4575): Check invalid scope name
+* Add more loong64 support
+* Improve dlang/dmd support for frameworks
+* [#4571](https://github.com/xmake-io/xmake/issues/4571): Improve `xmake test` output
+* [#4609](https://github.com/xmake-io/xmake/issues/4609): Improve to detect vs build tool envirnoments
+* [#4614](https://github.com/xmake-io/xmake/issues/4614): Support android ndk 26b
+* [#4473](https://github.com/xmake-io/xmake/issues/4473): Enable warning output by default
+* [#4477](https://github.com/xmake-io/xmake/issues/4477): Improve runtimes to support libc++/libstdc++
+* [#4657](https://github.com/xmake-io/xmake/issues/4657): Improve to select script pattern
+* [#4673](https://github.com/xmake-io/xmake/pull/4673): Refactor modules support
+* [#4746](https://github.com/xmake-io/xmake/pull/4746): Add native modules support for cmake generator
+
+### Bugs Fixed
+
+* [#4596](https://github.com/xmake-io/xmake/issues/4596): Fix remote build cache
+* [#4689](https://github.com/xmake-io/xmake/issues/4689): Fix deps inherit
+
 ## v2.8.6
 
 ### New features
