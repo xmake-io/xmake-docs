@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.8.8
+
+### Changes
+
+* Add `package:check_sizeof()`
+
+### Bugs Fixed
+
+* [#4774](https://github.com/xmake-io/xmake/issues/4774): Fix android symbol strip
+* [#4769](https://github.com/xmake-io/xmake/issues/4769): Fix cross toolchain and format
+* [#4776](https://github.com/xmake-io/xmake/issues/4776): Fix soname for linux
+* [#4638](https://github.com/xmake-io/xmake/issues/4638): Fix vsxmake with --menu config
+
 ## v2.8.7
 
 ### New features
