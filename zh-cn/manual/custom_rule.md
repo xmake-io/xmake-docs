@@ -902,7 +902,7 @@ target("test")
 ```lua
 rule("test")
     on_load(function (target)
-        target:add("defines", "-DTEST")
+        target:add("defines", "TEST")
     end)
 ```
 

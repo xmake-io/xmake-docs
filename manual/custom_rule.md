@@ -900,7 +900,7 @@ The load script used to implement the custom rules will be executed when the tar
 ```lua
 rule("test")
     on_load(function (target)
-        target:add("defines", "-DTEST")
+        target:add("defines", "TEST")
     end)
 ```
 
