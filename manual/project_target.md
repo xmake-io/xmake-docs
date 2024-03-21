@@ -3057,6 +3057,8 @@ Xmake will automatically adapt the flags internally to the different compilers.
 
 This is a new interface in version 2.8.2, we can use this interface to set the encoding of source and target files.
 
+All supported encodings: utf-8, gb2312 (msvc)
+
 By default, just specifying the encoding will work for both the source and target files.
 
 ```lua
