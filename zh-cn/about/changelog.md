@@ -1,4 +1,26 @@
 
+## v2.8.9
+
+### 新特性
+
+* [#4843](https://github.com/xmake-io/xmake/issues/4843): 添加 check_bigendian 接口实现大小端探测
+
+### 改进
+
+* [#4798](https://github.com/xmake-io/xmake/issues/4798): 改进 wasi sdk 检测
+* [#4772](https://github.com/xmake-io/xmake/issues/4772): 改进 tools.cmake 去兼容支持 vs2022 preview (v144)
+* [#4813](https://github.com/xmake-io/xmake/issues/4813): 添加 gb2312 编码
+* [#4864](https://github.com/xmake-io/xmake/issues/4864): 改进抽取符号，支持 gdb 断点调试
+* [#4831](https://github.com/xmake-io/xmake/issues/4831): 改进 target:fileconfig() 支持 headerfiles
+* [#4846](https://github.com/xmake-io/xmake/issues/4846): 改进进度显示，解决顺序错乱问题
+
+### Bugs 修复
+
+* 修复 select_script 的脚本模式匹配
+* [#4763](https://github.com/xmake-io/xmake/issues/4763): 修复 {force = true}
+* [#4807](https://github.com/xmake-io/xmake/issues/4807): 修复 nimble::find_package
+* [#4857](https://github.com/xmake-io/xmake/issues/4857): 修复对 -P/-F 等基础选项的解析
+
 ## v2.8.8
 
 ### 改进

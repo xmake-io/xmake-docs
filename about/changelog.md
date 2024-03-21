@@ -1,5 +1,27 @@
 # Changelog
 
+## v2.8.9
+
+### New features
+
+* [#4843](https://github.com/xmake-io/xmake/issues/4843): Endianness/Byte-order detection on build machine
+
+### Changes
+
+* [#4798](https://github.com/xmake-io/xmake/issues/4798): Improve wasi sdk detect
+* [#4772](https://github.com/xmake-io/xmake/issues/4772): Improve tools.cmake to support vs2022 preview (v144)
+* [#4813](https://github.com/xmake-io/xmake/issues/4813): Add gb2312 encoding
+* [#4864](https://github.com/xmake-io/xmake/issues/4864): Improve to extract symbols for gdb
+* [#4831](https://github.com/xmake-io/xmake/issues/4831): Allow target:fileconfig() for headerfiles
+* [#4846](https://github.com/xmake-io/xmake/issues/4846): Improve to show progress
+
+### Bugs Fixed
+
+* Fix select_script match pattern
+* [#4763](https://github.com/xmake-io/xmake/issues/4763): Fix {force = true}
+* [#4807](https://github.com/xmake-io/xmake/issues/4807): Fix nimble::find_package
+* [#4857](https://github.com/xmake-io/xmake/issues/4857): Fix parse basic options
+
 ## v2.8.8
 
 ### Changes
