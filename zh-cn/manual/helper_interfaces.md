@@ -398,3 +398,18 @@ checking for STRING_SIZE ... 24
 ```
 
 另外，我也可以通过 `target:check_sizeof` 在脚本域进行检测。
+
+#### 检测大小端
+
+在 2.8.9 版本之后，我们新增了 `check_bigendian` 接口，来判断当前编译目标是否为大端模式。
+
+```lua
+includes("@builtin/check")
+
+target("test")
+    set_kind("static")
+    add_files("*.cpp")
+    check_bigendian("IS_BIG_ENDIAN")
+```
+
+如果检测通过，当前是大端模式，那么会定义 `IS_BIG_ENDIAN=1`。

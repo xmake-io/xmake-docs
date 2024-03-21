@@ -399,3 +399,18 @@ checking for STRING_SIZE ... 24
 ```
 
 Alternatively, I can check for it in the script field with `target:check_sizeof`.
+
+#### Detecting big-endian
+
+After version 2.8.9, we added the ``check_bigendian`` interface to determine if the current compilation target is in bigendian mode.
+
+```lua
+includes("@builtin/check")
+
+target("test")
+    set_kind("static")
+    add_files("*.cpp")
+    check_bigendian("IS_BIG_ENDIAN")
+```
+
+If the test passes and it is currently in big endian mode, then `IS_BIG_ENDIAN=1` is defined.

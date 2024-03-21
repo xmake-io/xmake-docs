@@ -695,7 +695,7 @@ target("test")
 <p>The load script used to implement the custom rules will be executed when the target is loaded. You can customize some target configurations in it, for example:</p>
 <pre><code class="lang-lua">rule("test")
     on_load(function (target)
-        target:add("defines", "-DTEST")
+        target:add("defines", "TEST")
     end)
 </code></pre>
 <h3 id="ruleon_config">rule:on_config</h3>

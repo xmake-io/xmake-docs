@@ -2547,6 +2547,7 @@ $ xmake run -g bench*
 <h3 id="targetset_encodings">target:set_encodings</h3>
 <h4 id="">设置编码</h4>
 <p>这是 2.8.2 版本新增的接口，我们可以用这个接口设置源文件、目标执行文件的编码。</p>
+<p>目前支持的编码：utf-8, gb2312 (msvc)</p>
 <p>默认情况下，我们仅仅指定编码，是会同时对源文件，目标文件生效。</p>
 <pre><code class="lang-lua">-- for all source/target encodings
 set_encodings("utf-8") -- msvc: /utf-8
