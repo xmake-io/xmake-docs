@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/manual/target_instance">https://xmake.io/#/manual/target_instance</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>This page describes the interface for <code>target</code> of functions like <code>on_load()</code>, <code>before_build()</code> or <code>after_install()</code> of the <a href="manual/project_target.md">Project target</a></p>
+<p>!> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr</p>
+<h4 id="targetname">target:name</h4>
+<ul>
+<li>Get the name of the target</li>
+</ul>
+<h4 id="targetget">target:get</h4>
+<ul>
+<li>Get the values of the target by name</li>
+</ul>
+<pre><code class="lang-lua">-- get the links
+target:get("links")
+-- get the defined macros
+target:get("defines")
+</code></pre>
+<h4 id="targetset">target:set</h4>
+<ul>
+<li>Set the values of the target by name (If you just want to add values use <a href="#targetadd">target:add</a>)</li>
+</ul>
+<pre><code class="lang-lua">-- set the links
+target:set("links", "sdl2")
+-- set the defined macros
+target:set("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<h4 id="targetadd">target:add</h4>
+<ul>
+<li>Add to the values of the target by name</li>
+</ul>
+<pre><code class="lang-lua">-- add links
+target:add("links", "sdl2")
+-- add defined macros
+target:add("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<h4 id="targetkind">target:kind</h4>
+<ul>
+<li>Get the target program type</li>
+</ul>
+<p>Corresponding to <code>set_kind</code> description domain interface settings. The main target types are: binary, static, shared, phony, object, headeronly.</p>
+<h4 id="targetis_plat">target:is_plat</h4>
+<ul>
+<li>Whether the current platform is one of the given platforms</li>
+</ul>
+<p>Although we can also use the <code>is_plat</code> global interface to directly determine the platform, xmake supports the use of <code>set_plat</code> to set the compilation platform separately for a specific target.</p>
+<p>At this time, using the global interface is not applicable, so we usually recommend using the interface provided by the target to directly determine the compilation platform for the current target, which is more reliable.</p>
+<pre><code class="lang-lua">- Is the current platform android?
+target:is_plat("android")
+- Is the current platform windows, linux or macosx?
+target:is_plat("windows", "linux", "macosx")
+</code></pre>
+<h4 id="targetis_arch">target:is_arch</h4>
+<ul>
+<li>Is the current architecture one of the given architectures</li>
+</ul>
+<p>Although we can also use the <code>is_arch</code> global interface to directly determine the architecture, xmake supports the use of <code>set_arch</code> to set the compilation architecture separately for a specific target.</p>
+<p>At this time, using the global interface is not applicable, so we usually recommend using the interface provided by the target to directly judge the compilation architecture of the current target, which is more reliable.</p>
+<pre><code class="lang-lua">- Is the current architecture x86
+target:is_arch("x86")
+- Is the current architecture x64 or x86_64
+target:is_arch("x64", "x86_64")
+</code></pre>
+<h4 id="targettargetfile">target:targetfile</h4>
+<ul>
+<li>Get the target file path</li>
+</ul>
+<p>It is mainly used to obtain the output path of static, shared, and binary object program files.</p>
+<pre><code class="lang-lua">os.cp(target:targetfile(), "/tmp/")
+</code></pre>
+<h4 id="targettargetdir">target:targetdir</h4>
+<ul>
+<li>Get the output directory of the target file</li>
+</ul>
+<p>That is, the storage directory corresponding to target:targetfile().</p>
+<h4 id="targetbasename">target:basename</h4>
+<ul>
+<li>Get the base name of the target file</li>
+</ul>
+<p>That is, <code>foo</code> in libfoo.a, foo.dll, foo.exe.</p>
+<h4 id="targetfilename">target:filename</h4>
+<ul>
+<li>Get the target file name</li>
+</ul>
+<p>The full file name of the target file, equivalent to <code>path.filename(target:targetfile())</code>.</p>
+<h4 id="targetinstalldir">target:installdir</h4>
+<ul>
+<li>Get the installation directory of the target file</li>
+</ul>
+<p>It is usually used to obtain the corresponding installation directory path in scripts such as after_install of <code>xmake install/uninstall</code>, which can be used for user-defined installation scripts.</p>
+<h4 id="targetautogendir">target:autogendir</h4>
+<ul>
+<li>Get auto-generated catalog</li>
+</ul>
+<p>This is usually used in some custom rule scripts to store some target-specific automatically generated files, and the path is usually under <code>build/.gens/target</code>.</p>
+<p>For example, when we are processing lex/yacc, some source code files are automatically generated, and they can be stored in this directory so that they can be processed later.</p>
+<h4 id="targetobjectfile">target:objectfile</h4>
+<ul>
+<li>Get the object file path</li>
+</ul>
+<p>Usually used in custom scripts to obtain the target file path corresponding to the source file, for example</p>
+<pre><code class="lang-lua">local objectfile = target:objectfile(sourcefile)
+</code></pre>
+<h4 id="targetsourcebatches">target:sourcebatches</h4>
+<ul>
+<li>Get all source files</li>
+</ul>
+<p>It can get all the source files added by <code>add_files</code> and store them separately according to different source file types.</p>
+<p>The approximate structure is as follows:</p>
+<pre><code class="lang-lua">{
+  "c++.build" = {
+    objectfiles = {
+      "build/.objs/test/macosx/x86_64/release/src/main.cpp.o"
+    },
+    rulename = "c++.build",
+    sourcekind = "cxx",
+    sourcefiles = {
+      "src/main.cpp"
+    },
+    dependfiles = {
+      "build/.deps/test/macosx/x86_64/release/src/main.cpp.o.d"
+    }
+  },
+  "asm.build" = {
+    objectfiles = {
+      "build/.objs/test/macosx/x86_64/release/src/test.S.o"
+    },
+    rulename = "asm.build",
+    sourcekind = "as",
+    sourcefiles = {
+      "src/test.S"
+    },
+    dependfiles = {
+      "build/.deps/test/macosx/x86_64/release/src/test.S.o.d"
+    }
+  }
+}
+</code></pre>
+<p>We can traverse to obtain and process each type of source file.</p>
+<pre><code class="lang-lua">for _, sourcebatch in pairs(target:sourcebatches()) do
+    local sourcekind = sourcebatch.sourcekind
+    if sourcekind == "cc" or sourcekind == "cxx" or sourcekind == "as" then
+        for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
+            - TODO
+        end
+    end
+end
+</code></pre>
+<p>Where sourcekind is the type of each source file, cc is the c file type, cxx is the c++ source file, and as is the asm source file.</p>
+<p>sourcebatch corresponds to each type of source file batch, corresponding to a batch of source files of the same type.</p>
+<p>sourcebatch.sourcefiles is a list of source files, sourcebatch.objectfiles is a list of object files, and sourcebatch.rulename is the name of the corresponding rule.</p>
+<h4 id="targetobjectfiles">target:objectfiles</h4>
+<ul>
+<li>Get a list of all object files</li>
+</ul>
+<p>Although <code>target:sourcebatches()</code> can also obtain all object files, they are classified according to the source file type and do not directly participate in the final link.</p>
+<p>If we want to dynamically modify the final linked object file list, we can modify <code>target:objectfiles()</code>, which is an array list.</p>
+<h4 id="targetheaderfiles">target:headerfiles</h4>
+<ul>
+<li>Get a list of all header files</li>
+</ul>
+<p>You can get a list of all header files set by the <code>add_headerfiles()</code> interface.</p>
+<pre><code class="lang-lua">for _, headerfile in ipairs(target:headerfiles()) do
+    - TODO
+end
+</code></pre>
+<h4 id="targetscriptdir">target:scriptdir</h4>
+<ul>
+<li>Get the xmake.lua directory where the target definition is located</li>
+</ul>
+<p>This is usually used in custom rules. If you want to get the directory where the current target is actually defined in xmake.lua, it is convenient to reference some resource files. You can use this interface.</p>
+<h4 id="targethas_cxxfuncs">target:has_cxxfuncs</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C++ function</li>
+</ul>
+<p>The usage is similar to <a href="#targethas_cfuncs">target:has_cfuncs</a>, except that it is mainly used to detect C++ functions.</p>
+<p>However, while detecting functions, we can also additionally configure std languages to assist detection.</p>
+<pre><code>target:has_cxxfuncs("foo", {includes = "foo.h", configs = {languages = "cxx17"}})
+</code></pre><h4 id="targethas_ctypes">target:has_ctypes</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C type</li>
+</ul>
+<p>This should be used in <code>on_config</code> like this:</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+     on_config(function(target)
+         if target:has_ctypes("z_stream", {includes = "zlib.h"}) then
+             target:add("defines", "HAVE_ZSTEAM_T")
+         end
+     end)
+</code></pre>
+<h4 id="targethas_cxxtypes">target:has_cxxtypes</h4>
+<ul>
+<li>Check whether the target compilation configuration can get the given C++ type</li>
+</ul>
+<p>The usage is similar to <a href="#targethas_ctypes">target:has_ctypes</a>, except that it is mainly used to detect the type of C++.</p>
+<h4 id="targethas_cflags">target:has_cflags</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C compilation flags</li>
+</ul>
+<pre><code class="lang-lua">target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         if target:has_cxxflags("-fPIC") then
+             target:add("defines", "HAS_PIC")
+         end
+     end)
+</code></pre>
+<h4 id="targethas_cxxflags">target:has_cxxflags</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C++ compilation flags</li>
+</ul>
+<p>The usage is similar to <a href="#targethas_cflags">target:has_cflags</a>, except that it is mainly used to detect the compilation flags of C++.</p>
+<h4 id="targethas_cincludes">target:has_cincludes</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C header file</li>
+</ul>
+<p>This should be used in <code>on_config</code>, for example, it can be used to determine whether the current target can obtain the zlib.h header file of the zlib dependency package, and then automatically define <code>HAVE_INFLATE</code>:</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     add_packages("zlib")
+     on_config(function(target)
+         if target:has_cincludes("zlib.h") then
+             target:add("defines", "HAVE_ZLIB_H")
+         end
+     end)
+</code></pre>
+<h4 id="targethas_cxxincludes">target:has_cxxincludes</h4>
+<ul>
+<li>Check whether the target compilation configuration can obtain the given C++ header file</li>
+</ul>
+<p>The usage is similar to <a href="#targethas_cincludes">target:has_cincludes</a>, except that it is mainly used to detect C++ header files.</p>
+<h4 id="targetcheck_csnippets">target:check_csnippets</h4>
+<ul>
+<li>Detect whether a given piece of C code can be compiled and linked</li>
+</ul>
+<p>The usage is similar to <a href="#targetcheck_cxxsnippets">target:check_cxxsnippets</a>, except that it is mainly used to detect C code snippets.</p>
+<h4 id="targetcheck_cxxsnippets">target:check_cxxsnippets</h4>
+<ul>
+<li>Detect if a given piece of C++ code can be compiled and linked</li>
+</ul>
+<p>This should be used in <code>on_config</code> like this:</p>
+<pre><code class="lang-lua">add_requires("libtins")
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     add_packages("libtins")
+     on_config(function(target)
+         local has_snippet = target:check_cxxsnippets({test = [[
+             #include <string>
+             using namespace Tins;
+             void test() {
+                 std::string name = NetworkInterface::default_interface().name();
+                 printf("%s\n", name.c_str());
+             }
+         ]]}, {configs = {languages = "c++11"}, includes = {"tins/tins.h"}}))
+         if has_snippet then
+             target:add("defines", "HAS_XXX")
+         end
+     end)
+</code></pre>
+<p>By default, it only checks whether the compilation link is passed. If you want to try the runtime check, you can set <code>tryrun = true</code>.</p>
+<pre><code class="lang-lua">target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         local has_int_4 = target:check_cxxsnippets({test = [[
+             return (sizeof(int) == 4)? 0 : -1;
+         ]]}, {configs = {languages = "c++11"}, tryrun = true}))
+         if has_int_4 then
+             target:add("defines", "HAS_INT4")
+         end
+     end)
+</code></pre>
+<p>We can also continue to capture the running output of the detection by setting <code>output = true</code>, and add a custom <code>main</code> entry to achieve a complete test code, not just a code snippet.</p>
+<pre><code class="lang-lua">target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         local int_size = target:check_cxxsnippets({test = [[
+             #include <stdio.h>
+             int main(int argc, char** argv) {
+                 printf("%d", sizeof(int)); return 0;
+                 return 0;
+             }
+         ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
+     end)
+</code></pre>
+<h4 id="targetcheck_sizeof">target:check_sizeof</h4>
+<ul>
+<li>Detect type size</li>
+</ul>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        print("sizeof(long) = %s", target:check_sizeof("long"))
+        print("sizeof(string) = %s", target:check_sizeof("std::string", {includes = "string"}))
+        if target:check_size("long") == 8 then
+            target:add("defines", "LONG64")
+        end
+    end)
+</code></pre>
+<pre><code class="lang-bash">$ xmake
+sizeof(long) = 8
+sizeof(string) = 24
+</code></pre>
+<h4 id="targethas_features">target:has_features</h4>
+<ul>
+<li>Detect if specified C/C++ compiler feature</li>
+</ul>
+<p>It is faster than using <code>check_cxxsnippets</code>, because it only performs preprocessing once to check all compiler features, instead of calling the compiler every time to try to compile.</p>
+<pre><code>target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     on_config(function(target)
+         if target:has_features("c_static_assert") then
+             target:add("defines", "HAS_STATIC_ASSERT")
+         end
+         if target:has_features("cxx_constexpr") then
+             target:add("defines", "HAS_CXX_CONSTEXPR")
+         end
+     end)
+</code></pre></article>
+</body>
+</html>

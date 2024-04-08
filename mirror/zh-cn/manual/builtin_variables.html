@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/manual/builtin_variables">https://xmake.io/#/zh-cn/manual/builtin_variables</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>xmake提供了 <code>$(varname)</code> 的语法，来支持内置变量的获取，例如：</p>
+<pre><code class="lang-lua">add_cxflags("-I$(buildir)")
+</code></pre>
+<p>它将会在在实际编译的时候，将内置的 <code>buildir</code> 变量转换为实际的构建输出目录：<code>-I./build</code></p>
+<p>一般内置变量可用于在传参时快速获取和拼接变量字符串，例如：</p>
+<pre><code class="lang-lua">target("test")
+
+    -- 添加工程源码目录下的源文件
+    add_files("$(projectdir)/src/*.c")
+
+    -- 添加构建目录下的头文件搜索路径
+    add_includedirs("$(buildir)/inc")
+</code></pre>
+<p>也可以在自定义脚本的模块接口中使用，例如：</p>
+<pre><code class="lang-lua">target("test")
+    on_run(function (target)
+        -- 复制当前脚本目录下的头文件到输出目录
+        os.cp("$(scriptdir)/xxx.h", "$(buildir)/inc")
+    end)
+</code></pre>
+<p>所有的内置变量，也可以通过<a href="#val">val</a>接口，来获取他们的值。</p>
+<p>这种使用内置变量的方式，使得描述编写更加的简洁易读，下面是一些xmake内置的变量，可以直接获取：</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>描述</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#varos">$(os)</a></td>
+<td>获取当前编译平台的操作系统</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varhost">$(host)</a></td>
+<td>获取本机操作系统</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#vartmpdir">$(tmpdir)</a></td>
+<td>获取临时目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varcurdir">$(curdir)</a></td>
+<td>获取当前目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varbuildir">$(buildir)</a></td>
+<td>获取构建输出目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varscriptdir">$(scriptdir)</a></td>
+<td>获取工程描述脚本目录</td>
+<td>>= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#varglobaldir">$(globaldir)</a></td>
+<td>获取全局配置目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varconfigdir">$(configdir)</a></td>
+<td>获取本地工程配置目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varprogramdir">$(programdir)</a></td>
+<td>xmake安装脚本目录</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#varprojectdir">$(projectdir)</a></td>
+<td>获取工程根目录</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varshell">$(shell)</a></td>
+<td>执行外部shell命令</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varenv">$(env)</a></td>
+<td>获取外部环境变量</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#varreg">$(reg)</a></td>
+<td>获取windows注册表配置项的值</td>
+<td>>= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<p>当然这种变量模式，也是可以扩展的，默认通过<code>xmake f --var=val</code>命令，配置的参数都是可以直接获取，例如：</p>
+<pre><code class="lang-lua">target("test")
+    add_defines("-DTEST=$(var)")
+</code></pre>
+<p><p class="tip"><br>所有<code>xmake f --xxx=...</code>配置的参数值，都是可以通过内置变量获取到，例如：<code>xmake f --arch=x86</code>对应<code>$(arch)</code>，其他的还有<code>$(plat)</code>, <code>$(mode)</code>等等。<br>具体有哪些参数，可以通过：<code>xmake f -h</code>才查看。<br></p>
+
+</p>
+<p>既然支持直接从配置选项中获取，那么当然也就能很方便的扩展自定义的选项，来获取自定义的变量了，具体如何自定义选项见：<a href="#option">option</a></p>
+<h3 id="varos">var.$(os)</h3>
+<h4 id="">获取当前编译平台的操作系统</h4>
+<p>如果当前编译的是iphoneos，那么这个值就是：<code>ios</code>，以此类推。</p>
+<h3 id="varhost">var.$(host)</h3>
+<h4 id="">获取本机操作系统</h4>
+<p>指的是当前本机环境的主机系统，如果你是在macOS上编译，那么系统就是：<code>macosx</code></p>
+<h3 id="vartmpdir">var.$(tmpdir)</h3>
+<h4 id="">获取临时目录</h4>
+<p>一般用于临时存放一些非永久性文件。</p>
+<h3 id="varcurdir">var.$(curdir)</h3>
+<h4 id="">获取当前目录</h4>
+<p>一般默认是执行<code>xmake</code>命令时的工程根目录，当然如果通过<a href="#os-cd">os.cd</a>改变了目录的话，这个值也会一起改变。</p>
+<h3 id="varbuildir">var.$(buildir)</h3>
+<h4 id="">获取当前的构建输出目录</h4>
+<p>默认一般为当前工程根目录下的：<code>./build</code>目录，也可以通过执行：<code>xmake f -o /tmp/build</code>命令来修改默认的输出目录。</p>
+<h3 id="varscriptdir">var.$(scriptdir)</h3>
+<h4 id="">获取当前工程描述脚本的目录</h4>
+<p>也就是对应<code>xmake.lua</code>所在的目录路径。</p>
+<h3 id="varglobaldir">var.$(globaldir)</h3>
+<h4 id="">全局配置目录</h4>
+<p>xmake的<code>xmake g|global</code>全局配置命令，数据存储的目录路径，在里面可以放置一些自己的插件、平台脚本。</p>
+<p>默认为：<code>~/.config</code></p>
+<h3 id="varconfigdir">var.$(configdir)</h3>
+<h4 id="">当前工程配置目录</h4>
+<p>当前工程的配置存储目录，也就是<code>xmake f|config</code>配置命令的存储目录，默认为：<code>projectdir/.config</code></p>
+<h3 id="varprogramdir">var.$(programdir)</h3>
+<h4 id="xmake">xmake安装脚本目录</h4>
+<p>也就是<code>XMAKE_PROGRAM_DIR</code>环境变量所在目录，我们也可以通过设置这个环境量，来修改xmake的加载脚本，实现版本切换。</p>
+<h3 id="varprojectdir">var.$(projectdir)</h3>
+<h4 id="">工程根目录</h4>
+<p>也就是<code>xmake -P xxx</code>命令中指定的目录路径，默认不指定就是<code>xmake</code>命令执行时的当前目录，一般用于定位工程文件。</p>
+<h3 id="varshell">var.$(shell)</h3>
+<h4 id="shell">执行外部shell命令</h4>
+<p>除了内置的变量处理，xmake还支持原生shell的运行，来处理一些xmake内置不支持的功能</p>
+<p>例如，现在有个需求，我想用在编译linux程序时，调用<code>pkg-config</code>获取到实际的第三方链接库名，可以这么做：</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    if is_plat("linux") then
+        add_ldflags("$(shell pkg-config --libs sqlite3)")
+    end
+</code></pre>
+<p>当然，xmake有自己的自动化第三库检测机制，一般情况下不需要这么麻烦，而且lua自身的脚本化已经很不错了。。</p>
+<p>但是这个例子可以说明，xmake是完全可以通过原生shell，来与一些第三方的工具进行配合使用。。</p>
+<h3 id="varenv">var.$(env)</h3>
+<h4 id="">获取外部环境变量</h4>
+<p>例如，可以通过获取环境变量中的路径：</p>
+<pre><code class="lang-lua">target("test")
+    add_includedirs("$(env PROGRAMFILES)/OpenSSL/inc")
+</code></pre>
+<h3 id="varreg">var.$(reg)</h3>
+<h4 id="windows">获取windows注册表配置项的值</h4>
+<p>通过 <code>regpath; name</code> 的方式获取注册表中某个项的值：</p>
+<pre><code class="lang-lua">print("$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)")
+</code></pre>
+</article>
+</body>
+</html>

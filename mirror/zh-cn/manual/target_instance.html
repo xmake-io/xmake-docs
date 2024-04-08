@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/manual/target_instance">https://xmake.io/#/zh-cn/manual/target_instance</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>此页面描述了 <a href="zh-cn/manual/project_target.md">工程目标</a> 的 <code>on_load()</code>、<code>before_build()</code> 或 <code>after_install()</code> 等函数的 <code>target</code> 接口</p>
+<p>!> 此处文档还不完整，你也可以通过赞助或者提 pr 来加速文档的更新</p>
+<h4 id="targetname">target:name</h4>
+<ul>
+<li>获取目标的名字</li>
+</ul>
+<h4 id="targetget">target:get</h4>
+<ul>
+<li>获取目标在描述域的配置值</li>
+</ul>
+<p>任何在描述域的 <code>set_xxx</code> 和 <code>add_xxx</code> 配置值都可以通过这个接口获取到。</p>
+<pre><code class="lang-lua">-- get the links
+target:get("links")
+-- get the defined macros
+target:get("defines")
+</code></pre>
+<h4 id="targetset">target:set</h4>
+<ul>
+<li>设置目标的配置值，（如果你想添加值可以用 <a href="#targetadd">target:add</a>）。</li>
+</ul>
+<pre><code class="lang-lua">-- set the links
+target:set("links", "sdl2")
+-- set the defined macros
+target:set("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<h4 id="targetadd">target:add</h4>
+<ul>
+<li>按名称添加到目标的值</li>
+</ul>
+<pre><code class="lang-lua">-- add links
+target:add("links", "sdl2")
+-- add defined macros
+target:add("defines", "SDL_MAIN_HANDLED")
+</code></pre>
+<h4 id="targetkind">target:kind</h4>
+<ul>
+<li>获取目标程序类型</li>
+</ul>
+<p>对应 <code>set_kind</code> 描述域接口设置。目标类型主要有：binary, static, shared, phony, object, headeronly。</p>
+<h4 id="targetis_plat">target:is_plat</h4>
+<ul>
+<li>当前平台是否是给定平台之一</li>
+</ul>
+<p>尽管，我们也可以用 <code>is_plat</code> 全局接口直接判断平台，但是 xmake 支持使用 <code>set_plat</code> 针对特定 target 单独设置编译平台。</p>
+<p>这个时候，使用全局接口，就不适用了，所以通常我们推荐使用 target 提供的接口，来直接对当前 target 判断编译平台，更加可靠。</p>
+<pre><code class="lang-lua">-- Is the current platform android?
+target:is_plat("android")
+-- Is the current platform windows, linux or macosx?
+target:is_plat("windows", "linux", "macosx")
+</code></pre>
+<h4 id="targetis_arch">target:is_arch</h4>
+<ul>
+<li>当前架构是否是给定架构之一</li>
+</ul>
+<p>尽管，我们也可以用 <code>is_arch</code> 全局接口直接判断架构，但是 xmake 支持使用 <code>set_arch</code> 针对特定 target 单独设置编译架构。</p>
+<p>这个时候，使用全局接口，就不适用了，所以通常我们推荐使用 target 提供的接口，来直接对当前 target 判断编译架构，更加可靠。</p>
+<pre><code class="lang-lua">-- Is the current architecture x86
+target:is_arch("x86")
+-- Is the current architecture x64 or x86_64
+target:is_arch("x64", "x86_64")
+</code></pre>
+<h4 id="targettargetfile">target:targetfile</h4>
+<ul>
+<li>获取目标文件路径</li>
+</ul>
+<p>主要用于获取 static, shared, binary 目标程序文件的输出路径。</p>
+<pre><code class="lang-lua">os.cp(target:targetfile(), "/tmp/")
+</code></pre>
+<h4 id="targettargetdir">target:targetdir</h4>
+<ul>
+<li>获取目标文件的输出目录</li>
+</ul>
+<p>也就是 target:targetfile() 对应的存储目录。</p>
+<h4 id="targetbasename">target:basename</h4>
+<ul>
+<li>获取目标文件的 base 名</li>
+</ul>
+<p>也就是 libfoo.a，foo.dll, foo.exe 中的 <code>foo</code>。</p>
+<h4 id="targetfilename">target:filename</h4>
+<ul>
+<li>获取目标文件名</li>
+</ul>
+<p>目标文件的完整文件名，等价于 <code>path.filename(target:targetfile())</code>。</p>
+<h4 id="targetinstalldir">target:installdir</h4>
+<ul>
+<li>获取目标文件的安装目录</li>
+</ul>
+<p>通常用于 <code>xmake install/uninstall</code> 的 after_install 等脚本中获取对应的安装目录路径，可以用于用户自定义安装脚本。</p>
+<h4 id="targetautogendir">target:autogendir</h4>
+<ul>
+<li>获取自动生成目录</li>
+</ul>
+<p>这个通常用于一些自定义规则脚本中，存放一些特定于 target 的自动生成文件，路径通常在 <code>build/.gens/target</code> 下面。</p>
+<p>比如，我们在处理 lex/yacc 自动生成一些源码文件，就可以存放在这个目录下，方便之后去处理它。</p>
+<h4 id="targetobjectfile">target:objectfile</h4>
+<ul>
+<li>获取对象文件路径</li>
+</ul>
+<p>通常用于自定义脚本中，获取源文件对应的目标文件路径，例如</p>
+<pre><code class="lang-lua">local objectfile = target:objectfile(sourcefile)
+</code></pre>
+<h4 id="targetsourcebatches">target:sourcebatches</h4>
+<ul>
+<li>获取所有源文件</li>
+</ul>
+<p>它可以获取到 <code>add_files</code> 添加的所有源文件，并且根据不同源文件类型，分别存储。</p>
+<p>大概结构如下：</p>
+<pre><code class="lang-lua">{
+  "c++.build" = {
+    objectfiles = {
+      "build/.objs/test/macosx/x86_64/release/src/main.cpp.o"
+    },
+    rulename = "c++.build",
+    sourcekind = "cxx",
+    sourcefiles = {
+      "src/main.cpp"
+    },
+    dependfiles = {
+      "build/.deps/test/macosx/x86_64/release/src/main.cpp.o.d"
+    }
+  },
+  "asm.build" = {
+    objectfiles = {
+      "build/.objs/test/macosx/x86_64/release/src/test.S.o"
+    },
+    rulename = "asm.build",
+    sourcekind = "as",
+    sourcefiles = {
+      "src/test.S"
+    },
+    dependfiles = {
+      "build/.deps/test/macosx/x86_64/release/src/test.S.o.d"
+    }
+  }
+}
+</code></pre>
+<p>我们可以通过遍历去获取处理每种类型的源文件。</p>
+<pre><code class="lang-lua">for _, sourcebatch in pairs(target:sourcebatches()) do
+    local sourcekind = sourcebatch.sourcekind
+    if sourcekind == "cc" or sourcekind == "cxx" or sourcekind == "as" then
+        for _, sourcefile in ipairs(sourcebatch.sourcefiles) do
+            -- TODO
+        end
+    end
+end
+</code></pre>
+<p>其中 sourcekind 是每种源文件的类型，cc 是 c 文件类型，cxx 是 c++ 源文件，as 是 asm 源文件。</p>
+<p>sourcebatch 对应每种类型的源文件 batch，对应一批同类型源文件。</p>
+<p>sourcebatch.sourcefiles 是源文件列表，sourcebatch.objectfiles 是对象文件列表，sourcebatch.rulename 是对应的规则名。</p>
+<h4 id="targetobjectfiles">target:objectfiles</h4>
+<ul>
+<li>获取所有对象文件列表</li>
+</ul>
+<p>尽管 <code>target:sourcebatches()</code> 也可以获取所有对象文件，但是它们是根据源文件类型分类过的，且不直接参与最终链接。</p>
+<p>如果我们想动态修改最终链接的对象文件列表，可以修改 <code>target:objectfiles()</code>，它是一个数组列表。</p>
+<h4 id="targetheaderfiles">target:headerfiles</h4>
+<ul>
+<li>获取所有的头文件列表</li>
+</ul>
+<p>可以获取到 <code>add_headerfiles()</code> 接口设置的所有头文件列表。</p>
+<pre><code class="lang-lua">for _, headerfile in ipairs(target:headerfiles()) do
+    -- TODO
+end
+</code></pre>
+<h4 id="targetscriptdir">target:scriptdir</h4>
+<ul>
+<li>获取目标定义所在的 xmake.lua 目录</li>
+</ul>
+<p>这通常在自定义规则中使用的比较多，想获取当前 target 实际被定义在哪个 xmake.lua 所在目录下，方便引用一些资源文件，可以用这个接口。</p>
+<h4 id="targethas_cfuncs">target:has_cfuncs</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C 函数</li>
+</ul>
+<p>这应该在 <code>on_config</code> 中使用，比如可以用它来判断当前目标能否获取到 zlib 依赖包的一些函数接口，然后自动定义 <code>HAVE_INFLATE</code>：</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+    on_config(function (target)
+        if target:has_cfuncs("inflate", {includes = "zlib.h"}) then
+            target:add("defines", "HAVE_INFLATE")
+        end
+    end)
+</code></pre>
+<p>尽管 option 也提供了类似的检测功能，但 option 的检测使用的是全局的平台工具链，它无法附带上 target 相关的一些编译配置，<br>也无法根据 target 设置不同编译工具链来适配检测，并且无法检测包里面的一些接口。</p>
+<p>如果我们仅仅是想粗粒度的检测函数接口，并且 target 没有额外设置不同的工具链，那么 option 提供的检测功能已经足够使用了。</p>
+<p>如果想要更细粒度控制检测，可以使用 target 实例接口提供的检测特性。</p>
+<h4 id="targethas_cxxfuncs">target:has_cxxfuncs</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C++ 函数</li>
+</ul>
+<p>用法跟 <a href="#targethas_cfuncs">target:has_cfuncs</a> 类似，只是这里主要用于检测 C++ 的函数。</p>
+<p>不过，在检测函数的同时，我们还可以额外配置 std languages，来辅助检测。</p>
+<pre><code>target:has_cxxfuncs("foo", {includes = "foo.h", configs = {languages = "cxx17"}})
+</code></pre><h4 id="targethas_ctypes">target:has_ctypes</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C 类型</li>
+</ul>
+<p>这应该在 <code>on_config</code> 中使用，如下所示：</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+    on_config(function (target)
+        if target:has_ctypes("z_stream", {includes = "zlib.h"}) then
+            target:add("defines", "HAVE_ZSTEAM_T")
+        end
+    end)
+</code></pre>
+<h4 id="targethas_cxxtypes">target:has_cxxtypes</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C++ 类型</li>
+</ul>
+<p>用法跟 <a href="#targethas_ctypes">target:has_ctypes</a> 类似，只是这里主要用于检测 C++ 的类型。</p>
+<h4 id="targethas_cflags">target:has_cflags</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C 编译 flags</li>
+</ul>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        if target:has_cxxflags("-fPIC") then
+            target:add("defines", "HAS_PIC")
+        end
+    end)
+</code></pre>
+<h4 id="targethas_cxxflags">target:has_cxxflags</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C++ 编译 flags</li>
+</ul>
+<p>用法跟 <a href="#targethas_cflags">target:has_cflags</a> 类似，只是这里主要用于检测 C++ 的编译 flags。</p>
+<h4 id="targethas_cincludes">target:has_cincludes</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C 头文件</li>
+</ul>
+<p>这应该在 <code>on_config</code> 中使用，比如可以用它来判断当前目标能否获取到 zlib 依赖包的 zlib.h 头文件，然后自动定义 <code>HAVE_INFLATE</code>：</p>
+<pre><code class="lang-lua">add_requires("zlib")
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+    on_config(function (target)
+        if target:has_cincludes("zlib.h") then
+            target:add("defines", "HAVE_ZLIB_H")
+        end
+    end)
+</code></pre>
+<h4 id="targethas_cxxincludes">target:has_cxxincludes</h4>
+<ul>
+<li>检测目标编译配置能否获取给定的 C++ 头文件</li>
+</ul>
+<p>用法跟 <a href="#targethas_cincludes">target:has_cincludes</a> 类似，只是这里主要用于检测 C++ 的头文件。</p>
+<h4 id="targetcheck_csnippets">target:check_csnippets</h4>
+<ul>
+<li>检测是否可以编译和链接给定的 C 代码片段</li>
+</ul>
+<p>用法跟 <a href="#targetcheck_cxxsnippets">target:check_cxxsnippets</a> 类似，只是这里主要用于检测 C 的代码片段。</p>
+<h4 id="targetcheck_cxxsnippets">target:check_cxxsnippets</h4>
+<ul>
+<li>检测是否可以编译和链接给定的 C++ 代码片段</li>
+</ul>
+<p>这应该在 <code>on_config</code> 中使用，如下所示：</p>
+<pre><code class="lang-lua">add_requires("libtins")
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("libtins")
+    on_config(function (target)
+        local has_snippet = target:check_cxxsnippets({test = [[
+            #include <string>
+            using namespace Tins;
+            void test() {
+                std::string name = NetworkInterface::default_interface().name();
+                printf("%s\n", name.c_str());
+            }
+        ]]}, {configs = {languages = "c++11"}, includes = {"tins/tins.h"}}))
+        if has_snippet then
+            target:add("defines", "HAS_XXX")
+        end
+    end)
+</code></pre>
+<p>默认仅仅检测编译链接是否通过，如果想要尝试运行时检测，可以再设置 <code>tryrun = true</code>。</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        local has_int_4 = target:check_cxxsnippets({test = [[
+            return (sizeof(int) == 4)? 0 : -1;
+        ]]}, {configs = {languages = "c++11"}, tryrun = true}))
+        if has_int_4 then
+            target:add("defines", "HAS_INT4")
+        end
+    end)
+</code></pre>
+<p>我们也可以继续通过设置 <code>output = true</code> 来捕获检测的运行输出，并且加上自定义的 <code>main</code> 入口，实现完整的测试代码，而不仅仅是代码片段。</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        local int_size = target:check_cxxsnippets({test = [[
+            #include <stdio.h>
+            int main(int argc, char** argv) {
+                printf("%d", sizeof(int)); return 0;
+                return 0;
+            }
+        ]]}, {configs = {languages = "c++11"}, tryrun = true, output = true}))
+    end)
+</code></pre>
+<h4 id="targetcheck_sizeof">target:check_sizeof</h4>
+<ul>
+<li>检测类型大小</li>
+</ul>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        print("sizeof(long) = %s", target:check_sizeof("long"))
+        print("sizeof(string) = %s", target:check_sizeof("std::string", {includes = "string"}))
+        if target:check_size("long") == 8 then
+            target:add("defines", "LONG64")
+        end
+    end)
+</code></pre>
+<pre><code class="lang-bash">$ xmake
+sizeof(long) = 8
+sizeof(string) = 24
+</code></pre>
+<h4 id="targethas_features">target:has_features</h4>
+<ul>
+<li>检测是否指定的 C/C++ 编译特性</li>
+</ul>
+<p>它相比使用 <code>check_cxxsnippets</code> 来检测，会更加快一些，因为它仅仅执行一次预处理就能检测所有的编译器特性，而不是每次都去调用编译器尝试编译。</p>
+<pre><code>target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    on_config(function (target)
+        if target:has_features("c_static_assert") then
+            target:add("defines", "HAS_STATIC_ASSERT")
+        end
+        if target:has_features("cxx_constexpr") then
+            target:add("defines", "HAS_CXX_CONSTEXPR")
+        end
+    end)
+</code></pre></article>
+</body>
+</html>

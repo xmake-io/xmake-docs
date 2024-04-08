@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/features/build_cache">https://xmake.io/#/features/build_cache</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h1 id="buildcaching">Build caching</h1>
+<p>Xmake supports various methods of caching in the build process, which can speed up your builds:</p>
+<p><img src="/assets/img/speed_skating.svg" alt=""></p>
+<p>Your build might be as fast as the above speed skater!</p>
+<h2 id="localcompilationcache">Local compilation cache</h2>
+<p>By default, Xmake will enable the local cache. The version before 2.6.5 uses the external ccache by default, and after 2.6.6, Xmake provides a built-in cross-platform local cache solution.</p>
+<p>Compared with third-party independent processes such as ccache, Xmake&#39;s internal state maintenance is easier to optimize, and it also avoids frequent independent process loading and time-consuming, and avoids additional communication with the daemon process. In addition, the built-in cache works better cross-platform, and it also supports MSVC on Windows well, while ccache only supports the GCC and Clang toolchains.</p>
+<p>If it&#39;s causing you problems, we can also disable the cache with the following command.</p>
+<pre><code class="lang-bash">$ xmake f --ccache=n
+</code></pre>
+<p>Note: Regardless of whether the built-in local cache is used, the configuration name is <code>--ccache=</code>, which means the C/C++ build cache, not just the name of the ccache tool.</p>
+<p>If we want to continue to use other external caching tools, we can also configure it in the following way.</p>
+<pre><code class="lang-bash">$ xmake f --ccache=n --cxx="ccache gcc" --cc="ccache gcc"
+$ xmake
+</code></pre>
+<h2 id="remotecompilationcache">Remote compilation cache</h2>
+<p>In addition to local caching, we also provide remote caching services, similar to Mozilla&#39;s sscache, which is usually not used if it is only for personal development. However, if a large-scale project is developed collaboratively by multiple people within an organization, distributed compilation and local caching alone are not enough. We also need to cache the compiled object files to a separate server for sharing.</p>
+<p>This way, even if other people compile it for the first time, they do not need to compile it every time, and instead can directly pull the cache from the remote to speed up the compilation. In addition, the remote cache service provided by Xmake is also supported by all platforms, not only GCC and Clang, but also MSVC.</p>
+<h3 id="starttheservice">Start the service</h3>
+<p>We can specify the <code>--ccache</code> parameter to enable the remote compilation cache service. Of course, if this parameter is not specified, Xmake will enable all server-configured services by default.</p>
+<pre><code class="lang-bash">$ xmake service --ccache
+<remote_cache_server>: listening 0.0.0.0:9092 ..
+</code></pre>
+<p>We can also start the service and echo detailed log information with the <code>-vD</code> flag.</p>
+<pre><code class="lang-bash">$ xmake service --ccache -vD
+<remote_cache_server>: listening 0.0.0.0:9092 ..
+</code></pre>
+<h3 id="starttheserviceindaemonmode">Start the service in Daemon mode</h3>
+<p>To start, restart, or stop the cache service in daemon mode, you can issue the below commands:</p>
+<pre><code class="lang-bash">$ xmake service --ccache --start
+$ xmake service --ccache --restart
+$ xmake service --ccache --stop
+</code></pre>
+<h3 id="configuretheserver">Configure the server</h3>
+<p>To configure the server, you must first generate the configuration file, or grab one off the internet (the first option is the easier). To do so, run the <code>xmake service</code> command, and it will automatically generate a default <code>server.conf</code> configuration file, stored in <code>~/.xmake/service/server.conf</code>.</p>
+<pre><code class="lang-bash">$ xmake service
+generating the config file to /Users/ruki/.xmake/service/server.conf ..
+a token(590234653af52e91b9e438ed860f1a2b) is generated, we can use this token to connect service.
+generating the config file to /Users/ruki/.xmake/service/client.conf ..
+<remote_cache_server>: listening 0.0.0.0:9692 ..
+</code></pre>
+<p>Then, we edit it, fixing the server&#39;s listening port (optional).</p>
+<pre><code class="lang-bash">{
+    distcc_build = {
+        listen = "0.0.0.0:9692",
+        workdir = "/Users/ruki/.xmake/service/server/remote_cache"
+    },
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    tokens = {
+        "590234653af52e91b9e438ed860f1a2b"
+    }
+}
+</code></pre>
+<h3 id="configuretheclient">Configure the client</h3>
+<p>The client configuration file is in <code>~/.xmake/service/client.conf</code>, where it can be specified where to connect to. We can configure multiple server addresses and corresponding tokens in the hosts list.</p>
+<pre><code class="lang-bash">{
+    remote_cache = {
+            connect = "127.0.0.1:9692",
+            token = "590234653af52e91b9e438ed860f1a2b"
+        }
+    }
+}
+</code></pre>
+<h4 id="timeoutconfiguration">Timeout configuration</h4>
+<p>By default, clients connect, send and receive data with unlimited waiting without timeout, but if the network to access the server is unstable, then there is a chance that access may get stuck, and this can be solved by configuring a timeout. If a timeout exception occurs, it will automatically degrade to local cache and will not be stuck forever.</p>
+<p>We can configure, <code>send_timeout</code>, <code>recv_timeout</code> and <code>connect_timeout</code> to take effect for all client services if set at the root.</p>
+<pre><code class="lang-bash">{
+    send_timeout = 5000,
+    recv_timeout = 5000,
+    connect_timeout = 5000
+}
+</code></pre>
+<p>We can also configure the timeout just for the current remote cache service, leaving the other services with the default timeout.</p>
+<pre><code class="lang-bash">{
+    distcc_build = {
+        send_timeout = 5000,
+        recv_timeout = 5000,
+        connect_timeout = 5000,
+    }
+}
+</code></pre>
+<p>!> The server-side configuration also supports timeout configuration.</p>
+<h3 id="userauthorization">User authorization</h3>
+<p>For user authorization, please refer to <a href="/#/guide/other_features?id=user-authorization">Remote Compilation/User Authorization</a></p>
+<h3 id="connecttotheserver">Connect to the server</h3>
+<p>After configuring the authentication and server address, you can enter the following command to connect the current project to the configured server. We need to enter <code>--ccache</code> when connecting to specify that only the remote compilation cache service is connected.</p>
+<pre><code class="lang-bash">$ cd projectdir
+$ xmake service --connect --ccache
+<client>: connect 127.0.0.1:9692 ..
+<client>: 127.0.0.1:9692 connected!
+</code></pre>
+<p>We can also connect to multiple services at the same time, such as distributed compilation and remote compilation cache services.</p>
+<pre><code class="lang-bash">$ xmake service --connect --distcc --ccache
+</code></pre>
+<p>If there is no parameter, the default connection is the remote compilation service.</p>
+<h4 id="disconnect">Disconnect</h4>
+<pre><code class="lang-bash">$ xmake service --disconnect --ccache
+</code></pre>
+<h4 id="cleantheservercache">Clean the server cache</h4>
+<p>We can also use the following command to clear the cache on the remote server corresponding to the current project.</p>
+<pre><code class="lang-bash">$ xmake service --clean --ccache
+</code></pre>
+<p>...and if we execute <code>xmake clean --all</code>, when the remote service is connected, all caches will be automatically cleaned up.</p>
+<h4 id="someinternaloptimizations">Some internal optimizations</h4>
+<ol>
+<li>Pull the snapshot of the remote cache and send it back to the local through bloom filter + lz4, which is used to quickly determine whether the cache exists and avoid frequently querying the server cache information</li>
+<li>With the local cache, you can avoid frequent requests to the remote server and pull the cache.</li>
+<li>Internal state maintenance, compared with independent tools such as sscache, avoids frequent independent process loading and time-consuming, and avoids additional communication with the daemon process</li>
+</ol>
+</article>
+</body>
+</html>

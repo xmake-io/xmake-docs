@@ -1,0 +1,2938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/manual/project_target">https://xmake.io/#/manual/project_target</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>We can use <code>target("test")</code> to define a project target named "test", each target generates an executable program, a static library, or a dynamic library.</p>
+<p>!> All interfaces of target can be set in the global scope, which affects all sub-targets.</p>
+<p>For example:</p>
+<pre><code class="lang-lua">-- affects both test and test2 targets
+add_defines("DEBUG")
+
+target("test")
+    add_files("*.c")
+
+target("test2")
+    add_files("*.c")
+</code></pre>
+<p>!> `target()&#39; interface can be repeatedly invoked in different places to set the same target.</p>
+<h3 id="target">target</h3>
+<h4 id="defineaprojecttarget">Define a project target</h4>
+<p>Defines a console target named <code>test</code> in project and the default target filename is <code>test</code>.</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+</code></pre>
+<p>And we can call <code>target("demo")</code> repeatedly to enter the target scope for modifying it&#39;s configuration.</p>
+<pre><code class="lang-lua">-- defines target: demo and enter it&#39;s scope to set configuration
+target("demo")
+    set_kind("binary")
+    add_files("src/demo.c")
+
+-- defines and set `other` target
+target("other")
+    ...
+
+-- re-enter demo target scope and add file `test.c` to `demo`
+target("demo")
+    add_files("src/test.c")
+</code></pre>
+<p>!> All configuration in root scope affects all targets, but does not affect the configuration of <code>option()</code>.</p>
+<p>For example:</p>
+<pre><code class="lang-lua">add_defines("DEBUG")
+
+target("demo")                   -- add -DDEBUG
+    set_kind("binary")
+    add_files("src/demo.c")
+
+target("test")                   -- add -DDEBUG
+    set_kind("binary")
+    add_files("src/test.c")
+</code></pre>
+<h3 id="target_end">target_end</h3>
+<h4 id="endtargetdefinition">End target definition</h4>
+<p>This is an optional api. If not called, then all settings after<br><code>target("xxx")</code> are made for that target, unless you enter other<br><code>target</code>, <code>option</code> or <code>task</code> scope. If you want to leave the current<br><code>target</code> and enter the root scope setting, then you can use this api. For example:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("static")
+    add_files("src/*.c")
+target_end()
+
+-- Here we are in the root scope
+-- ...
+</code></pre>
+<p>If you don&#39;t call this api:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("static")
+    add_files("src/*.c")
+
+-- Here we are in the target scope above, the subsequent settings are still
+set for test
+-- ...
+
+-- Enter another target scope
+target("test2")
+    ...
+</code></pre>
+<h3 id="targetset_kind">target:set_kind</h3>
+<h4 id="settargetkind">Set target kind</h4>
+<p>Set the target type, currently supported types are:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>phony</td>
+<td>Phony target program</td>
+</tr>
+<tr>
+<td>binary</td>
+<td>binary program</td>
+</tr>
+<tr>
+<td>static</td>
+<td>Static library program</td>
+</tr>
+<tr>
+<td>shared</td>
+<td>Dynamic library program</td>
+</tr>
+<tr>
+<td>object</td>
+<td>Only compile a collection of objects</td>
+</tr>
+<tr>
+<td>headeronly</td>
+<td>header file collection only</td>
+</tr>
+</tbody>
+</table>
+<h5 id="binary">binary</h5>
+<ul>
+<li>Executable file type</li>
+</ul>
+<pre><code class="lang-lua">target("demo")
+    set_kind("binary")
+    add_files("src/*.c")
+</code></pre>
+<p>!> Starting from 2.5.5, if the set_kind interface is not set, the default is binary type.</p>
+<p>So we simplify to:</p>
+<pre><code class="lang-lua">target("demo")
+    add_files("src/*.c")
+</code></pre>
+<p>even:</p>
+<pre><code class="lang-lua">target("demo", {files = "src/*.c"})
+</code></pre>
+<h5 id="static">static</h5>
+<ul>
+<li>Static library target type</li>
+</ul>
+<pre><code class="lang-lua">target("demo")
+    set_kind("static")
+    add_files("src/*.c")
+</code></pre>
+<h5 id="shared">shared</h5>
+<ul>
+<li>Dynamic library target type</li>
+</ul>
+<pre><code class="lang-lua">target("demo")
+    set_kind("shared")
+    add_files("src/*.c")
+</code></pre>
+<h5 id="object">object</h5>
+<ul>
+<li>Pure object file list type</li>
+</ul>
+<p>Usually used between two target programs, part of the object file is shared, and only compiled once. It can also be used to separate the object file list and configure different compilation parameters.</p>
+<h5 id="phony">phony</h5>
+<ul>
+<li>Empty target type</li>
+</ul>
+<p>It is a special target program type. It does not generate any actual program files, but is only used to combine the dependencies of other target programs.</p>
+<pre><code class="lang-lua">target("test1")
+    set_kind("binary")
+    add_files("src/*.c")
+
+target("test2")
+    set_kind("binary")
+    add_files("src/*.c")
+
+target("demo")
+    set_kind("phony")
+    add_deps("test1", "test2")
+</code></pre>
+<p>For example, with the above configuration, we can compile two dependent programs at the same time: test1 and test2 when executing <code>xmake build demo</code>.</p>
+<h5 id="headeronly">headeronly</h5>
+<p>-Pure header file target type</p>
+<p>After 2.5.9, we added the <code>headeronly</code> target type. For target programs of this type, we will not actually compile them because it has no source files to be compiled.</p>
+<p>But it contains a list of header files, which are usually used for the installation of headeronly library projects, the generation of file lists for IDE projects, and the generation of cmake/pkgconfig import files during the installation phase.</p>
+<p>E.g:</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+
+target("foo")
+    set_kind("headeronly")
+    add_headerfiles("src/foo.h")
+    add_rules("utils.install.cmake_importfiles")
+    add_rules("utils.install.pkgconfig_importfiles")
+</code></pre>
+<p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1747">#1747</a></p>
+<h3 id="targetset_strip">target:set_strip</h3>
+<h4 id="striptargetsymbols">Strip target symbols</h4>
+<p>Set the current target strip mode, currently supports the mode:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>debug</td>
+<td>When you link, strip off debugging symbols</td>
+</tr>
+<tr>
+<td>all</td>
+<td>When you link, strip all symbols, including debugging symbols</td>
+</tr>
+</tbody>
+</table>
+<p>This api is generally used in release mode and can generate smaller binary programs.</p>
+<pre><code class="lang-lua">target("xxxx")
+    set_strip("all")
+</code></pre>
+<p><p class="tip"><br>This api does not have to be used after the target. If no target is specified, it will be set to global mode. .<br></p>
+
+</p>
+<h3 id="targetset_enabled">target:set_enabled</h3>
+<h4 id="enableordisabletarget">Enable or disable target</h4>
+<p>If <code>set_enabled(false)</code> is set, the corresponding target will be directly disabled, including target loading and information acquisition, while <a href="#targetset_default">set_default</a> is just set to not compile by default, but the target can still get related information. , the default will also be loaded.</p>
+<h3 id="targetset_default">target:set_default</h3>
+<h4 id="markasdefaulttarget">Mark as default target</h4>
+<p>This interface is used to set whether the given project target is the default build. If this interface is not called for setting, then this target is built by default, for example:</p>
+<pre><code class="lang-lua">target("test1")
+    set_default(false)
+
+target("test2")
+    set_default(true)
+
+target("test3")
+    ...
+</code></pre>
+<p>The three goals of the above code, when executing the <code>xmake</code>, <code>xmake install</code>, <code>xmake package</code>, <code>xmake run</code> and other commands, if you do not specify the target name, then:</p>
+<table>
+<thead>
+<tr>
+<th>Target Name</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test1</td>
+<td>will not be built, installed, packaged, and run by default</td>
+</tr>
+<tr>
+<td>test2</td>
+<td>Default build, install, package, and run</td>
+</tr>
+<tr>
+<td>test3</td>
+<td>Default build, install, package, and run</td>
+</tr>
+</tbody>
+</table>
+<p>Through the above example, you can see that the default target can be set more than one, and it will run in turn when running.</p>
+<p><p class="tip"><br>    Note that the <code>xmake uninstall</code> and <code>xmake clean</code> commands are not affected by this interface setting, as most users prefer to clean and unload all of them.<br></p>
+
+</p>
+<p>If you don&#39;t want to use the default target, you can manually specify which targets you need to build the installation:</p>
+<pre><code class="lang-bash">$ xmake build targetname
+$ xmake install targetname
+</code></pre>
+<p>If you want to force the build to install all targets, you can pass in the <code>[-a|--all]</code> parameter:</p>
+<pre><code class="lang-bash">$ xmake build [-a|--all]
+$ xmake install [-a|--all]
+</code></pre>
+<h3 id="targetset_options">target:set_options</h3>
+<h4 id="setconfigurationoptions">Set configuration options</h4>
+<p>Add option dependencies. If you have customized some options through the <a href="#option">option</a> interface, you can add associations only if you specify this option under the target target field.</p>
+<pre><code class="lang-lua">-- Define a hello option
+option("hello")
+    set_default(false)
+    set_showmenu(true)
+    add_defines("HELLO_ENABLE")
+
+target("test")
+    -- If the hello option is enabled, this time the -DHELLO_ENABLE macro will be applied to the test target.
+    set_options("hello")
+</code></pre>
+<p>!> Some settings defined in <a href="#option">option</a> will affect this <code>target</code> target only after calling <code>set_options</code> for the association to take effect, such as macro definitions, link libraries, compile options, etc.</p>
+<h3 id="targetset_symbols">target:set_symbols</h3>
+<h4 id="setsymbolinfo">Set symbol info</h4>
+<p>Set the symbol mode of the target. If no target is currently defined, it will be set to the global state, affecting all subsequent targets.</p>
+<p>At present, we mainly support several levels:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+<th>gcc/clang</th>
+<th>msvc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>debug</td>
+<td>Add debugging symbols</td>
+<td>-g</td>
+<td>/Zi /Pdxxx.pdb</td>
+</tr>
+<tr>
+<td>debug, edit</td>
+<td>Only for msvc, used with debug level</td>
+<td>Ignore</td>
+<td>/ZI /Pdxxx.pdb</td>
+</tr>
+<tr>
+<td>debug, embed</td>
+<td>Only for msvc, used with debug level</td>
+<td>Ignore</td>
+<td>/Z7</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>Set symbol invisible</td>
+<td>-fvisibility=hidden</td>
+<td>Ignore</td>
+</tr>
+</tbody>
+</table>
+<p>These two values can also be set at the same time, for example:</p>
+<pre><code class="lang-lua">-- add debug symbols, set symbols are not visible
+set_symbols("debug", "hidden")
+</code></pre>
+<p>If this api is not called, the debug symbol is disabled by default. .</p>
+<p>!> In v2.3.3 and above, you can automatically generate independent debugging symbols by setting at the same time with <code>set_strip("all")</code>. For example, for iOS programs, it is a .dSYM file, for Android and other programs, it is .sym Symbol file.</p>
+<p>If target sets both of the following settings, symbol file generation will be enabled</p>
+<pre><code class="lang-lua">target("test")
+    set_symbols("debug")
+    set_strip("all")
+</code></pre>
+<p>For the built-in release mode, symbol generation is not enabled by default, it is just the strip targetfile. If you want to enable it, you only need to enable the debug symbol, because mode.release internally has strip enabled by default.</p>
+<pre><code class="lang-lua">add_rules("mode.release")
+target("test")
+    set_symbols("debug")
+</code></pre>
+<p>The ios program will generate a .dSYM file, and then Strip itself symbol</p>
+<pre><code class="lang-console">[62%]: linking.release libtest.dylib
+[62%]: generating.release test.dSYM
+</code></pre>
+<p>The android program will generate a .sym file (actually a symbolic so/binary program), and then strip itself</p>
+<pre><code class="lang-console">[62%]: linking.release libtest.so
+[62%]: generating.release test.sym
+</code></pre>
+<p>In v2.3.9 and above, two additional symbol levels, <code>edit</code> and <code>embed</code> have been added, which need to be combined with <code>debug</code> levels to further subdivide the debugging symbol format of the msvc compiler, for example:</p>
+<pre><code class="lang-lua">set_symbols("debug", "edit")
+</code></pre>
+<p>It will switch from the default <code>-Zi -Pdxxx.pdb</code> to <code>-ZI -Pdxxx.pdb</code> compilation option, enable <code>Edit and Continue</code> debugging symbol format information, of course, this will not affect the processing of gcc/clang, so it is Fully compatible.</p>
+<h3 id="targetset_basename">target:set_basename</h3>
+<h4 id="setthebasenameoftargetfile">Set the base name of target file</h4>
+<p>By default, the generated target file name is based on the value configured in <code>target("name")</code>, for example:</p>
+<pre><code class="lang-lua">-- The target file name is: libxxx.a
+target("xxx")
+    set_kind("static")
+
+-- The target file name is: libxxx2.so
+target("xxx2")
+    set_kind("shared")
+</code></pre>
+<p>The default naming method basically meets the needs of most situations, but if you want to customize the target file name sometimes</p>
+<p>For example, to distinguish the target name by compile mode and architecture, this time you can use this interface to set:</p>
+<pre><code class="lang-lua">target("xxx")
+    set_kind("static")
+    set_basename("xxx_$(mode)_$(arch)")
+</code></pre>
+<p>if this time, the build configuration is: <code>xmake f -m debug -a armv7</code>, then the generated file name is: <code>libxxx_debug_armv7.a</code></p>
+<p>If you want to further customize the directory name of the target file, refer to: <a href="#targetset_targetdir">set_targetdir</a>.</p>
+<p>Or implement more advanced logic by writing custom scripts, see: <a href="#targetafter_build">after_build</a> and <a href="/mirror/manual/builtin_modules.html#osmv">os.mv</a>.</p>
+<h3 id="targetset_filename">target:set_filename</h3>
+<h4 id="setthefullnameoftargetfile">Set the full name of target file</h4>
+<p>The difference between it and <a href="#targetset_basename">set_basename</a> is that <a href="#targetset_basename">set_basename</a> sets the name without a suffix and a prefix, for example: <code>libtest.a</code>, if the basename is changed to test2, it becomes <code>libtest2.a</code>.</p>
+<p>The modification of filename is to modify the entire target file name, including the prefix and suffix. For example, you can directly change <code>libtest.a</code> to <code>test.dll</code>, which is not available for <a href="#targetset_basename">set_basename</a>.</p>
+<h3 id="targetset_prefixname">target:set_prefixname</h3>
+<h4 id="settheleadingnameofthetargetfile">Set the leading name of the target file</h4>
+<p>Only supported after version 2.5.5, you can modify the prefix name of the target file, for example, change the default: <code>libtest.so</code> to <code>test.so</code></p>
+<pre><code class="lang-lua">target("test")
+     set_prefixname("")
+</code></pre>
+<h3 id="targetset_suffixname">target:set_suffixname</h3>
+<h4 id="setthepostnameofthetargetfile">Set the postname of the target file</h4>
+<p>Only supported after version 2.5.5, you can modify the postname of the target file, for example, change the default: <code>libtest.so</code> to <code>libtest-d.so</code></p>
+<pre><code class="lang-lua">target("test")
+     set_suffixname("-d")
+</code></pre>
+<h3 id="targetset_extension">target:set_extension</h3>
+<h4 id="settheextensionofthetargetfile">Set the extension of the target file</h4>
+<p>Only supported after version 2.5.5, you can modify the extension of the set target file, for example, change the default: <code>libtest.so</code> to <code>test.dll</code></p>
+<pre><code class="lang-lua">target("test")
+     set_prefixname("")
+     set_extension(".dll")
+</code></pre>
+<h3 id="targetset_warnings">target:set_warnings</h3>
+<h4 id="setcompilationwarninglevel">Set compilation warning level</h4>
+<p>Set the warning level of the compilation of the current target, generally supporting several levels:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+<th>gcc/clang</th>
+<th>msvc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none</td>
+<td>disable all warnings</td>
+<td>-w</td>
+<td>-W0</td>
+</tr>
+<tr>
+<td>less</td>
+<td>Enable fewer warnings</td>
+<td>-W1</td>
+<td>-W1</td>
+</tr>
+<tr>
+<td>more</td>
+<td>Enable more warnings</td>
+<td>-W3</td>
+<td>-W3</td>
+</tr>
+<tr>
+<td>extra</td>
+<td>Enable extra warnings</td>
+<td>-Wextra</td>
+<td></td>
+</tr>
+<tr>
+<td>pedantic</td>
+<td>Enable non-standard warnings</td>
+<td>-Wpedantic</td>
+<td></td>
+</tr>
+<tr>
+<td>all</td>
+<td>Enable all warnings</td>
+<td>-Wall</td>
+<td>-W3</td>
+</tr>
+<tr>
+<td>allextra</td>
+<td>Enable all warnings + extra warnings</td>
+<td>-Wall -Wextra</td>
+<td>-W4</td>
+</tr>
+<tr>
+<td>everything</td>
+<td>Enable all supported warnings</td>
+<td>-Wall -Wextra -Weffc++ / -Weverything</td>
+<td>-Wall</td>
+</tr>
+<tr>
+<td>error</td>
+<td>Use all warnings as compilation errors</td>
+<td>-Werror</td>
+<td>-WX</td>
+</tr>
+</tbody>
+</table>
+<p>The parameters of this api can be added in combination, for example:</p>
+<pre><code class="lang-lua">-- Enable all warnings and handle them as compilation errors
+set_warnings("all", "error")
+</code></pre>
+<p>If there is no target currently, calling this api will set it to global mode. .</p>
+<h3 id="targetset_optimize">target:set_optimize</h3>
+<h4 id="setcompetitionoptimizationlevel">Set competition optimization level</h4>
+<p>Set the compile optimization level of the target. If no target is currently set, it will be set to the global state, affecting all subsequent targets.</p>
+<p>At present, we mainly support several levels:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+<th>gcc/clang</th>
+<th>msvc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none</td>
+<td>disable optimization</td>
+<td>-O0</td>
+<td>-Od</td>
+</tr>
+<tr>
+<td>fast</td>
+<td>quick optimization</td>
+<td>-O1</td>
+<td>default</td>
+</tr>
+<tr>
+<td>faster</td>
+<td>faster optimization</td>
+<td>-O2</td>
+<td>-O2</td>
+</tr>
+<tr>
+<td>fastest</td>
+<td>Optimization of the fastest running speed</td>
+<td>-O3</td>
+<td>-Ox -fp:fast</td>
+</tr>
+<tr>
+<td>smallest</td>
+<td>Minimize code optimization</td>
+<td>-Os</td>
+<td>-O1 -GL</td>
+</tr>
+<tr>
+<td>aggressive</td>
+<td>over-optimization</td>
+<td>-Ofast</td>
+<td>-Ox -fp:fast</td>
+</tr>
+</tbody>
+</table>
+<p>E.g:</p>
+<pre><code class="lang-lua">-- Optimization of the fastest running speed
+set_optimize("fastest")
+</code></pre>
+<h3 id="targetset_languages">target:set_languages</h3>
+<h4 id="setsourcecodelanguagestandards">Set source code language standards</h4>
+<p>Set the language standard for target code compilation. If no target exists, it will be set to global mode. . .</p>
+<p>The supported language standards currently have the following main ones:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ansi</td>
+<td>c language standard: ansi</td>
+</tr>
+<tr>
+<td>c89</td>
+<td>c language standard: c89</td>
+</tr>
+<tr>
+<td>gnu89</td>
+<td>c language standard: gnu89</td>
+</tr>
+<tr>
+<td>c99</td>
+<td>c language standard: c99</td>
+</tr>
+<tr>
+<td>gnu99</td>
+<td>c language standard: gnu99</td>
+</tr>
+<tr>
+<td>c11</td>
+<td>c language standard: c11</td>
+</tr>
+<tr>
+<td>c17</td>
+<td>c language standard: c17</td>
+</tr>
+<tr>
+<td>clatest</td>
+<td>c language standard: clatest</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cxx98</td>
+<td>c++ language standard: <code>c++98</code></td>
+</tr>
+<tr>
+<td>gnuxx98</td>
+<td>c++ language standard: <code>gnu++98</code></td>
+</tr>
+<tr>
+<td>cxx11</td>
+<td>c++ language standard: <code>c++11</code></td>
+</tr>
+<tr>
+<td>gnuxx11</td>
+<td>c++ language standard: <code>gnu++11</code></td>
+</tr>
+<tr>
+<td>cxx14</td>
+<td>c++ language standard: <code>c++14</code></td>
+</tr>
+<tr>
+<td>gnuxx14</td>
+<td>c++ language standard: <code>gnu++14</code></td>
+</tr>
+<tr>
+<td>cxx1z</td>
+<td>c++ language standard: <code>c++1z</code></td>
+</tr>
+<tr>
+<td>gnuxx1z</td>
+<td>c++ language standard: <code>gnu++1z</code></td>
+</tr>
+<tr>
+<td>cxx17</td>
+<td>c++ language standard: <code>c++17</code></td>
+</tr>
+<tr>
+<td>gnuxx17</td>
+<td>c++ language standard: <code>gnu++17</code></td>
+</tr>
+<tr>
+<td>cxx20</td>
+<td>c++ language standard: <code>c++20</code></td>
+</tr>
+<tr>
+<td>gnuxx20</td>
+<td>c++ language standard: <code>gnu++20</code></td>
+</tr>
+<tr>
+<td>cxxlatest</td>
+<td>c++ language standard: <code>c++latest</code></td>
+</tr>
+<tr>
+<td>gnuxxlatest</td>
+<td>c++ language standard: <code>gnu++latest</code></td>
+</tr>
+</tbody>
+</table>
+<p>The c standard and the c++ standard can be set at the same time, for example:</p>
+<pre><code class="lang-lua">-- Set c code standard: c99, c++ code standard: c++11
+set_languages("c99", "cxx11")
+</code></pre>
+<p>It is not that a specified standard is set, and the compiler will compile according to this standard. After all, each compiler supports different strengths, but xmake will try its best to adapt to the support standards of the current compilation tool.</p>
+<p>The msvc compiler does not support compiling c code according to the c99 standard, and can only support c89, but xmake supports it as much as possible, so after setting the c99 standard, xmake will force the c++ code mode to compile c code , To a certain extent, it solves the problem of compiling c99 c code under windows. .<br>The user does not need to make any additional changes.</p>
+<p>However, the latest msvc compilation already supports the c11/c17 standard, and xmake will not do additional special processing.</p>
+<h3 id="targetset_fpmodels">target:set_fpmodels</h3>
+<h4 id="setfloatpointcompilationmode">Set float-point compilation mode</h4>
+<p>This interface is used to set the floating-point compilation mode and the compilation abstract settings for mathematical calculation related optimizations. It provides several commonly used levels such as fast, strict, except, precise, etc. Some of them can be set at the same time, and some are conflicting. Effective.</p>
+<p>For the description of these levels, you can refer to the Microsoft document: <a href="https://docs.microsoft.com/en-us/cpp/build/reference/fp-specify-floating-point-behavior ?view=vs-2019">Specify floating-point behavior</a></p>
+<p>Of course, for other compilers such as gcc/icc, xmake will map to different compilation flags.</p>
+<pre><code class="lang-lua">set_fpmodels("fast")
+set_fpmodels("strict")
+set_fpmodels("fast", "except")
+set_fpmodels("precise") - default
+</code></pre>
+<p>For details about this, see: <a href="https://github.com/xmake-io/xmake/issues/981">https://github.com/xmake-io/xmake/issues/981</a></p>
+<h3 id="targetset_targetdir">target:set_targetdir</h3>
+<h4 id="setoutputdirectoriesfortargetfiles">Set output directories for target files</h4>
+<p>Set the output directory of the target program file. Under normal circumstances, you do not need to set it. The default output will be in the build directory.</p>
+<p>The build directory can be manually modified during project configuration:</p>
+<pre><code class="lang-bash">Xmake f -o /tmp/build
+</code></pre>
+<p>After modifying to <code>/tmp/build</code>, the target file is output to <code>/tmp/build</code> by default.</p>
+<p>And if you use this interface to set, you don&#39;t need to change the command every time, for example:</p>
+<pre><code class="lang-lua">target("test")
+    set_targetdir("/tmp/build")
+</code></pre>
+<p><p class="tip"><br>If the display sets <code>set_targetdir</code>, then the directory specified by <code>set_targetdir</code> is preferred as the output directory of the target file.<br></p>
+
+</p>
+<h3 id="targetset_objectdir">target:set_objectdir</h3>
+<h4 id="setoutputdirectoriesforobjectfiles">Set output directories for object files</h4>
+<p>Set the output directory of the object file (<code>*.o/obj</code>) of the target target, for example:</p>
+<pre><code class="lang-lua">target("test")
+    set_objectdir("$(buildir)/.objs")
+</code></pre>
+<h3 id="targetset_dependir">target:set_dependir</h3>
+<h4 id="setoutputdirectoriesfordependentfiles">Set output directories for dependent files</h4>
+<p>Set the output directory of the compile dependency file (<code>.deps</code>) of the target target, for example:</p>
+<pre><code class="lang-lua">target("test")
+    set_dependir("$(buildir)/.deps")
+</code></pre>
+<h3 id="targetadd_imports">target:add_imports</h3>
+<h4 id="addimportsmodulesforthecustomscript">Add imports modules for the custom script</h4>
+<p>Usually, we can import extension modules via <code>import("core.base.task")</code> inside a custom script such as <a href="#targeton_build">on_build</a>.<br>However, in the case of a large number of custom scripts, each custom script is repeatedly imported again, which is very cumbersome. Then you can implement pre-import through this interface, for example:</p>
+<pre><code class="lang-lua">target("test")
+    on_load(function (target)
+        import("core.base.task")
+        import("core.project.project")
+
+        task.run("xxxx")
+    end)
+    on_build(function (target)
+        import("core.base.task")
+        import("core.project.project")
+
+        task.run("xxxx")
+    end)
+    on_install(function (target)
+        import("core.base.task")
+        import("core.project.project")
+
+        task.run("xxxx")
+    end)
+</code></pre>
+<p>This interface can be simplified to:</p>
+<pre><code class="lang-lua">target("test")
+    add_imports("core.base.task", "core.project.project")
+    on_load(function (target)
+        task.run("xxxx")
+    end)
+    on_build(function (target)
+        task.run("xxxx")
+    end)
+    on_install(function (target)
+        task.run("xxxx")
+    end)
+</code></pre>
+<h3 id="targetadd_rules">target:add_rules</h3>
+<h4 id="addcustomcompilationruletotarget">Add custom compilation rule to target</h4>
+<p>We can extend the build support for other files by pre-setting the file suffixes supported by the rules:</p>
+<pre><code class="lang-lua">-- Define a build rule for a markdown file
+rule("markdown")
+    set_extensions(".md", ".markdown")
+    on_build(function (target, sourcefile)
+        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+    end)
+
+target("test")
+    set_kind("binary")
+
+    -- Make the test target support the construction rules of the markdown file
+    add_rules("markdown")
+
+    -- Adding a markdown file to build
+    add_files("src/*.md")
+    add_files("src/*.markdown")
+</code></pre>
+<p>We can also specify the application of local files to the rules, see: <a href="#targetadd_files">add_files</a>.</p>
+<h3 id="targeton_load">target:on_load</h3>
+<h4 id="runcustomloadtargetconfigurationscript">Run custom load target configuration script</h4>
+<p>This script will be executed when the target is initialized and loaded, and some dynamic target configurations can be made to achieve more flexible target description definitions, for example:</p>
+<pre><code class="lang-lua">target("test")
+    on_load(function (target)
+        target:add("defines", "DEBUG", "TEST=\"hello\"")
+        target:add("linkdirs", "/usr/lib", "/usr/local/lib")
+        target:add({includedirs = "/usr/include", "links" = "pthread"})
+    end)
+</code></pre>
+<p>You can dynamically add various target attributes in <code>on_load</code> via <code>target:set</code>, <code>target:add</code>.</p>
+<h3 id="targeton_config">target:on_config</h3>
+<h4 id="customconfigurationscript">custom configuration script</h4>
+<p>After <code>xmake config</code> is executed, this script is executed before Build, which is usually used for configuration work before compilation. It differs from on_load in that on_load is executed as soon as the target is loaded, and the execution timing is earlier.</p>
+<p>If some configuration cannot be configured prematurely in on_load, it can be configured in on_config.</p>
+<p>In addition, its execution time is earlier than before_build, and the approximate execution flow is as follows:</p>
+<pre><code>on_load -> after_load -> on_config -> before_build -> on_build -> after_build
+</code></pre><h3 id="targeton_link">target:on_link</h3>
+<h4 id="runcustomlinktargetscript">Run custom link target script</h4>
+<p>This is a new interface after v2.2.7, which is used to customize the link process of the target.</p>
+<pre><code class="lang-lua">target("test")
+    on_link(function (target)
+        print("link it")
+    end)
+</code></pre>
+<h3 id="targeton_build">target:on_build</h3>
+<h4 id="runcustombuildtargetscript">Run custom build target script</h4>
+<p>Override the target build behavior of the target target, implement a custom compilation process, in general, do not need to do this, unless you really need to do some compiler operations that xmake does not provide by default.</p>
+<p>You can override it by following the steps below to customize the compilation:</p>
+<pre><code class="lang-lua">target("test")
+
+    -- Set up custom build scripts
+    on_build(function (target)
+        print("build it")
+    end)
+</code></pre>
+<p>Note: After version 2.1.5, all target custom scripts can be processed separately for different platforms and architectures, for example:</p>
+<pre><code class="lang-lua">target("test")
+    on_build("iphoneos|arm*", function (target)
+        print("build for iphoneos and arm")
+    end)
+</code></pre>
+<p>If the first parameter is a string, then it is specified in which platform_architecture the script needs to be executed, and mode matching is supported, for example, <code>arm*</code> matches all arm architectures.</p>
+<p>Of course, you can also set the platform only, do not set the architecture, this is to match the specified platform, execute the script:</p>
+<pre><code class="lang-lua">target("test")
+    on_build("windows", function (target)
+        print("build for windows")
+    end)
+</code></pre>
+<p>!> Once the build process is set for this target target, the default build process for xmake will no longer be executed.</p>
+<h3 id="targeton_build_file">target:on_build_file</h3>
+<h4 id="runcustombuildsinglefilescript">Run custom build single file script</h4>
+<p>Through this interface, you can use hook to specify the built-in build process of the target, replacing each source file compilation process:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_build_file(function (target, sourcefile, opt)
+    end)
+</code></pre>
+<p>If you don&#39;t want to rewrite the built-in build script, just add some of your own processing before and after compiling. Its utility: <a href="#targetbefore_build_file">target.before_build_file</a> and <a href="#targetafter_build_file">target.after_build_file</a> will be more convenient and you don&#39;t need to call it. Opt.origin`.</p>
+<h3 id="targeton_build_files">target:on_build_files</h3>
+<h4 id="runcustombuildfilesscript">Run custom build files script</h4>
+<p>Through this interface, you can use hook to specify the built-in build process of the target, and replace a batch of the same type of source file compilation process:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_build_files(function (target, sourcebatch, opt)
+    end)
+</code></pre>
+<p>After setting this interface, the corresponding file in the source file list will not appear in the custom <a href="#targeton_build_file">target.on_build_file</a>, because this is an inclusion relationship.</p>
+<p>Where sourcebatch describes the same source files of the same type:</p>
+<ul>
+<li><code>sourcebatch.sourcekind</code>: Get the type of this batch of source files, for example: cc, as, ..</li>
+<li><code>sourcebatch.sourcefiles()</code>: get the list of source files</li>
+<li><code>sourcebatch.objectfiles()</code>: get the list of object files</li>
+<li><code>sourcebatch.dependfiles()</code>: Get the list of corresponding dependent files, compile dependency information in the stored source file, for example: xxx.d</li>
+</ul>
+<h3 id="targeton_clean">target:on_clean</h3>
+<h4 id="runcustomcleanfilesscript">Run custom clean files script</h4>
+<p>Override the cleanup operation of the target target&#39;s <code>xmake [c|clean}</code> to implement a custom cleanup process.</p>
+<pre><code class="lang-lua">target("test")
+
+    -- Set up a custom cleanup script
+    on_clean(function (target)
+
+        -- Delete only target files
+        os.rm(target:targetfile())
+    end)
+</code></pre>
+<p>Some target interfaces are described as follows:</p>
+<table>
+<thead>
+<tr>
+<th>target interface</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>target:name()</td>
+<td>Get the target name</td>
+</tr>
+<tr>
+<td>target:targetfile()</td>
+<td>Get the target file path</td>
+</tr>
+<tr>
+<td>target:get("kind")</td>
+<td>Get the build type of the target</td>
+</tr>
+<tr>
+<td>target:get("defines")</td>
+<td>Get the macro definition of the target</td>
+</tr>
+<tr>
+<td>target:get("xxx")</td>
+<td>Other target information set by the <code>set_/add_</code> interface can be obtained through this interface</td>
+</tr>
+<tr>
+<td>target:add("links", "pthread")</td>
+<td>Add target settings</td>
+</tr>
+<tr>
+<td>target:set("links", "pthread", "z")</td>
+<td>Override target settings</td>
+</tr>
+<tr>
+<td>target:deps()</td>
+<td>Get all dependent targets of the target</td>
+</tr>
+<tr>
+<td>target:dep("depname")</td>
+<td>Get the specified dependency target</td>
+</tr>
+<tr>
+<td>target:sourcebatches()</td>
+<td>Get a list of all source files for the target</td>
+</tr>
+</tbody>
+</table>
+<h3 id="targeton_package">target:on_package</h3>
+<h4 id="runcustompackagetargetscript">Run custom package target script</h4>
+<p>Override the target object&#39;s <code>xmake [p|package}</code> package operation to implement the custom packaging process. If you want to package the specified target into the format you want, you can customize it through this interface.</p>
+<p>This interface is quite practical. For example, after compiling jni, the generated so is packaged into the apk package.</p>
+<pre><code class="lang-lua">-- Define a test demo for an android app
+target("demo")
+
+    -- Generate dynamic libraries: libdemo.so
+    set_kind("shared")
+
+    -- Set the output directory of the object, optional
+    set_objectdir("$(buildir)/.objs")
+
+    -- Every time you compile the build directory of libdemo.so, set it to app/libs/armeabi
+    set_targetdir("libs/armeabi")
+
+    -- Add jni code files
+    add_files("jni/*.c")
+
+    -- Set up a custom package script. After compiling libdemo.so with xmake, execute xmake p to package
+    -- will automatically compile the app into an apk file using ant
+    --
+    on_package(function (target)
+
+        -- Use ant to compile the app into an apk file, and redirect the output to a log file.
+        os.run("ant debug")
+    end)
+</code></pre>
+<h3 id="targeton_install">target:on_install</h3>
+<h4 id="runcustominstalltargetfilescript">Run custom install target file script</h4>
+<p>Override the installation of <code>xmake [i|install}</code> of the target target to implement a custom installation process.</p>
+<p>For example, the generated apk package will be installed.</p>
+<pre><code class="lang-lua">target("test")
+
+    -- Set up a custom installation script to automatically install apk files
+    on_install(function (target)
+
+        -- Use adb to install packaged apk files
+        os.run("adb install -r ./bin/Demo-debug.apk")
+    end)
+</code></pre>
+<h3 id="targeton_uninstall">target:on_uninstall</h3>
+<h4 id="runcustomuninstalltargetfilescript">Run custom uninstall target file script</h4>
+<p>Override the uninstallation of <code>xmake [u|uninstall}</code> of the target target to implement a custom uninstall process.</p>
+<pre><code class="lang-lua">target("test")
+    on_uninstall(function (target)
+        ...
+    end)
+</code></pre>
+<h3 id="targeton_run">target:on_run</h3>
+<h4 id="runcustomruntargetscript">Run custom run target script</h4>
+<p>Override the running operation of the target target&#39;s <code>xmake [r|run}</code> to implement a custom running process.</p>
+<p>For example, run the installed apk program:</p>
+<pre><code class="lang-lua">target("test")
+
+    -- Set custom run scripts, automatically run the installed app, and automatically get device output information
+    on_run(function (target)
+
+        os.run("adb shell am start -n com.demo/com.demo.DemoTest")
+        os.run("adb logcat")
+    end)
+</code></pre>
+<h3 id="targetbefore_link">target:before_link</h3>
+<h4 id="runcustomscriptbeforelinkingtarget">Run custom script before linking target</h4>
+<p>This is a new interface after v2.2.7 to add custom script before linking target.</p>
+<pre><code class="lang-lua">target("test")
+    before_link(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetbefore_build">target:before_build</h3>
+<h4 id="runcustomscriptbeforebuildingtarget">Run custom script before building target</h4>
+<p>It does not override the default build operation, just add some custom actions before building.</p>
+<pre><code class="lang-lua">target("test")
+    before_build(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetbefore_build_file">target:before_build_file</h3>
+<h4 id="runcustomscriptbeforebuildingsinglefile">Run custom script before building single file</h4>
+<p>Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts before each source file compilation process:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    before_build_file(function (target, sourcefile, opt)
+    end)
+</code></pre>
+<h3 id="targetbefore_build_files">target:before_build_files</h3>
+<h4 id="runcustomscriptbeforebuildingfiles">Run custom script before building files</h4>
+<p>Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts before a batch of source files of the same type:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    before_build_files(function (target, sourcebatch, opt)
+    end)
+</code></pre>
+<h3 id="targetbefore_clean">target:before_clean</h3>
+<h4 id="runcustomscriptbeforecleaningtarget">Run custom script before cleaning target</h4>
+<p>It does not override the default cleanup operation, just add some custom actions before cleaning.</p>
+<pre><code class="lang-lua">target("test")
+    before_clean(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetbefore_package">target:before_package</h3>
+<h4 id="runcustomscriptbeforepackagingtarget">Run custom script before packaging target</h4>
+<p>It does not override the default packaging operation, just add some custom operations before packaging.</p>
+<pre><code class="lang-lua">target("test")
+    before_package(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetbefore_install">target:before_install</h3>
+<h4 id="runcustomscriptbeforeinstallingtarget">Run custom script before installing target</h4>
+<p>It does not override the default installation operation, just add some custom actions before installation.</p>
+<pre><code class="lang-lua">target("test")
+    before_install(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetbefore_uninstall">target:before_uninstall</h3>
+<h4 id="runcustomscriptbeforeuninstallingtarget">Run custom script before uninstalling target</h4>
+<p>It does not override the default uninstall operation, just add some custom actions before uninstalling.</p>
+<pre><code class="lang-lua">target("test")
+    before_uninstall(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetbefore_run">target:before_run</h3>
+<h4 id="runcustomscriptbeforerunningtarget">Run custom script before running target</h4>
+<p>It does not override the default run operation, just add some custom actions before running.</p>
+<pre><code class="lang-lua">target("test")
+    before_run(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetafter_link">target:after_link</h3>
+<h4 id="runcustomscriptafterlinkingtarget">Run custom script after linking target</h4>
+<p>This is a new interface after v2.2.7 to add custom script after linking target.</p>
+<pre><code class="lang-lua">target("test")
+    after_link(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetafter_build">target:after_build</h3>
+<h4 id="runcustomscriptafterbuildingtarget">Run custom script after building target</h4>
+<p>It does not override the default build operation, just add some custom actions after the build.</p>
+<p>For example, for jailbreak development of ios, after the program is built, you need to use <code>ldid</code> for signature operation.</p>
+<pre><code class="lang-lua">target("test")
+    after_build(function (target)
+        os.run("ldid -S %s", target:targetfile())
+    end)
+</code></pre>
+<h3 id="targetafter_build_file">target:after_build_file</h3>
+<h4 id="runcustomscriptafterbuildingsinglefile">Run custom script after building single file</h4>
+<p>Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts after each source file compilation process:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    after_build_file(function (target, sourcefile, opt)
+    end)
+</code></pre>
+<h3 id="targetafter_build_files">target:after_build_files</h3>
+<h4 id="runcustomscriptafterbuildingfiles">Run custom script after building files</h4>
+<p>Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts after a batch of source files of the same type:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    after_build_files(function (target, sourcebatch, opt)
+    end)
+</code></pre>
+<h3 id="targetafter_clean">target:after_clean</h3>
+<h4 id="runcustomscriptaftercleaningtarget">Run custom script after cleaning target</h4>
+<p>It does not override the default cleanup operation, just add some custom actions after cleanup.</p>
+<p>Generally used to clean up some extra temporary files automatically generated by a target. The default cleanup rules of these files may not be cleaned up.<br>To, for example:</p>
+<pre><code class="lang-lua">target("test")
+    after_clean(function (target)
+        os.rm("$(buildir)/otherfiles")
+    end)
+</code></pre>
+<h3 id="targetafter_package">target:after_package</h3>
+<h4 id="runcustomscriptafterpackagingtarget">Run custom script after packaging target</h4>
+<p>It does not override the default packaging operation, just add some custom operations after packaging.</p>
+<pre><code class="lang-lua">target("test")
+    after_package(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetafter_install">target:after_install</h3>
+<h4 id="runcustomscriptafterinstallingtarget">Run custom script after installing target</h4>
+<p>It does not override the default installation operation, just add some custom actions after installation.</p>
+<pre><code class="lang-lua">target("test")
+    after_install(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetafter_uninstall">target:after_uninstall</h3>
+<h4 id="runcustomscriptafteruninstallingtarget">Run custom script after uninstalling target</h4>
+<p>It does not override the default uninstall operation, just add some custom actions after uninstalling.</p>
+<pre><code class="lang-lua">target("test")
+    after_uninstall(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetafter_run">target:after_run</h3>
+<h4 id="runcustomscriptafterrunningtarget">Run custom script after running target</h4>
+<p>It does not override the default run operation, just add some custom actions after the run.</p>
+<pre><code class="lang-lua">target("test")
+    after_run(function (target)
+        print("")
+    end)
+</code></pre>
+<h3 id="targetset_pcheader">target:set_pcheader</h3>
+<h4 id="setprecompiledcheaderfile">Set pre-compiled c header file</h4>
+<p>Xmake supports accelerating c program compilation by precompiling header files. Currently supported compilers are: gcc, clang, and msvc.</p>
+<p>The usage is as follows:</p>
+<pre><code class="lang-lua">target("test")
+    set_pcheader("header.h")
+</code></pre>
+<h3 id="targetset_pcxxheader">target:set_pcxxheader</h3>
+<h4 id="setprecompiledcheaderfile">Set pre-compiled c++ header file</h4>
+<p>Xmake supports precompiled header files to speed up C++ program compilation. Currently supported compilers are: gcc, clang, and msvc.</p>
+<p>The usage is as follows:</p>
+<pre><code class="lang-lua">target("test")
+    set_pcxxheader("header.h")
+</code></pre>
+<h3 id="targetset_pmheader">target:set_pmheader</h3>
+<h4 id="setprecompiledobjcheaderfile">Set pre-compiled objc header file</h4>
+<p>Xmake supports accelerating objc program compilation by precompiling header files. Currently supported compilers are: gcc, clang, and msvc.</p>
+<p>The usage is as follows:</p>
+<pre><code class="lang-lua">target("test")
+    set_pmheader("header.h")
+</code></pre>
+<h3 id="targetset_pmxxheader">target:set_pmxxheader</h3>
+<h4 id="setprecompiledobjcheaderfile">Set pre-compiled objc++ header file</h4>
+<p>Xmake supports precompiled header files to speed up ObjC++ program compilation. Currently supported compilers are: gcc, clang, and msvc.</p>
+<p>The usage is as follows:</p>
+<pre><code class="lang-lua">target("test")
+    set_pmxxheader("header.h")
+</code></pre>
+<h3 id="targetadd_deps">target:add_deps</h3>
+<h4 id="addtargetdependencies">Add target dependencies</h4>
+<p>Add the dependency target of the current target. When compiling, it will first compile the target of the dependency and then compile the current target. . .</p>
+<pre><code class="lang-lua">target("test1")
+    set_kind("static")
+    set_files("*.c")
+
+target("test2")
+    set_kind("static")
+    set_files("*.c")
+
+target("demo")
+    add_deps("test1", "test2")
+</code></pre>
+<p>In the above example, when compiling the target demo, you need to compile the test1 and test2 targets first, because the demo will use them.</p>
+<p><p class="tip"><br>The target will automatically inherit the configuration and properties in the dependent target. You don&#39;t need to call the interfaces <code>add_links</code>, <code>add_linkdirs</code> and <code>add_rpathdirs</code> to associate the dependent targets.<br></p>
+
+</p>
+<p>And the inheritance relationship is to support cascading, for example:</p>
+<pre><code class="lang-lua">target("library1")
+    set_kind("static")
+    add_files("*.c")
+    add_includedirs("inc") -- The default private header file directory will not be inherited
+    add_includedirs("inc1", {public = true}) -- The header file related directory here will also be inherited
+
+target("library2")
+    set_kind("static")
+    add_deps("library1")
+    add_files("*.c")
+
+target("test")
+    set_kind("binary")
+    add_deps("library2")
+</code></pre>
+<p>If we don&#39;t want to inherit any configuration that depends on the target, what should we do?</p>
+<pre><code class="lang-lua">add_deps("dep1", "dep2", {inherit = false})
+</code></pre>
+<p>By explicitly setting the inherit configuration, tell xmake whether the two dependent configurations need to be inherited. If not set, the default is to enable inheritance.</p>
+<p>After version 2.2.5, you can set public to true by <code>add_includedirs("inc1", {public = true})</code>, and expose the settings of includers to other dependent child targets.</p>
+<p>At present, for the target compilation link flags related interface settings, support for inheritance properties, you can artificially control whether you need to export to other targets to rely on inheritance, the currently supported properties are:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>private</td>
+<td>The default setting, as the private configuration of the current target, will not be inherited by other targets that depend on</td>
+</tr>
+</tbody>
+</table>
+<p>Public | public configuration, current target, dependent child targets will be set |<br>Interface | interface settings, only inherited by the dependent child target, the current target does not participate |</p>
+<p>For a detailed description of this, you can look at it: <a href="https://github.com/xmake-io/xmake/issues/368">https://github.com/xmake-io/xmake/issues/368</a></p>
+<h3 id="targetadd_links">target:add_links</h3>
+<h4 id="addlinklibraries">Add link libraries</h4>
+<p>Add a link library for the current target, which is usually paired with <a href="#targetadd_linkdirs">add_linkdirs</a>.</p>
+<pre><code class="lang-lua">target("demo")
+
+    -- Add a link to libtest.a, equivalent to -ltest
+    add_links("test")
+
+    -- Add link search directory
+    add_linkdirs("$(buildir)/lib")
+</code></pre>
+<p>Starting with version 2.8.1, add_links also supports adding the full path to the library, e.g. <code>add_links("/tmp/libfoo.a")</code>, explicitly specifying the library file.</p>
+<h3 id="targetadd_syslinks">target:add_syslinks</h3>
+<h4 id="addsystemlinklibraries">Add system link libraries</h4>
+<p>This interface is similar to <a href="#targetadd_links">add_links</a>. The only difference is that the link library added through this interface is in the order of all <code>add_links</code>.</p>
+<p>Therefore, it is mainly used to add system library dependencies, because the link order of the system libraries is very backward, for example:</p>
+<pre><code class="lang-lua">add_syslinks("pthread", "m", "dl")
+target("demo")
+    add_links("a", "b")
+    add_linkdirs("$(buildir)/lib")
+</code></pre>
+<p>The above configuration, even if <code>add_syslinks</code> is set in advance, the final link order is still: <code>-la -lb -lpthread -lm -ldl</code></p>
+<h3 id="targetadd_linkorders">target:add_linkorders</h3>
+<h4 id="adjustlinkorder">Adjust link order</h4>
+<p>This is a feature only supported by xmake 2.8.5 and later, and is mainly used to adjust the link order within the target.</p>
+<p>Since xmake provides <code>add_links</code>, <code>add_deps</code>, <code>add_packages</code>, <code>add_options</code> interfaces, you can configure targets, dependencies, links in packages and options.</p>
+<p>However, the link order between them was previously less controllable and could only be generated in a fixed order, which was a bit overwhelming for some complex projects.</p>
+<p>For more details and background see: <a href="https://github.com/xmake-io/xmake/issues/1452">#1452</a></p>
+<h5 id="sortlinks">Sort links</h5>
+<p>In order to more flexibly adjust the various link orders within the target, we have added the <code>add_linkorders</code> interface, which is used to configure various link orders introduced by the target, dependencies, packages, options, and link groups.</p>
+<p>For example:</p>
+<pre><code class="lang-lua">add_links("a", "b", "c", "d", "e")
+-- e -> b -> a
+add_linkorders("e", "b", "a")
+--e->d
+add_linkorders("e", "d")
+</code></pre>
+<p>add_links is the configured initial link order, and then we configure two local link dependencies <code>e -> b -> a</code> and <code>e -> d</code> through add_linkorders.</p>
+<p>xmake will internally generate a DAG graph based on these configurations, and use topological sorting to generate the final link sequence and provide it to the linker.</p>
+<p>Of course, if there is a circular dependency and a cycle is created, it will also provide warning information.</p>
+<h5 id="sortinglinksandlinkgroups">Sorting links and link groups</h5>
+<p>In addition, we can also solve the problem of circular dependencies by configuring link groups through <code>add_linkgroups</code>.</p>
+<p>And <code>add_linkorders</code> can also sort link groups.</p>
+<pre><code class="lang-lua">add_links("a", "b", "c", "d", "e")
+add_linkgroups("c", "d", {name = "foo", group = true})
+add_linkorders("e", "linkgroup::foo")
+</code></pre>
+<p>If we want to sort link groups, we need to give each link group a name, <code>{name = "foo"}</code>, and then we can reference the configuration through <code>linkgroup::foo</code> in <code>add_linkorders</code>.</p>
+<h5 id="sortlinksandframeworks">Sort links and frameworks</h5>
+<p>We can also sort links and frameworks for macOS/iPhoneOS.</p>
+<pre><code class="lang-lua">add_links("a", "b", "c", "d", "e")
+add_frameworks("Foundation", "CoreFoundation")
+add_linkorders("e", "framework::CoreFoundation")
+</code></pre>
+<h5 id="completeexample">Complete example</h5>
+<p>For a complete example, we can look at:</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("libpng")
+
+target("bar")
+     set_kind("shared")
+     add_files("src/foo.cpp")
+     add_linkgroups("m", "pthread", {whole = true})
+
+target("foo")
+     set_kind("static")
+     add_files("src/foo.cpp")
+     add_packages("libpng", {public = true})
+
+target("demo")
+     set_kind("binary")
+     add_deps("foo")
+     add_files("src/main.cpp")
+     if is_plat("linux", "macosx") then
+         add_syslinks("pthread", "m", "dl")
+     end
+     if is_plat("macosx") then
+         add_frameworks("Foundation", "CoreFoundation")
+     end
+     add_linkorders("framework::Foundation", "png16", "foo")
+     add_linkorders("dl", "linkgroup::syslib")
+     add_linkgroups("m", "pthread", {name = "syslib", group = true})
+</code></pre>
+<p>The complete project is at: <a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/c%2B%2B/linkorders/xmake.lua">linkorders example</a></p>
+<h3 id="targetadd_linkgroups">target:add_linkgroups</h3>
+<h4 id="addlinkgroup">Add link group</h4>
+<p>This is a feature only supported by versions after xmake 2.8.5. This link group feature is currently mainly used for compilation on the Linux platform and only supports the gcc/clang compiler.</p>
+<p>It should be noted that the concept of link group in gcc/clang mainly refers to: <code>-Wl,--start-group</code></p>
+<p>xmake is aligned and encapsulated, further abstracted, and is not only used to process <code>-Wl,--start-group</code>, but also <code>-Wl,--whole-archive</code> and <code>-Wl,-Bstatic</code> .</p>
+<p>Below we will explain them one by one.</p>
+<p>For more details, see: <a href="https://github.com/xmake-io/xmake/issues/1452">#1452</a></p>
+<h5 id="startgroupsupport">--start-group support</h5>
+<p><code>-Wl,--start-group</code> and <code>-Wl,--end-group</code> are linker options for handling complex library dependencies, ensuring that the linker can resolve symbolic dependencies and successfully connect multiple libraries.</p>
+<p>In xmake, we can achieve this in the following way:</p>
+<pre><code class="lang-lua">add_linkgroups("a", "b", {group = true})
+</code></pre>
+<p>It will generate the corresponding <code>-Wl,--start-group -la -lb -Wl,--end-group</code> link options.</p>
+<p>If there is a symbolic circular dependency between libraries a and b, no link error will be reported and the link can be successful.</p>
+<p>For unsupported platforms and compilations, it will fall back to <code>-la -lb</code></p>
+<h5 id="wholearchivesupport">--whole-archive support</h5>
+<p><code>--whole-archive</code> is a linker option commonly used when dealing with static libraries.<br>Its function is to tell the linker to include all object files in the specified static library into the final executable file, not just the object files that satisfy the current symbol dependencies.<br>This can be used to ensure that all code for certain libraries is linked, even if they are not directly referenced in the current symbol dependencies.</p>
+<p>For more information, please refer to the gcc/clang documentation.</p>
+<p>In xmake, we can achieve this in the following way:</p>
+<pre><code class="lang-lua">add_linkgroups("a", "b", {whole = true})
+</code></pre>
+<p>It will generate the corresponding <code>-Wl,--whole-archive -la -lb -Wl,--no-whole-archive</code> link options.</p>
+<p>For unsupported platforms and compilations, it will fall back to <code>-la -lb</code></p>
+<p>Additionally, we can configure group/whole at the same time:</p>
+<pre><code class="lang-lua">add_linkgroups("a", "b", {whole = true, group = true})
+</code></pre>
+<h5 id="bstaticsupport">-Bstatic support</h5>
+<p><code>-Bstatic</code> is also an option for compilers (such as gcc) to instruct the compiler to use only static libraries and not shared libraries when linking.</p>
+<p>For more information, please refer to the gcc/clang documentation.</p>
+<p>In xmake, we can achieve this in the following way:</p>
+<pre><code class="lang-lua">add_linkgroups("a", "b", {static = true})
+</code></pre>
+<p>It will generate the corresponding <code>-Wl,-Bstatic -la -lb -Wl,-Bdynamic</code> linkage options.</p>
+<h3 id="targetadd_files">target:add_files</h3>
+<h4 id="addsourcefiles">Add source files</h4>
+<p>Source files used to add target projects, even library files, some file types currently supported:</p>
+<table>
+<thead>
+<tr>
+<th>Supported source file types</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.c/.cpp/.cc/.cxx</td>
+<td>c++ file</td>
+</tr>
+<tr>
+<td>.s/.S/.asm</td>
+<td>assembly files</td>
+</tr>
+<tr>
+<td>.m/.mm</td>
+<td>objc file</td>
+</tr>
+<tr>
+<td>.swift</td>
+<td>swift file</td>
+</tr>
+<tr>
+<td>.go</td>
+<td>golang file</td>
+</tr>
+<tr>
+<td>.o/.obj</td>
+<td>object File</td>
+</tr>
+<tr>
+<td>.a/.lib</td>
+<td>static library files, will automatically merge the library to the target program</td>
+</tr>
+<tr>
+<td>.rc</td>
+<td>msvc resource file</td>
+</tr>
+<tr>
+<td>.manifest</td>
+<td>windows manifest file</td>
+</tr>
+<tr>
+<td>.dll</td>
+<td>windows export file</td>
+</tr>
+<tr>
+<td>.ld/.lds</td>
+<td>linker scripts file for gcc/clang</td>
+</tr>
+<tr>
+<td>.map/.ver</td>
+<td>version script file for gcc/clang</td>
+</tr>
+</tbody>
+</table>
+<p>The wildcard <code>*</code> indicates that the file in the current directory is matched, and <code>**</code> matches the file in the multi-level directory.</p>
+<p>E.g:</p>
+<pre><code class="lang-lua">add_files("src/test_*.c")
+add_files("src/xxx/**.cpp")
+add_files("src/asm/*.S", "src/objc/**/hello.m")
+</code></pre>
+<p>The use of <code>add_files</code> is actually quite flexible and convenient. Its matching mode draws on the style of premake, but it has been improved and enhanced.</p>
+<p>This makes it possible to not only match files, but also to filter out a batch of files in the specified mode while adding files.</p>
+<p>E.g:</p>
+<pre><code class="lang-lua">-- Recursively add all c files under src, but not all c files under src/impl/
+add_files("src/**.c|impl/*.c")
+
+-- Add all cpp files under src, but not including src/test.cpp, src/hello.cpp, and all cpp files with xx_ prefix under src
+add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
+</code></pre>
+<p>The separators after the <code>`</code>are all files that need to be excluded. These files also support the matching mode, and you can add multiple filtering modes at the same time, as long as the middle is separated by <code>|</code>. .</p>
+<p>One of the benefits of supporting the filtering of some files when adding files is that they provide the basis for subsequent file additions based on different switching logic.</p>
+<p><p class="tip"><br>In order to make the description more streamlined, the filter descriptions after <code>|</code> are based on a schema: the directory before <code>*</code> in <code>src/*.cpp</code>.<br>So the above example is filtered after the file under src, this is to pay attention to.<br></p>
+
+</p>
+<p>After version 2.1.6, <code>add_files</code> has been improved to support more fine-grained compilation option controls based on files, such as:</p>
+<pre><code class="lang-lua">target("test")
+    add_defines("TEST1")
+    add_files("src/*.c")
+    add_files("test/*.c", "test2/test2.c", {defines = "TEST2", languages = "c99", includedirs = ".", cflags = "-O0"})
+</code></pre>
+<p>You can pass a configuration table in the last parameter of <code>add_files</code> to control the compilation options of the specified files. The configuration parameters are consistent with the target, and these files will also inherit the target&#39;s common configuration <code>-DTEST1</code>.</p>
+<p>After version 2.1.9, support for adding unknown code files, by setting rule custom rules, to achieve custom build of these files, for example:</p>
+<pre><code class="lang-lua">target("test")
+    -- ...
+    add_files("src/test/*.md", {rule = "markdown"})
+</code></pre>
+<p>For instructions on using custom build rules, see: <a href="#Building Rules">Building Rules</a>.</p>
+<p>And after the 2.1.9 version, you can use the force parameter to force the automatic detection of cxflags, cflags and other compile options, directly into the compiler, even if the compiler may not support, it will also be set:</p>
+<pre><code class="lang-lua">add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
+</code></pre>
+<h3 id="targetremove_files">target:remove_files</h3>
+<h4 id="removesourcefiles">Remove source files</h4>
+<p>Through this interface, you can delete the specified file from the list of files added by the <a href="targetadd_files">add_files</a> interface, for example:</p>
+<pre><code class="lang-lua">target("test")
+    add_files("src/*.c")
+    remove_files("src/test.c")
+</code></pre>
+<p>In the above example, you can add all files except <code>test.c</code> from the <code>src</code> directory. Of course, this can also be done by `add_files("src/*.c|test.c").To achieve the same purpose, but this way is more flexible.</p>
+<p>For example, we can conditionally determine which files to delete, and this interface also supports the matching mode of <a href="targetadd_files">add_files</a>, filtering mode, and bulk removal.</p>
+<pre><code class="lang-lua">target("test")
+    add_files("src/**.c")
+    remove_files("src/test*.c")
+    remove_files("src/subdir/*.c|xxx.c")
+    if is_plat("iphoneos") then
+        add_files("xxx.m")
+    end
+</code></pre>
+<p>Through the above example, we can see that <code>add_files</code> and <code>remove_files</code> are added and deleted sequentially according to the calling sequence, and deleted by <code>remove_files("src/subdir/*.c|xxx.c")</code> Batch file,<br>And exclude <code>src/subdir/xxx.c</code> (that is, don&#39;t delete this file).</p>
+<p>Note: This interface is only available in version v2.6.3. The previous version was del_files, which has been abandoned.</p>
+<p>If you want to be compatible with the previous version, you can solve it through the following configuration.</p>
+<pre><code class="lang-lua">remove_files = remove_files or del_files
+</code></pre>
+<h3 id="targetremove_headerfiles">target:remove_headerfiles</h3>
+<h4 id="removethespecifiedfilefromtheprecedinglistofheaderfiles">Remove the specified file from the preceding list of header files</h4>
+<p>Mainly used to remove files from the list of header files set by <code>add_headerfiles</code>, similar to <code>remove_files</code>.</p>
+<p>This interface is only provided in v2.6.3 version.</p>
+<h3 id="targetadd_linkdirs">target:add_linkdirs</h3>
+<h4 id="addlinksearchdirectories">Add link search directories</h4>
+<p>Set the search directory of the link library. This interface is used as follows:</p>
+<pre><code class="lang-lua">target("test")
+    add_linkdirs("$(buildir)/lib")
+</code></pre>
+<p>This interface is equivalent to gcc&#39;s <code>-Lxxx</code> link option.</p>
+<p>Generally, it is used together with <a href="#targetadd_links">add_links</a>. Of course, it can also be added directly through the <a href="#targetadd_ldflags">add_ldflags</a> or <a href="#targetadd_shflags">add_shflags</a> interface. It is also possible.</p>
+<p><p class="tip"><br>If you don&#39;t want to write to death in the project, you can set it by: <code>xmake f --linkdirs=xxx</code> or <code>xmake f --ldflags="-L/xxx"</code>, of course, this manually set directory search priority. higher.<br></p>
+
+</p>
+<h3 id="targetadd_rpathdirs">target:add_rpathdirs</h3>
+<h4 id="addloadsearchdirectoriesfordynamiclibraries">Add load search directories for dynamic libraries</h4>
+<p>After <a href="#targetadd_linkdirs">add_linkdirs</a> sets the link search directory of the dynamic library, the program is normally linked, but in the Linux platform, if you want to run the compiled program normally, it will report that the dynamic library fails to be loaded.</p>
+<p>Because the dynamic library&#39;s load directory is not found, if you want to run the program that depends on the dynamic library, you need to set the <code>LD_LIBRARY_PATH</code> environment variable to specify the dynamic library directory to be loaded.</p>
+<p>However, this method is global, and the impact is too wide. The better way is to set the dynamic library search path to be loaded when the linker is set by the linker option of <code>-rpath=xxx</code>, and xmake does it. Encapsulation, better handling cross-platform issues with <code>add_rpathdirs</code>.</p>
+<p>The specific use is as follows:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_linkdirs("$(buildir)/lib")
+    add_rpathdirs("$(buildir)/lib")
+</code></pre>
+<p>Just need to set the rpath directory when linking, although the same purpose can be achieved by <code>add_ldflags("-Wl,-rpath=xxx")</code>, but this interface is more general.</p>
+<p>Internally, different platforms will be processed. For example, under macOS, the <code>-rpath</code> setting is not required, and the running program can be loaded normally. Therefore, for this platform, xmake internally ignores the setting directly to avoid link error.</p>
+<p>When doing dynamic library linking for dlang programs, xmake will automatically process it into <code>-L-rpath=xxx</code> to pass in the linker of dlang, thus avoiding the need to directly use <code>add_ldflags</code> to determine and handle different platforms and compile. Problem.</p>
+<p>The 2.1.7 version has improved this interface, supporting: <code>@loader_path</code>, <code>@executable_path</code> and <code>$ORIGIN</code> built-in variables to specify the program&#39;s load directory. Their effects are basically the same, mainly for Also compatible with macho, elf.</p>
+<p>E.g:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_linkdirs("$(buildir)/lib")
+    add_rpathdirs("@loader_path/lib")
+</code></pre>
+<p>Specify the test program to load the dynamic library file of <code>lib/*.[so|dylib]</code> in the current execution directory, which will help to improve the portability of the program without writing dead absolute paths and relative paths, resulting in program and directory switching. Causes the program to load the dynamic library failed.</p>
+<p><p class="tip"><br>It should be noted that under macos, if the add_rpathdirs setting is in effect, you need to do some preprocessing on dylib and add the <code>@rpath/xxx</code> path setting:<br><code>$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib</code><br>We can also check if there is a path with @rpath via <code>otool -L libxxx.dylib</code><br></p>
+
+</p>
+<h3 id="targetadd_includedirs">target:add_includedirs</h3>
+<h4 id="addincludesearchdirectories">Add include search directories</h4>
+<p>Set the search directory for the header file. This interface is used as follows:</p>
+<pre><code class="lang-lua">target("test")
+    add_includedirs("$(buildir)/include")
+</code></pre>
+<p>Of course, it can also be set directly through interfaces such as <a href="#targetadd_cxflags">add_cxflags</a> or <a href="#targetadd_mxflags">add_mxflags</a>, which is also possible.</p>
+<p>After 2.2.5, includedirs can be exported to dependent child targets via the extra <code>{public|interface = true}</code> property setting, for example:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("static")
+    add_includedirs("src/include") -- only for the current target
+    add_includedirs("$(buildir)/include", {public = true}), the current target and child targets will be set
+
+target("demo")
+    set_kind("binary")
+    add_deps("test")
+</code></pre>
+<p>For more on this block, see: <a href="#targetadd_deps">add_deps</a></p>
+<p>!>If you don&#39;t want it to be fixed in the project, you can set it by: xmake f --includedirs=xxx or xmake f --cxflags="-I/xxx". This manual setting has higher directory search priority.</p>
+<p>!> The header file does not support pattern matching by default, and it is not recommended to do so. It is easy to introduce some unnecessary subdirectories, resulting in the interference of various header file reference conflicts, and it is more difficult to check if there is a problem.<br>If the user insists on doing this, it can be achieved by <code>add_includedirs(os.dirs(path.join(os.scriptdir(), "xxx/**")))</code>.</p>
+<h3 id="targetadd_sysincludedirs">target:add_sysincludedirs</h3>
+<h4 id="addsystemheaderfilesearchdirectory">Add system header file search directory</h4>
+<p><code>add_includedirs</code> is usually used to add search directories for project header files. The introduction of some system library header files may trigger some internal warning messages, but these warnings may be unavoidable for users and cannot be fixed.</p>
+<p>Then, every time these warnings are displayed, it will interfere with the user. Therefore, gcc/clang provides <code>-isystem</code> to set the system header file search path. The header files set through this interface will suppress some warning messages to avoid disturbing users .</p>
+<p>msvc also provides the <code>/external:I</code> compilation option to set it, but it needs a higher version of msvc to support it.</p>
+<p>Therefore, xmake provides <code>add_sysincludedirs</code> to abstractly adapt and set the search path of system library header files. If the current compiler does not support it, it will automatically switch back to the <code>-I</code> compilation option.</p>
+<pre><code class="lang-lua">target("test")
+    add_sysincludedirs("/usr/include")
+</code></pre>
+<p>The generated compilation options are as follows:</p>
+<pre><code class="lang-console">-isystem /usr/include
+</code></pre>
+<p>In the case of the msvc compiler, it will be:</p>
+<pre><code class="lang-console">/experimental:external /external:W0 /external:I /usr/include
+</code></pre>
+<p>!> In addition, the dependency package introduced with <code>add_requires()</code> will also use <code>-isystem</code> as the external system header file by default.</p>
+<h3 id="targetadd_defines">target:add_defines</h3>
+<h4 id="addmacrodefinition">Add macro definition</h4>
+<pre><code class="lang-lua">add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
+</code></pre>
+<p>Equivalent to setting the compile option:</p>
+<pre><code>-DDEBUG -DTEST=0 -DTEST2=\"hello\"
+</code></pre><h3 id="targetadd_undefines">target:add_undefines</h3>
+<h4 id="addmacroundefinition">Add macro undefinition</h4>
+<pre><code class="lang-lua">add_undefines("DEBUG")
+</code></pre>
+<p>Equivalent to setting the compile option: <code>-UDEBUG</code></p>
+<p>In the code is equivalent to: <code>#undef DEBUG</code></p>
+<h3 id="targetadd_cflags">target:add_cflags</h3>
+<h4 id="addccompilationflags">Add c compilation flags</h4>
+<p>Add compilation options only for c code</p>
+<pre><code class="lang-lua">add_cflags("-g", "-O2", "-DDEBUG")
+</code></pre>
+<p><p class="warn"><br>All option values are based on the definition of gcc as standard. If other compilers are not compatible (for example: vc), xmake will automatically convert it internally to the corresponding option values supported by the compiler.<br>Users don&#39;t have to worry about compatibility. If other compilers don&#39;t have matching values, xmake will automatically ignore the settings.<br></p>
+
+</p>
+<p>After version 2.1.9, the force parameter can be used to force the automatic detection of flags to be disabled and passed directly to the compiler. Even if the compiler may not support it, it will be set:</p>
+<pre><code class="lang-lua">add_cflags("-g", "-O2", {force = true})
+</code></pre>
+<h3 id="targetadd_cxflags">target:add_cxflags</h3>
+<h4 id="addcccompilationflags">Add c/c++ compilation flags</h4>
+<p>Add compilation options to c/c++ code at the same time</p>
+<h3 id="targetadd_cxxflags">target:add_cxxflags</h3>
+<h4 id="addccompilationflags">Add c++ compilation flags</h4>
+<p>Add compilation options only to c++ code</p>
+<h5 id="addcompilerspecificflags">Add compiler-specific flags</h5>
+<p>In version 2.7.3, we have improved all flags adding interfaces to specify flags only for specific compilers, e.g.</p>
+<pre><code class="lang-lua">add_cxxflags("clang::-stdlib=libc++")
+add_cxxflags("gcc::-stdlib=libc++")
+add_cxxflags("cl::/GR-")
+add_cxxflags("clang_cl::/GR-")
+</code></pre>
+<p>Or.</p>
+<pre><code class="lang-lua">add_cxxflags("-stdlib=libc++", {tools = "clang"})
+add_cxxflags("-stdlib=libc++", {tools = "gcc"})
+add_cxxflags("/GR-", {tools = {"clang_cl", "cl"}})
+</code></pre>
+<p>!> Not just for compile flags, but also for link flags such as add_ldflags, which also work. For link flags, the user must specify<br>if they want to target the C or C++ linker, such as "clang" for C and "clangxx" for C++.</p>
+<h3 id="targetadd_mflags">target:add_mflags</h3>
+<h4 id="addobjccompilationflags">Add objc compilation flags</h4>
+<p>Add compilation options only to objc code</p>
+<pre><code class="lang-lua">add_mflags("-g", "-O2", "-DDEBUG")
+</code></pre>
+<p>After version 2.1.9, the force parameter can be used to force the automatic detection of flags to be disabled and passed directly to the compiler. Even if the compiler may not support it, it will be set:</p>
+<pre><code class="lang-lua">add_mflags("-g", "-O2", {force = true})
+</code></pre>
+<h3 id="targetadd_mxflags">target:add_mxflags</h3>
+<h4 id="addobjcobjccompilationflags">Add objc/objc++ compilation flags</h4>
+<p>Also add compile options to objc/objc++ code</p>
+<pre><code class="lang-lua">add_mxflAgs("-framework CoreFoundation")
+</code></pre>
+<h3 id="targetadd_mxxflags">target:add_mxxflags</h3>
+<h4 id="addobjccompilationflags">Add objc++ compilation flags</h4>
+<p>Add compilation options only to objc++ code</p>
+<pre><code class="lang-lua">add_mxxflags("-framework CoreFoundation")
+</code></pre>
+<h3 id="targetadd_scflags">target:add_scflags</h3>
+<h4 id="addswiftcompilationflags">Add swift compilation flags</h4>
+<p>Add compilation options to swift code</p>
+<pre><code class="lang-lua">add_scflags("xxx")
+</code></pre>
+<h3 id="targetadd_asflags">target:add_asflags</h3>
+<h4 id="addasmcompilationflags">Add asm compilation flags</h4>
+<p>Add compilation options to assembly code</p>
+<pre><code class="lang-lua">add_asflags("xxx")
+</code></pre>
+<h3 id="targetadd_gcflags">target:add_gcflags</h3>
+<h4 id="addgocompilationflags">Add go compilation flags</h4>
+<p>Add compile options to golang code</p>
+<pre><code class="lang-lua">add_gcflags("xxx")
+</code></pre>
+<h3 id="targetadd_dcflags">target:add_dcflags</h3>
+<h4 id="adddlangcompilationflags">Add dlang compilation flags</h4>
+<p>Add compilation options to dlang code</p>
+<pre><code class="lang-lua">add_dcflags("xxx")
+</code></pre>
+<h3 id="targetadd_rcflags">target:add_rcflags</h3>
+<h4 id="addrustcompilationflags">Add rust compilation flags</h4>
+<p>Add compilation options to the rust code</p>
+<pre><code class="lang-lua">add_rcflags("xxx")
+</code></pre>
+<h3 id="targetadd_fcflags">target:add_fcflags</h3>
+<h4 id="addfortrancompilationflags">Add fortran compilation flags</h4>
+<p>Add compilation options to the fortran code</p>
+<pre><code class="lang-lua">add_fcflags("xxx")
+</code></pre>
+<h3 id="targetadd_zcflags">target:add_zcflags</h3>
+<h4 id="addzigcompilationflags">Add zig compilation flags</h4>
+<p>Add compilation options to the zig code</p>
+<pre><code class="lang-lua">add_zcflags("xxx")
+</code></pre>
+<h3 id="targetadd_cuflags">target:add_cuflags</h3>
+<h4 id="addcudacompilationflags">Add cuda compilation flags</h4>
+<p>Add compilation options to cuda code</p>
+<pre><code class="lang-lua">add_cuflags("-gencode arch=compute_30,code=sm_30")
+</code></pre>
+<h3 id="targetadd_culdflags">target:add_culdflags</h3>
+<h4 id="addcudadevicelinkflags">Add cuda device link flags</h4>
+<p>After v2.2.7, cuda default build will use device-link. If you want to set some link flags in this stage, you can set it through this interface.<br>The final program link will use ldflags, will not call nvcc, and directly link through c/c++ linker such as gcc/clang.</p>
+<p>For a description of device-link, please refer to: <a href="https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/">https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/</a></p>
+<pre><code class="lang-lua">add_culdflags("-gencode arch=compute_30,code=sm_30")
+</code></pre>
+<h3 id="targetadd_cugencodes">target:add_cugencodes</h3>
+<h4 id="addgencodesettingsforcudadevices">Add gencode settings for cuda devices</h4>
+<p>The <code>add_cugencodes()</code> interface is actually a simplified encapsulation of <code>add_cuflags("-gencode arch=compute_xx, code=compute_xx")</code> compilation flags settings. The actual flags mapping relationship corresponding to the internal parameter values is as follows:</p>
+<pre><code class="lang-lua">- compute_xx                   --> `-gencode arch=compute_xx,code=compute_xx`
+- sm_xx                        --> `-gencode arch=compute_xx,code=sm_xx`
+- sm_xx,sm_yy                  --> `-gencode arch=compute_xx,code=[sm_xx,sm_yy]`
+- compute_xx,sm_yy             --> `-gencode arch=compute_xx,code=sm_yy`
+- compute_xx,sm_yy,sm_zz       --> `-gencode arch=compute_xx,code=[sm_yy,sm_zz]`
+- native                       --> match the fastest cuda device on current host,
+                                   eg. for a Tesla P100, `-gencode arch=compute_60,code=sm_60` will be added,
+                                   if no available device is found, no `-gencode` flags will be added
+</code></pre>
+<p>E.g:</p>
+<pre><code class="lang-lua">add_cugencodes("sm_30")
+</code></pre>
+<p>Is equivalent to</p>
+<pre><code class="lang-lua">add_cuflags("-gencode arch=compute_30,code=sm_30")
+add_culdflags("-gencode arch=compute_30,code=sm_30")
+</code></pre>
+<p>Is it more streamlined? This is actually an auxiliary interface for simplifying the setup.</p>
+<p>And if we set the native value, then xmake will automatically detect the cuda device of the current host, and then quickly match its corresponding gencode setting, and automatically append it to the entire build process.</p>
+<p>For example, if our host&#39;s current GPU is Tesla P100, and it can be automatically detected by xmake, then the following settings:</p>
+<pre><code class="lang-lua">add_cugencodes("native")
+</code></pre>
+<p>Equivalent to:</p>
+<pre><code class="lang-lua">add_cugencodes("sm_60")
+</code></pre>
+<h3 id="targetadd_ldflags">target:add_ldflags</h3>
+<h4 id="addstaticlibrarylinkflags">Add static library link flags</h4>
+<p>Add static link option</p>
+<pre><code class="lang-lua">add_ldflags("-L/xxx", "-lxxx")
+</code></pre>
+<h3 id="targetadd_arflags">target:add_arflags</h3>
+<h4 id="addarchivelibraryflags">Add archive library flags</h4>
+<p>Affect the generation of static libraries</p>
+<pre><code class="lang-lua">add_arflags("xxx")
+</code></pre>
+<h3 id="targetadd_shflags">target:add_shflags</h3>
+<h4 id="adddynamiclibrarylinkflags">Add dynamic library link flags</h4>
+<p>Affect the generation of dynamic libraries</p>
+<pre><code class="lang-lua">add_shflags("xxx")
+</code></pre>
+<h3 id="targetadd_options">target:add_options</h3>
+<h4 id="addoptiondependencies">Add option dependencies</h4>
+<p>This interface is similar to <a href="#targetset_options">set_options</a>, the only difference is that this is an append option, and <a href="#targetset_options">set_options</a> overrides the previous settings each time.</p>
+<h3 id="targetadd_packages">target:add_packages</h3>
+<h4 id="addpackagedependencies">Add package dependencies</h4>
+<p>In the target scope, add integration package dependencies, for example:</p>
+<pre><code class="lang-lua">target("test")
+    add_packages("zlib", "polarssl", "pcre", "mysql")
+</code></pre>
+<p>In this way, when compiling the test target, if the package exists, the macro definition, the header file search path, and the link library directory in the package will be automatically appended, and all the libraries in the package will be automatically linked.</p>
+<p>Users no longer need to call the <a href="#targetadd_links">add_links</a>, <a href="#targetadd_includedirs">add_includedirs</a>, <a href="#targetadd_ldflags">add_ldflags</a> interfaces to configure the dependent library links.</p>
+<p>For how to set up the package search directory, please refer to: <a href="/mirror/manual/global_interfaces.html#add_packagedirs">add_packagedirs</a> interface</p>
+<p>After v2.2.2, this interface also supports packages defined by <a href="/mirror/manual/global_interfaces.html#add_requires">add_requires</a> in remote dependency management.</p>
+<pre><code class="lang-lua">add_requires("zlib", "polarssl")
+target("test")
+    add_packages("zlib", "polarssl")
+</code></pre>
+<p>After v2.2.3, it also supports overwriting built-in links to control the actual linked libraries:</p>
+<pre><code class="lang-lua">-- By default, there will be links to ncurses, panel, form, etc.
+add_requires("ncurses")
+
+target("test")
+
+    -- Display specified, only use ncurses a link library
+    add_packages("ncurses", {links = "ncurses"})
+</code></pre>
+<p>Or simply disable links and only use header files:</p>
+<pre><code class="lang-lua">add_requires("lua")
+target("test")
+    add_packages("lua", {links = {}})
+</code></pre>
+<h3 id="targetadd_languages">target:add_languages</h3>
+<h4 id="addlanguagestandards">Add language standards</h4>
+<p>Similar to <a href="#targetset_languages">set_languages</a>, the only difference is that this interface will not overwrite the previous settings, but append settings.</p>
+<h3 id="targetadd_vectorexts">target:add_vectorexts</h3>
+<h4 id="addvectorextensions">Add vector extensions</h4>
+<p>Add extended instruction optimization options, currently supports the following extended instruction sets:</p>
+<pre><code class="lang-lua">add_vectorexts("mmx")
+add_vectorexts("neon")
+add_vectorexts("avx", "avx2", "avx512")
+add_vectorexts("sse", "sse2", "sse3", "ssse3", "sse4.2")
+</code></pre>
+<p>!> If the currently set instruction set compiler does not support it, xmake will automatically ignore it, so you don&#39;t need the user to manually determine the maintenance. Just set all the instruction sets you need.</p>
+<p>In 2.8.2, we added <code>all</code> configuration item has been added which can be used to turn on all extended directive optimisations where possible.</p>
+<pre><code class="lang-lua">add_vectorexts("all")
+</code></pre>
+<h3 id="targetadd_frameworks">target:add_frameworks</h3>
+<h4 id="addframeworks">Add frameworks</h4>
+<p>Currently used for the <code>objc</code> and <code>swift</code> programs of the <code>ios</code> and <code>macosx</code> platforms, for example:</p>
+<pre><code class="lang-lua">target("test")
+    add_frameworks("Foundation", "CoreFoundation")
+</code></pre>
+<p>Of course, you can also use <a href="#targetadd_mxflags">add_mxflags</a> and <a href="#targetadd_ldflags">add_ldflags</a> to set them up, but it is cumbersome and is not recommended.</p>
+<pre><code class="lang-lua">target("test")
+    add_mxflags("-framework Foundation", "-framework CoreFoundation")
+    add_ldflags("-framework Foundation", "-framework CoreFoundation")
+</code></pre>
+<p>If it is not for both platforms, these settings will be ignored.</p>
+<h3 id="targetadd_frameworkdirs">target:add_frameworkdirs</h3>
+<h4 id="addframeworksearchdirectories">Add framework search directories</h4>
+<p>For some third-party frameworks, it is impossible to find them only through <a href="#targetadd_frameworks">add_frameworks</a>. You also need to add a search directory through this interface.</p>
+<pre><code class="lang-lua">target("test")
+    add_frameworks("MyFramework")
+    add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
+</code></pre>
+<h3 id="targetset_toolset">target:set_toolset</h3>
+<h4 id="settoolset">Set toolset</h4>
+<p>Separate settings for a specific target to switch a compiler, linker, but we recommend using <a href="#targetset_toolchains">set_toolchains</a> to switch the overall tool chain of a target.</p>
+<p>Compared with set_toolchains, this interface only switches a specific compiler or linker of the toolchain.</p>
+<p>!> This interface is only supported in versions above 2.3.4. The set_toolchain/set_tool interface before 2.3.4 will be gradually deprecated. The new interface is adopted and the usage is the same.</p>
+<p>For the source files added by <code>add_files("*.c")</code>, the default is to call the system&#39;s best matching compiler to compile, or manually modify it by <code>xmake f --cc=clang</code> command, but these are Globally affects all target targets.</p>
+<p>If there are some special requirements, you need to specify a different compiler, linker or specific version of the compiler for a specific target target under the current project. At this time, the interface can be used for purposes. For example:</p>
+<pre><code class="lang-lua">target("test1")
+    add_files("*.c")
+
+target("test2")
+    add_files("*.c")
+    set_toolset("cc", "$(projectdir)/tools/bin/clang-5.0")
+</code></pre>
+<p>The above description only makes special settings for the compiler of the test2 target, compiling test2 with a specific clang-5.0 compiler, and test1 still uses the default settings.</p>
+<p><p class="tip"><br>Each setting will override the previous setting under the current target target. Different targets will not be overwritten and independent of each other. If set in the root domain, all child targets will be affected.<br></p>
+
+</p>
+<p>The previous parameter is key, which is used to specify the tool type. Currently supported (compiler, linker, archiver):</p>
+<table>
+<thead>
+<tr>
+<th>Tool Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cc</td>
+<td>c compiler</td>
+</tr>
+<tr>
+<td>cxx</td>
+<td>c++ compiler</td>
+</tr>
+<tr>
+<td>mm</td>
+<td>objc compiler</td>
+</tr>
+<tr>
+<td>mxx</td>
+<td>objc++ compiler</td>
+</tr>
+<tr>
+<td>gc</td>
+<td>go compiler</td>
+</tr>
+<tr>
+<td>as</td>
+<td>Assembler</td>
+</tr>
+<tr>
+<td>sc</td>
+<td>swift compiler</td>
+</tr>
+<tr>
+<td>rc</td>
+<td>rust compiler</td>
+</tr>
+<tr>
+<td>dc</td>
+<td>dlang compiler</td>
+</tr>
+<tr>
+<td>fc</td>
+<td>fortran compiler</td>
+</tr>
+<tr>
+<td>sc</td>
+<td>swift compiler</td>
+</tr>
+<tr>
+<td>rust</td>
+<td>rust compiler</td>
+</tr>
+<tr>
+<td>strip</td>
+<td>strip program</td>
+</tr>
+<tr>
+<td>ld</td>
+<td>c/c++/asm/objc and other general executable program linker</td>
+</tr>
+<tr>
+<td>sh</td>
+<td>c/c++/asm/objc and other general dynamic library linkers</td>
+</tr>
+<tr>
+<td>ar</td>
+<td>c/c++/asm/objc and other general static library archivers</td>
+</tr>
+<tr>
+<td>dcld</td>
+<td>dlang executable linker, rcld/gcld and similar</td>
+</tr>
+<tr>
+<td>dcsh</td>
+<td>dlang dynamic library linker, rcsh/gcsh and similar</td>
+</tr>
+</tbody>
+</table>
+<p>For some compiler file names that are irregular, causing xmake to fail to recognize the known compiler name, we can also add a tool name prompt, for example:</p>
+<pre><code class="lang-lua">set_toolset("cc", "gcc@$(projectdir)/tools/bin/Mipscc.exe")
+</code></pre>
+<h3 id="targetset_toolchains">target:set_toolchains</h3>
+<h4 id="setupthetoolchain">Set up the toolchain</h4>
+<p>This sets up different tool chains for a specific target individually. Unlike set_toolset, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.</p>
+<p>This is also a recommended practice, because most compiler tool chains like gcc/clang, the compiler and the linker are used together. To cut it, you have to cut it as a whole. Separate and scattered switch settings will be cumbersome.</p>
+<p>For example, we switch the test target to two tool chains of clang+yasm:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("clang", "yasm")
+</code></pre>
+<p>You only need to specify the name of the toolchain. Specific toolchains supported by xmake can be viewed by the following command:</p>
+<pre><code class="lang-bash">$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+</code></pre>
+<p>Of course, we can also switch to other tool chains globally through the command line:</p>
+<pre><code class="lang-bash">$ xmake f --toolchain=clang
+$ xmake
+</code></pre>
+<p>In addition, we can also customize toolchain in xmake.lua, and then specify it through <code>set_toolchains</code>, for example:</p>
+<pre><code class="lang-lua">toolchain("myclang")
+    set_kind("standalone")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
+
+    - ...
+</code></pre>
+<p>For details about this piece, you can go to the <a href="/mirror/manual/custom_toolchain.html">Custom Toolchain</a>.</p>
+<p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/780">#780</a></p>
+<p>Starting from version 2.3.5, new settings and switches for toolchains platform and architecture have been added, such as:</p>
+<pre><code class="lang-lua">target("test")
+    set_toolchains("xcode", {plat = os.host(), arch = os.arch()})
+</code></pre>
+<p>If it is currently in cross-compilation mode, this test will still be forced to switch to the local compilation toolchain of xcode and the corresponding pc platform. This is for those who want to support part of the target using the host toolchain and part of the target using the cross-compilation toolchain. ,very useful.</p>
+<p>However, this is not particularly convenient, especially when cross-platform compilation, pc tool chains of different platforms are different, there are msvc, xcode, clang, etc., you need to judge the platform to specify.</p>
+<p>Therefore, we can directly use the <a href="#targetset_plat">set_plat</a> and <a href="#targetset_arch">set_arch</a> interfaces to directly set a specific target to the host platform, and we can automatically select the host toolchain internally, for example:</p>
+<pre><code class="lang-lua">target("test")
+    set_plat(os.host())
+    set_arch(os.arch())
+</code></pre>
+<p>The application scenario and example of this piece can be seen: <a href="https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua">https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua</a></p>
+<p>In luajit, you need to compile the minilua/buildvm of the host platform to generate jit related code, and then start compiling luajit itself to different cross tool chains.</p>
+<p>For details of this, you can refer to: <a href="https://github.com/xmake-io/xmake/pull/857">https://github.com/xmake-io/xmake/pull/857</a></p>
+<p>v2.5.1 has made further improvements to set_toolchains to better support independent toolchain switching for specific targets. For example, different targets support switching to different VS versions, for example:</p>
+<pre><code class="lang-lua">target("test")
+     set_toolchains("msvc", {vs = "2015"})
+</code></pre>
+<p>By default, xmake will use the global vs tool chain. For example, if vs2019 is currently detected, but the user also installs vs2015 at the same time, you can switch the test target to vs2015 to compile through the above configuration.</p>
+<p>You can even use <code>set_arch</code> to specify a specific architecture to x86 instead of the default x64.</p>
+<pre><code class="lang-lua">target("test")
+     set_arch("x86")
+     set_toolchains("msvc", {vs = "2015"})
+</code></pre>
+<p>The above effect is similar to <code>set_toolchains("msvc", {vs = "2015", arch = "x86"})</code>, but <code>set_arch</code> is for target granularity, and the arch setting in <code>set_toolchains</code> is only for specific tools Chain granularity.</p>
+<p>Generally, we recommend using <code>set_arch</code> to switch the architecture of the entire target.</p>
+<h3 id="targetset_plat">target:set_plat</h3>
+<h4 id="setthecompilationplatformforthespecifiedtarget">Set the compilation platform for the specified target</h4>
+<p>Usually used with <a href="#targetset_arch">set_arch</a> to switch the compilation platform of the specified target to the specified platform, xmake will automatically select the appropriate tool chain according to the switched platform.</p>
+<p>Generally used in scenarios where the host platform target and cross-compilation target need to be compiled at the same time. For more details, see: <a href="#targetset_toolchains">set_toolchains</a></p>
+<p>E.g:</p>
+<pre><code class="lang-console">$ xmake f -p android --ndk=/xxx
+</code></pre>
+<p>Even if you are using android ndk to compile the android platform target, the host target it depends on will still switch to the host platform and use xcode, msvc and other host tool chains to compile.</p>
+<pre><code class="lang-lua">target("host")
+     set_kind("binary")
+     set_plat(os.host())
+     set_arch(os.arch())
+     add_files("src/host/*.c")
+
+target("test")
+     set_kind("binary")
+     add_deps("host")
+     add_files("src/test/*.c")
+</code></pre>
+<h3 id="targetset_arch">target:set_arch</h3>
+<h4 id="setthecompilationarchitectureofthespecifiedtarget">Set the compilation architecture of the specified target</h4>
+<p>For details, see: <a href="#targetset_plat">set_plat</a></p>
+<h3 id="targetset_values">target:set_values</h3>
+<h4 id="setcustomconfigurationvalues">Set custom configuration values</h4>
+<p>Set some extended configuration values for the target. These configurations do not have a built-in api like <code>set_ldflags</code>. You can extend the configuration by passing in a configuration name with the first argument.<br>Generally used to pass configuration parameters to scripts in custom rules, for example:</p>
+<pre><code class="lang-lua">rule("markdown")
+    on_build_file(function (target, sourcefile)
+        -- compile .markdown with flags
+        local flags = target:values("markdown.flags")
+        if flags then
+            -- ..
+        end
+    end)
+
+target("test")
+    add_files("src/*.md", {rule = "markdown"})
+    set_values("markdown.flags", "xxx", "xxx")
+</code></pre>
+<p>In the above code example, it can be seen that when the target applies the markdown rule, some flag values are set by set_values and provided to the markdown rule for processing.<br>In the rule script, you can get the extended flag value set in the target by <code>target:values("markdown.flags")</code>.</p>
+<p>!> The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: <a href="/mirror/manual/custom_rule.html#built-in-rules">built-in rules</a></p>
+<p>The following is a list of some built-in extended configuration items currently supported by xmake.</p>
+<table>
+<thead>
+<tr>
+<th>Extended configuration name</th>
+<th>Configuration description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fortran.moduledir</td>
+<td>Set the output directory of the fortran module</td>
+</tr>
+<tr>
+<td>ndk.arm_mode</td>
+<td>Set the arm compilation mode of ndk (arm/thumb)</td>
+</tr>
+<tr>
+<td>objc.build.arc</td>
+<td>Set to enable or disable objc&#39;s arc</td>
+</tr>
+<tr>
+<td>objc++.build.arc</td>
+<td>Set to enable or disable arc of objc++</td>
+</tr>
+<tr>
+<td>xcode.bundle_identifier</td>
+<td>Set the Bundle Identifier of the xcode toolchain</td>
+</tr>
+<tr>
+<td>xcode.mobile_provision</td>
+<td>Set the certificate information of the xcode toolchain</td>
+</tr>
+<tr>
+<td>xcode.codesign_identity</td>
+<td>Set the code signing identity of the xcode toolchain</td>
+</tr>
+<tr>
+<td>wasm.preloadfiles</td>
+<td>Set the preload file (and path mapping) of wasm build</td>
+</tr>
+<tr>
+<td>wdk.env.winver</td>
+<td>Set the win support version of wdk</td>
+</tr>
+<tr>
+<td>wdk.umdf.sdkver</td>
+<td>Set the umdf sdk version of wdk</td>
+</tr>
+<tr>
+<td>wdk.kmdf.sdkver</td>
+<td>Set the kmdf sdk version of wdk</td>
+</tr>
+<tr>
+<td>wdk.sign.mode</td>
+<td>Set the code signing mode of wdk</td>
+</tr>
+<tr>
+<td>wdk.sign.store</td>
+<td>Set wdk code signing store</td>
+</tr>
+<tr>
+<td>wdk.sign.certfile</td>
+<td>Set wdk code signing certificate file</td>
+</tr>
+<tr>
+<td>wdk.sign.thumbprint</td>
+<td>Set wdk code signing fingerprint</td>
+</tr>
+</tbody>
+</table>
+<h3 id="targetadd_values">target:add_values</h3>
+<h4 id="addcustomconfigurationvalues">Add custom configuration values</h4>
+<p>Usage is similar to <a href="#targetset_values">target:set_values</a>, the difference is that this interface is an additional setting, and will not override the settings each time.</p>
+<h3 id="targetset_rundir">target:set_rundir</h3>
+<h4 id="settherunningdirectory">Set the running directory</h4>
+<p>This interface is used to set the current running directory of the default running target program. If not set, by default, the target is loaded and run in the directory where the executable file is located.</p>
+<p>If the user wants to modify the load directory, one is to customize the run logic by <code>on_run()</code>, and to do the switch inside, but just to cut the directory, this is too cumbersome.</p>
+<p>Therefore, you can quickly switch settings to the default directory environment through this interface.</p>
+<pre><code class="lang-lua">target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+     set_rundir("$(projectdir)/xxx")
+</code></pre>
+<h3 id="targetset_runargs">target:set_runargs</h3>
+<h4 id="setthelistofrunparameters">Set the list of run parameters</h4>
+<p>2.6.9 New interface to set default run arguments for <code>xmake run</code>, with which we can avoid typing run arguments every time on the command line, <code>xmake run -x --arg1=val</code></p>
+<pre><code class="lang-lua">set_runargs("-x", "--arg1=val")
+</code></pre>
+<h3 id="targetadd_runenvs">target:add_runenvs</h3>
+<h4 id="addruntimeenvironmentvariables">Add runtime environment variables</h4>
+<p>This interface is used to add an environment variable that sets the default running target program. Unlike <a href="#targetset_runenv">set_runenv</a>, this interface appends the value in the existing system env and does not overwrite it.</p>
+<p>Therefore, for PATH, it is very convenient to append values through this interface, and this interface supports multi-value settings, so it is usually used to set multi-value env with path sep. .</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_runenvs("PATH", "/tmp/bin", "xxx/bin")
+    add_runenvs("LD_LIBRARY_PATH", "/tmp/lib", "xxx/lib")
+</code></pre>
+<h3 id="targetset_runenv">target:set_runenv</h3>
+<h4 id="settheruntimeenvironmentvariable">Set the runtime environment variable</h4>
+<p>This interface differs from <a href="#targetadd_runenvs">add_runenvs</a> in that <code>set_runenv</code> is an override setting for an environment variable that overrides the env value of the original system environment, and this interface is singular and cannot pass multiple parameters.</p>
+<p>So, if you want to override the env that sets the multipath in PATH, you need to splicing yourself:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_runenv("PATH", path.joinenv("/tmp/bin", "xxx/bin"))
+    set_runenv("NAME", "value")
+</code></pre>
+<h3 id="targetset_installdir">target:set_installdir</h3>
+<h4 id="settheinstallationdirectory">Set the installation directory</h4>
+<p>By default, <code>xmake install</code> will be installed to the system <code>/usr/local</code> directory. We can specify other installation directories except <code>xmake install -o /usr/local</code>.<br>You can also set a different installation directory for the target in xmake.lua instead of the default directory.</p>
+<h3 id="targetadd_installfiles">target:add_installfiles</h3>
+<h4 id="addinstallationfiles">Add installation files</h4>
+<p>2.2.5 version of the new interface, used to set the corresponding file for each target, generally used for the <code>xmake install/uninstall</code> command.</p>
+<p>For example, we can specify to install various types of files to the installation directory:</p>
+<pre><code class="lang-lua">target("test")
+    add_installfiles("src/*.h")
+    add_installfiles("doc/*.md")
+</code></pre>
+<p>By default on Linux and other systems, we will install to <code>/usr/local/*.h, /usr/local/*.md</code>, but we can also specify to install to a specific subdirectory:</p>
+<pre><code class="lang-lua">target("test")
+    add_installfiles("src/*.h", {prefixdir = "include"})
+    add_installfiles("doc/*.md", {prefixdir = "share/doc"})
+</code></pre>
+<p>The above settings, we will install to <code>/usr/local/include/*.h, /usr/local/share/doc/*.md</code></p>
+<p>We can also install by subdirectory in the source file by <code>()</code>, for example:</p>
+<pre><code class="lang-lua">target("test")
+    add_installfiles("src/(tbox/*.h)", {prefixdir = "include"})
+    add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
+</code></pre>
+<p>We extract the <code>src/*.h</code> subdirectory structure from the files in <code>src/tbox/*.h</code> and install it: <code>/usr/local/include/tbox/*.h, /usr/local /share/doc/tbox/*.md</code></p>
+<p>Of course, users can also use the <a href="#targetset_installdir">set_installdir</a> interface.</p>
+<p>For a detailed description of this interface, see: <a href="https://github.com/xmake-io/xmake/issues/318">https://github.com/xmake-io/xmake/issues/318</a></p>
+<h3 id="targetadd_headerfiles">target:add_headerfiles</h3>
+<h4 id="addheaderfiles">Add header files</h4>
+<p>2.2.5 version of the new interface, used to set the corresponding header file for each target, generally used for the <code>xmake install/uninstall</code> command.</p>
+<p>This interface is used in almost the same way as the <a href="#targetadd_installfiles">add_installfiles</a> interface. It can be used as a Tianjian installation file, but this interface is only used to install header files.<br>Therefore, it is much easier to use than <code>add_installfiles</code>. By default, prefixfix is not set, and the header files are automatically installed into the corresponding <code>include</code> subdirectory.</p>
+<p>And this interface for the <code>xmake project -k vs201x</code> and other plug-in generated IDE files, will also add the corresponding header file into it.</p>
+<p>We can also install by subdirectory in the source file by <code>()</code>, for example:</p>
+<pre><code class="lang-lua">target("test")
+    add_headerfiles("src/(tbox/*.h)", {prefixdir = "include"})
+</code></pre>
+<p>After v2.7.1, we can disable the default header file installation behavior through the <code>{install = false}</code> parameter,<br>and only display and edit the set header files for the project generator&#39;s file list, such as vs project.</p>
+<pre><code class="lang-lua">add_headerfiles("src/foo.h")
+add_headerfiles("src/test.h", {install = false})
+</code></pre>
+<p>The above two header files will be displayed in the vs project, but only foo.h will be distributed and installed on the system.</p>
+<h3 id="targetset_configdir">target:set_configdir</h3>
+<h4 id="settheoutputdirectoryofconfigurationfiles">Set the output directory of configuration files</h4>
+<p>Version 2.2.5 adds a new interface, mainly used for the output directory of the template configuration file set by the <a href="#targetadd_configfiles">add_configfiles</a> interface.</p>
+<h3 id="targetset_configvar">target:set_configvar</h3>
+<h4 id="settemplateconfigurationvariables">Set template configuration variables</h4>
+<p>The new interface in version 2.2.5 is used to add some template configuration variables that need to be pre-processed before compilation, generally used in the <a href="#targetadd_configfiles">add_configfiles</a> interface.</p>
+<pre><code class="lang-lua">target("test")
+     set_kind("binary")
+     add_files("main.c")
+     set_configvar("HAS_FOO", 1)
+     set_configvar("HAS_BAR", "bar")
+     set_configvar("HAS_ZOO", "zoo", {quote = false})
+     add_configfiles("config.h.in")
+</code></pre>
+<p>config.h.in</p>
+<pre><code class="lang-c">${define HAS_FOO}
+${define HAS_BAR}
+${define HAS_ZOO}
+</code></pre>
+<p>The content of the generated config.h is as follows:</p>
+<pre><code class="lang-c">#define HAS_FOO 1
+#define HAS_BAR "bar"
+#define HAS_ZOO zoo
+</code></pre>
+<p>set_configvar can set number, string and boolean type values. If it is a string value, the macro definition generated by default is enclosed in quotation marks. If you want to remove the quotation marks, you can set <code>{quote = false}</code>.</p>
+<p>For related issues, see: <a href="https://github.com/xmake-io/xmake/issues/1694">#1694</a></p>
+<p>If there is a path in the macro definition, and the path separator needs to be escaped, we can also configure to enable path character escaping.</p>
+<pre><code class="lang-lua">set_configvar("TEST", "C:\\hello", {escape = true})
+</code></pre>
+<p>It will be automatically escaped into <code>#define TEST "C:\\hello"</code>, if escaping is not turned on, it will become: <code>#define TEST "C:\hello"</code></p>
+<p>For related issues, see: <a href="https://github.com/xmake-io/xmake/issues/1872">#1872</a></p>
+<h3 id="targetadd_configfiles">target:add_configfiles</h3>
+<h4 id="addtemplateconfigurationfiles">Add template configuration files</h4>
+<p>2.2.5 version of the new interface, used to add some configuration files that need to be pre-processed before compiling.</p>
+<p>Let&#39;s start with a simple example:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_configdir("$(buildir)/config")
+    add_configfiles("src/config.h.in")
+</code></pre>
+<p>The above settings will automatically configure the <code>config.h.in</code> header file template before compiling. After preprocessing, it will generate the output to the specified <code>build/config/config.h</code>.</p>
+<p>If <code>set_configdir</code> is not set, the default output is in the <code>build</code> directory.</p>
+<p>The <code>.in</code> suffix will be automatically recognized and processed. If you want to store the output as a different file name, you can pass:</p>
+<pre><code class="lang-lua">add_configfiles("src/config.h", {filename = "myconfig.h"})
+</code></pre>
+<p>The way to rename the output, again, this interface is similar to <a href="#targetadd_configfiles">add_installfiles</a>, which also supports prefixdir and subdirectory extraction settings:</p>
+<pre><code class="lang-lua">add_configfiles("src/*.h.in", {prefixdir = "subdir"})
+add_configfiles("src/(tbox/config.h)")
+</code></pre>
+<h5 id="variables">Variables</h5>
+<p>One of the most important features of this interface is that it can be preprocessed and replaced with some of the template variables in the preprocessing, for example:</p>
+<p>Config.h.in</p>
+<pre><code>#define VAR1 "${VAR1}"
+#define VAR2 "${VAR2}"
+#define HELLO "${HELLO}"
+</code></pre><pre><code class="lang-lua">set_configvar("VAR1", "1")
+
+target("test")
+    set_kind("binary")
+    add_files("main.c")
+
+    set_configvar("VAR2", 2)
+    add_configfiles("config.h.in", {variables = {hello = "xmake"}})
+    add_configfiles("*.man", {onlycopy = true})
+</code></pre>
+<p>The template variable is set via the <a href="#targetset_configvar">set_configvar</a> interface, and the substitution is handled by the variable set in <code>{variables = {xxx = ""}}</code>.</p>
+<p>The preprocessed file <code>config.h</code> is:</p>
+<pre><code>#define VAR1 "1"
+#define VAR2 "2"
+#define HELLO "xmake"
+</code></pre><p>The <code>{onlycopy = true}</code> setting will force <code>*.man</code> to be treated as a normal file, copying files only during the preprocessing stage, and not replacing variables.</p>
+<p>The default template variable matching mode is <code>${var}</code>, of course we can also set other matching modes, for example, to <code>@var@</code> matching rules:</p>
+<pre><code class="lang-lua">target("test")
+    add_configfiles("config.h.in", {pattern = "@(.-)@"})
+</code></pre>
+<h5 id="builtinvariables">Builtin variables</h5>
+<p>We also have some built-in variables that can be replaced with default variables even if they are not set through this interface:</p>
+<pre><code>${VERSION} -> 1.6.3
+${VERSION_MAJOR} -> 1
+${VERSION_MINOR} -> 6
+${VERSION_ALTER} -> 3
+${VERSION_BUILD} -> set_version("1.6.3", {build = "%Y%m%d%H%M"}) -> 201902031421
+${PLAT} and ${plat} -> MACOS and macosx
+${ARCH} and ${arch} -> ARM and arm
+${MODE} and ${mode} -> DEBUG/RELEASE and debug/release
+${DEBUG} and ${debug} -> 1 or 0
+${OS} and ${os} -> IOS or ios
+</code></pre><p>E.g:</p>
+<p>Config.h.in</p>
+<pre><code class="lang-c">#define CONFIG_VERSION "${VERSION}"
+#define CONFIG_VERSION_MAJOR ${VERSION_MAJOR}
+#define CONFIG_VERSION_MINOR ${VERSION_MINOR}
+#define CONFIG_VERSION_ALTER ${VERSION_ALTER}
+#define CONFIG_VERSION_BUILD ${VERSION_BUILD}
+</code></pre>
+<p>Config.h</p>
+<pre><code class="lang-c">#define CONFIG_VERSION "1.6.3"
+#define CONFIG_VERSION_MAJOR 1
+#define CONFIG_VERSION_MINOR 6
+#define CONFIG_VERSION_ALTER 3
+#define CONFIG_VERSION_BUILD 201902031401
+</code></pre>
+<p>Added git related built-in variables after v2.5.3:</p>
+<pre><code class="lang-c">#define GIT_COMMIT "${GIT_COMMIT}"
+#define GIT_COMMIT_LONG "${GIT_COMMIT_LONG}"
+#define GIT_COMMIT_DATE "${GIT_COMMIT_DATE}"
+#define GIT_BRANCH "${GIT_BRANCH}"
+#define GIT_TAG "${GIT_TAG}"
+#define GIT_TAG_LONG "${GIT_TAG_LONG}"
+#define GIT_CUSTOM "${GIT_TAG}-${GIT_COMMIT}"
+</code></pre>
+<pre><code class="lang-c">#define GIT_COMMIT "8c42b2c2"
+#define GIT_COMMIT_LONG "8c42b2c251793861eb85ffdf7e7c2307b129c7ae"
+#define GIT_COMMIT_DATE "20210121225744"
+#define GIT_BRANCH "dev"
+#define GIT_TAG "v1.6.6"
+#define GIT_TAG_LONG "v1.6.6-0-g8c42b2c2"
+#define GIT_CUSTOM "v1.6.6-8c42b2c2"
+</code></pre>
+<h5 id="macrodefinition">Macro definition</h5>
+<p>We can also perform some variable state control processing on the <code>#define</code> definition:</p>
+<p>Config.h.in</p>
+<pre><code class="lang-c">${define FOO_ENABLE}
+</code></pre>
+<pre><code class="lang-lua">set_configvar("FOO_ENABLE", 1) -- or pass true
+set_configvar("FOO_STRING", "foo")
+</code></pre>
+<p>After setting the above variable, <code>${define xxx}</code> will be replaced with:</p>
+<pre><code class="lang-c">#define FOO_ENABLE 1
+#define FOO_STRING "foo"
+</code></pre>
+<p>Or (when set to 0 disable)</p>
+<pre><code class="lang-c">/* #undef FOO_ENABLE */
+/* #undef FOO_STRING */
+</code></pre>
+<p>This method is very useful for some automatic detection generation config.h, such as with the option to do automatic detection:</p>
+<pre><code class="lang-lua">option("foo")
+    set_default(true)
+    set_description("Enable Foo")
+    set_configvar("FOO_ENABLE", 1) -- or pass true to enable the FOO_ENABLE variable
+    set_configvar("FOO_STRING", "foo")
+
+target("test")
+    add_configfiles("config.h.in")
+
+    -- If the foo option is enabled -> Add FOO_ENABLE and FOO_STRING definitions
+    add_options("foo")
+</code></pre>
+<p>Config.h.in</p>
+<pre><code class="lang-c">${define FOO_ENABLE}
+${define FOO_STRING}
+</code></pre>
+<p>Config.h</p>
+<pre><code class="lang-c">#define FOO_ENABLE 1
+#define FOO_STRING "foo"
+</code></pre>
+<p>Regarding the option option detection, and the automatic generation of config.h, there are some helper functions, you can look at it: <a href="https://github.com/xmake-io/xmake/issues/342">https://github.com/xmake-io/xmake/issues/342</a></p>
+<p>In addition to <code>#define</code>, if you want to other non<code>#define xxx</code> also performs state switching processing. You can use the <code>${default xxx 0}</code> mode to set default values, for example:</p>
+<pre><code>HAVE_SSE2 equ ${default VAR_HAVE_SSE2 0}
+</code></pre><p>After <code>set_configvar("HAVE_SSE2", 1)</code> is enabled, it becomes <code>HAVE_SSE2 equ 1</code>. If no variable is set, the default value is used: <code>HAVE_SSE2 equ 0</code></p>
+<p>For a detailed description of this, see: <a href="https://github.com/xmake-io/xmake/issues/320">https://github.com/xmake-io/xmake/issues/320</a></p>
+<h3 id="targetset_policy">target:set_policy</h3>
+<h4 id="setbuildpolicy">Set build policy</h4>
+<p>Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users&#39; habits and needs.</p>
+<p>Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy, which is open to users to a certain degree of configurability.</p>
+<p>The usage is as follows:</p>
+<pre><code class="lang-lua">set_policy("check.auto_ignore_flags", false)
+</code></pre>
+<p>You only need to set this configuration in the project root domain to disable the automatic detection and ignore mechanism of flags. In addition, set_policy can also take effect locally for a specific target.</p>
+<pre><code class="lang-lua">target ("test")
+    set_policy ("check.auto_ignore_flags", false)
+</code></pre>
+<p>For a complete list of policies support and instructions, see: <a href="/mirror/guide/build_policies.html">build policies</a></p>
+<h3 id="targetset_runtimes">target:set_runtimes</h3>
+<h4 id="settheruntimelibraryofthecompilationtarget">Set the runtime library of the compilation target</h4>
+<p>This is a newly added interface since v2.5.1, which is used to abstractly set the runtime library that the compilation target depends on. Currently, only the abstraction of the msvc runtime library is supported, but the mapping to other compiler runtime libraries may be expanded in the future.</p>
+<p>Some of the currently supported configuration values are described as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MT</td>
+<td>msvc runtime library: multithreaded static library</td>
+</tr>
+<tr>
+<td>MTd</td>
+<td>msvc runtime library: multithreaded static library (debug)</td>
+</tr>
+<tr>
+<td>MD</td>
+<td>msvc runtime library: multi-threaded dynamic library</td>
+</tr>
+<tr>
+<td>MDd</td>
+<td>msvc runtime library: multi-threaded dynamic library (debug)</td>
+</tr>
+<tr>
+<td>c++_static</td>
+<td>clang&#39;s c++ runtime library, static library</td>
+</tr>
+<tr>
+<td>c++_shared</td>
+<td>c++ Runtime Library, Dynamic Libraries</td>
+</tr>
+<tr>
+<td>stdc++_static</td>
+<td>c++ runtime library for gcc, static library</td>
+</tr>
+<tr>
+<td>stdc++_shared</td>
+<td>c++ runtime library for gcc, dynamic libraries</td>
+</tr>
+<tr>
+<td>gnustl_static</td>
+<td>c++ runtime library for android, static libraries, deprecated in higher NDK versions</td>
+</tr>
+<tr>
+<td>gnustl_shared</td>
+<td>c++ runtime library, static library for android, deprecated in higher NDK versions</td>
+</tr>
+<tr>
+<td>stlport_static</td>
+<td>c++ runtime library, static library for android, deprecated by NDK</td>
+</tr>
+<tr>
+<td>stlport_static</td>
+<td>c++ Runtime Library for android, static library, deprecated in higher NDK versions</td>
+</tr>
+</tbody>
+</table>
+<p>About vs runtime, you can refer to: <a href="https://docs.microsoft.com/en-us/cpp/build/reference/md-mt-ld-use-run-time-library?view =msvc-160">msvc runtime description</a></p>
+<p>And this interface passes in the MT/MTd parameter configuration, xmake will automatically configure the <code>/MT /nodefaultlib:msvcrt.lib</code> parameter.</p>
+<p>We can set different runtimes for different targets.</p>
+<p>In addition, if we set <code>set_runtimes</code> in the global root domain, then all <code>add_requires("xx")</code> package definitions will also be globally synchronized to the corresponding vs runtime configuration</p>
+<pre><code class="lang-lua">set_runtimes("MD")
+add_requires("libcurl", "fmt")
+target("test")
+   set_kind("binary")
+   add_files("src/*.c")
+</code></pre>
+<p>Of course, we can also use <code>add_requires("xx", {configs = {vs_runtime = "MD"}})</code> to modify the vs runtime library for specific packages.</p>
+<p>We can also use <code>xmake f --vs_runtime=&#39;MD&#39;</code> to switch it globally through parameter configuration.</p>
+<p>Issues related to this api: <a href="https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681">#1071</a></p>
+<h3 id="targetset_group">target:set_group</h3>
+<h4 id="settargetgroup">Set target group</h4>
+<h5 id="usedforgroupdisplayofprojectfiles">Used for group display of project files</h5>
+<p>This interface can be used to generate the vs/vsxmake project. The directory tree of the internal subprojects of the vs project is grouped and displayed according to the specified structure. However, grouping support may be added to other modules in the future.</p>
+<p>For example, for the following grouping configuration:</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+target("test1")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     set_group("group1")
+
+target("test2")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     set_group("group1")
+
+target("test3")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     set_group("group1/group2")
+
+target("test4")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     set_group("group3/group4")
+
+target("test5")
+     set_kind("binary")
+     add_files("src/*.cpp")
+
+target("test6")
+     set_kind("binary")
+     add_files("src/*.cpp")
+</code></pre>
+<p>The effect of the generated VS project directory structure is as follows:</p>
+<p><img src="assets/img/manual/set_group.png" alt=""></p>
+<p>For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1026">#1026</a></p>
+<h5 id="compileandspecifyabatchoftargetprograms">Compile and specify a batch of target programs</h5>
+<p>We can use <code>set_group()</code> to mark a given target as <code>test/benchmark/...</code> and use <code>set_default(false)</code> to disable to build it by default.</p>
+<p>Then, through the <code>xmake -g xxx</code> command, you can specify to build a batch of target programs.</p>
+<p>For example, we can use this feature to build all tests.</p>
+<pre><code class="lang-lua">target("test1")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+
+target("test2")
+    set_kind("binary")
+    set_default(false)
+    set_group("test")
+    add_files("src/*.cpp")
+</code></pre>
+<pre><code class="lang-console">$ xmake -g test
+$ xmake --group=test
+</code></pre>
+<h5 id="runaspecifiedbatchoftargetprograms">Run a specified batch of target programs</h5>
+<p>We can also specify to run all test programs with the <code>test</code> group by setting the group.</p>
+<pre><code class="lang-console">$ xmake run -g test
+$ xmake run --group=test
+</code></pre>
+<p>In addition, we can also support grouped pattern matching:</p>
+<pre><code>$ xmake build -g test_*
+$ xmake run -g test/foo_*
+$ xmake build -g bench*
+$ xmake run -g bench*
+</code></pre><p>For more information: <a href="https://github.com/xmake-io/xmake/issues/1913">#1913</a></p>
+<h3 id="targetadd_filegroups">target:add_filegroups</h3>
+<h4 id="addsourcefilegroups">Add Source file groups</h4>
+<p>This interface is currently used to group the source files generated by the vs/vsxmake/cmakelists generator.</p>
+<p>If you don&#39;t set up grouping, Xmake will also display them in tree mode by default, but in some extreme cases, the directory hierarchy is not very good, e.g.</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("... /... /... /... /src/**.cpp")
+</code></pre>
+<p><img src="https://xmake.io/assets/img/manual/filegroup1.png" alt=""></p>
+<p>Two main presentation modes are currently supported.</p>
+<ul>
+<li>plain: flat mode</li>
+<li>tree: tree display, which is also the default mode</li>
+</ul>
+<p>Also, it supports grouping of files added by <code>add_headerfiles</code>.</p>
+<h5 id="setthegroupandspecifiestherootdirectory">Set the group and specifies the root directory</h5>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("... /... /... /... /src/**.cpp")
+    add_filegroups("group1/group2", {rootdir = "... /... /... /... /"})
+</code></pre>
+<p><img src="https://xmake.io/assets/img/manual/filegroup2.png" alt=""></p>
+<h5 id="setthegroupandspecifiesthefilematchingpattern">Set the group and specifies the file matching pattern</h5>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("... /... /... /... /src/**.cpp")
+    add_filegroups("group1/group2", {rootdir = "... /... /... /... /", files = {"src/**.cpp"}})
+</code></pre>
+<h5 id="showasflatmode">Show as flat mode</h5>
+<p>In this mode, all source files ignore the nested directory hierarchy and are displayed at the same level under grouping.</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("... /... /... /... /src/**.cpp")
+    add_filegroups("group1/group2", {rootdir = "... /... /... /... /", mode = "plain"})
+</code></pre>
+<p><img src="https://xmake.io/assets/img/manual/filegroup3.png" alt=""></p>
+<h3 id="targetset_exceptions">target:set_exceptions</h3>
+<h4 id="enablingordisablingexceptions">Enabling or disabling exceptions</h4>
+<p>We can configure C++/Objc exceptions to be enabled and disabled via this configuration.</p>
+<p>Normally, if we configure them via the add_cxxflags interface, it would be cumbersome for the compiler to handle them separately, depending on the platform.</p>
+<p>For example</p>
+<pre><code class="lang-lua">    on_config(function (target)
+        if (target:has_tool("cxx", "cl")) then
+            target:add("cxflags", "/EHsc", {force = true})
+            target:add("defines", "_HAS_EXCEPTIONS=1", {force = true})
+        elseif(target:has_tool("cxx", "clang") or target:has_tool("cxx", "clang-cl")) then
+            target:add("cxflags", "-fexceptions", {force = true})
+            target:add("cxflags", "-fcxx-exceptions", {force = true})
+        end
+    end)
+</code></pre>
+<p>And with this interface, we can abstract to configure them in a compiler-independent way.</p>
+<p>Enabling C++ exceptions:</p>
+<pre><code class="lang-lua">set_exceptions("cxx")
+</code></pre>
+<p>Disable C++ exceptions:</p>
+<pre><code class="lang-lua">set_exceptions("no-cxx")
+</code></pre>
+<p>We can also configure to turn on objc exceptions at the same time.</p>
+<pre><code class="lang-lua">set_exceptions("cxx", "objc")
+</code></pre>
+<p>or disable them.</p>
+<pre><code class="lang-lua">set_exceptions("no-cxx", "no-objc")
+</code></pre>
+<p>Xmake will automatically adapt the flags internally to the different compilers.</p>
+<h3 id="targetset_encodings">target:set_encodings</h3>
+<h4 id="setencodings">Set encodings</h4>
+<p>This is a new interface in version 2.8.2, we can use this interface to set the encoding of source and target files.</p>
+<p>All supported encodings: utf-8, gb2312 (msvc)</p>
+<p>By default, just specifying the encoding will work for both the source and target files.</p>
+<pre><code class="lang-lua">-- for all source/target encodings
+set_encodings("utf-8") -- msvc: /utf-8
+</code></pre>
+<p>It is equivalent to:</p>
+<pre><code class="lang-lua">set_encodings("source:utf-8", "target:utf-8")
+</code></pre>
+<p>And it only supports utf-8 encodings for now, but will be expanded in the future.</p>
+<p>If we just want to set the source file encoding or the target file encoding separately, we can do that too.</p>
+<h5 id="setsourceencoding">Set source encoding</h5>
+<p>Usually this refers to the encoding of the source file of the compiled code, and we can set it like this.</p>
+<pre><code class="lang-lua">-- gcc/clang: -finput-charset=UTF-8, msvc: -source-charset=utf-8
+set_encodings("source:utf-8")
+</code></pre>
+<h5 id="setthetargetfileencoding">Set the target file encoding</h5>
+<p>It usually refers to the runtime output encoding of the target executable.</p>
+<pre><code class="lang-lua">-- gcc/clang: -fexec-charset=UTF-8, msvc: -target-charset=utf-8
+set_encodings("target:utf-8")
+</code></pre>
+<h3 id="targetadd_forceincludes">target:add_forceincludes</h3>
+<h4 id="forceincludes">forceincludes</h4>
+<p>This is a new interface in 2.8.2 for forcing <code>includes</code> headers directly into configuration files.</p>
+<pre><code class="lang-lua">add_forceincludes("config.h")
+</code></pre>
+<p>It works like <code>#include <config.h></code>, but you don&#39;t need to add it explicitly in the source code.</p>
+<p>Also, its search path is controlled by <code>add_includedirs</code> instead of the direct config file path.</p>
+<pre><code class="lang-lua">add_forceincludes("config.h")
+add_includedirs("src")
+</code></pre>
+<p>By default add_forceincludes matches c/c++/objc, if you just want to match c++ you can do so:</p>
+<pre><code class="lang-lua">add_forceincludes("config.h", {sourcekinds = "cxx"})
+</code></pre>
+<p>If you want to match multiple source file types at the same time, that&#39;s also possible:</p>
+<pre><code class="lang-lua">add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
+</code></pre>
+<h3 id="targetadd_extrafiles">target:add_extrafiles</h3>
+<h4 id="addingextrafiles">Adding Extra Files</h4>
+<p>This interface, also new in 2.8.2, is mainly used in projects generated by the vs/vsxmake project generator to add extra files to the project list, so that users can also quickly click on them to edit them, even though they are not code files.</p>
+<p>In the future, we may use this interface for more other things as well.</p>
+<pre><code class="lang-lua">add_extrafiles("assets/other.txt")
+</code></pre>
+<h3 id="targetadd_tests">target:add_tests</h3>
+<h4 id="addtestcase">Add test case</h4>
+<p>Starting from version 2.8.5, we have added a built-in test command: <code>xmake test</code>. We only need to configure some test cases through add_tests on the target that needs to be tested to automatically execute the test.</p>
+<p>Even if the current target is set to <code>set_default(false)</code>, when executing tests, xmake will still automatically compile them first, and then automatically run all tests.</p>
+<p>We can first look at an overall example to get a rough idea of what it looks like.</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+for _, file in ipairs(os.files("src/test_*.cpp")) do
+     local name = path.basename(file)
+     target(name)
+         set_kind("binary")
+         set_default(false)
+         add_files("src/" .. name .. ".cpp")
+         add_tests("default")
+         add_tests("args", {runargs = {"foo", "bar"}})
+         add_tests("pass_output", {trim_output = true, runargs = "foo", pass_outputs = "hello foo"})
+         add_tests("fail_output", {fail_outputs = {"hello2 .*", "hello xmake"}})
+end
+</code></pre>
+<p>This example automatically scans the <code>test_*.cpp</code> source files in the source code directory, and then automatically creates a test target for each file. It is set to <code>set_default(false)</code>, which means that under normal circumstances, it will not be compiled by default. they.</p>
+<p>However, if you execute <code>xmake test</code> for testing, they will be automatically compiled and then tested. The running effect is as follows:</p>
+<pre><code class="lang-bash">ruki-2:test ruki$ xmake test
+running tests ...
+[  2%]: test_1/args        .................................... passed 7.000s
+[  5%]: test_1/default     .................................... passed 5.000s
+[  8%]: test_1/fail_output .................................... passed 5.000s
+[ 11%]: test_1/pass_output .................................... passed 6.000s
+[ 13%]: test_2/args        .................................... passed 7.000s
+[ 16%]: test_2/default     .................................... passed 6.000s
+[ 19%]: test_2/fail_output .................................... passed 6.000s
+[ 22%]: test_2/pass_output .................................... passed 6.000s
+[ 25%]: test_3/args        .................................... passed 7.000s
+[ 27%]: test_3/default     .................................... passed 7.000s
+[ 30%]: test_3/fail_output .................................... passed 6.000s
+[ 33%]: test_3/pass_output .................................... passed 6.000s
+[ 36%]: test_4/args        .................................... passed 6.000s
+[ 38%]: test_4/default     .................................... passed 6.000s
+[ 41%]: test_4/fail_output .................................... passed 5.000s
+[ 44%]: test_4/pass_output .................................... passed 6.000s
+[ 47%]: test_5/args        .................................... passed 5.000s
+[ 50%]: test_5/default     .................................... passed 6.000s
+[ 52%]: test_5/fail_output .................................... failed 6.000s
+[ 55%]: test_5/pass_output .................................... failed 5.000s
+[ 58%]: test_6/args        .................................... passed 7.000s
+[ 61%]: test_6/default     .................................... passed 6.000s
+[ 63%]: test_6/fail_output .................................... passed 6.000s
+[ 66%]: test_6/pass_output .................................... passed 6.000s
+[ 69%]: test_7/args        .................................... failed 6.000s
+[ 72%]: test_7/default     .................................... failed 7.000s
+[ 75%]: test_7/fail_output .................................... failed 6.000s
+[ 77%]: test_7/pass_output .................................... failed 5.000s
+[ 80%]: test_8/args        .................................... passed 7.000s
+[ 83%]: test_8/default     .................................... passed 6.000s
+[ 86%]: test_8/fail_output .................................... passed 6.000s
+[ 88%]: test_8/pass_output .................................... failed 5.000s
+[ 91%]: test_9/args        .................................... passed 6.000s
+[ 94%]: test_9/default     .................................... passed 6.000s
+[ 97%]: test_9/fail_output .................................... passed 6.000s
+[100%]: test_9/pass_output .................................... passed 6.000s
+
+80% tests passed, 7 tests failed out of 36, spent 0.242s
+</code></pre>
+<p><img src="/assets/img/manual/xmake-test1.png" alt=""></p>
+<p>We can also execute <code>xmake test -vD</code> to view detailed test failure error messages:</p>
+<p><img src="/assets/img/manual/xmake-test2.png" alt=""></p>
+<h5 id="runthespecifiedtesttarget">Run the specified test target</h5>
+<p>We can also specify to run a test with a specified target:</p>
+<pre><code class="lang-bash">$ xmake test targetname/testname
+</code></pre>
+<p>Or run all tests of a target or a batch of tests by pattern matching:</p>
+<pre><code class="lang-bash">$ xmake test targetname/*
+$ xmake test targetname/foo*
+</code></pre>
+<p>You can also run tests with the same name for all targets:</p>
+<pre><code class="lang-bash">$ xmake test */testname
+</code></pre>
+<h5 id="parallelizerunningtests">Parallelize running tests</h5>
+<p>In fact, the default is to run in parallel, but we can adjust the parallelism of the operation through <code>-jN</code>.</p>
+<pre><code class="lang-bash">$ xmake test -jN
+</code></pre>
+<h5 id="runtestsingroups">Run tests in groups</h5>
+<pre><code class="lang-bash">$ xmake test -g "foo"
+$ xmake test -g "foo*"
+</code></pre>
+<h5 id="addtesttotargetnoparameters">Add test to target (no parameters)</h5>
+<p>If no parameters are configured, and only the test name is configured to <code>add_tests</code>, then it is only tested whether the target program will fail to run, and whether the test passes is judged based on the exit code.</p>
+<pre><code>target("test")
+     add_tests("testname")
+</code></pre><h5 id="configurerunningparameters">Configure running parameters</h5>
+<p>We can also use <code>{runargs = {"arg1", "arg2"}}</code> to configure <code>add_tests</code> to specify the parameters that the test needs to run.</p>
+<p>In addition, a target can be configured with multiple test cases at the same time, and each test case can be run independently without conflicting with each other.</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname", {runargs = "arg1"})
+     add_tests("testname", {runargs = {"arg1", "arg2"}})
+</code></pre>
+<p>If we do not configure runargs to <code>add_tests</code>, then we will also try to get the running parameters set by <code>set_runargs</code> from the bound target.</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname")
+     set_runargs("arg1", "arg2")
+</code></pre>
+<h5 id="configurerunningdirectory">Configure running directory</h5>
+<p>We can also set the current working directory of the test run through rundir, for example:</p>
+<pre><code class="lang-lua">targett("test")
+     add_tests("testname", {rundir = os.projectdir()})
+</code></pre>
+<p>If we do not configure rundir to <code>add_tests</code>, then we will also try to obtain the running directory set by <code>set_rundir</code> from the bound target.</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname")
+     set_rundir("$(projectdir)")
+</code></pre>
+<h5 id="configuretherunningenvironment">Configure the running environment</h5>
+<p>We can also set some runtime environment variables through runenvs, for example:</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname", {runenvs = {LD_LIBRARY_PATH = "/lib"}})
+</code></pre>
+<p>If we do not configure runenvs to <code>add_tests</code>, then we will also try to obtain the running environment set by <code>add_runenvs</code> from the bound target.</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname")
+     add_runenvs("LD_LIBRARY_PATH", "/lib")
+</code></pre>
+<h5 id="matchingoutputresults">Matching output results</h5>
+<p>By default, <code>xmake test</code> will determine whether the test passed based on whether the exit code of the test run is 0.</p>
+<p>Of course, we can also determine whether the test passes by configuring whether the output result of the test run meets our specified matching pattern.</p>
+<p>Mainly controlled by these two parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pass_outputs</td>
+<td>The test passes if the outputs match</td>
+</tr>
+<tr>
+<td>fail_outputs</td>
+<td>If the outputs match, the test fails</td>
+</tr>
+</tbody>
+</table>
+<p>What is passed into <code>pass_outputs</code> and <code>fail_outputs</code> is a list of lua matching patterns, but the patterns are slightly simplified, such as the processing of <code>*</code>.</p>
+<p>If the match is successful, the test passes and can be configured like this:</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname1", {pass_outputs = "hello"})
+     add_tests("testname2", {pass_outputs = "hello *"})
+     add_tests("testname3", {pass_outputs = {"hello", "hello *"}})
+</code></pre>
+<p>If the match is successful, the test fails. You can configure it like this:</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname1", {fail_outputs = "hello"})
+     add_tests("testname2", {fail_outputs = "hello *"})
+     add_tests("testname3", {fail_outputs = {"hello", "hello *"}})
+</code></pre>
+<p>We can also configure them simultaneously:</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname", {pass_outputs = "foo", fail_outputs = "hello"})
+</code></pre>
+<p>Since some test output results will have some newline or other blank characters at the end, which interferes with the matching mode, we can configure <code>trim_output = true</code> to truncate the blank characters before matching.</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname", {trim_output = true, pass_outputs = "foo", fail_outputs = "hello"})
+</code></pre>
+<p>We can also configure <code>{plain = true}</code> to disable lua pattern matching and only do the most basic flat text matching.</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname", {plain = true, pass_outputs = "foo", fail_outputs = "hello"})
+</code></pre>
+<h5 id="configuretestgroup">Configure test group</h5>
+<p>We can also configure a test group through <code>group = "foo"</code> for group testing:</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname1", {group = "foo"})
+     add_tests("testname2", {group = "foo"})
+     add_tests("testname3", {group = "bar"})
+     add_tests("testname4", {group = "bae"})
+</code></pre>
+<p>Where testname1/testname2 is a group foo, and the other two are in another group.</p>
+<p>Then, we can use <code>xmake test -g groupname</code> to perform group testing.</p>
+<pre><code class="lang-bash">$ xmake test -g "foo"
+$ xmake test -g "foo*"
+</code></pre>
+<p>!> Running grouping also supports pattern matching.</p>
+<p>In addition, if the <code>group</code> parameter is not set to <code>add_tests</code>, we can also get the group name bound to the target by default.</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname")
+     set_group("foo")
+</code></pre>
+<h5 id="customtestscript">Custom test script</h5>
+<p>We have also added <code>before_test</code>, <code>on_test</code> and <code>after_test</code> configuration scripts. Users can customize them in the rule and target fields to implement customized test execution.</p>
+<pre><code class="lang-lua">target("test")
+      on_test(function (target, opt)
+         print(opt.name, opt.runenvs, opt.runargs, opt.pass_outputs)
+
+         -- do test
+         --...
+
+         -- passed
+         return true
+
+         -- failed
+         return false, errors
+      end)
+</code></pre>
+<p>Among them, all parameters passed into <code>add_tests</code> can be obtained in opt. We customize the test logic in on_test, and then return true to indicate that the test passed, return false to indicate that the test failed, and then continue to return the error message of test failure.</p>
+<h5 id="automatedbuild">Automated build</h5>
+<p>Since the test target usually does not need to be built during the normal development build phase, we will set <code>set_default(false)</code>.</p>
+<pre><code class="lang-lua">target("test")
+     add_tests("testname")
+     set_default(false)
+</code></pre>
+<p>However, when running <code>xmake test</code> for testing, the targets corresponding to these tests will still be automatically built to ensure that they can be run.</p>
+<pre><code class="lang-bash">$ xmake test
+[25%]: cache compiling.release src/main.cpp
+[50%]: linking.release test
+running tests...
+[100%]: test/testname ............................. passed 6.000s
+
+100% tests passed, 0 tests failed out of 1, spent 0.006s
+</code></pre>
+<h5 id="terminateifthefirsttestfails">Terminate if the first test fails</h5>
+<p>By default, <code>xmake test</code> will wait until all tests have been run, no matter how many of them failed.</p>
+<p>Sometimes, we want to interrupt the test directly if the first test fails, then we can enable it through the following configuration:</p>
+<pre><code class="lang-lua">set_policy("test.return_zero_on_failure", true)
+</code></pre>
+<h5 id="ifthetestfailsreturnzero">If the test fails, return zero</h5>
+<p>By default, as long as a test fails, it will return a non-zero exit code when <code>xmake test</code> is completed. This is very useful for some CI environments and can interrupt other CI scripts to continue running.</p>
+<p>Then the trigger signal tells CI that we need to generate test reports and alarms.</p>
+<p>Then, if we want to suppress this behavior, we can force the exit code of <code>xmake test</code> to always be set to 0.</p>
+<pre><code class="lang-lua">set_policy("test.return_zero_on_failure", true)
+</code></pre>
+<h5 id="onlytestcompilation">Only test compilation</h5>
+<p>Sometimes, we just want to test whether the code compiles or fails without running them. This can be achieved by configuring <code>build_should_pass</code> and <code>build_should_fail</code>.</p>
+<pre><code class="lang-lua">target("test_10")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/compile.cpp")
+     add_tests("compile_fail", {build_should_fail = true})
+
+target("test_11")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/compile.cpp")
+     add_tests("compile_pass", {build_should_pass = true})
+</code></pre>
+<p>This is usually used in scenarios with <code>static_assert</code> in some test code, for example:</p>
+<pre><code class="lang-c++">template <typename T>
+bool foo(T val) {
+   if constexpr (std::is_same_v<T, int>) {
+     printf("int!\n");
+   } else if constexpr (std::is_same_v<T, float>) {
+     printf("float!\n");
+   } else {
+     static_assert(false, "unsupported type");
+   }
+}
+
+int main(int, char**) {
+   foo("BAD");
+   return 0;
+}
+</code></pre>
+<h5 id="configureadditionalcodecompilation">Configure additional code compilation</h5>
+<p>When configuring test cases, we can also configure additional code that needs to be compiled for each test, as well as some macro definitions to implement inline testing.</p>
+<p>xmake will compile an independent executable program for each test to run it, but this will not affect the compilation results of the target in the production environment.</p>
+<pre><code class="lang-lua">target("test_13")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/test_1.cpp")
+     add_tests("stub_1", {files = "tests/stub_1.cpp", defines = "STUB_1"})
+
+target("test_14")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/test_2.cpp")
+     add_tests("stub_2", {files = "tests/stub_2.cpp", defines = "STUB_2"})
+
+target("test_15")
+     set_kind("binary")
+     set_default(false)
+     add_files("src/test_1.cpp")
+     add_tests("stub_n", {files = "tests/stub_n*.cpp", defines = "STUB_N"})
+</code></pre>
+<p>Taking doctest as an example, we can externally unit test without modifying any main.cpp:</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("doctest")
+
+target("doctest")
+     set_kind("binary")
+     add_files("src/*.cpp")
+     for _, testfile in ipairs(os.files("tests/*.cpp")) do
+         add_tests(path.basename(testfile), {
+             files = testfile,
+             remove_files = "src/main.cpp",
+             languages = "c++11",
+             packages = "doctest",
+             defines = "DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN"})
+     end
+</code></pre>
+<p>Defining DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN will introduce additional main entry function, so we need to configure remove_files to remove the existing main.cpp file.</p>
+<p>The running effect is as follows:</p>
+<pre><code class="lang-bash">ruki-2:doctest ruki$ xmake test
+running tests...
+[50%]: doctest/test_1 ........................ failed 0.009s
+[100%]: doctest/test_2 ........................ passed 0.009s
+
+50% tests passed, 1 tests failed out of 2, spent 0.019s
+ruki-2:doctest ruki$ xmake test -v
+running tests...
+[50%]: doctest/test_1 ........................ failed 0.026s
+[doctest] doctest version is "2.4.11"
+[doctest] run with "--help" for options
+================================================== =============================
+tests/test_1.cpp:7:
+TEST CASE: testing the factorial function
+
+tests/test_1.cpp:8: ERROR: CHECK( factorial(1) == 10 ) is NOT correct!
+   values: CHECK( 1 == 10 )
+
+================================================== =============================
+[doctest] test cases: 1 | 0 passed | 1 failed | 0 skipped
+[doctest] assertions: 4 | 3 passed | 1 failed |
+[doctest] Status: FAILURE!
+
+run failed, exit code: 1
+[100%]: doctest/test_2 ........................ passed 0.010s
+
+50% tests passed, 1 tests failed out of 2, spent 0.038s
+</code></pre>
+<h5 id="testdynamiclibrary">Test dynamic library</h5>
+<p>Usually, <code>add_tests</code> is only used to run tests on executable programs. Running dynamic libraries requires an additional main entry, so we need to configure an additional executable program to load it, for example:</p>
+<pre><code class="lang-lua">
+target("doctest_shared")
+     set_kind("shared")
+     add_files("src/foo.cpp")
+     for _, testfile in ipairs(os.files("tests/*.cpp")) do
+         add_tests(path.basename(testfile), {
+             kind = "binary",
+             files = testfile,
+             languages = "c++11",
+             packages = "doctest",
+             defines = "DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN"})
+     end
+</code></pre>
+<p>Each unit test can be changed to a binary executable program through <code>kind = "binary"</code>, and the main entry function can be introduced through DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN.</p>
+<p>This enables external runnable unit tests in dynamic library targets.</p>
+<h5 id="configureruntimeout">Configure run timeout</h5>
+<p>If some test programs get stuck if they run for a long time without exiting, we can force them to exit and return failure by configuring a timeout.</p>
+<pre><code class="lang-lua">target("test_timeout")
+    set_kind("binary")
+    set_default(false)
+    add_files("src/run_timeout.cpp")
+    add_tests("run_timeout", {run_timeout = 1000})
+``
+
+```bash
+$ xmake test
+[100%]: test_timeout/run_timeout .................................... failed 1.006s
+run failed, exit code: -1, exit error: wait process timeout
+</code></pre>
+</article>
+</body>
+</html>

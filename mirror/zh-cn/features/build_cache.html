@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/features/build_cache">https://xmake.io/#/zh-cn/features/build_cache</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h3 id="">本地编译缓存</h3>
+<p>默认，Xmake 就会开启本地缓存，2.6.5 之前的版本默认使用外置的 ccache，而 2.6.6 之后版本，Xmake 提供了内置的跨平台本地缓存方案。</p>
+<p>相比 ccache 等第三方独立进程，xmake 内部状态维护，更加便于优化，也避免了频繁的独立进程加载耗时，也避免了与守护进程额外的通信。</p>
+<p>另外，内置的缓存能够更好的支持跨平台，Windows 上 msvc 也能够很好的支持，而 ccache 仅仅支持 gcc/clang。</p>
+<p>当然，我们也可以通过下面的命令禁用缓存。</p>
+<pre><code class="lang-bash">$ xmake f --ccache=n
+</code></pre>
+<p>注：不管是否使用内置本地缓存，配置名都是 <code>--ccache=</code>，意思是 c/c++ 构建缓存，而不仅仅是指 ccache 工具的名字。</p>
+<p>我们如果想继续使用外置的其他缓存工具，我们也是可以通过下面的方式来配置。</p>
+<pre><code class="lang-bash">$ xmake f --ccache=n --cxx="ccache gcc" --cc="ccache gcc"
+$ xmake
+</code></pre>
+<h3 id="">远程编译缓存</h3>
+<p>除了本地缓存，我们也提供了远程缓存服务，类似 mozilla 的 sscache，如果只是个人开发，平常不会用到它。</p>
+<p>但是，如果是公司内部多人协同开发一个大型项目，仅仅靠分布式编译和本地缓存，是不够的。我们还需要对编译的对象文件缓存到独立的服务器上进行共享。</p>
+<p>这样，其他人即使首次编译，也不需要每次都去分布式编译它，直接从远程拉取缓存来加速编译。</p>
+<p>另外，Xmake 提供的远程缓存服务，也是全平台支持的，不仅支持 gcc/clang 还支持 msvc。</p>
+<h4 id="">开启服务</h4>
+<p>我们可以指定 <code>--ccache</code> 参数来开启远程编译缓存服务，当然如果不指定这个参数，xmake 会默认开启所有服务端配置的服务。</p>
+<pre><code class="lang-console">$ xmake service --ccache
+<remote_cache_server>: listening 0.0.0.0:9092 ..
+</code></pre>
+<p>我们也可以开启服务的同时，回显详细日志信息。</p>
+<pre><code class="lang-console">$ xmake service --ccache -vD
+<remote_cache_server>: listening 0.0.0.0:9092 ..
+</code></pre>
+<h4 id="daemon">以 Daemon 模式开启服务</h4>
+<pre><code class="lang-console">$ xmake service --ccache --start
+$ xmake service --ccache --restart
+$ xmake service --ccache --stop
+</code></pre>
+<h4 id="">配置服务端</h4>
+<p>我们首先，运行 <code>xmake service</code> 命令，它会自动生成一个默认的 <code>server.conf</code> 配置文件，存储到 <code>~/.xmake/service/server.conf</code>。</p>
+<pre><code class="lang-bash">$ xmake service
+generating the config file to /Users/ruki/.xmake/service/server.conf ..
+an token(590234653af52e91b9e438ed860f1a2b) is generated, we can use this token to connect service.
+generating the config file to /Users/ruki/.xmake/service/client.conf ..
+<remote_cache_server>: listening 0.0.0.0:9692 ..
+</code></pre>
+<p>然后，我们编辑它，修复服务器的监听端口（可选）。</p>
+<pre><code class="lang-bash">$ cat ~/.xmake/service/server.conf
+{
+    distcc_build = {
+        listen = "0.0.0.0:9692",
+        workdir = "/Users/ruki/.xmake/service/server/remote_cache"
+    },
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    tokens = {
+        "590234653af52e91b9e438ed860f1a2b"
+    }
+}
+</code></pre>
+<h4 id="">配置客户端</h4>
+<p>客户端配置文件在 <code>~/.xmake/service/client.conf</code>，我们可以在里面配置客户端需要连接的服务器地址。</p>
+<p>我们可以在 hosts 列表里面配置多个服务器地址，以及对应的 token。</p>
+<pre><code class="lang-console">$cat ~/.xmake/service/client.conf
+{
+    remote_cache = {
+            connect = "127.0.0.1:9692,
+            token = "590234653af52e91b9e438ed860f1a2b"
+        }
+    }
+}
+</code></pre>
+<h5 id="">配置超时</h5>
+<p>默认情况下，客户端连接，收发数据都是无限等待不超时的，但是如果访问服务端的网络不稳定，那么有可能会导致访问卡死，这个时候可以配置超时来解决。</p>
+<p>如果发生超时异常，就会自动退化到本地缓存，不会永远卡死。</p>
+<p>我们可以配置，<code>send_timeout</code>, <code>recv_timeout</code> 和 <code>connect_timeout</code> 三种超时，如果在根节点设置，那么所有客户端服务都会生效。</p>
+<pre><code class="lang-console">$ cat ~/.xmake/service/client.conf
+{
+    send_timeout = 5000,
+    recv_timeout = 5000,
+    connect_timeout = 5000
+}
+</code></pre>
+<p>我们也可以仅仅针对当前远程缓存服务配置超时，其他服务还是默认超时。</p>
+<pre><code class="lang-console">$ cat ~/.xmake/service/client.conf
+{
+    distcc_build = {
+        send_timeout = 5000,
+        recv_timeout = 5000,
+        connect_timeout = 5000,
+    }
+}
+</code></pre>
+<p>!> 服务端配置同样支持超时配置。</p>
+<h4 id="">用户认证和授权</h4>
+<p>关于用户认证和授权，可以参考 <a href="/#/zh-cn/guide/other_features?id=%e7%94%a8%e6%88%b7%e8%ae%a4%e8%af%81%e5%92%8c%e6%8e%88%e6%9d%83">远程编译/用户认证和授权</a> 里面的详细说明，用法是完全一致的。</p>
+<h4 id="">连接服务器</h4>
+<p>配置完认证和服务器地址后，就可以输入下面的命令，将当前工程连接到配置的服务器上了。</p>
+<p>我们需要在连接时候，输入 <code>--ccache</code>，指定仅仅连接远程编译缓存服务。</p>
+<pre><code class="lang-bash">$ cd projectdir
+$ xmake service --connect --ccache
+<client>: connect 127.0.0.1:9692 ..
+<client>: 127.0.0.1:9692 connected!
+</code></pre>
+<p>我们也可以同时连接多个服务，比如分布式编译和远程编译缓存服务。</p>
+<pre><code class="lang-hash">$ xmake service --connect --distcc --ccache
+</code></pre>
+<p>!> 如果不带任何参数，默认连接的是远程编译服务。</p>
+<h4 id="">断开连接</h4>
+<pre><code class="lang-bash">$ xmake service --disconnect --ccache
+</code></pre>
+<h4 id="">清理服务器缓存</h4>
+<p>我们也可以通过下面的命令，清理当前工程对应的远程服务器上的缓存。</p>
+<pre><code class="lang-bash">$ xmake service --clean --ccache
+</code></pre>
+<p>而如果我们执行 <code>xmake clean --all</code>，在连接了远程服务的状态下，也会去自动清理所有的缓存。</p>
+<h4 id="">一些内部优化</h4>
+<ol>
+<li>拉取远程缓存的快照，通过 bloom filter + lz4 回传本地后，用于快速判断缓存是否存在，避免频繁的查询服务端缓存信息</li>
+<li>配合本地缓存，可以避免频繁地请求远程服务器，拉取缓存。</li>
+<li>内部状态维护，相比 sscache 等独立工具，避免了频繁的独立进程加载耗时，也避免了与守护进程额外的通信</li>
+</ol>
+</article>
+</body>
+</html>

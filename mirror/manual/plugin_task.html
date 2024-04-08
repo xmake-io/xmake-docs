@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/manual/plugin_task">https://xmake.io/#/manual/plugin_task</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>Xmake can implement custom tasks or plugins. The core of both is the <code>task</code> task. The two are actually the same. The xmake plugins are implemented with <code>task</code>.</p>
+<p>In essence, they are tasks, except that the <a href="#taskset_category">set_category</a> classification is different.</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#task">task</a></td>
+<td>Define plugins or tasks</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#task_end">task_end</a></td>
+<td>End defining plugins or tasks</td>
+<td>>= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#taskset_menu">set_menu</a></td>
+<td>Set Task Menu</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#taskset_category">set_category</a></td>
+<td>Set Task Category</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#taskon_run">on_run</a></td>
+<td>Set Task Run Script</td>
+<td>>= 2.0.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="task">task</h3>
+<h4 id="definingpluginsortasks">Defining plugins or tasks</h4>
+<p>The <code>task</code> field is used to describe a custom task implementation, in the same level as <a href="#target">target</a> and <a href="#option">option</a>.</p>
+<p>For example, here is a simple task defined:</p>
+<pre><code class="lang-lua">task("hello")
+
+    -- Set the run script
+    on_run(function ()
+        print("hello xmake!")
+    end)
+</code></pre>
+<p>This task only needs to print <code>hello xmake!</code>, how do you run it?</p>
+<p>Since the <a href="#taskset_menu">set_menu</a> setting menu is not used here, this task can only be called inside the custom script of <code>xmake.lua</code> or other tasks, for example:</p>
+<pre><code class="lang-lua">target("test")
+
+    after_build(function (target)
+
+        -- Import task module
+        import("core.project.task")
+
+        -- Run the hello task
+        task.run("hello")
+    end)
+</code></pre>
+<p>Run the <code>hello</code> task after building the <code>test</code> target.</p>
+<h3 id="task_end">task_end</h3>
+<h4 id="enddefiningpluginsortasks">End defining plugins or tasks</h4>
+<p>This is an optional api that shows the departure option scope, similar to <a href="#target_end">target_end</a>.</p>
+<h3 id="taskset_menu">task:set_menu</h3>
+<h4 id="settingthetaskmenu">Setting the task menu</h4>
+<p>By setting a menu, this task can be opened to the user to manually call through the command line. The menu settings are as follows:</p>
+<pre><code class="lang-lua">task("echo")
+
+    -- Set the run script
+    on_run(function ()
+
+        -- Import parameter option module
+        import("core.base.option")
+
+        -- Initialize color mode
+        local modes = ""
+        for _, mode in ipairs({"bright", "dim", "blink", "reverse"}) do
+            if option.get(mode) then
+                modes = modes .. " " .. mode
+            end
+        end
+
+        -- Get parameter content and display information
+        cprint("${%s%s}%s", option.get("color"), modes, table.concat(option.get("contents") or {}, " "))
+    end)
+
+    -- Set the command line options for the plugin. There are no parameter options here, just the plugin description.
+    set_menu {
+                -- Settings menu usage
+                usage = "xmake echo [options]"
+
+                -- Setup menu description
+            ,   description = "Echo the given info!"
+
+                -- Set menu options, if there are no options, you can set it to {}
+            ,   options =
+                {
+                    -- Set k mode as key-only bool parameter
+                    {&#39;b&#39;, "bright", "k", nil, "Enable bright." }
+                ,   {&#39;d&#39;, "dim", "k", nil, "Enable dim." }
+                ,   {&#39;-&#39;, "blink", "k", nil, "Enable blink." }
+                ,   {&#39;r&#39;, "reverse", "k", nil, "Reverse color." }
+
+                    -- When the menu is displayed, a blank line
+                ,   {}
+
+                    -- Set kv as the key-value parameter and set the default value: black
+                ,   {&#39;c&#39;, "color", "kv", "black", "Set the output color."
+                                                     , " - red"
+                                                     , " - blue"
+                                                     , " - yellow"
+                                                     , " - green"
+                                                     , " - magenta"
+                                                     , " - cyan"
+                                                     , " - white" }
+
+                    -- Set `vs` as a value multivalued parameter and a `v` single value type
+                    -- generally placed last, used to get a list of variable parameters
+                ,   {}
+                ,   {nil, "contents", "vs", nil, "The info contents." }
+                }
+            }
+</code></pre>
+<p>After defining this task, execute <code>xmake --help</code> and you will have one more task item:</p>
+<pre><code>Tasks:
+
+    ...
+
+    Echo Echo the given info!
+</code></pre><p>If the classification is <code>plugin</code> by <a href="#taskset_category">set_category</a>, then this task is a plugin:</p>
+<pre><code>Plugins:
+
+    ...
+
+    Echo Echo the given info!
+</code></pre><p>To run this task manually, you can execute:</p>
+<pre><code class="lang-bash">$ xmake echo hello xmake!
+</code></pre>
+<p>Just fine, if you want to see the menu defined by this task, you only need to execute: <code>xmake echo [-h|--help]</code>, the result is as follows:</p>
+<pre><code class="lang-bash">Usage: $xmake echo [options]
+
+Echo the given info!
+
+Options:
+    -v, --verbose Print lots of verbose information.
+        --backtrace Print backtrace information for debugging.
+        --profile Print performance data for debugging.
+        --version Print the version number and exit.
+    -h, --help Print this help message and exit.
+
+    -F FILE, --file=FILE Read a given xmake.lua file.
+    -P PROJECT, --project=PROJECT Change to the given project directory.
+                                           Search priority:
+                                               1. The Given Command Argument
+                                               2. The Environment Variable: XMAKE_PROJECT_DIR
+                                               3. The Current Directory
+
+    -b, --bright Enable bright.
+    -d, --dim Enable dim.
+    --, --blink Enable blink.
+    -r, --reverse Reverse color.
+
+    -c COLOR, --color=COLOR Set the output color. (default: black)
+                                               - red
+                                               - blue
+                                               - yellow
+                                               - green
+                                               - magenta
+                                               - cyan
+                                               - white
+
+    Contents ... The info contents.
+</code></pre>
+<p><p class="tip"><br>The most part of the menu is the common options built into xmake. Basically, each task will be used. You don&#39;t need to define it yourself to simplify the menu definition.<br></p>
+
+</p>
+<p>Below, let&#39;s actually run this task, for example, I want to display the red <code>hello xmake!</code>, only need to:</p>
+<pre><code class="lang-bash">$ xmake echo -c red hello xmake!
+</code></pre>
+<p>You can also use the full name of the option and highlight it:</p>
+<pre><code class="lang-bash">$ xmake echo --color=red --bright hello xmake!
+</code></pre>
+<p>The last variable argument list is retrieved by <code>option.get("contents")</code> in the <code>run</code> script, which returns an array of type <code>table</code>.</p>
+<h3 id="taskset_category">task:set_category</h3>
+<h4 id="settingtaskcategories">Setting task categories</h4>
+<p>It is only used for grouping of menus. Of course, the plugin will use <code>plugin</code> by default. The built-in task will use <code>action</code> by default, but it is just a convention.</p>
+<p><p class="tip"><br>You can use any name you define yourself. The same name will be grouped and displayed together. If it is set to <code>plugin</code>, it will be displayed in the Plugins group of xmake.<br></p>
+
+</p>
+<p>E.g:</p>
+<pre><code class="lang-lua">plugins:
+    l, lua Run the lua script.
+    m, macro Run the given macro.
+       doxygen Generate the doxygen document.
+       project Generate the project file.
+       hello Hello xmake!
+       app2ipa Generate .ipa file from theGiven .app
+       echo Echo the given info!
+</code></pre>
+<p>If you do not call this interface to set the classification, the default is to use the <code>Tasks</code> group display, which represents the normal task.</p>
+<h3 id="taskon_run">task:on_run</h3>
+<h4 id="settingupatasktorunascript">Setting up a task to run a script</h4>
+<p>There are two ways to set it up. The easiest way is to set the inline function:</p>
+<pre><code class="lang-lua">task("hello")
+
+    on_run(function ()
+        print("hello xmake!")
+    end)
+</code></pre>
+<p>This is convenient and small for small tasks, but it is not suitable for large tasks, such as plugins, which require complex scripting support.</p>
+<p>This time you need a separate module file to set up the run script, for example:</p>
+<pre><code class="lang-lua">task("hello")
+    on_run("main")
+</code></pre>
+<p>Here the <code>main</code> is set to run the main entry module for the script. The file name is <code>main.lua</code>, placed in the same directory as <code>xmake.lua</code> that defines <code>task</code>. Of course, you can use other file names.</p>
+<p>The directory structure is as follows:</p>
+<pre><code>projectdir
+    - xmake.lua
+    - main.lua
+</code></pre><p>The contents of <code>main.lua</code> are as follows:</p>
+<pre><code class="lang-lua">function main(...)
+    print("hello xmake!")
+end
+</code></pre>
+<p>It&#39;s a simple script file with the main function of <code>main</code>. You can import various extension modules via <a href="/mirror/manual/builtin_modules.html#import">import</a> to implement complex functions, such as:</p>
+<pre><code class="lang-lua">-- Import parameter option module
+import("core.base.option")
+
+-- Entrance function
+function main(...)
+
+    -- Get the parameter content
+    print("color: %s", option.get("color"))
+end
+</code></pre>
+<p>You can also create multiple custom module files in the current directory and use them after importing via <a href="/mirror/manual/builtin_modules.html#import">import</a>, for example:</p>
+<pre><code>Projectdir
+    - xmake.lua
+    - main.lua
+    - module.lua
+</code></pre><p>The contents of <code>module.lua</code> are as follows:</p>
+<pre><code class="lang-lua">-- Define an export interface
+function hello()
+    print("hello xmake!")
+end
+</code></pre>
+<p><p class="tip"><br>The private interface is named by the <code>_hello</code> with a descending line prefix, so that the imported module will not contain this interface and will only be used inside the module itself.<br></p>
+
+</p>
+<p>Then make a call in <code>main.lua</code>:</p>
+<pre><code class="lang-lua">import("module")
+
+function main(...)
+    module.hello()
+end
+</code></pre>
+<p>For more modules, see: <a href="/mirror/manual/builtin_modules.html">Builtin Module</a> and <a href="/mirror/manual/extension_modules.html">Extension Module</a></p>
+<p>Among them, the parameter in <code>main(...)</code> is specified by <code>task.run</code>, for example:</p>
+<pre><code class="lang-lua">task.run("hello", {color="red"}, arg1, arg2, arg3)
+</code></pre>
+<p>Inside the <code>arg1, arg2</code> these are the arguments to the <code>hello</code> task <code>main(...)</code> entry, and <code>{color="red"}</code> to specify the parameter options in the task menu.</p>
+<p>For a more detailed description of <code>task.run</code>, see: <a href="#task-run">task.run</a></p>
+</article>
+</body>
+</html>

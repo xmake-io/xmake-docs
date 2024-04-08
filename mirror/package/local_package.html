@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/package/local_package">https://xmake.io/#/package/local_package</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h3 id="defaultpackagingformat">Default packaging format</h3>
+<p>After version 2.5.5, we have provided a new local package packaging solution that will seamlessly integrate <code>add_requires</code> and <code>add_packages</code>.</p>
+<p>We can execute the <code>xmake package</code> command to generate the default new version of the packaging format.</p>
+<pre><code class="lang-console">$ xmake package
+package(foo): build/packages/f/foo generated
+</code></pre>
+<p>It will generate the file <code>build/packages/f/foo/xmake.lua</code> with the following content:</p>
+<pre><code class="lang-lua">package("foo")
+    set_description("The foo package")
+    set_license("Apache-2.0")
+    add_deps("add", "sub")
+
+    on_load(function (package)
+        package:set("installdir", path.join(os.scriptdir(), package:plat(), package:arch(), package:mode()))
+    end)
+
+    on_fetch(function (package)
+        local result = {}
+        result.links = "foo"
+        result.linkdirs = package:installdir("lib")
+        result.includedirs = package:installdir("include")
+        return result
+    end)
+</code></pre>
+<p>In fact, it uses <code>package()</code> to define and describe local packages, just like remote packages.</p>
+<p>The generated directory structure is as follows:</p>
+<pre><code class="lang-console">$ tree build/packages/f/foo/
+build/packages/f/foo/
+├── macosx
+│   └── x86_64
+│       └── release
+│           ├── include
+│           │   └── foo.h
+│           └── lib
+│               └── libfoo.a
+└── xmake.lua
+</code></pre>
+<p>We can also use the <code>add_requires</code>/<code>add_repositories</code> interface to seamlessly integrate this package.</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_repositories("local-repo build")
+add_requires("foo")
+
+target("bar")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("foo")
+</code></pre>
+<p>Among them, add_repositories configuration specifies the warehouse root directory of the local package, and then this package can be referenced through <code>add_requires</code>.</p>
+<p>In addition, the generated local package has another feature, which is to support <code>target/add_deps</code>, which automatically associates the dependencies of multiple packages, and automatically connects all dependency links during integration.</p>
+<p>Here is the complete <a href="https://github.com/xmake-io/xmake/blob/dev/tests/actions/package/localpkg/test.lua">test example</a>.</p>
+<pre><code class="lang-console">"/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/bar build/.objs/bar/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version -min=10.15 -isysroot
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk -stdlib=libc++
+ -L/Users/ruki/projects/personal/xmake/tests/actions/package/localpkg/bar/build/packages/f/foo/macosx/x86_64/release/lib
+ -L/Users/ruki/projects/personal/xmake/tests/actions/package/localpkg/bar/build/packages/s/sub/macosx/x86_64/release/lib
+ -L/Users/ruki/projects/personal/xmake/tests/actions/package/localpkg/bar/build/packages/a/add/macosx/x86_64/release/lib
+ -Wl,-x -lfoo -lsub -ladd -lz
+</code></pre>
+<h3 id="generateremotepackage">Generate remote package</h3>
+<p>Out of the local package format, <code>xmake package</code> now also supports generating remote packages, so that users can quickly submit them to remote warehouses.</p>
+<p>We only need to modify the package format when packaging.</p>
+<pre><code class="lang-console">$ xmake package -f remote
+</code></pre>
+<p>He will also generate packages/f/foo/xmake.lua file.</p>
+<pre><code class="lang-lua">package("foo")
+    set_description("The foo package")
+    set_license("Apache-2.0")
+    add_deps("add", "sub")
+
+    add_urls("https://github.com/myrepo/foo.git")
+    add_versions("1.0", "<shasum256 or gitcommit>")
+
+    on_install(function (package)
+        local configs = {}
+        if package:config("shared") then
+            configs.kind = "shared"
+        end
+        import("package.tools.xmake").install(package, configs)
+    end)
+
+    on_test(function (package)
+        - TODO check includes and interfaces
+        - assert(package:has_cfuncs("foo", {includes = "foo.h"})
+    end)
+</code></pre>
+<p>Compared with the local package, the package definition configuration has more actual installation logic, as well as the settings of urls and versions,</p>
+<p>We can also modify urls, versions and other configuration values ​​through additional parameters, for example:</p>
+<pre><code class="lang-console">$ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepage=xxxxx`
+</code></pre>
+<p>xmake will also read the relevant configuration information from the target&#39;s <code>set_license</code> and <code>set_version</code> configurations.</p>
+<h3 id="findpackagesfromcmake">Find packages from CMake</h3>
+<p>Now cmake is the de facto standard, so the find_package provided by CMake can already find a large number of libraries and modules. We fully reuse this part of cmake&#39;s ecology to expand xmake&#39;s integration of packages.</p>
+<p>We can use <code>find_package("cmake::xxx")</code> to find some packages with cmake, xmake will automatically generate a cmake script to call cmake&#39;s find_package to find some packages and get the bread information.</p>
+<p>E.g:</p>
+<pre><code class="lang-console">$ xmake l find_package cmake::ZLIB
+{
+  links = {
+    "z"
+  },
+  includedirs = {
+    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.
+15.sdk/usr/include"
+  },
+  linkdirs = {
+    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.
+15.sdk/usr/lib"
+  }
+}
+$ xmake l find_package cmake::LibXml2
+{
+  links = {
+    "xml2"
+  },
+  includedirs = {
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/libxml2"
+  },
+  linkdirs = {
+    "/usr/lib"
+  }
+}
+</code></pre>
+<h4 id="integratethepackageintheproject">Integrate the package in the project</h4>
+<p>If we integrate and find cmake dependent packages in the xmake.lua project configuration, we usually don&#39;t need to use find_package directly, and we can use a more general and simple package integration method.</p>
+<pre><code class="lang-lua">add_requires("cmake::ZLIB", {alias = "zlib", system = true})
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+</code></pre>
+<p>We specify <code>system = true</code> to tell xmake to force cmake to find the package from the system. If it cannot be found, the installation logic will not be followed, because cmake does not provide the installation function of package managers such as vcpkg/conan.<br>Only the package search feature is provided.</p>
+<h4 id="specifyversion">Specify version</h4>
+<pre><code class="lang-lua">add_requires("cmake::OpenCV 4.1.1", {system = true})
+</code></pre>
+<h4 id="specifiedcomponents">Specified components</h4>
+<pre><code class="lang-lua">add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"}}))
+</code></pre>
+<h4 id="defaultswitch">Default switch</h4>
+<pre><code class="lang-lua">add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "system"},
+                                             presets = {Boost_USE_STATIC_LIB = true}}})
+</code></pre>
+<p>It is equivalent to predefine some configurations in CMakeLists.txt before calling find_package internally to find the package to control the find_package search strategy and status.</p>
+<pre><code>set(Boost_USE_STATIC_LIB ON) - will be used in FindBoost.cmake
+find_package(Boost REQUIRED COMPONENTS regex system)
+</code></pre><h4 id="setenvironmentvariables">Set environment variables</h4>
+<pre><code class="lang-lua">add_requires("cmake::OpenCV", {system = true, configs = {envs = {CMAKE_PREFIX_PATH = "xxx"}}})
+</code></pre>
+<h4 id="specifycustomfindfoocmakemodulescriptdirectory">Specify custom FindFoo.cmake module script directory</h4>
+<p>mydir/cmake_modules/FindFoo.cmake</p>
+<pre><code class="lang-lua">add_requires("cmake::Foo", {system = true, configs = {moduledirs = "mydir/cmake_modules"}})
+</code></pre>
+<p>Related issues: <a href="https://github.com/xmake-io/xmake/issues/1632">#1632</a></p>
+<h4 id="specifyinglinks">Specifying links</h4>
+<p>For cmake packages, we have added the <code>link_libraries</code> configuration option to allow users to customize the configuration of package dependencies and even support for target links when looking to use cmake packages.</p>
+<pre><code class="lang-lua">add_requires("cmake::xxx", {configs = {link_libraries = {"abc::lib1", "abc::lib2"}}})
+</code></pre>
+<p>xmake automatically appends the following configuration to improve the extraction of links libraries when looking for cmake packages.</p>
+<pre><code class="lang-cmake">target_link_libraries(test PRIVATE ABC::lib1 ABC::lib2)
+</code></pre>
+<h4 id="specifythesearchmode">Specify the search mode</h4>
+<p>In addition, we add the following search mode configuration.</p>
+<pre><code class="lang-lua">add_requires("cmake::xxx", {configs = {search_mode = "config"}})
+add_requires("cmake::xxx", {configs = {search_mode = "module"}})
+add_requires("cmake::xxx") -- both
+</code></pre>
+<p>Specify config search mode, for example, to tell cmake to look for packages from <code>XXXConfig.cmake</code>.</p>
+<p>xmake will automatically append the following configuration internally when it looks for cmake packages.</p>
+<pre><code class="lang-cmake">find_package(ABC CONFIG REQUIRED)
+</code></pre>
+</article>
+</body>
+</html>

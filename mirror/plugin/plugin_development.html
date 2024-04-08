@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/plugin/plugin_development">https://xmake.io/#/plugin/plugin_development</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="introduction">Introduction</h2>
+<p>XMake supports the plugin module and we can develop ourself plugin module conveniently.</p>
+<p>We can run command <code>xmake -h</code> to look over some builtin plugins of xmake</p>
+<pre><code>Plugins: 
+    l, lua                                 Run the lua script.
+    m, macro                               Run the given macro.
+       doxygen                             Generate the doxygen document.
+       hello                               Hello xmake!
+       project                             Create the project file.
+</code></pre><ul>
+<li>lua: Run a given lua script.</li>
+<li>macro: Record and playback some xmake commands repeatably.</li>
+<li>doxygen：Generate doxygen document automatically.</li>
+<li>hello:  The demo plugin and only print: &#39;hello xmake!&#39;</li>
+<li>project：Generate project file for IDE, and now it can generate make, cmake, vs, xcode (need cmake), ninja project file and compile_commands.json and compile_flags.txt</li>
+</ul>
+<h2 id="quickstart">Quick Start</h2>
+<p>Now we write a simple plugin demo for printing &#39;hello xmake!&#39;</p>
+<pre><code class="lang-lua">-- define a plugin task 
+task("hello")
+
+    -- set the category for showing it in plugin category menu (optional)
+    set_category("plugin")
+
+    -- the main entry of the plugin
+    on_run(function ()
+
+        -- print &#39;hello xmake!&#39;
+        print("hello xmake!")
+    end)
+
+    -- set the menu options, but we put empty options now.
+    set_menu {
+                -- usage
+                usage = "xmake hello [options]"
+
+                -- description
+            ,   description = "Hello xmake!"
+
+                -- options
+            ,   options = {}
+            }
+</code></pre>
+<p>The file tree of this plugin:</p>
+<pre><code>plugins
+|-- hello
+|  |-- xmake.lua
+|...
+| notice no xmake.lua in plugins directory
+</code></pre><p>Now one of the most simple plugin finished, how was it to be xmake detected it, there are three ways:</p>
+<ol>
+<li>Put this plugin directory into xmake/plugins the source codes as the builtin plugin.</li>
+<li>Put this plugin directory into ~/.xmake/plugins as the global user plugin.</li>
+<li>Put this plugin directory (hello) to the <code>./plugins</code> directory of the current project and call <code>add_plugindirs("plugins")</code> in xmake.lua as the local project plugin.</li>
+</ol>
+<h2 id="runplugin">Run Plugin</h2>
+<p>Next we run this plugin</p>
+<pre><code class="lang-bash">xmake hello
+</code></pre>
+<p>The results is </p>
+<pre><code>hello xmake!
+</code></pre><p>Finally, we can also run this plugin in the custom scripts of <code>xmake.lua</code></p>
+<pre><code class="lang-lua">
+target("demo")
+
+    -- run this plugin after building target
+    after_build(function (target)
+
+        -- import task module
+        import("core.project.task")
+
+        -- run the plugin task
+        task.run("hello")
+    end)
+</code></pre>
+</article>
+</body>
+</html>

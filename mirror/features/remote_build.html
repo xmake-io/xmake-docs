@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/features/remote_build">https://xmake.io/#/features/remote_build</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h1 id="remotebuilding">Remote building</h1>
+<p>Version 2.6.5 provides remote compilation support, through which we can compile code on a remote server, run and debug remotely. The server can be deployed on Linux/MacOS/Windows to achieve cross-platform compilation, for example: compile and run Windows programs on Linux, and compile and run macOS/Linux programs on Windows.</p>
+<p>Compared with ssh remote login and compilation, it is more stable and smoother to use. It will not cause ssh terminal input to be stuck due to network instability, and it can also quickly edit code files locally. Even we can seamlessly implement remote compilation in editors and IDEs such as vs/sublime/vscode/idea without relying on the IDE&#39;s own support for remote compilation.</p>
+<h2 id="starttheservice">Start the service</h2>
+<pre><code class="lang-bash">$ xmake service
+<remote_build_server>: listening 0.0.0.0:9091 ..
+</code></pre>
+<p>We can also start the service and echo detailed log information.</p>
+<pre><code class="lang-bash">$ xmake service -vD
+<remote_build_server>: listening 0.0.0.0:9091 ..
+</code></pre>
+<h3 id="starttheserviceindaemonmode">Start the service in Daemon mode</h3>
+<p>To start and control the service when in daemon mode, you can issue the following commands:</p>
+<pre><code class="lang-bash">$ xmake service --start
+$ xmake service --restart
+$ xmake service --stop
+</code></pre>
+<h3 id="configuretheserver">Configure the server</h3>
+<p>We first, run the <code>xmake service</code> command, it will automatically generate a default <code>server.conf</code> configuration file, stored in <code>~/.xmake/service/server.conf</code>.</p>
+<p>!> Version 2.6.5, the configuration address is in <code>~/.xmake/service.conf</code>. Subsequent versions have made a lot of improvements and separated the configuration file. If you are using version 2.6.6 or above, please use the new configuration file.</p>
+<p>Then, we edit it, fixing the server&#39;s listening port (optional).</p>
+<pre><code class="lang-bash">{
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    remote_build = {
+        listen = "0.0.0.0:9691",
+        workdir = "/Users/ruki/.xmake/service/server/remote_build"
+    },
+    tokens = {
+        "e438d816c95958667747c318f1532c0f"
+    }
+}
+</code></pre>
+<h3 id="configuretheclient">Configure the client</h3>
+<p>The client configuration file is in <code>~/.xmake/service/client.conf</code>, where we can configure the server address that the client needs to connect to.</p>
+<p>!> Version 2.6.5, the configuration address is in <code>~/.xmake/service.conf</code>. Subsequent versions have made a lot of improvements and separated the configuration file. If you are using version 2.6.6 or above, please use the new configuration file.</p>
+<pre><code class="lang-bash">{
+    remote_build = {
+        connect = "127.0.0.1:9691",
+        token = "e438d816c95958667747c318f1532c0f"
+    }
+}
+</code></pre>
+<h3 id="userauthorization">User authorization</h3>
+<p>!> Version 2.6.6 and above supports user authentication; version 2.6.5 can only connect anonymously.</p>
+<p>Before the actual connection, we briefly introduce several authentication mechanisms currently provided by the services provided by Xmake.</p>
+<ol>
+<li>Token authentication</li>
+<li>Password authentication</li>
+<li>Trusted host verification</li>
+</ol>
+<h4 id="tokenauthentication">Token Authentication</h4>
+<p>This is also the default recommended method, which is more secure, more convenient to configure and connect, and does not need to enter a password every time you connect. When we execute the <code>xmake service</code> command, a server and client configuration file will be generated by default, and a default token will be automatically generated, so the local direct connection does not require any configuration.</p>
+<h5 id="serverauthenticationconfiguration">Server authentication configuration</h5>
+<p>The server can configure multiple tokens for authorizing connections to different user hosts, and of course, can share one token.</p>
+<pre><code class="lang-bash">{
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    remote_build = {
+        listen = "0.0.0.0:9691",
+        workdir = "/Users/ruki/.xmake/service/server/remote_build"
+    },
+    tokens = {
+        "e438d816c95958667747c318f1532c0f"
+    }
+}
+</code></pre>
+<h5 id="clientauthenticationconfiguration">Client Authentication Configuration</h5>
+<p>The client only needs to add the token on the server to the corresponding client configuration.</p>
+<pre><code class="lang-bash">{
+    remote_build = {
+        connect = "127.0.0.1:9691",
+        token = "e438d816c95958667747c318f1532c0f"
+    }
+}
+</code></pre>
+<h5 id="manuallygeneratenewtoken">Manually generate new token</h5>
+<p>We can also execute the following command to manually generate a new token and add it to the server configuration ourselves.</p>
+<pre><code class="lang-bash">$ xmake service --gen-token
+New token a7b9fc2d3bfca1472aabc38bb5f5d612 is generated!
+</code></pre>
+<h4 id="passwordauthentication">Password authentication</h4>
+<p>We also provide an authorization mode of password authentication. Compared with token authentication, it requires users to enter a password every time they connect, and can only be connected after the verification is passed.</p>
+<h5 id="serverauthenticationconfiguration">Server authentication configuration</h5>
+<p>For password authentication, we do not need to manually configure the token, just execute the following command to add a user. During the adding process, the user will be prompted to enter a password.</p>
+<pre><code class="lang-bash">$ xmake service --add-user=ruki
+Please input user ruki password:
+123456
+Add user ruki ok!
+</code></pre>
+<p>Then, Xmake will generate a new token from the username and password and add it to the token list of the server configuration.</p>
+<pre><code class="lang-bash">{
+    known_hosts = { },
+    logfile = "/Users/ruki/.xmake/service/server/logs.txt",
+    remote_build = {
+        listen = "0.0.0.0:9691",
+        workdir = "/Users/ruki/.xmake/service/server/remote_build"
+    },
+    tokens = {
+        "e438d816c95958667747c318f1532c0f",
+        "7889e25402413e93fd37395a636bf942"
+    }
+}
+</code></pre>
+<p>Of course, we can also delete the specified user and password.</p>
+<pre><code class="lang-bash">$ xmake service --rm-user=ruki
+Please input user ruki password:
+123456
+Remove user ruki ok!
+</code></pre>
+<h5 id="clientauthenticationconfiguration">Client Authentication Configuration</h5>
+<p>For the client, we no longer need to set the token of the server. We only need to add the user name that needs to be connected in the connection configuration to enable password authentication. The format is: <code>user@address:port</code></p>
+<pre><code class="lang-bash">{
+    remote_build = {
+        connect = "root@127.0.0.1:9691"
+  }
+}
+</code></pre>
+<p>!> If the username is removed and the token is not configured, it is anonymous mode. If the server is not configured with a token, the authentication is completely disabled and the connection is made directly.</p>
+<h4 id="trustedhostverification">Trusted host verification</h4>
+<p>In addition, in order to further improve security, we also provide server-side trusted host verification. If the server-configured <code>known_hosts</code> list is configured with the ip address of the client host that can be connected,<br>Then only these hosts can successfully connect to this server, and other host&#39;s connections to it will be prompted to be untrusted and refuse the connection, even if token and password authentication are OK.</p>
+<pre><code class="lang-bash">{
+    logfile = "/Users/ruki/.xmake/service/logs.txt",
+    server = {
+        tokens = {
+            "4b928c7563a0cba10ff4c3f5ca0c8e24"
+        },
+        known_hosts = { "127.0.0.1", "xx.xx.xx.xx"}
+    }
+}
+</code></pre>
+<h3 id="connecttoaremoteserver">Connect to a remote server</h3>
+<p>Next, we only need to enter the root directory of the project that needs to be compiled remotely, and execute the <code>xmake service --connect</code> command to connect.</p>
+<p>If it is the token authentication mode, then no additional password input is required, and the connection is directly connected.</p>
+<pre><code class="lang-bash">$ xmake create test
+$ cd test
+$ xmake service --connect
+<remote_build_client>: connect 192.168.56.110:9091 ..
+<remote_build_client>: connected!
+<remote_build_client>: sync files in 192.168.56.110:9091 ..
+Scanning files ..
+Comparing 3 files ..
+    [+]: src/main.cpp
+    [+]: .gitignore
+    [+]: xmake.lua
+3 files has been changed!
+Archiving files ..
+Uploading files with 1372 bytes ..
+<remote_build_client>: sync files ok!
+</code></pre>
+<p>If it is password authentication, the user will be prompted to enter the password to continue the connection.</p>
+<pre><code class="lang-bash">$ xmake service --connect
+Please input user root password:
+000000
+<remote_build_client>: connect 127.0.0.1:9691 ..
+<remote_build_client>: connected!
+<remote_build_client>: sync files in 127.0.0.1:9691 ..
+Scanning files ..
+Comparing 3 files ..
+    [+]: xmake.lua
+    [+]: .gitignore
+    [+]: src/main.cpp
+3 files has been changed!
+Archiving files ..
+Uploading files with 1591 bytes ..
+<remote_build_client>: sync files ok!
+</code></pre>
+<p>If the password is incorrect, an error message will be displayed.</p>
+<pre><code class="lang-bash">$ xmake service --connect
+Please input user root password:
+123
+<remote_build_client>: connect 127.0.0.1:9691 ..
+<remote_build_client>: connect 127.0.0.1:9691 failed, user and password are incorrect!
+</code></pre>
+<h3 id="remotebuildproject">Remote build project</h3>
+<p>After the connection is successful, we can compile remotely like normal local compilation.</p>
+<pre><code class="lang-bash">$ xmake
+<remote_build_client>: run xmake in 192.168.56.110:9091 ..
+checking for platform... macosx
+checking for architecture ... x86_64
+checking for Xcode directory ... /Applications/Xcode.app
+checking for Codesign Identity of Xcode ... Apple Development: waruqi@gmail.com (T3NA4MRVPU)
+checking for SDK version of Xcode for macosx (x86_64) ... 11.3
+checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
+[ 25%]: cache compiling.release src/main.cpp
+[ 50%]: linking.release test
+[100%]: build ok!
+<remote_build_client>: run command ok!
+</code></pre>
+<h3 id="runthetargetprogramremotely">Run the target program remotely</h3>
+<p>We can also run and debug the compiled target program remotely like running and debugging locally.</p>
+<pre><code class="lang-bash">$ xmake run
+<remote_build_client>: run xmake run in 192.168.56.110:9091 ..
+hello world!
+<remote_build_client>: run command ok!
+</code></pre>
+<h3 id="remoterebuildproject">Remote Rebuild Project</h3>
+<pre><code class="lang-bash">$ xmake -rv
+<remote_build_client>: run xmake -rv in 192.168.56.110:9091 ..
+[ 25%]: cache compiling.release src/main.cpp
+/usr/local/bin/ccache /usr/bin/xcrun -sdk macosx clang -c -Qunused-arguments -arch x86_64 -mmacosx-version-min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/ MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src /main.cpp
+[ 50%]: linking.release test
+"/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/test build/.objs/test/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version -min=11.4 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -stdlib=libc++ -Wl,-x -lz
+[100%]: build ok!
+<remote_build_client>: run command ok!
+</code></pre>
+<h3 id="remoteconfigurationcompilationparameters">Remote configuration compilation parameters</h3>
+<pre><code class="lang-bash">$ xmake f --xxx --yy
+</code></pre>
+<h3 id="manuallysyncprojectfiles">Manually sync project files</h3>
+<p>When connecting, the code will be automatically synchronized once, and the code will be changed later. You can execute this command to manually synchronize the changed files.</p>
+<pre><code class="lang-bash">$ xmake service --sync
+<remote_build_client>: sync files in 192.168.56.110:9091 ..
+Scanning files ..
+Comparing 3 files ..
+    [+]: src/main.cpp
+    [+]: .gitignore
+    [+]: xmake.lua
+3 files has been changed!
+Archiving files ..
+Uploading files with 1372 bytes ..
+<remote_build_client>: sync files ok!
+</code></pre>
+<h3 id="pullremotefiles">Pull remote files</h3>
+<p>In version v2.7.1, we added a parameter to pull the remote specified file.<br>Usually, we can use it to pull the target file after the build and download the compiled library file to the local.</p>
+<p>For example:</p>
+<pre><code class="lang-bash">xmake service --pull &#39;build/**&#39; outputdir
+</code></pre>
+<p>We can specify the remote path <code>build/**</code> to pull all matching files to the local outputdir directory.</p>
+<h3 id="disconnectfromremote">Disconnect from remote</h3>
+<p>For the current project, disconnect the connection, which only affects the current project, and other projects can still be connected and compiled at the same time.</p>
+<pre><code class="lang-bash">$ xmake service --disconnect
+<remote_build_client>: disconnect 192.168.56.110:9091 ..
+<remote_build_client>: disconnected!
+</code></pre>
+<h3 id="viewserverlog">View server log</h3>
+<pre><code class="lang-bash">$ xmake service --logs
+</code></pre>
+<h3 id="cleanremoteservicecacheandbuildfiles">Clean remote service cache and build files</h3>
+<p>We can also manually clean any caches and build generated files from the remote.</p>
+<pre><code class="lang-bash">$ cd projectdir
+$ xmake service --clean
+</code></pre>
+</article>
+</body>
+</html>

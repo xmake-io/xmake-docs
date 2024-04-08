@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/package/remote_package">https://xmake.io/#/zh-cn/package/remote_package</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>这个在2.2.2版本后已经初步支持，用法上更加的简单，只需要设置对应的依赖包就行了，例如：</p>
+<pre><code class="lang-lua">add_requires("tbox 1.6.*", "libpng ~1.16", "zlib")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("tbox", "libpng", "zlib")
+</code></pre>
+<p>上面的<code>add_requires</code>用于描述当前项目需要的依赖包，而<code>add_packages</code>用于应用依赖包到test目标，只有设置这个才会自动追加links, linkdirs, includedirs等设置。</p>
+<p>然后直接执行编译即可：</p>
+<pre><code class="lang-console">$ xmake
+</code></pre>
+<p>xmake会去远程拉取相关源码包，然后自动编译安装，最后编译项目，进行依赖包的链接，具体效果见下图：</p>
+<p><img src="/assets/img/index/package_manage.png" width="80%" /></p>
+<p>关于包依赖管理的更多相关信息和进展见相关issues：<a href="https://github.com/xmake-io/xmake/issues/69">Remote package management</a></p>
+<h2 id="">目前支持的特性</h2>
+<ul>
+<li>语义版本支持，例如：">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"</li>
+<li>提供官方包仓库、自建私有仓库、项目内置仓库等多仓库管理支持</li>
+<li>跨平台包编译集成支持（不同平台、不同架构的包可同时安装，快速切换使用）</li>
+<li>debug依赖包支持，实现源码调试</li>
+</ul>
+<h2 id="">依赖包处理机制</h2>
+<p>这里我们简单介绍下整个依赖包的处理机制：</p>
+<p><img src="/assets/img/index/package_arch.png" width="80%" /></p>
+<ol>
+<li>优先检测当前系统目录、第三方包管理下有没有存在指定的包，如果有匹配的包，那么就不需要下载安装了 （当然也可以设置不使用系统包）</li>
+<li>检索匹配对应版本的包，然后下载、编译、安装（注：安装在特定xmake目录，不会干扰系统库环境）</li>
+<li>编译项目，最后自动链接启用的依赖包</li>
+</ol>
+<h2 id="">快速上手</h2>
+<p>新建一个依赖tbox库的空工程：</p>
+<pre><code class="lang-console">$ xmake create -t console_tbox test
+$ cd test
+</code></pre>
+<p>执行编译即可，如果当前没有安装tbox库，则会自动下载安装后使用：</p>
+<pre><code class="lang-console">$ xmake
+</code></pre>
+<p>切换到iphoneos平台进行编译，将会重新安装iphoneos版本的tbox库进行链接使用：</p>
+<pre><code class="lang-console">$ xmake f -p iphoneos
+$ xmake
+</code></pre>
+<p>切换到android平台arm64-v8a架构编译：</p>
+<pre><code class="lang-console">$ xmake f -p android [--ndk=~/android-ndk-r16b]
+$ xmake
+</code></pre>
+<h2 id="">语义版本设置</h2>
+<p>xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：<a href="https://semver.org/">https://semver.org/</a></p>
+<p>一些语义版本写法：</p>
+<pre><code class="lang-lua">add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
+add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
+</code></pre>
+<p>目前xmake使用的语义版本解析器是<a href="https://github.com/uael">uael</a>贡献的<a href="https://github.com/uael/sv">sv</a>库，里面也有对版本描述写法的详细说明，可以参考下：<a href="https://github.com/uael/sv#versions">版本描述说明</a></p>
+<p>当然，如果我们对当前的依赖包的版本没有特殊要求，那么可以直接这么写：</p>
+<pre><code class="lang-lua">add_requires("tbox", "libpng", "zlib")
+</code></pre>
+<p>这会使用已知的最新版本包，或者是master分支的源码编译的包，如果当前包有git repo地址，我们也能指定特定分支版本：</p>
+<pre><code class="lang-lua">add_requires("tbox master")
+add_requires("tbox dev")
+</code></pre>
+<h2 id="">额外的包信息设置</h2>
+<h3 id="">可选包设置</h3>
+<p>如果指定的依赖包当前平台不支持，或者编译安装失败了，那么xmake会编译报错，这对于有些必须要依赖某些包才能工作的项目，这是合理的。<br>但是如果有些包是可选的依赖，即使没有也可以正常编译使用的话，可以设置为可选包：</p>
+<pre><code class="lang-lua">add_requires("tbox", {optional = true})
+</code></pre>
+<h3 id="">禁用系统库</h3>
+<p>默认的设置，xmake会去优先检测系统库是否存在（如果没设置版本要求），如果用户完全不想使用系统库以及第三方包管理提供的库，那么可以设置：</p>
+<pre><code class="lang-lua">add_requires("tbox", {system = false})
+</code></pre>
+<h3 id="">使用调试版本的包</h3>
+<p>如果我们想同时源码调试依赖包，那么可以设置为使用debug版本的包（当然前提是这个包支持debug编译）：</p>
+<pre><code class="lang-lua">add_requires("tbox", {debug = true})
+</code></pre>
+<p>如果当前包还不支持debug编译，可在仓库中提交修改编译规则，对debug进行支持，例如：</p>
+<pre><code class="lang-lua">package("openssl")
+    on_install("linux", "macosx", function (package)
+        os.vrun("./config %s --prefix=\"%s\"", package:debug() and "--debug" or "", package:installdir())
+        os.vrun("make -j4")
+        os.vrun("make install")
+    end)
+</code></pre>
+<h3 id="">传递额外的编译信息到包</h3>
+<p>某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：</p>
+<pre><code class="lang-lua">add_requires("tbox", {configs = {small = true}})
+</code></pre>
+<p>传递<code>--small=true</code>给tbox包，使得编译安装的tbox包是启用此选项的。</p>
+<p>我们可以通过在工程目录中执行：<code>xmake require --info tbox</code> 来获取指定包所有的可配置参数列表和取值说明。</p>
+<p>比如：</p>
+<pre><code class="lang-console">xmake require --info spdlog
+    require(spdlog):
+      -> requires:
+         -> plat: macosx
+         -> arch: x86_64
+         -> configs:
+            -> header_only: true
+            -> shared: false
+            -> vs_runtime: MT
+            -> debug: false
+            -> fmt_external: true
+            -> noexcept: false
+      -> configs:
+         -> header_only: Use header only (default: true)
+         -> fmt_external: Use external fmt library instead of bundled (default: false)
+         -> noexcept: Compile with -fno-exceptions. Call abort() on any spdlog exceptions (default: false)
+      -> configs (builtin):
+         -> debug: Enable debug symbols. (default: false)
+         -> shared: Enable shared library. (default: false)
+         -> cflags: Set the C compiler flags.
+         -> cxflags: Set the C/C++ compiler flags.
+         -> cxxflags: Set the C++ compiler flags.
+         -> asflags: Set the assembler flags.
+         -> vs_runtime: Set vs compiler runtime. (default: MT)
+            -> values: {"MT","MD"}
+</code></pre>
+<p>其中，configs里面就是spdlog包自身提供的可配置参数，而下面带有builtin的configs部分，是所有包都会有的内置配置参数。<br>最上面requires部分，是项目当前配置值。</p>
+<p>!> <code>vs_runtime</code>是用于msvc下vs runtime的设置，v2.2.9版本中，还支持所有static依赖包的自动继承，也就是说spdlog如果设置了MD，那么它依赖的fmt包也会自动继承设置MD。</p>
+<p>可以看到，我们已经能够很方便的定制化获取需要的包，但是每个包自身也许有很多依赖，如果这些依赖也要各种定制化配置，怎么办？</p>
+<p>可以通过 <code>add_requireconfs</code> 去重写内部依赖包的配置参数。</p>
+<h3 id="">安装任意版本的包</h3>
+<p>默认情况下，<code>add_requires("zlib >1.2.x")</code> 只能选择到 <code>xmake-repo</code> 仓库中存在的包版本，因为每个版本的包，它们都会有一个sha256的校验值，用于包的完整性校验。</p>
+<p>因此，未知版本的包不存在校验值，xmake 默认是不让选择使用的，这并不安全。</p>
+<p>那如果，我们需要的包版本无法选择使用怎么办呢？有两种方式，一种是提交一个 pr 给 <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>，增加指定包的新版本以及对应的 sha256，例如：</p>
+<pre><code class="lang-lua">package("zlib")
+    add_versions("1.2.10", "8d7e9f698ce48787b6e1c67e6bff79e487303e66077e25cb9784ac8835978017")
+    add_versions("1.2.11", "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1")
+</code></pre>
+<p>另外，还有一种方式，就是用户传递 <code>{verify = false}</code> 配置给 <code>add_requires</code>，强制忽略包的文件完整性校验，这样就不需要 sha256 值，因此就可以安装任意版本的包。</p>
+<p>当然，这也会存在一定的安全性以及包不完整的风险，这就需要用户自己去选择评估了。</p>
+<pre><code class="lang-lua">add_requires("zlib 1.2.11", {verify = false})
+</code></pre>
+<h3 id="">禁用外部头文件搜索路径</h3>
+<p>默认情况下，通过 <code>add_requires</code> 安装的包会采用 <code>-isystem</code> 或者 <code>/external:I</code> 来引用里面的头文件路径，这通常能够避免一些包头文件引入的不可修改的警告信息，<br>但是，我们还是可以通过设置 <code>{external = false}</code> 来禁用外部头文件，切回 <code>-I</code> 的使用。</p>
+<p>默认启用了 external 外部头文件的编译 flags 如下：</p>
+<pre><code class="lang-console">-isystem /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+</code></pre>
+<p>手动关闭 external 外部头文件的编译 flags 如下：</p>
+<pre><code class="lang-lua">add_requires("zlib 1.x", {external = false})
+</code></pre>
+<pre><code class="lang-console">-I /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
+</code></pre>
+<h2 id="">第三方依赖包安装</h2>
+<p>2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan，brew, vcpkg等</p>
+<h3 id="homebrew">添加 homebrew 的依赖包</h3>
+<pre><code class="lang-lua">add_requires("brew::zlib", {alias = "zlib"})
+add_requires("brew::pcre2/libpcre2-8", {alias = "pcre2"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("pcre2", "zlib")
+</code></pre>
+<h3 id="vcpkg">添加 vcpkg 的依赖包</h3>
+<pre><code class="lang-lua">add_requires("vcpkg::zlib", "vcpkg::pcre2")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("vcpkg::zlib", "vcpkg::pcre2")
+</code></pre>
+<p>我们也可以加个包别名，简化对<code>add_packages</code>的使用：</p>
+<pre><code class="lang-lua">add_requires("vcpkg::zlib", {alias = "zlib"})
+add_requires("vcpkg::pcre2", {alias = "pcre2"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib", "pcre2")
+</code></pre>
+<p>如果 vcpkg 包带有可选特性，我们也可以直接使用 vcpkg 的语法格式 <code>packagename[feature1,feature2]</code> 来安装包。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">add_requires("vcpkg::boost[core]")
+</code></pre>
+<p>v2.6.3 之后，xmake 支持 vcpkg 新的清单模式，通过它，我们就能支持 vcpkg 包的版本选择，例如：</p>
+<pre><code class="lang-lua">add_requires("vcpkg::zlib 1.2.11+10")
+add_requires("vcpkg::fmt >=8.0.1", {configs = {baseline = "50fd3d9957195575849a49fa591e645f1d8e7156"}})
+add_requires("vcpkg::libpng", {configs = {features = {"apng"}}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("vcpkg::zlib", "vcpkg::fmt", "vcpkg::libpng")
+</code></pre>
+<p>v2.6.8 之后，还可以额外配置私有仓库，仅清单模式有效。</p>
+<pre><code class="lang-lua">local registries = {
+    {
+        kind = "git",
+        repository = "https://github.com/SakuraEngine/vcpkg-registry",
+        baseline = "e0e1e83ec66e3c9b36066f79d133b01eb68049f7",
+        packages = {
+            "skrgamenetworkingsockets"
+        }
+    }
+}
+add_requires("vcpkg::skrgamenetworkingsockets >=1.4.0+1", {configs = {registries = registries}})
+</code></pre>
+<h3 id="conan">添加 conan 的依赖包</h3>
+<pre><code class="lang-lua">add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
+add_requires("conan::openssl/1.1.1g", {alias = "openssl",
+    configs = {options = "OpenSSL:shared=True"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("openssl", "zlib")
+</code></pre>
+<p>执行xmake进行编译后：</p>
+<pre><code class="lang-console">ruki:test_package ruki$ xmake
+checking for the architecture ... x86_64
+checking for the Xcode directory ... /Applications/Xcode.app
+checking for the SDK version of Xcode ... 10.14
+note: try installing these packages (pass -y to skip confirm)?
+  -> conan::zlib/1.2.11 (debug)
+  -> conan::openssl/1.1.1g
+please input: y (y/n)
+
+  => installing conan::zlib/1.2.11 .. ok
+  => installing conan::openssl/1.1.1g .. ok
+
+[  0%]: cache compiling.release src/main.c
+[100%]: linking.release test
+</code></pre>
+<p>自定义 conan/settings 配置：</p>
+<pre><code class="lang-lua">add_requires("conan::poco/1.10.0", {alias = "poco",
+    configs = {settings = {"compiler=gcc", "compiler.libcxx=libstdc++11"}}})
+</code></pre>
+<p>其他一些 conan 相关配置项：</p>
+<pre><code>{
+    build          = {description = "use it to choose if you want to build from sources.", default = "missing", values = {"all", "never", "missing", "outdated"}},
+    remote         = {description = "Set the conan remote server."},
+    options        = {description = "Set the options values, e.g. OpenSSL:shared=True"},
+    imports        = {description = "Set the imports for conan."},
+    settings       = {description = "Set the build settings for conan."},
+    build_requires = {description = "Set the build requires for conan.", default = "xmake_generator/0.1.0@bincrafters/testing"}
+}
+</code></pre><h3 id="conda">添加 conda 的依赖包</h3>
+<pre><code class="lang-lua">add_requires("conda::zlib 1.2.11", {alias = "zlib"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+</code></pre>
+<h3 id="pacman">添加 pacman 的依赖包</h3>
+<p>我们既支持 archlinux 上的 pacman 包安装和集成，也支持 msys2 上 pacman 的 mingw x86_64/i386 包安装和集成。</p>
+<pre><code class="lang-lua">add_requires("pacman::zlib", {alias = "zlib"})
+add_requires("pacman::libpng", {alias = "libpng"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib", "libpng")
+</code></pre>
+<p>archlinux 上只需要：</p>
+<pre><code class="lang-console">xmake
+</code></pre>
+<p>msys2 上安装 mingw 包，需要指定到 mingw 平台：</p>
+<pre><code class="lang-console">xmake f -p mingw -a [x86_64|i386]
+xmake
+</code></pre>
+<h3 id="clib">添加 clib 的依赖包</h3>
+<p>clib是一款基于源码的依赖包管理器，拉取的依赖包是直接下载对应的库源码，集成到项目中编译，而不是二进制库依赖。</p>
+<p>其在xmake中集成也很方便，唯一需要注意的是，还需要自己添加上对应库的源码到xmake.lua，例如：</p>
+<pre><code class="lang-lua">add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
+
+target("test")
+    set_kind("binary")
+    add_files("clib/bytes/*.c")
+    add_files("src/*.c")
+    add_packages("bytes")
+</code></pre>
+<h3 id="dubdlang">添加 dub/dlang 的依赖包</h3>
+<p>xmake 也支持 dlang 的 dub 包管理器，集成 dlang 的依赖包来使用。</p>
+<pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
+
+add_requires("dub::log 0.4.3", {alias = "log"})
+add_requires("dub::dateparser", {alias = "dateparser"})
+add_requires("dub::emsi_containers", {alias = "emsi_containers"})
+add_requires("dub::stdx-allocator", {alias = "stdx-allocator"})
+add_requires("dub::mir-core", {alias = "mir-core"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.d")
+    add_packages("log", "dateparser", "emsi_containers", "stdx-allocator", "mir-core")
+</code></pre>
+<h3 id="ubuntuapt">添加 ubuntu/apt 的依赖包</h3>
+<p>v2.5.4 之后版本支持使用 apt 集成依赖包，也会自动查找 ubuntu 系统上已经安装的包。</p>
+<pre><code class="lang-lua">add_requires("apt::zlib1g-dev", {alias = "zlib"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+</code></pre>
+<h3 id="gentooportage">添加 gentoo/portage 的依赖包</h3>
+<p>v2.5.4 之后版本支持使用 Portage 集成依赖包，也会自动查找 Gentoo 系统上已经安装的包。</p>
+<pre><code class="lang-lua">add_requires("portage::libhandy", {alias = "libhandy"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("libhandy")
+</code></pre>
+<h3 id="nimble">添加 nimble 的依赖包</h3>
+<p>v2.5.8 之后支持集成 nimble 包管理器中的包，但是目前仅用于 nim 项目，因为它并没有提供二进制的包，而是直接安装的 nim 代码包。</p>
+<pre><code class="lang-lua">add_requires("nimble::zip >1.3")
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.nim")
+    add_packages("nimble::zip")
+</code></pre>
+<h3 id="cargo">添加 cargo 的依赖包</h3>
+<p>Cargo 依赖包主要给 rust 项目集成使用，例如：</p>
+<pre><code class="lang-lua">add_rules("mode.release", "mode.debug")
+add_requires("cargo::base64 0.13.0")
+add_requires("cargo::flate2 1.0.17", {configs = {features = "zlib"}})
+
+target("test")
+    set_kind("binary")
+    add_files("src/main.rs")
+    add_packages("cargo::base64", "cargo::flate2")
+</code></pre>
+<p>不过，我们也可以在 C++ 中通过 cxxbridge 的方式，调用 Rust 库接口，来变相复用所有的 Rust 包。</p>
+<p>完整例子见：<a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library">Call Rust in C++</a></p>
+<h2 id="">使用自建私有包仓库</h2>
+<p>如果需要的包不在官方仓库<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>中，我们可以提交贡献代码到仓库进行支持。<br>但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
+<p>比如，现在我们有一个一个私有仓库repo：<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>
+<p>我们可以通过下面的命令进行仓库添加：</p>
+<pre><code class="lang-console">$ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git [branch]
+</code></pre>
+<p>!> [branch]是可选的，我们也可以切换到指定repo分支</p>
+<p>或者我们直接写在xmake.lua中：</p>
+<pre><code class="lang-lua">add_repositories("my-repo git@github.com:myrepo/xmake-repo.git")
+</code></pre>
+<p>同样，我们也可以切换到指定repo分支</p>
+<pre><code class="lang-lua">add_repositories("my-repo git@github.com:myrepo/xmake-repo.git dev")
+</code></pre>
+<p>如果我们只是想添加一两个私有包，这个时候特定去建立一个git repo太小题大做了，我们可以直接把包仓库放置项目里面，例如：</p>
+<pre><code>projectdir
+  - myrepo
+    - packages
+      - t/tbox/xmake.lua
+      - z/zlib/xmake.lua
+  - src
+    - main.c
+  - xmake.lua
+</code></pre><p>上面myrepo目录就是自己的私有包仓库，内置在自己的项目里面，然后在xmake.lua里面添加一下这个仓库位置：</p>
+<pre><code class="lang-lua">add_repositories("my-repo myrepo")
+</code></pre>
+<p>这个可以参考<a href="https://github.com/xmake-io/benchbox">benchbox</a>项目，里面就内置了一个私有仓库。</p>
+<p>我们甚至可以连仓库也不用建，直接定义包描述到项目xmake.lua中，这对依赖一两个包的情况还是很有用的，例如：</p>
+<pre><code class="lang-lua">package("libjpeg")
+
+    set_urls("http://www.ijg.org/files/jpegsrc.$(version).tar.gz")
+
+    add_versions("v9c", "650250979303a649e21f87b5ccd02672af1ea6954b911342ea491f351ceb7122")
+
+    on_install("windows", function (package)
+        os.mv("jconfig.vc", "jconfig.h")
+        os.vrun("nmake -f makefile.vc")
+        os.cp("*.h", package:installdir("include"))
+        os.cp("libjpeg.lib", package:installdir("lib"))
+    end)
+
+    on_install("macosx", "linux", function (package)
+        import("package.tools.autoconf").install(package)
+    end)
+
+package_end()
+
+add_requires("libjpeg")
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("libjpeg")
+</code></pre>
+<p>关于如何编写自定义包描述规则，详情见：<a href="#添加包到仓库">添加包到仓库</a></p>
+<h2 id="">包管理命令使用</h2>
+<p>包管理命令<code>$ xmake require</code> 可用于手动显示的下载编译安装、卸载、检索、查看包信息。</p>
+<h3 id="xrepo">xrepo 命令</h3>
+<p><code>xmake require</code> 仅用于当前工程，我们也提供了更加方便的独立 <code>xrepo</code> 包管理器命令，来全局对包进行安装，卸载和查找管理。</p>
+<p>详细文档见：<a href="https://xrepo.xmake.io/#/zh-cn/getting_started">Xrepo 命令使用入门</a></p>
+<h3 id="">安装指定包</h3>
+<pre><code class="lang-console">$ xmake require tbox
+</code></pre>
+<p>安装指定版本包：</p>
+<pre><code class="lang-console">$ xmake require tbox "~1.6"
+</code></pre>
+<p>强制重新下载安装，并且显示详细安装信息：</p>
+<pre><code class="lang-console">$ xmake require -f -v tbox "1.5.x"
+</code></pre>
+<p>传递额外的设置信息：</p>
+<pre><code class="lang-console">$ xmake require --extra="{debug=true,config={small=true}}" tbox
+</code></pre>
+<p>安装debug包，并且传递<code>small=true</code>的编译配置信息到包中去。</p>
+<h3 id="">卸载指定包</h3>
+<pre><code class="lang-console">$ xmake require --uninstall tbox
+</code></pre>
+<p>这会完全卸载删除包文件。</p>
+<h3 id="">查看包详细信息</h3>
+<pre><code class="lang-console">$ xmake require --info tbox
+</code></pre>
+<h3 id="">在当前仓库中搜索包</h3>
+<pre><code class="lang-console">$ xmake require --search tbox
+</code></pre>
+<p>这个是支持模糊搜素以及lua模式匹配搜索的：</p>
+<pre><code class="lang-console">$ xmake require --search pcr
+</code></pre>
+<p>会同时搜索到pcre, pcre2等包。</p>
+<h3 id="">列举当前已安装的包</h3>
+<pre><code class="lang-console">$ xmake require --list
+</code></pre>
+<h2 id="">仓库管理命令使用</h2>
+<p>上文已经简单讲过，添加私有仓库可以用（支持本地路径添加）：</p>
+<pre><code class="lang-console">$ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
+</code></pre>
+<p>v2.2.3开始，支持添加指定分支的repo，例如：</p>
+<pre><code class="lang-console">$ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git dev
+</code></pre>
+<p>!> 我们也可以添加本地仓库路径，即使没有git也是可以支持的，用于在本地快速的调试repo中的包。</p>
+<p>我们也可以移除已安装的某个仓库：</p>
+<pre><code class="lang-console">$ xmake repo --remove myrepo
+</code></pre>
+<p>或者查看所有已添加的仓库：</p>
+<pre><code class="lang-console">$ xmake repo --list
+</code></pre>
+<p>如果远程仓库有更新，可以手动执行仓库更新，来获取更多、最新的包：</p>
+<pre><code class="lang-console">$ xmake repo -u
+</code></pre>
+<h2 id="">远程包下载优化</h2>
+<p>如果由于网络不稳定，导致下载包速度很慢或者下载失败，我们可以通过的下面的一些方式来解决。</p>
+<h3 id="">手动下载</h3>
+<p>默认xmake会调用curl, wget等工具来下载，用户也可以手动用自己的下载器下载（也可以使用代理），把下载后的包放到自己的目录下，比如: <code>/download/packages/zlib-v1.0.tar.gz</code></p>
+<p>然后使用下面的命令，设置包下载的搜索目录：</p>
+<pre><code class="lang-console">$ xmake g --pkg_searchdirs="/download/packages"
+</code></pre>
+<p>然后重新执行xmake编译时候，xmake会优先从<code>/download/packages</code>找寻源码包，然后直接使用，不再自己下载了。</p>
+<p>至于找寻的包名是怎样的呢，可以通过下面的命令查看：</p>
+<pre><code class="lang-console">$ xmake require --info zlib
+-> searchdirs: /download/packages
+-> searchnames: zlib-1.2.11.tar.gz
+</code></pre>
+<p>我们可以看到对应的搜索目录以及搜索的包名。</p>
+<h3 id="">设置代理</h3>
+<p>如果觉得手动下载还是麻烦，我们也可以让xmake直接走代理。</p>
+<pre><code class="lang-console">$ xmake g --proxy="socks5://127.0.0.1:1086"
+$ xmake g --help
+    -x PROXY, --proxy=PROXY  Use proxy on given port. [PROTOCOL://]HOST[:PORT]
+                                 e.g.
+                                 - xmake g --proxy=&#39;http://host:port&#39;
+                                 - xmake g --proxy=&#39;https://host:port&#39;
+                                 - xmake g --proxy=&#39;socks5://host:port&#39;
+</code></pre>
+<p><code>--proxy</code>参数指定代理协议和地址，具体语法可以参考curl的，通常可以支持http, https, socks5等协议，但实际支持力度依赖curl, wget和git，比如wget就不支持socks5协议。</p>
+<p>我们可以通过下面的参数指定哪些host走代理，如果没设置，默认全局走代理。</p>
+<pre><code class="lang-console">--proxy_hosts=PROXY_HOSTS    Only enable proxy for the given hosts list, it will enable all if be unset,
+                             and we can pass match pattern to list:
+                                 e.g.
+                                 - xmake g --proxy_hosts=&#39;github.com,gitlab.*,*.xmake.io&#39;
+</code></pre>
+<p>如果设置了hosts列表，那么之后这个列表里面匹配的host才走代理。。</p>
+<p><code>--proxy_host</code>支持多个hosts设置，逗号分隔，并且支持基础的模式匹配 *.github.com， 以及其他lua模式匹配规则也支持</p>
+<p>如果觉得上面的hosts模式配置还不够灵活，我们也可以走pac的自动代理配置规则：</p>
+<pre><code class="lang-console">--proxy_pac=PROXY_PAC    Set the auto proxy configuration file. (default: pac.lua)
+                                     e.g.
+                                     - xmake g --proxy_pac=pac.lua (in /Users/ruki/.xmake or absolute path)
+                                     - function main(url, host)
+                                           if host == &#39;github.com&#39; then
+                                                return true
+                                           end
+                                       end
+</code></pre>
+<p>!> 如果有proxy_hosts优先走hosts配置，没有的话才走pac配置。</p>
+<p>pac的默认路径：~/.xmake/pac.lua，如果--proxy被设置，并且这个文件存在，就会自动走pac，如果不存在，也没hosts，那就全局生效代理。</p>
+<p>也可以手动指定pac全路径</p>
+<pre><code class="lang-console">$ xmake g --proxy_pac=/xxxx/xxxxx_pac.lua
+</code></pre>
+<p>配置规则描述：</p>
+<pre><code class="lang-lua">function main(url, host)
+    if host:find("bintray.com") then
+        return true
+    end
+end
+</code></pre>
+<p>如果返回true，那么这个url和host就是走的代理，不返回或者返回false，就是不走代理。</p>
+<p>这块的具体详情见：<a href="https://github.com/xmake-io/xmake/issues/854">https://github.com/xmake-io/xmake/issues/854</a></p>
+<p>!> 另外，除了依赖包下载，其他涉及网络下载的命令也都支持代理，比如：<code>xmake update</code></p>
+<h4 id="">镜像代理</h4>
+<p>v2.5.4 之后，pac.lua 配置里面还可以配置镜像代理规则，比如对所有 github.com 域名的访问切到 hub.fastgit.org 域名，实现加速下载包。</p>
+<pre><code class="lang-lua">function mirror(url)
+     return url:gsub("github.com", "hub.fastgit.org")
+end
+</code></pre>
+<pre><code class="lang-console">$ xrepo install libpng
+> curl https://hub.fastgit.org/glennrp/libpng/archive/v1.6.37.zip -o v1.6.37.zip
+</code></pre>
+<p>v2.6.3 之后，xmake 提供了一些内置的镜像可以直接使用，例如 github 的镜像加速：</p>
+<pre><code class="lang-console">$ xmake g --proxy_pac=github_mirror.lua
+</code></pre>
+<p>我们不用自己编写 pac.lua，就可以直接使用它来加速 github 源的下载。</p>
+<p>更多内置镜像可以通过 <code>xmake g --help</code> 查看 <code>--proxy_pac=</code> 下列表。</p>
+<h2 id="">添加包到仓库</h2>
+<h3 id="">仓库包结构</h3>
+<p>在制作自己的包之前，我们需要先了解下一个包仓库的结构，不管是官方包仓库，还是自建私有包仓库，结构都是相同的：</p>
+<pre><code>xmake-repo
+  - packages
+    - t/tbox/xmake.lua
+    - z/zlib/xmake.lua
+</code></pre><p>通过上面的结构，可以看到每个包都会有个xmake.lua用于描述它的安装规则，并且根据<code>z/zlib</code>两级子目录分类存储，方便快速检索。</p>
+<h3 id="">包描述说明</h3>
+<p>关于包的描述规则，基本上都是在它的xmake.lua里面完成的，这跟项目工程里面的xmake.lua描述很类似，不同的是描述域仅支持<code>package()</code>，</p>
+<p>不过，在项目xmake.lua里面，也是可以直接添加<code>package()</code>来内置包描述的，连包仓库都省了，有时候这样会更加方便。</p>
+<p>首先，我们先拿zlib的描述规则，来直观感受下，这个规则可以在<a href="https://github.com/xmake-io/xmake-repo/blob/master/packages/z/zlib/xmake.lua">xmake-repo/z/zlib/xmake.lua</a>下找到。</p>
+<pre><code>package("zlib")
+
+    set_homepage("http://www.zlib.net")
+    set_description("A Massively Spiffy Yet Delicately Unobtrusive Compression Library")
+
+    set_urls("http://zlib.net/zlib-$(version).tar.gz",
+             "https://downloads.sourceforge.net/project/libpng/zlib/$(version)/zlib-$(version).tar.gz")
+
+    add_versions("1.2.10", "8d7e9f698ce48787b6e1c67e6bff79e487303e66077e25cb9784ac8835978017")
+    add_versions("1.2.11", "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1")
+
+    on_install("windows", function (package)
+        io.gsub("win32/Makefile.msc", "%-MD", "-" .. package:config("vs_runtime"))
+        os.vrun("nmake -f win32\\Makefile.msc zlib.lib")
+        os.cp("zlib.lib", package:installdir("lib"))
+        os.cp("*.h", package:installdir("include"))
+    end)
+
+    on_install("linux", "macosx", function (package)
+        import("package.tools.autoconf").install(package, {"--static"})
+    end)
+
+    on_install("iphoneos", "android@linux,macosx", "mingw@linux,macosx", function (package)
+        import("package.tools.autoconf").configure(package, {host = "", "--static"})
+        io.gsub("Makefile", "\nAR=.-\n",      "\nAR=" .. (package:build_getenv("ar") or "") .. "\n")
+        io.gsub("Makefile", "\nARFLAGS=.-\n", "\nARFLAGS=cr\n")
+        io.gsub("Makefile", "\nRANLIB=.-\n",  "\nRANLIB=\n")
+        os.vrun("make install -j4")
+    end)
+
+    on_test(function (package)
+        assert(package:has_cfuncs("inflate", {includes = "zlib.h"}))
+    end)
+</code></pre><p>这个包规则对windows, linux, macosx, iphoneos，mingw等平台都添加了安装规则，基本上已经做到了全平台覆盖，甚至一些交叉编译平台，算是一个比较典型的例子了。</p>
+<p>当然，有些包依赖源码实现力度，并不能完全跨平台，那么只需对它支持的平台设置安装规则即可。</p>
+<p>更多详细的包配置 API 说明见：<a href="/mirror/zh-cn/manual/package_dependencies.html">包接口文档</a></p>
+<h3 id="">扩展配置参数</h3>
+<p>详情见：<a href="/mirror/zh-cn/manual/package_dependencies.html#packageadd_configs">add_configs</a></p>
+<h3 id="">内置配置参数</h3>
+<p>除了可以通过<a href="/mirror/zh-cn/manual/package_dependencies.html#packageadd_configs">add_configs</a>设置一些扩展的配置参数以外，xmake还提供了一些内置的配置参数，可以使用</p>
+<h4 id="">启用调试包</h4>
+<pre><code class="lang-lua">add_requires("xxx", {debug = true})
+</code></pre>
+<p>包描述里面必须有相关处理才能支持：</p>
+<pre><code class="lang-lua">on_install(function (package)
+    local configs = {}
+    if package:debug() then
+        table.insert(configs, "--enable-debug")
+    end
+    import("package.tools.autoconf").install(package)
+end)
+</code></pre>
+<h4 id="msvc">设置msvc运行时库</h4>
+<pre><code class="lang-lua">add_requires("xxx", {configs = {vs_runtime = "MT"}})
+</code></pre>
+<p>通常情况下，通过<code>import("package.tools.autoconf").install</code>等内置工具脚本安装的包，内部都对vs_runtime自动处理过了。</p>
+<p>但是如果是一些特殊的源码包，构建规则比较特殊，那么需要自己处理了：</p>
+<pre><code class="lang-lua">on_install(function (package)
+    io.gsub("build/Makefile.win32.common", "%-MD", "-" .. package:config("vs_runtime"))
+end)
+</code></pre>
+<h3 id="">添加环境变量</h3>
+<p>对于一些库，里面也带了可执行的工具，如果需要在集成包的时候，使用上这些工具，那么也可以设置上对应PATH环境变量：</p>
+<pre><code class="lang-lua">package("luajit")
+    on_load(function (package)
+        if is_plat("windows") then
+            package:addenv("PATH", "lib")
+        end
+        package:addenv("PATH", "bin")
+    end)
+</code></pre>
+<p>而在项目工程中，只有通过<code>add_packages</code>集成对应的包后，对应的环境变量才会生效。</p>
+<pre><code class="lang-lua">add_requires("luajit")
+target("test")
+    set_kind("binary")
+    add_packages("luajit")
+    after_run(function (package)
+        os.exec("luajit --version")
+    end)
+</code></pre>
+<h3 id="">安装二进制包</h3>
+<p>xmake也是支持直接引用二进制版本包，直接安装使用，例如：</p>
+<pre><code class="lang-lua">if is_plat("windows") then
+    set_urls("https://www.libsdl.org/release/SDL2-devel-$(version)-VC.zip")
+    add_versions("2.0.8", "68505e1f7c16d8538e116405411205355a029dcf2df738dbbc768b2fe95d20fd")
+end
+
+on_install("windows", function (package)
+    os.cp("include", package:installdir())
+    os.cp("lib/$(arch)/*.lib", package:installdir("lib"))
+    os.cp("lib/$(arch)/*.dll", package:installdir("lib"))
+end)
+</code></pre>
+<h3 id="">本地测试</h3>
+<p>如果在本地xmake-repo仓库中，已经添加和制作好了新的包，可以在本地运行测试下，是否通过，如果测试通过，即可提交pr到官方仓库，请求merge。</p>
+<p>我们可以执行下面的脚本进行测试指定包：</p>
+<pre><code class="lang-bash">cd xmake-repo
+xmake l scripts/test.lua -v -D zlib
+</code></pre>
+<p>上面的命令，会强制重新下载和安装zlib包，测试整个安装流程是否ok，加上<code>-v -D</code>是为了可以看到完整详细的日志信息和出错信息，方便调试分析。</p>
+<p>如果网络环境不好，不想每次测试都去重新下载所有依赖，可以加上<code>--shallow</code>参数来执行，这个参数告诉脚本，仅仅重新解压本地缓存的zlib源码包，重新执行安装命令，但不会下载各种依赖。</p>
+<pre><code class="lang-bash">cd xmake-repo
+xmake l scripts/test.lua -v -D --shallow zlib
+</code></pre>
+<p>如果我们想测试其他平台的包规则是否正常，比如: android, iphoneos等平台，可以通过<code>-p/--plat</code>或者<code>-a/--arch</code>来指定。</p>
+<pre><code class="lang-bash">cd xmake-repo
+xmake l scripts/test.lua -v -D --shallow -p iphoneos -a arm64 zlib
+xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
+</code></pre>
+<h2 id="">提交包到官方仓库</h2>
+<p>目前这个特性刚完成不久，目前官方仓库的包还不是很多，有些包也许还不支持部分平台，不过这并不是太大问题，后期迭代几个版本后，我会不断扩充完善包仓库。</p>
+<p>如果你需要的包，当前的官方仓库还没有收录，可以提交issues或者自己可以在本地调通后，贡献提交到官方仓库：<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
+<p>详细的贡献说明，见：<a href="https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a></p>
+<p>关于如何制作自己的包，可以看下上文：<a href="#添加包到仓库">添加包到仓库</a>。</p>
+<h2 id="">依赖包的锁定和升级</h2>
+<p>v2.5.7 之后，新增依赖包的版本锁定，类似 npm 的 package.lock, cargo 的 cargo.lock。</p>
+<p>比如，我们引用一些包，默认情况下，如果不指定版本，那么 xmake 每次都会自动拉取最新版本的包来集成使用，例如：</p>
+<pre><code class="lang-lua">add_requires("zlib")
+</code></pre>
+<p>但如果上游的包仓库更新改动，比如 zlib 新增了一个 1.2.11 版本，或者安装脚本有了变动，都会导致用户的依赖包发生改变。</p>
+<p>这容易导致原本编译通过的一些项目，由于依赖包的变动出现一些不稳定因素，有可能编译失败等等。</p>
+<p>为了确保用户的项目每次使用的包都是固定的，我们可以通过下面的配置去启用包依赖锁定。</p>
+<pre><code class="lang-lua">set_policy("package.requires_lock", true)
+</code></pre>
+<p>这是一个全局设置，必须设置到全局根作用域，如果启用后，xmake 执行完包拉取，就会自动生成一个 <code>xmake-requires.lock</code> 的配置文件。</p>
+<p>它包含了项目依赖的所有包，以及当前包的版本等信息。</p>
+<pre><code class="lang-lua">{
+    __meta__ = {
+        version = "1.0"
+    },
+    ["macosx|x86_64"] = {
+        ["cmake#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "4498f11267de5112199152ab030ed139c985ad5a",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "3.21.0"
+        },
+        ["glfw#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "eda7adee81bac151f87c507030cc0dd8ab299462",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "3.3.4"
+        },
+        ["opengl#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "94d2eee1f466092e04c5cf1e4ecc8c8883c1d0eb",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            }
+        }
+    }
+}
+</code></pre>
+<p>当然，我们也可以执行下面的命令，强制升级包到最新版本。</p>
+<pre><code class="lang-console">$ xmake require --upgrade
+upgrading packages ..
+  zlib: 1.2.10 -> 1.2.11
+1 package is upgraded!
+</code></pre>
+<h2 id="">分发和使用自定义包规则</h2>
+<p>2.7.2 版本之后，我们可以在包管理仓库中，添加自定义构架规则脚本，实现跟随包进行动态下发和安装。</p>
+<p>我们需要将自定义规则放到仓库的 <code>packages/x/xxx/rules</code> 目录中，它会跟随包一起被安装。</p>
+<p>但是，它也存在一些限制：</p>
+<ul>
+<li>在包中规则，我们不能添加 <code>on_load</code>, <code>after_load</code> 脚本，但是通常我们可以使用 <code>on_config</code> 来代替。</li>
+</ul>
+<h3 id="">添加包规则</h3>
+<p>我们需要将规则脚本添加到 rules 固定目录下，例如：packages/z/zlib/rules/foo.lua</p>
+<pre><code class="lang-lua">rule("foo")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+</code></pre>
+<h3 id="">应用包规则</h3>
+<p>使用规则的方式跟之前类似，唯一的区别就是，我们需要通过 <code>@packagename/</code> 前缀去指定访问哪个包里面的规则。</p>
+<p>具体格式：<code>add_rules("@packagename/rulename")</code>，例如：<code>add_rules("@zlib/foo")</code>。</p>
+<pre><code class="lang-lua">add_requires("zlib", {system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib")
+    add_rules("@zlib/foo")
+</code></pre>
+<h3 id="">通过包别名引用规则</h3>
+<p>如果存在一个包的别名，xmake 将优先考虑包的别名来获得规则。</p>
+<pre><code class="lang-lua">add_requires("zlib", {alias = "zlib2", system = false})
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib2")
+    add_rules("@zlib2/foo")
+</code></pre>
+<h3 id="">添加包规则依赖</h3>
+<p>我们可以使用<code>add_deps("@bar")</code>来添加相对于当前包目录的其他规则。</p>
+<p>然而，我们不能添加来自其他包的规则依赖，它们是完全隔离的，我们只能参考用户项目中由<code>add_requires</code>导入的其他包的规则。</p>
+<p>packages/z/zlib/rules/foo.lua</p>
+<pre><code class="lang-lua">rule("foo")
+    add_deps("@bar")
+    on_config(function (target)
+        print("foo: on_config %s", target:name())
+    end)
+</code></pre>
+<p>packages/z/zlib/rules/bar.lua</p>
+<pre><code class="lang-lua">rule("bar")
+    on_config(function (target)
+        print("bar: on_config %s", target:name())
+    end)
+</code></pre>
+<h2 id="cmakexrepo">在 CMake 中使用 Xrepo 的依赖包管理</h2>
+<p>我们新增了一个独立项目 <a href="https://github.com/xmake-io/xrepo-cmake">xrepo-cmake</a>。</p>
+<p>它是一个基于 Xrepo/Xmake 的 C/C++ 包管理器的 CMake 包装器。</p>
+<p>这允许使用 CMake 来构建您的项目，同时使用 Xrepo 来管理依赖包。这个项目的部分灵感来自 <a href="https://github.com/conan-io/cmake-conan">cmake-conan</a>。</p>
+<p>此项目的示例用例：</p>
+<ul>
+<li>想要使用 Xrepo 管理包的现有 CMake 项目。</li>
+<li>必须使用 CMake，但想使用 Xrepo 管理的新项目包。</li>
+</ul>
+<h3 id="apis">Apis</h3>
+<h4 id="xrepo_package">xrepo_package</h4>
+<p><a href="https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake">xrepo.cmake</a> 提供<code>xrepo_package</code>函数来管理包。</p>
+<pre><code class="lang-cmake">xrepo_package(
+    "foo 1.2.3"
+    [CONFIGS feature1=true,feature2=false]
+    [CONFIGS path/to/script.lua]
+    [DEPS]
+    [MODE debug|release]
+    [ALIAS aliasname]
+    [OUTPUT verbose|diagnosis|quiet]
+    [DIRECTORY_SCOPE]
+)
+</code></pre>
+<p>一些函数参数直接对应于 Xrepo 命令选项。</p>
+<p><code>xrepo_package</code> 将软件包安装目录添加到 <code>CMAKE_PREFIX_PATH</code>。所以<code>find_package</code><br>可以使用。如果 <code>CMAKE_MINIMUM_REQUIRED_VERSION</code> >= 3.1，cmake <code>pkgConfig</code> 也会搜索<br>对于软件包安装目录下的 pkgconfig 文件。</p>
+<p>调用 <code>xrepo_package(foo)</code> 后，有 <code>foo</code> 包的三种使用方式：</p>
+<ol>
+<li>如果包提供 cmake 配置文件，则调用 <code>find_package(foo)</code>。<ul>
+<li>有关详细信息，请参阅 CMake <a href="https://cmake.org/cmake/help/latest/command/find_package.html"><code>find_package</code></a> 文档。<br>2.如果包没有提供cmake配置文件或者找不到模块<ul>
+<li>以下变量可用于使用pacakge（cmake后的变量名<br>查找模块 <a href="https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html#standard-variable-names">标准变量名称</a>)</li>
+<li><code>foo_INCLUDE_DIRS</code></li>
+<li><code>foo_LIBRARY_DIRS</code></li>
+<li><code>foo_LIBRARIES</code></li>
+<li><code>foo_DEFINITIONS</code></li>
+<li>如果指定了 <code>DIRECTORY_SCOPE</code>，则 <code>xrepo_package</code> 将运行以下代码<pre><code class="lang-cmake">include_directories(${foo_INCLUDE_DIRS})
+link_directories(${foo_LIBRARY_DIRS})
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用<code>xrepo_target_packages</code>。请参阅以下部分。</li>
+</ol>
+<p>注意 <code>CONFIGS path/to/script.lua</code> 用于对包配置进行精细控制。<br>例如：</p>
+<ul>
+<li>排除系统上的包。</li>
+<li>覆盖依赖包的默认配置，例如设置<code>shared=true</code>。</li>
+</ul>
+<p>如果指定了 <code>DEPS</code>，所有依赖库都将添加到 <code>CMAKE_PREFIX_PATH</code>，以及 include 和 libraries 那四个变量中。</p>
+<h4 id="xrepo_target_packages">xrepo_target_packages</h4>
+<p>将包 includedirs 和 links/linkdirs 添加到给定的目标。</p>
+<pre><code class="lang-cmake">xrepo_target_packages(
+    target
+    [NO_LINK_LIBRARIES]
+    [PRIVATE|PUBLIC|INTERFACE]
+    package1 package2 ...
+)
+</code></pre>
+<h3 id="">使用来自官方存储库的包</h3>
+<p>Xrepo 官方仓库：<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
+<p>这是一个使用 <code>gflags</code> 包版本 2.2.2 的示例 <code>CMakeLists.txt</code> 由 Xrepo 管理。</p>
+<h4 id="xrepocmake">集成 xrepo.cmake</h4>
+<pre><code class="lang-cmake">cmake_minimum_required(VERSION 3.13.0)
+
+project(foo)
+
+# Download xrepo.cmake if not exists in build directory.
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/xrepo.cmake")
+    message(STATUS "Downloading xrepo.cmake from https://github.com/xmake-io/xrepo-cmake/")
+    # mirror https://cdn.jsdelivr.net/gh/xmake-io/xrepo-cmake@main/xrepo.cmake
+    file(DOWNLOAD "https://raw.githubusercontent.com/xmake-io/xrepo-cmake/main/xrepo.cmake"
+                  "${CMAKE_BINARY_DIR}/xrepo.cmake"
+                  TLS_VERIFY ON)
+endif()
+
+# Include xrepo.cmake so we can use xrepo_package function.
+include(${CMAKE_BINARY_DIR}/xrepo.cmake)
+</code></pre>
+<h4 id="">添加包</h4>
+<pre><code class="lang-cmake">xrepo_package("zlib")
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+xrepo_target_packages(example-bin zlib)
+</code></pre>
+<h4 id="">添加带有配置的包</h4>
+<pre><code class="lang-cmake">xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+xrepo_target_packages(example-bin gflags)
+</code></pre>
+<h4 id="cmake">添加带有 cmake 导入模块的包</h4>
+<pre><code class="lang-cmake">xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
+
+# `xrepo_package` 会将 gflags 安装目录添加到 CMAKE_PREFIX_PATH.
+# `find_package(gflags)` 会从 CMAKE_PREFIX_PATH 包含的目录中找到 gflags 提供的
+# config-file 文件。
+# 参考 https://cmake.org/cmake/help/latest/command/find_package.html#search-modes
+find_package(gflags CONFIG COMPONENTS shared)
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+target_link_libraries(example-bin gflags)
+</code></pre>
+<h4 id="">添加自定义包</h4>
+<pre><code class="lang-cmake">set(XREPO_XMAKEFILE ${CMAKE_CURRENT_SOURCE_DIR}/packages/xmake.lua)
+xrepo_package("myzlib")
+
+add_executable(example-bin "")
+target_sources(example-bin PRIVATE
+    src/main.cpp
+)
+xrepo_target_packages(example-bin myzlib)
+</code></pre>
+<p>在 packages/xmake.lua 中定义一个包：</p>
+<pre><code class="lang-lua">package("myzlib")
+    -- ...
+</code></pre>
+<p>我们可以自定义一个包，具体定义方式，参考文档：<a href="https://xmake.io/#/zh-cn/package/remote_package?id=package-description">自定义 Xrepo 包</a>。</p>
+<h3 id="">使用来自第三个存储库的包</h3>
+<p>除了从官方维护的存储库安装软件包之外，Xrepo 还可以安装来自第三方包管理器的包，例如 vcpkg/conan/conda/pacman/homebrew/apt/dub/cargo。</p>
+<p>关于命令行的使用，我们可以参考文档：<a href="https://xrepo.xmake.io/#/getting_started?id=install-packages-from-third-party-package-manager">Xrepo命令用法</a></p>
+<p>我们也可以直接在 cmake 中使用它来安装来自第三方仓库的包，只需将仓库名称添加为命名空间即可。例如：<code>vcpkg::zlib</code>, <code>conan::pcre2</code></p>
+<h4 id="conan">Conan</h4>
+<pre><code class="lang-cmake">xrepo_package("conan::gflags/2.2.2")
+</code></pre>
+<h4 id="conda">Conda</h4>
+<pre><code class="lang-cmake">xrepo_package("conda::gflags 2.2.2")
+</code></pre>
+<h4 id="vcpkg">Vcpkg</h4>
+<pre><code class="lang-cmake">xrepo_package("vcpkg::gflags")
+</code></pre>
+<h4 id="homebrew">Homebrew</h4>
+<pre><code class="lang-cmake">xrepo_package("brew::gflags")
+</code></pre>
+</article>
+</body>
+</html>

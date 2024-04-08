@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/manual/xpack">https://xmake.io/#/manual/xpack</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="packaginginterface">Packaging interface</h2>
+<p>xpack is provided as a plug-in, and all its APIs need to be introduced through <code>includes("@builtin/xpack")</code>.</p>
+<pre><code class="lang-lua">includes("@builtin/xpack")
+
+xpack("test")
+     set_version("1.0")
+     set_homepage("https://xmake.io")
+     add_installfiles("...")
+</code></pre>
+<h3 id="xpackset_version">xpack:set_version</h3>
+<h4 id="setpackageversion">Set package version</h4>
+<p>This interface is used to set the version of the generated installation package:</p>
+<pre><code class="lang-lua">xpack("test")
+     set_version("1.0")
+     --...
+</code></pre>
+<p>If we do not set it, but bind the installed target program through <code>set_targets</code>, the version configuration in target will also be used.</p>
+<pre><code class="lang-lua">target("foo")
+     set_version("1.0")
+
+xpack("test")
+     set_targets("foo")
+     --...
+</code></pre>
+<p>We can also use the global project version if no targets are bound.</p>
+<pre><code class="lang-lua">set_version("1.0")
+
+xpack("xmake")
+     --...
+</code></pre>
+<h3 id="xpackset_homepage">xpack:set_homepage</h3>
+<h4 id="sethomepageinformation">Set homepage information</h4>
+<pre><code class="lang-lua">xpack("xmake")
+     set_homepage("https://xmake.io")
+</code></pre>
+<h3 id="xpackset_title">xpack:set_title</h3>
+<h4 id="settitleinformation">Set title information</h4>
+<p>A simple description usually used to configure the installation package, shorter than <code>set_description</code>.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_title("Xmake build utility ($(arch))")
+</code></pre>
+<h3 id="xpackset_description">xpack:set_description</h3>
+<h4 id="setdetaileddescription">Set detailed description</h4>
+<p>This interface can set more detailed description information of the installation package. You can use one or two sentences to describe the package in detail.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_description("A cross-platform build utility based on Lua.")
+</code></pre>
+<h3 id="xpackset_author">xpack:set_author</h3>
+<h4 id="setauthorinformation">Set author information</h4>
+<p>We can set the email address, name, etc. to describe the author of this package.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_author("waruqi@gmail.com")
+</code></pre>
+<h3 id="xpackset_maintainer">xpack:set_maintainer</h3>
+<h4 id="setmaintainerinformation">Set maintainer information</h4>
+<p>We can set the email address, name, etc. to describe the maintainer of this package.</p>
+<p>The maintainer and author may or may not be the same person.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_maintainer("waruqi@gmail.com")
+</code></pre>
+<h3 id="xpackset_copyright">xpack:set_copyright</h3>
+<h4 id="setthecopyrightinformationofthepackage">Set the copyright information of the package</h4>
+<pre><code class="lang-lua">xpack("xmake")
+     set_copyright("Copyright (C) 2015-present, TBOOX Open Source Group")
+</code></pre>
+<h3 id="xpackset_license">xpack:set_license</h3>
+<h4 id="setthepackagelicence">Set the package licence</h4>
+<p>Currently used by packages like srpm/rpm/deb to set the licence name.</p>
+<pre><code class="lang-lua">set_license("Apache-2.0")
+</code></pre>
+<h3 id="xpackset_licensefile">xpack:set_licensefile</h3>
+<h4 id="setthelicensefileofthepackage">Set the license file of the package</h4>
+<p>We can set the file path where LICENSE is located, like the NSIS installation package, it will also additionally display the LICENSE page to the installation user.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_licensefile("../LICENSE.md")
+</code></pre>
+<h3 id="xpackset_company">xpack:set_company</h3>
+<h4 id="setthecompanytowhichthepackagebelongs">Set the company to which the package belongs</h4>
+<p>We can use this interface to set the company and organization name to which the package belongs.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_company("tboox.org")
+</code></pre>
+<h3 id="xpackset_inputkind">xpack:set_inputkind</h3>
+<h4 id="setthepackagedinputsourcetype">Set the packaged input source type</h4>
+<p>This is an optional interface that can be used to identify the currently packaged input source type.</p>
+<ul>
+<li>binary: package from binary files as input source, usually using <code>add_installfiles</code></li>
+<li>source: Start packaging from a source file as an input source, usually using <code>add_sourcefiles</code></li>
+</ul>
+<p>This is generally used for custom packaging formats, and for built-in formats, such as: nsis, zip, srczip, etc.,<br>In fact, it can be determined whether the currently packaged input source is packaged from the source code or directly from the binary source.</p>
+<p>Therefore, unless necessary (such as customizing the packaging format), we usually do not need to set it.</p>
+<p>In the script domain, we can also use <code>package:from_source()</code> and <code>package:from_binary()</code> to determine the current input source.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("nsis", "zip", "targz", "srczip", "srctargz", "runself")
+     add_installfiles("src/(assets/*.png)", {prefixdir = "images"})
+     add_sourcefiles("(src/**)")
+     on_load(function (package)
+         if package:from_source() then
+             package:set("basename", "test-$(plat)-src-v$(version)")
+         else
+             package:set("basename", "test-$(plat)-$(arch)-v$(version)")
+         end
+     end)
+</code></pre>
+<p>If the above packaging configuration is an nsis package, the binary file will be used as the input source for packaging by default, and the files configured by <code>add_installfiles</code> will be packaged.</p>
+<p><code>srczip</code>, <code>srctargz</code> and <code>runself</code> start packaging from the source file, will package the files in <code>add_sourcefiles</code>, and then execute the packaging script.</p>
+<h3 id="xpackset_formats">xpack:set_formats</h3>
+<h4 id="setpackagingformat">Set packaging format</h4>
+<p>Configure the packaging format that needs to be generated by the current XPack package. Multiple formats can be configured at the same time. The <code>xmake pack</code> command will generate them all at once.</p>
+<p>!> Some formats will be automatically ignored if the current platform does not support generation.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("nsis", "zip", "targz", "srczip", "srctargz", "runself")
+</code></pre>
+<p>We can also specify to generate some of the formats through commands instead of generating them all at once.</p>
+<pre><code class="lang-bash">$ xmake pack -f "nsis,zip"
+</code></pre>
+<p>Separated by commas, specify to generate NSIS and zip packages, and ignore other format packages for the time being.</p>
+<p>Currently supported formats are:</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nsis</td>
+<td>Windows NSIS installation package, binary installation</td>
+</tr>
+<tr>
+<td>zip</td>
+<td>Binary zip package, does not contain installation script</td>
+</tr>
+<tr>
+<td>targz</td>
+<td>Binary tar.gz package, does not contain the installation script</td>
+</tr>
+<tr>
+<td>srczip</td>
+<td>zip source package</td>
+</tr>
+<tr>
+<td>srctargz</td>
+<td>tar.gz source package</td>
+</tr>
+<tr>
+<td>runself</td>
+<td>self-running shell script package, source code compilation and installation</td>
+</tr>
+<tr>
+<td>rpm</td>
+<td>rpm binary installation package</td>
+</tr>
+<tr>
+<td>srpm</td>
+<td>rpm source code installation package</td>
+</tr>
+<tr>
+<td>deb</td>
+<td>deb binary installation package (TODO)</td>
+</tr>
+<tr>
+<td>Others</td>
+<td>Customizable formats and installation scripts</td>
+</tr>
+</tbody>
+</table>
+<h3 id="xpackset_basename">xpack:set_basename</h3>
+<h4 id="setpackagefilename">Set package file name</h4>
+<p>Set the file name of the generated package, but do not include the suffix.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_basename("xmake-v$(version)")
+</code></pre>
+<p>We can also configure variables such as <code>$(version)</code>, <code>$(plat)</code>, <code>$(arch)</code> and so on.</p>
+<p>In addition, if you want more flexible configuration, you can configure it in the on_load script.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     on_load(function (package)
+         package:set("basename", "xmake-v" .. package:version())
+     end)
+</code></pre>
+<h3 id="xpackset_extension">xpack:set_extension</h3>
+<h4 id="settheextensionoftheinstallationpackage">Set the extension of the installation package</h4>
+<p>Usually we do not need to modify the extension of the generated package, because after specifying <code>nsis</code>, <code>zip</code> and other formats, there will be a default suffix name, such as: <code>.exe</code>, <code>.zip</code>.</p>
+<p>However, if we are customizing the package format and need to generate a custom package, then we may need to configure it.</p>
+<pre><code class="lang-lua">xpack("mypack")
+     set_format("myformat")
+     set_extension(".myf")
+     on_package(function (package)
+         local outputfile = package:outputfile()
+         -- TODO
+     end)
+</code></pre>
+<p>For example, here we customize a myformat package format, using the custom suffix name of <code>.myf</code>, and then we can generate it in on_package,</p>
+<p>The package output file name returned by <code>package:outputfile()</code> will contain this suffix.</p>
+<h3 id="xpackadd_targets">xpack:add_targets</h3>
+<h4 id="associatedtargetprogram">Associated target program</h4>
+<p>We can use this interface to configure the associated target that needs to be installed.</p>
+<pre><code class="lang-lua">target("foo")
+     set_kind("shared")
+     add_files("src/*.cpp")
+     add_headerfiles("include/(*.h)")
+
+xpack("test")
+     set_formats("nsis")
+     add_targets("foo")
+</code></pre>
+<p>When the test installation package is generated, the executable program and dynamic library of the associated foo target will be packaged and installed together.<br>In addition, the custom installation files configured through <code>add_headerfiles</code> and <code>add_installfiles</code> in the target will also be included in the installation package and installed together.</p>
+<p>And we can also use <code>on_installcmd</code>, <code>after_installcmd</code> and other custom packaging installation scripts in the target and its rules, which will also be executed together.</p>
+<h3 id="xpackadd_components">xpack:add_components</h3>
+<h4 id="addinstallationpackagecomponents">Add installation package components</h4>
+<p>We also support adding custom components to the installation package and selecting and installing them according to the component mode. Currently, only NSIS packages have comparative support effects.</p>
+<p>We can define a component domain through <code>xpack_component()</code>, and then use <code>add_components()</code> to add the specified component and associate it with the package.</p>
+<p>In the component, we can write some custom installation scripts through <code>on_installcmd()</code>, and the installation will only be executed when the component is enabled.</p>
+<pre><code class="lang-lua">xpack("test")
+     add_components("LongPath")
+
+xpack_component("LongPath")
+     set_default(false)
+     set_title("Enable Long Path")
+     set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
+     on_installcmd(function (component, batchcmds)
+         batchcmds:rawcmd("nsis", [[
+   ${If} $NoAdmin == "false"
+     ; Enable long path
+     WriteRegDWORD ${HKLM} "SYSTEM\CurrentControlSet\Control\FileSystem" "LongPathsEnabled" 1
+   ${EndIf}]])
+     end)
+</code></pre>
+<p>Here, we use <code>batchcmds:rawcmd("nsis", "...")</code> to add an nsis-specific installation command to enable long path support. The effect is as follows:</p>
+<p><img src="/assets/img/manual/nsis_4.png" alt=""></p>
+<p>It will only be enabled when we check LongPath. Of course, we can also configure whether the component is enabled by default through <code>set_default()</code>.</p>
+<p>Except for the NSIS package, although other packages do not have complete support for components, they will also execute the scripts in the components to implement packaging, but may not be able to display the corresponding component UI and check boxes.</p>
+<h3 id="xpackset_bindir">xpack:set_bindir</h3>
+<h4 id="setthebinaryinstallationdirectoryofthepackage">Set the binary installation directory of the package</h4>
+<p>Usually the generated installation package will have an installation root directory, and we can specify the bin directory location under the installation directory through this configuration.</p>
+<p>If not specified, defaults to <code>installdir/bin</code>.</p>
+<p>If configured</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_bindir("mybin")
+</code></pre>
+<p>Then the executable file will be installed under <code>installdir/mybin</code>. If it is an NSIS package, this path will be automatically set to <code>%PATH%</code> after installation.</p>
+<h3 id="xpackset_libdir">xpack:set_libdir</h3>
+<h4 id="setthelibraryinstallationdirectoryofthepackage">Set the library installation directory of the package</h4>
+<p>Usually the generated installation package will have an installation root directory, and we can specify the lib directory location under the installation directory through this configuration.</p>
+<p>If not specified, defaults to <code>installdir/lib</code>.</p>
+<p>If configured</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_libdir("mylib")
+</code></pre>
+<p>Then the static library files will be installed under <code>installdir/mylib</code>.</p>
+<h3 id="xpackset_includedir">xpack:set_includedir</h3>
+<h4 id="setthepackageheaderfileinstallationdirectory">Set the package header file installation directory</h4>
+<p>Usually the generated installation package will have an installation root directory, and we can specify the include directory location under the installation directory through this configuration.</p>
+<p>If not specified, defaults to <code>installdir/include</code>.</p>
+<p>If configured</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_includedir("myinc")
+</code></pre>
+<p>Then the header files will be installed under <code>installdir/myinc</code>.</p>
+<h3 id="xpackset_prefixdir">xpack:set_prefixdir</h3>
+<h4 id="settheinstallationprefixdirectoryofthepackage">Set the installation prefix directory of the package</h4>
+<p>If configured</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_prefixdir("prefix")
+</code></pre>
+<p>Then all installation files will be installed under <code>installdir/prefix</code>, for example:</p>
+<pre><code>installdir
+   - prefix
+     - include
+     - lib
+     - bin
+</code></pre><h3 id="xpackset_specfile">xpack:set_specfile</h3>
+<h4 id="setpackagespecfilepath">Set package spec file path</h4>
+<p>The generation of some package formats requires the generation of specific spec files before calling third-party packaging tools to generate packages.</p>
+<p>For example, for NSIS packages, you need to first generate an NSIS-specific <code>.nsi</code> configuration file through xmake based on the xpack configuration, and then xmake will call <code>makensis.exe</code> to generate the NSIS package based on this <code>.nsi</code> file.</p>
+<p>Packages such as deb/rpm have specific spec files.</p>
+<p>xmake will automatically generate a spec file by default when packaging, but if we want to more deeply customize the configuration of some unique packages, we can use this interface,</p>
+<p>Configure a spec file of your own, in which the user maintains some package configuration definitions, and then define some <code>${PACKAGE_NAME}</code>, <code>${VERSION}</code> package-specific built-in variables in it to realize package information replacement.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_formats("nsis")
+     set_specfile("makensis.nsi")
+</code></pre>
+<p>makensis.nsi</p>
+<pre><code>VIProductVersion "${VERSION}.0"
+VIFileVersion "${VERSION}.0"
+VIAddVersionKey /LANG=0 ProductName "${PACKAGE_NAME}"
+VIAddVersionKey /LANG=0 Comments "${PACKAGE_DESCRIPTION}"
+VIAddVersionKey /LANG=0 CompanyName "${PACKAGE_COMPANY}"
+VIAddVersionKey /LANG=0 LegalCopyright "${PACKAGE_COPYRIGHT}"
+VIAddVersionKey /LANG=0 FileDescription "${PACKAGE_NAME} Installer - v${VERSION}"
+VIAddVersionKey /LANG=0 OriginalFilename "${PACKAGE_FILENAME}"
+</code></pre><p>Here are some built-in commonly used package variables:</p>
+<table>
+<thead>
+<tr>
+<th>Variable name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PACKAGE_ARCH</td>
+<td>Architecture of package binaries</td>
+</tr>
+<tr>
+<td>PACKAGE_PLAT</td>
+<td>Platform for package binaries</td>
+</tr>
+<tr>
+<td>PACKAGE_NAME</td>
+<td>Package name</td>
+</tr>
+<tr>
+<td>PACKAGE_TITLE</td>
+<td>Brief description of the package</td>
+</tr>
+<tr>
+<td>PACKAGE_DESCRIPTION</td>
+<td>Detailed description of the package</td>
+</tr>
+<tr>
+<td>PACKAGE_FILENAME</td>
+<td>Package file name</td>
+</tr>
+<tr>
+<td>PACKAGE_AUTHOR</td>
+<td>package author</td>
+</tr>
+<tr>
+<td>PACKAGE_MAINTAINER</td>
+<td>Package maintainer</td>
+</tr>
+<tr>
+<td>PACKAGE_HOMEPAGE</td>
+<td>Package homepage address</td>
+</tr>
+<tr>
+<td>PACKAGE_COPYRIGHT</td>
+<td>Package copyright information</td>
+</tr>
+<tr>
+<td>PACKAGE_COMPANY</td>
+<td>The name of the company to which the package belongs</td>
+</tr>
+<tr>
+<td>PACKAGE_ICONFILE</td>
+<td>Package icon file path</td>
+</tr>
+<tr>
+<td>PACKAGE_LICENSEFILE</td>
+<td>Package LICENSE file path</td>
+</tr>
+<tr>
+<td>PACKAGE_VERSION_MAJOR</td>
+<td>The major version of the package</td>
+</tr>
+<tr>
+<td>PACKAGE_VERSION_MINOR</td>
+<td>The minor version of the package</td>
+</tr>
+<tr>
+<td>PACKAGE_VERSION_ALTER</td>
+<td>Alter version of package</td>
+</tr>
+<tr>
+<td>PACKAGE_VERSION_BUILD</td>
+<td>The build version of the package</td>
+</tr>
+</tbody>
+</table>
+<p>In addition to built-in variables, we can also configure some custom template variables through the <code>set_specvar</code> interface.</p>
+<h3 id="xpackset_specvar">xpack:set_specvar</h3>
+<h4 id="setcustomvariablesinthepackagespecfile">Set custom variables in the package spec file</h4>
+<p>Usually used together with the <code>set_specfile</code> interface to set some custom package variables in a custom spec template file.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_formats("nsis")
+     set_specfile("makensis.nsi")
+     set_specvar("FOO", "hello")
+</code></pre>
+<p>makensis.nsi</p>
+<pre><code>VIAddVersionKey /LANG=0 ProductName "${FOO}"
+</code></pre><p>Before generating the package, xmake will replace <code>${FOO}</code> with hello, and then call the <code>makensis.exe</code> command to generate the NSIS installation package based on this file.</p>
+<h3 id="xpackset_iconfile">xpack:set_iconfile</h3>
+<h4 id="seticonfilepath">Set icon file path</h4>
+<p>We can additionally configure an ico icon file, which can be used to set the icon of some installation packages such as NSIS that support icon customization.</p>
+<pre><code class="lang-lua">xpack("xmake")
+     set_iconfile("xmake.ico")
+</code></pre>
+<h3 id="xpackadd_sourcefiles">xpack:add_sourcefiles</h3>
+<h4 id="addsourcefiles">Add source files</h4>
+<p>This is usually used for source packages, that is, pure source packages such as <code>srczip</code>, <code>srctargz</code>, and source code installation packages in the <code>runself</code> format.</p>
+<p>If it is a custom package format, we need to configure <code>set_inputkind("source")</code> to open the source package.</p>
+<p>Through this interface, you can customize which source files need to be included in the package for later compilation and installation.</p>
+<p>Its detailed usage is similar to <code>add_installfiles</code>, you can refer to its documentation description.</p>
+<h3 id="xpackadd_installfiles">xpack:add_installfiles</h3>
+<h4 id="addbinaryfiles">Add binary files</h4>
+<p>This is usually used for binary packages, that is, packages in <code>nsis</code>, <code>deb</code>, etc. formats, which install binary files directly.</p>
+<p>Therefore, we can use this interface to configure additional binary files that need to be installed, such as executable files, resource files, etc.</p>
+<p>For example, we can specify to install various types of files to the installation directory:</p>
+<pre><code class="lang-lua">xpack("test")
+     add_installfiles("src/*.h")
+     add_installfiles("doc/*.md")
+</code></pre>
+<p>We can also specify to install to a specific subdirectory:</p>
+<pre><code class="lang-lua">xpack("test")
+     add_installfiles("src/*.h", {prefixdir = "include"})
+     add_installfiles("doc/*.md", {prefixdir = "share/doc"})
+</code></pre>
+<p>For the above settings, we will install them to <code>installdir/include/*.h</code>, <code>installdir/share/doc/*.md</code>.</p>
+<p>Note: The default installation will not retain the directory structure and will be fully expanded. Of course, we can also use <code>()</code> to extract the subdirectory structure in the source file for installation, for example:</p>
+<pre><code class="lang-lua">xpack("test")
+     add_installfiles("src/(tbox/*.h)", {prefixdir = "include"})
+     add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
+</code></pre>
+<h3 id="xpackadd_buildrequires">xpack:add_buildrequires</h3>
+<h4 id="addpackagebuilddependencies">Add package build dependencies</h4>
+<p>This is usually used for some source packages, such as srpm. Before installing these source code packages, you need to build the source code first, and building the source code may require the use of some other dependency packages.</p>
+<p>We can configure them through this interface.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     on_load(function (package)
+         local format = package:format()
+         if format == "srpm" then
+             package:add("buildrequires", "make")
+             package:add("buildrequires", "gcc")
+             package:add("buildrequires", "gcc-c++")
+         end
+     end)
+     on_buildcmd(function (package, batchcmds)
+         batchcmds:runv("make")
+     end)
+</code></pre>
+<p>Since different installation packages have some differences in their dependent package names, we need to configure them for different package formats in the on_load script domain.</p>
+<h3 id="xpackon_load">xpack:on_load</h3>
+<h4 id="customloadingscript">Custom loading script</h4>
+<p>If the configuration in the description field cannot meet our needs, we can further flexibly configure the package in the on_load custom script field.</p>
+<p>This interface will be called during the initial loading of each XPack package, and you can make some basic configurations in it.</p>
+<p>For example, dynamically modify the package file name in it:</p>
+<pre><code class="lang-lua">xpack("test")
+     on_load(function (package)package:set("basename", "test-" .. package:version())
+     end)
+</code></pre>
+<h3 id="xpackbefore_package">xpack:before_package</h3>
+<h4 id="customizethescriptbeforepackaging">Customize the script before packaging</h4>
+<p>We can configure custom scripts before packaging through this interface.</p>
+<pre><code class="lang-lua">xpack("test")
+     before_package(function (package)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpackon_package">xpack:on_package</h3>
+<h4 id="custompackagingscript">Custom packaging script</h4>
+<p>We can configure packaging custom scripts through this interface, which will rewrite the entire built-in packaging logic. Typically used for custom package formats.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("xxx")
+     on_package(function (package)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpackafter_package">xpack:after_package</h3>
+<h4 id="customizethescriptafterpackaging">Customize the script after packaging</h4>
+<p>We can configure the custom script after packaging through this interface.</p>
+<pre><code class="lang-lua">xpack("test")
+     after_package(function (package)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpackon_buildcmd">xpack:on_buildcmd</h3>
+<h4 id="custombuildscript">Custom build script</h4>
+<p>For some source code build packages, we need to build the source code first before installation, such as srpm packages.</p>
+<p>Therefore, we can customize the build script through this interface, for example:</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     add_sourcefiles("src/*.c")
+     add_sourcefiles("./configure")
+     on_buildcmd(function (package, batchcmds)
+         batchcmds:runv("./configure")
+         batchcmds:runv("make")
+     end)
+</code></pre>
+<p>If we associate target programs through add_targets, xpack will execute the <code>xmake build</code> command by default to build them even if we do not configure <code>on_buildcmd</code>.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     add_sourcefiles("src/*.c")
+     add_sourcefiles("./xmake.lua")
+</code></pre>
+<p>In addition, we can also use <code>add_buildrequires</code> to configure some build dependencies.</p>
+<h3 id="xpackbefore_buildcmd">xpack:before_buildcmd</h3>
+<h4 id="customizeprebuildscripts">Customize pre-build scripts</h4>
+<p>Through this interface, we can configure pre-build scripts.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     before_buildcmd(function (package, batchcmds)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpackafter_buildcmd">xpack:after_buildcmd</h3>
+<h4 id="customizethescriptafterthebuild">Customize the script after the build</h4>
+<p>Through this interface, we can configure the script after the build.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srpm")
+     after_buildcmd(function (package, batchcmds)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpackbefore_installcmd">xpack:before_installcmd</h3>
+<h4 id="addscriptbeforeinstallation">Add script before installation</h4>
+<p>It will not rewrite the entire installation script, but will add some custom installation scripts before the existing installation scripts are executed:</p>
+<pre><code class="lang-lua">xpack("test")
+     before_installcmd(function (package, batchcmds)
+         batchcmds:mkdir(package:installdir("resources"))
+         batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+         batchcmds:mkdir(package:installdir("stub"))
+     end)
+</code></pre>
+<p>It should be noted that the cp, mkdir and other commands added through <code>batchcmds</code> will not be executed immediately, but will only generate a command list. When the package is actually generated later, these commands will be translated into packaging commands.</p>
+<h3 id="xpackon_installcmd">xpack:on_installcmd</h3>
+<h4 id="custominstallationscript">Custom installation script</h4>
+<p>This time, the built-in default installation script is completely rewritten, including the internal automatic installation of files configured with <code>add_installfiles</code>. Users need to handle all the installation logic by themselves.</p>
+<h3 id="xpackafter_installcmd">xpack:after_installcmd</h3>
+<h4 id="addpostinstallationscripts">Add post-installation scripts</h4>
+<p>It will not rewrite the entire installation script, but will add some custom installation scripts after the existing installation scripts are executed:</p>
+<pre><code class="lang-lua">xpack("test")
+     after_installcmd(function (package, batchcmds)
+         batchcmds:mkdir(package:installdir("resources"))
+         batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+         batchcmds:mkdir(package:installdir("stub"))
+     end)
+</code></pre>
+<p>It should be noted that the cp, mkdir and other commands added through <code>batchcmds</code> will not be executed immediately, but will only generate a command list. When the package is actually generated later, these commands will be translated into packaging commands.</p>
+<h3 id="xpackbefore_uninstallcmd">xpack:before_uninstallcmd</h3>
+<h4 id="addscriptbeforeuninstallation">Add script before uninstallation</h4>
+<p>Similar to before_installcmd, please refer to before_installcmd description.</p>
+<h3 id="xpackon_uninstallcmd">xpack:on_uninstallcmd</h3>
+<h4 id="customuninstallscript">Custom uninstall script</h4>
+<p>Similar to on_installcmd, please refer to on_installcmd description.</p>
+<h3 id="xpackafter_uninstallcmd">xpack:after_uninstallcmd</h3>
+<h4 id="addscriptafteruninstallation">Add script after uninstallation</h4>
+<p>Similar to after_installcmd, please refer to after_installcmd description.</p>
+<h3 id="xpackset_nsis_displayicon">xpack:set_nsis_displayicon</h3>
+<h4 id="setthedisplayiconofnsis">Set the display icon of NSIS</h4>
+<p>This is an NSIS proprietary API that can be used to configure NSIS display icons:</p>
+<pre><code class="lang-lua">xpack("test")
+     set_nsis_displayicon("bin/foo.exe")
+</code></pre>
+<p>We need to configure the executable file path with an icon so that the icon displayed in the installation package is consistent with it.</p>
+<p>This is an optional configuration. Even if we do not configure it, xmake will use the icon in the executable file in the associated target by default.</p>
+<h2 id="componentinterface">Component interface</h2>
+<h3 id="xpack_componentset_title">xpack_component:set_title</h3>
+<h4 id="setabriefdescriptionofthepackagecomponents">Set a brief description of the package components</h4>
+<pre><code class="lang-lua">xpack_component("LongPath")
+     set_title("Enable Long Path")
+</code></pre>
+<h3 id="xpack_componentset_description">xpack_component:set_description</h3>
+<h4 id="setdetaileddescriptionofpackagecomponents">Set detailed description of package components</h4>
+<pre><code class="lang-lua">xpack_component("LongPath")
+     set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
+</code></pre>
+<h3 id="xpack_componentset_default">xpack_component:set_default</h3>
+<h4 id="setthedefaultenabledstateofpackagecomponents">Set the default enabled state of package components</h4>
+<p>Usually the package component is enabled by default, but we can also use this interface to disable this component by default. Only when the user chooses to check this component when installing the package will it be enabled for installation.</p>
+<pre><code class="lang-lua">xpack_component("LongPath")
+     set_default(false)
+     set_title("Enable Long Path")
+</code></pre>
+<h3 id="xpack_componenton_load">xpack_component:on_load</h3>
+<h4 id="customloadingscript">Custom loading script</h4>
+<p>We can further flexibly configure package components in the on_load custom script field.</p>
+<pre><code class="lang-lua">xpack_component("test")
+     on_load(function (component)
+         local package = component:package()
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpack_componentbefore_installcmd">xpack_component:before_installcmd</h3>
+<h4 id="addscriptbeforecomponentinstallation">Add script before component installation</h4>
+<p>It will not rewrite the entire installation script, but will add some custom installation scripts before the existing installation scripts are executed:</p>
+<pre><code class="lang-lua">xpack_component("test")
+     before_installcmd(function (component, batchcmds)
+         batchcmds:mkdir(package:installdir("resources"))
+         batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+         batchcmds:mkdir(package:installdir("stub"))
+     end)
+</code></pre>
+<p>It should be noted that the cp, mkdir and other commands added through <code>batchcmds</code> will not be executed immediately, but will only generate a command list. When the package is actually generated later, these commands will be translated into packaging commands.</p>
+<p>It is exactly the same as xpack&#39;s before_installcmd. The only difference is that the installation script here will only be executed when this component is enabled.</p>
+<h3 id="xpack_componenton_installcmd">xpack_component:on_installcmd</h3>
+<h4 id="rewritetheinstallationscriptofthecomponent">Rewrite the installation script of the component</h4>
+<p>This will rewrite the entire component&#39;s installation script, similar to xpack&#39;s on_installcmd.</p>
+<pre><code class="lang-lua">xpack_component("test")
+     on_installcmd(function (component, batchcmds)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpack_componentafter_installcmd">xpack_component:after_installcmd</h3>
+<h4 id="addscriptaftercomponentinstallation">Add script after component installation</h4>
+<p>After the component is installed, the script here will be executed, similar to xpack&#39;s after_installcmd.</p>
+<pre><code class="lang-lua">xpack_component("test")
+     after_installcmd(function (component, batchcmds)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpack_componentbefore_uninstallcmd">xpack_component:before_uninstallcmd</h3>
+<h4 id="addscriptbeforecomponentuninstallation">Add script before component uninstallation</h4>
+<p>After the component is installed, the script here will be executed, similar to xpack&#39;s before_uninstallcmd.</p>
+<pre><code class="lang-lua">xpack_component("test")
+     before_uninstallcmd(function (component, batchcmds)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpack_componenton_uninstallcmd">xpack_component:on_uninstallcmd</h3>
+<h4 id="rewritethescriptforcomponentuninstallation">Rewrite the script for component uninstallation</h4>
+<p>This will rewrite the entire component&#39;s uninstall script, similar to xpack&#39;s on_uninstallcmd.</p>
+<pre><code class="lang-lua">xpack_component("test")
+     on_uninstallcmd(function (component, batchcmds)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpack_componentafter_uninstallcmd">xpack_component:after_uninstallcmd</h3>
+<h4 id="addscriptaftercomponentuninstallation">Add script after component uninstallation</h4>
+<p>After the component is uninstalled, the script here will be executed, similar to xpack&#39;s before_uninstallcmd.</p>
+<pre><code class="lang-lua">xpack_component("test")
+     before_uninstallcmd(function (component, batchcmds)
+         -- TODO
+     end)
+</code></pre>
+<h3 id="xpack_componentadd_sourcefiles">xpack_component:add_sourcefiles</h3>
+<h4 id="addcomponentsourcefile">Add component source file</h4>
+<p>This is similar to xpack&#39;s add_sourcefiles, but here only when the component is enabled, these source files will be added to the installation package.</p>
+<h3 id="xpack_componentadd_installfiles">xpack_component:add_installfiles</h3>
+<h4 id="addcomponentbinaryinstallationfile">Add component binary installation file</h4>
+<p>This is similar to xpack&#39;s add_installfiles, but here only the binaries are added to the installation package when the component is enabled.</p>
+</article>
+</body>
+</html>

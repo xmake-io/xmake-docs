@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/manual/specification">https://xmake.io/#/zh-cn/manual/specification</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="">命名规范</h2>
+<p>接口的命名，是有按照预定义的一些规范来命名的，这样更加方便理解和易于使用，目前命名按照如下一些规则：</p>
+<table>
+<thead>
+<tr>
+<th>接口规则</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is_</code>, <code>has_</code>前缀的接口</td>
+<td>表示为条件判断</td>
+</tr>
+<tr>
+<td><code>set_</code>前缀的接口</td>
+<td>表示为覆盖设置</td>
+</tr>
+<tr>
+<td><code>add_</code>前缀的接口</td>
+<td>表示为追加设置</td>
+</tr>
+<tr>
+<td><code>s</code>后缀的接口</td>
+<td>表示支持多值传入，例如：<code>add_files("*.c", "test.cpp")</code></td>
+</tr>
+<tr>
+<td><code>on_</code>前缀的接口</td>
+<td>表示为覆盖内置脚本</td>
+</tr>
+<tr>
+<td><code>before_</code>前缀的接口</td>
+<td>表示为在内置脚本运行前，执行此脚本</td>
+</tr>
+<tr>
+<td><code>after_</code>前缀的接口</td>
+<td>表示为在内置脚本运行后，执行此脚本</td>
+</tr>
+<tr>
+<td><code>scope("name")</code>的接口</td>
+<td>表示为定义一个描述域，例如：<code>target("xxx")</code>, <code>option("xxx")</code></td>
+</tr>
+<tr>
+<td>描述域/描述设置</td>
+<td>建议缩进表示</td>
+</tr>
+</tbody>
+</table>
+</article>
+</body>
+</html>

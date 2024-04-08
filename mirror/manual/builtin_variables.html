@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/manual/builtin_variables">https://xmake.io/#/manual/builtin_variables</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <p>Xmake provides the syntax of <code>$(varname)</code> to support the acquisition of built-in variables, for example:</p>
+<pre><code class="lang-lua">add_cxflags("-I$(buildir)")
+</code></pre>
+<p>It will convert the built-in <code>buildir</code> variable to the actual build output directory when compiling: <code>-I./build</code></p>
+<p>General built-in variables can be used to quickly get and splicing variable strings when passing arguments, for example:</p>
+<pre><code class="lang-lua">target("test")
+
+    -- Add source files in the project source directory
+    add_files("$(projectdir)/src/*.c")
+
+    -- Add a header file search path under the build directory
+    add_includedirs("$(buildir)/inc")
+</code></pre>
+<p>It can also be used in the module interface of a custom script, for example:</p>
+<pre><code class="lang-lua">target("test")
+    on_run(function (target)
+        -- Copy the header file in the current script directory to the output directory
+        os.cp("$(scriptdir)/xxx.h", "$(buildir)/inc")
+    end)
+</code></pre>
+<p>All built-in variables can also be retrieved via the <a href="#val">val</a> interface.</p>
+<p>This way of using built-in variables makes the description writing more concise and easy to read. Here are some of the variables built into xmake that can be obtained directly:</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Description</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#varos">$(os)</a></td>
+<td>Get the operating system of the current build platform</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varhost">$(host)</a></td>
+<td>Get native operating system</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#vartmpdir">$(tmpdir)</a></td>
+<td>Get Temporary Directory</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varcurdir">$(curdir)</a></td>
+<td>Get current directory</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varbuildir">$(buildir)</a></td>
+<td>Get the build output directory</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varscriptdir">$(scriptdir)</a></td>
+<td>Get Project Description Script Directory</td>
+<td>>= 2.1.1</td>
+</tr>
+<tr>
+<td><a href="#varglobaldir">$(globaldir)</a></td>
+<td>Get Global Configuration Directory</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varconfigdir">$(configdir)</a></td>
+<td>Get Local Project Configuration Directory</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varprogramdir">$(programdir)</a></td>
+<td>xmake installation script directory</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#varprojectdir">$(projectdir)</a></td>
+<td>Get the project root directory</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varshell">$(shell)</a></td>
+<td>Execute external shell command</td>
+<td>>= 2.0.1</td>
+</tr>
+<tr>
+<td><a href="#varenv">$(env)</a></td>
+<td>Get external environment variables</td>
+<td>>= 2.1.5</td>
+</tr>
+<tr>
+<td><a href="#varreg">$(reg)</a></td>
+<td>Get the value of the windows registry configuration item</td>
+<td>>= 2.1.5</td>
+</tr>
+</tbody>
+</table>
+<p>Of course, this variable mode can also be extended. By default, the <code>xmake f --var=val</code> command can be used to directly obtain the parameters. For example:</p>
+<pre><code class="lang-lua">target("test")
+    add_defines("-DTEST=$(var)")
+</code></pre>
+<p><p class="tip"><br>All the parameter values ​​of the <code>xmake f --xxx=...</code> configuration can be obtained through built-in variables, for example: <code>xmake f --arch=x86</code> corresponds to <code>$(arch)</code>, others have <code>$(plat)</code>, <code>$(mode)</code> and so on.<br>What are the specific parameters, you can check it out by <code>xmake f -h</code>.<br></p>
+
+</p>
+<p>Since the support is directly obtained from the configuration options, it is of course convenient to extend the custom options to get the custom variables. For details on how to customize the options, see: <a href="#option">option</a></p>
+<h3 id="varos">var.$(os)</h3>
+<h4 id="gettheoperatingsystemofthecurrentbuildplatform">Get the operating system of the current build platform</h4>
+<p>If iphoneos is currently compiled, then this value is: <code>ios</code>, and so on.</p>
+<h3 id="varhost">var.$(host)</h3>
+<h4 id="getthenativeoperatingsystem">Get the native operating system</h4>
+<p>Refers to the host system of the current native environment, if you compile on macOS, then the system is: <code>macosx</code></p>
+<h3 id="vartmpdir">var.$(tmpdir)</h3>
+<h4 id="gettingatemporarydirectory">Getting a temporary directory</h4>
+<p>Generally used to temporarily store some non-permanent files.</p>
+<h3 id="varcurdir">var.$(curdir)</h3>
+<h4 id="getthecurrentdirectory">Get the current directory</h4>
+<p>The default is the project root directory when the <code>xmake</code> command is executed. Of course, if the directory is changed by <a href="#os-cd">os.cd</a>, this value will also change.</p>
+<h3 id="varbuildir">var.$(buildir)</h3>
+<h4 id="getthecurrentbuildoutputdirectory">Get the current build output directory</h4>
+<p>The default is usually the <code>./build</code> directory in the current project root directory. You can also modify the default output directory by executing the <code>xmake f -o /tmp/build</code> command.</p>
+<h3 id="varscriptdir">var.$(scriptdir)</h3>
+<h4 id="getthedirectoryofthecurrentprojectdescriptionscript">Get the directory of the current project description script</h4>
+<p>That is, the directory path corresponding to <code>xmake.lua</code>.</p>
+<h3 id="varglobaldir">var.$(globaldir)</h3>
+<h4 id="globalconfigurationdirectory">Global Configuration Directory</h4>
+<p>Xmake&#39;s <code>xmake g|global</code> global configuration command, directory path for data storage, where you can place some of your own plugins and platform scripts.</p>
+<p>The default is: <code>~/.config</code></p>
+<h3 id="varconfigdir">var.$(configdir)</h3>
+<h4 id="currentprojectconfigurationdirectory">Current project configuration directory</h4>
+<p>The current project configuration storage directory, which is the storage directory of the <code>xmake f|config</code> configuration command, defaults to: <code>projectdir/.config</code></p>
+<h3 id="varprogramdir">var.$(programdir)</h3>
+<h4 id="xmakeinstallationscriptdirectory">xmake installation script directory</h4>
+<p>That is, the directory where the <code>XMAKE_PROGRAM_DIR</code> environment variable is located. We can also modify the xmake load script by setting this environment amount to implement version switching.</p>
+<h3 id="varprojectdir">var.$(projectdir)</h3>
+<h4 id="projectrootdirectory">Project root directory</h4>
+<p>That is, the directory path specified in the <code>xmake -P xxx</code> command, the default is not specified is the current directory when the <code>xmake</code> command is executed, which is generally used to locate the project file.</p>
+<h3 id="varshell">var.$(shell)</h3>
+<h4 id="executingexternalshellcommands">Executing external shell commands</h4>
+<p>In addition to the built-in variable handling, xmake also supports the native shell to handle some of the features that xmake does not support.</p>
+<p>For example, there is a need now, I want to use the <code>pkg-config</code> to get the actual third-party link library name when compiling the Linux program, you can do this:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    if is_plat("linux") then
+        add_ldflags("$(shell pkg-config --libs sqlite3)")
+    end
+</code></pre>
+<p>Of course, xmake has its own automated third library detection mechanism, which generally does not need such trouble, and lua&#39;s own scripting is very good. .</p>
+<p>But this example shows that xmake can be used with some third-party tools through the native shell. .</p>
+<h3 id="varenv">var.$(env)</h3>
+<h4 id="getexternalenvironmentvariables">Get external environment variables</h4>
+<p>For example, you can get the path in the environment variable:</p>
+<pre><code class="lang-lua">target("test")
+    add_includedirs("$(env PROGRAMFILES)/OpenSSL/inc")
+</code></pre>
+<h3 id="varreg">var.$(reg)</h3>
+<h4 id="getthevalueofthewindowsregistryconfigurationitem">Get the value of the windows registry configuration item</h4>
+<p>Get the value of an item in the registry by <code>regpath; name</code>:</p>
+<pre><code class="lang-lua">print("$(reg HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\XXXX;Name)")
+</code></pre>
+</article>
+</body>
+</html>

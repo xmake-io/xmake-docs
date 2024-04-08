@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/theme/builtin_themes">https://xmake.io/#/theme/builtin_themes</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="defaulttheme">Default theme</h2>
+<p>This is the default display theme after we install xmake. Theme name: default, which will provide color output by default, suitable for some dark background terminals.</p>
+<p><img src="/assets/img/theme/default.png" width="60%" /></p>
+<p>We can also switch back to the default theme with the following command:</p>
+<pre><code class="lang-bash">$ xmake g --theme=default
+</code></pre>
+<h2 id="ninjatheme">Ninja Theme</h2>
+<p>This is the theme provided by the version after v2.3.4. The construction progress style is similar to ninja. It uses a single-line progress bar, and the progress is no longer rolled back.</p>
+<p>The configuration of the default theme is the same except that the progress is displayed differently.</p>
+<pre><code class="lang-bash">$ xmake g --theme=ninja
+</code></pre>
+<p><img src="/assets/img/theme/ninja.png" width="60%" /></p>
+<h2 id="emojitheme">Emoji Theme</h2>
+<p>This theme part output uses emoji characters instead of the previous color output.</p>
+<pre><code class="lang-bash">$ xmake g --theme=emoji
+</code></pre>
+<p><img src="/assets/img/theme/emoji.png" width="60%" /></p>
+<h2 id="darktheme">Dark Theme</h2>
+<p>This theme is mainly for some terminal backgrounds with a light color system (such as light yellow, etc.), which causes some warning outputs (the default is also yellow) to be invisible, so the theme color is changed to a dark system to improve visibility.</p>
+<pre><code class="lang-bash">$ xmake g --theme=dark
+</code></pre>
+<h2 id="lighttheme">Light theme</h2>
+<p>This theme is mainly for the dark background of some terminals, which makes some outputs overlap invisible, so change the theme color to light color to improve visibility.</p>
+<pre><code class="lang-bash">$ xmake g --theme=light
+</code></pre>
+<h2 id="plaintheme">Plain Theme</h2>
+<p>In fact, this theme is to completely disable color and emoji output, mainly to deal with the problem of garbled display caused by some terminals that do not support colors code, and it is also the most simple theme style.</p>
+<p>!> Some win terminals may not support colors, you can set this theme to solve the problem of garbled display</p>
+<pre><code class="lang-bash">$ xmake g --theme=plain
+</code></pre>
+<h2 id="powershelltheme">Powershell theme</h2>
+<p>The background of the powershell terminal under win is blue, and its palette configuration seems to be changed. The magenta color is actually displayed as the background blue, which is very strange, resulting in the local output of xmake&#39;s default output will be invisible Overlapped)</p>
+<p>Therefore, this theme is to better adapt the display output under the powershell terminal.</p>
+<pre><code class="lang-bash">$ xmake g --theme=powershell
+</code></pre>
+</article>
+</body>
+</html>

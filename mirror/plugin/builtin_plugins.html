@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/plugin/builtin_plugins">https://xmake.io/#/plugin/builtin_plugins</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="generateideprojectfiles">Generate IDE Project Files</h2>
+<h3 id="generatemakefile">Generate Makefile</h3>
+<pre><code class="lang-bash">$ xmake project -k makefile
+</code></pre>
+<h3 id="generatecmakeliststxt">Generate CMakelists.txt</h3>
+<pre><code class="lang-console">$ xmake project -k cmakelists
+</code></pre>
+<h3 id="generatebuildninja">Generate build.ninja</h3>
+<p>!> Only supported in versions above 2.3.1</p>
+<pre><code class="lang-console">$ xmake project -k ninja
+</code></pre>
+<h3 id="generatecompiler_flags">Generate compiler_flags</h3>
+<pre><code class="lang-console">$ xmake project -k compiler_flags
+</code></pre>
+<h3 id="generatecompiler_commands">Generate compiler_commands</h3>
+<p>We can export the compilation commands info of all source files and it is JSON compilation database format.</p>
+<pre><code class="lang-console">$ xmake project -k compile_commands
+</code></pre>
+<p>The the content of the output file:</p>
+<pre><code>[
+  { "directory": "/home/user/llvm/build",
+    "command": "/usr/bin/clang++ -Irelative -DSOMEDEF=\"With spaces, quotes and \\-es.\" -c -o file.o file.cc",
+    "file": "file.cc" },
+  ...
+]
+
+</code></pre><p>Please see <a href="#https://clang.llvm.org/docs/JSONCompilationDatabase.html">JSONCompilationDatabase</a> if need known more info about <code>compile_commands</code>.</p>
+<h3 id="generatexcodeprojectfile">Generate Xcode project file</h3>
+<p>At present, we have no time to implement the generation of xcode projects by ourselves, but it does not mean that it is not supported, because xmake supports the generation of cmakelists.txt files, and cmake supports the generation of xcode project files. Before the official implementation,<br>We can also support it in disguise through cmake, xmake will automatically call cmake internally to transfer the generated results, there is no difference in use for users, just make sure that cmake has been installed:</p>
+<pre><code class="lang-console">$ xmake project -k xcode
+</code></pre>
+<p>!> After we have time, we will re-implement each more complete xcode output plugin by ourselves, and welcome everyone to contribute.</p>
+<h3 id="generatevisualstudioproject">Generate VisualStudio Project</h3>
+<h4 id="compilewithxmakeintegration">Compile with xmake integration</h4>
+<p>v2.2.8 or later, provides a new version of the vs project generation plugin extension, which is very different from the previous plugin processing mode for generating vs. The previously generated vs project is the compilation of all files and then transferred to vs. To handle compilation.</p>
+<p>But this mode, there is no way to support the rules of xmake. Because xmake&#39;s rules use a lot of custom scripts like <code>on_build</code>, they can&#39;t be expanded, so projects like qt, wdk can&#39;t support exporting to vs. compile.</p>
+<p>Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellisense and definition jumps, as well as breakpoint debugging.</p>
+<p>The specific use is similar to the old version:</p>
+<pre><code class="lang-console">$ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug;release"
+</code></pre>
+<p>If no version is specified, xmake will automatically detect the current version of vs to generate:</p>
+<pre><code class="lang-bash">$ xmake project -k vsxmake -m "debug,release"
+</code></pre>
+<p><img src="/assets/img/manual/qt_vs.png" alt=""></p>
+<p>In addition, the vsxmake plugin will additionally generate a custom configuration property page for easy and flexible modification and appending some xmake compilation configuration in the vs., and even switch to other cross toolchains in the configuration to achieve the vs. vs. Cross-compilation of other platforms such as android, linux.</p>
+<p><img src="/assets/img/manual/property_page_vsxmake.png" alt=""></p>
+<p>The v2.5.1 version provides a <code>add_rules("plugin.vsxmake.autoupdate")</code> rule. If this rule is applied, the production vs project will be checked for changes in xmake.lua and the code file list after the compilation is completed. If there are changes , The vs project will be updated automatically.</p>
+<pre><code class="lang-lua">add_rules("plugin.vsxmake.autoupdate")
+target("test")
+     set_kind("binary")
+     add_files("src/*.c")
+</code></pre>
+<p>In addition, we can group each target through the <code>set_group</code> interface, so that the generated vs project can be grouped according to the specified structure. For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1026">issue 1026</a></p>
+<h4 id="usingvsbuiltincompilationmechanism">Using vs built-in compilation mechanism</h4>
+<p>!> It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.</p>
+<pre><code class="lang-bash">$ xmake project -k [vs2008|vs2013|vs2015|..]
+</code></pre>
+<p>v2.1.2 or later, it supports multi-mode and multi-architecture generation for vs201x project.</p>
+<p>For example:</p>
+<pre><code class="lang-bash">$ xmake project -k vs2017 -m "debug,release"
+</code></pre>
+<p>It will generate four project configurations: <code>debug|x86</code>, <code>debug|x64</code>, <code>release|x86</code>, <code>release|x64</code>.</p>
+<p>Or you can set modes to <code>xmake.lua</code>:</p>
+<pre><code class="lang-lua">set_modes("debug", "release")
+</code></pre>
+<p>Then, we run the following command:</p>
+<pre><code class="lang-bash">$ xmake project -k vs2017
+</code></pre>
+<p>The effect is same.</p>
+<p>In addition, we can group each target through the <code>set_group</code> interface, so that the generated vs project can be grouped according to the specified structure. For more details, please see: <a href="https://github.com/xmake-io/xmake/issues/1026">issue 1026</a></p>
+<h2 id="runthecustomluascript">Run the Custom Lua Script</h2>
+<h3 id="runthegivenscript">Run the given script</h3>
+<p>Write a simple lua script:</p>
+<pre><code class="lang-lua">function main()
+    print("hello xmake!")
+end
+</code></pre>
+<p>Run this lua script.</p>
+<pre><code class="lang-bash">$ xmake lua /tmp/test.lua
+</code></pre>
+<p><p class="tip"><br>    You can also use <code>import</code> api to write a more advance lua script.<br></p>
+
+</p>
+<h3 id="runthebuiltinscript">Run the builtin script</h3>
+<p>You can run <code>xmake lua -l</code> to list all builtin script name, for example:</p>
+<pre><code class="lang-bash">$ xmake lua -l
+scripts:
+    cat
+    cp
+    echo
+    versioninfo
+    ...
+</code></pre>
+<p>And run them:</p>
+<pre><code class="lang-bash">$ xmake lua cat ~/file.txt
+$ xmake lua echo "hello xmake"
+$ xmake lua cp /tmp/file /tmp/file2
+$ xmake lua versioninfo
+</code></pre>
+<h3 id="runinteractivecommandsrepl">Run interactive commands (REPL)</h3>
+<p>Enter interactive mode:</p>
+<pre><code class="lang-bash">$ xmake lua
+> 1 + 2
+3
+
+> a = 1
+> a
+1
+
+> for _, v in pairs({1, 2, 3}) do
+>> print(v)
+>> end
+1
+2
+3
+</code></pre>
+<p>And we can <code>import</code> modules:</p>
+<pre><code class="lang-bash">> task = import("core.project.task")
+> task.run("hello")
+hello xmake!
+</code></pre>
+<p>If you want to cancel multiline input, please input character <code>q</code>, for example:</p>
+<pre><code class="lang-bash">> for _, v in ipairs({1, 2}) do
+>> print(v)
+>> q             <--  cancel multiline and clear previous input
+> 1 + 2
+3
+</code></pre>
+<h2 id="showspecifiedinformationandlist">Show specified information and list</h2>
+<h3 id="showbasicinformationaboutxmakeitselfandthecurrentproject">Show basic information about xmake itself and the current project</h3>
+<pre><code class="lang-bash">$ xmake show
+The information of xmake:
+    version: 2.3.3+202006011009
+    host: macosx/x86_64
+    programdir: /Users/ruki/.local/share/xmake
+    programfile: /Users/ruki/.local/bin/xmake
+    globaldir: /Users/ruki/.xmake
+    tmpdir: /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/200603
+    workingdir: /Users/ruki/projects/personal/tbox
+    packagedir: /Users/ruki/.xmake/packages
+    packagedir(cache): /Users/ruki/.xmake/cache/packages/2006
+
+The information of project: tbox
+    version: 1.6.5
+    plat: macosx
+    arch: x86_64
+    mode: release
+    buildir: build
+    configdir: /Users/ruki/projects/personal/tbox/.xmake/macosx/x86_64
+    projectdir: /Users/ruki/projects/personal/tbox
+    projectfile: /Users/ruki/projects/personal/tbox/xmake.lua
+</code></pre>
+<h3 id="showtoolchainslist">Show toolchains list</h3>
+<pre><code class="lang-bash">$ xmake show -l toolchains
+xcode         Xcode IDE
+vs            VisualStudio IDE
+yasm          The Yasm Modular Assembler
+clang         A C language family frontend for LLVM
+go            Go Programming Language Compiler
+dlang         D Programming Language Compiler
+sdcc          Small Device C Compiler
+cuda          CUDA Toolkit
+ndk           Android NDK
+rust          Rust Programming Language Compiler
+llvm          A collection of modular and reusable compiler and toolchain technologies
+cross         Common cross compilation toolchain
+nasm          NASM Assembler
+gcc           GNU Compiler Collection
+mingw         Minimalist GNU for Windows
+gnu-rm        GNU Arm Embedded Toolchain
+envs          Environment variables toolchain
+fasm          Flat Assembler
+</code></pre>
+<h3 id="showtheinformationofthegiventarget">Show the information of the given target</h3>
+<p>We can use it to quickly trace the location of some specific configurations.</p>
+<pre><code class="lang-bash">$ xmake show -t tbox
+The information of target(tbox):
+    at: /Users/ruki/projects/personal/tbox/src/tbox/xmake.lua
+    kind: static
+    targetfile: build/macosx/x86_64/release/libtbox.a
+    rules:
+      -> mode.release -> ./xmake.lua:26
+      -> mode.debug -> ./xmake.lua:26
+      -> mode.profile -> ./xmake.lua:26
+      -> mode.coverage -> ./xmake.lua:26
+      -> utils.install.cmake_importfiles -> ./src/tbox/xmake.lua:15
+      -> utils.install.pkgconfig_importfiles -> ./src/tbox/xmake.lua:16
+    options:
+      -> info -> ./src/tbox/xmake.lua:50
+      -> float -> ./src/tbox/xmake.lua:50
+      -> wchar -> ./src/tbox/xmake.lua:50
+      -> exception -> ./src/tbox/xmake.lua:50
+      -> force-utf8 -> ./src/tbox/xmake.lua:50
+      -> deprecated -> ./src/tbox/xmake.lua:50
+      -> xml -> ./src/tbox/xmake.lua:53
+      -> zip -> ./src/tbox/xmake.lua:53
+      -> hash -> ./src/tbox/xmake.lua:53
+      -> regex -> ./src/tbox/xmake.lua:53
+      -> coroutine -> ./src/tbox/xmake.lua:53
+      -> object -> ./src/tbox/xmake.lua:53
+      -> charset -> ./src/tbox/xmake.lua:53
+      -> database -> ./src/tbox/xmake.lua:53
+    packages:
+      -> mbedtls -> ./src/tbox/xmake.lua:43
+      -> polarssl -> ./src/tbox/xmake.lua:43
+      -> openssl -> ./src/tbox/xmake.lua:43
+      -> pcre2 -> ./src/tbox/xmake.lua:43
+      -> pcre -> ./src/tbox/xmake.lua:43
+      -> zlib -> ./src/tbox/xmake.lua:43
+      -> mysql -> ./src/tbox/xmake.lua:43
+      -> sqlite3 -> ./src/tbox/xmake.lua:43
+    links:
+      -> pthread -> option(__keyword_thread_local) -> @programdir/includes/check_csnippets.lua:100
+    syslinks:
+      -> pthread -> ./xmake.lua:71
+      -> dl -> ./xmake.lua:71
+      -> m -> ./xmake.lua:71
+      -> c -> ./xmake.lua:71
+    defines:
+      -> __tb_small__ -> ./xmake.lua:42
+      -> __tb_prefix__="tbox" -> ./src/tbox/xmake.lua:19
+      -> _GNU_SOURCE=1 -> option(__systemv_semget) -> @programdir/includes/check_cfuncs.lua:104
+    cxflags:
+      -> -Wno-error=deprecated-declarations -> ./xmake.lua:22
+      -> -fno-strict-aliasing -> ./xmake.lua:22
+      -> -Wno-error=expansion-to-defined -> ./xmake.lua:22
+      -> -fno-stack-protector -> ./xmake.lua:51
+    frameworks:
+      -> CoreFoundation -> ./src/tbox/xmake.lua:38
+      -> CoreServices -> ./src/tbox/xmake.lua:38
+    mxflags:
+      -> -Wno-error=deprecated-declarations -> ./xmake.lua:23
+      -> -fno-strict-aliasing -> ./xmake.lua:23
+      -> -Wno-error=expansion-to-defined -> ./xmake.lua:23
+    includedirs:
+      -> src -> ./src/tbox/xmake.lua:26
+      -> build/macosx/x86_64/release -> ./src/tbox/xmake.lua:27
+    headerfiles:
+      -> src/(tbox/**.h)|**/impl/**.h -> ./src/tbox/xmake.lua:30
+      -> src/(tbox/prefix/**/prefix.S) -> ./src/tbox/xmake.lua:31
+      -> src/(tbox/math/impl/*.h) -> ./src/tbox/xmake.lua:32
+      -> src/(tbox/utils/impl/*.h) -> ./src/tbox/xmake.lua:33
+      -> build/macosx/x86_64/release/tbox.config.h -> ./src/tbox/xmake.lua:34
+    files:
+      -> src/tbox/*.c -> ./src/tbox/xmake.lua:56
+      -> src/tbox/hash/bkdr.c -> ./src/tbox/xmake.lua:57
+      -> src/tbox/hash/fnv32.c -> ./src/tbox/xmake.lua:57
+      -> src/tbox/hash/adler32.c -> ./src/tbox/xmake.lua:57
+      -> src/tbox/math/**.c -> ./src/tbox/xmake.lua:58
+      -> src/tbox/libc/**.c|string/impl/**.c -> ./src/tbox/xmake.lua:59
+      -> src/tbox/utils/*.c|option.c -> ./src/tbox/xmake.lua:60
+      -> src/tbox/prefix/**.c -> ./src/tbox/xmake.lua:61
+      -> src/tbox/memory/**.c -> ./src/tbox/xmake.lua:62
+      -> src/tbox/string/**.c -> ./src/tbox/xmake.lua:63
+      -> src/tbox/stream/**.c|**/charset.c|**/zip.c -> ./src/tbox/xmake.lua:64
+      -> src/tbox/network/**.c|impl/ssl/*.c -> ./src/tbox/xmake.lua:65
+      -> src/tbox/algorithm/**.c -> ./src/tbox/xmake.lua:66
+      -> src/tbox/container/**.c|element/obj.c -> ./src/tbox/xmake.lua:67
+      -> src/tbox/libm/impl/libm.c -> ./src/tbox/xmake.lua:68
+      -> src/tbox/libm/idivi8.c -> ./src/tbox/xmake.lua:73
+      -> src/tbox/libm/ilog2i.c -> ./src/tbox/xmake.lua:70
+      -> src/tbox/libm/isqrti.c -> ./src/tbox/xmake.lua:71
+      -> src/tbox/libm/isqrti64.c -> ./src/tbox/xmake.lua:72
+      -> src/tbox/platform/*.c|context.c|exception.c -> ./src/tbox/xmake.lua:74
+      -> src/tbox/platform/impl/*.c|charset.c|poller_fwatcher.c -> ./src/tbox/xmake.lua:74
+      -> src/tbox/libm/*.c -> ./src/tbox/xmake.lua:77
+    compiler (cc): /usr/bin/xcrun -sdk macosx clang
+      -> -Qunused-arguments -target x86_64-apple-macos12.6 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk
+    linker (ar): /usr/bin/xcrun -sdk macosx ar
+      -> -cr
+    compflags (cc):
+      -> -Qunused-arguments -target x86_64-apple-macos12.6 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk -Wall -Werror -Oz -std=c99 -Isrc -Ibuild/macosx/x86_64/release -D__tb_small__ -D__tb_prefix__=\"tbox\" -D_GNU_SOURCE=1 -framework CoreFoundation -framework CoreServices -Wno-error=deprecated-declarations -fno-strict-aliasing -Wno-error=expansion-to-defined -fno-stack-protector
+    linkflags (ar):
+      -> -cr
+</code></pre>
+<h3 id="showbuiltincompilationmodeslist">Show builtin compilation modes list</h3>
+<pre><code class="lang-bash">$ xmake show -l buildmodes
+</code></pre>
+<h3 id="showbuiltincompilationruleslist">Show builtin compilation rules list</h3>
+<pre><code class="lang-bash">$ xmake show -l rules
+</code></pre>
+<h3 id="showotherinformation">Show other information</h3>
+<p>It is still being perfected, see: <a href="https://github.com/xmake-io/xmake/issues/798">https://github.com/xmake-io/xmake/issues/798</a></p>
+<p>Or run</p>
+<pre><code class="lang-bash">$ xmake show --help
+</code></pre>
+<h2 id="watchingforfileupdates">Watching for file updates</h2>
+<p>New in v2.7.1 is the <code>xmake watch</code> plugin command, which can automatically monitor project files for updates and then trigger an automatic build or run some custom commands.</p>
+<p>This is often used for personal development to enable fast, real-time incremental builds without the need to manually execute the build command each time, improving development efficiency.</p>
+<h3 id="buildautomaticallyafteraprojectupdate">Build automatically after a project update</h3>
+<p>The default behaviour is to monitor the entire project root directory and any file changes will trigger an incremental build of the project.</p>
+<pre><code class="lang-bash">$ xmake watch
+watching /private/tmp/test/src/** .
+watching /private/tmp/test/* ...
+/private/tmp/test/src/main.cpp modified
+[ 25%]: cache compiling.release src/main.cpp
+[ 50%]: linking.release test
+[ 100%]: build ok!
+```&#39;&#39;
+
+### Monitoring a specific directory
+
+We can also monitor specific code directories to narrow down the scope of monitoring and improve performance.
+
+```bash
+$ xmake watch -d src
+$ xmake watch -d "src;tests/*"
+</code></pre>
+<p>The above command will recursively watch all subdirectories. If you want to keep a tight watch on the files in the current directory and not do recursive monitoring, you can use the following command.</p>
+<pre><code class="lang-bash">$ xmake watch -p src
+$ xmake watch -p "src;tests/*"
+</code></pre>
+<h3 id="watchandrunthespecifiedcommand">Watch and run the specified command</h3>
+<p>If you want to run the build automatically even after the automatic build, we can use a custom command set.</p>
+<pre><code class="lang-bash">$ xmake watch -c "xmake; xmake run"
+</code></pre>
+<p>The above list of commands is passed as a string, which is not flexible enough for complex command arguments that need to be escaped rather tediously, so we can use the following for arbitrary commands.</p>
+<pre><code class="lang-bash">$ xmake watch -- echo hello xmake!
+$ xmake watch -- xmake run --help
+</code></pre>
+<h3 id="watchingandrunningthetargetprogram">Watching and running the target program</h3>
+<p>Although we can automate the running of the target program with custom commands, we also provide more convenient arguments to achieve this behaviour.</p>
+<pre><code class="lang-bash">$ xmake watch -r
+$ xmake watch --run
+[100%]: build ok!
+hello world!
+</code></pre>
+<h3 id="watchingandrunningluascripts">Watching and running lua scripts</h3>
+<p>We can also watch for file updates and then run the specified lua script for more flexible and complex command customisation.</p>
+<pre><code class="lang-bash">$ xmake watch -s /tmp/test.lua
+</code></pre>
+<p>We can also get a list of all updated file paths and events in the script again.</p>
+<pre><code class="lang-lua">function main(events)
+    -- TODO handle events
+end
+</code></pre>
+<h2 id="checkprojectconfigurationsandcodes">Check project configurations and codes</h2>
+<h3 id="checkprojectconfiguration">Check project configuration</h3>
+<h4 id="checkallapivaluesinxmakeluabydefault">Check all api values in xmake.lua by default</h4>
+<pre><code class="lang-lua">set_lanuages("c91") -- typo
+</code></pre>
+<pre><code class="lang-console">$ xmake check
+./xmake.lua:15: warning: unknown language value &#39;c91&#39;, it may be &#39;c90&#39;
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<p>we can also run a given group</p>
+<pre><code class="lang-console">$ xmake check api
+$ xmake check api.target
+</code></pre>
+<h4 id="verboseoutput">Verbose output</h4>
+<pre><code class="lang-console">$ xmake check -v
+./xmake.lua:15: warning: unknown language value &#39;cxx91&#39;, it may be &#39;cxx98&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;mbedtls&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;polarssl&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;openssl&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;pcre2&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;pcre&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;zlib&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;mysql&#39;
+./src/tbox/xmake.lua:43: note: unknown package value &#39;sqlite3&#39;
+8 notes, 1 warnings, 0 errors
+</code></pre>
+<h4 id="checkthegivenapi">Check the given api</h4>
+<pre><code class="lang-console">$ xmake check api.target.languages
+./xmake.lua:15: warning: unknown language value &#39;cxx91&#39;, it may be &#39;cxx98&#39;
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<h4 id="checkcompilerflags">Check compiler flags</h4>
+<pre><code class="lang-console">$ xmake check
+./xmake.lua:10: warning: clang: unknown c compiler flag &#39;-Ox&#39;
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<h4 id="checkincludedirs">Check includedirs</h4>
+<pre><code class="lang-console">$ xmake check
+./xmake.lua:11: warning: includedir &#39;xxx&#39; not found
+0 notes, 1 warnings, 0 errors
+</code></pre>
+<h3 id="checkprojectcodeclangtidy">Check project code (clang-tidy)</h3>
+<h4 id="listclangtidychecks">List clang-tidy checks</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --list
+Enabled checks:
+    clang-analyzer-apiModeling.StdCLibraryFunctions
+    clang-analyzer-apiModeling.TrustNonnull
+    clang-analyzer-apiModeling.google.GTest
+    clang-analyzer-apiModeling.llvm.CastValue
+    clang-analyzer-apiModeling.llvm.ReturnValue
+    ...
+</code></pre>
+<h4 id="checksourcecodeintargets">Check source code in targets</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy
+1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: &#39;iostr&#39; file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy -p compile_commands.json /private/tmp/test2/src
+/main.cpp) failed(1)
+</code></pre>
+<h4 id="checkcodewiththegivenchecks">Check code with the given checks</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --checks="*"
+6 warnings and 1 error generated.
+Error while processing /private/tmp/test2/src/main.cpp.
+/tmp/test2/src/main.cpp:1:10: error: &#39;iostr&#39; file not found [clang-diagnostic-error]
+#include <iostr>
+         ^~~~~~~
+/tmp/test2/src/main.cpp:3:1: warning: do not use namespace using-directives; use using-declarat
+ions instead [google-build-using-namespace]
+using namespace std;
+^
+/tmp/test2/src/main.cpp:3:17: warning: declaration must be declared within the &#39;__llvm_libc&#39; na
+mespace [llvmlibc-implementation-in-namespace]
+using namespace std;
+                ^
+/tmp/test2/src/main.cpp:5:5: warning: declaration must be declared within the &#39;__llvm_libc&#39; nam
+espace [llvmlibc-implementation-in-namespace]
+int main(int argc, char **argv) {
+    ^
+/tmp/test2/src/main.cpp:5:5: warning: use a trailing return type for this function [modernize-u
+se-trailing-return-type]
+int main(int argc, char **argv) {
+~~~ ^
+auto                            -> int
+/tmp/test2/src/main.cpp:5:14: warning: parameter &#39;argc&#39; is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+             ^~~~
+              /*argc*/
+/tmp/test2/src/main.cpp:5:27: warning: parameter &#39;argv&#39; is unused [misc-unused-parameters]
+int main(int argc, char **argv) {
+                          ^~~~
+                           /*argv*/
+Found compiler error(s).
+error: execv(/usr/local/opt/llvm/bin/clang-tidy --checks=* -p compile_commands.json /private/tm
+p/test2/src/main.cpp) failed(1)
+</code></pre>
+<h4 id="checkcodewiththegiventargetname">Check code with the given target name</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy [targetname]
+</code></pre>
+<h4 id="checkcodewiththegivensourcefiles">Check code with the given source files</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy -f src/main.c
+$ xmake check clang.tidy -f &#39;src/*.c:src/**.cpp&#39;
+</code></pre>
+<h4 id="setthegivenclangtidyconfigfile">Set the given .clang-tidy config file</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --configfile=/tmp/.clang-tidy
+</code></pre>
+<h4 id="createanewclangtidyconfigfile">Create a new .clang-tidy config file</h4>
+<pre><code class="lang-console">$ xmake check clang.tidy --checks="*" --create
+$ cat .clang-tidy
+---
+Checks:          &#39;clang-diagnostic-*,clang-analyzer-*,*&#39;
+WarningsAsErrors: &#39;&#39;
+HeaderFilterRegex: &#39;&#39;
+AnalyzeTemporaryDtors: false
+FormatStyle:     none
+User:            ruki
+CheckOptions:
+  - key:             readability-suspicious-call-argument.PrefixSimilarAbove
+    value:           &#39;30&#39;
+  - key:             cppcoreguidelines-no-malloc.Reallocations
+    value:           &#39;::realloc&#39;
+
+</code></pre>
+<h4 id="automaticallyfixingerrorcodes">Automatically fixing error codes</h4>
+<p>We can use the following command parameters to automatically fix problematic code detected by clang tidy.</p>
+<pre><code class="lang-console">$ xmake check clang.tidy --fix
+$ xmake check clang.tidy --fix_errors
+$ xmake check clang.tidy --fix_notes
+</code></pre>
+<h2 id="generateinstallationpackagexpack">Generate installation package (XPack)</h2>
+<h3 id="introduction">Introduction</h3>
+<p>This plug-in can help users quickly generate installation packages and source code packages for different platforms. It will generate the following installation package formats:</p>
+<ul>
+<li>Windows NSIS binary installation package</li>
+<li>runself (shell) self-compile installation package</li>
+<li>zip/tar.gz binary package</li>
+<li>zip/tar.gz source package</li>
+<li>RPM binary installation package</li>
+<li>SRPM source code installation package</li>
+<li>DEB binary installation package (to be supported)</li>
+</ul>
+<p>Here is a complete example, we can take a brief look at it first:</p>
+<pre><code class="lang-lua">set_version("1.0.0")
+add_rules("mode.debug", "mode.release")
+
+includes("@builtin/xpack")
+
+target("test")
+     set_kind("binary")
+     add_files("src/*.cpp")
+
+xpack("test")
+     set_formats("nsis", "zip", "targz", "runself")
+     set_title("hello")
+     set_author("ruki")
+     set_description("A test installer.")
+     set_homepage("https://xmake.io")
+     set_licensefile("LICENSE.md")
+     add_targets("test")
+     add_installfiles("src/(assets/*.png)", {prefixdir = "images"})
+     add_sourcefiles("(src/**)")
+     set_iconfile("src/assets/xmake.ico")
+
+     after_installcmd(function (package, batchcmds)
+         batchcmds:mkdir(package:installdir("resources"))
+         batchcmds:cp("src/assets/*.txt", package:installdir("resources"), {rootdir = "src"})
+         batchcmds:mkdir(package:installdir("stub"))
+     end)
+
+     after_uninstallcmd(function (package, batchcmds)
+         batchcmds:rmdir(package:installdir("resources"))
+         batchcmds:rmdir(package:installdir("stub"))
+     end)
+</code></pre>
+<p>We introduce all configuration interfaces of xpack through <code>includes("@builtin/xpack")</code>, including the xpack configuration domain and all its domain interfaces.</p>
+<p>Then we execute:</p>
+<pre><code class="lang-bash">$xmakepack
+</code></pre>
+<p>All installation packages will be generated.</p>
+<h3 id="generatensisinstallationpackage">Generate NSIS installation package</h3>
+<p>As long as you configure the <code>set_formats("nsis")</code> format and then execute the <code>xmake pack</code> command, you can generate an installation package in NSIS format.</p>
+<p>In addition, xmake will also automatically install the tools required to generate NSIS packages to achieve true one-click packaging.</p>
+<pre><code class="lang-bash">$xmakepack
+note: install or modify (m) these packages (pass -y to skip confirm)?
+in xmake-repo:
+   -> nsis 3.09
+please input: y (y/n/m)
+
+   => install nsis 3.09 .. ok
+
+[25%]: compiling.release src\main.cpp
+[37%]: compiling.release src\main.cpp
+[50%]: linking.release foo.dll
+[62%]: linking.release test.exe
+packing build\xpack\test\test-windows-x64-v1.0.0.exe
+pack ok
+</code></pre>
+<p><code>test-windows-x64-v1.0.0.exe</code> is the installation package we generated. Double-click to run it to install our binary files to the specified directory.</p>
+<p><img src="/assets/img/manual/nsis_1.png" alt=""><br><img src="/assets/img/manual/nsis_2.png" alt=""><br><img src="/assets/img/manual/nsis_3.png" alt=""></p>
+<h4 id="addcomponentinstallation">Add component installation</h4>
+<p>We can also add component installation commands to NSIS. Only when the user selects the specified component, its installation command will be executed.</p>
+<pre><code class="lang-lua">xpack("test")
+     add_components("LongPath")
+
+xpack_component("LongPath")
+     set_default(false)
+     set_title("Enable Long Path")
+     set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
+     on_installcmd(function (component, batchcmds)
+         batchcmds:rawcmd("nsis", [[
+   ${If} $NoAdmin == "false"
+     ; Enable long path
+     WriteRegDWORD ${HKLM} "SYSTEM\CurrentControlSet\Control\FileSystem" "LongPathsEnabled" 1
+   ${EndIf}]])
+     end)
+</code></pre>
+<p>In this example, we added an NSIS-specific custom command to support long paths.</p>
+<p><img src="/assets/img/manual/nsis_4.png" alt=""></p>
+<h3 id="generateselfinstallationpackage">Generate self-installation package</h3>
+<p>We can also generate self-compiled installation packages based on shell scripts. We need to configure the runself packaging format, and then add the source files that need to participate in compilation and installation through <code>add_sourcefiles</code>.</p>
+<p>Next, we need to customize the on_installcmd installation script to configure if we compile the source code package, we can simply call a built-in compilation and installation script file, or directly configure compilation and installation commands such as <code>make install</code>.</p>
+<p>For example:</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("runself")
+     add_sourcefiles("(src/**)")
+     on_installcmd(function (package, batchcmds)
+         batchcmds:runv("make", {"install"})
+     end)
+</code></pre>
+<p>Then, we execute the <code>xmake pack</code> command to generate a self-installed xxx.gz.run package, which uses gzip compression by default.</p>
+<pre><code class="lang-bash">$xmakepack
+packing build/xpack/test/test-macosx-src-v1.0.0.gz.run
+pack ok
+</code></pre>
+<p>We can use sh to load and run it to install our program.</p>
+<pre><code class="lang-bash">$ sh ./build/xpack/test/test-macosx-src-v1.0.0.gz.run
+</code></pre>
+<p>We can also look at a more complete example:</p>
+<pre><code class="lang-lua">xpack("xmakesrc")
+     set_formats("runself")
+     set_basename("xmake-v$(version)")
+     set_prefixdir("xmake-$(version)")
+     before_package(function (package)
+         import("devel.git")
+
+         local rootdir = path.join(os.tmpfile(package:basename()) .. ".dir", "repo")
+         if not os.isdir(rootdir) then
+             os.tryrm(rootdir)
+             os.cp(path.directory(os.projectdir()), rootdir)
+
+             git.clean({repodir = rootdir, force = true, all = true})
+             git.reset({repodir = rootdir, hard = true})
+             if os.isfile(path.join(rootdir, ".gitmodules")) then
+                 git.submodule.clean({repodir = rootdir, force = true, all = true})
+                 git.submodule.reset({repodir = rootdir, hard = true})
+             end
+         end
+
+         local extraconf = {rootdir = rootdir}
+         package:add("sourcefiles", path.join(rootdir, "core/**|src/pdcurses/**|src/luajit/**|src/tbox/tbox/src/demo/**"), extraconf )
+         package:add("sourcefiles", path.join(rootdir, "xmake/**"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "*.md"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "configure"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "scripts/*.sh"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "scripts/man/**"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "scripts/debian/**"), extraconf)
+         package:add("sourcefiles", path.join(rootdir, "scripts/msys/**"), extraconf)
+     end)
+
+     on_installcmd(function (package, batchcmds)
+         batchcmds:runv("./scripts/get.sh", {"__local__"})
+     end)
+</code></pre>
+<p>It is the installation package configuration script of xmake&#39;s own source code, which is more complete.</p>
+<p>For configuration, please refer to: <a href="https://github.com/xmake-io/xmake/blob/master/core/xpack.lua">xpack.lua</a></p>
+<p>Here, it performs compilation and installation by calling the <code>./scripts/get.sh</code> installation script built into the source package.</p>
+<h3 id="generatesourcecodearchivepackage">Generate source code archive package</h3>
+<p>In addition, we can also configure the <code>srczip</code> and <code>srctargz</code> formats to generate source code compression packages. It is not a complete installation package and has no installation commands. It is only used for source code package distribution.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("srczip", "srctargz")
+     add_sourcefiles("(src/**)")
+</code></pre>
+<pre><code class="lang-bash">$xmakepack
+packing build/xpack/test/test-macosx-src-v1.0.0.zip ..
+packing build/xpack/test/test-macosx-src-v1.0.0.tar.gz ..
+pack ok
+</code></pre>
+<h3 id="generatebinaryarchivepackage">Generate binary archive package</h3>
+<p>We can also configure <code>zip</code> and <code>targz</code> to generate binary compressed packages. It will automatically compile all bound target target programs and package all required binary programs and library files into zip/tar.gz format.</p>
+<p>This is usually used to create a green version of the installation package. There is no automatic installation script inside. Users need to set environment variables such as PATH themselves.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("zip", "targz")
+     add_installfiles("(src/**)")
+</code></pre>
+<pre><code class="lang-bash">$xmakepack
+packing build/xpack/test/test-macosx-v1.0.0.zip ..
+packing build/xpack/test/test-macosx-v1.0.0.tar.gz ..
+pack ok
+</code></pre>
+<p>!> It should be noted that to add binary files to the package, use <code>add_installfiles</code> instead of <code>add_sourcefiles</code>.</p>
+<p>We can also use <code>add_targets</code> to bind the target target programs and libraries that need to be installed. See the interface description for <code>add_targets</code> below for more details.</p>
+<h3 id="generatesrpmsourcecodeinstallationpackage">Generate SRPM source code installation package</h3>
+<p>It can generate source code installation packages in <code>.src.rpm</code> format.</p>
+<p>We can configure add_targets to associate the targets that need to be built. In the generated srpm package, it will automatically call <code>xmake build</code> and <code>xmake install</code> to build and install the package.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_homepage("https://xmake.io")
+     set_license("Apache-2.0")
+     set_description("A cross-platform build utility based on Lua.")
+
+     set_formats("srpm")
+     add_sourcefiles("(src/**)")
+     add_sourcefiles("./xmake.lua")
+
+     add_targets("demo")
+</code></pre>
+<p>It will generate a spec file similar to the following, and then automatically call rpmbuild to generate the <code>.src.rpm</code> package.</p>
+<pre><code>Name: test
+Version: 1.0.0
+Release: 1%{?dist}
+Summary: hello
+
+License: Apache-2.0
+URL: https://xmake.io
+Source0: test-linux-src-v1.0.0.tar.gz
+
+BuildRequires: xmake
+BuildRequires: gcc
+BuildRequires: gcc-c++
+
+%description
+A test installer.
+
+%prep
+%autosetup -n test-1.0.0 -p1
+
+%build
+xmake build -y test
+
+%install
+xmake install -o %{buildroot}/%{_exec_prefix} test
+cd %{buildroot}
+find . -type f | sed &#39;s!^\./!/!&#39; > %{_builddir}/_installedfiles.txt
+
+%check
+
+%files -f %{_builddir}/_installedfiles.txt
+
+%changelog
+* Fri Dec 22 2023 ruki - 1.0.0-1
+- Update to 1.0.0
+</code></pre><p>We can also customize build and installation scripts through <code>on_buildcmd</code> and <code>on_installcmd</code>.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_homepage("https://xmake.io")
+     set_license("Apache-2.0")
+     set_description("A cross-platform build utility based on Lua.")
+
+     set_formats("srpm")
+     add_sourcefiles("(src/**)")
+     add_sourcefiles("./configure")
+
+     on_buildcmd(function (package, batchcmds)
+         batchcmds:runv("./configure")
+         batchcmds:runv("make")
+     end)
+
+     on_installcmd(function (package, batchcmds)
+         batchcmds:runv("make", {"install", "PREFIX=%{buildroot}"})
+     end)
+</code></pre>
+<h3 id="generaterpmbinaryinstallationpackage">Generate RPM binary installation package</h3>
+<p>The RPM package will directly generate a compiled binary installation package. xmake will automatically call the <code>rpmbuild --rebuild</code> command to build the SRPM package and generate it.</p>
+<p>In XPack, we only need to configure <code>set_formats("rpm")</code> to support rpm package generation, and other configurations are exactly the same as srpm packages.</p>
+<pre><code class="lang-lua">xpack("test")
+     set_formats("rpm")
+     -- TODO
+</code></pre>
+<h3 id="packagingcommand">Packaging command</h3>
+<h4 id="specifypackagingformat">Specify packaging format</h4>
+<p>If we have configured multiple packaging formats using <code>set_formats</code> in the configuration file, then <code>xmake pack</code> will automatically generate packages for all these formats by default.</p>
+<p>Of course, we can also use <code>xmake pack --formats=nsis,targz</code> to selectively specify which formats of packages currently need to be packaged.</p>
+<h4 id="modifythepackagefilename">Modify the package file name</h4>
+<p>We can modify the package name through <code>set_basename()</code> in the configuration file, or we can modify it through the command line.</p>
+<pre><code class="lang-bash">$ xmake pack --basename="foo"
+packing build/xpack/test/foo.zip ..
+pack ok
+</code></pre>
+<h4 id="specifyoutputdirectory">Specify output directory</h4>
+<p>The default output directory is in the build directory, but we can also modify the output path.</p>
+<pre><code class="lang-bash">$ xmake pack -o /tmp/output
+</code></pre>
+<h4 id="disableautomaticbuild">Disable automatic build</h4>
+<p>If you are building a binary package such as NSIS, <code>xmake pack</code> will automatically compile all bound target files first, and then execute the packaging logic.</p>
+<p>But if we have already compiled it and don&#39;t want to compile it every time, but package it directly, we can disable automatic building through the following parameters.</p>
+<pre><code class="lang-bash">$ xmake pack --autobuild=n
+</code></pre>
+<h3 id="interfacedescription">Interface description</h3>
+<p>For more descriptions of the XPack packaging interface, see: <a href="https://xmake.io/#/manual/xpack">XPack Packaging Interface Document</a>.</p>
+<h2 id="macrosrecordingandplayback">Macros Recording and Playback</h2>
+<h3 id="introduction">Introduction</h3>
+<p>We can record and playback our xmake commands and save as macro quickly using this plugin.</p>
+<p>And we can run this macro to simplify our jobs repeatably.</p>
+<h3 id="recordcommands">Record Commands</h3>
+<pre><code class="lang-bash"># begin to record commands
+$ xmake macro --begin
+
+# run some xmake commands
+$ xmake f -p android --ndk=/xxx/ndk -a arm64-v8a
+$ xmake p
+$ xmake f -p mingw --sdk=/mingwsdk
+$ xmake p
+$ xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin
+$ xmake p
+$ xmake f -p iphoneos -a armv7
+$ xmake p
+$ xmake f -p iphoneos -a arm64
+$ xmake p
+$ xmake f -p iphoneos -a armv7s
+$ xmake p
+$ xmake f -p iphoneos -a i386
+$ xmake p
+$ xmake f -p iphoneos -a x86_64
+$ xmake p
+
+# stop to record and  save as anonymous macro
+xmake macro --end
+</code></pre>
+<h3 id="playbackmacro">Playback Macro</h3>
+<pre><code class="lang-bash"># playback the previous anonymous macro
+$ xmake macro .
+</code></pre>
+<h3 id="namedmacro">Named Macro</h3>
+<pre><code class="lang-bash">$ xmake macro --begin
+$ ...
+$ xmake macro --end macroname
+$ xmake macro macroname
+</code></pre>
+<h3 id="importandexportmacro">Import and Export Macro</h3>
+<p>Import the given macro file or directory.</p>
+<pre><code class="lang-bash">$ xmake macro --import=/xxx/macro.lua macroname
+$ xmake macro --import=/xxx/macrodir
+</code></pre>
+<p>Export the given macro to file or directory.</p>
+<pre><code class="lang-bash">$ xmake macro --export=/xxx/macro.lua macroname
+$ xmake macro --export=/xxx/macrodir
+</code></pre>
+<h3 id="listandshowmacro">List and Show Macro</h3>
+<p>List all builtin macros.</p>
+<pre><code class="lang-bash">$ xmake macro --list
+</code></pre>
+<p>Show the given macro script content.</p>
+<pre><code class="lang-bash">$ xmake macro --show macroname
+</code></pre>
+<h3 id="custommacroscript">Custom Macro Script</h3>
+<p>Create and write a <code>macro.lua</code> script first.</p>
+<pre><code class="lang-lua">function main()
+    os.exec("xmake f -p android --ndk=/xxx/ndk -a arm64-v8a")
+    os.exec("xmake p")
+    os.exec("xmake f -p mingw --sdk=/mingwsdk")
+    os.exec("xmake p")
+    os.exec("xmake f -p linux --sdk=/toolsdk --toolchains=/xxxx/bin")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a armv7")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a arm64")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a armv7s")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a i386")
+    os.exec("xmake p")
+    os.exec("xmake f -p iphoneos -a x86_64")
+    os.exec("xmake p")
+end
+</code></pre>
+<p>Import this macro script to xmake.</p>
+<pre><code class="lang-bash">$ xmake macro --import=/xxx/macro.lua [macroname]
+</code></pre>
+<p>Playback this macro script.</p>
+<pre><code class="lang-bash">$ xmake macro [.|macroname]
+</code></pre>
+<h3 id="builtinmacros">Builtin Macros</h3>
+<p>XMake supports some builtins macros to simplify our jobs.</p>
+<p>For example, we use <code>package</code> macro to package all architectures of the iphoneos platform just for once.</p>
+<pre><code class="lang-bash">$ xmake macro package -p iphoneos
+</code></pre>
+<h3 id="advancemacroscript">Advance Macro Script</h3>
+<p>Let&#39;s see the <code>package</code> macro script:</p>
+<pre><code class="lang-lua">-- imports
+import("core.base.option")
+import("core.project.config")
+import("core.project.project")
+import("core.platform.platform")
+
+-- the options
+local options =
+{
+    {&#39;p&#39;, "plat",       "kv",  os.host(),   "Set the platform."                                    }
+,   {&#39;f&#39;, "config",     "kv",  nil,         "Pass the config arguments to \"xmake config\" .."     }
+,   {&#39;o&#39;, "outputdir",  "kv",  nil,         "Set the output directory of the package."             }
+}
+
+-- package all
+--
+-- .e.g
+-- xmake m package
+-- xmake m package -f "-m debug"
+-- xmake m package -p linux
+-- xmake m package -p iphoneos -f "-m debug --xxx ..." -o /tmp/xxx
+-- xmake m package -f \"--mode=debug\"
+--
+function main(argv)
+
+    -- parse arguments
+    local args = option.parse(argv, options, "Package all architectures for the given the platform."
+                                           , ""
+                                           , "Usage: xmake macro package [options]")
+
+    -- package all archs
+    local plat = args.plat
+    for _, arch in ipairs(platform.archs(plat)) do
+
+        -- config it
+        os.exec("xmake f -p %s -a %s %s -c %s", plat, arch, args.config or "", (option.get("verbose") and "-v" or ""))
+
+        -- package it
+        if args.outputdir then
+            os.exec("xmake p -o %s %s", args.outputdir, (option.get("verbose") and "-v" or ""))
+        else
+            os.exec("xmake p %s", (option.get("verbose") and "-v" or ""))
+        end
+    end
+
+    -- package universal for iphoneos, watchos ...
+    if plat == "iphoneos" or plat == "watchos" then
+
+        -- load configure
+        config.load()
+
+        -- load project
+        project.load()
+
+        -- enter the project directory
+        os.cd(project.directory())
+
+        -- the outputdir directory
+        local outputdir = args.outputdir or config.get("buildir")
+
+        -- package all targets
+        for _, target in pairs(project.targets()) do
+
+            -- get all modes
+            local modedirs = os.match(format("%s/%s.pkg/lib/*", outputdir, target:name()), true)
+            for _, modedir in ipairs(modedirs) do
+
+                -- get mode
+                local mode = path.basename(modedir)
+
+                -- make lipo arguments
+                local lipoargs = nil
+                for _, arch in ipairs(platform.archs(plat)) do
+                    local archfile = format("%s/%s.pkg/lib/%s/%s/%s/%s", outputdir, target:name(), mode, plat, arch, path.filename(target:targetfile()))
+                    if os.isfile(archfile) then
+                        lipoargs = format("%s -arch %s %s", lipoargs or "", arch, archfile)
+                    end
+                end
+                if lipoargs then
+
+                    -- make full lipo arguments
+                    lipoargs = format("-create %s -output %s/%s.pkg/lib/%s/%s/universal/%s", lipoargs, outputdir, target:name(), mode, plat, path.filename(target:targetfile()))
+
+                    -- make universal directory
+                    os.mkdir(format("%s/%s.pkg/lib/%s/%s/universal", outputdir, target:name(), mode, plat))
+
+                    -- package all archs
+                    os.execv("xmake", {"l", "lipo", lipoargs})
+                end
+            end
+        end
+    end
+end
+</code></pre>
+<p><p class="tip"><br>    If you want to known more options, please run: <code>xmake macro --help</code><br></p>
+
+</p>
+<h2 id="generatedoxygendocument">Generate Doxygen Document</h2>
+<p>Please ensure that the doxygen tool has been installed first.</p>
+<pre><code class="lang-bash">$ xmake doxygen
+</code></pre>
+</article>
+</body>
+</html>

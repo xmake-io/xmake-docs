@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/guide/faq">https://xmake.io/#/zh-cn/guide/faq</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="">怎样获取更多参数选项信息？</h2>
+<p>获取主菜单的帮助信息，里面有所有action和plugin的列表描述。</p>
+<pre><code class="lang-bash">$ xmake [-h|--help]
+</code></pre>
+<p>获取配置菜单的帮助信息，里面有所有配置选项的描述信息，以及支持平台、架构列表。</p>
+<pre><code class="lang-bash">$ xmake f [-h|--help]
+</code></pre>
+<p>获取action和plugin命令菜单的帮助信息，里面有所有内置命令和插件任务的参数使用信息。</p>
+<pre><code class="lang-bash">$ xmake [action|plugin] [-h|--help]
+</code></pre>
+<p>例如，获取<code>run</code>命令的参数信息:</p>
+<pre><code class="lang-bash">$ xmake run --help
+</code></pre>
+<h2 id="">怎样实现静默构建，不输出任何信息？</h2>
+<pre><code class="lang-bash">$ xmake [-q|--quiet]
+</code></pre>
+<h2 id="xmake">如果xmake运行失败了怎么办？</h2>
+<p>可以先尝试清除下配置，重新构建下：</p>
+<pre><code class="lang-bash">$ xmake f -c
+$ xmake
+</code></pre>
+<p>如果还是失败了，请加上 <code>-v</code> 或者 <code>--verbose</code> 选项重新执行xmake后，获取更加详细的输出信息</p>
+<p>例如：</p>
+<pre><code class="lang-hash">$ xmake [-v|--verbose]
+</code></pre>
+<p>并且可以加上 <code>-D</code> 选项获取出错时的xmake的调试栈信息和其他更详细的诊断信息, 然后你可以提交这些信息到<a href="https://github.com/xmake-io/xmake/issues">issues</a>.</p>
+<pre><code class="lang-bash">$ xmake -v -D
+</code></pre>
+<h2 id="">怎样看实时编译警告信息?</h2>
+<p>为了避免刷屏，在构建时候，默认是不实时输出警告信息的，如果想要看的话可以加上<code>-w</code>选项启用编译警告输出就行了。</p>
+<pre><code class="lang-bash">$ xmake [-w|--warning]
+</code></pre>
+<h2 id="xmakelua">怎样基于源码自动生成xmake.lua？</h2>
+<p>如果你想临时写一两个测试代码、或者手上有一些移植过来的零散源码想要快速编译运行，可以不用专门xmake.lua，直接运行：</p>
+<pre><code class="lang-bash">$ xmake
+</code></pre>
+<p>xmake会自动扫描分析当前的源码目录，识别程序结构和类型，生成一个xmake.lua，并且会尝试直接构建它。</p>
+<p>如果编译成功，可以直接运行：</p>
+<pre><code class="lang-bash">$ xmake run
+</code></pre>
+<p>当然，如果仅仅只是想要生成xmake.lua，默认不去构建，可以执行：</p>
+<pre><code class="lang-bash">$ xmake f -y
+</code></pre>
+<p>更多相关介绍，请参考文章：<a href="https://tboox.org/cn/2017/01/07/build-without-makefile/">xmake新增智能代码扫描编译模式，无需手写任何make文件</a></p>
+<h2 id="xmakelua">为什么 xmake.lua 会被执行多遍？</h2>
+<p>xmake.lua里面分描述域和脚本域，在描述域里面会对各种配置域进行分阶段多次解析，有可能会执行多遍，因此不要在描述域写复杂的脚本。</p>
+<p>如果要写各种复杂脚本，请在脚本域内进行配置，<code>target/on_load</code>的脚本域里面同样可以灵活配置各种target相关设置，并且提供更强大的lua脚本模块支持。</p>
+<p>更多细节见：<a href="/mirror/zh-cn/guide/syntax_description.html">描述语法说明</a></p>
+<h2 id="xmake">如何调试 Xmake 源码?</h2>
+<h3 id="">下载源码</h3>
+<p>由于 Xmake 使用了 git submodules 维护子模块，因此我们可以通过下面几种方式拉取完整源码。</p>
+<h4 id="git">使用 git 拉取</h4>
+<pre><code class="lang-bash">$ git clone --recursive https://github.com/xmake-io/xmake.git
+</code></pre>
+<p>或者</p>
+<pre><code class="lang-bash">$ git clone https://github.com/xmake-io/xmake.git
+$ git submodule update --init
+</code></pre>
+<h4 id="githubreleases">从 Github Releases 下载源码包</h4>
+<p>由于 github 本身的 downloads 附件下载不支持归档 submodules，因此 Xmake 每次发版都会完整打包一份额外的 tar 包源码上传到 Releases 上。</p>
+<p>因此，不要下载错误的链接地址</p>
+<ul>
+<li>不完整源码：<a href="https://github.com/xmake-io/xmake/archive/refs/tags/v2.7.2.tar.gz">https://github.com/xmake-io/xmake/archive/refs/tags/v2.7.2.tar.gz</a></li>
+<li>完整源码包：<a href="https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz">https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz</a></li>
+</ul>
+<pre><code class="lang-bash">wget https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
+tar -xvf xmake-v2.7.2.tar.gz -C xmake
+cd xmake
+</code></pre>
+<p>!> Xmake 的 tar 源码包没有顶层 xmake 根目录，因此解压时候最好带上 <code>-C xmake</code> 指定下输出目录。</p>
+<h3 id="">编译源码</h3>
+<h4 id="windows">在 Windows 上编译</h4>
+<p>如果是在 Windows 编译 Xmake 源码，需要借助现有的 Xmake 预构建版本进行自举编译。</p>
+<p>因此我们需要先参考 <a href="https://xmake.io/#/zh-cn/guide/installation?id=windows">Windows 安装 Xmake</a> 文档，安装 Xmake。</p>
+<p>然后进入 Xmake 源码目录进行编译。</p>
+<pre><code class="lang-bash">cd xmake
+cd core
+xmake
+</code></pre>
+<p>!> 我们需要进入 Xmake 的 core 子目录执行 xmake 命令。</p>
+<h4 id="linuxmacosfreebsd">在 Linux/macOS/FreeBSD 上编译</h4>
+<p>其他类 unix 平台环境编译 Xmake，我们只需要在源码根目录执行 make 就行了。</p>
+<pre><code class="lang-bash">$ cd xmake
+$ ./configure
+$ make
+</code></pre>
+<h3 id="">加载调试</h3>
+<p>如果编译完成，我们就可以加载刚刚编译好的 Xmake 二进制 core 程序，然后运行本地的 Lua 脚本了。</p>
+<h4 id="windows">在 Windows 上加载本地调试环境</h4>
+<p>进入 <code>xmake/scripts</code> 目录，双击 srcenv.bat 脚本，它会自动加载本地的 Xmake 程序和脚本，打开一个 cmd 终端。</p>
+<p>我们在这个终端下，就可以开启调试了。</p>
+<p>我们也可以运行</p>
+<pre><code class="lang-bash">$ xmake l os.programdir
+</code></pre>
+<p>来验证我们是否真的加载了本地的 Lua 脚本环境。</p>
+<h4 id="">在其他平台加载本地调试环境</h4>
+<p>在 Linux/macOS/FreeBSD 上会更加简单点，只需要运行：</p>
+<pre><code class="lang-bash">$ cd xmake
+$ source scripts/srcenv.profile
+</code></pre>
+<p>就能进入本地源码调试环境。</p>
+<h3 id="core">调试 core 二进制</h3>
+<p>通常调试 Xmake 的 Lua 脚本，只需要直接修改当前源码目录的 Lua 脚本就行了，实时生效的，我们并不需要重复编译 core 二进制。</p>
+<p>但是如果是 Xmake 的 C 端 core 程序有问题，需要调试或者加模块，那么就需要重复编译了。</p>
+<p>编译完成，也是实时生效的，我们可以在 C 代码里通过：</p>
+<pre><code class="lang-c">tb_trace_i("hello %s", "xmake");
+</code></pre>
+<p>来格式化打印各种输出。</p>
+<p>如果是 tbox 等 Xmake 依赖的各种 submodules 子模块有问题，需要调试。</p>
+<p>我们也可以直接进入子模块源码，修改后重新编译执行。</p>
+<p>但是，如果需要贡献修复补丁，我们需要提交 pr 给子模块的仓库才行，补丁合并后，作者会在特定时间同步到到 Xmake 源码仓库。</p>
+<h3 id="">断点调试</h3>
+<p>2.8.3 版本，我们新增了 Lua 断点调试支持，配合 <a href="https://github.com/EmmyLua/VSCode-EmmyLua">VSCode-EmmyLua</a> 插件，我们可以很方便的在 VSCode 中断点调试 Xmake 自身源码。</p>
+<p>首先，我们需要在 VSCode 的插件市场安装 VSCode-EmmyLua 插件，然后执行下面的命令更新下 xmake-repo 仓库保持最新。</p>
+<pre><code class="lang-bash">xrepo update-repo
+</code></pre>
+<p>!> Xmake 也需要保持最新版本。</p>
+<p>然后，在自己的工程目录下执行以下命令：</p>
+<pre><code class="lang-bash">$ xrepo env -b emmylua_debugger -- xmake build
+</code></pre>
+<p>其中 <code>xrepo env -b emmylua_debugger</code> 用于绑定 EmmyLua 调试器插件环境，而 <code>--</code> 后面的参数，就是我们实际需要被调试的 xmake 命令。</p>
+<p>通常我们仅仅调试 <code>xmake build</code> 构建，如果想要调试其他命令，可以自己调整，比如想要调试 <code>xmake install -o /tmp</code> 安装命令，那么可以改成：</p>
+<pre><code class="lang-bash">$ xrepo env -b emmylua_debugger -- xmake install -o /tmp
+</code></pre>
+<p>执行完上面的命令后，它不会立即退出，会一直处于等待调试状态，有可能没有任何输出。</p>
+<p>这个时候，我们不要急着退出它，继续打开 VSCode，并在 VSCode 中打开 Xmake 的 Lua 脚本源码目录。</p>
+<p>也就是这个目录：<a href="https://github.com/xmake-io/xmake/tree/master/xmake">Xmake Lua Scripts</a>，我们可以下载的本地，也可以直接打开 Xmake 安装目录中的 lua 脚本目录。</p>
+<p>然后切换到 VSCode 的调试 Tab 页，点击 <code>RunDebug</code> -> <code>Emmylua New Debug</code> 就能连接到我们的 <code>xmake build</code> 命令调试端，开启调试。</p>
+<p>如下图所示，默认的起始断点会自动中断到 <code>debugger:_start_emmylua_debugger</code> 内部，我们可以点击单步跳出当前函数，就能进入 main 入口。</p>
+<p><img src="/assets/img/manual/xmake-debug.png" alt=""></p>
+<p>然后设置自己的断点，点击继续运行，就能中断到自己想要调试的代码位置。</p>
+<p>我们也可以在项目工程的配置脚本中设置断点，也可以实现快速调试自己的配置脚本，而不仅仅是 Xmake 自身源码。</p>
+<p><img src="/assets/img/manual/xmake-debug2.png" alt=""></p>
+<h3 id="">远程调试</h3>
+<p>2.8.3 版本现在也能支持远程调试，其实这个功能主要是给作者用的，因为作者本人的开发电脑是 mac，但是有时候还是需要能够在 windows 上调试 xmake 源码脚本。</p>
+<p>但是在虚拟机中调试，太卡，体验不好，并且作者本人的电脑磁盘空间不够，因此我通常会远程连到单独的 windows 主机上去调试 xmake 源码。</p>
+<p>我们先在 windows 机器上开启远程编译服务：</p>
+<pre><code class="lang-bash">$ xmake service
+</code></pre>
+<p>然后本机打开需要构建的工程目录，执行远程连接，然后执行 <code>xmake service --sync --xmakesrc=</code> 去同步本地源码：</p>
+<pre><code class="lang-bash">$ xmake service --connect
+$ xmake service --sync --xmakesrc=~/projects/personal/xmake/xmake/
+$ xmake build
+$ xmake run
+</code></pre>
+<p>这样，我们就能本地修改 xmake 脚本源码，然后同步到远程 windows 机器上，然后远程执行 xmake 构建命令，获取对应的调试输出，以及分析构建行为。</p>
+<p>我们也能够通过 <code>xmake service --pull=</code> 命令，回拉远程的文件到本地，进行分析。</p>
+<p>注：详细的远程编译特性说明，见 <a href="http://xmake.io/#/zh-cn/features/remote_build">远程编译文档</a>。</p>
+<p><img src="/assets/img/manual/xmake-remote.png" alt=""></p>
+<h2 id="">如何调试仓库包?</h2>
+<p>调试的方式有很多种，这里我主要介绍作者最常使用的调试方式，那就是直接拉取 xmake-repo 仓库来调试。</p>
+<pre><code class="lang-bash">$ git clone https://github.com/xmake-io/xmake-repo.git
+$ xmake l scripts/test.lua -vD --shallow zlib
+</code></pre>
+<p>使用上面 test.lua 脚本命令来调试包，我们可以重复安装测试指定的包，<code>--shallow</code> 告诉 Xmake 每次测试不去重复完整安装它的所有依赖包，仅仅测试按照当前包。</p>
+<p>我们也可以测试指定的平台，架构，编译模式，vs_runtime 和动态库，静态库等等。</p>
+<pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow -p mingw --mingw=/xxx/sdk zlib
+$ xmake l scripts/test.lua -vD --shallow -p iphoneos -a arm64 zlib
+$ xmake l scripts/test.lua -vD --shallow -k shared --vs_runtime=MD zlib
+$ xmake l scripts/test.lua -vD --shallow -m debug zlib
+</code></pre>
+<h3 id="">调试本地包源码</h3>
+<p>有时候，由于包的源码和构建脚本有问题，我们需要修改一些代码才能继续测试安装，如果通过 add_patches/io.replace 的方式在 on_install 里面去修改调试，非常繁琐。</p>
+<p>因此，我们可以通过指定 <code>-d package_sourcedir</code> 方式，直接让测试脚本进入我们预先下载好的包源码目录，测试编译安装，我们每次的代码修改不会被重置。</p>
+<pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
+</code></pre>
+<p>等修改调试通过后，我们再根据改动，通过 <code>git diff > fix.patch</code> 生成补丁文件，通过 <code>add_patches</code> 配置应用补丁包，来修复包的安装。</p>
+<h3 id="">远程调试包源码</h3>
+<p>我们也可以远程调试包，先开启远程服务：</p>
+<pre><code class="lang-bash">$ xmake service
+</code></pre>
+<p>然后传入 <code>--remote</code> 参数，即可实现远程包编译测试。</p>
+<pre><code class="lang-bash">$ xmake l scripts/test.lua -vD --shallow --remote /tmp/zlib-1.2.11 zlib
+</code></pre>
+<h2 id="">下载包提示证书校验失败怎么办？</h2>
+<pre><code class="lang-bash">curl: (60) SSL certificate problem: unable to get local issuer certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+</code></pre>
+<p>如果你在使用 Xmake 安装依赖包时候，遇到上面的证书验证问题，你可以尝试更新 curl 证书去修复它，或者直接全局配置禁用证书验证来绕过它。</p>
+<pre><code class="lang-bash">$ xmake g --insecure-ssl=y
+</code></pre>
+<p>当然，禁用证书验证会带来一定的安全性风险，不过好在 xmake-repo 仓库中的包，有严格的 sha256 校验，<br>即使下载被劫持，最终也会 xmake 的 sha256 校验检测到，作为无效下载。</p>
+</article>
+</body>
+</html>

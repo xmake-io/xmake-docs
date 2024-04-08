@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xmake</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="/assets/npm/github-markdown/github-markdown.min.css" rel="stylesheet">
+  <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+  </style>
+</head>
+<body>
+<article class="markdown-body">
+<h4>This is a mirror page, please see the original page: </h4><a href="https://xmake.io/#/zh-cn/package/system_package">https://xmake.io/#/zh-cn/package/system_package</a>
+<div id="wwads-panel" class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px;bottom:20px;right:20px;width:200px;height:260px;background:#fff;position:fixed"></div>
+</br>
+    <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7I52QU&placement=xmakeio" id="_carbonads_js"></script>
+<style>
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+</style>
+    <h2 id="">查找使用系统包</h2>
+<p>Xmake 对远程包和系统包的使用进行了统一，全部使用 <code>add_requires("zlib")</code> 接口来描述集成，而默认的配置方式，它会优先从系统上查找库，如果没有，会自动下载安装集成。</p>
+<p>而如果我们仅仅想查找使用系统库，不想远程下载，可以这么配置：</p>
+<pre><code class="lang-lua">add_requires("zlib", {system = true})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("zlib")
+</code></pre>
+<p>通过 <code>{system = true}</code> 就可以强制禁用远程下载，这时候，他就等价于 Xmake/CMake 的 <code>find_package</code>，但是更加简单易用，并且和远程包使用方式完全一致。</p>
+<p>默认情况下，如果找不到系统库，就是提示失败，如果这个包是可选的，那么可以额外配置 <code>{optional = true}</code> 选项。</p>
+<pre><code class="lang-lua">add_requires("zlib", {system = true, optional = true})
+</code></pre>
+<h2 id="">查找包快速测试</h2>
+<p>我们可以使用下面的命令，快速检测系统上指定的包信息：</p>
+<pre><code class="lang-console">$ xmake l find_package x264
+{
+    links = {
+      "x264"
+    },
+    linkdirs = {
+      "/usr/local/Cellar/x264/r2699/lib"
+    },
+    version = "0.148.2699 a5e06b9",
+    includedirs = {
+      "/usr/local/Cellar/x264/r2699/include"
+    }
+}
+</code></pre>
+<p>我们也可以追加第三方包管理器前缀来测试：</p>
+<pre><code class="lang-console">xmake l find_package conan::OpenSSL/1.0.2g
+</code></pre>
+<p>!> 需要注意的是，find_package命令如果在带有xmake.lua的工程目录下执行，是会有缓存的，如果查找失败，下次查找也会使用缓存的结果，如果要每次强制重新检测，请切换到非工程目录下执行上面的命令。</p>
+</article>
+</body>
+</html>
