@@ -561,7 +561,7 @@ end
 
 - Get compiled command line list
 
-A little different from [compiler.compargv](#compilercompargv) is that this interface returns a list of parameters, table representation, more convenient to operate:
+A little different from [compiler.compcmd](#compilercompcmd) is that this interface returns a list of parameters, table representation, more convenient to operate:
 
 ```lua
 local program, argv = compiler.compargv("xxx.c", "xxx.o")
