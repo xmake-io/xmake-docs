@@ -359,7 +359,7 @@ end
 
 - 获取编译命令行列表
 
-跟[compiler.compargv](#compilercompargv)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
+跟[compiler.compcmd](#compilercompcmd)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
 
 ```lua
 local program, argv = compiler.compargv("xxx.c", "xxx.o")
