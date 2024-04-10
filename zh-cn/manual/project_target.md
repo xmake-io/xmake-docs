@@ -1991,6 +1991,13 @@ add_cugencodes("sm_60")
 add_ldflags("-L/xxx", "-lxxx")
 ```
 
+在添加链接选项时，默认无法支持参数内有空格，使用expand = false：
+
+```lua
+-- add_ldflags("-L/my lib") ERROR: Invalid arguments
+add_ldflags({"-L/my lib"}, {expand = false}) -- OK
+```
+
 ### target:add_arflags
 
 #### 添加静态库归档选项
