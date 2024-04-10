@@ -1993,6 +1993,13 @@ Add static link option
 add_ldflags("-L/xxx", "-lxxx")
 ```
 
+While adding flags, argument with space is not allowed defaultly, use expand = false instead.
+
+```lua
+-- add_ldflags("-L/my lib") ERROR: Invalid arguments
+add_ldflags({"-L/my lib"}, {expand = false}) -- OK
+```
+
 ### target:add_arflags
 
 #### Add archive library flags
