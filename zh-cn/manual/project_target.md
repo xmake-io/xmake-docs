@@ -679,6 +679,18 @@ target("test")
     add_files("src/*.markdown")
 ```
 
+我们可以在add_rules时传参：
+
+```lua
+rule("my_rule")
+    on_load(function (target)
+        local my_arg = target:extraconf("rules", "my_rule", "my_arg") -- "my arg"
+    end)
+
+target("test")
+    add_rules("my_rule", { my_arg = "my arg"})
+```
+
 我们也可以指定应用局部文件到规则，具体使用见：[add_files](#targetadd_files)。
 
 ### target:on_load
