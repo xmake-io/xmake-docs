@@ -677,6 +677,18 @@ target("test")
     add_files("src/*.markdown")
 ```
 
+We can send arguments to rule in add_rules:
+
+```lua
+rule("my_rule")
+    on_load(function (target)
+        local my_arg = target:extraconf("rules", "my_rule", "my_arg") -- "my arg"
+    end)
+
+target("test")
+    add_rules("my_rule", { my_arg = "my arg"})
+```
+
 We can also specify the application of local files to the rules, see: [add_files](#targetadd_files).
 
 ### target:on_load
