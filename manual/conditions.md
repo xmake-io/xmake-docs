@@ -75,15 +75,27 @@ if is_plat("macosx", "iphoneos") then
     add_frameworks("Foundation")
 end
 ```
+Available platforms:
 
-Support platforms:
+| Platform  |
+|-----------|
+| android   |
+| appletvos |
+| applexros |
+| bsd       |
+| cross     |
+| cygwin    |
+| haiku     |
+| iphoneos  |
+| linux     |
+| macosx    |
+| mingw     |
+| msys      |
+| wasm      |
+| watchos   |
+| windows   |
 
-* windows
-* linux
-* macosx
-* android
-* iphoneos
-* watchos
+
 
 ### is_host
 
