@@ -5,7 +5,7 @@ Native modules can be used in the build workflow.
 
 xmake will do dual-stage build if any native-module added. Native-modules can be imported in script-scope after first stage's build.
 
-#### Import shared module
+#### Establish shared module
 
 ./modules/foo/foo.c
 
@@ -51,7 +51,7 @@ target("foo")
     add_files("foo.c")
 ```
 
-#### Import binary module
+#### Establish binary module
 
 ./modules/bar/bar.cpp
 
@@ -89,6 +89,8 @@ target("sub")
     add_rules("module.binary")
     add_files("bar.cpp")
 ```
+
+#### Import native module
 
 ./xmake.lua
 
