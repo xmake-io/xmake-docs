@@ -57,6 +57,7 @@
   - [选项实例](zh-cn/manual/option_instance.md)
   - [内置模块](zh-cn/manual/builtin_modules.md)
   - [扩展模块](zh-cn/manual/extension_modules.md)
+  - [原生模块](zh-cn/manual/native_modules.md)
 
 - 其他特性
 

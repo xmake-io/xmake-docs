@@ -55,6 +55,7 @@
   - [Option Instance](manual/option_instance.md)
   - [Builtin Modules](manual/builtin_modules.md)
   - [Extension Modules](manual/extension_modules.md)
+  - [Native Modules](manual/native_modules.md)
 
 - Other features
 
