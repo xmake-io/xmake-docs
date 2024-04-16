@@ -499,33 +499,43 @@ Set the language standard for target code compilation. If no target exists, it w
 
 The supported language standards currently have the following main ones:
 
-| Value      | Description                      |
-| ---------- | ----------------------           |
-| ansi       | c language standard: ansi        |
-| c89        | c language standard: c89         |
-| gnu89      | c language standard: gnu89       |
-| c99        | c language standard: c99         |
-| gnu99      | c language standard: gnu99       |
-| c11        | c language standard: c11         |
-| c17        | c language standard: c17         |
-| clatest    | c language standard: clatest     |
+| Value    |C language standard|
+|----------|-------------------|
+| `ansi`   |`ansi`             |
+| `c89`    |`c89`              |
+| `gnu89`  |`gnu89`            |
+| `c90`    |`c90`              |
+| `gnu90`  |`gnu90`            |
+| `c99`    |`c99`              |
+| `gnu99`  |`gnu99`            |
+| `c11`    |`c11`              |
+| `c17`    |`c17`              |
+| `clatest`|`clatest`          |
 
-| Value      | Description                          |
-| ---------- | ----------------------               |
-| cxx98      | c++ language standard: `c++98`       |
-| gnuxx98    | c++ language standard: `gnu++98`     |
-| cxx11      | c++ language standard: `c++11`       |
-| gnuxx11    | c++ language standard: `gnu++11`     |
-| cxx14      | c++ language standard: `c++14`       |
-| gnuxx14    | c++ language standard: `gnu++14`     |
-| cxx1z      | c++ language standard: `c++1z`       |
-| gnuxx1z    | c++ language standard: `gnu++1z`     |
-| cxx17      | c++ language standard: `c++17`       |
-| gnuxx17    | c++ language standard: `gnu++17`     |
-| cxx20      | c++ language standard: `c++20`       |
-| gnuxx20    | c++ language standard: `gnu++20`     |
-| cxxlatest  | c++ language standard: `c++latest`   |
-| gnuxxlatest| c++ language standard: `gnu++latest` |
+|Value        |C++ language standard |
+|-------------|----------------------|
+|`cxx98`      |`c++98`               |
+|`gnuxx98`    |`gnu++98`             |
+|`cxx03`      |`c++03`               |
+|`gnuxx03`    |`gnu++03`             |
+|`cxx11`      |`c++11`               |
+|`gnuxx11`    |`gnu++11`             |
+|`cxx14`      |`c++14`               |
+|`gnuxx14`    |`gnu++14`             |
+|`cxx1z`      |`c++1z`               |
+|`gnuxx1z`    |`gnu++1z`             |
+|`cxx17`      |`c++17`               |
+|`gnuxx17`    |`gnu++17`             |
+|`cxx20`      |`c++20`               |
+|`gnuxx20`    |`gnu++20`             |
+|`cxx2a`      |`c++2a`               |
+|`gnuxx2a`    |`gnu++2a`             |
+|`cxx20`      |`c++23`               |
+|`gnuxx20`    |`gnu++23`             |
+|`cxx2b`      |`c++2b`               |
+|`gnuxx2b`    |`gnu++2b`             |
+|`cxxlatest`  |`c++latest`           |
+|`gnuxxlatest`|`gnu++latest`         |
 
 The c standard and the c++ standard can be set at the same time, for example:
 
