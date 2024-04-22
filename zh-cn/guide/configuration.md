@@ -120,6 +120,20 @@ $ xmake f -p wasm --toolchain=wasi
 $ xmake
 ```
 
+### HarmonyOS (鸿蒙)
+
+2.9.1 版本新增了鸿蒙 OS 平台的 native 工具链编译支持：
+
+```bash
+$ xmake f -p harmony
+```
+
+xmake 会自动探测默认的 SDK 路径，当然我们也可以指定 Harmony SDK 路径。
+
+```bash
+$ xmake f -p Harmony --sdk=/Users/ruki/Library/Huawei/Sdk/openharmony/10/native
+```
+
 ## 交叉编译配置
 
 通常，如果我们需要在当前pc环境编译生成其他设备上才能运行的目标文件时候，就需要通过对应的交叉编译工具链来编译生成它们，比如在win/macos上编译linux的程序，或者在linux上编译其他嵌入式设备的目标文件等。

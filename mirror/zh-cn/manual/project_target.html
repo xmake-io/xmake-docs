@@ -819,6 +819,15 @@ target("test")
     add_files("src/*.md")
     add_files("src/*.markdown")
 </code></pre>
+<p>我们可以在add_rules时传参：</p>
+<pre><code class="lang-lua">rule("my_rule")
+    on_load(function (target)
+        local my_arg = target:extraconf("rules", "my_rule", "my_arg") -- "my arg"
+    end)
+
+target("test")
+    add_rules("my_rule", { my_arg = "my arg"})
+</code></pre>
 <p>我们也可以指定应用局部文件到规则，具体使用见：<a href="#targetadd_files">add_files</a>。</p>
 <h3 id="targeton_load">target:on_load</h3>
 <h4 id="">自定义目标加载脚本</h4>
@@ -1711,6 +1720,10 @@ add_culdflags("-gencode arch=compute_30,code=sm_30")
 <h4 id="">添加链接选项</h4>
 <p>添加静态链接选项</p>
 <pre><code class="lang-lua">add_ldflags("-L/xxx", "-lxxx")
+</code></pre>
+<p>在添加链接选项时，默认无法支持参数内有空格，使用expand = false：</p>
+<pre><code class="lang-lua">-- add_ldflags("-L/my lib") ERROR: Invalid arguments
+add_ldflags({"-L/my lib"}, {expand = false}) -- OK
 </code></pre>
 <h3 id="targetadd_arflags">target:add_arflags</h3>
 <h4 id="">添加静态库归档选项</h4>

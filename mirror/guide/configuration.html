@@ -158,6 +158,13 @@ $ xmake
 <pre><code class="lang-bash">$ xmake f -p watchos [-a i386|armv7k]
 $ xmake
 </code></pre>
+<h3 id="harmonyos">HarmonyOS</h3>
+<p>Version 2.9.1 adds native toolchain compilation support for the Hongmeng OS platform:</p>
+<pre><code class="lang-bash">$ xmake f -p harmony
+</code></pre>
+<p>xmake will automatically detect the default SDK path, but you can also specify the Harmony SDK path.</p>
+<pre><code class="lang-bash">$ xmake f -p Harmony --sdk=/Users/ruki/Library/Huawei/Sdk/openharmony/10/native
+</code></pre>
 <h2 id="crosscompilation">Cross Compilation</h2>
 <p>Generally, if we need to compile and generate object files that can be run on other devices in the current pc environment, we need to compile and generate them through the corresponding cross-compilation tool chain, such as compiling linux programs on win/macos, or Compile object files of other embedded devices, etc.</p>
 <p>The usual cross-compilation tool chain is based on gcc/clang, and most of them have a structure similar to the following:</p>
