@@ -2144,6 +2144,56 @@ end
 <p>The result is: "    hello xmake!"</p>
 <h3 id="coroutine">coroutine</h3>
 <p>The coroutine module is a native module of lua. For use, see: <a href="https://www.lua.org/manual/5.1/manual.html#5.2">lua official manual</a></p>
+<h3 id="signal">signal</h3>
+<p>2.9.1 adds a new signal registration interface. We can register signal processing functions such as SIGINT in the Lua layer to customize the response logic.</p>
+<h4 id="signalregister">signal.register</h4>
+<ul>
+<li>Register signal handler</li>
+</ul>
+<p>Currently, it only supports SIGINT signal processing, and it also supports mainstream platforms such as windows.</p>
+<pre><code class="lang-lua">import("core.base.signal")
+
+function main()
+     signal.register(signal.SIGINT, function (signo)
+         print("signal.SIGINT(%d)", signo)
+     end)
+     io.read()
+end
+</code></pre>
+<p>This is useful when some sub-processes internally shield SIGINT, causing them to freeze and not exit. Even if the user presses <code>Ctrl+C</code> to exit the xmake process, it does not exit.<br>We can force it out in this way.</p>
+<pre><code class="lang-lua">import("core.base.process")
+import("core.base.signal")
+
+function main()
+     local proc
+     signal.register(signal.SIGINT, function (signo)
+         print("sigint")
+         if proc then
+             proc:kill()
+         end
+     end)
+     proc = process.open("./trap.sh")
+     if proc then
+         proc:wait()
+         proc:close()
+     end
+end
+</code></pre>
+<p>For the background of this issue, please refer to: <a href="https://github.com/xmake-io/xmake/issues/4889">#4889</a></p>
+<h4 id="signalignore">signal.ignore</h4>
+<ul>
+<li>Ignore a signal</li>
+</ul>
+<p>We can also ignore the processing of blocking a certain signal through the <code>signal.ignore</code> interface.</p>
+<pre><code class="lang-lua">signal.ignore(signal.SIGINT)
+</code></pre>
+<h4 id="signalreset">signal.reset</h4>
+<ul>
+<li>Reset a signal</li>
+</ul>
+<p>We can also clear the processing function of a certain signal and fall back to the default processing logic.</p>
+<pre><code class="lang-lua">signal.reset(signal.SIGINT)
+</code></pre>
 </article>
 </body>
 </html>
