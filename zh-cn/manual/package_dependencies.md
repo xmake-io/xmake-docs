@@ -523,7 +523,7 @@ end)
 !plat|!arch@!subhost|!subarch
 ```
 
-```bash
+```lua
 @!linux
 @!linux|x86_64
 @!macosx,!linux
@@ -546,6 +546,18 @@ on_install("macosx|native", ...)
 
 同理，如果只想匹配交叉编译，可以使用 `macosx|!native` 进行取反排除就行了。
 
+2.9.1 版本，我们继续对它做了改进，增加了条件逻辑判断的支持：
+
+例如：
+
+```lua
+on_install("!wasm|!arm* and !cross|!arm*", function (package)
+end)
+```
+
+来表述排除 wasm 和 cross 平台之外的 arm 架构。
+
+并且，它也支持通过 `()` 描述的嵌套逻辑，`a and b or (a and (c or d))`。
 
 ##### 编译工具
 

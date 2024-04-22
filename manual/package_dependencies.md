@@ -532,7 +532,7 @@ In 2.8.7, we have improved pattern matching support and added the ability to exc
 !plat|!arch@!subhost|!subarch
 ```
 
-```bash
+```lua
 @!linux
 @!linux|x86_64
 @!macosx,!linux
@@ -554,6 +554,19 @@ The above configuration, if used on a macOS x86_64 device, will only match the l
 If it is cross-compiled with `xmake f -a arm64`, it will not be matched.
 
 In the same way, if you only want to match cross-compilation, you can use `macosx|!native` to negate and exclude.
+
+In version 2.9.1, we have continued to improve it and added support for conditional logic judgments:
+
+For example:
+
+```lua
+on_install("!wasm|!arm* and !cross|!arm*", function (package)
+end)
+```
+
+To describe the arm architecture excluding the wasm and cross platforms.
+
+Moreover, it also supports nested logic described by `()`, `a and b or (a and (c or d))`.
 
 ##### Compilation tools
 
