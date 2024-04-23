@@ -1,5 +1,28 @@
 # Changelog
 
+## v2.9.1
+
+### New features
+
+* [#4874](https://github.com/xmake-io/xmake/pull/4874): Add Harmony SDK support
+* [#4889](https://github.com/xmake-io/xmake/issues/4889): Add signal module to register signal handler in lua
+* [#4925](https://github.com/xmake-io/xmake/issues/4925): Add native modules support
+* [#4938](https://github.com/xmake-io/xmake/issues/4938): Support for cppfront/h2
+
+### Changes
+
+* Improve packages to support for clang-cl
+* [#4893](https://github.com/xmake-io/xmake/issues/4893): Improve rc includes deps
+* [#4928](https://github.com/xmake-io/xmake/issues/4928): Improve to build and link speed
+* [#4931](https://github.com/xmake-io/xmake/pull/4931): Update pdcurses
+* [#4973](https://github.com/xmake-io/xmake/issues/4973): Improve to select script
+
+### Bugs fixed
+
+* [#4882](https://github.com/xmake-io/xmake/issues/4882): Fix install deps with --group
+* [#4877](https://github.com/xmake-io/xmake/issues/4877): Fix compile error for xpack with unity build
+* [#4887](https://github.com/xmake-io/xmake/issues/4887): Fix object deps
+
 ## v2.8.9
 
 ### New features
