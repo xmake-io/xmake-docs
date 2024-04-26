@@ -37,8 +37,6 @@ If you want to know more, please refer to: the [Documentation](https://xmake.io/
 
 The official Xmake repository can be found at [xmake-io/xmake-repo](https://github.com/xmake-io/xmake-repo).
 
-![](https://github.com/xmake-io/xmake-docs/raw/master/assets/img/index/xmake-basic-render.gif)
-
 ## Installation
 
 ### With cURL

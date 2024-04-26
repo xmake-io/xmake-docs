@@ -24,7 +24,7 @@ The content of `xmake.lua` is very simple:
 ```lua
 target("hello")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
 ```
 
 Supported Languages
@@ -66,14 +66,14 @@ $ xmake run hello
 To debug the hello, you need change to the debug mode and build it.
 
 ```bash
-$ xmake config -m debug 
+$ xmake config -m debug
 $ xmake
 ```
 
 Then run the following command to debug target program.
 
 ```bash
-$ xmake run -d hello 
+$ xmake run -d hello
 ```
 
 It will start the debugger (.e.g lldb, gdb, windbg, vsjitdebugger, ollydbg ..) to load our program.

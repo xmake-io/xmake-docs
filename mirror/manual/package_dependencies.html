@@ -429,7 +429,7 @@ end)
 </code></pre>
 <p>In 2.8.7, we have improved pattern matching support and added the ability to exclude specific platforms and architectures, such as:</p>
 <pre><code>!plat|!arch@!subhost|!subarch
-</code></pre><pre><code class="lang-bash">@!linux
+</code></pre><pre><code class="lang-lua">@!linux
 @!linux|x86_64
 @!macosx,!linux
 !android@macosx,!linux
@@ -444,6 +444,13 @@ android|armeabi-v7a,!iphoneos@macosx,!linux|x86_64
 <p>The above configuration, if used on a macOS x86_64 device, will only match the local architecture compilation of <code>xmake f -a x86_64</code>.</p>
 <p>If it is cross-compiled with <code>xmake f -a arm64</code>, it will not be matched.</p>
 <p>In the same way, if you only want to match cross-compilation, you can use <code>macosx|!native</code> to negate and exclude.</p>
+<p>In version 2.9.1, we have continued to improve it and added support for conditional logic judgments:</p>
+<p>For example:</p>
+<pre><code class="lang-lua">on_install("!wasm|!arm* and !cross|!arm*", function (package)
+end)
+</code></pre>
+<p>To describe the arm architecture excluding the wasm and cross platforms.</p>
+<p>Moreover, it also supports nested logic described by <code>()</code>, <code>a and b or (a and (c or d))</code>.</p>
 <h5 id="compilationtools">Compilation tools</h5>
 <p>We have built-in scripts for installing common compilation tools to provide convenient architecture support for build tool chains with different source code dependencies, such as: autoconf, cmake, meson, etc.</p>
 <h6 id="xmake">xmake</h6>
