@@ -11,6 +11,7 @@ so that the Xmake project and the community will grow stronger.
 
 | User (Company Name or Personal Contact) | Project (Project Introduction or Address) | Comment (optional) |
 | :--- | :--- | :--- |
+| [Isaac A.](https://gitlab.com/tenten8401) | [VueFusion](https://gitlab.com/tenten8401/vuefusion) VR Full Body Tracker | Xmake is awesome |
 | [ruki](https://github.com/waruqi) | [tbox](https://github.com/tboox/tbox) & [ltui](https://github.com/tboox/ltui) | ... |
 | [zsx](https://github.com/acl-dev/acl) | [acl](https://github.com/acl-dev/acl) | Good |
 | [深圳市云语科技](https://www.raysync.cn/) | [镭速-大文件传输系统](https://www.raysync.cn/) | 非常有特点的构建系统 |
