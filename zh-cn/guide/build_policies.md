@@ -136,6 +136,42 @@ set_policy("check.auto_map_flags", false)
 set_policy("build.across_targets_in_parallel", false)
 ```
 
+### build.fence
+
+由于配置 `set_policy("build.across_targets_in_parallel", false)` 存在局限性，它会限制父 target 和它的所有依赖的子 target 之间的并行度，影响的范围有点大。
+
+而我们做 codegen 时候，有时候仅仅只是想对其中某个依赖的 target 限制并行度，作为 codegen 程序，提前让它完成编译。
+
+这个时候，`build.across_targets_in_parallel` 就无法精细控制了，编译速度也无法达到最优。
+
+因此，我们新增了 `build.fence` 策略，它可以仅仅只针对特定的子 target 限制并行编译链接。
+
+相关的背景细节，可以看下：[#5003](https://github.com/xmake-io/xmake/issues/5003)
+
+例如：
+
+```lua
+target("autogen")
+    set_default(false)
+    set_kind("binary")
+    set_plat(os.host())
+    set_arch(os.arch())
+    add_files("src/autogen.cpp")
+    set_languages("c++11")
+    set_policy("build.fence", true)
+
+target("test")
+    set_kind("binary")
+    add_deps("autogen")
+    add_rules("autogen")
+    add_files("src/main.cpp")
+    add_files("src/*.in")
+```
+
+其中 autogen 目标程序需要在 test 程序的源码被编译前，就要完成编译链接，因为 test 目标需要运行 autogen 程序，去动态生成一些源码参与编译。
+
+而针对 autogen 配置 `set_policy("build.fence", true)` 就可以实现这个目的。
+
 ### build.merge_archive
 
 如果设置了这个策略，那么使用 `add_deps()` 依赖的目标库不再作为链接存在，而是直接把它们合并到父目标库中去。

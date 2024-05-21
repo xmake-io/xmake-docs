@@ -133,6 +133,42 @@ Of course, if the build source files in some special targets depend on previous 
 set_policy("build.across_targets_in_parallel", false)
 ```
 
+### build.fence
+
+Due to the limitation of `set_policy(‘build.across_targets_in_parallel’, false)`, it will limit the parallelism between the parent target and all of its dependent subtargets, which is a bit wide.
+
+When we do codegen, sometimes we just want to limit the parallelism of one of the dependent targets, as a codegen program, and let it finish compiling in advance.
+
+In this case, `build.cross_targets_in_parallel` can't control it finely, and the compilation speed can't be optimised.
+
+Therefore, we have added the `build.fence` policy, which restricts parallel compilation links to only certain sub-targets.
+
+For background, see [#5003](https://github.com/xmake-io/xmake/issues/5003).
+
+Example:
+
+```lua
+target(‘autogen’)
+    set_default(false)
+    set_kind(‘binary’)
+    set_plat(os.host())
+    set_arch(os.arch())
+    add_files(‘src/autogen.cpp’)
+    set_languages(‘c++11’)
+    set_policy(‘build.fence’, true)
+
+target(‘test’)
+    set_kind(‘binary’)
+    add_deps(‘autogen’)
+    add_rules(‘autogen’)
+    add_files(‘src/main.cpp’)
+    add_files(‘src/*.in’)
+```
+
+The autogen target needs to be compiled and linked before the source code of the test program is compiled, because the test target needs to run the autogen program to dynamically generate some source code to participate in the compilation.
+
+The autogen configuration `set_policy(‘build.fence’, true)` does this.
+
 ### build.merge_archive
 
 If this policy is set, then the target libraries that are dependent on using `add_deps()` no longer exist as links, but are merged directly into the parent target library.

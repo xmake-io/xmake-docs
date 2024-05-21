@@ -106,7 +106,7 @@
 <p>The content of <code>xmake.lua</code> is very simple:</p>
 <pre><code class="lang-lua">target("hello")
     set_kind("binary")
-    add_files("src/*.c") 
+    add_files("src/*.c")
 </code></pre>
 <p>Supported Languages</p>
 <ul>
@@ -137,11 +137,11 @@ $ xmake
 </code></pre>
 <h2 id="debugprogram">Debug Program</h2>
 <p>To debug the hello, you need change to the debug mode and build it.</p>
-<pre><code class="lang-bash">$ xmake config -m debug 
+<pre><code class="lang-bash">$ xmake config -m debug
 $ xmake
 </code></pre>
 <p>Then run the following command to debug target program.</p>
-<pre><code class="lang-bash">$ xmake run -d hello 
+<pre><code class="lang-bash">$ xmake run -d hello
 </code></pre>
 <p>It will start the debugger (.e.g lldb, gdb, windbg, vsjitdebugger, ollydbg ..) to load our program.</p>
 <pre><code class="lang-bash">[lldb]$target create "build/hello"

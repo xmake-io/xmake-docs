@@ -168,6 +168,31 @@ target("test")
 <p>Of course, if the build source files in some special targets depend on previous targets (especially in the case of some custom rules, although rarely encountered), we can also disable this optimization behavior through the following settings:</p>
 <pre><code class="lang-bash">set_policy("build.across_targets_in_parallel", false)
 </code></pre>
+<h3 id="buildfence">build.fence</h3>
+<p>Due to the limitation of <code>set_policy(‘build.across_targets_in_parallel’, false)</code>, it will limit the parallelism between the parent target and all of its dependent subtargets, which is a bit wide.</p>
+<p>When we do codegen, sometimes we just want to limit the parallelism of one of the dependent targets, as a codegen program, and let it finish compiling in advance.</p>
+<p>In this case, <code>build.cross_targets_in_parallel</code> can&#39;t control it finely, and the compilation speed can&#39;t be optimised.</p>
+<p>Therefore, we have added the <code>build.fence</code> policy, which restricts parallel compilation links to only certain sub-targets.</p>
+<p>For background, see <a href="https://github.com/xmake-io/xmake/issues/5003">#5003</a>.</p>
+<p>Example:</p>
+<pre><code class="lang-lua">target(‘autogen’)
+    set_default(false)
+    set_kind(‘binary’)
+    set_plat(os.host())
+    set_arch(os.arch())
+    add_files(‘src/autogen.cpp’)
+    set_languages(‘c++11’)
+    set_policy(‘build.fence’, true)
+
+target(‘test’)
+    set_kind(‘binary’)
+    add_deps(‘autogen’)
+    add_rules(‘autogen’)
+    add_files(‘src/main.cpp’)
+    add_files(‘src/*.in’)
+</code></pre>
+<p>The autogen target needs to be compiled and linked before the source code of the test program is compiled, because the test target needs to run the autogen program to dynamically generate some source code to participate in the compilation.</p>
+<p>The autogen configuration <code>set_policy(‘build.fence’, true)</code> does this.</p>
 <h3 id="buildmerge_archive">build.merge_archive</h3>
 <p>If this policy is set, then the target libraries that are dependent on using <code>add_deps()</code> no longer exist as links, but are merged directly into the parent target library.</p>
 <p>Example.</p>
