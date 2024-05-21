@@ -1554,6 +1554,18 @@ hello world!
 - src/main.v:4:Verilog $finish
 </code></pre>
 <p>A more complete example: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/verilator">Verilator</a></p>
+<h4 id="compilestaticlibrary">Compile static library</h4>
+<p>We also provide <code>verilator.static</code> rules to compile and generate verilator static libraries.</p>
+<pre><code class="lang-lua">add_requires("verilator")
+target("hello")
+     add_rules("verilator.static")
+     set_toolchains("@verilator")
+     add_files("src/*.v")
+
+target("test")
+     add_deps("hello")
+     add_files("src/*.cpp")
+</code></pre>
 <h2 id="cppfrontprogram">Cppfront Program</h2>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 

@@ -457,6 +457,55 @@ package("libusb")
 
 To find out what methods are available to `package` look [here](manual/package_interface.md).
 
+### package:on_check
+
+#### Check whether the package supports the current platform
+
+Sometimes, simply using `on_install("windows", "android", function () end)` cannot properly limit the package's support for the current platform.
+
+For example, it is also compiled using msvc on windows, but it only supports using the vs2022 tool chain. Then we cannot simply restrict the installation of packages by disabling the windows platform.
+
+Because each user's compilation tool chain environment may be different. At this time, we can configure `on_check` to do more detailed detection to determine whether the package supports the current tool chain environment.
+
+If the package is not supported, it will prompt the user earlier before the package is downloaded and installed. It can also avoid some unsupported ci job tests on the ci of xmake-repo.
+
+For example, the following configuration can determine whether the current msvc provides the corresponding vs sdk version. If the version is not satisfied, the package cannot be compiled and installed, and the user will see a more readable unsupported error message.
+
+```lua
+package("test")
+     on_check("windows", function (package)
+         import("core.tool.toolchain")
+         import("core.base.semver")
+         local msvc = toolchain.load("msvc", {plat = package:plat(), arch = package:arch()})
+         if msvc then
+             local vs_sdkver = msvc:config("vs_sdkver")
+             assert(vs_sdkver and semver.match(vs_sdkver):gt("10.0.19041"), "package(cglm): need vs_sdkver > 10.0.19041.0")
+         end
+     end)
+```
+
+For example, we can also use it to determine the current compiler's support for c++20, if it does not support std::input_iterator, which is only available in c++20. Then there is no need to continue downloading, compiling and installing this package.
+
+Users will see a `Require at least C++20.` error to prompt them to upgrade their compiler.
+
+```lua
+package("test")
+     on_check(function (package)
+         assert(package:check_cxxsnippets({test = [[
+             #include <cstddef>
+             #include <iterator>
+             struct SimpleInputIterator {
+                 using difference_type = std::ptrdiff_t;
+                 using value_type = int;
+                 int operator*() const;
+                 SimpleInputIterator& operator++();
+                 void operator++(int) { ++*this; }
+             };
+             static_assert(std::input_iterator<SimpleInputIterator>);
+         ]]}, {configs = {languages = "c++20"}}), "Require at least C++20.")
+     end)
+```
+
 ### package:on_install
 
 #### Installation package

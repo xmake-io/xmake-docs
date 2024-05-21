@@ -385,6 +385,42 @@ end)
      end)
 </code></pre>
 <p>To find out what methods are available to <code>package</code> look <a href="manual/package_interface.md">here</a>.</p>
+<h3 id="packageon_check">package:on_check</h3>
+<h4 id="checkwhetherthepackagesupportsthecurrentplatform">Check whether the package supports the current platform</h4>
+<p>Sometimes, simply using <code>on_install("windows", "android", function () end)</code> cannot properly limit the package&#39;s support for the current platform.</p>
+<p>For example, it is also compiled using msvc on windows, but it only supports using the vs2022 tool chain. Then we cannot simply restrict the installation of packages by disabling the windows platform.</p>
+<p>Because each user&#39;s compilation tool chain environment may be different. At this time, we can configure <code>on_check</code> to do more detailed detection to determine whether the package supports the current tool chain environment.</p>
+<p>If the package is not supported, it will prompt the user earlier before the package is downloaded and installed. It can also avoid some unsupported ci job tests on the ci of xmake-repo.</p>
+<p>For example, the following configuration can determine whether the current msvc provides the corresponding vs sdk version. If the version is not satisfied, the package cannot be compiled and installed, and the user will see a more readable unsupported error message.</p>
+<pre><code class="lang-lua">package("test")
+     on_check("windows", function (package)
+         import("core.tool.toolchain")
+         import("core.base.semver")
+         local msvc = toolchain.load("msvc", {plat = package:plat(), arch = package:arch()})
+         if msvc then
+             local vs_sdkver = msvc:config("vs_sdkver")
+             assert(vs_sdkver and semver.match(vs_sdkver):gt("10.0.19041"), "package(cglm): need vs_sdkver > 10.0.19041.0")
+         end
+     end)
+</code></pre>
+<p>For example, we can also use it to determine the current compiler&#39;s support for c++20, if it does not support std::input_iterator, which is only available in c++20. Then there is no need to continue downloading, compiling and installing this package.</p>
+<p>Users will see a <code>Require at least C++20.</code> error to prompt them to upgrade their compiler.</p>
+<pre><code class="lang-lua">package("test")
+     on_check(function (package)
+         assert(package:check_cxxsnippets({test = [[
+             #include <cstddef>
+             #include <iterator>
+             struct SimpleInputIterator {
+                 using difference_type = std::ptrdiff_t;
+                 using value_type = int;
+                 int operator*() const;
+                 SimpleInputIterator&amp; operator++();
+                 void operator++(int) { ++*this; }
+             };
+             static_assert(std::input_iterator<SimpleInputIterator>);
+         ]]}, {configs = {languages = "c++20"}}), "Require at least C++20.")
+     end)
+</code></pre>
 <h3 id="packageon_install">package:on_install</h3>
 <h4 id="installationpackage">Installation package</h4>
 <p>This interface is mainly used to add installation scripts. The previous string parameters are used to set supported platforms. Other script fields such as <code>on_load</code>, <code>on_test</code> are also supported.</p>

@@ -1548,6 +1548,18 @@ hello world!
 - src/main.v:4: Verilog $finish
 </code></pre>
 <p>更多完整例子：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/verilator">Verilator</a></p>
+<h4 id="">编译静态库</h4>
+<p>我们也提供了 <code>verilator.static</code> 规则来编译生成 verilator 静态库。</p>
+<pre><code class="lang-lua">add_requires("verilator")
+target("hello")
+    add_rules("verilator.static")
+    set_toolchains("@verilator")
+    add_files("src/*.v")
+
+target("test")
+    add_deps("hello")
+    add_files("src/*.cpp")
+</code></pre>
 <h2 id="cppfront">Cppfront 程序</h2>
 <pre><code class="lang-lua">add_rules("mode.debug", "mode.release")
 

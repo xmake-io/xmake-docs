@@ -448,6 +448,55 @@ package("libusb")
     end)
 ```
 
+### package:on_check
+
+#### 检测包是否支持当前平台
+
+有时候，单纯用 `on_install("windows", "android", function () end)` 无法很好的限制包对当前平台的支持力度。
+
+例如，同样都是在 windows 上使用 msvc 编译，但是它仅仅只支持使用 vs2022 工具链。那么我们无法简单的去通过禁用 windows 平台，来限制包的安装。
+
+因为每个用户的编译工具链环境都可能是不同的。这个时候，我们可以通过配置 `on_check` 去做更细致的检测，来判断包是否支持当前的工具链环境。
+
+如果包不被支持，那么它会在包被下载安装前，更早的提示用户，也可以在 xmake-repo 的 ci 上，规避掉一些不支持的 ci job 测试。
+
+例如，下面的配置，就可以判断当前的 msvc 是否提供了对应的 vs sdk 版本，如果版本不满足，那么这个包就无法被编译安装，用户会看到更加可读的不支持的错误提示。
+
+```lua
+package("test")
+    on_check("windows", function (package)
+        import("core.tool.toolchain")
+        import("core.base.semver")
+        local msvc = toolchain.load("msvc", {plat = package:plat(), arch = package:arch()})
+        if msvc then
+            local vs_sdkver = msvc:config("vs_sdkver")
+            assert(vs_sdkver and semver.match(vs_sdkver):gt("10.0.19041"), "package(cglm): need vs_sdkver > 10.0.19041.0")
+        end
+    end)
+```
+
+例如，我们也可以用它来判断，当前编译器对 c++20 的支持力度，如果不支持 c++20 才有的 std::input_iterator。那么这个包就没必要继续下载编译安装。
+
+用户会看到 `Require at least C++20.` 的错误，来提示用户取升级自己的编译器。
+
+```lua
+package("test")
+    on_check(function (package)
+        assert(package:check_cxxsnippets({test = [[
+            #include <cstddef>
+            #include <iterator>
+            struct SimpleInputIterator {
+                using difference_type = std::ptrdiff_t;
+                using value_type = int;
+                int operator*() const;
+                SimpleInputIterator& operator++();
+                void operator++(int) { ++*this; }
+            };
+            static_assert(std::input_iterator<SimpleInputIterator>);
+        ]]}, {configs = {languages = "c++20"}}), "Require at least C++20.")
+    end)
+```
+
 ### package:on_install
 
 #### 安装包

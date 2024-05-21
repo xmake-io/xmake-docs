@@ -2130,6 +2130,22 @@ hello world!
 
 更多完整例子：[Verilator](https://github.com/xmake-io/xmake/tree/master/tests/projects/embed/verilator)
 
+#### 编译静态库
+
+我们也提供了 `verilator.static` 规则来编译生成 verilator 静态库。
+
+```lua
+add_requires("verilator")
+target("hello")
+    add_rules("verilator.static")
+    set_toolchains("@verilator")
+    add_files("src/*.v")
+
+target("test")
+    add_deps("hello")
+    add_files("src/*.cpp")
+```
+
 ## Cppfront 程序
 
 ```lua
