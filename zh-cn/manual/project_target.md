@@ -1247,9 +1247,7 @@ target("demo")
 
 上面的例子，在编译目标demo的时候，需要先编译test1, test2目标，因为demo会去用到他们
 
-<p class="tip">
-target会自动继承依赖目标中的配置和属性，不需要额外调用`add_links`, `add_linkdirs`和`add_rpathdirs`等接口去关联依赖目标了。
-</p>
+!> target会自动继承依赖目标中的配置和属性，不需要额外调用`add_links`, `add_linkdirs`和`add_rpathdirs`等接口去关联依赖目标了。
 
 并且继承关系是支持级联的，例如：
 
@@ -1668,11 +1666,15 @@ target("test")
 
 指定test程序加载当前执行目录下`lib/*.[so|dylib]`的动态库文件，这将有助于提升程序的可移植性，不用写死绝对路径和相对路径，导致程序和目录切换引起程序加载动态库失败。
 
-<p class="tip">
-需要注意的是，在macos下，要想add_rpathdirs设置生效，需要对dylib做一些预处理，添加`@rpath/xxx`路径设置：
+!> 需要注意的是，在macos下，要想 add_rpathdirs 设置生效，需要对dylib做一些预处理，添加`@rpath/xxx`路径设置：
 `$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib`
 我们也可以通过`otool -L libxxx.dylib`查看是否存在带@rpath的路径
-</p>
+
+另外，对于 gcc， `add_rpathdirs` 默认设置的是 runpath，如果想要显式的配置上 `-Wl,--enable-new-dtags`, `-Wl,--disable-new-dtags` 去配置 rpath 还是 runpath
+
+我们可以通过额外的参数指定，`add_rpathdirs("xxx", {runpath = true})`
+
+相关背景细节见：[#5109](https://github.com/xmake-io/xmake/issues/5109)
 
 ### target:add_includedirs
 

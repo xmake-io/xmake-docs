@@ -1573,9 +1573,10 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
     add_rpathdirs("@loader_path/lib")
 </code></pre>
 <p>Specify the test program to load the dynamic library file of <code>lib/*.[so|dylib]</code> in the current execution directory, which will help to improve the portability of the program without writing dead absolute paths and relative paths, resulting in program and directory switching. Causes the program to load the dynamic library failed.</p>
-<p><p class="tip"><br>It should be noted that under macos, if the add_rpathdirs setting is in effect, you need to do some preprocessing on dylib and add the <code>@rpath/xxx</code> path setting:<br><code>$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib</code><br>We can also check if there is a path with @rpath via <code>otool -L libxxx.dylib</code><br></p>
-
-</p>
+<p>!> It should be noted that under macos, if the add_rpathdirs setting is in effect, you need to do some preprocessing on dylib and add the <code>@rpath/xxx</code> path setting:<br><code>$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib</code><br>We can also check if there is a path with @rpath via <code>otool -L libxxx.dylib</code></p>
+<p>In addition, for gcc, <code>add_rpathdirs</code> defaults to runpath. If you want to configure it explicitly, use <code>-Wl,--enable-new-dtags</code>, <code>-Wl,--disable-new-dtags</code> to configure rpath. Or runpath</p>
+<p>We can specify it through additional parameters, <code>add_rpathdirs("xxx", {runpath = true})</code></p>
+<p>For relevant background details, see: <a href="https://github.com/xmake-io/xmake/issues/5109">#5109</a></p>
 <h3 id="targetadd_includedirs">target:add_includedirs</h3>
 <h4 id="addincludesearchdirectories">Add include search directories</h4>
 <p>Set the search directory for the header file. This interface is used as follows:</p>

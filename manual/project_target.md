@@ -1677,11 +1677,15 @@ target("test")
 
 Specify the test program to load the dynamic library file of `lib/*.[so|dylib]` in the current execution directory, which will help to improve the portability of the program without writing dead absolute paths and relative paths, resulting in program and directory switching. Causes the program to load the dynamic library failed.
 
-<p class="tip">
-It should be noted that under macos, if the add_rpathdirs setting is in effect, you need to do some preprocessing on dylib and add the `@rpath/xxx` path setting:
+!> It should be noted that under macos, if the add_rpathdirs setting is in effect, you need to do some preprocessing on dylib and add the `@rpath/xxx` path setting:
 `$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib`
 We can also check if there is a path with @rpath via `otool -L libxxx.dylib`
-</p>
+
+In addition, for gcc, `add_rpathdirs` defaults to runpath. If you want to configure it explicitly, use `-Wl,--enable-new-dtags`, `-Wl,--disable-new-dtags` to configure rpath. Or runpath
+
+We can specify it through additional parameters, `add_rpathdirs("xxx", {runpath = true})`
+
+For relevant background details, see: [#5109](https://github.com/xmake-io/xmake/issues/5109)
 
 ### target:add_includedirs
 

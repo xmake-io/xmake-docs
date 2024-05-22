@@ -1224,9 +1224,7 @@ target("demo")
     add_deps("test1", "test2")
 </code></pre>
 <p>上面的例子，在编译目标demo的时候，需要先编译test1, test2目标，因为demo会去用到他们</p>
-<p><p class="tip"><br>target会自动继承依赖目标中的配置和属性，不需要额外调用<code>add_links</code>, <code>add_linkdirs</code>和<code>add_rpathdirs</code>等接口去关联依赖目标了。<br></p>
-
-</p>
+<p>!> target会自动继承依赖目标中的配置和属性，不需要额外调用<code>add_links</code>, <code>add_linkdirs</code>和<code>add_rpathdirs</code>等接口去关联依赖目标了。</p>
 <p>并且继承关系是支持级联的，例如：</p>
 <pre><code class="lang-lua">target("library1")
     set_kind("static")
@@ -1546,9 +1544,10 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
     add_rpathdirs("@loader_path/lib")
 </code></pre>
 <p>指定test程序加载当前执行目录下<code>lib/*.[so|dylib]</code>的动态库文件，这将有助于提升程序的可移植性，不用写死绝对路径和相对路径，导致程序和目录切换引起程序加载动态库失败。</p>
-<p><p class="tip"><br>需要注意的是，在macos下，要想add_rpathdirs设置生效，需要对dylib做一些预处理，添加<code>@rpath/xxx</code>路径设置：<br><code>$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib</code><br>我们也可以通过<code>otool -L libxxx.dylib</code>查看是否存在带@rpath的路径<br></p>
-
-</p>
+<p>!> 需要注意的是，在macos下，要想 add_rpathdirs 设置生效，需要对dylib做一些预处理，添加<code>@rpath/xxx</code>路径设置：<br><code>$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib</code><br>我们也可以通过<code>otool -L libxxx.dylib</code>查看是否存在带@rpath的路径</p>
+<p>另外，对于 gcc， <code>add_rpathdirs</code> 默认设置的是 runpath，如果想要显式的配置上 <code>-Wl,--enable-new-dtags</code>, <code>-Wl,--disable-new-dtags</code> 去配置 rpath 还是 runpath</p>
+<p>我们可以通过额外的参数指定，<code>add_rpathdirs("xxx", {runpath = true})</code></p>
+<p>相关背景细节见：<a href="https://github.com/xmake-io/xmake/issues/5109">#5109</a></p>
 <h3 id="targetadd_includedirs">target:add_includedirs</h3>
 <h4 id="">添加头文件搜索目录</h4>
 <p>设置头文件的搜索目录，这个接口的使用方式如下：</p>
