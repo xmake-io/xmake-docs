@@ -1,6 +1,6 @@
 <img src="/assets/img/logo.svg" width="16%" />
 
-# xmake <small>2.9.1</small>
+# xmake <small>2.9.2</small>
 
 > A cross-platform build utility based on Lua
 

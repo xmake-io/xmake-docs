@@ -1,5 +1,28 @@
 # Changelog
 
+## v2.9.2
+
+### New features
+
+* [#5005](https://github.com/xmake-io/xmake/pull/5005): Show all apis
+* [#5003](https://github.com/xmake-io/xmake/issues/5003): Add build.fence policy
+* [#5060](https://github.com/xmake-io/xmake/issues/5060): Support Verilator target build to static library
+* [#5074](https://github.com/xmake-io/xmake/pull/5074): Add `xrepo download` command to download package source
+* [#5086](https://github.com/xmake-io/xmake/issues/5986): Add check support for package
+* [#5103](https://github.com/xmake-io/xmake/pull/5103): Add qt ts files building
+* [#5104](https://github.com/xmake-io/xmake/pull/5104): Call where in find_program
+
+### Changes
+
+* [#5077](https://github.com/xmake-io/xmake/issues/5077): Use x64 host compiler for msvc when building x86 target
+* [#5109](https://github.com/xmake-io/xmake/issues/5109): Support runpath/rpath for add_rpathdirs
+* [#5132](https://github.com/xmake-io/xmake/pull/5132): Improve ifort/icc/icx support on windows
+
+### Bugs Fixed
+
+* [#5059](https://github.com/xmake-io/xmake/issues/5059): Fix load huge targets stuck
+* [#5029](https://github.com/xmake-io/xmake/issues/5029): Fix crash on termux
+
 ## v2.9.1
 
 ### New features
