@@ -1101,4 +1101,4 @@ When will it be removed?
 
 This behavior will not exist forever. When Xmake has enough users, or there are other better statistical methods, we will consider removing the relevant statistical code. Of course, if a lot of user feedback is unwilling to accept it, we will also consider removing it.
 
-For related issues about this, see [#1795](https://github.com/xmake-io/xmake/issues/1795) and [#1803](https://github.com/orgs/xmake-io/discussions/1802).
+For related issues about this, see [#1795](https://github.com/xmake-io/xmake/issues/1795) and [#1803](https://github.com/xmake-io/xmake/discussions/1802).
