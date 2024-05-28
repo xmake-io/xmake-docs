@@ -214,7 +214,7 @@
 * [#3871](https://github.com/xmake-io/xmake/issues/3871): Improve tools.msbuild to support for upgrading vsproj
 * [#3148](https://github.com/xmake-io/xmake/issues/3148): Support grpc for protobuf
 * [#3889](https://github.com/xmake-io/xmake/issues/3889): Support to add library path for add_links
-* [#3912](https://github.com/orgs/xmake-io/issues/3912): Add set_pmxxheader to support objc precompiled header
+* [#3912](https://github.com/xmake-io/xmake/issues/3912): Add set_pmxxheader to support objc precompiled header
 * add_links support library file path
 
 ### Changes
@@ -232,7 +232,7 @@
 
 * [#3755](https://github.com/xmake-io/xmake/pull/3755): Fix find_tool from xmake/packages
 * [#3787](https://github.com/xmake-io/xmake/issues/3787): Fix packages from conan 2.x
-* [#3839](https://github.com/orgs/xmake-io/discussions/3839): Fix vs_runtime for conan 2.x
+* [#3839](https://github.com/xmake-io/xmake/discussions/3839): Fix vs_runtime for conan 2.x
 
 
 ## v2.7.9
