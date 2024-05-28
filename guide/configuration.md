@@ -365,8 +365,8 @@ In this way, Xmake can be easily extended to deal with various compilation platf
 I excerpted a cross-compilation configuration written before porting libuv, and intuitively feel:
 
 ```lua
--- for gragonfly/freebsd/netbsd/openbsd platform
-if is_plat("gragonfly", "freebsd", "netbsd", "openbsd") then
+-- for dragonfly/freebsd/netbsd/openbsd platform
+if is_plat("dragonfly", "freebsd", "netbsd", "openbsd") then
     add_files("src/unix/bsd-ifaddrs.c")
     add_files("src/unix/freebsd.c")
     add_files("src/unix/kqueue.c")
@@ -386,7 +386,7 @@ end
 Then, we can switch these platforms to compile:
 
 ```bash
-$ xmake f -p [gragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
+$ xmake f -p [dragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
 $ xmake
 ```
 

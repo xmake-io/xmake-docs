@@ -296,8 +296,8 @@ end
 </code></pre>
 <p>In this way, Xmake can be easily extended to deal with various compilation platforms, users can extend their own support for freebsd, netbsd, sunos and other cross-compiling platforms.</p>
 <p>I excerpted a cross-compilation configuration written before porting libuv, and intuitively feel:</p>
-<pre><code class="lang-lua">-- for gragonfly/freebsd/netbsd/openbsd platform
-if is_plat("gragonfly", "freebsd", "netbsd", "openbsd") then
+<pre><code class="lang-lua">-- for dragonfly/freebsd/netbsd/openbsd platform
+if is_plat("dragonfly", "freebsd", "netbsd", "openbsd") then
     add_files("src/unix/bsd-ifaddrs.c")
     add_files("src/unix/freebsd.c")
     add_files("src/unix/kqueue.c")
@@ -314,7 +314,7 @@ if is_plat("sunos") then
 end
 </code></pre>
 <p>Then, we can switch these platforms to compile:</p>
-<pre><code class="lang-bash">$ xmake f -p [gragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
+<pre><code class="lang-bash">$ xmake f -p [dragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
 $ xmake
 </code></pre>
 <p>In addition, the built-in Linux platform also supports cross-compilation. If you do n’t want to configure other platform names, you can cross-compile as the linux platform.</p>

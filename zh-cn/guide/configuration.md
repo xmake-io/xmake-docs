@@ -363,8 +363,8 @@ end
 我摘录一段之前移植libuv写的交叉编译的配置，直观感受下：
 
 ```lua
--- for gragonfly/freebsd/netbsd/openbsd platform
-if is_plat("gragonfly", "freebsd", "netbsd", "openbsd") then
+-- for dragonfly/freebsd/netbsd/openbsd platform
+if is_plat("dragonfly", "freebsd", "netbsd", "openbsd") then
     add_files("src/unix/bsd-ifaddrs.c")
     add_files("src/unix/freebsd.c")
     add_files("src/unix/kqueue.c")
@@ -384,7 +384,7 @@ end
 然后，我们就可以切换这些平台来编译：
 
 ```bash
-$ xmake f -p [gragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
+$ xmake f -p [dragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
 $ xmake
 ```
 

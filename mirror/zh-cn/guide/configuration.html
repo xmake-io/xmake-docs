@@ -295,8 +295,8 @@ end
 </code></pre>
 <p>通过这种方式，xmake就可以很方便的扩展处理各种编译平台，用户可以自己扩展支持freebsd, netbsd, sunos等其他各种平台的交叉编译。</p>
 <p>我摘录一段之前移植libuv写的交叉编译的配置，直观感受下：</p>
-<pre><code class="lang-lua">-- for gragonfly/freebsd/netbsd/openbsd platform
-if is_plat("gragonfly", "freebsd", "netbsd", "openbsd") then
+<pre><code class="lang-lua">-- for dragonfly/freebsd/netbsd/openbsd platform
+if is_plat("dragonfly", "freebsd", "netbsd", "openbsd") then
     add_files("src/unix/bsd-ifaddrs.c")
     add_files("src/unix/freebsd.c")
     add_files("src/unix/kqueue.c")
@@ -313,7 +313,7 @@ if is_plat("sunos") then
 end
 </code></pre>
 <p>然后，我们就可以切换这些平台来编译：</p>
-<pre><code class="lang-bash">$ xmake f -p [gragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
+<pre><code class="lang-bash">$ xmake f -p [dragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
 $ xmake
 </code></pre>
 <p>另外，内置的linux平台也是支持交叉编译的哦，如果不想配置其他平台名，统一作为linux平台来交叉编译，也是可以的。</p>
