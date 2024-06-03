@@ -53,7 +53,7 @@ $ xmake
 
 如果是手动下载的 llvm sdk，我们需要额外指定 llvm sdk 根目录，确保 xmake 能找到它，当然，如果用户已经安装到 PATH 目录下，`--sdk` 参数的设置也是可选的。
 
-### Cirle
+### Circle
 
 v2.5.9 xmake 新增了 circle 编译器的支持，这是个新的 C++20 编译器，额外附带了一些有趣的编译期元编程特性，有兴趣的同学可以到官网查看：https://www.circle-lang.org/
 
