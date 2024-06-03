@@ -35,7 +35,7 @@ $ xmake project -k ninja
 $ xmake project -k compiler_flags
 ```
 
-### 生成compiler_commands
+### 生成compile_commands
 
 导出每个源文件的编译信息，生成基于clang的编译数据库文件，json格式，可用于跟ide，编辑器，静态分析工具进行交互。
 
