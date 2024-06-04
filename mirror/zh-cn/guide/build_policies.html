@@ -152,7 +152,7 @@ target("test")
 <p>然后我们就可以随意设置各种原始flags，xmake不会去自动检测和忽略他们了。</p>
 <h3 id="checkauto_map_flags">check.auto_map_flags</h3>
 <p>这是xmake的另外一个对flags的智能分析处理，通常像<code>add_links</code>, <code>add_defines</code>这种xmake内置的api去设置的配置，是具有跨平台特性的，不同编译器平台会自动处理成对应的原始flags。</p>
-<p>但是，有些情况，用户还是需要自己通过add_cxflags, add_ldflags设置原始的编译链接flags，这些flags并不能很好的跨编译器</p>
+<p>但是，有些情况，用户还是需要自己通过<code>add_cxflags</code>, <code>add_ldflags</code>设置原始的编译链接flags，这些flags并不能很好的跨编译器</p>
 <p>就拿<code>-O0</code>的编译优化flags来说，虽然有<code>set_optimize</code>来实现跨编译器配置，但如果用户直接设置<code>add_cxflags("-O0")</code>呢？gcc/clang下可以正常处理，但是msvc下就不支持了</p>
 <p>也许我们能通过<code>if is_plat() then</code>来分平台处理，但很繁琐，因此xmake内置了flags的自动映射功能。</p>
 <p>基于gcc flags的普及性，xmake采用gcc的flags命名规范，对其根据不同的编译实现自动映射，例如：</p>
@@ -316,7 +316,7 @@ $ xmake run
 <h3 id="packagefetch_only">package.fetch_only</h3>
 <p>如果开启这个策略，那么所有的依赖包仅仅只会从系统获取，不会从远程下载安装。</p>
 <h3 id="packageinstall_only">package.install_only</h3>
-<p>如果开启这个策略，纳闷所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。</p>
+<p>如果开启这个策略，那么所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。</p>
 <h3 id="packagelibrarydepsstrict_compatibility">package.librarydeps.strict_compatibility</h3>
 <p>默认禁用，如果启用它，那么当前包和它的所有库依赖包之间会保持严格的兼容性，任何依赖包的版本更新，都会强制触发当前包的重新编译安装。</p>
 <p>以确保所有的包都是二进制兼容的，不会因为某个依赖包接口改动，导致和其他已被安装的其他包一起链接时候，发生链接和运行错误。</p>
