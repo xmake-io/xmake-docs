@@ -99,7 +99,7 @@ target("test")
 
 这是xmake的另外一个对flags的智能分析处理，通常像`add_links`, `add_defines`这种xmake内置的api去设置的配置，是具有跨平台特性的，不同编译器平台会自动处理成对应的原始flags。
 
-但是，有些情况，用户还是需要自己通过add_cxflags, add_ldflags设置原始的编译链接flags，这些flags并不能很好的跨编译器
+但是，有些情况，用户还是需要自己通过`add_cxflags`, `add_ldflags`设置原始的编译链接flags，这些flags并不能很好的跨编译器
 
 就拿`-O0`的编译优化flags来说，虽然有`set_optimize`来实现跨编译器配置，但如果用户直接设置`add_cxflags("-O0")`呢？gcc/clang下可以正常处理，但是msvc下就不支持了
 
