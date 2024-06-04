@@ -390,7 +390,7 @@ $ xmake g --policies=run.autobuild
 
 ### package.install_only
 
-如果开启这个策略，纳闷所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。
+如果开启这个策略，那么所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。
 
 ### package.librarydeps.strict_compatibility
 
