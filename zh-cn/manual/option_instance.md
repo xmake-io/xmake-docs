@@ -1,6 +1,11 @@
 
 此页面描述了 [配置选项](zh-cn/manual/configuration_option.md) 的 `on_load()`、`on_check()` 或 `after_check()` 等函数的 `option` 接口
 
+
+#### option:value
+
+- 获取选项的值
+
 #### option:name
 
 - 获取选项的名字
@@ -27,6 +32,8 @@ option:get("defines")
 option:set("links", "sdl2")
 -- set the defined macros
 option:set("defines", "SDL_MAIN_HANDLED")
+-- set configvar
+option:set("configvar", option:name(), option:value(), {quote = false})
 ```
 
 #### option:add
