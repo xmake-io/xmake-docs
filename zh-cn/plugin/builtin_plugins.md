@@ -679,12 +679,13 @@ $ xmake check clang.tidy --fix_notes
 这个插件可以帮助用户快速生成不同平台的安装包，源码包，它会生成下面一些安装包格式：
 
 - Windows NSIS 二进制安装包
+- Windows WIX 二进制安装包
 - runself (shell) 自编译安装包
 - zip/tar.gz 二进制包
 - zip/tar.gz 源码包
 - RPM 二进制安装包
 - SRPM 源码安装包
-- DEB 二进制安装包（待支持）
+- DEB 二进制安装包
 
 下面是一个完整例子，我们可以先简单看下：
 

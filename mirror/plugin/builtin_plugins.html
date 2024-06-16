@@ -565,12 +565,13 @@ $ xmake check clang.tidy --fix_notes
 <p>This plug-in can help users quickly generate installation packages and source code packages for different platforms. It will generate the following installation package formats:</p>
 <ul>
 <li>Windows NSIS binary installation package</li>
+<li>Windows Wix binary installation package</li>
 <li>runself (shell) self-compile installation package</li>
 <li>zip/tar.gz binary package</li>
 <li>zip/tar.gz source package</li>
 <li>RPM binary installation package</li>
 <li>SRPM source code installation package</li>
-<li>DEB binary installation package (to be supported)</li>
+<li>DEB binary installation package</li>
 </ul>
 <p>Here is a complete example, we can take a brief look at it first:</p>
 <pre><code class="lang-lua">set_version("1.0.0")
