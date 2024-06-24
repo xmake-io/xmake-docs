@@ -1,5 +1,21 @@
 # Changelog
 
+## v2.9.3
+
+### New features
+
+* [#4637](https://github.com/xmake-io/xmake/issues/4637): Add mix generator for xpack
+* [#5107](https://github.com/xmake-io/xmake/issues/5107): Add deb generator for xpack
+* [#5148](https://github.com/xmake-io/xmake/issues/5148): Add on_source in package
+
+### Changes
+
+* [#5156](https://github.com/xmake-io/xmake/issues/5156): Improve to install cargo packages for rust
+
+### Bugs fixed
+
+* [#5176](https://github.com/xmake-io/xmake/pull/5176): Fix VS toolset v144
+
 ## v2.9.2
 
 ### New features

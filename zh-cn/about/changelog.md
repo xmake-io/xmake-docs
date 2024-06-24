@@ -1,4 +1,20 @@
 
+## v2.9.3
+
+### 新特性
+
+* [#4637](https://github.com/xmake-io/xmake/issues/4637): 为 xpack 添加 mix 支持
+* [#5107](https://github.com/xmake-io/xmake/issues/5107): 为 xpack 添加 deb 支持
+* [#5148](https://github.com/xmake-io/xmake/issues/5148): 为包添加 on_source 配置域
+
+### 改进
+
+* [#5156](https://github.com/xmake-io/xmake/issues/5156): 改进安装 cargo 包
+
+### 问题修复
+
+* [#5176](https://github.com/xmake-io/xmake/pull/5176): 修复 VS toolset v144 支持
+
 ## v2.9.2
 
 ### 新特性

@@ -93,6 +93,10 @@
 }
 </style>
     <p>此页面描述了 <a href="zh-cn/manual/configuration_option.md">配置选项</a> 的 <code>on_load()</code>、<code>on_check()</code> 或 <code>after_check()</code> 等函数的 <code>option</code> 接口</p>
+<h4 id="optionvalue">option:value</h4>
+<ul>
+<li>获取选项的值</li>
+</ul>
 <h4 id="optionname">option:name</h4>
 <ul>
 <li>获取选项的名字</li>
@@ -115,6 +119,8 @@ option:get("defines")
 option:set("links", "sdl2")
 -- set the defined macros
 option:set("defines", "SDL_MAIN_HANDLED")
+-- set configvar
+option:set("configvar", option:name(), option:value(), {quote = false})
 </code></pre>
 <h4 id="optionadd">option:add</h4>
 <ul>

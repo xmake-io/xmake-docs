@@ -93,6 +93,10 @@
 }
 </style>
     <p>This page describes the interface for <code>option</code> of functions like <code>on_load()</code>, <code>on_check()</code> or <code>after_check()</code> of the <a href="manual/configuration_option.md">Configuration option</a></p>
+<h4 id="optionvalue">option:value</h4>
+<ul>
+<li>Get the value of the option</li>
+</ul>
 <h4 id="optionname">option:name</h4>
 <ul>
 <li>Get the name of the option</li>
@@ -114,6 +118,8 @@ option:get("defines")
 option:set("links", "sdl2")
 -- set the defined macros
 option:set("defines", "SDL_MAIN_HANDLED")
+-- set configvar
+option:set("configvar", option:name(), option:value(), {quote = false})
 </code></pre>
 <h4 id="optionadd">option:add</h4>
 <ul>
