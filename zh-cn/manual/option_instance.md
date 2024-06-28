@@ -47,6 +47,20 @@ option:add("links", "sdl2")
 option:add("defines", "SDL_MAIN_HANDLED")
 ```
 
+#### get_config
+
+- 值得注意的是，在脚本域中同样可以直接使用`get_config`来获取target的选项值
+
+```lua
+target("test")
+    set_kind("phony")
+    add_options("exp")
+    on_build(function (target)
+        print("$(exp)")
+        print(get_config("exp"))
+    end)
+```
+
 !> 此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新
 
 
