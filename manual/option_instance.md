@@ -44,5 +44,20 @@ option:add("links", "sdl2")
 option:add("defines", "SDL_MAIN_HANDLED")
 ```
 
+
+#### get_config
+
+- It is worth noting that you can also use `get_config` directly in the script domain to get the target's option values
+
+```lua
+target("test")
+    set_kind("phony")
+    add_options("exp")
+    on_build(function (target)
+        print("$(exp)")
+        print(get_config("exp"))
+    end)
+``
+
 !> The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr
 
