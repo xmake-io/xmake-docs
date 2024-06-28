@@ -22,13 +22,13 @@ $ xmake project -k cmakelists
 $ xmake project -k ninja
 ```
 
-### Generate compiler_flags
+### Generate compile_flags
 
 ```console
-$ xmake project -k compiler_flags
+$ xmake project -k compile_flags
 ```
 
-### Generate compiler_commands
+### Generate compile_commands
 
 We can export the compilation commands info of all source files and it is JSON compilation database format.
 
