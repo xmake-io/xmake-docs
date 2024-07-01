@@ -244,7 +244,7 @@ xmake update github:xmake-io/xmake#master
 xmake update gitee:tboox/xmake#dev # gitee mirror
 ```
 
-If just update the xaake lua script changes, you can add `-s/--scriptonly` to quickly update the lua script.
+If just update the xmake lua script changes, you can add `-s/--scriptonly` to quickly update the lua script.
 
 ```bash
 xmake update -s dev
