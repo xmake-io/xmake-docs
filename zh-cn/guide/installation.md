@@ -99,10 +99,16 @@ brew install xmake --HEAD
 bash <(curl -fsSL https://xmake.io/shget.text)
 ```
 
-## Archlinux
+## Arch Linux
 
 ```bash
 sudo pacman -Sy xmake
+```
+
+## Alpine Linux
+
+```bash
+sudo apk add xmake
 ```
 
 ## Ubuntu
