@@ -80,10 +80,16 @@ pacman -Sy mingw-w64-i686-xmake
 brew install xmake
 ```
 
-## Archlinux
+## Arch Linux
 
 ```bash
 sudo pacman -Sy xmake
+```
+
+## Alpine Linux
+
+```bash
+sudo apk add xmake
 ```
 
 ## Ubuntu
@@ -104,7 +110,7 @@ For Fedora 39 and above, you can install directly from the official repositories
 
 ```bash
 sudo dnf install xmake
-``
+```
 
 We can also install from the Copr repository:
 
