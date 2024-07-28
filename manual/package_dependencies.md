@@ -181,7 +181,7 @@ add_links("mbedtls", "mbedx509", "mbedcrypto")
 
 Add some system library links. When some packages integrate links, you also need to rely on some system libraries to link them. This time you can attach them to the package description.
 
-```
+```lua
 if is_plat("macosx") then
     add_frameworks("CoreGraphics", "CoreFoundation", "Foundation")
 elseif is_plat("windows") then
