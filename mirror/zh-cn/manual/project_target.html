@@ -1548,6 +1548,7 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 <p>另外，对于 gcc， <code>add_rpathdirs</code> 默认设置的是 runpath，如果想要显式的配置上 <code>-Wl,--enable-new-dtags</code>, <code>-Wl,--disable-new-dtags</code> 去配置 rpath 还是 runpath</p>
 <p>我们可以通过额外的参数指定，<code>add_rpathdirs("xxx", {runpath = true})</code></p>
 <p>相关背景细节见：<a href="https://github.com/xmake-io/xmake/issues/5109">#5109</a></p>
+<p>2.9.4 之后，我们新增了 <code>add_rpathdirs("xxx", {install_only = true})</code> ，可以单独配置安装后的 rpath 路径。</p>
 <h3 id="targetadd_includedirs">target:add_includedirs</h3>
 <h4 id="">添加头文件搜索目录</h4>
 <p>设置头文件的搜索目录，这个接口的使用方式如下：</p>
@@ -2137,6 +2138,42 @@ target("test")
 <p>2.2.5版本新增接口，用于针对每个target设置不同的默认安装目录，一般用于<code>xmake install/uninstall</code>命令。</p>
 <p>默认情况下执行<code>xmake install</code>会安装到系统<code>/usr/local</code>目录，我们除了可以通过<code>xmake install -o /usr/local</code>指定其他安装目录外，<br>还可以在xmake.lua中针对target设置不同的安装目录来替代默认目录。</p>
 <p>除了上述两种方式，我们也可以通过<code>INSTALLDIR</code>和<code>DESTDIR</code>环境变量设置默认的安装目录。</p>
+<h3 id="targetset_prefixdir">target:set_prefixdir</h3>
+<h4 id="">设置安装前置子目录</h4>
+<p>尽管通过 <code>set_installdir</code> 和 <code>xmake install -o [installdir]</code> 设置了安装根目录，但是如果我们还想进一步调整 bin, lib 和 include 的子路径。</p>
+<p>那么，我们可以使用这个接口，默认情况下，安装目录会按照这个结构：</p>
+<pre><code class="lang-bash">installdir
+  - bin
+  - lib
+  - include
+</code></pre>
+<p>如果我们配置：</p>
+<pre><code class="lang-lua">set_prefix("prefixdir")
+</code></pre>
+<p>就是增加一个总的子目录：</p>
+<pre><code class="lang-bash">installdir
+  - prefixdir
+    - bin
+    - lib
+    - include
+</code></pre>
+<p>我们还可以单独配置 bin, lib 和 include 子目录，例如：</p>
+<pre><code class="lang-lua">set_prefix("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+</code></pre>
+<pre><code class="lang-bash">installdir
+  - prefixdir
+    - mybin
+    - mylib
+    - myinc
+</code></pre>
+<p>如果，我们不配置 prefixdir，仅仅修改 bin 子目录，可以将 prefixdir 配置成 <code>/</code>。</p>
+<pre><code class="lang-lua">set_prefix("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+</code></pre>
+<pre><code class="lang-bash">installdir
+  - mybin
+  - mylib
+  - myinc
+</code></pre>
 <h3 id="targetadd_installfiles">target:add_installfiles</h3>
 <h4 id="">添加安装文件</h4>
 <p>2.2.5版本新增接口，用于针对每个target设置对应需要安装的文件，一般用于<code>xmake install/uninstall</code>命令。</p>

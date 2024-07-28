@@ -1687,6 +1687,8 @@ We can specify it through additional parameters, `add_rpathdirs("xxx", {runpath 
 
 For relevant background details, see: [#5109](https://github.com/xmake-io/xmake/issues/5109)
 
+After 2.9.4, we added `add_rpathdirs("xxx", {install_only = true})`, which can configure the installed rpath path separately.
+
 ### target:add_includedirs
 
 #### Add include search directories
@@ -2486,6 +2488,64 @@ target("test")
 
 By default, `xmake install` will be installed to the system `/usr/local` directory. We can specify other installation directories except `xmake install -o /usr/local`.
 You can also set a different installation directory for the target in xmake.lua instead of the default directory.
+
+### target:set_prefixdir
+
+#### Set the installation prefix subdirectory
+
+Although the installation root directory is set by `set_installdir` and `xmake install -o [installdir]`, if we still want to further adjust the subpaths of bin, lib and include.
+
+Then, we can use this interface. By default, the installation directory will follow this structure:
+
+```bash
+installdir
+- bin
+- lib
+- include
+```
+
+If we configure:
+
+```lua
+set_prefix("prefixdir")
+```
+
+It is to add a general subdirectory:
+
+```bash
+installdir
+- prefixdir
+- bin
+- lib
+- include
+```
+
+We can also configure bin, lib and include subdirectories separately, for example:
+
+```lua
+set_prefix("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+```
+
+```bash
+installdir
+- prefixdir
+- mybin
+- mylib
+- myinc
+```
+
+If we do not configure prefixdir and only modify the bin subdirectory, we can configure prefixdir to `/`.
+
+```lua
+set_prefix("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+```
+
+```bash
+installdir
+  - mybin
+  - mylib
+  - myinc
+```
 
 ### target:add_installfiles
 

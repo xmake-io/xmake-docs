@@ -1676,6 +1676,8 @@ target("test")
 
 相关背景细节见：[#5109](https://github.com/xmake-io/xmake/issues/5109)
 
+2.9.4 之后，我们新增了 `add_rpathdirs("xxx", {install_only = true})` ，可以单独配置安装后的 rpath 路径。
+
 ### target:add_includedirs
 
 #### 添加头文件搜索目录
@@ -2477,6 +2479,64 @@ target("test")
 还可以在xmake.lua中针对target设置不同的安装目录来替代默认目录。
 
 除了上述两种方式，我们也可以通过`INSTALLDIR`和`DESTDIR`环境变量设置默认的安装目录。
+
+### target:set_prefixdir
+
+#### 设置安装前置子目录
+
+尽管通过 `set_installdir` 和 `xmake install -o [installdir]` 设置了安装根目录，但是如果我们还想进一步调整 bin, lib 和 include 的子路径。
+
+那么，我们可以使用这个接口，默认情况下，安装目录会按照这个结构：
+
+```bash
+installdir
+  - bin
+  - lib
+  - include
+```
+
+如果我们配置：
+
+```lua
+set_prefix("prefixdir")
+```
+
+就是增加一个总的子目录：
+
+```bash
+installdir
+  - prefixdir
+    - bin
+    - lib
+    - include
+```
+
+我们还可以单独配置 bin, lib 和 include 子目录，例如：
+
+```lua
+set_prefix("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+```
+
+```bash
+installdir
+  - prefixdir
+    - mybin
+    - mylib
+    - myinc
+```
+
+如果，我们不配置 prefixdir，仅仅修改 bin 子目录，可以将 prefixdir 配置成 `/`。
+
+```lua
+set_prefix("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+```
+
+```bash
+installdir
+  - mybin
+  - mylib
+  - myinc
+```
 
 ### target:add_installfiles
 

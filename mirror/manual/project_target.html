@@ -1577,6 +1577,7 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 <p>In addition, for gcc, <code>add_rpathdirs</code> defaults to runpath. If you want to configure it explicitly, use <code>-Wl,--enable-new-dtags</code>, <code>-Wl,--disable-new-dtags</code> to configure rpath. Or runpath</p>
 <p>We can specify it through additional parameters, <code>add_rpathdirs("xxx", {runpath = true})</code></p>
 <p>For relevant background details, see: <a href="https://github.com/xmake-io/xmake/issues/5109">#5109</a></p>
+<p>After 2.9.4, we added <code>add_rpathdirs("xxx", {install_only = true})</code>, which can configure the installed rpath path separately.</p>
 <h3 id="targetadd_includedirs">target:add_includedirs</h3>
 <h4 id="addincludesearchdirectories">Add include search directories</h4>
 <p>Set the search directory for the header file. This interface is used as follows:</p>
@@ -2165,6 +2166,42 @@ target("test")
 <h3 id="targetset_installdir">target:set_installdir</h3>
 <h4 id="settheinstallationdirectory">Set the installation directory</h4>
 <p>By default, <code>xmake install</code> will be installed to the system <code>/usr/local</code> directory. We can specify other installation directories except <code>xmake install -o /usr/local</code>.<br>You can also set a different installation directory for the target in xmake.lua instead of the default directory.</p>
+<h3 id="targetset_prefixdir">target:set_prefixdir</h3>
+<h4 id="settheinstallationprefixsubdirectory">Set the installation prefix subdirectory</h4>
+<p>Although the installation root directory is set by <code>set_installdir</code> and <code>xmake install -o [installdir]</code>, if we still want to further adjust the subpaths of bin, lib and include.</p>
+<p>Then, we can use this interface. By default, the installation directory will follow this structure:</p>
+<pre><code class="lang-bash">installdir
+- bin
+- lib
+- include
+</code></pre>
+<p>If we configure:</p>
+<pre><code class="lang-lua">set_prefix("prefixdir")
+</code></pre>
+<p>It is to add a general subdirectory:</p>
+<pre><code class="lang-bash">installdir
+- prefixdir
+- bin
+- lib
+- include
+</code></pre>
+<p>We can also configure bin, lib and include subdirectories separately, for example:</p>
+<pre><code class="lang-lua">set_prefix("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+</code></pre>
+<pre><code class="lang-bash">installdir
+- prefixdir
+- mybin
+- mylib
+- myinc
+</code></pre>
+<p>If we do not configure prefixdir and only modify the bin subdirectory, we can configure prefixdir to <code>/</code>.</p>
+<pre><code class="lang-lua">set_prefix("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+</code></pre>
+<pre><code class="lang-bash">installdir
+  - mybin
+  - mylib
+  - myinc
+</code></pre>
 <h3 id="targetadd_installfiles">target:add_installfiles</h3>
 <h4 id="addinstallationfiles">Add installation files</h4>
 <p>2.2.5 version of the new interface, used to set the corresponding file for each target, generally used for the <code>xmake install/uninstall</code> command.</p>

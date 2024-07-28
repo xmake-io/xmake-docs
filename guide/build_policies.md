@@ -364,6 +364,22 @@ build/
 └─ test
 ```
 
+### build.rpath
+
+Configures to enable or disable the target rpath setting during build.
+
+By default, if `target(foo)` depends on the dynamic library bar, the generated foo executable file will automatically add bar's rpath, which ensures that users can directly execute the foo program and find bar correctly.
+
+If you want to disable this behavior, you can explicitly configure it.
+
+### install.rpath
+
+Although the rpath will be set for the built program, the rpath when it is built may not be completely applicable after `xmake install` is installed, so xmake will automatically modify and adjust the rpath so that the installed program can also find its dependent libraries.
+
+However, the premise is that the user must first configure an independent installation rpath through `add_rpathdirs("/xxx", {installonly = true})`.
+
+And we can also use this policy to disable the default installation phase rpath setting behavior.
+
 ### run.autobuild
 
 This policy is used to adjust the behaviour of `xmake run`. By default, running `xmake run` does not build the target program automatically, but prompts the user to build it manually if it has not been compiled yet.

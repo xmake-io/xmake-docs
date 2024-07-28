@@ -306,6 +306,14 @@ set_policy("build.sanitizer.undefined", true)
 <pre><code class="lang-bash">build/
 └─ test
 </code></pre>
+<h3 id="buildrpath">build.rpath</h3>
+<p>Configures to enable or disable the target rpath setting during build.</p>
+<p>By default, if <code>target(foo)</code> depends on the dynamic library bar, the generated foo executable file will automatically add bar&#39;s rpath, which ensures that users can directly execute the foo program and find bar correctly.</p>
+<p>If you want to disable this behavior, you can explicitly configure it.</p>
+<h3 id="installrpath">install.rpath</h3>
+<p>Although the rpath will be set for the built program, the rpath when it is built may not be completely applicable after <code>xmake install</code> is installed, so xmake will automatically modify and adjust the rpath so that the installed program can also find its dependent libraries.</p>
+<p>However, the premise is that the user must first configure an independent installation rpath through <code>add_rpathdirs("/xxx", {installonly = true})</code>.</p>
+<p>And we can also use this policy to disable the default installation phase rpath setting behavior.</p>
 <h3 id="runautobuild">run.autobuild</h3>
 <p>This policy is used to adjust the behaviour of <code>xmake run</code>. By default, running <code>xmake run</code> does not build the target program automatically, but prompts the user to build it manually if it has not been compiled yet.</p>
 <p>By turning on this policy, we can automatically build the target program before running it.</p>

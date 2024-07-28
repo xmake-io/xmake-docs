@@ -367,6 +367,22 @@ build/
 └─ test
 ```
 
+### build.rpath
+
+配置启用或者禁用构建时的 target rpath 设置。
+
+默认情况下，如果 `target(foo)` 依赖动态库 bar，那么生成的 foo 可执行文件会自动加上 bar 的 rpath，这能保证用户直接执行 foo 程序，也能正确找到 bar。
+
+如果你想禁用这个行为，可以显式配置禁用它。
+
+### install.rpath
+
+尽管构建后的程序，会被设置 rpath，但是当 `xmake install` 安装后，它构建时候的 rpath 就不一定完全适用了，因此 xmake 会自动修改调整 rpath，使得安装后的程序，同样可以找到它的依赖库。
+
+不过前提是，用户自己先得通过 `add_rpathdirs("/xxx", {installonly = true})` 去配置独立的安装 rpath。
+
+而我们也可以通过这个 policy 去禁用默认的安装阶段 rpath 设置行为。
+
 ### run.autobuild
 
 这个策略用于调整 `xmake run` 的行为，默认情况下，执行 `xmake run` 并不会自动构建目标程序，如果程序还没被编译，就是提示用户手动构建一下。
