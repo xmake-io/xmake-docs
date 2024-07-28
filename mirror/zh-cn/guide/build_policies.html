@@ -294,6 +294,19 @@ set_policy("build.sanitizer.undefined", true)
 <p>之后的每次构建，只要配置没有变化，就不会重新生成 configfiles。</p>
 <p>但是，如果我们的 configfiles 中有使用 GIT_COMMIT 等变量，想要每次构建时候，总是重新生成最新的配置，那么可以配置它。</p>
 <p>具体使用背景，可以看下：<a href="https://github.com/xmake-io/xmake/issues/4747">#4747</a></p>
+<h3 id="buildintermediate_directory">build.intermediate_directory</h3>
+<p>配置启用或禁用构建的内部子目录。</p>
+<p>默认情况下，执行 <code>xmake</code> 编译项目会自动在 build 目录下根据平台。架构，编译模式生成子目录，分别存储对象文件，目标文件。例如：</p>
+<pre><code class="lang-bash">build/
+└── macosx
+    └── x86_64
+        └── release
+            └─test
+</code></pre>
+<p>如果配置禁用此策略，那么生成的产物将会直接生成到 build 根目录下。变成：</p>
+<pre><code class="lang-bash">build/
+└─ test
+</code></pre>
 <h3 id="runautobuild">run.autobuild</h3>
 <p>这个策略用于调整 <code>xmake run</code> 的行为，默认情况下，执行 <code>xmake run</code> 并不会自动构建目标程序，如果程序还没被编译，就是提示用户手动构建一下。</p>
 <p>而开启这个策略，我们就可以在运行程序前，先自动构建对应的目标程序。</p>

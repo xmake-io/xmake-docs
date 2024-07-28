@@ -346,6 +346,27 @@ $ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
 
 具体使用背景，可以看下：[#4747](https://github.com/xmake-io/xmake/issues/4747)
 
+### build.intermediate_directory
+
+配置启用或禁用构建的内部子目录。
+
+默认情况下，执行 `xmake` 编译项目会自动在 build 目录下根据平台。架构，编译模式生成子目录，分别存储对象文件，目标文件。例如：
+
+```bash
+build/
+└── macosx
+    └── x86_64
+        └── release
+            └─test
+```
+
+如果配置禁用此策略，那么生成的产物将会直接生成到 build 根目录下。变成：
+
+```bash
+build/
+└─ test
+```
+
 ### run.autobuild
 
 这个策略用于调整 `xmake run` 的行为，默认情况下，执行 `xmake run` 并不会自动构建目标程序，如果程序还没被编译，就是提示用户手动构建一下。

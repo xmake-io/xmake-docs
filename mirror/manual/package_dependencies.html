@@ -209,7 +209,7 @@ end
 <h3 id="packageadd_syslinks">package:add_syslinks</h3>
 <h4 id="addsystemlibrarylinks">Add system library links</h4>
 <p>Add some system library links. When some packages integrate links, you also need to rely on some system libraries to link them. This time you can attach them to the package description.</p>
-<pre><code>if is_plat("macosx") then
+<pre><code class="lang-lua">if is_plat("macosx") then
     add_frameworks("CoreGraphics", "CoreFoundation", "Foundation")
 elseif is_plat("windows") then
     add_defines("CAIRO_WIN32_STATIC_BUILD=1")
@@ -217,7 +217,8 @@ elseif is_plat("windows") then
 else
     add_syslinks("pthread")
 end
-</code></pre><h3 id="packageadd_linkorders">package:add_linkorders</h3>
+</code></pre>
+<h3 id="packageadd_linkorders">package:add_linkorders</h3>
 <h4 id="adjustthelinkorderwithinthepackage">Adjust the link order within the package</h4>
 <p>For specific details, please see the target&#39;s internal documentation for <code>add_linkorders</code>, <a href="https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkorders">target/add_linkorders</a>.</p>
 <pre><code class="lang-lua">package("libpng")
@@ -241,6 +242,12 @@ end
 <h3 id="packageadd_includedirs">package:add_includedirs</h3>
 <h4 id="addincludedirectories">Add include directories</h4>
 <p>Add another header file search directory.</p>
+<h3 id="packageadd_bindirs">package:add_bindirs</h3>
+<h4 id="addexecutablefiledirectory">Add executable file directory</h4>
+<p>By default, if <code>set_kind("binary")</code> or <code>set_kind("toolchain")</code> is configured as an executable package.</p>
+<p>Then, it will use the bin directory as an executable directory by default and automatically add it to the PATH environment variable.</p>
+<p>If you want to open some of the compiled executable tools in the library package to users, you need to configure <code>package:addenv("PATH", "bin")</code> in the package.</p>
+<p>If you use this interface to configure <code>add_bindirs("bin")</code>, bin will be automatically added to PATH, and you no longer need to configure PATH separately. In addition, this also provides a way to modify the executable directory.</p>
 <h3 id="packageadd_defines">package:add_defines</h3>
 <h4 id="adddefinition">Add definition</h4>
 <p>Some specific definition options can be exported to the integrated package.</p>

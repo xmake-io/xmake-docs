@@ -236,6 +236,18 @@ The package's link library search directory can also be adjusted, but it is usua
 
 Add another header file search directory.
 
+### package:add_bindirs
+
+#### Add executable file directory
+
+By default, if `set_kind("binary")` or `set_kind("toolchain")` is configured as an executable package.
+
+Then, it will use the bin directory as an executable directory by default and automatically add it to the PATH environment variable.
+
+If you want to open some of the compiled executable tools in the library package to users, you need to configure `package:addenv("PATH", "bin")` in the package.
+
+If you use this interface to configure `add_bindirs("bin")`, bin will be automatically added to PATH, and you no longer need to configure PATH separately. In addition, this also provides a way to modify the executable directory.
+
 ### package:add_defines
 
 #### Add definition

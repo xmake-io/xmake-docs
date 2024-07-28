@@ -136,8 +136,11 @@ Invoke-Expression (Invoke-Webrequest &#39;https://xmake.io/psget.text&#39; -UseB
 <h2 id="macos">MacOS</h2>
 <pre><code class="lang-bash">brew install xmake
 </code></pre>
-<h2 id="archlinux">Archlinux</h2>
+<h2 id="archlinux">Arch Linux</h2>
 <pre><code class="lang-bash">sudo pacman -Sy xmake
+</code></pre>
+<h2 id="alpinelinux">Alpine Linux</h2>
+<pre><code class="lang-bash">sudo apk add xmake
 </code></pre>
 <h2 id="ubuntu">Ubuntu</h2>
 <h3 id="viaapt">via apt</h3>
@@ -149,12 +152,9 @@ sudo apt install xmake
 <h2 id="fedorarhelopensusecentos">Fedora/RHEL/OpenSUSE/CentOS</h2>
 <p>For Fedora 39 and above, you can install directly from the official repositories using the following command:</p>
 <pre><code class="lang-bash">sudo dnf install xmake
-``
-
-We can also install from the Copr repository:
-
-```bash
-sudo dnf copr enable waruqi/xmake
+</code></pre>
+<p>We can also install from the Copr repository:</p>
+<pre><code class="lang-bash">sudo dnf copr enable waruqi/xmake
 sudo dnf install xmake
 </code></pre>
 <h2 id="gentoo">Gentoo</h2>
@@ -237,7 +237,7 @@ xmake update dev
 <pre><code class="lang-bash">xmake update github:xmake-io/xmake#master
 xmake update gitee:tboox/xmake#dev # gitee mirror
 </code></pre>
-<p>If just update the xaake lua script changes, you can add <code>-s/--scriptonly</code> to quickly update the lua script.</p>
+<p>If just update the xmake lua script changes, you can add <code>-s/--scriptonly</code> to quickly update the lua script.</p>
 <pre><code class="lang-bash">xmake update -s dev
 </code></pre>
 <p>Finally, if we want to uninstall Xmake, we&#39;re sorry to see you go! Still, it is supported: <code>xmake update --uninstall</code>.</p>

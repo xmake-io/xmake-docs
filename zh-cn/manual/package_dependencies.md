@@ -229,6 +229,18 @@ package("libpng")
 
 #### 添加其他头文件搜索目录
 
+### package:add_bindirs
+
+#### 添加可执行文件目录
+
+默认情况下，如果配置了 `set_kind("binary")` 或者 `set_kind("toolchain")` 作为可执行的包。
+
+那么，它默认会将 bin 目录作为可执行目录，并且自动将它加入到 PATH 环境变量中去。
+
+而如果对应 library 包，想要将里面附带编译的一些可执行工具开放给用户执行，那么需要在包中配置 `package:addenv("PATH", "bin")` 中才行。
+
+而通过这个接口去配置 `add_bindirs("bin")` ，那么将会自动将 bin 添加到 PATH，不再需要单独配置 PATH，另外，这也提供了一种可以修改可执行目录的方式。
+
 ### package:add_defines
 
 #### 添加宏定义

@@ -207,7 +207,7 @@ end
 <h3 id="packageadd_syslinks">package:add_syslinks</h3>
 <h4 id="">设置系统库链接</h4>
 <p>添加一些系统库链接，有些包集成链接的时候，还需要依赖一些系统库，才能链接通过，这个时候可以在包描述里面都附加上去。</p>
-<pre><code>if is_plat("macosx") then
+<pre><code class="lang-lua">if is_plat("macosx") then
     add_frameworks("CoreGraphics", "CoreFoundation", "Foundation")
 elseif is_plat("windows") then
     add_defines("CAIRO_WIN32_STATIC_BUILD=1")
@@ -215,7 +215,8 @@ elseif is_plat("windows") then
 else
     add_syslinks("pthread")
 end
-</code></pre><h3 id="packageadd_linkorders">package:add_linkorders</h3>
+</code></pre>
+<h3 id="packageadd_linkorders">package:add_linkorders</h3>
 <h4 id="">调整包内部的链接顺序</h4>
 <p>具体详情可以看下 target 内部对 <code>add_linkorders</code> 的文档说明，<a href="https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkorders">target/add_linkorders</a>。</p>
 <pre><code class="lang-lua">package("libpng")
@@ -237,6 +238,12 @@ end
 <p>包的链接库搜索目录也是可以调整的，不过通常都不需要，除非一些库安装完不在prefix/lib下面，而在lib的子目录下，默认搜索不到的话。</p>
 <h3 id="packageadd_includedirs">package:add_includedirs</h3>
 <h4 id="">添加其他头文件搜索目录</h4>
+<h3 id="packageadd_bindirs">package:add_bindirs</h3>
+<h4 id="">添加可执行文件目录</h4>
+<p>默认情况下，如果配置了 <code>set_kind("binary")</code> 或者 <code>set_kind("toolchain")</code> 作为可执行的包。</p>
+<p>那么，它默认会将 bin 目录作为可执行目录，并且自动将它加入到 PATH 环境变量中去。</p>
+<p>而如果对应 library 包，想要将里面附带编译的一些可执行工具开放给用户执行，那么需要在包中配置 <code>package:addenv("PATH", "bin")</code> 中才行。</p>
+<p>而通过这个接口去配置 <code>add_bindirs("bin")</code> ，那么将会自动将 bin 添加到 PATH，不再需要单独配置 PATH，另外，这也提供了一种可以修改可执行目录的方式。</p>
 <h3 id="packageadd_defines">package:add_defines</h3>
 <h4 id="">添加宏定义</h4>
 <p>可以对集成的包对外输出一些特定的定义选项。</p>

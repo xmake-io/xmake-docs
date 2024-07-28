@@ -343,6 +343,27 @@ However, if we use a variable such as GIT_COMMIT in our configfiles and want to 
 
 For background on how to use it, see: [#4747](https://github.com/xmake-io/xmake/issues/4747)
 
+### build.intermediate_directory
+
+Configures whether to enable or disable internal subdirectories of the build.
+
+By default, executing `xmake` to compile the project will automatically generate subdirectories in the build directory according to the platform, architecture, and compilation mode to store object files and target files respectively. For example:
+
+```bash
+build/
+└── macosx
+    └── x86_64
+        └── release
+            └─test
+```
+
+If this policy is disabled, the generated product will be directly generated in the build root directory. Become:
+
+```bash
+build/
+└─ test
+```
+
 ### run.autobuild
 
 This policy is used to adjust the behaviour of `xmake run`. By default, running `xmake run` does not build the target program automatically, but prompts the user to build it manually if it has not been compiled yet.
