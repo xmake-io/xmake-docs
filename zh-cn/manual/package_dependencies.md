@@ -178,7 +178,7 @@ add_links("mbedtls", "mbedx509", "mbedcrypto")
 
 添加一些系统库链接，有些包集成链接的时候，还需要依赖一些系统库，才能链接通过，这个时候可以在包描述里面都附加上去。
 
-```
+```lua
 if is_plat("macosx") then
     add_frameworks("CoreGraphics", "CoreFoundation", "Foundation")
 elseif is_plat("windows") then
