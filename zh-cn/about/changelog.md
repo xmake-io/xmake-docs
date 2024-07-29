@@ -1,4 +1,30 @@
 
+## v2.9.4
+
+### 新特性
+
+* [#5278](https://github.com/xmake-io/xmake/issues/5278): 添加 `build.intermediate_directory` 策略去禁用中间目录生成
+* [#5313](https://github.com/xmake-io/xmake/issues/5313): 添加 windows arm/arm64ec 支持
+* [#5296](https://github.com/xmake-io/xmake/issues/5296): 添加 Intel LLVM Fortran 编译器支持
+* [#5384](https://github.com/xmake-io/xmake/issues/5384): 为包添加 `add_bindirs` 配置支持
+
+### 改进
+
+* [#5280](https://github.com/xmake-io/xmake/issues/5280): 添加缺失的 C++20 Modules 文件扩展
+* [#5251](https://github.com/xmake-io/xmake/issues/5251): 为 windows installer 更新内置的 7z/curl
+* [#5286](https://github.com/xmake-io/xmake/issues/5286): 改进 json 支持16进制解析
+* [#5302](https://github.com/xmake-io/xmake/pull/5302): 改进 Vala 支持
+* [#5335](https://github.com/xmake-io/xmake/pull/5335): 改进 `xmake install` 和 `xpack`，添加 `set_prefixdir` 接口
+* [#5387](https://github.com/xmake-io/xmake/pull/5387): 改进 `xmake test`
+* [#5376](https://github.com/xmake-io/xmake/pull/5376): 改进 C++ module 对象列表处理和 moduleonly 包支持
+
+### Bugs 修复
+
+* [#5288](https://github.com/xmake-io/xmake/issues/5288): 修复 `xmake test` 对 Unity Build 的支持
+* [#5270](https://github.com/xmake-io/xmake/issues/5270): 修复 gcc/clang 对 pch 的支持
+* [#5276](https://github.com/xmake-io/xmake/issues/5276): 修复查找 vc6 环境
+* [#5259](https://github.com/xmake-io/xmake/issues/5259): 修复命令补全失效问题
+
 ## v2.9.3
 
 ### 新特性

@@ -1,5 +1,31 @@
 # Changelog
 
+## v2.9.4
+
+### New features
+
+* [#5278](https://github.com/xmake-io/xmake/issues/5278): Add `build.intermediate_directory` policy to disable and custom intermediate directory
+* [#5313](https://github.com/xmake-io/xmake/issues/5313): Add windows arm/arm64ec support
+* [#5296](https://github.com/xmake-io/xmake/issues/5296): Add Intel LLVM Fortran Compiler support
+* [#5384](https://github.com/xmake-io/xmake/issues/5384): Add `add_bindirs` for package
+
+### Changes
+
+* [#5280](https://github.com/xmake-io/xmake/issues/5280): Add missing C++20 Modules file extension
+* [#5251](https://github.com/xmake-io/xmake/issues/5251): Update 7z/curl for windows installer
+* [#5286](https://github.com/xmake-io/xmake/issues/5286): Improve json to parse hex string
+* [#5302](https://github.com/xmake-io/xmake/pull/5302): Improve Vala support
+* [#5335](https://github.com/xmake-io/xmake/pull/5335): Improve `xmake install` and `xpack`, Add `set_prefixdir` api for target
+* [#5387](https://github.com/xmake-io/xmake/pull/5387): Improve `xmake test`
+* [#5376](https://github.com/xmake-io/xmake/pull/5376): Improve module objectfiles handling and moduleonly package
+
+### Bugs Fixed
+
+* [#5288](https://github.com/xmake-io/xmake/issues/5288): Fix `xmake test` for unity build
+* [#5270](https://github.com/xmake-io/xmake/issues/5270): Fix pch/include for gcc/clang
+* [#5276](https://github.com/xmake-io/xmake/issues/5276): Fix find vc6
+* [#5259](https://github.com/xmake-io/xmake/issues/5259): Fix the failure of the command line completion function
+
 ## v2.9.3
 
 ### New features
