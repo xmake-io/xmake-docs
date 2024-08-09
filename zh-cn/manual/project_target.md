@@ -3538,7 +3538,7 @@ running tests ...
 而有时候，我们想在第一个测试没通过，就直接中断测试，那么我们可以通过下面的配置启用：
 
 ```lua
-set_policy("test.return_zero_on_failure", true)
+set_policy("test.stop_on_first_failure", true)
 ```
 
 ##### 测试失败返回0
