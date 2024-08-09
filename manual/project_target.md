@@ -3546,7 +3546,7 @@ By default, `xmake test` will wait until all tests have been run, no matter how 
 Sometimes, we want to interrupt the test directly if the first test fails, then we can enable it through the following configuration:
 
 ```lua
-set_policy("test.return_zero_on_failure", true)
+set_policy("test.stop_on_first_failure", true)
 ```
 
 ##### If the test fails, return zero
