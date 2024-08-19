@@ -579,7 +579,7 @@ Set the output directory of the target program file. Under normal circumstances,
 The build directory can be manually modified during project configuration:
 
 ```bash
-Xmake f -o /tmp/build
+xmake f -o /tmp/build
 ```
 
 After modifying to `/tmp/build`, the target file is output to `/tmp/build` by default.
