@@ -386,7 +386,7 @@ target("test")
     add_packages("sfml", {components = "graphics")
 ```
 
-!> 注：除了配置可用的组件列表，我们还需要对每个组件进行详细配置，才能正常使用，因此，它通常和 `on_componment` 接口配合使用。
+!> 注：除了配置可用的组件列表，我们还需要对每个组件进行详细配置，才能正常使用，因此，它通常和 `on_component` 接口配合使用。
 
 一个关于包组件的配置和使用的完整例子见：[components example](https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua)
 
@@ -816,7 +816,7 @@ package("zlib")
 
 如果仅仅只是想增加自定义 http headers 去获取下载授权，可以使用 [设置包下载的 http headers](https://xmake.io/#/zh-cn/manual/project_target?id=%e8%ae%be%e7%bd%ae%e5%8c%85%e4%b8%8b%e8%bd%bd%e7%9a%84-http-headers)
 
-### package:on_componment
+### package:on_component
 
 #### 配置包组件
 
