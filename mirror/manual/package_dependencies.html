@@ -343,7 +343,7 @@ target("test")
 target("test")
     add_packages("sfml", {components = "graphics")
 </code></pre>
-<p>!> Note: In addition to configuring the list of available components, we also need to configure each component in detail for it to work properly, so it is usually used in conjunction with the <code>on_componment</code> interface.</p>
+<p>!> Note: In addition to configuring the list of available components, we also need to configure each component in detail for it to work properly, so it is usually used in conjunction with the <code>on_component</code> interface.</p>
 <p>A full example of the configuration and use of package components can be found at: <a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua">components example</a></p>
 <h3 id="packageset_base">package:set_base</h3>
 <h4 id="inheritpackageconfiguration">Inherit package configuration</h4>
@@ -755,7 +755,7 @@ end)
 end)
 </code></pre>
 <p>if the run fails, the test will not pass.</p>
-<h3 id="packageon_componment">package:on_componment</h3>
+<h3 id="packageon_component">package:on_component</h3>
 <h4 id="definepackagecomponent">Define package component</h4>
 <p>This is a new interface added in 2.7.3 to support component-based configuration of packages, see: <a href="https://github.com/xmake-io/xmake/issues/2636">#2636</a> for details.</p>
 <p>Through this interface we can configure the current package, specifying component details such as links to components, dependencies etc.</p>

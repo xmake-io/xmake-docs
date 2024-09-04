@@ -339,7 +339,7 @@ target("test")
 target("test")
     add_packages("sfml", {components = "graphics")
 </code></pre>
-<p>!> 注：除了配置可用的组件列表，我们还需要对每个组件进行详细配置，才能正常使用，因此，它通常和 <code>on_componment</code> 接口配合使用。</p>
+<p>!> 注：除了配置可用的组件列表，我们还需要对每个组件进行详细配置，才能正常使用，因此，它通常和 <code>on_component</code> 接口配合使用。</p>
 <p>一个关于包组件的配置和使用的完整例子见：<a href="https://github.com/xmake-io/xmake/blob/master/tests/projects/package/components/xmake.lua">components example</a></p>
 <h3 id="packageset_base">package:set_base</h3>
 <h4 id="">继承包配置</h4>
@@ -629,7 +629,7 @@ end)
 </code></pre>
 <p>自定义下载需要用户完全自己控制下载逻辑，会比较复杂，除非必要，不推荐这么做。</p>
 <p>如果仅仅只是想增加自定义 http headers 去获取下载授权，可以使用 <a href="https://xmake.io/#/zh-cn/manual/project_target?id=%e8%ae%be%e7%bd%ae%e5%8c%85%e4%b8%8b%e8%bd%bd%e7%9a%84-http-headers">设置包下载的 http headers</a></p>
-<h3 id="packageon_componment">package:on_componment</h3>
+<h3 id="packageon_component">package:on_component</h3>
 <h4 id="">配置包组件</h4>
 <p>这是 2.7.3 新加的接口，用于支持包的组件化配置，详情见：<a href="https://github.com/xmake-io/xmake/issues/2636">#2636</a>。</p>
 <p>通过这个接口，我们可以配置当前包，指定组件的详细信息，比如组件的链接，依赖等等。</p>
