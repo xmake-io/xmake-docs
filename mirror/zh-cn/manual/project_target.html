@@ -2859,7 +2859,7 @@ running tests ...
 <h5 id="">首次测试失败就终止</h5>
 <p>默认情况下，<code>xmake test</code> 会等到所有测试都运行完，不管里面有多少是没通过的。</p>
 <p>而有时候，我们想在第一个测试没通过，就直接中断测试，那么我们可以通过下面的配置启用：</p>
-<pre><code class="lang-lua">set_policy("test.return_zero_on_failure", true)
+<pre><code class="lang-lua">set_policy("test.stop_on_first_failure", true)
 </code></pre>
 <h5 id="0">测试失败返回0</h5>
 <p>默认情况下，只要有一个测试没通过，等到 <code>xmake test</code> 运行完成，它都会返回非0退出代码，这对于一些 CI 环境非常有用，可以中断 CI 的其他脚本继续运行。</p>

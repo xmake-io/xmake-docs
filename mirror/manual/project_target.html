@@ -775,7 +775,7 @@ set_fpmodels("precise") - default
 <h4 id="setoutputdirectoriesfortargetfiles">Set output directories for target files</h4>
 <p>Set the output directory of the target program file. Under normal circumstances, you do not need to set it. The default output will be in the build directory.</p>
 <p>The build directory can be manually modified during project configuration:</p>
-<pre><code class="lang-bash">Xmake f -o /tmp/build
+<pre><code class="lang-bash">xmake f -o /tmp/build
 </code></pre>
 <p>After modifying to <code>/tmp/build</code>, the target file is output to <code>/tmp/build</code> by default.</p>
 <p>And if you use this interface to set, you don&#39;t need to change the command every time, for example:</p>
@@ -2886,7 +2886,7 @@ running tests...
 <h5 id="terminateifthefirsttestfails">Terminate if the first test fails</h5>
 <p>By default, <code>xmake test</code> will wait until all tests have been run, no matter how many of them failed.</p>
 <p>Sometimes, we want to interrupt the test directly if the first test fails, then we can enable it through the following configuration:</p>
-<pre><code class="lang-lua">set_policy("test.return_zero_on_failure", true)
+<pre><code class="lang-lua">set_policy("test.stop_on_first_failure", true)
 </code></pre>
 <h5 id="ifthetestfailsreturnzero">If the test fails, return zero</h5>
 <p>By default, as long as a test fails, it will return a non-zero exit code when <code>xmake test</code> is completed. This is very useful for some CI environments and can interrupt other CI scripts to continue running.</p>
