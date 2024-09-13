@@ -1351,6 +1351,43 @@ target("example")
     add_packages("python")
 ```
 
+### Java/C 模块
+
+[完整例子](https://github.com/xmake-io/xmake/blob/dev/tests/projects/swig/java_c)
+
+```lua
+-- make sure you config to an enviroment with jni.h
+-- for example: xmake f -c -p android
+
+target("example")
+    set_kind('shared')
+    -- set moduletype to java
+    add_rules("swig.c", {moduletype = "java"})
+    -- test jar build
+    -- add_rules("swig.c", {moduletype = "java" , buildjar = true})
+    -- use swigflags to provider package name and output path of java files
+    add_files("src/example.i", {swigflags = {
+        "-package",
+        "com.example",
+        "-outdir",
+        "build/java/com/example/"
+    }})
+    add_files("src/example.c")
+    add_includedirs("src")
+    before_build(function()
+        -- ensure output path exists before running swig
+        os.mkdir("build/java/com/example/")
+    end)
+```
+
+我们也可以配置
+
+```lua
+add_rules("swig.c", {moduletype = "java", buildjar = true})
+```
+
+去同时构建 jar 包，方便直接使用。
+
 ## C++20 模块
 
 ### 快速开始

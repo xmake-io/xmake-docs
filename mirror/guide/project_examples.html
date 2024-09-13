@@ -996,6 +996,34 @@ target("example")
     add_files("src/example.cpp")
     add_packages("python")
 </code></pre>
+<h3 id="javacmodule">Java/C module</h3>
+<p><a href="https://github.com/xmake-io/xmake/blob/dev/tests/projects/swig/java_c">Example project</a></p>
+<pre><code class="lang-lua">-- make sure you config to an enviroment with jni.h
+-- for example: xmake f -c -p android
+
+target("example")
+    set_kind(&#39;shared&#39;)
+    -- set moduletype to java
+    add_rules("swig.c", {moduletype = "java"})
+    -- test jar build
+    -- add_rules("swig.c", {moduletype = "java" , buildjar = true})
+    -- use swigflags to provider package name and output path of java files
+    add_files("src/example.i", {swigflags = {
+        "-package",
+        "com.example",
+        "-outdir",
+        "build/java/com/example/"
+    }})
+    add_files("src/example.c")
+    add_includedirs("src")
+    before_build(function()
+        -- ensure output path exists before running swig
+        os.mkdir("build/java/com/example/")
+    end)
+</code></pre>
+<p>We can also configure <code>buildjar = true</code> to build jar file.</p>
+<pre><code class="lang-lua">add_rules("swig.c", {moduletype = "java", buildjar = true})
+</code></pre>
 <h2 id="c20module">C++20 Module</h2>
 <h3 id="quickstart">Quick Start</h3>
 <p>xmake uses <code>.mpp</code> as the default module extension, but also supports <code>.ixx</code>, <code>.cppm</code>, <code>.mxx</code> and other extensions.</p>

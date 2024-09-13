@@ -596,6 +596,22 @@ c++
 add_rules("utils.symbols.export_all", {export_classes = true})
 ```
 
+Versions from 2.9.5 onwards also support custom filters to filter the symbol names and source file names that need to be exported:
+
+```lua
+target("bar")
+    set_kind("shared")
+    add_files("src/bar.cpp")
+    add_rules("utils.symbols.export_all", {export_filter = function (symbol, opt)
+        local filepath = opt.sourcefile or opt.objectfile
+        if filepath and filepath:find("bar.cpp", 1, true) and symbol:find("add", 1, true) then
+            print("export: %s at %s", symbol, filepath)
+            return true
+        end
+    end})
+```
+
+
 Related issue [#1123](https://github.com/xmake-io/xmake/issues/1123)
 
 #### utils.symbols.export_list

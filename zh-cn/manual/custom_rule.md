@@ -600,6 +600,21 @@ add_rules("utils.symbols.export_all", {export_classes = true})
 
 相关 issue [#1123](https://github.com/xmake-io/xmake/issues/1123)
 
+2.9.5 之后的版本还支持自定义过滤器，去针对性过滤需要导出的符号名和源文件名：
+
+```lua
+target("bar")
+    set_kind("shared")
+    add_files("src/bar.cpp")
+    add_rules("utils.symbols.export_all", {export_filter = function (symbol, opt)
+        local filepath = opt.sourcefile or opt.objectfile
+        if filepath and filepath:find("bar.cpp", 1, true) and symbol:find("add", 1, true) then
+            print("export: %s at %s", symbol, filepath)
+            return true
+        end
+    end})
+```
+
 #### utils.symbols.export_list
 
 我们可以在 xmake.lua 里面直接定义导出的符号列表，例如：
