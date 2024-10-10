@@ -98,10 +98,10 @@ target("test")
         end
     end)
     after_build(function (target)
-        Import("core.project.config")
-        Local targetfile = target:targetfile()
-        Os.cp(targetfile, path.join(config.buildir(), path.filename(targetfile)))
-        Print("build %s", targetfile)
+        import("core.project.config")
+        local targetfile = target:targetfile()
+        os.cp(targetfile, path.join(config.buildir(), path.filename(targetfile)))
+        print("build %s", targetfile)
     end)
 ```
 
