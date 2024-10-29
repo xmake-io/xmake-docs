@@ -1380,6 +1380,18 @@ add_linkorders("e", "linkgroup::foo")
 
 If we want to sort link groups, we need to give each link group a name, `{name = "foo"}`, and then we can reference the configuration through `linkgroup::foo` in `add_linkorders`.
 
+Version 2.9.6 adds the as_needed configuration item, which can be used to disable as_needed. (Not configured by default, that is, enabled.)
+
+```lua
+add_linkgroups("c", "d", {as_needed = false})
+```
+
+The corresponding flags are as follows.
+
+```bash
+-Wl,--no-as-needed c d -Wl,--as-needed
+```
+
 ##### Sort links and frameworks
 
 We can also sort links and frameworks for macOS/iPhoneOS.

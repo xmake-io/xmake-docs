@@ -506,3 +506,10 @@ on_test(function (package)
   ]]}, {configs = {languages = "cxx11"}, includes = "foo.hpp"}))
 end)
 ```
+
+#### package:check_fcsnippets
+
+- 检测是否可以编译和链接给定的 Fortran 代码片段
+
+用法如上
+

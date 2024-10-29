@@ -1369,6 +1369,18 @@ add_linkorders("e", "linkgroup::foo")
 
 如果要排序链接组，我们需要对每个链接组取个名，`{name = "foo"}` ，然后就能在 `add_linkorders` 里面通过 `linkgroup::foo` 去引用配置了。
 
+2.9.6 版本新增 as_needed 配置项，可以用于禁用 as_needed。（默认不配置，就是开启状态。）
+
+```lua
+add_linkgroups("c", "d", {as_needed = false})
+```
+
+对应的 flags 如下。
+
+```bash
+-Wl,--no-as-needed c d -Wl,--as-needed
+```
+
 ##### 排序链接和frameworks
 
 我们也可以排序链接和 macOS/iPhoneOS 的 frameworks。

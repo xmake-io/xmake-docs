@@ -411,6 +411,33 @@ please input: y (y/n)
 
 关于这个的完整介绍和所有第三方包的安装使用，可以参考文档：[第三方依赖包安装](https://xmake.io/#/zh-cn/package/remote_package?id=%e7%ac%ac%e4%b8%89%e6%96%b9%e4%be%9d%e8%b5%96%e5%8c%85%e5%ae%89%e8%a3%85)
 
+##### 另一种简化的配置语法
+
+我们通常使用的常用配置语法：
+
+```lua
+add_requires("boost >=1.78.0", {configs = {iostreams = true, system = true, thread = true}})
+```
+
+对于大部分 boolean 配置，我们可以通过下面的写法，去简化配置。
+
+```lua
+add_requires("boost[iostreams,system,thread] >=1.78.0")
+```
+
+这对于 `xrepo install` 独立 cli 命令下带复杂配置的安装，会省事不少，用户可以根据自己的喜好需求，选择使用。
+
+```console
+xrepo install boost[iostreams,system,thread]
+```
+
+另外，除了 boolean 配置，还支持 string 和 array 配置值。boolean 值，也可以设置 `=n/y` 去禁用和启用。
+
+```lua
+add_requires("boost[iostreams,system,thread,key=value] >=1.78.0")
+add_requires("boost[iostreams=y,thread=n] >=1.78.0")
+add_requires("ffmpeg[shared,debug,codecs=[foo,bar,zoo]]")
+```
 
 ### add_requireconfs
 

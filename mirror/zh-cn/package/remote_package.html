@@ -265,7 +265,7 @@ target("test")
 <pre><code class="lang-lua">add_requires("vcpkg::boost[core]")
 </code></pre>
 <p>v2.6.3 之后，xmake 支持 vcpkg 新的清单模式，通过它，我们就能支持 vcpkg 包的版本选择，例如：</p>
-<pre><code class="lang-lua">add_requires("vcpkg::zlib 1.2.11+10")
+<pre><code class="lang-lua">add_requires("vcpkg::zlib 1.2.11")
 add_requires("vcpkg::fmt >=8.0.1", {configs = {baseline = "50fd3d9957195575849a49fa591e645f1d8e7156"}})
 add_requires("vcpkg::libpng", {configs = {features = {"apng"}}})
 

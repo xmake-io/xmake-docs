@@ -333,6 +333,21 @@ please input: y (y/n)
 [100%]: linking.release test
 </code></pre>
 <p>For a complete introduction to this and the installation and use of all third-party packages,<br>you can refer to the document: <a href="https://xmake.io/#/package/remote_package?id=install-third-party-packages">Third-party dependency package installation</a></p>
+<h5 id="anothersimplifiedconfigurationsyntax">Another simplified configuration syntax</h5>
+<p>The common configuration syntax we usually use:</p>
+<pre><code class="lang-lua">add_requires("boost >=1.78.0", {configs = {iostreams = true, system = true, thread = true}})
+</code></pre>
+<p>For most boolean configurations, we can simplify the configuration by writing as follows.</p>
+<pre><code class="lang-lua">add_requires("boost[iostreams,system,thread] >=1.78.0")
+</code></pre>
+<p>This will save a lot of trouble for installations with complex configurations under the <code>xrepo install</code> independent cli command. Users can choose to use it according to their own preferences.</p>
+<pre><code class="lang-console">xrepo install boost[iostreams,system,thread]
+</code></pre>
+<p>In addition, in addition to boolean configurations, string and array configuration values ​​are also supported. Boolean values ​​can also be set <code>=n/y</code> to disable and enable.</p>
+<pre><code class="lang-lua">add_requires("boost[iostreams,system,thread,key=value] >=1.78.0")
+add_requires("boost[iostreams=y,thread=n] >=1.78.0")
+add_requires("ffmpeg[shared,debug,codecs=[foo,bar,zoo]]")
+</code></pre>
 <h3 id="add_requireconfs">add_requireconfs</h3>
 <h4 id="settheconfigurationofthespecifieddependentpackage">Set the configuration of the specified dependent package</h4>
 <p>This is a newly added interface after v2.5.1. We can use it to expand and rewrite the configuration of the package defined by <code>add_requires()</code> and its dependent packages. It has the following uses.</p>

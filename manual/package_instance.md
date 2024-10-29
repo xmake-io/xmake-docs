@@ -498,3 +498,10 @@ on_test(function (package)
   ]]}, {configs = {languages = "cxx11"}, includes = "foo.hpp"}))
 end)
 ```
+
+#### package:check_fcsnippets
+
+- Wether the given Fortran snippet can be compiled and linked
+
+see above
+
