@@ -1,5 +1,26 @@
 # Changelog
 
+## v2.9.6
+
+### New features
+
+* [#5527](https://github.com/xmake-io/xmake/issues/5527): Add `set_policy("compatibility.version", "3.0")` to preview v3.0 features.
+* [#5649](https://github.com/xmake-io/xmake/pull/5649): Add `package.check_fcsnippets`
+
+### Changes
+
+* [#5631](https://github.com/xmake-io/xmake/pull/5631): Add `as_needed` for `add_linkgroups`
+* [#5702](https://github.com/xmake-io/xmake/issues/5702): Improve hash module
+* [#5688](https://github.com/xmake-io/xmake/pull/5688): Improve hashset module
+* [#5711](https://github.com/xmake-io/xmake/issues/5711): Support to parse include deps for sdcc
+* [#5727](https://github.com/xmake-io/xmake/issues/5727): Improve configs for add_requires
+* [#5762](https://github.com/xmake-io/xmake/pull/5762): Improve bin2c speed
+
+### Bugs fixed
+
+* [#5645](https://github.com/xmake-io/xmake/issues/5645): Fix `xmake watch` for linux
+* [#5686](https://github.com/xmake-io/xmake/pull/5686): Fix module scanning
+
 ## v2.9.5
 
 ### New features

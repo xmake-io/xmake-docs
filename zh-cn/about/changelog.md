@@ -1,4 +1,25 @@
 
+## v2.9.6
+
+### 新特性
+
+* [#5527](https://github.com/xmake-io/xmake/issues/5527): 添加 `set_policy("compatibility.version", "3.0")` 提前预览体验 3.0 特性
+* [#5649](https://github.com/xmake-io/xmake/pull/5649): 添加 `package.check_fcsnippets`
+
+### 改进
+
+* [#5631](https://github.com/xmake-io/xmake/pull/5631): 为 `add_linkgroups` 添加 `as_needed`
+* [#5702](https://github.com/xmake-io/xmake/issues/5702): 改进 hash 模块
+* [#5688](https://github.com/xmake-io/xmake/pull/5688): 改进 hashset
+* [#5711](https://github.com/xmake-io/xmake/issues/5711): 为 sdcc 支持解析 include 依赖
+* [#5727](https://github.com/xmake-io/xmake/issues/5727): 为 add_requires 改进 configs 配置
+* [#5762](https://github.com/xmake-io/xmake/pull/5762): 改进 bin2c 速度
+
+### Bugs 修复
+
+* [#5645](https://github.com/xmake-io/xmake/issues/5645): 修复 `xmake watch` 在 linux 无法监听递归文件问题
+* [#5686](https://github.com/xmake-io/xmake/pull/5686): 修复模块扫描
+
 ## v2.9.5
 
 ### 新特性
