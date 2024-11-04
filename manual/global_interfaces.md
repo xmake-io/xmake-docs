@@ -517,7 +517,7 @@ We can also rewrite the internal zlib library version that libpng depends on:
 
 ```lua
 add_requires("libpng")
-add_requireconfs("libpng.zlib", {version = "1.2.10"})
+add_requireconfs("libpng.zlib", {override = true, version = "1.2.10"})
 ```
 
 ##### Pattern matching for cascading dependencies
