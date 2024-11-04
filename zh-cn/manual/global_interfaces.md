@@ -528,7 +528,7 @@ add_requireconfs("libpng.zlib", {configs = {shared = true}})
 
 ```lua
 add_requires("libpng")
-add_requireconfs("libpng.zlib", {version = "1.2.10"})
+add_requireconfs("libpng.zlib", {override = true, version = "1.2.10"})
 ```
 
 ##### 级联依赖的模式匹配
