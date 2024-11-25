@@ -11,6 +11,7 @@ so that the Xmake project and the community will grow stronger.
 
 | User (Company Name or Personal Contact) | Project (Project Introduction or Address) | Comment (optional) |
 | :--- | :--- | :--- |
+| [Aleksandr Alibekov] | [TurboINI](https://github.com/HotWizard/TurboINI) | Xmake is so simple and nice to use. |
 | [Isaac A.](https://gitlab.com/tenten8401) | [VueFusion](https://gitlab.com/tenten8401/vuefusion) VR Full Body Tracker | Xmake is awesome |
 | [ruki](https://github.com/waruqi) | [tbox](https://github.com/tboox/tbox) & [ltui](https://github.com/tboox/ltui) | ... |
 | [zsx](https://github.com/acl-dev/acl) | [acl](https://github.com/acl-dev/acl) | Good |
