@@ -269,7 +269,7 @@ Xmake can automatically fetch and install dependencies!
 * [User-built repositories](https://xmake.io/#/package/remote_package?id=using-self-built-private-package-repository)
 * Conan (conan::openssl/1.1.1g)
 * Conda (conda::libpng 1.3.67)
-* Vcpkg (vcpkg:ffmpeg)
+* Vcpkg (vcpkg::ffmpeg)
 * Homebrew/Linuxbrew (brew::pcre2/libpcre2-8)
 * Pacman on archlinux/msys2 (pacman::libcurl)
 * Apt on ubuntu/debian (apt::zlib1g-dev)
