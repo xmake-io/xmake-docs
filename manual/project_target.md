@@ -530,8 +530,8 @@ The supported language standards currently have the following main ones:
 |`gnuxx20`    |`gnu++20`             |
 |`cxx2a`      |`c++2a`               |
 |`gnuxx2a`    |`gnu++2a`             |
-|`cxx20`      |`c++23`               |
-|`gnuxx20`    |`gnu++23`             |
+|`cxx23`      |`c++23`               |
+|`gnuxx23`    |`gnu++23`             |
 |`cxx2b`      |`c++2b`               |
 |`gnuxx2b`    |`gnu++2b`             |
 |`cxxlatest`  |`c++latest`           |
