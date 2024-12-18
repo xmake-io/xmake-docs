@@ -1811,6 +1811,14 @@ target("hello")
     add_files("src/main.c")
 ```
 
+## Lua 模块
+
+参考 <https://github.com/xmake-io/luarocks-build-xmake>
+如果你的 lua 模块含有 C 代码，你可以使用 [LuaNativeObjects](https://github.com/Neopallium/LuaNativeObjects) 去从 lua 代码生成 C 代码。
+参考[例子](https://github.com/Freed-Wu/rime.nvim/blob/main/xmake.lua)。
+
+## Lua
+
 ## Linux 内核驱动模块
 
 v2.6.2 版本，xmake 完整支持了 Linux 内核驱动模块的构建，这也许首个也是唯一一个支持编译 Linux 内核驱动的第三方构建工具了。
