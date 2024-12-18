@@ -1319,11 +1319,11 @@ target("foo")
 <p>v2.6.2 版本，xmake 完整支持了 Linux 内核驱动模块的构建，这也许首个也是唯一一个支持编译 Linux 内核驱动的第三方构建工具了。</p>
 <h3 id="helloworld">Hello world 模块</h3>
 <p>完整例子：<a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/linux/driver/hello">Linux Kernel Driver Modules</a></p>
-<p>它的配置非常简单，只需要配置上支持模块的 linux-headers 包，然后应用 <code>platform.linux.driver</code> 构建规则就行了。</p>
+<p>它的配置非常简单，只需要配置上支持模块的 linux-headers 包，然后应用 <code>platform.linux.module</code> 构建规则就行了。</p>
 <pre><code class="lang-lua">add_requires("linux-headers", {configs = {driver_modules = true}})
 
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     add_packages("linux-headers")
     set_license("GPL-2.0")
@@ -1363,20 +1363,20 @@ package_end()
 add_requires("linux-headers")
 
 target("test")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     add_packages("linux-headers")
 </code></pre>
 <p>不过这样，也许还有点繁琐，因此在 v2.6.3 版本，我们支持更加方便的设置 linux-headers 路径。</p>
 <pre><code class="lang-lua">target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     set_values("linux.driver.linux-headers", "/usr/src/linux-headers-5.11.0-41-generic")
 </code></pre>
 <p>我们也可以通过定义 option 选项，将 linux-headers 路径作为 <code>xmake f --linux-headers=/usr/src/linux-headers</code> 的方式传入。</p>
 <pre><code class="lang-lua">option("linux-headers", {showmenu = true, description = "Set linux-headers path."})
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     set_values("linux.driver.linux-headers", "$(linux-headers)")
 </code></pre>

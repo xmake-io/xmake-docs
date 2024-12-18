@@ -1323,11 +1323,11 @@ target("foo")
 <p>In version v2.6.2, xmake fully supports the construction of Linux kernel driver modules. This may be the first and only third-party build tool that supports compiling Linux kernel drivers.</p>
 <h3 id="helloworldmodule">Hello world module</h3>
 <p>Full example: <a href="https://github.com/xmake-io/xmake/tree/master/tests/projects/linux/driver/hello">Linux Kernel Driver Modules</a></p>
-<p>Its configuration is very simple. You only need to configure the linux-headers package that supports the module, and then apply the <code>platform.linux.driver</code> build rule.</p>
+<p>Its configuration is very simple. You only need to configure the linux-headers package that supports the module, and then apply the <code>platform.linux.module</code> build rule.</p>
 <pre><code class="lang-lua">add_requires("linux-headers", {configs = {driver_modules = true}})
 
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     add_packages("linux-headers")
     set_license("GPL-2.0")
@@ -1367,20 +1367,20 @@ package_end()
 add_requires("linux-headers")
 
 target("test")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     add_packages("linux-headers")
 </code></pre>
 <p>But this may be a bit cumbersome, so in v2.6.3, we support more convenient setting of the linux-headers path.</p>
 <pre><code class="lang-lua">target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     set_values("linux.driver.linux-headers", "/usr/src/linux-headers-5.11.0-41-generic")
 </code></pre>
 <p>We can also pass in the linux-headers path as <code>xmake f --linux-headers=/usr/src/linux-headers</code> by defining option options.</p>
 <pre><code class="lang-lua">option("linux-headers", {showmenu = true, description = "Set linux-headers path."})
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     set_values("linux.driver.linux-headers", "$(linux-headers)")
 </code></pre>
