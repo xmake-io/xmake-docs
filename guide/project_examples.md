@@ -1818,6 +1818,10 @@ Refer <https://github.com/xmake-io/luarocks-build-xmake>
 If your lua module contains C code, you can use [LuaNativeObjects](https://github.com/Neopallium/LuaNativeObjects) to generate C code from lua code.
 Refer [example](https://github.com/Freed-Wu/rime.nvim/blob/main/xmake.lua).
 
+## Nodejs module
+
+Refer [example](https://github.com/tonyfettes/coc-rime/blob/master/xmake.lua).
+
 ## Linux kernel driver module
 
 In version v2.6.2, xmake fully supports the construction of Linux kernel driver modules. This may be the first and only third-party build tool that supports compiling Linux kernel drivers.
