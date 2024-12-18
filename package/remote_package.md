@@ -458,6 +458,19 @@ However, we can also use cxxbridge in C++ to call the Rust library interface to 
 
 For a complete example, see: [Call Rust in C++](https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library)
 
+### Add NuGet dependency packages
+
+After 2.9.7, we also support getting native libraries from dotnet/nuget and quickly integrating them.
+
+```lua
+add_requires("nuget::zlib_static", {alias = "zlib"})
+
+target("test")
+set_kind("binary")
+add_files("src/*.cpp")
+add_packages("zlib")
+```
+
 ## Using self-built private package repository
 
 If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.

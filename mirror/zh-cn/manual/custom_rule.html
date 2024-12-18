@@ -852,6 +852,14 @@ batchcmds:link(objectfiles, targetfile, {configs = {linkdirs = ""}})
         end
     end)
 </code></pre>
+<h3 id="rulebefore_config">rule:before_config</h3>
+<h4 id="">自定义配置前脚本</h4>
+<p>用于实现自定义 target 配置前的执行脚本，例如：</p>
+<pre><code class="lang-lua">rule("test")
+    before_config(function (target)
+    end)
+</code></pre>
+<p>它会在 on_config 之前被执行。</p>
 <h3 id="rulebefore_link">rule:before_link</h3>
 <h4 id="">自定义链接前脚本</h4>
 <p>用于实现自定义target链接前的执行脚本，例如：</p>
@@ -906,6 +914,14 @@ batchcmds:link(objectfiles, targetfile, {configs = {linkdirs = ""}})
 <h3 id="rulebefore_buildcmd_files">rule:before_buildcmd_files</h3>
 <h4 id="">自定义编译前批处理脚本，一次处理多个源文件</h4>
 <p>跟<a href="#ruleon_buildcmd_files">rule:on_buildcmd_files</a>用法类似，不过这个接口被调用的时机是在编译某些源文件之前，<br>一般用于对某些源文件进行编译前的预处理。</p>
+<h3 id="ruleafter_config">rule:after_config</h3>
+<h4 id="">自定义配置后脚本</h4>
+<p>用于实现自定义 target 配置后的执行脚本，例如：</p>
+<pre><code class="lang-lua">rule("test")
+    after_config(function (target)
+    end)
+</code></pre>
+<p>它会在 on_config 之后被执行。</p>
 <h3 id="ruleafter_link">rule:after_link</h3>
 <h4 id="">自定义链接后脚本</h4>
 <p>用于实现自定义target链接后的执行脚本，用法跟<a href="#rulebefore_link">rule:before_link</a>类似。</p>

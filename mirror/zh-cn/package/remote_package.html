@@ -417,6 +417,15 @@ target("test")
 </code></pre>
 <p>不过，我们也可以在 C++ 中通过 cxxbridge 的方式，调用 Rust 库接口，来变相复用所有的 Rust 包。</p>
 <p>完整例子见：<a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library">Call Rust in C++</a></p>
+<h3 id="nuget">添加 NuGet 的依赖包</h3>
+<p>2.9.7 之后，我们也支持从 dotnet/nuget 中，获取 native 库并快速集成。</p>
+<pre><code class="lang-lua">add_requires("nuget::zlib_static", {alias = "zlib"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib")
+</code></pre>
 <h2 id="">使用自建私有包仓库</h2>
 <p>如果需要的包不在官方仓库<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>中，我们可以提交贡献代码到仓库进行支持。<br>但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：<a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>比如，现在我们有一个一个私有仓库repo：<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>

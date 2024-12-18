@@ -33,6 +33,20 @@ $ xmake f --toolchain=clang -c
 $ xmake
 ```
 
+在 windows 上，它会自动加载 msvc 环境。
+
+另外，我们也支持 PortableBuildTools + clang 环境：
+
+```console
+$ xmake f -c --sdk=C:/BuildTools --toolchain=clang
+$ xmake -v
+[ 50%]: cache compiling.release src\main.cpp
+C:\Users\star\scoop\apps\llvm\current\bin\clang -c -Qunused-arguments -m64 --target=x86_64-windows-msvc -fexceptions -fcxx-exceptions -o build\.objs\test\windows\x64\release\src\main.cpp.obj src\main.cpp
+[ 75%]: linking.release test.exe
+C:\Users\star\scoop\apps\llvm\current\bin\clang++ -o build\windows\x64\release\test.exe build\.objs\test\windows\x64\release\src\main.cpp.obj -m64 --target=x86_64-windows-msvc
+[100%]: build ok, spent 0.235s
+```
+
 ### Clang-cl
 
 如果只是单纯的切换使用 clang-cl.exe 编译器，剩下的链接操作还是用 msvc，那么我们不需要整个工具链切换，仅仅切换 c/c++ 编译器。

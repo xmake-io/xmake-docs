@@ -1128,6 +1128,20 @@ rule("foo")
      end)
 ```
 
+### rule:before_config
+
+#### Custom pre-configuration script
+
+Used to implement the execution script before custom target configuration, for example:
+
+```lua
+rule("test")
+before_config(function (target)
+end)
+```
+
+It will be executed before on_config.
+
 ### rule:before_link
 
 #### Custom pre-link script
@@ -1227,6 +1241,20 @@ It is generally used to pre-process certain source files before compilation.
 
 Similar to the usage of [rule:on_buildcmd_files](#ruleon_buildcmd_files), but the time when this interface is called is before compiling some source files,
 It is generally used to pre-process certain source files before compilation.
+
+### rule:after_config
+
+#### Custom post-configuration script
+
+Used to implement the execution script after custom target configuration, for example:
+
+```lua
+rule("test")
+after_config(function (target)
+end)
+```
+
+It will be executed after on_config.
 
 ### rule:after_link
 

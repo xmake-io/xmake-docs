@@ -402,6 +402,15 @@ target("test")
 </code></pre>
 <p>However, we can also use cxxbridge in C++ to call the Rust library interface to reuse all Rust packages in disguise.</p>
 <p>For a complete example, see: <a href="https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library">Call Rust in C++</a></p>
+<h3 id="addnugetdependencypackages">Add NuGet dependency packages</h3>
+<p>After 2.9.7, we also support getting native libraries from dotnet/nuget and quickly integrating them.</p>
+<pre><code class="lang-lua">add_requires("nuget::zlib_static", {alias = "zlib"})
+
+target("test")
+set_kind("binary")
+add_files("src/*.cpp")
+add_packages("zlib")
+</code></pre>
 <h2 id="usingselfbuiltprivatepackagerepository">Using self-built private package repository</h2>
 <p>If the required package is not in the official repository <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a>, we can submit the contribution code to the repository for support.<br>But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: <a href="https://github.com/xmake-io/xmake-repo">xmake-repo</a></p>
 <p>For example, now we have a private repository repo:<a href="mailto:`git@github.com">`git@github.com</a>:myrepo/xmake-repo.git`</p>

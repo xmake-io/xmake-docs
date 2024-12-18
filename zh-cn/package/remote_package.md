@@ -487,6 +487,19 @@ target("test")
 
 完整例子见：[Call Rust in C++](https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library)
 
+### 添加 NuGet 的依赖包
+
+2.9.7 之后，我们也支持从 dotnet/nuget 中，获取 native 库并快速集成。
+
+```lua
+add_requires("nuget::zlib_static", {alias = "zlib"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("zlib")
+```
+
 ## 使用自建私有包仓库
 
 如果需要的包不在官方仓库[xmake-repo](https://github.com/xmake-io/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。

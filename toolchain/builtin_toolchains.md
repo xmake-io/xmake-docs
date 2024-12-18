@@ -33,6 +33,18 @@ $ xmake f --toolchain=clang -c
 $ xmake
 ```
 
+On Windows, it will automatically load the msvc environment.
+
+In addition, we also support PortableBuildTools + clang environment:
+
+```console
+$ xmake f -c --sdk=C:/BuildTools --toolchain=clang
+$ xmake -v
+[50%]: cache compiling.release src\main.cpp C:\Users\star\scoop\apps\llvm\current\bin\clang -c -Qunused-arguments -m64 --target=x86_64-windows-msvc -fexceptions -fcxx-exceptions -o build\.objs\test\windows\x64\release\src\main.cpp.obj src\main.cpp
+[75%]: linking.release test.exe C:\Users\star\scoop\apps\llvm\current\bin\clang++ -o build\windows\x64\release\test.exe build\.objs\test\windows\x64\release\src\main.cpp.obj -m64 --target=x86_64-windows-msvc
+[100%]: build ok, spent 0.235s
+```
+
 ### Clang-cl
 
 If you simply switch to the clang-cl.exe compiler, and use msvc for the rest of the link operation, then we don't need to switch the entire tool chain, just cut the c/c++ compiler.

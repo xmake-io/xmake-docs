@@ -298,7 +298,7 @@ add_requires("zlib", "pcre2", "mbedtls")
 <ul>
 <li>Conan (conan::openssl/1.1.1g)</li>
 <li>Conda (conda::libpng 1.3.67)</li>
-<li>Vcpkg (vcpkg:ffmpeg)</li>
+<li>Vcpkg (vcpkg::ffmpeg)</li>
 <li>Homebrew/Linuxbrew (brew::pcre2/libpcre2-8)</li>
 <li>Pacman on archlinux/msys2 (pacman::libcurl)</li>
 <li>Apt on ubuntu/debian (apt::zlib1g-dev)</li>
@@ -397,7 +397,7 @@ add_requireconfs("libpng.zlib", {configs = {shared = true}})
 <p>如果依赖路径很深，比如 <code>foo -> bar -> xyz</code> 的依赖链，我们可以写成：<code>foo.bar.xyz</code></p>
 <p>我们也可以改写 libpng 依赖的内部 zlib 库版本：</p>
 <pre><code class="lang-lua">add_requires("libpng")
-add_requireconfs("libpng.zlib", {version = "1.2.10"})
+add_requireconfs("libpng.zlib", {override = true, version = "1.2.10"})
 </code></pre>
 <h5 id="">级联依赖的模式匹配</h5>
 <p>如果一个包的依赖非常多，且依赖层次也很深，怎么办呢，比如 libwebp 这个包，它的依赖有：</p>
