@@ -1819,13 +1819,13 @@ v2.6.2 版本，xmake 完整支持了 Linux 内核驱动模块的构建，这也
 
 完整例子：[Linux Kernel Driver Modules](https://github.com/xmake-io/xmake/tree/master/tests/projects/linux/driver/hello)
 
-它的配置非常简单，只需要配置上支持模块的 linux-headers 包，然后应用 `platform.linux.driver` 构建规则就行了。
+它的配置非常简单，只需要配置上支持模块的 linux-headers 包，然后应用 `platform.linux.module` 构建规则就行了。
 
 ```lua
 add_requires("linux-headers", {configs = {driver_modules = true}})
 
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     add_packages("linux-headers")
     set_license("GPL-2.0")
@@ -1878,7 +1878,7 @@ package_end()
 add_requires("linux-headers")
 
 target("test")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     add_packages("linux-headers")
 ```
@@ -1887,7 +1887,7 @@ target("test")
 
 ```lua
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     set_values("linux.driver.linux-headers", "/usr/src/linux-headers-5.11.0-41-generic")
 ```
@@ -1897,7 +1897,7 @@ target("hello")
 ```lua
 option("linux-headers", {showmenu = true, description = "Set linux-headers path."})
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     set_values("linux.driver.linux-headers", "$(linux-headers)")
 ```

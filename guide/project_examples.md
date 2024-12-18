@@ -1819,13 +1819,13 @@ In version v2.6.2, xmake fully supports the construction of Linux kernel driver 
 
 Full example: [Linux Kernel Driver Modules](https://github.com/xmake-io/xmake/tree/master/tests/projects/linux/driver/hello)
 
-Its configuration is very simple. You only need to configure the linux-headers package that supports the module, and then apply the `platform.linux.driver` build rule.
+Its configuration is very simple. You only need to configure the linux-headers package that supports the module, and then apply the `platform.linux.module` build rule.
 
 ```lua
 add_requires("linux-headers", {configs = {driver_modules = true}})
 
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     add_packages("linux-headers")
     set_license("GPL-2.0")
@@ -1878,7 +1878,7 @@ package_end()
 add_requires("linux-headers")
 
 target("test")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     add_packages("linux-headers")
 ```
@@ -1887,7 +1887,7 @@ But this may be a bit cumbersome, so in v2.6.3, we support more convenient setti
 
 ```lua
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     set_values("linux.driver.linux-headers", "/usr/src/linux-headers-5.11.0-41-generic")
 ```
@@ -1897,7 +1897,7 @@ We can also pass in the linux-headers path as `xmake f --linux-headers=/usr/src/
 ```lua
 option("linux-headers", {showmenu = true, description = "Set linux-headers path."})
 target("hello")
-    add_rules("platform.linux.driver")
+    add_rules("platform.linux.module")
     add_files("src/*.c")
     set_values("linux.driver.linux-headers", "$(linux-headers)")
 ```
