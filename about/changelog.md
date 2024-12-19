@@ -1,5 +1,28 @@
 # Changelog
 
+## v2.9.7
+
+### New features
+
+* [#5813](https://github.com/xmake-io/xmake/pull/5813): Add `before_config` and `after_config` for rule
+* [#5848](https://github.com/xmake-io/xmake/issues/5848): Support custom MSVC build tools, e.g. PortableBuildTools and msvc-wine
+* [#5880](https://github.com/xmake-io/xmake/pull/5880): Use msvc package to build project
+* [#5884](https://github.com/xmake-io/xmake/issues/5884): Add installtips for package
+* [#5894](https://github.com/xmake-io/xmake/issues/5894): Add package.merge_staticlibs policy to merge package libs
+* [#5948](https://github.com/xmake-io/xmake/pull/5948): Add `lua.native-object` rule
+* [#5911](https://github.com/xmake-io/xmake/issues/5911): Support for nuget packages
+
+### Changes
+
+* [#5817](https://github.com/xmake-io/xmake/pull/5817): Improve default pic for packages
+* [#5869](https://github.com/xmake-io/xmake/pull/5869): Add libstdc++ standard library modules support for gcc
+* [#5923](https://github.com/xmake-io/xmake/pull/5923): Solve the package version and configs conflict
+
+### Bugs fixed
+
+* [#5856](https://github.com/xmake-io/xmake/issues/5856): Fix compile c++modules for clang
+* [#5858](https://github.com/xmake-io/xmake/issues/5858): Fix the precompiled header for gcc
+
 ## v2.9.6
 
 ### New features
