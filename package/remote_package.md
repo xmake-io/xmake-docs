@@ -945,7 +945,7 @@ If you need a package that is not supported by the current official repository, 
 
 For detailed contribution descriptions, see: [CONTRIBUTING.md](https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md)
 
-For how to make your own package, you can look at the above: [Adding packages to the official repository](#Adding-packages-to-the-official-repository).
+For how to make your own package, you can look at the above: [Submit packages to the official repository](#submit-packages-to-the-official-repository).
 
 ## Dependent package lock and upgrade
 
