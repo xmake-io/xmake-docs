@@ -684,7 +684,7 @@ os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
 os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 ```
 
-The above code will: all the header files in the current `xmake.lua` directory, the header files in the project source test directory are all copied to the `$(buildir)` output directory.
+The above code will copy all the header files in the current `xmake.lua` directory, the header files in the project source test directory to the `$(buildir)` output directory.
 
 Among them `$(scriptdir)`, `$(projectdir)` These variables are built-in variables of xmake. For details, see the related documentation of [built-in variables](#built-in variables).
 
