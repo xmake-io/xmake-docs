@@ -177,7 +177,7 @@ add_versions("github:4.0.2", "4df1ef0bf73b7148caea1270539ef7bd06607e0ea8aa2fbf1b
 </code></pre>
 <h3 id="packageadd_versions">package:add_versions</h3>
 <h4 id="addpackageversions">Add package versions</h4>
-<p>Used to set the version of each source package and the corresponding sha256 value, as described in <a href="#add_urls">add_urls</a></p>
+<p>Used to set the version of each source package and the corresponding sha256 value, as described in <a href="#packageadd_urls">add_urls</a></p>
 <h3 id="packageadd_versionfiles">package:add_versionfiles</h3>
 <h4 id="addingalistofpackageversions">Adding a list of package versions</h4>
 <p>Normally we can add package versions through the <code>add_versions</code> interface, but if there are more and more versions, the package configuration will be too bloated, at this time, we can use the <code>add_versionfiles</code> interface to store a list of all the versions in a separate file to maintain.</p>
@@ -235,7 +235,7 @@ end
 <h3 id="packageadd_frameworks">package:add_frameworks</h3>
 <h4 id="addframeworks">Add frameworks</h4>
 <p>Add a dependent system frameworks link.</p>
-<p>See for example: <a href="#add_syslinks">add_syslinks</a></p>
+<p>See for example: <a href="#packageadd_syslinks">add_syslinks</a></p>
 <h3 id="packageadd_linkdirs">package:add_linkdirs</h3>
 <h4 id="addlinkdirectories">Add link directories</h4>
 <p>The package&#39;s link library search directory can also be adjusted, but it is usually not needed, unless some libraries are not installed under prefix/lib, but in the lib subdirectory, the default search is not available.</p>

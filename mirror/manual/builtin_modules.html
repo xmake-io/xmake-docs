@@ -828,7 +828,7 @@ $ xmake --version
 <pre><code class="lang-lua">os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
 os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 </code></pre>
-<p>The above code will: all the header files in the current <code>xmake.lua</code> directory, the header files in the project source test directory are all copied to the <code>$(buildir)</code> output directory.</p>
+<p>The above code will copy all the header files in the current <code>xmake.lua</code> directory, the header files in the project source test directory to the <code>$(buildir)</code> output directory.</p>
 <p>Among them <code>$(scriptdir)</code>, <code>$(projectdir)</code> These variables are built-in variables of xmake. For details, see the related documentation of <a href="#built-in variables">built-in variables</a>.</p>
 <p>The matching patterns in <code>*.h</code> and <code>**.h</code> are similar to those in <a href="#targetadd_files">add_files</a>, the former is a single-level directory matching, and the latter is a recursive multi-level directory matching.</p>
 <p>This interface also supports `recursive replication&#39; of directories, for example:</p>

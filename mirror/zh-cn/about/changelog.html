@@ -92,7 +92,29 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v296">v2.9.6</h2>
+    <h2 id="v297">v2.9.7</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/5813">#5813</a>: 为 rule 添加 <code>before_config</code> 和 <code>after_config</code></li>
+<li><a href="https://github.com/xmake-io/xmake/issues/5848">#5848</a>: 支持自定义 MSVC 构建工具, PortableBuildTools 和 msvc-wine</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/5880">#5880</a>: 支持使用 msvc 包去构建工程</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/5884">#5884</a>: 为包添加自定义安装提示</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/5894">#5894</a>: 添加 package.merge_staticlibs 策略去合并包安装的静态库</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/5948">#5948</a>: 添加 <code>lua.native-object</code> 规则</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/5911">#5911</a>: 支持 nuget 包集成</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/5817">#5817</a>: 改进安装包的默认 pic 配置</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/5869">#5869</a>: 为 gcc 添加 libstdc++ 标准库模块的支持</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/5923">#5923</a>: 解决包依赖链中版本和配置冲突</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/5856">#5856</a>: 修复 c++modules 在 clang 下的编译</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/5858">#5858</a>: 修复 gcc 的头文件预编译问题</li>
+</ul>
+<h2 id="v296">v2.9.6</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/issues/5527">#5527</a>: 添加 <code>set_policy("compatibility.version", "3.0")</code> 提前预览体验 3.0 特性</li>

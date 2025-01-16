@@ -1315,6 +1315,10 @@ target("foo")
     set_toolchains("c51")
     add_files("src/main.c")
 </code></pre>
+<h2 id="lua">Lua 模块</h2>
+<p>参考 <a href="https://github.com/xmake-io/luarocks-build-xmake">https://github.com/xmake-io/luarocks-build-xmake</a><br>如果你的 lua 模块含有 C 代码，你可以使用 <a href="https://github.com/Neopallium/LuaNativeObjects">LuaNativeObjects</a> 去从 lua 代码生成 C 代码。<br>参考<a href="https://github.com/Freed-Wu/rime.nvim/blob/main/xmake.lua">例子</a>。</p>
+<h2 id="nodejs">Nodejs 模块</h2>
+<p>参考<a href="https://github.com/tonyfettes/coc-rime/blob/master/xmake.lua">例子</a>。</p>
 <h2 id="linux">Linux 内核驱动模块</h2>
 <p>v2.6.2 版本，xmake 完整支持了 Linux 内核驱动模块的构建，这也许首个也是唯一一个支持编译 Linux 内核驱动的第三方构建工具了。</p>
 <h3 id="helloworld">Hello world 模块</h3>

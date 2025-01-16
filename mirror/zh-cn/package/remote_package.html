@@ -599,11 +599,6 @@ end
 <pre><code class="lang-console">$ xrepo install libpng
 > curl https://hub.fastgit.org/glennrp/libpng/archive/v1.6.37.zip -o v1.6.37.zip
 </code></pre>
-<p>v2.6.3 之后，xmake 提供了一些内置的镜像可以直接使用，例如 github 的镜像加速：</p>
-<pre><code class="lang-console">$ xmake g --proxy_pac=github_mirror.lua
-</code></pre>
-<p>我们不用自己编写 pac.lua，就可以直接使用它来加速 github 源的下载。</p>
-<p>更多内置镜像可以通过 <code>xmake g --help</code> 查看 <code>--proxy_pac=</code> 下列表。</p>
 <h2 id="">添加包到仓库</h2>
 <h3 id="">仓库包结构</h3>
 <p>在制作自己的包之前，我们需要先了解下一个包仓库的结构，不管是官方包仓库，还是自建私有包仓库，结构都是相同的：</p>

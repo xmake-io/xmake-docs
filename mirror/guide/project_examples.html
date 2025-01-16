@@ -1319,6 +1319,11 @@ target("foo")
     set_toolchains("c51")
     add_files("src/main.c")
 </code></pre>
+<h2 id="luamodule">Lua module</h2>
+<p>Refer <a href="https://github.com/xmake-io/luarocks-build-xmake">https://github.com/xmake-io/luarocks-build-xmake</a></p>
+<p>If your lua module contains C code, you can use <a href="https://github.com/Neopallium/LuaNativeObjects">LuaNativeObjects</a> to generate C code from lua code.<br>Refer <a href="https://github.com/Freed-Wu/rime.nvim/blob/main/xmake.lua">example</a>.</p>
+<h2 id="nodejsmodule">Nodejs module</h2>
+<p>Refer <a href="https://github.com/tonyfettes/coc-rime/blob/master/xmake.lua">example</a>.</p>
 <h2 id="linuxkerneldrivermodule">Linux kernel driver module</h2>
 <p>In version v2.6.2, xmake fully supports the construction of Linux kernel driver modules. This may be the first and only third-party build tool that supports compiling Linux kernel drivers.</p>
 <h3 id="helloworldmodule">Hello world module</h3>
