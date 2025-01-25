@@ -302,6 +302,20 @@ However, it is usually necessary to specify the SDK path yourself.
 $ xmake f --qt=[Qt SDK]
 ```
 
+#### Cross-Platform Qt Builds
+
+For cross-platform Qt development, xmake supports using separate SDKs for host tools and the target platform. This is particularly useful when building Qt applications for a different platform than your development machine.
+
+The `--qt_host` option allows you to specify the location of Qt tools that are compatible with your build machine, while `--qt` points to the SDK for the target platform:
+
+```bash
+$ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
+```
+
+**Important considerations**:
+- Make sure the host and target Qt versions match, or it may cause build issues.
+- Native deployment tools like `windeployqt` and `macdeployqt` must run on their respective platforms, so cross-platform tasks such as `xmake install` may fail.
+
 #### Qt packages from the xmake-repo repository
 
 xmake now officially provides a variety of modules for the Qt5 SDK that can be integrated automatically without any manual installation.
