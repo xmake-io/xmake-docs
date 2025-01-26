@@ -304,6 +304,20 @@ $ xmake
 $ xmake f --qt=[Qt SDK]
 ```
 
+#### 跨平台 Qt 交叉编译
+
+对于跨平台 Qt 开发，xmake 支持为主机工具和目标平台使用单独的 SDK。这在为不同于开发机器的平台构建 Qt 应用程序时特别有用。
+
+`--qt_host` 选项允许您指定与构建机器兼容的 Qt 工具的位置，而 `--qt` 指向目标平台的 SDK：
+
+```bash
+$ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
+```
+
+**重要注意事项**：
+- 确保主机和目标 Qt 版本匹配，否则可能会导致构建问题。
+- 本机部署工具（如 `windeployqt` 和 `macdeployqt`）必须在各自的平台上运行，因此跨平台任务（如 `xmake install`）可能会失败。
+
 #### 来自 xmake-repo 仓库的 Qt 包
 
 xmake 现在官方提供了 Qt5 SDK 的各种模块包，可以自动集成使用，无需任何手动安装。

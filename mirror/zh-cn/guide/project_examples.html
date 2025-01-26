@@ -282,6 +282,16 @@ $ xmake
 <p>但是，通常需要自己指定 SDK 路径。</p>
 <pre><code class="lang-bash">$ xmake f --qt=[Qt SDK]
 </code></pre>
+<h4 id="qt">跨平台 Qt 交叉编译</h4>
+<p>对于跨平台 Qt 开发，xmake 支持为主机工具和目标平台使用单独的 SDK。这在为不同于开发机器的平台构建 Qt 应用程序时特别有用。</p>
+<p><code>--qt_host</code> 选项允许您指定与构建机器兼容的 Qt 工具的位置，而 <code>--qt</code> 指向目标平台的 SDK：</p>
+<pre><code class="lang-bash">$ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
+</code></pre>
+<p><strong>重要注意事项</strong>：</p>
+<ul>
+<li>确保主机和目标 Qt 版本匹配，否则可能会导致构建问题。</li>
+<li>本机部署工具（如 <code>windeployqt</code> 和 <code>macdeployqt</code>）必须在各自的平台上运行，因此跨平台任务（如 <code>xmake install</code>）可能会失败。</li>
+</ul>
 <h4 id="xmakerepoqt">来自 xmake-repo 仓库的 Qt 包</h4>
 <p>xmake 现在官方提供了 Qt5 SDK 的各种模块包，可以自动集成使用，无需任何手动安装。</p>
 <p>只需要配置集成包就行了，xmake 会自动处理 Qt 的安装集成，并且自动编译项目。</p>
