@@ -192,7 +192,7 @@ $ xmake f --menu
 
 ## Supported languages
 
-* C and C++
+* C, C++ (including cpp2)
 * Objective-C and Objective-C++
 * Swift
 * Assembly
