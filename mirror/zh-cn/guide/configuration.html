@@ -154,7 +154,7 @@ $ xmake
 <p>关于版本对应关系，可以看下：<a href="https://wiki.qt.io/Qt_for_WebAssembly">https://wiki.qt.io/Qt_for_WebAssembly</a></p>
 <p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/956">https://github.com/xmake-io/xmake/issues/956</a></p>
 <p>除了 emscripten 以外，还有一个常用的wasm工具链 wasi-sdk，用于构建基于wasi的程序，我们仅仅只需要切换工具链即可。</p>
-<pre><code class="lang-console">$ xmake f -p wasm --toolchain=wasi
+<pre><code class="lang-bash">$ xmake f -p wasm --toolchain=wasi
 $ xmake
 </code></pre>
 <h3 id="harmonyos">HarmonyOS (鸿蒙)</h3>
@@ -776,24 +776,24 @@ $ xmake
 <h2 id="">导入导出配置</h2>
 <p>2.5.5 之后，我们还可以导入导出已经配置好的配置集，方便配置的快速迁移。</p>
 <h3 id="">导出配置</h3>
-<pre><code class="lang-console">$ xmake f --export=/tmp/config.txt
+<pre><code class="lang-bash">$ xmake f --export=/tmp/config.txt
 $ xmake f -m debug --xxx=y --export=/tmp/config.txt
 </code></pre>
 <h3 id="">导入配置</h3>
-<pre><code class="lang-console">$ xmake f --import=/tmp/config.txt
+<pre><code class="lang-bash">$ xmake f --import=/tmp/config.txt
 $ xmake f -m debug --xxx=y --import=/tmp/config.txt
 </code></pre>
 <h3 id="">导出配置（带菜单）</h3>
-<pre><code class="lang-console">$ xmake f --menu --export=/tmp/config.txt
+<pre><code class="lang-bash">$ xmake f --menu --export=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
 </code></pre>
 <h3 id="">导入配置（带菜单）</h3>
-<pre><code class="lang-console">$ xmake f --menu --import=/tmp/config.txt
+<pre><code class="lang-bash">$ xmake f --menu --import=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
 </code></pre>
 <h2 id="">环境变量</h2>
 <p>我们可以执行下面的命令，获取所有 xmake 用到的环境变量，以及当前被设置的值。</p>
-<pre><code class="lang-console">$ xmake show -l envs
+<pre><code class="lang-bash">$ xmake show -l envs
 XMAKE_RAMDIR            Set the ramdisk directory.
                         <empty>
 XMAKE_GLOBALDIR         Set the global config directory of xmake.
@@ -834,7 +834,7 @@ XMAKE_LOGFILE           Set the log output file path.
 <li>设置本地工程配置目录</li>
 </ul>
 <p>每个项目的本地编译配置，默认会存储在当前项目根目录的 <code>.xmake</code> 路径下，然后根据不同的平台，架构区分，例如：</p>
-<pre><code class="lang-console">.xmake/macosx/x86_64
+<pre><code class="lang-bash">.xmake/macosx/x86_64
 </code></pre>
 <p>我们如果不想存储在项目根目录，也可以自己设置到其他路径，比如 build 目录下等等。</p>
 <h3 id="xmake_globaldir">XMAKE_GLOBALDIR</h3>
@@ -848,7 +848,7 @@ XMAKE_LOGFILE           Set the log output file path.
 <li>允许用户在 root 模式下运行</li>
 </ul>
 <p>通常 xmake 是默认禁止在 root 下运行，这非常不安全。但是如果用户非要在 root 下运行，也可以设置这个变量，强制开启。</p>
-<pre><code class="lang-console">export XMAKE_ROOT=y
+<pre><code class="lang-bash">export XMAKE_ROOT=y
 </code></pre>
 <h3 id="xmake_colorterm">XMAKE_COLORTERM</h3>
 <ul>
@@ -901,7 +901,7 @@ XMAKE_LOGFILE           Set the log output file path.
 </ul>
 <p>xmake 的所有 lua 脚本随安装程序一起安装，默认都在安装目录下，但是如果想要切到自己下载的脚本目录下，方便本地修改调试，可以设置此变量。</p>
 <p>如果要查看当前 xmake 在使用的脚本目录，可以执行：</p>
-<pre><code class="lang-console">$ xmake l os.programdir
+<pre><code class="lang-bash">$ xmake l os.programdir
 /Users/ruki/.local/share/xmake
 </code></pre>
 <h3 id="xmake_profile">XMAKE_PROFILE</h3>
@@ -909,8 +909,8 @@ XMAKE_LOGFILE           Set the log output file path.
 <li>开启性能分析</li>
 </ul>
 <p>这仅仅对 xmake 的开发者开放，用于分析 xmake 运行过程中的耗时情况，追踪调用过程。</p>
-<p>它有两种模式，一种性能分析模式，将每个函数的耗时排序显示出来。</p>
-<pre><code class="lang-console">$ XMAKE_PROFILE=perf xmake
+<h4 id="">分析函数调用耗时</h4>
+<pre><code class="lang-bash">$ XMAKE_PROFILE=perf:call xmake
 [ 25%]: cache compiling.release src/main.cpp
 [ 50%]: linking.release test
 [100%]: build ok!
@@ -924,8 +924,46 @@ XMAKE_LOGFILE           Set the log output file path.
  0.003,   1.33%,      48, delay                         : @programdir/core/base/timer.lua: 60
  0.002,   1.02%,      24, is_suspended                  : @programdir/core/base/scheduler.lua: 86
 </code></pre>
-<p>另外一种是追踪 xmake 的运行过程：</p>
-<pre><code class="lang-console">$ XMAKE_PROFILE=trace xmake
+<h4 id="">分析进程耗时</h4>
+<p>可以用于分析每个文件的编译耗时，以及一些运行瓶颈。</p>
+<pre><code class="lang-bash">$ XMAKE_PROFILE=perf:process xmake -r
+[  7%]: compiling.release src/header.h
+[ 23%]: compiling.release src/test.cpp
+[ 30%]: compiling.release src/test8.cpp
+[ 38%]: compiling.release src/test4.cpp
+[ 46%]: compiling.release src/test5.cpp
+[ 53%]: compiling.release src/test7.cpp
+[ 61%]: compiling.release src/test6.cpp
+[ 69%]: compiling.release src/test2.cpp
+[ 76%]: compiling.release src/main.cpp
+[ 84%]: compiling.release test3.cpp
+[ 84%]: compiling.release src/test.c
+[ 92%]: linking.release main
+[100%]: build ok, spent 2.754s
+1411.000,  22.19%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_37317EEDB62F4F3088AF6A2E2A649460 -fdiagnostics-color=always -x c++-header -o build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch src/header.h
+508.000,   7.99%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_1ABAE1FAD68D45008DC76A3A00697820 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/main.cpp.o src/main.cpp
+473.000,   7.44%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_1C0BE5280C6F4E208F919577A48AAA40 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/test3.cpp.o test3.cpp
+451.000,   7.09%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_877D3D9B6BBA4D308BFB5E4EBD751340 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test6.cpp.o src/test6.cpp
+404.000,   6.35%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_C9968E2873B648208A8C3F2BA7573640 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test7.cpp.o src/test7.cpp
+402.000,   6.32%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_7F6DFA37FF494D208EADF9737484EC40 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test2.cpp.o src/test2.cpp
+383.000,   6.02%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_63C9E23AE7E047308F762C7C02A56B50 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test4.cpp.o src/test4.cpp
+374.000,   5.88%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_C3A0EF96A7C14D00879BFAEFD26E9D20 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test8.cpp.o src/test8.cpp
+368.000,   5.79%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_BADB46AF75CB4610857EF5083BD54D30 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test.cpp.o src/test.cpp
+363.000,   5.71%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_0247BDB87DD14500816471184D4E8140 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test5.cpp.o src/test5.cpp
+156.000,   2.45%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -fPIC -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F0FF8220B33B46208D39A98937D55E50 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.c
+133.000,   2.09%,       3, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang --version
+107.000,   1.68%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -O3 -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_C8A96266E0034C20898C147FC52F3A40 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.c
+105.000,   1.65%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -fdiagnostics-color=always -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_48A2FA7BE7AB44008B60558E412A9D30 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.c
+105.000,   1.65%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -fPIC -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -lz -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -lz -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F510FB15C9A647108111A7010EFED240 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.cpp
+91.000,   1.43%,       3, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ --version
+74.000,   1.16%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -O3 -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_BF6B4B6DACB843008E822CEFDC711230 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test.c.o src/test.c
+73.000,   1.15%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -o build/macosx/x86_64/release/main build/.objs/main/macosx/x86_64/release/src/test.cpp.o build/.objs/main/macosx/x86_64/release/src/test8.cpp.o build/.objs/main/macosx/x86_64/release/src/test4.cpp.o build/.objs/main/macosx/x86_64/release/src/test5.cpp.o build/.objs/main/macosx/x86_64/release/src/test7.cpp.o build/.objs/main/macosx/x86_64/release/src/test6.cpp.o build/.objs/main/macosx/x86_64/release/src/test2.cpp.o build/.objs/main/macosx/x86_64/release/src/main.cpp.o build/.objs/main/macosx/x86_64/release/test3.cpp.o build/.objs/main/macosx/x86_64/release/src/test.c.o -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -lz -Wl,-x -Wl,-dead_strip
+70.000,   1.10%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -fPIC -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_6D0B6327841A47208939EEF194F38B50 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.cpp
+68.000,   1.07%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -O3 -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_8AB279F8450D4D108E92951CC9C1C650 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.cpp
+65.000,   1.02%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -fdiagnostics-color=always -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_D25F0DB04D6D430084C098F1E1F76C00 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.cpp
+</code></pre>
+<h4 id="xmake">追踪 xmake 的运行过程</h4>
+<pre><code class="lang-bash">$ XMAKE_PROFILE=trace xmake
 func                          : @programdir/core/base/scheduler.lua: 457
 is_suspended                  : @programdir/core/base/scheduler.lua: 86
 status                        : @programdir/core/base/scheduler.lua: 71
@@ -933,12 +971,34 @@ thread                        : @programdir/core/base/scheduler.lua: 66
 thread                        : @programdir/core/base/scheduler.lua: 66
 length                        : @programdir/core/base/heap.lua: 120
 </code></pre>
+<h4 id="">分析运行卡死问题</h4>
+<p>可以用于获取 xmake 运行卡死时的栈。启用此特性后，通过 Ctrl+C 中断后就能获取栈。</p>
+<pre><code class="lang-bash">$ XMAKE_PROFILE=stuck xmake l test.lua
+<Ctrl+C>
+stack traceback:
+        [C]: in function &#39;base/io.file_read&#39;
+        @programdir/core/base/io.lua:177: in method &#39;_read&#39;
+        @programdir/core/sandbox/modules/io.lua:90: in function <@programdir/core/sandbox/module
+s/io.lua:89>
+        (...tail calls...)
+        /Users/ruki/share/test.lua:2: in function </Users/ruki/share/test.lua:1>
+        (...tail calls...)
+        @programdir/plugins/lua/main.lua:123: in function <@programdir/plugins/lua/main.lua:79>
+        (...tail calls...)
+        [C]: in function &#39;xpcall&#39;
+        @programdir/core/base/utils.lua:280: in function &#39;sandbox/modules/utils.trycall&#39;
+        (...tail calls...)
+        @programdir/core/base/task.lua:519: in function &#39;base/task.run&#39;
+        @programdir/core/main.lua:278: in upvalue &#39;cotask&#39;
+        @programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lu
+a:368>
+</code></pre>
 <h3 id="xmake_rcfiles">XMAKE_RCFILES</h3>
 <ul>
 <li>设置全局配置文件</li>
 </ul>
 <p>我们可以设置一些 xmakerc.lua 全局配置文件，在用户编译项目的时候，全局引入它们，比如全局引入一些用户自定义的帮助脚本，工具链什么的。</p>
-<pre><code class="lang-console">$ export XMAKE_RCFILES=xmakerc.lua
+<pre><code class="lang-bash">$ export XMAKE_RCFILES=xmakerc.lua
 $ xmake
 </code></pre>
 <p>如果不设置，默认路径为：<code>~/.xmake/xmakerc.lua</code>。</p>
@@ -956,21 +1016,21 @@ $ xmake
 https://gitlab.com/tboox/xmake-repo.git
 https://gitee.com/tboox/xmake-repo.git
 </code></pre><p>但如果 xmake 选择错误，可能会导致仓库下载失败，而通过这个环境变量，我们可以自己设置固定使用指定的仓库地址，不再进行自动选择。</p>
-<pre><code class="lang-console">$ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
+<pre><code class="lang-bash">$ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
 </code></pre>
 <h3 id="xmake_binary_repo">XMAKE_BINARY_REPO</h3>
 <ul>
 <li>设置官方包预编译仓库地址</li>
 </ul>
 <p>类似 <code>XMAKE_MAIN_REPO</code>，唯一的区别是，这个用于切换预编译仓库的地址。</p>
-<pre><code class="lang-console">$ export XMAKE_BINARY_REPO = https://github.com/xmake-mirror/build-artifacts.git
+<pre><code class="lang-bash">$ export XMAKE_BINARY_REPO = https://github.com/xmake-mirror/build-artifacts.git
 </code></pre>
 <h3 id="xmake_theme">XMAKE_THEME</h3>
 <ul>
 <li>设置主题</li>
 </ul>
 <p>通常我们可以通过 <code>xmake g --theme=plain</code> 来设置颜色主题，但是它是全局的，如果想单独对当前终端会话设置，我们就可以使用这个环境变量来设置。</p>
-<pre><code class="lang-console">$ export XMAKE_THEME=plain
+<pre><code class="lang-bash">$ export XMAKE_THEME=plain
 </code></pre>
 <h3 id="xmake_stats">XMAKE_STATS</h3>
 <ul>
@@ -981,7 +1041,7 @@ https://gitee.com/tboox/xmake-repo.git
 <p>然后借用 github 自身提供的 Traffic 统计图表来获取大概的用户量。</p>
 <p>对于每个项目，每天只会统计一次，并且不会泄露任何用户隐私，因为仅仅只是多了一次额外的 git clone 操作，另外我们 clone 的是一个空仓库，不会耗费用户多少流量。</p>
 <p>当然，并不是每个用户都希望这么做，用户完全有权利去禁用这个行为，我们只需要设置：</p>
-<pre><code class="lang-console">export XMAKE_STATS=n
+<pre><code class="lang-bash">export XMAKE_STATS=n
 </code></pre>
 <p>就可以完全禁用它，另外我们也会在 ci 上自动禁用这个行为。</p>
 <p>什么时候移除它？</p>

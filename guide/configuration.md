@@ -992,38 +992,106 @@ $ xmake l os.programdir
 
 ### XMAKE_PROFILE
 
--Turn on performance analysis
+- Enable performance analysis
 
-This is only open to the developers of Xmake, and is used to analyze the time-consuming situation of Xmake running and track the calling process.
+This is only available to xmake developers, and is used to analyze the time spent in running xmake and track the calling process.
 
-It has two modes, a performance analysis mode, which displays the time-consuming order of each function.
+#### Analyze the time taken to call functions
 
 ```bash
-$ XMAKE_PROFILE=perf xmake
-[25%]: cache compiling.release src/main.cpp
-[50%]: linking.release test
+$ XMAKE_PROFILE=perf:call xmake
+[ 25%]: cache compiling.release src/main.cpp
+[ 50%]: linking.release test
 [100%]: build ok!
- 0.238, 97.93%, 1, runloop: @programdir/core/base/scheduler.lua: 805
- 0.180, 74.04%, 25, _resume: [C]: -1
- 0.015, 6.34%, 50, _co_groups_resume: @programdir/core/base/scheduler.lua: 299
- 0.011, 4.37%, 48, wait: @programdir/core/base/poller.lua: 111
- 0.004, 1.70%, 62, status: @programdir/core/base/scheduler.lua: 71
- 0.004, 1.53%, 38, is_dead: @programdir/core/base/scheduler.lua: 76
- 0.003, 1.44%, 50, next: @programdir/core/base/timer.lua: 74
- 0.003, 1.33%, 48, delay: @programdir/core/base/timer.lua: 60
- 0.002, 1.02%, 24, is_suspended: @programdir/core/base/scheduler.lua: 86
+0.238, 97.93%, 1, runloop : @programdir/core/base/scheduler.lua: 805
+0.180, 74.04%, 25, _resume : [C]: -1
+0.015, 6.34%, 50, _co_groups_resume : @programdir/core/base/scheduler.lua: 299
+0.011, 4.37%, 48, wait : @programdir/core/base/poller.lua: 111
+0.004, 1.70%, 62, status : @programdir/core/base/scheduler.lua: 71
+0.004, 1.53%, 38, is_dead : @programdir/core/base/scheduler.lua: 76
+0.003, 1.44%, 50, next : @programdir/core/base/timer.lua: 74
+0.003, 1.33%, 48, delay : @programdir/core/base/timer.lua: 60
+0.002, 1.02%, 24, is_suspended : @programdir/core/base/scheduler.lua: 86
 ```
 
-The other is to track the running process of Xmake:
+#### Analysis of process time consumption
+
+It can be used to analyze the compilation time of each file and some operation bottlenecks.
+
+```bash
+$ XMAKE_PROFILE=perf:process xmake -r
+[  7%]: compiling.release src/header.h
+[ 23%]: compiling.release src/test.cpp
+[ 30%]: compiling.release src/test8.cpp
+[ 38%]: compiling.release src/test4.cpp
+[ 46%]: compiling.release src/test5.cpp
+[ 53%]: compiling.release src/test7.cpp
+[ 61%]: compiling.release src/test6.cpp
+[ 69%]: compiling.release src/test2.cpp
+[ 76%]: compiling.release src/main.cpp
+[ 84%]: compiling.release test3.cpp
+[ 84%]: compiling.release src/test.c
+[ 92%]: linking.release main
+[100%]: build ok, spent 2.754s
+1411.000,  22.19%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_37317EEDB62F4F3088AF6A2E2A649460 -fdiagnostics-color=always -x c++-header -o build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch src/header.h
+508.000,   7.99%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_1ABAE1FAD68D45008DC76A3A00697820 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/main.cpp.o src/main.cpp
+473.000,   7.44%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_1C0BE5280C6F4E208F919577A48AAA40 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/test3.cpp.o test3.cpp
+451.000,   7.09%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_877D3D9B6BBA4D308BFB5E4EBD751340 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test6.cpp.o src/test6.cpp
+404.000,   6.35%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_C9968E2873B648208A8C3F2BA7573640 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test7.cpp.o src/test7.cpp
+402.000,   6.32%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_7F6DFA37FF494D208EADF9737484EC40 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test2.cpp.o src/test2.cpp
+383.000,   6.02%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_63C9E23AE7E047308F762C7C02A56B50 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test4.cpp.o src/test4.cpp
+374.000,   5.88%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_C3A0EF96A7C14D00879BFAEFD26E9D20 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test8.cpp.o src/test8.cpp
+368.000,   5.79%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_BADB46AF75CB4610857EF5083BD54D30 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test.cpp.o src/test.cpp
+363.000,   5.71%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -std=c++11 -include src/header.h -include-pch build/.objs/main/macosx/x86_64/release/src/cxx/header.h.pch -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_0247BDB87DD14500816471184D4E8140 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test5.cpp.o src/test5.cpp
+156.000,   2.45%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -fPIC -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F0FF8220B33B46208D39A98937D55E50 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.c
+133.000,   2.09%,       3, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang --version
+107.000,   1.68%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -O3 -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_C8A96266E0034C20898C147FC52F3A40 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.c
+105.000,   1.65%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -fdiagnostics-color=always -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_48A2FA7BE7AB44008B60558E412A9D30 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.c
+105.000,   1.65%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -fPIC -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -lz -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -lz -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F510FB15C9A647108111A7010EFED240 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.cpp
+91.000,   1.43%,       3, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ --version
+74.000,   1.16%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -fvisibility=hidden -O3 -DNDEBUG -MMD -MF /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_BF6B4B6DACB843008E822CEFDC711230 -fdiagnostics-color=always -o build/.objs/main/macosx/x86_64/release/src/test.c.o src/test.c
+73.000,   1.15%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -o build/macosx/x86_64/release/main build/.objs/main/macosx/x86_64/release/src/test.cpp.o build/.objs/main/macosx/x86_64/release/src/test8.cpp.o build/.objs/main/macosx/x86_64/release/src/test4.cpp.o build/.objs/main/macosx/x86_64/release/src/test5.cpp.o build/.objs/main/macosx/x86_64/release/src/test7.cpp.o build/.objs/main/macosx/x86_64/release/src/test6.cpp.o build/.objs/main/macosx/x86_64/release/src/test2.cpp.o build/.objs/main/macosx/x86_64/release/src/main.cpp.o build/.objs/main/macosx/x86_64/release/test3.cpp.o build/.objs/main/macosx/x86_64/release/src/test.c.o -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -lz -Wl,-x -Wl,-dead_strip
+70.000,   1.10%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -fPIC -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_6D0B6327841A47208939EEF194F38B50 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.cpp
+68.000,   1.07%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -O3 -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_8AB279F8450D4D108E92951CC9C1C650 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.cpp
+65.000,   1.02%,       1, /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -fdiagnostics-color=always -Qunused-arguments -target x86_64-apple-macos15.1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -S -o /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_D25F0DB04D6D430084C098F1E1F76C00 /var/folders/32/w9cz0y_14hs19lkbs6v6_fm80000gn/T/.xmake501/241220/_F3443E45635A466AA3BEAE9DE99B4339.cpp
+```
+
+#### Tracking the running process of xmake
 
 ```bash
 $ XMAKE_PROFILE=trace xmake
-func: @programdir/core/base/scheduler.lua: 457
-is_suspended: @programdir/core/base/scheduler.lua: 86
-status: @programdir/core/base/scheduler.lua: 71
-thread: @programdir/core/base/scheduler.lua: 66
-thread: @programdir/core/base/scheduler.lua: 66
-length: @programdir/core/base/heap.lua: 120
+func                          : @programdir/core/base/scheduler.lua: 457
+is_suspended                  : @programdir/core/base/scheduler.lua: 86
+status                        : @programdir/core/base/scheduler.lua: 71
+thread                        : @programdir/core/base/scheduler.lua: 66
+thread                        : @programdir/core/base/scheduler.lua: 66
+length                        : @programdir/core/base/heap.lua: 120
+```
+
+#### Analysis and operation stuck problem
+
+It can be used to get the stack when xmake is stuck. After enabling this feature, you can get the stack after interrupting by pressing Ctrl+C.
+
+```bash
+$ XMAKE_PROFILE=stuck xmake l test.lua
+<Ctrl+C>
+stack traceback:
+[C]: in function 'base/io.file_read'
+@programdir/core/base/io.lua:177: in method '_read'
+@programdir/core/sandbox/modules/io.lua:90: in function <@programdir/core/sandbox/module
+s/io.lua:89>
+(...tail calls...)
+/Users/ruki/share/test.lua:2: in function </Users/ruki/share/test.lua:1>
+(...tail calls...)
+@programdir/plugins/lua/main.lua:123: in function <@programdir/plugins/lua/main.lua:79>
+(...tail calls...)
+[C]: in function 'xpcall'
+@programdir/core/base/utils.lua:280: in function 'sandbox/modules/utils.trycall'
+(...tail calls...)
+@programdir/core/base/task.lua:519: in function 'base/task.run'
+@programdir/core/main.lua:278: in upvalue 'cotask'
+@programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lu
+a:368>
 ```
 
 ### XMAKE_RCFILES
