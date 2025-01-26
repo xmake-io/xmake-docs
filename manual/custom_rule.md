@@ -787,6 +787,21 @@ target("example")
      set_languages("c++11")
 ```
 
+#### nodejs.module
+
+Build nodejs module.
+
+```lua
+add_requires("node-addon-api")
+
+target("foo")
+    set_languages("cxx17")
+    add_rules("nodejs.module")
+    add_packages("node-addon-api")
+    add_files("*.cc")
+end
+```
+
 #### utils.ipsc
 
 The ipsc compiler rules are supported and are used as follows.

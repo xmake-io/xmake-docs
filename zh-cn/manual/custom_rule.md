@@ -788,6 +788,21 @@ target("example")
     set_languages("c++11")
 ```
 
+#### nodejs.module
+
+构建 nodejs 模块。
+
+```lua
+add_requires("node-addon-api")
+
+target("foo")
+    set_languages("cxx17")
+    add_rules("nodejs.module")
+    add_packages("node-addon-api")
+    add_files("*.cc")
+end
+```
+
 #### utils.ipsc
 
 ipsc 编译器规则支持，使用方式如下：
