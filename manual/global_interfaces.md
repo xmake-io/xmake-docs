@@ -694,3 +694,320 @@ set_allowedmodes("release", "releasedbg")
 ```
 
 Set the current project to only support the two compilation modes release/releasedbg.
+
+### namespace
+
+Enter the namespace, which is supported by xmake 2.9.8. It can be used to isolate various domain name conflicts such as duplicate target and option in sub-projects.
+
+#### Isolate target
+
+For target access within a namespace, you can directly access it in the existing way without adding any namespace. For cross-namespace access, you need to specify `namespace::` to specify it.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+namespace("ns1", function ()
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+
+    namespace("ns2", function()
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+end)
+```
+
+When we specify to build a specific target, we can also locate it by namespace.
+
+```bash
+$ xmake build -r ns1::test
+[ 33%]: cache compiling.release ns1::ns2::src/bar.cpp
+[ 41%]: cache compiling.release ns1::src/foo.cpp
+[ 50%]: cache compiling.release ns1::src/main.cpp
+[ 58%]: archiving.release ns1::ns2::libbar.a
+[ 75%]: archiving.release ns1::libfoo.a
+[ 91%]: linking.release ns1::test
+[100%]: build ok, spent 1.325s
+```
+
+In addition, namespaces can also isolate the configuration of the root domain. Each namespace has an independent sub-root domain and can set global configuration separately.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_defines("ROOT")
+
+namespace("ns1", function ()
+    add_defines("NS1_ROOT")
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_defines("FOO")
+
+    namespace("ns2", function ()
+        add_defines("NS2_ROOT")
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            add_defines("BAR")
+    end)
+end)
+
+target("test")
+    set_kind("binary")
+    add_deps("ns1::foo", "ns1::ns2::bar")
+    add_files("src/main.cpp")
+    add_defines("TEST")
+```
+
+We can also isolate subprojects introduced by includes.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_defines("ROOT")
+
+namespace("ns1", function ()
+    add_defines("NS1_ROOT")
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_defines("FOO")
+
+    includes("src")
+end)
+
+target("test")
+    set_kind("binary")
+    add_deps("ns1::foo", "ns1::ns2::bar")
+    add_files("src/main.cpp")
+    add_defines("TEST")
+```
+
+#### Isolate option
+
+```bash
+$ xmake f --opt0=y
+$ xmake f --ns1::opt1=y
+$ xmake f --ns1::ns2::opt2=y
+```
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+option("opt0", {default = true, defines = "OPT0", description = "option0"})
+
+namespace("ns1", function ()
+    option("opt1", {default = true, defines = "NS1_OPT1", description = "option1"})
+
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_options("opt1")
+
+    namespace("ns2", function()
+        option("opt2", {default = true, defines = "NS2_OPT2", description = "option2"})
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            add_options("opt2")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+        add_options("opt0", "opt1", "ns2::opt2")
+end)
+```
+
+#### Isolate rule
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+rule("rule0")
+    on_load(function (target)
+        target:add("defines", "RULE0")
+    end)
+
+namespace("ns1", function ()
+    rule("rule1")
+        on_load(function (target)
+            target:add("defines", "NS1_RULE1")
+        end)
+
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_rules("rule1")
+
+    namespace("ns2", function()
+        rule("rule2")
+            on_load(function (target)
+                target:add("defines", "NS2_RULE2")
+            end)
+
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            add_rules("rule2")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+        add_rules("rule0", "rule1", "ns2::rule2")
+end)
+```
+
+#### Isolate task
+
+```bash
+xmake task0
+xmake ns1::task1
+xmake ns1::ns2::task2
+```
+
+```lua
+task("task0")
+    set_menu {options = {}}
+    on_run(function ()
+        print("task0")
+    end)
+
+namespace("ns1", function ()
+    task("task1")
+        set_menu {options = {}}
+        on_run(function ()
+            print("NS1_TASK1")
+        end)
+
+    namespace("ns2", function()
+        task("task2")
+            set_menu {options = {}}
+            on_run(function ()
+                print("NS2_TASK2")
+            end)
+    end)
+end)
+```
+
+#### Isolate toolchain
+
+```lua
+
+toolchain("toolchain0")
+    on_load(function (toolchain)
+        toolchain:add("defines", "TOOLCHAIN0")
+    end)
+
+namespace("ns1", function ()
+    toolchain("toolchain1")
+        on_load(function (toolchain)
+            toolchain:add("defines", "NS1_TOOLCHAIN1")
+        end)
+
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        set_toolchains("toolchain1")
+
+    namespace("ns2", function()
+        toolchain("toolchain2")
+            on_load(function (toolchain)
+                toolchain:add("defines", "NS2_TOOLCHAIN2")
+            end)
+
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            set_toolchains("toolchain2")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+        set_toolchains("toolchain0", "toolchain1", "ns2::toolchain2")
+end)
+```
+
+#### Isolate package
+
+```lua
+
+add_requires("package0", {system = false})
+
+package("package0")
+    on_load(function (package)
+        package:add("defines", "PACKAGE0")
+    end)
+    on_install(function (package) end)
+
+namespace("ns1", function ()
+
+    add_requires("package1", {system = false})
+
+    package("package1")
+        on_load(function (package)
+            package:add("defines", "NS1_PACKAGE1")
+        end)
+        on_install(function (package) end)
+
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_packages("package1")
+
+    namespace("ns2", function()
+
+        add_requires("package2", {system = false})
+
+        package("package2")
+            on_load(function (package)
+                package:add("defines", "NS2_PACKAGE2")
+            end)
+            on_install(function (package) end)
+
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            add_packages("package2")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+        add_packages("package0", "package1", "ns2::package2")
+end)
+```
+
+### namespace_end
+
+End the current namespace.
+
+```lua
+namespace("test")
+  target("hello")
+    add_files("src/*.c")
+namespace_end()
+```
+
+In addition to using namespace_end, we can also use the following syntax to end the namespace, which is more friendly to LSP. The specific method to use depends on the user's needs and preferences.
+
+```lua
+namespace("test", function ()
+  target("hello")
+    add_files("src/*.c")
+end)
+```

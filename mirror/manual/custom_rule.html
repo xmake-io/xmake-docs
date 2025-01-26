@@ -617,6 +617,17 @@ target("example")
      add_packages("pybind11")
      set_languages("c++11")
 </code></pre>
+<h4 id="nodejsmodule">nodejs.module</h4>
+<p>Build nodejs module.</p>
+<pre><code class="lang-lua">add_requires("node-addon-api")
+
+target("foo")
+    set_languages("cxx17")
+    add_rules("nodejs.module")
+    add_packages("node-addon-api")
+    add_files("*.cc")
+end
+</code></pre>
 <h4 id="utilsipsc">utils.ipsc</h4>
 <p>The ipsc compiler rules are supported and are used as follows.</p>
 <pre><code class="lang-lua">target("test")

@@ -706,3 +706,320 @@ set_allowedmodes("release", "releasedbg")
 ```
 
 设置当前项目仅仅支持 release/releasedbg 两个编译模式。
+
+### namespace
+
+进入命名空间，xmake 2.9.8 版本支持，可以用于隔离子工程的重名 target，option 等各种域名冲突。
+
+#### 隔离 target
+
+对于命名空间内部的 target 访问，完全可以按现有的方式，不加任何命名空间，直接访问，而跨命名空间访问，则需要指定 `namespace::` 去指定。
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+namespace("ns1", function ()
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+
+    namespace("ns2", function()
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+end)
+```
+
+我们指定构建特定 target 时，也可以通过命名空间来定位。
+
+```bash
+$ xmake build -r ns1::test
+[ 33%]: cache compiling.release ns1::ns2::src/bar.cpp
+[ 41%]: cache compiling.release ns1::src/foo.cpp
+[ 50%]: cache compiling.release ns1::src/main.cpp
+[ 58%]: archiving.release ns1::ns2::libbar.a
+[ 75%]: archiving.release ns1::libfoo.a
+[ 91%]: linking.release ns1::test
+[100%]: build ok, spent 1.325s
+```
+
+另外，命名空间也能隔离根域的配置，每个命名空间都有独立子根域，可以单独设置全局配置。
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_defines("ROOT")
+
+namespace("ns1", function ()
+    add_defines("NS1_ROOT")
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_defines("FOO")
+
+    namespace("ns2", function ()
+        add_defines("NS2_ROOT")
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            add_defines("BAR")
+    end)
+end)
+
+target("test")
+    set_kind("binary")
+    add_deps("ns1::foo", "ns1::ns2::bar")
+    add_files("src/main.cpp")
+    add_defines("TEST")
+```
+
+我们还可以隔离 includes 引入的子工程。
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_defines("ROOT")
+
+namespace("ns1", function ()
+    add_defines("NS1_ROOT")
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_defines("FOO")
+
+    includes("src")
+end)
+
+target("test")
+    set_kind("binary")
+    add_deps("ns1::foo", "ns1::ns2::bar")
+    add_files("src/main.cpp")
+    add_defines("TEST")
+```
+
+#### 隔离 option
+
+```bash
+$ xmake f --opt0=y
+$ xmake f --ns1::opt1=y
+$ xmake f --ns1::ns2::opt2=y
+```
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+option("opt0", {default = true, defines = "OPT0", description = "option0"})
+
+namespace("ns1", function ()
+    option("opt1", {default = true, defines = "NS1_OPT1", description = "option1"})
+
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_options("opt1")
+
+    namespace("ns2", function()
+        option("opt2", {default = true, defines = "NS2_OPT2", description = "option2"})
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            add_options("opt2")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+        add_options("opt0", "opt1", "ns2::opt2")
+end)
+```
+
+#### 隔离 rule
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+rule("rule0")
+    on_load(function (target)
+        target:add("defines", "RULE0")
+    end)
+
+namespace("ns1", function ()
+    rule("rule1")
+        on_load(function (target)
+            target:add("defines", "NS1_RULE1")
+        end)
+
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_rules("rule1")
+
+    namespace("ns2", function()
+        rule("rule2")
+            on_load(function (target)
+                target:add("defines", "NS2_RULE2")
+            end)
+
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            add_rules("rule2")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+        add_rules("rule0", "rule1", "ns2::rule2")
+end)
+```
+
+#### 隔离 task
+
+```bash
+xmake task0
+xmake ns1::task1
+xmake ns1::ns2::task2
+```
+
+```lua
+task("task0")
+    set_menu {options = {}}
+    on_run(function ()
+        print("task0")
+    end)
+
+namespace("ns1", function ()
+    task("task1")
+        set_menu {options = {}}
+        on_run(function ()
+            print("NS1_TASK1")
+        end)
+
+    namespace("ns2", function()
+        task("task2")
+            set_menu {options = {}}
+            on_run(function ()
+                print("NS2_TASK2")
+            end)
+    end)
+end)
+```
+
+#### 隔离 toolchain
+
+```lua
+
+toolchain("toolchain0")
+    on_load(function (toolchain)
+        toolchain:add("defines", "TOOLCHAIN0")
+    end)
+
+namespace("ns1", function ()
+    toolchain("toolchain1")
+        on_load(function (toolchain)
+            toolchain:add("defines", "NS1_TOOLCHAIN1")
+        end)
+
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        set_toolchains("toolchain1")
+
+    namespace("ns2", function()
+        toolchain("toolchain2")
+            on_load(function (toolchain)
+                toolchain:add("defines", "NS2_TOOLCHAIN2")
+            end)
+
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            set_toolchains("toolchain2")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+        set_toolchains("toolchain0", "toolchain1", "ns2::toolchain2")
+end)
+```
+
+#### 隔离 package
+
+```lua
+
+add_requires("package0", {system = false})
+
+package("package0")
+    on_load(function (package)
+        package:add("defines", "PACKAGE0")
+    end)
+    on_install(function (package) end)
+
+namespace("ns1", function ()
+
+    add_requires("package1", {system = false})
+
+    package("package1")
+        on_load(function (package)
+            package:add("defines", "NS1_PACKAGE1")
+        end)
+        on_install(function (package) end)
+
+    target("foo")
+        set_kind("static")
+        add_files("src/foo.cpp")
+        add_packages("package1")
+
+    namespace("ns2", function()
+
+        add_requires("package2", {system = false})
+
+        package("package2")
+            on_load(function (package)
+                package:add("defines", "NS2_PACKAGE2")
+            end)
+            on_install(function (package) end)
+
+        target("bar")
+            set_kind("static")
+            add_files("src/bar.cpp")
+            add_packages("package2")
+    end)
+
+    target("test")
+        set_kind("binary")
+        add_deps("foo", "ns2::bar")
+        add_files("src/main.cpp")
+        add_packages("package0", "package1", "ns2::package2")
+end)
+```
+
+### namespace_end
+
+结束当前的命名空间。
+
+```lua
+namespace("test")
+  target("hello")
+    add_files("src/*.c")
+namespace_end()
+```
+
+除了使用 namespace_end，我们也可以使用下面的语法，来结束命名空间，并且对 LSP 更加友好，具体使用哪种方式，根据用户自己的需求和喜好决定。
+
+```lua
+namespace("test", function ()
+  target("hello")
+    add_files("src/*.c")
+end)
+```
