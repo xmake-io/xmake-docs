@@ -2885,6 +2885,107 @@ After `set_configvar("HAVE_SSE2", 1)` is enabled, it becomes `HAVE_SSE2 equ 1`. 
 
 For a detailed description of this, see: https://github.com/xmake-io/xmake/issues/320
 
+##### Define export macros
+
+A new feature added in v2.9.8 is that it can generate export macro definitions for dynamic libraries, which are usually used for symbol export and import of dll libraries under Windows.
+
+Define in config.h.in:
+
+```c
+${define_export MYLIB}
+```
+
+It will generate
+
+```c
+#ifdef MYLIB_STATIC
+#  define MYLIB_EXPORT
+#else
+#  if defined(_WIN32)
+#    define MYLIB_EXPORT __declspec(dllexport)
+#  elif defined(__GNUC__) && ((__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+#    define MYLIB_EXPORT __attribute__((visibility("default")))
+#  else
+#    define MYLIB_EXPORT
+#  endif
+#endif
+```
+
+When we define the dynamic library export symbol, we can use this macro to control the import and export.
+
+```c
+MYLIB_EXPORT void foo();
+```
+
+It is similar to CMake's [GenerateExportHeader](https://cmake.org/cmake/help/latest/module/GenerateExportHeader.html).
+
+However, it does not generate an independent export header file, but generates it directly in config.h.
+
+For more details, see: [#6088](https://github.com/xmake-io/xmake/issues/6088)
+
+##### Custom preprocessor
+
+If the built-in build rules of xmake do not meet your needs, you can also customize the processor to rewrite the build rules, such as rewriting `${define_export XXX}`:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("main.c")
+    add_configfiles("config.h.in", {
+        preprocessor = function (preprocessor_name, name, value, opt)
+            if preprocessor_name == "define_export" then
+                    value = ([[#ifdef %s_STATIC
+#  define %s_EXPORT
+#else
+#  if defined(_WIN32)
+#    define %s_EXPORT __declspec(dllexport)
+#  elif defined(__GNUC__) && ((__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+#    define %s_EXPORT __attribute__((visibility("default")))
+#  else
+#    define %s_EXPORT
+#  endif
+#endif
+]]):format(name, name, name, name, name)
+                return value
+            end
+        end})
+```
+
+We can also override the generation of `${define XXX}` and `${default XXX}`, or even customize and extend other preprocessor configurations.
+
+For example:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("main.c")
+    set_configvar("FOO", "foo")
+    add_configfiles("config.h")
+    add_configfiles("config.h.in", {
+        preprocessor = function (preprocessor_name, name, value, opt)
+            local argv = opt.argv
+            if preprocessor_name == "define_custom" then
+                return string.format("#define CUSTOM_%s %s", name, value)
+            end
+        end})
+```
+
+Then we configure in config.h.in:
+
+```c
+${define_custom FOO arg1 arg2}
+```
+
+Where, `define_custom` is the custom preprocessor name, FOO is the variable name, and the variable value can be obtained from `set_configvar`.
+
+arg1 and arg2 are optional preprocessing parameter lists. Whether they are needed depends on actual needs. If you want to use parameters, you can get them through `opt.argv`, which is a parameter list table.
+
+After running `xmake config`, the following configuration will be automatically generated in config.h:
+
+```c
+#define CUSTOM_FOO foo
+```
+
 ### target:set_policy
 
 #### Set build policy

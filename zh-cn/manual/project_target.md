@@ -2875,6 +2875,107 @@ HAVE_SSE2 equ ${default VAR_HAVE_SSE2 0}
 
 关于这个的详细说明，见：https://github.com/xmake-io/xmake/issues/320
 
+##### 定义导出宏
+
+v2.9.8 新增的特性，可以生成动态库的导出宏定义，通常用于 windows 下 dll 库的符号导出和导入。
+
+在 config.h.in 中定义：
+
+```c
+${define_export MYLIB}
+```
+
+就会生成
+
+```c
+#ifdef MYLIB_STATIC
+#  define MYLIB_EXPORT
+#else
+#  if defined(_WIN32)
+#    define MYLIB_EXPORT __declspec(dllexport)
+#  elif defined(__GNUC__) && ((__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+#    define MYLIB_EXPORT __attribute__((visibility("default")))
+#  else
+#    define MYLIB_EXPORT
+#  endif
+#endif
+```
+
+我们在定义动态库导出符号时，可以通过这个宏来控制导入导出。
+
+```c
+MYLIB_EXPORT void foo();
+```
+
+它跟 CMake 的 [GenerateExportHeader](https://cmake.org/cmake/help/latest/module/GenerateExportHeader.html) 的功能类似。
+
+不过，它不会额外生成一个独立的导出头文件，而是直接在 config.h 中去生成它。
+
+更多详情见：[#6088](https://github.com/xmake-io/xmake/issues/6088)
+
+##### 自定义预处理器
+
+如果 xmake 内置的生成规则不满足需求，也可以自定义处理器去重写生成规则，例如重写 `${define_export XXX}`：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("main.c")
+    add_configfiles("config.h.in", {
+        preprocessor = function (preprocessor_name, name, value, opt)
+            if preprocessor_name == "define_export" then
+                    value = ([[#ifdef %s_STATIC
+#  define %s_EXPORT
+#else
+#  if defined(_WIN32)
+#    define %s_EXPORT __declspec(dllexport)
+#  elif defined(__GNUC__) && ((__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+#    define %s_EXPORT __attribute__((visibility("default")))
+#  else
+#    define %s_EXPORT
+#  endif
+#endif
+]]):format(name, name, name, name, name)
+                return value
+            end
+        end})
+```
+
+我们也可以重写对 `${define XXX}` 和 `${default XXX}` 的生成，甚至自定义扩展其他预处理配置。
+
+例如：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("main.c")
+    set_configvar("FOO", "foo")
+    add_configfiles("config.h")
+    add_configfiles("config.h.in", {
+        preprocessor = function (preprocessor_name, name, value, opt)
+            local argv = opt.argv
+            if preprocessor_name == "define_custom" then
+                return string.format("#define CUSTOM_%s %s", name, value)
+            end
+        end})
+```
+
+然后我们在 config.h.in 中配置：
+
+```c
+${define_custom FOO arg1 arg2}
+```
+
+其中，`define_custom` 是自定义的预处理器名，FOO 是变量名，可以从 `set_configvar` 中获取变量值。
+
+而 arg1, arg2 是可选的预处理参数列表，根据实际的需求来判断是否需要使用，如果想要使用参数，可以通过 `opt.argv` 来获取，它是一个参数列表 table。
+
+在运行 `xmake config` 后，就会在 config.h 中自动生成如下配置：
+
+```c
+#define CUSTOM_FOO foo
+```
+
 ### target:set_policy
 
 #### 设置构建行为策略

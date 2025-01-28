@@ -2378,6 +2378,77 @@ ${define FOO_STRING}
 <pre><code>HAVE_SSE2 equ ${default VAR_HAVE_SSE2 0}
 </code></pre><p>通过<code>set_configvar("HAVE_SSE2", 1)</code>启用变量后，变为<code>HAVE_SSE2 equ 1</code>，如果没有设置变量，则使用默认值：<code>HAVE_SSE2 equ 0</code></p>
 <p>关于这个的详细说明，见：<a href="https://github.com/xmake-io/xmake/issues/320">https://github.com/xmake-io/xmake/issues/320</a></p>
+<h5 id="">定义导出宏</h5>
+<p>v2.9.8 新增的特性，可以生成动态库的导出宏定义，通常用于 windows 下 dll 库的符号导出和导入。</p>
+<p>在 config.h.in 中定义：</p>
+<pre><code class="lang-c">${define_export MYLIB}
+</code></pre>
+<p>就会生成</p>
+<pre><code class="lang-c">#ifdef MYLIB_STATIC
+#  define MYLIB_EXPORT
+#else
+#  if defined(_WIN32)
+#    define MYLIB_EXPORT __declspec(dllexport)
+#  elif defined(__GNUC__) &amp;&amp; ((__GNUC__ >= 4) || (__GNUC__ == 3 &amp;&amp; __GNUC_MINOR__ >= 3))
+#    define MYLIB_EXPORT __attribute__((visibility("default")))
+#  else
+#    define MYLIB_EXPORT
+#  endif
+#endif
+</code></pre>
+<p>我们在定义动态库导出符号时，可以通过这个宏来控制导入导出。</p>
+<pre><code class="lang-c">MYLIB_EXPORT void foo();
+</code></pre>
+<p>它跟 CMake 的 <a href="https://cmake.org/cmake/help/latest/module/GenerateExportHeader.html">GenerateExportHeader</a> 的功能类似。</p>
+<p>不过，它不会额外生成一个独立的导出头文件，而是直接在 config.h 中去生成它。</p>
+<p>更多详情见：<a href="https://github.com/xmake-io/xmake/issues/6088">#6088</a></p>
+<h5 id="">自定义预处理器</h5>
+<p>如果 xmake 内置的生成规则不满足需求，也可以自定义处理器去重写生成规则，例如重写 <code>${define_export XXX}</code>：</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("main.c")
+    add_configfiles("config.h.in", {
+        preprocessor = function (preprocessor_name, name, value, opt)
+            if preprocessor_name == "define_export" then
+                    value = ([[#ifdef %s_STATIC
+#  define %s_EXPORT
+#else
+#  if defined(_WIN32)
+#    define %s_EXPORT __declspec(dllexport)
+#  elif defined(__GNUC__) &amp;&amp; ((__GNUC__ >= 4) || (__GNUC__ == 3 &amp;&amp; __GNUC_MINOR__ >= 3))
+#    define %s_EXPORT __attribute__((visibility("default")))
+#  else
+#    define %s_EXPORT
+#  endif
+#endif
+]]):format(name, name, name, name, name)
+                return value
+            end
+        end})
+</code></pre>
+<p>我们也可以重写对 <code>${define XXX}</code> 和 <code>${default XXX}</code> 的生成，甚至自定义扩展其他预处理配置。</p>
+<p>例如：</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("main.c")
+    set_configvar("FOO", "foo")
+    add_configfiles("config.h")
+    add_configfiles("config.h.in", {
+        preprocessor = function (preprocessor_name, name, value, opt)
+            local argv = opt.argv
+            if preprocessor_name == "define_custom" then
+                return string.format("#define CUSTOM_%s %s", name, value)
+            end
+        end})
+</code></pre>
+<p>然后我们在 config.h.in 中配置：</p>
+<pre><code class="lang-c">${define_custom FOO arg1 arg2}
+</code></pre>
+<p>其中，<code>define_custom</code> 是自定义的预处理器名，FOO 是变量名，可以从 <code>set_configvar</code> 中获取变量值。</p>
+<p>而 arg1, arg2 是可选的预处理参数列表，根据实际的需求来判断是否需要使用，如果想要使用参数，可以通过 <code>opt.argv</code> 来获取，它是一个参数列表 table。</p>
+<p>在运行 <code>xmake config</code> 后，就会在 config.h 中自动生成如下配置：</p>
+<pre><code class="lang-c">#define CUSTOM_FOO foo
+</code></pre>
 <h3 id="targetset_policy">target:set_policy</h3>
 <h4 id="">设置构建行为策略</h4>
 <p>xmake有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。</p>

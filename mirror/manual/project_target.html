@@ -2406,6 +2406,77 @@ ${define FOO_STRING}
 <pre><code>HAVE_SSE2 equ ${default VAR_HAVE_SSE2 0}
 </code></pre><p>After <code>set_configvar("HAVE_SSE2", 1)</code> is enabled, it becomes <code>HAVE_SSE2 equ 1</code>. If no variable is set, the default value is used: <code>HAVE_SSE2 equ 0</code></p>
 <p>For a detailed description of this, see: <a href="https://github.com/xmake-io/xmake/issues/320">https://github.com/xmake-io/xmake/issues/320</a></p>
+<h5 id="defineexportmacros">Define export macros</h5>
+<p>A new feature added in v2.9.8 is that it can generate export macro definitions for dynamic libraries, which are usually used for symbol export and import of dll libraries under Windows.</p>
+<p>Define in config.h.in:</p>
+<pre><code class="lang-c">${define_export MYLIB}
+</code></pre>
+<p>It will generate</p>
+<pre><code class="lang-c">#ifdef MYLIB_STATIC
+#  define MYLIB_EXPORT
+#else
+#  if defined(_WIN32)
+#    define MYLIB_EXPORT __declspec(dllexport)
+#  elif defined(__GNUC__) &amp;&amp; ((__GNUC__ >= 4) || (__GNUC__ == 3 &amp;&amp; __GNUC_MINOR__ >= 3))
+#    define MYLIB_EXPORT __attribute__((visibility("default")))
+#  else
+#    define MYLIB_EXPORT
+#  endif
+#endif
+</code></pre>
+<p>When we define the dynamic library export symbol, we can use this macro to control the import and export.</p>
+<pre><code class="lang-c">MYLIB_EXPORT void foo();
+</code></pre>
+<p>It is similar to CMake&#39;s <a href="https://cmake.org/cmake/help/latest/module/GenerateExportHeader.html">GenerateExportHeader</a>.</p>
+<p>However, it does not generate an independent export header file, but generates it directly in config.h.</p>
+<p>For more details, see: <a href="https://github.com/xmake-io/xmake/issues/6088">#6088</a></p>
+<h5 id="custompreprocessor">Custom preprocessor</h5>
+<p>If the built-in build rules of xmake do not meet your needs, you can also customize the processor to rewrite the build rules, such as rewriting <code>${define_export XXX}</code>:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("main.c")
+    add_configfiles("config.h.in", {
+        preprocessor = function (preprocessor_name, name, value, opt)
+            if preprocessor_name == "define_export" then
+                    value = ([[#ifdef %s_STATIC
+#  define %s_EXPORT
+#else
+#  if defined(_WIN32)
+#    define %s_EXPORT __declspec(dllexport)
+#  elif defined(__GNUC__) &amp;&amp; ((__GNUC__ >= 4) || (__GNUC__ == 3 &amp;&amp; __GNUC_MINOR__ >= 3))
+#    define %s_EXPORT __attribute__((visibility("default")))
+#  else
+#    define %s_EXPORT
+#  endif
+#endif
+]]):format(name, name, name, name, name)
+                return value
+            end
+        end})
+</code></pre>
+<p>We can also override the generation of <code>${define XXX}</code> and <code>${default XXX}</code>, or even customize and extend other preprocessor configurations.</p>
+<p>For example:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("binary")
+    add_files("main.c")
+    set_configvar("FOO", "foo")
+    add_configfiles("config.h")
+    add_configfiles("config.h.in", {
+        preprocessor = function (preprocessor_name, name, value, opt)
+            local argv = opt.argv
+            if preprocessor_name == "define_custom" then
+                return string.format("#define CUSTOM_%s %s", name, value)
+            end
+        end})
+</code></pre>
+<p>Then we configure in config.h.in:</p>
+<pre><code class="lang-c">${define_custom FOO arg1 arg2}
+</code></pre>
+<p>Where, <code>define_custom</code> is the custom preprocessor name, FOO is the variable name, and the variable value can be obtained from <code>set_configvar</code>.</p>
+<p>arg1 and arg2 are optional preprocessing parameter lists. Whether they are needed depends on actual needs. If you want to use parameters, you can get them through <code>opt.argv</code>, which is a parameter list table.</p>
+<p>After running <code>xmake config</code>, the following configuration will be automatically generated in config.h:</p>
+<pre><code class="lang-c">#define CUSTOM_FOO foo
+</code></pre>
 <h3 id="targetset_policy">target:set_policy</h3>
 <h4 id="setbuildpolicy">Set build policy</h4>
 <p>Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users&#39; habits and needs.</p>
