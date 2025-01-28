@@ -2960,7 +2960,6 @@ target("test")
     set_kind("binary")
     add_files("main.c")
     set_configvar("FOO", "foo")
-    add_configfiles("config.h")
     add_configfiles("config.h.in", {
         preprocessor = function (preprocessor_name, name, value, opt)
             local argv = opt.argv
