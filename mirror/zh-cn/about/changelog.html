@@ -92,7 +92,33 @@
   line-height: 1;
 }
 </style>
-    <h2 id="v297">v2.9.7</h2>
+    <h2 id="v298">v2.9.8</h2>
+<h3 id="">新特性</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/issues/5994">#5994</a>: 分析进程执行性能</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/5995">#5995</a>: 为 vs generator 添加 profile 支持</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/5949">#5949</a>: 添加 nodejs.module 规则</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/3380">#3380</a>: 添加命名空间支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/5945">#5945</a>: 检测 pkgconfig/cmake 导入文件</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/6054">#6054</a>: 为 linux 添加 xmake bundle 包</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/6071">#6071</a>: 改进 git 包下载，支持仅仅 clone 指定子目录</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/5163">#5163</a>: 支持 TI-CGT C2000/C6000 编译器</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/5344">#5344</a>: 支持 IAR ARM C/C++ 编译器</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/5554">#5554</a>: 添加自定义未知工具链支持</li>
+</ul>
+<h3 id="">改进</h3>
+<ul>
+<li><a href="https://github.com/xmake-io/xmake/pull/6056">#6056</a>: 添加 CI 去构建发布 windows arm64 版本。</li>
+<li><a href="https://github.com/xmake-io/xmake/pull/6097">#6097</a>: 添加 qt_host 支持交叉编译 Qt 项目</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/6120">#6120</a>: 改进 configfiles 添加自定义预处理支持</li>
+<li><a href="https://github.com/xmake-io/xmake/issues/6088">#6088</a>: 改进 configfiles 去生成导出宏</li>
+</ul>
+<h3 id="bugs">Bugs 修复</h3>
+<ul>
+<li><a href="https://github.com/tboox/tbox/issues/272">#272</a>: 修复 msvc + /O1 时候，错误的编译器优化导致 xmake 加载卡住</li>
+<li><a href="https://github.com/tboox/tbox/issues/6089">#6089</a>: 修复 depend.is_changed</li>
+</ul>
+<h2 id="v297">v2.9.7</h2>
 <h3 id="">新特性</h3>
 <ul>
 <li><a href="https://github.com/xmake-io/xmake/pull/5813">#5813</a>: 为 rule 添加 <code>before_config</code> 和 <code>after_config</code></li>
