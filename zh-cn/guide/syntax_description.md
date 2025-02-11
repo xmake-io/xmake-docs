@@ -124,7 +124,7 @@ target("test")
     on_install("modules.test.install")
 ```
 
-我们可以吧自定义的脚本放置到xmake.lua对应目录下，`modules/test/load.lua`和`modules/test/install.lua`中独立维护。
+我们可以把自定义的脚本放置到xmake.lua对应目录下，`modules/test/load.lua`和`modules/test/install.lua`中独立维护。
 
 这些独立的lua脚本里面，我们还可以通过[import](/zh-cn/manual/builtin_modules?id=import)导入各种内置模块和自定义模块进来使用，就跟平常写lua, java没啥区别。
 
