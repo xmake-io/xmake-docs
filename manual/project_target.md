@@ -1579,6 +1579,13 @@ target("test")
     add_files("src/test/*.md", {rule = "markdown"})
 ```
 
+After version 2.3.1, you can use the sourcekind parameter to force the use of the C or C++ compiler:
+
+```lua
+add_files("*.c", {sourcekind = "cxx"})    -- force to compile as c++
+add_files("*.cpp", {sourcekind = "cc"})  -- force to compile as c
+```
+
 For instructions on using custom build rules, see: [Building Rules](#Building Rules).
 
 And after the 2.1.9 version, you can use the force parameter to force the automatic detection of cxflags, cflags and other compile options, directly into the compiler, even if the compiler may not support, it will also be set:

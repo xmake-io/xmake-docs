@@ -1576,6 +1576,13 @@ target("test")
 add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 ```
 
+2.3.1版本之后，可以通过sourcekind参数强制使用c或c++编译器：
+
+```lua
+add_files("*.c", {sourcekind = "cxx"})    -- force to compile as c++
+add_files("*.cpp", {sourcekind = "cc"})  -- force to compile as c
+```
+
 ### target:remove_files
 
 #### 从前面的源代码文件列表中删除指定文件
