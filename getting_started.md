@@ -170,7 +170,7 @@ The test project: [xmake-core](https://github.com/xmake-io/xmake/tree/master/cor
 
 ## Supported toolchains
 
-```bash
+```text
 $ xmake show -l toolchains
 xcode         Xcode IDE
 vs            VisualStudio IDE
