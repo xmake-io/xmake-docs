@@ -185,10 +185,25 @@ sudo dnf install xmake
 ./xmake-x.x.x.gz.run
 </code></pre>
 <h2 id="freebsd">FreeBSD</h2>
-<p>见下文源码编译安装，并使用gmake来代替make。</p>
+<p>由于 BSD 上，已有的 xmake 包名已被占用，只能使用 xmake-io 作为包名来安装。</p>
+<pre><code class="lang-bash">pkg install xmake-io
+</code></pre>
 <h2 id="termuxandroid">Termux (Android)</h2>
 <pre><code class="lang-bash">pkg install xmake
 </code></pre>
+<h2 id="bundle">Bundle 包</h2>
+<p>如果不想安装，我们也提供了另外一种 Bundle 打包格式，它无需用户安装，单一可执行文件，下载即可运行使用，方便分发。</p>
+<p>它会把所有 Lua 脚本内置到 Xmake 可执行文件中去，不需要额外安装和配置什么环境变量。</p>
+<p>我们可以到 <a href="https://github.com/xmake-io/xmake/releases">Releases</a> 中获取它们，目前有如下一些 Bundle 包。</p>
+<pre><code>xmake-bundle-v2.9.8.arm64.exe
+xmake-bundle-v2.9.8.cosmocc
+xmake-bundle-v2.9.8.linux.x86_64
+xmake-bundle-v2.9.8.macos.arm64
+xmake-bundle-v2.9.8.macos.x86_64
+xmake-bundle-v2.9.8.win32.exe
+xmake-bundle-v2.9.8.win64.exe
+</code></pre><p>其中，<code>.cosmocc</code> 后缀的包，提供了跨平台运行的能力，但是目前对 Windows 上支持还比较弱，不推荐在 windows 上使用。</p>
+<p>另外的都是针对特定平台的单一可执行文件，用户根据自己的系统按需下载使用。</p>
 <h2 id="">源码编译安装</h2>
 <h3 id="">安装</h3>
 <p>!> 切记，xmake不建议在root下安装和使用，所以尽量不要在root下拉取源码编译安装！</p>

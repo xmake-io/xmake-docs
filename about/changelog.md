@@ -1,5 +1,26 @@
 # Changelog
 
+## v2.9.9
+
+### New features
+
+* [#6137](https://github.com/xmake-io/xmake/issues/6137): IDE integration
+* [#6138](https://github.com/xmake-io/xmake/issues/6138): Use libxmake to build binary with xmake lua apis
+* [#6154](https://github.com/xmake-io/xmake/issues/6154): Add kotlin language and kotlin-native compiler and packages support
+* [#6279](https://github.com/xmake-io/xmake/pull/6279): Add msvc midl support
+
+### Changes
+
+* [#6182](https://github.com/xmake-io/xmake/pull/6182): Support msstl modules for clang
+* [#6281](https://github.com/xmake-io/xmake/pull/6281): Support Verilator target build to shared library
+* [#6270](https://github.com/xmake-io/xmake/pull/6270): Improve conan generator
+* [#6243](https://github.com/xmake-io/xmake/pull/6243): Improve llvm toolchain to support for cross platform
+* Support for CMake 4.0
+
+### Bugs fixed
+
+* [#6292](https://github.com/xmake-io/xmake/issues/6292): Fix namespace issue
+
 ## v2.9.8
 
 ### New features

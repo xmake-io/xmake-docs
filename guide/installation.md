@@ -139,13 +139,39 @@ sudo chmod 777 ./xmake-x.x.x.gz.run
 
 ## FreeBSD
 
-We need [source compilation and installation](#source-compilation-and-installation) and use `gmake` instead of make.
+Due to package name conflicts, only xmake-io can be used as the package name.
+
+```bash
+pkg install xmake-io
+```
 
 ## Termux (Android)
 
 ```bash
 pkg install xmake
 ```
+
+## Bundle package
+
+If you don't want to install, we also provide another Bundle packaging format, which does not require user installation, a single executable file, can be run and used after downloading, and is easy to distribute.
+
+It will build all Lua scripts into the Xmake executable file, without the need for additional installation and configuration of any environment variables.
+
+We can get them from [Releases](https://github.com/xmake-io/xmake/releases), and there are currently some Bundle packages as follows.
+
+```
+xmake-bundle-v2.9.8.arm64.exe
+xmake-bundle-v2.9.8.cosmocc
+xmake-bundle-v2.9.8.linux.x86_64
+xmake-bundle-v2.9.8.macos.arm64
+xmake-bundle-v2.9.8.macos.x86_64
+xmake-bundle-v2.9.8.win32.exe
+xmake-bundle-v2.9.8.win64.exe
+```
+
+Among them, the package with the `.cosmocc` suffix provides the ability to run across platforms, but the support for Windows is still relatively weak, and it is not recommended to use it on Windows.
+
+The others are single executable files for specific platforms, and users can download and use them as needed according to their own systems.
 
 ## Source compilation and installation
  

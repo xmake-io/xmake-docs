@@ -123,7 +123,7 @@ add_rules("c++.unity_build")
 [100%]: build ok
 </code></pre>
 <p>由于我们仅仅启用了 C++ 的 Unity Build，所以 C 代码还是正常挨个编译。另外在 Unity Build 模式下，我们还是可以做到尽可能的并行编译加速，互不冲突。</p>
-<p>如果没有设置 <code>batchsize</code> 参数，那么默认会吧所有文件合并到一个文件中进行编译。</p>
+<p>如果没有设置 <code>batchsize</code> 参数，那么默认会把所有文件合并到一个文件中进行编译。</p>
 <h3 id="group">Group 模式</h3>
 <p>如果上面的 Batch 模式自动合并效果不理想，我们也可以使用自定义分组，来手动配置哪些文件合并到一起参与编译，这使得用户更加地灵活可控。</p>
 <pre><code class="lang-lua">target("test")

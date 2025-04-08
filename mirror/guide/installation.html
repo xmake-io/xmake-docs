@@ -170,10 +170,25 @@ sudo dnf install xmake
 ./xmake-x.x.x.gz.run
 </code></pre>
 <h2 id="freebsd">FreeBSD</h2>
-<p>We need <a href="#source-compilation-and-installation">source compilation and installation</a> and use <code>gmake</code> instead of make.</p>
+<p>Due to package name conflicts, only xmake-io can be used as the package name.</p>
+<pre><code class="lang-bash">pkg install xmake-io
+</code></pre>
 <h2 id="termuxandroid">Termux (Android)</h2>
 <pre><code class="lang-bash">pkg install xmake
 </code></pre>
+<h2 id="bundlepackage">Bundle package</h2>
+<p>If you don&#39;t want to install, we also provide another Bundle packaging format, which does not require user installation, a single executable file, can be run and used after downloading, and is easy to distribute.</p>
+<p>It will build all Lua scripts into the Xmake executable file, without the need for additional installation and configuration of any environment variables.</p>
+<p>We can get them from <a href="https://github.com/xmake-io/xmake/releases">Releases</a>, and there are currently some Bundle packages as follows.</p>
+<pre><code>xmake-bundle-v2.9.8.arm64.exe
+xmake-bundle-v2.9.8.cosmocc
+xmake-bundle-v2.9.8.linux.x86_64
+xmake-bundle-v2.9.8.macos.arm64
+xmake-bundle-v2.9.8.macos.x86_64
+xmake-bundle-v2.9.8.win32.exe
+xmake-bundle-v2.9.8.win64.exe
+</code></pre><p>Among them, the package with the <code>.cosmocc</code> suffix provides the ability to run across platforms, but the support for Windows is still relatively weak, and it is not recommended to use it on Windows.</p>
+<p>The others are single executable files for specific platforms, and users can download and use them as needed according to their own systems.</p>
 <h2 id="sourcecompilationandinstallation">Source compilation and installation</h2>
 <h3 id="installation">Installation</h3>
 <p>!> Note! Xmake is not recommended to install under root!</p>

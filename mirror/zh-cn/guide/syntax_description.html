@@ -173,7 +173,7 @@
     on_load("modules.test.load")
     on_install("modules.test.install")
 </code></pre>
-<p>我们可以吧自定义的脚本放置到xmake.lua对应目录下，<code>modules/test/load.lua</code>和<code>modules/test/install.lua</code>中独立维护。</p>
+<p>我们可以把自定义的脚本放置到xmake.lua对应目录下，<code>modules/test/load.lua</code>和<code>modules/test/install.lua</code>中独立维护。</p>
 <p>这些独立的lua脚本里面，我们还可以通过<a href="/mirror/zh-cn/manual/builtin_modules.html#import">import</a>导入各种内置模块和自定义模块进来使用，就跟平常写lua, java没啥区别。</p>
 <p>而对于脚本的域的不同阶段，<code>on_load</code>主要用于target加载时候，做一些动态化的配置，这里不像描述域，只会执行一遍哦!!!</p>
 <p>其他阶段，还有很多，比如：<code>on/after/before</code>_<code>build/install/package/run</code>等，具体看下后面的target api手册部分吧，这里就不细说了。</p>
