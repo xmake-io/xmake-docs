@@ -930,7 +930,7 @@ If we don't want to store it in the root directory of the project, we can also s
 
 - Set the root directory of the global configuration file
 
-A `.xmake` directory, which serves as the storage directory of the global configuration of `xmake g/global global` configuration, will be created under this path. Other global files such as installation packages, caches, etc., will be stored in this directory by default.
+A `.xmake` directory, which serves as the storage directory of the global configuration of `xmake g/global` configuration, will be created under this path. Other global files such as installation packages, caches, etc., will be stored in this directory by default.
 
 The default path is: `~`.
 
