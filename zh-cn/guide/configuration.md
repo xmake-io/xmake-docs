@@ -906,7 +906,7 @@ $ xmake show -l envs
 XMAKE_RAMDIR            Set the ramdisk directory.
                         <empty>
 XMAKE_GLOBALDIR         Set the global config directory of xmake.
-                        /Users/ruki/.xmake
+                        /Users/ruki
 XMAKE_ROOT              Allow xmake to run under root.
                         <empty>
 XMAKE_COLORTERM         Set the color terminal environment.
@@ -957,9 +957,9 @@ ramdisk 目录是内存文件系统的目录位置，通常 `os.tmpdir()` 接口
 
 - 设置全局配置文件根目录
 
-也就是 `xmake g/global` 全局配置的存储目录，还有安装包，缓存等其他全局文件，默认都会存储在这个目录下。
+xmake将在该目录下创建 `.xmake`，作为 `xmake g/global` 全局配置的存储目录，还有安装包，缓存等其他全局文件，默认都会存储在这个目录下。
 
-默认路径为：`~/.xmake`。
+默认路径为：`~`。
 
 ### XMAKE_ROOT
 
@@ -992,15 +992,15 @@ export XMAKE_ROOT=y
 
 - 设置依赖包的安装根目录
 
-xmake 的远程包安装的全局目录默认是 `~/.xmake/packages`，但是用户也可以设置这个变量，去单独修改它。
+xmake 的远程包安装的全局目录默认是 `$XMAKE_GLOBALDIR/.xmake/packages`，但是用户也可以设置这个变量，去单独修改它。
 
-我们也可以使用 `xmake g --pkg_installdir=/xxx` 去设置它，效果是一样的。
+我们也可以使用 `xmake g --pkg_installdir=/xxx` 去设置它，效果是一样的。但环境变量的优先级高于此配置。
 
 ### XMAKE_PKG_CACHEDIR
 
 - 设置依赖包的缓存目录
 
-默认路径在 `~/.xmake/cache` 目录，存储包安装过程中的各种缓存文件，比较占存储空间，用户也可以单独设置它。
+默认路径在 `$XMAKE_GLOBALDIR/.xmake/cache` 目录，存储包安装过程中的各种缓存文件，比较占存储空间，用户也可以单独设置它。
 
 当然，xmake 在每个月都会自动清理上个月的所有缓存文件。
 
@@ -1132,7 +1132,7 @@ $ export XMAKE_RCFILES=xmakerc.lua
 $ xmake
 ```
 
-如果不设置，默认路径为：`~/.xmake/xmakerc.lua`。
+如果不设置此环境变量，用户可以在`/etc/xmakerc.lua`、`~/xmakerc.lua`与`$XMAKE_GLOBALDIR/.xmake/xmakerc.lua`设置全局配置文件，搜索优先级从高至低排列。
 
 ### XMAKE_LOGFILE
 
