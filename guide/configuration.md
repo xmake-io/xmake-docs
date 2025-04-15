@@ -879,7 +879,7 @@ $ xmake show -l envs
 XMAKE_RAMDIR Set the ramdisk directory.
                         <empty>
 XMAKE_GLOBALDIR Set the global config directory of xmake.
-                        /Users/ruki/.xmake
+                        /Users/ruki
 XMAKE_ROOT Allow xmake to run under root.
                         <empty>
 XMAKE_COLORTERM Set the color terminal environment.
@@ -930,9 +930,9 @@ If we don't want to store it in the root directory of the project, we can also s
 
 - Set the root directory of the global configuration file
 
-That is, the storage directory of the global configuration of `xmake g/global`, as well as other global files such as installation packages, caches, etc., will be stored in this directory by default.
+A `.xmake` directory, which serves as the storage directory of the global configuration of `xmake g/global global` configuration, will be created under this path. Other global files such as installation packages, caches, etc., will be stored in this directory by default.
 
-The default path is: `~/.xmake`.
+The default path is: `~`.
 
 ### XMAKE_ROOT
 
@@ -965,15 +965,15 @@ Or use `xmake g --theme=plain` to disable it globally.
 
 - Set the installation root directory of the dependent package
 
-The default global directory for xmake's remote package installation is `~/.xmake/packages`, but users can also set this variable to modify it individually.
+The default global directory for xmake's remote package installation is `$XMAKE_GLOBALDIR/.xmake/packages`, but users can also set this variable to modify it individually.
 
-We can also use `xmake g --pkg_installdir=/xxx` to set it, the effect is the same.
+We can also use `xmake g --pkg_installdir=/xxx` to set it, the effect is the same. However, the environment variable takes precedence over this configuration.
 
 ### XMAKE_PKG_CACHEDIR
 
 - Set the cache directory of dependent packages
 
-The default path is in the `~/.xmake/cache` directory, which stores various cache files during the package installation process, which takes up more storage space, and the user can also set it separately.
+The default path is in the `$XMAKE_GLOBALDIR/.xmake/cache` directory, which stores various cache files during the package installation process, which takes up more storage space, and the user can also set it separately.
 
 Of course, Xmake will automatically clean up all cache files of the previous month every month.
 
@@ -1105,7 +1105,7 @@ $ export XMAKE_RCFILES=xmakerc.lua
 $ xmake
 ```
 
-If not set, the default path is: `~/.xmake/xmakerc.lua`.
+If this environment variable is not set, users can set the global configuration file in `/etc/xmakerc.lua`, `~/xmakerc.lua`, and `$XMAKE_GLOBALDIR/.xmake/xmakerc.lua`. The search priority is listed from highest to lowest.
 
 ### XMAKE_LOGFILE
 
