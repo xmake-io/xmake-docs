@@ -1,4 +1,3 @@
-
 ### Default packaging format
 
 After version 2.5.5, we have provided a new local package packaging solution that will seamlessly integrate `add_requires` and `add_packages`.
@@ -67,6 +66,8 @@ Among them, add_repositories configuration specifies the warehouse root director
 In addition, the generated local package has another feature, which is to support `target/add_deps`, which automatically associates the dependencies of multiple packages, and automatically connects all dependency links during integration.
 
 Here is the complete [test example](https://github.com/xmake-io/xmake/blob/dev/tests/actions/package/localpkg/test.lua).
+
+Here is a step by step [guide](../examples/local_package.md)
 
 ```console
 "/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/bar build/.objs/bar/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version -min=10.15 -isysroot
@@ -158,6 +159,7 @@ $ xmake l find_package cmake::LibXml2
   }
 }
 ```
+
 #### Integrate the package in the project
 
 If we integrate and find cmake dependent packages in the xmake.lua project configuration, we usually don't need to use find_package directly, and we can use a more general and simple package integration method.
