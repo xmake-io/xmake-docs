@@ -67,8 +67,6 @@ In addition, the generated local package has another feature, which is to suppor
 
 Here is the complete [test example](https://github.com/xmake-io/xmake/blob/dev/tests/actions/package/localpkg/test.lua).
 
-
-
 ```console
 "/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/bar build/.objs/bar/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version -min=10.15 -isysroot
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk -stdlib=libc++
@@ -249,7 +247,7 @@ xmake will automatically append the following configuration internally when it l
 find_package(ABC CONFIG REQUIRED)
 ```
 
-## Step by Step Local Packaging Tutorial
+#### Step by Step Local Packaging Tutorial
 
 Written by [@mccakit](https://github.com/mccakit)
 
