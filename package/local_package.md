@@ -332,14 +332,6 @@ In this tutorial we will package a static library called foo, upload it to a Git
   ```
   
   ```powershell
-  gh auth login
-  ```
-  
-  ```powershell
-  gh repo create xmake_local_package_tutorial --public --source=. --remote=origin --push
-  ```
-  
-  ```powershell
   git add .\packages\
   ```
   
@@ -348,7 +340,11 @@ In this tutorial we will package a static library called foo, upload it to a Git
   ```
   
   ```powershell
-  git push
+  gh auth login
+  ```
+  
+  ```powershell
+  gh repo create xmake_local_package_tutorial --public --source=. --remote=origin --push
   ```
 
 - Create a project where you intend on consuming the package
