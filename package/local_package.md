@@ -249,8 +249,6 @@ find_package(ABC CONFIG REQUIRED)
 
 #### Step by Step Local Packaging Tutorial
 
-Written by [@mccakit](https://github.com/mccakit)
-
 ---
 
 In this tutorial we will package a static library called foo, upload it to a GitHub repository and consume it similar to a manner of CMake FetchContent
