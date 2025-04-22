@@ -1,4 +1,3 @@
-
 This has been initially supported after the 2.2.2 version, the usage is much simpler, just set the corresponding dependency package, for example:
 
 ```lua
@@ -1093,7 +1092,6 @@ Example use cases for this project:
 
 ### Apis
 
-
 #### xrepo_package
 
 [`xrepo.cmake`](./xrepo.cmake) provides `xrepo_package` function to manage
@@ -1121,25 +1119,33 @@ for pkgconfig files under package install directories.
 After calling `xrepo_package(foo)`, there are three ways to use `foo` package:
 
 1. Call `find_package(foo)` if package provides cmake config-files.
-    - Refer to CMake [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) documentation for more details.
+   
+   - Refer to CMake [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) documentation for more details.
+
 2. If the package does not provide cmake config files or find modules
+   
    - Following variables can be used to use the pacakge (variable names following cmake
      find modules [standard variable names](https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html#standard-variable-names))
+     
      - `foo_INCLUDE_DIRS`
      - `foo_LIBRARY_DIRS`
      - `foo_LIBRARIES`
      - `foo_DEFINITIONS`
+   
    - If `DIRECTORY_SCOPE` is specified, `xrepo_package` will run following code
+     
      ```cmake
      include_directories(${foo_INCLUDE_DIRS})
      link_directories(${foo_LIBRARY_DIRS})
      ```
+
 3. Use `xrepo_target_packages`. Please refer to following section.
 
 Note `CONFIGS path/to/script.lua` is for fine control over package configs.
 For example:
-  - Exclude packages on system.
-  - Override dependent packages' default configs, e.g. set `shared=true`.
+
+- Exclude packages on system.
+- Override dependent packages' default configs, e.g. set `shared=true`.
 
 If `DEPS` is specified, all dependent libraries will add to `CMAKE_PREFIX_PATH`, along with include,
 libraries being included in the four variables.
@@ -1265,7 +1271,7 @@ package("myzlib")
     add_versions("1.2.10", "8d7e9f698ce48787b6e1c67e6bff79e487303e66077e25cb9784ac8835978017")
 
     on_install(function (package)
-  	-- TODO
+      -- TODO
     end)
 
     on_test(function (package)
@@ -1410,3 +1416,229 @@ For CMake 3.19 and later which has JSON support, `xrepo_package` parses the JSON
 output. For previous version of CMake, `xrepo_package` uses only the `--cflags` option
 to get package include directory. Library and cmake module directory are infered from that
 directory, so it maybe unreliable to detect the correct paths.
+
+---
+
+#### Step by Step Remote Packaging Tutorial
+
+---
+
+##### Introduction
+
+###### What is a remote package?
+
+A remote package is a package that is compiled from source
+
+###### Why should I use remote packages?
+
+If you're developing cross-platform libraries, remote packages allow you to avoid manually compiling for every library and platform
+
+###### How can I create remote packages?
+
+1. Upload your source code to a repository
+
+2. In a **separate repository**, create a remote package manifest that points to your source repository
+
+###### How can I consume remote packages?
+
+You need to add the repository that contains the remote package manifest to your project, find the package then and add it to your desired target.
+
+##### Example
+
+In this example, we’ll create a remote package for a static library named `foo`, built using **Windows with MSVC**, and then **consume it on MSYS2 using Clang**.
+
+- Create an xmake project
+  
+  ```powershell
+  xmake create -P package_remote_origin
+  ```
+
+- Imitate this filetree to prepare files for your package
+  
+  ```powershell
+  │   .gitignore
+  │   xmake.lua
+  │
+  └───src
+      │   main.cpp
+      │
+      ├───inc
+      │   └───foo
+      │           foo.hpp
+      │
+      └───lib
+          └───foo
+                  foo.cpp
+  ```
+
+- Create static library target in xmake
+  
+  ```lua
+  target("foo")
+      set_kind("static")
+      add_files("src/lib/foo/*.cpp")
+      add_headerfiles("src/inc/foo/*.hpp")
+      add_includedirs("src/inc/foo", {public = true})
+  ```
+
+- Implement the functionality of your target
+  
+  foo.hpp
+  
+  ```cpp
+  void foo();
+  ```
+  
+  foo.cpp
+  
+  ```cpp
+  #include <iostream>
+  #include "foo.hpp"
+  
+  void foo()
+  {
+      std::cout << "foo";
+  }
+  ```
+
+- Build your project to see if it compiles
+  
+  ```powershell
+  xmake build
+  ```
+
+- Create a source repository for your package with a version tag
+  
+  ```powershell
+  git init
+  ```
+  
+  ```powershell
+  git checkout -b package_source
+  ```
+  
+  ```powershell
+  git add .\src\
+  ```
+  
+  ```powershell
+  git add xmake.lua
+  ```
+  
+  ```powershell
+  git commit -m "init"
+  ```
+  
+  ```powershell
+  git tag v1.0.0 
+  ```
+  
+  ```powershell
+  gh repo create xmake_remote_package_tutorial_source --public
+  ```
+  
+  ```powershell
+  git remote add source https://github.com/mccakit/xmake_remote_package_tutorial_source.git
+  ```
+  
+  ```powershell
+  git push -u source package_source v1.0.0
+  ```
+
+- Create a package and point to your source repository in the config file
+  
+  ```powershell
+  xmake package -f remote foo
+  ```
+  
+  ```powershell
+  add_urls("https://github.com/mccakit/xmake_remote_package_tutorial_source.git")
+  add_versions("1.0.0", "v1.0.0")
+  ```
+
+- Create a package config repository for your package
+  
+  ```powershell
+  git rm -r --cached .
+  ```
+  
+  ```powerquery
+  cp -r build/packages packages
+  ```
+  
+  ```powershell
+  git checkout -b package_config
+  ```
+  
+  ```powershell
+  git add .\packages\
+  ```
+  
+  ```powershell
+  git commit -m "init"
+  ```
+  
+  ```powershell
+  gh repo create xmake_remote_package_tutorial_config --public
+  ```
+  
+  ```powershell
+  git remote add config https://github.com/mccakit/xmake_remote_package_tutorial_config.git 
+  ```
+  
+  ```powershell
+  git push -u config main
+  ```
+  
+  ---
+
+- Create a project where you intend on consuming the package
+  
+  ```powershell
+  xmake create -P package_consumption
+  ```
+
+- Let's consume the package in msys2/clang
+  
+  ```powershell
+  clang64
+  ```
+  
+  ```powershell
+  set_toolchains("clang")
+  ```
+  
+  ---
+  
+  ```lua
+  add_repositories("cakit-repo https://github.com/mccakit/xmake_remote_package_tutorial_config.git")
+  add_requires("foo >= 1.0.0")
+  ```
+  
+  ```lua
+  target("package_consumption")
+      set_kind("binary")
+      add_files("src/*.cpp")
+      add_packages("foo")
+  ```
+  
+  ```cpp
+  #include "foo.hpp"
+  int main()
+  {
+      foo();
+      return 0;
+  }
+  ```
+
+---
+
+Congratulations, you have created a remote package and consumed it in xmake! 
+
+```powershell
+cakit@DESKTOP-6J44CHE CLANG64 /c/Users/cakit/Desktop/package_remote_consumption
+$ xmake build -q
+cakit@DESKTOP-6J44CHE CLANG64 /c/Users/cakit/Desktop/package_remote_consumption
+$ xmake run -q
+foo
+```
