@@ -1417,11 +1417,7 @@ output. For previous version of CMake, `xrepo_package` uses only the `--cflags` 
 to get package include directory. Library and cmake module directory are infered from that
 directory, so it maybe unreliable to detect the correct paths.
 
----
-
 #### Step by Step Remote Packaging Tutorial
-
----
 
 ##### Introduction
 
@@ -1449,13 +1445,13 @@ In this example, we’ll create a remote package for a static library named `foo
 
 - Create an xmake project
   
-  ```powershell
+  ```bash
   xmake create -P package_remote_origin
   ```
 
 - Imitate this filetree to prepare files for your package
   
-  ```powershell
+  ```bash
   │   .gitignore
   │   xmake.lua
   │
@@ -1503,114 +1499,107 @@ In this example, we’ll create a remote package for a static library named `foo
 
 - Build your project to see if it compiles
   
-  ```powershell
+  ```bash
   xmake build
   ```
 
 - Create a source repository for your package with a version tag
   
-  ```powershell
+  ```bash
   git init
   ```
   
-  ```powershell
+  ```bash
   git checkout -b package_source
   ```
   
-  ```powershell
+  ```bash
   git add .\src\
   ```
   
-  ```powershell
+  ```bash
   git add xmake.lua
   ```
   
-  ```powershell
+  ```bash
   git commit -m "init"
   ```
   
-  ```powershell
+  ```bash
   git tag v1.0.0 
   ```
   
-  ```powershell
+  ```bash
   gh repo create xmake_remote_package_tutorial_source --public
   ```
   
-  ```powershell
+  ```bash
   git remote add source https://github.com/mccakit/xmake_remote_package_tutorial_source.git
   ```
   
-  ```powershell
+  ```bash
   git push -u source package_source v1.0.0
   ```
 
 - Create a package and point to your source repository in the config file
   
-  ```powershell
+  ```bash
   xmake package -f remote foo
   ```
   
-  ```powershell
+  ```bash
   add_urls("https://github.com/mccakit/xmake_remote_package_tutorial_source.git")
   add_versions("1.0.0", "v1.0.0")
   ```
 
 - Create a package config repository for your package
   
-  ```powershell
+  ```bash
   git rm -r --cached .
   ```
   
-  ```powerquery
+  ```bash
   cp -r build/packages packages
   ```
   
-  ```powershell
+  ```bash
   git checkout -b package_config
   ```
   
-  ```powershell
+  ```bash
   git add .\packages\
   ```
   
-  ```powershell
+  ```bash
   git commit -m "init"
   ```
   
-  ```powershell
+  ```bash
   gh repo create xmake_remote_package_tutorial_config --public
   ```
   
-  ```powershell
+  ```bash
   git remote add config https://github.com/mccakit/xmake_remote_package_tutorial_config.git 
   ```
   
-  ```powershell
+  ```bash
   git push -u config main
   ```
-  
-  ---
 
 - Create a project where you intend on consuming the package
   
-  ```powershell
+  ```bash
   xmake create -P package_consumption
   ```
 
 - Let's consume the package in msys2/clang
   
-  ```powershell
+  ```bash
   clang64
   ```
   
-  ```powershell
-  set_toolchains("clang")
-  ```
-  
-  ---
-  
   ```lua
+  set_toolchains("clang")
   add_repositories("cakit-repo https://github.com/mccakit/xmake_remote_package_tutorial_config.git")
   add_requires("foo >= 1.0.0")
   ```
@@ -1631,11 +1620,9 @@ In this example, we’ll create a remote package for a static library named `foo
   }
   ```
 
----
-
 Congratulations, you have created a remote package and consumed it in xmake! 
 
-```powershell
+```bash
 cakit@DESKTOP-6J44CHE CLANG64 /c/Users/cakit/Desktop/package_remote_consumption
 $ xmake build -q
 cakit@DESKTOP-6J44CHE CLANG64 /c/Users/cakit/Desktop/package_remote_consumption
