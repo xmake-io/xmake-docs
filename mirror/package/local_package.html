@@ -260,6 +260,97 @@ add_requires("cmake::xxx") -- both
 <p>xmake will automatically append the following configuration internally when it looks for cmake packages.</p>
 <pre><code class="lang-cmake">find_package(ABC CONFIG REQUIRED)
 </code></pre>
+<h4 id="stepbysteplocalpackagingtutorial">Step by Step Local Packaging Tutorial</h4>
+<p>In this tutorial we will package a static library called foo, upload it to a GitHub repository and consume it similar to a manner of CMake FetchContent</p>
+<ul>
+<li>Create an xmake project</li>
+</ul>
+<pre><code class="lang-bash">$ xmake create -P package_origin
+</code></pre>
+<ul>
+<li>Imitate this filetree to prepare files for your package</li>
+</ul>
+<pre><code class="lang-bash">│   .gitignore
+│   xmake.lua
+└───src
+  │   main.cpp
+  ├───inc
+  │   └───foo
+  │           foo.hpp
+  └───lib
+      └───foo
+              foo.cpp
+</code></pre>
+<ul>
+<li>Create static library target in xmake</li>
+</ul>
+<pre><code class="lang-lua">target("foo")
+  set_kind("static")
+  add_files("src/lib/foo/*.cpp")
+  add_headerfiles("src/inc/foo/*.hpp")
+  add_includedirs("src/inc/foo", {public = true})
+</code></pre>
+<ul>
+<li>Implement the functionality of your target</li>
+</ul>
+<p>foo.hpp</p>
+<pre><code class="lang-cpp">void foo();
+</code></pre>
+<p>foo.cpp</p>
+<pre><code class="lang-cpp">#include <iostream>
+#include "foo.hpp"
+
+void foo() {
+    std::cout << "foo";
+}
+</code></pre>
+<ul>
+<li>Build your project and create the package</li>
+</ul>
+<pre><code class="lang-bash">$ xmake build
+$ xmake package foo
+</code></pre>
+<ul>
+<li>Move packages artifacts to a custom package repository.</li>
+</ul>
+<pre><code class="lang-bash">$ mkdir xmake_local_package_tutorial
+$ cp -r build/packages xmake_local_package_tutorial/packages
+$ cd xmake_local_package_tutorial
+$ git init
+$ git add .
+$ git commit -a -m "init"
+</code></pre>
+<p>Then push this new package repository to your custom repository, e.g. <code>https://github.com/xxx/xmake_local_package_tutorial.git</code></p>
+<ul>
+<li>Create a project where you intend on consuming the package</li>
+</ul>
+<pre><code class="lang-bash">$ xmake create package_consumption
+</code></pre>
+<ul>
+<li>Consume the package by adding the repository, finding the package and then linking the package to target of your choosing</li>
+</ul>
+<pre><code class="lang-lua">add_repositories("foo https://github.com/xxx/xmake_local_package_tutorial.git")
+add_requires("foo")
+
+target("package_consumption")
+  set_kind("binary")
+  add_files("src/*.cpp")
+  add_packages("foo")
+</code></pre>
+<p>you can also use local repository.</p>
+<pre><code class="lang-lua">add_repositories("foo /localpath/xmake_local_package_tutorial")
+</code></pre>
+<pre><code class="lang-cpp">#include "foo.hpp"
+int main() {
+    foo();
+    return 0;
+}
+</code></pre>
+<p>Congratulations, you have packaged a library and consumed it xmake!</p>
+<pre><code class="lang-bash">$ xmake build
+$ xmake run
+foo
+</code></pre>
 </article>
 </body>
 </html>

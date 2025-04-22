@@ -797,7 +797,7 @@ $ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
 XMAKE_RAMDIR            Set the ramdisk directory.
                         <empty>
 XMAKE_GLOBALDIR         Set the global config directory of xmake.
-                        /Users/ruki/.xmake
+                        /Users/ruki
 XMAKE_ROOT              Allow xmake to run under root.
                         <empty>
 XMAKE_COLORTERM         Set the color terminal environment.
@@ -841,8 +841,8 @@ XMAKE_LOGFILE           Set the log output file path.
 <ul>
 <li>设置全局配置文件根目录</li>
 </ul>
-<p>也就是 <code>xmake g/global</code> 全局配置的存储目录，还有安装包，缓存等其他全局文件，默认都会存储在这个目录下。</p>
-<p>默认路径为：<code>~/.xmake</code>。</p>
+<p>xmake将在该目录下创建 <code>.xmake</code>，作为 <code>xmake g/global</code> 全局配置的存储目录，还有安装包，缓存等其他全局文件，默认都会存储在这个目录下。</p>
+<p>默认路径为：<code>~</code>。</p>
 <h3 id="xmake_root">XMAKE_ROOT</h3>
 <ul>
 <li>允许用户在 root 模式下运行</li>
@@ -887,13 +887,13 @@ XMAKE_LOGFILE           Set the log output file path.
 <ul>
 <li>设置依赖包的安装根目录</li>
 </ul>
-<p>xmake 的远程包安装的全局目录默认是 <code>~/.xmake/packages</code>，但是用户也可以设置这个变量，去单独修改它。</p>
-<p>我们也可以使用 <code>xmake g --pkg_installdir=/xxx</code> 去设置它，效果是一样的。</p>
+<p>xmake 的远程包安装的全局目录默认是 <code>$XMAKE_GLOBALDIR/.xmake/packages</code>，但是用户也可以设置这个变量，去单独修改它。</p>
+<p>我们也可以使用 <code>xmake g --pkg_installdir=/xxx</code> 去设置它，效果是一样的。但环境变量的优先级高于此配置。</p>
 <h3 id="xmake_pkg_cachedir">XMAKE_PKG_CACHEDIR</h3>
 <ul>
 <li>设置依赖包的缓存目录</li>
 </ul>
-<p>默认路径在 <code>~/.xmake/cache</code> 目录，存储包安装过程中的各种缓存文件，比较占存储空间，用户也可以单独设置它。</p>
+<p>默认路径在 <code>$XMAKE_GLOBALDIR/.xmake/cache</code> 目录，存储包安装过程中的各种缓存文件，比较占存储空间，用户也可以单独设置它。</p>
 <p>当然，xmake 在每个月都会自动清理上个月的所有缓存文件。</p>
 <h3 id="xmake_program_dir">XMAKE_PROGRAM_DIR</h3>
 <ul>
@@ -1001,7 +1001,7 @@ a:368>
 <pre><code class="lang-bash">$ export XMAKE_RCFILES=xmakerc.lua
 $ xmake
 </code></pre>
-<p>如果不设置，默认路径为：<code>~/.xmake/xmakerc.lua</code>。</p>
+<p>如果不设置此环境变量，用户可以在<code>/etc/xmakerc.lua</code>、<code>~/xmakerc.lua</code>与<code>$XMAKE_GLOBALDIR/.xmake/xmakerc.lua</code>设置全局配置文件，搜索优先级从高至低排列。</p>
 <h3 id="xmake_logfile">XMAKE_LOGFILE</h3>
 <ul>
 <li>设置日志文件路径</li>
