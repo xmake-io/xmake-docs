@@ -374,7 +374,7 @@ You need to add the repository to your project and and find it, then you can add
 - Consume the package by adding the repository, finding the package and then linking the package to target of your choosing
   
   ```lua
-  add_repositories("foo https://github.com/mccakit/xmake_local_package_tutorial.git")
+  add_repositories("foo https://github.com/xxx/xmake_local_package_tutorial.git")
   add_requires("foo")
   ```
   
@@ -397,7 +397,7 @@ You need to add the repository to your project and and find it, then you can add
 Congratulations, you have packaged a library and consumed it xmake!
 
 ```bash
-PS C:\Users\cakit\Desktop\package_consumption> xmake build -q
-PS C:\Users\cakit\Desktop\package_consumption> xmake run -q
+$ xmake build -q
+$ xmake run -q
 foo
 ```

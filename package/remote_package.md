@@ -1534,7 +1534,7 @@ In this example, we’ll create a remote package for a static library named `foo
   ```
   
   ```bash
-  git remote add source https://github.com/mccakit/xmake_remote_package_tutorial_source.git
+  git remote add source https://github.com/xxx/xmake_remote_package_tutorial_source.git
   ```
   
   ```bash
@@ -1548,7 +1548,7 @@ In this example, we’ll create a remote package for a static library named `foo
   ```
   
   ```bash
-  add_urls("https://github.com/mccakit/xmake_remote_package_tutorial_source.git")
+  add_urls("https://github.com/xxx/xmake_remote_package_tutorial_source.git")
   add_versions("1.0.0", "v1.0.0")
   ```
 
@@ -1579,7 +1579,7 @@ In this example, we’ll create a remote package for a static library named `foo
   ```
   
   ```bash
-  git remote add config https://github.com/mccakit/xmake_remote_package_tutorial_config.git 
+  git remote add config https://github.com/xxx/xmake_remote_package_tutorial_config.git 
   ```
   
   ```bash
@@ -1600,7 +1600,7 @@ In this example, we’ll create a remote package for a static library named `foo
   
   ```lua
   set_toolchains("clang")
-  add_repositories("cakit-repo https://github.com/mccakit/xmake_remote_package_tutorial_config.git")
+  add_repositories("myrepo https://github.com/xxx/xmake_remote_package_tutorial_config.git")
   add_requires("foo >= 1.0.0")
   ```
   
@@ -1623,9 +1623,7 @@ In this example, we’ll create a remote package for a static library named `foo
 Congratulations, you have created a remote package and consumed it in xmake! 
 
 ```bash
-cakit@DESKTOP-6J44CHE CLANG64 /c/Users/cakit/Desktop/package_remote_consumption
 $ xmake build -q
-cakit@DESKTOP-6J44CHE CLANG64 /c/Users/cakit/Desktop/package_remote_consumption
 $ xmake run -q
 foo
 ```
