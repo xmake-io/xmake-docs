@@ -1119,21 +1119,21 @@ for pkgconfig files under package install directories.
 After calling `xrepo_package(foo)`, there are three ways to use `foo` package:
 
 1. Call `find_package(foo)` if package provides cmake config-files.
-   
+
    - Refer to CMake [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) documentation for more details.
 
 2. If the package does not provide cmake config files or find modules
-   
+
    - Following variables can be used to use the pacakge (variable names following cmake
      find modules [standard variable names](https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html#standard-variable-names))
-     
+
      - `foo_INCLUDE_DIRS`
      - `foo_LIBRARY_DIRS`
      - `foo_LIBRARIES`
      - `foo_DEFINITIONS`
-   
+
    - If `DIRECTORY_SCOPE` is specified, `xrepo_package` will run following code
-     
+
      ```cmake
      include_directories(${foo_INCLUDE_DIRS})
      link_directories(${foo_LIBRARY_DIRS})
@@ -1444,121 +1444,121 @@ You need to add the repository that contains the remote package manifest to your
 In this example, we’ll create a remote package for a static library named `foo`, built using **Windows with MSVC**, and then **consume it on MSYS2 using Clang**.
 
 - Create an xmake project
-  
-  ```bash
-  xmake create -P package_remote_origin
-  ```
+
+```bash
+xmake create -P package_remote_origin
+```
 
 - Imitate this filetree to prepare files for your package
-  
-  ```bash
-  │
-  ├── .gitignore
-  ├── xmake.lua
-  └── src
-      ├── main.cpp
-      ├── inc
-      │   └── foo
-      │       └── foo.hpp
-      └── lib
-          └── foo
-              └── foo.cpp
-  ```
+
+```bash
+│
+├── .gitignore
+├── xmake.lua
+└── src
+    ├── main.cpp
+    ├── inc
+    │   └── foo
+    │       └── foo.hpp
+    └── lib
+        └── foo
+            └── foo.cpp
+```
 
 - Create static library target in xmake
-  
-  ```lua
-  target("foo")
-      set_kind("static")
-      add_files("src/lib/foo/*.cpp")
-      add_headerfiles("src/inc/foo/*.hpp")
-      add_includedirs("src/inc/foo", {public = true})
-  ```
+
+```lua
+target("foo")
+    set_kind("static")
+    add_files("src/lib/foo/*.cpp")
+    add_headerfiles("src/inc/foo/*.hpp")
+    add_includedirs("src/inc/foo", {public = true})
+```
 
 - Implement the functionality of your target
-  
-  foo.hpp
-  
-  ```cpp
-  void foo();
-  ```
-  
-  foo.cpp
-  
-  ```cpp
-  #include <iostream>
-  #include "foo.hpp"
-  
-  void foo()
-  {
-      std::cout << "foo";
-  }
-  ```
+
+foo.hpp
+
+```cpp
+void foo();
+```
+
+foo.cpp
+
+```cpp
+#include <iostream>
+#include "foo.hpp"
+
+void foo()
+{
+    std::cout << "foo";
+}
+```
 
 - Build your project to see if it compiles
-  
-  ```bash
-  xmake build
-  ```
+
+```bash
+xmake build
+```
 
 - Create a source repository for your package with a version tag
-  
-  ```bash
-  git init; git checkout -b package_source
-  git add .\src\; git add xmake.lua; git commit -m "init"
-  gh repo create xmake_remote_package_tutorial_source --public
-  git remote add source https://github.com/xxx/xmake_remote_package_tutorial_source.git
-  git tag v1.0.0; git push -u source package_source v1.0.0
-  ```
+
+```bash
+git init; git checkout -b package_source
+git add .\src\; git add xmake.lua; git commit -m "init"
+gh repo create xmake_remote_package_tutorial_source --public
+git remote add source https://github.com/xxx/xmake_remote_package_tutorial_source.git
+git tag v1.0.0; git push -u source package_source v1.0.0
+```
 
 - Create a package and point to your source repository in the config file
-  
-  ```bash
-  xmake package -f remote foo
-  ```
-  
-  ```lua
-  add_urls("https://github.com/xxx/xmake_remote_package_tutorial_source.git")
-  add_versions("1.0.0", "v1.0.0")
-  ```
+
+```bash
+xmake package -f remote foo
+```
+
+```lua
+add_urls("https://github.com/xxx/xmake_remote_package_tutorial_source.git")
+add_versions("1.0.0", "v1.0.0")
+```
 
 - Create a package config repository for your package
-  
-  ```bash
-  git rm -r --cached .; cp -r build/packages packages; git checkout -b package_config
-  git add .\packages\; git commit -m "init";
-  gh repo create xmake_remote_package_tutorial_config --public;
-  git remote add config https://github.com/xxx/xmake_remote_package_tutorial_config.git 
-  git push -u config main
-  ```
+
+```bash
+git rm -r --cached .; cp -r build/packages packages; git checkout -b package_config
+git add .\packages\; git commit -m "init";
+gh repo create xmake_remote_package_tutorial_config --public;
+git remote add config https://github.com/xxx/xmake_remote_package_tutorial_config.git
+git push -u config main
+```
 
 - Create a project where you intend on consuming the package
-  
-  ```bash
-  xmake create -P package_consumption
-  ```
+
+```bash
+xmake create -P package_consumption
+```
 
 - Let's consume the package in msys2/clang
-  
-  ```bash
-  clang64
-  ```
-  
-  ```lua
-  set_toolchains("clang")
-  add_repositories("myrepo https://github.com/xxx/xmake_remote_package_tutorial_config.git")
-  add_requires("foo >= 1.0.0")
-  target("package_consumption")
-      set_kind("binary")
-      add_files("src/*.cpp")
-      add_packages("foo")
-  ```
-  
-  ```cpp
-  #include "foo.hpp"
-  int main()
-  {
-      foo();
-      return 0;
-  }
-  ```
+
+```bash
+clang64
+```
+
+```lua
+set_toolchains("clang")
+add_repositories("myrepo https://github.com/xxx/xmake_remote_package_tutorial_config.git")
+add_requires("foo >= 1.0.0")
+target("package_consumption")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("foo")
+```
+
+```cpp
+#include "foo.hpp"
+int main()
+{
+    foo();
+    return 0;
+}
+```
