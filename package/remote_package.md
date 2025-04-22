@@ -1452,19 +1452,17 @@ In this example, we’ll create a remote package for a static library named `foo
 - Imitate this filetree to prepare files for your package
   
   ```bash
-  │   .gitignore
-  │   xmake.lua
   │
-  └───src
-      │   main.cpp
-      │
-      ├───inc
-      │   └───foo
-      │           foo.hpp
-      │
-      └───lib
-          └───foo
-                  foo.cpp
+  ├── .gitignore
+  ├── xmake.lua
+  └── src
+      ├── main.cpp
+      ├── inc
+      │   └── foo
+      │       └── foo.hpp
+      └── lib
+          └── foo
+              └── foo.cpp
   ```
 
 - Create static library target in xmake
@@ -1506,39 +1504,11 @@ In this example, we’ll create a remote package for a static library named `foo
 - Create a source repository for your package with a version tag
   
   ```bash
-  git init
-  ```
-  
-  ```bash
-  git checkout -b package_source
-  ```
-  
-  ```bash
-  git add .\src\
-  ```
-  
-  ```bash
-  git add xmake.lua
-  ```
-  
-  ```bash
-  git commit -m "init"
-  ```
-  
-  ```bash
-  git tag v1.0.0 
-  ```
-  
-  ```bash
+  git init; git checkout -b package_source
+  git add .\src\; git add xmake.lua; git commit -m "init"
   gh repo create xmake_remote_package_tutorial_source --public
-  ```
-  
-  ```bash
   git remote add source https://github.com/xxx/xmake_remote_package_tutorial_source.git
-  ```
-  
-  ```bash
-  git push -u source package_source v1.0.0
+  git tag v1.0.0; git push -u source package_source v1.0.0
   ```
 
 - Create a package and point to your source repository in the config file
@@ -1547,7 +1517,7 @@ In this example, we’ll create a remote package for a static library named `foo
   xmake package -f remote foo
   ```
   
-  ```bash
+  ```lua
   add_urls("https://github.com/xxx/xmake_remote_package_tutorial_source.git")
   add_versions("1.0.0", "v1.0.0")
   ```
@@ -1555,34 +1525,10 @@ In this example, we’ll create a remote package for a static library named `foo
 - Create a package config repository for your package
   
   ```bash
-  git rm -r --cached .
-  ```
-  
-  ```bash
-  cp -r build/packages packages
-  ```
-  
-  ```bash
-  git checkout -b package_config
-  ```
-  
-  ```bash
-  git add .\packages\
-  ```
-  
-  ```bash
-  git commit -m "init"
-  ```
-  
-  ```bash
-  gh repo create xmake_remote_package_tutorial_config --public
-  ```
-  
-  ```bash
+  git rm -r --cached .; cp -r build/packages packages; git checkout -b package_config
+  git add .\packages\; git commit -m "init";
+  gh repo create xmake_remote_package_tutorial_config --public;
   git remote add config https://github.com/xxx/xmake_remote_package_tutorial_config.git 
-  ```
-  
-  ```bash
   git push -u config main
   ```
 
@@ -1602,9 +1548,6 @@ In this example, we’ll create a remote package for a static library named `foo
   set_toolchains("clang")
   add_repositories("myrepo https://github.com/xxx/xmake_remote_package_tutorial_config.git")
   add_requires("foo >= 1.0.0")
-  ```
-  
-  ```lua
   target("package_consumption")
       set_kind("binary")
       add_files("src/*.cpp")
@@ -1619,11 +1562,3 @@ In this example, we’ll create a remote package for a static library named `foo
       return 0;
   }
   ```
-
-Congratulations, you have created a remote package and consumed it in xmake! 
-
-```bash
-$ xmake build -q
-$ xmake run -q
-foo
-```
