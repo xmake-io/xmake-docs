@@ -1,4 +1,4 @@
-### Default packaging format
+### Generate local package
 
 After version 2.5.5, we have provided a new local package packaging solution that will seamlessly integrate `add_requires` and `add_packages`.
 
@@ -76,6 +76,120 @@ Here is the complete [test example](https://github.com/xmake-io/xmake/blob/dev/t
  -Wl,-x -lfoo -lsub -ladd -lz
 ```
 
+#### Step by Step Local Packaging Tutorial
+
+In this tutorial we will package a static library called foo, upload it to a GitHub repository and consume it similar to a manner of CMake FetchContent
+
+- Create an xmake project
+
+```bash
+$ xmake create -P package_origin
+```
+
+- Imitate this filetree to prepare files for your package
+
+```bash
+│   .gitignore
+│   xmake.lua
+└───src
+  │   main.cpp
+  ├───inc
+  │   └───foo
+  │           foo.hpp
+  └───lib
+      └───foo
+              foo.cpp
+```
+
+- Create static library target in xmake
+
+```lua
+target("foo")
+  set_kind("static")
+  add_files("src/lib/foo/*.cpp")
+  add_headerfiles("src/inc/foo/*.hpp")
+  add_includedirs("src/inc/foo", {public = true})
+```
+
+- Implement the functionality of your target
+
+foo.hpp
+
+```cpp
+void foo();
+```
+
+foo.cpp
+
+```cpp
+#include <iostream>
+#include "foo.hpp"
+
+void foo() {
+    std::cout << "foo";
+}
+```
+
+- Build your project and create the package
+
+```bash
+$ xmake build
+$ xmake package foo
+```
+
+- Move packages artifacts to a custom package repository.
+
+```bash
+$ mkdir my_custom_binary_package_repo
+$ cp -r build/packages my_custom_binary_package_repo/packages
+$ cd my_custom_binary_package_repo
+$ git init
+$ git add .
+$ git commit -a -m "init"
+```
+
+Then push this new package repository to your custom repository, e.g. `https://github.com/xxx/my_custom_binary_package_repo.git`
+
+- Create a project where you intend on consuming the package
+
+```bash
+$ xmake create package_consumption
+```
+
+- Consume the package by adding the repository, finding the package and then linking the package to target of your choosing
+
+```lua
+add_repositories("foo https://github.com/xxx/my_custom_binary_package_repo.git")
+add_requires("foo")
+
+target("package_consumption")
+  set_kind("binary")
+  add_files("src/*.cpp")
+  add_packages("foo")
+```
+
+you can also use local repository.
+
+```lua
+add_repositories("foo /localpath/my_custom_binary_package_repo")
+```
+
+```cpp
+#include "foo.hpp"
+int main() {
+    foo();
+    return 0;
+}
+```
+
+Congratulations, you have packaged a library and consumed it xmake!
+
+```bash
+$ xmake build
+$ xmake run
+foo
+```
+
 ### Generate remote package
 
 Out of the local package format, `xmake package` now also supports generating remote packages, so that users can quickly submit them to remote warehouses.
@@ -120,6 +234,146 @@ $ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepag
 ```
 
 xmake will also read the relevant configuration information from the target's `set_license` and `set_version` configurations.
+
+#### Step by Step Remote Packaging Tutorial
+
+##### Introduction
+
+A remote package is a package that is compiled from source. If you're developing cross-platform libraries, remote packages allow you to avoid manually compiling for every library and platform.
+
+To create remote packages:
+1. Upload your source code to a repository.
+2. In a **separate repository**, create a remote package manifest that points to your source repository.
+
+To consume remote packages, you need to add the repository that contains the remote package manifest to your project, find the package, and then add it to your desired target. 
+
+##### Example
+
+In this example, we’ll create a remote package for a static library named `foo`, built using **Windows with MSVC**, and then **consume it on MSYS2 using Clang**.
+
+- Create an xmake project
+
+```bash
+xmake create package_remote_origin
+```
+
+- Imitate this filetree to prepare files for your package
+
+```bash
+│
+├── .gitignore
+├── xmake.lua
+└── src
+    ├── main.cpp
+    ├── inc
+    │   └── foo
+    │       └── foo.hpp
+    └── lib
+        └── foo
+            └── foo.cpp
+```
+
+- Create static library target in xmake
+
+```lua
+target("foo")
+    set_kind("static")
+    add_files("src/lib/foo/*.cpp")
+    add_headerfiles("src/inc/foo/*.hpp")
+    add_includedirs("src/inc/foo", {public = true})
+```
+
+- Implement the functionality of your target
+
+foo.hpp
+
+```cpp
+void foo();
+```
+
+foo.cpp
+
+```cpp
+#include <iostream>
+#include "foo.hpp"
+
+void foo() {
+    std::cout << "foo";
+}
+```
+
+- Create a package and point to your source repository in the config file
+
+```bash
+xmake package -f remote foo
+```
+
+- Create a source repository for your package with a version tag
+
+For example, you can pust to `https://github.com/xxx/foo_remote_package_source.git` with tag v1.0.0
+
+Then edit package configuration to add the given version.
+
+```lua
+package("foo")
+    add_urls("https://github.com/xxx/foo_remote_package_source.git")
+    add_versions("1.0.0", "v1.0.0")
+```
+
+Or you can use .tar.gz as git url and add it's sha256 sum to versions.
+
+- Create a package config repository for your package
+
+```bash
+$ mkdir mycustom_remote_package_repo
+$ mv build/packages mycustom_remote_package_repo
+$ cd mycustom_remote_package_repo
+$ git init
+$ git add .
+$ git commit -a -m "init repository"
+```
+
+You can push this repository to https://github.com/xxx/mycustom_remote_package_repo.git
+
+- Create a project where you intend on consuming the package
+
+```bash
+$ xmake create package_consumption
+```
+
+- Consume the package by adding the repository, finding the package and then linking the package to target of your choosing
+
+```lua
+add_repositories("foo https://github.com/xxx/mycustom_remote_package_repo.git")
+add_requires("foo")
+
+target("package_consumption")
+  set_kind("binary")
+  add_files("src/*.cpp")
+  add_packages("foo")
+```
+
+you can also use local repository.
+
+```lua
+add_repositories("foo /localpath/mycustom_remote_package_repo")
+```
+
+```cpp
+#include "foo.hpp"
+int main() {
+    foo();
+    return 0;
+}
+```
+
+Congratulations, you have packaged a library and consumed it xmake!
+
+```bash
+$ xmake build
+$ xmake run
+foo
+```
 
 ### Find packages from CMake
 
@@ -245,118 +499,4 @@ xmake will automatically append the following configuration internally when it l
 
 ```cmake
 find_package(ABC CONFIG REQUIRED)
-```
-
-#### Step by Step Local Packaging Tutorial
-
-In this tutorial we will package a static library called foo, upload it to a GitHub repository and consume it similar to a manner of CMake FetchContent
-
-- Create an xmake project
-
-```bash
-$ xmake create -P package_origin
-```
-
-- Imitate this filetree to prepare files for your package
-
-```bash
-│   .gitignore
-│   xmake.lua
-└───src
-  │   main.cpp
-  ├───inc
-  │   └───foo
-  │           foo.hpp
-  └───lib
-      └───foo
-              foo.cpp
-```
-
-- Create static library target in xmake
-
-```lua
-target("foo")
-  set_kind("static")
-  add_files("src/lib/foo/*.cpp")
-  add_headerfiles("src/inc/foo/*.hpp")
-  add_includedirs("src/inc/foo", {public = true})
-```
-
-- Implement the functionality of your target
-
-foo.hpp
-
-```cpp
-void foo();
-```
-
-foo.cpp
-
-```cpp
-#include <iostream>
-#include "foo.hpp"
-
-void foo() {
-    std::cout << "foo";
-}
-```
-
-- Build your project and create the package
-
-```bash
-$ xmake build
-$ xmake package foo
-```
-
-- Move packages artifacts to a custom package repository.
-
-```bash
-$ mkdir xmake_local_package_tutorial
-$ cp -r build/packages xmake_local_package_tutorial/packages
-$ cd xmake_local_package_tutorial
-$ git init
-$ git add .
-$ git commit -a -m "init"
-```
-
-Then push this new package repository to your custom repository, e.g. `https://github.com/xxx/xmake_local_package_tutorial.git`
-
-- Create a project where you intend on consuming the package
-
-```bash
-$ xmake create package_consumption
-```
-
-- Consume the package by adding the repository, finding the package and then linking the package to target of your choosing
-
-```lua
-add_repositories("foo https://github.com/xxx/xmake_local_package_tutorial.git")
-add_requires("foo")
-
-target("package_consumption")
-  set_kind("binary")
-  add_files("src/*.cpp")
-  add_packages("foo")
-```
-
-you can also use local repository.
-
-```lua
-add_repositories("foo /localpath/xmake_local_package_tutorial")
-```
-
-```cpp
-#include "foo.hpp"
-int main() {
-    foo();
-    return 0;
-}
-```
-
-Congratulations, you have packaged a library and consumed it xmake!
-
-```bash
-$ xmake build
-$ xmake run
-foo
 ```
