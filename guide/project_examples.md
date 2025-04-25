@@ -857,8 +857,7 @@ Vector size: 10000
 Vector add successfully completed on device.
 ```
 
-
-For the complete [example]((https://github.com/mccakit/xmake_sycl))
+For the complete [example](https://github.com/mccakit/xmake_sycl)
 
 > At the moment, only the dpcpp toolchain is functional
 
