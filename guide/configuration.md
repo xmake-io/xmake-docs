@@ -371,9 +371,7 @@ so.2, for GNU/Linux 3.2.0, not stripped
 ```
 
 Let's test it in our virtual machine
-![](https://cdn.discordapp.com/attachments/785369106199216130/1368567284213223584/image.png?ex=681a029b&is=6818b11b&hm=4cc39652dc94ac17602118ce88e311b58c777d740aeed00bcab9e79aa7aac189&=)
-
-
+![loading-ag-2634](../assets/img/guide/cross_vm.png)
 
 ### Project description settings
 
