@@ -313,6 +313,7 @@ $ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
 ```
 
 **Important considerations**:
+
 - Make sure the host and target Qt versions match, or it may cause build issues.
 - Native deployment tools like `windeployqt` and `macdeployqt` must run on their respective platforms, so cross-platform tasks such as `xmake install` may fail.
 
@@ -628,11 +629,11 @@ $ xmake l private.tools.codesign.dump
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AppIDName</key>
-	<string>XC org tboox test</string>
-	<key>ApplicationIdentifierPrefix</key>
-	<array>
-	<string>43AAQM58X3</string>
+    <key>AppIDName</key>
+    <string>XC org tboox test</string>
+    <key>ApplicationIdentifierPrefix</key>
+    <array>
+    <string>43AAQM58X3</string>
 ...
 ```
 
@@ -1106,12 +1107,12 @@ main.rs
 
 ```rust
 extern "C" {
-	fn add(a: i32, b: i32) -> i32;
+    fn add(a: i32, b: i32) -> i32;
 }
 
 fn main() {
     unsafe {
-	    println!("add(1, 2) = {}", add(1, 2));
+        println!("add(1, 2) = {}", add(1, 2));
     }
 }
 ```
@@ -1466,7 +1467,7 @@ package("foo")
     on_install(function(package)
         import("package.tools.xmake").install(package, {})
     end)
-````
+```
 
 #### Integrating the C++ Modules package
 
@@ -1559,6 +1560,45 @@ There is also experimental support for non-standard std modules in lower version
 It is still possible to experiment with xmake to build std modules in lower versions of clang, even though it is probably still a toy (and will encounter many problems).
 
 For a discussion see: [#3255](https://github.com/xmake-io/xmake/pull/3255)
+
+##### Hello, Modules – A Step-by-Step Walkthrough
+
+1. Install the llvm toolchain, compiling manually is recommended, make sure you have libcxx installed
+
+2. Patch your llvm toolchain,by cloning this [repo](https://github.com/mccakit/xmake_llvm_patch) and putting its contents to C:\llvm\share\libc++\v1\std
+
+3. Update your xmake installation to a branch that fixes modules and cross compilation for windows with
+   
+   ```bash
+   $ xmake update -s github:Arthapz/xmake#cakit-branch
+   ```
+
+4. Enable cpp modules in your xmake.lua file
+   
+   ```lua
+   set_languages("cxxlatest")
+   set_policy("build.c++.modules", true)
+   target("foo")
+       set_kind("binary")
+       add_files("src/main.cpp")
+   ```
+
+5. Build and enjoy the results
+   
+   ```cpp
+   import std;
+   
+   int main()
+   {
+     std::cout << "Hi";
+   }
+   ```
+   
+   ```bash
+   $ xmake f --toolchain=llvm --runtimes="c++_shared" --sdk=C:/llvm
+   $ xmake build
+   Hi
+   ```
 
 #### Gcc
 
@@ -1880,7 +1920,6 @@ $ xmake -v
 WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check will be entirely skipped.
 /usr/bin/ccache /usr/bin/gcc -c -m64 -O2 -std=gnu89 -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include -I/usr /src/linux-headers-5.11.0-41-generic/arch/x86/include/generated -I/usr/src/linux-headers-5.11.0-41-generic/include -I/usr/src/linux -headers-5.11.0-41-generic/arch/x86/include/uapi -I/usr/src/linux-headers-5.11.0-41-generic/arch/x86/include/generated/uapi -I/usr /src/linux-headers-5.11.0-41-generic/include/uapi -I/usr/src/linux-headers-5.11.0-41-generic/include/generated/uapi -D__KERNEL__ -DMODULE -DKBUILD_MODNAME=\"hello\" -DCONFIG_X86_X32_ABI -isystem /usr/lib/gcc/x86_64-linux-gnu/10/include -include /usr/src/linux-headers- 5.11.0-41-generic/include/linux/kconfig.h -include /usr/src/linux-headers-5.11.0-41-generic/include/linux/compiler_types.h -nostdinc -mno-sse -mno- mmx -mno-sse2 -mno-3dnow -mno-avx -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red- zone -mcmodel=kernel -mindirect-branch=thunk-extern -mindirect-branch-register -mrecord-mcount -fmacro-prefix-map=./= -fno-strict-aliasing -fno-common -fshort-wchar -fno- PIE -fcf-protection=none -falign-jumps=1 -falign-loops=1 -fno-asynchronous-unwind-tables -fno-jump-tables -fno-delete-null-pointer-checks -fno-allow-store- data-races -fno-reorder-blocks -fno-ipa-cp-clone -fno-partial-inlining -fstack-protector-strong -fno-inline-functions-called-once -falign-functions=32 -fno-strict- overflow -fno-stack-check -fconserve-stack -o build/.o bjs/hello/linux/x86_64/release/build/linux/x86_64/release/hello.ko.mod.o build/.objs/hello/linux/x86_64/release/build/linux/x86_64/release/hello.ko. mod.c
 /usr/bin/ld -m elf_x86_64 -r --build-id=sha1 -T /usr/src/linux-headers-5.11.0-41-generic/scripts/module.lds -o build/linux/x86_64/ release/hello.ko build/.objs/hello/linux/x86_64/release/build/linux/x86_64/release/hello.ko.o build/.objs/hello/linux/x86_64/release/build/linux/x86_64/ release/hello.ko.mod.o
-
 ```
 
 Through the `add_requires("linux-headers", {configs = {driver_modules = true}})` configuration package, xmake will automatically find the corresponding linux-headers package from the system first.
@@ -1967,7 +2006,6 @@ WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check wil
 /usr/bin/ccache /mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc -c -O2 -std=gnu89 -I/home/ruki/. xmake/packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805/arch/arm/include -I/home/ruki/.xmake/packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805/arch/arm/include /generated -I/home/ruki/.xmake/packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805/include -I/home/ruki/.xmake/packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805 /arch/arm/include/uapi -I/home/ruki/.xmake/packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805/arch/arm/include/generated/uapi -I/home/ruki/.xmake /packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805/include/uapi -I/home/ruki/.xmake/packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805/include/generated/uapi -D__KERNEL__ DMODULE -DKBUILD_MODNAME=\"hello\" -D__LINUX_ARM_ARCH__=6 -isystem /mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf /bin/../lib/gcc/arm-linux-gnueabihf/7.5.0/include -include /home/ruki/.xmake/packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805/include/linux/kconfig .h -include /home/ruki/.xmake/packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805/include/linux/compiler_types.h -nostdinc -fno-strict-aliasing -fno-common -fshort-wchar- fno-PIE -falign-jumps=1 -falign-loops=1 -fno-asynchronous-unwind-tables -fno-jump-tables -fno-delete-null-pointer-checks -fno-reorder-blocks -fno-ipa- cp-clone -fno-partial-inlining -fstack-protector-strong -fno-inline-functions-called-once -falign-functions=32 -fno-strict-overflow -fno-stack-check -fconserve-stack -mbig- endian -mabi=aapcs-linux -mfpu=vfp -marm -march=armv6k -mtune=arm1136j-s -msoft-float -Uarm -o build/.objs/hello/cross/arm/release/build/cross/arm/ release/hello.ko.mod.o build/.objs/hello/cross/arm/release/build/cross/arm/release/hello.ko.mod.c
 /mnt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ld -EB --be8 -r --build-id=sha1 -T /home/ruki/. xmake/packages/l/linux-headers/5.10.46/7695a30b7add4d3aa4685cbac6815805/scripts/module.lds -o build/cross/arm/release/hello.ko build/.objs/hello/cross/arm/release/build/cross /arm/release/hello.ko.o build/.objs/hello/cross/arm/release/build/cross/arm/release/hello.ko.mod.o
 [100%]: build ok!
-
 ```
 
 #### Build Arm64 driver module
@@ -2060,7 +2098,6 @@ Currently supported values and mappings are as follows:
 ```
 
 #### Set custom flags
-
 
 ```lua
 add_requires("iverilog")

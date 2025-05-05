@@ -100,7 +100,6 @@ $ xmake
 
 The `--qt` parameter setting is optional, usually xmake can detect the sdk path of qt.
 
-
 One thing to note is that there is a correspondence between the versions of Emscripten and Qt SDK. If the version does not match, there may be compatibility issues between Qt/Wasm.
 
 Regarding the version correspondence, you can see: [https://wiki.qt.io/Qt_for_WebAssembly](https://wiki.qt.io/Qt_for_WebAssembly)
@@ -113,7 +112,6 @@ In addition to emscripten, there is a common wasi-sdk toolchain for building was
 $ xmake f -p wasm --toolchain=wasi
 $ xmake
 ```
-
 
 ### Apple WatchOS
 
@@ -295,8 +293,87 @@ We can also configure some additional compilation and linking options through `-
 e.g:
 
 ```bash
-$ xmake f -p cross --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread"
+$ xmake f -p cross --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread" 
 ```
+
+### Step by Step Cross Compilation Tutorial
+
+#### Introduction
+
+Cross-compilation is the process of compiling code for a target architecture that differs from the one on your local machine. To do this, you must compile your source files for the desired target architecture and link them against the appropriate system libraries, typically provided through an SDK or sysroot.
+
+#### Why Cross Compile?
+
+* Native compilation isn’t always feasible, especially in fields like embedded systems development
+
+* Cross-compiling on a powerful development machine is often much faster than compiling directly on the target device
+
+* Relying solely on native compilation is impractical—there are many operating systems and architectures, and you can’t realistically own and maintain 20 different machines just to support them all
+
+#### How do you cross compile on xmake?
+
+1. Use a toolchain that supports cross-compilation.
+
+2. Set the platform to `cross` and specify the target triplet using the `--cross` parameter
+
+3. Provide the appropriate SDK or sysroot using the `--sdk` parameter
+
+#### Example
+
+In this example, you'll use cross compilation to run a hello world on a debian mint virtual machine. I'm assuming your host compiler is on windows.
+
+##### Getting the sysroot
+
+1. Install wsl, docker, and rancher desktop
+
+2. Pull the `debian:bookworm` image, update the package list, and install `g++`, which includes the C++ standard library we'll be linking against
+   
+   ```bash
+   $ docker pull debian:bookworm
+   $ docker run -it --name=deb debian:bookworm
+   $ apt update
+   $ apt install g++
+   $ exit
+   $ docker export deb -o deb.tar
+   ```
+
+##### Fixing the cross compilation on Windows
+
+```bash
+$ xmake update -s github:Arthapz/xmake#cakit-branch
+```
+
+##### Putting it together
+
+```lua
+set_languages("cxxlatest")
+target("foo")
+    set_kind("binary")
+    add_files("src/main.cpp")
+```
+
+```cpp
+#include <iostream>
+
+int main()
+{
+  std::cout << "Hi";
+}
+```
+
+```bash
+$ xmake config --plat=cross --cross=x86_64-pc-linux-gnu --toolchain=llvm --sdk=C:/
+dev/sysroots/deb2
+$ wsl
+$ file ./build/cross/x86_64/release/foo
+./foo: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.
+so.2, for GNU/Linux 3.2.0, not stripped
+```
+
+Let's test it in our virtual machine
+![](https://cdn.discordapp.com/attachments/785369106199216130/1368567284213223584/image.png?ex=681a029b&is=6818b11b&hm=4cc39652dc94ac17602118ce88e311b58c777d740aeed00bcab9e79aa7aac189&=)
+
+
 
 ### Project description settings
 
@@ -599,51 +676,51 @@ $ xmake
 
 ### Common Cross-compilation configuration
 
-| Configuration Option         | Description                                  |
-| ---------------------------- | -------------------------------------------- |
-| [--sdk](#-sdk)               | Set the sdk root directory of toolchains     |
-| [--bin](#-bin)               | Set the `bin` directory of toolchains        |
-| [--cross](#-cross)           | Set the prefix of compilation tools          |
-| [--as](#-as)                 | Set `asm` assembler                          |
-| [--cc](#-cc)                 | Set `c` compiler                             |
-| [--cxx](#-cxx)               | Set `c++` compiler                           |
-| [--mm](#-mm)                 | Set `objc` compiler                          |
-| [--mxx](#-mxx)               | Set `objc++` compiler                        |
-| [--sc](#-sc)                 | Set `swift` compiler                         |
-| [--gc](#-gc)                 | Set `golang` compiler                        |
-| [--dc](#-dc)                 | Set `dlang` compiler                         |
-| [--rc](#-rc)                 | Set `rust` compiler                          |
-| [--cu](#-cu)                 | Set `cuda` compiler                          |
-| [--ld](#-ld)                 | Set `c/c++/objc/asm` linker                  |
-| [--sh](#-sh)                 | Set `c/c++/objc/asm` shared library linker   |
-| [--ar](#-ar)                 | Set `c/c++/objc/asm` static library archiver |
-| [--scld](#-scld)             | Set `swift` linker                           |
-| [--scsh](#-scsh)             | Set `swift` shared library linker            |
-| [--gcld](#-gcld)             | Set `golang` linker                          |
-| [--gcar](#-gcar)             | Set `golang` static library archiver         |
-| [--dcld](#-dcld)             | Set `dlang` linker                           |
-| [--dcsh](#-dcsh)             | Set `dlang` shared library linker            |
-| [--dcar](#-dcar)             | Set `dlang` static library archiver          |
-| [--rcld](#-rcld)             | Set `rust` linker                            |
-| [--rcsh](#-rcsh)             | Set `rust` shared library linker             |
-| [--rcar](#-rcar)             | Set `rust` static library archiver           |
-| [--cu-ccbin](#-cu-ccbin)     | Set `cuda` host compiler                     |
-| [--culd](#-culd)             | Set `cuda` linker                            |
-| [--asflags](#-asflags)       | Set `asm` assembler option                   |
-| [--cflags](#-cflags)         | Set `c` compiler option                      |
-| [--cxflags](#-cxflags)       | Set `c/c++` compiler option                  |
-| [--cxxflags](#-cxxflags)     | Set `c++` compiler option                    |
-| [--mflags](#-mflags)         | Set `objc` compiler option                   |
-| [--mxflags](#-mxflags)       | Set `objc/c++` compiler option               |
-| [--mxxflags](#-mxxflags)     | Set `objc++` compiler option                 |
-| [--scflags](#-scflags)       | Set `swift` compiler option                  |
-| [--gcflags](#-gcflags)       | Set `golang` compiler option                 |
-| [--dcflags](#-dcflags)       | Set `dlang` compiler option                  |
-| [--rcflags](#-rcflags)       | Set `rust` compiler option                   |
-| [--cuflags](#-cuflags)       | Set `cuda` compiler option                   |
-| [--ldflags](#-ldflags)       | Set  linker option                           |
-| [--shflags](#-shflags)       | Set  shared library linker option            |
-| [--arflags](#-arflags)       | Set  static library archiver option          |
+| Configuration Option     | Description                                  |
+| ------------------------ | -------------------------------------------- |
+| [--sdk](#-sdk)           | Set the sdk root directory of toolchains     |
+| [--bin](#-bin)           | Set the `bin` directory of toolchains        |
+| [--cross](#-cross)       | Set the prefix of compilation tools          |
+| [--as](#-as)             | Set `asm` assembler                          |
+| [--cc](#-cc)             | Set `c` compiler                             |
+| [--cxx](#-cxx)           | Set `c++` compiler                           |
+| [--mm](#-mm)             | Set `objc` compiler                          |
+| [--mxx](#-mxx)           | Set `objc++` compiler                        |
+| [--sc](#-sc)             | Set `swift` compiler                         |
+| [--gc](#-gc)             | Set `golang` compiler                        |
+| [--dc](#-dc)             | Set `dlang` compiler                         |
+| [--rc](#-rc)             | Set `rust` compiler                          |
+| [--cu](#-cu)             | Set `cuda` compiler                          |
+| [--ld](#-ld)             | Set `c/c++/objc/asm` linker                  |
+| [--sh](#-sh)             | Set `c/c++/objc/asm` shared library linker   |
+| [--ar](#-ar)             | Set `c/c++/objc/asm` static library archiver |
+| [--scld](#-scld)         | Set `swift` linker                           |
+| [--scsh](#-scsh)         | Set `swift` shared library linker            |
+| [--gcld](#-gcld)         | Set `golang` linker                          |
+| [--gcar](#-gcar)         | Set `golang` static library archiver         |
+| [--dcld](#-dcld)         | Set `dlang` linker                           |
+| [--dcsh](#-dcsh)         | Set `dlang` shared library linker            |
+| [--dcar](#-dcar)         | Set `dlang` static library archiver          |
+| [--rcld](#-rcld)         | Set `rust` linker                            |
+| [--rcsh](#-rcsh)         | Set `rust` shared library linker             |
+| [--rcar](#-rcar)         | Set `rust` static library archiver           |
+| [--cu-ccbin](#-cu-ccbin) | Set `cuda` host compiler                     |
+| [--culd](#-culd)         | Set `cuda` linker                            |
+| [--asflags](#-asflags)   | Set `asm` assembler option                   |
+| [--cflags](#-cflags)     | Set `c` compiler option                      |
+| [--cxflags](#-cxflags)   | Set `c/c++` compiler option                  |
+| [--cxxflags](#-cxxflags) | Set `c++` compiler option                    |
+| [--mflags](#-mflags)     | Set `objc` compiler option                   |
+| [--mxflags](#-mxflags)   | Set `objc/c++` compiler option               |
+| [--mxxflags](#-mxxflags) | Set `objc++` compiler option                 |
+| [--scflags](#-scflags)   | Set `swift` compiler option                  |
+| [--gcflags](#-gcflags)   | Set `golang` compiler option                 |
+| [--dcflags](#-dcflags)   | Set `dlang` compiler option                  |
+| [--rcflags](#-rcflags)   | Set `rust` compiler option                   |
+| [--cuflags](#-cuflags)   | Set `cuda` compiler option                   |
+| [--ldflags](#-ldflags)   | Set  linker option                           |
+| [--shflags](#-shflags)   | Set  shared library linker option            |
+| [--arflags](#-arflags)   | Set  static library archiver option          |
 
 <p class="tip">
 if you want to known more options, please run: `xmake f --help`。
@@ -862,7 +939,6 @@ $ xmake f --menu --export=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
 ```
 
-
 ### Import configuration (with menu)
 
 ```bash
@@ -950,11 +1026,11 @@ export XMAKE_ROOT=y
 
 Currently, these values ​​can be set:
 
-| Value | Description |
-| --- | --- |
-| nocolor | Disable color output |
-| color8 | 8-color output support |
-| color256 | 256 color output support |
+| Value     | Description               |
+| --------- | ------------------------- |
+| nocolor   | Disable color output      |
+| color8    | 8-color output support    |
+| color256  | 256 color output support  |
 | truecolor | True color output support |
 
 Generally, users don't need to set them, Xmake will automatically detect the color range supported by the user terminal. If the user doesn't want to output colors, they can set nocolor to disable them globally.
