@@ -322,21 +322,6 @@ Cross-compilation is the process of compiling code for a target architecture tha
 
 In this example, you'll use cross compilation to run a hello world on a debian mint virtual machine. I'm assuming your host compiler is on windows.
 
-##### Getting the sysroot
-
-1. Install wsl, docker, and rancher desktop
-
-2. Pull the `debian:bookworm` image, update the package list, and install `g++`, which includes the C++ standard library we'll be linking against
-   
-   ```bash
-   $ docker pull debian:bookworm
-   $ docker run -it --name=deb debian:bookworm
-   $ apt update
-   $ apt install g++
-   $ exit
-   $ docker export deb -o deb.tar
-   ```
-
 ##### Fixing the cross compilation on Windows
 
 ```bash
@@ -344,22 +329,6 @@ $ xmake update -s github:Arthapz/xmake#cakit-branch
 ```
 
 ##### Putting it together
-
-```lua
-set_languages("cxxlatest")
-target("foo")
-    set_kind("binary")
-    add_files("src/main.cpp")
-```
-
-```cpp
-#include <iostream>
-
-int main()
-{
-  std::cout << "Hi";
-}
-```
 
 ```bash
 $ xmake config --plat=cross --cross=x86_64-pc-linux-gnu --toolchain=llvm --sdk=C:/

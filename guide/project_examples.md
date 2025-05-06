@@ -1569,36 +1569,28 @@ For a discussion see: [#3255](https://github.com/xmake-io/xmake/pull/3255)
 
 3. Update your xmake installation to a branch that fixes modules and cross compilation for windows with
    
-   ```bash
-   $ xmake update -s github:Arthapz/xmake#cakit-branch
-   ```
+```bash
+$ xmake update -s github:Arthapz/xmake#cakit-branch
+```
 
 4. Enable cpp modules in your xmake.lua file
    
-   ```lua
-   set_languages("cxxlatest")
-   set_policy("build.c++.modules", true)
-   target("foo")
-       set_kind("binary")
-       add_files("src/main.cpp")
-   ```
+```lua
+set_languages("cxxlatest")
+set_policy("build.c++.modules", true)
+```
 
 5. Build and enjoy the results
    
-   ```cpp
-   import std;
+```cpp
+import std;
+```
    
-   int main()
-   {
-     std::cout << "Hi";
-   }
-   ```
-   
-   ```bash
-   $ xmake f --toolchain=llvm --runtimes="c++_shared" --sdk=C:/llvm
-   $ xmake build
-   Hi
-   ```
+```bash
+$ xmake f --toolchain=llvm --runtimes="c++_shared" --sdk=C:/llvm
+$ xmake build
+Hi
+```
 
 #### Gcc
 
