@@ -486,7 +486,7 @@ option("test")
 我们也可以通过 `is_config` 获取绑定到option的输出。
 
 ```lua
-if is_config("test", "8") tben
+if is_config("test", "8") then
     -- xxx
 end
 ```
