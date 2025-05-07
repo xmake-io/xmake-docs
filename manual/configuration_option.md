@@ -487,7 +487,7 @@ option("test")
 We can also get the output bound to the option through `is_config`.
 
 ```lua
-if is_config("test", "8") tben
+if is_config("test", "8") then
      - xxx
 end
 ```
