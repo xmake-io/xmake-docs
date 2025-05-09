@@ -249,6 +249,20 @@ toolchain("myclang")
     set_toolset("as", "clang")
 ```
 
+If you provide multiple tool options, they will be searched in order.
+For example, the following will attempt to find `clang` and will then try to use `gcc` if `clang` cannot be found:
+
+```lua
+    set_toolset("cc", "clang", "gcc")
+```
+
+If your tool has the same name as a supported tool but a different name, you can specify this as `{generic tool name}@{tool name}`.
+For example the following will look for a C compiler called `clang-mytarget` suffix but will then assume that the tool behaves like clang:
+
+```lua
+    set_toolset("cc", "clang@clang-mytarget")
+```
+
 For details about this interface, you can see: [target.set_toolset](/manual/project_target?id=targetset_toolset)
 
 ### toolchain:set_sdkdir
