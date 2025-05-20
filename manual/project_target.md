@@ -2610,8 +2610,8 @@ For a detailed description of this interface, see: https://github.com/xmake-io/x
 
 2.2.5 version of the new interface, used to set the corresponding header file for each target, generally used for the `xmake install/uninstall` command.
 
-This interface is used in almost the same way as the [add_installfiles](#targetadd_installfiles) interface. It can be used as a Tianjian installation file, but this interface is only used to install header files.
-Therefore, it is much easier to use than `add_installfiles`. By default, prefixfix is not set, and the header files are automatically installed into the corresponding `include` subdirectory.
+This interface is used in almost the same way as the [add_installfiles](#targetadd_installfiles) interface. But it is provided for installing header files.
+It is not required to set the `prefixdir` option. The header files are installed into the corresponding `include` subdirectory by default.
 
 And this interface for the `xmake project -k vs201x` and other plug-in generated IDE files, will also add the corresponding header file into it.
 
