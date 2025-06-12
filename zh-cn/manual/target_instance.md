@@ -88,6 +88,18 @@ target:is_arch("x64", "x86_64")
 os.cp(target:targetfile(), "/tmp/")
 ```
 
+#### target:artifactfile
+
+- 获取目标的产物文件
+
+目前只能获取 windows DLL 的 implib 文件输出路径。
+
+```lua
+target:artifactfile("implib")
+```
+
+不过，后期有可能会扩展到其他类型的产物文件路径获取。
+
 #### target:targetdir
 
 - 获取目标文件的输出目录

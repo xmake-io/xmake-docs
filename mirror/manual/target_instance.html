@@ -159,6 +159,14 @@ target:is_arch("x64", "x86_64")
 <p>It is mainly used to obtain the output path of static, shared, and binary object program files.</p>
 <pre><code class="lang-lua">os.cp(target:targetfile(), "/tmp/")
 </code></pre>
+<h4 id="targetartifactfile">target:artifactfile</h4>
+<ul>
+<li>Get the artifact file of the target</li>
+</ul>
+<p>Currently, only the implib file output path of Windows DLL can be obtained.</p>
+<pre><code class="lang-lua">target:artifactfile("implib")
+</code></pre>
+<p>However, it may be extended to other types of artifact file path acquisition in the future.</p>
 <h4 id="targettargetdir">target:targetdir</h4>
 <ul>
 <li>Get the output directory of the target file</li>

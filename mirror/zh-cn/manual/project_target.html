@@ -748,9 +748,13 @@ set_fpmodels("precise") -- default
 <pre><code class="lang-lua">target("test")
     set_targetdir("/tmp/build")
 </code></pre>
-<p><p class="tip"><br>如果显示设置了<code>set_targetdir</code>， 那么优先选择<code>set_targetdir</code>指定的目录为目标文件的输出目录。<br></p>
-
-</p>
+<p>!> 如果显示设置了<code>set_targetdir</code>， 那么优先选择<code>set_targetdir</code>指定的目录为目标文件的输出目录。</p>
+<p>从 3.0 开始，我们还可以配置 bindir, libdir, includedir 等构建输出的子目录，例如：</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("shared")
+    add_files("src/x.cpp")
+    set_targetdir("$(builddir)/out", { bindir = "bin", libdir = "lib" })
+</code></pre>
 <h3 id="targetset_objectdir">target:set_objectdir</h3>
 <h4 id="">设置对象文件生成目录</h4>
 <p>设置目标target的对象文件(<code>*.o/obj</code>)的输出目录，例如:</p>

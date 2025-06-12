@@ -782,9 +782,13 @@ set_fpmodels("precise") - default
 <pre><code class="lang-lua">target("test")
     set_targetdir("/tmp/build")
 </code></pre>
-<p><p class="tip"><br>If the display sets <code>set_targetdir</code>, then the directory specified by <code>set_targetdir</code> is preferred as the output directory of the target file.<br></p>
-
-</p>
+<p>!> If the display sets <code>set_targetdir</code>, then the directory specified by <code>set_targetdir</code> is preferred as the output directory of the target file.</p>
+<p>Starting from 3.0, we can also configure the subdirectories of the build output such as bindir, libdir, includedir, etc., for example:</p>
+<pre><code class="lang-lua">target("test")
+    set_kind("shared")
+    add_files("src/x.cpp")
+    set_targetdir("$(builddir)/out", { bindir = "bin", libdir = "lib" })
+</code></pre>
 <h3 id="targetset_objectdir">target:set_objectdir</h3>
 <h4 id="setoutputdirectoriesforobjectfiles">Set output directories for object files</h4>
 <p>Set the output directory of the object file (<code>*.o/obj</code>) of the target target, for example:</p>
@@ -2237,7 +2241,7 @@ target("test")
 <h3 id="targetadd_headerfiles">target:add_headerfiles</h3>
 <h4 id="addheaderfiles">Add header files</h4>
 <p>2.2.5 version of the new interface, used to set the corresponding header file for each target, generally used for the <code>xmake install/uninstall</code> command.</p>
-<p>This interface is used in almost the same way as the <a href="#targetadd_installfiles">add_installfiles</a> interface. It can be used as a Tianjian installation file, but this interface is only used to install header files.<br>Therefore, it is much easier to use than <code>add_installfiles</code>. By default, prefixfix is not set, and the header files are automatically installed into the corresponding <code>include</code> subdirectory.</p>
+<p>This interface is used in almost the same way as the <a href="#targetadd_installfiles">add_installfiles</a> interface. But it is provided for installing header files.<br>It is not required to set the <code>prefixdir</code> option. The header files are installed into the corresponding <code>include</code> subdirectory by default.</p>
 <p>And this interface for the <code>xmake project -k vs201x</code> and other plug-in generated IDE files, will also add the corresponding header file into it.</p>
 <p>We can also install by subdirectory in the source file by <code>()</code>, for example:</p>
 <pre><code class="lang-lua">target("test")

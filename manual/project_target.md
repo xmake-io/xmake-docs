@@ -591,9 +591,16 @@ target("test")
     set_targetdir("/tmp/build")
 ```
 
-<p class="tip">
-If the display sets `set_targetdir`, then the directory specified by `set_targetdir` is preferred as the output directory of the target file.
-</p>
+!> If the display sets `set_targetdir`, then the directory specified by `set_targetdir` is preferred as the output directory of the target file.
+
+Starting from 3.0, we can also configure the subdirectories of the build output such as bindir, libdir, includedir, etc., for example:
+
+```lua
+target("test")
+    set_kind("shared")
+    add_files("src/x.cpp")
+    set_targetdir("$(builddir)/out", { bindir = "bin", libdir = "lib" })
+```
 
 ### target:set_objectdir
 

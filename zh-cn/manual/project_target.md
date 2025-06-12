@@ -583,9 +583,16 @@ target("test")
     set_targetdir("/tmp/build")
 ```
 
-<p class="tip">
-如果显示设置了`set_targetdir`， 那么优先选择`set_targetdir`指定的目录为目标文件的输出目录。
-</p>
+!> 如果显示设置了`set_targetdir`， 那么优先选择`set_targetdir`指定的目录为目标文件的输出目录。
+
+从 3.0 开始，我们还可以配置 bindir, libdir, includedir 等构建输出的子目录，例如：
+
+```lua
+target("test")
+    set_kind("shared")
+    add_files("src/x.cpp")
+    set_targetdir("$(builddir)/out", { bindir = "bin", libdir = "lib" })
+```
 
 ### target:set_objectdir
 

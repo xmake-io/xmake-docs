@@ -160,6 +160,14 @@ target:is_arch("x64", "x86_64")
 <p>主要用于获取 static, shared, binary 目标程序文件的输出路径。</p>
 <pre><code class="lang-lua">os.cp(target:targetfile(), "/tmp/")
 </code></pre>
+<h4 id="targetartifactfile">target:artifactfile</h4>
+<ul>
+<li>获取目标的产物文件</li>
+</ul>
+<p>目前只能获取 windows DLL 的 implib 文件输出路径。</p>
+<pre><code class="lang-lua">target:artifactfile("implib")
+</code></pre>
+<p>不过，后期有可能会扩展到其他类型的产物文件路径获取。</p>
 <h4 id="targettargetdir">target:targetdir</h4>
 <ul>
 <li>获取目标文件的输出目录</li>

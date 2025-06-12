@@ -86,6 +86,18 @@ It is mainly used to obtain the output path of static, shared, and binary object
 os.cp(target:targetfile(), "/tmp/")
 ```
 
+#### target:artifactfile
+
+- Get the artifact file of the target
+
+Currently, only the implib file output path of Windows DLL can be obtained.
+
+```lua
+target:artifactfile("implib")
+```
+
+However, it may be extended to other types of artifact file path acquisition in the future.
+
 #### target:targetdir
 
 - Get the output directory of the target file
