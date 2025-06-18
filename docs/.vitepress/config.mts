@@ -19,6 +19,7 @@ export default defineConfig({
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: 'Xmake' }],
     ['meta', { property: 'og:url', content: 'https://xmake.io/' }],
+    ['meta', { name: 'algolia-site-verification', content: '47A51984C60C423B' }]
   ],
 
   themeConfig: {
