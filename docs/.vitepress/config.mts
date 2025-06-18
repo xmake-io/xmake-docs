@@ -54,8 +54,8 @@ export default defineConfig({
     search: {
       provider: 'algolia',
       options: {
-        appId: '',
-        apiKey: '',
+        appId: 'BML13VM9HE',
+        apiKey: '2c01bab700081b9d4322ce0c65ab3bfd',
         indexName: 'xmake'
       }
     },
