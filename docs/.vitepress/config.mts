@@ -4,8 +4,26 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Xmake",
   description: "A cross-platform build utility based on Lua",
+  lang: 'en-US',
+
+  head: [
+    [
+      'link',
+      { rel: 'icon', type: 'image/svg+xml', href: '/assets/img/logo.svg' }
+    ],
+    [
+      'link',
+      { rel: 'icon', type: 'image/png', href: '/assets/img/logo.png' }
+    ],
+    ['meta', { name: 'theme-color', content: '#3c8772' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'Xmake' }],
+    ['meta', { property: 'og:url', content: 'https://xmake.io/' }],
+  ],
+
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
+    logo: { src: '/assets/img/logo.svg', width: 24, height: 24 },
+
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Examples', link: '/markdown-examples' }
@@ -22,7 +40,14 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/xmake-io/xmake' },
+      { icon: 'twitter', link: 'https://twitter.com/waruqi' },
+      { icon: 'discord', link: 'https://discord.gg/xmake' }
     ]
+  },
+
+  locales: {
+    root: { label: 'English' },
+    zh: { label: '简体中文' }
   }
 })
