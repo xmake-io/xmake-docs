@@ -1,3 +1,0 @@
-User-Agent: *
-Allow: /
-Sitemap: https://xmake.io/sitemap.xml
