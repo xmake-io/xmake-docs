@@ -26,7 +26,7 @@ export default defineConfig({
 
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Sponsor', link: '/markdown-examples' }
     ],
 
     sidebar: [
@@ -39,11 +39,27 @@ export default defineConfig({
       }
     ],
 
+    editLink: {
+      repo: 'xmake-docs/docs',
+      text: 'Edit this page on GitHub'
+    },
+
     socialLinks: [
       { icon: 'github', link: 'https://github.com/xmake-io/xmake' },
       { icon: 'twitter', link: 'https://twitter.com/waruqi' },
       { icon: 'discord', link: 'https://discord.gg/xmake' }
-    ]
+    ],
+
+    search: {
+      provider: 'algolia',
+      options: {
+        appId: '',
+        apiKey: '',
+        indexName: 'xmake'
+      }
+    },
+
+    carbonAds: { code: 'CEBDT27Y', placement: 'xmakeio' }
   },
 
   locales: {
