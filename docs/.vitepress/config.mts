@@ -35,6 +35,15 @@ export default defineConfig({
         text: 'Examples',
         items: [
           { text: 'Markdown Examples', link: '/markdown-examples' },
+          { text: 'Runtime API Examples', link: '/test1' },
+          { text: 'Runtime API Examples', link: '/test2' },
+          { text: 'Runtime API Examples', link: '/test3' },
+          { text: 'Runtime API Examples', link: '/test4' },
+          { text: 'Runtime API Examples', link: '/test5' },
+          { text: 'Runtime API Examples', link: '/test6' },
+          { text: 'Runtime API Examples', link: '/test7' },
+          { text: 'Runtime API Examples', link: '/test8' },
+          { text: 'Runtime API Examples', link: '/test9' },
           { text: 'Runtime API Examples', link: '/api-examples' }
         ]
       }
