@@ -1,10 +1,16 @@
 import { defineConfig } from 'vitepress'
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Xmake",
   description: "A cross-platform build utility based on Lua",
   lang: 'en-US',
+
+  sitemap: {
+    hostname: 'https://newdocs.xmake.io',
+    transformItems(items) {
+      return items.filter((item) => !item.url.includes('migration'))
+    }
+  },
 
   head: [
     [
@@ -26,8 +32,17 @@ export default defineConfig({
     logo: { src: '/assets/img/logo.svg', width: 24, height: 24 },
 
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Sponsor', link: '/markdown-examples' }
+    {
+        text: 'Docs',
+        activeMatch: `^/(guide|style-guide|cookbook|examples)/`,
+        items: [
+          { text: 'Guide', link: '/guide/introduction' },
+          { text: 'Examples', link: '/examples/' },
+          { text: 'Quick Start', link: '/guide/quick-start' },
+          { text: 'API Reference', link: '/api/' }
+        ]
+      },
+      { text: 'Sponsor', link: '/about/sponsor' }
     ],
 
     sidebar: [

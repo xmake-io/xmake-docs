@@ -1,24 +1,29 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
   name: "Xmake"
   text: "A cross-platform build utility based on Lua"
-  tagline: My great project tagline
+  tagline: <i>Modern C/C++ build tools, Simple, Fast and Lightweight<br>
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: What is Xmake?
+      link: /guide/what-is-xmake
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Quickstart
+      link: /guide/getting-started
+    - theme: alt
+      text: GitHub
+      link: https://github.com/xmake-io/xmake
+    - theme: alt
+      text: Gitee
+      link: https://gitee.com/tboox/xmake
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Simple
+    details: Simple, Fast and Lightweight
+  - title: Modern
+    details: Modern C/C++ build tools, Powerful dependency package integration
   - title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
