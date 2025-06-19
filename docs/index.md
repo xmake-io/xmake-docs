@@ -7,10 +7,7 @@ hero:
   tagline: <i>Modern C/C++ build tools<br>
   actions:
     - theme: brand
-      text: What is Xmake?
-      link: /guide/what-is-xmake
-    - theme: alt
-      text: Quickstart
+      text: Get Started ->
       link: /guide/getting-started
     - theme: alt
       text: GitHub

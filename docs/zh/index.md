@@ -7,10 +7,7 @@ hero:
   tagline: <i>现代化的 C/C++ 构建工具<br>
   actions:
     - theme: brand
-      text: 什么是 Xmake?
-      link: /zh/guide/what-is-xmake
-    - theme: alt
-      text: 快速上手
+      text: 快速上手 ->
       link: /zh/guide/getting-started
     - theme: alt
       text: GitHub
