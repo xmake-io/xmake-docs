@@ -65,7 +65,7 @@ export default defineConfig({
     ],
 
     editLink: {
-      repo: 'xmake-docs/docs',
+      pattern: 'https://github.com/xmake-io/xmake-docs/edit/master/docs/:path',
       text: 'Edit this page on GitHub'
     },
 
