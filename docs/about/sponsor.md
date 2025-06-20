@@ -1,5 +1,3 @@
-## Sponsoring
-
 The Xmake projects are personal open-source projects, their development need your help.
 
 If you would like to support the development of Xmake, you are encouraged to donate!
