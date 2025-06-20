@@ -1,11 +1,7 @@
----
-outline: deep
----
-
-# Installation
+## Installation
 
 ::: tip NOTE
-Xmake is not recommended to install under root!
+Xmake is not recommended for root installation, because this is very insecure. If the user has to download the root, if the prompt Xmake fails to run, please pass the `--root` parameter as prompted or set `XMAKE_ROOT=y`. The environment variable is forcibly enabled, provided that the user needs to pay attention to the risk of incorrect operating system file files under root.
 :::
 
 ::: code-group
@@ -24,17 +20,11 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 
 :::
 
-If you want to install a specific version and branch, you can append the version number and branch parameters later
+If we want to install a specific version and branch, you can append the version number and branch parameters later
 
 ```bash
 curl -fsSL https://xmake.io/shget.text | bash -s dev
 curl -fsSL https://xmake.io/shget.text | bash -s v2.7.7
-```
-
-If you want to install a specific version and branch, you can append the version number and branch parameters later
-
-```powershell
-Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content dev
 Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content v2.7.7
 ```
 
@@ -42,9 +32,7 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 If the ps script execution prompt fails, you can try to execute in administrator mode.
 :::
 
-## Windows
-
-### via installer
+### Windows
 
 1. Download the Xmake windows installer from [Releases](https://github.com/xmake-io/xmake/releases)
 2. Run xmake-[version].[win32|win64].exe
@@ -67,7 +55,7 @@ winget install xmake
 ```
 :::
 
-## Msys/Mingw
+### Msys/Mingw
 
 ::: code-group
 
@@ -81,14 +69,13 @@ pacman -Sy mingw-w64-i686-xmake
 
 :::
 
-## MacOS
+### MacOS
 
 ```bash
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install xmake
 ```
 
-## Linux distributions
+### Linux distributions
 
 ::: code-group
 
@@ -114,9 +101,7 @@ sudo dnf install xmake
 
 :::
 
-## Ubuntu
-
-### Install PPA packages
+### Ubuntu PPA
 
 ```bash
 sudo add-apt-repository ppa:xmake-io/xmake
@@ -124,9 +109,7 @@ sudo apt update
 sudo apt install xmake
 ```
 
-Also, Xmake has recently been added to the official Debian repositories: https://packages.debian.org/sid/xmake
-
-## Gentoo
+### Gentoo
 
 1. Refer to [here](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) to add GURU to your system repository
 2. Install dev-util/xmake
@@ -135,16 +118,16 @@ Also, Xmake has recently been added to the official Debian repositories: https:/
 sudo emerge -a --autounmask dev-util/xmake
 ```
 
-## Other Linux
+### Other Linux
 
-Download xmake `xmake-x.x.x.gz.run` install package from [Releases](https://github.com/xmake-io/xmake/releases) 
+Download xmake `xmake-x.x.x.gz.run` install package from [Releases](https://github.com/xmake-io/xmake/releases)
 
 ```bash
 sudo chmod 777 ./xmake-x.x.x.gz.run
 ./xmake-x.x.x.gz.run
 ```
 
-## FreeBSD
+### FreeBSD
 
 Due to package name conflicts, only xmake-io can be used as the package name.
 
@@ -152,13 +135,13 @@ Due to package name conflicts, only xmake-io can be used as the package name.
 pkg install xmake-io
 ```
 
-## Termux (Android)
+### Termux (Android)
 
 ```bash
 pkg install xmake
 ```
 
-## Bundle package
+### Bundle package
 
 If you don't want to install, we also provide another Bundle packaging format, which does not require user installation, a single executable file, can be run and used after downloading, and is easy to distribute.
 
@@ -180,21 +163,16 @@ Among them, the package with the `.cosmocc` suffix provides the ability to run a
 
 The others are single executable files for specific platforms, and users can download and use them as needed according to their own systems.
 
-## Source compilation and installation
- 
-### Installation
+### Source compilation and installation
+
+#### Download source code
 
 ```bash
 git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
-# On macOS, you may need to run: export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
-./configure
-make
-./scripts/get.sh __local__ __install_only__
-source ~/.xmake/profile
 ```
 
-If you think the source of github is too slow, you can pull it through the mirror source of gitee or gitlab: 
+If you think the source of github is too slow, you can pull it through the mirror source of gitee or gitlab:
 
 ```bash
 git clone --recursive https://gitee.com/tboox/xmake.git
@@ -208,64 +186,35 @@ Since the current Xmake source maintains dependencies via git submodule, it is n
 If you forget to add `--recursive` when git clone, you can also execute `git submodule update --init` to pull all submodules, for example:
 
 ```bash
-git clone https://github.com/xmake-io/xmake.git
-cd ./xmake
 git submodule update --init
-./configure
-make
-./scripts/get.sh __local__ __install_only__
 ```
 
-::: tip NOTE
-`./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute Xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.
-:::
+#### Build and install
 
-### Source compilation in Windows platform
+::: code-group
 
-```bash
-git clone --recursive https://github.com/xmake-io/xmake.git
-cd ./xmake/core
+```bash [Linux]
+./configure
+make -j4
+./scripts/get.sh __local__ __install_only__
+source ~/.xmake/profile
+```
+
+```bash [windows]
+cd ./core
 xmake
 ```
 
-### Only update the lua script
-
-This developer needs to debug the Xmake source locally:
-
-```bash
-./scripts/get.sh __local__ __install_only__
-```
-
-### Root installation
-
-Xmake is not recommended for root installation, because this is very insecure. If the user has to download the root, if the prompt Xmake fails to run, please pass the `--root` parameter as prompted or set `XMAKE_ROOT=y`. The environment variable is forcibly enabled, provided that the user needs to pay attention to the risk of incorrect operating system file files under root.
-
-### Dependency issues
-
-1. If you encounter problems with readline, please install readline-devel or libreadline-dev dependencies. This is optional. It is only needed when the `xmake lua` command executes REPL.
-2. If you want to speed up compilation, you can install ccache, Xmake will automatically detect and use, which is also optional.
-
-## Other installation methods
-
-::: tip NOTE
-This is also the source code compilation and installation, but the installation path will be written directly to `/usr/`, which requires root privileges, so unless special circumstances, this installation method is not recommended, it is recommended to use the `./get. Sh __local__` way to install, the installation path of the two installation methods is different, do not mix.
 :::
 
-Compile and install via make:
 
-```bash
-./configure
-make
-sudo make install
-```
+::: tip NOTE
+`./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute Xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.
 
-Install to other specified directories:
+If you encounter problems with readline, please install readline-devel or libreadline-dev dependencies. This is optional. It is only needed when the `xmake lua` command executes REPL.
+:::
 
-```bash
-sudo make install PREFIX=/usr/local
-```
-
-## Update Upgrade
+### Update and Upgrade
 
 Starting with v2.2.3, the `xmake update` command has been added to quickly update and upgrade itself. The default is to upgrade to the latest version. Of course, you can also specify to upgrade or roll back to a version:
 
