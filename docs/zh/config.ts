@@ -73,6 +73,13 @@ function nav(): DefaultTheme.NavItem[] {
           items: [
             { text: 'Xmake 包仓库', link: 'https://xmake.microblock.cc/' }
           ]
+        },
+        {
+          text: '其他',
+          items: [
+            { text: '实验楼课程', link: '/zh/about/course' },
+            { text: '周边物品', link: '/zh/about/peripheral_items' }
+          ]
         }
       ]
     },
