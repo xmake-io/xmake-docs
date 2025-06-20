@@ -65,6 +65,17 @@ function nav(): DefaultTheme.NavItem[] {
         { text: 'API 手册', link: '/zh/api/' }
       ]
     },
+    {
+      text: '生态系统',
+      items: [
+        {
+          text: '资源',
+          items: [
+            { text: 'Xmake 包仓库', link: 'https://xmake.microblock.cc/' }
+          ]
+        }
+      ]
+    },
     { text: '赞助', link: '/zh/about/sponsor' }
   ]
 }

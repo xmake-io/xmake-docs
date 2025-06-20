@@ -34,6 +34,18 @@ function nav(): DefaultTheme.NavItem[] {
         { text: 'API Reference', link: '/api/' }
       ]
     },
+    {
+      text: 'Ecosystem',
+      items: [
+        {
+          text: 'Resources',
+          items: [
+            { text: 'Xmake Packages', link: 'https://xmake.microblock.cc/' }
+          ]
+        }
+      ]
+
+    },
     { text: 'Sponsor', link: '/about/sponsor' }
   ]
 }
