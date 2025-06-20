@@ -31,44 +31,6 @@ export default defineConfig({
   themeConfig: {
     logo: { src: '/assets/img/logo.svg', width: 24, height: 24 },
 
-    nav: [
-    {
-        text: 'Docs',
-        activeMatch: `^/(guide|style-guide|cookbook|examples)/`,
-        items: [
-          { text: 'Guide', link: '/guide/introduction' },
-          { text: 'Examples', link: '/examples/' },
-          { text: 'Quick Start', link: '/guide/quick-start' },
-          { text: 'API Reference', link: '/api/' }
-        ]
-      },
-      { text: 'Sponsor', link: '/about/sponsor' }
-    ],
-
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/test1' },
-          { text: 'Runtime API Examples', link: '/test2' },
-          { text: 'Runtime API Examples', link: '/test3' },
-          { text: 'Runtime API Examples', link: '/test4' },
-          { text: 'Runtime API Examples', link: '/test5' },
-          { text: 'Runtime API Examples', link: '/test6' },
-          { text: 'Runtime API Examples', link: '/test7' },
-          { text: 'Runtime API Examples', link: '/test8' },
-          { text: 'Runtime API Examples', link: '/test9' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
-    ],
-
-    editLink: {
-      pattern: 'https://github.com/xmake-io/xmake-docs/edit/master/docs/:path',
-      text: 'Edit this page on GitHub'
-    },
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/xmake-io/xmake' },
       { icon: 'twitter', link: 'https://twitter.com/waruqi' },
