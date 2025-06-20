@@ -8,8 +8,7 @@ const prod = !!process.env.NETLIFY
 
 export default defineConfig({
   title: "Xmake",
-  description: "A cross-platform build utility based on Lua",
-  lang: 'en-US',
+  metaChunk: true,
 
   sitemap: {
     hostname: 'https://newdocs.xmake.io',
