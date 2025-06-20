@@ -60,8 +60,8 @@ function nav(): DefaultTheme.NavItem[] {
       activeMatch: `^/(guide|style-guide|cookbook|examples)/`,
       items: [
         { text: '使用指南', link: '/zh/guide/what-is-xmake', activeMatch: '/zh/guide/' },
-        { text: '示例', link: '/zh/examples/' },
         { text: '快速上手', link: '/zh/guide/getting-started' },
+        { text: '示例', link: '/zh/examples/' },
         { text: 'API 手册', link: '/zh/api/' }
       ]
     },
@@ -72,6 +72,13 @@ function nav(): DefaultTheme.NavItem[] {
           text: '资源',
           items: [
             { text: 'Xmake 包仓库', link: 'https://xmake.microblock.cc/' }
+          ]
+        },
+        {
+          text: '帮助',
+          items: [
+            { text: '社区', link: '/zh/about/contact' },
+            { text: '问题反馈', link: 'https://github.com/xmake-io/xmake/issues' }
           ]
         },
         {

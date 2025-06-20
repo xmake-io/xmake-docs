@@ -244,3 +244,84 @@ xmake update -s dev
 
 最后，我们如果要卸载xmake，也是支持的：`xmake update --uninstall`
 
+## 创建工程
+
+创建一个名叫 `hello` 的 `c++` 控制台工程：
+
+```bash
+$ xmake create hello
+```
+
+执行完后，将会生成一个简单工程结构：
+
+```
+hello
+├── src
+│   └─main.cpp
+└── xmake.lua
+```
+
+其中`xmake.lua`是工程描述文件，内容非常简单，告诉 xmake 添加`src`目录下的所有`.cpp`源文件：
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+target("hello")
+    set_kind("binary")
+    add_files("src/*.cpp")
+```
+
+## 构建工程
+
+```bash
+$ cd hello
+$ xmake
+```
+
+## 运行程序
+
+```bash
+$ xmake run
+```
+
+## 调试程序
+
+首先你需要切换到 debug 模式去重新编译程序。
+
+```bash
+$ xmake config -m debug
+$ xmake
+```
+
+然后执行下面的命令去开始调试：
+
+```bash
+$ xmake run -d hello
+```
+
+Xmake 将会使用调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。
+
+```bash
+[lldb]$target create "build/hello"
+Current executable set to 'build/hello' (x86_64).
+[lldb]$b main
+Breakpoint 1: where = hello`main, address = 0x0000000100000f50
+[lldb]$r
+Process 7509 launched: '/private/tmp/hello/build/hello' (x86_64)
+Process 7509 stopped
+* thread #1: tid = 0x435a2, 0x0000000100000f50 hello`main, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1
+    frame #0: 0x0000000100000f50 hello`main
+hello`main:
+->  0x100000f50 <+0>:  pushq  %rbp
+    0x100000f51 <+1>:  movq   %rsp, %rbp
+    0x100000f54 <+4>:  leaq   0x2b(%rip), %rdi          ; "hello world!"
+    0x100000f5b <+11>: callq  0x100000f64               ; symbol stub for: puts
+[lldb]$
+```
+
+如果想要使用指定的调试器：
+
+```bash
+$ xmake f --debugger=gdb
+$ xmake run -d hello
+```

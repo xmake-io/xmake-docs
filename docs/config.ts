@@ -29,8 +29,8 @@ function nav(): DefaultTheme.NavItem[] {
       activeMatch: `^/(guide|style-guide|cookbook|examples)/`,
       items: [
         { text: 'Guide', link: '/guide/what-is-xmake', activeMatch: '/guide/' },
-        { text: 'Examples', link: '/examples/' },
         { text: 'Getting Started', link: '/guide/getting-started' },
+        { text: 'Examples', link: '/examples/' },
         { text: 'API Reference', link: '/api/' }
       ]
     },
@@ -41,6 +41,13 @@ function nav(): DefaultTheme.NavItem[] {
           text: 'Resources',
           items: [
             { text: 'Xmake Packages', link: 'https://xmake.microblock.cc/' }
+          ]
+        },
+        {
+          text: 'Help',
+          items: [
+            { text: 'Community', link: '/about/contact' },
+            { text: 'Feedback', link: 'https://github.com/xmake-io/xmake/issues' }
           ]
         }
       ]
