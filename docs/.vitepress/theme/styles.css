@@ -35,8 +35,13 @@
   --vp-button-brand-active-bg: var(--vp-c-brand-1);
 }
 
-.VPButton.medium[data-v-6b421642] {
-    border-radius: 8px;
+:root {
+    .VPButton.big,
+    .VPButton.alt,
+    .VPButton.medium,
+    .VPButton.brand {
+        border-radius: 8px;
+    }
 }
 
 /* colors */
