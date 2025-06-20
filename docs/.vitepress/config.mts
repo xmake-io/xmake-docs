@@ -1,4 +1,10 @@
-import { defineConfig } from 'vitepress'
+import {
+  defineConfig,
+  resolveSiteDataByRoute,
+  type HeadConfig
+} from 'vitepress'
+
+const prod = !!process.env.NETLIFY
 
 export default defineConfig({
   title: "Xmake",
@@ -52,5 +58,19 @@ export default defineConfig({
   locales: {
     root: { label: 'English' },
     zh: { label: '简体中文' }
-  }
+  },
+
+  transformPageData: prod
+    ? (pageData, ctx) => {
+        const site = resolveSiteDataByRoute(
+          ctx.siteConfig.site,
+          pageData.relativePath
+        )
+        const title = `${pageData.title || site.title} | ${pageData.description || site.description}`
+        ;((pageData.frontmatter.head ??= []) as HeadConfig[]).push(
+          ['meta', { property: 'og:locale', content: site.lang }],
+          ['meta', { property: 'og:title', content: title }]
+        )
+      }
+    : undefined
 })
