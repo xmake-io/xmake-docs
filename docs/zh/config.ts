@@ -15,6 +15,7 @@ export default defineAdditionalConfig({
 
     sidebar: {
       '/zh/guide/': { base: '/zh/guide/', items: sidebarGuide() },
+      '/zh/api/': { base: '/zh/api/', items: apiGuide() },
     },
 
     editLink: {
@@ -62,7 +63,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: '使用指南', link: '/zh/guide/what-is-xmake', activeMatch: '/zh/guide/' },
         { text: '快速上手', link: '/zh/guide/getting-started' },
         { text: '示例', link: '/zh/examples/' },
-        { text: 'API 手册', link: '/zh/api/' }
+        { text: 'API 手册', link: '/zh/api/description/specification' }
       ]
     },
     {
@@ -102,6 +103,25 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       items: [
         { text: '什么是 Xmake？', link: 'what-is-xmake' },
         { text: '快速开始', link: 'getting-started' }
+      ]
+    }
+  ]
+}
+
+function apiGuide(): DefaultTheme.SidebarItem[] {
+  return [
+    {
+      text: '描述域',
+      collapsed: false,
+      items: [
+        { text: '接口规范', link: 'description/specification' }
+      ]
+    },
+    {
+      text: '脚本域',
+      collapsed: false,
+      items: [
+        { text: '原生模块', link: 'scripts/native_modules' }
       ]
     }
   ]

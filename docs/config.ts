@@ -13,6 +13,7 @@ export default defineAdditionalConfig({
 
     sidebar: {
       '/guide/': { base: '/guide/', items: sidebarGuide() },
+      '/api/': { base: '/api/', items: apiGuide() },
     },
 
     editLink: {
@@ -31,7 +32,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: 'Guide', link: '/guide/what-is-xmake', activeMatch: '/guide/' },
         { text: 'Getting Started', link: '/guide/getting-started' },
         { text: 'Examples', link: '/examples/' },
-        { text: 'API Reference', link: '/api/' }
+        { text: 'API Reference', link: '/api/description/specification' }
       ]
     },
     {
@@ -65,6 +66,25 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'What it Xmake？', link: 'what-is-xmake' },
         { text: 'Getting Started', link: 'getting-started' }
+      ]
+    }
+  ]
+}
+
+function apiGuide(): DefaultTheme.SidebarItem[] {
+  return [
+    {
+      text: 'Description Scope',
+      collapsed: false,
+      items: [
+        { text: 'Specification', link: 'description/specification' }
+      ]
+    },
+    {
+      text: 'Script Scope',
+      collapsed: false,
+      items: [
+        { text: 'Native Modules', link: 'scripts/native_modules' }
       ]
     }
   ]
