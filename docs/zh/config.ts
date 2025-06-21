@@ -16,6 +16,7 @@ export default defineAdditionalConfig({
     sidebar: {
       '/zh/guide/': { base: '/zh/guide/', items: sidebarGuide() },
       '/zh/api/': { base: '/zh/api/', items: apiGuide() },
+      '/zh/examples/': { base: '/zh/examples/', items: examplesGuide() },
     },
 
     editLink: {
@@ -62,7 +63,7 @@ function nav(): DefaultTheme.NavItem[] {
       items: [
         { text: '使用指南', link: '/zh/guide/what-is-xmake', activeMatch: '/zh/guide/' },
         { text: '快速上手', link: '/zh/guide/getting-started' },
-        { text: '示例', link: '/zh/examples/' },
+        { text: '示例', link: '/zh/examples/cpp/basic' },
         { text: 'API 手册', link: '/zh/api/description/specification' }
       ]
     },
@@ -123,6 +124,18 @@ function apiGuide(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: '原生模块', link: 'scripts/native_modules' }
+      ]
+    }
+  ]
+}
+
+function examplesGuide(): DefaultTheme.SidebarItem[] {
+  return [
+    {
+      text: 'C/C++',
+      collapsed: false,
+      items: [
+        { text: '基础程序', link: 'cpp/basic' }
       ]
     }
   ]
