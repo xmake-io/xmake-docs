@@ -1,5 +1,5 @@
 
-## 安装
+## 安装 {#installation}
 
 ::: tip 注意
 Xmake 不推荐 root 下安装使用，因为这很不安全，如果用户非要 root 下装，装完后，如果提示xmake运行不了，请根据提示传递`--root`参数，或者设置`XMAKE_ROOT=y`环境变量强行启用下，前提是：用户需要随时注意root下误操作系统文件文件的风险。
@@ -167,9 +167,9 @@ xmake-bundle-v2.9.8.win64.exe
 另外的都是针对特定平台的单一可执行文件，用户根据自己的系统按需下载使用。
 
 
-### 源码编译安装
+### 源码编译安装 {#build-code-and-installation}
 
-#### 下载源码
+#### 下载源码 {#download-code}
 
 ```bash
 git clone --recursive https://github.com/xmake-io/xmake.git
@@ -190,7 +190,7 @@ cd ./xmake
 
 如果git clone的时候忘记加`--recursive`，那么也可以执行`git submodule update --init`来拉取所有submodules。
 
-#### 编译安装
+#### 编译安装 {#build-installation}
 
 ::: code-group
 
@@ -214,7 +214,7 @@ xmake
 如果遇到readline相关问题，请装下readline-devel或者libreadline-dev依赖，这个是可选的，仅仅`xmake lua`命令执行REPL时候才需要。
 :::
 
-### 更新升级
+### 更新升级 {#update}
 
 从 v2.2.3 版本开始，新增了`xmake update`命令，来快速进行自我更新和升级，默认是升级到最新版本，当然也可以指定升级或者回退到某个版本：
 
@@ -244,7 +244,7 @@ xmake update -s dev
 
 最后，我们如果要卸载xmake，也是支持的：`xmake update --uninstall`
 
-## 创建工程
+## 创建工程 {#create-project}
 
 创建一个名叫 `hello` 的 `c++` 控制台工程：
 
@@ -271,20 +271,20 @@ target("hello")
     add_files("src/*.cpp")
 ```
 
-## 构建工程
+## 构建工程 {#build-project}
 
 ```bash
 $ cd hello
 $ xmake
 ```
 
-## 运行程序
+## 运行程序 {#run-program}
 
 ```bash
 $ xmake run
 ```
 
-## 调试程序
+## 调试程序 {#debug-program}
 
 首先你需要切换到 debug 模式去重新编译程序。
 
