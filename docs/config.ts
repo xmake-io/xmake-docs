@@ -98,7 +98,8 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
       text: 'C/C++',
       collapsed: false,
       items: [
-        { text: 'Basic', link: 'cpp/basic' }
+        { text: 'Basic Programs', link: 'cpp/basic' },
+        { text: 'Wasm Programs', link: 'cpp/wasm' }
       ]
     }
   ]
