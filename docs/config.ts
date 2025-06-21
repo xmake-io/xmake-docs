@@ -74,14 +74,15 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
 function apiGuide(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: 'Description Scope',
+      text: 'Description API',
       collapsed: false,
       items: [
-        { text: 'Specification', link: 'description/specification' }
+        { text: 'Specification', link: 'description/specification' },
+        { text: 'Conditions', link: 'description/conditions' }
       ]
     },
     {
-      text: 'Script Scope',
+      text: 'Script API',
       collapsed: false,
       items: [
         { text: 'Native Modules', link: 'scripts/native_modules' }

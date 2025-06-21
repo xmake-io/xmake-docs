@@ -111,14 +111,15 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
 function apiGuide(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: '描述域',
+      text: '描述域 API',
       collapsed: false,
       items: [
-        { text: '接口规范', link: 'description/specification' }
+        { text: '接口规范', link: 'description/specification' },
+        { text: '条件判断', link: 'description/conditions' }
       ]
     },
     {
-      text: '脚本域',
+      text: '脚本域 API',
       collapsed: false,
       items: [
         { text: '原生模块', link: 'scripts/native_modules' }
