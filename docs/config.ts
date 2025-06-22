@@ -106,6 +106,8 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'WinSDK Programs', link: 'cpp/winsdk' },
         { text: 'MFC Programs', link: 'cpp/mfc' },
         { text: 'Protobuf Programs', link: 'cpp/protobuf' },
+        { text: 'OpenMP Programs', link: 'cpp/openmp' },
+        { text: 'C++ Modules Programs', link: 'cpp/modules' },
       ]
     },
     {
@@ -115,6 +117,10 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'iOS/MacOS Programs', link: 'other/objc' },
         { text: 'Cuda Programs', link: 'other/cuda' },
         { text: 'Lex/Yacc Programs', link: 'other/lex-yacc' },
+        { text: 'Fortran Programs', link: 'other/fortran' },
+        { text: 'Golang Programs', link: 'other/golang' },
+        { text: 'Dlang Programs', link: 'other/dlang' },
+        { text: 'Rust Programs', link: 'other/rust' },
       ]
     }
   ]

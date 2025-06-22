@@ -143,6 +143,8 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'WinSDK 程序', link: 'cpp/winsdk' },
         { text: 'MFC 程序', link: 'cpp/mfc' },
         { text: 'Protobuf 程序', link: 'cpp/protobuf' },
+        { text: 'OpenMP 程序', link: 'cpp/openmp' },
+        { text: 'C++ Modules 程序', link: 'cpp/modules' },
       ]
     },
     {
@@ -152,6 +154,10 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'iOS/MacOS 程序', link: 'other/objc' },
         { text: 'Cuda 程序', link: 'other/cuda' },
         { text: 'Lex/Yacc 程序', link: 'other/lex-yacc' },
+        { text: 'Fortran 程序', link: 'other/fortran' },
+        { text: 'Golang 程序', link: 'other/golang' },
+        { text: 'Dlang 程序', link: 'other/dlang' },
+        { text: 'Rust 程序', link: 'other/rust' },
       ]
     }
   ]
