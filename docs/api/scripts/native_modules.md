@@ -14,9 +14,8 @@ Here we also have a complete example of importing the lua-cjson module for refer
 
 First, we first implement the shared native code, so the interface is exported through the lua API.
 
-./modules/foo/foo.c
 
-```c++
+```c++ [./modules/foo/foo.c]
 #include <xmi.h>
 
 static int c_add(lua_State* lua) {
@@ -53,9 +52,8 @@ Then, we configure `add_rules("modules.shared")` to compile as a shared native m
 
 Even Lua dependencies do not need to be introduced, because the xmake main program has exported all Lua interfaces and can be used directly, so the entire module is very lightweight.
 
-./modules/foo/xmake.lua
 
-```lua
+```lua [./modules/foo/xmake.lua]
 add_rules("mode.debug", "mode.release")
 
 target("foo")
@@ -76,9 +74,7 @@ Whether to use a dynamic library module or a binary module depends on your needs
 
 In addition, if you need to speed up through parallel execution, you can also use binary modules.
 
-./modules/bar/bar.cpp
-
-```c++
+```c++ [./modules/bar/bar.cpp]
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstdlib>
@@ -91,9 +87,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-./modules/bar/xmake.lua
-
-```lua
+```lua [./modules/bar/xmake.lua]
 add_rules("mode.debug", "mode.release")
 
 target("add")
@@ -106,9 +100,7 @@ target("add")
 
 For module import, we only need to call import, which is exactly the same as importing lua modules.
 
-./xmake.lua
-
-```lua
+```lua [./xmake.lua]
 add_rules("mode.debug", "mode.release")
 --Add native modules in the ./modules directory
 add_moduledirs("modules")

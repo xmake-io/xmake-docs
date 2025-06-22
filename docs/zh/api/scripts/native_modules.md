@@ -14,9 +14,7 @@
 
 首先，我们先实现 shared 的 native 代码，所以接口通过 lua API 导出。
 
-./modules/foo/foo.c
-
-```c++
+```c++ [./modules/foo/foo.c]
 #include <xmi.h>
 
 static int c_add(lua_State* lua) {
@@ -53,9 +51,7 @@ int luaopen(foo, lua_State* lua) {
 
 甚至连 lua 的依赖也不需要引入，因为 xmake 主程序已经对其导出了所有的 lua 接口，可直接使用，所以整个模块是非常轻量的。
 
-./modules/foo/xmake.lua
-
-```lua
+```lua [./modules/foo/xmake.lua]
 add_rules("mode.debug", "mode.release")
 
 target("foo")
@@ -76,9 +72,7 @@ target("foo")
 
 另外，如果需要通过并行执行来提速，也可以使用二进制模块。
 
-./modules/bar/bar.cpp
-
-```c++
+```c++ [./modules/bar/bar.cpp]
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstdlib>
@@ -91,9 +85,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-./modules/bar/xmake.lua
-
-```lua
+```lua [./modules/bar/xmake.lua]
 add_rules("mode.debug", "mode.release")
 
 target("add")
@@ -106,9 +98,7 @@ target("add")
 
 对于模块导入，我们仅仅需要调用 import，跟导入 lua 模块的用法完全一致。
 
-./xmake.lua
-
-```lua
+```lua [./xmake.lua]
 add_rules("mode.debug", "mode.release")
 -- 添加./modules目录内原生模块
 add_moduledirs("modules")
