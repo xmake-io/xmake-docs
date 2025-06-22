@@ -108,19 +108,22 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Protobuf Programs', link: 'cpp/protobuf' },
         { text: 'OpenMP Programs', link: 'cpp/openmp' },
         { text: 'C++ Modules Programs', link: 'cpp/modules' },
+        { text: 'Linux Bpf Programs', link: 'cpp/linux-bpf' },
       ]
     },
     {
       text: 'Other Languages',
       collapsed: false,
       items: [
-        { text: 'iOS/MacOS Programs', link: 'other/objc' },
+        { text: 'ObjC Programs', link: 'other/objc' },
         { text: 'Cuda Programs', link: 'other/cuda' },
         { text: 'Lex/Yacc Programs', link: 'other/lex-yacc' },
         { text: 'Fortran Programs', link: 'other/fortran' },
         { text: 'Golang Programs', link: 'other/golang' },
         { text: 'Dlang Programs', link: 'other/dlang' },
         { text: 'Rust Programs', link: 'other/rust' },
+        { text: 'Swift Programs', link: 'other/swift' },
+        { text: 'Zig Programs', link: 'other/zig' },
       ]
     }
   ]

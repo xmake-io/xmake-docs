@@ -145,19 +145,22 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Protobuf 程序', link: 'cpp/protobuf' },
         { text: 'OpenMP 程序', link: 'cpp/openmp' },
         { text: 'C++ Modules 程序', link: 'cpp/modules' },
+        { text: 'Linux Bpf 程序', link: 'cpp/linux-bpf' },
       ]
     },
     {
       text: '其他语言',
       collapsed: false,
       items: [
-        { text: 'iOS/MacOS 程序', link: 'other/objc' },
+        { text: 'ObjC 程序', link: 'other/objc' },
         { text: 'Cuda 程序', link: 'other/cuda' },
         { text: 'Lex/Yacc 程序', link: 'other/lex-yacc' },
         { text: 'Fortran 程序', link: 'other/fortran' },
         { text: 'Golang 程序', link: 'other/golang' },
         { text: 'Dlang 程序', link: 'other/dlang' },
         { text: 'Rust 程序', link: 'other/rust' },
+        { text: 'Swift 程序', link: 'other/swift' },
+        { text: 'Zig 程序', link: 'other/zig' },
       ]
     }
   ]
