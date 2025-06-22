@@ -202,9 +202,10 @@ The `--qt_host` option allows you to specify the location of Qt tools that are c
 $ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
 ```
 
-**Important considerations**:
+::: tip NOTE
 - Make sure the host and target Qt versions match, or it may cause build issues.
 - Native deployment tools like `windeployqt` and `macdeployqt` must run on their respective platforms, so cross-platform tasks such as `xmake install` may fail.
+:::
 
 ### Qt packages from the xmake-repo repository
 

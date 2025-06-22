@@ -203,9 +203,10 @@ $ xmake f --qt=[Qt SDK]
 $ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
 ```
 
-**重要注意事项**：
+::: tip 注意
 - 确保主机和目标 Qt 版本匹配，否则可能会导致构建问题。
 - 本机部署工具（如 `windeployqt` 和 `macdeployqt`）必须在各自的平台上运行，因此跨平台任务（如 `xmake install`）可能会失败。
+:::
 
 ### 来自 xmake-repo 仓库的 Qt 包
 

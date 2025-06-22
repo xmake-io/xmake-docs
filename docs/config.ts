@@ -102,6 +102,7 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Basic Programs', link: 'cpp/basic' },
         { text: 'Wasm Programs', link: 'cpp/wasm' },
         { text: 'Qt Programs', link: 'cpp/qt' },
+        { text: 'WDK Programs', link: 'cpp/wdk' },
       ]
     }
   ]
