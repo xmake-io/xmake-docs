@@ -127,3 +127,119 @@ because the linked libraries are different and need to be statically linked.
 The effect is as follows:
 
 ![](/assets/img/guide/qt_widgetapp.png)
+
+
+## Android Application
+
+After the 2.2.6 version, you can directly switch to the android platform to compile the Quick/Widgets application, generate the apk package, and install it to the device via the `xmake install` command.
+
+```bash
+$ xmake create -t quickapp_qt -l c ++ appdemo
+$ cd appdemo
+$ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c
+$ xmake
+[0%]: compiling.qt.qrc src/qml.qrc
+[ 50%]: cache compiling.release src/main.cpp
+[100%]: linking.release libappdemo.so
+[100%]: generating.qt.app appdemo.apk
+```
+
+Then install to the device:
+
+```bash
+$ xmake install
+installing appdemo ...
+installing build/android/release/appdemo.apk ..
+success
+install ok!👌
+```
+
+## Supported Qt SDKs
+
+### The official Qt SDK installation package
+
+This is usually detected automatically on macos/windows, but it is possible to specify the Qt SDK path manually.
+
+```bash
+$ xmake f --qt=[qt sdk path]
+```
+
+### The Ubuntu Apt package
+
+After installing the Qt SDK using apt, xmake will also be able to detect it automatically.
+
+```bash
+$ sudo apt install -y qtcreator qtbase5-dev
+$ xmake
+```
+
+### Qt Mingw SDK from msys2/pacman
+
+xmake also supports the Qt Mingw SDK installed from pacman
+
+```bash
+$ pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator
+$ xmake
+```
+
+### Qt SDK package from aqtinstall script
+
+The Qt SDK installed by [aqtinstall](https://github.com/miurahr/aqtinstall) is based entirely on the official SDK structure and is therefore fully supported by xmake.
+
+However, it is usually necessary to specify the SDK path yourself.
+
+```bash
+$ xmake f --qt=[Qt SDK]
+```
+
+### Cross-Platform Qt Builds
+
+For cross-platform Qt development, xmake supports using separate SDKs for host tools and the target platform. This is particularly useful when building Qt applications for a different platform than your development machine.
+
+The `--qt_host` option allows you to specify the location of Qt tools that are compatible with your build machine, while `--qt` points to the SDK for the target platform:
+
+```bash
+$ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
+```
+
+**Important considerations**:
+- Make sure the host and target Qt versions match, or it may cause build issues.
+- Native deployment tools like `windeployqt` and `macdeployqt` must run on their respective platforms, so cross-platform tasks such as `xmake install` may fail.
+
+### Qt packages from the xmake-repo repository
+
+xmake now officially provides a variety of modules for the Qt5 SDK that can be integrated automatically without any manual installation.
+
+Just configure the integration packages and xmake will automatically handle the Qt installation and integration and compile the project automatically.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("qt5widgets")
+
+target("test")
+    add_rules("qt.widgetapp")
+    add_packages("qt5widgets")
+
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    -- add files with Q_OBJECT meta (only for qt.moc)
+    add_files("src/mainwindow.h")
+```
+
+In addition to the `qt5widgets` package, the repository also provides `qt5gui`, `qt5network` and other packages that can be used.
+
+Once configured, simply execute:
+
+```bash
+$ xmake
+```
+
+::: tip NOTE
+The Qt6 package is still under development and only supports Qt5 for now
+:::
+
+### Qt packages from vcpkg/conan
+
+There is no time to support it yet, so please try to integrate the Qt SDK in the same way as above.
