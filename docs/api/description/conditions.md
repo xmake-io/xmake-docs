@@ -106,7 +106,7 @@ Support hosts:
 * linux
 * macosx
 
-We can also get it from [$(host)](/manual/builtin_variables?id=varhost) or [os.host](/manual/builtin_modules?id=oshost).
+We can also get it from [$(host)](https://xmake.io/#/manual/builtin_variables?id=varhost) or [os.host](https://xmake.io/#/manual/builtin_modules?id=oshost).
 
 ## is_subhost
 
@@ -328,7 +328,7 @@ but also the custom options defined through the [option](#option).
 
 This interface is introduced from version 2.2.3 to detect whether a dependent package exists or is enabled.
 
-It is usually used to [add_requires](/zh-cn/manual/global_interfaces?id=add_requires).
+It is usually used to [add_requires](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_requires).
 
 ```lua
 add_requires("tbox", {optional = true})

@@ -107,7 +107,7 @@ end
 * linux
 * macosx
 
-你也可以通过[$(host)](/zh-cn/manual/builtin_variables?id=varhost)内置变量或者[os.host](/zh-cn/manual/builtin_modules?id=oshost)接口，来进行获取
+你也可以通过[$(host)](https://xmake.io/#/zh-cn/manual/builtin_variables?id=varhost)内置变量或者[os.host](https://xmake.io/#/zh-cn/manual/builtin_modules?id=oshost)接口，来进行获取
 
 ## is_subhost
 
@@ -333,7 +333,7 @@ $ xmake f --test1=false
 
 此接口从2.2.3版本开始引入，用于检测远程依赖包是否存在或启用，可用于描述域。
 
-一般配合[add_requires](/zh-cn/manual/global_interfaces?id=add_requires)一起使用，例如：
+一般配合[add_requires](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_requires)一起使用，例如：
 
 ```lua
 add_requires("tbox", {optional = true})

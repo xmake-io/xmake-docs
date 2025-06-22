@@ -6,7 +6,7 @@ $ xmake f -p wasm
 $ xmake
 ```
 
-For detailed wasm compilation configuration see: [wasm configuration](/guide/configuration?id=wasm)
+For detailed wasm compilation configuration see: [wasm configuration](https://xmake.io/#/guide/configuration?id=wasm)
 
 Alternatively, when compiling a file with the `-preload-file assets/xxx.md` setting, we can also simplify its setup by configuring
 
