@@ -107,8 +107,9 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'MFC Programs', link: 'cpp/mfc' },
         { text: 'Protobuf Programs', link: 'cpp/protobuf' },
         { text: 'OpenMP Programs', link: 'cpp/openmp' },
-        { text: 'C++ Modules Programs', link: 'cpp/modules' },
+        { text: 'C++ Modules', link: 'cpp/modules' },
         { text: 'Linux Bpf Programs', link: 'cpp/linux-bpf' },
+        { text: 'Swig Modules', link: 'cpp/swig' },
       ]
     },
     {
@@ -124,6 +125,8 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Rust Programs', link: 'other/rust' },
         { text: 'Swift Programs', link: 'other/swift' },
         { text: 'Zig Programs', link: 'other/zig' },
+        { text: 'Vala Programs', link: 'other/vala' },
+        { text: 'Pascal Programs', link: 'other/pascal' },
       ]
     }
   ]

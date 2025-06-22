@@ -144,8 +144,9 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'MFC 程序', link: 'cpp/mfc' },
         { text: 'Protobuf 程序', link: 'cpp/protobuf' },
         { text: 'OpenMP 程序', link: 'cpp/openmp' },
-        { text: 'C++ Modules 程序', link: 'cpp/modules' },
+        { text: 'C++ 模块', link: 'cpp/modules' },
         { text: 'Linux Bpf 程序', link: 'cpp/linux-bpf' },
+        { text: 'Swig 模块', link: 'cpp/swig' },
       ]
     },
     {
@@ -161,6 +162,8 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Rust 程序', link: 'other/rust' },
         { text: 'Swift 程序', link: 'other/swift' },
         { text: 'Zig 程序', link: 'other/zig' },
+        { text: 'Vala 程序', link: 'other/vala' },
+        { text: 'Pascal 程序', link: 'other/pascal' },
       ]
     }
   ]
