@@ -146,10 +146,12 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
-      text: 'ObjC/C++',
+      text: '其他语言',
       collapsed: false,
       items: [
-        { text: 'iOS/MacOS 程序', link: 'objc/xcode' },
+        { text: 'iOS/MacOS 程序', link: 'other/objc' },
+        { text: 'Cuda 程序', link: 'other/cuda' },
+        { text: 'Lex/Yacc 程序', link: 'other/lex-yacc' },
       ]
     }
   ]
