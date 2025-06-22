@@ -103,6 +103,9 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Wasm Programs', link: 'cpp/wasm' },
         { text: 'Qt Programs', link: 'cpp/qt' },
         { text: 'WDK Programs', link: 'cpp/wdk' },
+        { text: 'WinSDK Programs', link: 'cpp/winsdk' },
+        { text: 'MFC Programs', link: 'cpp/mfc' },
+        { text: 'Protobuf Programs', link: 'cpp/protobuf' },
       ]
     }
   ]

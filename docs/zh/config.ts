@@ -140,6 +140,9 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Wasm 程序', link: 'cpp/wasm' },
         { text: 'Qt 程序', link: 'cpp/qt' },
         { text: 'WDK 程序', link: 'cpp/wdk' },
+        { text: 'WinSDK 程序', link: 'cpp/winsdk' },
+        { text: 'MFC 程序', link: 'cpp/mfc' },
+        { text: 'Protobuf 程序', link: 'cpp/protobuf' },
       ]
     }
   ]
