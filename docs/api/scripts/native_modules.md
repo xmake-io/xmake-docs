@@ -14,6 +14,18 @@ Here we also have a complete example of importing the lua-cjson module for refer
 
 First, we first implement the shared native code, so the interface is exported through the lua API.
 
+```js [.vitepress/config.js]
+export default {
+  // site-level options
+  title: 'VitePress',
+  description: 'Just playing around.',
+
+  themeConfig: {
+    // theme-level options
+  }
+}
+```
+
 
 ```c++ [./modules/foo/foo.c]
 #include <xmi.h>
