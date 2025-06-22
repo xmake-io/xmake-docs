@@ -137,7 +137,8 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: '基础程序', link: 'cpp/basic' },
-        { text: 'Wasm 程序', link: 'cpp/wasm' }
+        { text: 'Wasm 程序', link: 'cpp/wasm' },
+        { text: 'Qt 程序', link: 'cpp/qt' },
       ]
     }
   ]

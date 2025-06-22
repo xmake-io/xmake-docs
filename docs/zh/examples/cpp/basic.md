@@ -1,4 +1,12 @@
 
+下面我们简单介绍一些常用的工程例子，更多更全的examples工程可以到[project examples](https://github.com/xmake-io/xmake/tree/master/tests/projects)中查看。
+
+我们也可以通过：`xmake create`命令创建各种常用的空工程来快速开始，具体对于这个命令的介绍以及支持的工程模板，可以敲下面的命令查看：
+
+```bash
+xmake create --help
+```
+
 ## 可执行程序 {#executable}
 
 ```lua
