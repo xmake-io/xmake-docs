@@ -4,11 +4,23 @@ import {
   type HeadConfig
 } from 'vitepress'
 
+import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
+
 const prod = !!process.env.NETLIFY
 
 export default defineConfig({
   title: "Xmake",
   metaChunk: true,
+
+  markdown: {
+    config(md) {
+      md.use(groupIconMdPlugin, {
+        titleBar: {
+          includeSnippet: true,
+        },
+      })
+    },
+  },
 
   sitemap: {
     hostname: 'https://newdocs.xmake.io',
@@ -52,6 +64,12 @@ export default defineConfig({
     },
 
     carbonAds: { code: 'CEBDT27Y', placement: 'xmakeio' }
+  },
+
+  vite: {
+    plugins: [
+      groupIconVitePlugin()
+    ],
   },
 
   locales: {
