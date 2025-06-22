@@ -144,6 +144,13 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'MFC 程序', link: 'cpp/mfc' },
         { text: 'Protobuf 程序', link: 'cpp/protobuf' },
       ]
+    },
+    {
+      text: 'ObjC/C++',
+      collapsed: false,
+      items: [
+        { text: 'iOS/MacOS 程序', link: 'objc/xcode' },
+      ]
     }
   ]
 }

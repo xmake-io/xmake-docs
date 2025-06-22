@@ -107,6 +107,13 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'MFC Programs', link: 'cpp/mfc' },
         { text: 'Protobuf Programs', link: 'cpp/protobuf' },
       ]
+    },
+    {
+      text: 'ObjC/C++',
+      collapsed: false,
+      items: [
+        { text: 'iOS/MacOS Programs', link: 'objc/xcode' },
+      ]
     }
   ]
 }
