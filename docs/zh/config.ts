@@ -80,7 +80,8 @@ function nav(): DefaultTheme.NavItem[] {
           text: '帮助',
           items: [
             { text: '社区', link: '/zh/about/contact' },
-            { text: '问题反馈', link: 'https://github.com/xmake-io/xmake/issues' }
+            { text: '问题反馈', link: 'https://github.com/xmake-io/xmake/issues' },
+            { text: '谁在使用 Xmake?', link: '/zh/about/who_is_using_xmake' }
           ]
         },
         {

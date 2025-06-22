@@ -49,7 +49,8 @@ function nav(): DefaultTheme.NavItem[] {
           text: 'Help',
           items: [
             { text: 'Community', link: '/about/contact' },
-            { text: 'Feedback', link: 'https://github.com/xmake-io/xmake/issues' }
+            { text: 'Feedback', link: 'https://github.com/xmake-io/xmake/issues' },
+            { text: 'Who is using Xmake?', link: '/about/who_is_using_xmake' }
           ]
         }
       ]
