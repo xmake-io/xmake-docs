@@ -1,7 +1,7 @@
 
 We can use `target("test")` to define a project target named "test", each target generates an executable program, a static library, or a dynamic library.
 
-:::tip NOTE 
+:::tip NOTE
 All interfaces of target can be set in the global scope, which affects all sub-targets.
 :::
 For example:
@@ -17,7 +17,7 @@ target("test2")
     add_files("*.c")
 ```
 
-:::tip NOTE 
+:::tip NOTE
 `target()' interface can be repeatedly invoked in different places to set the same target.
 :::
 
@@ -197,7 +197,7 @@ For example, with the above configuration, we can compile two dependent programs
 
 #### headeronly
 
--Pure header file target type
+- Pure header file target type
 
 After 2.5.9, we added the `headeronly` target type. For target programs of this type, we will not actually compile them because it has no source files to be compiled.
 
@@ -3467,7 +3467,7 @@ We can also execute `xmake test -vD` to view detailed test failure error message
 
 #### Run the specified test target
 
-We can also specify to run a test with a specified 
+We can also specify to run a test with a specified
 
 ```bash
 $ xmake test targetname/testname
