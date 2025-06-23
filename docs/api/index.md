@@ -2,13 +2,11 @@
 outline: deep
 ---
 
-## API Reference
-
-### Description API
+## Description API
 
 - [Specification](/api/description/specification)
 - [Conditions](/api/description/conditions)
 
-### Scripts API
+## Scripts API
 
 - [Native Modules](/api/scripts/native_modules)
