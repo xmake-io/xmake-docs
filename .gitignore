@@ -20,7 +20,6 @@
 *.gch.d
 cscope.*
 gmon.out
-other
 tags
 doc
 install.log
