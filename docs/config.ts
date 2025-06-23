@@ -127,6 +127,7 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Zig Programs', link: 'other/zig' },
         { text: 'Vala Programs', link: 'other/vala' },
         { text: 'Pascal Programs', link: 'other/pascal' },
+        { text: 'Nim Programs', link: 'other/nim' },
       ]
     }
   ]

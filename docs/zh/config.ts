@@ -164,6 +164,7 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Zig 程序', link: 'other/zig' },
         { text: 'Vala 程序', link: 'other/vala' },
         { text: 'Pascal 程序', link: 'other/pascal' },
+        { text: 'Nim 程序', link: 'other/nim' },
       ]
     }
   ]
