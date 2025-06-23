@@ -3459,11 +3459,11 @@ running tests ...
 80% tests passed, 7 tests failed out of 36, spent 0.242s
 ```
 
-![](/https://xmake.io/assets/img/manual/xmake-test1.png)
+![](https://xmake.io/assets/img/manual/xmake-test1.png)
 
 We can also execute `xmake test -vD` to view detailed test failure error messages:
 
-![](/https://xmake.io/assets/img/manual/xmake-test2.png)
+![](https://xmake.io/assets/img/manual/xmake-test2.png)
 
 #### Run the specified test target
 
