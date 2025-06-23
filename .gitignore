@@ -28,3 +28,4 @@ build
 .history/**
 docs/.vitepress/dist
 docs/.vitepress/cache
+node_modules

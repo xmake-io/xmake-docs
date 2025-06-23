@@ -1,10 +1,14 @@
 
+Native modules can be used in the build workflow.
+
+### Native module
+
 We know that in xmake, you can import some lua modules through the import interface for use in the script domain. However, if the operation of some modules is time-consuming, then lua implementation is not an ideal choice.
 Therefore, in the new version, we have added support for the native lua module, which can be implemented through native to achieve speed-up optimization. Moreover, importing and using the module is as simple as the lua module.
 
 When using native modules, xmake will perform two stages of compilation. First, it will automatically compile the native module, and then import the module into lua as a library or binary. For users, they only need to call import to import.
 
-## Define dynamic library module
+#### Define dynamic library module
 
 The advantage of the dynamic library module is that it not only achieves performance acceleration through native, but also avoids the creation of additional sub-processes for each call, making it more lightweight and further improving the speed.
 
@@ -14,20 +18,9 @@ Here we also have a complete example of importing the lua-cjson module for refer
 
 First, we first implement the shared native code, so the interface is exported through the lua API.
 
-```js [.vitepress/config.js]
-export default {
-  // site-level options
-  title: 'VitePress',
-  description: 'Just playing around.',
+./modules/foo/foo.c
 
-  themeConfig: {
-    // theme-level options
-  }
-}
-```
-
-
-```c++ [./modules/foo/foo.c]
+```c++
 #include <xmi.h>
 
 static int c_add(lua_State* lua) {
@@ -64,8 +57,9 @@ Then, we configure `add_rules("modules.shared")` to compile as a shared native m
 
 Even Lua dependencies do not need to be introduced, because the xmake main program has exported all Lua interfaces and can be used directly, so the entire module is very lightweight.
 
+./modules/foo/xmake.lua
 
-```lua [./modules/foo/xmake.lua]
+```lua
 add_rules("mode.debug", "mode.release")
 
 target("foo")
@@ -74,7 +68,7 @@ target("foo")
      add_files("foo.c")
 ```
 
-## Define binary module
+#### Define binary module
 
 In addition to the dynamic library module, we also provide the import of another binary module. It is actually an executable file. Every time the module interface is called, a child process will be called.
 
@@ -86,7 +80,9 @@ Whether to use a dynamic library module or a binary module depends on your needs
 
 In addition, if you need to speed up through parallel execution, you can also use binary modules.
 
-```c++ [./modules/bar/bar.cpp]
+./modules/bar/bar.cpp
+
+```c++
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstdlib>
@@ -99,7 +95,9 @@ int main(int argc, char** argv) {
 }
 ```
 
-```lua [./modules/bar/xmake.lua]
+./modules/bar/xmake.lua
+
+```lua
 add_rules("mode.debug", "mode.release")
 
 target("add")
@@ -108,11 +106,13 @@ target("add")
      add_files("bar.cpp")
 ```
 
-## Import native module
+#### Import native module
 
 For module import, we only need to call import, which is exactly the same as importing lua modules.
 
-```lua [./xmake.lua]
+./xmake.lua
+
+```lua
 add_rules("mode.debug", "mode.release")
 --Add native modules in the ./modules directory
 add_moduledirs("modules")
@@ -155,7 +155,7 @@ bar: 1 + 1 = 2
 [100%]: build ok, spent 0.447s
 ```
 
-## Use as codegen
+#### Use as codegen
 
 Through the new native module feature, we can also use it to implement auto-codegen, and then continue to execute the subsequent compilation process based on the automatically generated code.
 

@@ -5,6 +5,9 @@
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
-    "vitepress": "^2.0.0-alpha.6"
+    "vitepress": "2.0.0-alpha.6"
+  },
+  "dependencies": {
+    "vitepress-plugin-group-icons": "^1.6.0"
   }
 }

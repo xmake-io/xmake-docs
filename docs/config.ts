@@ -13,8 +13,7 @@ export default defineAdditionalConfig({
 
     sidebar: {
       '/guide/': { base: '/guide/', items: sidebarGuide() },
-      '/api/description': { base: '/api/description', items: descriptionApiGuide() },
-      '/api/scripts': { base: '/api/scripts', items: scriptsApiGuide() },
+      '/api/': { base: '/api/', items: sidebarApi() },
       '/examples/': { base: '/examples/', items: examplesGuide() },
     },
 
@@ -61,6 +60,40 @@ function nav(): DefaultTheme.NavItem[] {
   ]
 }
 
+function sidebarApi(): DefaultTheme.SidebarItem[] {
+  return [
+    {
+      text: 'Description Scope',
+      collapsed: false,
+      items: [
+        { text: 'Specification', link: 'description/specification' },
+        { text: 'Conditions', link: 'description/conditions' },
+        { text: 'Global Interfaces', link: 'description/global_interfaces' },
+        { text: 'Helper Interfaces', link: 'description/helper_interfaces' },
+        { text: 'Project Target', link: 'description/project_target' },
+        { text: 'Configuration Option', link: 'description/configuration_option' },
+        { text: 'Plugin Task', link: 'description/plugin_task' },
+        { text: 'Custom Rule', link: 'description/custom_rule' },
+        { text: 'Custom Toolchain', link: 'description/custom_toolchain' },
+        { text: 'Package Dependencies', link: 'description/package_dependencies' },
+        { text: 'Builtin Variables', link: 'description/builtin_variables' }
+      ]
+    },
+    {
+      text: 'Script Scope',
+      collapsed: false,
+      items: [
+        { text: 'Package Instance', link: 'scripts/package_instance' },
+        { text: 'Target Instance', link: 'scripts/target_instance' },
+        { text: 'Option Instance', link: 'scripts/option_instance' },
+        { text: 'Builtin Modules', link: 'scripts/builtin_modules' },
+        { text: 'Extension Modules', link: 'scripts/extension_modules' },
+        { text: 'Native Modules', link: 'scripts/native_modules' }
+      ]
+    }
+  ]
+}
+
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
   return [
     {
@@ -71,19 +104,6 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Getting Started', link: 'getting-started' }
       ]
     }
-  ]
-}
-
-function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
-  return [
-    { text: 'Specification', link: '/specification' },
-    { text: 'Conditions', link: '/conditions' }
-  ]
-}
-
-function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
-  return [
-    { text: 'Native Modules', link: '/native_modules' }
   ]
 }
 

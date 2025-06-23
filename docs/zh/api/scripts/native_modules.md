@@ -1,10 +1,14 @@
 
+构建流程里可以使用原生模块。
+
+### 原生模块
+
 我们知道，在 xmake 中，可以通过 import 接口去导入一些 lua 模块在脚本域中使用，但是如果一些模块的操作比较耗时，那么 lua 实现并不是理想的选择。
 因此，新版本中，我们新增了 native lua 模块的支持，可以通过 native 实现，来达到提速优化的效果，并且模块导入和使用，还是跟 lua 模块一样简单。
 
 使用原生模块时，xmake 会进行两段编译，先会自动编译原生模块，后将模块导入 lua 作为库或二进制，而对于用户，仅仅只需要调用 import 导入即可。
 
-## 定义动态库模块 {#define-dynamic-module}
+#### 定义动态库模块
 
 动态库模块的好处是，不仅仅通过 native 实现了性能加速，另外避免了每次调用额外的子进程创建，因此更加的轻量，速度进一步得到提升。
 
@@ -14,7 +18,9 @@
 
 首先，我们先实现 shared 的 native 代码，所以接口通过 lua API 导出。
 
-```c++ [./modules/foo/foo.c]
+./modules/foo/foo.c
+
+```c++
 #include <xmi.h>
 
 static int c_add(lua_State* lua) {
@@ -51,7 +57,9 @@ int luaopen(foo, lua_State* lua) {
 
 甚至连 lua 的依赖也不需要引入，因为 xmake 主程序已经对其导出了所有的 lua 接口，可直接使用，所以整个模块是非常轻量的。
 
-```lua [./modules/foo/xmake.lua]
+./modules/foo/xmake.lua
+
+```lua
 add_rules("mode.debug", "mode.release")
 
 target("foo")
@@ -60,7 +68,7 @@ target("foo")
     add_files("foo.c")
 ```
 
-## 定义二进制模块 {#define-binary-module}
+#### 定义二进制模块
 
 出了动态库模块，我们还提供了另外一种二进制模块的导入。它其实就是一个可执行文件，每次调用模块接口，都会去调用一次子进程。
 
@@ -72,7 +80,9 @@ target("foo")
 
 另外，如果需要通过并行执行来提速，也可以使用二进制模块。
 
-```c++ [./modules/bar/bar.cpp]
+./modules/bar/bar.cpp
+
+```c++
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstdlib>
@@ -85,7 +95,9 @@ int main(int argc, char** argv) {
 }
 ```
 
-```lua [./modules/bar/xmake.lua]
+./modules/bar/xmake.lua
+
+```lua
 add_rules("mode.debug", "mode.release")
 
 target("add")
@@ -94,11 +106,13 @@ target("add")
     add_files("bar.cpp")
 ```
 
-## 导入原生模块 {#import-native-module}
+#### 导入原生模块
 
 对于模块导入，我们仅仅需要调用 import，跟导入 lua 模块的用法完全一致。
 
-```lua [./xmake.lua]
+./xmake.lua
+
+```lua
 add_rules("mode.debug", "mode.release")
 -- 添加./modules目录内原生模块
 add_moduledirs("modules")
@@ -141,8 +155,9 @@ bar: 1 + 1 = 2
 [100%]: build ok, spent 0.447s
 ```
 
-## 作为 codegen 来使用 {#auto-codegen}
+#### 作为 codegen 来使用
 
 通过新的 native 模块特性，我们也可以用来实现 auto-codegen，然后根据自动生成的代码，继续执行后续编译流程。
 
 这里也有完整的例子可以参考：[autogen_shared_module](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/autogen_shared_module)。
+

@@ -15,8 +15,7 @@ export default defineAdditionalConfig({
 
     sidebar: {
       '/zh/guide/': { base: '/zh/guide/', items: sidebarGuide() },
-      '/zh/api/description': { base: '/zh/api/description', items: descriptionApiGuide() },
-      '/zh/api/scripts': { base: '/zh/api/scripts', items: scriptsApiGuide() },
+      '/zh/api/': { base: '/zh/api/', items: sidebarApi() },
       '/zh/examples/': { base: '/zh/examples/', items: examplesGuide() },
     },
 
@@ -111,16 +110,38 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
+function sidebarApi(): DefaultTheme.SidebarItem[] {
   return [
-    { text: '接口规范', link: '/specification' },
-    { text: '条件判断', link: '/conditions' }
-  ]
-}
-
-function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
-  return [
-    { text: '原生模块', link: '/native_modules' }
+    {
+      text: 'API手册 (描述域)',
+      collapsed: false,
+      items: [
+        { text: '接口规范', link: 'description/specification' },
+        { text: '条件判断', link: 'description/conditions' },
+        { text: '全局接口', link: 'description/global_interfaces' },
+        { text: '辅助接口', link: 'description/helper_interfaces' },
+        { text: '工程目标', link: 'description/project_target' },
+        { text: '配置选项', link: 'description/configuration_option' },
+        { text: '插件任务', link: 'description/plugin_task' },
+        { text: '自定义规则', link: 'description/custom_rule' },
+        { text: '自定义工具链', link: 'description/custom_toolchain' },
+        { text: '包依赖管理', link: 'description/package_dependencies' },
+        { text: '内置变量', link: 'description/builtin_variables' },
+        { text: 'XPack 打包', link: 'description/xpack' }
+      ]
+    },
+    {
+      text: 'API手册 (脚本域)',
+      collapsed: false,
+      items: [
+        { text: '包实例', link: 'scripts/package_instance' },
+        { text: '目标实例', link: 'scripts/target_instance' },
+        { text: '选项实例', link: 'scripts/option_instance' },
+        { text: '内置模块', link: 'scripts/builtin_modules' },
+        { text: '扩展模块', link: 'scripts/extension_modules' },
+        { text: '原生模块', link: 'scripts/native_modules' }
+      ]
+    }
   ]
 }
 

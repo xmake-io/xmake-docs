@@ -1,8 +1,21 @@
+
 Conditions are generally used to handle some special compilation platforms.
 
-## is_os
+| Interfaces                  | Description                               | Support version             |
+| -------------------------   | ----------------------------------------  | --------------------------- |
+| [is_os](#is_os)             | Is the current compilation target system? | >= 2.0.1                    |
+| [is_arch](#is_arch)         | Is the current compilation architecture?  | >= 2.0.1                    |
+| [is_plat](#is_plat)         | Is the current compilation platform?      | >= 2.0.1                    |
+| [is_host](#is_host)         | Is the current compilation host system?   | >= 2.1.4                    |
+| [is_mode](#is_mode)         | Is the current compilation mode?          | >= 2.0.1                    |
+| [is_kind](#is_kind)         | Is the current target kind?               | >= 2.0.1                    |
+| [is_config](#is_config)     | Is the given config values?               | >= 2.2.2                    |
+| [has_config](#has_config)   | Is the given configs enabled?             | >= 2.2.2                    |
+| [has_package](#has_package) | Is the given dependent package enabled?   | >= 2.2.3                    |
 
-### Is the current compilation target system
+### is_os
+
+#### Is the current compilation target system
 
 ```lua
 if is_os("ios") then
@@ -18,9 +31,9 @@ Support operation systems:
 * macosx
 * ios
 
-## is_arch
+### is_arch
 
-### Is the current compilation architecture
+#### Is the current compilation architecture
 
 You can use this api to check the configuration command: `xmake f -a armv7`
 
@@ -45,9 +58,9 @@ if is_arch("arm.*") then
 end
 ```
 
-## is_plat
+### is_plat
 
-### Is the current compilation platform
+#### Is the current compilation platform
 
 You can use this api to check the configuration command: `xmake f -p iphoneos`
 
@@ -62,7 +75,6 @@ if is_plat("macosx", "iphoneos") then
     add_frameworks("Foundation")
 end
 ```
-
 Available platforms:
 
 | Platform  |
@@ -84,9 +96,10 @@ Available platforms:
 | windows   |
 
 
-## is_host
 
-### Is the current compilation host system
+### is_host
+
+#### Is the current compilation host system
 
 Some compilation platforms can be built on multiple different operating systems, for example: android ndk (on linux, macOS and windows).
 
@@ -106,11 +119,11 @@ Support hosts:
 * linux
 * macosx
 
-We can also get it from [$(host)](https://xmake.io/#/manual/builtin_variables?id=varhost) or [os.host](https://xmake.io/#/manual/builtin_modules?id=oshost).
+We can also get it from [$(host)](/manual/builtin_variables?id=varhost) or [os.host](/manual/builtin_modules?id=oshost).
 
-## is_subhost
+### is_subhost
 
-### Determine the subsystem environment of the current host
+#### Determine the subsystem environment of the current host
 
 At present, it is mainly used for detection of cygwin, msys2 and other subsystem environments on windows systems. If you run xmake in the msys2 shell environment, then `is_subhost("windows")` will return false, and `is_host("windows")` It will still return true.
 
@@ -129,28 +142,26 @@ end
 
 We can also quickly check the current subsystem platform by executing `xmake l os.subhost`.
 
-::: tip NOTE
-It may also support other subsystem environments under linux and macos systems later, if they exist.
-:::
+!> It may also support other subsystem environments under linux and macos systems later, if they exist.
 
-## is_subarch
+### is_subarch
 
-### Determine the architecture of the current host subsystem environment
+#### Determine the architecture of the current host subsystem environment
 
 At present, it is mainly used for the detection of the architecture under the subsystem environment such as cygwin and msys2 on the windows system. The msvc tool chain is usually used on the windows compilation platform, and the architecture is x64, x86.
 In the msys/cygwin subsystem environment, the compiler architecture defaults to x86_64/i386, which is different.
 
 We can also quickly view the current subsystem architecture by executing `xmake l os.subarch`.
 
-## is_cross
+### is_cross
 
-### Determines whether the current platform is cross-compiled or not.
+#### Determines whether the current platform is cross-compiled or not.
 
 This interface returns true if the current target architecture and platform, which is not the current host platform, is cross-compiled.
 
-## is_mode
+### is_mode
 
-### Is the current compilation mode
+#### Is the current compilation mode
 
 You can use this api to check the configuration command: `xmake f -m debug`
 
@@ -200,9 +211,9 @@ if is_mode("release", "profile") then
 end
 ```
 
-## is_kind
+### is_kind
 
-### Is the current target kind
+#### Is the current target kind
 
 You can use this api to check the configuration command: `xmake f -k [static|shared]`
 
@@ -233,9 +244,9 @@ $ xmake f -k shared
 $ xmake
 ```
 
-## is_config
+### is_config
 
-### Is the given config values?
+#### Is the given config values?
 
 This interface is introduced from version 2.2.2 to determine whether the specified configuration is a given value.
 
@@ -279,14 +290,14 @@ if is_config("test", "hello.*") then
 end
 ```
 
-::: tip NOTE
+<p class="tip">
 This interface is not only able to determine the custom options defined through the [option](#option),
 but also to determine the built-in global and local configuration.
-:::
+</p>
 
-## has_config
+### has_config
 
-### Is the given configs enabled?
+#### Is the given configs enabled?
 
 This interface is introduced from version 2.2.2 to detect whether a custom or built-in option/configuration exists or is enabled.
 
@@ -317,18 +328,18 @@ $ xmake f --test1=no
 $ xmake f --test1=false
 ```
 
-::: tip NOTE
+<p class="tip">
 This interface can determine not only the built-in global and local configs,
 but also the custom options defined through the [option](#option).
-:::
+</p>
 
-## has_package
+### has_package
 
-### Is the given dependent package enabled?
+#### Is the given dependent package enabled?
 
 This interface is introduced from version 2.2.3 to detect whether a dependent package exists or is enabled.
 
-It is usually used to [add_requires](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_requires).
+It is usually used to [add_requires](/zh-cn/manual/global_interfaces?id=add_requires).
 
 ```lua
 add_requires("tbox", {optional = true})
@@ -346,6 +357,6 @@ target("test")
 If the remote dependencies are added via the optional add-on package added by `add_requires`, or the current platform does not support the actual installation, then `has_package` will return false.
 Indicates that it does not exist, and then does some special processing for other flags definitions and even source file compilation controls.
 
-::: tip NOTE
+<p class="tip">
 The difference between this interface and [has_config](#has_config) is that [has_config](#has_config) is used for [option](#option) whereas this is used for [add_requires](#add_requires).
-:::
+</p>

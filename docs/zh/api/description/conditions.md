@@ -1,8 +1,9 @@
-条件判断的 API，一般用于必须要处理特定平台的编译逻辑的场合，他们通常跟 lua 的 if 语句配合使用。
 
-## is_os
+条件判断的api，一般用于必须要处理特定平台的编译逻辑的场合。。通常跟 lua 的 if 语句配合使用。
 
-### 判断当前构建目标的操作系统
+### is_os
+
+#### 判断当前构建目标的操作系统
 
 ```lua
 -- 如果当前操作系统是ios
@@ -19,9 +20,9 @@ end
 * macosx
 * ios
 
-## is_arch
+### is_arch
 
-### 判断当前编译架构
+#### 判断当前编译架构
 
 用于检测编译配置：`xmake f -a armv7`
 
@@ -48,9 +49,9 @@ end
 
 用`.*`就可以匹配所有了。
 
-## is_plat
+### is_plat
 
-### 判断当前编译平台
+#### 判断当前编译平台
 
 用于检测编译配置：`xmake f -p iphoneos`
 
@@ -84,9 +85,9 @@ $ xmake f -p other --sdk=...
 
 如果指定的平台名不存在，就会自动切到`cross`平台进行交叉编译，但是却可以通过`is_plat("other")`来判断自己的平台逻辑。
 
-## is_host
+### is_host
 
-### 判断当前主机环境的操作系统
+#### 判断当前主机环境的操作系统
 
 有些编译平台是可以在多个不同的操作系统进行构建的，例如：android的ndk就支持linux,macOS还有windows环境。
 
@@ -107,11 +108,11 @@ end
 * linux
 * macosx
 
-你也可以通过[$(host)](https://xmake.io/#/zh-cn/manual/builtin_variables?id=varhost)内置变量或者[os.host](https://xmake.io/#/zh-cn/manual/builtin_modules?id=oshost)接口，来进行获取
+你也可以通过[$(host)](/zh-cn/manual/builtin_variables?id=varhost)内置变量或者[os.host](/zh-cn/manual/builtin_modules?id=oshost)接口，来进行获取
 
-## is_subhost
+### is_subhost
 
-### 判断当前主机的子系统环境
+#### 判断当前主机的子系统环境
 
 目前主要用于 windows 系统上 cygwin, msys2 等子系统环境的探测，如果在 msys2 shell 环境下运行 xmake，那么 `is_subhost("windows")` 想将会返回 false，而 `is_host("windows")` 依旧会返回 true。
 
@@ -130,28 +131,26 @@ end
 
 我们也可以通过执行 `xmake l os.subhost` 来快速查看当前的子系统平台。
 
-::: tip 提示
-后期也有可能会支持 linux 和 macos 系统下的其他子系统环境，如果存在话。
-:::
+!> 后期也有可能会支持 linux 和 macos 系统下的其他子系统环境，如果存在话。
 
-## is_subarch
+### is_subarch
 
-### 判断当前主机子系统环境下的架构
+#### 判断当前主机子系统环境下的架构
 
 目前主要用于 windows 系统上 cygwin, msys2 等子系统环境下架构的探测，通常在 windows 编译平台采用 msvc 工具链，那边编译架构时 x64，x86。
 而在 msys/cygwin 子系统环境下，编译架构默认为 x86_64/i386，是有差异的。
 
 我们也可以通过执行 `xmake l os.subarch` 来快速查看当前的子系统架构。
 
-## is_cross
+### is_cross
 
-### 判断当前平台是否为交叉编译
+#### 判断当前平台是否为交叉编译
 
 如果当前的目标架构和平台，不是当前的主机平台，属于交叉编译，这个接口就会返回 true。
 
-## is_mode
+### is_mode
 
-### 判断当前编译模式
+#### 判断当前编译模式
 
 用于检测编译配置：`xmake f -m debug`
 
@@ -201,9 +200,9 @@ if is_mode("release", "profile") then
 end
 ```
 
-## is_kind
+### is_kind
 
-### 判断当前编译类型
+#### 判断当前编译类型
 
 判断当前是否编译的是动态库还是静态库，用于检测编译配置：`xmake f -k [static|shared]`
 
@@ -236,9 +235,9 @@ $ xmake f -k shared
 $ xmake
 ```
 
-## is_config
+### is_config
 
-### 判断指定配置是否为给定的值
+#### 判断指定配置是否为给定的值
 
 此接口从2.2.2版本开始引入，用于判断指定配置是否为给定的值，可用于描述域。
 
@@ -285,13 +284,13 @@ if is_config("test", "hello.*") then
 end
 ```
 
-::: tip 提示
+<p class="tip">
 此接口不仅能够判断通过[option](#option)定义的自定义配置选项，同时还能判断内置的全局配置、本地配置。
-:::
+</p>
 
-## has_config
+### has_config
 
-### 判断配置是否启用或者存在
+#### 判断配置是否启用或者存在
 
 此接口从2.2.2版本开始引入，用于检测自定义或者内置的编译配置是否存在或启用，可用于描述域。
 
@@ -323,17 +322,18 @@ $ xmake f --test1=no
 $ xmake f --test1=false
 ```
 
-::: tip 提示
+<p class="tip">
 此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](#option)定义的自定义配置选项。
-:::
+</p>
 
-## has_package
 
-### 判断依赖包是否启用或者存在
+### has_package
+
+#### 判断依赖包是否启用或者存在
 
 此接口从2.2.3版本开始引入，用于检测远程依赖包是否存在或启用，可用于描述域。
 
-一般配合[add_requires](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_requires)一起使用，例如：
+一般配合[add_requires](/zh-cn/manual/global_interfaces?id=add_requires)一起使用，例如：
 
 ```lua
 add_requires("tbox", {optional = true})
@@ -351,6 +351,7 @@ target("test")
 如果通过`add_requires`添加的可选依赖包，远程下载安装失败，或者当前平台不支持导致实际上没有被正常安装上，那么`has_package`就会返回false，
 表示不存在，然后对其他flags定义甚至源文件编译控制做一些特殊处理。
 
-::: tip 注意
+<p class="tip">
 此接口跟[has_config](#has_config)的区别在于，[has_config](#has_config)用于[option](#option)，而它用于[add_requires](#add_requires)。
-:::
+</p>
+
