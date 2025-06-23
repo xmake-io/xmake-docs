@@ -241,7 +241,7 @@ target("xxxx")
 
 ### 设置是否启用或禁用目标
 
-如果设置`set_enabled(false)`，则会直接禁用对应的target，包括target的加载和信息获取，而[set_default](#targetset_default)仅仅只是设置默认不去编译，但是target还是能获取到相关信息的，默认也会被加载。
+如果设置`set_enabled(false)`，则会直接禁用对应的target，包括target的加载和信息获取，而[set_default](#set_default)仅仅只是设置默认不去编译，但是target还是能获取到相关信息的，默认也会被加载。
 
 ## set_default
 
@@ -404,17 +404,17 @@ target("xxx")
 
 如果这个时候，编译配置为：`xmake f -m debug -a armv7`，那么生成的文件名为：`libxxx_debug_armv7.a`
 
-如果还想进一步定制目标文件的目录名，可参考：[set_targetdir](#targetset_targetdir)。
+如果还想进一步定制目标文件的目录名，可参考：[set_targetdir](#set_targetdir)。
 
-或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#targetafter_build)和[os.mv](https://xmake.io/#/zh-cn/manual/builtin_modules?id=osmv)。
+或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#after_build)和[os.mv](https://xmake.io/#/zh-cn/manual/builtin_modules?id=osmv)。
 
 ## set_filename
 
 ### 设置目标文件全名
 
-它跟[set_basename](#targetset_basename)的区别在于，[set_basename](#targetset_basename)设置名字不带后缀跟前缀，例如：`libtest.a`，basename如果改成test2后就变成了`libtest2.a`。
+它跟[set_basename](#set_basename)的区别在于，[set_basename](#set_basename)设置名字不带后缀跟前缀，例如：`libtest.a`，basename如果改成test2后就变成了`libtest2.a`。
 
-而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把`libtest.a`改成`test.dll`，这个对于[set_basename](#targetset_basename)是做不到的。
+而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把`libtest.a`改成`test.dll`，这个对于[set_basename](#set_basename)是做不到的。
 
 ## set_prefixname
 
@@ -708,7 +708,7 @@ target("test")
     add_rules("my_rule", { my_arg = "my arg"})
 ```
 
-我们也可以指定应用局部文件到规则，具体使用见：[add_files](#targetadd_files)。
+我们也可以指定应用局部文件到规则，具体使用见：[add_files](#add_files)。
 
 ## on_load
 
@@ -810,7 +810,7 @@ target("test")
     end)
 ```
 
-如果不想重写内置的编译脚本，仅仅只是在编译前后添加一些自己的处理，其实用：[target.before_build_file](#targetbefore_build_file)和[target.after_build_file](#targetafter_build_file)会更加方便，不需要调用`opt.origin`。
+如果不想重写内置的编译脚本，仅仅只是在编译前后添加一些自己的处理，其实用：[target.before_build_file](#before_build_file)和[target.after_build_file](#after_build_file)会更加方便，不需要调用`opt.origin`。
 
 ## on_build_files
 
@@ -1313,7 +1313,7 @@ add_deps("dep1", "dep2", {inherit = false})
 
 ### 添加链接库名
 
-为当前目标添加链接库，一般这个要与[add_linkdirs](#targetadd_linkdirs)配对使用。
+为当前目标添加链接库，一般这个要与[add_linkdirs](#add_linkdirs)配对使用。
 
 ```lua
 target("demo")
@@ -1331,7 +1331,7 @@ target("demo")
 
 ### 添加系统链接库名
 
-这个接口使用上跟[add_links](#targetadd_links)类似，唯一的区别就是，通过这个接口添加的链接库顺序在所有`add_links`之后。
+这个接口使用上跟[add_links](#add_links)类似，唯一的区别就是，通过这个接口添加的链接库顺序在所有`add_links`之后。
 
 因此主要用于添加系统库依赖，因为系统库的链接顺序是非常靠后的，例如：
 
@@ -1608,7 +1608,7 @@ add_files("*.cpp", {sourcekind = "cc"})  -- force to compile as c
 
 ### 从前面的源代码文件列表中删除指定文件
 
-通过此接口，可以从前面[add_files](#targetadd_files)接口添加的文件列表中，删除指定的文件，例如：
+通过此接口，可以从前面[add_files](#add_files)接口添加的文件列表中，删除指定的文件，例如：
 
 ```lua
 target("test")
@@ -1618,7 +1618,7 @@ target("test")
 
 上面的例子，可以从`src`目录下添加除`test.c`以外的所有文件，当然这个也可以通过`add_files("src/*.c|test.c")`来达到相同的目的，但是这种方式更加灵活。
 
-例如，我们可以条件判断来控制删除哪些文件，并且此接口也支持[add_files](#targetadd_files)的匹配模式，过滤模式，进行批量移除。
+例如，我们可以条件判断来控制删除哪些文件，并且此接口也支持[add_files](#add_files)的匹配模式，过滤模式，进行批量移除。
 
 ```lua
 target("test")
@@ -1662,7 +1662,7 @@ target("test")
 
 此接口相当于gcc的`-Lxxx`链接选项。
 
-一般他是与[add_links](#targetadd_links)配合使用的，当然也可以直接通过[add_ldflags](#targetadd_ldflags)或者[add_shflags](#targetadd_shflags)接口来添加，也是可以的。
+一般他是与[add_links](#add_links)配合使用的，当然也可以直接通过[add_ldflags](#add_ldflags)或者[add_shflags](#add_shflags)接口来添加，也是可以的。
 
 <p class="tip">
 如果不想在工程中写死，可以通过：`xmake f --linkdirs=xxx`或者`xmake f --ldflags="-L/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
@@ -1672,7 +1672,7 @@ target("test")
 
 ### 添加程序运行时动态库的加载搜索目录
 
-通过[add_linkdirs](#targetadd_linkdirs)设置动态库的链接搜索目录后，程序被正常链接，但是在linux平台想要正常运行编译后的程序，会报加载动态库失败。
+通过[add_linkdirs](#add_linkdirs)设置动态库的链接搜索目录后，程序被正常链接，但是在linux平台想要正常运行编译后的程序，会报加载动态库失败。
 
 因为没找到动态库的加载目录，想要正常运行依赖动态库的程序，需要设置`LD_LIBRARY_PATH`环境变量，指定需要加载的动态库目录。
 
@@ -1731,7 +1731,7 @@ target("test")
     add_includedirs("$(buildir)/include")
 ```
 
-当然也可以直接通过[add_cxflags](#targetadd_cxflags)或者[add_mxflags](#targetadd_mxflags)等接口来设置，也是可以的。
+当然也可以直接通过[add_cxflags](#add_cxflags)或者[add_mxflags](#add_mxflags)等接口来设置，也是可以的。
 
 2.2.5之后，可通过额外的`{public|interface = true}`属性设置，将includedirs导出给依赖的子target，例如：
 
@@ -1746,7 +1746,7 @@ target("demo")
     add_deps("test")
 ```
 
-更多关于这块的说明，见：[add_deps](#targetadd_deps)
+更多关于这块的说明，见：[add_deps](#add_deps)
 
 :::tip 注意
 如果不想在工程中写死，可以通过：`xmake f --includedirs=xxx`或者`xmake f --cxflags="-I/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
@@ -2089,7 +2089,7 @@ add_shflags("xxx")
 
 ### 添加关联选项
 
-这个接口跟[set_options](#targetset_options)类似，唯一的区别就是，此处是追加选项，而[set_options](#targetset_options)每次设置会覆盖先前的设置。
+这个接口跟[set_options](#set_options)类似，唯一的区别就是，此处是追加选项，而[set_options](#set_options)每次设置会覆盖先前的设置。
 
 ## add_packages
 
@@ -2104,7 +2104,7 @@ target("test")
 
 这样，在编译test目标时，如果这个包存在的，将会自动追加包里面的宏定义、头文件搜索路径、链接库目录，也会自动链接包中所有库。
 
-用户不再需要自己单独调用[add_links](#targetadd_links)，[add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags)等接口，来配置依赖库链接了。
+用户不再需要自己单独调用[add_links](#add_links)，[add_includedirs](#add_includedirs), [add_ldflags](#add_ldflags)等接口，来配置依赖库链接了。
 
 对于如何设置包搜索目录，可参考：[add_packagedirs](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_packagedirs) 接口
 
@@ -2141,7 +2141,7 @@ target("test")
 
 ### 添加语言标准
 
-与[set_languages](#targetset_languages)类似，唯一区别是这个接口不会覆盖掉之前的设置，而是追加设置。
+与[set_languages](#set_languages)类似，唯一区别是这个接口不会覆盖掉之前的设置，而是追加设置。
 
 ## add_vectorexts
 
@@ -2177,7 +2177,7 @@ target("test")
     add_frameworks("Foundation", "CoreFoundation")
 ```
 
-当然也可以使用[add_mxflags](#targetadd_mxflags)和[add_ldflags](#targetadd_ldflags)来设置，不过比较繁琐，不建议这样设置。
+当然也可以使用[add_mxflags](#add_mxflags)和[add_ldflags](#add_ldflags)来设置，不过比较繁琐，不建议这样设置。
 
 ```lua
 target("test")
@@ -2191,7 +2191,7 @@ target("test")
 
 ### 添加链接框架搜索目录
 
-对于一些第三方framework，那么仅仅通过[add_frameworks](#targetadd_frameworks)是没法找到的，还需要通过这个接口来添加搜索目录。
+对于一些第三方framework，那么仅仅通过[add_frameworks](#add_frameworks)是没法找到的，还需要通过这个接口来添加搜索目录。
 
 ```lua
 target("test")
@@ -2203,7 +2203,7 @@ target("test")
 
 ### 设置工具集
 
-针对特定target单独设置切换某个编译器，链接器，不过我们更推荐使用[set_toolchains](#targetset_toolchains)对某个target进行整体工具链的切换。
+针对特定target单独设置切换某个编译器，链接器，不过我们更推荐使用[set_toolchains](#set_toolchains)对某个target进行整体工具链的切换。
 
 与set_toolchains相比，此接口只切换工具链某个特定的编译器或者链接器。
 
@@ -2343,7 +2343,7 @@ target("test")
 
 但是，这还不是特别方便，尤其是跨平台编译时候，不同平台的pc工具链都是不同的，有msvc, xcode, clang等，还需要判断平台来指定。
 
-因此，我们可以直接使用[set_plat](#targetset_plat)和[set_arch](#targetset_arch)接口，直接设置特定target到主机平台，就可以内部自动选择host工具链了，例如：
+因此，我们可以直接使用[set_plat](#set_plat)和[set_arch](#set_arch)接口，直接设置特定target到主机平台，就可以内部自动选择host工具链了，例如：
 
 ```lua
 target("test")
@@ -2382,9 +2382,9 @@ target("test")
 
 ### 设置指定目标的编译平台
 
-通常配合[set_arch](#targetset_arch)使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。
+通常配合[set_arch](#set_arch)使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。
 
-一般用于需要同时编译host平台目标、交叉编译目标的场景，更多详情见：[set_toolchains](#targetset_toolchains)
+一般用于需要同时编译host平台目标、交叉编译目标的场景，更多详情见：[set_toolchains](#set_toolchains)
 
 例如：
 
@@ -2411,7 +2411,7 @@ target("test")
 
 ### 设置指定目标的编译架构
 
-详情见：[set_plat](#targetset_plat)
+详情见：[set_plat](#set_plat)
 
 ## set_values
 
@@ -2466,7 +2466,7 @@ target("test")
 
 ### 添加一些扩展配置值
 
-用法跟[set_values](#targetset_values)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
+用法跟[set_values](#set_values)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
 
 ## set_rundir
 
@@ -2499,7 +2499,7 @@ set_runargs("-x", "--arg1=val")
 
 ### 添加运行环境变量
 
-此接口用于添加设置默认运行target程序的环境变量，跟[set_runenv](#targetset_runenv)不同的是，此接口是对已有系统env中的值进行追加，并不会覆盖。
+此接口用于添加设置默认运行target程序的环境变量，跟[set_runenv](#set_runenv)不同的是，此接口是对已有系统env中的值进行追加，并不会覆盖。
 
 所以，对于PATH这种，通过此接口追加值是非常方便的，而且此接口支持多值设置，所以通常就是用来设置带有path sep的多值env。。
 
@@ -2515,7 +2515,7 @@ target("test")
 
 ### 设置运行环境变量
 
-此接口跟[add_runenvs](#targetadd_runenvs)不同的是，`set_runenv`是对某个环境变量的覆盖设置，会覆盖原有系统环境的env值，并且此接口是单数设置，不能传递多参。
+此接口跟[add_runenvs](#add_runenvs)不同的是，`set_runenv`是对某个环境变量的覆盖设置，会覆盖原有系统环境的env值，并且此接口是单数设置，不能传递多参。
 
 所以，如果要覆盖设置PATH这中多路径的env，需要自己去拼接：
 
@@ -2630,7 +2630,7 @@ target("test")
 
 我们把`src/tbox/*.h`中的文件，提取`tbox/*.h`子目录结构后，在进行安装：`/usr/local/include/tbox/*.h, /usr/local/share/doc/tbox/*.md`
 
-当然，用户也可以通过[set_installdir](#targetset_installdir)接口，来配合使用。
+当然，用户也可以通过[set_installdir](#set_installdir)接口，来配合使用。
 
 关于此接口的详细说明，见：https://github.com/xmake-io/xmake/issues/318
 
@@ -2640,7 +2640,7 @@ target("test")
 
 2.2.5版本新增接口，用于针对每个target设置对应需要安装的头文件，一般用于`xmake install/uninstall`命令。
 
-此接口使用方式跟[add_installfiles](#targetadd_installfiles)接口几乎完全一样，都可以用来添加安装文件，不过此接口仅用于安装头文件。
+此接口使用方式跟[add_installfiles](#add_installfiles)接口几乎完全一样，都可以用来添加安装文件，不过此接口仅用于安装头文件。
 因此，使用上比`add_installfiles`简化了不少，默认不设置prefixdir，也会自动将头文件安装到对应的`include`子目录中。
 
 并且此接口对于`xmake project -k vs201x`等插件生成的IDE文件，也会添加对应的头文件进去。
@@ -2665,13 +2665,13 @@ add_headerfiles("src/test.h", {install = false})
 
 ### 设置模板配置文件的输出目录
 
-2.2.5版本新增接口，主要用于[add_configfiles](#targetadd_configfiles)接口设置的模板配置文件的输出目录。
+2.2.5版本新增接口，主要用于[add_configfiles](#add_configfiles)接口设置的模板配置文件的输出目录。
 
 ## set_configvar
 
 ### 设置模板配置变量
 
-2.2.5版本新增接口，用于在编译前，添加一些需要预处理的模板配置变量，一般用于[add_configfiles](#targetadd_configfiles)接口。
+2.2.5版本新增接口，用于在编译前，添加一些需要预处理的模板配置变量，一般用于[add_configfiles](#add_configfiles)接口。
 
 ```lua
 target("test")
@@ -2739,7 +2739,7 @@ target("test")
 add_configfiles("src/config.h", {filename = "myconfig.h"})
 ```
 
-的方式，来重命名输出，同样，这个接口跟[add_installfiles](#targetadd_configfiles)类似，也是支持prefixdir和子目录提取设置：
+的方式，来重命名输出，同样，这个接口跟[add_installfiles](#add_configfiles)类似，也是支持prefixdir和子目录提取设置：
 
 ```lua
 add_configfiles("src/*.h.in", {prefixdir = "subdir"})
@@ -2770,7 +2770,7 @@ target("test")
     add_configfiles("*.man", {onlycopy = true})
 ```
 
-通过[set_configvar](#targetset_configvar)接口设置模板变量，裹着通过`{variables = {xxx = ""}}`中设置的变量进行替换处理。
+通过[set_configvar](#set_configvar)接口设置模板变量，裹着通过`{variables = {xxx = ""}}`中设置的变量进行替换处理。
 
 预处理后的文件`config.h`内容为：
 

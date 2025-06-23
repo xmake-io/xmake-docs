@@ -242,7 +242,7 @@ This api does not have to be used after the target. If no target is specified, i
 
 ### Enable or disable target
 
-If `set_enabled(false)` is set, the corresponding target will be directly disabled, including target loading and information acquisition, while [set_default](#targetset_default) is just set to not compile by default, but the target can still get related information. , the default will also be loaded.
+If `set_enabled(false)` is set, the corresponding target will be directly disabled, including target loading and information acquisition, while [set_default](#set_default) is just set to not compile by default, but the target can still get related information. , the default will also be loaded.
 
 ## set_default
 
@@ -405,17 +405,17 @@ target("xxx")
 
 if this time, the build configuration is: `xmake f -m debug -a armv7`, then the generated file name is: `libxxx_debug_armv7.a`
 
-If you want to further customize the directory name of the target file, refer to: [set_targetdir](#targetset_targetdir).
+If you want to further customize the directory name of the target file, refer to: [set_targetdir](#set_targetdir).
 
-Or implement more advanced logic by writing custom scripts, see: [after_build](#targetafter_build) and [os.mv](https://xmake.io/#/manual/builtin_modules?id=osmv).
+Or implement more advanced logic by writing custom scripts, see: [after_build](#after_build) and [os.mv](https://xmake.io/#/manual/builtin_modules?id=osmv).
 
 ## set_filename
 
 ### Set the full name of target file
 
-The difference between it and [set_basename](#targetset_basename) is that [set_basename](#targetset_basename) sets the name without a suffix and a prefix, for example: `libtest.a`, if the basename is changed to test2, it becomes `libtest2.a `.
+The difference between it and [set_basename](#set_basename) is that [set_basename](#set_basename) sets the name without a suffix and a prefix, for example: `libtest.a`, if the basename is changed to test2, it becomes `libtest2.a `.
 
-The modification of filename is to modify the entire target file name, including the prefix and suffix. For example, you can directly change `libtest.a` to `test.dll`, which is not available for [set_basename](#targetset_basename).
+The modification of filename is to modify the entire target file name, including the prefix and suffix. For example, you can directly change `libtest.a` to `test.dll`, which is not available for [set_basename](#set_basename).
 
 ## set_prefixname
 
@@ -719,7 +719,7 @@ target("test")
     add_rules("my_rule", { my_arg = "my arg"})
 ```
 
-We can also specify the application of local files to the rules, see: [add_files](#targetadd_files).
+We can also specify the application of local files to the rules, see: [add_files](#add_files).
 
 ## on_load
 
@@ -820,7 +820,7 @@ target("test")
     end)
 ```
 
-If you don't want to rewrite the built-in build script, just add some of your own processing before and after compiling. Its utility: [target.before_build_file](#targetbefore_build_file) and [target.after_build_file](#targetafter_build_file) will be more convenient and you don't need to call it. Opt.origin`.
+If you don't want to rewrite the built-in build script, just add some of your own processing before and after compiling. Its utility: [target.before_build_file](#before_build_file) and [target.after_build_file](#after_build_file) will be more convenient and you don't need to call it. Opt.origin`.
 
 ## on_build_files
 
@@ -1325,7 +1325,7 @@ For a detailed description of this, you can look at it: https://github.com/xmake
 
 ### Add link libraries
 
-Add a link library for the current target, which is usually paired with [add_linkdirs](#targetadd_linkdirs).
+Add a link library for the current target, which is usually paired with [add_linkdirs](#add_linkdirs).
 
 ```lua
 target("demo")
@@ -1343,7 +1343,7 @@ Starting with version 2.8.1, add_links also supports adding the full path to the
 
 ### Add system link libraries
 
-This interface is similar to [add_links](#targetadd_links). The only difference is that the link library added through this interface is in the order of all `add_links`.
+This interface is similar to [add_links](#add_links). The only difference is that the link library added through this interface is in the order of all `add_links`.
 
 Therefore, it is mainly used to add system library dependencies, because the link order of the system libraries is very backward, for example:
 
@@ -1620,7 +1620,7 @@ add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 
 ### Remove source files
 
-Through this interface, you can delete the specified file from the list of files added by the [add_files](#targetadd_files) interface, for example:
+Through this interface, you can delete the specified file from the list of files added by the [add_files](#add_files) interface, for example:
 
 ```lua
 target("test")
@@ -1630,7 +1630,7 @@ target("test")
 
 In the above example, you can add all files except `test.c` from the `src` directory. Of course, this can also be done by `add_files("src/*.c|test.c").To achieve the same purpose, but this way is more flexible.
 
-For example, we can conditionally determine which files to delete, and this interface also supports the matching mode of [add_files](#targetadd_files), filtering mode, and bulk removal.
+For example, we can conditionally determine which files to delete, and this interface also supports the matching mode of [add_files](#add_files), filtering mode, and bulk removal.
 
 ```lua
 target("test")
@@ -1674,7 +1674,7 @@ target("test")
 
 This interface is equivalent to gcc's `-Lxxx` link option.
 
-Generally, it is used together with [add_links](#targetadd_links). Of course, it can also be added directly through the [add_ldflags](#targetadd_ldflags) or [add_shflags](#targetadd_shflags) interface. It is also possible.
+Generally, it is used together with [add_links](#add_links). Of course, it can also be added directly through the [add_ldflags](#add_ldflags) or [add_shflags](#add_shflags) interface. It is also possible.
 
 <p class="tip">
 If you don't want to write to death in the project, you can set it by: `xmake f --linkdirs=xxx` or `xmake f --ldflags="-L/xxx"`, of course, this manually set directory search priority. higher.
@@ -1684,7 +1684,7 @@ If you don't want to write to death in the project, you can set it by: `xmake f 
 
 ### Add load search directories for dynamic libraries
 
-After [add_linkdirs](#targetadd_linkdirs) sets the link search directory of the dynamic library, the program is normally linked, but in the Linux platform, if you want to run the compiled program normally, it will report that the dynamic library fails to be loaded.
+After [add_linkdirs](#add_linkdirs) sets the link search directory of the dynamic library, the program is normally linked, but in the Linux platform, if you want to run the compiled program normally, it will report that the dynamic library fails to be loaded.
 
 Because the dynamic library's load directory is not found, if you want to run the program that depends on the dynamic library, you need to set the `LD_LIBRARY_PATH` environment variable to specify the dynamic library directory to be loaded.
 
@@ -1743,7 +1743,7 @@ target("test")
     add_includedirs("$(buildir)/include")
 ```
 
-Of course, it can also be set directly through interfaces such as [add_cxflags](#targetadd_cxflags) or [add_mxflags](#targetadd_mxflags), which is also possible.
+Of course, it can also be set directly through interfaces such as [add_cxflags](#add_cxflags) or [add_mxflags](#add_mxflags), which is also possible.
 
 After 2.2.5, includedirs can be exported to dependent child targets via the extra `{public|interface = true}` property setting, for example:
 
@@ -1758,7 +1758,7 @@ target("demo")
     add_deps("test")
 ```
 
-For more on this block, see: [add_deps](#targetadd_deps)
+For more on this block, see: [add_deps](#add_deps)
 
 !>If you don't want it to be fixed in the project, you can set it by: xmake f --includedirs=xxx or xmake f --cxflags="-I/xxx". This manual setting has higher directory search priority.
 
@@ -2100,7 +2100,7 @@ add_shflags("xxx")
 
 ### Add option dependencies
 
-This interface is similar to [set_options](#targetset_options), the only difference is that this is an append option, and [set_options](#targetset_options) overrides the previous settings each time.
+This interface is similar to [set_options](#set_options), the only difference is that this is an append option, and [set_options](#set_options) overrides the previous settings each time.
 
 ## add_packages
 
@@ -2115,7 +2115,7 @@ target("test")
 
 In this way, when compiling the test target, if the package exists, the macro definition, the header file search path, and the link library directory in the package will be automatically appended, and all the libraries in the package will be automatically linked.
 
-Users no longer need to call the [add_links](#targetadd_links), [add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags) interfaces to configure the dependent library links.
+Users no longer need to call the [add_links](#add_links), [add_includedirs](#add_includedirs), [add_ldflags](#add_ldflags) interfaces to configure the dependent library links.
 
 For how to set up the package search directory, please refer to: [add_packagedirs](https://xmake.io/#/manual/global_interfaces?id=add_packagedirs) interface
 
@@ -2152,7 +2152,7 @@ target("test")
 
 ### Add language standards
 
-Similar to [set_languages](#targetset_languages), the only difference is that this interface will not overwrite the previous settings, but append settings.
+Similar to [set_languages](#set_languages), the only difference is that this interface will not overwrite the previous settings, but append settings.
 
 ## add_vectorexts
 
@@ -2189,7 +2189,7 @@ target("test")
     add_frameworks("Foundation", "CoreFoundation")
 ```
 
-Of course, you can also use [add_mxflags](#targetadd_mxflags) and [add_ldflags](#targetadd_ldflags) to set them up, but it is cumbersome and is not recommended.
+Of course, you can also use [add_mxflags](#add_mxflags) and [add_ldflags](#add_ldflags) to set them up, but it is cumbersome and is not recommended.
 
 ```lua
 target("test")
@@ -2203,7 +2203,7 @@ If it is not for both platforms, these settings will be ignored.
 
 ### Add framework search directories
 
-For some third-party frameworks, it is impossible to find them only through [add_frameworks](#targetadd_frameworks). You also need to add a search directory through this interface.
+For some third-party frameworks, it is impossible to find them only through [add_frameworks](#add_frameworks). You also need to add a search directory through this interface.
 
 ```lua
 target("test")
@@ -2215,7 +2215,7 @@ target("test")
 
 ### Set toolset
 
-Separate settings for a specific target to switch a compiler, linker, but we recommend using [set_toolchains](#targetset_toolchains) to switch the overall tool chain of a target.
+Separate settings for a specific target to switch a compiler, linker, but we recommend using [set_toolchains](#set_toolchains) to switch the overall tool chain of a target.
 
 Compared with set_toolchains, this interface only switches a specific compiler or linker of the toolchain.
 
@@ -2353,7 +2353,7 @@ If it is currently in cross-compilation mode, this test will still be forced to 
 
 However, this is not particularly convenient, especially when cross-platform compilation, pc tool chains of different platforms are different, there are msvc, xcode, clang, etc., you need to judge the platform to specify.
 
-Therefore, we can directly use the [set_plat](#targetset_plat) and [set_arch](#targetset_arch) interfaces to directly set a specific target to the host platform, and we can automatically select the host toolchain internally, for example:
+Therefore, we can directly use the [set_plat](#set_plat) and [set_arch](#set_arch) interfaces to directly set a specific target to the host platform, and we can automatically select the host toolchain internally, for example:
 
 ```lua
 target("test")
@@ -2392,9 +2392,9 @@ Generally, we recommend using `set_arch` to switch the architecture of the entir
 
 ### Set the compilation platform for the specified target
 
-Usually used with [set_arch](#targetset_arch) to switch the compilation platform of the specified target to the specified platform, xmake will automatically select the appropriate tool chain according to the switched platform.
+Usually used with [set_arch](#set_arch) to switch the compilation platform of the specified target to the specified platform, xmake will automatically select the appropriate tool chain according to the switched platform.
 
-Generally used in scenarios where the host platform target and cross-compilation target need to be compiled at the same time. For more details, see: [set_toolchains](#targetset_toolchains)
+Generally used in scenarios where the host platform target and cross-compilation target need to be compiled at the same time. For more details, see: [set_toolchains](#set_toolchains)
 
 E.g:
 
@@ -2421,7 +2421,7 @@ target("test")
 
 ### Set the compilation architecture of the specified target
 
-For details, see: [set_plat](#targetset_plat)
+For details, see: [set_plat](#set_plat)
 
 ## set_values
 
@@ -2476,7 +2476,7 @@ The following is a list of some built-in extended configuration items currently 
 
 ### Add custom configuration values
 
-Usage is similar to [set_values](#targetset_values), the difference is that this interface is an additional setting, and will not override the settings each time.
+Usage is similar to [set_values](#set_values), the difference is that this interface is an additional setting, and will not override the settings each time.
 
 ## set_rundir
 
@@ -2509,7 +2509,7 @@ set_runargs("-x", "--arg1=val")
 
 ### Add runtime environment variables
 
-This interface is used to add an environment variable that sets the default running target program. Unlike [set_runenv](#targetset_runenv), this interface appends the value in the existing system env and does not overwrite it.
+This interface is used to add an environment variable that sets the default running target program. Unlike [set_runenv](#set_runenv), this interface appends the value in the existing system env and does not overwrite it.
 
 Therefore, for PATH, it is very convenient to append values through this interface, and this interface supports multi-value settings, so it is usually used to set multi-value env with path sep. .
 
@@ -2525,7 +2525,7 @@ target("test")
 
 ### Set the runtime environment variable
 
-This interface differs from [add_runenvs](#targetadd_runenvs) in that `set_runenv` is an override setting for an environment variable that overrides the env value of the original system environment, and this interface is singular and cannot pass multiple parameters.
+This interface differs from [add_runenvs](#add_runenvs) in that `set_runenv` is an override setting for an environment variable that overrides the env value of the original system environment, and this interface is singular and cannot pass multiple parameters.
 
 So, if you want to override the env that sets the multipath in PATH, you need to splicing yourself:
 
@@ -2636,7 +2636,7 @@ target("test")
 
 We extract the `src/*.h` subdirectory structure from the files in `src/tbox/*.h` and install it: `/usr/local/include/tbox/*.h, /usr/local /share/doc/tbox/*.md`
 
-Of course, users can also use the [set_installdir](#targetset_installdir) interface.
+Of course, users can also use the [set_installdir](#set_installdir) interface.
 
 For a detailed description of this interface, see: https://github.com/xmake-io/xmake/issues/318
 
@@ -2646,7 +2646,7 @@ For a detailed description of this interface, see: https://github.com/xmake-io/x
 
 2.2.5 version of the new interface, used to set the corresponding header file for each target, generally used for the `xmake install/uninstall` command.
 
-This interface is used in almost the same way as the [add_installfiles](#targetadd_installfiles) interface. But it is provided for installing header files.
+This interface is used in almost the same way as the [add_installfiles](#add_installfiles) interface. But it is provided for installing header files.
 It is not required to set the `prefixdir` option. The header files are installed into the corresponding `include` subdirectory by default.
 
 And this interface for the `xmake project -k vs201x` and other plug-in generated IDE files, will also add the corresponding header file into it.
@@ -2672,13 +2672,13 @@ The above two header files will be displayed in the vs project, but only foo.h w
 
 ### Set the output directory of configuration files
 
-Version 2.2.5 adds a new interface, mainly used for the output directory of the template configuration file set by the [add_configfiles](#targetadd_configfiles) interface.
+Version 2.2.5 adds a new interface, mainly used for the output directory of the template configuration file set by the [add_configfiles](#add_configfiles) interface.
 
 ## set_configvar
 
 ### Set template configuration variables
 
-The new interface in version 2.2.5 is used to add some template configuration variables that need to be pre-processed before compilation, generally used in the [add_configfiles](#targetadd_configfiles) interface.
+The new interface in version 2.2.5 is used to add some template configuration variables that need to be pre-processed before compilation, generally used in the [add_configfiles](#add_configfiles) interface.
 
 ```lua
 target("test")
@@ -2746,7 +2746,7 @@ The `.in` suffix will be automatically recognized and processed. If you want to 
 add_configfiles("src/config.h", {filename = "myconfig.h"})
 ```
 
-The way to rename the output, again, this interface is similar to [add_installfiles](#targetadd_configfiles), which also supports prefixdir and subdirectory extraction settings:
+The way to rename the output, again, this interface is similar to [add_installfiles](#add_configfiles), which also supports prefixdir and subdirectory extraction settings:
 
 ```lua
 add_configfiles("src/*.h.in", {prefixdir = "subdir"})
@@ -2777,7 +2777,7 @@ target("test")
     add_configfiles("*.man", {onlycopy = true})
 ```
 
-The template variable is set via the [set_configvar](#targetset_configvar) interface, and the substitution is handled by the variable set in `{variables = {xxx = ""}}`.
+The template variable is set via the [set_configvar](#set_configvar) interface, and the substitution is handled by the variable set in `{variables = {xxx = ""}}`.
 
 The preprocessed file `config.h` is:
 
