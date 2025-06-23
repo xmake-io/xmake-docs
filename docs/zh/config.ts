@@ -34,6 +34,10 @@ export default defineAdditionalConfig({
       text: '最后更新于'
     },
 
+    outline: {
+      label: '页面导航'
+    },
+
     notFound: {
       title: '页面未找到',
       quote:
