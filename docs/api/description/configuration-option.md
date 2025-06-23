@@ -110,7 +110,7 @@ This script overrides the built-in option detection logic.
 option("test")
     add_deps("small")
     on_check(function (option)
-        if dep("small"):enabled() then
+        if option:dep("small"):enabled() then
             enable(false)
         end
     end)
@@ -133,7 +133,7 @@ option("test")
     add_deps("small")
     add_links("pthread")
     after_check(function (option)
-        enable(false)
+        option:enable(false)
     end)
 ```
 

@@ -79,8 +79,8 @@ option("test")
     add_deps("small")
     set_default(true)
     after_check(function (option)
-        if dep("small"):enabled() then
-            enable(false)
+        if option:dep("small"):enabled() then
+            option:enable(false)
         end
     end)
 ```
@@ -111,7 +111,7 @@ option("zlib")
 option("test")
     add_deps("small")
     on_check(function (option)
-        enable(true)
+        option:enable(true)
     end)
 ```
 
@@ -130,7 +130,7 @@ option("test")
     add_deps("small")
     add_links("pthread")
     after_check(function (option)
-        enable(false)
+        option:enable(false)
     end)
 ```
 
