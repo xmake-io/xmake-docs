@@ -1,3 +1,4 @@
+# Configuration option
 
 Define and set option switches. Each `option` corresponds to an option that can be used to customize the build configuration options and switch settings.
 

@@ -1,3 +1,4 @@
+# Project target
 
 We can use `target("test")` to define a project target named "test", each target generates an executable program, a static library, or a dynamic library.
 
