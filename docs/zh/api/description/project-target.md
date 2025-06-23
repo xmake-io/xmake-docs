@@ -406,7 +406,7 @@ target("xxx")
 
 如果还想进一步定制目标文件的目录名，可参考：[set_targetdir](#targetset_targetdir)。
 
-或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#targetafter_build)和[os.mv](/zh-cn/manual/builtin_modules?id=osmv)。
+或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#targetafter_build)和[os.mv](https://xmake.io/#/zh-cn/manual/builtin_modules?id=osmv)。
 
 ## target:set_filename
 
@@ -2106,9 +2106,9 @@ target("test")
 
 用户不再需要自己单独调用[add_links](#targetadd_links)，[add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags)等接口，来配置依赖库链接了。
 
-对于如何设置包搜索目录，可参考：[add_packagedirs](/zh-cn/manual/global_interfaces?id=add_packagedirs) 接口
+对于如何设置包搜索目录，可参考：[add_packagedirs](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_packagedirs) 接口
 
-而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](/zh-cn/manual/global_interfaces?id=add_requires)定义的包。
+而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_requires)定义的包。
 
 ```lua
 add_requires("zlib", "polarssl")
@@ -2328,7 +2328,7 @@ toolchain("myclang")
     -- ...
 ```
 
-关于这块的详情介绍，可以到[自定义工具链](/zh-cn/manual/custom_toolchain)章节查看
+关于这块的详情介绍，可以到[自定义工具链](https://xmake.io/#/zh-cn/manual/custom_toolchain)章节查看
 
 更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
 
@@ -2439,7 +2439,7 @@ target("test")
 在规则脚本中可以通过`target:values("markdown.flags")`获取到target中设置的扩展flags值。
 
 :::tip 注意
-具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](/zh-cn/manual/custom_rule?id=内建规则)
+具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](https://xmake.io/#/zh-cn/manual/custom_rule?id=内建规则)
 :::
 
 下面是一些 xmake 目前支持的一些内置的扩展配置项列表。

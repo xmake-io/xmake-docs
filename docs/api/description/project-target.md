@@ -407,7 +407,7 @@ if this time, the build configuration is: `xmake f -m debug -a armv7`, then the 
 
 If you want to further customize the directory name of the target file, refer to: [set_targetdir](#targetset_targetdir).
 
-Or implement more advanced logic by writing custom scripts, see: [after_build](#targetafter_build) and [os.mv](/manual/builtin_modules?id=osmv).
+Or implement more advanced logic by writing custom scripts, see: [after_build](#targetafter_build) and [os.mv](https://xmake.io/#/manual/builtin_modules?id=osmv).
 
 ## target:set_filename
 
@@ -2117,9 +2117,9 @@ In this way, when compiling the test target, if the package exists, the macro de
 
 Users no longer need to call the [add_links](#targetadd_links), [add_includedirs](#targetadd_includedirs), [add_ldflags](#targetadd_ldflags) interfaces to configure the dependent library links.
 
-For how to set up the package search directory, please refer to: [add_packagedirs](/manual/global_interfaces?id=add_packagedirs) interface
+For how to set up the package search directory, please refer to: [add_packagedirs](https://xmake.io/#/manual/global_interfaces?id=add_packagedirs) interface
 
-After v2.2.2, this interface also supports packages defined by [add_requires](/manual/global_interfaces?id=add_requires) in remote dependency management.
+After v2.2.2, this interface also supports packages defined by [add_requires](https://xmake.io/#/manual/global_interfaces?id=add_requires) in remote dependency management.
 
 ```lua
 add_requires("zlib", "polarssl")
@@ -2338,7 +2338,7 @@ toolchain("myclang")
     - ...
 ```
 
-For details about this piece, you can go to the [Custom Toolchain](/manual/custom_toolchain).
+For details about this piece, you can go to the [Custom Toolchain](https://xmake.io/#/manual/custom_toolchain).
 
 For more details, please see: [#780](https://github.com/xmake-io/xmake/issues/780)
 
@@ -2449,7 +2449,7 @@ In the above code example, it can be seen that when the target applies the markd
 In the rule script, you can get the extended flag value set in the target by `target:values("markdown.flags")`.
 
 :::tip NOTE
-The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](/manual/custom_rule?id=built-in-rules)
+The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](https://xmake.io/#/manual/custom_rule?id=built-in-rules)
 :::
 
 The following is a list of some built-in extended configuration items currently supported by xmake.
@@ -3141,7 +3141,7 @@ target("test6")
 
 The effect of the generated VS project directory structure is as follows:
 
-![](assets/img/manual/set_group.png)
+![](assets/imghttps://xmake.io/#/manual/set_group.png)
 
 For more details, please see: [#1026](https://github.com/xmake-io/xmake/issues/1026)
 
@@ -3206,7 +3206,7 @@ target("test")
     add_files("... /... /... /... /src/**.cpp")
 ```
 
-![](https://xmake.io/assets/img/manual/filegroup1.png)
+![](https://xmake.io/assets/imghttps://xmake.io/#/manual/filegroup1.png)
 
 Two main presentation modes are currently supported.
 
@@ -3224,7 +3224,7 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /"})
 ```
 
-![](https://xmake.io/assets/img/manual/filegroup2.png)
+![](https://xmake.io/assets/imghttps://xmake.io/#/manual/filegroup2.png)
 
 
 #### Set the group and specifies the file matching pattern
@@ -3247,7 +3247,7 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /", mode = "plain"})
 ```
 
-![](https://xmake.io/assets/img/manual/filegroup3.png)
+![](https://xmake.io/assets/imghttps://xmake.io/#/manual/filegroup3.png)
 
 ## target:set_exceptions
 
