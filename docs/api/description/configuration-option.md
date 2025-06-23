@@ -152,7 +152,7 @@ option("test")
 
 The effect chart is as follows:
 
-<img src="/assets/img/manual/option_set_values.png" width="60%" />
+<img src="https://xmake.io/assets/img/manual/option_set_values.png" width="60%" />
 
 ## set_default
 
@@ -316,7 +316,7 @@ The menu interface path structure finally displayed in the above configuration:
 
 The effect chart is as follows:
 
-<img src="/assets/img/manual/option_set_category.gif" width="60%" />
+<img src="https://xmake.io/assets/img/manual/option_set_category.gif" width="60%" />
 
 ## set_description
 
