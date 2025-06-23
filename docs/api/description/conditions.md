@@ -1,4 +1,3 @@
-
 Conditions are generally used to handle some special compilation platforms.
 
 | Interfaces                  | Description                               | Support version             |
@@ -13,7 +12,7 @@ Conditions are generally used to handle some special compilation platforms.
 | [has_config](#has_config)   | Is the given configs enabled?             | >= 2.2.2                    |
 | [has_package](#has_package) | Is the given dependent package enabled?   | >= 2.2.3                    |
 
-### is_os
+## is_os
 
 #### Is the current compilation target system
 
@@ -31,7 +30,7 @@ Support operation systems:
 * macosx
 * ios
 
-### is_arch
+## is_arch
 
 #### Is the current compilation architecture
 
@@ -58,7 +57,7 @@ if is_arch("arm.*") then
 end
 ```
 
-### is_plat
+## is_plat
 
 #### Is the current compilation platform
 
@@ -97,7 +96,7 @@ Available platforms:
 
 
 
-### is_host
+## is_host
 
 #### Is the current compilation host system
 
@@ -121,7 +120,7 @@ Support hosts:
 
 We can also get it from [$(host)](/manual/builtin_variables?id=varhost) or [os.host](/manual/builtin_modules?id=oshost).
 
-### is_subhost
+## is_subhost
 
 #### Determine the subsystem environment of the current host
 
@@ -144,7 +143,7 @@ We can also quickly check the current subsystem platform by executing `xmake l o
 
 !> It may also support other subsystem environments under linux and macos systems later, if they exist.
 
-### is_subarch
+## is_subarch
 
 #### Determine the architecture of the current host subsystem environment
 
@@ -153,13 +152,13 @@ In the msys/cygwin subsystem environment, the compiler architecture defaults to 
 
 We can also quickly view the current subsystem architecture by executing `xmake l os.subarch`.
 
-### is_cross
+## is_cross
 
 #### Determines whether the current platform is cross-compiled or not.
 
 This interface returns true if the current target architecture and platform, which is not the current host platform, is cross-compiled.
 
-### is_mode
+## is_mode
 
 #### Is the current compilation mode
 
@@ -211,7 +210,7 @@ if is_mode("release", "profile") then
 end
 ```
 
-### is_kind
+## is_kind
 
 #### Is the current target kind
 
@@ -244,7 +243,7 @@ $ xmake f -k shared
 $ xmake
 ```
 
-### is_config
+## is_config
 
 #### Is the given config values?
 
@@ -295,7 +294,7 @@ This interface is not only able to determine the custom options defined through 
 but also to determine the built-in global and local configuration.
 </p>
 
-### has_config
+## has_config
 
 #### Is the given configs enabled?
 
@@ -333,7 +332,7 @@ This interface can determine not only the built-in global and local configs,
 but also the custom options defined through the [option](#option).
 </p>
 
-### has_package
+## has_package
 
 #### Is the given dependent package enabled?
 
