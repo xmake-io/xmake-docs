@@ -641,7 +641,7 @@ target("test")
 
 ### Add imports modules for the custom script
 
-Usually, we can import extension modules via `import("core.base.task")` inside a custom script such as [on_build](#targeton_build).
+Usually, we can import extension modules via `import("core.base.task")` inside a custom script such as [on_build](#on_build).
 However, in the case of a large number of custom scripts, each custom script is repeatedly imported again, which is very cumbersome. Then you can implement pre-import through this interface, for example:
 
 ```lua
@@ -836,7 +836,7 @@ target("test")
     end)
 ```
 
-After setting this interface, the corresponding file in the source file list will not appear in the custom [target.on_build_file](#targeton_build_file), because this is an inclusion relationship.
+After setting this interface, the corresponding file in the source file list will not appear in the custom [target.on_build_file](#on_build_file), because this is an inclusion relationship.
 
 Where sourcebatch describes the same source files of the same type:
 

@@ -630,7 +630,7 @@ target("test")
 
 ### 为自定义脚本预先导入扩展模块
 
-通常，我们在[on_build](#targeton_build)等自定义脚本内部，可以通过`import("core.base.task")`的方式导入扩展模块，
+通常，我们在[on_build](#on_build)等自定义脚本内部，可以通过`import("core.base.task")`的方式导入扩展模块，
 但是对于自定义脚本比较多的情况下，每个自定义脚本都重复导入一遍，非常的繁琐，那么可以通过这个接口，实现预先导入，例如：
 
 ```lua
@@ -826,7 +826,7 @@ target("test")
     end)
 ```
 
-设置此接口后，对应源文件列表中文件，就不会出现在自定义的[target.on_build_file](#targeton_build_file)了，因为这个是包含关系。
+设置此接口后，对应源文件列表中文件，就不会出现在自定义的[target.on_build_file](#on_build_file)了，因为这个是包含关系。
 
 其中sourcebatch描述了这批同类型源文件：
 
