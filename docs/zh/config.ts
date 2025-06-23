@@ -111,7 +111,8 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
   return [
     { text: '接口规范', link: '/specification' },
     { text: '全局接口', link: '/global-interfaces' },
-    { text: '条件判断', link: '/conditions' }
+    { text: '条件判断', link: '/conditions' },
+    { text: '辅助接口', link: '/helper-interfaces' }
   ]
 }
 
