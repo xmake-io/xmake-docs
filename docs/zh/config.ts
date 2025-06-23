@@ -147,6 +147,9 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'C++ 模块', link: 'cpp/modules' },
         { text: 'Linux Bpf 程序', link: 'cpp/linux-bpf' },
         { text: 'Swig 模块', link: 'cpp/swig' },
+        { text: 'Keil/MDK 嵌入式程序', link: 'cpp/keil-mdk' },
+        { text: 'Keil/C51 嵌入式程序', link: 'cpp/keil-c51' },
+        { text: 'Linux 内核驱动模块', link: 'cpp/linux-driver-module' },
       ]
     },
     {

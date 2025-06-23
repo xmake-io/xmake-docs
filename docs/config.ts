@@ -110,6 +110,9 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'C++ Modules', link: 'cpp/modules' },
         { text: 'Linux Bpf Programs', link: 'cpp/linux-bpf' },
         { text: 'Swig Modules', link: 'cpp/swig' },
+        { text: 'Keil/MDK Embed Programs', link: 'cpp/keil-mdk' },
+        { text: 'Keil/C51 Embed Programs', link: 'cpp/keil-c51' },
+        { text: 'Linux Kernel Driver Module', link: 'cpp/linux-driver-module' },
       ]
     },
     {
