@@ -150,6 +150,13 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Keil/MDK 嵌入式程序', link: 'cpp/keil-mdk' },
         { text: 'Keil/C51 嵌入式程序', link: 'cpp/keil-c51' },
         { text: 'Linux 内核驱动模块', link: 'cpp/linux-driver-module' },
+        { text: 'ASN.1 程序', link: 'cpp/asn1' },
+        { text: 'CppFront 程序', link: 'cpp/cppfront' },
+        { text: 'Lua 模块', link: 'cpp/lua-module' },
+        { text: 'NodeJS 模块', link: 'cpp/nodejs-module' },
+        { text: 'Python 模块', link: 'cpp/python-module' },
+        { text: 'Cosmocc 程序', link: 'cpp/cosmocc' },
+        { text: '合并静态库', link: 'cpp/merge-static-libraries' },
       ]
     },
     {
@@ -168,6 +175,7 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Vala 程序', link: 'other/vala' },
         { text: 'Pascal 程序', link: 'other/pascal' },
         { text: 'Nim 程序', link: 'other/nim' },
+        { text: 'Verilog 仿真程序', link: 'other/verilog' },
       ]
     }
   ]

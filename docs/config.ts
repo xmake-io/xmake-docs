@@ -113,6 +113,13 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Keil/MDK Embed Programs', link: 'cpp/keil-mdk' },
         { text: 'Keil/C51 Embed Programs', link: 'cpp/keil-c51' },
         { text: 'Linux Kernel Driver Module', link: 'cpp/linux-driver-module' },
+        { text: 'ASN.1 Programs', link: 'cpp/asn1' },
+        { text: 'CppFront Programs', link: 'cpp/cppfront' },
+        { text: 'Lua Modules', link: 'cpp/lua-module' },
+        { text: 'NodeJS Modules', link: 'cpp/nodejs-module' },
+        { text: 'Python Modules', link: 'cpp/python-module' },
+        { text: 'Cosmocc Programs', link: 'cpp/cosmocc' },
+        { text: 'Merge Static Libraries', link: 'cpp/merge-static-libraries' },
       ]
     },
     {
@@ -131,6 +138,7 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Vala Programs', link: 'other/vala' },
         { text: 'Pascal Programs', link: 'other/pascal' },
         { text: 'Nim Programs', link: 'other/nim' },
+        { text: 'Verilog Programs', link: 'other/verilog' },
       ]
     }
   ]
