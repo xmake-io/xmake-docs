@@ -5,7 +5,9 @@ outline: deep
 ## 描述域 API
 
 - [接口规范](/zh/api/description/specification)
-- [添加判断](/zh/api/description/conditions)
+- [条件判断](/zh/api/description/conditions)
+- [全局接口](/zh/api/description/global-interfaces)
+- [辅助接口](/zh/api/description/helper-interfaces)
 
 ## 脚本域 API
 
