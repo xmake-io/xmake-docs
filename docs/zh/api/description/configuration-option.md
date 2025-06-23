@@ -22,7 +22,7 @@ option("test2")
 ```
 
 :::tip 注意
-`option`域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用[option_end](#option_end)接口。
+`option`域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用[option_end](#_end)接口。
 :::
 
 
@@ -389,7 +389,7 @@ target("test")
 
 ### 添加链接库检测时候需要的搜索目录
 
-这个是可选的，一般系统库不需要加这个，也能检测通过，如果确实没找到，可以自己追加搜索目录，提高检测通过率。具体使用见：[add_links](#optionadd_links)
+这个是可选的，一般系统库不需要加这个，也能检测通过，如果确实没找到，可以自己追加搜索目录，提高检测通过率。具体使用见：[add_links](#add_links)
 
 ## add_rpathdirs
 
@@ -420,7 +420,7 @@ target("test")
 
 ### 添加c++头文件检测
 
-与[add_cincludes](#optionadd_cincludes)类似，只是检测的头文件类型是c++头文件。
+与[add_cincludes](#add_cincludes)类似，只是检测的头文件类型是c++头文件。
 
 ## add_ctypes
 
@@ -445,14 +445,14 @@ target("test")
 
 ### 添加c++类型检测
 
-与[add_ctypes](#optionadd_ctypes)类似，只是检测的类型是c++类型。
+与[add_ctypes](#add_ctypes)类似，只是检测的类型是c++类型。
 
 ## add_csnippets
 
 ### 添加c代码片段检测
 
-如果现有的[add_ctypes](#optionadd_ctypes), [add_cfuncs](#optionadd_cfuncs)等不能满足当前的检测需求，
-可以用这个接口实现更加定制化检测一些编译器特性检测，具体见: [add_cxxsnippets](#optionadd_cxxsnippets)。
+如果现有的[add_ctypes](#add_ctypes), [add_cfuncs](#add_cfuncs)等不能满足当前的检测需求，
+可以用这个接口实现更加定制化检测一些编译器特性检测，具体见: [add_cxxsnippets](#add_cxxsnippets)。
 
 ## add_cxxsnippets
 
@@ -538,4 +538,4 @@ sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}
 
 ### 添加c++库函数检测
 
-用法跟 [add_cfuncs](#optionadd_cxxfuncs) 一致。
+用法跟 [add_cfuncs](#add_cxxfuncs) 一致。

@@ -22,7 +22,7 @@ option("test2")
 ```
 
 :::tip NOTE
-The `option` field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the [option_end](#option_end) interface.
+The `option` field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the [option_end](#_end) interface.
 :::
 
 ## option
@@ -392,7 +392,7 @@ If the test passes, the `test` target will be automatically added when it is com
 
 ### Adding the search directory needed for link library detection
 
-This is optional. Generally, the system library does not need to add this, and it can also pass the test. If it is not found, you can add the search directory yourself to improve the detection pass rate. For details, see: [add_links](#optionadd_links)
+This is optional. Generally, the system library does not need to add this, and it can also pass the test. If it is not found, you can add the search directory yourself to improve the detection pass rate. For details, see: [add_links](#add_links)
 
 ## add_rpathdirs
 
@@ -423,7 +423,7 @@ If you want more flexible detection, you can do this in [option.on_check](#on_ch
 
 ### Add c++ header file detection
 
-Similar to [add_cincludes](#optionadd_cincludes), except that the detected header file type is a c++ header file.
+Similar to [add_cincludes](#add_cincludes), except that the detected header file type is a c++ header file.
 
 ## add_ctypes
 
@@ -448,14 +448,14 @@ If you want more flexible detection, you can do this in [option.on_check](#on_ch
 
 ### Adding c++ type detection
 
-Similar to [add_ctypes](#optionadd_ctypes), except that the type detected is a c++ type.
+Similar to [add_ctypes](#add_ctypes), except that the type detected is a c++ type.
 
 ## add_csnippets
 
 ### Add c code fragment detection
 
-If the existing [add_ctypes](#optionadd_ctypes), [add_cfuncs](#optionadd_cfuncs), etc. cannot meet the current detection requirements,
-You can use this interface to implement more custom detection of some compiler feature detection, see: [add_cxxsnippets](#optionadd_cxxsnippets).
+If the existing [add_ctypes](#add_ctypes), [add_cfuncs](#add_cfuncs), etc. cannot meet the current detection requirements,
+You can use this interface to implement more custom detection of some compiler feature detection, see: [add_cxxsnippets](#add_cxxsnippets).
 
 ## add_cxxsnippets
 
@@ -541,4 +541,4 @@ Note that the detected function usually needs to be accompanied by `add_cinclude
 
 ### Add c++ library function detection
 
-The usage is consistent with [add_cfuncs](#optionadd_cxxfuncs).
+The usage is consistent with [add_cfuncs](#add_cxxfuncs).
