@@ -124,6 +124,7 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
 
 function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
   return [
+    { text: '目标实例', link: '/target_instance' },
     { text: '包实例', link: '/package_instance' },
     { text: '原生模块', link: '/native_modules' }
   ]
