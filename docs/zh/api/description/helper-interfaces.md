@@ -13,7 +13,9 @@
 - [#342](https://github.com/xmake-io/xmake/issues/342)
 - [#1715](https://github.com/xmake-io/xmake/issues/1715)
 
+:::tip 注意
 注：如果是 2.8.5 以上版本，就不需要通过 `includes("check_links.lua")` 分别引入这些接口了，而是使用更加方便的
+:::
 
 ```lua
 includes("@builtin/check")
@@ -42,15 +44,15 @@ target("test")
     configvar_check_links("HAS_PTHREAD", {"pthread", "m", "dl"})
 ```
 
-config.h.in
 
-```c
+
+```c [config.h.in]
 ${define HAS_PTHREAD}
 ```
 
-config.h
 
-```c
+
+```c [config.h]
 define HAS_PTHREAD 1
 /* #undef HAS_PTHREAD */
 ```
@@ -72,16 +74,16 @@ target("test")
     configvar_check_ctypes("HAS_WCHAR_AND_FLOAT", {"wchar_t", "float"})
 ```
 
-config.h.in
 
-```c
+
+```c [config.h.in]
 ${define HAS_WCHAR}
 ${define HAS_WCHAR_AND_FLOAT}
 ```
 
-config.h
 
-```c
+
+```c [config.h]
 /* #undef HAS_WCHAR */
 /* #undef HAS_WCHAR_AND_FLOAT */
 ```
@@ -100,15 +102,14 @@ target("test")
     configvar_check_cfuncs("HAS_SETJMP", "setjmp", {includes = {"signal.h", "setjmp.h"}})
 ```
 
-config.h.in
 
-```c
+
+```c [config.h.in]
 ${define HAS_SETJMP}
 ```
 
-config.h
 
-```c
+```c [config.h]
 define HAS_SETJMP 1
 /* #undef HAS_SETJMP */
 ```
@@ -128,16 +129,16 @@ target("test")
     configvar_check_cincludes("HAS_STRING_AND_STDIO_H", {"string.h", "stdio.h"})
 ```
 
-config.h.in
 
-```c
+
+```c [config.h.in]
 ${define HAS_STRING_H}
 ${define HAS_STRING_AND_STDIO_H}
 ```
 
-config.h
 
-```c
+
+```c [config.h]
 /* #undef HAS_STRING_H */
 define HAS_STRING_AND_STDIO_H 1
 ```
@@ -156,15 +157,15 @@ target("test")
     configvar_check_csnippets("HAS_STATIC_ASSERT", "_Static_assert(1, \"\");")
 ```
 
-config.h.in
 
-```c
+
+```c [config.h.in]
 ${define HAS_STATIC_ASSERT}
 ```
 
-config.h
 
-```c
+
+```c [config.h]
 define HAS_STATIC_ASSERT 1
 ```
 
@@ -201,16 +202,16 @@ target("test")
     configvar_check_features("HAS_CONSEXPR_AND_STATIC_ASSERT", {"cxx_constexpr", "c_static_assert"}, {languages = "c++11"})
 ```
 
-config.h.in
 
-```c
+
+```c [config.h.in]
 ${define HAS_CONSTEXPR}
 ${define HAS_CONSEXPR_AND_STATIC_ASSERT}
 ```
 
-config.h
 
-```c
+
+```c [config.h]
 /* #undef HAS_CONSTEXPR */
 define HAS_CONSEXPR_AND_STATIC_ASSERT 1
 ```
