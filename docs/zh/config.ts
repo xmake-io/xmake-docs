@@ -113,7 +113,8 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
     { text: '全局接口', link: '/global-interfaces' },
     { text: '条件判断', link: '/conditions' },
     { text: '辅助接口', link: '/helper-interfaces' },
-    { text: '工程目标', link: '/project-target' }
+    { text: '工程目标', link: '/project-target' },
+    { text: '配置选项', link: '/configuration-option' }
   ]
 }
 
