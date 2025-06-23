@@ -6,6 +6,7 @@ outline: deep
 
 - [Specification](/api/description/specification)
 - [Conditions](/api/description/conditions)
+- [Global-interfaces](/api/description/global-interfaces)
 
 ## Scripts API
 
