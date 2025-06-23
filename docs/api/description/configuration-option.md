@@ -25,9 +25,9 @@ option("test2")
 The `option` field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the [option_end](#option_end) interface.
 :::
 
-### option
+## option
 
-#### Defining options
+### Defining options
 
 Define and set option switches for custom compilation configuration options, switch settings.
 
@@ -50,22 +50,22 @@ target("demo")
 Thus, if an option is defined, if this option is enabled, the macro definition of `-DTEST` will be automatically added when compiling the target.
 
 ```lua
-# Manually enable this option
+-- Manually enable this option
 $ xmake f --test=y
 $ xmake
 ```
 
-### option_end
+## option_end
 
-#### End definition option
+### End definition option
 
-This is an optional api that shows the departure option scope, similar to [target_end](/manual/project_target?id=target_end).
+This is an optional api that shows the departure option scope, similar to [target_end](https://xmake.io/#/manual/project_target?id=target_end).
 
-### option:add_deps
+## add_deps
 
-#### Adding options depends
+### Adding options depends
 
-By setting the dependency, you can adjust the detection order of the options, which is generally used when the detection script is called by [on_check](#optionon_check).
+By setting the dependency, you can adjust the detection order of the options, which is generally used when the detection script is called by [on_check](#on_check).
 
 ```lua
 option("small")
@@ -78,8 +78,8 @@ option("test")
     add_deps("small")
     set_default(true)
     after_check(function (option)
-        if option:dep("small"):enabled() then
-            option:enable(false)
+        if dep("small"):enabled() then
+            enable(false)
         end
     end)
 ```
@@ -90,7 +90,7 @@ After the detection of the dependent small option is completed, the state of the
 Since on_check will only be executed when the default value is not set, if the default value is set, the custom logic can be processed in the after_check phase.
 :::
 
-### option:before_check
+## before_check
 
 Execute this script before option detection
 
@@ -100,9 +100,9 @@ option("zlib")
     end)
 ```
 
-### option:on_check
+## on_check
 
-#### Custom Option Detection Script
+### Custom Option Detection Script
 
 This script overrides the built-in option detection logic.
 
@@ -110,8 +110,8 @@ This script overrides the built-in option detection logic.
 option("test")
     add_deps("small")
     on_check(function (option)
-        if option:dep("small"):enabled() then
-            option:enable(false)
+        if dep("small"):enabled() then
+            enable(false)
         end
     end)
 ```
@@ -122,7 +122,7 @@ If the option that test depends on passes, disable the test option.
 Only when `set_default` is not set, will the `on_check` be executed for custom option check script.
 :::
 
-### option:after_check
+## after_check
 
 Execute this script after option detection
 
@@ -133,13 +133,13 @@ option("test")
     add_deps("small")
     add_links("pthread")
     after_check(function (option)
-        option:enable(false)
+        enable(false)
     end)
 ```
 
-### option:set_values
+## set_values
 
-#### Setting the list of option values
+### Setting the list of option values
 
 For the graphical menu configuration of `xmake f --menu` only, a list of option values is provided for quick selection by the user, for example:
 
@@ -154,9 +154,9 @@ The effect chart is as follows:
 
 <img src="/assets/img/manual/option_set_values.png" width="60%" />
 
-### option:set_default
+## set_default
 
-#### Setting options defaults
+### Setting options defaults
 
 When the option value is not modified by the command `xmake f --option=[y|n}`, the option itself has a default value, which can be set through this interface:
 
@@ -178,7 +178,7 @@ option("test")
 | boolean    | Typically used as a parameter switch, value range: `true/false` | `xmake f --optionname=[y/n/yes/no/true/false]`  |
 | string     | can be any string, generally used for pattern judgment          | `xmake f --optionname=value`                    |
 
-If it is an option of the `boolean` value, it can be judged by [has_config](/manual/conditions?id=has_config), and the option is enabled.
+If it is an option of the `boolean` value, it can be judged by [has_config](https://xmake.io/#/manual/conditions?id=has_config), and the option is enabled.
 
 If it is an option of type `string`, it can be used directly in built-in variables, for example:
 
@@ -202,7 +202,7 @@ $ xmake
 
 Specify a different source directory path for this `rootdir` option and compile it.
 
-Detection behavior of the option:
+Detection behavior of the 
 
 | default value | detection behavior |
 | ----------    | --------------------------------------------------------------------------------------------- |
@@ -211,9 +211,9 @@ Detection behavior of the option:
 | true          | switch option, not automatic detection, enabled by default, can be manually configured to modify |
 | string type   | no switch state, no automatic detection, can be manually configured and modified, generally used for configuration variable transfer |
 
-### option:set_showmenu
+## set_showmenu
 
-#### Set whether to enable menu display
+### Set whether to enable menu display
 
 If set to `true`, then this option will appear in `xmake f --help`, which can also be configured via `xmake f --optionname=xxx`, otherwise it can only be used inside `xmake.lua` , the modification cannot be configured manually.
 
@@ -235,9 +235,9 @@ Options:
 After 2.6.8, this option is enabled by default and there is usually no need to configure it additionally.
 :::
 
-### option:set_category
+## set_category
 
-#### Setting option categories, only for menu display
+### Setting option categories, only for menu display
 
 This is an optional configuration, only used in the help menu, the classification display options, the same category of options, will be displayed in the same group, so the menu looks more beautiful.
 
@@ -318,9 +318,9 @@ The effect chart is as follows:
 
 <img src="/assets/img/manual/option_set_category.gif" width="60%" />
 
-### option:set_description
+## set_description
 
-#### Setting menu display description
+### Setting menu display description
 
 When the option menu is displayed, the description on the right is used to help the user know more clearly about the purpose of this option, for example:
 
@@ -370,9 +370,9 @@ When you see this menu, the user can clearly know the specific use of the define
 $ xmake f --mode=release
 ```
 
-### option:add_links
+## add_links
 
-#### Add Link Library Detection
+### Add Link Library Detection
 
 If the specified link library is passed, this option will be enabled and the associated target will automatically be added to this link, for example:
 
@@ -388,21 +388,21 @@ target("test")
 If the test passes, the `test` target will be automatically added when it is compiled: `-L/usr/local/lib -lpthread` compile option
 
 
-### option:add_linkdirs
+## add_linkdirs
 
-#### Adding the search directory needed for link library detection
+### Adding the search directory needed for link library detection
 
 This is optional. Generally, the system library does not need to add this, and it can also pass the test. If it is not found, you can add the search directory yourself to improve the detection pass rate. For details, see: [add_links](#optionadd_links)
 
-### option:add_rpathdirs
+## add_rpathdirs
 
-#### Adding a load search directory for a dynamic library at runtime
+### Adding a load search directory for a dynamic library at runtime
 
-After the option passes the detection, it will be automatically added to the corresponding target. For details, see: [target.add_rpathdirs](/manual/project_target?id=targetadd_rpathdirs).
+After the option passes the detection, it will be automatically added to the corresponding target. For details, see: [target.add_rpathdirs](https://xmake.io/#/manual/project_target?id=targetadd_rpathdirs).
 
-### option:add_cincludes
+## add_cincludes
 
-#### Add c header file detection
+### Add c header file detection
 
 This option will be enabled if the c header file is passed, for example:
 
@@ -417,17 +417,17 @@ target("test")
 
 This option checks if there is a `pthread.h` header file. If the test passes, then the `test` target program will add the macro definition of `ENABLE_PTHREAD`.
 
-If you want more flexible detection, you can do this in [option.on_check](#optionon_check) via [lib.detect.has_cincludes](#detect-has_cincludes).
+If you want more flexible detection, you can do this in [option.on_check](#on_check) via [lib.detect.has_cincludes](#detect-has_cincludes).
 
-### option:add_cxxincludes
+## add_cxxincludes
 
-#### Add c++ header file detection
+### Add c++ header file detection
 
 Similar to [add_cincludes](#optionadd_cincludes), except that the detected header file type is a c++ header file.
 
-### option:add_ctypes
+## add_ctypes
 
-#### Add c type detection
+### Add c type detection
 
 This option will be enabled if the c type is passed, for example:
 
@@ -442,24 +442,24 @@ target("test")
 
 This option checks if there is a type of `wchar_t`. If the test passes, then the `test` target program will add the macro definition of `HAVE_WCHAR`.
 
-If you want more flexible detection, you can do this in [option.on_check](#optionon_check) via [lib.detect.has_ctypes](#detect-has_ctypes).
+If you want more flexible detection, you can do this in [option.on_check](#on_check) via [lib.detect.has_ctypes](#detect-has_ctypes).
 
-### option:add_cxxtypes
+## add_cxxtypes
 
-#### Adding c++ type detection
+### Adding c++ type detection
 
 Similar to [add_ctypes](#optionadd_ctypes), except that the type detected is a c++ type.
 
-### option:add_csnippets
+## add_csnippets
 
-#### Add c code fragment detection
+### Add c code fragment detection
 
 If the existing [add_ctypes](#optionadd_ctypes), [add_cfuncs](#optionadd_cfuncs), etc. cannot meet the current detection requirements,
 You can use this interface to implement more custom detection of some compiler feature detection, see: [add_cxxsnippets](#optionadd_cxxsnippets).
 
-### option:add_cxxsnippets
+## add_cxxsnippets
 
-#### Adding c++ code snippet detection
+### Adding c++ code snippet detection
 
 This interface can be used to implement more custom detection of some compiler feature detection, especially the detection support of various features of C++, such as:
 
@@ -474,7 +474,7 @@ The above code implements the detection of the constexpr feature of C++. If the 
 
 For the detection of compiler features, there is a more convenient and efficient detection module, providing more powerful detection support, see: [compiler.has_features](#compiler-has_features) and [detect.check_cxsnippets](#detect-check_cxsnippets)
 
-If you want more flexible detection, you can do this in [option.on_check](#optionon_check) via [lib.detect.check_cxsnippets](#detect-check_cxsnippets).
+If you want more flexible detection, you can do this in [option.on_check](#on_check) via [lib.detect.check_cxsnippets](#detect-check_cxsnippets).
 
 After v2.5.7, two new options, `{tryrun = true}` and `{output = true}`, are added to try to run detection and capture output.
 
@@ -504,9 +504,9 @@ if is_config("test", "8") then
 end
 ```
 
-### option:add_cfuncs
+## add_cfuncs
 
-#### Add c library function detection
+### Add c library function detection
 
 ```lua
 option("setjmp")
@@ -533,11 +533,12 @@ sigsetjmp((void*)0, 0)
 sigsetjmp{sigsetjmp((void*)0, 0);}
 sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}
 ```
-
+:::tip NOTE
 Note that the detected function usually needs to be accompanied by `add_cincludes` to ensure that the function can be included normally, otherwise the detection will fail.
+:::
 
-### option:add_cxxfuncs
+## add_cxxfuncs
 
-#### Add c++ library function detection
+### Add c++ library function detection
 
-The usage is consistent with [option:add_cfuncs](#optionadd_cxxfuncs).
+The usage is consistent with [add_cfuncs](#optionadd_cxxfuncs).
