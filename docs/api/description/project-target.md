@@ -1620,7 +1620,7 @@ add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 
 ### Remove source files
 
-Through this interface, you can delete the specified file from the list of files added by the [add_files](targetadd_files) interface, for example:
+Through this interface, you can delete the specified file from the list of files added by the [add_files](#targetadd_files) interface, for example:
 
 ```lua
 target("test")
@@ -1630,7 +1630,7 @@ target("test")
 
 In the above example, you can add all files except `test.c` from the `src` directory. Of course, this can also be done by `add_files("src/*.c|test.c").To achieve the same purpose, but this way is more flexible.
 
-For example, we can conditionally determine which files to delete, and this interface also supports the matching mode of [add_files](targetadd_files), filtering mode, and bulk removal.
+For example, we can conditionally determine which files to delete, and this interface also supports the matching mode of [add_files](#targetadd_files), filtering mode, and bulk removal.
 
 ```lua
 target("test")
@@ -3049,7 +3049,7 @@ target ("test")
     set_policy ("check.auto_ignore_flags", false)
 ```
 
-For a complete list of policies support and instructions, see: [build policies](/guide/build_policies)
+For a complete list of policies support and instructions, see: [build policies](https://xmake.io/#/guide/build_policies)
 
 ## target:set_runtimes
 

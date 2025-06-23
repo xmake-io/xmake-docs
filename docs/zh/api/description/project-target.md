@@ -1608,7 +1608,7 @@ add_files("*.cpp", {sourcekind = "cc"})  -- force to compile as c
 
 ### 从前面的源代码文件列表中删除指定文件
 
-通过此接口，可以从前面[add_files](targetadd_files)接口添加的文件列表中，删除指定的文件，例如：
+通过此接口，可以从前面[add_files](#targetadd_files)接口添加的文件列表中，删除指定的文件，例如：
 
 ```lua
 target("test")
@@ -1618,7 +1618,7 @@ target("test")
 
 上面的例子，可以从`src`目录下添加除`test.c`以外的所有文件，当然这个也可以通过`add_files("src/*.c|test.c")`来达到相同的目的，但是这种方式更加灵活。
 
-例如，我们可以条件判断来控制删除哪些文件，并且此接口也支持[add_files](targetadd_files)的匹配模式，过滤模式，进行批量移除。
+例如，我们可以条件判断来控制删除哪些文件，并且此接口也支持[add_files](#targetadd_files)的匹配模式，过滤模式，进行批量移除。
 
 ```lua
 target("test")
@@ -3042,7 +3042,7 @@ target("test")
     set_policy("check.auto_ignore_flags", false)
 ```
 
-完整的 policies 支持列表和使用说明，见：[构建策略](/zh-cn/guide/build_policies)
+完整的 policies 支持列表和使用说明，见：[构建策略](https://xmake.io/#/zh-cn/guide/build_policies)
 
 ## target:set_runtimes
 
