@@ -326,7 +326,7 @@ $ xmake f --debugger=gdb
 $ xmake run -d hello
 ```
 
-## 下一步?
+## 下一步 {#next-steps}
 
 - 继续阅读该指南. [向导](/zh/guide/getting-started.html)
 - 查看示例. [实例](/zh/examples/cpp/basic.html).
