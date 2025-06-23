@@ -3141,7 +3141,7 @@ target("test6")
 
 The effect of the generated VS project directory structure is as follows:
 
-![](assets/imghttps://xmake.io/#/manual/set_group.png)
+![](https://xmake.io/assets/img/manual/set_group.png)
 
 For more details, please see: [#1026](https://github.com/xmake-io/xmake/issues/1026)
 
@@ -3459,11 +3459,11 @@ running tests ...
 80% tests passed, 7 tests failed out of 36, spent 0.242s
 ```
 
-![](/assets/img/manual/xmake-test1.png)
+![](/https://xmake.io/assets/img/manual/xmake-test1.png)
 
 We can also execute `xmake test -vD` to view detailed test failure error messages:
 
-![](/assets/img/manual/xmake-test2.png)
+![](/https://xmake.io/assets/img/manual/xmake-test2.png)
 
 #### Run the specified test target
 

@@ -3134,7 +3134,7 @@ target("test6")
 
 生成的 vs 工程目录结构效果如下：
 
-![](assets/img/manual/set_group.png)
+![](https://xmake.io/assets/img/manual/set_group.png)
 
 其中 `set_group("group1/group2")` 可以将 target 设置到二级分组中去。
 
@@ -3454,11 +3454,11 @@ running tests ...
 80% tests passed, 7 tests failed out of 36, spent 0.242s
 ```
 
-![](/assets/img/manual/xmake-test1.png)
+![](https://xmake.io/assets/img/manual/xmake-test1.png)
 
 我们也可以执行 `xmake test -vD` 查看详细的测试失败的错误信息：
 
-![](/assets/img/manual/xmake-test2.png)
+![](https://xmake.io/assets/img/manual/xmake-test2.png)
 
 #### 运行指定测试目标
 
