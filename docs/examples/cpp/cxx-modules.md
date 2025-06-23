@@ -127,39 +127,33 @@ The full example project is available at: [C++ Modules package distribution exam
 
 [Arthapz](https://github.com/Arthapz) has also helped to improve support for C++23 Std Modules.
 
-It is currently supported by three compilers in progress.
+```lua
+add_rules("mode.debug", "mode.release")
+set_languages("c++latest")
 
-### Msvc
+target("mod")
+    set_kind("static")
+    add_files("src/*.cpp")
+    add_files("src/*.mpp", {public = true})
 
-The latest Visual Studio 17.5 preview already supports it, and the non-standard ifc std modules will be deprecated.
+target("stdmodules")
+    set_kind("binary")
+    add_files("test/*.cpp")
+    add_deps("mod")
+```
 
-For the standard C++23 std modules, this is how we introduced them.
+```c++ [my_module.mpp]
+export module my_module;
 
-```c
 import std;
+
+export auto my_sum(std::size_t a, std::size_t b) -> std::size_t;
 ```
 
-Whereas for ifc std modules, we need to write it like this.
+```c++ [my_module.cpp]
+module my_module;
 
+import std;
+
+auto my_sum(std::size_t a, std::size_t b) -> std::size_t { return a + b; }
 ```
-import std.core;
-```
-
-This is not a C++23 standard, it is only provided by msvc, it is not compatible with other compilers and will be deprecated in new versions of msvc.
-Therefore the new version of Xmake will only support C++23 std modules and not the deprecated ifc std modules.
-
-### Clang
-
-It seems that the latest clang does not yet fully support C++23 std modules either, and is still in draft patch status, [#D135507](https://reviews.llvm.org/D135507).
-
-However, Xmake does support it, so if you want to try it out, you can merge in the patch and test it with xmake.
-
-There is also experimental support for non-standard std modules in lower versions of clang.
-
-It is still possible to experiment with xmake to build std modules in lower versions of clang, even though it is probably still a toy (and will encounter many problems).
-
-For a discussion see: [#3255](https://github.com/xmake-io/xmake/pull/3255)
-
-### Gcc
-
-It is not currently supported.

@@ -1,5 +1,3 @@
-## 快速开始
-
 Xmake 采用 `.mpp` 作为默认的模块扩展名，但是也同时支持 `.ixx`, `.cppm`, `.mxx` 等扩展名。
 
 目前 xmake 已经完整支持 gcc11/clang/msvc 的 C++20 Modules 构建支持，并且能够自动分析模块间的依赖关系，实现最大化并行编译。
@@ -13,7 +11,7 @@ target("class")
 
 更多例子见：[C++ Modules](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules)
 
-## Cpp-Only 工程
+## Cpp-Only 工程 {#cpp-only}
 
 v2.7.1 版本对 C++20 模块的实现进行了重构和升级，新增了对 Headerunits 的支持，我们可以在模块中引入 Stl 和 用户头文件模块。
 
@@ -34,7 +32,7 @@ target("test")
     set_policy("build.c++.modules", true)
 ```
 
-## 模块的分发和集成
+## 模块的分发和集成 {#distribution}
 
 ### 分发 C++ Modules 包
 
@@ -117,43 +115,37 @@ $ cat ./build/.packages/f/foo/latest/4e0143c97b65425b855ad5fd03038b6a/modules/fo
 
 完整的例子工程见：[C++ Modules 包分发例子工程](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules/packages)
 
-## 支持 C++23 Std Modules
+## 支持 C++23 Std Modules {#std-modules}
 
 [Arthapz](https://github.com/Arthapz) 也帮忙改进了对 C++23 Std Modules 的支持。
 
-目前三个编译器对它的支持进展：
+```lua
+add_rules("mode.debug", "mode.release")
+set_languages("c++latest")
 
-### Msvc
+target("mod")
+    set_kind("static")
+    add_files("src/*.cpp")
+    add_files("src/*.mpp", {public = true})
 
-最新 Visual Studio 17.5 preview 已经支持，并且非标准的 ifc std modules 将被废弃。
+target("stdmodules")
+    set_kind("binary")
+    add_files("test/*.cpp")
+    add_deps("mod")
+```
 
-对于标准的 C++23 std modules，我们是这么引入的。
+```c++ [my_module.mpp]
+export module my_module;
 
-```c
 import std;
+
+export auto my_sum(std::size_t a, std::size_t b) -> std::size_t;
 ```
 
-而对于 ifc std modules，我们需要这么写：
+```c++ [my_module.cpp]
+module my_module;
 
+import std;
+
+auto my_sum(std::size_t a, std::size_t b) -> std::size_t { return a + b; }
 ```
-import std.core;
-```
-
-它不是 C++23 标准，仅仅 msvc 提供，对其他编译器并不兼容，以后新版本 msvc 中也会逐步废弃。
-因此新版本 Xmake 将仅仅 C++23 std modules，不再支持废弃的 ifc std modules。
-
-### Clang
-
-目前最新的 clang 似乎也还没完全支持 C++23 std modules，当前还是 draft patch 状态，[#D135507](https://reviews.llvm.org/D135507)。
-
-但是，Xmake 也对它进行了支持，如果大家想要尝鲜，可以自行合入这个 patch，然后使用 xmake 来测试。
-
-另外，低版本的 clang 也有对非标准的 std modules 做了实验性支持。
-
-我们还是可以在低版本 clang 中尝试性使用 xmake 来构建 std modules，尽管它可能还只是个玩具（会遇到很多问题）。
-
-相关讨论见：[#3255](https://github.com/xmake-io/xmake/pull/3255)
-
-### Gcc
-
-目前还不支持。
