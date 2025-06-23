@@ -13,7 +13,8 @@ export default defineAdditionalConfig({
 
     sidebar: {
       '/guide/': { base: '/guide/', items: sidebarGuide() },
-      '/api/': { base: '/api/', items: apiGuide() },
+      '/api/description': { base: '/api/description', items: descriptionApiGuide() },
+      '/api/scripts': { base: '/api/scripts', items: scriptsApiGuide() },
       '/examples/': { base: '/examples/', items: examplesGuide() },
     },
 
@@ -33,7 +34,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: 'Guide', link: '/guide/what-is-xmake', activeMatch: '/guide/' },
         { text: 'Getting Started', link: '/guide/getting-started' },
         { text: 'Examples', link: '/examples/cpp/basic' },
-        { text: 'API Reference', link: '/api/description/specification' }
+        { text: 'API Reference', link: '/api/' }
       ]
     },
     {
@@ -73,23 +74,16 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function apiGuide(): DefaultTheme.SidebarItem[] {
+function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
   return [
-    {
-      text: 'Description API',
-      collapsed: false,
-      items: [
-        { text: 'Specification', link: 'description/specification' },
-        { text: 'Conditions', link: 'description/conditions' }
-      ]
-    },
-    {
-      text: 'Script API',
-      collapsed: false,
-      items: [
-        { text: 'Native Modules', link: 'scripts/native_modules' }
-      ]
-    }
+    { text: 'Specification', link: '/specification' },
+    { text: 'Conditions', link: '/conditions' }
+  ]
+}
+
+function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
+  return [
+    { text: 'Native Modules', link: '/native_modules' }
   ]
 }
 

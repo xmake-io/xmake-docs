@@ -15,7 +15,8 @@ export default defineAdditionalConfig({
 
     sidebar: {
       '/zh/guide/': { base: '/zh/guide/', items: sidebarGuide() },
-      '/zh/api/': { base: '/zh/api/', items: apiGuide() },
+      '/zh/api/description': { base: '/zh/api/description', items: descriptionApiGuide() },
+      '/zh/api/scripts': { base: '/zh/api/scripts', items: scriptsApiGuide() },
       '/zh/examples/': { base: '/zh/examples/', items: examplesGuide() },
     },
 
@@ -64,7 +65,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: '使用指南', link: '/zh/guide/what-is-xmake', activeMatch: '/zh/guide/' },
         { text: '快速上手', link: '/zh/guide/getting-started' },
         { text: '示例', link: '/zh/examples/cpp/basic' },
-        { text: 'API 手册', link: '/zh/api/description/specification' }
+        { text: 'API 手册', link: '/zh/api/' }
       ]
     },
     {
@@ -110,23 +111,16 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function apiGuide(): DefaultTheme.SidebarItem[] {
+function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
   return [
-    {
-      text: '描述域 API',
-      collapsed: false,
-      items: [
-        { text: '接口规范', link: 'description/specification' },
-        { text: '条件判断', link: 'description/conditions' }
-      ]
-    },
-    {
-      text: '脚本域 API',
-      collapsed: false,
-      items: [
-        { text: '原生模块', link: 'scripts/native_modules' }
-      ]
-    }
+    { text: '接口规范', link: '/specification' },
+    { text: '条件判断', link: '/conditions' }
+  ]
+}
+
+function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
+  return [
+    { text: '原生模块', link: '/native_modules' }
   ]
 }
 
