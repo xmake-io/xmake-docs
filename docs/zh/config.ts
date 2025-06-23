@@ -30,8 +30,6 @@ export default defineAdditionalConfig({
       next: '下一页'
     },
 
-
-
     lastUpdated: {
       text: '最后更新于'
     },

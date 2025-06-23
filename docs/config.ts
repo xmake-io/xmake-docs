@@ -21,8 +21,7 @@ export default defineAdditionalConfig({
     editLink: {
       pattern: 'https://github.com/xmake-io/xmake-docs/edit/master/docs/:path',
       text: 'Edit this page on GitHub'
-    },
-
+    }
   }
 })
 
@@ -78,9 +77,8 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
 function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
   return [
     { text: 'Specification', link: '/specification' },
-    { text: 'Conditions', link: '/conditions' }，
-    { text: 'Global Interfaces', link: '/global-interfaces' },
-
+    { text: 'Conditions', link: '/conditions' },
+    { text: 'Global Interfaces', link: '/global-interfaces' }
   ]
 }
 
