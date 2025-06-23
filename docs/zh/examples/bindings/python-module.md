@@ -1,6 +1,6 @@
 ## Swig
 
-我们可以使用 Swig 来开发 Python 模块，详细的介绍可以看下：[Python Modules with Swig](/zh/examples/cpp/swig.html#python-c-module)
+我们可以使用 Swig 来开发 Python 模块，详细的介绍可以看下：[Python Modules with Swig](/zh/examples/bindings/swig.html#python-c-module)
 
 ## Cython
 
