@@ -79,7 +79,8 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
     { text: 'Specification', link: '/specification' },
     { text: 'Conditions', link: '/conditions' },
     { text: 'Global Interfaces', link: '/global-interfaces' },
-    { text: 'Helper Interfaces', link: '/helper-interfaces' }
+    { text: 'Helper Interfaces', link: '/helper-interfaces' },
+    { text: 'Project Targets', link: '/project-target' },
   ]
 }
 
