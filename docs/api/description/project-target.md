@@ -234,9 +234,9 @@ target("xxxx")
     set_strip("all")
 ```
 
-<p class="tip">
+:::tip NOTE
 This api does not have to be used after the target. If no target is specified, it will be set to global mode. .
-</p>
+:::
 
 ## set_enabled
 
@@ -271,9 +271,9 @@ The three goals of the above code, when executing the `xmake`, `xmake install`, 
 
 Through the above example, you can see that the default target can be set more than one, and it will run in turn when running.
 
-<p class="tip">
+:::tip NOTE
     Note that the `xmake uninstall` and `xmake clean` commands are not affected by this interface setting, as most users prefer to clean and unload all of them.
-</p>
+:::
 
 If you don't want to use the default target, you can manually specify which targets you need to build the installation:
 
@@ -1278,9 +1278,9 @@ target("demo")
 
 In the above example, when compiling the target demo, you need to compile the test1 and test2 targets first, because the demo will use them.
 
-<p class="tip">
+:::tip NOTE
 The target will automatically inherit the configuration and properties in the dependent target. You don't need to call the interfaces `add_links`, `add_linkdirs` and `add_rpathdirs` to associate the dependent targets.
-</p>
+:::
 
 And the inheritance relationship is to support cascading, for example:
 
@@ -1577,10 +1577,10 @@ The separators after the ```are all files that need to be excluded. These files 
 
 One of the benefits of supporting the filtering of some files when adding files is that they provide the basis for subsequent file additions based on different switching logic.
 
-<p class="tip">
+:::tip NOTE
 In order to make the description more streamlined, the filter descriptions after `|` are based on a schema: the directory before `*` in `src/*.cpp`.
 So the above example is filtered after the file under src, this is to pay attention to.
-</p>
+:::
 
 After version 2.1.6, `add_files` has been improved to support more fine-grained compilation option controls based on files, such as:
 
@@ -1676,9 +1676,9 @@ This interface is equivalent to gcc's `-Lxxx` link option.
 
 Generally, it is used together with [add_links](#add_links). Of course, it can also be added directly through the [add_ldflags](#add_ldflags) or [add_shflags](#add_shflags) interface. It is also possible.
 
-<p class="tip">
+:::tip NOTE
 If you don't want to write to death in the project, you can set it by: `xmake f --linkdirs=xxx` or `xmake f --ldflags="-L/xxx"`, of course, this manually set directory search priority. higher.
-</p>
+:::
 
 ## add_rpathdirs
 
@@ -1837,10 +1837,10 @@ Add compilation options only for c code
 add_cflags("-g", "-O2", "-DDEBUG")
 ```
 
-<p class="warn">
+:::tip WARN
 All option values are based on the definition of gcc as standard. If other compilers are not compatible (for example: vc), xmake will automatically convert it internally to the corresponding option values supported by the compiler.
 Users don't have to worry about compatibility. If other compilers don't have matching values, xmake will automatically ignore the settings.
-</p>
+:::
 
 After version 2.1.9, the force parameter can be used to force the automatic detection of flags to be disabled and passed directly to the compiler. Even if the compiler may not support it, it will be set:
 
@@ -2238,9 +2238,9 @@ target("test2")
 
 The above description only makes special settings for the compiler of the test2 target, compiling test2 with a specific clang-5.0 compiler, and test1 still uses the default settings.
 
-<p class="tip">
+:::tip NOTE
 Each setting will override the previous setting under the current target target. Different targets will not be overwritten and independent of each other. If set in the root domain, all child targets will be affected.
-</p>
+:::
 
 The previous parameter is key, which is used to specify the tool type. Currently supported (compiler, linker, archiver):
 

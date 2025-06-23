@@ -51,9 +51,9 @@ target("demo")
     add_files("src/test.c")
 ```
 
-<p class="tip">
+:::tip 注意
 所有根域的设置，会全局影响所有target目标，但是不会影响option的定义。
-</p>
+:::
 
 ```lua
 -- 在根域对所有target添加-DDEBUG的宏定义，影响所有target（demo和test都会加上此宏定义）
@@ -233,9 +233,9 @@ target("xxxx")
     set_strip("all")
 ```
 
-<p class="tip">
+:::tip 注意
 这个api不一定非得在target之后使用，如果没有target指定，那么将会设置到全局模式。。
-</p>
+:::
 
 ## set_enabled
 
@@ -270,9 +270,9 @@ target("test3")
 
 通过上面的例子，可以看到默认目标可以设置多个，运行的时候也会依次运行。
 
-<p class="tip">
+:::tip 注意
     需要注意的是，`xmake uninstall`和`xmake clean`命令不受此接口设置影响，因为用户大部分情况下都是喜欢清除和卸载所有。
-</p>
+:::
 
 如果不想使用默认的目标，那么可以手动指定需要构建安装的目标：
 
@@ -306,9 +306,9 @@ target("test")
     set_options("hello")
 ```
 
-<p class="warn">
+:::tip WARN
 只有调用`set_options`进行关联生效后，[option](#option) 中定义的一些设置才会影响到此`target`目标，例如：宏定义、链接库、编译选项等等
-</p>
+:::
 
 ## set_symbols
 
@@ -1565,10 +1565,10 @@ add_files("src/*.cpp|test.cpp|hello.cpp|xx_*.cpp")
 
 添加文件的时候支持过滤一些文件的一个好处就是，可以为后续根据不同开关逻辑添加文件提供基础。
 
-<p class="tip">
+:::tip 注意
 为了使得描述上更加的精简，`|`之后的过滤描述都是基于起一个模式：`src/*.cpp` 中`*`之前的目录为基础的。
 所以上面的例子后面过滤的都是在src下的文件，这个是要注意的。
-</p>
+:::
 
 2.1.6版本之后，对`add_files`进行了改进，支持基于files更细粒度的编译选项控制，例如：
 
@@ -1664,9 +1664,9 @@ target("test")
 
 一般他是与[add_links](#add_links)配合使用的，当然也可以直接通过[add_ldflags](#add_ldflags)或者[add_shflags](#add_shflags)接口来添加，也是可以的。
 
-<p class="tip">
+:::tip 注意
 如果不想在工程中写死，可以通过：`xmake f --linkdirs=xxx`或者`xmake f --ldflags="-L/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
-</p>
+:::
 
 ## add_rpathdirs
 
@@ -2226,9 +2226,9 @@ target("test2")
 
 上述描述仅对test2目标的编译器进行特殊设置，使用特定的clang-5.0编译器来编译test2，而test1还是使用默认设置。
 
-<p class="tip">
+:::tip 注意
 每次设置都会覆盖当前target目标下之前的那次设置，不同target之间不会被覆盖，互相独立，如果在根域设置，会影响所有子target。
-</p>
+:::
 
 前一个参数是key，用于指定工具类型，目前支持的有（编译器、链接器、归档器）：
 
