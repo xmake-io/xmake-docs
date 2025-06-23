@@ -87,6 +87,7 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
 
 function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
   return [
+    { text: 'Package Instance', link: '/package_instance' },
     { text: 'Native Modules', link: '/native_modules' }
   ]
 }

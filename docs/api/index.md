@@ -16,4 +16,5 @@ outline: deep
 
 ## Scripts API
 
+- [Package Instance](/api/scripts/package_instance)
 - [Native Modules](/api/scripts/native_modules)

@@ -15,4 +15,5 @@ outline: deep
 
 ## 脚本域 API
 
+- [包实例](/zh/api/scripts/package_instance)
 - [原生模块](/zh/api/scripts/native_modules)
