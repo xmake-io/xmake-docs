@@ -100,6 +100,7 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Basic Programs', link: 'cpp/basic' },
+        { text: 'C++ Modules', link: 'cpp/cxx-modules' },
         { text: 'Wasm Programs', link: 'cpp/wasm' },
         { text: 'Qt Programs', link: 'cpp/qt' },
         { text: 'WDK Programs', link: 'cpp/wdk' },
@@ -107,38 +108,50 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'MFC Programs', link: 'cpp/mfc' },
         { text: 'Protobuf Programs', link: 'cpp/protobuf' },
         { text: 'OpenMP Programs', link: 'cpp/openmp' },
-        { text: 'C++ Modules', link: 'cpp/modules' },
         { text: 'Linux Bpf Programs', link: 'cpp/linux-bpf' },
-        { text: 'Swig Modules', link: 'cpp/swig' },
-        { text: 'Keil/MDK Embed Programs', link: 'cpp/keil-mdk' },
-        { text: 'Keil/C51 Embed Programs', link: 'cpp/keil-c51' },
         { text: 'Linux Kernel Driver Module', link: 'cpp/linux-driver-module' },
         { text: 'ASN.1 Programs', link: 'cpp/asn1' },
         { text: 'CppFront Programs', link: 'cpp/cppfront' },
-        { text: 'Lua Modules', link: 'cpp/lua-module' },
-        { text: 'NodeJS Modules', link: 'cpp/nodejs-module' },
-        { text: 'Python Modules', link: 'cpp/python-module' },
         { text: 'Cosmocc Programs', link: 'cpp/cosmocc' },
         { text: 'Merge Static Libraries', link: 'cpp/merge-static-libraries' },
+      ]
+    },
+    {
+      text: 'Bindings Programs',
+      collapsed: false,
+      items: [
+        { text: 'Swig Modules', link: 'bindings/swig' },
+        { text: 'Lua Modules', link: 'bindings/lua-module' },
+        { text: 'Python Modules', link: 'bindings/python-module' },
+        { text: 'NodeJS Modules', link: 'bindings/nodejs-module' },
+      ]
+    },
+    {
+      text: 'Embed Programs',
+      collapsed: false,
+      items: [
+        { text: 'Keil/MDK Embed Programs', link: 'embed/keil-mdk' },
+        { text: 'Keil/C51 Embed Programs', link: 'embed/keil-c51' },
+        { text: 'Verilog Programs', link: 'embed/verilog' },
       ]
     },
     {
       text: 'Other Languages',
       collapsed: false,
       items: [
-        { text: 'ObjC Programs', link: 'other/objc' },
-        { text: 'Cuda Programs', link: 'other/cuda' },
-        { text: 'Lex/Yacc Programs', link: 'other/lex-yacc' },
-        { text: 'Fortran Programs', link: 'other/fortran' },
-        { text: 'Golang Programs', link: 'other/golang' },
-        { text: 'Dlang Programs', link: 'other/dlang' },
-        { text: 'Rust Programs', link: 'other/rust' },
-        { text: 'Swift Programs', link: 'other/swift' },
-        { text: 'Zig Programs', link: 'other/zig' },
-        { text: 'Vala Programs', link: 'other/vala' },
-        { text: 'Pascal Programs', link: 'other/pascal' },
-        { text: 'Nim Programs', link: 'other/nim' },
-        { text: 'Verilog Programs', link: 'other/verilog' },
+        { text: 'ObjC Programs', link: 'other-languages/objc' },
+        { text: 'Cuda Programs', link: 'other-languages/cuda' },
+        { text: 'Lex/Yacc Programs', link: 'other-languages/lex-yacc' },
+        { text: 'Fortran Programs', link: 'other-languages/fortran' },
+        { text: 'Golang Programs', link: 'other-languages/golang' },
+        { text: 'Dlang Programs', link: 'other-languages/dlang' },
+        { text: 'Rust Programs', link: 'other-languages/rust' },
+        { text: 'Swift Programs', link: 'other-languages/swift' },
+        { text: 'Zig Programs', link: 'other-languages/zig' },
+        { text: 'Vala Programs', link: 'other-languages/vala' },
+        { text: 'Pascal Programs', link: 'other-languages/pascal' },
+        { text: 'Nim Programs', link: 'other-languages/nim' },
+        { text: 'Verilog Programs', link: 'other-languages/verilog' },
       ]
     }
   ]

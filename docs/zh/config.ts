@@ -137,6 +137,7 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: '基础程序', link: 'cpp/basic' },
+        { text: 'C++ 模块', link: 'cpp/cxx-modules' },
         { text: 'Wasm 程序', link: 'cpp/wasm' },
         { text: 'Qt 程序', link: 'cpp/qt' },
         { text: 'WDK 程序', link: 'cpp/wdk' },
@@ -144,38 +145,49 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'MFC 程序', link: 'cpp/mfc' },
         { text: 'Protobuf 程序', link: 'cpp/protobuf' },
         { text: 'OpenMP 程序', link: 'cpp/openmp' },
-        { text: 'C++ 模块', link: 'cpp/modules' },
         { text: 'Linux Bpf 程序', link: 'cpp/linux-bpf' },
-        { text: 'Swig 模块', link: 'cpp/swig' },
-        { text: 'Keil/MDK 嵌入式程序', link: 'cpp/keil-mdk' },
-        { text: 'Keil/C51 嵌入式程序', link: 'cpp/keil-c51' },
         { text: 'Linux 内核驱动模块', link: 'cpp/linux-driver-module' },
         { text: 'ASN.1 程序', link: 'cpp/asn1' },
         { text: 'CppFront 程序', link: 'cpp/cppfront' },
-        { text: 'Lua 模块', link: 'cpp/lua-module' },
-        { text: 'NodeJS 模块', link: 'cpp/nodejs-module' },
-        { text: 'Python 模块', link: 'cpp/python-module' },
         { text: 'Cosmocc 程序', link: 'cpp/cosmocc' },
         { text: '合并静态库', link: 'cpp/merge-static-libraries' },
+      ]
+    },
+    {
+      text: '语言绑定模块',
+      collapsed: false,
+      items: [
+        { text: 'Swig 模块', link: 'bindings/swig' },
+        { text: 'Lua 模块', link: 'bindings/lua-module' },
+        { text: 'Python 模块', link: 'bindings/python-module' },
+        { text: 'NodeJS 模块', link: 'bindings/nodejs-module' },
+      ]
+    },
+    {
+      text: '嵌入式程序',
+      collapsed: false,
+      items: [
+        { text: 'Keil/MDK 程序', link: 'embed/keil-mdk' },
+        { text: 'Keil/C51 程序', link: 'embed/keil-c51' },
+        { text: 'Verilog 仿真程序', link: 'embed/verilog' },
       ]
     },
     {
       text: '其他语言',
       collapsed: false,
       items: [
-        { text: 'ObjC 程序', link: 'other/objc' },
-        { text: 'Cuda 程序', link: 'other/cuda' },
-        { text: 'Lex/Yacc 程序', link: 'other/lex-yacc' },
-        { text: 'Fortran 程序', link: 'other/fortran' },
-        { text: 'Golang 程序', link: 'other/golang' },
-        { text: 'Dlang 程序', link: 'other/dlang' },
-        { text: 'Rust 程序', link: 'other/rust' },
-        { text: 'Swift 程序', link: 'other/swift' },
-        { text: 'Zig 程序', link: 'other/zig' },
-        { text: 'Vala 程序', link: 'other/vala' },
-        { text: 'Pascal 程序', link: 'other/pascal' },
-        { text: 'Nim 程序', link: 'other/nim' },
-        { text: 'Verilog 仿真程序', link: 'other/verilog' },
+        { text: 'ObjC 程序', link: 'other-languages/objc' },
+        { text: 'Cuda 程序', link: 'other-languages/cuda' },
+        { text: 'Lex/Yacc 程序', link: 'other-languages/lex-yacc' },
+        { text: 'Fortran 程序', link: 'other-languages/fortran' },
+        { text: 'Golang 程序', link: 'other-languages/golang' },
+        { text: 'Dlang 程序', link: 'other-languages/dlang' },
+        { text: 'Rust 程序', link: 'other-languages/rust' },
+        { text: 'Swift 程序', link: 'other-languages/swift' },
+        { text: 'Zig 程序', link: 'other-languages/zig' },
+        { text: 'Vala 程序', link: 'other-languages/vala' },
+        { text: 'Pascal 程序', link: 'other-languages/pascal' },
+        { text: 'Nim 程序', link: 'other-languages/nim' },
       ]
     }
   ]

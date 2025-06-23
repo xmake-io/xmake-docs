@@ -1,10 +1,10 @@
 ## Swig
 
-我们可以使用 Swig 来开发 Python 模块，详细的介绍可以看下：[Python Modules with Swig](/zh/examples/bindings/swig.html#python-c-module)
+We can use Swig to develop Python modules. For a detailed introduction, please see: [Python Modules with Swig](/zh/examples/cpp/swig.html#python-c-module)
 
 ## Cython
 
-我们也可以使用 Cython 来构建 Python 模块。
+We can also use Cython to build Python modules.
 
 ```lua
 add_rules("mode.debug", "mode.release")
@@ -22,7 +22,7 @@ print("Hello, world!")
 
 ## PyBind
 
-我们还可以使用 pybind11 来构建 python 模块。
+We can also use pybind11 to build python modules.
 
 ```lua
 add_rules("mode.release", "mode.debug")
