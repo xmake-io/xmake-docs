@@ -101,7 +101,7 @@ target("test2")
     ...
 ```
 
-## target:set_kind
+## set_kind
 
 ### 设置目标编译类型
 
@@ -215,7 +215,7 @@ target("foo")
 
 更多详情见：[#1747](https://github.com/xmake-io/xmake/issues/1747)
 
-## target:set_strip
+## set_strip
 
 ### 设置是否strip信息
 
@@ -237,13 +237,13 @@ target("xxxx")
 这个api不一定非得在target之后使用，如果没有target指定，那么将会设置到全局模式。。
 </p>
 
-## target:set_enabled
+## set_enabled
 
 ### 设置是否启用或禁用目标
 
 如果设置`set_enabled(false)`，则会直接禁用对应的target，包括target的加载和信息获取，而[set_default](#targetset_default)仅仅只是设置默认不去编译，但是target还是能获取到相关信息的，默认也会被加载。
 
-## target:set_default
+## set_default
 
 ### 设置是否为默认构建安装目标
 
@@ -288,7 +288,7 @@ $ xmake build [-a|--all]
 $ xmake install [-a|--all]
 ```
 
-## target:set_options
+## set_options
 
 ### 设置关联选项
 
@@ -310,7 +310,7 @@ target("test")
 只有调用`set_options`进行关联生效后，[option](#option) 中定义的一些设置才会影响到此`target`目标，例如：宏定义、链接库、编译选项等等
 </p>
 
-## target:set_symbols
+## set_symbols
 
 ### 设置符号信息
 
@@ -376,7 +376,7 @@ set_symbols("debug", "edit")
 
 会从默认的 `-Zi -Pdxxx.pdb` 切换到 `-ZI -Pdxxx.pdb` 编译选项，开启 `Edit and Continue` 调试符号格式信息，当然这并不会影响 gcc/clang 的处理，所以也是完全兼容的。
 
-## target:set_basename
+## set_basename
 
 ### 设置目标文件名
 
@@ -408,7 +408,7 @@ target("xxx")
 
 或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#targetafter_build)和[os.mv](https://xmake.io/#/zh-cn/manual/builtin_modules?id=osmv)。
 
-## target:set_filename
+## set_filename
 
 ### 设置目标文件全名
 
@@ -416,7 +416,7 @@ target("xxx")
 
 而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把`libtest.a`改成`test.dll`，这个对于[set_basename](#targetset_basename)是做不到的。
 
-## target:set_prefixname
+## set_prefixname
 
 ### 设置目标文件的前置名
 
@@ -427,7 +427,7 @@ target("test")
     set_prefixname("")
 ```
 
-## target:set_suffixname
+## set_suffixname
 
 ### 设置目标文件的后置名
 
@@ -438,7 +438,7 @@ target("test")
     set_suffixname("-d")
 ```
 
-## target:set_extension
+## set_extension
 
 ### 设置目标文件的扩展名
 
@@ -450,7 +450,7 @@ target("test")
     set_extension(".dll")
 ```
 
-## target:set_warnings
+## set_warnings
 
 ### 设置警告级别
 
@@ -477,7 +477,7 @@ set_warnings("all", "error")
 
 如果当前没有目标，调用这个api将会设置到全局模式。。
 
-## target:set_optimize
+## set_optimize
 
 ### 设置优化级别
 
@@ -501,7 +501,7 @@ set_warnings("all", "error")
 set_optimize("fastest")
 ```
 
-## target:set_languages
+## set_languages
 
 ### 设置代码语言标准
 
@@ -551,7 +551,7 @@ msvc 的编译器并不支持按 c99 的标准来编译c代码，只能支持到
 
 不过最新的 msvc 编译已经支持上了 c11/c17 标准，xmake 也就不会再做额外的特殊处理。
 
-## target:set_fpmodels
+## set_fpmodels
 
 ### 设置float-point编译模式
 
@@ -570,7 +570,7 @@ set_fpmodels("precise") -- default
 
 关于这块详情见：[https://github.com/xmake-io/xmake/issues/981](https://github.com/xmake-io/xmake/issues/981)
 
-## target:set_targetdir
+## set_targetdir
 
 ### 设置生成目标文件目录
 
@@ -604,7 +604,7 @@ target("test")
     set_targetdir("$(builddir)/out", { bindir = "bin", libdir = "lib" })
 ```
 
-## target:set_objectdir
+## set_objectdir
 
 ### 设置对象文件生成目录
 
@@ -615,7 +615,7 @@ target("test")
     set_objectdir("$(buildir)/.objs")
 ```
 
-## target:set_dependir
+## set_dependir
 
 ### 设置依赖文件生成目录
 
@@ -626,7 +626,7 @@ target("test")
     set_dependir("$(buildir)/.deps")
 ```
 
-## target:add_imports
+## add_imports
 
 ### 为自定义脚本预先导入扩展模块
 
@@ -671,7 +671,7 @@ target("test")
     end)
 ```
 
-## target:add_rules
+## add_rules
 
 ### 添加规则到目标
 
@@ -682,7 +682,7 @@ target("test")
 rule("markdown")
     set_extensions(".md", ".markdown")
     on_build(function (target, sourcefile)
-        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+        os.cp(sourcefile, path.join(targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 
 target("test")
@@ -701,7 +701,7 @@ target("test")
 ```lua
 rule("my_rule")
     on_load(function (target)
-        local my_arg = target:extraconf("rules", "my_rule", "my_arg") -- "my arg"
+        local my_arg = extraconf("rules", "my_rule", "my_arg") -- "my arg"
     end)
 
 target("test")
@@ -710,7 +710,7 @@ target("test")
 
 我们也可以指定应用局部文件到规则，具体使用见：[add_files](#targetadd_files)。
 
-## target:on_load
+## on_load
 
 ### 自定义目标加载脚本
 
@@ -719,15 +719,15 @@ target("test")
 ```lua
 target("test")
     on_load(function (target)
-        target:add("defines", "DEBUG", "TEST=\"hello\"")
-        target:add("linkdirs", "/usr/lib", "/usr/local/lib")
-        target:add({includedirs = "/usr/include", "links" = "pthread"})
+        add("defines", "DEBUG", "TEST=\"hello\"")
+        add("linkdirs", "/usr/lib", "/usr/local/lib")
+        add({includedirs = "/usr/include", "links" = "pthread"})
     end)
 ```
 
-可以在`on_load`里面，通过`target:set`, `target:add` 来动态添加各种target属性。
+可以在`on_load`里面，通过`set`, `add` 来动态添加各种target属性。
 
-## target:on_config
+## on_config
 
 ### 自定义配置脚本
 
@@ -741,7 +741,7 @@ target("test")
 on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 ```
 
-## target:on_link
+## on_link
 
 ### 自定义链接脚本
 
@@ -754,7 +754,7 @@ target("test")
     end)
 ```
 
-## target:on_build
+## on_build
 
 ### 自定义编译脚本
 
@@ -796,7 +796,7 @@ target("test")
 :::
 
 
-## target:on_build_file
+## on_build_file
 
 ### 自定义编译脚本, 实现单文件构建
 
@@ -812,7 +812,7 @@ target("test")
 
 如果不想重写内置的编译脚本，仅仅只是在编译前后添加一些自己的处理，其实用：[target.before_build_file](#targetbefore_build_file)和[target.after_build_file](#targetafter_build_file)会更加方便，不需要调用`opt.origin`。
 
-## target:on_build_files
+## on_build_files
 
 ### 自定义编译脚本, 实现多文件构建
 
@@ -835,7 +835,7 @@ target("test")
 * `sourcebatch.objectfiles()`: 获取对象文件列表
 * `sourcebatch.dependfiles()`: 获取对应依赖文件列表，存有源文件中编译依赖信息，例如：xxx.d
 
-## target:on_clean
+## on_clean
 
 ### 自定义清理脚本
 
@@ -848,7 +848,7 @@ target("test")
     on_clean(function (target)
 
         -- 仅删掉目标文件
-        os.rm(target:targetfile())
+        os.rm(targetfile())
     end)
 ```
 
@@ -856,18 +856,18 @@ target("test")
 
 | target接口                          | 描述                                                             |
 | ----------------------------------- | ---------------------------------------------------------------- |
-| target:name()                       | 获取目标名                                                       |
-| target:targetfile()                 | 获取目标文件路径                                                 |
-| target:get("kind")                  | 获取目标的构建类型                                               |
-| target:get("defines")               | 获取目标的宏定义                                                 |
-| target:get("xxx")                   | 其他通过 `set_/add_`接口设置的target信息，都可以通过此接口来获取 |
-| target:add("links", "pthread")      | 添加目标设置                                                     |
-| target:set("links", "pthread", "z") | 覆写目标设置                                                     |
-| target:deps()                       | 获取目标的所有依赖目标                                           |
-| target:dep("depname")               | 获取指定的依赖目标                                               |
-| target:sourcebatches()              | 获取目标的所有源文件列表                                         |
+| name()                       | 获取目标名                                                       |
+| targetfile()                 | 获取目标文件路径                                                 |
+| get("kind")                  | 获取目标的构建类型                                               |
+| get("defines")               | 获取目标的宏定义                                                 |
+| get("xxx")                   | 其他通过 `set_/add_`接口设置的target信息，都可以通过此接口来获取 |
+| add("links", "pthread")      | 添加目标设置                                                     |
+| set("links", "pthread", "z") | 覆写目标设置                                                     |
+| deps()                       | 获取目标的所有依赖目标                                           |
+| dep("depname")               | 获取指定的依赖目标                                               |
+| sourcebatches()              | 获取目标的所有源文件列表                                         |
 
-## target:on_package
+## on_package
 
 ### 自定义打包脚本
 
@@ -901,7 +901,7 @@ target("demo")
     end)
 ```
 
-## target:on_install
+## on_install
 
 ### 自定义安装脚本
 
@@ -920,7 +920,7 @@ target("test")
     end)
 ```
 
-## target:on_uninstall
+## on_uninstall
 
 ### 自定义卸载脚本
 
@@ -933,7 +933,7 @@ target("test")
     end)
 ```
 
-## target:on_run
+## on_run
 
 ### 自定义运行脚本
 
@@ -952,7 +952,7 @@ target("test")
     end)
 ```
 
-## target:before_link
+## before_link
 
 ### 在链接之前执行一些自定义脚本
 
@@ -965,7 +965,7 @@ target("test")
     end)
 ```
 
-## target:before_build
+## before_build
 
 ### 在构建之前执行一些自定义脚本
 
@@ -978,7 +978,7 @@ target("test")
     end)
 ```
 
-## target:before_build_file
+## before_build_file
 
 ### 自定义编译前的脚本, 实现单文件构建
 
@@ -992,7 +992,7 @@ target("test")
     end)
 ```
 
-## target:before_build_files
+## before_build_files
 
 ### 自定义编译前的脚本, 实现多文件构建
 
@@ -1006,7 +1006,7 @@ target("test")
     end)
 ```
 
-## target:before_clean
+## before_clean
 
 ### 在清理之前执行一些自定义脚本
 
@@ -1019,7 +1019,7 @@ target("test")
     end)
 ```
 
-## target:before_package
+## before_package
 
 ### 在打包之前执行一些自定义脚本
 
@@ -1032,7 +1032,7 @@ target("test")
     end)
 ```
 
-## target:before_install
+## before_install
 
 ### 在安装之前执行一些自定义脚本
 
@@ -1045,7 +1045,7 @@ target("test")
     end)
 ```
 
-## target:before_uninstall
+## before_uninstall
 
 ### 在卸载之前执行一些自定义脚本
 
@@ -1058,7 +1058,7 @@ target("test")
     end)
 ```
 
-## target:before_run
+## before_run
 
 ### 在运行之前执行一些自定义脚本
 
@@ -1071,7 +1071,7 @@ target("test")
     end)
 ```
 
-## target:after_link
+## after_link
 
 ### 在链接之后执行一些自定义脚本
 
@@ -1084,7 +1084,7 @@ target("test")
     end)
 ```
 
-## target:after_build
+## after_build
 
 ### 在构建之后执行一些自定义脚本
 
@@ -1095,11 +1095,11 @@ target("test")
 ```lua
 target("test")
     after_build(function (target)
-        os.run("ldid -S %s", target:targetfile())
+        os.run("ldid -S %s", targetfile())
     end)
 ```
 
-## target:after_build_file
+## after_build_file
 
 ### 自定义编译前的脚本, 实现单文件构建
 
@@ -1113,7 +1113,7 @@ target("test")
     end)
 ```
 
-## target:after_build_files
+## after_build_files
 
 ### 自定义编译前的脚本, 实现多文件构建
 
@@ -1127,7 +1127,7 @@ target("test")
     end)
 ```
 
-## target:after_clean
+## after_clean
 
 ### 在清理之后执行一些自定义脚本
 
@@ -1142,7 +1142,7 @@ target("test")
     end)
 ```
 
-## target:after_package
+## after_package
 
 ### 在打包之后执行一些自定义脚本
 
@@ -1155,7 +1155,7 @@ target("test")
     end)
 ```
 
-## target:after_install
+## after_install
 
 ### 在安装之后执行一些自定义脚本
 
@@ -1167,7 +1167,7 @@ target("test")
         print("")
     end)
 ```
-## target:after_uninstall
+## after_uninstall
 
 ### 在卸载之后执行一些自定义脚本
 
@@ -1180,7 +1180,7 @@ target("test")
     end)
 ```
 
-## target:after_run
+## after_run
 
 ### 在运行之后执行一些自定义脚本
 
@@ -1193,7 +1193,7 @@ target("test")
     end)
 ```
 
-## target:set_pcheader
+## set_pcheader
 
 ### 设置 C 预编译头文件
 
@@ -1206,7 +1206,7 @@ target("test")
     set_pcheader("header.h")
 ```
 
-## target:set_pcxxheader
+## set_pcxxheader
 
 ### 设置 C++ 预编译头文件
 
@@ -1219,7 +1219,7 @@ target("test")
     set_pcxxheader("header.h")
 ```
 
-## target:set_pmheader
+## set_pmheader
 
 ### 设置 ObjC 预编译头文件
 
@@ -1232,7 +1232,7 @@ target("test")
     set_pmheader("header.h")
 ```
 
-## target:set_pmxxheader
+## set_pmxxheader
 
 ### 设置 ObjC++ 预编译头文件
 
@@ -1245,7 +1245,7 @@ target("test")
     set_pmxxheader("header.h")
 ```
 
-## target:add_deps
+## add_deps
 
 ### 添加子工程目标依赖
 
@@ -1309,7 +1309,7 @@ add_deps("dep1", "dep2", {inherit = false})
 
 对于这块的详细说明，可以看下：https://github.com/xmake-io/xmake/issues/368
 
-## target:add_links
+## add_links
 
 ### 添加链接库名
 
@@ -1327,7 +1327,7 @@ target("demo")
 
 2.8.1 版本开始，add_links 还支持添加库的完整路径，例如：`add_links("/tmp/libfoo.a")`，显式的指定库文件。
 
-## target:add_syslinks
+## add_syslinks
 
 ### 添加系统链接库名
 
@@ -1344,7 +1344,7 @@ target("demo")
 
 上面的配置，即使`add_syslinks`被优先提前设置了，但最后的链接顺序依然是：`-la -lb -lpthread -lm -ldl`
 
-## target:add_linkorders
+## add_linkorders
 
 ### 调整链接顺序
 
@@ -1448,7 +1448,7 @@ target("demo")
 
 完整工程在：[linkorders example](https://github.com/xmake-io/xmake/blob/master/tests/projects/c%2B%2B/linkorders/xmake.lua)
 
-## target:add_linkgroups
+## add_linkgroups
 
 ### 添加链接组
 
@@ -1516,7 +1516,7 @@ add_linkgroups("a", "b", {static = true})
 
 它会对应生成 `-Wl,-Bstatic -la -lb -Wl,-Bdynamic` 链接选项。
 
-## target:add_files
+## add_files
 
 ### 添加源代码文件
 
@@ -1604,7 +1604,7 @@ add_files("*.c", {sourcekind = "cxx"})    -- force to compile as c++
 add_files("*.cpp", {sourcekind = "cc"})  -- force to compile as c
 ```
 
-## target:remove_files
+## remove_files
 
 ### 从前面的源代码文件列表中删除指定文件
 
@@ -1641,7 +1641,7 @@ target("test")
 remove_files = remove_files or del_files
 ```
 
-## target:remove_headerfiles
+## remove_headerfiles
 
 ### 从前面的头文件列表中删除指定文件
 
@@ -1649,7 +1649,7 @@ remove_files = remove_files or del_files
 
 这个接口，v2.6.3 版本才提供。
 
-## target:add_linkdirs
+## add_linkdirs
 
 ### 添加链接库搜索目录
 
@@ -1668,7 +1668,7 @@ target("test")
 如果不想在工程中写死，可以通过：`xmake f --linkdirs=xxx`或者`xmake f --ldflags="-L/xxx"`的方式来设置，当然这种手动设置的目录搜索优先级更高。
 </p>
 
-## target:add_rpathdirs
+## add_rpathdirs
 
 ### 添加程序运行时动态库的加载搜索目录
 
@@ -1720,7 +1720,7 @@ target("test")
 
 2.9.4 之后，我们新增了 `add_rpathdirs("xxx", {install_only = true})` ，可以单独配置安装后的 rpath 路径。
 
-## target:add_includedirs
+## add_includedirs
 
 ### 添加头文件搜索目录
 
@@ -1757,7 +1757,7 @@ target("demo")
 :::
 如果用户非要这么做，可以通过 `add_includedirs(os.dirs(path.join(os.scriptdir(), "xxx/**")))` 来实现。
 
-## target:add_sysincludedirs
+## add_sysincludedirs
 
 ### 添加系统头文件搜索目录
 
@@ -1791,7 +1791,7 @@ target("test")
 另外，使用 `add_requires()` 引入的依赖包，默认也会使用 `-isystem` 作为外部系统头文件。
 :::
 
-## target:add_defines
+## add_defines
 
 ### 添加宏定义
 
@@ -1805,7 +1805,7 @@ add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
 -DDEBUG -DTEST=0 -DTEST2=\"hello\"
 ```
 
-## target:add_undefines
+## add_undefines
 
 ### 取消宏定义
 
@@ -1817,7 +1817,7 @@ add_undefines("DEBUG")
 
 在代码中相当于：`#undef DEBUG`
 
-## target:add_cflags
+## add_cflags
 
 ### 添加c编译选项
 
@@ -1838,13 +1838,13 @@ add_cflags("-g", "-O2", "-DDEBUG")
 add_cflags("-g", "-O2", {force = true})
 ```
 
-## target:add_cxflags
+## add_cxflags
 
 ### 添加c/c++编译选项
 
 同时对c/c++代码添加编译选项，用法跟 add_cflags 一致。
 
-## target:add_cxxflags
+## add_cxxflags
 
 ### 添加c++编译选项
 
@@ -1873,7 +1873,7 @@ add_cxxflags("/GR-", {tools = {"clang_cl", "cl"}})
 不仅仅是编译flags，对 add_ldflags 等链接 flags，也是同样生效的。
 :::
 
-## target:add_mflags
+## add_mflags
 
 ### 添加objc编译选项
 
@@ -1889,7 +1889,7 @@ add_mflags("-g", "-O2", "-DDEBUG")
 add_mflags("-g", "-O2", {force = true})
 ```
 
-## target:add_mxflags
+## add_mxflags
 
 ### 添加objc/objc++编译选项
 
@@ -1899,7 +1899,7 @@ add_mflags("-g", "-O2", {force = true})
 add_mxflags("-framework CoreFoundation")
 ```
 
-## target:add_mxxflags
+## add_mxxflags
 
 ### 添加objc++编译选项
 
@@ -1909,7 +1909,7 @@ add_mxflags("-framework CoreFoundation")
 add_mxxflags("-framework CoreFoundation")
 ```
 
-## target:add_scflags
+## add_scflags
 
 ### 添加swift编译选项
 
@@ -1919,7 +1919,7 @@ add_mxxflags("-framework CoreFoundation")
 add_scflags("xxx")
 ```
 
-## target:add_asflags
+## add_asflags
 
 ### 添加汇编编译选项
 
@@ -1929,7 +1929,7 @@ add_scflags("xxx")
 add_asflags("xxx")
 ```
 
-## target:add_gcflags
+## add_gcflags
 
 ### 添加go编译选项
 
@@ -1939,7 +1939,7 @@ add_asflags("xxx")
 add_gcflags("xxx")
 ```
 
-## target:add_dcflags
+## add_dcflags
 
 ### 添加dlang编译选项
 
@@ -1949,7 +1949,7 @@ add_gcflags("xxx")
 add_dcflags("xxx")
 ```
 
-## target:add_rcflags
+## add_rcflags
 
 ### 添加rust编译选项
 
@@ -1959,7 +1959,7 @@ add_dcflags("xxx")
 add_rcflags("xxx")
 ```
 
-## target:add_fcflags
+## add_fcflags
 
 ### 添加fortran编译选项
 
@@ -1969,7 +1969,7 @@ add_rcflags("xxx")
 add_fcflags("xxx")
 ```
 
-## target:add_zcflags
+## add_zcflags
 
 ### 添加zig编译选项
 
@@ -1979,7 +1979,7 @@ add_fcflags("xxx")
 add_zcflags("xxx")
 ```
 
-## target:add_cuflags
+## add_cuflags
 
 ### 添加cuda编译选项
 
@@ -1989,7 +1989,7 @@ add_zcflags("xxx")
 add_cuflags("-gencode arch=compute_30,code=sm_30")
 ```
 
-## target:add_culdflags
+## add_culdflags
 
 ### 添加cuda设备链接选项
 
@@ -2002,7 +2002,7 @@ v2.2.7之后，cuda默认构建会使用device-link，这个阶段如果要设�
 add_culdflags("-gencode arch=compute_30,code=sm_30")
 ```
 
-## target:add_cugencodes
+## add_cugencodes
 
 ### 添加cuda设备的gencode设置
 
@@ -2049,7 +2049,7 @@ add_cugencodes("native")
 add_cugencodes("sm_60")
 ```
 
-## target:add_ldflags
+## add_ldflags
 
 ### 添加链接选项
 
@@ -2066,7 +2066,7 @@ add_ldflags("-L/xxx", "-lxxx")
 add_ldflags({"-L/my lib"}, {expand = false}) -- OK
 ```
 
-## target:add_arflags
+## add_arflags
 
 ### 添加静态库归档选项
 
@@ -2075,7 +2075,7 @@ add_ldflags({"-L/my lib"}, {expand = false}) -- OK
 ```lua
 add_arflags("xxx")
 ```
-## target:add_shflags
+## add_shflags
 
 ### 添加动态库链接选项
 
@@ -2085,13 +2085,13 @@ add_arflags("xxx")
 add_shflags("xxx")
 ```
 
-## target:add_options
+## add_options
 
 ### 添加关联选项
 
 这个接口跟[set_options](#targetset_options)类似，唯一的区别就是，此处是追加选项，而[set_options](#targetset_options)每次设置会覆盖先前的设置。
 
-## target:add_packages
+## add_packages
 
 ### 添加包依赖
 
@@ -2137,13 +2137,13 @@ target("test")
     add_packages("lua", {links = {}})
 ```
 
-## target:add_languages
+## add_languages
 
 ### 添加语言标准
 
 与[set_languages](#targetset_languages)类似，唯一区别是这个接口不会覆盖掉之前的设置，而是追加设置。
 
-## target:add_vectorexts
+## add_vectorexts
 
 ### 添加向量扩展指令
 
@@ -2166,7 +2166,7 @@ add_vectorexts("sse", "sse2", "sse3", "ssse3", "sse4.2")
 add_vectorexts("all")
 ```
 
-## target:add_frameworks
+## add_frameworks
 
 ### 添加链接框架
 
@@ -2187,7 +2187,7 @@ target("test")
 
 如果不是这两个平台，这些设置将会被忽略。
 
-## target:add_frameworkdirs
+## add_frameworkdirs
 
 ### 添加链接框架搜索目录
 
@@ -2199,7 +2199,7 @@ target("test")
     add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
 ```
 
-## target:set_toolset
+## set_toolset
 
 ### 设置工具集
 
@@ -2261,7 +2261,7 @@ set_toolset("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 
 上述描述设置mipscc.exe作为c编译器，并且提示xmake作为gcc的传参处理方式进行编译。
 
-## target:set_toolchains
+## set_toolchains
 
 ### 设置工具链
 
@@ -2378,7 +2378,7 @@ target("test")
 
 通常，我们更推荐使用 `set_arch` 来对整个target实现架构切换。
 
-## target:set_plat
+## set_plat
 
 ### 设置指定目标的编译平台
 
@@ -2407,13 +2407,13 @@ target("test")
     add_files("src/test/*.c")
 ```
 
-## target:set_arch
+## set_arch
 
 ### 设置指定目标的编译架构
 
 详情见：[set_plat](#targetset_plat)
 
-## target:set_values
+## set_values
 
 ### 设置一些扩展配置值
 
@@ -2424,7 +2424,7 @@ target("test")
 rule("markdown")
     on_build_file(function (target, sourcefile, opt)
         -- compile .markdown with flags
-        local flags = target:values("markdown.flags")
+        local flags = values("markdown.flags")
         if flags then
             -- ..
         end
@@ -2436,7 +2436,7 @@ target("test")
 ```
 
 上述代码例子中，可以看出，在target应用markdown规则的时候，通过set_values去设置一些flags值，提供给markdown规则去处理。
-在规则脚本中可以通过`target:values("markdown.flags")`获取到target中设置的扩展flags值。
+在规则脚本中可以通过`values("markdown.flags")`获取到target中设置的扩展flags值。
 
 :::tip 注意
 具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](https://xmake.io/#/zh-cn/manual/custom_rule?id=内建规则)
@@ -2462,13 +2462,13 @@ target("test")
 | wdk.sign.certfile       | 设置 wdk 的代码签名证书文件           |
 | wdk.sign.thumbprint     | 设置 wdk 的代码签名指纹               |
 
-## target:add_values
+## add_values
 
 ### 添加一些扩展配置值
 
-用法跟[target:set_values](#targetset_values)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
+用法跟[set_values](#targetset_values)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
 
-## target:set_rundir
+## set_rundir
 
 ### 设置运行目录
 
@@ -2485,7 +2485,7 @@ target("test")
     set_rundir("$(projectdir)/xxx")
 ```
 
-## target:set_runargs
+## set_runargs
 
 ### 设置运行参数列表
 
@@ -2495,7 +2495,7 @@ target("test")
 set_runargs("-x", "--arg1=val")
 ```
 
-## target:add_runenvs
+## add_runenvs
 
 ### 添加运行环境变量
 
@@ -2511,7 +2511,7 @@ target("test")
     add_runenvs("LD_LIBRARY_PATH", "/tmp/lib", "xxx/lib")
 ```
 
-## target:set_runenv
+## set_runenv
 
 ### 设置运行环境变量
 
@@ -2527,7 +2527,7 @@ target("test")
     set_runenv("NAME", "value")
 ```
 
-## target:set_installdir
+## set_installdir
 
 ### 设置安装目录
 
@@ -2538,7 +2538,7 @@ target("test")
 
 除了上述两种方式，我们也可以通过`INSTALLDIR`和`DESTDIR`环境变量设置默认的安装目录。
 
-## target:set_prefixdir
+## set_prefixdir
 
 ### 设置安装前置子目录
 
@@ -2596,7 +2596,7 @@ installdir
   - myinc
 ```
 
-## target:add_installfiles
+## add_installfiles
 
 ### 添加安装文件
 
@@ -2634,7 +2634,7 @@ target("test")
 
 关于此接口的详细说明，见：https://github.com/xmake-io/xmake/issues/318
 
-## target:add_headerfiles
+## add_headerfiles
 
 ### 添加安装头文件
 
@@ -2661,13 +2661,13 @@ add_headerfiles("src/test.h", {install = false})
 
 上面两个头文件，在 vs 工程中都会展示出来，但是仅仅 foo.h 会被发布安装到系统。
 
-## target:set_configdir
+## set_configdir
 
 ### 设置模板配置文件的输出目录
 
 2.2.5版本新增接口，主要用于[add_configfiles](#targetadd_configfiles)接口设置的模板配置文件的输出目录。
 
-## target:set_configvar
+## set_configvar
 
 ### 设置模板配置变量
 
@@ -2713,7 +2713,7 @@ set_configvar("TEST", "C:\\hello", {escape = true})
 
 相关 issues 见：[#1872](https://github.com/xmake-io/xmake/issues/1872)
 
-## target:add_configfiles
+## add_configfiles
 
 ### 添加模板配置文件
 
@@ -3021,7 +3021,7 @@ ${define_custom FOO arg1 arg2}
 define CUSTOM_FOO foo
 ```
 
-## target:set_policy
+## set_policy
 
 ### 设置构建行为策略
 
@@ -3044,7 +3044,7 @@ target("test")
 
 完整的 policies 支持列表和使用说明，见：[构建策略](https://xmake.io/#/zh-cn/guide/build_policies)
 
-## target:set_runtimes
+## set_runtimes
 
 ### 设置编译目标依赖的运行时库
 
@@ -3090,7 +3090,7 @@ target("test")
 
 与此 api 相关的 issue：[#1071](https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681)
 
-## target:set_group
+## set_group
 
 ### 设置目标分组
 
@@ -3187,7 +3187,7 @@ $ xmake run -g bench*
 
 更多信息见：[#1913](https://github.com/xmake-io/xmake/issues/1913)
 
-## target:add_filegroups
+## add_filegroups
 
 ### 添加源文件分组
 
@@ -3244,7 +3244,7 @@ target("test")
 
 ![](https://xmake.io/assets/img/manual/filegroup3.png)
 
-## target:set_exceptions
+## set_exceptions
 
 ### 启用或者禁用异常
 
@@ -3256,12 +3256,12 @@ target("test")
 
 ```lua
     on_config(function (target)
-        if (target:has_tool("cxx", "cl")) then
-            target:add("cxflags", "/EHsc", {force = true})
-            target:add("defines", "_HAS_EXCEPTIONS=1", {force = true})
-        elseif(target:has_tool("cxx", "clang") or target:has_tool("cxx", "clang-cl")) then
-            target:add("cxflags", "-fexceptions", {force = true})
-            target:add("cxflags", "-fcxx-exceptions", {force = true})
+        if (has_tool("cxx", "cl")) then
+            add("cxflags", "/EHsc", {force = true})
+            add("defines", "_HAS_EXCEPTIONS=1", {force = true})
+        elseif(has_tool("cxx", "clang") or has_tool("cxx", "clang-cl")) then
+            add("cxflags", "-fexceptions", {force = true})
+            add("cxflags", "-fcxx-exceptions", {force = true})
         end
     end)
 ```
@@ -3294,7 +3294,7 @@ set_exceptions("no-cxx", "no-objc")
 
 Xmake 会在内部自动根据不同的编译器，去适配对应的 flags。
 
-## target:set_encodings
+## set_encodings
 
 ### 设置编码
 
@@ -3312,7 +3312,7 @@ set_encodings("utf-8") -- msvc: /utf-8
 它等价于：
 
 ```lua
-set_encodings("source:utf-8", "target:utf-8")
+set_encodings("source:utf-8", "utf-8")
 ```
 
 并且，目前仅仅支持设置成 utf-8 编码，将来会不断扩展。
@@ -3334,10 +3334,10 @@ set_encodings("source:utf-8")
 
 ```lua
 -- gcc/clang: -fexec-charset=UTF-8, msvc: -target-charset=utf-8
-set_encodings("target:utf-8")
+set_encodings("utf-8")
 ```
 
-## target:add_forceincludes
+## add_forceincludes
 
 ### 强制添加 includes
 
@@ -3369,7 +3369,7 @@ add_forceincludes("config.h", {sourcekinds = "cxx"})
 add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
 ```
 
-## target:add_extrafiles
+## add_extrafiles
 
 ### 添加额外的文件
 
@@ -3381,7 +3381,7 @@ add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
 add_extrafiles("assets/other.txt")
 ```
 
-## target:add_tests
+## add_tests
 
 ### 添加测试用例
 

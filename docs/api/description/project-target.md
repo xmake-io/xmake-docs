@@ -36,7 +36,7 @@ target("test")
 And we can call `target("demo")` repeatedly to enter the target scope for modifying it's configuration.
 
 ```lua
--- defines target: demo and enter it's scope to set configuration
+-- defines  demo and enter it's scope to set configuration
 target("demo")
     set_kind("binary")
     add_files("src/demo.c")
@@ -103,7 +103,7 @@ target("test2")
     ...
 ```
 
-## target:set_kind
+## set_kind
 
 ### Set target kind
 
@@ -216,7 +216,7 @@ target("foo")
 ```
 
 For more details, please see: [#1747](https://github.com/xmake-io/xmake/issues/1747)
-## target:set_strip
+## set_strip
 
 ### Strip target symbols
 
@@ -238,13 +238,13 @@ target("xxxx")
 This api does not have to be used after the target. If no target is specified, it will be set to global mode. .
 </p>
 
-## target:set_enabled
+## set_enabled
 
 ### Enable or disable target
 
 If `set_enabled(false)` is set, the corresponding target will be directly disabled, including target loading and information acquisition, while [set_default](#targetset_default) is just set to not compile by default, but the target can still get related information. , the default will also be loaded.
 
-## target:set_default
+## set_default
 
 ### Mark as default target
 
@@ -289,7 +289,7 @@ $ xmake build [-a|--all]
 $ xmake install [-a|--all]
 ```
 
-## target:set_options
+## set_options
 
 ### Set configuration options
 
@@ -311,7 +311,7 @@ target("test")
 Some settings defined in [option](#option) will affect this `target` target only after calling `set_options` for the association to take effect, such as macro definitions, link libraries, compile options, etc.
 :::
 
-## target:set_symbols
+## set_symbols
 
 ### Set symbol info
 
@@ -377,7 +377,7 @@ set_symbols("debug", "edit")
 
 It will switch from the default `-Zi -Pdxxx.pdb` to `-ZI -Pdxxx.pdb` compilation option, enable `Edit and Continue` debugging symbol format information, of course, this will not affect the processing of gcc/clang, so it is Fully compatible.
 
-## target:set_basename
+## set_basename
 
 ### Set the base name of target file
 
@@ -409,7 +409,7 @@ If you want to further customize the directory name of the target file, refer to
 
 Or implement more advanced logic by writing custom scripts, see: [after_build](#targetafter_build) and [os.mv](https://xmake.io/#/manual/builtin_modules?id=osmv).
 
-## target:set_filename
+## set_filename
 
 ### Set the full name of target file
 
@@ -417,7 +417,7 @@ The difference between it and [set_basename](#targetset_basename) is that [set_b
 
 The modification of filename is to modify the entire target file name, including the prefix and suffix. For example, you can directly change `libtest.a` to `test.dll`, which is not available for [set_basename](#targetset_basename).
 
-## target:set_prefixname
+## set_prefixname
 
 ### Set the leading name of the target file
 
@@ -428,7 +428,7 @@ target("test")
      set_prefixname("")
 ```
 
-## target:set_suffixname
+## set_suffixname
 
 ### Set the postname of the target file
 
@@ -439,7 +439,7 @@ target("test")
      set_suffixname("-d")
 ```
 
-## target:set_extension
+## set_extension
 
 ### Set the extension of the target file
 
@@ -451,7 +451,7 @@ target("test")
      set_extension(".dll")
 ```
 
-## target:set_warnings
+## set_warnings
 
 ### Set compilation warning level
 
@@ -478,7 +478,7 @@ set_warnings("all", "error")
 
 If there is no target currently, calling this api will set it to global mode. .
 
-## target:set_optimize
+## set_optimize
 
 ### Set competition optimization level
 
@@ -502,7 +502,7 @@ E.g:
 set_optimize("fastest")
 ```
 
-## target:set_languages
+## set_languages
 
 ### Set source code language standards
 
@@ -562,7 +562,7 @@ The user does not need to make any additional changes.
 
 However, the latest msvc compilation already supports the c11/c17 standard, and xmake will not do additional special processing.
 
-## target:set_fpmodels
+## set_fpmodels
 
 ### Set float-point compilation mode
 
@@ -581,7 +581,7 @@ set_fpmodels("precise") - default
 
 For details about this, see: [https://github.com/xmake-io/xmake/issues/981](https://github.com/xmake-io/xmake/issues/981)
 
-## target:set_targetdir
+## set_targetdir
 
 ### Set output directories for target files
 
@@ -615,7 +615,7 @@ target("test")
     set_targetdir("$(builddir)/out", { bindir = "bin", libdir = "lib" })
 ```
 
-## target:set_objectdir
+## set_objectdir
 
 ### Set output directories for object files
 
@@ -626,7 +626,7 @@ target("test")
     set_objectdir("$(buildir)/.objs")
 ```
 
-## target:set_dependir
+## set_dependir
 
 ### Set output directories for dependent files
 
@@ -637,7 +637,7 @@ target("test")
     set_dependir("$(buildir)/.deps")
 ```
 
-## target:add_imports
+## add_imports
 
 ### Add imports modules for the custom script
 
@@ -682,7 +682,7 @@ target("test")
     end)
 ```
 
-## target:add_rules
+## add_rules
 
 ### Add custom compilation rule to target
 
@@ -693,7 +693,7 @@ We can extend the build support for other files by pre-setting the file suffixes
 rule("markdown")
     set_extensions(".md", ".markdown")
     on_build(function (target, sourcefile)
-        os.cp(sourcefile, path.join(target:targetdir(), path.basename(sourcefile) .. ".html"))
+        os.cp(sourcefile, path.join(targetdir(), path.basename(sourcefile) .. ".html"))
     end)
 
 target("test")
@@ -712,7 +712,7 @@ We can send arguments to rule in add_rules:
 ```lua
 rule("my_rule")
     on_load(function (target)
-        local my_arg = target:extraconf("rules", "my_rule", "my_arg") -- "my arg"
+        local my_arg = extraconf("rules", "my_rule", "my_arg") -- "my arg"
     end)
 
 target("test")
@@ -721,7 +721,7 @@ target("test")
 
 We can also specify the application of local files to the rules, see: [add_files](#targetadd_files).
 
-## target:on_load
+## on_load
 
 ### Run custom load target configuration script
 
@@ -730,15 +730,15 @@ This script will be executed when the target is initialized and loaded, and some
 ```lua
 target("test")
     on_load(function (target)
-        target:add("defines", "DEBUG", "TEST=\"hello\"")
-        target:add("linkdirs", "/usr/lib", "/usr/local/lib")
-        target:add({includedirs = "/usr/include", "links" = "pthread"})
+        add("defines", "DEBUG", "TEST=\"hello\"")
+        add("linkdirs", "/usr/lib", "/usr/local/lib")
+        add({includedirs = "/usr/include", "links" = "pthread"})
     end)
 ```
 
-You can dynamically add various target attributes in `on_load` via `target:set`, `target:add`.
+You can dynamically add various target attributes in `on_load` via `set`, `add`.
 
-## target:on_config
+## on_config
 
 ### custom configuration script
 
@@ -752,7 +752,7 @@ In addition, its execution time is earlier than before_build, and the approximat
 on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 ```
 
-## target:on_link
+## on_link
 
 ### Run custom link target script
 
@@ -765,7 +765,7 @@ target("test")
     end)
 ```
 
-## target:on_build
+## on_build
 
 ### Run custom build target script
 
@@ -806,7 +806,7 @@ target("test")
 Once the build process is set for this target target, the default build process for xmake will no longer be executed.
 :::
 
-## target:on_build_file
+## on_build_file
 
 ### Run custom build single file script
 
@@ -822,7 +822,7 @@ target("test")
 
 If you don't want to rewrite the built-in build script, just add some of your own processing before and after compiling. Its utility: [target.before_build_file](#targetbefore_build_file) and [target.after_build_file](#targetafter_build_file) will be more convenient and you don't need to call it. Opt.origin`.
 
-## target:on_build_files
+## on_build_files
 
 ### Run custom build files script
 
@@ -845,7 +845,7 @@ Where sourcebatch describes the same source files of the same type:
 * `sourcebatch.objectfiles()`: get the list of object files
 * `sourcebatch.dependfiles()`: Get the list of corresponding dependent files, compile dependency information in the stored source file, for example: xxx.d
 
-## target:on_clean
+## on_clean
 
 ### Run custom clean files script
 
@@ -858,7 +858,7 @@ target("test")
     on_clean(function (target)
 
         -- Delete only target files
-        os.rm(target:targetfile())
+        os.rm(targetfile())
     end)
 ```
 
@@ -866,18 +866,18 @@ Some target interfaces are described as follows:
 
 | target interface                    | description                                  |
 | ----------------------------------- | -------------------------------------------- |
-| target:name()                       | Get the target name                          |
-| target:targetfile()                 | Get the target file path                     |
-| target:get("kind")                  | Get the build type of the target             |
-| target:get("defines")               | Get the macro definition of the target       |
-| target:get("xxx")                   | Other target information set by the `set_/add_` interface can be obtained through this interface |
-| target:add("links", "pthread")      | Add target settings                          |
-| target:set("links", "pthread", "z") | Override target settings                     |
-| target:deps()                       | Get all dependent targets of the target      |
-| target:dep("depname")               | Get the specified dependency target          |
-| target:sourcebatches()              | Get a list of all source files for the target |
+| name()                       | Get the target name                          |
+| targetfile()                 | Get the target file path                     |
+| get("kind")                  | Get the build type of the target             |
+| get("defines")               | Get the macro definition of the target       |
+| get("xxx")                   | Other target information set by the `set_/add_` interface can be obtained through this interface |
+| add("links", "pthread")      | Add target settings                          |
+| set("links", "pthread", "z") | Override target settings                     |
+| deps()                       | Get all dependent targets of the target      |
+| dep("depname")               | Get the specified dependency target          |
+| sourcebatches()              | Get a list of all source files for the target |
 
-## target:on_package
+## on_package
 
 ### Run custom package target script
 
@@ -911,7 +911,7 @@ target("demo")
     end)
 ```
 
-## target:on_install
+## on_install
 
 ### Run custom install target file script
 
@@ -930,7 +930,7 @@ target("test")
     end)
 ```
 
-## target:on_uninstall
+## on_uninstall
 
 ### Run custom uninstall target file script
 
@@ -943,7 +943,7 @@ target("test")
     end)
 ```
 
-## target:on_run
+## on_run
 
 ### Run custom run target script
 
@@ -962,7 +962,7 @@ target("test")
     end)
 ```
 
-## target:before_link
+## before_link
 
 ### Run custom script before linking target
 
@@ -975,7 +975,7 @@ target("test")
     end)
 ```
 
-## target:before_build
+## before_build
 
 ### Run custom script before building target
 
@@ -988,7 +988,7 @@ target("test")
     end)
 ```
 
-## target:before_build_file
+## before_build_file
 
 ### Run custom script before building single file
 
@@ -1002,7 +1002,7 @@ target("test")
     end)
 ```
 
-## target:before_build_files
+## before_build_files
 
 ### Run custom script before building files
 
@@ -1017,7 +1017,7 @@ target("test")
 ```
 
 
-## target:before_clean
+## before_clean
 
 ### Run custom script before cleaning target
 
@@ -1030,7 +1030,7 @@ target("test")
     end)
 ```
 
-## target:before_package
+## before_package
 
 ### Run custom script before packaging target
 
@@ -1043,7 +1043,7 @@ target("test")
     end)
 ```
 
-## target:before_install
+## before_install
 
 ### Run custom script before installing target
 
@@ -1056,7 +1056,7 @@ target("test")
     end)
 ```
 
-## target:before_uninstall
+## before_uninstall
 
 ### Run custom script before uninstalling target
 
@@ -1069,7 +1069,7 @@ target("test")
     end)
 ```
 
-## target:before_run
+## before_run
 
 ### Run custom script before running target
 
@@ -1082,7 +1082,7 @@ target("test")
     end)
 ```
 
-## target:after_link
+## after_link
 
 ### Run custom script after linking target
 
@@ -1095,7 +1095,7 @@ target("test")
     end)
 ```
 
-## target:after_build
+## after_build
 
 ### Run custom script after building target
 
@@ -1106,11 +1106,11 @@ For example, for jailbreak development of ios, after the program is built, you n
 ```lua
 target("test")
     after_build(function (target)
-        os.run("ldid -S %s", target:targetfile())
+        os.run("ldid -S %s", targetfile())
     end)
 ```
 
-## target:after_build_file
+## after_build_file
 
 ### Run custom script after building single file
 
@@ -1124,7 +1124,7 @@ target("test")
     end)
 ```
 
-## target:after_build_files
+## after_build_files
 
 ### Run custom script after building files
 
@@ -1138,7 +1138,7 @@ target("test")
     end)
 ```
 
-## target:after_clean
+## after_clean
 
 ### Run custom script after cleaning target
 
@@ -1154,7 +1154,7 @@ target("test")
     end)
 ```
 
-## target:after_package
+## after_package
 
 ### Run custom script after packaging target
 
@@ -1167,7 +1167,7 @@ target("test")
     end)
 ```
 
-## target:after_install
+## after_install
 
 ### Run custom script after installing target
 
@@ -1179,7 +1179,7 @@ target("test")
         print("")
     end)
 ```
-## target:after_uninstall
+## after_uninstall
 
 ### Run custom script after uninstalling target
 
@@ -1192,7 +1192,7 @@ target("test")
     end)
 ```
 
-## target:after_run
+## after_run
 
 ### Run custom script after running target
 
@@ -1205,7 +1205,7 @@ target("test")
     end)
 ```
 
-## target:set_pcheader
+## set_pcheader
 
 ### Set pre-compiled c header file
 
@@ -1218,7 +1218,7 @@ target("test")
     set_pcheader("header.h")
 ```
 
-## target:set_pcxxheader
+## set_pcxxheader
 
 ### Set pre-compiled c++ header file
 
@@ -1231,7 +1231,7 @@ target("test")
     set_pcxxheader("header.h")
 ```
 
-## target:set_pmheader
+## set_pmheader
 
 ### Set pre-compiled objc header file
 
@@ -1244,7 +1244,7 @@ target("test")
     set_pmheader("header.h")
 ```
 
-## target:set_pmxxheader
+## set_pmxxheader
 
 ### Set pre-compiled objc++ header file
 
@@ -1257,7 +1257,7 @@ target("test")
     set_pmxxheader("header.h")
 ```
 
-## target:add_deps
+## add_deps
 
 ### Add target dependencies
 
@@ -1321,7 +1321,7 @@ Interface | interface settings, only inherited by the dependent child target, th
 
 For a detailed description of this, you can look at it: https://github.com/xmake-io/xmake/issues/368
 
-## target:add_links
+## add_links
 
 ### Add link libraries
 
@@ -1339,7 +1339,7 @@ target("demo")
 
 Starting with version 2.8.1, add_links also supports adding the full path to the library, e.g. `add_links("/tmp/libfoo.a")`, explicitly specifying the library file.
 
-## target:add_syslinks
+## add_syslinks
 
 ### Add system link libraries
 
@@ -1356,7 +1356,7 @@ target("demo")
 
 The above configuration, even if `add_syslinks` is set in advance, the final link order is still: `-la -lb -lpthread -lm -ldl`
 
-## target:add_linkorders
+## add_linkorders
 
 ### Adjust link order
 
@@ -1460,7 +1460,7 @@ target("demo")
 
 The complete project is at: [linkorders example](https://github.com/xmake-io/xmake/blob/master/tests/projects/c%2B%2B/linkorders/xmake.lua)
 
-## target:add_linkgroups
+## add_linkgroups
 
 ### Add link group
 
@@ -1528,7 +1528,7 @@ add_linkgroups("a", "b", {static = true})
 
 It will generate the corresponding `-Wl,-Bstatic -la -lb -Wl,-Bdynamic` linkage options.
 
-## target:add_files
+## add_files
 
 ### Add source files
 
@@ -1616,7 +1616,7 @@ And after the 2.1.9 version, you can use the force parameter to force the automa
 add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 ```
 
-## target:remove_files
+## remove_files
 
 ### Remove source files
 
@@ -1653,7 +1653,7 @@ If you want to be compatible with the previous version, you can solve it through
 remove_files = remove_files or del_files
 ```
 
-## target:remove_headerfiles
+## remove_headerfiles
 
 ### Remove the specified file from the preceding list of header files
 
@@ -1661,7 +1661,7 @@ Mainly used to remove files from the list of header files set by `add_headerfile
 
 This interface is only provided in v2.6.3 version.
 
-## target:add_linkdirs
+## add_linkdirs
 
 ### Add link search directories
 
@@ -1680,7 +1680,7 @@ Generally, it is used together with [add_links](#targetadd_links). Of course, it
 If you don't want to write to death in the project, you can set it by: `xmake f --linkdirs=xxx` or `xmake f --ldflags="-L/xxx"`, of course, this manually set directory search priority. higher.
 </p>
 
-## target:add_rpathdirs
+## add_rpathdirs
 
 ### Add load search directories for dynamic libraries
 
@@ -1732,7 +1732,7 @@ For relevant background details, see: [#5109](https://github.com/xmake-io/xmake/
 
 After 2.9.4, we added `add_rpathdirs("xxx", {install_only = true})`, which can configure the installed rpath path separately.
 
-## target:add_includedirs
+## add_includedirs
 
 ### Add include search directories
 
@@ -1767,7 +1767,7 @@ The header file does not support pattern matching by default, and it is not reco
 :::
 If the user insists on doing this, it can be achieved by `add_includedirs(os.dirs(path.join(os.scriptdir(), "xxx/**")))`.
 
-## target:add_sysincludedirs
+## add_sysincludedirs
 
 ### Add system header file search directory
 
@@ -1801,7 +1801,7 @@ In the case of the msvc compiler, it will be:
 In addition, the dependency package introduced with `add_requires()` will also use `-isystem` as the external system header file by default.
 :::
 
-## target:add_defines
+## add_defines
 
 ### Add macro definition
 
@@ -1815,7 +1815,7 @@ Equivalent to setting the compile option:
 -DDEBUG -DTEST=0 -DTEST2=\"hello\"
 ```
 
-## target:add_undefines
+## add_undefines
 
 ### Add macro undefinition
 
@@ -1827,7 +1827,7 @@ Equivalent to setting the compile option: `-UDEBUG`
 
 In the code is equivalent to: `#undef DEBUG`
 
-## target:add_cflags
+## add_cflags
 
 ### Add c compilation flags
 
@@ -1848,13 +1848,13 @@ After version 2.1.9, the force parameter can be used to force the automatic dete
 add_cflags("-g", "-O2", {force = true})
 ```
 
-## target:add_cxflags
+## add_cxflags
 
 ### Add c/c++ compilation flags
 
 Add compilation options to c/c++ code at the same time
 
-## target:add_cxxflags
+## add_cxxflags
 
 ### Add c++ compilation flags
 
@@ -1884,7 +1884,7 @@ Not just for compile flags, but also for link flags such as add_ldflags, which a
 :::
 if they want to target the C or C++ linker, such as "clang" for C and "clangxx" for C++.
 
-## target:add_mflags
+## add_mflags
 
 ### Add objc compilation flags
 
@@ -1900,7 +1900,7 @@ After version 2.1.9, the force parameter can be used to force the automatic dete
 add_mflags("-g", "-O2", {force = true})
 ```
 
-## target:add_mxflags
+## add_mxflags
 
 ### Add objc/objc++ compilation flags
 
@@ -1910,7 +1910,7 @@ Also add compile options to objc/objc++ code
 add_mxflAgs("-framework CoreFoundation")
 ```
 
-## target:add_mxxflags
+## add_mxxflags
 
 ### Add objc++ compilation flags
 
@@ -1920,7 +1920,7 @@ Add compilation options only to objc++ code
 add_mxxflags("-framework CoreFoundation")
 ```
 
-## target:add_scflags
+## add_scflags
 
 ### Add swift compilation flags
 
@@ -1930,7 +1930,7 @@ Add compilation options to swift code
 add_scflags("xxx")
 ```
 
-## target:add_asflags
+## add_asflags
 
 ### Add asm compilation flags
 
@@ -1940,7 +1940,7 @@ Add compilation options to assembly code
 add_asflags("xxx")
 ```
 
-## target:add_gcflags
+## add_gcflags
 
 ### Add go compilation flags
 
@@ -1950,7 +1950,7 @@ Add compile options to golang code
 add_gcflags("xxx")
 ```
 
-## target:add_dcflags
+## add_dcflags
 
 ### Add dlang compilation flags
 
@@ -1960,7 +1960,7 @@ Add compilation options to dlang code
 add_dcflags("xxx")
 ```
 
-## target:add_rcflags
+## add_rcflags
 
 ### Add rust compilation flags
 
@@ -1970,7 +1970,7 @@ Add compilation options to the rust code
 add_rcflags("xxx")
 ```
 
-## target:add_fcflags
+## add_fcflags
 
 ### Add fortran compilation flags
 
@@ -1980,7 +1980,7 @@ Add compilation options to the fortran code
 add_fcflags("xxx")
 ```
 
-## target:add_zcflags
+## add_zcflags
 
 ### Add zig compilation flags
 
@@ -1990,7 +1990,7 @@ Add compilation options to the zig code
 add_zcflags("xxx")
 ```
 
-## target:add_cuflags
+## add_cuflags
 
 ### Add cuda compilation flags
 
@@ -2000,7 +2000,7 @@ Add compilation options to cuda code
 add_cuflags("-gencode arch=compute_30,code=sm_30")
 ```
 
-## target:add_culdflags
+## add_culdflags
 
 ### Add cuda device link flags
 
@@ -2013,7 +2013,7 @@ For a description of device-link, please refer to: https://devblogs.nvidia.com/s
 add_culdflags("-gencode arch=compute_30,code=sm_30")
 ```
 
-## target:add_cugencodes
+## add_cugencodes
 
 ### Add gencode settings for cuda devices
 
@@ -2060,7 +2060,7 @@ Equivalent to:
 add_cugencodes("sm_60")
 ```
 
-## target:add_ldflags
+## add_ldflags
 
 ### Add static library link flags
 
@@ -2077,7 +2077,7 @@ While adding flags, argument with space is not allowed defaultly, use expand = f
 add_ldflags({"-L/my lib"}, {expand = false}) -- OK
 ```
 
-## target:add_arflags
+## add_arflags
 
 ### Add archive library flags
 
@@ -2086,7 +2086,7 @@ Affect the generation of static libraries
 ```lua
 add_arflags("xxx")
 ```
-## target:add_shflags
+## add_shflags
 
 ### Add dynamic library link flags
 
@@ -2096,13 +2096,13 @@ Affect the generation of dynamic libraries
 add_shflags("xxx")
 ```
 
-## target:add_options
+## add_options
 
 ### Add option dependencies
 
 This interface is similar to [set_options](#targetset_options), the only difference is that this is an append option, and [set_options](#targetset_options) overrides the previous settings each time.
 
-## target:add_packages
+## add_packages
 
 ### Add package dependencies
 
@@ -2148,13 +2148,13 @@ target("test")
     add_packages("lua", {links = {}})
 ```
 
-## target:add_languages
+## add_languages
 
 ### Add language standards
 
 Similar to [set_languages](#targetset_languages), the only difference is that this interface will not overwrite the previous settings, but append settings.
 
-## target:add_vectorexts
+## add_vectorexts
 
 ### Add vector extensions
 
@@ -2178,7 +2178,7 @@ In 2.8.2, we added `all` configuration item has been added which can be used to 
 add_vectorexts("all")
 ```
 
-## target:add_frameworks
+## add_frameworks
 
 ### Add frameworks
 
@@ -2199,7 +2199,7 @@ target("test")
 
 If it is not for both platforms, these settings will be ignored.
 
-## target:add_frameworkdirs
+## add_frameworkdirs
 
 ### Add framework search directories
 
@@ -2211,7 +2211,7 @@ target("test")
     add_frameworkdirs("/tmp/frameworkdir", "/tmp/frameworkdir2")
 ```
 
-## target:set_toolset
+## set_toolset
 
 ### Set toolset
 
@@ -2271,7 +2271,7 @@ For some compiler file names that are irregular, causing xmake to fail to recogn
 set_toolset("cc", "gcc@$(projectdir)/tools/bin/Mipscc.exe")
 ```
 
-## target:set_toolchains
+## set_toolchains
 
 ### Set up the toolchain
 
@@ -2388,7 +2388,7 @@ The above effect is similar to `set_toolchains("msvc", {vs = "2015", arch = "x86
 
 Generally, we recommend using `set_arch` to switch the architecture of the entire target.
 
-## target:set_plat
+## set_plat
 
 ### Set the compilation platform for the specified target
 
@@ -2417,13 +2417,13 @@ target("test")
      add_files("src/test/*.c")
 ```
 
-## target:set_arch
+## set_arch
 
 ### Set the compilation architecture of the specified target
 
 For details, see: [set_plat](#targetset_plat)
 
-## target:set_values
+## set_values
 
 ### Set custom configuration values
 
@@ -2434,7 +2434,7 @@ Generally used to pass configuration parameters to scripts in custom rules, for 
 rule("markdown")
     on_build_file(function (target, sourcefile)
         -- compile .markdown with flags
-        local flags = target:values("markdown.flags")
+        local flags = values("markdown.flags")
         if flags then
             -- ..
         end
@@ -2446,7 +2446,7 @@ target("test")
 ```
 
 In the above code example, it can be seen that when the target applies the markdown rule, some flag values are set by set_values and provided to the markdown rule for processing.
-In the rule script, you can get the extended flag value set in the target by `target:values("markdown.flags")`.
+In the rule script, you can get the extended flag value set in the target by `values("markdown.flags")`.
 
 :::tip NOTE
 The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](https://xmake.io/#/manual/custom_rule?id=built-in-rules)
@@ -2472,13 +2472,13 @@ The following is a list of some built-in extended configuration items currently 
 | wdk.sign.certfile           | Set wdk code signing certificate file                  |
 | wdk.sign.thumbprint         | Set wdk code signing fingerprint                       |
 
-## target:add_values
+## add_values
 
 ### Add custom configuration values
 
-Usage is similar to [target:set_values](#targetset_values), the difference is that this interface is an additional setting, and will not override the settings each time.
+Usage is similar to [set_values](#targetset_values), the difference is that this interface is an additional setting, and will not override the settings each time.
 
-## target:set_rundir
+## set_rundir
 
 ### Set the running directory
 
@@ -2495,7 +2495,7 @@ target("test")
      set_rundir("$(projectdir)/xxx")
 ```
 
-## target:set_runargs
+## set_runargs
 
 ### Set the list of run parameters
 
@@ -2505,7 +2505,7 @@ target("test")
 set_runargs("-x", "--arg1=val")
 ```
 
-## target:add_runenvs
+## add_runenvs
 
 ### Add runtime environment variables
 
@@ -2521,7 +2521,7 @@ target("test")
     add_runenvs("LD_LIBRARY_PATH", "/tmp/lib", "xxx/lib")
 ```
 
-## target:set_runenv
+## set_runenv
 
 ### Set the runtime environment variable
 
@@ -2537,14 +2537,14 @@ target("test")
     set_runenv("NAME", "value")
 ```
 
-## target:set_installdir
+## set_installdir
 
 ### Set the installation directory
 
 By default, `xmake install` will be installed to the system `/usr/local` directory. We can specify other installation directories except `xmake install -o /usr/local`.
 You can also set a different installation directory for the target in xmake.lua instead of the default directory.
 
-## target:set_prefixdir
+## set_prefixdir
 
 ### Set the installation prefix subdirectory
 
@@ -2602,7 +2602,7 @@ installdir
   - myinc
 ```
 
-## target:add_installfiles
+## add_installfiles
 
 ### Add installation files
 
@@ -2640,7 +2640,7 @@ Of course, users can also use the [set_installdir](#targetset_installdir) interf
 
 For a detailed description of this interface, see: https://github.com/xmake-io/xmake/issues/318
 
-## target:add_headerfiles
+## add_headerfiles
 
 ### Add header files
 
@@ -2668,13 +2668,13 @@ add_headerfiles("src/test.h", {install = false})
 
 The above two header files will be displayed in the vs project, but only foo.h will be distributed and installed on the system.
 
-## target:set_configdir
+## set_configdir
 
 ### Set the output directory of configuration files
 
 Version 2.2.5 adds a new interface, mainly used for the output directory of the template configuration file set by the [add_configfiles](#targetadd_configfiles) interface.
 
-## target:set_configvar
+## set_configvar
 
 ### Set template configuration variables
 
@@ -2720,7 +2720,7 @@ It will be automatically escaped into `#define TEST "C:\\hello"`, if escaping is
 
 For related issues, see: [#1872](https://github.com/xmake-io/xmake/issues/1872)
 
-## target:add_configfiles
+## add_configfiles
 
 ### Add template configuration files
 
@@ -3028,7 +3028,7 @@ After running `xmake config`, the following configuration will be automatically 
 define CUSTOM_FOO foo
 ```
 
-## target:set_policy
+## set_policy
 
 ### Set build policy
 
@@ -3051,7 +3051,7 @@ target ("test")
 
 For a complete list of policies support and instructions, see: [build policies](https://xmake.io/#/guide/build_policies)
 
-## target:set_runtimes
+## set_runtimes
 
 ### Set the runtime library of the compilation target
 
@@ -3097,7 +3097,7 @@ We can also use `xmake f --vs_runtime='MD'` to switch it globally through parame
 
 Issues related to this api: [#1071](https://github.com/xmake-io/xmake/issues/1071#issuecomment-750817681)
 
-## target:set_group
+## set_group
 
 ### Set target group
 
@@ -3192,7 +3192,7 @@ $ xmake run -g bench*
 
 For more information: [#1913](https://github.com/xmake-io/xmake/issues/1913)
 
-## target:add_filegroups
+## add_filegroups
 
 ### Add Source file groups
 
@@ -3249,7 +3249,7 @@ target("test")
 
 ![](https://xmake.io/assets/img/manual/filegroup3.png)
 
-## target:set_exceptions
+## set_exceptions
 
 ### Enabling or disabling exceptions
 
@@ -3261,12 +3261,12 @@ For example
 
 ```lua
     on_config(function (target)
-        if (target:has_tool("cxx", "cl")) then
-            target:add("cxflags", "/EHsc", {force = true})
-            target:add("defines", "_HAS_EXCEPTIONS=1", {force = true})
-        elseif(target:has_tool("cxx", "clang") or target:has_tool("cxx", "clang-cl")) then
-            target:add("cxflags", "-fexceptions", {force = true})
-            target:add("cxflags", "-fcxx-exceptions", {force = true})
+        if (has_tool("cxx", "cl")) then
+            add("cxflags", "/EHsc", {force = true})
+            add("defines", "_HAS_EXCEPTIONS=1", {force = true})
+        elseif(has_tool("cxx", "clang") or has_tool("cxx", "clang-cl")) then
+            add("cxflags", "-fexceptions", {force = true})
+            add("cxflags", "-fcxx-exceptions", {force = true})
         end
     end)
 ```
@@ -3299,7 +3299,7 @@ set_exceptions("no-cxx", "no-objc")
 
 Xmake will automatically adapt the flags internally to the different compilers.
 
-## target:set_encodings
+## set_encodings
 
 ### Set encodings
 
@@ -3317,7 +3317,7 @@ set_encodings("utf-8") -- msvc: /utf-8
 It is equivalent to:
 
 ```lua
-set_encodings("source:utf-8", "target:utf-8")
+set_encodings("source:utf-8", "utf-8")
 ```
 
 And it only supports utf-8 encodings for now, but will be expanded in the future.
@@ -3339,10 +3339,10 @@ It usually refers to the runtime output encoding of the target executable.
 
 ```lua
 -- gcc/clang: -fexec-charset=UTF-8, msvc: -target-charset=utf-8
-set_encodings("target:utf-8")
+set_encodings("utf-8")
 ```
 
-## target:add_forceincludes
+## add_forceincludes
 
 ### forceincludes
 
@@ -3374,7 +3374,7 @@ If you want to match multiple source file types at the same time, that's also po
 add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
 ```
 
-## target:add_extrafiles
+## add_extrafiles
 
 ### Adding Extra Files
 
@@ -3386,7 +3386,7 @@ In the future, we may use this interface for more other things as well.
 add_extrafiles("assets/other.txt")
 ```
 
-## target:add_tests
+## add_tests
 
 ### Add test case
 
@@ -3467,7 +3467,7 @@ We can also execute `xmake test -vD` to view detailed test failure error message
 
 #### Run the specified test target
 
-We can also specify to run a test with a specified target:
+We can also specify to run a test with a specified 
 
 ```bash
 $ xmake test targetname/testname
