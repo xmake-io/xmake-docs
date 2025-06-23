@@ -332,5 +332,5 @@ $ xmake run -d hello
 
 - Continue with the guide. [Guide](/guide/getting-started.html)
 - Checkout the examples. [Examples](/examples/cpp/basic.html).
-- Checkout API reference. [API Reference](/api/description/specification.html)
+- Checkout API reference. [API Reference](/api/)
 
