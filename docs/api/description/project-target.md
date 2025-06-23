@@ -3206,7 +3206,7 @@ target("test")
     add_files("... /... /... /... /src/**.cpp")
 ```
 
-![](https://xmake.io/assets/imghttps://xmake.io/#/manual/filegroup1.png)
+![](https://xmake.io/assets/img/manual/filegroup1.png)
 
 Two main presentation modes are currently supported.
 
@@ -3224,7 +3224,7 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /"})
 ```
 
-![](https://xmake.io/assets/imghttps://xmake.io/#/manual/filegroup2.png)
+![](https://xmake.io/assets/img/manual/filegroup2.png)
 
 
 #### Set the group and specifies the file matching pattern
@@ -3247,7 +3247,7 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /", mode = "plain"})
 ```
 
-![](https://xmake.io/assets/imghttps://xmake.io/#/manual/filegroup3.png)
+![](https://xmake.io/assets/img/manual/filegroup3.png)
 
 ## target:set_exceptions
 
