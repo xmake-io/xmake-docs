@@ -81,6 +81,7 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
     { text: 'Global Interfaces', link: '/global-interfaces' },
     { text: 'Helper Interfaces', link: '/helper-interfaces' },
     { text: 'Project Targets', link: '/project-target' },
+    { text: 'Configuration Option', link: '/configuration-option' },
   ]
 }
 

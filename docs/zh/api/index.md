@@ -9,6 +9,7 @@ outline: deep
 - [全局接口](/zh/api/description/global-interfaces)
 - [辅助接口](/zh/api/description/helper-interfaces)
 - [工程目标](/zh/api/description/project-target)
+- [配置选项](/zh/api/description/configuration-option)
 
 
 ## 脚本域 API
