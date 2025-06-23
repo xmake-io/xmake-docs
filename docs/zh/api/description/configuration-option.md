@@ -149,7 +149,7 @@ option("test")
 
 效果图如下：
 
-<img src="https://xmake.io/assets/img/manual/option_set_values.png" width="60%" />
+<img src="assets/img/manual/option_set_values.png" width="60%" />
 
 ## set_default
 
@@ -313,7 +313,7 @@ option("test4")
 
 效果图如下：
 
-<img src="https://xmake.io/assets/img/manual/option_set_category.gif" width="60%" />
+<img src="assets/img/manual/option_set_category.gif" width="60%" />
 
 ## set_description
 
