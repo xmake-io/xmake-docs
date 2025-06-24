@@ -69,7 +69,15 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'What it Xmake？', link: 'what-is-xmake' },
-        { text: 'Getting Started', link: 'getting-started' }
+        { text: 'Getting Started', link: 'getting-started' },
+        {
+          text: 'Next Steps',
+          collapsed: false,
+          items: [
+            { text: 'API Reference', link: '../api/' },
+            { text: 'Examples', link: '../examples/cpp/basic' },
+          ]
+        }
       ]
     }
   ]
@@ -97,6 +105,15 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
     { text: 'Helper Interfaces', link: '/helper-interfaces' },
     { text: 'Project Targets', link: '/project-target' },
     { text: 'Configuration Option', link: '/configuration-option' },
+    {
+      text: 'Next Steps',
+      collapsed: false,
+      items: [
+        { text: 'Scripts API', link: '../scripts/target-instance' },
+        { text: 'Guide', link: '../../guide/what-is-xmake' },
+        { text: 'Examples', link: '../examples/cpp/basic' },
+      ]
+    }
   ]
 }
 
@@ -113,7 +130,16 @@ function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
         { text: 'os', link: '/builtin-modules/os' },
       ]
     },
-    { text: 'Native Modules', link: '/native-modules' }
+    { text: 'Native Modules', link: '/native-modules' },
+    {
+      text: 'Next Steps',
+      collapsed: false,
+      items: [
+        { text: 'Description API', link: '../description/specification' },
+        { text: 'Guide', link: '../../guide/what-is-xmake' },
+        { text: 'Examples', link: '../examples/cpp/basic' },
+      ]
+    }
   ]
 }
 
@@ -176,6 +202,14 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Pascal Programs', link: 'other-languages/pascal' },
         { text: 'Nim Programs', link: 'other-languages/nim' },
         { text: 'Verilog Programs', link: 'other-languages/verilog' },
+      ]
+    },
+    {
+      text: 'Next Steps',
+      collapsed: false,
+      items: [
+        { text: 'API Reference', link: '../api/' },
+        { text: 'Guide', link: '../guide/what-is-xmake' },
       ]
     }
   ]

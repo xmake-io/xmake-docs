@@ -57,6 +57,50 @@ export default defineAdditionalConfig({
   }
 })
 
+function searchOptions(): Partial<DefaultTheme.AlgoliaSearchOptions> {
+  return {
+    placeholder: '搜索文档',
+    translations: {
+      button: {
+        buttonText: '搜索文档',
+        buttonAriaLabel: '搜索文档'
+      },
+      modal: {
+        searchBox: {
+          resetButtonTitle: '清除查询条件',
+          resetButtonAriaLabel: '清除查询条件',
+          cancelButtonText: '取消',
+          cancelButtonAriaLabel: '取消'
+        },
+        startScreen: {
+          recentSearchesTitle: '搜索历史',
+          noRecentSearchesText: '没有搜索历史',
+          saveRecentSearchButtonTitle: '保存至搜索历史',
+          removeRecentSearchButtonTitle: '从搜索历史中移除',
+          favoriteSearchesTitle: '收藏',
+          removeFavoriteSearchButtonTitle: '从收藏中移除'
+        },
+        errorScreen: {
+          titleText: '无法获取结果',
+          helpText: '你可能需要检查你的网络连接'
+        },
+        footer: {
+          selectText: '选择',
+          navigateText: '切换',
+          closeText: '关闭',
+          searchByText: '搜索提供者'
+        },
+        noResultsScreen: {
+          noResultsText: '无法找到相关结果',
+          suggestedQueryText: '你可以尝试查询',
+          reportMissingResultsText: '你认为该查询应该有结果？',
+          reportMissingResultsLinkText: '点击反馈'
+        }
+      }
+    }
+  }
+}
+
 function nav(): DefaultTheme.NavItem[] {
   return [
     {
@@ -108,6 +152,14 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
         { text: '什么是 Xmake？', link: 'what-is-xmake' },
         { text: '快速开始', link: 'getting-started' }
       ]
+    },
+    {
+      text: '下一步',
+      collapsed: false,
+      items: [
+        { text: 'API 手册', link: '../api/' },
+        { text: '示例', link: '../examples/cpp/basic' },
+      ]
     }
   ]
 }
@@ -133,7 +185,16 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
     { text: '条件判断', link: '/conditions' },
     { text: '辅助接口', link: '/helper-interfaces' },
     { text: '工程目标', link: '/project-target' },
-    { text: '配置选项', link: '/configuration-option' }
+    { text: '配置选项', link: '/configuration-option' },
+    {
+      text: '下一步',
+      collapsed: false,
+      items: [
+        { text: '脚本域 API', link: '../scripts/target-instance' },
+        { text: '使用指南', link: '../../guide/what-is-xmake' },
+        { text: '示例', link: '../examples/cpp/basic' },
+      ]
+    }
   ]
 }
 
@@ -150,7 +211,16 @@ function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
         { text: 'os', link: '/builtin-modules/os' },
       ]
     },
-    { text: '原生模块', link: '/native-modules' }
+    { text: '原生模块', link: '/native-modules' },
+    {
+      text: '下一步',
+      collapsed: false,
+      items: [
+        { text: '描述域 API', link: '../description/specification' },
+        { text: '使用指南', link: '../../guide/what-is-xmake' },
+        { text: '示例', link: '../examples/cpp/basic' },
+      ]
+    }
   ]
 }
 
@@ -213,50 +283,15 @@ function examplesGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Pascal 程序', link: 'other-languages/pascal' },
         { text: 'Nim 程序', link: 'other-languages/nim' },
       ]
+    },
+    {
+      text: '下一步',
+      collapsed: false,
+      items: [
+        { text: 'API 手册', link: '../api/' },
+        { text: '使用指南', link: '../guide/what-is-xmake' },
+      ]
     }
   ]
 }
 
-function searchOptions(): Partial<DefaultTheme.AlgoliaSearchOptions> {
-  return {
-    placeholder: '搜索文档',
-    translations: {
-      button: {
-        buttonText: '搜索文档',
-        buttonAriaLabel: '搜索文档'
-      },
-      modal: {
-        searchBox: {
-          resetButtonTitle: '清除查询条件',
-          resetButtonAriaLabel: '清除查询条件',
-          cancelButtonText: '取消',
-          cancelButtonAriaLabel: '取消'
-        },
-        startScreen: {
-          recentSearchesTitle: '搜索历史',
-          noRecentSearchesText: '没有搜索历史',
-          saveRecentSearchButtonTitle: '保存至搜索历史',
-          removeRecentSearchButtonTitle: '从搜索历史中移除',
-          favoriteSearchesTitle: '收藏',
-          removeFavoriteSearchButtonTitle: '从收藏中移除'
-        },
-        errorScreen: {
-          titleText: '无法获取结果',
-          helpText: '你可能需要检查你的网络连接'
-        },
-        footer: {
-          selectText: '选择',
-          navigateText: '切换',
-          closeText: '关闭',
-          searchByText: '搜索提供者'
-        },
-        noResultsScreen: {
-          noResultsText: '无法找到相关结果',
-          suggestedQueryText: '你可以尝试查询',
-          reportMissingResultsText: '你认为该查询应该有结果？',
-          reportMissingResultsLinkText: '点击反馈'
-        }
-      }
-    }
-  }
-}
