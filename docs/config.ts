@@ -136,6 +136,8 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'core.base.option', link: '/extension-modules/core-base-option' },
+        { text: 'core.base.global', link: '/extension-modules/core-base-global' },
+        { text: 'core.project.config', link: '/extension-modules/core-project-config' },
       ]
     },
     { text: 'Native Modules', link: '/native-modules' },
