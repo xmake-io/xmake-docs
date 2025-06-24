@@ -25,7 +25,7 @@ end
 
 ```lua
 task("hello")
-    on_run(function ())
+    on_run(function ()
         import("core.base.option")
         print(option.get("info"))
     end)

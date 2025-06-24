@@ -139,6 +139,8 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'core.base.option', link: '/extension-modules/core-base-option' },
         { text: 'core.base.global', link: '/extension-modules/core-base-global' },
         { text: 'core.base.task', link: '/extension-modules/core-base-task' },
+        { text: 'core.base.json', link: '/extension-modules/core-base-json' },
+        { text: 'core.base.semver', link: '/extension-modules/core-base-semver' },
         { text: 'core.project.config', link: '/extension-modules/core-project-config' },
       ]
     },
