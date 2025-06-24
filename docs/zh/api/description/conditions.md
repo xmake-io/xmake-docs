@@ -109,7 +109,7 @@ end
 * linux
 * macosx
 
-你也可以通过[$(host)](/zh/api/description/builtin-variables/#var-host)内置变量或者[os.host](/zh/api/scripts/builtin-modules/os#os-host)接口，来进行获取
+你也可以通过[$(host)](/zh/api/description/builtin-variables#var-host)内置变量或者[os.host](/zh/api/scripts/builtin-modules/os#os-host)接口，来进行获取
 
 ## is_subhost
 

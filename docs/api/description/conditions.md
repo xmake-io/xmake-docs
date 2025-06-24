@@ -108,7 +108,7 @@ Support hosts:
 * linux
 * macosx
 
-We can also get it from [$(host)](/api/description/builtin-variables/#var-host) or [os.host](/api/scripts/builtin-modules/os#os-host).
+We can also get it from [$(host)](/api/description/builtin-variables#var-host) or [os.host](/api/scripts/builtin-modules/os#os-host).
 
 ## is_subhost
 
