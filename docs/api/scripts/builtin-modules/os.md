@@ -17,11 +17,11 @@ The behavior is similar to the `cp` command in the shell, supporting path wildca
 e.g:
 
 ```lua
-os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
-os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
+os.cp("$(scriptdir)/*.h", "$(builddir)/inc")
+os.cp("$(projectdir)/src/test/**.h", "$(builddir)/inc")
 ```
 
-The above code will copy all the header files in the current `xmake.lua` directory, the header files in the project source test directory to the `$(buildir)` output directory.
+The above code will copy all the header files in the current `xmake.lua` directory, the header files in the project source test directory to the `$(builddir)` output directory.
 
 Among them `$(scriptdir)`, `$(projectdir)` These variables are built-in variables of xmake.
 For details, see the related documentation of [built-in variables](/api/description/builtin-variables).
@@ -61,10 +61,10 @@ Similar to the use of [os.cp](#os-cp), it also supports multi-file move operatio
 
 ```lua
 -- Move multiple files to a temporary directory
-os.mv("$(buildir)/test1", "$(tmpdir)")
+os.mv("$(builddir)/test1", "$(tmpdir)")
 
 -- File movement does not support bulk operations, which is file renaming
-os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
+os.mv("$(builddir)/libtest.a", "$(builddir)/libdemo.a")
 ```
 
 ## os.rm
@@ -74,8 +74,8 @@ os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
 Support for recursive deletion of directories, bulk delete operations, and pattern matching and built-in variables, such as:
 
 ```lua
-os.rm("$(buildir)/inc/**.h")
-os.rm("$(buildir)/lib/")
+os.rm("$(builddir)/inc/**.h")
+os.rm("$(builddir)/lib/")
 ```
 
 ## os.trycp
@@ -150,7 +150,7 @@ If it is not a directory, it cannot be deleted.
 Support for batch creation and built-in variables, such as:
 
 ```lua
-os.mkdir("$(tmpdir)/test", "$(buildir)/inc")
+os.mkdir("$(tmpdir)/test", "$(builddir)/inc")
 ```
 
 ## os.isdir
@@ -172,7 +172,7 @@ end
 Return false if the file does not exist
 
 ```lua
-if os.isfile("$(buildir)/libxxx.a") then
+if os.isfile("$(builddir)/libxxx.a") then
     -- ...
 end
 ```
@@ -185,12 +185,12 @@ Return false if the file or directory does not exist
 
 ```lua
 -- Judging the existence of the directory
-if os.exists("$(buildir)") then
+if os.exists("$(builddir)") then
     -- ...
 end
 
 -- Judging the existence of the file
-if os.exists("$(buildir)/libxxx.a") then
+if os.exists("$(builddir)/libxxx.a") then
     -- ...
 end
 ```
@@ -203,7 +203,7 @@ Supports pattern matching in [add_files](#targetadd_files), supports recursive a
 
 ```lua
 -- Recursive traversal to get all subdirectories
-for _, dir in ipairs(os.dirs("$(buildir)/inc/**")) do
+for _, dir in ipairs(os.dirs("$(builddir)/inc/**")) do
     print(dir)
 end
 ```
@@ -216,7 +216,7 @@ Supports pattern matching in [add_files](#targetadd_files), supports recursive a
 
 ```lua
 -- Non-recursive traversal to get all child files
-for _, filepath in ipairs(os.files("$(buildir)/inc/*.h")) do
+for _, filepath in ipairs(os.files("$(builddir)/inc/*.h")) do
     print(filepath)
 end
 ```
@@ -229,7 +229,7 @@ Supports pattern matching in [add_files](#targetadd_files), supports recursive a
 
 ```lua
 -- Recursive traversal to get all child files and directories
-for _, filedir in ipairs(os.filedirs("$(buildir)/**")) do
+for _, filedir in ipairs(os.filedirs("$(builddir)/**")) do
     print(filedir)
 end
 ```
@@ -261,7 +261,7 @@ This interface supports parameter formatting and built-in variables such as:
 os.run("echo hello %s!", "xmake")
 
 -- List build directory files
-os.run("ls -l $(buildir)")
+os.run("ls -l $(builddir)")
 ```
 
 ::: tip WARN

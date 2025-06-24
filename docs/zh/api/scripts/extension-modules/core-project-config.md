@@ -60,11 +60,11 @@ end
 
 也就是获取`xmake f|config --mode=debug`的平台配置，相当于`config.get("mode")`。
 
-## config.buildir
+## config.builddir
 
 - 获取当前工程的输出目录配置
 
-也就是获取`xmake f|config -o /tmp/output`的平台配置，相当于`config.get("buildir")`。
+也就是获取`xmake f|config -o /tmp/output`的平台配置，相当于`config.get("builddir")`。
 
 ## config.directory
 
@@ -101,7 +101,7 @@ end
 ,   cxx = "xcrun -sdk macosx clang"
 ,   sc = "xcrun -sdk macosx swiftc"
 ,   mm = "xcrun -sdk macosx clang"
-,   buildir = "build"
+,   builddir = "build"
 ,   mxx = "xcrun -sdk macosx clang++"
 ,   ld = "xcrun -sdk macosx clang++"
 ,   mode = "release"

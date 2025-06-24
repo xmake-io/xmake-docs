@@ -613,7 +613,7 @@ target("test")
 
 ```lua
 target("test")
-    set_objectdir("$(buildir)/.objs")
+    set_objectdir("$(builddir)/.objs")
 ```
 
 ## set_dependir
@@ -624,7 +624,7 @@ target("test")
 
 ```lua
 target("test")
-    set_dependir("$(buildir)/.deps")
+    set_dependir("$(builddir)/.deps")
 ```
 
 ## add_imports
@@ -884,7 +884,7 @@ target("demo")
     set_kind("shared")
 
     -- 设置对象的输出目录，可选
-    set_objectdir("$(buildir)/.objs")
+    set_objectdir("$(builddir)/.objs")
 
     -- 每次编译完的libdemo.so的生成目录，设置为app/libs/armeabi
     set_targetdir("libs/armeabi")
@@ -1139,7 +1139,7 @@ target("test")
 ```lua
 target("test")
     after_clean(function (target)
-        os.rm("$(buildir)/otherfiles")
+        os.rm("$(builddir)/otherfiles")
     end)
 ```
 
@@ -1323,7 +1323,7 @@ target("demo")
     add_links("test")
 
     -- 添加链接搜索目录
-    add_linkdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
 ```
 
 2.8.1 版本开始，add_links 还支持添加库的完整路径，例如：`add_links("/tmp/libfoo.a")`，显式的指定库文件。
@@ -1340,7 +1340,7 @@ target("demo")
 add_syslinks("pthread", "m", "dl")
 target("demo")
     add_links("a", "b")
-    add_linkdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
 ```
 
 上面的配置，即使`add_syslinks`被优先提前设置了，但最后的链接顺序依然是：`-la -lb -lpthread -lm -ldl`
@@ -1658,7 +1658,7 @@ remove_files = remove_files or del_files
 
 ```lua
 target("test")
-    add_linkdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
 ```
 
 此接口相当于gcc的`-Lxxx`链接选项。
@@ -1684,8 +1684,8 @@ target("test")
 ```lua
 target("test")
     set_kind("binary")
-    add_linkdirs("$(buildir)/lib")
-    add_rpathdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
+    add_rpathdirs("$(builddir)/lib")
 ```
 
 只需要在链接的时候，在设置下rpath目录就好了，虽然也可以通过`add_ldflags("-Wl,-rpath=xxx")`达到相同的目的，但是这个接口更加通用。
@@ -1701,7 +1701,7 @@ target("test")
 ```lua
 target("test")
     set_kind("binary")
-    add_linkdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
     add_rpathdirs("@loader_path/lib")
 ```
 
@@ -1729,7 +1729,7 @@ target("test")
 
 ```lua
 target("test")
-    add_includedirs("$(buildir)/include")
+    add_includedirs("$(builddir)/include")
 ```
 
 当然也可以直接通过[add_cxflags](#add_cxflags)或者[add_mxflags](#add_mxflags)等接口来设置，也是可以的。
@@ -1740,7 +1740,7 @@ target("test")
 target("test")
     set_kind("static")
     add_includedirs("src/include") -- 仅对当前target生效
-    add_includedirs("$(buildir)/include", {public = true})，当前target和子target都会被设置
+    add_includedirs("$(builddir)/include", {public = true})，当前target和子target都会被设置
 
 target("demo")
     set_kind("binary")
@@ -2726,7 +2726,7 @@ set_configvar("TEST", "C:\\hello", {escape = true})
 target("test")
     set_kind("binary")
     add_files("src/*.c")
-    set_configdir("$(buildir)/config")
+    set_configdir("$(builddir)/config")
     add_configfiles("src/config.h.in")
 ```
 

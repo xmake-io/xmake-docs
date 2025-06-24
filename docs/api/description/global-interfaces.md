@@ -201,7 +201,7 @@ We can only be configured by `$xmake f --name=value`. If we want to write a defa
 
 ```lua
 set_config("name", "value")
-set_config("buildir", "other/buildir")
+set_config("builddir", "other/builddir")
 set_config("cc", "gcc")
 set_config("ld", "g++")
 ```

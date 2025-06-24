@@ -61,11 +61,11 @@ That is to get the platform configuration of `xmake f|config --plat=iphoneos`, w
 
 That is to get the platform configuration of `xmake f|config --mode=debug`, which is equivalent to `config.get("mode")`.
 
-## config.buildir
+## config.builddir
 
 - Get the output directory configuration of the current project
 
-That is to get the platform configuration of `xmake f|config -o /tmp/output`, which is equivalent to `config.get("buildir")`.
+That is to get the platform configuration of `xmake f|config -o /tmp/output`, which is equivalent to `config.get("builddir")`.
 
 ## config.directory
 
@@ -102,7 +102,7 @@ The output is for example:
 ,   cxx = "xcrun -sdk macosx clang"
 ,   sc = "xcrun -sdk macosx swiftc"
 ,   mm = "xcrun -sdk macosx clang"
-,   buildir = "build"
+,   builddir = "build"
 ,   mxx = "xcrun -sdk macosx clang++"
 ,   ld = "xcrun -sdk macosx clang++"
 ,   mode = "release"

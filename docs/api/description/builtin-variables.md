@@ -3,10 +3,10 @@
 Xmake provides the syntax of `$(varname)` to support the acquisition of built-in variables, for example:
 
 ```lua
-add_cxflags("-I$(buildir)")
+add_cxflags("-I$(builddir)")
 ```
 
-It will convert the built-in `buildir` variable to the actual build output directory when compiling: `-I./build`
+It will convert the built-in `builddir` variable to the actual build output directory when compiling: `-I./build`
 
 General built-in variables can be used to quickly get and splicing variable strings when passing arguments, for example:
 
@@ -17,7 +17,7 @@ target("test")
     add_files("$(projectdir)/src/*.c")
 
     -- Add a header file search path under the build directory
-    add_includedirs("$(buildir)/inc")
+    add_includedirs("$(builddir)/inc")
 ```
 
 It can also be used in the module interface of a custom script, for example:
@@ -26,7 +26,7 @@ It can also be used in the module interface of a custom script, for example:
 target("test")
     on_run(function (target)
         -- Copy the header file in the current script directory to the output directory
-        os.cp("$(scriptdir)/xxx.h", "$(buildir)/inc")
+        os.cp("$(scriptdir)/xxx.h", "$(builddir)/inc")
     end)
 ```
 
@@ -71,7 +71,7 @@ Generally used to temporarily store some non-permanent files.
 
 The default is the project root directory when the `xmake` command is executed. Of course, if the directory is changed by [os.cd](/api/scripts/builtin-modules/os#os-cd), this value will also change.
 
-## var.$(buildir)
+## var.$(builddir)
 
 - Get the current build output directory
 

@@ -624,7 +624,7 @@ Set the output directory of the object file (`*.o/obj`) of the target target, fo
 
 ```lua
 target("test")
-    set_objectdir("$(buildir)/.objs")
+    set_objectdir("$(builddir)/.objs")
 ```
 
 ## set_dependir
@@ -635,7 +635,7 @@ Set the output directory of the compile dependency file (`.deps`) of the target 
 
 ```lua
 target("test")
-    set_dependir("$(buildir)/.deps")
+    set_dependir("$(builddir)/.deps")
 ```
 
 ## add_imports
@@ -894,7 +894,7 @@ target("demo")
     set_kind("shared")
 
     -- Set the output directory of the object, optional
-    set_objectdir("$(buildir)/.objs")
+    set_objectdir("$(builddir)/.objs")
 
     -- Every time you compile the build directory of libdemo.so, set it to app/libs/armeabi
     set_targetdir("libs/armeabi")
@@ -1151,7 +1151,7 @@ To, for example:
 ```lua
 target("test")
     after_clean(function (target)
-        os.rm("$(buildir)/otherfiles")
+        os.rm("$(builddir)/otherfiles")
     end)
 ```
 
@@ -1335,7 +1335,7 @@ target("demo")
     add_links("test")
 
     -- Add link search directory
-    add_linkdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
 ```
 
 Starting with version 2.8.1, add_links also supports adding the full path to the library, e.g. `add_links("/tmp/libfoo.a")`, explicitly specifying the library file.
@@ -1352,7 +1352,7 @@ Therefore, it is mainly used to add system library dependencies, because the lin
 add_syslinks("pthread", "m", "dl")
 target("demo")
     add_links("a", "b")
-    add_linkdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
 ```
 
 The above configuration, even if `add_syslinks` is set in advance, the final link order is still: `-la -lb -lpthread -lm -ldl`
@@ -1670,7 +1670,7 @@ Set the search directory of the link library. This interface is used as follows:
 
 ```lua
 target("test")
-    add_linkdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
 ```
 
 This interface is equivalent to gcc's `-Lxxx` link option.
@@ -1696,8 +1696,8 @@ The specific use is as follows:
 ```lua
 target("test")
     set_kind("binary")
-    add_linkdirs("$(buildir)/lib")
-    add_rpathdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
+    add_rpathdirs("$(builddir)/lib")
 ```
 
 Just need to set the rpath directory when linking, although the same purpose can be achieved by `add_ldflags("-Wl,-rpath=xxx")`, but this interface is more general.
@@ -1713,7 +1713,7 @@ E.g:
 ```lua
 target("test")
     set_kind("binary")
-    add_linkdirs("$(buildir)/lib")
+    add_linkdirs("$(builddir)/lib")
     add_rpathdirs("@loader_path/lib")
 ```
 
@@ -1741,7 +1741,7 @@ Set the search directory for the header file. This interface is used as follows:
 
 ```lua
 target("test")
-    add_includedirs("$(buildir)/include")
+    add_includedirs("$(builddir)/include")
 ```
 
 Of course, it can also be set directly through interfaces such as [add_cxflags](#add_cxflags) or [add_mxflags](#add_mxflags), which is also possible.
@@ -1752,7 +1752,7 @@ After 2.2.5, includedirs can be exported to dependent child targets via the extr
 target("test")
     set_kind("static")
     add_includedirs("src/include") -- only for the current target
-    add_includedirs("$(buildir)/include", {public = true}), the current target and child targets will be set
+    add_includedirs("$(builddir)/include", {public = true}), the current target and child targets will be set
 
 target("demo")
     set_kind("binary")
@@ -2733,7 +2733,7 @@ Let's start with a simple example:
 target("test")
     set_kind("binary")
     add_files("src/*.c")
-    set_configdir("$(buildir)/config")
+    set_configdir("$(builddir)/config")
     add_configfiles("src/config.h.in")
 ```
 

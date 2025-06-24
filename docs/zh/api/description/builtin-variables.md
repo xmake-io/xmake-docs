@@ -3,10 +3,10 @@
 Xmake 提供了 `$(varname)` 的语法，来支持内置变量的获取，例如：
 
 ```lua
-add_cxflags("-I$(buildir)")
+add_cxflags("-I$(builddir)")
 ```
 
-它将会在在实际编译的时候，将内置的 `buildir` 变量转换为实际的构建输出目录：`-I./build`
+它将会在在实际编译的时候，将内置的 `builddir` 变量转换为实际的构建输出目录：`-I./build`
 
 一般内置变量可用于在传参时快速获取和拼接变量字符串，例如：
 
@@ -17,7 +17,7 @@ target("test")
     add_files("$(projectdir)/src/*.c")
 
     -- 添加构建目录下的头文件搜索路径
-    add_includedirs("$(buildir)/inc")
+    add_includedirs("$(builddir)/inc")
 ```
 
 也可以在自定义脚本的模块接口中使用，例如：
@@ -26,7 +26,7 @@ target("test")
 target("test")
     on_run(function (target)
         -- 复制当前脚本目录下的头文件到输出目录
-        os.cp("$(scriptdir)/xxx.h", "$(buildir)/inc")
+        os.cp("$(scriptdir)/xxx.h", "$(builddir)/inc")
     end)
 ```
 
@@ -70,7 +70,7 @@ target("test")
 
 一般默认是执行`xmake`命令时的工程根目录，当然如果通过[os.cd](/zh/api/scripts/builtin-modules/os#os-cd)改变了目录的话，这个值也会一起改变。
 
-## var.$(buildir)
+## var.$(builddir)
 
 - 获取当前的构建输出目录
 

@@ -17,11 +17,11 @@ os 模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）�
 例如：
 
 ```lua
-os.cp("$(scriptdir)/*.h", "$(buildir)/inc")
-os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
+os.cp("$(scriptdir)/*.h", "$(builddir)/inc")
+os.cp("$(projectdir)/src/test/**.h", "$(builddir)/inc")
 ```
 
-上面的代码将：当前`xmake.lua`目录下的所有头文件、工程源码test目录下的头文件全部复制到`$(buildir)`输出目录中。
+上面的代码将：当前`xmake.lua`目录下的所有头文件、工程源码test目录下的头文件全部复制到`$(builddir)`输出目录中。
 
 其中`$(scriptdir)`, `$(projectdir)` 这些变量是xmake的内置变量，具体详情见：[内置变量](/zh/api/description/builtin-variables)的相关文档。
 
@@ -60,10 +60,10 @@ os.cp("/xxx/foo", "/xxx/bar", {symlink = true})
 
 ```lua
 -- 移动文件到临时目录
-os.mv("$(buildir)/test1", "$(tmpdir)")
+os.mv("$(builddir)/test1", "$(tmpdir)")
 
 -- 文件移动不支持批量操作，也就是文件重命名
-os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
+os.mv("$(builddir)/libtest.a", "$(builddir)/libdemo.a")
 ```
 
 ## os.rm
@@ -73,8 +73,8 @@ os.mv("$(buildir)/libtest.a", "$(buildir)/libdemo.a")
 支持递归删除目录，批量删除操作，以及模式匹配和内置变量，例如：
 
 ```lua
-os.rm("$(buildir)/inc/**.h")
-os.rm("$(buildir)/lib/")
+os.rm("$(builddir)/inc/**.h")
+os.rm("$(builddir)/lib/")
 ```
 
 ## os.trycp
@@ -149,7 +149,7 @@ os.cd(oldir)
 支持批量创建和内置变量，例如：
 
 ```lua
-os.mkdir("$(tmpdir)/test", "$(buildir)/inc")
+os.mkdir("$(tmpdir)/test", "$(builddir)/inc")
 ```
 
 ## os.isdir
@@ -171,7 +171,7 @@ end
 如果文件不存在，则返回false
 
 ```lua
-if os.isfile("$(buildir)/libxxx.a") then
+if os.isfile("$(builddir)/libxxx.a") then
     -- ...
 end
 ```
@@ -184,12 +184,12 @@ end
 
 ```lua
 -- 判断目录存在
-if os.exists("$(buildir)") then
+if os.exists("$(builddir)") then
     -- ...
 end
 
 -- 判断文件存在
-if os.exists("$(buildir)/libxxx.a") then
+if os.exists("$(builddir)/libxxx.a") then
     -- ...
 end
 ```
@@ -202,7 +202,7 @@ end
 
 ```lua
 -- 递归遍历获取所有子目录
-for _, dir in ipairs(os.dirs("$(buildir)/inc/**")) do
+for _, dir in ipairs(os.dirs("$(builddir)/inc/**")) do
     print(dir)
 end
 ```
@@ -215,7 +215,7 @@ end
 
 ```lua
 -- 非递归遍历获取所有子文件
-for _, filepath in ipairs(os.files("$(buildir)/inc/*.h")) do
+for _, filepath in ipairs(os.files("$(builddir)/inc/*.h")) do
     print(filepath)
 end
 ```
@@ -228,7 +228,7 @@ end
 
 ```lua
 -- 递归遍历获取所有子文件和目录
-for _, filedir in ipairs(os.filedirs("$(buildir)/**")) do
+for _, filedir in ipairs(os.filedirs("$(builddir)/**")) do
     print(filedir)
 end
 ```
@@ -246,7 +246,7 @@ end
 os.run("echo hello %s!", "xmake")
 
 -- 列举构建目录文件
-os.run("ls -l $(buildir)")
+os.run("ls -l $(builddir)")
 ```
 
 ::: tip 注意
