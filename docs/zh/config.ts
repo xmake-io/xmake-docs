@@ -139,10 +139,18 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
 
 function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
   return [
-    { text: '目标实例', link: '/target_instance' },
-    { text: '选项实例', link: '/option_instance' },
-    { text: '包实例', link: '/package_instance' },
-    { text: '原生模块', link: '/native_modules' }
+    { text: '目标实例', link: '/target-instance' },
+    { text: '选项实例', link: '/option-instance' },
+    { text: '包实例', link: '/package-instance' },
+    {
+      text: '内建模块',
+      collapsed: false,
+      items: [
+        { text: 'import', link: '/builtin-modules/import' },
+        { text: 'os', link: '/builtin-modules/os' },
+      ]
+    },
+    { text: '原生模块', link: '/native-modules' }
   ]
 }
 

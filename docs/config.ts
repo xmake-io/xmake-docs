@@ -102,10 +102,18 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
 
 function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
   return [
-    { text: 'Target Instance', link: '/target_instance' },
-    { text: 'Option Instance', link: '/option_instance' },
-    { text: 'Package Instance', link: '/package_instance' },
-    { text: 'Native Modules', link: '/native_modules' }
+    { text: 'Target Instance', link: '/target-instance' },
+    { text: 'Option Instance', link: '/option-instance' },
+    { text: 'Package Instance', link: '/package-instance' },
+    {
+      text: 'Builtin Modules',
+      collapsed: false,
+      items: [
+        { text: 'import', link: '/builtin-modules/import' },
+        { text: 'os', link: '/builtin-modules/os' },
+      ]
+    },
+    { text: 'Native Modules', link: '/native-modules' }
   ]
 }
 

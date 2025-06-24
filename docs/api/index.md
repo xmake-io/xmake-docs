@@ -16,7 +16,8 @@ outline: deep
 
 ## Scripts API
 
-- [Target Instance](/api/scripts/target_instance)
-- [Option Instance](/api/scripts/option_instance)
-- [Package Instance](/api/scripts/package_instance)
-- [Native Modules](/api/scripts/native_modules)
+- [Target Instance](/api/scripts/target-instance)
+- [Option Instance](/api/scripts/option-instance)
+- [Package Instance](/api/scripts/package-instance)
+- [Builtin Modules](/api/scripts/builtin-modules/import)
+- [Native Modules](/api/scripts/native-modules)

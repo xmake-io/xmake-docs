@@ -15,7 +15,8 @@ outline: deep
 
 ## 脚本域 API {#scripts-api}
 
-- [目标实例](/zh/api/scripts/target_instance)
-- [选项实例](/zh/api/scripts/option_instance)
-- [包实例](/zh/api/scripts/package_instance)
-- [原生模块](/zh/api/scripts/native_modules)
+- [目标实例](/zh/api/scripts/target-instance)
+- [选项实例](/zh/api/scripts/option-instance)
+- [包实例](/zh/api/scripts/package-instance)
+- [内建模块](/zh/api/scripts/builtin-modules/import)
+- [原生模块](/zh/api/scripts/native-modules)
