@@ -23,7 +23,8 @@ os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 
 The above code will copy all the header files in the current `xmake.lua` directory, the header files in the project source test directory to the `$(buildir)` output directory.
 
-Among them `$(scriptdir)`, `$(projectdir)` These variables are built-in variables of xmake. For details, see the related documentation of [built-in variables](#built-in variables).
+Among them `$(scriptdir)`, `$(projectdir)` These variables are built-in variables of xmake.
+For details, see the related documentation of [built-in variables](/api/description/builtin-variables).
 
 The matching patterns in `*.h` and `**.h` are similar to those in [add_files](/api/description/project-target#add-files), the former is a single-level directory matching, and the latter is a recursive multi-level directory matching.
 

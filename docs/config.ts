@@ -105,13 +105,14 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: 'Helper Interfaces', link: '/helper-interfaces' },
     { text: 'Project Targets', link: '/project-target' },
     { text: 'Configuration Option', link: '/configuration-option' },
+    { text: 'Builtin Variables', link: '/builtin-variables' },
     {
       text: 'Next Steps',
       collapsed: false,
       items: [
         { text: 'Scripts API', link: '../scripts/target-instance' },
         { text: 'Guide', link: '../../guide/what-is-xmake' },
-        { text: 'Examples', link: '../examples/cpp/basic' },
+        { text: 'Examples', link: '../../examples/cpp/basic' },
       ]
     }
   ]
@@ -137,7 +138,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'Description API', link: '../description/specification' },
         { text: 'Guide', link: '../../guide/what-is-xmake' },
-        { text: 'Examples', link: '../examples/cpp/basic' },
+        { text: 'Examples', link: '../../examples/cpp/basic' },
       ]
     }
   ]

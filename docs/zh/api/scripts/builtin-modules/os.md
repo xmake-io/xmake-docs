@@ -23,7 +23,7 @@ os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 
 上面的代码将：当前`xmake.lua`目录下的所有头文件、工程源码test目录下的头文件全部复制到`$(buildir)`输出目录中。
 
-其中`$(scriptdir)`, `$(projectdir)` 这些变量是xmake的内置变量，具体详情见：[内置变量](#内置变量)的相关文档。
+其中`$(scriptdir)`, `$(projectdir)` 这些变量是xmake的内置变量，具体详情见：[内置变量](/zh/api/description/builtin-variables)的相关文档。
 
 而`*.h`和`**.h`中的匹配模式，跟[add_files](/zh/api/description/project-target#add-files)中的类似，前者是单级目录匹配，后者是递归多级目录匹配。
 

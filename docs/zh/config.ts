@@ -186,13 +186,14 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: '辅助接口', link: '/helper-interfaces' },
     { text: '工程目标', link: '/project-target' },
     { text: '配置选项', link: '/configuration-option' },
+    { text: '内建变量', link: '/builtin-variables' },
     {
       text: '下一步',
       collapsed: false,
       items: [
         { text: '脚本域 API', link: '../scripts/target-instance' },
         { text: '使用指南', link: '../../guide/what-is-xmake' },
-        { text: '示例', link: '../examples/cpp/basic' },
+        { text: '示例', link: '../../examples/cpp/basic' },
       ]
     }
   ]
@@ -218,7 +219,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: '描述域 API', link: '../description/specification' },
         { text: '使用指南', link: '../../guide/what-is-xmake' },
-        { text: '示例', link: '../examples/cpp/basic' },
+        { text: '示例', link: '../../examples/cpp/basic' },
       ]
     }
   ]

@@ -8,10 +8,11 @@ outline: deep
 
 - [Specification](/api/description/specification)
 - [Conditions](/api/description/conditions)
-- [Global-interfaces](/api/description/global-interfaces)
-- [Helper-interfaces](/api/description/helper-interfaces)
+- [Global Interfaces](/api/description/global-interfaces)
+- [Helper Interfaces](/api/description/helper-interfaces)
 - [Project Target](/api/description/project-target)
 - [Configuration Option](/api/description/configuration-option)
+- [Builtin Variables](/api/description/builtin-variables)
 
 
 ## Scripts API
