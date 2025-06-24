@@ -186,6 +186,7 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: '辅助接口', link: '/helper-interfaces' },
     { text: '工程目标', link: '/project-target' },
     { text: '配置选项', link: '/configuration-option' },
+    { text: '插件任务', link: '/plugin-and-task' },
     { text: '内建变量', link: '/builtin-variables' },
     {
       text: '下一步',
@@ -218,6 +219,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'core.base.option', link: '/extension-modules/core-base-option' },
         { text: 'core.base.global', link: '/extension-modules/core-base-global' },
+        { text: 'core.base.task', link: '/extension-modules/core-base-task' },
         { text: 'core.project.config', link: '/extension-modules/core-project-config' },
       ]
     },

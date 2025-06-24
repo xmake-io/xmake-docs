@@ -12,6 +12,7 @@ outline: deep
 - [Helper Interfaces](/api/description/helper-interfaces)
 - [Project Target](/api/description/project-target)
 - [Configuration Option](/api/description/configuration-option)
+- [Plugin and Task](/api/description/plugin-and-task)
 - [Builtin Variables](/api/description/builtin-variables)
 
 

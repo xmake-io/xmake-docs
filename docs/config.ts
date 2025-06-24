@@ -105,6 +105,7 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: 'Helper Interfaces', link: '/helper-interfaces' },
     { text: 'Project Targets', link: '/project-target' },
     { text: 'Configuration Option', link: '/configuration-option' },
+    { text: 'Plugin and Task', link: '/plugin-and-task' },
     { text: 'Builtin Variables', link: '/builtin-variables' },
     {
       text: 'Next Steps',
@@ -137,6 +138,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'core.base.option', link: '/extension-modules/core-base-option' },
         { text: 'core.base.global', link: '/extension-modules/core-base-global' },
+        { text: 'core.base.task', link: '/extension-modules/core-base-task' },
         { text: 'core.project.config', link: '/extension-modules/core-project-config' },
       ]
     },

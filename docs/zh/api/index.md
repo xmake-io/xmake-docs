@@ -12,6 +12,7 @@ outline: deep
 - [辅助接口](/zh/api/description/helper-interfaces)
 - [工程目标](/zh/api/description/project-target)
 - [配置选项](/zh/api/description/configuration-option)
+- [插件任务](/zh/api/description/plugin-and-task)
 - [内建变量](/zh/api/description/builtin-variables)
 
 ## 脚本域 API {#scripts-api}
