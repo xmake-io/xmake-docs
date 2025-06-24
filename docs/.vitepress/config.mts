@@ -6,6 +6,8 @@ import {
 
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 
+import llmstxt from 'vitepress-plugin-llms'
+
 const prod = !!process.env.NETLIFY
 
 export default defineConfig({
@@ -68,8 +70,13 @@ export default defineConfig({
 
   vite: {
     plugins: [
-      groupIconVitePlugin()
+      groupIconVitePlugin(),
+      prod &&
+        llmstxt()
     ],
+    experimental: {
+      enableNativePlugin: true
+    }
   },
 
   locales: {

@@ -264,7 +264,7 @@ hello
 
 其中`xmake.lua`是工程描述文件，内容非常简单，告诉 xmake 添加`src`目录下的所有`.cpp`源文件：
 
-```lua
+```lua [xmake.lua]
 add_rules("mode.debug", "mode.release")
 
 target("hello")

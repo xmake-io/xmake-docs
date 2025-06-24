@@ -265,7 +265,7 @@ It is a simple console program only for printing `hello xmake!`
 
 The content of `xmake.lua` is very simple:
 
-```lua
+```lua [xmake.lua]
 add_rules("mode.debug", "mode.release")
 
 target("hello")
