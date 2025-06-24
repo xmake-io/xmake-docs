@@ -187,6 +187,8 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: '工程目标', link: '/project-target' },
     { text: '配置选项', link: '/configuration-option' },
     { text: '插件任务', link: '/plugin-and-task' },
+    { text: '自定义规则', link: '/custom-rule' },
+    { text: '自定义工具链', link: '/custom-toolchain' },
     { text: '内建变量', link: '/builtin-variables' },
     {
       text: '下一步',

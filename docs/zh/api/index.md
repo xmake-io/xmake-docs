@@ -13,6 +13,8 @@ outline: deep
 - [工程目标](/zh/api/description/project-target)
 - [配置选项](/zh/api/description/configuration-option)
 - [插件任务](/zh/api/description/plugin-and-task)
+- [自定义规则](/zh/api/description/custom-rule)
+- [自定义工具链](/zh/api/description/custom-toolchain)
 - [内建变量](/zh/api/description/builtin-variables)
 
 ## 脚本域 API {#scripts-api}

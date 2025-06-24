@@ -106,6 +106,8 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: 'Project Targets', link: '/project-target' },
     { text: 'Configuration Option', link: '/configuration-option' },
     { text: 'Plugin and Task', link: '/plugin-and-task' },
+    { text: 'Custom Rule', link: '/custom-rule' },
+    { text: 'Custom Toolchain', link: '/custom-toolchain' },
     { text: 'Builtin Variables', link: '/builtin-variables' },
     {
       text: 'Next Steps',

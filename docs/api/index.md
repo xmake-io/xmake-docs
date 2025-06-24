@@ -13,6 +13,8 @@ outline: deep
 - [Project Target](/api/description/project-target)
 - [Configuration Option](/api/description/configuration-option)
 - [Plugin and Task](/api/description/plugin-and-task)
+- [Custom Rule](/api/description/custom-rule)
+- [Custom Toolchain](/api/description/custom-toolchain)
 - [Builtin Variables](/api/description/builtin-variables)
 
 
