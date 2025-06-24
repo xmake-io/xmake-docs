@@ -96,6 +96,7 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: 'Package Dependencies', link: '/package-dependencies' },
     { text: 'Builtin Variables', link: '/builtin-variables' },
     { text: 'Builtin Rules', link: '/builtin-rules' },
+    { text: 'XPack Interfaces', link: '/xpack-interfaces' },
     {
       text: 'Next Steps',
       collapsed: false,

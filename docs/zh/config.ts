@@ -177,6 +177,7 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: '包依赖', link: '/package-dependencies' },
     { text: '内置变量', link: '/builtin-variables' },
     { text: '内置规则', link: '/builtin-rules' },
+    { text: 'XPack 打包', link: '/xpack-interfaces' },
     {
       text: '下一步',
       collapsed: false,
