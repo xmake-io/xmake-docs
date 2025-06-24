@@ -27,7 +27,7 @@ For task tasks or plugins that are not a main entry, you can use this:
 
 ```lua
 task("hello")
-    on_run(function ())
+    on_run(function ()
         import("core.base.option")
         print(option.get("info"))
     end)
