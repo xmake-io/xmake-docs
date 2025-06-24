@@ -12,11 +12,11 @@ export default defineAdditionalConfig({
     nav: nav(),
 
     sidebar: {
-      '/guide/': { base: '/guide/', items: sidebarGuide() },
-      '/api/description': { base: '/api/description/', items: descriptionApiGuide() },
-      '/api/scripts': { base: '/api/scripts/', items: scriptsApiGuide() },
-      '/api/': { base: '/api/', items: apiGuide() },
-      '/examples/': { base: '/examples/', items: examplesGuide() },
+      '/guide/': { base: '/guide/', items: guideSidebar() },
+      '/api/description': { base: '/api/description/', items: descriptionApiSidebar() },
+      '/api/scripts': { base: '/api/scripts/', items: scriptsApiSidebar() },
+      '/api/': { base: '/api/', items: apiSidebar() },
+      '/examples/': { base: '/examples/', items: examplesSidebar() },
     },
 
     editLink: {
@@ -62,7 +62,7 @@ function nav(): DefaultTheme.NavItem[] {
   ]
 }
 
-function sidebarGuide(): DefaultTheme.SidebarItem[] {
+function guideSidebar(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: 'Introduction',
@@ -83,7 +83,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function apiGuide(): DefaultTheme.SidebarItem[] {
+function apiSidebar(): DefaultTheme.SidebarItem[] {
   return [
     { text: 'API Reference', link: '/#api-reference' },
     {
@@ -97,7 +97,7 @@ function apiGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
+function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
   return [
     { text: 'Specification', link: '/specification' },
     { text: 'Conditions', link: '/conditions' },
@@ -117,7 +117,7 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
+function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
   return [
     { text: 'Target Instance', link: '/target-instance' },
     { text: 'Option Instance', link: '/option-instance' },
@@ -143,7 +143,7 @@ function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function examplesGuide(): DefaultTheme.SidebarItem[] {
+function examplesSidebar(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: 'C/C++',

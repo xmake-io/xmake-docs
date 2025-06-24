@@ -14,11 +14,11 @@ export default defineAdditionalConfig({
     search: { options: searchOptions() },
 
     sidebar: {
-      '/zh/guide/': { base: '/zh/guide/', items: sidebarGuide() },
-      '/zh/api/description': { base: '/zh/api/description/', items: descriptionApiGuide() },
-      '/zh/api/scripts': { base: '/zh/api/scripts/', items: scriptsApiGuide() },
-      '/zh/api/': { base: '/zh/api/', items: apiGuide() },
-      '/zh/examples/': { base: '/zh/examples/', items: examplesGuide() },
+      '/zh/guide/': { base: '/zh/guide/', items: guideSidebar() },
+      '/zh/api/description': { base: '/zh/api/description/', items: descriptionApiSidebar() },
+      '/zh/api/scripts': { base: '/zh/api/scripts/', items: scriptsApiSidebar() },
+      '/zh/api/': { base: '/zh/api/', items: apiSidebar() },
+      '/zh/examples/': { base: '/zh/examples/', items: examplesSidebar() },
     },
 
     editLink: {
@@ -143,7 +143,7 @@ function nav(): DefaultTheme.NavItem[] {
   ]
 }
 
-function sidebarGuide(): DefaultTheme.SidebarItem[] {
+function guideSidebar(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: '简介',
@@ -164,7 +164,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function apiGuide(): DefaultTheme.SidebarItem[] {
+function apiSidebar(): DefaultTheme.SidebarItem[] {
   return [
     { text: 'API 手册', link: '/#api-reference' },
     {
@@ -178,7 +178,7 @@ function apiGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
+function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
   return [
     { text: '接口规范', link: '/specification' },
     { text: '全局接口', link: '/global-interfaces' },
@@ -198,7 +198,7 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
+function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
   return [
     { text: '目标实例', link: '/target-instance' },
     { text: '选项实例', link: '/option-instance' },
@@ -224,7 +224,7 @@ function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function examplesGuide(): DefaultTheme.SidebarItem[] {
+function examplesSidebar(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: 'C/C++',
