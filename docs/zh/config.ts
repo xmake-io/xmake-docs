@@ -15,8 +15,9 @@ export default defineAdditionalConfig({
 
     sidebar: {
       '/zh/guide/': { base: '/zh/guide/', items: sidebarGuide() },
-      '/zh/api/description': { base: '/zh/api/description', items: descriptionApiGuide() },
-      '/zh/api/scripts': { base: '/zh/api/scripts', items: scriptsApiGuide() },
+      '/zh/api/description': { base: '/zh/api/description/', items: descriptionApiGuide() },
+      '/zh/api/scripts': { base: '/zh/api/scripts/', items: scriptsApiGuide() },
+      '/zh/api/': { base: '/zh/api/', items: apiGuide() },
       '/zh/examples/': { base: '/zh/examples/', items: examplesGuide() },
     },
 
@@ -106,6 +107,20 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       items: [
         { text: '什么是 Xmake？', link: 'what-is-xmake' },
         { text: '快速开始', link: 'getting-started' }
+      ]
+    }
+  ]
+}
+
+function apiGuide(): DefaultTheme.SidebarItem[] {
+  return [
+    { text: 'API 手册', link: '/#api-reference' },
+    {
+      text: '下一步',
+      collapsed: false,
+      items: [
+        { text: '使用指南', link: '../guide/what-is-xmake' },
+        { text: '示例', link: '../examples/cpp/basic' },
       ]
     }
   ]

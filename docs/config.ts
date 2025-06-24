@@ -13,8 +13,9 @@ export default defineAdditionalConfig({
 
     sidebar: {
       '/guide/': { base: '/guide/', items: sidebarGuide() },
-      '/api/description': { base: '/api/description', items: descriptionApiGuide() },
-      '/api/scripts': { base: '/api/scripts', items: scriptsApiGuide() },
+      '/api/description': { base: '/api/description/', items: descriptionApiGuide() },
+      '/api/scripts': { base: '/api/scripts/', items: scriptsApiGuide() },
+      '/api/': { base: '/api/', items: apiGuide() },
       '/examples/': { base: '/examples/', items: examplesGuide() },
     },
 
@@ -69,6 +70,20 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'What it Xmake？', link: 'what-is-xmake' },
         { text: 'Getting Started', link: 'getting-started' }
+      ]
+    }
+  ]
+}
+
+function apiGuide(): DefaultTheme.SidebarItem[] {
+  return [
+    { text: 'API Reference', link: '/#api-reference' },
+    {
+      text: 'Next Steps',
+      collapsed: false,
+      items: [
+        { text: 'Guide', link: '../guide/what-is-xmake' },
+        { text: 'Examples', link: '../examples/cpp/basic' },
       ]
     }
   ]

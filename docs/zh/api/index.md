@@ -2,9 +2,9 @@
 outline: deep
 ---
 
-# API 手册
+# API 手册 {#api-reference}
 
-## 描述域 API
+## 描述域 API {#description-api}
 
 - [接口规范](/zh/api/description/specification)
 - [条件判断](/zh/api/description/conditions)
@@ -13,7 +13,7 @@ outline: deep
 - [工程目标](/zh/api/description/project-target)
 - [配置选项](/zh/api/description/configuration-option)
 
-## 脚本域 API
+## 脚本域 API {#scripts-api}
 
 - [目标实例](/zh/api/scripts/target_instance)
 - [包实例](/zh/api/scripts/package_instance)
