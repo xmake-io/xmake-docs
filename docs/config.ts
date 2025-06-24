@@ -93,6 +93,7 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: 'Plugin and Task', link: '/plugin-and-task' },
     { text: 'Custom Rule', link: '/custom-rule' },
     { text: 'Custom Toolchain', link: '/custom-toolchain' },
+    { text: 'Package Dependencies', link: '/package-dependencies' },
     { text: 'Builtin Variables', link: '/builtin-variables' },
     { text: 'Builtin Rules', link: '/builtin-rules' },
     {

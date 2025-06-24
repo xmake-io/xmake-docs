@@ -174,6 +174,7 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: '插件任务', link: '/plugin-and-task' },
     { text: '自定义规则', link: '/custom-rule' },
     { text: '自定义工具链', link: '/custom-toolchain' },
+    { text: '包依赖', link: '/package-dependencies' },
     { text: '内置变量', link: '/builtin-variables' },
     { text: '内置规则', link: '/builtin-rules' },
     {
