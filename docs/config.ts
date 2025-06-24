@@ -103,6 +103,7 @@ function descriptionApiGuide(): DefaultTheme.SidebarItem[] {
 function scriptsApiGuide(): DefaultTheme.SidebarItem[] {
   return [
     { text: 'Target Instance', link: '/target_instance' },
+    { text: 'Option Instance', link: '/option_instance' },
     { text: 'Package Instance', link: '/package_instance' },
     { text: 'Native Modules', link: '/native_modules' }
   ]

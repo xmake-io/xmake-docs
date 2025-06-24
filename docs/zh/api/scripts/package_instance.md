@@ -1,4 +1,4 @@
-# 包实例
+# 包实例 {#package-instance}
 
 此页面描述了 [包依赖管理](https://xmake.io/#/zh-cn/manual/package_dependencies.md) 的 `on_load()`、`on_install()` 或 `on_test()` 等函数的 `package` 接口
 

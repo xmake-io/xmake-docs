@@ -1,4 +1,4 @@
-# 目标实例
+# 目标实例 {#target-instance}
 
 此页面描述了 [工程目标](https://xmake/.io#zh-cn/manual/project_target.md) 的 `on_load()`、`before_build()` 或 `after_install()` 等函数的 `target` 接口
 
