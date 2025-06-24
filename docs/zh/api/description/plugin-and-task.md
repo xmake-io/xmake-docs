@@ -76,37 +76,37 @@ task("echo")
     -- 设置插件的命令行选项，这里没有任何参数选项，仅仅显示插件描述
     set_menu {
                 -- 设置菜单用法
-                usage = "xmake echo [options]"
+                usage = "xmake echo [options]",
 
                 -- 设置菜单描述
-            ,   description = "Echo the given info!"
+                description = "Echo the given info!",
 
                 -- 设置菜单选项，如果没有选项，可以设置为{}
-            ,   options =
+                options =
                 {
                     -- 设置k模式作为key-only型bool参数
-                    {'b', "bright",     "k",  nil,       "Enable bright."               }
-                ,   {'d', "dim",        "k",  nil,       "Enable dim."                  }
-                ,   {'-', "blink",      "k",  nil,       "Enable blink."                }
-                ,   {'r', "reverse",    "k",  nil,       "Reverse color."               }
+                    {'b', "bright",     "k",  nil,       "Enable bright."               },
+                    {'d', "dim",        "k",  nil,       "Enable dim."                  },
+                    {'-', "blink",      "k",  nil,       "Enable blink."                },
+                    {'r', "reverse",    "k",  nil,       "Reverse color."               },
 
                     -- 菜单显示时，空白一行
-                ,   {}
+                    {},
 
                     -- 设置kv作为key-value型参数，并且设置默认值：black
-                ,   {'c', "color",      "kv", "black",   "Set the output color."
-                                                     ,   "    - red"
-                                                     ,   "    - blue"
-                                                     ,   "    - yellow"
-                                                     ,   "    - green"
-                                                     ,   "    - magenta"
-                                                     ,   "    - cyan"
-                                                     ,   "    - white"                  }
+                    {'c', "color",      "kv", "black",   "Set the output color.",
+                                                         "    - red",
+                                                         "    - blue",
+                                                         "    - yellow",
+                                                         "    - green",
+                                                         "    - magenta",
+                                                         "    - cyan",
+                                                         "    - white"},
 
                     -- 设置`vs`作为values多值型参数，还有`v`单值类型
                     -- 一般放置在最后，用于获取可变参数列表
-                ,   {}
-                ,   {nil, "contents",   "vs", nil,       "The info contents."           }
+                    {},
+                    {nil, "contents",   "vs", nil,       "The info contents."           }
                 }
             }
 ```

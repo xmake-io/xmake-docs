@@ -29,8 +29,8 @@
 
 ```lua
 {
-    clean = true
-,   ccache = "ccache"
-,   xcode_dir = "/Applications/Xcode.app"
+    clean = true,
+    ccache = "ccache",
+    xcode_dir = "/Applications/Xcode.app"
 }
 ```
