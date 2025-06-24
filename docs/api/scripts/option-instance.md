@@ -1,6 +1,6 @@
 # Option Instance
 
-This page describes the interface for `option` of functions like `on_load()`, `on_check()` or `after_check()` of the [Configuration option](https://xmake.io/#/manual/configuration_option.md)
+This page describes the interface for `option` of functions like `on_load()`, `on_check()` or `after_check()` of the [Configuration option](/api/description/configuration-option)
 
 ## option:value
 

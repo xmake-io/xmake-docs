@@ -105,7 +105,7 @@ set_version("1.5.1")
 set_version("1.5.1", {build = "%Y%m%d%H%M"})
 ```
 
-我们也能够添加版本宏定义到头文件，请参考：[add_configfiles](https://xmake.io/#/manual/project_target?id=add-template-configuration-files)
+我们也能够添加版本宏定义到头文件，请参考：[add_configfiles](/zh/api/description/project-target#add-configfiles)
 
 :::tip 注意
 我们可以全局设置版本，但现在我们也可以在 target 域去单独设置它。

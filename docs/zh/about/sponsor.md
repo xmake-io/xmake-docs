@@ -2,7 +2,7 @@ Xmake 项目属于个人开源项目，它的发展需要您的帮助，如果�
 
 欢迎联系我们，获取更多赞助详情。
 
-- [联系方式](https://xmake.io/#/zh-cn/about/contact)
+- [联系方式](/zh/about/contact)
 
 ## 赞助方式
 

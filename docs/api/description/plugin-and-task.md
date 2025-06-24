@@ -74,37 +74,37 @@ task("echo")
     -- Set the command line options for the plugin. There are no parameter options here, just the plugin description.
     set_menu {
                 -- Settings menu usage
-                usage = "xmake echo [options]"
+                usage = "xmake echo [options]",
 
                 -- Setup menu description
-            ,   description = "Echo the given info!"
+                description = "Echo the given info!",
 
                 -- Set menu options, if there are no options, you can set it to {}
-            ,   options =
+                options =
                 {
                     -- Set k mode as key-only bool parameter
-                    {'b', "bright", "k", nil, "Enable bright." }
-                ,   {'d', "dim", "k", nil, "Enable dim." }
-                ,   {'-', "blink", "k", nil, "Enable blink." }
-                ,   {'r', "reverse", "k", nil, "Reverse color." }
+                    {'b', "bright", "k", nil, "Enable bright." },
+                    {'d', "dim", "k", nil, "Enable dim." },
+                    {'-', "blink", "k", nil, "Enable blink." },
+                    {'r', "reverse", "k", nil, "Reverse color." },
 
                     -- When the menu is displayed, a blank line
-                ,   {}
+                    {},
 
                     -- Set kv as the key-value parameter and set the default value: black
-                ,   {'c', "color", "kv", "black", "Set the output color."
-                                                     , " - red"
-                                                     , " - blue"
-                                                     , " - yellow"
-                                                     , " - green"
-                                                     , " - magenta"
-                                                     , " - cyan"
-                                                     , " - white" }
+                    {'c', "color", "kv", "black", "Set the output color.",
+                                                       " - red",
+                                                       " - blue",
+                                                       " - yellow",
+                                                       " - green",
+                                                       " - magenta",
+                                                       " - cyan",
+                                                       " - white" },
 
                     -- Set `vs` as a value multivalued parameter and a `v` single value type
                     -- generally placed last, used to get a list of variable parameters
-                ,   {}
-                ,   {nil, "contents", "vs", nil, "The info contents." }
+                    {}
+                    {nil, "contents", "vs", nil, "The info contents." }
                 }
             }
 ```

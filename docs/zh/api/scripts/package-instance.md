@@ -1,6 +1,6 @@
 # 包实例 {#package-instance}
 
-此页面描述了 [包依赖管理](https://xmake.io/#/zh-cn/manual/package_dependencies.md) 的 `on_load()`、`on_install()` 或 `on_test()` 等函数的 `package` 接口
+此页面描述了 [包依赖管理](/zh/api/description/package-dependencies) 的 `on_load()`、`on_install()` 或 `on_test()` 等函数的 `package` 接口
 
 ## package:name
 
@@ -70,13 +70,13 @@ package:add("defines", "SDL_MAIN_HANDLED")
   + cygwin
   + bsd
 
-如果包是二进制的，则会返回 [`os.host`](https://xmake.io/#/zh-cn/manual/builtin_modules.md#oshost) 的值
+如果包是二进制的，则会返回 [`os.host`](/zh/api/scripts/builtin-modules/os#os-host) 的值
 
 ## package:arch
 
 - 获取包的架构（例如 x86、x64、x86_64）
 
-如果包是二进制的，则返回 [`os.arch`](https://xmake.io/#/zh-cn/manual/builtin_modules.md#osarch)
+如果包是二进制的，则返回 [`os.arch`](/zh/api/scripts/builtin-modules/os#os-arch)
 
 ## package:targetos
 

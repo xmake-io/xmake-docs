@@ -1,6 +1,6 @@
 # Package instance
 
-This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](https://xmake.io/#/manual/package_dependencies.md)
+This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](/api/description/package-dependencies)
 
 ## package:name
 
@@ -72,13 +72,13 @@ Same as `package:get("description")`
   + cygwin
   + bsd
 
-If the package is binary [`os.host`](http://xmake.io/#/manual/builtin_modules.md#oshost) is returned
+If the package is binary [`os.host`](/api/scripts/builtin-modules/os#os-host) is returned
 
 ## package:arch
 
 - Get the architecture of the package (e.g. x86, x64, x86_64)
 
-If the package is binary [`os.arch`](http://xmake.io/#/manual/builtin_modules.md#osarch) is returned
+If the package is binary [`os.arch`](/api/scripts/builtin-modules/os#os-arch) is returned
 
 ## package:targetos
 

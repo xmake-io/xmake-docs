@@ -408,7 +408,7 @@ if this time, the build configuration is: `xmake f -m debug -a armv7`, then the 
 
 If you want to further customize the directory name of the target file, refer to: [set_targetdir](#set_targetdir).
 
-Or implement more advanced logic by writing custom scripts, see: [after_build](#after_build) and [os.mv](https://xmake.io/#/manual/builtin_modules?id=osmv).
+Or implement more advanced logic by writing custom scripts, see: [after_build](#after_build) and [os.mv](/api/scripts/builtin-modules/os#os-mv).
 
 ## set_filename
 
@@ -2120,7 +2120,7 @@ Users no longer need to call the [add_links](#add_links), [add_includedirs](#add
 
 For how to set up the package search directory, please refer to: [add_packagedirs](https://xmake.io/#/manual/global_interfaces?id=add_packagedirs) interface
 
-After v2.2.2, this interface also supports packages defined by [add_requires](https://xmake.io/#/manual/global_interfaces?id=add_requires) in remote dependency management.
+After v2.2.2, this interface also supports packages defined by [add_requires](/api/description/global-interfaces#add-requires) in remote dependency management.
 
 ```lua
 add_requires("zlib", "polarssl")
@@ -2339,7 +2339,7 @@ toolchain("myclang")
     - ...
 ```
 
-For details about this piece, you can go to the [Custom Toolchain](https://xmake.io/#/manual/custom_toolchain).
+For details about this piece, you can go to the [Custom Toolchain](/api/description/custom-toolchain).
 
 For more details, please see: [#780](https://github.com/xmake-io/xmake/issues/780)
 
