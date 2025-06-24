@@ -15,7 +15,6 @@ export default defineAdditionalConfig({
       '/guide/': { base: '/guide/', items: guideSidebar() },
       '/api/description': { base: '/api/description/', items: descriptionApiSidebar() },
       '/api/scripts': { base: '/api/scripts/', items: scriptsApiSidebar() },
-      '/api/': { base: '/api/', items: apiSidebar() },
       '/examples/': { base: '/examples/', items: examplesSidebar() },
     },
 
@@ -35,7 +34,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: 'Guide', link: '/guide/what-is-xmake', activeMatch: '/guide/' },
         { text: 'Getting Started', link: '/guide/getting-started' },
         { text: 'Examples', link: '/examples/cpp/basic' },
-        { text: 'API Reference', link: '/api/' }
+        { text: 'API Reference', link: '/api/description/specification' }
       ]
     },
     {
@@ -74,24 +73,10 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
           text: 'Next Steps',
           collapsed: false,
           items: [
-            { text: 'API Reference', link: '../api/' },
+            { text: 'API Reference', link: '../api/description/specification' },
             { text: 'Examples', link: '../examples/cpp/basic' },
           ]
         }
-      ]
-    }
-  ]
-}
-
-function apiSidebar(): DefaultTheme.SidebarItem[] {
-  return [
-    { text: 'API Reference', link: '/#api-reference' },
-    {
-      text: 'Next Steps',
-      collapsed: false,
-      items: [
-        { text: 'Guide', link: '../guide/what-is-xmake' },
-        { text: 'Examples', link: '../examples/cpp/basic' },
       ]
     }
   ]
@@ -225,7 +210,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       text: 'Next Steps',
       collapsed: false,
       items: [
-        { text: 'API Reference', link: '../api/' },
+        { text: 'API Reference', link: '../api/description/specification' },
         { text: 'Guide', link: '../guide/what-is-xmake' },
       ]
     }

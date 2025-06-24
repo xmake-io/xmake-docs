@@ -17,7 +17,6 @@ export default defineAdditionalConfig({
       '/zh/guide/': { base: '/zh/guide/', items: guideSidebar() },
       '/zh/api/description': { base: '/zh/api/description/', items: descriptionApiSidebar() },
       '/zh/api/scripts': { base: '/zh/api/scripts/', items: scriptsApiSidebar() },
-      '/zh/api/': { base: '/zh/api/', items: apiSidebar() },
       '/zh/examples/': { base: '/zh/examples/', items: examplesSidebar() },
     },
 
@@ -110,7 +109,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: '使用指南', link: '/zh/guide/what-is-xmake', activeMatch: '/zh/guide/' },
         { text: '快速上手', link: '/zh/guide/getting-started' },
         { text: '示例', link: '/zh/examples/cpp/basic' },
-        { text: 'API 手册', link: '/zh/api/' }
+        { text: 'API 手册', link: '/zh/api/description/specification' }
       ]
     },
     {
@@ -157,21 +156,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       text: '下一步',
       collapsed: false,
       items: [
-        { text: 'API 手册', link: '../api/' },
-        { text: '示例', link: '../examples/cpp/basic' },
-      ]
-    }
-  ]
-}
-
-function apiSidebar(): DefaultTheme.SidebarItem[] {
-  return [
-    { text: 'API 手册', link: '/#api-reference' },
-    {
-      text: '下一步',
-      collapsed: false,
-      items: [
-        { text: '使用指南', link: '../guide/what-is-xmake' },
+        { text: 'API 手册', link: '../api/description/specification' },
         { text: '示例', link: '../examples/cpp/basic' },
       ]
     }
@@ -305,7 +290,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       text: '下一步',
       collapsed: false,
       items: [
-        { text: 'API 手册', link: '../api/' },
+        { text: 'API 手册', link: '../api/description/specification' },
         { text: '使用指南', link: '../guide/what-is-xmake' },
       ]
     }
