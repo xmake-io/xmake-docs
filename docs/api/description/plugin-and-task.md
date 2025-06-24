@@ -257,7 +257,7 @@ function main(...)
 end
 ```
 
-It's a simple script file with the main function of `main`. You can import various extension modules via [import](/manual/builtin_modules?id=import) to implement complex functions, such as:
+It's a simple script file with the main function of `main`. You can import various extension modules via [import](/api/scripts/builtin-modules/import) to implement complex functions, such as:
 
 ```lua
 -- Import parameter option module
@@ -271,7 +271,7 @@ function main(...)
 end
 ```
 
-You can also create multiple custom module files in the current directory and use them after importing via [import](/manual/builtin_modules?id=import), for example:
+You can also create multiple custom module files in the current directory and use them after importing via [import](/api/scripts/builtin-modules/import), for example:
 
 ```
 Projectdir
@@ -304,7 +304,7 @@ function main(...)
 end
 ```
 
-For more modules, see: [Builtin Module](/manual/builtin_modules) and [Extension Module](/manual/extension_modules)
+For more modules, see: [Builtin Module](/api/scripts/builtin-modules/import) and [Extension Module](/api/scripts/extension-modules/core-base-option)
 
 Among them, the parameter in `main(...)` is specified by `task.run`, for example:
 

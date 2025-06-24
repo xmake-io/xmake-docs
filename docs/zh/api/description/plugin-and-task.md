@@ -258,7 +258,7 @@ function main(...)
 end
 ```
 
-就是一个简单的带`main`主函数的脚本文件，你可以通过[import](/zh-cn/manual/builtin_modules?id=import)导入各种扩展模块，实现复杂功能，例如：
+就是一个简单的带`main`主函数的脚本文件，你可以通过[import](/zh/api/scripts/builtin-modules/import)导入各种扩展模块，实现复杂功能，例如：
 
 ```lua
 -- 导入参数选项模块
@@ -272,7 +272,7 @@ function main(...)
 end
 ```
 
-你也可以在当前目录下，创建多个自定义的模块文件，通过[import](/zh-cn/manual/builtin_modules?id=import)导入后使用，例如：
+你也可以在当前目录下，创建多个自定义的模块文件，通过[import](/zh/api/scripts/builtin-modules/import)导入后使用，例如：
 
 ```
 projectdir
@@ -305,7 +305,7 @@ function main(...)
 end
 ```
 
-更多模块介绍见：[内置模块](/zh-cn/manual/builtin_modules)和[扩展模块](/zh-cn/manual/extension_modules)
+更多模块介绍见：[内置模块](/zh/api/scripts/builtin-modules/import)和[扩展模块](/zh/api/scripts/extension-modules/core-base-option)
 
 其中，`main(...)`中参数，是通过`task.run`指定的，例如：
 

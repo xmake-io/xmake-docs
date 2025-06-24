@@ -209,7 +209,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: '选项实例', link: '/option-instance' },
     { text: '包实例', link: '/package-instance' },
     {
-      text: '内建模块',
+      text: '内置模块',
       collapsed: false,
       items: [
         { text: 'import', link: '/builtin-modules/import' },
