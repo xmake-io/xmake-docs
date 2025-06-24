@@ -15,7 +15,8 @@ outline: deep
 - [插件任务](/zh/api/description/plugin-and-task)
 - [自定义规则](/zh/api/description/custom-rule)
 - [自定义工具链](/zh/api/description/custom-toolchain)
-- [内建变量](/zh/api/description/builtin-variables)
+- [内置变量](/zh/api/description/builtin-variables)
+- [内置规则](/zh/api/description/builtin-rules)
 
 ## 脚本域 API {#scripts-api}
 

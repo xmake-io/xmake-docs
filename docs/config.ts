@@ -109,6 +109,7 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: 'Custom Rule', link: '/custom-rule' },
     { text: 'Custom Toolchain', link: '/custom-toolchain' },
     { text: 'Builtin Variables', link: '/builtin-variables' },
+    { text: 'Builtin Rules', link: '/builtin-rules' },
     {
       text: 'Next Steps',
       collapsed: false,

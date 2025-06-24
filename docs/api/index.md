@@ -16,6 +16,7 @@ outline: deep
 - [Custom Rule](/api/description/custom-rule)
 - [Custom Toolchain](/api/description/custom-toolchain)
 - [Builtin Variables](/api/description/builtin-variables)
+- [Builtin Rules](/api/description/builtin-rules)
 
 
 ## Scripts API
