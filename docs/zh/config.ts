@@ -212,6 +212,13 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'os', link: '/builtin-modules/os' },
       ]
     },
+    {
+      text: '扩展模块',
+      collapsed: false,
+      items: [
+        { text: 'core.base.option', link: '/extension-modules/core-base-option' },
+      ]
+    },
     { text: '原生模块', link: '/native-modules' },
     {
       text: '下一步',

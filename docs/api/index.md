@@ -21,4 +21,5 @@ outline: deep
 - [Option Instance](/api/scripts/option-instance)
 - [Package Instance](/api/scripts/package-instance)
 - [Builtin Modules](/api/scripts/builtin-modules/import)
+- [Extension Modules](/api/scripts/extension-modules/core-base-option)
 - [Native Modules](/api/scripts/native-modules)

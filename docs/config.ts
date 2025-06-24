@@ -131,6 +131,13 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'os', link: '/builtin-modules/os' },
       ]
     },
+    {
+      text: 'Extension Modules',
+      collapsed: false,
+      items: [
+        { text: 'core.base.option', link: '/extension-modules/core-base-option' },
+      ]
+    },
     { text: 'Native Modules', link: '/native-modules' },
     {
       text: 'Next Steps',

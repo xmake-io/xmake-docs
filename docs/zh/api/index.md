@@ -20,4 +20,5 @@ outline: deep
 - [选项实例](/zh/api/scripts/option-instance)
 - [包实例](/zh/api/scripts/package-instance)
 - [内建模块](/zh/api/scripts/builtin-modules/import)
+- [扩展模块](/zh/api/scripts/extension-modules/core-base-option)
 - [原生模块](/zh/api/scripts/native-modules)
