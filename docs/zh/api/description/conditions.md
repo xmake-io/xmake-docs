@@ -109,7 +109,7 @@ end
 * linux
 * macosx
 
-你也可以通过[$(host)](https://xmake.io/#/zh-cn/manual/builtin_variables?id=varhost)内置变量或者[os.host](https://xmake.io/#/zh-cn/manual/builtin_modules?id=oshost)接口，来进行获取
+你也可以通过[$(host)](/zh/api/description/builtin-variables/#var-host)内置变量或者[os.host](/zh/api/scripts/builtin-modules/os#os-host)接口，来进行获取
 
 ## is_subhost
 
@@ -288,7 +288,7 @@ end
 ```
 
 ::: tip 提示
-此接口不仅能够判断通过[option](#option)定义的自定义配置选项，同时还能判断内置的全局配置、本地配置。
+此接口不仅能够判断通过[option](/zh/api/description/configuration-option#option)定义的自定义配置选项，同时还能判断内置的全局配置、本地配置。
 :::
 
 ## has_config
@@ -326,7 +326,7 @@ $ xmake f --test1=false
 ```
 
 ::: tip 提示
-此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](#option)定义的自定义配置选项。
+此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](/zh/api/description/configuration-option#option)定义的自定义配置选项。
 :::
 
 ## has_package
@@ -335,7 +335,7 @@ $ xmake f --test1=false
 
 此接口从2.2.3版本开始引入，用于检测远程依赖包是否存在或启用，可用于描述域。
 
-一般配合[add_requires](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_requires)一起使用，例如：
+一般配合[add_requires](/zh/api/description/global-interfaces#add-requires)一起使用，例如：
 
 ```lua
 add_requires("tbox", {optional = true})
@@ -354,5 +354,5 @@ target("test")
 表示不存在，然后对其他flags定义甚至源文件编译控制做一些特殊处理。
 
 ::: tip 注意
-此接口跟[has_config](#has_config)的区别在于，[has_config](#has_config)用于[option](#option)，而它用于[add_requires](#add_requires)。
+此接口跟[has_config](#has_config)的区别在于，[has_config](#has_config)用于[option](/zh/api/description/configuration-option#option)，而它用于[add_requires](/zh/api/description/global-interfaces#add-requires)。
 :::

@@ -60,7 +60,7 @@ $ xmake
 
 ### End definition option
 
-This is an optional api that shows the departure option scope, similar to [target_end](https://xmake.io/#/manual/project_target?id=target_end).
+This is an optional api that shows the departure option scope, similar to [target_end](/api/description/project-target#target-end).
 
 ## add_deps
 
@@ -179,7 +179,7 @@ option("test")
 | boolean    | Typically used as a parameter switch, value range: `true/false` | `xmake f --optionname=[y/n/yes/no/true/false]`  |
 | string     | can be any string, generally used for pattern judgment          | `xmake f --optionname=value`                    |
 
-If it is an option of the `boolean` value, it can be judged by [has_config](https://xmake.io/#/manual/conditions?id=has_config), and the option is enabled.
+If it is an option of the `boolean` value, it can be judged by [has_config](/api/description/conditions#has-config), and the option is enabled.
 
 If it is an option of type `string`, it can be used directly in built-in variables, for example:
 
@@ -399,7 +399,7 @@ This is optional. Generally, the system library does not need to add this, and i
 
 ### Adding a load search directory for a dynamic library at runtime
 
-After the option passes the detection, it will be automatically added to the corresponding target. For details, see: [target.add_rpathdirs](https://xmake.io/#/manual/project_target?id=targetadd_rpathdirs).
+After the option passes the detection, it will be automatically added to the corresponding target. For details, see: [target.add_rpathdirs](/api/description/project-target#add-rpathdirs).
 
 ## add_cincludes
 

@@ -200,7 +200,7 @@ end
 
 - Adjust the link order within the package
 
-For specific details, please see the target's internal documentation for `add_linkorders`, [target/add_linkorders](https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkorders).
+For specific details, please see the target's internal documentation for `add_linkorders`, [target:add_linkorders](/zh/api/description/project-target#add-linkorders).
 
 ```lua
 package("libpng")
@@ -212,7 +212,7 @@ package("libpng")
 
 - Configure the link group of the package
 
-For specific details, please see the target's internal documentation for `add_linkgroups`, [target/add_linkgroups](https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkgroups).
+For specific details, please see the target's internal documentation for `add_linkgroups`, [target:add_linkgroups](/api/description/project-target#add-linkgroups).
 
 ```lua
 package("libpng")

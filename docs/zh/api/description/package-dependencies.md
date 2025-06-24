@@ -196,7 +196,7 @@ end
 
 - 调整包内部的链接顺序
 
-具体详情可以看下 target 内部对 `add_linkorders` 的文档说明，[target/add_linkorders](https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkorders)。
+具体详情可以看下 target 内部对 `add_linkorders` 的文档说明，[target:add_linkorders](/zh/api/description/project-target#add_linkorders)。
 
 ```lua
 package("libpng")
@@ -208,7 +208,7 @@ package("libpng")
 
 - 配置包的链接组
 
-具体详情可以看下 target 内部对 `add_linkgroups` 的文档说明，[target/add_linkgroups](https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_linkgroups)。
+具体详情可以看下 target 内部对 `add_linkgroups` 的文档说明，[target:add_linkgroups](/zh/api/description/project-target#add-linkgroups)。
 
 ```lua
 package("libpng")

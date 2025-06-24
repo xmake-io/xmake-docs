@@ -108,7 +108,7 @@ Support hosts:
 * linux
 * macosx
 
-We can also get it from [$(host)](https://xmake.io/#/manual/builtin_variables?id=varhost) or [os.host](https://xmake.io/#/manual/builtin_modules?id=oshost).
+We can also get it from [$(host)](/api/description/builtin-variables/#var-host) or [os.host](/api/scripts/builtin-modules/os#os-host).
 
 ## is_subhost
 
@@ -282,7 +282,7 @@ end
 ```
 
 ::: tip NOTE
-This interface is not only able to determine the custom options defined through the [option](#option),
+This interface is not only able to determine the custom options defined through the [option](/api/description/configuration-option#option),
 but also to determine the built-in global and local configuration.
 :::
 
@@ -321,7 +321,7 @@ $ xmake f --test1=false
 
 ::: tip NOTE
 This interface can determine not only the built-in global and local configs,
-but also the custom options defined through the [option](#option).
+but also the custom options defined through the [option](/api/description/configuration-option#option).
 :::
 
 ## has_package
@@ -330,7 +330,7 @@ but also the custom options defined through the [option](#option).
 
 This interface is introduced from version 2.2.3 to detect whether a dependent package exists or is enabled.
 
-It is usually used to [add_requires](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_requires).
+It is usually used to [add_requires](/api/description/global-interfaces#add-requires).
 
 ```lua
 add_requires("tbox", {optional = true})
@@ -349,5 +349,5 @@ If the remote dependencies are added via the optional add-on package added by `a
 Indicates that it does not exist, and then does some special processing for other flags definitions and even source file compilation controls.
 
 ::: tip NOTE
-The difference between this interface and [has_config](#has_config) is that [has_config](#has_config) is used for [option](#option) whereas this is used for [add_requires](#add_requires).
+The difference between this interface and [has_config](#has_config) is that [has_config](#has_config) is used for [option](/api/description/configuration-option#option) whereas this is used for [add_requires](/api/description/global-interfaces#add-requires).
 :::

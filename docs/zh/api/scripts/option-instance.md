@@ -1,6 +1,6 @@
 # 选项实例 {#option-instance}
 
-此页面描述了 [配置选项](https://xmake.io/#/zh-cn/manual/configuration_option.md) 的 `on_load()`、`on_check()` 或 `after_check()` 等函数的 `option` 接口
+此页面描述了 [配置选项](/zh/api/description/configuration-option) 的 `on_load()`、`on_check()` 或 `after_check()` 等函数的 `option` 接口
 
 
 ## option:value

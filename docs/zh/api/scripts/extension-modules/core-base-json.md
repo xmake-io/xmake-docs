@@ -5,7 +5,7 @@ xmake 提供了内置的 json 模块，基于 lua_cjson 实现，我们可以用
 
 我们可以通过 `import("core.base.json")` 直接导入使用。
 
-这里也有一些例子：[Jsom Examples](https://github.com/xmake-io/xmake/blob/master/tests/modules/json/test.lua)
+这里也有一些例子：[Json Examples](https://github.com/xmake-io/xmake/blob/master/tests/modules/json/test.lua)
 
 ## json.decode
 

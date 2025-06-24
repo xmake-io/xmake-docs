@@ -61,7 +61,7 @@ $ xmake
 
 ### 结束定义选项
 
-这是一个可选api，显示离开选项作用域，用法和[target_end](https://xmake.io/#/zh-cn/manual/project_target?id=target_end)类似。
+这是一个可选api，显示离开选项作用域，用法和[target_end](/zh/api/description/project-target#target_end)类似。
 
 ## add_deps
 
@@ -176,7 +176,7 @@ option("test")
 | boolean | 一般用作参数开关，值范围：`true/false` | `xmake f --optionname=[y/n/yes/no/true/false]` |
 | string  | 可以是任意字符串，一般用于模式判断     | `xmake f --optionname=value`                   |
 
-如果是`boolean`值的选项，可以通过[has_config](https://xmake.io/#/zh-cn/manual/conditions?id=has_config)来进行判断，选项是否被启用。
+如果是`boolean`值的选项，可以通过[has_config](/zh/api/description/conditions#has-config)来进行判断，选项是否被启用。
 
 如果是`string`类型的选项，可以在内建变量中直接使用，例如：
 
@@ -396,7 +396,7 @@ target("test")
 
 ### 添加程序运行时动态库的加载搜索目录
 
-在选项通过检测后，会自动添加到对应的target上去，具体使用见：[target.add_rpathdirs](https://xmake.io/#/zh-cn/manual/project_target?id=targetadd_rpathdirs)。
+在选项通过检测后，会自动添加到对应的target上去，具体使用见：[target:add_rpathdirs](/zh/api/description/project-target#add-rpathdirs)。
 
 ## add_cincludes
 

@@ -80,31 +80,31 @@ end
 
 ```lua
 {
-    sh = "xcrun -sdk macosx clang++"
-,   xcode_dir = "/Applications/Xcode.app"
-,   ar = "xcrun -sdk macosx ar"
-,   small = true
-,   object = false
-,   arch = "x86_64"
-,   xcode_sdkver = "10.12"
-,   ex = "xcrun -sdk macosx ar"
-,   cc = "xcrun -sdk macosx clang"
-,   rc = "rustc"
-,   plat = "macosx"
-,   micro = false
-,   host = "macosx"
-,   as = "xcrun -sdk macosx clang"
-,   dc = "dmd"
-,   gc = "go"
-,   openssl = false
-,   ccache = "ccache"
-,   cxx = "xcrun -sdk macosx clang"
-,   sc = "xcrun -sdk macosx swiftc"
-,   mm = "xcrun -sdk macosx clang"
-,   builddir = "build"
-,   mxx = "xcrun -sdk macosx clang++"
-,   ld = "xcrun -sdk macosx clang++"
-,   mode = "release"
-,   kind = "static"
+    sh = "xcrun -sdk macosx clang++",
+    xcode_dir = "/Applications/Xcode.app",
+    ar = "xcrun -sdk macosx ar",
+    small = true,
+    object = false,
+    arch = "x86_64",
+    xcode_sdkver = "10.12",
+    ex = "xcrun -sdk macosx ar",
+    cc = "xcrun -sdk macosx clang",
+    rc = "rustc",
+    plat = "macosx",
+    micro = false,
+    host = "macosx",
+    as = "xcrun -sdk macosx clang",
+    dc = "dmd",
+    gc = "go",
+    openssl = false,
+    ccache = "ccache",
+    cxx = "xcrun -sdk macosx clang",
+    sc = "xcrun -sdk macosx swiftc",
+    mm = "xcrun -sdk macosx clang",
+    builddir = "build",
+    mxx = "xcrun -sdk macosx clang++",
+    ld = "xcrun -sdk macosx clang++",
+    mode = "release",
+    kind = "static"
 }
 ```

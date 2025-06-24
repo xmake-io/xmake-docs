@@ -407,7 +407,7 @@ target("xxx")
 
 如果还想进一步定制目标文件的目录名，可参考：[set_targetdir](#set_targetdir)。
 
-或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#after_build)和[os.mv](https://xmake.io/#/zh-cn/manual/builtin_modules?id=osmv)。
+或者通过编写自定义脚本，实现更高级的逻辑，具体见：[after_build](#after_build)和[os.mv](/zh/api/scripts/builtin-modules/os#os-mv)。
 
 ## set_filename
 
@@ -2109,7 +2109,7 @@ target("test")
 
 对于如何设置包搜索目录，可参考：[add_packagedirs](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_packagedirs) 接口
 
-而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_requires)定义的包。
+而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](/zh/api/description/global-interfaces#add-requires)定义的包。
 
 ```lua
 add_requires("zlib", "polarssl")
@@ -2329,7 +2329,7 @@ toolchain("myclang")
     -- ...
 ```
 
-关于这块的详情介绍，可以到[自定义工具链](https://xmake.io/#/zh-cn/manual/custom_toolchain)章节查看
+关于这块的详情介绍，可以到[自定义工具链](/zh/api/description/custom-toolchain)章节查看
 
 更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
 

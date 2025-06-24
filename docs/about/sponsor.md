@@ -4,7 +4,7 @@ If you would like to support the development of Xmake, you are encouraged to don
 
 Feel free to contact us for more details on sponsorship.
 
-- [Contact us](https://xmake.io/#/about/contact)
+- [Contact us](/about/contact)
 
 ## Payment Methods
 
