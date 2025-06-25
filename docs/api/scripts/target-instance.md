@@ -2,11 +2,11 @@
 
 This page describes the interface for `target` of functions like `on_load()`, `before_build()` or `after_install()` of the [Project target](https://xmake.io/#manual/project_target.md)
 
-#### target:name
+## target:name
 
 - Get the name of the target
 
-#### target:get
+## target:get
 
 - Get the values of the target by name
 
@@ -17,7 +17,7 @@ target:get("links")
 target:get("defines")
 ```
 
-#### target:set
+## target:set
 
 - Set the values of the target by name (If you just want to add values use [target:add](#target-add))
 
@@ -28,7 +28,7 @@ target:set("links", "sdl2")
 target:set("defines", "SDL_MAIN_HANDLED")
 ```
 
-#### target:add
+## target:add
 
 - Add to the values of the target by name
 
@@ -39,13 +39,13 @@ target:add("links", "sdl2")
 target:add("defines", "SDL_MAIN_HANDLED")
 ```
 
-#### target:kind
+## target:kind
 
 - Get the target program type
 
 Corresponding to `set_kind` description domain interface settings. The main target types are: binary, static, shared, phony, object, headeronly.
 
-#### target:is_plat
+## target:is_plat
 
 - Whether the current platform is one of the given platforms
 
@@ -60,7 +60,7 @@ target:is_plat("android")
 target:is_plat("windows", "linux", "macosx")
 ```
 
-#### target:is_arch
+## target:is_arch
 
 - Is the current architecture one of the given architectures
 
@@ -75,7 +75,7 @@ target:is_arch("x86")
 target:is_arch("x64", "x86_64")
 ```
 
-#### target:targetfile
+## target:targetfile
 
 - Get the target file path
 
@@ -85,7 +85,7 @@ It is mainly used to obtain the output path of static, shared, and binary object
 os.cp(target:targetfile(), "/tmp/")
 ```
 
-#### target:artifactfile
+## target:artifactfile
 
 - Get the artifact file of the target
 
@@ -97,31 +97,31 @@ target:artifactfile("implib")
 
 However, it may be extended to other types of artifact file path acquisition in the future.
 
-#### target:targetdir
+## target:targetdir
 
 - Get the output directory of the target file
 
 That is, the storage directory corresponding to target:targetfile().
 
-#### target:basename
+## target:basename
 
 - Get the base name of the target file
 
 That is, `foo` in libfoo.a, foo.dll, foo.exe.
 
-#### target:filename
+## target:filename
 
 - Get the target file name
 
 The full file name of the target file, equivalent to `path.filename(target:targetfile())`.
 
-#### target:installdir
+## target:installdir
 
 - Get the installation directory of the target file
 
 It is usually used to obtain the corresponding installation directory path in scripts such as after_install of `xmake install/uninstall`, which can be used for user-defined installation scripts.
 
-#### target:autogendir
+## target:autogendir
 
 - Get auto-generated catalog
 
@@ -129,7 +129,7 @@ This is usually used in some custom rule scripts to store some target-specific a
 
 For example, when we are processing lex/yacc, some source code files are automatically generated, and they can be stored in this directory so that they can be processed later.
 
-#### target:objectfile
+## target:objectfile
 
 - Get the object file path
 
@@ -139,7 +139,7 @@ Usually used in custom scripts to obtain the target file path corresponding to t
 local objectfile = target:objectfile(sourcefile)
 ```
 
-#### target:sourcebatches
+## target:sourcebatches
 
 - Get all source files
 
@@ -197,7 +197,7 @@ sourcebatch corresponds to each type of source file batch, corresponding to a ba
 
 sourcebatch.sourcefiles is a list of source files, sourcebatch.objectfiles is a list of object files, and sourcebatch.rulename is the name of the corresponding rule.
 
-#### target:objectfiles
+## target:objectfiles
 
 - Get a list of all object files
 
@@ -205,7 +205,7 @@ Although `target:sourcebatches()` can also obtain all object files, they are cla
 
 If we want to dynamically modify the final linked object file list, we can modify `target:objectfiles()`, which is an array list.
 
-#### target:headerfiles
+## target:headerfiles
 
 - Get a list of all header files
 
@@ -217,13 +217,13 @@ for _, headerfile in ipairs(target:headerfiles()) do
 end
 ```
 
-#### target:scriptdir
+## target:scriptdir
 
 - Get the xmake.lua directory where the target definition is located
 
 This is usually used in custom rules. If you want to get the directory where the current target is actually defined in xmake.lua, it is convenient to reference some resource files. You can use this interface.
 
-#### target:has_cxxfuncs
+## target:has_cxxfuncs
 
 - Check whether the target compilation configuration can obtain the given C++ function
 
@@ -235,7 +235,7 @@ However, while detecting functions, we can also additionally configure std langu
 target:has_cxxfuncs("foo", {includes = "foo.h", configs = {languages = "cxx17"}})
 ```
 
-#### target:has_ctypes
+## target:has_ctypes
 
 - Check whether the target compilation configuration can obtain the given C type
 
@@ -254,13 +254,13 @@ target("test")
      end)
 ```
 
-#### target:has_cxxtypes
+## target:has_cxxtypes
 
 - Check whether the target compilation configuration can get the given C++ type
 
 The usage is similar to [target:has_ctypes](#target-has_ctypes), except that it is mainly used to detect the type of C++.
 
-#### target:has_cflags
+## target:has_cflags
 
 - Check whether the target compilation configuration can obtain the given C compilation flags
 
@@ -275,13 +275,13 @@ target("test")
      end)
 ```
 
-#### target:has_cxxflags
+## target:has_cxxflags
 
 - Check whether the target compilation configuration can obtain the given C++ compilation flags
 
 The usage is similar to [target:has_cflags](#target-has_cflags), except that it is mainly used to detect the compilation flags of C++.
 
-#### target:has_cincludes
+## target:has_cincludes
 
 - Check whether the target compilation configuration can obtain the given C header file
 
@@ -300,19 +300,19 @@ target("test")
      end)
 ```
 
-#### target:has_cxxincludes
+## target:has_cxxincludes
 
 - Check whether the target compilation configuration can obtain the given C++ header file
 
 The usage is similar to [target:has_cincludes](#target-has_cincludes), except that it is mainly used to detect C++ header files.
 
-#### target:check_csnippets
+## target:check_csnippets
 
 - Detect whether a given piece of C code can be compiled and linked
 
 The usage is similar to [target:check_cxxsnippets](#target-check_cxxsnippets), except that it is mainly used to detect C code snippets.
 
-#### target:check_cxxsnippets
+## target:check_cxxsnippets
 
 - Detect if a given piece of C++ code can be compiled and linked
 
@@ -372,7 +372,7 @@ target("test")
      end)
 ```
 
-#### target:check_sizeof
+## target:check_sizeof
 
 - Detect type size
 
@@ -397,7 +397,7 @@ sizeof(long) = 8
 sizeof(string) = 24
 ```
 
-#### target:has_features
+## target:has_features
 
 - Detect if specified C/C++ compiler feature
 

@@ -198,7 +198,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: '包实例', link: '/package-instance' },
     {
       text: '内置模块',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'import', link: '/builtin-modules/import' },
         { text: 'inherit', link: '/builtin-modules/inherit' },
@@ -217,7 +217,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
     },
     {
       text: '扩展模块',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'core.base.option', link: '/extension-modules/core-base-option' },
         { text: 'core.base.global', link: '/extension-modules/core-base-global' },

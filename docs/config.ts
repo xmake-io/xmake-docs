@@ -117,7 +117,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
     { text: 'Package Instance', link: '/package-instance' },
     {
       text: 'Builtin Modules',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'import', link: '/builtin-modules/import' },
         { text: 'inherit', link: '/builtin-modules/inherit' },
@@ -136,7 +136,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
     },
     {
       text: 'Extension Modules',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'core.base.option', link: '/extension-modules/core-base-option' },
         { text: 'core.base.global', link: '/extension-modules/core-base-global' },
