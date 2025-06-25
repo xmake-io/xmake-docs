@@ -225,6 +225,9 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'vformat', link: 'builtin-modules/vformat' },
         { text: 'raise', link: 'builtin-pmodules/raise' },
         { text: 'os', link: 'builtin-modules/os' },
+        { text: 'winos', link: 'builtin-modules/winos' },
+        { text: 'macos', link: 'builtin-modules/macos' },
+        { text: 'linuxos', link: 'builtin-modules/linuxos' },
       ]
     },
     {
