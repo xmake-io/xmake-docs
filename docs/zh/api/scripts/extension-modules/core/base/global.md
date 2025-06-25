@@ -7,7 +7,7 @@
 
 - 获取指定配置值
 
-类似[config.get](/zh/api/scripts/extension-modules/core-project-config#config-get)，唯一的区别就是这个是从全局配置中获取。
+类似[config.get](/zh/api/scripts/extension-modules/core/project/config#config-get)，唯一的区别就是这个是从全局配置中获取。
 
 ## global.load
 

@@ -305,7 +305,7 @@ function main(...)
 end
 ```
 
-更多模块介绍见：[内置模块](/zh/api/scripts/builtin-modules/import)和[扩展模块](/zh/api/scripts/extension-modules/core-base-option)
+更多模块介绍见：[内置模块](/zh/api/scripts/builtin-modules/import)和[扩展模块](/zh/api/scripts/extension-modules/core/base/option)
 
 其中，`main(...)`中参数，是通过`task.run`指定的，例如：
 

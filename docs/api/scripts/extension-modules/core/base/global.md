@@ -7,7 +7,7 @@ Used to get the configuration information of xmake global, that is, the value of
 
 - Get the specified configuration value
 
-Similar to [config.get](/api/scripts/extension-modules/core-project-config#config-get), the only difference is that this is obtained from the global configuration.
+Similar to [config.get](/api/scripts/extension-modules/core/project/config#config-get), the only difference is that this is obtained from the global configuration.
 
 ## global.load
 

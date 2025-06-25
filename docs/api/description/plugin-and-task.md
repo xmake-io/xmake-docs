@@ -304,7 +304,7 @@ function main(...)
 end
 ```
 
-For more modules, see: [Builtin Module](/api/scripts/builtin-modules/import) and [Extension Module](/api/scripts/extension-modules/core-base-option)
+For more modules, see: [Builtin Module](/api/scripts/builtin-modules/import) and [Extension Module](/api/scripts/extension-modules/core/base/option)
 
 Among them, the parameter in `main(...)` is specified by `task.run`, for example:
 
