@@ -228,6 +228,12 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'winos', link: 'builtin-modules/winos' },
         { text: 'macos', link: 'builtin-modules/macos' },
         { text: 'linuxos', link: 'builtin-modules/linuxos' },
+        { text: 'io', link: 'builtin-modules/io' },
+        { text: 'path', link: 'builtin-modules/path' },
+        { text: 'table', link: 'builtin-modules/table' },
+        { text: 'string', link: 'builtin-modules/string' },
+        { text: 'coroutine', link: 'builtin-modules/coroutine' },
+        { text: 'signal', link: 'builtin-modules/signal' },
       ]
     },
     {
