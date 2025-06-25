@@ -1,5 +1,6 @@
 import { createRequire } from 'module'
 import { defineAdditionalConfig, type DefaultTheme } from 'vitepress'
+import { builtinModulesApiSidebarItems, extensionModulesApiSidebarItems } from './sidebar'
 
 const require = createRequire(import.meta.url)
 const pkg = require('vitepress/package.json')
@@ -130,37 +131,12 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
     {
       text: 'Builtin Modules',
       collapsed: true,
-      items: [
-        { text: 'import', link: 'builtin-modules/import' },
-        { text: 'inherit', link: 'builtin-modules/inherit' },
-        { text: 'try-catch-finally', link: 'builtin-modules/try-catch-finally' },
-        { text: 'pairs', link: 'builtin-modules/pairs' },
-        { text: 'ipairs', link: 'builtin-modules/ipairs' },
-        { text: 'print', link: 'builtin-modules/print' },
-        { text: 'printf', link: 'builtin-modules/printf' },
-        { text: 'cprint', link: 'builtin-modules/cprint' },
-        { text: 'cprintf', link: 'builtin-modules/cprintf' },
-        { text: 'format', link: 'builtin-modules/format' },
-        { text: 'vformat', link: 'builtin-modules/vformat' },
-        { text: 'raise', link: 'builtin-pmodules/raise' },
-        { text: 'os', link: 'builtin-modules/os' },
-        { text: 'winos', link: 'builtin-modules/winos' },
-        { text: 'macos', link: 'builtin-modules/macos' },
-        { text: 'linuxos', link: 'builtin-modules/linuxos' },
-        { text: 'io', link: 'builtin-modules/io' },
-        { text: 'path', link: 'builtin-modules/path' },
-        { text: 'table', link: 'builtin-modules/table' },
-        { text: 'string', link: 'builtin-modules/string' },
-        { text: 'coroutine', link: 'builtin-modules/coroutine' },
-        { text: 'signal', link: 'builtin-modules/signal' },
-      ]
+      items: builtinModulesApiSidebarItems()
     },
     {
       text: 'Extension Modules',
       collapsed: false,
-      items: [
-        coreScriptsApiSidebar(),
-      ]
+      items: extensionModulesApiSidebarItems()
     },
     { text: 'Native Modules', link: 'native-modules' },
     {
@@ -173,41 +149,6 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       ]
     }
   ]
-}
-
-function coreScriptsApiSidebar(): DefaultTheme.SidebarItem[] {
-  return {
-    text: 'core',
-    collapsed: true,
-    items: [
-      coreBaseScriptsApiSidebar(),
-      coreProjectScriptsApiSidebar(),
-    ]
-  }
-}
-
-function coreBaseScriptsApiSidebar(): DefaultTheme.SidebarItem[] {
-  return {
-    text: 'base',
-    collapsed: true,
-    items: [
-      { text: 'option', link: 'extension-modules/core/base/option' },
-      { text: 'global', link: 'extension-modules/core/base/global' },
-      { text: 'task', link: 'extension-modules/core/base/task' },
-      { text: 'json', link: 'extension-modules/core/base/json' },
-      { text: 'semver', link: 'extension-modules/core/base/semver' },
-    ]
-  }
-}
-
-function coreProjectScriptsApiSidebar(): DefaultTheme.SidebarItem[] {
-  return {
-    text: 'project',
-    collapsed: true,
-    items: [
-      { text: 'config', link: 'extension-modules/core/project/config' },
-    ]
-  }
 }
 
 function examplesSidebar(): DefaultTheme.SidebarItem[] {
