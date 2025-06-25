@@ -73,6 +73,14 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: 'Essentials',
+      collapsed: false,
+      items: [
+        { text: 'Create Project', link: 'create-project' },
+        { text: 'Build configuration', link: 'build-configuration' },
+      ]
+    },
+    {
       text: 'Next Steps',
       collapsed: false,
       items: [

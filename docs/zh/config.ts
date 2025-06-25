@@ -154,6 +154,14 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: '基础',
+      collapsed: false,
+      items: [
+        { text: '创建工程', link: 'create-project' },
+        { text: '编译配置', link: 'build-configuration' },
+      ]
+    },
+    {
       text: '下一步',
       collapsed: false,
       items: [

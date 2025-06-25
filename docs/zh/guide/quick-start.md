@@ -329,7 +329,7 @@ $ xmake run -d hello
 
 ## 下一步 {#next-steps}
 
-- 继续阅读该指南. [向导](/zh/guide/introduction.html)
-- 查看示例. [实例](/zh/examples/cpp/basic.html).
+- 继续阅读该指南. [创建工程](/zh/guide/create-project)
+- 查看示例. [实例](/zh/examples/cpp/basic)
 - 查看 API 手册. [API 手册](/zh/api/description/specification)
 
