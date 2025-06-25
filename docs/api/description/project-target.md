@@ -3741,7 +3741,6 @@ report of tests:
 [ 75%]: test/normal_behavior ............... passed 0.015s
 [100%]: test/normal_behavior_unexpected_pass unexpected pass 0.015s
 
-50% tests passed, 1 test(s) failed, 1 unexpected pass(es), 1 expected failure(s) out of 4, spent 0.038s
 Detailed summary:
 Failed tests:
  - test/crash_div_by_zero_fails
@@ -3749,6 +3748,8 @@ Unexpected passes:
  - test/normal_behavior_unexpected_pass
 Expected failures:
  - test/crash_div_by_zero
+
+50% tests passed, 1 test(s) failed, 1 unexpected pass(es), 1 expected failure(s) out of 4, spent 0.038s
 ```
 
 #### Terminate if the first test fails
