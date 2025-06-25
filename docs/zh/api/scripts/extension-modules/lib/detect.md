@@ -501,7 +501,7 @@ local ok = check_cxsnippets("void test() {}")
 local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar_t", includes = "stdio.h"})
 ```
 
-此接口是[detect.has_cfuncs](#detect-has_cfuncs), [detect.has_cincludes](#detect-has_cincludes)和[detect.has_ctypes](detect-has_ctypes)等接口的通用版本，也更加底层。
+此接口是[detect.has_cfuncs](#detect-has_cfuncs), [detect.has_cincludes](#detect-has_cincludes)和[detect.has_ctypes](#detect-has_ctypes)等接口的通用版本，也更加底层。
 
 因此我们可以用它来检测：types, functions, includes 还有 links，或者是组合起来一起检测。
 

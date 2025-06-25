@@ -485,7 +485,7 @@ import("lib.detect.has_cincludes")
 
 local ok = has_cincludes("stdio.h")
 local ok = has_cincludes({"stdio.h", "stdlib.h"}, {target = target})
-local ok = has_cincludes({"stdio.h", "stdlib.h"}, {configs = {defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
+local ok = has_cincludes({"stdio.h", "stdlib.h"}, {configs = {defines = "_GNU_SOURCE=1", languages = "cxx11"}})
 ```
 
 ## detect.has_cxxincludes
@@ -520,7 +520,8 @@ This interface is similar to [lib.detect.has_ctypess](#detect-has_ctypes). Pleas
 
 The generic c/c++ code snippet detection interface, by passing in a list of multiple code snippets, it will automatically generate a compiled file, and then common sense to compile it, if the compilation pass returns true.
 
-For some complex compiler features, even if [compiler.has_features](#compilerhas_features) can't detect it, you can detect it by trying to compile through this interface.
+For some complex compiler features, even if [compiler.has_features](/api/scripts/extension-modules/core/tool/compiler#compiler-has_features) can't detect it,
+you can detect it by trying to compile through this interface.
 
 ```lua
 import("lib.detect.check_cxsnippets")
@@ -529,7 +530,7 @@ local ok = check_cxsnippets("void test() {}")
 local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar_t", includes = "stdio.h"})
 ```
 
-This interface is a generic version of interfaces such as [detect.has_cfuncs](#detect-has_cfuncs), [detect.has_cincludes](#detect-has_cincludes), and [detect.has_ctypes](detect-has_ctypes), and is also lower level.
+This interface is a generic version of interfaces such as [detect.has_cfuncs](#detect-has_cfuncs), [detect.has_cincludes](#detect-has_cincludes), and [detect.has_ctypes](#detect-has_ctypes), and is also lower level.
 
 So we can use it to detect: types, functions, includes and links, or combine them together to detect.
 
