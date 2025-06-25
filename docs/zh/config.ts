@@ -165,20 +165,26 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
 
 function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
   return [
-    { text: '接口规范', link: '/specification' },
-    { text: '全局接口', link: '/global-interfaces' },
-    { text: '条件判断', link: '/conditions' },
-    { text: '辅助接口', link: '/helper-interfaces' },
-    { text: '工程目标', link: '/project-target' },
-    { text: '配置选项', link: '/configuration-option' },
-    { text: '插件任务', link: '/plugin-and-task' },
-    { text: '自定义规则', link: '/custom-rule' },
-    { text: '自定义工具链', link: '/custom-toolchain' },
-    { text: '包依赖', link: '/package-dependencies' },
-    { text: '内置变量', link: '/builtin-variables' },
-    { text: '内置规则', link: '/builtin-rules' },
-    { text: 'XPack 打包接口', link: '/xpack-interfaces' },
-    { text: 'XPack 组件接口', link: '/xpack-component-interfaces' },
+    {
+      text: '描述域 API',
+      collapsed: false,
+      items: [
+        { text: '接口规范', link: '/specification' },
+        { text: '全局接口', link: '/global-interfaces' },
+        { text: '条件判断', link: '/conditions' },
+        { text: '辅助接口', link: '/helper-interfaces' },
+        { text: '工程目标', link: '/project-target' },
+        { text: '配置选项', link: '/configuration-option' },
+        { text: '插件任务', link: '/plugin-and-task' },
+        { text: '自定义规则', link: '/custom-rule' },
+        { text: '自定义工具链', link: '/custom-toolchain' },
+        { text: '包依赖', link: '/package-dependencies' },
+        { text: '内置变量', link: '/builtin-variables' },
+        { text: '内置规则', link: '/builtin-rules' },
+        { text: 'XPack 打包接口', link: '/xpack-interfaces' },
+        { text: 'XPack 组件接口', link: '/xpack-component-interfaces' },
+      ]
+    },
     {
       text: '下一步',
       collapsed: false,
@@ -193,9 +199,15 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
 
 function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
   return [
-    { text: '目标实例', link: '/target-instance' },
-    { text: '选项实例', link: '/option-instance' },
-    { text: '包实例', link: '/package-instance' },
+    {
+      text: '脚本域 API',
+      collapsed: false,
+      items: [
+        { text: '目标实例', link: '/target-instance' },
+        { text: '选项实例', link: '/option-instance' },
+        { text: '包实例', link: '/package-instance' },
+      ]
+    },
     {
       text: '内置模块',
       collapsed: true,

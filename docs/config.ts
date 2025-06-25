@@ -84,20 +84,26 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
 
 function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
   return [
-    { text: 'Specification', link: '/specification' },
-    { text: 'Conditions', link: '/conditions' },
-    { text: 'Global Interfaces', link: '/global-interfaces' },
-    { text: 'Helper Interfaces', link: '/helper-interfaces' },
-    { text: 'Project Targets', link: '/project-target' },
-    { text: 'Configuration Option', link: '/configuration-option' },
-    { text: 'Plugin and Task', link: '/plugin-and-task' },
-    { text: 'Custom Rule', link: '/custom-rule' },
-    { text: 'Custom Toolchain', link: '/custom-toolchain' },
-    { text: 'Package Dependencies', link: '/package-dependencies' },
-    { text: 'Builtin Variables', link: '/builtin-variables' },
-    { text: 'Builtin Rules', link: '/builtin-rules' },
-    { text: 'XPack Interfaces', link: '/xpack-interfaces' },
-    { text: 'XPack Component Interfaces', link: '/xpack-component-interfaces' },
+    {
+      text: 'Description API',
+      collapsed: false,
+      items: [
+        { text: 'Specification', link: '/specification' },
+        { text: 'Conditions', link: '/conditions' },
+        { text: 'Global Interfaces', link: '/global-interfaces' },
+        { text: 'Helper Interfaces', link: '/helper-interfaces' },
+        { text: 'Project Targets', link: '/project-target' },
+        { text: 'Configuration Option', link: '/configuration-option' },
+        { text: 'Plugin and Task', link: '/plugin-and-task' },
+        { text: 'Custom Rule', link: '/custom-rule' },
+        { text: 'Custom Toolchain', link: '/custom-toolchain' },
+        { text: 'Package Dependencies', link: '/package-dependencies' },
+        { text: 'Builtin Variables', link: '/builtin-variables' },
+        { text: 'Builtin Rules', link: '/builtin-rules' },
+        { text: 'XPack Interfaces', link: '/xpack-interfaces' },
+        { text: 'XPack Component Interfaces', link: '/xpack-component-interfaces' },
+      ]
+    },
     {
       text: 'Next Steps',
       collapsed: false,
@@ -112,9 +118,15 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
 
 function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
   return [
-    { text: 'Target Instance', link: '/target-instance' },
-    { text: 'Option Instance', link: '/option-instance' },
-    { text: 'Package Instance', link: '/package-instance' },
+    {
+      text: 'Scripts API',
+      collapsed: false,
+      items: [
+        { text: 'Target Instance', link: '/target-instance' },
+        { text: 'Option Instance', link: '/option-instance' },
+        { text: 'Package Instance', link: '/package-instance' },
+      ]
+    },
     {
       text: 'Builtin Modules',
       collapsed: true,
