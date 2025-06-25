@@ -238,14 +238,9 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
     },
     {
       text: '扩展模块',
-      collapsed: true,
+      collapsed: false,
       items: [
-        { text: 'core.base.option', link: 'extension-modules/core-base-option' },
-        { text: 'core.base.global', link: 'extension-modules/core-base-global' },
-        { text: 'core.base.task', link: 'extension-modules/core-base-task' },
-        { text: 'core.base.json', link: 'extension-modules/core-base-json' },
-        { text: 'core.base.semver', link: 'extension-modules/core-base-semver' },
-        { text: 'core.project.config', link: 'extension-modules/core-project-config' },
+        coreScriptsApiSidebar(),
       ]
     },
     { text: '原生模块', link: 'native-modules' },
@@ -259,6 +254,41 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       ]
     }
   ]
+}
+
+function coreScriptsApiSidebar(): DefaultTheme.SidebarItem[] {
+  return {
+    text: 'core',
+    collapsed: true,
+    items: [
+      coreBaseScriptsApiSidebar(),
+      coreProjectScriptsApiSidebar(),
+    ]
+  }
+}
+
+function coreBaseScriptsApiSidebar(): DefaultTheme.SidebarItem[] {
+  return {
+    text: 'base',
+    collapsed: true,
+    items: [
+      { text: 'option', link: 'extension-modules/core/base/option' },
+      { text: 'global', link: 'extension-modules/core/base/global' },
+      { text: 'task', link: 'extension-modules/core/base/task' },
+      { text: 'json', link: 'extension-modules/core/base/json' },
+      { text: 'semver', link: 'extension-modules/core/base/semver' },
+    ]
+  }
+}
+
+function coreProjectScriptsApiSidebar(): DefaultTheme.SidebarItem[] {
+  return {
+    text: 'project',
+    collapsed: true,
+    items: [
+      { text: 'config', link: 'extension-modules/core/project/config' },
+    ]
+  }
 }
 
 function examplesSidebar(): DefaultTheme.SidebarItem[] {
