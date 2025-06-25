@@ -29,10 +29,13 @@ export function builtinModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
 
 export function extensionModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
   return [
+    cliModulesApiSidebar(),
     coreModulesApiSidebar(),
+    develModulesApiSidebar(),
     libModulesApiSidebar(),
     netModulesApiSidebar(),
     privilegeModulesApiSidebar(),
+    utilsModulesApiSidebar(),
   ]
 }
 
@@ -84,6 +87,16 @@ function coreToolModulesApiSidebar(): DefaultTheme.SidebarItem {
   }
 }
 
+function cliModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'cli',
+    collapsed: true,
+    items: [
+      { text: 'amalgamate', link: 'extension-modules/cli/amalgamate' },
+    ]
+  }
+}
+
 function coreProjectModulesApiSidebar(): DefaultTheme.SidebarItem {
   return {
     text: 'project',
@@ -91,6 +104,16 @@ function coreProjectModulesApiSidebar(): DefaultTheme.SidebarItem {
     items: [
       { text: 'config', link: 'extension-modules/core/project/config' },
       { text: 'project', link: 'extension-modules/core/project/project' },
+    ]
+  }
+}
+
+function develModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'devel',
+    collapsed: true,
+    items: [
+      { text: 'git', link: 'extension-modules/devel/git' },
     ]
   }
 }
@@ -124,3 +147,15 @@ function privilegeModulesApiSidebar(): DefaultTheme.SidebarItem {
     ]
   }
 }
+
+function utilsModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'utils',
+    collapsed: true,
+    items: [
+      { text: 'archive', link: 'extension-modules/utils/archive' },
+      { text: 'platform', link: 'extension-modules/utils/platform' },
+    ]
+  }
+}
+
