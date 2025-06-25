@@ -40,6 +40,7 @@ function coreModulesApiSidebar(): DefaultTheme.SidebarItem {
     items: [
       coreBaseModulesApiSidebar(),
       coreProjectModulesApiSidebar(),
+      coreToolModulesApiSidebar(),
     ]
   }
 }
@@ -49,11 +50,22 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
     text: 'base',
     collapsed: true,
     items: [
-      { text: 'option', link: 'extension-modules/core/base/option' },
       { text: 'global', link: 'extension-modules/core/base/global' },
-      { text: 'task', link: 'extension-modules/core/base/task' },
       { text: 'json', link: 'extension-modules/core/base/json' },
+      { text: 'option', link: 'extension-modules/core/base/option' },
       { text: 'semver', link: 'extension-modules/core/base/semver' },
+      { text: 'task', link: 'extension-modules/core/base/task' },
+    ]
+  }
+}
+
+function coreToolModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'tool',
+    collapsed: true,
+    items: [
+      { text: 'compiler', link: 'extension-modules/core/tool/compiler' },
+      { text: 'linker', link: 'extension-modules/core/tool/linker' },
     ]
   }
 }
@@ -64,6 +76,7 @@ function coreProjectModulesApiSidebar(): DefaultTheme.SidebarItem {
     collapsed: true,
     items: [
       { text: 'config', link: 'extension-modules/core/project/config' },
+      { text: 'project', link: 'extension-modules/core/project/project' },
     ]
   }
 }
