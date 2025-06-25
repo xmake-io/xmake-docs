@@ -108,8 +108,8 @@ function nav(): DefaultTheme.NavItem[] {
       items: [
         { text: '使用指南', link: '/zh/guide/what-is-xmake', activeMatch: '/zh/guide/' },
         { text: '快速上手', link: '/zh/guide/getting-started' },
-        { text: '示例', link: '/zh/examples/cpp/basic' },
-        { text: 'API 手册', link: '/zh/api/description/specification' }
+        { text: '示例', link: '/zh/examples/cpp/basic', activeMatch: '/zh/examples/' },
+        { text: 'API 手册', link: '/zh/api/description/specification', activeMatch: '/zh/api/' }
       ]
     },
     {

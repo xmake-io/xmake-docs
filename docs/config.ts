@@ -33,8 +33,8 @@ function nav(): DefaultTheme.NavItem[] {
       items: [
         { text: 'Guide', link: '/guide/what-is-xmake', activeMatch: '/guide/' },
         { text: 'Getting Started', link: '/guide/getting-started' },
-        { text: 'Examples', link: '/examples/cpp/basic' },
-        { text: 'API Reference', link: '/api/description/specification' }
+        { text: 'Examples', link: '/examples/cpp/basic', activeMatch: '/examples/' },
+        { text: 'API Reference', link: '/api/description/specification', activeMatch: '/api/' }
       ]
     },
     {
