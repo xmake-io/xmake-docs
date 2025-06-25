@@ -10,13 +10,13 @@
 
 ```lua
 {
-     [".c"]      = cc
-,    [".cc"]     = cxx
-,    [".cpp"]    = cxx
-,    [".m"]      = mm
-,    [".mm"]     = mxx
-,    [".swift"]  = sc
-,    [".go"]     = gc
+    [".c"]      = cc,
+    [".cc"]     = cxx,
+    [".cpp"]    = cxx,
+    [".m"]      = mm,
+    [".mm"]     = mxx,
+    [".swift"]  = sc,
+    [".go"]     = gc
 }
 ```
 
@@ -28,9 +28,9 @@
 
 ```lua
 {
-     binary = {"ld", "gcld", "dcld"}
-,    static = {"ar", "gcar", "dcar"}
-,    shared = {"sh", "dcsh"}
+    binary = {"ld", "gcld", "dcld"},
+    static = {"ar", "gcar", "dcar"},
+    shared = {"sh", "dcsh"}
 }
 ```
 
@@ -42,15 +42,15 @@
 
 ```lua
 {
-     cc  = ".c"
-,    cxx = {".cc", ".cpp", ".cxx"}
-,    mm  = ".m"
-,    mxx = ".mm"
-,    sc  = ".swift"
-,    gc  = ".go"
-,    rc  = ".rs"
-,    dc  = ".d"
-,    as  = {".s", ".S", ".asm"}
+    cc  = ".c",
+    cxx = {".cc", ".cpp", ".cxx"},
+    mm  = ".m",
+    mxx = ".mm",
+    sc  = ".swift",
+    gc  = ".go",
+    rc  = ".rs",
+    dc  = ".d",
+    as  = {".s", ".S", ".asm"}
 }
 ```
 
@@ -62,9 +62,9 @@
 
 ```lua
 {
-     cc  = {"cflags", "cxflags"}
-,    cxx = {"cxxflags", "cxflags"}
-,    ...
+    cc  = {"cflags", "cxflags"},
+    cxx = {"cxxflags", "cxflags"},
+    ...
 }
 ```
 

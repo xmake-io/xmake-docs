@@ -159,4 +159,4 @@ bar: 1 + 1 = 2
 
 Through the new native module feature, we can also use it to implement auto-codegen, and then continue to execute the subsequent compilation process based on the automatically generated code.
 
-There is also a complete example here for reference: [autogen_shared_module](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/autogen_shared_module).
+There is also a complete example here for reference: [autogen_shared_module](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/autogen/autogen_shared_module).

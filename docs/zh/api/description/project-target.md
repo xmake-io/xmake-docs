@@ -293,7 +293,7 @@ $ xmake install [-a|--all]
 
 ### 设置关联选项
 
-添加选项依赖，如果通过[option](#option)接口自定义了一些选项，那么只有在指定`target`目标域下，添加此选项，才能进行关联生效。
+添加选项依赖，如果通过[option](/zh/api/description/configuration-option#option)接口自定义了一些选项，那么只有在指定`target`目标域下，添加此选项，才能进行关联生效。
 
 ```lua
 -- 定义一个hello选项
@@ -308,7 +308,7 @@ target("test")
 ```
 
 :::tip WARN
-只有调用`set_options`进行关联生效后，[option](#option) 中定义的一些设置才会影响到此`target`目标，例如：宏定义、链接库、编译选项等等
+只有调用`set_options`进行关联生效后，[option](/zh/api/description/configuration-option#option) 中定义的一些设置才会影响到此`target`目标，例如：宏定义、链接库、编译选项等等
 :::
 
 ## set_symbols
@@ -3135,7 +3135,7 @@ target("test6")
 
 生成的 vs 工程目录结构效果如下：
 
-![](https://xmake.io/assets/img/manual/set_group.png)
+![](/assets/img/manual/set_group.png)
 
 其中 `set_group("group1/group2")` 可以将 target 设置到二级分组中去。
 
@@ -3202,7 +3202,7 @@ target("test")
     add_files("../../../../src/**.cpp")
 ```
 
-![](https://xmake.io/assets/img/manual/filegroup1.png)
+![](/assets/img/manual/filegroup1.png)
 
 目前主要支持两种展示模式：
 
@@ -3220,7 +3220,7 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "../../../../"})
 ```
 
-![](https://xmake.io/assets/img/manual/filegroup2.png)
+![](/assets/img/manual/filegroup2.png)
 
 
 #### 设置分组并指定文件匹配模式
@@ -3243,7 +3243,7 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "../../../../", mode = "plain"})
 ```
 
-![](https://xmake.io/assets/img/manual/filegroup3.png)
+![](/assets/img/manual/filegroup3.png)
 
 ## set_exceptions
 
@@ -3455,11 +3455,11 @@ running tests ...
 80% tests passed, 7 tests failed out of 36, spent 0.242s
 ```
 
-![](https://xmake.io/assets/img/manual/xmake-test1.png)
+![](/assets/img/manual/xmake-test1.png)
 
 我们也可以执行 `xmake test -vD` 查看详细的测试失败的错误信息：
 
-![](https://xmake.io/assets/img/manual/xmake-test2.png)
+![](/assets/img/manual/xmake-test2.png)
 
 #### 运行指定测试目标
 

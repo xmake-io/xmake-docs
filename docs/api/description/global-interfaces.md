@@ -165,7 +165,7 @@ The builtin modules are placed in the 'xmake/modules' directory, but for user-de
 ```lua
 add_moduledirs("$(projectdir)/modules")
 ```
-xmake will load the given module in the given directory when calling `import`.
+xmake will load the given module in the given directory when calling [`import`](/api/scripts/builtin-modules/import).
 
 ## add_plugindirs
 

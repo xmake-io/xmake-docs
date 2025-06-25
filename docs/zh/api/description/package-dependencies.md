@@ -126,7 +126,7 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 
 - 设置每个源码包的版本
 
-它也会设置对应的sha256值，具体描述见：[add_urls](#packageadd_urls)
+它也会设置对应的sha256值，具体描述见：[add_urls](#add_urls)
 
 ## add_versionfiles
 
@@ -220,7 +220,7 @@ package("libpng")
 
 - 添加依赖的系统 frameworks 链接
 
-示例见：[add_syslinks](#packageadd_syslinks)
+示例见：[add_syslinks](#add_syslinks)
 
 ## add_linkdirs
 
