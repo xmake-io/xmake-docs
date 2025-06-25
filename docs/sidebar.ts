@@ -30,6 +30,7 @@ export function builtinModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
 export function extensionModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
   return [
     coreModulesApiSidebar(),
+    libModulesApiSidebar(),
   ]
 }
 
@@ -77,6 +78,16 @@ function coreProjectModulesApiSidebar(): DefaultTheme.SidebarItem {
     items: [
       { text: 'config', link: 'extension-modules/core/project/config' },
       { text: 'project', link: 'extension-modules/core/project/project' },
+    ]
+  }
+}
+
+function libModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'lib',
+    collapsed: true,
+    items: [
+      { text: 'detect', link: 'extension-modules/lib/detect' },
     ]
   }
 }
