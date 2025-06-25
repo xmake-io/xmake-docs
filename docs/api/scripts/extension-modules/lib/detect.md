@@ -3,13 +3,17 @@
 
 This module provides very powerful probing capabilities for probing programs, compilers, language features, dependencies, and more.
 
-!> The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient.
+::: tip NOTE
+The interface of this module is spread across multiple module directories, try to import it by importing a single interface, which is more efficient.
+:::
 
 ## detect.find_file
 
 - Find files
 
-This interface provides a more powerful project than [os.files](#os-files), which can specify multiple search directories at the same time, and can also specify additional subdirectories for each directory to match the pattern lookup, which is equivalent to [ An enhanced version of os.files](#os-files).
+This interface provides a more powerful project than [os.files](/api/scripts/builtin-modules/os#os-files),
+which can specify multiple search directories at the same time, and can also specify additional subdirectories for each directory to match the pattern lookup,
+which is equivalent to an enhanced version of [os.files](/api/scripts/builtin-modules/os#os-files).
 
 E.g:
 
@@ -56,13 +60,15 @@ By specifying a list of suffixes subdirectories, you can extend the list of path
 
 And without changing the path list, you can dynamically switch subdirectories to search for files.
 
-!> We can also quickly call and test this interface with the `xmake lua` plugin: `xmake lua lib.detect.find_file test.h /usr/local`
+::: tip NOTE
+We can also quickly call and test this interface with the `xmake lua` plugin: `xmake lua lib.detect.find_file test.h /usr/local`
+:::
 
 ## detect.find_path
 
 - Find the path
 
-The usage of this interface is similar to [lib.detect.find_file](#detectfind_file), the only difference is that the returned results are different.
+The usage of this interface is similar to [lib.detect.find_file](#detect-find_file), the only difference is that the returned results are different.
 After the interface finds the incoming file path, it returns the corresponding search path, not the file path itself. It is generally used to find the parent directory location corresponding to the file.
 
 ```lua
@@ -126,7 +132,7 @@ local library = find_library("cryp*", {"/usr", "/usr/local"}, {suffixes = "/lib"
 
 - Find executable programs
 
-This interface is more primitive than [lib.detect.find_tool](#detectfind_tool), looking for executables through the specified parameter directory.
+This interface is more primitive than [lib.detect.find_tool](#detect-find_tool), looking for executables through the specified parameter directory.
 
 ```lua
 import("lib.detect.find_program")
@@ -157,8 +163,10 @@ local program = find_program("ccache", {paths = {"$(env PATH)", "$(reg HKEY_LOCA
 local program = find_program("ccache", {paths = {"$(env PATH)", function () return "/usr/local/bin" end}})
 ```
 
-!> In order to speed up the efficiency of frequent lookups, this interface comes with a default cache, so even if you frequently find the same program, it will not take too much time.
+::: tip NOTE
+In order to speed up the efficiency of frequent lookups, this interface comes with a default cache, so even if you frequently find the same program, it will not take too much time.
 If you want to disable the cache, you can clear the local cache by executing `xmake f -c` in the project directory.
+:::
 
 We can also test quickly with `xmake lua lib.detect.find_program ccache`.
 
@@ -194,7 +202,9 @@ local version = find_programver("ccache", {command = "--version", parse = "(%d+%
 local version = find_programver("ccache", {command = "--version", parse = function (output) return output:match("(%d+%.?%d*%.?%d*.-)%s ") end})
 ```
 
-!> In order to speed up the efficiency of frequent lookups, this interface is self-contained by default. If you want to disable the cache, you can execute `xmake f -c` in the project directory to clear the local cache.
+::: tip NOTE
+In order to speed up the efficiency of frequent lookups, this interface is self-contained by default. If you want to disable the cache, you can execute `xmake f -c` in the project directory to clear the local cache.
+:::
 
 We can also test quickly with `xmake lua lib.detect.find_programver ccache`.
 
@@ -209,7 +219,7 @@ After 2.6.x this interface is not recommended for direct use (internal use only)
 - Find tool
 
 This interface is also used to find executable programs, but more
-advanced than [lib.detect.find_program](#detectfind_program), the
+advanced than [lib.detect.find_program](#detect-find_program), the
 function is also more powerful, it encapsulates the executable
 program, providing the concept of tools:
 
@@ -225,7 +235,7 @@ The corresponding relationship is as follows:
 | gcc | `/usr/toolchains/bin/arm-linux-gcc` |
 | link | `link.exe -lib` |
 
-[lib.detect.find_program](#detectfind_program) can only determine
+[lib.detect.find_program](#detect-find_program) can only determine
 whether the program exists by passing in the original program command
 or path.  And `find_tool` can find the tool through a more consistent
 toolname, and return the corresponding program complete command path,
@@ -326,10 +336,12 @@ end
 After placing it in the project's module directory, execute: `xmake l
 lib.detect.find_tool 7z` to find it.
 
-!> In order to speed up the efficiency of frequent
+::: tip NOTE
+In order to speed up the efficiency of frequent
 lookups, this interface is self-contained by default. If you want to
 disable the cache, you can execute `xmake f -c` in the project
 directory to clear the local cache.
+:::
 
 We can also test quickly with `xmake lua lib.detect.find_tool clang`.
 
@@ -373,7 +385,7 @@ Please refer to [CUDA Toolkit Documentation](https://docs.nvidia.com/cuda/cuda-r
 
 - Get all the features of the specified tool
 
-This interface is similar to [compiler.features](#compilerfeatures). The difference is that this interface is more primitive. The passed argument is the actual tool name toolname.
+This interface is similar to [compiler.features](/api/scripts/extension-modules/core/tool/compiler#compiler-features). The difference is that this interface is more primitive. The passed argument is the actual tool name toolname.
 
 And this interface not only can get the characteristics of the compiler, the characteristics of any tool can be obtained, so it is more versatile.
 
@@ -387,13 +399,13 @@ local features = features("clang", {flags = {"-g", "-O0", "-std=c++11"}})
 
 By passing in flags, you can change the result of the feature, for example, some features of C++11, which are not available by default. After enabling `-std=c++11`, you can get it.
 
-A list of all compiler features can be found at [compiler.features](#compilerfeatures).
+A list of all compiler features can be found at [compiler.features](/api/scripts/extension-modules/core/tool/compiler#compiler-features).
 
 ## detect.has_features
 
 - Determine if the specified feature is supported
 
-This interface is similar to [compiler.has_features](#compilerhas_features), but more primitive, the passed argument is the actual tool name toolname.
+This interface is similar to [compiler.has_features](/api/scripts/extension-modules/core/tool/compiler#compiler-has_features), but more primitive, the passed argument is the actual tool name toolname.
 
 And this interface can not only judge the characteristics of the compiler, but the characteristics of any tool can be judged, so it is more versatile.
 
@@ -407,13 +419,13 @@ local features = has_features("clang", {"cxx_constexpr", "c_static_assert"}, {fl
 
 If the specified feature list exists, the actual supported feature sublist is returned. If none is supported, nil is returned. We can also change the feature acquisition rule by specifying flags.
 
-A list of all compiler features can be found at [compiler.features](#compilerfeatures).
+A list of all compiler features can be found at [compiler.features](/api/scripts/extension-modules/core/tool/compiler#compiler-features).
 
 ## detect.has_flags
 
 - Determine if the specified parameter option is supported
 
-This interface is similar to [compiler.has_flags](#compilerhas_flags), but more primitive, the passed argument is the actual tool name toolname.
+This interface is similar to [compiler.has_flags](/api/scripts/extension-modules/core/tool/compiler#compiler-has_flags), but more primitive, the passed argument is the actual tool name toolname.
 
 ```lua
 import("lib.detect.has_flags")
@@ -431,7 +443,7 @@ The detection of this interface has been optimized. Except for the cache mechani
 
 - Determine if the specified c function exists
 
-This interface is a simplified version of [lib.detect.check_cxsnippets](#detectcheck_cxsnippets) and is only used to detect functions.
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect functions.
 
 ```lua
 import("lib.detect.has_cfuncs")
@@ -460,13 +472,13 @@ The verbose is used to echo the detection information, the target is used to app
 
 - Determine if the specified c++ function exists
 
-This interface is similar to [lib.detect.has_cfuncs](#detecthas_cfuncs), please refer to its instructions for use. The only difference is that this interface is used to detect c++ functions.
+This interface is similar to [lib.detect.has_cfuncs](#detect-has_cfuncs), please refer to its instructions for use. The only difference is that this interface is used to detect c++ functions.
 
 ## detect.has_cincludes
 
 - Determine if the specified c header file exists
 
-This interface is a simplified version of [lib.detect.check_cxsnippets](#detectcheck_cxsnippets) and is only used to detect header files.
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect header files.
 
 ```lua
 import("lib.detect.has_cincludes")
@@ -480,27 +492,27 @@ local ok = has_cincludes({"stdio.h", "stdlib.h"}, {configs = {defines = "_GNU_SO
 
 - Determine if the specified c++ header file exists
 
-This interface is similar to [lib.detect.has_cincludess](#detecthas_cincludes), please refer to its instructions for use. The only difference is that this interface is used to detect c++ header files.
+This interface is similar to [lib.detect.has_cincludess](#detect-has_cincludes), please refer to its instructions for use. The only difference is that this interface is used to detect c++ header files.
 
 ## detect.has_ctypes
 
 - Determine if the specified c type exists
 
-This interface is a simplified version of [lib.detect.check_cxsnippets](#detectcheck_cxsnippets) and is only used to detect functions.
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect functions.
 
 ```lua
 import("lib.detect.has_ctypes")
 
 local ok = has_ctypes("wchar_t")
 local ok = has_ctypes({"char", "wchar_t"}, {includes = "stdio.h"})
-local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, configs = {"defines = "_GNU_SOURCE=1", languages ​​= "cxx11"}})
+local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, configs = {"defines = "_GNU_SOURCE=1", languages = "cxx11"}})
 ```
 
 ## detect.has_cxxtypes
 
 - Determine if the specified c++ type exists
 
-This interface is similar to [lib.detect.has_ctypess](#detecthas_ctypes). Please refer to its instructions for use. The only difference is that this interface is used to detect c++ types.
+This interface is similar to [lib.detect.has_ctypess](#detect-has_ctypes). Please refer to its instructions for use. The only difference is that this interface is used to detect c++ types.
 
 ## detect.check_cxsnippets
 
@@ -517,7 +529,7 @@ local ok = check_cxsnippets("void test() {}")
 local ok = check_cxsnippets({"void test(){}", "#define TEST 1"}, {types = "wchar_t", includes = "stdio.h"})
 ```
 
-This interface is a generic version of interfaces such as [detect.has_cfuncs](#detecthas_cfuncs), [detect.has_cincludes](#detecthas_cincludes), and [detect.has_ctypes](detect-has_ctypes), and is also lower level.
+This interface is a generic version of interfaces such as [detect.has_cfuncs](#detect-has_cfuncs), [detect.has_cincludes](#detect-has_cincludes), and [detect.has_ctypes](detect-has_ctypes), and is also lower level.
 
 So we can use it to detect: types, functions, includes and links, or combine them together to detect.
 
@@ -535,4 +547,5 @@ There are other optional parameters:
 { verbose = false, target = [target|option], sourcekind = "[cc|cxx]"}
 ```
 
-The verbose is used to echo the detection information. The target is used to append the configuration information in the target before the detection. The sourcekind is used to specify the tool type such as the compiler. For example, the incoming `cxx` is forced to be detected as c++ code.
+The verbose is used to echo the detection information. The target is used to append the configuration information in the target before the detection.
+The sourcekind is used to specify the tool type such as the compiler. For example, the incoming `cxx` is forced to be detected as c++ code.
