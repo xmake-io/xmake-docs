@@ -120,6 +120,17 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'import', link: '/builtin-modules/import' },
+        { text: 'inherit', link: '/builtin-modules/inherit' },
+        { text: 'try-catch-finally', link: '/builtin-modules/try-catch-finally' },
+        { text: 'pairs', link: '/builtin-modules/pairs' },
+        { text: 'ipairs', link: '/builtin-modules/ipairs' },
+        { text: 'print', link: '/builtin-modules/print' },
+        { text: 'printf', link: '/builtin-modules/printf' },
+        { text: 'cprint', link: '/builtin-modules/cprint' },
+        { text: 'cprintf', link: '/builtin-modules/cprintf' },
+        { text: 'format', link: '/builtin-modules/format' },
+        { text: 'vformat', link: '/builtin-modules/vformat' },
+        { text: 'raise', link: '/builtin-pmodules/raise' },
         { text: 'os', link: '/builtin-modules/os' },
       ]
     },
