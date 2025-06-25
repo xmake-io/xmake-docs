@@ -1,6 +1,6 @@
 # Target instance
 
-This page describes the interface for `target` of functions like `on_load()`, `before_build()` or `after_install()` of the [Project target](https://xmake.io/#manual/project_target.md)
+This page describes the interface for `target` of functions like `on_load()`, `before_build()` or `after_install()` of the [Project target](/api/description/project-target).
 
 ## target:name
 
@@ -19,7 +19,9 @@ target:get("defines")
 
 ## target:set
 
-- Set the values of the target by name (If you just want to add values use [target:add](#target-add))
+- Set the values of the target by name
+
+If you just want to add values use [target:add](#target-add).
 
 ```lua
 -- set the links
