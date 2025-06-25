@@ -95,7 +95,7 @@ end
 
 - 判断指定链接选项是否支持
 
-虽然通过[lib.detect.has_flags](/zh/api/scripts/extension-modules/lib/detect/has_flags)也能判断，但是那个接口更加底层，需要指定链接器名称
+虽然通过[lib.detect.has_flags](/zh/api/scripts/extension-modules/lib/detect#detect-has_flags)也能判断，但是那个接口更加底层，需要指定链接器名称
 而此接口只需要指定target的目标类型，源文件类型，它会自动切换选择当前支持的链接器。
 
 ```lua

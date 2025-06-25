@@ -95,7 +95,7 @@ The returned array of flags is an array.
 
 - Determine if the specified link option is supported
 
-Although it can be judged by [lib.detect.has_flags](/api/scripts/extension-modules/lib/detect/has_flags), but the interface is more low-level, you need to specify the linker name.
+Although it can be judged by [lib.detect.has_flags](/api/scripts/extension-modules/lib/detect#detect-has_flags), but the interface is more low-level, you need to specify the linker name.
 This interface only needs to specify the target type of the target, the source file type, which will automatically switch to select the currently supported linker.
 
 ```lua

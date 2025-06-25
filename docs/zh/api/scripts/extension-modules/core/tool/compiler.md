@@ -85,7 +85,7 @@ end
 
 - 判断指定编译选项是否支持
 
-虽然通过[lib.detect.has_flags](/zh/api/scripts/extension-modules/lib/detect/has_flags)也能判断，但是那个接口更加底层，需要指定编译器名称。
+虽然通过[lib.detect.has_flags](/zh/api/scripts/extension-modules/lib/detect#detect-has_flags)也能判断，但是那个接口更加底层，需要指定编译器名称。
 而此接口只需要指定语言类型，它会自动切换选择当前支持的编译器。
 
 ```lua
@@ -104,7 +104,7 @@ end
 
 - 获取所有编译器特性
 
-虽然通过[lib.detect.features](/zh/api/scripts/extension-modules/lib/detect/features)也能获取，但是那个接口更加底层，需要指定编译器名称。
+虽然通过[lib.detect.features](/zh/api/scripts/extension-modules/lib/detect#detect-features)也能获取，但是那个接口更加底层，需要指定编译器名称。
 而此接口只需要指定语言类型，它会自动切换选择当前支持的编译器，然后获取当前的编译器特性列表。
 
 ```lua
@@ -192,7 +192,7 @@ local features = compiler.features("cxx", {target = target, configs = {defines =
 
 - 判断指定的编译器特性是否支持
 
-虽然通过[lib.detect.has_features](/zh/api/scripts/extension-modules/lib/detect/has_features)也能获取，但是那个接口更加底层，需要指定编译器名称。
+虽然通过[lib.detect.has_features](/zh/api/scripts/extension-modules/lib/detect#detect-has_features)也能获取，但是那个接口更加底层，需要指定编译器名称。
 而此接口只需要指定需要检测的特姓名称列表，就能自动切换选择当前支持的编译器，然后判断指定特性在当前的编译器中是否支持。
 
 ```lua

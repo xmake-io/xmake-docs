@@ -86,7 +86,7 @@ The returned array of flags is an array.
 
 - Determine if the specified compilation option is supported
 
-Although it can be judged by [lib.detect.has_flags](/api/scripts/extension-modules/lib/detect/has_flags), but the interface is more low-level, you need to specify the compiler name.
+Although it can be judged by [lib.detect.has_flags](/api/scripts/extension-modules/lib/detect#detect-has_flags), but the interface is more low-level, you need to specify the compiler name.
 This interface only needs to specify the language type, it will automatically switch to select the currently supported compiler.
 
 ```lua
@@ -105,7 +105,7 @@ end
 
 - Get all compiler features
 
-Although it can be obtained by [lib.detect.features](/api/scripts/extension-modules/lib/detect/features), but the interface is more low-level, you need to specify the compiler name.
+Although it can be obtained by [lib.detect.features](/api/scripts/extension-modules/lib/detect#detect-features), but the interface is more low-level, you need to specify the compiler name.
 This interface only needs to specify the language type, it will automatically switch to select the currently supported compiler, and then get the current list of compiler features.
 
 ```lua
@@ -193,7 +193,7 @@ A list of all C++ compiler features:
 
 - Determine if the specified compiler feature is supported
 
-Although it can be obtained by [lib.detect.has_features](/api/scripts/extension-modules/lib/detect/has_features), but the interface is more low-level, you need to specify the compiler name.
+Although it can be obtained by [lib.detect.has_features](/api/scripts/extension-modules/lib/detect#detect-has_features), but the interface is more low-level, you need to specify the compiler name.
 And this interface only needs to specify the special name list that needs to be detected, it can automatically switch to select the currently supported compiler, and then determine whether the specified feature is supported in the current compiler.
 
 ```lua
