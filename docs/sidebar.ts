@@ -31,6 +31,8 @@ export function extensionModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
   return [
     coreModulesApiSidebar(),
     libModulesApiSidebar(),
+    netModulesApiSidebar(),
+    privilegeModulesApiSidebar(),
   ]
 }
 
@@ -103,3 +105,22 @@ function libModulesApiSidebar(): DefaultTheme.SidebarItem {
   }
 }
 
+function netModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'net',
+    collapsed: true,
+    items: [
+      { text: 'http', link: 'extension-modules/net/http' },
+    ]
+  }
+}
+
+function privilegeModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'privilege',
+    collapsed: true,
+    items: [
+      { text: 'sudo', link: 'extension-modules/privilege/sudo' },
+    ]
+  }
+}
