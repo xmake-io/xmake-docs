@@ -1,6 +1,6 @@
 # core.project.project
 
-用于获取当前工程的一些描述信息，也就是在`xmake.lua`工程描述文件中定义的配置信息，例如：[target](/api/description/project-target)、 [option](/api/description/configuration-option) 等。
+用于获取当前工程的一些描述信息，也就是在`xmake.lua`工程描述文件中定义的配置信息，例如：[target](/zh/api/description/project-target)、 [option](/zh/api/description/configuration-option) 等。
 
 ## project.target
 

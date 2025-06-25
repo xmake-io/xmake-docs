@@ -145,4 +145,4 @@ bar: 1 + 1 = 2
 
 通过新的 native 模块特性，我们也可以用来实现 auto-codegen，然后根据自动生成的代码，继续执行后续编译流程。
 
-这里也有完整的例子可以参考：[autogen_shared_module](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/autogen_shared_module)。
+这里也有完整的例子可以参考：[autogen_shared_module](https://github.com/xmake-io/xmake/tree/master/tests/projects/other/autogen/autogen_shared_module)。

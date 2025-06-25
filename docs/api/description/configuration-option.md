@@ -23,7 +23,7 @@ option("test2")
 ```
 
 :::tip NOTE
-The `option` field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the [option_end](#_end) interface.
+The `option` field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the [option_end](#option-end) interface.
 :::
 
 ## option

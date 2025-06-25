@@ -3142,7 +3142,7 @@ target("test6")
 
 The effect of the generated VS project directory structure is as follows:
 
-![](https://xmake.io/assets/img/manual/set_group.png)
+![](/assets/img/manual/set_group.png)
 
 For more details, please see: [#1026](https://github.com/xmake-io/xmake/issues/1026)
 
@@ -3207,7 +3207,7 @@ target("test")
     add_files("... /... /... /... /src/**.cpp")
 ```
 
-![](https://xmake.io/assets/img/manual/filegroup1.png)
+![](/assets/img/manual/filegroup1.png)
 
 Two main presentation modes are currently supported.
 
@@ -3225,7 +3225,7 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /"})
 ```
 
-![](https://xmake.io/assets/img/manual/filegroup2.png)
+![](/assets/img/manual/filegroup2.png)
 
 
 #### Set the group and specifies the file matching pattern
@@ -3248,7 +3248,7 @@ target("test")
     add_filegroups("group1/group2", {rootdir = "... /... /... /... /", mode = "plain"})
 ```
 
-![](https://xmake.io/assets/img/manual/filegroup3.png)
+![](/assets/img/manual/filegroup3.png)
 
 ## set_exceptions
 
@@ -3460,11 +3460,11 @@ running tests ...
 80% tests passed, 7 tests failed out of 36, spent 0.242s
 ```
 
-![](https://xmake.io/assets/img/manual/xmake-test1.png)
+![](/assets/img/manual/xmake-test1.png)
 
 We can also execute `xmake test -vD` to view detailed test failure error messages:
 
-![](https://xmake.io/assets/img/manual/xmake-test2.png)
+![](/assets/img/manual/xmake-test2.png)
 
 #### Run the specified test target
 

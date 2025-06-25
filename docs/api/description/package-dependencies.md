@@ -130,7 +130,7 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 
 - Add package versions
 
-Used to set the version of each source package and the corresponding sha256 value, as described in [add_urls](#packageadd_urls)
+Used to set the version of each source package and the corresponding sha256 value, as described in [add_urls](#add_urls)
 
 ## add_versionfiles
 
@@ -226,7 +226,7 @@ package("libpng")
 
 Add a dependent system frameworks link.
 
-See for example: [add_syslinks](#packageadd_syslinks)
+See for example: [add_syslinks](#add_syslinks)
 
 ## add_linkdirs
 
