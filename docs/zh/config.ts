@@ -157,8 +157,16 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       text: '基础',
       collapsed: false,
       items: [
-        { text: '创建工程', link: 'create-project' },
-        { text: '编译配置', link: 'build-configuration' },
+        { text: '创建工程', link: 'essentials/create-project' },
+        { text: '编译配置', link: 'essentials/build-configuration' },
+      ]
+    },
+    {
+      text: '进阶主题',
+      collapsed: false,
+      items: [
+        { text: '远程编译', link: 'extras/remote-compilation' },
+        { text: '分布式编译', link: 'extras/distributed-compilation' },
       ]
     },
     {

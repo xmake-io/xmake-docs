@@ -76,8 +76,16 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       text: 'Essentials',
       collapsed: false,
       items: [
-        { text: 'Create Project', link: 'create-project' },
-        { text: 'Build configuration', link: 'build-configuration' },
+        { text: 'Create Project', link: 'essentials/create-project' },
+        { text: 'Build configuration', link: 'essentials/build-configuration' },
+      ]
+    },
+    {
+      text: 'Extra Topics',
+      collapsed: false,
+      items: [
+        { text: 'Remote Compilation', link: 'extras/remote-compilation' },
+        { text: 'Distributed Compilation', link: 'extras/distributed-compilation' },
       ]
     },
     {
