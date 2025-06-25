@@ -294,7 +294,7 @@ $ xmake install [-a|--all]
 
 ### Set configuration options
 
-Add option dependencies. If you have customized some options through the [option](#option) interface, you can add associations only if you specify this option under the target target field.
+Add option dependencies. If you have customized some options through the [option](/api/description/configuration-option#option) interface, you can add associations only if you specify this option under the target target field.
 
 ```lua
 -- Define a hello option
@@ -309,7 +309,7 @@ target("test")
 ```
 
 :::tip NOTE
-Some settings defined in [option](#option) will affect this `target` target only after calling `set_options` for the association to take effect, such as macro definitions, link libraries, compile options, etc.
+Some settings defined in [option](/api/description/configuration-option#option) will affect this `target` target only after calling `set_options` for the association to take effect, such as macro definitions, link libraries, compile options, etc.
 :::
 
 ## set_symbols

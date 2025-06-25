@@ -164,7 +164,7 @@ set_xmakever("2.1.0")
 
 ### 添加模块目录
 
-xmake内置的扩展模块都在`xmake/modules`目录下，可通过[import](#import)来导入他们，如果自己在工程里面实现了一些扩展模块，
+xmake内置的扩展模块都在`xmake/modules`目录下，可通过[import](/zh/api/scripts/builtin-modules/import)来导入他们，如果自己在工程里面实现了一些扩展模块，
 可以放置在这个接口指定的目录下，import也就会能找到，并且优先进行导入。
 
 ## add_plugindirs

@@ -293,7 +293,7 @@ $ xmake install [-a|--all]
 
 ### 设置关联选项
 
-添加选项依赖，如果通过[option](#option)接口自定义了一些选项，那么只有在指定`target`目标域下，添加此选项，才能进行关联生效。
+添加选项依赖，如果通过[option](/zh/api/description/configuration-option#option)接口自定义了一些选项，那么只有在指定`target`目标域下，添加此选项，才能进行关联生效。
 
 ```lua
 -- 定义一个hello选项
@@ -308,7 +308,7 @@ target("test")
 ```
 
 :::tip WARN
-只有调用`set_options`进行关联生效后，[option](#option) 中定义的一些设置才会影响到此`target`目标，例如：宏定义、链接库、编译选项等等
+只有调用`set_options`进行关联生效后，[option](/zh/api/description/configuration-option#option) 中定义的一些设置才会影响到此`target`目标，例如：宏定义、链接库、编译选项等等
 :::
 
 ## set_symbols
