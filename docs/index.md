@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started ->
-      link: /guide/getting-started
+      link: /guide/quick-start
     - theme: alt
       text: GitHub
       link: https://github.com/xmake-io/xmake

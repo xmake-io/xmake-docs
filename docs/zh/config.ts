@@ -107,8 +107,8 @@ function nav(): DefaultTheme.NavItem[] {
       text: '文档',
       activeMatch: `^/(guide|style-guide|cookbook|examples)/`,
       items: [
-        { text: '使用指南', link: '/zh/guide/what-is-xmake', activeMatch: '/zh/guide/' },
-        { text: '快速上手', link: '/zh/guide/getting-started' },
+        { text: '使用指南', link: '/zh/guide/introduction', activeMatch: '/zh/guide/' },
+        { text: '快速上手', link: '/zh/guide/quick-start' },
         { text: '示例', link: '/zh/examples/cpp/basic', activeMatch: '/zh/examples/' },
         { text: 'API 手册', link: '/zh/api/description/specification', activeMatch: '/zh/api/' }
       ]
@@ -146,11 +146,11 @@ function nav(): DefaultTheme.NavItem[] {
 function guideSidebar(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: '简介',
+      text: '开始',
       collapsed: false,
       items: [
-        { text: '什么是 Xmake？', link: 'what-is-xmake' },
-        { text: '快速开始', link: 'getting-started' }
+        { text: '简介', link: 'introduction' },
+        { text: '快速上手', link: 'quick-start' }
       ]
     },
     {
@@ -191,7 +191,7 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: '脚本域 API', link: '../scripts/target-instance' },
-        { text: '使用指南', link: '../../guide/what-is-xmake' },
+        { text: '使用指南', link: '../../guide/introduction' },
         { text: '示例', link: '../../examples/cpp/basic' },
       ]
     }
@@ -225,7 +225,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: '描述域 API', link: '../description/specification' },
-        { text: '使用指南', link: '../../guide/what-is-xmake' },
+        { text: '使用指南', link: '../../guide/introduction' },
         { text: '示例', link: '../../examples/cpp/basic' },
       ]
     }
@@ -297,7 +297,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'API 手册', link: '../api/description/specification' },
-        { text: '使用指南', link: '../guide/what-is-xmake' },
+        { text: '使用指南', link: '../guide/introduction' },
       ]
     }
   ]

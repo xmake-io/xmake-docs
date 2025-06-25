@@ -1,4 +1,4 @@
-# 快速上手
+# 快速上手 {quick-start}
 
 ## 安装 {#installation}
 
@@ -329,7 +329,7 @@ $ xmake run -d hello
 
 ## 下一步 {#next-steps}
 
-- 继续阅读该指南. [向导](/zh/guide/getting-started.html)
+- 继续阅读该指南. [向导](/zh/guide/introduction.html)
 - 查看示例. [实例](/zh/examples/cpp/basic.html).
 - 查看 API 手册. [API 手册](/zh/api/description/specification)
 

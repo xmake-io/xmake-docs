@@ -32,8 +32,8 @@ function nav(): DefaultTheme.NavItem[] {
       text: 'Docs',
       activeMatch: `^/(guide|style-guide|cookbook|examples)/`,
       items: [
-        { text: 'Guide', link: '/guide/what-is-xmake', activeMatch: '/guide/' },
-        { text: 'Getting Started', link: '/guide/getting-started' },
+        { text: 'Guide', link: '/guide/introduction', activeMatch: '/guide/' },
+        { text: 'Quick Start', link: '/guide/quick-start' },
         { text: 'Examples', link: '/examples/cpp/basic', activeMatch: '/examples/' },
         { text: 'API Reference', link: '/api/description/specification', activeMatch: '/api/' }
       ]
@@ -65,19 +65,19 @@ function nav(): DefaultTheme.NavItem[] {
 function guideSidebar(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: 'Introduction',
+      text: 'Getting Started',
       collapsed: false,
       items: [
-        { text: 'What it Xmake？', link: 'what-is-xmake' },
-        { text: 'Getting Started', link: 'getting-started' },
-        {
-          text: 'Next Steps',
-          collapsed: false,
-          items: [
-            { text: 'API Reference', link: '../api/description/specification' },
-            { text: 'Examples', link: '../examples/cpp/basic' },
-          ]
-        }
+        { text: 'Introduction', link: 'introduction' },
+        { text: 'Quick Start', link: 'quick-start' },
+      ]
+    },
+    {
+      text: 'Next Steps',
+      collapsed: false,
+      items: [
+        { text: 'API Reference', link: '../api/description/specification' },
+        { text: 'Examples', link: '../examples/cpp/basic' },
       ]
     }
   ]
@@ -110,7 +110,7 @@ function descriptionApiSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Scripts API', link: '../scripts/target-instance' },
-        { text: 'Guide', link: '../../guide/what-is-xmake' },
+        { text: 'Guide', link: '../../guide/introduction' },
         { text: 'Examples', link: '../../examples/cpp/basic' },
       ]
     }
@@ -144,7 +144,7 @@ function scriptsApiSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Description API', link: '../description/specification' },
-        { text: 'Guide', link: '../../guide/what-is-xmake' },
+        { text: 'Guide', link: '../../guide/introduction' },
         { text: 'Examples', link: '../../examples/cpp/basic' },
       ]
     }
@@ -217,7 +217,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'API Reference', link: '../api/description/specification' },
-        { text: 'Guide', link: '../guide/what-is-xmake' },
+        { text: 'Guide', link: '../guide/introduction' },
       ]
     }
   ]
