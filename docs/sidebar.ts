@@ -40,6 +40,7 @@ function coreModulesApiSidebar(): DefaultTheme.SidebarItem {
     collapsed: true,
     items: [
       coreBaseModulesApiSidebar(),
+      coreLanguageModulesApiSidebar(),
       coreProjectModulesApiSidebar(),
       coreToolModulesApiSidebar(),
     ]
@@ -56,6 +57,16 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
       { text: 'option', link: 'extension-modules/core/base/option' },
       { text: 'semver', link: 'extension-modules/core/base/semver' },
       { text: 'task', link: 'extension-modules/core/base/task' },
+    ]
+  }
+}
+
+function coreLanguageModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'language',
+    collapsed: true,
+    items: [
+      { text: 'language', link: 'extension-modules/core/language/language' },
     ]
   }
 }
