@@ -3692,6 +3692,59 @@ running tests ...
 100% tests passed, 0 tests failed out of 1, spent 0.006s
 ```
 
+#### 标记测试为预期失败
+你可以使用 `should_fail` 选项将测试标记为预期失败。这在验证以下情况时非常有用：
+
+- 崩溃处理
+- 断言或契约违规
+- 正在开发或已知存在问题的功能
+
+如果一个设置了 `should_fail = true` 的测试在执行时失败了，它将被视为成功。但如果它意外通过，则会在测试报告中高亮显示为 **unexpected pass**，并将该测试标记为失败。
+
+测试摘要也会将预期失败和意外通过的测试进行分组展示。
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("tests/test_foo.cpp")
+
+    add_tests("crash_div_by_zero", {
+        runargs = { "--div-zero" },
+        should_fail = true
+    })
+
+    add_tests("crash_div_by_zero_fails", {
+        runargs = { "--div-zero" }
+    })
+
+    add_tests("normal_behavior", {
+        runargs = { "--safe" }
+    })
+
+    add_tests("normal_behavior_unexpected_pass", {
+        runargs = { "--safe" },
+        should_fail = true
+    })
+```
+示例输出：
+```
+...
+report of tests:
+[ 25%]: test/crash_div_by_zero ............. expected failure 0.004s
+[ 50%]: test/crash_div_by_zero_fails........ failed 0.004s
+[ 75%]: test/normal_behavior ............... passed 0.015s
+[100%]: test/normal_behavior_unexpected_pass unexpected pass 0.015s
+
+50% tests passed, 1 test(s) failed, 1 unexpected pass(es), 1 expected failure(s) out of 4, spent 0.038s
+Detailed summary:
+Failed tests:
+ - test/crash_div_by_zero_fails
+Unexpected passes:
+ - test/normal_behavior_unexpected_pass
+Expected failures:
+ - test/crash_div_by_zero
+```
+
 #### 首次测试失败就终止
 
 默认情况下，`xmake test` 会等到所有测试都运行完，不管里面有多少是没通过的。

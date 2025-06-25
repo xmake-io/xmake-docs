@@ -3697,6 +3697,60 @@ running tests...
 100% tests passed, 0 tests failed out of 1, spent 0.006s
 ```
 
+#### Marking tests as expected to fail
+
+You can mark a test as *expected to fail* using the `should_fail` option. This is useful when validating:
+
+- crash handling
+- assertion or contract violations
+- features under development or known to be broken
+
+If a test marked with `should_fail = true` fails during execution, it is treated as a **success**. If it unexpectedly passes, the result will be highlighted in the test report as an **unexpected pass**, and the test will be marked as failed.
+
+The test summary will also group expected failures and unexpected passes accordingly.
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("tests/test_foo.cpp")
+
+    add_tests("crash_div_by_zero", {
+        runargs = { "--div-zero" },
+        should_fail = true
+    })
+
+    add_tests("crash_div_by_zero_fails", {
+        runargs = { "--div-zero" }
+    })
+
+    add_tests("normal_behavior", {
+        runargs = { "--safe" }
+    })
+
+    add_tests("normal_behavior_unexpected_pass", {
+        runargs = { "--safe" },
+        should_fail = true
+    })
+```
+Example output:
+```
+...
+report of tests:
+[ 25%]: test/crash_div_by_zero ............. expected failure 0.004s
+[ 50%]: test/crash_div_by_zero_fails........ failed 0.004s
+[ 75%]: test/normal_behavior ............... passed 0.015s
+[100%]: test/normal_behavior_unexpected_pass unexpected pass 0.015s
+
+50% tests passed, 1 test(s) failed, 1 unexpected pass(es), 1 expected failure(s) out of 4, spent 0.038s
+Detailed summary:
+Failed tests:
+ - test/crash_div_by_zero_fails
+Unexpected passes:
+ - test/normal_behavior_unexpected_pass
+Expected failures:
+ - test/crash_div_by_zero
+```
+
 #### Terminate if the first test fails
 
 By default, `xmake test` will wait until all tests have been run, no matter how many of them failed.
