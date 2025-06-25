@@ -332,7 +332,7 @@ $ xmake run -d hello
 
 ## What's Next?
 
-- Continue with the guide. [Create Project](/guide/create-project)
+- Continue with the guide. [Create Project](/guide/essentials/create-project)
 - Checkout the examples. [Examples](/examples/cpp/basic)
 - Checkout API reference. [API Reference](/api/description/specification)
 
