@@ -86,6 +86,8 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'Remote Compilation', link: 'extras/remote-compilation' },
         { text: 'Distributed Compilation', link: 'extras/distributed-compilation' },
+        { text: 'Build Cache Acceleration', link: 'extras/build-cache' },
+        { text: 'Unity Build Acceleration', link: 'extras/unity-build' },
       ]
     },
     {

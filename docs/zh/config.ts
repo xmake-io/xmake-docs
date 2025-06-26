@@ -167,6 +167,8 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: '远程编译', link: 'extras/remote-compilation' },
         { text: '分布式编译', link: 'extras/distributed-compilation' },
+        { text: '编译缓存加速', link: 'extras/build-cache' },
+        { text: 'Unity 编译加速', link: 'extras/unity-build' },
       ]
     },
     {
