@@ -169,6 +169,8 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: '分布式编译', link: 'extras/distributed-compilation' },
         { text: '编译缓存加速', link: 'extras/build-cache' },
         { text: 'Unity 编译加速', link: 'extras/unity-build' },
+        { text: '自动扫描源码', link: 'extras/autoscan-sourcecode' },
+        { text: '尝试构建第三方源码', link: 'extras/trybuild-3rd-sourcecode' },
       ]
     },
     {
