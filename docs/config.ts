@@ -93,7 +93,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         {
           text: 'Using Remote Packages',
-          collapsed: false,
+          collapsed: true,
           items: [
             { text: 'Using Official Packages', link: 'package-management/using-official-packages' },
             { text: 'Using Third-party Packages', link: 'package-management/using-third-party-packages' },

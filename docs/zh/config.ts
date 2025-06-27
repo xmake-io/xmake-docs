@@ -174,7 +174,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         {
           text: '使用远程包',
-          collapsed: false,
+          collapsed: true,
           items: [
             { text: '使用官方包', link: 'package-management/using-official-packages' },
             { text: '使用第三方包', link: 'package-management/using-third-party-packages' },
