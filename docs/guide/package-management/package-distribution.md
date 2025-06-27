@@ -63,15 +63,15 @@ This package rule adds installation rules to windows, linux, macosx, iphoneos, m
 
 Of course, some packages rely on source code implementation and are not completely cross-platform, so you only need to set the installation rules for the platforms it supports.
 
-For more detailed package configuration API descriptions see: [Package Interface Documentation](/manual/package_dependencies)
+For more detailed package configuration API descriptions see: [Package Interface Documentation](https://xmake.io/#/manual/package_dependencies)
 
 ### Extended configuration parameters
 
-See: [add_configs](/manual/package_dependencies?id=packageadd_configs) for details.
+See: [add_configs](https://xmake.io/#/manual/package_dependencies?id=packageadd_configs) for details.
 
 ### Built-in configuration parameters
 
-In addition to setting some extended configuration parameters via [add_configs](/manual/package_dependencies?id=packageadd_configs), xmake also provides some built-in configuration parameters that can be used.
+In addition to setting some extended configuration parameters via [add_configs](https://xmake.io/#/manual/package_dependencies?id=packageadd_configs), xmake also provides some built-in configuration parameters that can be used.
 
 #### Enable debug package
 

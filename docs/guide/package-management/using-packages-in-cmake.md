@@ -16,7 +16,7 @@ Example use cases for this project:
 
 ### xrepo_package
 
-[`xrepo.cmake`](./xrepo.cmake) provides `xrepo_package` function to manage
+[`xrepo.cmake`](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) provides `xrepo_package` function to manage
 packages.
 
 ```cmake
