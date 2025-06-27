@@ -73,11 +73,18 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
-      text: 'Essentials',
+      text: 'Basic Commands',
       collapsed: false,
       items: [
-        { text: 'Create Project', link: 'essentials/create-project' },
-        { text: 'Build configuration', link: 'essentials/build-configuration' },
+        { text: 'Create Project', link: 'basic-commands/create-project' },
+        { text: 'Build configuration', link: 'basic-commands/build-configuration' },
+      ]
+    },
+    {
+      text: 'Project Configuration',
+      collapsed: false,
+      items: [
+        { text: 'Syntax description', link: 'project-configuration/syntax-description' },
       ]
     },
     {

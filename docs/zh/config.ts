@@ -154,11 +154,18 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
-      text: '基础',
+      text: '基础命令',
       collapsed: false,
       items: [
-        { text: '创建工程', link: 'essentials/create-project' },
-        { text: '编译配置', link: 'essentials/build-configuration' },
+        { text: '创建工程', link: 'basic-commands/create-project' },
+        { text: '编译配置', link: 'basic-commands/build-configuration' },
+      ]
+    },
+    {
+      text: '工程配置',
+      collapsed: false,
+      items: [
+        { text: '语法描述', link: 'project-configuration/syntax-description' },
       ]
     },
     {

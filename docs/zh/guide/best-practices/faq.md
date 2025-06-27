@@ -69,7 +69,7 @@ xmake.lua里面分描述域和脚本域，在描述域里面会对各种配置�
 
 如果要写各种复杂脚本，请在脚本域内进行配置，`target/on_load`的脚本域里面同样可以灵活配置各种target相关设置，并且提供更强大的lua脚本模块支持。
 
-更多细节见：[描述语法说明](/zh-cn/guide/syntax_description)
+更多细节见：[描述语法说明](https://xmake.io/#/zh-cn/guide/syntax_description)
 
 ## 如何调试 Xmake 源码? {#debugging-xmake-sourcecode}
 
