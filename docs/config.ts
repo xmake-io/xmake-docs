@@ -91,6 +91,14 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: 'Best Practices',
+      collapsed: false,
+      items: [
+        { text: 'FAQ', link: 'best-practices/faq' },
+        { text: 'Performance', link: 'best-practices/performance' },
+      ]
+    },
+    {
       text: 'Extra Topics',
       collapsed: false,
       items: [

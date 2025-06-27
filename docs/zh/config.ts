@@ -172,6 +172,14 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: '最佳实践',
+      collapsed: false,
+      items: [
+        { text: '常见问题', link: 'best-practices/faq' },
+        { text: '性能优化', link: 'best-practices/performance' },
+      ]
+    },
+    {
       text: '进阶主题',
       collapsed: false,
       items: [
