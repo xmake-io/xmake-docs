@@ -329,7 +329,7 @@ $ xmake run -d hello
 
 ## 下一步 {#next-steps}
 
-- 继续阅读该指南. [创建工程](/zh/guide/essentials/create-project)
+- 继续阅读该指南. [创建工程](/zh/guide/basic-commands/create-project)
 - 查看示例. [实例](/zh/examples/cpp/basic)
 - 查看 API 手册. [API 手册](/zh/api/description/specification)
 
