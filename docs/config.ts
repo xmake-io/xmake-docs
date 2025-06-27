@@ -81,6 +81,15 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: 'Extensions',
+      collapsed: false,
+      items: [
+        { text: 'Plugin Development', link: 'extensions/plugin-development' },
+        { text: 'Builtin Plugins', link: 'extensions/builtin-plugins' },
+        { text: 'IDE Integration Plugins', link: 'extensions/ide-integration-plugins' },
+      ]
+    },
+    {
       text: 'Extra Topics',
       collapsed: false,
       items: [

@@ -162,6 +162,15 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: '扩展',
+      collapsed: false,
+      items: [
+        { text: '插件开发', link: 'extensions/plugin-development' },
+        { text: '内置插件', link: 'extensions/builtin-plugins' },
+        { text: 'IDE 集成插件', link: 'extensions/ide-integration-plugins' },
+      ]
+    },
+    {
       text: '进阶主题',
       collapsed: false,
       items: [
