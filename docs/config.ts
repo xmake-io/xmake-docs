@@ -88,6 +88,13 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: 'Package Management',
+      collapsed: false,
+      items: [
+        { text: 'Remote package', link: 'package-management/remote-package' },
+      ]
+    },
+    {
       text: 'Extensions',
       collapsed: false,
       items: [

@@ -169,6 +169,13 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: '包依赖管理',
+      collapsed: false,
+      items: [
+        { text: '使用远程包', link: 'package-management/remote-package' },
+      ]
+    },
+    {
       text: '扩展',
       collapsed: false,
       items: [
