@@ -129,7 +129,7 @@ target("test")
 
 We can place the custom scripts in the corresponding directory of `xmake.lua`, and maintain them independently in `modules/test/load.lua` and `modules/test/install.lua`.
 
-In these independent lua scripts, we can also import various built-in modules and custom modules through [import](/zh-cn/manual/builtin_modules?id=import), just like to write lua, java is no different. .
+In these independent lua scripts, we can also import various built-in modules and custom modules through [import](https://xmake.io/#/zh-cn/manual/builtin_modules?id=import), just like to write lua, java is no different. .
 
 for the different stages of the script's domain, `on_load` is mainly used for target loading, do some dynamic configuration, not like the description field, it will only be executed once!!!
 
@@ -165,7 +165,8 @@ target("test2") {
 }
 ```
 
-However, in order to simplify the writing, Xmake stipulates that each newly defined target field starts, and the last configuration field ends automatically. Of course, if the user feels troubled, you can manually configure the leaving domain:
+However, in order to simplify the writing, Xmake stipulates that each newly defined target field starts, and the last configuration field ends automatically.
+Of course, if the user feels troubled, you can manually configure the leaving domain:
 
 ```lua
 target("test1")
@@ -183,13 +184,13 @@ target_end()
 
 Currently available configuration scopes are: `target()`, `option()`, `task()`, `package()`
 
-for a detailed description of each domain, see: [API Manual](/manual/project_target)
+for a detailed description of each domain, see: [API Manual](https://xmake.io/#/manual/project_target)
 
 ### Configuration Item
 
 As long as the configuration with the words `set_xxx` and `add_xxx` is a configuration item, multiple configuration items can be set in one configuration field.
 
-for a description of the configuration items, see: [Interface Specifications](/manual/specification)
+for a description of the configuration items, see: [Interface Specifications](https://xmake.io/#/manual/specification)
 
 ## Scope
 
@@ -261,7 +262,8 @@ The current external scope lating lua built-in apis are:
 - print
 - os
 
-Of course, although the built-in lua api does not provide much, Xmake also provides a lot of extension APIs. It is not much to describe the api. For details, please refer to: [API Manual](/manual)
+Of course, although the built-in lua api does not provide much, Xmake also provides a lot of extension APIs. It is not much to describe the api.
+For details, please refer to: [API Manual](https://xmake.io/#/manual)
 
 There are also some auxiliary apis, for example:
 
@@ -317,7 +319,7 @@ task("hello")
 
 In this scope, not only can you use most lua apis, but you can also use many extension modules provided by Xmake. All extension modules are imported through import.
 
-For details, please refer to: [import module document](/manual/builtin_modules?id=import)
+For details, please refer to: [import module document](https://xmake.io/#/manual/builtin_modules?id=import)
 
 Here we give a simple example, after the compilation is complete, ldid signature on the ios target program:
 
@@ -432,7 +434,8 @@ If you don't have a habit of using automatic code formatting, then you don't nee
 
 ## Multi-level Configuration
 
-In the script field we can import various rich extension modules by import, and in the description field we can introduce the project subdirectory through the [includes](/#/zh-cn/manual/global_interfaces?id=includes) interface. 
+In the script field we can import various rich extension modules by import,
+and in the description field we can introduce the project subdirectory through the [includes](https://xmake.io/#/zh-cn/manual/global_interfaces?id=includes) interface. 
 
 Remember: Xmake's includes handles the configuration relationship according to the tree structure. The target configuration in `xmake.lua` in the subdirectory inherits the root domain configuration in the parent `xmake.lua`, for example:
 
