@@ -172,7 +172,22 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       text: '包依赖管理',
       collapsed: false,
       items: [
-        { text: '使用远程包', link: 'package-management/remote-package' },
+        {
+          text: '使用远程包',
+          collapsed: false,
+          items: [
+            { text: '使用官方包', link: 'package-management/using-official-packages' },
+            { text: '使用第三方包', link: 'package-management/using-third-party-packages' },
+            { text: '在 CMake 中使用包', link: 'package-management/using-packages-in-cmake' },
+            { text: '分发包', link: 'package-management/package-distribution' },
+            { text: '包管理命令', link: 'package-management/package-management-commands' },
+            { text: '仓库管理命令', link: 'package-management/repository-management-commands' },
+            { text: 'Xrepo CLI', link: 'package-management/xrepo-cli' },
+          ]
+        },
+        { text: '使用本地包', link: 'package-management/using-local-packages' },
+        { text: '使用系统包', link: 'package-management/using-system-packages' },
+        { text: '使用源码包', link: 'package-management/using-source-code-packages' },
       ]
     },
     {

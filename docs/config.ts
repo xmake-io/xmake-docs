@@ -77,21 +77,37 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Create Project', link: 'basic-commands/create-project' },
-        { text: 'Build configuration', link: 'basic-commands/build-configuration' },
+        { text: 'Build Configuration', link: 'basic-commands/build-configuration' },
       ]
     },
     {
       text: 'Project Configuration',
       collapsed: false,
       items: [
-        { text: 'Syntax description', link: 'project-configuration/syntax-description' },
+        { text: 'Syntax Description', link: 'project-configuration/syntax-description' },
       ]
     },
     {
       text: 'Package Management',
       collapsed: false,
       items: [
-        { text: 'Remote package', link: 'package-management/remote-package' },
+        {
+          text: 'Using Remote Packages',
+          collapsed: false,
+          items: [
+            { text: 'Using Official Packages', link: 'package-management/using-official-packages' },
+            { text: 'Using Third-party Packages', link: 'package-management/using-third-party-packages' },
+            { text: 'Using Packages in CMake', link: 'package-management/using-packages-in-cmake' },
+            { text: 'Using Official Packages', link: 'package-management/using-official-packages' },
+            { text: 'Package Distribution', link: 'package-management/package-distribution' },
+            { text: 'Package Management Commands', link: 'package-management/package-management-commands' },
+            { text: 'Repository Management Commands', link: 'package-management/repository-management-commands' },
+            { text: 'Xrepo CLI', link: 'package-management/xrepo-cli' },
+          ]
+        },
+        { text: 'Using Local Packages', link: 'package-management/using-local-packages' },
+        { text: 'Using System Packages', link: 'package-management/using-system-packages' },
+        { text: 'Using Source code Packages', link: 'package-management/using-source-code-packages' },
       ]
     },
     {
