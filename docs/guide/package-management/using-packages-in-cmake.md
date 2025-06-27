@@ -16,7 +16,7 @@ Example use cases for this project:
 
 ### xrepo_package
 
-[`xrepo.cmake`](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) provides `xrepo_package` function to manage
+[xrepo.cmake](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) provides `xrepo_package` function to manage
 packages.
 
 ```cmake
@@ -262,7 +262,7 @@ xrepo_package("brew::gflags")
 
 ## How does it work?
 
-[`xrepo.cmake`](./xrepo.cmake) module basically does the following tasks:
+[xrepo.cmake](https://github.com/xmake-io/xrepo-cmake/blob/main/xrepo.cmake) module basically does the following tasks:
 
 - Call `xrepo install` to ensure specific package is installed.
 - Call `xrepo fetch` to get package information and setup various variables for
