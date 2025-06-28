@@ -7,7 +7,7 @@
 
 `xmake require` 仅用于当前工程，我们也提供了更加方便的独立 `xrepo` 包管理器命令，来全局对包进行安装，卸载和查找管理。
 
-详细文档见：[Xrepo 命令使用入门](https://xrepo.xmake.io/#/zh-cn/getting_started)
+详细文档见：[Xrepo 命令使用入门](/zh/guide/package-management/xrepo-cli)。
 
 ### 安装指定包
 

@@ -10,7 +10,7 @@ The package management command `$ xmake require` can be used to manually display
 
 `xmake require` is only used for the current project. We also provide a more convenient independent `xrepo` package manager command to install, uninstall, find and manage packages globally.
 
-For detailed documentation, see: [Getting Started with Xrepo Commands](https://xrepo.xmake.io/#/getting_started)
+For detailed documentation, see: [Getting Started with Xrepo Commands](/guide/package-management/xrepo-cli)
 
 ### Install the specified package
 
