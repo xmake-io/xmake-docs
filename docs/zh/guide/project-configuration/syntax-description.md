@@ -21,7 +21,7 @@ xmake.lua采用二八原则实现了描述域、脚本域两层分离式配置�
 
 因此，xmake通过描述域、脚本域两种不同的配置方式，来隔离80%的简单配置以及20%的复杂配置，使得整个xmake.lua看起来非常的清晰直观，可读性和可维护性都达到最佳。
 
-### 描述域
+### 描述域 {#description-scope}
 
 对于刚入门的新手用户，或者仅仅是维护一些简单的小项目，通过完全在描述配置就已经完全满足需求了，那什么是描述域呢？它长这样：
 
@@ -88,7 +88,7 @@ target("test")
 
 因此，不要想着在xmake.lua的描述域，写复杂的lua脚本，也不要在描述域调用print去显示信息，因为会被执行多遍，记住：会被执行多遍！！！
 
-### 脚本域
+### 脚本域 {#script-scope}
 
 限制描述域写复杂的lua，各种lua模块和接口都用不了？怎么办？这个时候就是脚本域出场的时候了。
 
@@ -137,7 +137,7 @@ target("test")
 
 其他阶段，还有很多，比如：`on/after/before`_`build/install/package/run`等，具体看下后面的target api手册部分吧，这里就不细说了。
 
-## 配置类型
+## 配置类型 {#configuration-type}
 
 在描述域配置中，分配置域和配置项，配置域里面可以通过`set_xxx`/`add_xxx`的接口，配置各种配置项。
 
@@ -195,7 +195,7 @@ target_end()
 
 关于配置项的规范说明，见：[接口规范](/zh/api/description/specification)
 
-## 作用域
+## 作用域 {#scope}
 
 Xmake 的描述语法是按作用域划分的，主要分为：
 
@@ -319,9 +319,9 @@ task("hello")
         end)
 ```
 
-在此作用域中，不仅可以使用大部分lua的api，还可以使用很多xmake提供的扩展模块，所有扩展模块，通过import来导入
+在此作用域中，不仅可以使用大部分lua的api，还可以使用很多xmake提供的扩展模块，所有扩展模块，通过 import 来导入。
 
-具体可参考：[import模块导入文档](api/scripts/builtin-modules/import).
+具体可参考：[import 模块导入文档](/zh/api/scripts/builtin-modules/import).
 
 这里我们给个简单的例子，在编译完成后，对ios目标程序进行ldid签名：
 
@@ -436,7 +436,7 @@ end
 
 ## 多级配置
 
-在脚本域我们可以通过import导入各种丰富的扩展模块来使用，而在描述域我们可以通过[includes](/zh/api/description/global-interfaces.html#includes)接口，来引入项目子目录下的xmake.lua配置。
+在脚本域我们可以通过 import 导入各种丰富的扩展模块来使用，而在描述域我们可以通过[includes](/zh/api/description/global-interfaces.html#includes)接口，来引入项目子目录下的xmake.lua配置。
 
 记住：xmake的includes是按照tree结构来处理配置关系的，子目录下的xmake.lua里面的target配置会继承父xmake.lua中的根域配置，例如：
 
