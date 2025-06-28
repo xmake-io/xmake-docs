@@ -157,7 +157,9 @@ xmake require --info spdlog
 Among them, configs is the configurable parameters provided by the spdlog package itself, and the configs part with builtin below is the built-in configuration parameters that all packages will have.
 The top required section is the current configuration value of the project.
 
-!> `vs_runtime` is the setting for vs runtime under msvc. In v2.2.9, it also supports automatic inheritance of all static dependencies. That is to say, if spdlog is set to MD, then the fmt package it depends on will also inherit automatically. Set the MD.
+::: tip NOTE
+`vs_runtime` is the setting for vs runtime under msvc. In v2.2.9, it also supports automatic inheritance of all static dependencies. That is to say, if spdlog is set to MD, then the fmt package it depends on will also inherit automatically. Set the MD.
+:::
 
 It can be seen that we have been able to customize the required packages very conveniently, but each package may have a lot of dependencies. If these dependencies are also customized, what should I do?
 
@@ -416,7 +418,9 @@ If we feel that the above hosts mode configuration is not flexible enough, we ca
                                        end
 ```
 
-!> If there are proxy_hosts, the host configuration is preferred, otherwise, the pac configuration can be used.
+::: tip NOTE
+If there are proxy_hosts, the host configuration is preferred, otherwise, the pac configuration can be used.
+:::
 
 The default path of pac: ~/.xmake/pac.lua, if --proxy is set, and this file exists, it will automatically go to pac. If it does not exist, and there are no hosts, then the proxy will take effect globally.
 

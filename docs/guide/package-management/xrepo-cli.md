@@ -34,7 +34,7 @@ We only need install xmake to use the xrepo command. About the installation of x
 * MinGW (i386, x86_64, arm, arm64)
 * Cross Toolchains
 
-## Suppory distributed repository
+## Support distributed repository
 
 In addition to directly retrieving the installation package from the official repository: [xmake-repo](https://github.com/xmake-io/xmake-repo).
 

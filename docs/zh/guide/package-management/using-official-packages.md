@@ -311,7 +311,7 @@ target("test")
     add_packages("libjpeg")
 ```
 
-关于如何编写自定义包描述规则，详情见：[添加包到仓库](#添加包到仓库)
+关于如何编写自定义包描述规则，详情见：[添加包到仓库](/zh/guide/package-management/package-distribution.html#submit-package-to-official-repository)
 
 ## 依赖包的锁定和升级
 
@@ -448,7 +448,9 @@ $ xmake g --help
                                        end
 ```
 
-!> 如果有proxy_hosts优先走hosts配置，没有的话才走pac配置。
+::: tip 注意
+如果有proxy_hosts优先走hosts配置，没有的话才走pac配置。
+:::
 
 pac的默认路径：~/.xmake/pac.lua，如果--proxy被设置，并且这个文件存在，就会自动走pac，如果不存在，也没hosts，那就全局生效代理。
 
@@ -472,7 +474,9 @@ end
 
 这块的具体详情见：https://github.com/xmake-io/xmake/issues/854
 
-!> 另外，除了依赖包下载，其他涉及网络下载的命令也都支持代理，比如：`xmake update`
+::: tip 注意
+另外，除了依赖包下载，其他涉及网络下载的命令也都支持代理，比如：`xmake update`
+:::
 
 #### 镜像代理
 

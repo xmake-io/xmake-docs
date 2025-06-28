@@ -1,6 +1,10 @@
+---
+outline: deep
+---
+
 # 分发包 {#package-distribution}
 
-## 定义包配置
+## 定义包配置 {#define-package-configuration}
 
 ### 仓库包结构
 
@@ -178,7 +182,7 @@ xmake l scripts/test.lua -v -D --shallow -p iphoneos -a arm64 zlib
 xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
 ```
 
-## 生成远程包
+## 生成远程包 {#generate-remote-package}
 
 除了本地包格式，`xmake package` 现在也支持生成远程包，便于用户将他们快速提交到远程仓库。
 
@@ -221,7 +225,7 @@ $ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepag
 
 xmake 也会从 target 的 `set_license` 和 `set_version` 等配置中读取相关配置信息。
 
-## 提交包到官方仓库
+## 提交包到官方仓库 {#submit-package-to-official-repository}
 
 目前这个特性刚完成不久，目前官方仓库的包还不是很多，有些包也许还不支持部分平台，不过这并不是太大问题，后期迭代几个版本后，我会不断扩充完善包仓库。
 
@@ -231,7 +235,7 @@ xmake 也会从 target 的 `set_license` 和 `set_version` 等配置中读取相
 
 关于如何制作自己的包，可以看下上文：[添加包到仓库](#添加包到仓库)。
 
-## 分发和使用自定义包规则
+## 分发和使用自定义包规则 {#custom-rule-distribution}
 
 2.7.2 版本之后，我们可以在包管理仓库中，添加自定义构架规则脚本，实现跟随包进行动态下发和安装。
 

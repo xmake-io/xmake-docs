@@ -162,14 +162,14 @@ package("myzlib")
     -- ...
 ```
 
-我们可以自定义一个包，具体定义方式，参考文档：[自定义 Xrepo 包](https://xmake.io/#/zh-cn/package/remote_package?id=package-description)。
+我们可以自定义一个包，具体定义方式，参考文档：[自定义 Xrepo 包](/zh/guide/package-management/package-distribution#define-package-configuration).
 
 
 ## 使用来自第三个存储库的包
 
 除了从官方维护的存储库安装软件包之外，Xrepo 还可以安装来自第三方包管理器的包，例如 vcpkg/conan/conda/pacman/homebrew/apt/dub/cargo。
 
-关于命令行的使用，我们可以参考文档：[Xrepo命令用法](https://xrepo.xmake.io/#/getting_started?id=install-packages-from-third-party-package-manager)
+关于命令行的使用，我们可以参考文档：[Xrepo命令用法](/zh/guide/package-management/xrepo-cli).
 
 我们也可以直接在 cmake 中使用它来安装来自第三方仓库的包，只需将仓库名称添加为命名空间即可。例如：`vcpkg::zlib`, `conan::pcre2`
 

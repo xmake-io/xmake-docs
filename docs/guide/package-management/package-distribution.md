@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Package Distribution
 
 ## Define package configuration

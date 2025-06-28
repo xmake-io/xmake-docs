@@ -193,7 +193,7 @@ package("myzlib")
     end)
 ```
 
-We can write a custom package in xmake.lua, please refer [Define Xrepo package](https://xmake.io/#/package/remote_package?id=package-description).
+We can write a custom package in xmake.lua, please refer [Define Xrepo package](/guide/package-management/package-distribution.html#define-package-configuration).
 
 ## Options and variables for `xrepo.cmake`
 
@@ -232,7 +232,7 @@ the default one on system, platform must be set to "cross".
 In addition to installing packages from officially maintained repository,
 Xrepo can also install packages from third-party package managers such as vcpkg/conan/conda/pacman/homebrew/apt/dub/cargo.
 
-For the use of the command line, we can refer to the documentation: [Xrepo command usage](https://xrepo.xmake.io/#/getting_started?id=install-packages-from-third-party-package-manager)
+For the use of the command line, we can refer to the documentation: [Xrepo command usage](/guide/package-management/xrepo-cli).
 
 We can also use it directly in cmake to install packages from third-party repositories, just add the repository name as a namespace. e.g. `vcpkg::zlib`, `conan::pcre2`
 
@@ -288,7 +288,7 @@ The package names:
 ```
 
 It's already in Xrepo, so we can use it. If it's not in Xrepo, we can create it in
-[self-built repositories](https://xrepo.xmake.io/#/getting_started?id=suppory-distributed-repository).
+[self-built repositories](/guide/package-management/xrepo-cli.html#support-distributed-repository).
 
 Let's see what configs are available for the package before using it:
 
