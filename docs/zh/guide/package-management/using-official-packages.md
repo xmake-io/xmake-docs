@@ -233,7 +233,7 @@ add_requires("zlib 1.x", {external = false})
 -I /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
 ```
 
-## 使用自建私有包仓库
+## 使用自建私有包仓库 {#using-self-repository}
 
 如果需要的包不在官方仓库[xmake-repo](https://github.com/xmake-io/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。
 但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：[xmake-repo](https://github.com/xmake-io/xmake-repo)
@@ -246,7 +246,9 @@ add_requires("zlib 1.x", {external = false})
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git [branch]
 ```
 
-!> [branch]是可选的，我们也可以切换到指定repo分支
+::: tip 注意
+`[branch]` 是可选的，我们也可以切换到指定repo分支
+:::
 
 或者我们直接写在xmake.lua中：
 
@@ -313,7 +315,7 @@ target("test")
 
 关于如何编写自定义包描述规则，详情见：[添加包到仓库](/zh/guide/package-management/package-distribution.html#submit-package-to-official-repository)
 
-## 依赖包的锁定和升级
+## 依赖包的锁定和升级 {#lock-and-upgrade-package}
 
 v2.5.7 之后，新增依赖包的版本锁定，类似 npm 的 package.lock, cargo 的 cargo.lock。
 
