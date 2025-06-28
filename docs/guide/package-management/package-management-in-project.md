@@ -1,10 +1,5 @@
----
-outline: deep
----
 
-# Package Management Commands
-
-## xmake require
+# Package Management in Project
 
 The package management command `$ xmake require` can be used to manually display the download, install, uninstall, retrieve, and view package information.
 
@@ -12,7 +7,7 @@ The package management command `$ xmake require` can be used to manually display
 
 For detailed documentation, see: [Getting Started with Xrepo Commands](/guide/package-management/xrepo-cli)
 
-### Install the specified package
+## Install the specified package
 
 ```console
 $ xmake require tbox
@@ -38,7 +33,7 @@ $ xmake require --extra="{debug=true,config={small=true}}" tbox
 
 Install the debug package and pass the compilation configuration information of `small=true` to the package.
 
-### Uninstall the specified package
+## Uninstall the specified package
 
 ```console
 $ xmake require --uninstall tbox
@@ -46,13 +41,13 @@ $ xmake require --uninstall tbox
 
 This will completely uninstall the removal package file.
 
-### Show package information
+## Show package information
 
 ```console
 $ xmake require --info tbox
 ```
 
-### Search for packages in the current repository
+## Search for packages in the current repository
 
 ```console
 $ xmake require --search tbox
@@ -66,7 +61,7 @@ $ xmake require --search pcr
 
 Will also search for pcre, pcre2 and other packages.
 
-### List the currently installed packages
+## List the currently installed packages
 
 ```console
 $ xmake require --list

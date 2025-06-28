@@ -1,9 +1,9 @@
 
-# 仓库管理命令 {#repository-management-commands}
+# 仓库管理命令 {#repository-management}
 
-## xmake repo
+我们可以使用 `xmake repo` 去管理仓库，并且我们也提供了更加方便的独立 `xrepo` 包管理器命令，来全局对包进行安装，卸载和查找管理。
 
-上文已经简单讲过，添加私有仓库可以用（支持本地路径添加）：
+详细文档见：[Xrepo 命令使用入门](/zh/guide/package-management/xrepo-cli)。
 
 ```console
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git

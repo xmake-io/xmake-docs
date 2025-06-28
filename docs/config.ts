@@ -98,16 +98,22 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
             { text: 'Using Official Packages', link: 'package-management/using-official-packages' },
             { text: 'Using Third-party Packages', link: 'package-management/using-third-party-packages' },
             { text: 'Using Packages in CMake', link: 'package-management/using-packages-in-cmake' },
-            { text: 'Using Official Packages', link: 'package-management/using-official-packages' },
             { text: 'Package Distribution', link: 'package-management/package-distribution' },
-            { text: 'Package Management Commands', link: 'package-management/package-management-commands' },
-            { text: 'Repository Management Commands', link: 'package-management/repository-management-commands' },
-            { text: 'Xrepo CLI', link: 'package-management/xrepo-cli' },
           ]
         },
         { text: 'Using Local Packages', link: 'package-management/using-local-packages' },
         { text: 'Using System Packages', link: 'package-management/using-system-packages' },
-        { text: 'Using Source code Packages', link: 'package-management/using-source-code-packages' },
+        { text: 'Using Sourcecode Packages', link: 'package-management/using-source-code-packages' },
+        { text: 'Network Optimization', link: 'package-management/network-optimization' },
+        {
+          text: 'CLI',
+          collapsed: true,
+          items: [
+            { text: 'Package Management in Project', link: 'package-management/package-management-in-project' },
+            { text: 'Repository Management', link: 'package-management/repository-management' },
+            { text: 'Xrepo CLI', link: 'package-management/xrepo-cli' },
+          ]
+        },
       ]
     },
     {

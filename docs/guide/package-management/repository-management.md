@@ -1,9 +1,9 @@
 
-# Repository Management Commands
+# Repository Management
 
-## xmake repo
+We can use `xmake repo` to manage repositories, and we also provide a more convenient independent `xrepo` package manager command to install, uninstall, find and manage packages globally.
 
-As mentioned above, adding a private repository is available (supporting local path addition):
+For detailed documentation, see: [Getting Started with Xrepo Commands](/guide/package-management/xrepo-cli)
 
 ```console
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
