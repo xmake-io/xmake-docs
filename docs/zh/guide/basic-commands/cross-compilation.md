@@ -230,7 +230,9 @@ $ xmake
 $ xmake show -l toolchains
 ```
 
-!> 此特性需要v2.3.4以上版本才支持
+::: tip 注意
+此特性需要v2.3.4以上版本才支持
+:::
 
 上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入`--ldflags/--includedirs`等场景就比较繁琐了,
 因此xmake也内置了一些常用工具链，可以省去交叉编译工具链复杂的配置过程，只需要执行：
@@ -303,7 +305,7 @@ toolchain("myclang")
     -- ...
 ```
 
-关于这块的详情介绍，可以到[自定义工具链](/zh-cn/manual/custom_toolchain)章节查看
+关于这块的详情介绍，可以到[自定义工具链](https://xmake.io/#/zh-cn/manual/custom_toolchain)章节查看
 
 更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
 
@@ -388,7 +390,9 @@ $ xmake f --toolchain=tinyc
 $ xmake
 ```
 
-!> Releases目录下，我们还提供了特殊的 xmake-tinyc-vX.X.X.win32.exe 安装包，内置tinyc工具链，无需依赖msvc，也可以编译c代码，开箱即用无依赖。
+::: tip 注意
+Releases目录下，我们还提供了特殊的 xmake-tinyc-vX.X.X.win32.exe 安装包，内置tinyc工具链，无需依赖msvc，也可以编译c代码，开箱即用无依赖。
+:::
 
 ### Emcc 工具链
 
