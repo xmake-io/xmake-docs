@@ -1,6 +1,6 @@
 
 * 邮箱：[waruqi@gmail.com](mailto:waruqi@gmail.com)
-* 主页：[xmake.io](https://xmake.io/#/zh-cn/)
+* 主页：[xmake.io](https://xmake.io/zh/)
 * 社区
   - [Reddit论坛](https://www.reddit.com/r/xmake/)
   - [Telegram群组](https://t.me/tbooxorg)

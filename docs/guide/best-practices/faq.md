@@ -67,7 +67,7 @@ Xmake.lua is divided into description fields and script fields. In the descripti
 
 If you want to write a variety of complex scripts, please configure them in the script domain. The script domain of `target/on_load` can also flexibly configure various target related settings and provide more powerful lua script module support.
 
-See: [Description of Syntax Description](https://xmake.io/#/guide/syntax_description) for more details.
+See: [Description of Syntax Description](/guide/project-configuration/syntax-description) for more details.
 
 ## How to debug Xmake source code?
 
@@ -103,7 +103,9 @@ $ tar -xvf xmake-v2.7.2.tar.gz -C xmake
 $ cd xmake
 ```
 
-! > The Xmake tarball does not have a top-level xmake root directory, so it is best to unpack it with `-C xmake` to specify the output directory.
+::: tip NOTE
+The Xmake tarball does not have a top-level xmake root directory, so it is best to unpack it with `-C xmake` to specify the output directory.
+:::
 
 ### Compiling source code
 
@@ -111,7 +113,7 @@ $ cd xmake
 
 If you are compiling Xmake source code on Windows, you will need to bootstrap it with an existing Xmake pre-build.
 
-Therefore we need to first install Xmake by referring to the [Installing Xmake on Windows](https://xmake.io/#/zh-cn/guide/installation?id=windows) documentation.
+Therefore we need to first install Xmake by referring to the [Installing Xmake on Windows](/guide/quick-start#windows) documentation.
 
 Then go to the Xmake source directory and compile.
 
@@ -253,7 +255,7 @@ This way, we can modify the xmake script source locally, sync it to a remote win
 
 We can also pull the remote files back to the local machine for analysis with the `xmake service --pull=` command.
 
-Note: See [Remote Build Documentation](http://xmake.io/#/features/remote_build) for a detailed description of remote build features.
+Note: See [Remote Build Documentation](/guide/extras/remote-compilation) for a detailed description of remote build features.
 
 ![](/assets/img/manual/xmake-remote.png)
 

@@ -1042,7 +1042,7 @@ $ xmake pack --autobuild=n
 
 ### 接口描述
 
-更多 XPack 打包接口描述见：[XPack 打包接口文档](https://xmake.io/#/zh-cn/manual/xpack)。
+更多 XPack 打包接口描述见：[XPack 打包接口文档](/zh/api/description/xpack-interfaces)。
 
 ## 宏记录和回放 {#xmake-macro}
 

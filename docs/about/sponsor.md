@@ -64,7 +64,7 @@ Feel free to contact us for more details on sponsorship.
 
 - All previous tier rewards
 - Add a logo and link to the README.md of my major open source projects
-- One-to-one technical consulting service, see [Technical Support](https://xmake.io/#/about/technical_support)
+- One-to-one technical consulting service
 
 ### $500 a month
 

@@ -1026,7 +1026,7 @@ $ xmake pack --autobuild=n
 
 ### Interface description
 
-For more descriptions of the XPack packaging interface, see: [XPack Packaging Interface Document](https://xmake.io/#/manual/xpack).
+For more descriptions of the XPack packaging interface, see: [XPack Packaging Interface Document](/api/description/xpack-interfaces).
 
 ## Macros Recording and Playback
 

@@ -413,7 +413,7 @@ please input: y (y/n)
 ```
 
 For a complete introduction to this and the installation and use of all third-party packages,
-you can refer to the document: [Third-party dependency package installation](https://xmake.io/#/package/remote_package?id=install-third-party-packages)
+you can refer to the document: [Third-party dependency package installation](/guide/package-management/using-third-party-packages).
 
 #### Another simplified configuration syntax
 

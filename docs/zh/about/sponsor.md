@@ -64,7 +64,7 @@ Xmake 项目属于个人开源项目，它的发展需要您的帮助，如果�
 
 - All previous tier rewards
 - Add a logo and link to the README.md of my major open source projects
-- One-to-one technical consulting service, see [Technical Support](https://xmake.io/#/about/technical_support)
+- One-to-one technical consulting service
 
 ### $500 a month
 

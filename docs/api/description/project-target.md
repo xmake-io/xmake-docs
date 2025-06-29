@@ -1761,7 +1761,9 @@ target("demo")
 
 For more on this block, see: [add_deps](#add_deps)
 
-!>If you don't want it to be fixed in the project, you can set it by: xmake f --includedirs=xxx or xmake f --cxflags="-I/xxx". This manual setting has higher directory search priority.
+::: tip NOTE
+If you don't want it to be fixed in the project, you can set it by: xmake f --includedirs=xxx or xmake f --cxflags="-I/xxx". This manual setting has higher directory search priority.
+:::
 
 :::tip NOTE
 The header file does not support pattern matching by default, and it is not recommended to do so. It is easy to introduce some unnecessary subdirectories, resulting in the interference of various header file reference conflicts, and it is more difficult to check if there is a problem.
@@ -2118,8 +2120,6 @@ In this way, when compiling the test target, if the package exists, the macro de
 
 Users no longer need to call the [add_links](#add_links), [add_includedirs](#add_includedirs), [add_ldflags](#add_ldflags) interfaces to configure the dependent library links.
 
-For how to set up the package search directory, please refer to: [add_packagedirs](https://xmake.io/#/manual/global_interfaces?id=add_packagedirs) interface
-
 After v2.2.2, this interface also supports packages defined by [add_requires](/api/description/global-interfaces#add-requires) in remote dependency management.
 
 ```lua
@@ -2450,7 +2450,8 @@ In the above code example, it can be seen that when the target applies the markd
 In the rule script, you can get the extended flag value set in the target by `values("markdown.flags")`.
 
 :::tip NOTE
-The specific extension configuration name will be different according to different rules. Currently, you can refer to the description of related rules: [built-in rules](https://xmake.io/#/manual/custom_rule?id=built-in-rules)
+The specific extension configuration name will be different according to different rules. Currently,
+you can refer to the description of related rules: [built-in rules](/api/description/builtin-rules).
 :::
 
 The following is a list of some built-in extended configuration items currently supported by xmake.
@@ -3050,7 +3051,7 @@ target ("test")
     set_policy ("check.auto_ignore_flags", false)
 ```
 
-For a complete list of policies support and instructions, see: [build policies](https://xmake.io/#/guide/build_policies)
+For a complete list of policies support and instructions, see: [build policies](/api/description/builtin-policies).
 
 ## set_runtimes
 

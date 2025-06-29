@@ -141,7 +141,7 @@ $ xmake f -p cross --trybuild=[cmake|autotools] --sdk=/xxxx
 $ xmake
 ```
 
-For more cross compilation configuration details, please refer to the document: [Cross Compilation](https://xmake.io/#/guide/configuration?id=cross-compilation), except for an additional `--trybuild=` parameter, all other cross-compilation configuration parameters are completely universal.
+For more cross compilation configuration details, please refer to the document: [Cross Compilation](/guide/basic-commands/cross-compilation), except for an additional `--trybuild=` parameter, all other cross-compilation configuration parameters are completely universal.
 
 ## Passing user configuration parameters
 
@@ -178,4 +178,5 @@ $ xmake f -p android --trybuild=ndkbuild [--ndk =]
 $ xmake
 ```
 
-We also provided [xmake-gradle](https://github.com/xmake-io/xmake-gradle) to build jni library in gradle, you can see [Uses xmake to build JNI in Gradle](https://xmake.io/#/plugin/more_plugins?id=gradle-plugin-jni)
+We also provided [xmake-gradle](https://github.com/xmake-io/xmake-gradle) to build jni library in gradle,
+you can see [Uses xmake to build JNI in Gradle](/guide/extensions/ide-integration-plugins#gradle-plugin-jni)

@@ -414,7 +414,7 @@ please input: y (y/n)
 [100%]: linking.release test
 ```
 
-关于这个的完整介绍和所有第三方包的安装使用，可以参考文档：[第三方依赖包安装](https://xmake.io/#/zh-cn/package/remote_package?id=%e7%ac%ac%e4%b8%89%e6%96%b9%e4%be%9d%e8%b5%96%e5%8c%85%e5%ae%89%e8%a3%85)
+关于这个的完整介绍和所有第三方包的安装使用，可以参考文档：[第三方依赖包安装](/zh/guide/package-management/using-third-party-packages)。
 
 #### 另一种简化的配置语法
 

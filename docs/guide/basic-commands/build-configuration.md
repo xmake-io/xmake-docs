@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Build Configuration
 
 Set compilation configuration before building project with command `xmake f|config`. If you want to known more options, please run: `xmake f --help`。

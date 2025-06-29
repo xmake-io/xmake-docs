@@ -53,7 +53,7 @@ target("demo")
 如果仅仅本地源码集成，我们不需要额外设置 `add_urls` 和 `add_versions`。
 :::
 
-关于包的配置描述，详情见：[包描述说明](https://xmake.io/#/zh-cn/package/remote_package?id=%e5%8c%85%e6%8f%8f%e8%bf%b0%e8%af%b4%e6%98%8e)
+关于包的配置描述，详情见：[包描述说明](/zh/guide/package-management/package-distribution.html#define-package-configuration)。
 
 定义完包后，我们就可以通过 `add_requires("foo")` 和 `add_packages("foo")` 来集成使用它了，就跟集成远程包一样的使用方式。
 

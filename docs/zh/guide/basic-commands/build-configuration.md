@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 编译配置 {#build-configuration}
 
 通过`xmake f|config`配置命令，设置构建前的相关配置信息，详细参数选项，请运行: `xmake f --help`。

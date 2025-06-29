@@ -53,7 +53,7 @@ Among them, we set the code directory location of the foo package through `set_s
 If only the local source code is integrated, we don't need to set additional `add_urls` and `add_versions`.
 :::
 
-For the configuration description of the package, see: [Package description description](https://xmake.io/#/package/remote_package?id=package-description).
+For the configuration description of the package, see: [Package description description](/guide/package-management/package-distribution.html#define-package-configuration).
 
 After defining the package, we can integrate it with `add_requires("foo")` and `add_packages("foo")`, just like integrating remote packages.
 

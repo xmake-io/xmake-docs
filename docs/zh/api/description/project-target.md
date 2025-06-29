@@ -2107,8 +2107,6 @@ target("test")
 
 用户不再需要自己单独调用[add_links](#add_links)，[add_includedirs](#add_includedirs), [add_ldflags](#add_ldflags)等接口，来配置依赖库链接了。
 
-对于如何设置包搜索目录，可参考：[add_packagedirs](https://xmake.io/#/zh-cn/manual/global_interfaces?id=add_packagedirs) 接口
-
 而在v2.2.2版本之后，此接口也同时支持远程依赖包管理中[add_requires](/zh/api/description/global-interfaces#add-requires)定义的包。
 
 ```lua
@@ -2440,7 +2438,7 @@ target("test")
 在规则脚本中可以通过`values("markdown.flags")`获取到target中设置的扩展flags值。
 
 :::tip 注意
-具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](https://xmake.io/#/zh-cn/manual/custom_rule?id=内建规则)
+具体扩展配置名，根据不同的rule，会有所不同，目前有哪些，可以参考相关规则的描述：[内建规则](/zh/api/description/builtin-rules)。
 :::
 
 下面是一些 xmake 目前支持的一些内置的扩展配置项列表。
@@ -3043,7 +3041,6 @@ target("test")
     set_policy("check.auto_ignore_flags", false)
 ```
 
-完整的 policies 支持列表和使用说明，见：[构建策略](https://xmake.io/#/zh-cn/guide/build_policies)
 
 ## set_runtimes
 

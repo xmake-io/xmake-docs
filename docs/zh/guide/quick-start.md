@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 快速上手 {quick-start}
 
 ## 安装 {#installation}

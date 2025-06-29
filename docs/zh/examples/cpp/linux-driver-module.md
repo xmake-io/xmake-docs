@@ -98,7 +98,7 @@ target("hello")
 
 这里用到的交叉工具链，可以从这里下载: [Download toolchains](https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/)
 
-更多，交叉编译配置文档，见：[配置交叉编译](https://xmake.io/#/zh-cn/guide/configuration?id=common-cross-compilation-configuration)
+更多，交叉编译配置文档，见：[配置交叉编译](/zh/guide/basic-commands/cross-compilation)。
 
 ::: tip 注意
 目前仅仅支持 arm/arm64 交叉编译架构，后续会支持更多的平台架构。

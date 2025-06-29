@@ -98,7 +98,7 @@ We only need to prepare our own cross-compilation tool chain, specify its root d
 
 The cross toolchain used here can be downloaded from here: [Download toolchains](https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/)
 
-For more, cross-compilation configuration documents, see: [Configure cross-compilation](https://xmake.io/#/guide/configuration?id=common-cross-compilation-configuration)
+For more, cross-compilation configuration documents, see: [Configure cross-compilation](/guide/basic-commands/cross-compilation).
 
 ::: tip NOTE
 Currently only supports arm/arm64 cross-compilation architecture, and more platform architectures will be supported in the future.

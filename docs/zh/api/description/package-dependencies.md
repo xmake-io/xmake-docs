@@ -819,7 +819,7 @@ package("zlib")
 
 自定义下载需要用户完全自己控制下载逻辑，会比较复杂，除非必要，不推荐这么做。
 
-如果仅仅只是想增加自定义 http headers 去获取下载授权，可以使用 [设置包下载的 http headers](https://xmake.io/#/zh-cn/manual/project_target?id=%e8%ae%be%e7%bd%ae%e5%8c%85%e4%b8%8b%e8%bd%bd%e7%9a%84-http-headers)
+如果仅仅只是想增加自定义 http headers 去获取下载授权，可以使用 [设置包下载的 http headers](/zh/api/description/builtin-policies#package-download-http-headers)。
 
 ## on_component
 

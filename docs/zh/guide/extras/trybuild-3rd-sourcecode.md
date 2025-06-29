@@ -147,7 +147,7 @@ $ xmake f -p cross --trybuild=[cmake|autotools] --sdk=/xxxx
 $ xmake
 ```
 
-关于更多交叉编译的配置细节，请参考文档：[交叉编译](https://xmake.io/#/zh-cn/guide/configuration?id=%e4%ba%a4%e5%8f%89%e7%bc%96%e8%af%91)，除了多了一个`--trybuild=`参数，其他交叉编译配置参数都是完全通用的。
+关于更多交叉编译的配置细节，请参考文档：[交叉编译](/zh/guide/basic-commands/cross-compilation)，除了多了一个`--trybuild=`参数，其他交叉编译配置参数都是完全通用的。
 
 ## 传递用户配置参数
 
@@ -186,4 +186,5 @@ $ xmake f -p android --trybuild=ndkbuild [--ndk=]
 $ xmake
 ```
 
-如果觉得命令行编译jni比较麻烦，xmake也提供了相关的gradle集成插件[xmake-gradle](https://github.com/xmake-io/xmake-gradle)，可以无缝集成xmake进行jni库的编译集成，具体详情见：[使用xmake-gradle插件构建JNI程序](https://xmake.io/#/zh-cn/plugin/more_plugins?id=gradle%e6%8f%92%e4%bb%b6%ef%bc%88jni%ef%bc%89)
+如果觉得命令行编译jni比较麻烦，xmake也提供了相关的gradle集成插件[xmake-gradle](https://github.com/xmake-io/xmake-gradle)，
+可以无缝集成xmake进行jni库的编译集成，具体详情见：[使用xmake-gradle插件构建JNI程序](/zh/guide/extensions/ide-integration-plugins.html#gradle-plugin)。

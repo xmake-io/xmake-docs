@@ -1,6 +1,6 @@
 # IDE 集成插件 {#ide-integration-plugins}
 
-## VSCode 插件
+## VSCode 插件 {#vscode-plugin}
 
 * [xmake-vscode](https://github.com/xmake-io/xmake-vscode)
 
@@ -38,13 +38,13 @@
 
 其他xmake的选项也同样可以在settings.json中完成设置。修改后可通过 >XMake: Configure 命令刷新配置。
 
-### 配置 Intellsence
+### 配置 IntelliSense {#intellisense}
 
 为了更好的 C++ 语法提示体验，xmake提供了对[Language Server Protocol](https://microsoft.github.io/language-server-protocol/)（简称LSP）的支持。
 
-在 vscode 中，我们可以通过使用 vscode-cpptools 或者 clangd 来提供 intellsence 支持。
+在 vscode 中，我们可以通过使用 vscode-cpptools 或者 clangd 来提供 intellisense 支持。
 
-另外，为了支持 intellsence，xmake 提供了 compile_commands.json 的生成支持。
+另外，为了支持 intellisense，xmake 提供了 compile_commands.json 的生成支持。
 
 #### 生成 compile_commands
 
@@ -81,9 +81,9 @@ $ xmake project -k compile_commands .vscode
 
 #### vscode-cpptools
 
-如果我们使用 vscode-cpptools 插件来提供 intellsence 支持，需要先去 vscode 插件市场，搜下 C++，默认第一个插件就是，安装下。
+如果我们使用 vscode-cpptools 插件来提供 intellisense 支持，需要先去 vscode 插件市场，搜下 C++，默认第一个插件就是，安装下。
 
-装完后，这个插件提供了 intellsence 和 调试支持。
+装完后，这个插件提供了 intellisense 和 调试支持。
 
 然后，我们需要配置下 c_cpp_properties.json 文件，关联上我们生成的 `.vscode/compile_commands.json`。
 
@@ -161,23 +161,23 @@ $ xmake project -k compile_commands .vscode
 
 如果配置后，还是没生效，可以尝试重启 vscode 和 clangd 进程，再验证下。
 
-## Sublime 插件
+## Sublime 插件 {#sublime-plugin}
 
 * [xmake-sublime](https://github.com/xmake-io/xmake-sublime)
 
 <img src="https://raw.githubusercontent.com/xmake-io/xmake-sublime/master/res/problem.gif" width="650px" />
 
-## Intellij IDEA/CLion 插件
+## Intellij IDEA/CLion 插件 {#clion-plugin}
 
 * [xmake-idea](https://github.com/xmake-io/xmake-idea)
 
 <img src="https://raw.githubusercontent.com/xmake-io/xmake-idea/master/res/problem.gif" width="650px" />
 
-## Vim 插件
+## Vim 插件 {#vim-plugin}
 
 * [xmake.vim](https://github.com/luzhlon/xmake.vim) (第三方开发, 感谢[@luzhlon](https://github.com/luzhlon))
 
-## Neovim 插件
+## Neovim 插件 {#neovim-plugin}
 
 * [xmake.nvim](https://github.com/Mythos-404/xmake.nvim) (第三方开发, 感谢[@Mythos_404](https://github.com/Mythos-404))
 
@@ -185,7 +185,7 @@ $ xmake project -k compile_commands .vscode
 
 <img src="https://raw.githubusercontent.com/Mythos-404/xmake.nvim/main/assets/XmakePreview.gif" width="650px" />
 
-## Gradle插件（JNI）
+## Gradle插件（JNI）{#gradle-plugin}
 
 * [xmake-gradle](https://github.com/xmake-io/xmake-gradle): 一个无缝整合xmake的gradle插件
 
