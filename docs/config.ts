@@ -89,6 +89,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Syntax Description', link: 'project-configuration/syntax-description' },
+        { text: 'Multi-level Directories', link: 'project-configuration/multi-level-directories' },
         { text: 'Toolchain Configuration', link: 'project-configuration/toolchain-configuration' },
       ]
     },
