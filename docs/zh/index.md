@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "Xmake"
   text: "一个基于Lua的轻量级跨平台自动构建工具"
-  tagline: <i>现代化的 C/C++ 构建工具<br>
+  tagline: <i>现代化的 C/C++ 构建工具</i>
   actions:
     - theme: brand
       text: 快速上手 ->

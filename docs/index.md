@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "Xmake"
   text: "A cross-platform build utility based on Lua"
-  tagline: <i>Modern C/C++ build tools<br>
+  tagline: <i>Modern C/C++ build tools</i>
   actions:
     - theme: brand
       text: Get Started ->
