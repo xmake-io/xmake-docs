@@ -21,7 +21,7 @@ $ xmake
 
 ### Use the specified version of Gcc
 
-If the user additionally installs a specific version of the gcc tool chain such as gcc-11, gcc-10, the local gcc program may be named `/usr/bin/gcc-11`.
+If the user additionally installs a specific version of the gcc toolchain such as gcc-11, gcc-10, the local gcc program may be named `/usr/bin/gcc-11`.
 
 One way is to switch by specifying the configuration one by one through `xmake f --cc=gcc-11 --cxx=gcc-11 --ld=g++-11`, but it is very cumbersome.
 
@@ -32,7 +32,7 @@ $ xmake f --toolchain=gcc-11 -c
 $ xmake
 ```
 
-You only need to specify the version name corresponding to `gcc-11` to quickly switch the entire gcc tool chain.
+You only need to specify the version name corresponding to `gcc-11` to quickly switch the entire gcc toolchain.
 
 ## Clang
 
@@ -57,7 +57,7 @@ $ xmake -v
 
 ## Clang-cl
 
-If you simply switch to the clang-cl.exe compiler, and use msvc for the rest of the link operation, then we don't need to switch the entire tool chain, just cut the c/c++ compiler.
+If you simply switch to the clang-cl.exe compiler, and use msvc for the rest of the link operation, then we don't need to switch the entire toolchain, just cut the c/c++ compiler.
 
 ```console
 $ xmake f --cc=clang-cl --cxx=clang-cl -c
@@ -75,7 +75,7 @@ $ xmake
 
 ## LLVM
 
-In addition to the independent clang compiler, if the user installs a complete llvm tool chain, we can also switch to it, including tools such as `llvm-ar`.
+In addition to the independent clang compiler, if the user installs a complete llvm toolchain, we can also switch to it, including tools such as `llvm-ar`.
 
 ```console
 $ xmake f --toolchain=llvm --sdk=/xxxx/llvm
@@ -104,7 +104,7 @@ $ xmake
 
 When using it, please add the tinycc compiler to the PATH environment.
 
-We can also use the remote tool chain to automatically download and integrate it, and truly achieve one-click compilation on all platforms without any manual installation operations by users.
+We can also use the remote toolchain to automatically download and integrate it, and truly achieve one-click compilation on all platforms without any manual installation operations by users.
 
 ```lua
 add_requires("tinycc")
@@ -147,7 +147,7 @@ $ xmake
 
 ## SDCC
 
-It is also an embedded arm compilation tool chain.
+It is also an embedded arm compilation toolchain.
 
 ```console
 $ xmake f --toolchain=sdcc -a stm8
@@ -203,7 +203,7 @@ If you want to use the arm/arm64 architecture of llvm-mingw, you need to specify
 
 ## Zig
 
-If you want to build a Zig program, we can automatically use the zig tool chain by executing xmake by default, but the premise is that zig is already in the PATH environment.
+If you want to build a Zig program, we can automatically use the zig toolchain by executing xmake by default, but the premise is that zig is already in the PATH environment.
 
 ```console
 $ xmake
@@ -250,7 +250,7 @@ $ xmake
 
 ## Emcc (WASM)
 
-If you want to compile the wasm program, we only need to switch to the wasm platform, and the emcc tool chain will be used to compile by default.
+If you want to compile the wasm program, we only need to switch to the wasm platform, and the emcc toolchain will be used to compile by default.
 
 ```console
 $ xmake f -p wasm
@@ -327,7 +327,7 @@ It should be noted that the dlang toolchain here actually includes automatic det
 
 ## Cuda
 
-For Cuda programs, we need to manually switch to the cuda tool chain.
+For Cuda programs, we need to manually switch to the cuda toolchain.
 
 ```console
 $ xmake f --toolchain=cuda -c
@@ -343,7 +343,7 @@ $ xmake
 
 ## Assembler
 
-Regarding the independent assembler tool chain, xmake supports three: yasm, nasm, and fasm, which can be switched at will. If not set, the assembler that comes with gcc/clang/msvc will be used by default.
+Regarding the independent assembler toolchain, xmake supports three: yasm, nasm, and fasm, which can be switched at will. If not set, the assembler that comes with gcc/clang/msvc will be used by default.
 
 ```console
 $ xmake f --toolchain=nasm -c
@@ -359,7 +359,7 @@ $ xmake
 
 ## Go
 
-The golang compiler tool chain is automatically enabled when compiling go programs by default.
+The golang compiler toolchain is automatically enabled when compiling go programs by default.
 
 ```console
 $ xmake
@@ -367,7 +367,7 @@ $ xmake
 
 ## Rust
 
-The rust compiler tool chain is automatically enabled when the rust program is compiled by default.
+The rust compiler toolchain is automatically enabled when the rust program is compiled by default.
 
 ```console
 $ xmake
@@ -382,7 +382,7 @@ $ xmake
 
 ## NDK
 
-Android's NDK compilation tool chain, as long as the android platform is enabled, it will be enabled by default.
+Android's NDK compilation toolchain, as long as the android platform is enabled, it will be enabled by default.
 
 ```console
 $ xmake f -p android --ndk=~/android-ndk-r20b -c
