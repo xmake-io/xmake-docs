@@ -66,8 +66,8 @@ If target is configured as `default = false`, it will not be compiled by default
 
 ```lua
 target("test")
-set_default(false)
-add_files("src/*.c")
+    set_default(false)
+    add_files("src/*.c")
 ```
 
 If you want to build all targets, including those with `default = false`, you can pass the `-a/--all` parameter.
@@ -104,27 +104,28 @@ If you want to further locate the problem, you can use the following command to 
 ```lua
 add_rules("mode.debug", "mode.release")
 
-target("foo") 
-set_kind("static") 
-add_files("src/foo.cpp")
+target("foo")
+    set_kind("static")
+    add_files("src/foo.cpp")
 
-target("test") 
-set_kind("binary") 
-dd_deps("foo") --------------- Incorrect interface 
-add_files("src/main.cpp")
+target("test")
+    set_kind("binary")
+    dd_deps("foo") --------------- Incorrect interface
+    add_files("src/main.cpp")
 ```
 
 ```sh
-$xmake-vD
+$ xmake -vD
 error: @programdir/core/main.lua:329: @programdir/core/sandbox/modules/import/core/base/task.lua:65: @progr
 amdir/core/project/project.lua:1050: ./xmake.lua:9: attempt to call a nil value (global 'dd_deps')
-stack traceback: 
-[./xmake.lua:9]: in main chunk ------------------ The actual configuration error
+stack traceback:
+    [./xmake.lua:9]: in main chunk  ----------------- here
 
 stack traceback:
-[C]: in function 'error'
-@programdir/core/base/os.lua:1075: in function 'os.raiselevel'
-(...tail calls...)
-@programdir/core/main.lua:329: in upvalue 'cotask'
-@programdir/core/base/scheduler.lua:406: in function <@programdir/core/base/scheduler.lua:399>
+        [C]: in function 'error'
+        @programdir/core/base/os.lua:1075: in function 'os.raiselevel'
+        (...tail calls...)
+        @programdir/core/main.lua:329: in upvalue 'cotask'
+        @programdir/core/base/scheduler.lua:406: in function <@programdir/core/base/scheduler.lua:399>
 ```
+
