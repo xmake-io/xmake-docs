@@ -160,6 +160,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: '创建工程', link: 'basic-commands/create-project' },
         { text: '编译配置', link: 'basic-commands/build-configuration' },
         { text: '交叉编译', link: 'basic-commands/cross-compilation' },
+        { text: '切换工具链', link: 'basic-commands/switch-toolchains' },
       ]
     },
     {
