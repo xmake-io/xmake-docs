@@ -7,7 +7,7 @@
 ## 命令格式
 
 ```console
-$ xmake build [target] [args]
+$ xmake build [options] [target]
 ```
 
 其中，`[target]` 指定需要构建的 target 目标，这是可选的，如果没有设置，那么默认会构建所有的目标程序（被标记为 default = false 的除外）。

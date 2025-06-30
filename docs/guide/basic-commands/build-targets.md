@@ -7,7 +7,7 @@ Here we will explain it in detail. First, let's take a look at its complete comm
 ## Command format
 
 ```console
-$ xmake build [target] [args]
+$ xmake build [options] [target]
 ```
 
 Among them, `[target]` specifies the target to be built. This is optional. If it is not set, all target programs will be built by default (except those marked as default = false).
