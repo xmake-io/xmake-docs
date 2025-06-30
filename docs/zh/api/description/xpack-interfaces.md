@@ -194,7 +194,7 @@ xpack("test")
 
 我们也可以通过命令，指定生成其中部分格式，而不是一次性全部生成。
 
-```bash
+```sh
 $ xmake pack -f "nsis,zip"
 ```
 

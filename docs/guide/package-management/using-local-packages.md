@@ -6,7 +6,7 @@ After version 2.5.5, we have provided a new local package packaging solution tha
 
 We can execute the `xmake package` command to generate the default new version of the packaging format.
 
-```console
+```sh
 $ xmake package
 package(foo): build/packages/f/foo generated
 ```
@@ -36,7 +36,7 @@ In fact, it uses `package()` to define and describe local packages, just like re
 
 The generated directory structure is as follows:
 
-```console
+```sh
 $ tree build/packages/f/foo/
 build/packages/f/foo/
 ├── macosx
@@ -71,7 +71,7 @@ In addition, the generated local package has another feature, which is to suppor
 
 Here is the complete [test example](https://github.com/xmake-io/xmake/blob/dev/tests/actions/package/localpkg/test.lua).
 
-```console
+```sh
 "/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/bar build/.objs/bar/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version -min=10.15 -isysroot
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk -stdlib=libc++
  -L/Users/ruki/projects/personal/xmake/tests/actions/package/localpkg/bar/build/packages/f/foo/macosx/x86_64/release/lib
@@ -88,7 +88,7 @@ We can use `find_package("cmake::xxx")` to find some packages with cmake, xmake 
 
 E.g:
 
-```console
+```sh
 $ xmake l find_package cmake::ZLIB
 {
   links = {

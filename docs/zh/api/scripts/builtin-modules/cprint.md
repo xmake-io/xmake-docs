@@ -105,7 +105,7 @@ xmake对于truecolor的检测支持，是通过`$COLORTERM`环境变量来实现
 
 可以通过下面的命令来启用和测试：
 
-```bash
+```sh
 $ export XMAKE_COLORTERM=truecolor
 $ xmake --version
 ```

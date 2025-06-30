@@ -5,7 +5,7 @@ sinceAfter the 2.2.1 release, xmake provides some built-in rules to simplify the
 
 We can view the complete list of built-in rules by running the following command:
 
-```bash
+```sh
 $ xmake show -l rules
 ```
 
@@ -596,7 +596,7 @@ int main(int argc, char** argv) {
 
 The content of the generated header file is similar:
 
-```console
+```sh
 cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
   0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
 ```
@@ -663,7 +663,7 @@ Similar to the usage of bin2c rules, see the complete example: [glsl2spv example
 
 In addition to the `utils.glsl2spv` rule, we now support the `utils.hlsl2spv` rule.
 
-```bash
+```sh
 add_rules("mode.debug", "mode.release")
 
 add_requires("glslang", {configs = {binaryonly = true}})

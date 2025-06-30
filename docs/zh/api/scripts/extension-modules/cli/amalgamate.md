@@ -8,7 +8,7 @@
 
 默认它会处理所有 target 的合并，例如：
 
-```bash
+```sh
 $ xmake l cli.amalgamate
 build/tbox.c generated!
 build/tbox.h generated!
@@ -16,7 +16,7 @@ build/tbox.h generated!
 
 我们也可以指定合并需要的目标：
 
-```bash
+```sh
 $ xmake l cli.amalgamate tbox
 build/tbox.c generated!
 build/tbox.h generated!
@@ -24,7 +24,7 @@ build/tbox.h generated!
 
 也可以在合并每个源文件时候，指定一个自定义的 unique ID 的宏定义，来处理符号冲突问题。
 
-```bash
+```sh
 $ xmake l cli.amalgamate -u MY_UNIQUEU_ID
 build/tbox.c generated!
 build/tbox.h generated!
@@ -41,7 +41,7 @@ build/tbox.h generated!
 
 我们也可以指定输出位置：
 
-```bash
+```sh
 $ xmake l cli.amalgamate -o /xxx
 /xxx/tbox.c generated!
 /xxx/tbox.h generated!

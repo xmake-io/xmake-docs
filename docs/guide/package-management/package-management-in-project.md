@@ -9,25 +9,25 @@ For detailed documentation, see: [Getting Started with Xrepo Commands](/guide/pa
 
 ## Install the specified package
 
-```console
+```sh
 $ xmake require tbox
 ```
 
 Install the specified version package:
 
-```console
+```sh
 $ xmake require tbox "~1.6"
 ```
 
 Force a re-download of the installation and display detailed installation information:
 
-```console
+```sh
 $ xmake require -f -v tbox "1.5.x"
 ```
 
 Pass additional setup information:
 
-```console
+```sh
 $ xmake require --extra="{debug=true,config={small=true}}" tbox
 ```
 
@@ -35,7 +35,7 @@ Install the debug package and pass the compilation configuration information of 
 
 ## Uninstall the specified package
 
-```console
+```sh
 $ xmake require --uninstall tbox
 ```
 
@@ -43,19 +43,19 @@ This will completely uninstall the removal package file.
 
 ## Show package information
 
-```console
+```sh
 $ xmake require --info tbox
 ```
 
 ## Search for packages in the current repository
 
-```console
+```sh
 $ xmake require --search tbox
 ```
 
 This is to support fuzzy search and lua pattern matching search:
 
-```console
+```sh
 $ xmake require --search pcr
 ```
 
@@ -63,7 +63,7 @@ Will also search for pcre, pcre2 and other packages.
 
 ## List the currently installed packages
 
-```console
+```sh
 $ xmake require --list
 ```
 

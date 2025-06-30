@@ -105,7 +105,7 @@ Xmake's detection support for truecolor is implemented by the `$COLORTERM` envir
 
 It can be enabled and tested with the following command:
 
-```bash
+```sh
 $ export XMAKE_COLORTERM=truecolor
 $ xmake --version
 ```

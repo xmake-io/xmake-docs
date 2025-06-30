@@ -4,14 +4,14 @@ xmake will automatically detect the compiler installed by Keil/MDK, related issu
 
 Compile with armcc
 
-```bash
+```sh
 $ xmake f -p cross -a cortex-m3 --toolchain=armcc -c
 $ xmake
 ```
 
 Compile with armclang
 
-```bash
+```sh
 $ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 $ xmake
 ```

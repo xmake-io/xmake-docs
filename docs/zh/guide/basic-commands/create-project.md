@@ -6,7 +6,7 @@ Xmake 提供了一些常用命令，让用户方便快速地创建工程，以�
 
 所有的命令，可以通过 `xmake -h` 去查看，命令格式如下：
 
-```bash
+```sh
 xmake [action] [arguments] ...
 ```
 
@@ -16,7 +16,7 @@ xmake [action] [arguments] ...
 
 首先，我们可以尝试创建一个名叫 `hello` 的 `c++` 控制台空工程。
 
-```bash
+```sh
 $ xmake create hello
 create hello ...
   [+]: xmake.lua
@@ -51,7 +51,7 @@ target("hello")
 
 然后，我们只需要进入刚刚创建的 hello 工程根目录，执行 xmake 命令，即可完成编译。
 
-```console
+```sh
 $ xmake
 [ 23%]: cache compiling.release src/main.cpp
 [ 47%]: linking.release hello
@@ -62,7 +62,7 @@ $ xmake
 
 我们可以通过 `-l [languages]` 参数，去指定创建其他语言的工程，比如创建一个 C 语言工程。
 
-```console
+```sh
 $ xmake create -l c hello
 create hello ...
   [+]: xmake.lua
@@ -73,7 +73,7 @@ create ok!
 
 或者创建一个 Rust 空工程。
 
-```console
+```sh
 $ xmake create -l rust hello
 create hello ...
   [+]: xmake.lua
@@ -84,7 +84,7 @@ create ok!
 
 完整语言可以通过 `xmake create -h` 查看。
 
-```bash
+```sh
     -l LANGUAGE, --language=LANGUAGE    The project language (default: c++)
                                             - pascal
                                             - c++
@@ -109,7 +109,7 @@ create ok!
 
 例如，创建一个静态库工程：
 
-```console
+```sh
 $ xmake create -t static test
 create test ...
   [+]: xmake.lua
@@ -120,7 +120,7 @@ create test ...
 create ok!
 ```
 
-```console
+```sh
 $ xmake
 [ 23%]: cache compiling.release src/main.cpp
 [ 23%]: cache compiling.release src/foo.cpp
@@ -131,7 +131,7 @@ $ xmake
 
 完整模版列表，也可以通过 `xmake create -h` 来查看。
 
-```console
+```sh
     -t TEMPLATE, --template=TEMPLATE    Select the project template id or name of the given language.
                                         (default: console)
                                             - console: pascal, c++, zig, go, nim, dlang, cuda, rust,

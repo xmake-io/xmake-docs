@@ -51,7 +51,7 @@ target("hello")
 
 ### Build the project
 
-```bash
+```sh
 $ xmake
 check iverilog... iverilog
 check vvp... vvp
@@ -61,7 +61,7 @@ check vvp... vvp
 
 ### Run the program
 
-```bash
+```sh
 $ xmake run
 hello world!
 LXT2 INFO: dumpfile hello.vcd opened, ready for output.
@@ -143,7 +143,7 @@ target("Hello")
 
 ### Build the project
 
-```bash
+```sh
 $ xmake
 [ 0%]: compiling.verilog src/main.v
 [ 15%]: cache compiling.release /Users/ruki/.xmake/packages/v/verilator/2023.1.10/cd2268409c1d44799288c7759b3cbd56/share/verilator/include/verilated.cpp
@@ -161,7 +161,7 @@ $ xmake
 
 ### Run the program
 
-```bash
+```sh
 $ xmake run
 ruki-2:hello ruki$ xmake run
 hello world!

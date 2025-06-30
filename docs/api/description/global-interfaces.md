@@ -395,7 +395,7 @@ target("test")
 
 After executing xmake to compile:
 
-```console
+```sh
 ruki:test_package ruki$ xmake
 checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
@@ -431,7 +431,7 @@ add_requires("boost[iostreams,system,thread] >=1.78.0")
 
 This will save a lot of trouble for installations with complex configurations under the `xrepo install` independent cli command. Users can choose to use it according to their own preferences.
 
-```console
+```sh
 xrepo install boost[iostreams,system,thread]
 ```
 
@@ -732,7 +732,7 @@ end)
 
 When we specify to build a specific target, we can also locate it by namespace.
 
-```bash
+```sh
 $ xmake build -r ns1::test
 [ 33%]: cache compiling.release ns1::ns2::src/bar.cpp
 [ 41%]: cache compiling.release ns1::src/foo.cpp
@@ -799,7 +799,7 @@ target("test")
 
 ### Isolate option
 
-```bash
+```sh
 $ xmake f --opt0=y
 $ xmake f --ns1::opt1=y
 $ xmake f --ns1::ns2::opt2=y
@@ -877,7 +877,7 @@ end)
 
 ### Isolate task
 
-```bash
+```sh
 xmake task0
 xmake ns1::task1
 xmake ns1::ns2::task2

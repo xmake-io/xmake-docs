@@ -1,7 +1,7 @@
 
 创建空工程：
 
-```bash
+```sh
 $ xmake create -l swift -t console test
 ```
 

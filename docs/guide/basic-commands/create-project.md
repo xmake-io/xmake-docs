@@ -6,7 +6,7 @@ Xmake provides some common commands to allow users to easily and quickly create 
 
 All commands can be viewed through `xmake -h`, the command format is as follows:
 
-```bash
+```sh
 xmake [action] [arguments] ...
 ```
 
@@ -16,7 +16,7 @@ Among them, action is the subcommand provided by xmake cli, and for creating a p
 
 First, we can try to create a `c++` console empty project named `hello`.
 
-```bash
+```sh
 $ xmake create hello
 create hello ...
 [+]: xmake.lua
@@ -51,7 +51,7 @@ In addition, some comments are provided at the end of the file, which provide co
 
 Then, we only need to enter the root directory of the hello project just created and execute the xmake command to complete the compilation.
 
-```console
+```sh
 $ xmake
 [ 23%]: cache compiling.release src/main.cpp
 [ 47%]: linking.release hello
@@ -62,7 +62,7 @@ $ xmake
 
 We can use the `-l [languages]` parameter to specify the creation of projects in other languages, such as creating a C language project.
 
-```console
+```sh
 $ xmake create -l c hello
 create hello ...
 [+]: xmake.lua
@@ -73,7 +73,7 @@ create ok!
 
 Or create an empty Rust project.
 
-```console
+```sh
 $ xmake create -l rust hello
 create hello ...
 [+]: xmake.lua
@@ -84,7 +84,7 @@ create ok!
 
 The complete language can be viewed through `xmake create -h`.
 
-```bash
+```sh
 -l LANGUAGE, --language=LANGUAGE The project language (default: c++)
 - pascal
 - c++
@@ -109,7 +109,7 @@ In addition, we can also use the `-t [template]` parameter to specify the type o
 
 For example, create a static library project:
 
-```console
+```sh
 $ xmake create -t ​​static test
 create test ...
 [+]: xmake.lua
@@ -120,7 +120,7 @@ create test ...
 create ok!
 ```
 
-```console
+```sh
 $ xmake
 [ 23%]: cache compiling.release src/main.cpp
 [ 23%]: cache compiling.release src/foo.cpp
@@ -131,7 +131,7 @@ $ xmake
 
 The complete template list can also be viewed through `xmake create -h`.
 
-```console 
+```sh 
 -t TEMPLATE, --template=TEMPLATE Select the project template id or name of the given language. 
 (default: console) 
 - console: pascal, c++, zig, go, nim, dlang, cuda, rust, 

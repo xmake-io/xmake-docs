@@ -4,31 +4,31 @@
 
 获取主菜单的帮助信息，里面有所有action和plugin的列表描述。
 
-```bash
+```sh
 $ xmake [-h|--help]
 ```
 
 获取配置菜单的帮助信息，里面有所有配置选项的描述信息，以及支持平台、架构列表。
 
-```bash
+```sh
 $ xmake f [-h|--help]
 ```
 
 获取action和plugin命令菜单的帮助信息，里面有所有内置命令和插件任务的参数使用信息。
 
-```bash
+```sh
 $ xmake [action|plugin] [-h|--help]
 ```
 
 例如，获取`run`命令的参数信息:
 
-```bash
+```sh
 $ xmake run --help
 ```
 
 ## 怎样实现静默构建，不输出任何信息？{#suppress-all-output-info}
 
-```bash
+```sh
 $ xmake [-q|--quiet]
 ```
 
@@ -36,7 +36,7 @@ $ xmake [-q|--quiet]
 
 可以先尝试清除下配置，重新构建下：
 
-```bash
+```sh
 $ xmake f -c
 $ xmake
 ```
@@ -51,7 +51,7 @@ $ xmake [-v|--verbose]
 
 并且可以加上 `-D` 选项获取出错时的xmake的调试栈信息和其他更详细的诊断信息, 然后你可以提交这些信息到[issues](https://github.com/xmake-io/xmake/issues).
 
-```bash
+```sh
 $ xmake -v -D
 ```
 
@@ -59,7 +59,7 @@ $ xmake -v -D
 
 为了避免刷屏，在构建时候，默认是不实时输出警告信息的，如果想要看的话可以加上`-w`选项启用编译警告输出就行了。
 
-```bash
+```sh
 $ xmake [-w|--warning]
 ```
 
@@ -79,13 +79,13 @@ xmake.lua里面分描述域和脚本域，在描述域里面会对各种配置�
 
 #### 使用 git 拉取
 
-```bash
+```sh
 $ git clone --recursive https://github.com/xmake-io/xmake.git
 ```
 
 或者
 
-```bash
+```sh
 $ git clone https://github.com/xmake-io/xmake.git
 $ git submodule update --init
 ```
@@ -99,7 +99,7 @@ $ git submodule update --init
 - 不完整源码：https://github.com/xmake-io/xmake/archive/refs/tags/v2.7.2.tar.gz
 - 完整源码包：https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
 
-```bash
+```sh
 wget https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
 tar -xvf xmake-v2.7.2.tar.gz -C xmake
 cd xmake
@@ -119,7 +119,7 @@ Xmake 的 tar 源码包没有顶层 xmake 根目录，因此解压时候最好�
 
 然后进入 Xmake 源码目录进行编译。
 
-```bash
+```sh
 cd xmake
 cd core
 xmake
@@ -133,7 +133,7 @@ xmake
 
 其他类 unix 平台环境编译 Xmake，我们只需要在源码根目录执行 make 就行了。
 
-```bash
+```sh
 $ cd xmake
 $ ./configure
 $ make
@@ -151,7 +151,7 @@ $ make
 
 我们也可以运行
 
-```bash
+```sh
 $ xmake l os.programdir
 ```
 
@@ -161,7 +161,7 @@ $ xmake l os.programdir
 
 在 Linux/macOS/FreeBSD 上会更加简单点，只需要运行：
 
-```bash
+```sh
 $ cd xmake
 $ source scripts/srcenv.profile
 ```
@@ -194,7 +194,7 @@ tb_trace_i("hello %s", "xmake");
 
 首先，我们需要在 VSCode 的插件市场安装 VSCode-EmmyLua 插件，然后执行下面的命令更新下 xmake-repo 仓库保持最新。
 
-```bash
+```sh
 xrepo update-repo
 ```
 
@@ -204,7 +204,7 @@ Xmake 也需要保持最新版本。
 
 然后，在自己的工程目录下执行以下命令：
 
-```bash
+```sh
 $ xrepo env -b emmylua_debugger -- xmake build
 ```
 
@@ -212,7 +212,7 @@ $ xrepo env -b emmylua_debugger -- xmake build
 
 通常我们仅仅调试 `xmake build` 构建，如果想要调试其他命令，可以自己调整，比如想要调试 `xmake install -o /tmp` 安装命令，那么可以改成：
 
-```bash
+```sh
 $ xrepo env -b emmylua_debugger -- xmake install -o /tmp
 ```
 
@@ -242,13 +242,13 @@ $ xrepo env -b emmylua_debugger -- xmake install -o /tmp
 
 我们先在 windows 机器上开启远程编译服务：
 
-```bash
+```sh
 $ xmake service
 ```
 
 然后本机打开需要构建的工程目录，执行远程连接，然后执行 `xmake service --sync --xmakesrc=` 去同步本地源码：
 
-```bash
+```sh
 $ xmake service --connect
 $ xmake service --sync --xmakesrc=~/projects/personal/xmake/xmake/
 $ xmake build
@@ -267,7 +267,7 @@ $ xmake run
 
 调试的方式有很多种，这里我主要介绍作者最常使用的调试方式，那就是直接拉取 xmake-repo 仓库来调试。
 
-```bash
+```sh
 $ git clone https://github.com/xmake-io/xmake-repo.git
 $ xmake l scripts/test.lua -vD --shallow zlib
 ```
@@ -276,7 +276,7 @@ $ xmake l scripts/test.lua -vD --shallow zlib
 
 我们也可以测试指定的平台，架构，编译模式，vs_runtime 和动态库，静态库等等。
 
-```bash
+```sh
 $ xmake l scripts/test.lua -vD --shallow -p mingw --mingw=/xxx/sdk zlib
 $ xmake l scripts/test.lua -vD --shallow -p iphoneos -a arm64 zlib
 $ xmake l scripts/test.lua -vD --shallow -k shared --vs_runtime=MD zlib
@@ -289,7 +289,7 @@ $ xmake l scripts/test.lua -vD --shallow -m debug zlib
 
 因此，我们可以通过指定 `-d package_sourcedir` 方式，直接让测试脚本进入我们预先下载好的包源码目录，测试编译安装，我们每次的代码修改不会被重置。
 
-```bash
+```sh
 $ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 ```
 
@@ -299,19 +299,19 @@ $ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 
 我们也可以远程调试包，先开启远程服务：
 
-```bash
+```sh
 $ xmake service
 ```
 
 然后传入 `--remote` 参数，即可实现远程包编译测试。
 
-```bash
+```sh
 $ xmake l scripts/test.lua -vD --shallow --remote /tmp/zlib-1.2.11 zlib
 ```
 
 ## 下载包提示证书校验失败怎么办？
 
-```bash
+```sh
 curl: (60) SSL certificate problem: unable to get local issuer certificate
 More details here: https://curl.se/docs/sslcerts.html
 
@@ -322,7 +322,7 @@ how to fix it, please visit the web page mentioned above.
 
 如果你在使用 Xmake 安装依赖包时候，遇到上面的证书验证问题，你可以尝试更新 curl 证书去修复它，或者直接全局配置禁用证书验证来绕过它。
 
-```bash
+```sh
 $ xmake g --insecure-ssl=y
 ```
 

@@ -19,7 +19,7 @@ The above `add_requires` is used to describe the dependencies required by the cu
 
 Then directly compile:
 
-```console
+```sh
 $ xmake
 ```
 
@@ -126,7 +126,7 @@ We can get a list of all configurable parameters and descriptions of the specifi
 
 such as:
 
-```console
+```sh
 xmake require --info spdlog
     require(spdlog):
       -> requires:
@@ -192,7 +192,7 @@ However, we can still disable external header files by setting `{external = fals
 
 The compilation flags for external header files are enabled by default as follows:
 
-```console
+```sh
 -isystem /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
 ```
 
@@ -202,7 +202,7 @@ Manually turn off the compilation flags of external external header files as fol
 add_requires("zlib 1.x", {external = false})
 ```
 
-```console
+```sh
 -I /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
 ```
 
@@ -215,13 +215,13 @@ For example, now we have a private repository repo:`git@github.com:myrepo/xmake-
 
 We can add the repository with the following command:
 
-```console
+```sh
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
 ```
 
 Starting with v2.2.3, support for adding repos for specified branches, for example:
 
-```console
+```sh
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git dev
 ```
 
@@ -342,7 +342,7 @@ It contains all the packages that the project depends on, as well as the current
 
 Of course, we can also execute the following command to force the upgrade package to the latest version.
 
-```console
+```sh
 $ xmake require --upgrade
 upgrading packages ..
   zlib: 1.2.10 -> 1.2.11

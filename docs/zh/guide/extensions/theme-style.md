@@ -8,7 +8,7 @@ outline: deep
 
 如果用户不喜欢xmake默认的显示配色和风格，我们可以通过下面的全局配置命令，来切换到xmake提供的其他一些配置主题上去，例如：
 
-```bash
+```sh
 $ xmake g --theme=dark
 ```
 
@@ -16,13 +16,13 @@ $ xmake g --theme=dark
 
 如果我们要切回默认主题，可以直接敲：
 
-```bash
+```sh
 $ xmake g -c
 ```
 
 或者
 
-```bash
+```sh
 $ xmake g --theme=default
 ```
 
@@ -42,7 +42,7 @@ $ xmake g --theme=default
 
 我们也可以通过下面的命令切回默认主题：
 
-```bash
+```sh
 $ xmake g --theme=default
 ```
 
@@ -52,7 +52,7 @@ $ xmake g --theme=default
 
 除了进度展示不同外，其他都跟默认主题的配置相同。
 
-```bash
+```sh
 $ xmake g --theme=ninja
 ```
 
@@ -62,7 +62,7 @@ $ xmake g --theme=ninja
 
 这个主题部分输出通过emoji字符代替之前的色彩输出。
 
-```bash
+```sh
 $ xmake g --theme=emoji
 ```
 
@@ -72,7 +72,7 @@ $ xmake g --theme=emoji
 
 这个主题主要是对一些终端背景是浅色系（比如淡黄色等），导致一些警告输出（默认也是黄色）重合不可见，所以把主题配色变成深色系，提高可见性。
 
-```bash
+```sh
 $ xmake g --theme=dark
 ```
 
@@ -80,7 +80,7 @@ $ xmake g --theme=dark
 
 这个主题主要是对一些终端背景是深色系，导致一些输出重合不可见，所以把主题配色变成浅色系，提高可见性。
 
-```bash
+```sh
 $ xmake g --theme=light
 ```
 
@@ -92,7 +92,7 @@ $ xmake g --theme=light
 一些win终端可能不支持colors，就可以设置这个主题来解决乱码显示问题
 :::
 
-```bash
+```sh
 $ xmake g --theme=plain
 ```
 
@@ -102,6 +102,6 @@ Windows 下 powershell 终端背景是蓝色的，而它的调色板配置似乎
 
 所以，这个主题就是为了更好的适配 powershell 终端下的显示输出。
 
-```bash
+```sh
 $ xmake g --theme=powershell
 ```

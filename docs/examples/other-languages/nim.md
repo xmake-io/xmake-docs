@@ -4,7 +4,7 @@ After v2.5.9, we have added support for the Nimlang project. For related issues,
 
 We can use the `xmake create` command to create an empty project.
 
-```bash
+```sh
 xmake create -l nim -t console test
 xmake create -l nim -t static test
 xmake create -l nim -t shared test
@@ -20,7 +20,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```bash
+```sh
 $ xmake -v
 [33%]: linking.release test
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/test/macosx/x86_64/release/nimcache -o:b
@@ -43,7 +43,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```bash
+```sh
 $ xmake -v
 [33%]: linking.release libfoo.a
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
@@ -71,7 +71,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```bash
+```sh
 $ xmake -rv
 [33%]: linking.release libfoo.dylib
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app

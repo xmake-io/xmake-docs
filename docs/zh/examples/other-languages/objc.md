@@ -2,7 +2,7 @@
 
 创建空工程：
 
-```bash
+```sh
 $ xmake create -l objc -t console test
 ```
 
@@ -35,14 +35,14 @@ target("test")
 
 我们也可以通过模板工程快速创建：
 
-```bash
+```sh
 $ xmake create -t xcode.macapp -l objc test
 $ xmake create -t xcode.iosapp -l objc test
 ```
 
 ### 编译 {#build}
 
-```bash
+```sh
 $ xmake f -p [iphoneos|macosx]
 $ xmake
 [ 18%]: compiling.xcode.release src/Assets.xcassets
@@ -62,7 +62,7 @@ $ xmake
 
 对于iOS程序，默认会检测系统先用可用签名来签名app，当然我们也可以手动指定其他签名证书：
 
-```bash
+```sh
 $ xmake f -p iphoneos --xcode_codesign_identity='Apple Development: xxx@gmail.com (T3NA4MRVPU)' --xcode_mobile_provision='iOS Team Provisioning Profile: org.tboox.test --xcode_bundle_identifier=org.tboox.test'
 $ xmake
 ```
@@ -81,7 +81,7 @@ target("test")
 
 那如何知道我们需要的签名配置呢？一种就是在xcode里面查看，另外xmake也提供了一些辅助工具可以dump出当前可用的所有签名配置：
 
-```bash
+```sh
 $ xmake l private.tools.codesign.dump
 ==================================== codesign identities ====================================
 {
@@ -104,13 +104,13 @@ $ xmake l private.tools.codesign.dump
 
 我们也提供了其他辅助工具来对已有的ipa/app程序进行重签名，例如：
 
-```bash
+```sh
 $ xmake l utils.ipa.resign test.ipa|test.app [codesign_identity] [mobile_provision] [bundle_identifier]
 ```
 
 其中，后面的签名参数都是可选的，如果没设置，那么默认会探测使用一个有效的签名：
 
-```bash
+```sh
 $ xmake l utils.ipa.resign test.ipa
 $ xmake l utils.ipa.resign test.app "Apple Development: waruqi@gmail.com (T3NA4MRVPU)"
 $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" iOS Team Provisioning Profile: org.tboox.test" org.tboox.test
@@ -120,7 +120,7 @@ $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4M
 
 目前仅支持运行 macOS 程序：
 
-```bash
+```sh
 $ xmake run
 ```
 
@@ -132,7 +132,7 @@ $ xmake run
 
 如果是 iOS 程序会生成ipa安装包，如果是macos会生成dmg包（dmg包生成暂时还在开发中）。
 
-```bash
+```sh
 $ xmake package
 output: build/iphoneos/release/arm64/test.ipa
 package ok!
@@ -140,7 +140,7 @@ package ok!
 
 我们也提供了辅助工具，来对指定app程序进行打包：
 
-```bash
+```sh
 $ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 ```
 
@@ -148,13 +148,13 @@ $ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 
 如果是iOS程序会安装ipa到设备，如果是macos会安装app到/Applications目录。
 
-```bash
+```sh
 $ xmake install
 ```
 
 我们也提供了辅助工具，来对指定ipa/app程序安装到设备：
 
-```bash
+```sh
 $ xmake l utils.ipa.install test.app
 $ xmake l utils.ipa.install test.ipa
 ```
@@ -165,7 +165,7 @@ $ xmake l utils.ipa.install test.ipa
 目前仅支持macos程序卸载
 :::
 
-```bash
+```sh
 $ xmake uninstall
 ```
 
@@ -180,7 +180,7 @@ target("test")
 
 我们也可以通过模板工程快速创建：
 
-```bash
+```sh
 $ xmake create -t xcode.framework -l objc test
 ```
 
@@ -188,7 +188,7 @@ $ xmake create -t xcode.framework -l objc test
 
 同时，如果我们开启了模拟器，xmake 可以支持直接 `xmake install` 和 `xmake run` 将 app 安装到模拟器并加载运行。
 
-```bash
+```sh
 $ xmake create -t xcode.iosapp_with_framework -l objc testapp
 $ cd testapp
 $ xmake f -p iphoneos -a x86_64
@@ -208,6 +208,6 @@ target("test")
 
 我们也可以通过模板工程快速创建：
 
-```bash
+```sh
 $ xmake create -t xcode.bundle -l objc test
 ```

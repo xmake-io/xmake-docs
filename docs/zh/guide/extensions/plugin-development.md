@@ -72,7 +72,7 @@ plugins
 
 接下来，我们尝试运行下这个插件：
 
-```console
+```sh
 xmake hello
 ```
 

@@ -2,7 +2,7 @@
 
 We can execute the following command to get all the environment variables used by xmake and the currently set values.
 
-```bash
+```sh
 $ xmake show -l envs
 XMAKE_RAMDIR Set the ramdisk directory.
                         <empty>
@@ -48,7 +48,7 @@ By default, xmake will use `/tmp/.xmake` and `%TEMP%/.xmake`. Of course, users c
 
 The local compilation configuration of each project will be stored in the `.xmake` path in the root directory of the current project by default, and then differentiated according to different platforms and architectures, for example:
 
-```console
+```sh
 .xmake/macosx/x86_64
 ```
 
@@ -68,7 +68,7 @@ The default path is: `~`.
 
 Usually xmake is forbidden to run under root by default, which is very insecure. But if the user has to run under root, he can also set this variable to force it on.
 
-```console
+```sh
 export XMAKE_ROOT=y
 ```
 
@@ -113,7 +113,7 @@ All lua scripts of Xmake are installed with the installer. By default, they are 
 
 If you want to view the script directory currently used by Xmake, you can execute:
 
-```console
+```sh
 $ xmake l os.programdir
 /Users/ruki/.local/share/xmake
 ```
@@ -126,7 +126,7 @@ This is only available to xmake developers, and is used to analyze the time spen
 
 ### Analyze the time taken to call functions
 
-```bash
+```sh
 $ XMAKE_PROFILE=perf:call xmake
 [ 25%]: cache compiling.release src/main.cpp
 [ 50%]: linking.release test
@@ -146,7 +146,7 @@ $ XMAKE_PROFILE=perf:call xmake
 
 It can be used to analyze the compilation time of each file and some operation bottlenecks.
 
-```bash
+```sh
 $ XMAKE_PROFILE=perf:process xmake -r
 [  7%]: compiling.release src/header.h
 [ 23%]: compiling.release src/test.cpp
@@ -186,7 +186,7 @@ $ XMAKE_PROFILE=perf:process xmake -r
 
 ### Tracking the running process of xmake
 
-```bash
+```sh
 $ XMAKE_PROFILE=trace xmake
 func                          : @programdir/core/base/scheduler.lua: 457
 is_suspended                  : @programdir/core/base/scheduler.lua: 86
@@ -200,7 +200,7 @@ length                        : @programdir/core/base/heap.lua: 120
 
 It can be used to get the stack when xmake is stuck. After enabling this feature, you can get the stack after interrupting by pressing Ctrl+C.
 
-```bash
+```sh
 $ XMAKE_PROFILE=stuck xmake l test.lua
 <Ctrl+C>
 stack traceback:
@@ -228,7 +228,7 @@ a:368>
 
 We can set up some `xmakerc.lua` global configuration files, and introduce them globally when users compile the project, such as global introduction of some user-defined help scripts, tool chains and so on.
 
-```console
+```sh
 $ export XMAKE_RCFILES=xmakerc.lua
 $ xmake
 ```
@@ -253,7 +253,7 @@ Xmake has built-in three main warehouse addresses by default, they are exactly t
 
 However, if Xmake chooses the wrong one, it may cause the warehouse download to fail. Through this environment variable, we can set and use the specified warehouse address by ourselves instead of automatically selecting it.
 
-```console
+```sh
 $ export XMAKE_MAIN_REPO=https://github.com/xmake-io/xmake-repo.git
 ```
 
@@ -263,7 +263,7 @@ $ export XMAKE_MAIN_REPO=https://github.com/xmake-io/xmake-repo.git
 
 Similar to `XMAKE_MAIN_REPO`, the only difference is that this is used to switch the address of the pre-compiled warehouse.
 
-```console
+```sh
 $ export XMAKE_BINARY_REPO=https://github.com/xmake-mirror/build-artifacts.git
 ```
 
@@ -273,7 +273,7 @@ $ export XMAKE_BINARY_REPO=https://github.com/xmake-mirror/build-artifacts.git
 
 Usually we can set the color theme through `xmake g --theme=plain`, but it is global. If we want to set the current terminal session individually, we can use this environment variable to set it.
 
-```console
+```sh
 $ export XMAKE_THEME=plain
 ```
 
@@ -287,7 +287,7 @@ Then borrow the Traffic statistics chart provided by github itself to get the ap
 
 For each project, we will only count once a day, and will not disclose any user privacy, because there is only one additional git clone operation. In addition, we cloned an empty warehouse, which will not consume much user traffic. Of course, not every user wants to do this, user has right to disable this behavior, we only need to set:
 
-```bash
+```sh
 export XMAKE_STATS=false
 ```
 

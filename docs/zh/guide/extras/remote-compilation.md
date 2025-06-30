@@ -10,21 +10,21 @@
 
 ## 开启服务 {#start-service}
 
-```console
+```sh
 $ xmake service
 <remote_build_server>: listening 0.0.0.0:9091 ..
 ```
 
 我们也可以开启服务的同时，回显详细日志信息。
 
-```console
+```sh
 $ xmake service -vD
 <remote_build_server>: listening 0.0.0.0:9091 ..
 ```
 
 ## 以 Daemon 模式开启服务
 
-```console
+```sh
 $ xmake service --start
 $ xmake service --restart
 $ xmake service --stop
@@ -40,7 +40,7 @@ $ xmake service --stop
 
 然后，我们编辑它，修复服务器的监听端口（可选）。
 
-```bash
+```sh
 $ cat ~/.xmake/service/server.conf
 {
     known_hosts = { },
@@ -63,7 +63,7 @@ $ cat ~/.xmake/service/server.conf
 2.6.5 版本，配置地址在 `~/.xmake/service.conf`，后续版本做了大量改进，分离了配置文件，如果用的是 2.6.6 以上版本，请使用新的配置文件。
 :::
 
-```console
+```sh
 $ cat ~/.xmake/service/client.conf
 {
     remote_build = {
@@ -95,7 +95,7 @@ $ cat ~/.xmake/service/client.conf
 
 服务端可以配置多个 token 用于对不同用户主机进行授权连接，当然也可以共用一个 token。
 
-```bash
+```sh
 $ cat ~/.xmake/service/server.conf
 {
     known_hosts = { },
@@ -114,7 +114,7 @@ $ cat ~/.xmake/service/server.conf
 
 客户端只需要添加服务器上的 token 到对应的客户端配置中即可。
 
-```bash
+```sh
 $ cat ~/.xmake/service/client.conf
 {
     remote_build = {
@@ -128,7 +128,7 @@ $ cat ~/.xmake/service/client.conf
 
 我们也可以执行下面的命令，手动生成一个新的 token，自己添加到服务器配置中。
 
-```bash
+```sh
 $ xmake service --gen-token
 New token a7b9fc2d3bfca1472aabc38bb5f5d612 is generated!
 ```
@@ -141,7 +141,7 @@ New token a7b9fc2d3bfca1472aabc38bb5f5d612 is generated!
 
 密码认证，我们不需要手动配置 token，只需要执行下面的命令，添加用户就行了，添加过程中，会提示用户输入密码。
 
-```bash
+```sh
 $ xmake service --add-user=ruki
 Please input user ruki password:
 123456
@@ -150,7 +150,7 @@ Add user ruki ok!
 
 然后，xmake 就会通过用户名，密码生成一个新的 token 添加到服务器配置的 token 列表中去。
 
-```bash
+```sh
 $ cat ~/.xmake/service/server.conf
 {
     known_hosts = { },
@@ -168,7 +168,7 @@ $ cat ~/.xmake/service/server.conf
 
 当然，我们也可以删除指定的用户和密码。
 
-```bash
+```sh
 $xmake service --rm-user=ruki
 Please input user ruki password:
 123456
@@ -179,7 +179,7 @@ Remove user ruki ok!
 
 对于客户端，我们不再需要设置服务器的 token 了，只需要在连接配置中，追加需要连接的用户名即可开启密码认证，格式：`user@address:port`
 
-```bash
+```sh
 $ cat ~/.xmake/service/client.conf
 {
     remote_build = {
@@ -197,7 +197,7 @@ $ cat ~/.xmake/service/client.conf
 另外，为了更进一步提高安全性，我们还提供了服务端可信主机验证，如果在服务器配置的 known_hosts 列表中，配置了可以连接的客户端主机 ip 地址，
 那么只有这些主机可以成功连接上这台服务器，其他主机对它的连接都会被提示为不可信而拒绝连接，即使 token 和密码认证都没问题也不行。
 
-```bash
+```sh
 $ cat ~/.xmake/service/server.conf
 {
     logfile = "/Users/ruki/.xmake/service/logs.txt",
@@ -216,7 +216,7 @@ $ cat ~/.xmake/service/server.conf
 
 如果是 token 认证模式，那么不需要的额外的密码输入，直接连接。
 
-```console
+```sh
 $ xmake create test
 $ cd test
 $ xmake service --connect
@@ -236,7 +236,7 @@ Uploading files with 1372 bytes ..
 
 如果是密码认证，那么会提示用户输入密码，才能继续连接。
 
-```bash
+```sh
 $ xmake service --connect
 Please input user root password:
 000000
@@ -256,7 +256,7 @@ Uploading files with 1591 bytes ..
 
 如果密码不对，就会提示错误。
 
-```bash
+```sh
 $ xmake service --connect
 Please input user root password:
 123
@@ -268,7 +268,7 @@ Please input user root password:
 
 连接成功后，我们就可以像正常本地编译一样，进行远程编译。
 
-```console
+```sh
 $ xmake
 <remote_build_client>: run xmake in 192.168.56.110:9091 ..
 checking for platform ... macosx
@@ -287,7 +287,7 @@ checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
 
 我们也可以像本地运行调试那样，远程运行调试编译的目标程序。
 
-```console
+```sh
 $ xmake run
 <remote_build_client>: run xmake run in 192.168.56.110:9091 ..
 hello world!
@@ -296,7 +296,7 @@ hello world!
 
 ## 远程重建工程
 
-```console
+```sh
 $ xmake -rv
 <remote_build_client>: run xmake -rv in 192.168.56.110:9091 ..
 [ 25%]: cache compiling.release src/main.cpp
@@ -309,7 +309,7 @@ $ xmake -rv
 
 ## 远程配置编译参数
 
-```console
+```sh
 $ xmake f --xxx --yy
 ```
 
@@ -317,7 +317,7 @@ $ xmake f --xxx --yy
 
 连接的时候，会自动同步一次代码，后期代码改动，可以执行此命令来手动同步改动的文件。
 
-```console
+```sh
 $ xmake service --sync
 <remote_build_client>: sync files in 192.168.56.110:9091 ..
 Scanning files ..
@@ -337,7 +337,7 @@ v2.7.1 版本我们新增了一个参数用于拉取远程指定的文件，通�
 
 例如：
 
-```bash
+```sh
 xmake service --pull 'build/**' outputdir
 ```
 
@@ -347,7 +347,7 @@ xmake service --pull 'build/**' outputdir
 
 针对当前工程，断开连接，这仅仅影响当前工程，其他项目还是可以同时连接和编译。
 
-```console
+```sh
 $ xmake service --disconnect
 <remote_build_client>: disconnect 192.168.56.110:9091 ..
 <remote_build_client>: disconnected!
@@ -355,7 +355,7 @@ $ xmake service --disconnect
 
 ## 查看服务器日志
 
-```console
+```sh
 $ xmake service --logs
 ```
 
@@ -363,7 +363,7 @@ $ xmake service --logs
 
 我们也可以手动清理远程的任何缓存和构建生成的文件。
 
-```console
+```sh
 $ cd projectdir
 $ xmake service --clean
 ```

@@ -1,7 +1,7 @@
 
 Xmake 也支持 GO 程序的构建，也提供了空工程的创建命令支持:
 
-```bash
+```sh
 $ xmake create -l go -t console test
 ```
 
@@ -15,7 +15,7 @@ target("test")
 
 v2.3.6版本，xmake对其的构建支持做了一些改进，对go的交叉编译也进行了支持，例如我们可以在macOS和linux上编译windows程序：
 
-```bash
+```sh
 $ xmake f -p windows -a x86
 ```
 

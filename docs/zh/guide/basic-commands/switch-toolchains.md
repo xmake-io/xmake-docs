@@ -14,7 +14,7 @@
 
 如果 linux 上安装了 gcc 工具链，通常 xmake 都会优先探测使用，当然我们也可以手动切换到 gcc 来构建。
 
-```console
+```sh
 $ xmake f --toolchain=gcc -c
 $ xmake
 ```
@@ -27,7 +27,7 @@ $ xmake
 
 所以，xmake 也提供了更加快捷的切换方式：
 
-```console
+```sh
 $ xmake f --toolchain=gcc-11 -c
 $ xmake
 ```
@@ -38,7 +38,7 @@ $ xmake
 
 在 macOS 和 linux，通常 xmake 也会优先尝试去自动探测和使用它，当然我们也可以手动切换。
 
-```console
+```sh
 $ xmake f --toolchain=clang -c
 $ xmake
 ```
@@ -47,7 +47,7 @@ $ xmake
 
 另外，我们也支持 PortableBuildTools + clang 环境：
 
-```console
+```sh
 $ xmake f -c --sdk=C:/BuildTools --toolchain=clang
 $ xmake -v
 [ 50%]: cache compiling.release src\main.cpp
@@ -61,7 +61,7 @@ C:\Users\star\scoop\apps\llvm\current\bin\clang++ -o build\windows\x64\release\t
 
 如果只是单纯的切换使用 clang-cl.exe 编译器，剩下的链接操作还是用 msvc，那么我们不需要整个工具链切换，仅仅切换 c/c++ 编译器。
 
-```console
+```sh
 $ xmake f --cc=clang-cl --cxx=clang-cl -c
 $ xmake
 ```
@@ -70,7 +70,7 @@ $ xmake
 
 除了独立 clang 编译器，如果用户安装了完整 llvm 工具链，我们也可以整个切换过去，包括 `llvm-ar` 等工具。
 
-```console
+```sh
 $ xmake f --toolchain=llvm --sdk=/xxxx/llvm
 $ xmake
 ```
@@ -81,7 +81,7 @@ $ xmake
 
 v2.5.9 xmake 新增了 circle 编译器的支持，这是个新的 C++20 编译器，额外附带了一些有趣的编译期元编程特性，有兴趣的同学可以到官网查看：https://www.circle-lang.org/
 
-```console
+```sh
 $ xmake f --toolchain=circle
 $ xmake
 ```
@@ -90,7 +90,7 @@ $ xmake
 
 [Tiny C 编译器](https://bellard.org/tcc/) 非常的轻量，在一些不想安装 msvc/llvm 等重量型编译器的情况下，使用它可能快速编译一些 c 代码。
 
-```console
+```sh
 $ xmake f --toolchain=tinycc
 $ xmake
 ```
@@ -111,7 +111,7 @@ target("test")
 
 v2.5.9 新增了对 Keil/MDK 下 armcc 的工具链支持，相关 issue 见：[#1753](https://github.com/xmake-io/xmake/issues/1753)
 
-```console
+```sh
 xmake f -p cross -a cortex-m3 --toolchain=armcc -c
 xmake
 ```
@@ -122,7 +122,7 @@ xmake
 
 v2.5.9 新增了对 Keil/MDK 下 armclang 的工具链支持，相关 issue 见：[#1753](https://github.com/xmake-io/xmake/issues/1753)
 
-```console
+```sh
 xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 xmake
 ```
@@ -133,7 +133,7 @@ xmake
 
 另外一个嵌入式 arm 的交叉工具链，官网：https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm
 
-```console
+```sh
 $ xmake f --toolchain=gnu-rm -c
 $ xmake
 ```
@@ -142,7 +142,7 @@ $ xmake
 
 也是一个嵌入式的 arm 编译工具链。
 
-```console
+```sh
 $ xmake f --toolchain=sdcc -a stm8
 $ xmake
 ```
@@ -162,21 +162,21 @@ $ xmake
 
 mingw 工具链很常用，并且全平台都提供，我们可以仅仅切换相关工具链：
 
-```console
+```sh
 $ xmake f --toolchain=mingw -c
 $ xmake
 ```
 
 但是这样，一些目标文件的后缀名并不完全匹配，因此建议整个切到 mingw 平台编译，还能支持依赖包下载。
 
-```console
+```sh
 $ xmake f -p mingw -c
 $ xmake
 ```
 
 xmake 默认会自动探测 mingw 工具链位置，macOS 和 msys/mingw64 环境通常都能自动探测到，如果检测到，也可以手动指定 mingw sdk 路径。
 
-```console
+```sh
 $ xmake f -p mingw --mingw=/xxx/mingw -c
 $ xmake
 ```
@@ -187,7 +187,7 @@ $ xmake
 
 这其实是一个独立于 Mingw 的项目，用法跟 Mingw 完全一直，但是它是基于 LLVM 的，并且提供了 arm/arm64 等其他更多架构的支持，而不仅仅是 i386/x86_64
 
-```console
+```sh
 $ xmake f -p mingw -a arm64 --mingw=/xxx/llvm-mingw -c
 $ xmake
 ```
@@ -198,20 +198,20 @@ $ xmake
 
 如果要构建 Zig 程序，我们默认执行 xmake 就能自动使用 zig 工具链，但前提是 zig 已经在 PATH 环境下。
 
-```console
+```sh
 $ xmake
 ```
 
 当然，我们也可以手动设置它。
 
-```console
+```sh
 $ xmake f --toolchain=zig -c
 $ xmake
 ```
 
 也可以指定 zig 编译器的路径。
 
-```console
+```sh
 $ xmake f --toolchain=zig --zc=/xxxx/zig -c
 $ xmake
 ```
@@ -220,7 +220,7 @@ $ xmake
 
 我们也可以使用 zig 提供的 `zig cc` 编译器去编译 C/C++ 代码。
 
-```console
+```sh
 $ xmake f --cc="zig cc" --cxx="zig cc" --ld="zig c++" -c
 $ xmake
 ```
@@ -229,14 +229,14 @@ $ xmake
 
 另外，我们也可以使用 zig 实现交叉编译。
 
-```console
+```sh
 $ xmake f -p cross --cross=riscv64-linux-musl --toolchain=zig
 $ xmake
 ```
 
 或者编译 arm64 架构：
 
-```console
+```sh
 $ xmake f --toolchain=zig -a arm64 -c
 $ xmake
 ```
@@ -245,7 +245,7 @@ $ xmake
 
 如果要编译 wasm 程序，我们只需要切换到 wasm 平台，默认就会使用 emcc 工具链去编译。
 
-```console
+```sh
 $ xmake f -p wasm
 $ xmake
 ```
@@ -254,7 +254,7 @@ $ xmake
 
 这是另外一个启用了 WASI 的 Wasm 工具链，我们需要手动切换使用。
 
-```console
+```sh
 $ xmake f -p wasm --toolchain=wasi
 $ xmake
 ```
@@ -263,7 +263,7 @@ $ xmake
 
 我们也可以切换到 Intel 的 C/C++ 编译器去使用。
 
-```console
+```sh
 $ xmake f --toolchain=icc -c
 $ xmake
 ```
@@ -272,7 +272,7 @@ $ xmake
 
 我们也可以切换到 Intel 的 Fortran 编译器去使用。
 
-```console
+```sh
 $ xmake f --toolchain=ifort -c
 $ xmake
 ```
@@ -281,7 +281,7 @@ $ xmake
 
 除了 Intel 的 Fortran 编译器，我们还有 gnu fortran 编译器可用。
 
-```console
+```sh
 $ xmake f --toolchain=gfortran -c
 $ xmake
 ```
@@ -290,13 +290,13 @@ $ xmake
 
 对于 pascal 程序，xmake 默认就会使用 fpc 编译器来编译。
 
-```console
+```sh
 $ xmake
 ```
 
 当然，我们也可以手动切换。
 
-```console
+```sh
 $ xmake f --toolchain=fpc -c
 $ xmake
 ```
@@ -305,13 +305,13 @@ $ xmake
 
 对于 dlang 程序，xmake 默认就会使用 dmd 编译器来编译。
 
-```console
+```sh
 $ xmake
 ```
 
 当然，我们也可以手动切换。
 
-```console
+```sh
 $ xmake f --toolchain=dlang -c
 $ xmake
 ```
@@ -322,14 +322,14 @@ $ xmake
 
 对于 Cuda 程序，我们需要手动切换到 cuda 工具链。
 
-```console
+```sh
 $ xmake f --toolchain=cuda -c
 $ xmake
 ```
 
 我们也可以手动切换 nvcc 内部调用的 C/C++ 编译器。
 
-```console
+```sh
 $ xmake f --toolchain=cuda --cu-ccbin=clang -c
 $ xmake
 ```
@@ -338,14 +338,14 @@ $ xmake
 
 关于独立的汇编器工具链，xmake 支持：yasm, nasm, fasm 三个，可以随意切换，如果没设置，默认使用 gcc/clang/msvc 自带的汇编器。
 
-```console
+```sh
 $ xmake f --toolchain=nasm -c
 $ xmake
 ```
 
 也可以单独指定汇编器路径
 
-```console
+```sh
 $ xmake f --toolchain=nasm --as=/xxx/nasm -c
 $ xmake
 ```
@@ -354,7 +354,7 @@ $ xmake
 
 golang 编译工具链，默认编译 go 程序会自动启用。
 
-```console
+```sh
 $ xmake
 ```
 
@@ -362,13 +362,13 @@ $ xmake
 
 rust 编译工具链，默认编译 rust 程序会自动启用。
 
-```console
+```sh
 $ xmake
 ```
 
 目前 rust 工具链还可以支持 android 等交叉编译环境。
 
-```console
+```sh
 $ xmake f -p android --ndk=~/android-ndk-r20b -c
 $ xmake
 ```
@@ -377,7 +377,7 @@ $ xmake
 
 Android 的 NDK 编译工具链，只要启用 android 平台，就会默认启用。
 
-```console
+```sh
 $ xmake f -p android --ndk=~/android-ndk-r20b -c
 $ xmake
 ```

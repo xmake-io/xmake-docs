@@ -118,7 +118,7 @@ target("test")
 
 首次执行效果如下：
 
-```bash
+```sh
 ruki-2:native_module ruki$ xmake
 [ 50%]: cache compiling.release src/foo.c
 [ 50%]: cache compiling.release src/bar.c
@@ -133,7 +133,7 @@ bar: 1 + 1 = 2
 
 第二次执行，就不会再构建插件，可以直接使用模块：
 
-```bash
+```sh
 ruki-2:native_module ruki$ xmake
 foo: 1 + 1 = 2
 foo: 1 - 1 = 0

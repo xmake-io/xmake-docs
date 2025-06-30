@@ -1,6 +1,6 @@
 Xmake will detect WDK automatically and we can also set the WDK directory manually.
 
-```bash
+```sh
 $ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 ```
@@ -64,7 +64,7 @@ target("msdsm")
 
 We can run the following command to generate a .cab driver package.
 
-```bash
+```sh
 $ xmake [p|package]
 $ xmake [p|package] -o outputdir
 ```
@@ -143,7 +143,7 @@ set_values("wdk.env.winver", "win7_sp3")
 
 We can also set windows version for WDK driver program:
 
-```bash
+```sh
 $ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 ```

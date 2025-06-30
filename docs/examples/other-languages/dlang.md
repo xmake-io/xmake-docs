@@ -1,7 +1,7 @@
 
 Create an empty project:
 
-```bash
+```sh
 $ xmake create -l dlang -t console test
 ```
 

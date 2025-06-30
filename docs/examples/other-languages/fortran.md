@@ -3,7 +3,7 @@ After v2.3.6, the gfortran compiler is supported to compile fortran projects. We
 
 After v2.3.8, xmake also supports Intel Fortran Compiler, you only need to switch the toolchain: `xmake f --toolchain=ifort`
 
-```bash
+```sh
 $ xmake create -l fortran -t console test
 ```
 

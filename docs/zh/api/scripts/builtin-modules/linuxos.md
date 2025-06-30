@@ -9,7 +9,7 @@ Linux 系统操作模块，属于内置模块，无需使用[import](/zh/api/scr
 
 我们也可以通过下面的命令，快速获取查看
 
-```bash
+```sh
 xmake l linuxos.name
 ```
 

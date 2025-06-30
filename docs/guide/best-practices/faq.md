@@ -4,31 +4,31 @@
 
 Get the help info of the main command:
 
-```bash
+```sh
 $ xmake [-h|--help]
 ```
 
 Get the help info of the configuration command:
 
-```bash
+```sh
 $ xmake f [-h|--help]
 ```
 
 Get the help info of the given action or plugin command:
 
-```bash
+```sh
 $ xmake [action|plugin] [-h|--help]
 ```
 
 For example:
 
-```bash
+```sh
 $ xmake run --help
 ```
 
 ## How to suppress all output info?
 
-```bash
+```sh
 $ xmake [-q|--quiet]
 ```
 
@@ -36,7 +36,7 @@ $ xmake [-q|--quiet]
 
 Please attempt to clean configuration and rebuild it first.
 
-```bash
+```sh
 $ xmake f -c
 $ xmake
 ```
@@ -45,19 +45,19 @@ If it fails again, please add `-v` or `--verbose` options to get more verbose in
 
 For example:
 
-```bash
+```sh
 $ xmake [-v|--verbose]
 ```
 
 And add `-D` to get the verbose backtrace and diagnosis info, then you can submit this to [issues](https://github.com/xmake-io/xmake/issues).
 
-```bash
+```sh
 $ xmake -v -D
 ```
 
 ## How to see verbose compiling warnings?
 
-```bash
+```sh
 $ xmake [-w|--warning]
 ```
 
@@ -77,13 +77,13 @@ Since Xmake uses git submodules to maintain submodules, we can pull the full sou
 
 #### Cloning with git
 
-```bash
+```sh
 $ git clone --recursive https://github.com/xmake-io/xmake.git
 ```
 
 or
 
-```bash
+```sh
 $ git clone https://github.com/xmake-io/xmake.git
 $ git submodule update --init
 ```
@@ -97,7 +97,7 @@ Therefore, do not download the wrong link address
 - Incomplete source code: https://github.com/xmake-io/xmake/archive/refs/tags/v2.7.2.tar.gz
 - Full source package: https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
 
-```bash
+```sh
 $ wget https://github.com/xmake-io/xmake/releases/download/v2.7.2/xmake-v2.7.2.tar.gz
 $ tar -xvf xmake-v2.7.2.tar.gz -C xmake
 $ cd xmake
@@ -117,7 +117,7 @@ Therefore we need to first install Xmake by referring to the [Installing Xmake o
 
 Then go to the Xmake source directory and compile.
 
-```bash
+```sh
 cd xmake
 cd core
 xmake
@@ -129,7 +129,7 @@ xmake
 
 To compile Xmake on other unix-like environments, we just need to execute make in the source root.
 
-```bash
+```sh
 $ cd xmake
 $ ./configure
 $ make
@@ -151,7 +151,7 @@ From this terminal, we can then enable debugging.
 
 We can also run:
 
-```bash
+```sh
 $ xmake l os.programdir
 ```
 
@@ -161,7 +161,7 @@ $ xmake l os.programdir
 
 On Linux/macOS/FreeBSD it's a bit easier! Just run.
 
-```bash
+```sh
 $ cd xmake
 $ source scripts/srcenv.profile
 ```
@@ -190,7 +190,7 @@ In version 2.8.3, we added Lua breakpoint debugging support, with [VSCode-EmmyLu
 
 First of all, we need to install VSCode-EmmyLua plugin in VSCode's plugin market, and then run the following command to update the xmake-repo repository to keep it up-to-date.
 
-```bash
+```sh
 xrepo update-repo
 ```
 
@@ -200,7 +200,7 @@ Xmake also needs to be kept up to date.
 
 Then, execute the following command in your own project directory:
 
-```bash
+```sh
 $ xrepo env -b emmylua_debugger -- xmake build
 ```
 
@@ -208,7 +208,7 @@ The `xrepo env -b emmylua_debugger` is used to bind the EmmyLua debugger plugin 
 
 Usually we just debug the `xmake build` build, but if you want to debug other commands, you can tweak it yourself, for example, if you want to debug the `xmake install -o /tmp` install command, you can change it to:
 
-```bash
+```sh
 $ xrepo env -b emmylua_debugger -- xmake install -o /tmp
 ```
 
@@ -238,13 +238,13 @@ But debugging in a virtual machine is too laggy, not good experience, and the au
 
 Let's start the remote compilation service on the windows machine:
 
-```bash
+```sh
 $ xmake service
 ```
 
 Then locally, open the project directory where you want to build, make a remote connection, and then run `xmake service --sync --xmakesrc=` to synchronise the local source:
 
-```bash
+```sh
 $ xmake service --connect
 $ xmake service --sync --xmakesrc=~/projects/personal/xmake/xmake/
 $ xmake build
@@ -263,7 +263,7 @@ Note: See [Remote Build Documentation](/guide/extras/remote-compilation) for a d
 
 There are many different ways to debug, here I will focus on the most common debugging method used by the author, which is to pull the xmake-repo repository directly to debug.
 
-```bash
+```sh
 $ git clone https://github.com/xmake-io/xmake-repo.git
 $ xmake l scripts/test.lua -vD --shallow zlib
 ```
@@ -272,7 +272,7 @@ Using the `test.lua` script command above to debug packages, we can repeatedly i
 
 We can also test specific platforms, architectures, build modes, vs_runtime and dynamic libraries, static libraries etc.
 
-```bash
+```sh
 $ xmake l scripts/test.lua -vD --shallow -p mingw --mingw=/xxx/sdk zlib
 $ xmake l scripts/test.lua -vD --shallow -p iphoneos -a arm64 zlib
 $ xmake l scripts/test.lua -vD --shallow -k shared --vs_runtime=MD zlib
@@ -287,7 +287,7 @@ and it would be very tedious to go through the debugging changes in on_install b
 Therefore, we can specify `-d package_sourcedir` to allow the test script to go directly to
 our pre-downloaded package source directory and test the build installation without our code changes being reset each time.
 
-```bash
+```sh
 $ xmake l scripts/test.lua -vD --shallow -d /tmp/zlib-1.2.11 zlib
 ```
 
@@ -298,19 +298,19 @@ and configure the patch package to be applied via `add_patches` to fix the packa
 
 We can also debug the package remotely, by first enabling the remote service:
 
-```bash
+```sh
 $ xmake service
 ```
 
 Then pass in the `--remote` parameter to compile and test the package remotely.
 
-```bash
+```sh
 $ xmake l scripts/test.lua -vD --shallow --remote /tmp/zlib-1.2.11 zlib
 ```
 
 ## What should I do if the download package failed to get the local issuer certificate?
 
-```bash
+```sh
 curl: (60) SSL certificate problem: unable to get local issuer certificate
 More details here: https://curl.se/docs/sslcerts.html
 
@@ -321,7 +321,7 @@ To learn more about this situation and how to fix it, please visit the web page 
 
 If you encounter the above certificate validation problem when using Xmake to install dependencies, you can try updating the cURL certificate to fix it, or just disable certificate validation in the global configuration to bypass it.
 
-```bash
+```sh
 $ xmake g --insecure-ssl=y
 ```
 

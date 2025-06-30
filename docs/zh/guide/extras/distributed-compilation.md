@@ -11,21 +11,21 @@ Xmake 提供了内置的分布式编译服务，通常它可以跟 本地编译�
 我们可以指定 `--distcc` 参数来开启分布式编译服务，当然如果不指定这个参数，xmake 会默认开启所有服务端配置的服务。
 这里我们假设有 2 台机器作为分布式的编译服务器集群,ip 地址分别是 192.168.22.168,192.168.22.169,两台服务器分别执行下面的脚本
 
-```console
+```sh
 $ xmake service --distcc
 <distcc_build_server>: listening 0.0.0.0:9093 ..
 ```
 
 我们也可以开启服务的同时，回显详细日志信息。
 
-```console
+```sh
 $ xmake service --distcc -vD
 <distcc_build_server>: listening 0.0.0.0:9093 ..
 ```
 
 ## 以 Daemon 模式开启服务
 
-```console
+```sh
 $ xmake service --distcc --start
 $ xmake service --distcc --restart
 $ xmake service --distcc --stop
@@ -35,7 +35,7 @@ $ xmake service --distcc --stop
 
 我们首先，运行 `xmake service` 命令，它会自动生成一个默认的 `server.conf` 配置文件，存储到 `~/.xmake/service/server.conf`。
 
-```bash
+```sh
 $ xmake service
 generating the config file to /Users/ruki/.xmake/service/server.conf ..
 an token(590234653af52e91b9e438ed860f1a2b) is generated, we can use this token to connect service.
@@ -45,7 +45,7 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
 
 然后，我们编辑它，修复每台服务器的监听端口（可选）。
 
-```bash
+```sh
 $ cat ~/.xmake/service/server.conf
 {
     distcc_build = {
@@ -70,7 +70,7 @@ $ cat ~/.xmake/service/server.conf
 分布式编译，推荐使用 token 认证模式，因为密码模式，每台服务器连接时候都要输入一次密码，很繁琐。
 :::
 
-```console
+```sh
 $cat ~/.xmake/service/client.conf
 {
     distcc_build = {
@@ -96,7 +96,7 @@ $cat ~/.xmake/service/client.conf
 
 我们可以配置，`send_timeout`, `recv_timeout` 和 `connect_timeout` 三种超时，如果在根节点设置，那么所有客户端服务都会生效。
 
-```console
+```sh
 $ cat ~/.xmake/service/client.conf
 {
     send_timeout = 5000,
@@ -107,7 +107,7 @@ $ cat ~/.xmake/service/client.conf
 
 我们也可以仅仅针对当前分布式构建服务配置超时，其他服务还是默认超时。
 
-```console
+```sh
 $ cat ~/.xmake/service/client.conf
 {
     distcc_build = {
@@ -132,7 +132,7 @@ $ cat ~/.xmake/service/client.conf
 
 我们需要在连接时候，输入 `--distcc`，指定仅仅连接分布式服务。
 
-```bash
+```sh
 $ cd projectdir
 $ xmake service --connect --distcc
 <client>: connect 127.0.0.1:9693 ..
@@ -153,7 +153,7 @@ $ xmake service --connect --distcc --ccache
 
 连接上服务器后，我们就可以像正常本地编译那样，进行分布式编译了，例如：
 
-```bash
+```sh
 $ xmake
 ...
 [ 93%]: cache compiling.release src/demo/network/unix_echo_client.c         ----> local job
@@ -179,7 +179,7 @@ $ xmake
 
 ## 断开连接 {#disconnect}
 
-```bash
+```sh
 $ xmake service --disconnect --distcc
 ```
 
@@ -203,7 +203,7 @@ local maxjobs = default_njob + server_count * server_default_njob
 
 我们只需要通过 `-jN` 就能指定本地并行任务数，但是它不会影响服务端的并行任务数。
 
-```bash
+```sh
 $ xmake -jN
 ```
 
@@ -211,7 +211,7 @@ $ xmake -jN
 
 如果要修改服务端的并行任务数，需要修改客户端的配置文件。
 
-```bash
+```sh
 $cat ~/.xmake/service/client.conf
 {
     distcc_build = {
@@ -239,7 +239,7 @@ xmake 提供的分布式编译服务是完全跨平台的，并且支持 Windows
 
 如果要进行 Android 项目编译，只需要在服务端配置中，增加 `toolchains` 工具链配置，提供 NDK 的跟路径即可。
 
-```bash
+```sh
 $ cat ~/.xmake/service/server.conf
 {
     distcc_build = {
@@ -263,7 +263,7 @@ $ cat ~/.xmake/service/server.conf
 
 只需要下载对应平台的 NDK 就行了。
 
-```bash
+```sh
 $ xmake f -p android --ndk=~/files/xxxx
 $ xmake
 ```
@@ -272,7 +272,7 @@ $ xmake
 
 编译 iOS 项目更加简单，因为 Xmake 通常能自动检测到 Xcode，所以只需要像正常本地一样，切一下平台到 ios 即可。
 
-```bash
+```sh
 $ xmake f -p iphoneos
 $ xmake
 ```
@@ -281,7 +281,7 @@ $ xmake
 
 如果要分布式交叉编译，我们需要在服务端配置工具链 sdk 路径，例如：
 
-```bash
+```sh
 $ cat ~/.xmake/service/server.conf
 {
     distcc_build = {
@@ -309,7 +309,7 @@ $ cat ~/.xmake/service/server.conf
 
 而客户端编译也只需要指定 sdk 目录。
 
-```bash
+```sh
 $ xmake f -p cross --sdk=/xxx/arm-linux-xxx
 $ xmake
 ```
@@ -318,7 +318,7 @@ $ xmake
 
 每个项目在服务端的编译，都会产生一些缓存文件，他们都是按工程粒度分别存储的，我们可以通过下面的命令，对当前工程清理每个服务器对应的缓存。
 
-```bash
+```sh
 $ xmake service --clean --distcc
 ```
 

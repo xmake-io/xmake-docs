@@ -145,7 +145,7 @@ package("libcurl")
     add_versionfiles("versions.txt")
 ```
 
-```bash
+```sh
 8.5.0 ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b
 8.4.0 e5250581a9c032b1b6ed3cf2f9c114c811fc41881069e9892d115cc73f9e88c6
 8.0.1 9b6b1e96b748d04b968786b6bdf407aa5c75ab53a3d37c1c8c81cdb736555ccf
@@ -281,7 +281,7 @@ package("pcre2")
 
 In the engineering project, we can also view a list of configurable parameters and values for a particular package:
 
-```bash
+```sh
 $ xmake require --info pcre2
 The package info of project:
     require(pcre2):
@@ -1126,7 +1126,7 @@ Of course, we can also make it possible for each component to prioritise finding
 
 For example, the sfml package, which is actually also componentized in homebrew, can be made to find each component from the system repository without having to install them in source each time.
 
-```bash
+```sh
 $ ls -l /usr/local/opt/sfml/lib/pkgconfig
 -r--r--r-- 1 ruki admin 317 10 19 17:52 sfml-all.pc
 -r--r--r-- 1 ruki admin 534 10 19 17:52 sfml-audio.pc

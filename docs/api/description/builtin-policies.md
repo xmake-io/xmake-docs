@@ -25,7 +25,7 @@ In addition, if the set policy name is invalid, xmake will also have a warning p
 
 If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:
 
-```bash
+```sh
 $ xmake l core.project.policy.policies
 {
   "check.auto_map_flags" = {
@@ -48,19 +48,19 @@ $ xmake l core.project.policy.policies
 
 We can also set up internal policy changes via the command line:
 
-```bash
+```sh
 $ xmake f --policies=package.fetch_only
 ```
 
 The policy name is set by default, which is the enabled state, but we can of course specify to set other values to disable it.
 
-```bash
+```sh
 $ xmake f --policies=package.precompiled:n
 ```
 
 Or configure multiple policy values at the same time, separated by commas.
 
-```bash
+```sh
 $ xmake f --policies=package.precompiled:n,package.install_only
 ```
 
@@ -122,7 +122,7 @@ Of course, the current implementation of automatic mapping is not very mature. T
 
 Some users do not like this automatic mapping behavior, so we can completely disable this default behavior through the following settings:
 
-```bash
+```sh
 set_policy("check.auto_map_flags", false)
 ```
 
@@ -135,7 +135,7 @@ However, the source files of each target can be completely parallelized, and fin
 
 Of course, if the build source files in some special targets depend on previous targets (especially in the case of some custom rules, although rarely encountered), we can also disable this optimization behavior through the following settings:
 
-```bash
+```sh
 set_policy("build.across_targets_in_parallel", false)
 ```
 
@@ -218,13 +218,13 @@ set_policy("build.ccache", false)
 
 Of course, we can also disable it on the command line.
 
-```bash
+```sh
 $ xmake f --ccache=n
 ```
 
 or
 
-```bash
+```sh
 $ xmake f --policies=build.ccache:n
 ```
 
@@ -251,7 +251,7 @@ set_policy("build.optimization.lto", true)
 
 We can also turn it on quickly via the command line option.
 
-```bash
+```sh
 $ xmake f --policies=build.optimization.lto
 ```
 
@@ -279,7 +279,7 @@ We can quickly enable it globally by turning on this policy, which will result i
 
 For example, we can enable it from the command line:
 
-```bash
+```sh
 $ xmake f --policies=build.sanitizer.address
 ```
 
@@ -321,7 +321,7 @@ set_policy("build.sanitizer.undefined", true)
 
 or
 
-```bash
+```sh
 $ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
 ```
 
@@ -357,7 +357,7 @@ Configures whether to enable or disable internal subdirectories of the build.
 
 By default, executing `xmake` to compile the project will automatically generate subdirectories in the build directory according to the platform, architecture, and compilation mode to store object files and target files respectively. For example:
 
-```bash
+```sh
 build/
 └── macosx
     └── x86_64
@@ -367,7 +367,7 @@ build/
 
 If this policy is disabled, the generated product will be directly generated in the build root directory. Become:
 
-```bash
+```sh
 build/
 └─ test
 ```
@@ -394,14 +394,14 @@ This policy is used to adjust the behaviour of `xmake run`. By default, running 
 
 By turning on this policy, we can automatically build the target program before running it.
 
-```bash
+```sh
 $ xmake f --policies=run.autobuild
 $ xmake run
 ```
 
 If you want this policy to take effect globally, you can turn it on globally.
 
-```bash
+```sh
 $ xmake g --policies=run.autobuild
 ```
 

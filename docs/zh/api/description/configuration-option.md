@@ -193,7 +193,7 @@ target("test")
 
 其中，`$(rootdir)` 就是自定义的选项内建变量，通过手动配置，可以动态修改它的值：
 
-```bash
+```sh
 $ xmake f --rootdir=~/projectdir/src
 $ xmake
 ```
@@ -261,7 +261,7 @@ option("demo2")
 
 这里四个选项分别归类于两个分组：`test`和`demo`，那么显示的布局类似这样：
 
-```bash
+```sh
 Options:
     ...
 
@@ -364,7 +364,7 @@ Options:
 
 看到这个菜单，用户就能清楚地知道，定义的这个`mode`选项的具体用处，以及如何使用了：
 
-```bash
+```sh
 $ xmake f --mode=release
 ```
 

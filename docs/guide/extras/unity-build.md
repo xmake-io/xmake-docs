@@ -34,7 +34,7 @@ target("test")
 
 We can additionally specify the size of each merged Batch by setting the `{batchsize = 2}` parameter to the rule, which means that every two C++ files are automatically merged and compiled. The compilation effect is roughly as follows:
 
-```bash
+```sh
 $ xmake -r
 [11%]: cache compiling.release build/.gens/test/unity_build/unity_642A245F.cpp
 [11%]: cache compiling.release build/.gens/test/unity_build/unity_bar.cpp

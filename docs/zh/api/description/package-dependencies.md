@@ -141,7 +141,7 @@ package("libcurl")
     add_versionfiles("versions.txt")
 ```
 
-```bash
+```sh
 8.5.0 ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b
 8.4.0 e5250581a9c032b1b6ed3cf2f9c114c811fc41881069e9892d115cc73f9e88c6
 8.0.1 9b6b1e96b748d04b968786b6bdf407aa5c75ab53a3d37c1c8c81cdb736555ccf
@@ -273,7 +273,7 @@ package("pcre2")
 
 在工程项目里面，我们也可以查看特定包的可配置参数和值列表：
 
-```bash
+```sh
 $ xmake require --info pcre2
 The package info of project:
     require(pcre2):
@@ -922,7 +922,7 @@ package("sfml")
 
 例如，sfml 包，它在 homebrew 中其实也是组件化的，我们完全可以让包从系统库中，找到对应的每个组件，而不需要每次源码安装它们。
 
-```bash
+```sh
 $ ls -l /usr/local/opt/sfml/lib/pkgconfig
 -r--r--r--  1 ruki  admin  317 10 19 17:52 sfml-all.pc
 -r--r--r--  1 ruki  admin  534 10 19 17:52 sfml-audio.pc

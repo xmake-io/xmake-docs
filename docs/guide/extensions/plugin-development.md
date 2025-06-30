@@ -72,7 +72,7 @@ Now one of the most simple plugin finished, how was it to be xmake detected it, 
 
 Next we run this plugin
 
-```bash
+```sh
 xmake hello
 ```
 

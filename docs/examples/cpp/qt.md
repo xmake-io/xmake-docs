@@ -1,6 +1,6 @@
 Create an empty project:
 
-```bash
+```sh
 $ xmake create -t qt.console test
 $ xmake create -t qt.static test
 $ xmake create -t qt.shared test
@@ -12,7 +12,7 @@ For more project templates see: `xmake create --help`
 
 xmake will detect Qt SDK automatically and we can also set the SDK directory manually.
 
-```bash
+```sh
 $ xmake f --qt=~/Qt/Qt5.9.1
 ```
 
@@ -23,7 +23,7 @@ For more details, please refer to: [#160](https://github.com/xmake-io/xmake/issu
 
 In addition, currently xmake also supports Qt/Wasm. For details, see: [Wasm Configuration](https://xmake.io/#/guide/configuration?id=wasm)
 
-```bash
+```sh
 $ xmake f -p wasm
 ```
 
@@ -69,7 +69,7 @@ because the linked libraries are different and need to be statically linked.
 
 Next, we try to compile, usually, if you use the Qt installation package to install by default, and do not modify the installation path, then in most cases you can automatically detect the root path of the QT SDK, for example:
 
-```bash
+```sh
 $ xmake
 checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
@@ -84,7 +84,7 @@ Build ok!
 
 Then we continue to run it:
 
-```bash
+```sh
 $ xmake run
 ```
 
@@ -133,7 +133,7 @@ The effect is as follows:
 
 After the 2.2.6 version, you can directly switch to the android platform to compile the Quick/Widgets application, generate the apk package, and install it to the device via the `xmake install` command.
 
-```bash
+```sh
 $ xmake create -t quickapp_qt -l c ++ appdemo
 $ cd appdemo
 $ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c
@@ -146,7 +146,7 @@ $ xmake
 
 Then install to the device:
 
-```bash
+```sh
 $ xmake install
 installing appdemo ...
 installing build/android/release/appdemo.apk ..
@@ -160,7 +160,7 @@ install ok!👌
 
 This is usually detected automatically on macos/windows, but it is possible to specify the Qt SDK path manually.
 
-```bash
+```sh
 $ xmake f --qt=[qt sdk path]
 ```
 
@@ -168,7 +168,7 @@ $ xmake f --qt=[qt sdk path]
 
 After installing the Qt SDK using apt, xmake will also be able to detect it automatically.
 
-```bash
+```sh
 $ sudo apt install -y qtcreator qtbase5-dev
 $ xmake
 ```
@@ -177,7 +177,7 @@ $ xmake
 
 xmake also supports the Qt Mingw SDK installed from pacman
 
-```bash
+```sh
 $ pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator
 $ xmake
 ```
@@ -188,7 +188,7 @@ The Qt SDK installed by [aqtinstall](https://github.com/miurahr/aqtinstall) is b
 
 However, it is usually necessary to specify the SDK path yourself.
 
-```bash
+```sh
 $ xmake f --qt=[Qt SDK]
 ```
 
@@ -198,7 +198,7 @@ For cross-platform Qt development, xmake supports using separate SDKs for host t
 
 The `--qt_host` option allows you to specify the location of Qt tools that are compatible with your build machine, while `--qt` points to the SDK for the target platform:
 
-```bash
+```sh
 $ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
 ```
 
@@ -233,7 +233,7 @@ In addition to the `qt5widgets` package, the repository also provides `qt5gui`, 
 
 Once configured, simply execute:
 
-```bash
+```sh
 $ xmake
 ```
 

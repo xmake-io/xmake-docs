@@ -61,7 +61,7 @@ toolchain("myclang")
 
 然后通过下面的命令切到自己定义的工具链就行了：
 
-```bash
+```sh
 $ xmake f --toolchain=myclang
 ```
 
@@ -69,7 +69,7 @@ $ xmake f --toolchain=myclang
 
 在自定义工具前，我们可以通过先运行以下命令，查看完整的内置工具链列表，确保xmake没有提供，如果有的话，直接使用就行了，没必要自己定义：
 
-```bash
+```sh
 $ xmake show -l toolchains
 ```
 
@@ -105,7 +105,7 @@ target("hello")
 
 这个时候，我们就可以通过命令行 `--toolchain=my_toolchain` 去手动切换到此工具链来使用。
 
-```console
+```sh
 xmake f --toolchain=my_toolchain
 xmake
 ```
@@ -156,7 +156,7 @@ target("hello")
 
 这样，我们就可以编译的时候，直接快速切换指定平台，来自动切换对应的工具链了。
 
-```console
+```sh
 xmake f -p myplat1
 xmake
 ```

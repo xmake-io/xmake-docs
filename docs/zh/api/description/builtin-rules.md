@@ -4,7 +4,7 @@
 
 我们可以通过运行以下命令，查看完整的内置规则列表：
 
-```bash
+```sh
 $ xmake show -l rules
 ```
 
@@ -596,7 +596,7 @@ int main(int argc, char** argv) {
 
 生成头文件内容类似：
 
-```console
+```sh
 cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
   0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
 ```
@@ -663,7 +663,7 @@ static unsigned char g_test_frag_spv_data[] = {
 
 除了 `utils.glsl2spv` 规则，我们现在还支持 `utils.hlsl2spv` 规则。
 
-```bash
+```sh
 add_rules("mode.debug", "mode.release")
 
 add_requires("glslang", {configs = {binaryonly = true}})

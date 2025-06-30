@@ -16,7 +16,7 @@ outline: deep
 
 ### 主机平台
 
-```bash
+```sh
 $ xmake
 ```
 
@@ -26,21 +26,21 @@ Xmake 将会自动探测当前主机平台，默认自动生成对应的目标�
 
 ### Linux
 
-```bash
+```sh
 $ xmake f -p linux [-a i386|x86_64]
 $ xmake
 ```
 
 ### Android
 
-```bash
+```sh
 $ xmake f -p android --ndk=~/files/android-ndk-r10e/ [-a armeabi-v7a|arm64-v8a]
 $ xmake
 ```
 
 如果要手动指定ndk中具体某个工具链，而不是使用默认检测的配置，可以通过[--bin](#-bin)来设置，例如：
 
-```bash
+```sh
 $ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
 ```
 
@@ -52,7 +52,7 @@ $ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/
 
 ### iPhoneOS
 
-```bash
+```sh
 $ xmake f -p iphoneos [-a armv7|armv7s|arm64|i386|x86_64]
 $ xmake
 ```
@@ -60,7 +60,7 @@ $ xmake
 由于 m1 设备上模拟器也支持 arm64 架构，因此之前单纯从 arch 去区分是否为模拟器，已无法满足需求。
 因此，2.6.5 版本，我们新增了一个参数配置去区分是否为模拟器目标。
 
-```bash
+```sh
 $ xmake f -p iphoneos --appledev=simulator
 $ xmake f -p watchos --appledev=simulator
 $ xmake f -p appletvos --appledev=simulator
@@ -70,13 +70,13 @@ $ xmake f -p appletvos --appledev=simulator
 
 我们也可以指定构建 Mac Catalyst 程序。
 
-```bash
+```sh
 $ xmake f --appledev=catalyst
 ```
 
 ### Windows
 
-```bash
+```sh
 $ xmake f -p windows [-a x86|x64]
 $ xmake
 ```
@@ -85,14 +85,14 @@ $ xmake
 
 xmake 除了支持 Msys2/MingW, MingW for macOS/linux 之外，还支持 llvm-mingw 工具链，可以切换 arm/arm64 架构来编译。
 
-```bash
+```sh
 $ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64|arm|arm64]
 $ xmake
 ```
 
 ### Apple WatchOS
 
-```bash
+```sh
 $ xmake f -p watchos [-a i386|armv7k]
 $ xmake
 ```
@@ -101,14 +101,14 @@ $ xmake
 
 此平台用于编译 WebAssembly 程序（内部会使用emcc工具链），在切换此平台之前，我们需要先进入 Emscripten 工具链环境，确保 emcc 等编译器可用。
 
-```bash
+```sh
 $ xmake f -p wasm
 $ xmake
 ```
 
 xmake 也支持 Qt for wasm 编译，只需要：
 
-```bash
+```sh
 $ xmake f -p wasm [--qt=~/Qt]
 $ xmake
 ```
@@ -124,7 +124,7 @@ $ xmake
 
 除了 emscripten 以外，还有一个常用的wasm工具链 wasi-sdk，用于构建基于wasi的程序，我们仅仅只需要切换工具链即可。
 
-```bash
+```sh
 $ xmake f -p wasm --toolchain=wasi
 $ xmake
 ```
@@ -133,13 +133,13 @@ $ xmake
 
 2.9.1 版本新增了鸿蒙 OS 平台的 native 工具链编译支持：
 
-```bash
+```sh
 $ xmake f -p harmony
 ```
 
 xmake 会自动探测默认的 SDK 路径，当然我们也可以指定 Harmony SDK 路径。
 
-```bash
+```sh
 $ xmake f -p Harmony --sdk=/Users/ruki/Library/Huawei/Sdk/openharmony/10/native
 ```
 
@@ -150,13 +150,13 @@ $ xmake f -p Harmony --sdk=/Users/ruki/Library/Huawei/Sdk/openharmony/10/native
 
 例如:
 
-```bash
+```sh
 $ xmake g --ndk=~/files/android-ndk-r10e/
 ```
 
 现在，我们重新配置和编译`android`程序：
 
-```bash
+```sh
 $ xmake f -p android
 $ xmake
 ```
@@ -171,14 +171,14 @@ $ xmake
 
 有时候，配置出了问题编译不过，或者需要重新检测各种依赖库和接口，可以加上`-c`参数，清除缓存的配置，强制重新检测和配置
 
-```bash
+```sh
 $ xmake f -c
 $ xmake
 ```
 
 或者：
 
-```bash
+```sh
 $ xmake f -p iphoneos -c
 $ xmake
 ```
@@ -189,21 +189,21 @@ $ xmake
 
 ### 导出配置
 
-```bash
+```sh
 $ xmake f --export=/tmp/config.txt
 $ xmake f -m debug --xxx=y --export=/tmp/config.txt
 ```
 
 ### 导入配置
 
-```bash
+```sh
 $ xmake f --import=/tmp/config.txt
 $ xmake f -m debug --xxx=y --import=/tmp/config.txt
 ```
 
 ### 导出配置（带菜单）
 
-```bash
+```sh
 $ xmake f --menu --export=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
 ```
@@ -211,7 +211,7 @@ $ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
 
 ### 导入配置（带菜单）
 
-```bash
+```sh
 $ xmake f --menu --import=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
 ```

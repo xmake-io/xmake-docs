@@ -391,7 +391,7 @@ target("test")
     check_sizeof("STRING_SIZE", "std::string", {includes = "string"})
 ```
 
-```bash
+```sh
 $ xmake f -c
 checking for LONG_SIZE ... 8
 checking for STRING_SIZE ... 24

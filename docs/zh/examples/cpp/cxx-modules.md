@@ -84,7 +84,7 @@ target("packages")
 
 集成好包后，我们就可以执行 `xmake` 命令，一键下载、编译、集成 C++ Modules 包来使用。
 
-```bash
+```sh
 $ xmake
 checking for platform ... linux
 checking for architecture ... x86_64
@@ -108,7 +108,7 @@ please input: y (y/n/m)
 
 注：每个包安装后，会在包路径下，存储维护模块的 meta-info 文件，这是 `p2473r1.pdf` 中约定的一种格式规范，也许它不是最终的标准，但这并不影响我们现在去使用模块的分发。
 
-```bash
+```sh
 $ cat ./build/.packages/f/foo/latest/4e0143c97b65425b855ad5fd03038b6a/modules/foo/foo.mpp.meta-info
 {"_VENDOR_extension":{"xmake":{"name":"foo","file":"foo.mpp"}},"definitions":{},"include_paths":{}}
 ```

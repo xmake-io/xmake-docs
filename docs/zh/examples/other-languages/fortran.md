@@ -2,7 +2,7 @@ v2.3.6之后版本开始支持gfortran编译器来编译fortran项目，我们�
 
 v2.3.8之后，xmake 还支持 Intel Fortran Compiler，只需要切换下工具链即可：`xmake f --toolchain=ifort`
 
-```bash
+```sh
 $ xmake create -l fortran -t console test
 ```
 

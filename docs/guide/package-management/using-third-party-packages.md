@@ -90,7 +90,7 @@ target("test")
 
 After executing xmake to compile:
 
-```console
+```sh
 ruki:test_package ruki$ xmake
 checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
@@ -154,13 +154,13 @@ target("test")
 
 On archlinux:
 
-```console
+```sh
 xmake
 ```
 
 To install the mingw package on msys2, you need to specify the mingw platform:
 
-```console
+```sh
 xmake f -p mingw -a [x86_64|i386]
 xmake
 ```

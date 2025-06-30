@@ -132,7 +132,7 @@ Since the construction of the plug-in module is completely independent from the 
 
 The first execution effect is as follows:
 
-```bash
+```sh
 ruki-2:native_module ruki$ xmake
 [50%]: cache compiling.release src/foo.c
 [50%]: cache compiling.release src/bar.c
@@ -147,7 +147,7 @@ bar: 1 + 1 = 2
 
 When executed for the second time, the plug-in will not be built and the module can be used directly:
 
-```bash
+```sh
 ruki-2:native_module ruki$ xmake
 foo: 1 + 1 = 2
 foo: 1 - 1 = 0

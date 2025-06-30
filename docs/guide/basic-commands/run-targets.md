@@ -6,7 +6,7 @@ This will provide a lot of convenience, and it will also automatically bind the 
 
 ## Command format
 
-```console
+```sh
 $ xmake run [options] [target] [runargs]
 ```
 
@@ -18,7 +18,7 @@ The options in front are the parameter options of `xmake run`, and the `runargs`
 
 Usually we only need to execute `xmake run` to run all executable programs.
 
-```console
+```sh
 $ xmake run
 hello world!
 ```
@@ -27,7 +27,7 @@ hello world!
 
 If you want to run a specific target program, you can execute:
 
-```console
+```sh
 $ xmake run foo
 ```
 
@@ -43,7 +43,7 @@ target("test")
 
 If you want to run all targets, including those with `default = false`, you can pass the `-a/--all` parameter.
 
-```console
+```sh
 $ xmake run -a
 ```
 
@@ -51,13 +51,13 @@ $ xmake run -a
 
 We can also pass run parameters to internal target programs.
 
-```console
+```sh
 $ xmake run foo --arg1=xxx --arg2=yyy
 ```
 
 :::tip NOTE
 At this time, we cannot omit the target name, and must specify the target name to be run, otherwise it will cause parameter ambiguity.
-```
+:::
 
 We can also use the [set_runargs](/zh/api/description/project-target#set-runargs) configuration interface of target to specify the incoming run parameters without having to specify it in the command line every time.
 
@@ -67,7 +67,7 @@ By default, the working directory of `xmake run` is in the directory where the e
 
 If we want to change the working directory, we can specify it through the `-w workdir` parameter.
 
-```console
+```sh
 $ xmake run -w /tmp foo
 ```
 
@@ -81,18 +81,18 @@ We can also pass the `-d` parameter to let `xmake run` load the debugger availab
 
 But the premise is that the current program must be compiled in debug mode, otherwise it will be difficult to debug because of the lack of necessary symbol information, and the call stack, line number and other information will not be visible.
 
-```bash
+```sh
 $ xmake f -m debug
 $ xmake
 ```
 
-```bash
+```sh
 $ xmake run -d hello
 ```
 
 Xmake will use the debugger to load the program and run. Currently, it supports various debuggers such as lldb, gdb, windbg, vsjitdebugger, ollydbg, etc.
 
-```bash
+```sh
 [lldb]$target create "build/hello"
 Current executable set to 'build/hello' (x86_64).
 [lldb]$b main
@@ -112,7 +112,7 @@ hello`main:
 
 In addition, we can also switch to a specific debugger:
 
-```bash
+```sh
 $ xmake f --debugger=gdb
 $ xmake run -d hello
 ```

@@ -1,7 +1,7 @@
 
 Create an empty project:
 
-```bash
+```sh
 $ xmake create -P test -l cuda
 $ cd test
 $ xmake
@@ -29,7 +29,7 @@ Device functions in cuda source files should be device-linked once and only once
 
 Xmake will detect Cuda SDK automatically and we can also set the SDK directory (or SDK version for default installations) manually.
 
-```bash
+```sh
 $ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake f --cuda=9.1
 $ xmake

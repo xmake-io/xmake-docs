@@ -6,7 +6,7 @@ Here we will explain it in detail. First, let's take a look at its complete comm
 
 ## Command format
 
-```console
+```sh
 $ xmake build [options] [target]
 ```
 
@@ -14,7 +14,7 @@ Among them, `[target]` specifies the target to be built. This is optional. If it
 
 The execution results are as follows:
 
-```console
+```sh
 $ xmake build
 [ 17%]: cache compiling.release src/main.cpp
 [ 23%]: cache compiling.release src/foo.cpp
@@ -25,7 +25,7 @@ $ xmake build
 
 Usually we can omit the `build` subcommand, because the default behavior of the xmake command is to perform the build.
 
-```console
+```sh
 $ xmake
 [ 17%]: cache compiling.release src/main.cpp
 [ 23%]: cache compiling.release src/foo.cpp
@@ -38,7 +38,7 @@ $ xmake
 
 If you want to build a specific target program, you can execute:
 
-```console
+```sh
 $ xmake build foo
 ```
 
@@ -48,13 +48,13 @@ At this time, you need to write the full build subcommand, otherwise the target 
 
 ## Rebuild the target
 
-```console
+```sh
 $ xmake -r
 ```
 
 Or
 
-```console
+```sh
 $ xmake --rebuild
 ```
 
@@ -72,13 +72,13 @@ add_files("src/*.c")
 
 If you want to build all targets, including those with `default = false`, you can pass the `-a/--all` parameter.
 
-```console
+```sh
 $ xmake build -a
 ```
 
 Or
 
-```console
+```sh
 $ xmake build --all
 ```
 
@@ -86,7 +86,7 @@ $ xmake build --all
 
 If we want to view the complete compiler command parameters to troubleshoot flags configuration and other issues, we can use `xmake -v`.
 
-```console
+```sh
 $ xmake -v
 [23%]: cache compiling.release src/main.cpp
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src/main.cpp
@@ -114,7 +114,7 @@ dd_deps("foo") --------------- Incorrect interface
 add_files("src/main.cpp")
 ```
 
-```console
+```sh
 $xmake-vD
 error: @programdir/core/main.lua:329: @programdir/core/sandbox/modules/import/core/base/task.lua:65: @progr
 amdir/core/project/project.lua:1050: ./xmake.lua:9: attempt to call a nil value (global 'dd_deps')

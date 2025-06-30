@@ -14,7 +14,7 @@ In addition, Xmake also provides some commonly used toolchains that can be switc
 
 If the gcc toolchain is installed on linux, xmake will usually be detected and used first. Of course, we can also manually switch to gcc to build.
 
-```console
+```sh
 $ xmake f --toolchain=gcc -c
 $ xmake
 ```
@@ -27,7 +27,7 @@ One way is to switch by specifying the configuration one by one through `xmake f
 
 Therefore, xmake also provides a faster switching method:
 
-```console
+```sh
 $ xmake f --toolchain=gcc-11 -c
 $ xmake
 ```
@@ -38,7 +38,7 @@ You only need to specify the version name corresponding to `gcc-11` to quickly s
 
 In macOS and linux, usually xmake will try to automatically detect and use it first. Of course, we can also switch manually.
 
-```console
+```sh
 $ xmake f --toolchain=clang -c
 $ xmake
 ```
@@ -47,7 +47,7 @@ On Windows, it will automatically load the msvc environment.
 
 In addition, we also support PortableBuildTools + clang environment:
 
-```console
+```sh
 $ xmake f -c --sdk=C:/BuildTools --toolchain=clang
 $ xmake -v
 [50%]: cache compiling.release src\main.cpp C:\Users\star\scoop\apps\llvm\current\bin\clang -c -Qunused-arguments -m64 --target=x86_64-windows-msvc -fexceptions -fcxx-exceptions -o build\.objs\test\windows\x64\release\src\main.cpp.obj src\main.cpp
@@ -59,7 +59,7 @@ $ xmake -v
 
 If you simply switch to the clang-cl.exe compiler, and use msvc for the rest of the link operation, then we don't need to switch the entire toolchain, just cut the c/c++ compiler.
 
-```console
+```sh
 $ xmake f --cc=clang-cl --cxx=clang-cl -c
 $ xmake
 ```
@@ -68,7 +68,7 @@ Since xmake v2.7.2, there's also a dedicated clang-cl toolchain. The advantage o
 `--vs_toolset` option will be handled correctly.
 You can use it by running:
 
-```console
+```sh
 $ xmake f --toolchain=clang-cl
 $ xmake
 ```
@@ -77,7 +77,7 @@ $ xmake
 
 In addition to the independent clang compiler, if the user installs a complete llvm toolchain, we can also switch to it, including tools such as `llvm-ar`.
 
-```console
+```sh
 $ xmake f --toolchain=llvm --sdk=/xxxx/llvm
 $ xmake
 ```
@@ -88,7 +88,7 @@ If it is a manually downloaded llvm sdk, we need to specify the llvm sdk root di
 
 v2.5.9 xmake adds support for the circle compiler. This is a new C++20 compiler with some interesting compile-time meta-programming features. Those who are interested can check it out on the official website: https://www.circle-lang.org/
 
-```console
+```sh
 $ xmake f --toolchain=circle
 $ xmake
 ```
@@ -97,7 +97,7 @@ $ xmake
 
 [Tiny C Compiler](https://bellard.org/tcc/) is very lightweight. In some cases where you don’t want to install heavy-weight compilers such as msvc/llvm, you may use it to quickly compile some c code.
 
-```console
+```sh
 $ xmake f --toolchain=tinycc
 $ xmake
 ```
@@ -118,7 +118,7 @@ target("test")
 
 v2.5.9 added toolchain support for armcc under Keil/MDK, see related issue: [#1753](https://github.com/xmake-io/xmake/issues/1753)
 
-```console
+```sh
 xmake f -p cross -a cortex-m3 --toolchain=armcc -c
 xmake
 ```
@@ -129,7 +129,7 @@ This toolchain is mainly used for embedded cross-compilation, so the `-p cross` 
 
 v2.5.9 adds toolchain support for armclang under Keil/MDK. For related issues, see: [#1753](https://github.com/xmake-io/xmake/issues/1753)
 
-```console
+```sh
 xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 xmake
 ```
@@ -140,7 +140,7 @@ This toolchain is mainly used for embedded cross-compilation, so the `-p cross` 
 
 Another cross toolchain for embedded arm, official website: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm
 
-```console
+```sh
 $ xmake f --toolchain=gnu-rm -c
 $ xmake
 ```
@@ -149,7 +149,7 @@ $ xmake
 
 It is also an embedded arm compilation toolchain.
 
-```console
+```sh
 $ xmake f --toolchain=sdcc -a stm8
 $ xmake
 ```
@@ -169,21 +169,21 @@ We can specify `-a stm8` to switch the cpu architecture, currently supported are
 
 The mingw toolchain is very commonly used and is available on all platforms. We can just switch the relevant toolchain:
 
-```console
+```sh
 $ xmake f --toolchain=mingw -c
 $ xmake
 ```
 
 However, in this way, the suffixes of some target files do not match exactly, so it is recommended to switch to the mingw platform for compilation and to support the download of dependent packages.
 
-```console
+```sh
 $ xmake f -p mingw -c
 $ xmake
 ```
 
 xmake will automatically detect the location of the mingw toolchain by default, macOS and msys/mingw64 environments can usually be automatically detected, if detected, you can also manually specify the mingw sdk path.
 
-```console
+```sh
 $ xmake f -p mingw --mingw=/xxx/mingw -c
 $ xmake
 ```
@@ -194,7 +194,7 @@ Note that `--mingw` is used here instead of `--sdk`. In fact, both are ok, but t
 
 This is actually a project independent of Mingw, the usage is completely the same as Mingw, but it is based on LLVM, and provides arm/arm64 and other more architecture support, not just i386/x86_64
 
-```console
+```sh
 $ xmake f -p mingw -a arm64 --mingw=/xxx/llvm-mingw -c
 $ xmake
 ```
@@ -205,20 +205,20 @@ If you want to use the arm/arm64 architecture of llvm-mingw, you need to specify
 
 If you want to build a Zig program, we can automatically use the zig toolchain by executing xmake by default, but the premise is that zig is already in the PATH environment.
 
-```console
+```sh
 $ xmake
 ```
 
 Of course, we can also set it manually.
 
-```console
+```sh
 $ xmake f --toolchain=zig -c
 $ xmake
 ```
 
 You can also specify the path of the zig compiler.
 
-```console
+```sh
 $ xmake f --toolchain=zig --zc=/xxxx/zig -c
 $ xmake
 ```
@@ -227,7 +227,7 @@ $ xmake
 
 We can also use the `zig cc` compiler provided by zig to compile C/C++ code.
 
-```console
+```sh
 $ xmake f --cc="zig cc" --cxx="zig cc" --ld="zig c++" -c
 $ xmake
 ```
@@ -236,14 +236,14 @@ $ xmake
 
 In addition, we can also use zig to achieve cross-compilation.
 
-```console
+```sh
 $ xmake f -p cross --cross=riscv64-linux-musl --toolchain=zig
 $ xmake
 ```
 
 Or compile the arm64 architecture:
 
-```console
+```sh
 $ xmake f --toolchain=zig -a arm64 -c
 $ xmake
 ```
@@ -252,7 +252,7 @@ $ xmake
 
 If you want to compile the wasm program, we only need to switch to the wasm platform, and the emcc toolchain will be used to compile by default.
 
-```console
+```sh
 $ xmake f -p wasm
 $ xmake
 ```
@@ -261,7 +261,7 @@ $ xmake
 
 This is another Wasm toolchain with WASI enabled, and we need to switch it manually.
 
-```console
+```sh
 $ xmake f -p wasm --toolchain=wasi
 $ xmake
 ```
@@ -270,7 +270,7 @@ $ xmake
 
 We can also switch to Intel's C/C++ compiler to use.
 
-```console
+```sh
 $ xmake f --toolchain=icc -c
 $ xmake
 ```
@@ -279,7 +279,7 @@ $ xmake
 
 We can also switch to Intel's Fortran compiler to use.
 
-```console
+```sh
 $ xmake f --toolchain=ifort -c
 $ xmake
 ```
@@ -288,7 +288,7 @@ $ xmake
 
 In addition to Intel's Fortran compiler, we also have the gnu fortran compiler available.
 
-```console
+```sh
 $ xmake f --toolchain=gfortran -c
 $ xmake
 ```
@@ -297,13 +297,13 @@ $ xmake
 
 For pascal programs, xmake will use the fpc compiler to compile by default.
 
-```console
+```sh
 $ xmake
 ```
 
 Of course, we can also switch manually.
 
-```console
+```sh
 $ xmake f --toolchain=fpc -c
 $ xmake
 ```
@@ -312,13 +312,13 @@ $ xmake
 
 For dlang programs, xmake will use the dmd compiler to compile by default.
 
-```console
+```sh
 $ xmake
 ```
 
 Of course, we can also switch manually.
 
-```console
+```sh
 $ xmake f --toolchain=dlang -c
 $ xmake
 ```
@@ -329,14 +329,14 @@ It should be noted that the dlang toolchain here actually includes automatic det
 
 For Cuda programs, we need to manually switch to the cuda toolchain.
 
-```console
+```sh
 $ xmake f --toolchain=cuda -c
 $ xmake
 ```
 
 We can also manually switch the C/C++ compiler called internally by nvcc.
 
-```console
+```sh
 $ xmake f --toolchain=cuda --cu-ccbin=clang -c
 $ xmake
 ```
@@ -345,14 +345,14 @@ $ xmake
 
 Regarding the independent assembler toolchain, xmake supports three: yasm, nasm, and fasm, which can be switched at will. If not set, the assembler that comes with gcc/clang/msvc will be used by default.
 
-```console
+```sh
 $ xmake f --toolchain=nasm -c
 $ xmake
 ```
 
 You can also specify the assembler path separately
 
-```console
+```sh
 $ xmake f --toolchain=nasm --as=/xxx/nasm -c
 $ xmake
 ```
@@ -361,7 +361,7 @@ $ xmake
 
 The golang compiler toolchain is automatically enabled when compiling go programs by default.
 
-```console
+```sh
 $ xmake
 ```
 
@@ -369,13 +369,13 @@ $ xmake
 
 The rust compiler toolchain is automatically enabled when the rust program is compiled by default.
 
-```console
+```sh
 $ xmake
 ```
 
 At present, the rust toolchain can also support cross-compilation environments such as android.
 
-```console
+```sh
 $ xmake f -p android --ndk=~/android-ndk-r20b -c
 $ xmake
 ```
@@ -384,7 +384,7 @@ $ xmake
 
 Android's NDK compilation toolchain, as long as the android platform is enabled, it will be enabled by default.
 
-```console
+```sh
 $ xmake f -p android --ndk=~/android-ndk-r20b -c
 $ xmake
 ```

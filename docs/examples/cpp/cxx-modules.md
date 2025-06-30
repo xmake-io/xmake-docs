@@ -92,7 +92,7 @@ target("packages")
 
 Once the packages are integrated, we can run the `xmake` command to download, compile and integrate the C++ Modules package for use with one click.
 
-```bash
+```sh
 $ xmake
 checking for platform ... linux
 checking for architecture ... x86_64
@@ -116,7 +116,7 @@ please input: y (y/n/m)
 
 Note: After each package is installed, a meta-info file for the maintenance module is stored in the package path, this is a format specification agreed in ``p2473r1.pdf``, it may not be the final standard, but this does not affect our ability to use the distribution of the module now.
 
-```bash
+```sh
 $ cat . /build/.packages/f/f/foo/latest/4e0143c97b65425b855ad5fd03038b6a/modules/foo/foo.mpp.meta-info
 {"_VENDOR_extension":{"xmake":{"name": "foo", "file": "foo.mpp"}}, "definitions":{}, "include_paths":{}}
 ```

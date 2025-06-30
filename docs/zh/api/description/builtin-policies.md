@@ -27,7 +27,7 @@ target("test")
 
 如果要获取当前xmake支持的所有策略配置列表和描述，可以执行下面的命令：
 
-```bash
+```sh
 $ xmake l core.project.policy.policies
 {
   "check.auto_map_flags" = {
@@ -50,19 +50,19 @@ $ xmake l core.project.policy.policies
 
 我们也可以通过命令行的方式去设置修改内部的策略:
 
-```bash
+```sh
 $ xmake f --policies=package.fetch_only
 ```
 
 默认设置策略名，就是启用状态，当然我们也可以指定设置其他值，禁用它。
 
-```bash
+```sh
 $ xmake f --policies=package.precompiled:n
 ```
 
 或者同时配置多个策略值，用逗号分割。
 
-```bash
+```sh
 $ xmake f --policies=package.precompiled:n,package.install_only
 ```
 
@@ -76,7 +76,7 @@ xmake默认会对所有`add_cxflags`, `add_ldflags`接口设置的原始flags进
 
 目前，v2.3.4版本如果检测失败，会有警告提示避免用户莫名躺坑，例如：
 
-```bash
+```sh
 warning: add_ldflags("-static") is ignored, please pass `{force = true}` or call `set_policy("check.auto_ignore_flags", false)` if you want to set it.
 ```
 
@@ -124,7 +124,7 @@ add_cxflags("-O0")
 
 也有部分用户并不喜欢这种自动映射行为，那么我们可以通过下面的设置完全禁用这个默认的行为：
 
-```bash
+```sh
 set_policy("check.auto_map_flags", false)
 ```
 
@@ -137,7 +137,7 @@ set_policy("check.auto_map_flags", false)
 
 当然，如果有些特殊的target里面的构建源文件要依赖先前的target（尤其是一些自定义rules的情况，虽然很少遇到），我们也可以通过下面的设置禁用这个优化行为：
 
-```bash
+```sh
 set_policy("build.across_targets_in_parallel", false)
 ```
 
@@ -220,13 +220,13 @@ set_policy("build.ccache", false)
 
 当然，我们也可以命令行去禁用它。
 
-```bash
+```sh
 $ xmake f --ccache=n
 ```
 
 或者
 
-```bash
+```sh
 $ xmake f --policies=build.ccache:n
 ```
 
@@ -253,7 +253,7 @@ set_policy("build.optimization.lto", true)
 
 我们也可以通过命令行选项快速开启。
 
-```bash
+```sh
 $ xmake f --policies=build.optimization.lto
 ```
 
@@ -281,7 +281,7 @@ Address Sanitizer（ASan）是一个快速的内存错误检测工具，由编�
 
 例如，我们可以通过命令行的方式去启用：
 
-```bash
+```sh
 $ xmake f --policies=build.sanitizer.address
 ```
 
@@ -359,7 +359,7 @@ $ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
 
 默认情况下，执行 `xmake` 编译项目会自动在 build 目录下根据平台。架构，编译模式生成子目录，分别存储对象文件，目标文件。例如：
 
-```bash
+```sh
 build/
 └── macosx
     └── x86_64
@@ -369,7 +369,7 @@ build/
 
 如果配置禁用此策略，那么生成的产物将会直接生成到 build 根目录下。变成：
 
-```bash
+```sh
 build/
 └─ test
 ```
@@ -396,14 +396,14 @@ build/
 
 而开启这个策略，我们就可以在运行程序前，先自动构建对应的目标程序。
 
-```bash
+```sh
 $ xmake f --policies=run.autobuild
 $ xmake run
 ```
 
 如果想要全局生效这个策略，可以全局开启它。
 
-```bash
+```sh
 $ xmake g --policies=run.autobuild
 ```
 

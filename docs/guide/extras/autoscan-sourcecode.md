@@ -18,7 +18,7 @@ Currently, projects that use directories in multiple levels are *not* supported.
 
 Execute Xmake directly in the directory with the source code (no xmake.lua), and follow the prompts:
 
-```bash
+```sh
 $ xmake
 note: xmake.lua not found, try generating it (pass -y or --confirm=y/n/d to skip confirm)?
 please input: n (y/n)
@@ -29,7 +29,7 @@ In addition, when there are other build system identification files (such as `CM
 the process of automatically generating an `xmake.lua` file will not be triggered. Instead,
 it will attempt to automatically detect build system and compile the code. If you want to force trigger the process of automatically generating `xmake.lua` file, you can run:
 
-```bash
+```sh
 $ xmake f -y
 ```
 
@@ -39,7 +39,7 @@ Although this approach has some limitations, but it is already sufficient to gen
 
 For example, if you download the source code for zlib-1.2.10 and want to compile it, you only need to enter the zlib source directory and run the following command:
 
-```bash
+```sh
 $ cd zlib-1.2.10
 $ xmake
 note: xmake.lua not found, try generating it (pass -y or --confirm=y/n/d to skip confirm)?
@@ -181,20 +181,20 @@ int main(int argc, char *argv[]) {
 
 If we use GCC to compile and run it, need run two commands:
 
-```bash
+```sh
 $ gcc ./main.c -o main
 $ ./main
 ```
 
 If we use xmake to run it, only need to run:
 
-```bash
+```sh
 $ xmake run
 ```
 
 Or even:
 
-```bash
+```sh
 $ xmake r
 ```
 
@@ -206,7 +206,7 @@ Hello, world!
 
 ...printed to the console! Even if we have a lot of source files, you only need to run one command:
 
-```bash
+```sh
 $ xmake run
 ```
 
@@ -234,7 +234,7 @@ This feature of autogeneration of project files not only supports C/C++, also su
 
 You can see that there aren't any make-like files in the project directory. "Whatever will we do?" I think you know. We can use Xmake to build it directly as a iOS static library:
 
-```bash
+```sh
 $ xmake f -p iphoneos; xmake
 ```
 
@@ -303,7 +303,7 @@ and of course we also get a `libFMDB.a` static library.
 
 Let's say you downloaded the "sixth public release of the Independent JPEG Group's free JPEG software", and wanted to build it. You could do it yourself, or you could run:
 
-```bash
+```sh
 xmake
 ```
 
@@ -539,7 +539,7 @@ Neat!
 
 If we want to add some manual configuration options. we need add them before compiling. For example:
 
-```bash
+```sh
 # Specify our options
 $ xmake f --cxflags="--cxx-flag" --ldflags="--link-flag" --includedirs="include/" --linkdirs="lib/"
 

@@ -27,7 +27,7 @@ add_requires("zlib", {system = true, optional = true})
 
 We can use the following command to quickly detect the package information specified on the system:
 
-```console
+```sh
 $ xmake l find_package x264
 {
      links = {
@@ -45,7 +45,7 @@ $ xmake l find_package x264
 
 We can also add a third-party package manager prefix to test:
 
-```console
+```sh
 xmake l find_package conan::OpenSSL/1.0.2g
 ```
 

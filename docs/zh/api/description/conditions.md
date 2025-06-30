@@ -80,7 +80,7 @@ end
 
 当然你也可以自己扩展添加自己的平台，甚至直接指定自己的平台名：
 
-```bash
+```sh
 $ xmake f -p other --sdk=...
 ```
 
@@ -226,13 +226,13 @@ target("test")
 
 编译配置的时候，可手动切换，编译类型：
 
-```bash
+```sh
 # 编译静态库
 $ xmake f -k static
 $ xmake
 ```
 
-```bash
+```sh
 # 编译动态库
 $ xmake f -k shared
 $ xmake
@@ -246,7 +246,7 @@ $ xmake
 
 例如：
 
-```console
+```sh
 $ xmake f --test=hello1
 ```
 
@@ -299,7 +299,7 @@ end
 
 例如以下配置情况，都会返回true:
 
-```console
+```sh
 # 启用某个配置选项（如果是boolean类型配置）
 $ xmake f --test1=y
 $ xmake f --test1=yes
@@ -318,7 +318,7 @@ end
 
 而下面的情况则会禁用配置，返回false：
 
-```console
+```sh
 # 禁用配置（如果是boolean类型配置）
 $ xmake f --test1=n
 $ xmake f --test1=no

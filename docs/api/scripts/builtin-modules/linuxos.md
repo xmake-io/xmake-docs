@@ -10,7 +10,7 @@ and its interface can be called directly in the script scope.
 
 We can also quickly get the view through the following command
 
-```bash
+```sh
 xmake l linuxos.name
 ```
 

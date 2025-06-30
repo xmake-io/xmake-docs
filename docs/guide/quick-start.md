@@ -12,11 +12,11 @@ Xmake is not recommended for root installation, because this is very insecure. I
 
 ::: code-group
 
-```bash [curl]
+```sh [curl]
 curl -fsSL https://xmake.io/shget.text | bash
 ```
 
-```bash [wget]
+```sh [wget]
 wget https://xmake.io/shget.text -O - | bash
 ```
 
@@ -28,7 +28,7 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 
 If we want to install a specific version and branch, you can append the version number and branch parameters later
 
-```bash
+```sh
 curl -fsSL https://xmake.io/shget.text | bash -s dev
 curl -fsSL https://xmake.io/shget.text | bash -s v2.7.7
 Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content v2.7.7
@@ -52,11 +52,11 @@ This is very useful for users who want to write some c tests or algorithm codes 
 
 ::: code-group
 
-```bash [scoop]
+```sh [scoop]
 scoop install xmake
 ```
 
-```bash [winget]
+```sh [winget]
 winget install xmake
 ```
 :::
@@ -65,11 +65,11 @@ winget install xmake
 
 ::: code-group
 
-```bash [mingw64]
+```sh [mingw64]
 pacman -Sy mingw-w64-x86_64-xmake
 ```
 
-```bash [mingw32]
+```sh [mingw32]
 pacman -Sy mingw-w64-i686-xmake
 ```
 
@@ -77,7 +77,7 @@ pacman -Sy mingw-w64-i686-xmake
 
 ### MacOS
 
-```bash
+```sh
 brew install xmake
 ```
 
@@ -85,23 +85,23 @@ brew install xmake
 
 ::: code-group
 
-```bash [Archlinux]
+```sh [Archlinux]
 sudo pacman -Sy xmake
 ```
 
-```bash [Alpine]
+```sh [Alpine]
 sudo apk add xmake
 ```
 
-```bash [ubuntu]
+```sh [ubuntu]
 sudo apt install xmake
 ```
 
-```bash [debian]
+```sh [debian]
 sudo apt install xmake
 ```
 
-```bash [fedora]
+```sh [fedora]
 sudo dnf install xmake
 ```
 
@@ -109,7 +109,7 @@ sudo dnf install xmake
 
 ### Ubuntu PPA
 
-```bash
+```sh
 sudo add-apt-repository ppa:xmake-io/xmake
 sudo apt update
 sudo apt install xmake
@@ -120,7 +120,7 @@ sudo apt install xmake
 1. Refer to [here](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users) to add GURU to your system repository
 2. Install dev-util/xmake
 
-```bash
+```sh
 sudo emerge -a --autounmask dev-util/xmake
 ```
 
@@ -128,7 +128,7 @@ sudo emerge -a --autounmask dev-util/xmake
 
 Download xmake `xmake-x.x.x.gz.run` install package from [Releases](https://github.com/xmake-io/xmake/releases)
 
-```bash
+```sh
 sudo chmod 777 ./xmake-x.x.x.gz.run
 ./xmake-x.x.x.gz.run
 ```
@@ -137,13 +137,13 @@ sudo chmod 777 ./xmake-x.x.x.gz.run
 
 Due to package name conflicts, only xmake-io can be used as the package name.
 
-```bash
+```sh
 pkg install xmake-io
 ```
 
 ### Termux (Android)
 
-```bash
+```sh
 pkg install xmake
 ```
 
@@ -173,14 +173,14 @@ The others are single executable files for specific platforms, and users can dow
 
 #### Download source code
 
-```bash
+```sh
 git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
 ```
 
 If you think the source of github is too slow, you can pull it through the mirror source of gitee or gitlab:
 
-```bash
+```sh
 git clone --recursive https://gitee.com/tboox/xmake.git
 git clone --recursive https://gitlab.com/tboox/xmake.git
 ```
@@ -191,7 +191,7 @@ Since the current Xmake source maintains dependencies via git submodule, it is n
 
 If you forget to add `--recursive` when git clone, you can also execute `git submodule update --init` to pull all submodules, for example:
 
-```bash
+```sh
 git submodule update --init
 ```
 
@@ -199,14 +199,14 @@ git submodule update --init
 
 ::: code-group
 
-```bash [Linux]
+```sh [Linux]
 ./configure
 make -j4
 ./scripts/get.sh __local__ __install_only__
 source ~/.xmake/profile
 ```
 
-```bash [windows]
+```sh [windows]
 cd ./core
 xmake
 ```
@@ -224,27 +224,27 @@ If you encounter problems with readline, please install readline-devel or librea
 
 Starting with v2.2.3, the `xmake update` command has been added to quickly update and upgrade itself. The default is to upgrade to the latest version. Of course, you can also specify to upgrade or roll back to a version:
 
-```bash
+```sh
 xmake update 2.7.1
 ```
 
 We can also specify an update to the master/dev branch version:
 
-```bash
+```sh
 xmake update master
 xmake update dev
 ```
 
 Update from the specified git source
 
-```bash
+```sh
 xmake update github:xmake-io/xmake#master
 xmake update gitee:tboox/xmake#dev # gitee mirror
 ```
 
 If just update the xmake lua script changes, you can add `-s/--scriptonly` to quickly update the lua script.
 
-```bash
+```sh
 xmake update -s dev
 ```
 
@@ -252,7 +252,7 @@ Finally, if we want to uninstall Xmake, we're sorry to see you go! Still, it is 
 
 ## Create Project
 
-```bash
+```sh
 $ xmake create hello
 ```
 
@@ -279,14 +279,14 @@ target("hello")
 
 ## Build Project
 
-```bash
+```sh
 $ cd hello
 $ xmake
 ```
 
 ## Run Program
 
-```bash
+```sh
 $ xmake run
 ```
 
@@ -294,20 +294,20 @@ $ xmake run
 
 To debug the hello, you need change to the debug mode and build it.
 
-```bash
+```sh
 $ xmake config -m debug
 $ xmake
 ```
 
 Then run the following command to debug target program.
 
-```bash
+```sh
 $ xmake run -d hello
 ```
 
 It will start the debugger (.e.g lldb, gdb, windbg, vsjitdebugger, ollydbg ..) to load our program.
 
-```bash
+```sh
 [lldb]$target create "build/hello"
 Current executable set to 'build/hello' (x86_64).
 [lldb]$b main
@@ -329,7 +329,7 @@ To study more debug command, please click the url [GDB to LLDB command map](http
 
 If you want to use the specify debugger, try
 
-```bash
+```sh
 $ xmake f --debugger=gdb
 $ xmake run -d hello
 ```

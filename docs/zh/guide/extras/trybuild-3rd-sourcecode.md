@@ -25,7 +25,7 @@ Xmake v2.3.1 以上版本直接对接了其他第三方构建系统，即使其�
 
 例如，对于一个使用cmake维护的项目，直接在项目根目录执行xmake，就会自动触发探测机制，检测到CMakeLists.txt，然后提示用户是否需要使用cmake来继续完成编译。
 
-```bash
+```sh
 $ xmake
 note: CMakeLists.txt found, try building it (pass -y or --confirm=y/n/d to skip confirm)?
 please input: y (y/n)
@@ -48,7 +48,7 @@ build ok!
 
 我们可以直接清理cmake维护项目的编译输出文件
 
-```bash
+```sh
 $ xmake clean
 $ xmake clean --all
 ```
@@ -57,7 +57,7 @@ $ xmake clean --all
 
 默认`xmake`对接的是增量构建行为，不过我们也可以强制快速重建：
 
-```bash
+```sh
 $ xmake --rebuild
 ```
 
@@ -65,7 +65,7 @@ $ xmake --rebuild
 
 如果一个项目下有多个构建系统同时在维护，比如 libpng 项目，自带autotools/cmake/makefile等构建系统维护，xmake 默认优先探测使用了autotools，如果想要强制切换其他构建系统，可以执行：
 
-```bash
+```sh
 $ xmake f --trybuild=[autotools|cmake|make|msbuild| ..]
 $ xmake
 ```
@@ -84,7 +84,7 @@ $ xmake
 
 ### 交叉编译android平台
 
-```bash
+```sh
 $ xmake f -p android --trybuild=autotools [--ndk=xxx]
 $ xmake
 ```
@@ -97,7 +97,7 @@ $ xmake
 
 说白了，你大概得这样，还不一定一次就能搞定：
 
-```bash
+```sh
 $ export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
 $ export AR=$TOOLCHAIN/bin/aarch64-linux-android-ar
 $ export AS=$TOOLCHAIN/bin/aarch64-linux-android-as
@@ -112,7 +112,7 @@ $ make
 
 如果是cmake呢，交叉编译也不省事，对于android平台，得这么配置。
 
-```bash
+```sh
 $ cmake \
     -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
     -DANDROID_ABI=$ABI \
@@ -128,21 +128,21 @@ $ cmake \
 
 ### 交叉编译iphoneos平台
 
-```bash
+```sh
 $ xmake f -p iphoneos --trybuild=[cmake|autotools]
 $ xmake
 ```
 
 ### 交叉编译mingw平台
 
-```bash
+```sh
 $ xmake f -p mingw --trybuild=[cmake|autotools] [--mingw=xxx]
 $ xmake
 ```
 
 ### 使用其他交叉编译工具链
 
-```bash
+```sh
 $ xmake f -p cross --trybuild=[cmake|autotools] --sdk=/xxxx
 $ xmake
 ```
@@ -153,7 +153,7 @@ $ xmake
 
 我们可以通过`--tryconfigs=`来传递用户额外的配置参数到对应的第三方构建系统，比如：autotools会传递给`./configure`，cmake会传递给`cmake`命令。
 
-```bash
+```sh
 $ xmake f --trybuild=autotools --tryconfigs="--enable-shared=no"
 $ xmake
 ```
@@ -168,7 +168,7 @@ $ xmake
 
 大多数情况下，每个构建系统对接后的编译方式都是一致的，除了`--trybuild=`配置参数除外。
 
-```bash
+```sh
 $ xmake f --trybuild=[autotools|cmake|meson|ninja|bazel|make|msbuild|xcodebuild]
 $ xmake
 ```
@@ -181,7 +181,7 @@ $ xmake
 
 如果当前项目下存在`jni/Android.mk`，那么xmake可以直接调用ndk-build来构建jni库。
 
-```bash
+```sh
 $ xmake f -p android --trybuild=ndkbuild [--ndk=]
 $ xmake
 ```

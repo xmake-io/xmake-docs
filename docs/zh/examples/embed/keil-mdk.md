@@ -5,14 +5,14 @@ xmake 会自动探测 Keil/MDK 安装的编译器，相关 issues [#1753](https:
 
 使用 armcc 编译
 
-```bash
+```sh
 $ xmake f -p cross -a cortex-m3 --toolchain=armcc -c
 $ xmake
 ```
 
 使用 armclang 编译
 
-```bash
+```sh
 $ xmake f -p cross -a cortex-m3 --toolchain=armclang -c
 $ xmake
 ```

@@ -1,7 +1,7 @@
 
 Xmake also supports the construction of go programs, and also provides command support for creating empty projects:
 
-```bash
+```sh
 $ xmake create -l go -t console test
 ```
 
@@ -15,7 +15,7 @@ target("test")
 
 In v2.3.6 version, xmake has made some improvements to its build support, and also supports cross compilation of go. For example, we can compile windows programs on macOS and linux:
 
-```bash
+```sh
 $ xmake f -p windows -a x86
 ```
 

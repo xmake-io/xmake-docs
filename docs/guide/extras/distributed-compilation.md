@@ -11,14 +11,14 @@ We can specify the `--distcc` parameter to enable the distributed compilation se
 
 Here we assume that there are two machines as a distributed compilation server cluster, with the IP addresses `192.168.22.168` and `192.168.22.169`. On the two servers execute the following command:
 
-```bash
+```sh
 $ xmake service --distcc
 <distcc_build_server>: listening 0.0.0.0:9093 ..
 ```
 
 Or for a more verbose experience with more detailed log messages, run it with the `-vD` flag.
 
-```bash
+```sh
 $ xmake service --distcc -vD
 <distcc_build_server>: listening 0.0.0.0:9093 ..
 ```
@@ -27,7 +27,7 @@ $ xmake service --distcc -vD
 
 To start the service in daemon mode, and control it, run:
 
-```bash
+```sh
 $ xmake service --distcc --start
 $ xmake service --distcc --restart
 $ xmake service --distcc --stop
@@ -37,7 +37,7 @@ $ xmake service --distcc --stop
 
 We first, run the `xmake service` command, it will automatically generate a default `server.conf` configuration file, stored in `~/.xmake/service/server.conf`.
 
-```bash
+```sh
 $ xmake service
 generating the config file to /Users/ruki/.xmake/service/server.conf ..
 an token(590234653af52e91b9e438ed860f1a2b) is generated, we can use this token to connect service.
@@ -47,7 +47,7 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
 
 Then, we edit it, fixing the server's listening port (optional).
 
-```bash
+```sh
 {
     distcc_build = {
         listen = "0.0.0.0:9693",
@@ -67,7 +67,7 @@ The client configuration file is in `~/.xmake/service/client.conf`, where we can
 
 With distributed compilation, it is recommended to use the token authentication mode, because the password mode requires a password to be entered for each server connection, which can become very annoying very fast.
 
-```bash
+```sh
 {
     distcc_build = {
         hosts = {
@@ -91,7 +91,7 @@ By default, clients connect, send and receive data with unlimited waiting withou
 
 We can configure, `send_timeout`, `recv_timeout` and `connect_timeout` to take effect for all client services if set at the root.
 
-```bash
+```sh
 {
     send_timeout = 5000,
     recv_timeout = 5000,
@@ -101,7 +101,7 @@ We can configure, `send_timeout`, `recv_timeout` and `connect_timeout` to take e
 
 We can also configure the timeout just for the current distributed build service, leaving the other services with the default timeout.
 
-```bash
+```sh
 {
     distcc_build = {
         send_timeout = 5000,
@@ -123,7 +123,7 @@ After configuring the authentication and server address, you can enter the follo
 
 We need to enter `--distcc` when connecting to specify that only distributed services are connected.
 
-```bash
+```sh
 $ cd projectdir
 $ xmake service --connect --distcc
 <client>: connect 127.0.0.1:9693 ..
@@ -132,7 +132,7 @@ $ xmake service --connect --distcc
 
 We can also connect to multiple services at the same time, such as distributed compilation and remote compilation cache services.
 
-```bash
+```sh
 $ xmake service --connect --distcc --ccache
 ```
 
@@ -142,7 +142,7 @@ If there is no parameter, the default connection is the remote compilation servi
 
 After connecting to the server, we can perform distributed compilation transparently (e.g. just like normal local compilation). For example:
 
-```bash
+```sh
 $ xmake
 ...
 [ 93%]: cache compiling.release src/demo/network/unix_echo_client.c ----> local job
@@ -170,7 +170,7 @@ In addition, we can also open the remote compilation cache and share the compila
 
 You can disconnect from a compilation server with:
 
-```bash
+```sh
 $ xmake service --disconnect --distcc
 ```
 
@@ -198,7 +198,7 @@ local maxjobs = default_njob + server_count * server_default_njob
 
 We only need to pass `-jN` to specify the number of local parallel tasks (just like in Make), but it will not affect the number of parallel tasks on the server side.
 
-```bash
+```sh
 $ xmake -jN
 ```
 
@@ -206,7 +206,7 @@ $ xmake -jN
 
 If you want to modify the number of parallel tasks on the server, you need to modify the configuration file of the client.
 
-```bash
+```sh
 {
     distcc_build = {
         hosts = {
@@ -233,7 +233,7 @@ The distributed compilation service provided by Xmake is completely cross-platfo
 
 If you want to compile an Android project, for example, you only need to add the `toolchains` toolchain configuration in the server configuration, and provide the path of the NDK.
 
-```bash
+```sh
 {
     distcc_build = {
         listen = "0.0.0.0:9693",
@@ -256,7 +256,7 @@ Then, we can compile the Android project in a distributed way like normal local 
 
 Just download the NDK for the corresponding platform.
 
-```bash
+```sh
 $ xmake f -p android --ndk=~/files/xxxx
 $ xmake
 ```
@@ -265,7 +265,7 @@ $ xmake
 
 Compiling iOS projects is easier, because Xmake can usually automatically detect Xcode, so just switch the platform to iOS like you would normally do for local development.
 
-```bash
+```sh
 $ xmake f -p iphoneos
 $ xmake
 ```
@@ -274,7 +274,7 @@ $ xmake
 
 If we want to distribute cross-compilation, we need to configure the toolchain SDK path on the server, for example:
 
-```bash
+```sh
 {
     distcc_build = {
         listen = "0.0.0.0:9693",
@@ -299,7 +299,7 @@ If the cross toolchain is more standardized, we usually only need to configure `
 
 On the client side, \compilation only needs to specify the SDK directory.
 
-```bash
+```sh
 $ xmake f -p cross --sdk=/xxx/arm-linux-xxx
 $ xmake
 ```
@@ -308,7 +308,7 @@ $ xmake
 
 The compilation of each project on the server side will generate some cache files, which are stored according to the project granularity. We can use the following command to clear the cache corresponding to each server for the current project.
 
-```bash
+```sh
 $ xmake service --clean --distcc
 ```
 

@@ -2,7 +2,7 @@
 
 Create an empty project:
 
-```bash
+```sh
 $ xmake create -l objc -t console test
 ```
 
@@ -35,14 +35,14 @@ After 2.5.7, you can directly add `*.metal` files, xmake will automatically gene
 
 We can also quickly create project through template:
 
-```bash
+```sh
 $ xmake create -t xcode.macapp -l objc test
 $ xmake create -t xcode.iosapp -l objc test
 ```
 
 ### Build Program
 
-```bash
+```sh
 $ xmake f -p [iphoneos|macosx]
 $ xmake
 [ 18%]: compiling.xcode.release src/Assets.xcassets
@@ -62,7 +62,7 @@ $ xmake
 
 For iOS programs, it will detect that the system first signs the app with available signatures. Of course, we can also manually specify other signature certificates:
 
-```bash
+```sh
 $ xmake f -p iphoneos --xcode_codesign_identity='Apple Development: xxx@gmail.com (T3NA4MRVPU)' --xcode_mobile_provision='iOS Team Provisioning Profile: org.tboox.test --xcode_bundle_identifier=org.tboox.test'
 $ xmake
 ```
@@ -81,7 +81,7 @@ target("test")
 
 How do we know the signature configuration we need? One is to view it in xcode. In addition, xmake also provides some auxiliary tools to dump all currently available signature configurations:
 
-```bash
+```sh
 $ xmake l private.tools.codesign.dump
 ==================================== codesign identities ====================================
 {
@@ -104,13 +104,13 @@ $ xmake l private.tools.codesign.dump
 
 We also provide other auxiliary tools to re-sign existing ipa / app programs, for example:
 
-```bash
+```sh
 $ xmake l utils.ipa.resign test.ipa | test.app [codesign_identity] [mobile_provision] [bundle_identifier]
 ```
 
 Among them, the following signature parameters are optional, if not set, then a valid signature will be detected by default:
 
-```bash
+```sh
 $ xmake l utils.ipa.resign test.ipa
 $ xmake l utils.ipa.resign test.app "Apple Development: waruqi@gmail.com (T3NA4MRVPU)"
 $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4MRVPU)" iOS Team Provisioning Profile: org.tboox.test" org.tboox.test
@@ -120,7 +120,7 @@ $ xmake l utils.ipa.resign test.ipa "Apple Development: waruqi@gmail.com (T3NA4M
 
 Currently only supports running macos program:
 
-```console
+```sh
 $ xmake run
 ```
 
@@ -132,7 +132,7 @@ The effect is as follows:
 
 If it is an iOS program, it will generate an ipa installation package, if it is macOS, it will generate a dmg package (dmg package generation is still under development for the time being).
 
-```bash
+```sh
 $ xmake package
 output: build/iphoneos/release/arm64/test.ipa
 package ok!
@@ -140,7 +140,7 @@ package ok!
 
 We also provide auxiliary tools to package the specified app program:
 
-```bash
+```sh
 $ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 ```
 
@@ -148,13 +148,13 @@ $ xmake l utils.ipa.package test.app output.ipa [iconfile.png]
 
 If it is an iOS program, it will install ipa to the device, if it is macos, it will install the app to the `/Applications` directory.
 
-```bash
+```sh
 $ xmake install
 ```
 
 We also provide auxiliary tools to install the specified ipa/app program to the device:
 
-```bash
+```sh
 $ xmake l utils.ipa.install test.app
 $ xmake l utils.ipa.install test.ipa
 ```
@@ -165,7 +165,7 @@ $ xmake l utils.ipa.install test.ipa
 Currently only the macos program is supported
 :::
 
-```bash
+```sh
 $ xmake uninstall
 ```
 
@@ -180,7 +180,7 @@ target("test")
 
 We can also quickly create project through template:
 
-```bash
+```sh
 $ xmake create -t xcode.framework -l objc test
 ```
 
@@ -188,7 +188,7 @@ In addition, xmake v2.3.9 and above, xmake also provides a complete iosapp/macap
 
 At the same time, if we turn on the emulator, xmake can support directly `xmake install` and `xmake run` to install the app to the emulator and load and run it.
 
-```bash
+```sh
 $ xmake create -t xcode.iosapp_with_framework -l objc testapp
 $ cd testapp
 $ xmake f -p iphoneos -a x86_64
@@ -208,6 +208,6 @@ target("test")
 
 We can also quickly create project through template:
 
-```bash
+```sh
 $ xmake create -t xcode.bundle -l objc test
 ```

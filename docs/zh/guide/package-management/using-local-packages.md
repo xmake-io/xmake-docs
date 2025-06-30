@@ -6,7 +6,7 @@
 
 我们执行 `xmake package` 命令就能够生成默认的新版打包格式。
 
-```console
+```sh
 $ xmake package
 package(foo): build/packages/f/foo generated
 ```
@@ -36,7 +36,7 @@ package("foo")
 
 而生成的目录结构如下：
 
-```console
+```sh
 $ tree build/packages/f/foo/
 build/packages/f/foo/
 ├── macosx
@@ -71,7 +71,7 @@ target("bar")
 
 这里有完整的[测试例子](https://github.com/xmake-io/xmake/blob/dev/tests/actions/package/localpkg/test.lua)。
 
-```console
+```sh
 "/usr/bin/xcrun -sdk macosx clang++" -o build/macosx/x86_64/release/bar build/.objs/bar/macosx/x86_64/release/src/main.cpp.o -arch x86_64 -mmacosx-version-min=10.15 -isysroot
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk -stdlib=libc++
  -L/Users/ruki/projects/personal/xmake/tests/actions/package/localpkg/bar/build/packages/f/foo/macosx/x86_64/release/lib
@@ -88,7 +88,7 @@ target("bar")
 
 例如：
 
-```console
+```sh
 $ xmake l find_package cmake::ZLIB
 {
   links = {

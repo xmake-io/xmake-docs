@@ -1,7 +1,7 @@
 
 默认会自动探测 WDK 所在环境，当然也可以指定 WDK sdk 环境目录：
 
-```bash
+```sh
 $ xmake f --wdk="G:\Program Files\Windows Kits\10" -c
 $ xmake
 ```
@@ -65,7 +65,7 @@ target("msdsm")
 
 可以通过以下命令生成.cab驱动包：
 
-```bash
+```sh
 $ xmake [p|package]
 $ xmake [p|package] -o outputdir
 ```
@@ -148,7 +148,7 @@ set_values("wdk.env.winver", "win7_sp3")
 
 我们也可以手动指定编译的目标程序支持的windows版本：
 
-```bash
+```sh
 $ xmake f --wdk_winver=[win10_rs3|win8|win7|win7_sp1]
 $ xmake
 ```

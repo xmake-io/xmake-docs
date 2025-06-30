@@ -19,7 +19,7 @@ target("test")
 
 然后直接执行编译即可：
 
-```console
+```sh
 $ xmake
 ```
 
@@ -50,27 +50,27 @@ xmake会去远程拉取相关源码包，然后自动编译安装，最后编译
 
 新建一个依赖tbox库的空工程：
 
-```console
+```sh
 $ xmake create -t console_tbox test
 $ cd test
 ```
 
 执行编译即可，如果当前没有安装tbox库，则会自动下载安装后使用：
 
-```console
+```sh
 $ xmake
 ```
 
 切换到iphoneos平台进行编译，将会重新安装iphoneos版本的tbox库进行链接使用：
 
-```console
+```sh
 $ xmake f -p iphoneos
 $ xmake
 ```
 
 切换到android平台arm64-v8a架构编译：
 
-```console
+```sh
 $ xmake f -p android [--ndk=~/android-ndk-r16b]
 $ xmake
 ```
@@ -153,7 +153,7 @@ add_requires("tbox", {configs = {small = true}})
 
 比如：
 
-```console
+```sh
 xmake require --info spdlog
     require(spdlog):
       -> requires:
@@ -219,7 +219,7 @@ add_requires("zlib 1.2.11", {verify = false})
 
 默认启用了 external 外部头文件的编译 flags 如下：
 
-```console
+```sh
 -isystem /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
 ```
 
@@ -229,7 +229,7 @@ add_requires("zlib 1.2.11", {verify = false})
 add_requires("zlib 1.x", {external = false})
 ```
 
-```console
+```sh
 -I /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
 ```
 
@@ -242,7 +242,7 @@ add_requires("zlib 1.x", {external = false})
 
 我们可以通过下面的命令进行仓库添加：
 
-```console
+```sh
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git [branch]
 ```
 
@@ -374,7 +374,7 @@ set_policy("package.requires_lock", true)
 
 当然，我们也可以执行下面的命令，强制升级包到最新版本。
 
-```console
+```sh
 $ xmake require --upgrade
 upgrading packages ..
   zlib: 1.2.10 -> 1.2.11

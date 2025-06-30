@@ -43,7 +43,7 @@ cpp是预处理器，as是汇编器，ar用于生成静态库，strip用于裁�
 
 如果我们的交叉编译工具链是上文的结构，xmake会自动检测识别这个sdk的结构，提取里面的cross，以及include/lib路径位置，用户通常不需要做额外的参数设置，只需要配置好sdk根目录就可以编译了，例如：
 
-```bash
+```sh
 $ xmake f -p cross --sdk=/home/toolchains_sdkdir
 $ xmake
 ```
@@ -73,7 +73,7 @@ $ xmake
 
 这个时候，我们可以在设置了sdk参数的基础上追加bin目录的参数设置，来调整工具链的bin目录。
 
-```bash
+```sh
 $ xmake f -p cross --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
 $ xmake
 ```
@@ -94,7 +94,7 @@ $ xmake
 
 我们现在想要选用armv7的版本，那么我们可以追加`--cross=`配置编译工具前缀名，例如：
 
-```bash
+```sh
 $ xmake f -p cross --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 ```
 
@@ -102,7 +102,7 @@ $ xmake f -p cross --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 
 如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：
 
-```bash
+```sh
 $ xmake f -p cross --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-clang++
 ```
 
@@ -116,7 +116,7 @@ $ xmake f -p cross --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-
 
 这个时候我们可以通过：
 
-```bash
+```sh
 xmake f --cxx=clang++@/home/xxx/c++mips.exe
 ```
 
@@ -128,7 +128,7 @@ xmake f --cxx=clang++@/home/xxx/c++mips.exe
 
 如果还要继续细分选择链接器，则继续追加相关链接器选项，例如：
 
-```bash
+```sh
 $ xmake f -p cross --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
 ```
 
@@ -140,7 +140,7 @@ ld指定可执行程序链接器，sh指定共享库程序链接器，ar指定�
 
 如果sdk里面还有额外的其他include/lib目录不在标准的结构中，导致交叉编译找不到库和头文件，那么我们可以通过`--includedirs`和`--linkdirs`来追加搜索路径，然后通过`--links`添加额外的链接库。
 
-```bash
+```sh
 $ xmake f -p cross --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --linkdirs=/usr/toolsdk/xxx/lib --links=pthread
 ```
 
@@ -160,7 +160,7 @@ $ xmake f -p cross --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --l
 
 例如：
 
-```bash
+```sh
 $ xmake f -p cross --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-lpthread"
 ```
 
@@ -170,7 +170,7 @@ $ xmake f -p cross --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-l
 
 其实，`-p/--plat=`参数也可以设置为其他自定义的值，只需要跟`is_plat`保持对应关系就可以，所有非内置平台名，都会默认采用交叉编译模式，例如：
 
-```bash
+```sh
 $ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/
 $ xmake
 ```
@@ -208,14 +208,14 @@ end
 
 然后，我们就可以切换这些平台来编译：
 
-```bash
+```sh
 $ xmake f -p [dragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
 $ xmake
 ```
 
 另外，内置的linux平台也是支持交叉编译的哦，如果不想配置其他平台名，统一作为linux平台来交叉编译，也是可以的。
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/usr/local/arm-xxx-gcc/
 $ xmake
 ```
@@ -226,7 +226,7 @@ $ xmake
 
 完整的工具链列表，请执行下面的命令查看：
 
-```bash
+```sh
 $ xmake show -l toolchains
 ```
 
@@ -237,7 +237,7 @@ $ xmake show -l toolchains
 上文讲述的是通用的交叉编译工具链配置，如果一些特定的工具链需要额外传入`--ldflags/--includedirs`等场景就比较繁琐了,
 因此xmake也内置了一些常用工具链，可以省去交叉编译工具链复杂的配置过程，只需要执行：
 
-```bash
+```sh
 $ xmake f --toolchain=gnu-rm --sdk=/xxx/
 $ xmake
 ```
@@ -248,21 +248,21 @@ $ xmake
 
 比如，我们也可以快速从gcc工具链整体切换到clang或者llvm工具链，不再需要`xmake f --cc=clang --cxx=clang --ld=clang++`等挨个配置了。
 
-```bash
+```sh
 $ xmake f --toolchain=clang
 $ xmake
 ```
 
 或者
 
-```bash
+```sh
 $ xmake f --toolchain=llvm --sdk=/xxx/llvm
 $ xmake
 ```
 
 具体xmake支持哪些工具链，可以通过下面的命令查看：
 
-```bash
+```sh
 $ xmake show -l toolchains
 xcode         Xcode IDE
 vs            VisualStudio IDE
@@ -315,7 +315,7 @@ toolchain("myclang")
 
 因此，xmake对mingw的工具链检测会更加完善，在macos下，基本上连sdk路径都不需要配置，也能直接检测到，只需要切到mingw平台编译即可。
 
-```bash
+```sh
 $ xmake f -p mingw
 $ xmake -v
 configure
@@ -348,7 +348,7 @@ build ok!
 
 尽管在linux/win上还没法自动检测到sdk路径，我们也可以手动指定sdk路径，需要注意的是，xmake为mingw专门提供了一个`--mingw=`参数用来指定mingw的工具链根目录，其效果跟`--sdk=`是一样的，但是它可以作为全局配置被设置。
 
-```bash
+```sh
 $ xmake g --mingw=/home/mingwsdk
 $ xmake f -p mingw
 $ xmake
@@ -360,7 +360,7 @@ $ xmake
 
 xmake 还支持 llvm-mingw 工具链，可以切换到 arm/arm64 架构来编译。
 
-```bash
+```sh
 $ xmake f --mingw=/xxx/llvm-mingw -a arm64
 $ xmake
 ```
@@ -369,7 +369,7 @@ $ xmake
 
 llvm工具链下载地址：https://releases.llvm.org/
 
-```bash
+```sh
 $ xmake f -p cross --toolchain=llvm --sdk="C:\Program Files\LLVM"
 $ xmake
 ```
@@ -378,14 +378,14 @@ $ xmake
 
 工具链地址：https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads#
 
-```bash
+```sh
 $ xmake f -p cross --toolchain=gnu-rm --sdk=/xxx/cc-arm-none-eabi-9-2019-q4-major
 $ xmake
 ```
 
 ### TinyC 工具链
 
-```bash
+```sh
 $ xmake f --toolchain=tinyc
 $ xmake
 ```
@@ -398,28 +398,28 @@ Releases目录下，我们还提供了特殊的 xmake-tinyc-vX.X.X.win32.exe 安
 
 通常只需要切换到 Wasm 平台，里面内置了 emcc 工具链，还会额外调整目标程序的扩展名为 `*.html` 以及输出 `*.wasm`。
 
-```bash
+```sh
 $ xmake f -p wasm
 $ xmake
 ```
 
 不过我们也能够直接切换到 emcc 工具链，但是后缀名不会被修改。
 
-```bash
+```sh
 $ xmake f --toolchain=emcc
 $ xmake
 ```
 
 ### Intel C++ 编译工具链
 
-```bash
+```sh
 $ xmake f --toolchain=icc
 $ xmake
 ```
 
 ### Intel Fortran 编译工具链
 
-```bash
+```sh
 $ xmake f --toolchain=ifort
 $ xmake
 ```
@@ -498,7 +498,7 @@ $ xmake
 
 那么，使用xmake进行交叉编译的时候，只需要进行如下配置和编译：
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/home/toolchains_sdkdir
 $ xmake
 ```
@@ -519,7 +519,7 @@ $ xmake
 
 例如：一些特殊的交叉工具链的，编译器bin目录，并不在 `/home/toolchains_sdkdir/bin` 这个位置，而是独立到了 `/usr/opt/bin`
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
 $ xmake
 ```
@@ -546,7 +546,7 @@ v2.2.1版本之前，这个参数名是`--toolchains`，比较有歧义，因此
 
 我们现在想要选用armv7的版本，则配置如下：
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 ```
 
@@ -556,7 +556,7 @@ $ xmake f -p linux --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 
 如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/user/toolsdk --as=armv7-linux-as
 ```
 
@@ -574,7 +574,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --as=armv7-linux-as
 
 如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang
 ```
 
@@ -592,7 +592,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --cc=armv7-linux-clang
 
 如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/user/toolsdk --cxx=armv7-linux-clang++
 ```
 
@@ -610,7 +610,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --cxx=armv7-linux-clang++
 
 如果还要继续细分选择链接器，则继续追加相关编译器选项，例如：
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++
 ```
 
@@ -626,7 +626,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --ld=armv7-linux-clang++
 
 - 设置`c/c++/objc/asm`共享库链接器
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/user/toolsdk --sh=armv7-linux-clang++
 ```
 
@@ -642,7 +642,7 @@ $ xmake f -p linux --sdk=/user/toolsdk --sh=armv7-linux-clang++
 
 - 设置`c/c++/objc/asm`静态库归档器
 
-```bash
+```sh
 $ xmake f -p linux --sdk=/user/toolsdk --ar=armv7-linux-ar
 ```
 

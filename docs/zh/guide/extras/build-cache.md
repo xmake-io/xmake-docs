@@ -14,7 +14,7 @@ outline: deep
 
 当然，我们也可以通过下面的命令禁用缓存。
 
-```bash
+```sh
 $ xmake f --ccache=n
 ```
 
@@ -22,7 +22,7 @@ $ xmake f --ccache=n
 
 我们如果想继续使用外置的其他缓存工具，我们也是可以通过下面的方式来配置。
 
-```bash
+```sh
 $ xmake f --ccache=n --cxx="ccache gcc" --cc="ccache gcc"
 $ xmake
 ```
@@ -41,21 +41,21 @@ $ xmake
 
 我们可以指定 `--ccache` 参数来开启远程编译缓存服务，当然如果不指定这个参数，xmake 会默认开启所有服务端配置的服务。
 
-```console
+```sh
 $ xmake service --ccache
 <remote_cache_server>: listening 0.0.0.0:9092 ..
 ```
 
 我们也可以开启服务的同时，回显详细日志信息。
 
-```console
+```sh
 $ xmake service --ccache -vD
 <remote_cache_server>: listening 0.0.0.0:9092 ..
 ```
 
 ### 以 Daemon 模式开启服务
 
-```console
+```sh
 $ xmake service --ccache --start
 $ xmake service --ccache --restart
 $ xmake service --ccache --stop
@@ -65,7 +65,7 @@ $ xmake service --ccache --stop
 
 我们首先，运行 `xmake service` 命令，它会自动生成一个默认的 `server.conf` 配置文件，存储到 `~/.xmake/service/server.conf`。
 
-```bash
+```sh
 $ xmake service
 generating the config file to /Users/ruki/.xmake/service/server.conf ..
 an token(590234653af52e91b9e438ed860f1a2b) is generated, we can use this token to connect service.
@@ -75,7 +75,7 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
 
 然后，我们编辑它，修复服务器的监听端口（可选）。
 
-```bash
+```sh
 $ cat ~/.xmake/service/server.conf
 {
     distcc_build = {
@@ -96,7 +96,7 @@ $ cat ~/.xmake/service/server.conf
 
 我们可以在 hosts 列表里面配置多个服务器地址，以及对应的 token。
 
-```console
+```sh
 $cat ~/.xmake/service/client.conf
 {
     remote_cache = {
@@ -115,7 +115,7 @@ $cat ~/.xmake/service/client.conf
 
 我们可以配置，`send_timeout`, `recv_timeout` 和 `connect_timeout` 三种超时，如果在根节点设置，那么所有客户端服务都会生效。
 
-```console
+```sh
 $ cat ~/.xmake/service/client.conf
 {
     send_timeout = 5000,
@@ -126,7 +126,7 @@ $ cat ~/.xmake/service/client.conf
 
 我们也可以仅仅针对当前远程缓存服务配置超时，其他服务还是默认超时。
 
-```console
+```sh
 $ cat ~/.xmake/service/client.conf
 {
     distcc_build = {
@@ -151,7 +151,7 @@ $ cat ~/.xmake/service/client.conf
 
 我们需要在连接时候，输入 `--ccache`，指定仅仅连接远程编译缓存服务。
 
-```bash
+```sh
 $ cd projectdir
 $ xmake service --connect --ccache
 <client>: connect 127.0.0.1:9692 ..
@@ -170,7 +170,7 @@ $ xmake service --connect --distcc --ccache
 
 ### 断开连接 {#disconnect}
 
-```bash
+```sh
 $ xmake service --disconnect --ccache
 ```
 
@@ -178,7 +178,7 @@ $ xmake service --disconnect --ccache
 
 我们也可以通过下面的命令，清理当前工程对应的远程服务器上的缓存。
 
-```bash
+```sh
 $ xmake service --clean --ccache
 ```
 

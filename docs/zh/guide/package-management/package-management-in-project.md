@@ -9,25 +9,25 @@
 
 ## 安装指定包
 
-```console
+```sh
 $ xmake require tbox
 ```
 
 安装指定版本包：
 
-```console
+```sh
 $ xmake require tbox "~1.6"
 ```
 
 强制重新下载安装，并且显示详细安装信息：
 
-```console
+```sh
 $ xmake require -f -v tbox "1.5.x"
 ```
 
 传递额外的设置信息：
 
-```console
+```sh
 $ xmake require --extra="{debug=true,config={small=true}}" tbox
 ```
 
@@ -35,7 +35,7 @@ $ xmake require --extra="{debug=true,config={small=true}}" tbox
 
 ## 卸载指定包
 
-```console
+```sh
 $ xmake require --uninstall tbox
 ```
 
@@ -43,19 +43,19 @@ $ xmake require --uninstall tbox
 
 ## 查看包详细信息
 
-```console
+```sh
 $ xmake require --info tbox
 ```
 
 ## 在当前仓库中搜索包
 
-```console
+```sh
 $ xmake require --search tbox
 ```
 
 这个是支持模糊搜素以及lua模式匹配搜索的：
 
-```console
+```sh
 $ xmake require --search pcr
 ```
 
@@ -63,7 +63,7 @@ $ xmake require --search pcr
 
 ## 列举当前已安装的包
 
-```console
+```sh
 $ xmake require --list
 ```
 

@@ -223,13 +223,13 @@ target("test")
 
 You can switch the target kind by configuration command.
 
-```bash
+```sh
 # compile as static library
 $ xmake f -k static
 $ xmake
 ```
 
-```bash
+```sh
 # compile as shared library
 $ xmake f -k shared
 $ xmake
@@ -243,7 +243,7 @@ This interface is introduced from version 2.2.2 to determine whether the specifi
 
 For example:
 
-```console
+```sh
 $ xmake f --test=hello1
 ```
 
@@ -294,7 +294,7 @@ This interface is introduced from version 2.2.2 to detect whether a custom or bu
 
 For example, the following configuration will be true:
 
-```console
+```sh
 # enable the given config or option (if be boolean type)
 $ xmake f --test1=y
 $ xmake f --test1=yes
@@ -312,7 +312,7 @@ end
 
 And the following configuration will be false:
 
-```console
+```sh
 # disable config/option（if be boolean type）
 $ xmake f --test1=n
 $ xmake f --test1=no

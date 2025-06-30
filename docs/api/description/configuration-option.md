@@ -196,7 +196,7 @@ target("test")
 
 Among them, `$(rootdir)` is a custom option built-in variable, which can be dynamically modified by manual configuration:
 
-```bash
+```sh
 $ xmake f --rootdir=~/projectdir/src
 $ xmake
 ```
@@ -264,7 +264,7 @@ option("demo2")
 
 The four options here are grouped into two groups: `test` and `demo`, and the layout shown is similar to this:
 
-```bash
+```sh
 Options:
     ...
 
@@ -367,7 +367,7 @@ Options:
 
 When you see this menu, the user can clearly know the specific use of the defined `mode` option and how to use it:
 
-```bash
+```sh
 $ xmake f --mode=release
 ```
 

@@ -5,7 +5,7 @@ v2.5.9 之后，我们新增了对 Nimlang 项目的支持，相关 issues 见�
 
 我们可以使用 `xmake create` 命令创建空工程。
 
-```bash
+```sh
 xmake create -l nim -t console test
 xmake create -l nim -t static test
 xmake create -l nim -t shared test
@@ -21,7 +21,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```bash
+```sh
 $ xmake -v
 [ 33%]: linking.release test
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/test/macosx/x86_64/release/nimcache -o:b
@@ -44,7 +44,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```bash
+```sh
 $ xmake -v
 [ 33%]: linking.release libfoo.a
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app
@@ -72,7 +72,7 @@ target("test")
     add_files("src/main.nim")
 ```
 
-```bash
+```sh
 $ xmake -rv
 [ 33%]: linking.release libfoo.dylib
 /usr/local/bin/nim c --opt:speed --nimcache:build/.gens/foo/macosx/x86_64/release/nimcache --app

@@ -8,25 +8,25 @@ outline: deep
 
 ### Generate Makefile
 
-```bash
+```sh
 $ xmake project -k makefile
 ```
 
 ### Generate CMakelists.txt
 
-```console
+```sh
 $ xmake project -k cmakelists
 ```
 
 ### Generate build.ninja
 
-```console
+```sh
 $ xmake project -k ninja
 ```
 
 ### Generate compile_flags
 
-```console
+```sh
 $ xmake project -k compile_flags
 ```
 
@@ -34,7 +34,7 @@ $ xmake project -k compile_flags
 
 We can export the compilation commands info of all source files and it is JSON compilation database format.
 
-```console
+```sh
 $ xmake project -k compile_commands
 ```
 
@@ -57,7 +57,7 @@ Please see [JSONCompilationDatabase](https://clang.llvm.org/docs/JSONCompilation
 At present, we have no time to implement the generation of xcode projects by ourselves, but it does not mean that it is not supported, because xmake supports the generation of cmakelists.txt files, and cmake supports the generation of xcode project files. Before the official implementation,
 We can also support it in disguise through cmake, xmake will automatically call cmake internally to transfer the generated results, there is no difference in use for users, just make sure that cmake has been installed:
 
-```console
+```sh
 $ xmake project -k xcode
 ```
 
@@ -77,13 +77,13 @@ Therefore, in order to solve this problem, the new version of the vs. build plug
 
 The specific use is similar to the old version:
 
-```console
+```sh
 $ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug;release"
 ```
 
 If no version is specified, xmake will automatically detect the current version of vs to generate:
 
-```bash
+```sh
 $ xmake project -k vsxmake -m "debug,release"
 ```
 
@@ -110,7 +110,7 @@ In addition, we can group each target through the `set_group` interface, so that
 It is recommended to use the new version of the vs. plugin provided after v2.2.8 mentioned above. The support is more complete. The generation method here does not support the rules of xmake, and the generation of projects such as qt.
 :::
 
-```bash
+```sh
 $ xmake project -k [vs2008|vs2013|vs2015|..]
 ```
 
@@ -118,7 +118,7 @@ v2.1.2 or later, it supports multi-mode and multi-architecture generation for vs
 
 For example:
 
-```bash
+```sh
 $ xmake project -k vs2017 -m "debug,release"
 ```
 
@@ -132,7 +132,7 @@ set_modes("debug", "release")
 
 Then, we run the following command:
 
-```bash
+```sh
 $ xmake project -k vs2017
 ```
 
@@ -154,7 +154,7 @@ end
 
 Run this lua script.
 
-```bash
+```sh
 $ xmake lua /tmp/test.lua
 ```
 
@@ -166,7 +166,7 @@ You can also use `import` api to write a more advance lua script.
 
 You can run `xmake lua -l` to list all builtin script name, for example:
 
-```bash
+```sh
 $ xmake lua -l
 scripts:
     cat
@@ -178,7 +178,7 @@ scripts:
 
 And run them:
 
-```bash
+```sh
 $ xmake lua cat ~/file.txt
 $ xmake lua echo "hello xmake"
 $ xmake lua cp /tmp/file /tmp/file2
@@ -189,7 +189,7 @@ $ xmake lua versioninfo
 
 Enter interactive mode:
 
-```bash
+```sh
 $ xmake lua
 > 1 + 2
 3
@@ -208,7 +208,7 @@ $ xmake lua
 
 And we can `import` modules:
 
-```bash
+```sh
 > task = import("core.project.task")
 > task.run("hello")
 hello xmake!
@@ -216,7 +216,7 @@ hello xmake!
 
 If you want to cancel multiline input, please input character `q`, for example:
 
-```bash
+```sh
 > for _, v in ipairs({1, 2}) do
 >> print(v)
 >> q             <--  cancel multiline and clear previous input
@@ -228,7 +228,7 @@ If you want to cancel multiline input, please input character `q`, for example:
 
 ### Show basic information about xmake itself and the current project
 
-```bash
+```sh
 $ xmake show
 The information of xmake:
     version: 2.3.3+202006011009
@@ -254,7 +254,7 @@ The information of project: tbox
 
 ### Show toolchains list
 
-```bash
+```sh
 $ xmake show -l toolchains
 xcode         Xcode IDE
 vs            VisualStudio IDE
@@ -280,7 +280,7 @@ fasm          Flat Assembler
 
 We can use it to quickly trace the location of some specific configurations.
 
-```bash
+```sh
 $ xmake show -t tbox
 The information of target(tbox):
     at: /Users/ruki/projects/personal/tbox/src/tbox/xmake.lua
@@ -384,13 +384,13 @@ The information of target(tbox):
 
 ### Show builtin compilation modes list
 
-```bash
+```sh
 $ xmake show -l buildmodes
 ```
 
 ### Show builtin compilation rules list
 
-```bash
+```sh
 $ xmake show -l rules
 ```
 
@@ -400,7 +400,7 @@ It is still being perfected, see: https://github.com/xmake-io/xmake/issues/798
 
 Or run
 
-```bash
+```sh
 $ xmake show --help
 ```
 
@@ -414,7 +414,7 @@ This is often used for personal development to enable fast, real-time incrementa
 
 The default behaviour is to monitor the entire project root directory and any file changes will trigger an incremental build of the project.
 
-```bash
+```sh
 $ xmake watch
 watching /private/tmp/test/src/** .
 watching /private/tmp/test/* ...
@@ -428,14 +428,14 @@ watching /private/tmp/test/* ...
 
 We can also monitor specific code directories to narrow down the scope of monitoring and improve performance.
 
-```bash
+```sh
 $ xmake watch -d src
 $ xmake watch -d "src;tests/*"
 ```
 
 The above command will recursively watch all subdirectories. If you want to keep a tight watch on the files in the current directory and not do recursive monitoring, you can use the following command.
 
-```bash
+```sh
 $ xmake watch -p src
 $ xmake watch -p "src;tests/*"
 ```
@@ -444,13 +444,13 @@ $ xmake watch -p "src;tests/*"
 
 If you want to run the build automatically even after the automatic build, we can use a custom command set.
 
-```bash
+```sh
 $ xmake watch -c "xmake; xmake run"
 ```
 
 The above list of commands is passed as a string, which is not flexible enough for complex command arguments that need to be escaped rather tediously, so we can use the following for arbitrary commands.
 
-```bash
+```sh
 $ xmake watch -- echo hello xmake!
 $ xmake watch -- xmake run --help
 ```
@@ -459,7 +459,7 @@ $ xmake watch -- xmake run --help
 
 Although we can automate the running of the target program with custom commands, we also provide more convenient arguments to achieve this behaviour.
 
-```bash
+```sh
 $ xmake watch -r
 $ xmake watch --run
 [100%]: build ok!
@@ -470,7 +470,7 @@ hello world!
 
 We can also watch for file updates and then run the specified lua script for more flexible and complex command customisation.
 
-```bash
+```sh
 $ xmake watch -s /tmp/test.lua
 ```
 
@@ -492,7 +492,7 @@ end
 set_lanuages("c91") -- typo
 ```
 
-```console
+```sh
 $ xmake check
 ./xmake.lua:15: warning: unknown language value 'c91', it may be 'c90'
 0 notes, 1 warnings, 0 errors
@@ -500,14 +500,14 @@ $ xmake check
 
 we can also run a given group
 
-```console
+```sh
 $ xmake check api
 $ xmake check api.target
 ```
 
 #### Verbose output
 
-```console
+```sh
 $ xmake check -v
 ./xmake.lua:15: warning: unknown language value 'cxx91', it may be 'cxx98'
 ./src/tbox/xmake.lua:43: note: unknown package value 'mbedtls'
@@ -523,7 +523,7 @@ $ xmake check -v
 
 #### Check the given api
 
-```console
+```sh
 $ xmake check api.target.languages
 ./xmake.lua:15: warning: unknown language value 'cxx91', it may be 'cxx98'
 0 notes, 1 warnings, 0 errors
@@ -531,7 +531,7 @@ $ xmake check api.target.languages
 
 #### Check compiler flags
 
-```console
+```sh
 $ xmake check
 ./xmake.lua:10: warning: clang: unknown c compiler flag '-Ox'
 0 notes, 1 warnings, 0 errors
@@ -540,7 +540,7 @@ $ xmake check
 #### Check includedirs
 
 
-```console
+```sh
 $ xmake check
 ./xmake.lua:11: warning: includedir 'xxx' not found
 0 notes, 1 warnings, 0 errors
@@ -550,7 +550,7 @@ $ xmake check
 
 #### List clang-tidy checks
 
-```console
+```sh
 $ xmake check clang.tidy --list
 Enabled checks:
     clang-analyzer-apiModeling.StdCLibraryFunctions
@@ -563,7 +563,7 @@ Enabled checks:
 
 #### Check source code in targets
 
-```console
+```sh
 $ xmake check clang.tidy
 1 error generated.
 Error while processing /private/tmp/test2/src/main.cpp.
@@ -577,7 +577,7 @@ error: execv(/usr/local/opt/llvm/bin/clang-tidy -p compile_commands.json /privat
 
 #### Check code with the given checks
 
-```console
+```sh
 $ xmake check clang.tidy --checks="*"
 6 warnings and 1 error generated.
 Error while processing /private/tmp/test2/src/main.cpp.
@@ -616,26 +616,26 @@ p/test2/src/main.cpp) failed(1)
 
 #### Check code with the given target name
 
-```console
+```sh
 $ xmake check clang.tidy [targetname]
 ```
 
 #### Check code with the given source files
 
-```console
+```sh
 $ xmake check clang.tidy -f src/main.c
 $ xmake check clang.tidy -f 'src/*.c:src/**.cpp'
 ```
 
 #### Set the given .clang-tidy config file
 
-```console
+```sh
 $ xmake check clang.tidy --configfile=/tmp/.clang-tidy
 ```
 
 #### Create a new .clang-tidy config file
 
-```console
+```sh
 $ xmake check clang.tidy --checks="*" --create
 $ cat .clang-tidy
 ---
@@ -718,7 +718,7 @@ We introduce all configuration interfaces of xpack through `includes("@builtin/x
 
 Then we execute:
 
-```bash
+```sh
 $xmakepack
 ```
 
@@ -730,7 +730,7 @@ As long as you configure the `set_formats("nsis")` format and then execute the `
 
 In addition, xmake will also automatically install the tools required to generate NSIS packages to achieve true one-click packaging.
 
-```bash
+```sh
 $xmakepack
 note: install or modify (m) these packages (pass -y to skip confirm)?
 in xmake-repo:
@@ -797,7 +797,7 @@ xpack("test")
 
 Then, we execute the `xmake pack` command to generate a self-installed xxx.gz.run package, which uses gzip compression by default.
 
-```bash
+```sh
 $xmakepack
 packing build/xpack/test/test-macosx-src-v1.0.0.gz.run
 pack ok
@@ -805,7 +805,7 @@ pack ok
 
 We can use sh to load and run it to install our program.
 
-```bash
+```sh
 $ sh ./build/xpack/test/test-macosx-src-v1.0.0.gz.run
 ```
 
@@ -864,7 +864,7 @@ xpack("test")
      add_sourcefiles("(src/**)")
 ```
 
-```bash
+```sh
 $xmakepack
 packing build/xpack/test/test-macosx-src-v1.0.0.zip ..
 packing build/xpack/test/test-macosx-src-v1.0.0.tar.gz ..
@@ -883,7 +883,7 @@ xpack("test")
      add_installfiles("(src/**)")
 ```
 
-```bash
+```sh
 $xmakepack
 packing build/xpack/test/test-macosx-v1.0.0.zip ..
 packing build/xpack/test/test-macosx-v1.0.0.tar.gz ..
@@ -1000,7 +1000,7 @@ Of course, we can also use `xmake pack --formats=nsis,targz` to selectively spec
 
 We can modify the package name through `set_basename()` in the configuration file, or we can modify it through the command line.
 
-```bash
+```sh
 $ xmake pack --basename="foo"
 packing build/xpack/test/foo.zip ..
 pack ok
@@ -1010,7 +1010,7 @@ pack ok
 
 The default output directory is in the build directory, but we can also modify the output path.
 
-```bash
+```sh
 $ xmake pack -o /tmp/output
 ```
 
@@ -1020,7 +1020,7 @@ If you are building a binary package such as NSIS, `xmake pack` will automatical
 
 But if we have already compiled it and don't want to compile it every time, but package it directly, we can disable automatic building through the following parameters.
 
-```bash
+```sh
 $ xmake pack --autobuild=n
 ```
 
@@ -1038,7 +1038,7 @@ And we can run this macro to simplify our jobs repeatably.
 
 ### Record Commands
 
-```bash
+```sh
 # begin to record commands
 $ xmake macro --begin
 
@@ -1066,14 +1066,14 @@ xmake macro --end
 
 ### Playback Macro
 
-```bash
+```sh
 # playback the previous anonymous macro
 $ xmake macro .
 ```
 
 ### Named Macro
 
-```bash
+```sh
 $ xmake macro --begin
 $ ...
 $ xmake macro --end macroname
@@ -1084,14 +1084,14 @@ $ xmake macro macroname
 
 Import the given macro file or directory.
 
-```bash
+```sh
 $ xmake macro --import=/xxx/macro.lua macroname
 $ xmake macro --import=/xxx/macrodir
 ```
 
 Export the given macro to file or directory.
 
-```bash
+```sh
 $ xmake macro --export=/xxx/macro.lua macroname
 $ xmake macro --export=/xxx/macrodir
 ```
@@ -1100,13 +1100,13 @@ $ xmake macro --export=/xxx/macrodir
 
 List all builtin macros.
 
-```bash
+```sh
 $ xmake macro --list
 ```
 
 Show the given macro script content.
 
-```bash
+```sh
 $ xmake macro --show macroname
 ```
 
@@ -1137,13 +1137,13 @@ end
 
 Import this macro script to xmake.
 
-```bash
+```sh
 $ xmake macro --import=/xxx/macro.lua [macroname]
 ```
 
 Playback this macro script.
 
-```bash
+```sh
 $ xmake macro [.|macroname]
 ```
 
@@ -1153,7 +1153,7 @@ XMake supports some builtins macros to simplify our jobs.
 
 For example, we use `package` macro to package all architectures of the iphoneos platform just for once.
 
-```bash
+```sh
 $ xmake macro package -p iphoneos
 ```
 
@@ -1265,6 +1265,6 @@ end
 
 Please ensure that the doxygen tool has been installed first.
 
-```bash
+```sh
 $ xmake doxygen
 ```

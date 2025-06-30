@@ -75,7 +75,7 @@ This will automatically update this file after each build.
 
 If the above methods are invalid, we can also execute the command to generate.
 
-```console
+```sh
 $ xmake project -k compile_commands .vscode
 ```
 
@@ -305,7 +305,7 @@ android {
 
 The `xmakeBuild` will be injected to `assemble` task automatically if the gradle-xmake-plugin has been applied.
 
-```console
+```sh
 $ ./gradlew app:assembleDebug
 > Task :nativelib:xmakeConfigureForArm64
 > Task :nativelib:xmakeBuildForArm64
@@ -328,6 +328,6 @@ $ ./gradlew app:assembleDebug
 
 ### Force to rebuild JNI
 
-```console
+```sh
 $ ./gradlew nativelib:xmakeRebuild
 ```

@@ -160,7 +160,7 @@ If you have added and created a new package in the local xmake-repo repository, 
 
 We can execute the following script to test the specified package:
 
-```bash
+```sh
 cd xmake-repo
 xmake l scripts/test.lua -v -D zlib
 ```
@@ -169,14 +169,14 @@ The above command will force the download and installation of the zlib package t
 
 If the network environment is not good, do not want to re-download all dependencies every time, you can add the `--shallow` parameter to execute, this parameter tells the script, just re-decompress the local cached zlib source package, re-execute the installation command, but Will not download various dependencies.
 
-```bash
+```sh
 cd xmake-repo
 xmake l scripts/test.lua -v -D --shallow zlib
 ```
 
 If we want to test the package rules of other platforms, such as: android, iphoneos and other platforms, you can specify by `-p/--plat` or `-a/--arch`.
 
-```bash
+```sh
 cd xmake-repo
 xmake l scripts/test.lua -v -D --shallow -p iphoneos -a arm64 zlib
 xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
@@ -186,7 +186,7 @@ xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
 
 We can also run `xmake package` to generate a remote package configuration.
 
-```console
+```sh
 $ xmake package -f remote
 ```
 
@@ -217,7 +217,7 @@ Compared with the local package, the package definition configuration has more a
 
 We can also modify urls, versions and other configuration values through additional parameters, for example:
 
-```console
+```sh
 $ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepage=xxxxx`
 ```
 

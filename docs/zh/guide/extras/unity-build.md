@@ -35,7 +35,7 @@ target("test")
 
 编译效果大概如下：
 
-```console
+```sh
 $ xmake -r
 [ 11%]: cache compiling.release build/.gens/test/unity_build/unity_642A245F.cpp
 [ 11%]: cache compiling.release build/.gens/test/unity_build/unity_bar.cpp

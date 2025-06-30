@@ -1,6 +1,6 @@
 所有 c/c++ 程序，我们都可以编译成 Wasm，无需任何 xmake.lua 配置改动，只需要切换到 wasm 编译平台进行编译。
 
-```bash
+```sh
 $ xmake f -p wasm
 $ xmake
 ```

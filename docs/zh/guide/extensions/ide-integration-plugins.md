@@ -75,7 +75,7 @@ target("test")
 
 如果上述方式都无效，我们也可以执行命令来生成。
 
-```console
+```sh
 $ xmake project -k compile_commands .vscode
 ```
 
@@ -311,7 +311,7 @@ android {
 
 当`gradle-xmake-plugin`插件被应用生效后，`xmakeBuild`任务会自动注入到现有的`assemble`任务中去，自动执行jni库编译和集成。
 
-```console
+```sh
 $ ./gradlew app:assembleDebug
 > Task :nativelib:xmakeConfigureForArm64
 > Task :nativelib:xmakeBuildForArm64
@@ -334,6 +334,6 @@ $ ./gradlew app:assembleDebug
 
 ### 强制重建JNI
 
-```console
+```sh
 $ ./gradlew nativelib:xmakeRebuild
 ```

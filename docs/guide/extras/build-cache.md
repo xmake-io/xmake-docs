@@ -10,7 +10,7 @@ Compared with third-party independent processes such as ccache, Xmake's internal
 
 If it's causing you problems, we can also disable the cache with the following command.
 
-```bash
+```sh
 $ xmake f --ccache=n
 ```
 
@@ -18,7 +18,7 @@ Note: Regardless of whether the built-in local cache is used, the configuration 
 
 If we want to continue to use other external caching tools, we can also configure it in the following way.
 
-```bash
+```sh
 $ xmake f --ccache=n --cxx="ccache gcc" --cc="ccache gcc"
 $ xmake
 ```
@@ -33,14 +33,14 @@ This way, even if other people compile it for the first time, they do not need t
 
 We can specify the `--ccache` parameter to enable the remote compilation cache service. Of course, if this parameter is not specified, Xmake will enable all server-configured services by default.
 
-```bash
+```sh
 $ xmake service --ccache
 <remote_cache_server>: listening 0.0.0.0:9092 ..
 ```
 
 We can also start the service and echo detailed log information with the `-vD` flag.
 
-```bash
+```sh
 $ xmake service --ccache -vD
 <remote_cache_server>: listening 0.0.0.0:9092 ..
 ```
@@ -49,7 +49,7 @@ $ xmake service --ccache -vD
 
 To start, restart, or stop the cache service in daemon mode, you can issue the below commands:
 
-```bash
+```sh
 $ xmake service --ccache --start
 $ xmake service --ccache --restart
 $ xmake service --ccache --stop
@@ -59,7 +59,7 @@ $ xmake service --ccache --stop
 
 To configure the server, you must first generate the configuration file, or grab one off the internet (the first option is the easier). To do so, run the `xmake service` command, and it will automatically generate a default `server.conf` configuration file, stored in `~/.xmake/service/server.conf`.
 
-```bash
+```sh
 $ xmake service
 generating the config file to /Users/ruki/.xmake/service/server.conf ..
 a token(590234653af52e91b9e438ed860f1a2b) is generated, we can use this token to connect service.
@@ -69,7 +69,7 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
 
 Then, we edit it, fixing the server's listening port (optional).
 
-```bash
+```sh
 {
     distcc_build = {
         listen = "0.0.0.0:9692",
@@ -87,7 +87,7 @@ Then, we edit it, fixing the server's listening port (optional).
 
 The client configuration file is in `~/.xmake/service/client.conf`, where it can be specified where to connect to. We can configure multiple server addresses and corresponding tokens in the hosts list.
 
-```bash
+```sh
 {
     remote_cache = {
             connect = "127.0.0.1:9692",
@@ -103,7 +103,7 @@ By default, clients connect, send and receive data with unlimited waiting withou
 
 We can configure, `send_timeout`, `recv_timeout` and `connect_timeout` to take effect for all client services if set at the root.
 
-```bash
+```sh
 {
     send_timeout = 5000,
     recv_timeout = 5000,
@@ -113,7 +113,7 @@ We can configure, `send_timeout`, `recv_timeout` and `connect_timeout` to take e
 
 We can also configure the timeout just for the current remote cache service, leaving the other services with the default timeout.
 
-```bash
+```sh
 {
     distcc_build = {
         send_timeout = 5000,
@@ -135,7 +135,7 @@ For user authorization, please refer to [Remote Compilation/User Authorization](
 
 After configuring the authentication and server address, you can enter the following command to connect the current project to the configured server. We need to enter `--ccache` when connecting to specify that only the remote compilation cache service is connected.
 
-```bash
+```sh
 $ cd projectdir
 $ xmake service --connect --ccache
 <client>: connect 127.0.0.1:9692 ..
@@ -144,7 +144,7 @@ $ xmake service --connect --ccache
 
 We can also connect to multiple services at the same time, such as distributed compilation and remote compilation cache services.
 
-```bash
+```sh
 $ xmake service --connect --distcc --ccache
 ```
 
@@ -152,7 +152,7 @@ If there is no parameter, the default connection is the remote compilation servi
 
 #### Disconnect
 
-```bash
+```sh
 $ xmake service --disconnect --ccache
 ```
 
@@ -160,7 +160,7 @@ $ xmake service --disconnect --ccache
 
 We can also use the following command to clear the cache on the remote server corresponding to the current project.
 
-```bash
+```sh
 $ xmake service --clean --ccache
 ```
 

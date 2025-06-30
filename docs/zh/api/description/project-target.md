@@ -277,14 +277,14 @@ target("test3")
 
 如果不想使用默认的目标，那么可以手动指定需要构建安装的目标：
 
-```bash
+```sh
 $ xmake build targetname
 $ xmake install targetname
 ```
 
 如果要强制构建安装所有目标，可以传入`[-a|--all]`参数：
 
-```bash
+```sh
 $ xmake build [-a|--all]
 $ xmake install [-a|--all]
 ```
@@ -357,14 +357,14 @@ target("test")
 
 ios程序会生成.dSYM文件，然后同时Strip自身符号
 
-```console
+```sh
 [ 62%]: linking.release libtest.dylib
 [ 62%]: generating.release test.dSYM
 ```
 
 android程序会生成.sym文件（其实就是带符号的so/binary程序），然后同时Strip自身符号
 
-```console
+```sh
 [ 62%]: linking.release libtest.so
 [ 62%]: generating.release test.sym
 ```
@@ -579,7 +579,7 @@ set_fpmodels("precise") -- default
 
 而build的目录可以在工程配置的时候，手动修改：
 
-```bash
+```sh
 xmake f -o /tmp/build
 ```
 
@@ -1399,7 +1399,7 @@ add_linkgroups("c", "d", {as_needed = false})
 
 对应的 flags 如下。
 
-```bash
+```sh
 -Wl,--no-as-needed c d -Wl,--as-needed
 ```
 
@@ -1778,13 +1778,13 @@ target("test")
 
 生成的编译选项如下：
 
-```console
+```sh
 -isystem /usr/include
 ```
 
 如果是 msvc 编译器，则会是：
 
-```console
+```sh
 /experimental:external /external:W0 /external:I /usr/include
 ```
 
@@ -2279,7 +2279,7 @@ target("test")
 
 只需要指定工具链名字即可，具体xmake支持哪些工具链，可以通过下面的命令查看：
 
-```bash
+```sh
 $ xmake show -l toolchains
 xcode         Xcode IDE
 vs            VisualStudio IDE
@@ -2303,7 +2303,7 @@ fasm          Flat Assembler
 
 当然，我们也可以通过命令行全局切换到其他工具链：
 
-```bash
+```sh
 $ xmake f --toolchain=clang
 $ xmake
 ```
@@ -2387,7 +2387,7 @@ target("test")
 
 例如：
 
-```console
+```sh
 $ xmake f -p android --ndk=/xxx
 ```
 
@@ -2545,7 +2545,7 @@ target("test")
 
 那么，我们可以使用这个接口，默认情况下，安装目录会按照这个结构：
 
-```bash
+```sh
 installdir
   - bin
   - lib
@@ -2560,7 +2560,7 @@ set_prefix("prefixdir")
 
 就是增加一个总的子目录：
 
-```bash
+```sh
 installdir
   - prefixdir
     - bin
@@ -2574,7 +2574,7 @@ installdir
 set_prefix("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
 ```
 
-```bash
+```sh
 installdir
   - prefixdir
     - mybin
@@ -2588,7 +2588,7 @@ installdir
 set_prefix("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
 ```
 
-```bash
+```sh
 installdir
   - mybin
   - mylib
@@ -3160,7 +3160,7 @@ target("test2")
     add_files("src/*.cpp")
 ```
 
-```console
+```sh
 $ xmake -g test
 $ xmake --group=test
 ```
@@ -3169,7 +3169,7 @@ $ xmake --group=test
 
 我们也可以通过设置分组，来指定运行所有带有 `test` 分组的测试程序。
 
-```console
+```sh
 $ xmake run -g test
 $ xmake run --group=test
 ```
@@ -3409,7 +3409,7 @@ end
 
 但是，如果执行 `xmake test` 进行测试，它们就会被自动编译，然后测试运行，运行效果如下：
 
-```bash
+```sh
 ruki-2:test ruki$ xmake test
 running tests ...
 [  2%]: test_1/args        .................................... passed 7.000s
@@ -3462,20 +3462,20 @@ running tests ...
 
 我们也可以指定运行指定 target 的某个测试：
 
-```bash
+```sh
 $ xmake test targetname/testname
 ```
 
 或者按模式匹配的方式，运行一个 target 的所有测试，或者一批测试：
 
-```bash
+```sh
 $ xmake test targetname/*
 $ xmake test targetname/foo*
 ```
 
 也可以运行所有 target 的同名测试：
 
-```bash
+```sh
 $ xmake test */testname
 ```
 
@@ -3483,13 +3483,13 @@ $ xmake test */testname
 
 其实，默认就是并行化运行的，但是我们可以通过 `-jN` 调整运行的并行度。
 
-```bash
+```sh
 $ xmake test -jN
 ```
 
 #### 分组运行测试
 
-```bash
+```sh
 $ xmake test -g "foo"
 $ xmake test -g "foo*"
 ```
@@ -3627,7 +3627,7 @@ target("test")
 
 然后，我们就可以使用 `xmake test -g groupname` 来进行分组测试了。
 
-```bash
+```sh
 $ xmake test -g "foo"
 $ xmake test -g "foo*"
 ```
@@ -3679,7 +3679,7 @@ target("test")
 
 但是运行 `xmake test` 进行测试时候，这些测试对应的 target 还是会被自动构建，确保能够被运行。
 
-```bash
+```sh
 $ xmake test
 [ 25%]: cache compiling.release src/main.cpp
 [ 50%]: linking.release test
@@ -3853,7 +3853,7 @@ target("doctest")
 
 运行效果如下：
 
-```bash
+```sh
 ruki-2:doctest ruki$ xmake test
 running tests ...
 [ 50%]: doctest/test_1 .................................... failed 0.009s
@@ -3918,7 +3918,7 @@ target("test_timeout")
     add_tests("run_timeout", {run_timeout = 1000})
 ```
 
-```bash
+```sh
 $ xmake test
 [100%]: test_timeout/run_timeout .................................... failed 1.006s
 run failed, exit code: -1, exit error: wait process timeout

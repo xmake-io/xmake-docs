@@ -90,7 +90,7 @@ target("test")
 
 执行xmake进行编译后：
 
-```console
+```sh
 ruki:test_package ruki$ xmake
 checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
@@ -154,13 +154,13 @@ target("test")
 
 archlinux 上只需要：
 
-```console
+```sh
 xmake
 ```
 
 msys2 上安装 mingw 包，需要指定到 mingw 平台：
 
-```console
+```sh
 xmake f -p mingw -a [x86_64|i386]
 xmake
 ```

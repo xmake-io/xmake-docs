@@ -131,13 +131,13 @@ Plugins:
 
 To run this task manually, you can execute:
 
-```bash
+```sh
 $ xmake echo hello xmake!
 ```
 
 Just fine, if you want to see the menu defined by this task, you only need to execute: `xmake echo [-h|--help]`, the result is as follows:
 
-```bash
+```sh
 Usage: $xmake echo [options]
 
 Echo the given info!
@@ -179,13 +179,13 @@ The most part of the menu is the common options built into xmake. Basically, eac
 
 Below, let's actually run this task, for example, I want to display the red `hello xmake!`, only need to:
 
-```bash
+```sh
 $ xmake echo -c red hello xmake!
 ```
 
 You can also use the full name of the option and highlight it:
 
-```bash
+```sh
 $ xmake echo --color=red --bright hello xmake!
 ```
 

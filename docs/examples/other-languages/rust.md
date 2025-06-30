@@ -1,6 +1,6 @@
 Create an empty project:
 
-```bash
+```sh
 $ xmake create -l rust -t console test
 ```
 

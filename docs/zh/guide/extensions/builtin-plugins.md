@@ -18,25 +18,25 @@ XMake跟`cmake`, `premake`等其他一些构建工具的区别在于：
 
 ### 生成 Makefile {#generate-makefile}
 
-```console
+```sh
 $ xmake project -k makefile
 ```
 
 ### 生成 CMakelists.txt {#generate-cmakelists}
 
-```console
+```sh
 $ xmake project -k cmakelists
 ```
 
 ### 生成 build.ninja {#generate-build-ninja}
 
-```console
+```sh
 $ xmake project -k ninja
 ```
 
 ### 生成 compiler_flags {#generate-compiler-flags}
 
-```console
+```sh
 $ xmake project -k compiler_flags
 ```
 
@@ -44,7 +44,7 @@ $ xmake project -k compiler_flags
 
 导出每个源文件的编译信息，生成基于clang的编译数据库文件，json格式，可用于跟ide，编辑器，静态分析工具进行交互。
 
-```console
+```sh
 $ xmake project -k compile_commands
 ```
 
@@ -67,7 +67,7 @@ $ xmake project -k compile_commands
 目前，我们还没有时间去自己实现xcode工程的生成，但不代表不支持，因为xmake支持生成cmakelists.txt文件，而cmake是支持xcode工程文件生成的，在官方还没有实现之前，
 我们也可以通过cmake变相支持它，xmake会自动内部调用cmake中转下生成结果，对用户而言使用上没啥区别，只需要确保cmake已经安装即可：
 
-```console
+```sh
 $ xmake project -k xcode
 ```
 
@@ -87,13 +87,13 @@ v2.2.8以上版本，提供了新版本的vs工程生成插件扩展，跟之前
 
 具体使用方式跟老版本类似：
 
-```console
+```sh
 $ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug;release"
 ```
 
 如果没指明版本，那么xmake会自动探测当前已有的vs版本来生成：
 
-```bash
+```sh
 $ xmake project -k vsxmake -m "debug,release"
 ```
 
@@ -120,13 +120,13 @@ target("test")
 建议尽量使用上文提到的v2.2.8之后提供的新版的vs生成插件，支持更加完善，此处的生成方式不支持xmake的rules，以及对qt等工程的生成。
 :::
 
-```console
+```sh
 $ xmake project -k [vs2008|vs2013|vs2015|..]
 ```
 
 v2.1.2以上版本，增强了vs201x版本工程的生成，支持多模式+多架构生成，生成的时候只需要指定：
 
-```console
+```sh
 $ xmake project -k vs2017 -m "debug,release"
 ```
 
@@ -157,7 +157,7 @@ end
 
 然后直接运行它就行了：
 
-```console
+```sh
 $ xmake lua /tmp/test.lua
 ```
 
@@ -169,7 +169,7 @@ $ xmake lua /tmp/test.lua
 
 你可以运行 `xmake lua -l` 来列举所有内置的脚本名，例如：
 
-```console
+```sh
 $ xmake lua -l
 scripts:
     cat
@@ -181,7 +181,7 @@ scripts:
 
 并且运行它们：
 
-```console
+```sh
 $ xmake lua cat ~/file.txt
 $ xmake lua echo "hello xmake"
 $ xmake lua cp /tmp/file /tmp/file2
@@ -194,7 +194,7 @@ $ xmake lua versioninfo
 
 我们先看下，如何进入交互模式：
 
-```console
+```sh
 # 不带任何参数执行，就可以进入
 $ xmake lua
 >
@@ -219,7 +219,7 @@ $ xmake lua
 
 我们也能够通过 `import` 来导入扩展模块：
 
-```console
+```sh
 > task = import("core.project.task")
 > task.run("hello")
 hello xmake!
@@ -227,7 +227,7 @@ hello xmake!
 
 如果要中途取消多行输入，只需要输入字符：`q` 就行了
 
-```console
+```sh
 > for _, v in ipairs({1, 2}) do
 >> print(v)
 >> q             <--  取消多行输入，清空先前的输入数据
@@ -239,7 +239,7 @@ hello xmake!
 
 ### 显示xmake自身和当前项目的基础信息
 
-```bash
+```sh
 $ xmake show
 The information of xmake:
     version: 2.3.3+202006011009
@@ -265,7 +265,7 @@ The information of project: tbox
 
 ### 显示工具链列表
 
-```bash
+```sh
 $ xmake show -l toolchains
 xcode         Xcode IDE
 vs            VisualStudio IDE
@@ -291,7 +291,7 @@ fasm          Flat Assembler
 
 我们可以用它来快速追溯定位一些特定配置的位置。
 
-```bash
+```sh
 $ xmake show -t tbox
 The information of target(tbox):
     at: /Users/ruki/projects/personal/tbox/src/tbox/xmake.lua
@@ -395,13 +395,13 @@ The information of target(tbox):
 
 ### 显示内置编译模式列表
 
-```bash
+```sh
 $ xmake show -l buildmodes
 ```
 
 ### 显示内置编译规则列表
 
-```bash
+```sh
 $ xmake show -l rules
 ```
 
@@ -411,7 +411,7 @@ $ xmake show -l rules
 
 或者运行：
 
-```bash
+```sh
 $ xmake show --help
 ```
 
@@ -425,7 +425,7 @@ v2.7.1 版本新增了 `xmake watch` 插件命令，可以自动监视项目文�
 
 默认行为就是监视整个项目根目录，任何文件改动都会触发项目的增量编译。
 
-```bash
+```sh
 $ xmake watch
 watching /private/tmp/test/src/** ..
 watching /private/tmp/test/* ..
@@ -439,14 +439,14 @@ watching /private/tmp/test/* ..
 
 我们也可以监视指定的代码目录，缩小监视范围，提升监视性能。
 
-```bash
+```sh
 $ xmake watch -d src
 $ xmake watch -d "src;tests/*"
 ```
 
 上面的命令，会去递归监视所有子目录，如果想要紧紧监视当前目录下的文件，不进行递归监视，可以使用下面的命令。
 
-```bash
+```sh
 $ xmake watch -p src
 $ xmake watch -p "src;tests/*"
 ```
@@ -455,13 +455,13 @@ $ xmake watch -p "src;tests/*"
 
 如果想在自动构建后，还想自动运行构建的程序，我们可以使用自定义的命令集。
 
-```bash
+```sh
 $ xmake watch -c "xmake; xmake run"
 ```
 
 上面的命令列表是作为字符串传递，这对于复杂命令参数，需要转义比较繁琐不够灵活，那么我们可以使用下面的方式进行任意命令的设置。
 
-```bash
+```sh
 $ xmake watch -- echo hello xmake!
 $ xmake watch -- xmake run --help
 ```
@@ -470,7 +470,7 @@ $ xmake watch -- xmake run --help
 
 尽管我们可以通过自定义命令来实现目标程序的自动运行，但是我们也提供了更加方便的参数来实现这个行为。
 
-```bash
+```sh
 $ xmake watch -r
 $ xmake watch --run
 [100%]: build ok!
@@ -481,7 +481,7 @@ hello world!
 
 我们还可以监视文件更新后，运行指定的 lua 脚本，实现更加灵活复杂的命令定制。
 
-```bash
+```sh
 $ xmake watch -s /tmp/test.lua
 ```
 
@@ -503,7 +503,7 @@ end
 set_lanuages("c91") -- typo
 ```
 
-```console
+```sh
 $ xmake check
 ./xmake.lua:15: warning: unknown language value 'c91', it may be 'c90'
 0 notes, 1 warnings, 0 errors
@@ -511,7 +511,7 @@ $ xmake check
 
 默认也可以指定检测特定组：
 
-```console
+```sh
 $ xmake check api
 $ xmake check api.target
 ```
@@ -520,7 +520,7 @@ $ xmake check api.target
 
 这会额外提供 note 级别的检测信息。
 
-```console
+```sh
 $ xmake check -v
 ./xmake.lua:15: warning: unknown language value 'cxx91', it may be 'cxx98'
 ./src/tbox/xmake.lua:43: note: unknown package value 'mbedtls'
@@ -536,7 +536,7 @@ $ xmake check -v
 
 #### 检测指定的 API
 
-```console
+```sh
 $ xmake check api.target.languages
 ./xmake.lua:15: warning: unknown language value 'cxx91', it may be 'cxx98'
 0 notes, 1 warnings, 0 errors
@@ -544,7 +544,7 @@ $ xmake check api.target.languages
 
 #### 检测编译 flags
 
-```console
+```sh
 $ xmake check
 ./xmake.lua:10: warning: clang: unknown c compiler flag '-Ox'
 0 notes, 1 warnings, 0 errors
@@ -555,7 +555,7 @@ $ xmake check
 除了 includedirs，还有 linkdirs 等路径都会去检测。
 
 
-```console
+```sh
 $ xmake check
 ./xmake.lua:11: warning: includedir 'xxx' not found
 0 notes, 1 warnings, 0 errors
@@ -566,7 +566,7 @@ $ xmake check
 
 #### 显示 clang-tidy 检测列表
 
-```console
+```sh
 $ xmake check clang.tidy --list
 Enabled checks:
     clang-analyzer-apiModeling.StdCLibraryFunctions
@@ -579,7 +579,7 @@ Enabled checks:
 
 #### 检测所有 targets 中的源码
 
-```console
+```sh
 $ xmake check clang.tidy
 1 error generated.
 Error while processing /private/tmp/test2/src/main.cpp.
@@ -595,7 +595,7 @@ error: execv(/usr/local/opt/llvm/bin/clang-tidy -p compile_commands.json /privat
 
 我们可以在 `--check=` 中指定需要检测的类型，具体用法可以参考 `clang-tidy` 的 `--check=` 参数，完全一致的。
 
-```console
+```sh
 $ xmake check clang.tidy --checks="*"
 6 warnings and 1 error generated.
 Error while processing /private/tmp/test2/src/main.cpp.
@@ -634,26 +634,26 @@ p/test2/src/main.cpp) failed(1)
 
 #### 检测指定 target 的代码
 
-```console
+```sh
 $ xmake check clang.tidy [targetname]
 ```
 
 #### 检测给定的源文件列表
 
-```console
+```sh
 $ xmake check clang.tidy -f src/main.c
 $ xmake check clang.tidy -f 'src/*.c:src/**.cpp'
 ```
 
 #### 设置 .clang-tidy 配置文件
 
-```console
+```sh
 $ xmake check clang.tidy --configfile=/tmp/.clang-tidy
 ```
 
 #### 创建 .clang-tidy 配置文件
 
-```console
+```sh
 $ xmake check clang.tidy --checks="*" --create
 $ cat .clang-tidy
 ---
@@ -736,7 +736,7 @@ xpack("test")
 
 然后我们执行：
 
-```bash
+```sh
 $ xmake pack
 ```
 
@@ -748,7 +748,7 @@ $ xmake pack
 
 另外，xmake 还会自动安装生成 NSIS 包所需的工具，实现真正的一键打包。
 
-```bash
+```sh
 $ xmake pack
 note: install or modify (m) these packages (pass -y to skip confirm)?
 in xmake-repo:
@@ -815,7 +815,7 @@ xpack("test")
 
 然后，我们执行 `xmake pack` 命令，就可以生成一个自安装的 xxx.gz.run 包，默认采用 gzip 压缩。
 
-```bash
+```sh
 $ xmake pack
 packing build/xpack/test/test-macosx-src-v1.0.0.gz.run
 pack ok
@@ -823,7 +823,7 @@ pack ok
 
 我们可以使用 sh 去加载运行它来安装我们的程序。
 
-```bash
+```sh
 $ sh ./build/xpack/test/test-macosx-src-v1.0.0.gz.run
 ```
 
@@ -880,7 +880,7 @@ xpack("test")
     add_sourcefiles("(src/**)")
 ```
 
-```bash
+```sh
 $ xmake pack
 packing build/xpack/test/test-macosx-src-v1.0.0.zip ..
 packing build/xpack/test/test-macosx-src-v1.0.0.tar.gz ..
@@ -899,7 +899,7 @@ xpack("test")
     add_installfiles("(src/**)")
 ```
 
-```bash
+```sh
 $ xmake pack
 packing build/xpack/test/test-macosx-v1.0.0.zip ..
 packing build/xpack/test/test-macosx-v1.0.0.tar.gz ..
@@ -1016,7 +1016,7 @@ xpack("test")
 
 我们可以在配置文件中，通过 `set_basename()` 来修改包名，也可以通过命令行去修改它。
 
-```bash
+```sh
 $ xmake pack --basename="foo"
 packing build/xpack/test/foo.zip ..
 pack ok
@@ -1026,7 +1026,7 @@ pack ok
 
 默认的输出目录是在 build 目录下，但我们也可以修改输出的路径。
 
-```bash
+```sh
 $ xmake pack -o /tmp/output
 ```
 
@@ -1036,7 +1036,7 @@ $ xmake pack -o /tmp/output
 
 但是如果我们已经编译过了，不想每次都去编译它，而是直接去打包，可以通过下面的参数禁用自动构建。
 
-```bash
+```sh
 $ xmake pack --autobuild=n
 ```
 
@@ -1061,7 +1061,7 @@ $ xmake pack --autobuild=n
 
 ### 记录操作
 
-```console
+```sh
 # 开始记录宏
 $ xmake macro --begin
 
@@ -1089,7 +1089,7 @@ xmake macro --end
 
 ### 回放
 
-```console
+```sh
 # 回放一个匿名宏
 $ xmake macro .
 ```
@@ -1098,7 +1098,7 @@ $ xmake macro .
 
 匿名宏的好处就是快速记录，快速回放，如果需要长久保存，就需要给宏取个名字。
 
-```console
+```sh
 $ xmake macro --begin
 $ ...
 $ xmake macro --end macroname
@@ -1109,14 +1109,14 @@ $ xmake macro macroname
 
 导入指定的宏脚本或者宏目录：
 
-```console
+```sh
 $ xmake macro --import=/xxx/macro.lua macroname
 $ xmake macro --import=/xxx/macrodir
 ```
 
 导出指定的宏到脚本或者目录：
 
-```console
+```sh
 $ xmake macro --export=/xxx/macro.lua macroname
 $ xmake macro --export=/xxx/macrodir
 ```
@@ -1125,13 +1125,13 @@ $ xmake macro --export=/xxx/macrodir
 
 列举所有`xmake`内置的宏脚本：
 
-```console
+```sh
 $ xmake macro --list
 ```
 
 显示指定的宏脚本内容：
 
-```console
+```sh
 $ xmake macro --show macroname
 ```
 
@@ -1162,13 +1162,13 @@ end
 
 导入到xmake，并且定义宏名字：
 
-```console
+```sh
 $ xmake macro --import=/xxx/macro.lua [macroname]
 ```
 
 回放这个宏脚本：
 
-```console
+```sh
 $ xmake macro [.|macroname]
 ```
 
@@ -1178,7 +1178,7 @@ XMake 提供了一些内置的宏脚本，来简化我们的日常开发工作�
 
 例如，我们可以使用 `package` 宏来对`iphoneos`平台的所有架构，一次性批量构建和打包：
 
-```console
+```sh
 $ xmake macro package -p iphoneos
 ```
 
@@ -1291,6 +1291,6 @@ end
 
 请先确保本机已安装`doxygen`工具，然后在工程目录下运行：
 
-```console
+```sh
 $ xmake doxygen
 ```

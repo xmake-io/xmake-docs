@@ -27,7 +27,7 @@ add_requires("zlib", {system = true, optional = true})
 
 我们可以使用下面的命令，快速检测系统上指定的包信息：
 
-```console
+```sh
 $ xmake l find_package x264
 {
     links = {
@@ -45,7 +45,7 @@ $ xmake l find_package x264
 
 我们也可以追加第三方包管理器前缀来测试：
 
-```console
+```sh
 xmake l find_package conan::OpenSSL/1.0.2g
 ```
 

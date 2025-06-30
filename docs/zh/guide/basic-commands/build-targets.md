@@ -6,7 +6,7 @@
 
 ## 命令格式
 
-```console
+```sh
 $ xmake build [options] [target]
 ```
 
@@ -14,7 +14,7 @@ $ xmake build [options] [target]
 
 执行效果如下：
 
-```console
+```sh
 $ xmake build
 [ 17%]: cache compiling.release src/main.cpp
 [ 23%]: cache compiling.release src/foo.cpp
@@ -25,7 +25,7 @@ $ xmake build
 
 通常我们可以省略后面的 `build` 子命令，因为 xmake 命令的默认行为就是执行构建。
 
-```console
+```sh
 $ xmake
 [ 17%]: cache compiling.release src/main.cpp
 [ 23%]: cache compiling.release src/foo.cpp
@@ -38,7 +38,7 @@ $ xmake
 
 如果要指定构建特定的目标程序，可以执行：
 
-```console
+```sh
 $ xmake build foo
 ```
 
@@ -48,13 +48,13 @@ $ xmake build foo
 
 ## 重新构建目标
 
-```console
+```sh
 $ xmake -r
 ```
 
 或者
 
-```console
+```sh
 $ xmake --rebuild
 ```
 
@@ -72,13 +72,13 @@ target("test")
 
 如果想要构建所有目标， 包括这些 `default = false` 的目标程序，那么可以传递 `-a/--all` 参数。
 
-```console
+```sh
 $ xmake build -a
 ```
 
 或者
 
-```console
+```sh
 $ xmake build --all
 ```
 
@@ -86,7 +86,7 @@ $ xmake build --all
 
 如果我们想查看完整的编译器命令参数，来排查 flags 配置等问题，可以使用 `xmake -v`。
 
-```console
+```sh
 $ xmake -v
 [ 23%]: cache compiling.release src/main.cpp
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -c -Qunused-arguments -target x86_64-apple-macos15.2 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG -o build/.objs/test/macosx/x86_64/release/src/main.cpp.o src/main.cpp
@@ -114,7 +114,7 @@ target("test")
     add_files("src/main.cpp")
 ```
 
-```console
+```sh
 $ xmake -vD
 error: @programdir/core/main.lua:329: @programdir/core/sandbox/modules/import/core/base/task.lua:65: @progr
 amdir/core/project/project.lua:1050: ./xmake.lua:9: attempt to call a nil value (global 'dd_deps')

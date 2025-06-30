@@ -133,13 +133,13 @@ Plugins:
 
 想要手动运行这个任务，可以执行：
 
-```bash
+```sh
 $ xmake echo hello xmake!
 ```
 
 就行了，如果要看这个任务定义的菜单，只需要执行：`xmake echo [-h|--help]`，显示结果如下：
 
-```bash
+```sh
 Usage: $xmake echo [options]
 
 Echo the given info!
@@ -181,13 +181,13 @@ Options:
 
 下面，我们来实际运行下这个任务，例如我要显示红色的`hello xmake!`，只需要：
 
-```bash
+```sh
 $ xmake echo -c red hello xmake!
 ```
 
 也可以使用选项全名，并且加上高亮：
 
-```bash
+```sh
 $ xmake echo --color=red --bright hello xmake!
 ```
 

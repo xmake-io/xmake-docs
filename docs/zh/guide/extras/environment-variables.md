@@ -2,7 +2,7 @@
 
 我们可以执行下面的命令，获取所有 xmake 用到的环境变量，以及当前被设置的值。
 
-```bash
+```sh
 $ xmake show -l envs
 XMAKE_RAMDIR            Set the ramdisk directory.
                         <empty>
@@ -48,7 +48,7 @@ ramdisk 目录是内存文件系统的目录位置，通常 `os.tmpdir()` 接口
 
 每个项目的本地编译配置，默认会存储在当前项目根目录的 `.xmake` 路径下，然后根据不同的平台，架构区分，例如：
 
-```bash
+```sh
 .xmake/macosx/x86_64
 ```
 
@@ -68,7 +68,7 @@ xmake将在该目录下创建 `.xmake`，作为 `xmake g/global` 全局配置的
 
 通常 xmake 是默认禁止在 root 下运行，这非常不安全。但是如果用户非要在 root 下运行，也可以设置这个变量，强制开启。
 
-```bash
+```sh
 export XMAKE_ROOT=y
 ```
 
@@ -113,7 +113,7 @@ xmake 的所有 lua 脚本随安装程序一起安装，默认都在安装目录
 
 如果要查看当前 xmake 在使用的脚本目录，可以执行：
 
-```bash
+```sh
 $ xmake l os.programdir
 /Users/ruki/.local/share/xmake
 ```
@@ -126,7 +126,7 @@ $ xmake l os.programdir
 
 ### 分析函数调用耗时
 
-```bash
+```sh
 $ XMAKE_PROFILE=perf:call xmake
 [ 25%]: cache compiling.release src/main.cpp
 [ 50%]: linking.release test
@@ -146,7 +146,7 @@ $ XMAKE_PROFILE=perf:call xmake
 
 可以用于分析每个文件的编译耗时，以及一些运行瓶颈。
 
-```bash
+```sh
 $ XMAKE_PROFILE=perf:process xmake -r
 [  7%]: compiling.release src/header.h
 [ 23%]: compiling.release src/test.cpp
@@ -186,7 +186,7 @@ $ XMAKE_PROFILE=perf:process xmake -r
 
 ### 追踪 xmake 的运行过程
 
-```bash
+```sh
 $ XMAKE_PROFILE=trace xmake
 func                          : @programdir/core/base/scheduler.lua: 457
 is_suspended                  : @programdir/core/base/scheduler.lua: 86
@@ -200,7 +200,7 @@ length                        : @programdir/core/base/heap.lua: 120
 
 可以用于获取 xmake 运行卡死时的栈。启用此特性后，通过 Ctrl+C 中断后就能获取栈。
 
-```bash
+```sh
 $ XMAKE_PROFILE=stuck xmake l test.lua
 <Ctrl+C>
 stack traceback:
@@ -228,7 +228,7 @@ a:368>
 
 我们可以设置一些 xmakerc.lua 全局配置文件，在用户编译项目的时候，全局引入它们，比如全局引入一些用户自定义的帮助脚本，工具链什么的。
 
-```bash
+```sh
 $ export XMAKE_RCFILES=xmakerc.lua
 $ xmake
 ```
@@ -255,7 +255,7 @@ https://gitee.com/tboox/xmake-repo.git
 
 但如果 xmake 选择错误，可能会导致仓库下载失败，而通过这个环境变量，我们可以自己设置固定使用指定的仓库地址，不再进行自动选择。
 
-```bash
+```sh
 $ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
 ```
 
@@ -265,7 +265,7 @@ $ export XMAKE_MAIN_REPO = https://github.com/xmake-io/xmake-repo.git
 
 类似 `XMAKE_MAIN_REPO`，唯一的区别是，这个用于切换预编译仓库的地址。
 
-```bash
+```sh
 $ export XMAKE_BINARY_REPO = https://github.com/xmake-mirror/build-artifacts.git
 ```
 
@@ -275,7 +275,7 @@ $ export XMAKE_BINARY_REPO = https://github.com/xmake-mirror/build-artifacts.git
 
 通常我们可以通过 `xmake g --theme=plain` 来设置颜色主题，但是它是全局的，如果想单独对当前终端会话设置，我们就可以使用这个环境变量来设置。
 
-```bash
+```sh
 $ export XMAKE_THEME=plain
 ```
 
@@ -293,7 +293,7 @@ $ export XMAKE_THEME=plain
 
 当然，并不是每个用户都希望这么做，用户完全有权利去禁用这个行为，我们只需要设置：
 
-```bash
+```sh
 export XMAKE_STATS=n
 ```
 

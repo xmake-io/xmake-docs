@@ -6,7 +6,7 @@ Xmake 提供了内置的 `xmake run` 命令，可以快速的运行被构建的�
 
 ## 命令格式
 
-```console
+```sh
 $ xmake run [options] [target] [runargs]
 ```
 
@@ -18,7 +18,7 @@ $ xmake run [options] [target] [runargs]
 
 通常我们只需要执行 `xmake run` 即可运行所有的可执行程序。
 
-```console
+```sh
 $ xmake run
 hello world!
 ```
@@ -27,7 +27,7 @@ hello world!
 
 如果要运行指定的目标程序，可以执行：
 
-```console
+```sh
 $ xmake run foo
 ```
 
@@ -43,7 +43,7 @@ target("test")
 
 如果想要运行所有目标， 包括这些 `default = false` 的目标程序，那么可以传递 `-a/--all` 参数。
 
-```console
+```sh
 $ xmake run -a
 ```
 
@@ -51,13 +51,13 @@ $ xmake run -a
 
 我们还可以传递运行参数给内部的目标程序。
 
-```console
+```sh
 $ xmake run foo --arg1=xxx --arg2=yyy
 ```
 
 :::tip 注意
 这个时候，我们不能省略目标名称，必须指定需要运行的目标名，否则会导致参数歧义。
-```
+:::
 
 我们也可以通过 target 的 [set_runargs](/zh/api/description/project-target#set-runargs) 配置接口，来指定传入的运行参数，而不需要每次命令行指定它。
 
@@ -67,7 +67,7 @@ $ xmake run foo --arg1=xxx --arg2=yyy
 
 如果我们想修改工作目录，我们可以通过 `-w workdir` 参数来指定。
 
-```console
+```sh
 $ xmake run -w /tmp foo
 ```
 
@@ -81,18 +81,18 @@ $ xmake run -w /tmp foo
 
 但前提是，当前程序必须是调试模式编译的，否则会因为缺少必要的符号信息，看不到调用栈，行号等信息，不便于调试。
 
-```bash
+```sh
 $ xmake f -m debug
 $ xmake
 ```
 
-```bash
+```sh
 $ xmake run -d hello
 ```
 
 Xmake 将会使用调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。
 
-```bash
+```sh
 [lldb]$target create "build/hello"
 Current executable set to 'build/hello' (x86_64).
 [lldb]$b main
@@ -112,7 +112,7 @@ hello`main:
 
 另外，我们也能够切换使用指定的调试器：
 
-```bash
+```sh
 $ xmake f --debugger=gdb
 $ xmake run -d hello
 ```

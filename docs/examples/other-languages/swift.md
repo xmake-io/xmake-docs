@@ -1,7 +1,7 @@
 
 Create an empty project:
 
-```bash
+```sh
 $ xmake create -l swift -t console test
 ```
 

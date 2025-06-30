@@ -5,13 +5,13 @@
 
 详细文档见：[Xrepo 命令使用入门](/zh/guide/package-management/xrepo-cli)。
 
-```console
+```sh
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
 ```
 
 v2.2.3开始，支持添加指定分支的repo，例如：
 
-```console
+```sh
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git dev
 ```
 
@@ -21,19 +21,19 @@ $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git dev
 
 我们也可以移除已安装的某个仓库：
 
-```console
+```sh
 $ xmake repo --remove myrepo
 ```
 
 或者查看所有已添加的仓库：
 
-```console
+```sh
 $ xmake repo --list
 ```
 
 如果远程仓库有更新，可以手动执行仓库更新，来获取更多、最新的包：
 
-```console
+```sh
 $ xmake repo -u
 ```
 

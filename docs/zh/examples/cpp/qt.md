@@ -1,6 +1,6 @@
 创建一个空工程：
 
-```bash
+```sh
 $ xmake create -t qt.console test
 $ xmake create -t qt.static test
 $ xmake create -t qt.shared test
@@ -12,13 +12,13 @@ $ xmake create -t qt.widgetapp test
 
 默认会自动探测Qt环境，当然也可以指定Qt SDK环境目录：
 
-```bash
+```sh
 $ xmake f --qt=~/Qt/Qt5.9.1
 ```
 
 如果想要使用 windows 下 MingW 的 Qt 环境，可以切到mingw的平台配置，并且指定下mingw编译环境的sdk路径即可，例如：
 
-```bash
+```sh
 $ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 ```
 
@@ -28,7 +28,7 @@ $ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 
 另外，当前xmake也支持Qt/Wasm，详情见：[Wasm 配置](https://xmake.io/#/zh-cn/guide/configuration?id=wasm)
 
-```bash
+```sh
 $ xmake f -p wasm
 ```
 
@@ -73,7 +73,7 @@ target("qt_quickapp")
 
 接下来，我们尝试编译下，通常，如果是使用Qt的安装包默认安装，也没有修改安装路径，那么大部分情况下都是可以自动检测到QT SDK的根路径，例如：
 
-```bash
+```sh
 $ xmake
 checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
@@ -88,7 +88,7 @@ build ok!
 
 然后我们继续运行下它：
 
-```bash
+```sh
 $ xmake run
 ```
 
@@ -134,7 +134,7 @@ target("qt_widgetapp")
 
 2.2.6 之后版本，可以直接切到android平台编译Quick/Widgets应用程序，生成apk包，并且可通过`xmake install`命令安装到设备。
 
-```bash
+```sh
 $ xmake create -t quickapp_qt -l c++ appdemo
 $ cd appdemo
 $ xmake f -p android --ndk=~/Downloads/android-ndk-r19c/ --android_sdk=~/Library/Android/sdk/ -c
@@ -147,7 +147,7 @@ $ xmake
 
 然后安装到设备：
 
-```bash
+```sh
 $ xmake install
 installing appdemo ...
 installing build/android/release/appdemo.apk ..
@@ -161,7 +161,7 @@ install ok!👌
 
 在 macos/windows 上通常能自动探测到，但是也可以手动指定 Qt SDK 路径。
 
-```bash
+```sh
 $ xmake f --qt=[qt sdk path]
 ```
 
@@ -169,7 +169,7 @@ $ xmake f --qt=[qt sdk path]
 
 使用 apt 安装完 Qt SDK，xmake 也能够自动检测到。
 
-```bash
+```sh
 $ sudo apt install -y qtcreator qtbase5-dev
 $ xmake
 ```
@@ -178,7 +178,7 @@ $ xmake
 
 xmake 也支持从 pacman 安装的 Qt Mingw SDK
 
-```bash
+```sh
 $ pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator
 $ xmake
 ```
@@ -189,7 +189,7 @@ $ xmake
 
 但是，通常需要自己指定 SDK 路径。
 
-```bash
+```sh
 $ xmake f --qt=[Qt SDK]
 ```
 
@@ -199,7 +199,7 @@ $ xmake f --qt=[Qt SDK]
 
 `--qt_host` 选项允许您指定与构建机器兼容的 Qt 工具的位置，而 `--qt` 指向目标平台的 SDK：
 
-```bash
+```sh
 $ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
 ```
 
@@ -234,7 +234,7 @@ target("test")
 
 配置完，只需要执行：
 
-```bash
+```sh
 $ xmake
 ```
 

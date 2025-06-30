@@ -1,7 +1,7 @@
 
 创建一个空工程：
 
-```bash
+```sh
 $ xmake create -P test -l cuda
 $ cd test
 $ xmake
@@ -28,7 +28,7 @@ cuda 源文件中的 device 函数需要被 device-link 且只 device-link 一�
 
 默认会自动探测 Cuda 环境，当然也可以指定 Cuda SDK 环境目录，或者指定 Cuda 版本（此时将在默认安装目录进行查找）：
 
-```bash
+```sh
 $ xmake f --cuda=/usr/local/cuda-9.1/
 $ xmake f --cuda=9.1
 $ xmake

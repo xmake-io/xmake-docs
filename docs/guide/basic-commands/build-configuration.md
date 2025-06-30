@@ -20,20 +20,20 @@ You can use short or long command option, for example: <br>
 Xmake will detect the current host platform automatically and build project.
 :::
 
-```bash
+```sh
 $ xmake
 ```
 
 ### Linux
 
-```bash
+```sh
 $ xmake f -p linux [-a i386|x86_64]
 $ xmake
 ```
 
 ### Android
 
-```bash
+```sh
 $ xmake f -p android --ndk=~/files/android-ndk-r10e/ [-a armeabi-v7a|arm64-v8a]
 $ xmake
 ```
@@ -42,7 +42,7 @@ If you want to set the other android toolchains, you can use [--bin](#-bin) opti
 
 For example:
 
-```bash
+```sh
 $ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
 ```
 
@@ -54,7 +54,7 @@ Please attempt to set `--arch=` option if it had failed to check compiler.
 
 ### iPhoneOS
 
-```bash
+```sh
 $ xmake f -p iphoneos [-a armv7|armv7s|arm64|i386|x86_64]
 $ xmake
 ```
@@ -62,7 +62,7 @@ $ xmake
 Since the emulator on the m1 device also supports the arm64 architecture, it is no longer possible to distinguish the emulator from the arch alone.
 Therefore, in version 2.6.5, we have added a new parameter to distinguish between emulator targets and emulator targets.
 
-```bash
+```sh
 $ xmake f -p iphoneos --appledev=simulator
 $ xmake f -p watchos --appledev=simulator
 $ xmake f -p appletvos --appledev=simulator
@@ -72,13 +72,13 @@ $ xmake f -p appletvos --appledev=simulator
 
 We can also specify to build Mac Catalyst programs.
 
-```bash
+```sh
 $ xmake f --appledev=catalyst
 ```
 
 ### Windows
 
-```bash
+```sh
 $ xmake f -p windows [-a x86|x64]
 $ xmake
 ```
@@ -87,7 +87,7 @@ $ xmake
 
 In addition to supporting Msys2/MingW, MingW for macOS/linux, xmake also supports the llvm-mingw tool chain, which can switch the arm/arm64 architecture to compile.
 
-```bash
+```sh
 $ xmake f -p mingw --sdk=/usr/local/i386-mingw32-4.3.0/ [-a i386|x86_64|arm|arm64]
 $ xmake
 ```
@@ -96,14 +96,14 @@ $ xmake
 
 This platform is used to compile WebAssembly programs (emcc toolchain is used internally). Before switching this platform, we need to enter the Emscripten toolchain environment to ensure that emcc and other compilers are available.
 
-```bash
+```sh
 $ xmake f -p wasm
 $ xmake
 ```
 
 Xmake also supports Qt for wasm compilation, you only need:
 
-```bash
+```sh
 $ xmake f -p wasm [--qt=~/Qt]
 $ xmake
 ```
@@ -119,14 +119,14 @@ For more details, please see: [https://github.com/xmake-io/xmake/issues/956](htt
 
 In addition to emscripten, there is a common wasi-sdk toolchain for building wasi-based programs, and we just need to switch between toolchains.
 
-```console
+```sh
 $ xmake f -p wasm --toolchain=wasi
 $ xmake
 ```
 
 ### Apple WatchOS
 
-```bash
+```sh
 $ xmake f -p watchos [-a i386|armv7k]
 $ xmake
 ```
@@ -135,13 +135,13 @@ $ xmake
 
 Version 2.9.1 adds native toolchain compilation support for the Hongmeng OS platform:
 
-```bash
+```sh
 $ xmake f -p harmony
 ```
 
 xmake will automatically detect the default SDK path, but you can also specify the Harmony SDK path.
 
-```bash
+```sh
 $ xmake f -p Harmony --sdk=/Users/ruki/Library/Huawei/Sdk/openharmony/10/native
 ```
 
@@ -151,13 +151,13 @@ You can save to the global configuration for simplfying operation.
 
 For example:
 
-```bash
+```sh
 $ xmake g --ndk=~/files/android-ndk-r10e/
 ```
 
 Now, we config and build project for android again.
 
-```bash
+```sh
 $ xmake f -p android
 $ xmake
 ```
@@ -170,14 +170,14 @@ You can use short or long command option, for example: `xmake g` or `xmake globa
 
 We can clean all cached configuration and re-configure project.
 
-```bash
+```sh
 $ xmake f -c
 $ xmake
 ```
 
 or
 
-```bash
+```sh
 $ xmake f -p iphoneos -c
 $ xmake
 ```
@@ -188,21 +188,21 @@ After 2.5.5, we can also import and export the configured configuration set to f
 
 ### Export configuration
 
-```bash
+```sh
 $ xmake f --export=/tmp/config.txt
 $ xmake f -m debug --xxx=y --export=/tmp/config.txt
 ```
 
 ### Import configuration
 
-```bash
+```sh
 $ xmake f --import=/tmp/config.txt
 $ xmake f -m debug --xxx=y --import=/tmp/config.txt
 ```
 
 ### Export configuration (with menu)
 
-```bash
+```sh
 $ xmake f --menu --export=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
 ```
@@ -210,7 +210,7 @@ $ xmake f --menu -m debug --xxx=y --export=/tmp/config.txt
 
 ### Import configuration (with menu)
 
-```bash
+```sh
 $ xmake f --menu --import=/tmp/config.txt
 $ xmake f --menu -m debug --xxx=y --import=/tmp/config.txt
 ```

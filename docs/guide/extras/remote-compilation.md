@@ -6,14 +6,14 @@ Compared with ssh remote login and compilation, it is more stable and smoother t
 
 ## Start the service
 
-```bash
+```sh
 $ xmake service
 <remote_build_server>: listening 0.0.0.0:9091 ..
 ```
 
 We can also start the service and echo detailed log information.
 
-```bash
+```sh
 $ xmake service -vD
 <remote_build_server>: listening 0.0.0.0:9091 ..
 ```
@@ -22,7 +22,7 @@ $ xmake service -vD
 
 To start and control the service when in daemon mode, you can issue the following commands:
 
-```bash
+```sh
 $ xmake service --start
 $ xmake service --restart
 $ xmake service --stop
@@ -38,7 +38,7 @@ Version 2.6.5, the configuration address is in `~/.xmake/service.conf`. Subseque
 
 Then, we edit it, fixing the server's listening port (optional).
 
-```bash
+```sh
 {
     known_hosts = { },
     logfile = "/Users/ruki/.xmake/service/server/logs.txt",
@@ -60,7 +60,7 @@ The client configuration file is in `~/.xmake/service/client.conf`, where we can
 Version 2.6.5, the configuration address is in `~/.xmake/service.conf`. Subsequent versions have made a lot of improvements and separated the configuration file. If you are using version 2.6.6 or above, please use the new configuration file.
 :::
 
-```bash
+```sh
 {
     remote_build = {
         connect = "127.0.0.1:9691",
@@ -89,7 +89,7 @@ This is also the default recommended method, which is more secure, more convenie
 
 The server can configure multiple tokens for authorizing connections to different user hosts, and of course, can share one token.
 
-```bash
+```sh
 {
     known_hosts = { },
     logfile = "/Users/ruki/.xmake/service/server/logs.txt",
@@ -107,7 +107,7 @@ The server can configure multiple tokens for authorizing connections to differen
 
 The client only needs to add the token on the server to the corresponding client configuration.
 
-```bash
+```sh
 {
     remote_build = {
         connect = "127.0.0.1:9691",
@@ -120,7 +120,7 @@ The client only needs to add the token on the server to the corresponding client
 
 We can also execute the following command to manually generate a new token and add it to the server configuration ourselves.
 
-```bash
+```sh
 $ xmake service --gen-token
 New token a7b9fc2d3bfca1472aabc38bb5f5d612 is generated!
 ```
@@ -133,7 +133,7 @@ We also provide an authorization mode of password authentication. Compared with 
 
 For password authentication, we do not need to manually configure the token, just execute the following command to add a user. During the adding process, the user will be prompted to enter a password.
 
-```bash
+```sh
 $ xmake service --add-user=ruki
 Please input user ruki password:
 123456
@@ -142,7 +142,7 @@ Add user ruki ok!
 
 Then, Xmake will generate a new token from the username and password and add it to the token list of the server configuration.
 
-```bash
+```sh
 {
     known_hosts = { },
     logfile = "/Users/ruki/.xmake/service/server/logs.txt",
@@ -159,7 +159,7 @@ Then, Xmake will generate a new token from the username and password and add it 
 
 Of course, we can also delete the specified user and password.
 
-```bash
+```sh
 $ xmake service --rm-user=ruki
 Please input user ruki password:
 123456
@@ -170,7 +170,7 @@ Remove user ruki ok!
 
 For the client, we no longer need to set the token of the server. We only need to add the user name that needs to be connected in the connection configuration to enable password authentication. The format is: `user@address:port`
 
-```bash
+```sh
 {
     remote_build = {
         connect = "root@127.0.0.1:9691"
@@ -187,7 +187,7 @@ If the username is removed and the token is not configured, it is anonymous mode
 In addition, in order to further improve security, we also provide server-side trusted host verification. If the server-configured `known_hosts` list is configured with the ip address of the client host that can be connected,
 Then only these hosts can successfully connect to this server, and other host's connections to it will be prompted to be untrusted and refuse the connection, even if token and password authentication are OK.
 
-```bash
+```sh
 {
     logfile = "/Users/ruki/.xmake/service/logs.txt",
     server = {
@@ -205,7 +205,7 @@ Next, we only need to enter the root directory of the project that needs to be c
 
 If it is the token authentication mode, then no additional password input is required, and the connection is directly connected.
 
-```bash
+```sh
 $ xmake create test
 $ cd test
 $ xmake service --connect
@@ -225,7 +225,7 @@ Uploading files with 1372 bytes ..
 
 If it is password authentication, the user will be prompted to enter the password to continue the connection.
 
-```bash
+```sh
 $ xmake service --connect
 Please input user root password:
 000000
@@ -245,7 +245,7 @@ Uploading files with 1591 bytes ..
 
 If the password is incorrect, an error message will be displayed.
 
-```bash
+```sh
 $ xmake service --connect
 Please input user root password:
 123
@@ -257,7 +257,7 @@ Please input user root password:
 
 After the connection is successful, we can compile remotely like normal local compilation.
 
-```bash
+```sh
 $ xmake
 <remote_build_client>: run xmake in 192.168.56.110:9091 ..
 checking for platform... macosx
@@ -276,7 +276,7 @@ checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
 
 We can also run and debug the compiled target program remotely like running and debugging locally.
 
-```bash
+```sh
 $ xmake run
 <remote_build_client>: run xmake run in 192.168.56.110:9091 ..
 hello world!
@@ -285,7 +285,7 @@ hello world!
 
 ## Remote Rebuild Project
 
-```bash
+```sh
 $ xmake -rv
 <remote_build_client>: run xmake -rv in 192.168.56.110:9091 ..
 [ 25%]: cache compiling.release src/main.cpp
@@ -298,7 +298,7 @@ $ xmake -rv
 
 ## Remote configuration compilation parameters
 
-```bash
+```sh
 $ xmake f --xxx --yy
 ```
 
@@ -306,7 +306,7 @@ $ xmake f --xxx --yy
 
 When connecting, the code will be automatically synchronized once, and the code will be changed later. You can execute this command to manually synchronize the changed files.
 
-```bash
+```sh
 $ xmake service --sync
 <remote_build_client>: sync files in 192.168.56.110:9091 ..
 Scanning files ..
@@ -327,7 +327,7 @@ Usually, we can use it to pull the target file after the build and download the 
 
 For example:
 
-```bash
+```sh
 xmake service --pull 'build/**' outputdir
 ```
 
@@ -337,7 +337,7 @@ We can specify the remote path `build/**` to pull all matching files to the loca
 
 For the current project, disconnect the connection, which only affects the current project, and other projects can still be connected and compiled at the same time.
 
-```bash
+```sh
 $ xmake service --disconnect
 <remote_build_client>: disconnect 192.168.56.110:9091 ..
 <remote_build_client>: disconnected!
@@ -345,7 +345,7 @@ $ xmake service --disconnect
 
 ## View server log
 
-```bash
+```sh
 $ xmake service --logs
 ```
 
@@ -353,7 +353,7 @@ $ xmake service --logs
 
 We can also manually clean any caches and build generated files from the remote.
 
-```bash
+```sh
 $ cd projectdir
 $ xmake service --clean
 ```

@@ -8,7 +8,7 @@
 
 然后使用下面的命令，设置包下载的搜索目录：
 
-```console
+```sh
 $ xmake g --pkg_searchdirs="/download/packages"
 ```
 
@@ -16,7 +16,7 @@ $ xmake g --pkg_searchdirs="/download/packages"
 
 至于找寻的包名是怎样的呢，可以通过下面的命令查看：
 
-```console
+```sh
 $ xmake require --info zlib
 -> searchdirs: /download/packages
 -> searchnames: zlib-1.2.11.tar.gz
@@ -28,7 +28,7 @@ $ xmake require --info zlib
 
 如果觉得手动下载还是麻烦，我们也可以让xmake直接走代理。
 
-```console
+```sh
 $ xmake g --proxy="socks5://127.0.0.1:1086"
 $ xmake g --help
     -x PROXY, --proxy=PROXY  Use proxy on given port. [PROTOCOL://]HOST[:PORT]
@@ -42,7 +42,7 @@ $ xmake g --help
 
 我们可以通过下面的参数指定哪些host走代理，如果没设置，默认全局走代理。
 
-```console
+```sh
 --proxy_hosts=PROXY_HOSTS    Only enable proxy for the given hosts list, it will enable all if be unset,
                              and we can pass match pattern to list:
                                  e.g.
@@ -55,7 +55,7 @@ $ xmake g --help
 
 如果觉得上面的hosts模式配置还不够灵活，我们也可以走pac的自动代理配置规则：
 
-```console
+```sh
 --proxy_pac=PROXY_PAC    Set the auto proxy configuration file. (default: pac.lua)
                                      e.g.
                                      - xmake g --proxy_pac=pac.lua (in /Users/ruki/.xmake or absolute path)
@@ -74,7 +74,7 @@ pac的默认路径：~/.xmake/pac.lua，如果--proxy被设置，并且这个文
 
 也可以手动指定pac全路径
 
-```console
+```sh
 $ xmake g --proxy_pac=/xxxx/xxxxx_pac.lua
 ```
 
@@ -106,7 +106,7 @@ function mirror(url)
 end
 ```
 
-```console
+```sh
 $ xrepo install libpng
 > curl https://hub.fastgit.org/glennrp/libpng/archive/v1.6.37.zip -o v1.6.37.zip
 ```

@@ -422,7 +422,7 @@ target("test")
     end)
 ```
 
-```bash
+```sh
 $ xmake
 sizeof(long) = 8
 sizeof(string) = 24

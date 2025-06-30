@@ -61,7 +61,7 @@ toolchain("myclang")
 
 Then use the following command to cut to the toolchain you defined:
 
-```bash
+```sh
 $ xmake f --toolchain=myclang
 ```
 
@@ -69,7 +69,7 @@ Of course, we can also switch to the specified target directly to the custom too
 
 Before customizing the tool, we can run the following command to view the complete list of built-in toolchains to ensure that xmake does not provide it. If so, just use it directly. There is no need to define it yourself:
 
-```bash
+```sh
 $ xmake show -l toolchains
 ```
 
@@ -105,7 +105,7 @@ This is the most streamlined cross-toolchain configuration. It only sets the cor
 
 At this time, we can use the command line `--toolchain=my_toolchain` to manually switch to this toolchain.
 
-```console
+```sh
 xmake f --toolchain=my_toolchain
 xmake
 ```
@@ -156,7 +156,7 @@ target("hello")
 
 In this way, we can quickly switch the designated platform directly when compiling to automatically switch the corresponding tool chain.
 
-```console
+```sh
 xmake f -p myplat1
 xmake
 ```

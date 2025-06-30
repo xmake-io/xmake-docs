@@ -160,7 +160,7 @@ end)
 
 我们可以执行下面的脚本进行测试指定包：
 
-```bash
+```sh
 cd xmake-repo
 xmake l scripts/test.lua -v -D zlib
 ```
@@ -169,14 +169,14 @@ xmake l scripts/test.lua -v -D zlib
 
 如果网络环境不好，不想每次测试都去重新下载所有依赖，可以加上`--shallow`参数来执行，这个参数告诉脚本，仅仅重新解压本地缓存的zlib源码包，重新执行安装命令，但不会下载各种依赖。
 
-```bash
+```sh
 cd xmake-repo
 xmake l scripts/test.lua -v -D --shallow zlib
 ```
 
 如果我们想测试其他平台的包规则是否正常，比如: android, iphoneos等平台，可以通过`-p/--plat`或者`-a/--arch`来指定。
 
-```bash
+```sh
 cd xmake-repo
 xmake l scripts/test.lua -v -D --shallow -p iphoneos -a arm64 zlib
 xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
@@ -188,7 +188,7 @@ xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
 
 我们只需要在打包时候，修改包格式。
 
-```console
+```sh
 $ xmake package -f remote
 ```
 
@@ -219,7 +219,7 @@ package("foo")
 
 我们也能够通过附加参数，去修改 urls，versions 等配置值，例如：
 
-```console
+```sh
 $ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepage=xxxxx`
 ```
 

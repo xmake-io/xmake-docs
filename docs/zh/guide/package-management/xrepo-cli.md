@@ -41,7 +41,7 @@ Xrepo 是一个基于 [Xmake](https://github.com/xmake-io/xmake) 的跨平台 C/
 
 只需要通过下面的命令，添加上自己的仓库地址：
 
-```console
+```sh
 $ xrepo add-repo myrepo https://github.com/mygroup/myrepo
 ```
 
@@ -66,7 +66,7 @@ target("test")
 
 #### 基本使用
 
-```console
+```sh
 $ xrepo install zlib tbox
 ```
 
@@ -74,14 +74,14 @@ $ xrepo install zlib tbox
 
 完整支持 Semantic Versioning (语义版本)。
 
-```console
+```sh
 $ xrepo install "zlib 1.2.x"
 $ xrepo install "zlib >=1.2.0"
 ```
 
 #### 安装指定平台包
 
-```console
+```sh
 $ xrepo install -p iphoneos -a arm64 zlib
 $ xrepo install -p android [--ndk=/xxx] zlib
 $ xrepo install -p mingw [--mingw=/xxx] zlib
@@ -90,26 +90,26 @@ $ xrepo install -p cross --sdk=/xxx/arm-linux-musleabi-cross zlib
 
 #### 安装调试版本包
 
-```console
+```sh
 $ xrepo install -m debug zlib
 ```
 
 #### 安装动态库版本包
 
-```console
+```sh
 $ xrepo install -k shared zlib
 ```
 
 #### 安装指定配置包
 
-```console
+```sh
 $ xrepo install -f "vs_runtime='MD'" zlib
 $ xrepo install -f "regex=true,thread=true" boost
 ```
 
 #### 安装第三方包管理器的包
 
-```console
+```sh
 $ xrepo install brew::zlib
 $ xrepo install vcpkg::zlib
 $ xrepo install conan::zlib/1.2.11
@@ -117,7 +117,7 @@ $ xrepo install conan::zlib/1.2.11
 
 ### 查找包的库使用信息
 
-```console
+```sh
 $ xrepo fetch pcre2
 {
   {
@@ -135,22 +135,22 @@ $ xrepo fetch pcre2
 }
 ```
 
-```console
+```sh
 $ xrepo fetch --ldflags openssl
 -L/Users/ruki/.xmake/packages/o/openssl/1.1.1/d639b7d6e3244216b403b39df5101abf/lib -lcrypto -lssl
 ```
 
-```console
+```sh
 $ xrepo fetch --cflags openssl
 -I/Users/ruki/.xmake/packages/o/openssl/1.1.1/d639b7d6e3244216b403b39df5101abf/include
 ```
 
-```console
+```sh
 $ xrepo fetch -p [iphoneos|android] --cflags "zlib 1.2.x"
 -I/Users/ruki/.xmake/packages/z/zlib/1.2.11/df72d410e7e14391b1a4375d868a240c/include
 ```
 
-```console
+```sh
 $ xrepo fetch --cflags --ldflags conan::zlib/1.2.11
 -I/Users/ruki/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/include -L/Users/ruki/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/lib -lz
 ```
@@ -159,13 +159,13 @@ $ xrepo fetch --cflags --ldflags conan::zlib/1.2.11
 
 xrepo 可以快速导出已经安装后的包，包括对应的库文件，头文件等等。
 
-```console
+```sh
 $ xrepo export -o /tmp/output zlib
 ```
 
 ### 搜索支持的包
 
-```console
+```sh
 $ xrepo search zlib "pcr*"
     zlib:
       -> zlib: A Massively Spiffy Yet Delicately Unobtrusive Compression Library (in xmake-repo)
@@ -176,7 +176,7 @@ $ xrepo search zlib "pcr*"
 
 ### 查看包环境信息
 
-```console
+```sh
 $ xrepo env --show luajit
 {
   OLDPWD = "/mnt/tbox",
@@ -203,7 +203,7 @@ add_requires("zlib 1.2.11")
 add_requires("python 3.x", "luajit")
 ```
 
-```console
+```sh
 $ xrepo env shell
 > python --version
 > luajit --version
@@ -219,13 +219,13 @@ set_toolchains("msvc")
 
 我们可以使用下面的命令，把指定的虚拟环境配置全局注册到系统中，方便快速切换。
 
-```console
+```sh
 $ xrepo env --add /tmp/base.lua
 ```
 
 这个时候，我们就保存了一个名叫 base 的全局虚拟环境，我们可以通过 list 命令去查看它。
 
-```console
+```sh
 $ xrepo env --list
 /Users/ruki/.xmake/envs:
   - base
@@ -234,7 +234,7 @@ envs(1) found!
 
 我们也可以删除它。
 
-```console
+```sh
 $ xrepo env --remove base
 ```
 
@@ -242,14 +242,14 @@ $ xrepo env --remove base
 
 如果我们注册了多个虚拟环境，我们也可以快速切换它们。
 
-```console
+```sh
 $ xrepo env -b base shell
 > python --version
 ```
 
 或者直接加载指定虚拟环境运行特定命令
 
-```console
+```sh
 $ xrepo env -b base python --version
 ```
 
@@ -261,7 +261,7 @@ $ xrepo env -b base python --version
 
 例如，我们想进入一个带有 python 3.0, luajit 和 cmake 的环境，只需要执行：
 
-```console
+```sh
 $ xrepo env -b "python 3.x,luajit,cmake" shell
 [python,luajit,cmake] $ python --version
 Python 3.10.6
@@ -273,14 +273,14 @@ Xmake 会自动安装相关依赖，然后开启一个新的 shell 环境，新�
 
 如果我们想退出当前环境，仅仅需要执行
 
-```console
+```sh
 [python,luajit,cmake] $ xrepo env quit
 $
 ```
 
 ### 查看包信息
 
-```console
+```sh
 $ xrepo info zlib
 The package info of project:
     require(zlib):
@@ -325,13 +325,13 @@ The package info of project:
 
 我们可以使用 `xrepo download` 命令，仅仅下载指定包的源码，而不去安装它。
 
-```bash
+```sh
 $ xrepo download zlib
 $ xrepo download "zlib 2.x"
 ```
 
 默认的下载目录就是当前的目录下 `packages` 子目录中，我们也可以通过 `-o outputdir` 参数修改下载目录。
 
-```bash
+```sh
 $ xrepo download -o /tmp zlib
 ```

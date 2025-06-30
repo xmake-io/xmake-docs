@@ -42,7 +42,7 @@ We can also add any number of self-built repositories, and even completely isola
 
 Just use the following command to add your own repository address:
 
-```console
+```sh
 $ xrepo add-repo myrepo https://github.com/mygroup/myrepo
 ```
 
@@ -67,20 +67,20 @@ The following is the overall architecture and compilation process integrated wit
 
 #### Basic usage
 
-```console
+```sh
 $ xrepo install zlib tbox
 ```
 
 #### Install the specified version package
 
-```console
+```sh
 $ xrepo install "zlib 1.2.x"
 $ xrepo install "zlib >=1.2.0"
 ```
 
 #### Install the specified platform package
 
-```console
+```sh
 $ xrepo install -p iphoneos -a arm64 zlib
 $ xrepo install -p android [--ndk=/xxx] zlib
 $ xrepo install -p mingw [--mingw=/xxx] zlib
@@ -89,26 +89,26 @@ $ xrepo install -p cross --sdk=/xxx/arm-linux-musleabi-cross zlib
 
 #### Install the debug package
 
-```console
+```sh
 $ xrepo install -m debug zlib
 ```
 
 #### Install the package with dynamic library
 
-```console
+```sh
 $ xrepo install -k shared zlib
 ```
 
 #### Install the specified configuration package
 
-```console
+```sh
 $ xrepo install -f "vs_runtime='MD'" zlib
 $ xrepo install -f "regex=true,thread=true" boost
 ```
 
 #### Install packages from third-party package manager
 
-```console
+```sh
 $ xrepo install brew::zlib
 $ xrepo install vcpkg::zlib
 $ xrepo install conan::zlib/1.2.11
@@ -116,7 +116,7 @@ $ xrepo install conan::zlib/1.2.11
 
 ### Find the library information of the package
 
-```console
+```sh
 $ xrepo fetch pcre2
 {
   {
@@ -134,22 +134,22 @@ $ xrepo fetch pcre2
 }
 ```
 
-```console
+```sh
 $ xrepo fetch --ldflags openssl
 -L/Users/ruki/.xmake/packages/o/openssl/1.1.1/d639b7d6e3244216b403b39df5101abf/lib -lcrypto -lssl
 ```
 
-```console
+```sh
 $ xrepo fetch --cflags openssl
 -I/Users/ruki/.xmake/packages/o/openssl/1.1.1/d639b7d6e3244216b403b39df5101abf/include
 ```
 
-```console
+```sh
 $ xrepo fetch -p [iphoneos|android] --cflags "zlib 1.2.x"
 -I/Users/ruki/.xmake/packages/z/zlib/1.2.11/df72d410e7e14391b1a4375d868a240c/include
 ```
 
-```console
+```sh
 $ xrepo fetch --cflags --ldflags conan::zlib/1.2.11
 -I/Users/ruki/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/include -L/Users/ruki/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/lib -lz
 ```
@@ -158,13 +158,13 @@ $ xrepo fetch --cflags --ldflags conan::zlib/1.2.11
 
 xrepo can quickly export installed packages, including corresponding library files, header files, etc.
 
-```console
+```sh
 $ xrepo export -o /tmp/output zlib
 ```
 
 ### Search supported packages
 
-```console
+```sh
 $ xrepo search zlib "pcr*"
     zlib:
       -> zlib: A Massively Spiffy Yet Delicately Unobtrusive Compression Library (in xmake-repo)
@@ -175,7 +175,7 @@ $ xrepo search zlib "pcr*"
 
 ### Show package environment information
 
-```console
+```sh
 $ xrepo env --show luajit
 {
    OLDPWD = "/mnt/tbox",
@@ -202,7 +202,7 @@ add_requires("zlib 1.2.11")
 add_requires("python 3.x", "luajit")
 ```
 
-```console
+```sh
 $ xrepo env shell
 > python --version
 > luajit --version
@@ -218,13 +218,13 @@ set_toolchains("msvc")
 
 We can use the following command to register the specified virtual environment configuration globally to the system for quick switching.
 
-```console
+```sh
 $ xrepo env --add /tmp/base.lua
 ```
 
 At this time, we have saved a global virtual environment called base, and we can view it through the list command.
 
-```console
+```sh
 $ xrepo env --list
 /Users/ruki/.xmake/envs:
   -base
@@ -233,7 +233,7 @@ envs(1) found!
 
 We can also delete it.
 
-```console
+```sh
 $ xrepo env --remove base
 ```
 
@@ -241,14 +241,14 @@ $ xrepo env --remove base
 
 If we register multiple virtual environments, we can also switch them quickly.
 
-```console
+```sh
 $ xrepo env -b base shell
 > python --version
 ```
 
 Or directly load the specified virtual environment to run specific commands
 
-```console
+```sh
 $ xrepo env -b base python --version
 ```
 
@@ -260,7 +260,7 @@ Not only can we manage switching environments by configuring environment configu
 
 For example, if we want to enter an environment with python 3.0, luajit and cmake, all we need to do is to execute
 
-```console
+```sh
 $ xrepo env -b "python 3.x,luajit,cmake" shell
 [python,luajit,cmake] $ python --version
 Python 3.10.6
@@ -272,14 +272,14 @@ Xmake will automatically install the dependencies and open a new shell environme
 
 If we want to exit the current environment, we simply need to run
 
-```console
+```sh
 [python,luajit,cmake] $ xrepo env quit
 $
 ```
 
 ### Show the given package information
 
-```console
+```sh
 $ xrepo info zlib
 The package info of project:
     require(zlib):
@@ -324,13 +324,13 @@ The package info of project:
 
 We can use the `xrepo download` command to only download the source code of the specified package without installing it.
 
-```bash
+```sh
 $ xrepo download zlib
 $ xrepo download "zlib 2.x"
 ```
 
 The default download directory is in the `packages` subdirectory of the current directory. We can also modify the download directory through the `-o outputdir` parameter.
 
-```bash
+```sh
 $ xrepo download -o /tmp zlib
 ```

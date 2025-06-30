@@ -9,7 +9,7 @@ By default, xmake will call curl, wget and other tools to download, users can al
 
 Then use the following command to set the search directory for package download:
 
-```console
+```sh
 $ xmake g --pkg_searchdirs="/download/packages"
 ```
 
@@ -17,7 +17,7 @@ Then re-execute xmake to compile, xmake will first look for the source package f
 
 As for the package name you are looking for, you can check it by the following command:
 
-```console
+```sh
 $ xmake require --info zlib
 -> searchdirs: /download/packages
 -> searchnames: zlib-1.2.11.tar.gz
@@ -29,7 +29,7 @@ We can see the corresponding search directory and the searched package name.
 
 If manual downloading is still troublesome, we can also let xmake go directly to the agent.
 
-```console
+```sh
 $ xmake g --proxy="socks5://127.0.0.1:1086"
 $ xmake g --help
     -x PROXY, --proxy=PROXY Use proxy on given port. [PROTOCOL://]HOST[:PORT]
@@ -43,7 +43,7 @@ The `--proxy` parameter specifies the proxy protocol and address. The specific s
 
 We can use the following parameters to specify which hosts go to the proxy. If not set, the default is to go global.
 
-```console
+```sh
 --proxy_hosts=PROXY_HOSTS Only enable proxy for the given hosts list, it will enable all if be unset,
                              and we can pass match pattern to list:
                                  e.g.
@@ -56,7 +56,7 @@ If the hosts list is set, then the matching hosts in this list will go to the pr
 
 If we feel that the above hosts mode configuration is not flexible enough, we can also follow pac's automatic proxy configuration rules:
 
-```console
+```sh
 --proxy_pac=PROXY_PAC Set the auto proxy configuration file. (default: pac.lua)
                                      e.g.
                                      -xmake g --proxy_pac=pac.lua (in /Users/ruki/.xmake or absolute path)
@@ -75,7 +75,7 @@ The default path of pac: ~/.xmake/pac.lua, if --proxy is set, and this file exis
 
 You can also manually specify the pac full path
 
-```console
+```sh
 $ xmake g --proxy_pac=/xxxx/xxxxx_pac.lua
 ```
 
@@ -103,7 +103,7 @@ function mirror(url)
 end
 ```
 
-```console
+```sh
 $ xrepo install libpng
 > curl https://hub.fastgit.org/glennrp/libpng/archive/v1.6.37.zip -o v1.6.37.zip
 ```

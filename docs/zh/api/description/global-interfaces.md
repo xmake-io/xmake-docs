@@ -397,7 +397,7 @@ target("test")
 
 执行xmake进行编译后：
 
-```console
+```sh
 ruki:test_package ruki$ xmake
 checking for the architecture ... x86_64
 checking for the Xcode directory ... /Applications/Xcode.app
@@ -432,7 +432,7 @@ add_requires("boost[iostreams,system,thread] >=1.78.0")
 
 这对于 `xrepo install` 独立 cli 命令下带复杂配置的安装，会省事不少，用户可以根据自己的喜好需求，选择使用。
 
-```console
+```sh
 xrepo install boost[iostreams,system,thread]
 ```
 
@@ -745,7 +745,7 @@ end)
 
 我们指定构建特定 target 时，也可以通过命名空间来定位。
 
-```bash
+```sh
 $ xmake build -r ns1::test
 [ 33%]: cache compiling.release ns1::ns2::src/bar.cpp
 [ 41%]: cache compiling.release ns1::src/foo.cpp
@@ -812,7 +812,7 @@ target("test")
 
 ### 隔离 option
 
-```bash
+```sh
 $ xmake f --opt0=y
 $ xmake f --ns1::opt1=y
 $ xmake f --ns1::ns2::opt2=y
@@ -890,7 +890,7 @@ end)
 
 ### 隔离 task
 
-```bash
+```sh
 xmake task0
 xmake ns1::task1
 xmake ns1::ns2::task2

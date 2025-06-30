@@ -278,14 +278,14 @@ Through the above example, you can see that the default target can be set more t
 
 If you don't want to use the default target, you can manually specify which targets you need to build the installation:
 
-```bash
+```sh
 $ xmake build targetname
 $ xmake install targetname
 ```
 
 If you want to force the build to install all targets, you can pass in the `[-a|--all]` parameter:
 
-```bash
+```sh
 $ xmake build [-a|--all]
 $ xmake install [-a|--all]
 ```
@@ -358,14 +358,14 @@ target("test")
 
 The ios program will generate a .dSYM file, and then Strip itself symbol
 
-```console
+```sh
 [62%]: linking.release libtest.dylib
 [62%]: generating.release test.dSYM
 ```
 
 The android program will generate a .sym file (actually a symbolic so/binary program), and then strip itself
 
-```console
+```sh
 [62%]: linking.release libtest.so
 [62%]: generating.release test.sym
 ```
@@ -590,7 +590,7 @@ Set the output directory of the target program file. Under normal circumstances,
 
 The build directory can be manually modified during project configuration:
 
-```bash
+```sh
 xmake f -o /tmp/build
 ```
 
@@ -1411,7 +1411,7 @@ add_linkgroups("c", "d", {as_needed = false})
 
 The corresponding flags are as follows.
 
-```bash
+```sh
 -Wl,--no-as-needed c d -Wl,--as-needed
 ```
 
@@ -1790,13 +1790,13 @@ target("test")
 
 The generated compilation options are as follows:
 
-```console
+```sh
 -isystem /usr/include
 ```
 
 In the case of the msvc compiler, it will be:
 
-```console
+```sh
 /experimental:external /external:W0 /external:I /usr/include
 ```
 
@@ -2291,7 +2291,7 @@ target("test")
 
 You only need to specify the name of the toolchain. Specific toolchains supported by xmake can be viewed by the following command:
 
-```bash
+```sh
 $ xmake show -l toolchains
 xcode         Xcode IDE
 vs            VisualStudio IDE
@@ -2315,7 +2315,7 @@ fasm          Flat Assembler
 
 Of course, we can also switch to other tool chains globally through the command line:
 
-```bash
+```sh
 $ xmake f --toolchain=clang
 $ xmake
 ```
@@ -2399,7 +2399,7 @@ Generally used in scenarios where the host platform target and cross-compilation
 
 E.g:
 
-```console
+```sh
 $ xmake f -p android --ndk=/xxx
 ```
 
@@ -2554,7 +2554,7 @@ Although the installation root directory is set by `set_installdir` and `xmake i
 
 Then, we can use this interface. By default, the installation directory will follow this structure:
 
-```bash
+```sh
 installdir
 - bin
 - lib
@@ -2569,7 +2569,7 @@ set_prefix("prefixdir")
 
 It is to add a general subdirectory:
 
-```bash
+```sh
 installdir
 - prefixdir
 - bin
@@ -2583,7 +2583,7 @@ We can also configure bin, lib and include subdirectories separately, for exampl
 set_prefix("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
 ```
 
-```bash
+```sh
 installdir
 - prefixdir
 - mybin
@@ -2597,7 +2597,7 @@ If we do not configure prefixdir and only modify the bin subdirectory, we can co
 set_prefix("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
 ```
 
-```bash
+```sh
 installdir
   - mybin
   - mylib
@@ -3169,7 +3169,7 @@ target("test2")
     add_files("src/*.cpp")
 ```
 
-```console
+```sh
 $ xmake -g test
 $ xmake --group=test
 ```
@@ -3178,7 +3178,7 @@ $ xmake --group=test
 
 We can also specify to run all test programs with the `test` group by setting the group.
 
-```console
+```sh
 $ xmake run -g test
 $ xmake run --group=test
 ```
@@ -3418,7 +3418,7 @@ This example automatically scans the `test_*.cpp` source files in the source cod
 
 However, if you execute `xmake test` for testing, they will be automatically compiled and then tested. The running effect is as follows:
 
-```bash
+```sh
 ruki-2:test ruki$ xmake test
 running tests ...
 [  2%]: test_1/args        .................................... passed 7.000s
@@ -3471,20 +3471,20 @@ We can also execute `xmake test -vD` to view detailed test failure error message
 
 We can also specify to run a test with a specified
 
-```bash
+```sh
 $ xmake test targetname/testname
 ```
 
 Or run all tests of a target or a batch of tests by pattern matching:
 
-```bash
+```sh
 $ xmake test targetname/*
 $ xmake test targetname/foo*
 ```
 
 You can also run tests with the same name for all targets:
 
-```bash
+```sh
 $ xmake test */testname
 ```
 
@@ -3492,13 +3492,13 @@ $ xmake test */testname
 
 In fact, the default is to run in parallel, but we can adjust the parallelism of the operation through `-jN`.
 
-```bash
+```sh
 $ xmake test -jN
 ```
 
 #### Run tests in groups
 
-```bash
+```sh
 $ xmake test -g "foo"
 $ xmake test -g "foo*"
 ```
@@ -3636,7 +3636,7 @@ Where testname1/testname2 is a group foo, and the other two are in another group
 
 Then, we can use `xmake test -g groupname` to perform group testing.
 
-```bash
+```sh
 $ xmake test -g "foo"
 $ xmake test -g "foo*"
 ```
@@ -3688,7 +3688,7 @@ target("test")
 
 However, when running `xmake test` for testing, the targets corresponding to these tests will still be automatically built to ensure that they can be run.
 
-```bash
+```sh
 $ xmake test
 [25%]: cache compiling.release src/main.cpp
 [50%]: linking.release test
@@ -3863,7 +3863,7 @@ Defining DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN will introduce additional main entry
 
 The running effect is as follows:
 
-```bash
+```sh
 ruki-2:doctest ruki$ xmake test
 running tests...
 [50%]: doctest/test_1 ........................ failed 0.009s
@@ -3928,7 +3928,7 @@ target("test_timeout")
     add_tests("run_timeout", {run_timeout = 1000})
 ``
 
-```bash
+```sh
 $ xmake test
 [100%]: test_timeout/run_timeout .................................... failed 1.006s
 run failed, exit code: -1, exit error: wait process timeout

@@ -12,11 +12,11 @@ Xmake 不推荐 root 下安装使用，因为这很不安全，如果用户非�
 
 ::: code-group
 
-```bash [curl]
+```sh [curl]
 curl -fsSL https://xmake.io/shget.text | bash
 ```
 
-```bash [wget]
+```sh [wget]
 wget https://xmake.io/shget.text -O - | bash
 ```
 
@@ -26,7 +26,7 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 
 如果要安装指定版本和分支，后面可以追加版本号和分支参数
 
-```bash
+```sh
 curl -fsSL https://xmake.io/shget.text | bash -s dev
 curl -fsSL https://xmake.io/shget.text | bash -s v2.7.7
 Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content v2.7.7
@@ -50,11 +50,11 @@ Releases 下面 xmake-[version].[win32|win64].zip 的包是不带安装程序的
 
 ::: code-group
 
-```bash [scoop]
+```sh [scoop]
 scoop install xmake
 ```
 
-```bash [winget]
+```sh [winget]
 winget install xmake
 ```
 :::
@@ -65,11 +65,11 @@ winget install xmake
 
 ::: code-group
 
-```bash [mingw64]
+```sh [mingw64]
 pacman -Sy mingw-w64-x86_64-xmake
 ```
 
-```bash [mingw32]
+```sh [mingw32]
 pacman -Sy mingw-w64-i686-xmake
 ```
 
@@ -77,7 +77,7 @@ pacman -Sy mingw-w64-i686-xmake
 
 ### MacOS
 
-```bash
+```sh
 brew install xmake
 ```
 
@@ -85,23 +85,23 @@ brew install xmake
 
 ::: code-group
 
-```bash [Archlinux]
+```sh [Archlinux]
 sudo pacman -Sy xmake
 ```
 
-```bash [Alpine]
+```sh [Alpine]
 sudo apk add xmake
 ```
 
-```bash [ubuntu]
+```sh [ubuntu]
 sudo apt install xmake
 ```
 
-```bash [debian]
+```sh [debian]
 sudo apt install xmake
 ```
 
-```bash [fedora]
+```sh [fedora]
 sudo dnf install xmake
 ```
 
@@ -109,7 +109,7 @@ sudo dnf install xmake
 
 ### Ubuntu PPA
 
-```bash
+```sh
 sudo add-apt-repository ppa:xmake-io/xmake
 sudo apt update
 sudo apt install xmake
@@ -120,7 +120,7 @@ sudo apt install xmake
 1. 参考[这里](https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users)将GURU添加到你的系统仓库
 2. 安装dev-util/xmake
 
-```bash
+```sh
 sudo emerge -a --autounmask dev-util/xmake
 ```
 
@@ -130,7 +130,7 @@ sudo emerge -a --autounmask dev-util/xmake
 
 然后运行这个自安装包。
 
-```bash
+```sh
 sudo chmod 777 ./xmake-x.x.x.gz.run
 ./xmake-x.x.x.gz.run
 ```
@@ -139,13 +139,13 @@ sudo chmod 777 ./xmake-x.x.x.gz.run
 
 由于 BSD 上，已有的 xmake 包名已被占用，只能使用 xmake-io 作为包名来安装。
 
-```bash
+```sh
 pkg install xmake-io
 ```
 
 ### Termux (Android)
 
-```bash
+```sh
 pkg install xmake
 ```
 
@@ -176,7 +176,7 @@ xmake-bundle-v2.9.8.win64.exe
 
 #### 下载源码 {#download-code}
 
-```bash
+```sh
 git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
 ```
@@ -199,14 +199,14 @@ cd ./xmake
 
 ::: code-group
 
-```bash [Linux]
+```sh [Linux]
 ./configure
 make -j4
 ./scripts/get.sh __local__ __install_only__
 source ~/.xmake/profile
 ```
 
-```bash [Windows]
+```sh [Windows]
 cd ./core
 xmake
 ```
@@ -223,27 +223,27 @@ xmake
 
 从 v2.2.3 版本开始，新增了`xmake update`命令，来快速进行自我更新和升级，默认是升级到最新版本，当然也可以指定升级或者回退到某个版本：
 
-```bash
+```sh
 xmake update 2.7.1
 ```
 
 我们也可以指定更新到master/dev分支版本：
 
-```bash
+```sh
 xmake update master
 xmake update dev
 ```
 
 从指定git源更新
 
-```bash
+```sh
 xmake update github:xmake-io/xmake#master
 xmake update gitee:tboox/xmake#dev # gitee镜像
 ```
 
 如果xmake/core没动过，仅仅更新xmake的lua脚本改动，可以加`-s/--scriptonly`快速更新lua脚本
 
-```bash
+```sh
 xmake update -s dev
 ```
 
@@ -253,7 +253,7 @@ xmake update -s dev
 
 创建一个名叫 `hello` 的 `c++` 控制台工程：
 
-```bash
+```sh
 $ xmake create hello
 ```
 
@@ -278,14 +278,14 @@ target("hello")
 
 ## 构建工程 {#build-project}
 
-```bash
+```sh
 $ cd hello
 $ xmake
 ```
 
 ## 运行程序 {#run-program}
 
-```bash
+```sh
 $ xmake run
 ```
 
@@ -293,20 +293,20 @@ $ xmake run
 
 首先你需要切换到 debug 模式去重新编译程序。
 
-```bash
+```sh
 $ xmake config -m debug
 $ xmake
 ```
 
 然后执行下面的命令去开始调试：
 
-```bash
+```sh
 $ xmake run -d hello
 ```
 
 Xmake 将会使用调试器去加载程序运行，目前支持：lldb, gdb, windbg, vsjitdebugger, ollydbg 等各种调试器。
 
-```bash
+```sh
 [lldb]$target create "build/hello"
 Current executable set to 'build/hello' (x86_64).
 [lldb]$b main
@@ -326,7 +326,7 @@ hello`main:
 
 如果想要使用指定的调试器：
 
-```bash
+```sh
 $ xmake f --debugger=gdb
 $ xmake run -d hello
 ```

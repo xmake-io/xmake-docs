@@ -3,7 +3,7 @@
 
 我们也可以通过：`xmake create`命令创建各种常用的空工程来快速开始，具体对于这个命令的介绍以及支持的工程模板，可以敲下面的命令查看：
 
-```bash
+```sh
 xmake create --help
 ```
 
@@ -17,13 +17,13 @@ target("test")
 
 完整例子请执行下面的命令来创建：
 
-```bash
+```sh
 xmake create test
 ```
 
 如果我们想创建 C 语言程序，只需要添加 `-l c` 命令行参数，例如：
 
-```bash
+```sh
 xmake create -l c test
 ```
 
@@ -44,13 +44,13 @@ target("test")
 
 完整例子请执行下面的命令来创建：
 
-```bash
+```sh
 xmake create -t static test
 ```
 
 如果我们想创建 C 语言程序，只需要添加 `-l c` 命令行参数，例如：
 
-```bash
+```sh
 xmake create -l c -t static test
 ```
 
@@ -71,12 +71,12 @@ target("test")
 
 完整例子请执行下面的命令来创建：
 
-```bash
+```sh
 xmake create -t shared test
 ```
 
 如果我们想创建 C 语言程序，只需要添加 `-l c` 命令行参数，例如：
 
-```bash
+```sh
 xmake create -l c -t shared test
 ```
