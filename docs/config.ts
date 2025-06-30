@@ -145,6 +145,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Unity Build Acceleration', link: 'extras/unity-build' },
         { text: 'Auto-scan Sourcecode', link: 'extras/autoscan-sourcecode' },
         { text: 'Try Build 3rd Sourcecode', link: 'extras/trybuild-3rd-sourcecode' },
+        { text: 'Envirnoment Variables', link: 'extras/environment-variables' },
       ]
     },
     {

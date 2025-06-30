@@ -226,6 +226,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Unity 编译加速', link: 'extras/unity-build' },
         { text: '自动扫描源码', link: 'extras/autoscan-sourcecode' },
         { text: '尝试构建第三方源码', link: 'extras/trybuild-3rd-sourcecode' },
+        { text: '环境变量', link: 'extras/environment-variables' },
       ]
     },
     {
