@@ -3,6 +3,8 @@ import './styles.css'
 import 'virtual:group-icons.css'
 
 const hashToRoute = {
+  '#/about/sponsor': '/about/sponsor',
+  '#/zh-cn/about/sponsor': '/zh/about/sponsor',
   '#/zh-cn/about/course': '/zh/about/course'
 }
 
