@@ -6,6 +6,8 @@
 这种方式是全局的，如果我们想要针对特定 target 进行工具链切换，我们需要在 xmake.lua 配置中，通过 [set_toolchains](/zh/api/description/project-target#set-toolchains) 接口来实现。
 :::
 
+如果我们想在 xmake.lua 工程配置文件中去切换它，可以到：[配置工具链](/zh/guide/project-configuration/toolchain-configuration) 进一步查看。
+
 另外，Xmake 还内置提供了一些常用的工具链，可以直接切换使用，但前提是：用户自己已经在系统上安装了对应的工具链环境。
 
 ## Gcc

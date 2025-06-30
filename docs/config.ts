@@ -87,6 +87,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Syntax Description', link: 'project-configuration/syntax-description' },
+        { text: 'Toolchain Configuration', link: 'project-configuration/toolchain-configuration' },
       ]
     },
     {

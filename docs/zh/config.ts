@@ -168,6 +168,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: '语法描述', link: 'project-configuration/syntax-description' },
+        { text: '工具链配置', link: 'project-configuration/toolchain-configuration' },
       ]
     },
     {
