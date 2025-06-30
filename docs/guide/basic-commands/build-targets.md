@@ -1,4 +1,4 @@
-# Build project {#build-project}
+# Build Targets {#build-targets}
 
 We have briefly mentioned before that we can use the `xmake build` command to build a project.
 

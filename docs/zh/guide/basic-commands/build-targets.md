@@ -1,4 +1,4 @@
-# 构建工程 {#build-project}
+# 构建目标 {#build-targets}
 
 之前我们已经简单讲过，可以通过 `xmake build` 命令来构建工程。
 

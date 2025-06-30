@@ -78,7 +78,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'Create Project', link: 'basic-commands/create-project' },
         { text: 'Build Configuration', link: 'basic-commands/build-configuration' },
-        { text: 'Build Project', link: 'basic-commands/build-project' },
+        { text: 'Build Targets', link: 'basic-commands/build-targets' },
         { text: 'Cross Compilation', link: 'basic-commands/cross-compilation' },
         { text: 'Switch Toolchains', link: 'basic-commands/switch-toolchains' },
       ]
