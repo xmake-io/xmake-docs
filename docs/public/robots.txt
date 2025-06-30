@@ -1,3 +1,5 @@
 User-Agent: *
 Allow: /
 Sitemap: https://xmake.io/sitemap.xml
+
+# Algolia-Crawler-Verif: 47A51984C60C423B
