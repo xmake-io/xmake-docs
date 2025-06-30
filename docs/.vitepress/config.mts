@@ -25,7 +25,7 @@ export default defineConfig({
   },
 
   sitemap: {
-    hostname: 'https://newdocs.xmake.io',
+    hostname: 'https://xmake.io',
     transformItems(items) {
       return items.filter((item) => !item.url.includes('migration'))
     }
