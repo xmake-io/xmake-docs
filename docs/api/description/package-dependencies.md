@@ -772,7 +772,8 @@ package("zlib")
 
 Custom download requires the user to fully control the download logic, which will be more complicated, and is not recommended unless necessary.
 
-If you just want to add custom http headers to obtain download authorization, you can see [Set http headers when downloading package](https://xmake.io/#/manual/project_target?id=setting-http-headers-for-package-downloads)
+If you just want to add custom http headers to obtain download authorization,
+you can see [Set http headers when downloading package](/api/description/builtin-policies#package-download-http-headers).
 
 ### Platform Filtering
 

@@ -67,15 +67,15 @@ package("zlib")
 
 当然，有些包依赖源码实现力度，并不能完全跨平台，那么只需对它支持的平台设置安装规则即可。
 
-更多详细的包配置 API 说明见：[包接口文档](https://xmake.io/#/zh-cn/manual/package_dependencies)
+更多详细的包配置 API 说明见：[包接口文档](/zh/api/description/package-dependencies)
 
 ### 扩展配置参数
 
-详情见：[add_configs](https://xmake.io/#/zh-cn/manual/package_dependencies?id=packageadd_configs)
+详情见：[add_configs](/zh/api/description/package-dependencies#add-configs)
 
 ### 内置配置参数
 
-除了可以通过[add_configs](https://xmake.io/#/zh-cn/manual/package_dependencies?id=packageadd_configs)设置一些扩展的配置参数以外，xmake还提供了一些内置的配置参数，可以使用
+除了可以通过[add_configs](/zh/api/description/package-dependencies#add-configs)设置一些扩展的配置参数以外，xmake还提供了一些内置的配置参数，可以使用
 
 #### 启用调试包
 

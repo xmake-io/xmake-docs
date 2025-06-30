@@ -67,7 +67,7 @@ $ xmake
 
 ## 设置工具链bin目录
 
-对于不规则工具链目录结构，靠单纯地[--sdk](https://xmake.io/#/zh-cn/guide/configuration?id=-sdk)选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。
+对于不规则工具链目录结构，靠单纯地[--sdk](#sdk)选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。
 
 例如：一些特殊的交叉工具链的，编译器bin目录，并不在  `/home/toolchains_sdkdir/bin`  这个位置，而是独立到了  `/usr/opt/bin`
 
@@ -305,7 +305,7 @@ toolchain("myclang")
     -- ...
 ```
 
-关于这块的详情介绍，可以到[自定义工具链](https://xmake.io/#/zh-cn/manual/custom_toolchain)章节查看
+关于这块的详情介绍，可以到[自定义工具链](/zh/api/description/custom-toolchain)章节查看
 
 更多详情见：[#780](https://github.com/xmake-io/xmake/issues/780)
 

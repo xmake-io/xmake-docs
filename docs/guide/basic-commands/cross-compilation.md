@@ -67,7 +67,7 @@ If the above automatic detection fails to completely compile for some tool chain
 
 ## Set toolchain bin directory
 
-For the irregular tool chain directory structure, by simply setting the [--sdk](https://xmake.io/#/zh-cn/guide/configuration?id=-sdk) option, it is impossible to completely detect the passing situation Next, you can continue to set the location of the bin directory of the toolchain through this option.
+For the irregular tool chain directory structure, by simply setting the [--sdk](#sdk) option, it is impossible to completely detect the passing situation Next, you can continue to set the location of the bin directory of the toolchain through this option.
 
 For example: for some special cross toolchains, the compiler bin directory is not in the `/home/toolchains_sdkdir/bin` position, but is instead in `/usr/opt/bin`
 
@@ -305,7 +305,7 @@ toolchain("myclang")
     - ...
 ```
 
-For details about this piece, you can go to the [Custom Toolchain](https://xmake.io/#/manual/custom_toolchain).
+For details about this piece, you can go to the [Custom Toolchain](/api/description/custom-toolchain).
 
 For more details, please see: [#780](https://github.com/xmake-io/xmake/issues/780)
 

@@ -17,11 +17,11 @@ $ xmake f --qt=~/Qt/Qt5.9.1
 ```
 
 The MingW SDK specified above uses the environment that comes with the Tools directory under Qt. Of course, if there are other third-party MingW compilation environments, they can also be specified manually. 
-For details, please refer to: [MingW Configuration](https://xmake.io/#/guide/configuration?id=mingw).
+For details, please refer to: [MingW Configuration](/guide/basic-commands/build-configuration#mingw).
 
 For more details, please refer to: [#160](https://github.com/xmake-io/xmake/issues/160)
 
-In addition, currently xmake also supports Qt/Wasm. For details, see: [Wasm Configuration](https://xmake.io/#/guide/configuration?id=wasm)
+In addition, currently xmake also supports Qt/Wasm. For details, see: [Wasm Configuration](/guide/basic-commands/build-configuration#wasm-webassembly)
 
 ```sh
 $ xmake f -p wasm

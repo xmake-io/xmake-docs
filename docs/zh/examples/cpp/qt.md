@@ -22,11 +22,12 @@ $ xmake f --qt=~/Qt/Qt5.9.1
 $ xmake f -p mingw --sdk=C:\Qt\Qt5.10.1\Tools\mingw530_32
 ```
 
-上述指定的 MingW SDK 用的是Qt下Tools目录自带的环境，当然如果有其他第三方 MingW 编译环境，也可以手动指定, 具体可以参考：[MingW 编译配置](https://xmake.io/#/zh-cn/guide/configuration?id=mingw)。
+上述指定的 MingW SDK 用的是Qt下Tools目录自带的环境，当然如果有其他第三方 MingW 编译环境，也可以手动指定,
+具体可以参考：[MingW 编译配置](/zh/guide/basic-commands/build-configuration#mingw)。
 
 更多详情可以参考：[#160](https://github.com/xmake-io/xmake/issues/160)
 
-另外，当前xmake也支持Qt/Wasm，详情见：[Wasm 配置](https://xmake.io/#/zh-cn/guide/configuration?id=wasm)
+另外，当前xmake也支持Qt/Wasm，详情见：[Wasm 配置](/zh/guide/basic-commands/build-configuration#wasm-webassembly)
 
 ```sh
 $ xmake f -p wasm
