@@ -166,7 +166,7 @@ add_linkdirs("/tmp")
 
 For more details, please refer to the document: [add_links](/api/description/project-target#add-links).
 
-## Configure system link library
+## Configure system link library {#configure-syslinks}
 
 `add_links` is usually used to link user-generated libraries, while `add_syslinks` can add system libraries without the need for an additional `add_linkdirs`.
 
@@ -203,6 +203,27 @@ For more details, please refer to the documentation:
 - [add_cflags](/api/description/project-target#add-cflags)
 - [add_cxflags](/api/description/project-target#add-cxflags)
 - [add_cxxflags](/api/description/project-target#add-cxxflags)
+
+## Configure target dependency {#configure-targetdeps}
+
+We can configure the dependency between two target programs through the [add_deps](/api/description/project-target#add-deps) interface.
+
+This is usually used in scenarios where an executable program depends on a static library (or dynamic library), for example:
+
+```lua
+target("foo")
+    set_kind("static")
+    add_files("src/foo.cpp")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.cpp")
+```
+
+Since the dependency between test and foo library programs is configured through `add_deps`, when we compile test, the foo dependency library will be automatically compiled and automatically linked to it, without the need for additional `add_links` and `add_linkdirs` configurations.
+
+For more information about dependency configuration, please refer to the document: [add_deps](/api/description/project-target#add-deps).
 
 ## Others
 

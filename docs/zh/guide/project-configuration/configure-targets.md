@@ -205,6 +205,27 @@ add_cxflags("-DDEBUG")
 - [add_cxflags](/zh/api/description/project-target#add-cxflags)
 - [add_cxxflags](/zh/api/description/project-target#add-cxxflags)
 
+## 配置目标依赖 {#configure-targetdeps}
+
+我们可以通过 [add_deps](/zh/api/description/project-target#add-deps) 接口来配置两个目标程序间的依赖。
+
+这通常可用于一个可执行程序依赖一个静态库（或者动态库）的场景，例如：
+
+```lua
+target("foo")
+    set_kind("static")
+    add_files("src/foo.cpp")
+
+target("test")
+    set_kind("binary")
+    add_deps("foo")
+    add_files("src/main.cpp")
+```
+
+由于 test 和 foo 库程序之间通过 `add_deps` 配置了依赖关系，当我们编译 test 的时候，会自动编译 foo 依赖库，并且也会自动的去链接它，而不再需要额外的 `add_links` 和 `add_linkdirs` 配置。
+
+更多关于依赖的配置说明，请参考文档：[add_deps](/zh/api/description/project-target#add-deps)。
+
 ## 其他
 
 更多关于目标配置 API 的完整说明，可以查看文档：[工程目标 API 手册](/zh/api/description/project-target)。
