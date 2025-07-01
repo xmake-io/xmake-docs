@@ -37,7 +37,6 @@ For example, define an option to enable test:
 ```lua
 option("test")
     set_default(false)
-    set_showmenu(true)
     add_defines("TEST")
 ```
 
@@ -147,7 +146,6 @@ For the graphical menu configuration of `xmake f --menu` only, a list of option 
 ```lua
 option("test")
     set_default("b")
-    set_showmenu(true)
     set_values("a", "b", "c")
 ```
 
@@ -187,7 +185,6 @@ If it is an option of type `string`, it can be used directly in built-in variabl
 -- define a path configuration option, using the temporary directory by default
 option("rootdir")
     set_default("$(tmpdir)")
-    set_showmenu(true)
 
 target("test")
     -- add source files in the specified options directory
@@ -246,19 +243,15 @@ E.g:
 
 ```lua
 option("test1")
-    set_showmenu(true)
     set_category("test")
 
 option("test2")
-    set_showmenu(true)
     set_category("test")
 
 option("demo1")
-    set_showmenu(true)
     set_category("demo")
 
 option("demo2")
-    set_showmenu(true)
     set_category("demo")
 ```
 
@@ -283,26 +276,22 @@ In version 2.1.9, the hierarchical path name `set_category("root/submenu/submenu
 -- 'boolean' option
 option("test1")
     set_default(true)
-    set_showmenu(true)
     set_category("root menu/test1")
 
 -- 'choice' option with values: "a", "b", "c"
 option("test2")
     set_default("a")
     set_values("a", "b", "c")
-    set_showmenu(true)
     set_category("root menu/test2")
 
 -- 'string' option
 option("test3")
     set_default("xx")
-    set_showmenu(true)
     set_category("root menu/test3/test3")
 
 -- 'number' option
 option("test4")
     set_default(6)
-    set_showmenu(true)
     set_category("root menu/test4")
 ```
 
@@ -328,7 +317,6 @@ When the option menu is displayed, the description on the right is used to help 
 ```lua
 option("test")
     set_default(false)
-    set_showmenu(true)
     set_description("Enable or disable test")
 ```
 
@@ -346,7 +334,6 @@ This interface also supports multi-line display and outputs more detailed descri
 ```lua
 option("mode")
     set_default("debug")
-    set_showmenu(true)
     set_description("Set build mode",
                     " - debug",
                     " - release",

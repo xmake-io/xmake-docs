@@ -38,7 +38,6 @@ option("test2")
 ```lua
 option("test")
     set_default(false)
-    set_showmenu(true)
     add_defines("TEST")
 ```
 
@@ -144,7 +143,6 @@ option("test")
 ```lua
 option("test")
     set_default("b")
-    set_showmenu(true)
     set_values("a", "b", "c")
 ```
 
@@ -184,7 +182,6 @@ option("test")
 -- 定义一个路径配置选项，默认使用临时目录
 option("rootdir")
     set_default("$(tmpdir)")
-    set_showmenu(true)
 
 target("test")
     -- 添加指定选项目录中的源文件
@@ -243,19 +240,15 @@ Options:
 
 ```lua
 option("test1")
-    set_showmenu(true)
     set_category("test")
 
 option("test2")
-    set_showmenu(true)
     set_category("test")
 
 option("demo1")
-    set_showmenu(true)
     set_category("demo")
 
 option("demo2")
-    set_showmenu(true)
     set_category("demo")
 ```
 
@@ -280,26 +273,22 @@ Options:
 -- 'boolean' option
 option("test1")
     set_default(true)
-    set_showmenu(true)
     set_category("root menu/test1")
 
 -- 'choice' option with values: "a", "b", "c"
 option("test2")
     set_default("a")
     set_values("a", "b", "c")
-    set_showmenu(true)
     set_category("root menu/test2")
 
 -- 'string' option
 option("test3")
     set_default("xx")
-    set_showmenu(true)
     set_category("root menu/test3/test3")
 
 -- 'number' option
 option("test4")
     set_default(6)
-    set_showmenu(true)
     set_category("root menu/test4")
 ```
 
@@ -325,7 +314,6 @@ option("test4")
 ```lua
 option("test")
     set_default(false)
-    set_showmenu(true)
     set_description("Enable or disable test")
 ```
 
@@ -343,7 +331,6 @@ Options:
 ```lua
 option("mode")
     set_default("debug")
-    set_showmenu(true)
     set_description("Set build mode",
                     "    - debug",
                     "    - release",
