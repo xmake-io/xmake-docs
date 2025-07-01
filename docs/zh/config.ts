@@ -161,6 +161,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: '编译配置', link: 'basic-commands/build-configuration' },
         { text: '构建目标', link: 'basic-commands/build-targets' },
         { text: '运行目标', link: 'basic-commands/run-targets' },
+        { text: '安装卸载', link: 'basic-commands/install-and-uninstall' },
         { text: '交叉编译', link: 'basic-commands/cross-compilation' },
         { text: '切换工具链', link: 'basic-commands/switch-toolchains' },
       ]

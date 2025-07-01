@@ -80,6 +80,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Build Configuration', link: 'basic-commands/build-configuration' },
         { text: 'Build Targets', link: 'basic-commands/build-targets' },
         { text: 'Run Targets', link: 'basic-commands/run-targets' },
+        { text: 'Install and Uninstall', link: 'basic-commands/install-and-uninstall' },
         { text: 'Cross Compilation', link: 'basic-commands/cross-compilation' },
         { text: 'Switch Toolchains', link: 'basic-commands/switch-toolchains' },
       ]
