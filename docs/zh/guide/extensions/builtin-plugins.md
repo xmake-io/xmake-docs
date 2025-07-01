@@ -1172,7 +1172,7 @@ $ xmake macro --import=/xxx/macro.lua [macroname]
 $ xmake macro [.|macroname]
 ```
 
-### 内置的宏脚本
+### 内置的宏脚本 {#builtin-macro-scripts}
 
 XMake 提供了一些内置的宏脚本，来简化我们的日常开发工作。
 
