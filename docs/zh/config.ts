@@ -172,6 +172,9 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: '语法描述', link: 'project-configuration/syntax-description' },
+        { text: '配置目标', link: 'project-configuration/configure-targets' },
+        { text: '定义选项', link: 'project-configuration/define-options' },
+        { text: '添加依赖包', link: 'project-configuration/add-packages' },
         { text: '多级目录配置', link: 'project-configuration/multi-level-directories' },
         { text: '工具链配置', link: 'project-configuration/toolchain-configuration' },
       ]

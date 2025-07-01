@@ -91,6 +91,9 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Syntax Description', link: 'project-configuration/syntax-description' },
+        { text: 'Configure Targets', link: 'project-configuration/configure-targets' },
+        { text: 'Define Options', link: 'project-configuration/define-options' },
+        { text: 'Add Packages', link: 'project-configuration/add-packages' },
         { text: 'Multi-level Directories', link: 'project-configuration/multi-level-directories' },
         { text: 'Toolchain Configuration', link: 'project-configuration/toolchain-configuration' },
       ]
