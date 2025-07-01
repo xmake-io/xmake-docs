@@ -96,6 +96,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Add Packages', link: 'project-configuration/add-packages' },
         { text: 'Multi-level Directories', link: 'project-configuration/multi-level-directories' },
         { text: 'Toolchain Configuration', link: 'project-configuration/toolchain-configuration' },
+        { text: 'Namespace Isolation', link: 'project-configuration/namespace-isolation' },
       ]
     },
     {

@@ -177,6 +177,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: '添加依赖包', link: 'project-configuration/add-packages' },
         { text: '多级目录配置', link: 'project-configuration/multi-level-directories' },
         { text: '工具链配置', link: 'project-configuration/toolchain-configuration' },
+        { text: '命名空间隔离', link: 'project-configuration/namespace-isolation' },
       ]
     },
     {
