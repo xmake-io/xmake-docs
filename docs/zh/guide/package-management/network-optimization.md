@@ -1,10 +1,10 @@
 # 网络优化 {#network-optimization}
 
-如果由于网络不稳定，导致下载包速度很慢或者下载失败，我们可以通过的下面的一些方式来解决。
+如果由于网络不稳定，导致下载包速度很慢或者下载失败，我们可以通过下面的一些方式来解决。
 
 ## 手动下载 {#manual-download}
 
-默认xmake会调用curl, wget等工具来下载，用户也可以手动用自己的下载器下载（也可以使用代理），把下载后的包放到自己的目录下，比如: `/download/packages/zlib-v1.0.tar.gz`
+默认 xmake 会调用 curl、wget 等工具来下载，用户也可以手动用自己的下载器下载（也可以使用代理），把下载后的包放到自己的目录下，比如：`/download/packages/zlib-v1.0.tar.gz`
 
 然后使用下面的命令，设置包下载的搜索目录：
 
@@ -12,9 +12,9 @@
 $ xmake g --pkg_searchdirs="/download/packages"
 ```
 
-然后重新执行xmake编译时候，xmake会优先从`/download/packages`找寻源码包，然后直接使用，不再自己下载了。
+然后重新执行 xmake 编译时，xmake 会优先从 `/download/packages` 找寻源码包，然后直接使用，不再自己下载了。
 
-至于找寻的包名是怎样的呢，可以通过下面的命令查看：
+至于查找的包名是怎样的呢，可以通过下面的命令查看：
 
 ```sh
 $ xmake require --info zlib
@@ -26,7 +26,7 @@ $ xmake require --info zlib
 
 ## 设置代理 {#proxy-setting}
 
-如果觉得手动下载还是麻烦，我们也可以让xmake直接走代理。
+如果觉得手动下载还是麻烦，我们也可以让 xmake 直接走代理。
 
 ```sh
 $ xmake g --proxy="socks5://127.0.0.1:1086"
@@ -38,9 +38,9 @@ $ xmake g --help
                                  - xmake g --proxy='socks5://host:port'
 ```
 
-`--proxy`参数指定代理协议和地址，具体语法可以参考curl的，通常可以支持http, https, socks5等协议，但实际支持力度依赖curl, wget和git，比如wget就不支持socks5协议。
+--proxy 参数指定代理协议和地址，具体语法可以参考 curl 的，通常可以支持 http、https、socks5 等协议，但实际支持力度依赖 curl、wget 和 git，比如 wget 就不支持 socks5 协议。
 
-我们可以通过下面的参数指定哪些host走代理，如果没设置，默认全局走代理。
+我们可以通过下面的参数指定哪些 host 走代理，如果没设置，默认全局走代理。
 
 ```sh
 --proxy_hosts=PROXY_HOSTS    Only enable proxy for the given hosts list, it will enable all if be unset,
@@ -49,11 +49,11 @@ $ xmake g --help
                                  - xmake g --proxy_hosts='github.com,gitlab.*,*.xmake.io'
 ```
 
-如果设置了hosts列表，那么之后这个列表里面匹配的host才走代理。。
+如果设置了 hosts 列表，那么之后这个列表里面匹配的 host 才走代理。
 
-`--proxy_host`支持多个hosts设置，逗号分隔，并且支持基础的模式匹配 *.github.com， 以及其他lua模式匹配规则也支持
+--proxy_host 支持多个 hosts 设置，逗号分隔，并且支持基础的模式匹配 *.github.com，以及其他 lua 模式匹配规则也支持。
 
-如果觉得上面的hosts模式配置还不够灵活，我们也可以走pac的自动代理配置规则：
+如果觉得上面的 hosts 模式配置还不够灵活，我们也可以走 pac 的自动代理配置规则：
 
 ```sh
 --proxy_pac=PROXY_PAC    Set the auto proxy configuration file. (default: pac.lua)
@@ -70,9 +70,9 @@ $ xmake g --help
 如果有proxy_hosts优先走hosts配置，没有的话才走pac配置。
 :::
 
-pac的默认路径：~/.xmake/pac.lua，如果--proxy被设置，并且这个文件存在，就会自动走pac，如果不存在，也没hosts，那就全局生效代理。
+pac 的默认路径：~/.xmake/pac.lua，如果 --proxy 被设置，并且这个文件存在，就会自动走 pac，如果不存在，也没 hosts，那就全局生效代理。
 
-也可以手动指定pac全路径
+也可以手动指定 pac 全路径。
 
 ```sh
 $ xmake g --proxy_pac=/xxxx/xxxxx_pac.lua
@@ -88,7 +88,7 @@ function main(url, host)
 end
 ```
 
-如果返回true，那么这个url和host就是走的代理，不返回或者返回false，就是不走代理。
+如果返回 true，那么这个 url 和 host 就是走的代理，不返回或者返回 false，就是不走代理。
 
 这块的具体详情见：https://github.com/xmake-io/xmake/issues/854
 
@@ -110,4 +110,3 @@ end
 $ xrepo install libpng
 > curl https://hub.fastgit.org/glennrp/libpng/archive/v1.6.37.zip -o v1.6.37.zip
 ```
-
