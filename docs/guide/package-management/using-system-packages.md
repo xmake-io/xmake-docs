@@ -2,7 +2,7 @@
 
 ## Find using system packages
 
-Xmake unifies the use of remote packages and system packages, and all use the `add_requires("zlib")` interface to describe the integration, and the default configuration method, it will first find the library from the system, if not, it will automatically download and install integrated.
+Xmake unifies the use of remote packages and system packages, and all use the `add_requires("zlib")` interface to describe the integration. With the default configuration method, it will first find the library from the system; if not, it will automatically download and install it for integration.
 
 And if we just want to find and use the system library and don't want to download it remotely, we can configure it like this:
 
@@ -50,5 +50,5 @@ xmake l find_package conan::OpenSSL/1.0.2g
 ```
 
 ::: tip NOTE
-It should be noted that if the find_package command is executed in the project directory with xmake.lua, there will be a cache. If the search fails, the next lookup will also use the cached result. If you want to force a retest every time, Please switch to the non-project directory to execute the above command.
+It should be noted that if the find_package command is executed in the project directory with xmake.lua, there will be a cache. If the search fails, the next lookup will also use the cached result. If you want to force a retest every time, please switch to a non-project directory to execute the above command.
 :::

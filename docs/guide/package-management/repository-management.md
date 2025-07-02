@@ -1,7 +1,6 @@
-
 # Repository Management
 
-We can use `xmake repo` to manage repositories, and we also provide a more convenient independent `xrepo` package manager command to install, uninstall, find and manage packages globally.
+We can use `xmake repo` to manage repositories, and we also provide a more convenient, independent `xrepo` package manager command to install, uninstall, find, and manage packages globally.
 
 For detailed documentation, see: [Getting Started with Xrepo Commands](/guide/package-management/xrepo-cli)
 
@@ -9,7 +8,7 @@ For detailed documentation, see: [Getting Started with Xrepo Commands](/guide/pa
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git
 ```
 
-We can also remove a repository that has already been installed:
+We can also remove a repository that has already been added:
 
 ```sh
 $ xmake repo --remove myrepo

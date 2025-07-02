@@ -4,18 +4,18 @@ outline: deep
 
 # Using Official Packages
 
-This has been initially supported after the 2.2.2 version, the usage is much simpler, just set the corresponding dependency package, for example:
+This has been initially supported after version 2.2.2. The usage is much simpler; just set the corresponding dependency package, for example:
 
 ```lua
 add_requires("tbox 1.6.*", "libpng ~1.16", "zlib")
 
 target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_packages("tbox", "libpng", "zlib")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("tbox", "libpng", "zlib")
 ```
 
-The above `add_requires` is used to describe the dependencies required by the current project, and `add_packages` is used to apply dependencies to the test target. Only settings will automatically add links, linkdirs, includedirs, etc.
+The above `add_requires` is used to describe the dependencies required by the current project, and `add_packages` is used to apply dependencies to the test target. Only these settings will automatically add links, linkdirs, includedirs, etc.
 
 Then directly compile:
 
@@ -33,7 +33,7 @@ For more information and progress on package dependency management see the relat
 
 * Semantic version support, for example: ">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"
 * Provide multi-repository management support such as official package repository, self-built private repository, project built-in repository, etc.
-* Cross-platform package compilation integration support (packages of different platforms and different architectures can be installed at the same time, fast switching use)
+* Cross-platform package compilation integration support (packages of different platforms and different architectures can be installed at the same time, fast switching and use)
 * Debug dependency package support, source code debugging
 
 ## Dependency Package Processing Mechanism
@@ -44,7 +44,7 @@ Here we briefly introduce the processing mechanism of the entire dependency pack
 <img src="/assets/img/index/package_arch.png" width="80%" />
 </div>
 
-1. Priority check for the current system directory, whether there is a specified package under the third-party package management, if there is a matching package, then you do not need to download and install (of course you can also set the system package)
+1. Priority check for the current system directory, whether there is a specified package under the third-party package management. If there is a matching package, then you do not need to download and install (of course you can also set the system package)
 2. Retrieve the package matching the corresponding version, then download, compile, and install (Note: installed in a specific xmake directory, will not interfere with the system library environment)
 3. Compile the project, and finally automatically link the enabled dependencies
 
@@ -87,7 +87,7 @@ add_requires("tbox", {optional = true})
 
 ### Disable System Library
 
-With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library and the library provided by the third-party package management, then you can set:
+With the default settings, xmake will first check to see if the system library exists (if no version is required). If the user does not want to use the system library or the library provided by third-party package management, then you can set:
 
 ```lua
 add_requires("tbox", {system = false})
@@ -101,20 +101,20 @@ If we want to debug the dependencies at the same time, we can set them to use th
 add_requires("tbox", {debug = true})
 ```
 
-If the current package does not support debug compilation, you can submit the modified compilation rules in the repository to support the debug, for example:
+If the current package does not support debug compilation, you can submit the modified compilation rules in the repository to support debug, for example:
 
 ```lua
 package("openssl")
-    on_install("linux", "macosx", function (package)
-        os.vrun("./config %s --prefix=\"%s\"", package:debug() and "--debug" or "", package:installdir())
-        os.vrun("make -j4")
-        os.vrun("make install")
-    end)
+    on_install("linux", "macosx", function (package)
+        os.vrun("./config %s --prefix=\"%s\"", package:debug() and "--debug" or "", package:installdir())
+        os.vrun("make -j4")
+        os.vrun("make install")
+    end)
 ```
 
 ### Passing additional compilation information to the package
 
-Some packages have various compile options at compile time, and we can pass them in. Of course, the package itself supports:
+Some packages have various compile options at compile time, and we can pass them in, provided the package itself supports it:
 
 ```lua
 add_requires("tbox", {configs = {small=true}})
@@ -128,30 +128,30 @@ such as:
 
 ```sh
 xmake require --info spdlog
-    require(spdlog):
-      -> requires:
-         -> plat: macosx
-         -> arch: x86_64
-         -> configs:
-            -> header_only: true
-            -> shared: false
-            -> vs_runtime: MT
-            -> debug: false
-            -> fmt_external: true
-            -> noexcept: false
-      -> configs:
-         -> header_only: Use header only (default: true)
-         -> fmt_external: Use external fmt library instead of bundled (default: false)
-         -> noexcept: Compile with -fno-exceptions. Call abort() on any spdlog exceptions (default: false)
-      -> configs (builtin):
-         -> debug: Enable debug symbols. (default: false)
-         -> shared: Enable shared library. (default: false)
-         -> cflags: Set the C compiler flags.
-         -> cxflags: Set the C/C++ compiler flags.
-         -> cxxflags: Set the C++ compiler flags.
-         -> asflags: Set the assembler flags.
-         -> vs_runtime: Set vs compiler runtime. (default: MT)
-            -> values: {"MT","MD"}
+    require(spdlog):
+      -> requires:
+          -> plat: macosx
+          -> arch: x86_64
+          -> configs:
+             -> header_only: true
+             -> shared: false
+             -> vs_runtime: MT
+             -> debug: false
+             -> fmt_external: true
+             -> noexcept: false
+      -> configs:
+          -> header_only: Use header only (default: true)
+          -> fmt_external: Use external fmt library instead of bundled (default: false)
+          -> noexcept: Compile with -fno-exceptions. Call abort() on any spdlog exceptions (default: false)
+      -> configs (builtin):
+          -> debug: Enable debug symbols. (default: false)
+          -> shared: Enable shared library. (default: false)
+          -> cflags: Set the C compiler flags.
+          -> cxflags: Set the C/C++ compiler flags.
+          -> cxxflags: Set the C++ compiler flags.
+          -> asflags: Set the assembler flags.
+          -> vs_runtime: Set vs compiler runtime. (default: MT)
+             -> values: {"MT","MD"}
 ```
 
 Among them, configs is the configurable parameters provided by the spdlog package itself, and the configs part with builtin below is the built-in configuration parameters that all packages will have.
@@ -179,7 +179,7 @@ package("zlib")
 
 In addition, there is another way that the user passes `{verify = false}` configuration to `add_requires` to force the file integrity check of the package to be ignored, so that the sha256 value is not needed, so any version of the package can be installed.
 
-Of course, there will be a certain degree of security and the risk of incomplete packages, which requires users to choose and evaluate.
+Of course, there will be a certain degree of security risk and the risk of incomplete packages, which requires users to choose and evaluate.
 
 ```lua
 add_requires("zlib 1.2.11", {verify = false})
@@ -196,7 +196,7 @@ The compilation flags for external header files are enabled by default as follow
 -isystem /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
 ```
 
-Manually turn off the compilation flags of external external header files as follows:
+Manually turn off the compilation flags of external header files as follows:
 
 ```lua
 add_requires("zlib 1.x", {external = false})
@@ -236,13 +236,13 @@ If we just want to add one or two private packages, this time to build a git rep
 
 ```
 projectdir
-  - myrepo
-    - packages
-      - t/tbox/xmake.lua
-      - z/zlib/xmake.lua
-  - src
-    - main.c
-  - xmake.lua
+  - myrepo
+    - packages
+      - t/tbox/xmake.lua
+      - z/zlib/xmake.lua
+  - src
+    - main.c
+  - xmake.lua
 ```
 
 The above myrepo directory is your own private package repository, built into your own project, and then add this repository location in xmake.lua:
@@ -258,29 +258,29 @@ We can even build a package without directly building a package description into
 ```lua
 package("libjpeg")
 
-    set_urls("http://www.ijg.org/files/jpegsrc.$(version).tar.gz")
+    set_urls("http://www.ijg.org/files/jpegsrc.$(version).tar.gz")
 
-    add_versions("v9c", "650250979303a649e21f87b5ccd02672af1ea6954b911342ea491f351ceb7122")
+    add_versions("v9c", "650250979303a649e21f87b5ccd02672af1ea6954b911342ea491f351ceb7122")
 
-    on_install("windows", function (package)
-        os.mv("jconfig.vc", "jconfig.h")
-        os.vrun("nmake -f makefile.vc")
-        os.cp("*.h", package:installdir("include"))
-        os.cp("libjpeg.lib", package:installdir("lib"))
-    end)
+    on_install("windows", function (package)
+        os.mv("jconfig.vc", "jconfig.h")
+        os.vrun("nmake -f makefile.vc")
+        os.cp("*.h", package:installdir("include"))
+        os.cp("libjpeg.lib", package:installdir("lib"))
+    end)
 
-    on_install("macosx", "linux", function (package)
-        import("package.tools.autoconf").install(package)
-    end)
+    on_install("macosx", "linux", function (package)
+        import("package.tools.autoconf").install(package)
+    end)
 
 package_end()
 
 add_requires("libjpeg")
 
 target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_packages("libjpeg")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("libjpeg")
 ```
 
 ## Dependent package lock and upgrade

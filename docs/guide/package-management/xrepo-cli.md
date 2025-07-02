@@ -10,7 +10,7 @@ Xrepo is a cross-platform C/C++ package manager based on [Xmake](https://github.
 
 It is based on the runtime provided by xmake, but it is a complete and independent package management program. Compared with package managers such as vcpkg/homebrew, xrepo can provide C/C++ packages for more platforms and architectures at the same time.
 
-And it also supports multi-version semantic selection. In addition, it is also a decentralized distributed repository. It not only provides the official [xmake-repo](https://github.com/xmake-io/xmake-repo) repository, It also supports users to build multiple private repositorys.
+And it also supports multi-version semantic selection. In addition, it is also a decentralized distributed repository. It not only provides the official [xmake-repo](https://github.com/xmake-io/xmake-repo) repository, it also supports users to build multiple private repositories.
 
 At the same time, xrepo also supports installing packages from third-party package managers such as vcpkg/homebrew/conan, and provides unified and consistent library link information to facilitate integration and docking with third-party projects.
 
@@ -20,13 +20,13 @@ If you want to know more, please refer to: [Documents](https://xmake.io), [Githu
 
 ## Installation
 
-We only need install xmake to use the xrepo command. About the installation of xmake, we can see: [Xmake Installation Document](/guide/quick-start.html#installation).
+We only need to install xmake to use the xrepo command. About the installation of xmake, we can see: [Xmake Installation Document](/guide/quick-start.html#installation).
 
 ## Supported platforms
 
 * Windows (x86, x64)
 * macOS (i386, x86_64, arm64)
-* Linux (i386, x86_64, cross-toolchains ..)
+* Linux (i386, x86_64, cross-toolchains, ...)
 * *BSD (i386, x86_64)
 * Android (x86, x86_64, armeabi, armeabi-v7a, arm64-v8a)
 * iOS (armv7, armv7s, arm64, i386, x86_64)
@@ -93,7 +93,7 @@ $ xrepo install -p cross --sdk=/xxx/arm-linux-musleabi-cross zlib
 $ xrepo install -m debug zlib
 ```
 
-#### Install the package with dynamic library
+#### Install the package with a dynamic library
 
 ```sh
 $ xrepo install -k shared zlib
@@ -106,7 +106,7 @@ $ xrepo install -f "vs_runtime='MD'" zlib
 $ xrepo install -f "regex=true,thread=true" boost
 ```
 
-#### Install packages from third-party package manager
+#### Install packages from a third-party package manager
 
 ```sh
 $ xrepo install brew::zlib

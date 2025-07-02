@@ -1,9 +1,8 @@
-
 # Using third-party packages
 
-After version 2.2.5, xmake supports support for dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib and etc.
+After version 2.2.5, xmake supports dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib, etc.
 
-## Using homebrew dependency package
+## Using Homebrew dependency package
 
 ```lua
 add_requires("brew::zlib", {alias = "zlib"})
@@ -15,7 +14,7 @@ target("test")
     add_packages("pcre2", "zlib")
 ```
 
-## Using vcpkg dependency package
+## Using Vcpkg dependency package
 
 ```lua
 add_requires("vcpkg::zlib", "vcpkg::pcre2")
@@ -46,7 +45,7 @@ e.g:
 add_requires("vcpkg::boost[core]")
 ```
 
-After v2.6.3, xmake supports the new manifest mode of vcpkg, through which we can support version selection of vcpkg package, for example:
+After v2.6.3, xmake supports the new manifest mode of vcpkg, through which we can support version selection of vcpkg packages, for example:
 
 ```lua
 add_requires("vcpkg::zlib 1.2.11")
@@ -59,7 +58,7 @@ target("test")
      add_packages("vcpkg::zlib", "vcpkg::fmt", "vcpkg::libpng")
 ```
 
-After v2.6.8 it is also possible to additionally configure private repositories, which is only available in manifest mode.
+After v2.6.8, it is also possible to additionally configure private repositories, which is only available in manifest mode.
 
 ```lua
 local registries = {
@@ -75,7 +74,7 @@ local registries = {
 add_requires("vcpkg::skrgamenetworkingsockets >=1.4.0+1", {configs = {registries = registries}})
 ```
 
-## Using conan dependency package
+## Using Conan dependency package
 
 ```lua
 add_requires("conan::zlib/1.2.11", {alias = "zlib", debug = true})
@@ -107,14 +106,14 @@ please input: y (y/n)
 [100%]: linking.release test
 ```
 
-Custom conan/settings:
+Custom Conan/settings:
 
 ```lua
 add_requires("conan::poco/1.10.0", {alias = "poco",
     configs = {settings = {"compiler=gcc", "compiler.libcxx=libstdc++11"}}})
 ```
 
-Some other conan related configuration items:
+Some other Conan related configuration items:
 
 ```
 {
@@ -127,7 +126,7 @@ Some other conan related configuration items:
 }
 ```
 
-## Using conda dependency package
+## Using Conda dependency package
 
 ```lua
 add_requires("conda::zlib 1.2.11", {alias = "zlib"})
@@ -138,7 +137,7 @@ target("test")
      add_packages("zlib")
 ```
 
-## Using pacman dependency package
+## Using Pacman dependency package
 
 We support not only the installation and integration of the pacman package on archlinux, but also the installation and integration of the mingw x86_64/i386 package of pacman on msys2.
 
@@ -152,7 +151,7 @@ target("test")
      add_packages("zlib", "libpng")
 ```
 
-On archlinux:
+On Arch Linux:
 
 ```sh
 xmake
@@ -165,7 +164,7 @@ xmake f -p mingw -a [x86_64|i386]
 xmake
 ```
 
-## Using clib dependency package
+## Using Clib dependency package
 
 Clib is a source-based dependency package manager. The dependent package is downloaded directly to the corresponding library source code, integrated into the project to compile, rather than binary library dependencies.
 
@@ -181,9 +180,9 @@ target("test")
     add_packages("bytes")
 ```
 
-## Using dub/dlang dependency package
+## Using Dub/Dlang dependency package
 
-xmake also supports dlang's dub package manager and integrates dlang's dependent packages to use.
+xmake also supports Dlang's dub package manager and integrates Dlang's dependent packages to use.
 
 ```lua
 add_rules("mode.debug", "mode.release")

@@ -2,7 +2,7 @@
 
 CMake wrapper for [Xrepo](https://xrepo.xmake.io/) C and C++ package manager.
 
-This allows using CMake to build your project, while using Xrepo to manage
+This allows you to use CMake to build your project, while using Xrepo to manage
 dependent packages. This project is partially inspired by
 [cmake-conan](https://github.com/conan-io/cmake-conan).
 
@@ -34,8 +34,8 @@ xrepo_package(
 
 Some of the function arguments correspond directly to Xrepo command options.
 
-`xrepo_package` adds package install directory to `CMAKE_PREFIX_PATH`. So `find_package`
-can be used. If `CMAKE_MINIMUM_REQUIRED_VERSION` >= 3.1, cmake `PkgConfig` will also search
+`xrepo_package` adds the package install directory to `CMAKE_PREFIX_PATH`. So `find_package`
+can be used. If `CMAKE_MINIMUM_REQUIRED_VERSION` >= 3.1, CMake `PkgConfig` will also search
 for pkgconfig files under package install directories.
 
 After calling `xrepo_package(foo)`, there are three ways to use `foo` package:
@@ -43,7 +43,7 @@ After calling `xrepo_package(foo)`, there are three ways to use `foo` package:
 1. Call `find_package(foo)` if package provides cmake config-files.
     - Refer to CMake [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) documentation for more details.
 2. If the package does not provide cmake config files or find modules
-   - Following variables can be used to use the pacakge (variable names following cmake
+   - Following variables can be used to use the package (variable names following CMake
      find modules [standard variable names](https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html#standard-variable-names))
      - `foo_INCLUDE_DIRS`
      - `foo_LIBRARY_DIRS`
@@ -82,8 +82,8 @@ xrepo_target_packages(
     to link, pass `NO_LINK_LIBRARIES` to disable calling `target_link_libraries`.
     User should call `target_link_libraries` to setup correct library linking.
 - `PRIVATE|PUBLIC|INTERFACE`
-  - The default is not specifying propagation control keyword when calling
-    `target_include_libraries`, `target_link_libraries`, etc, because there's no
+  - The default is not specifying a propagation control keyword when calling
+    `target_include_libraries`, `target_link_libraries`, etc., because there's no
     default choice on this in CMake.
   - Refer to this [Stack Overflow answer](https://stackoverflow.com/a/26038443)
     for differences.
@@ -145,8 +145,8 @@ xrepo_target_packages(example-bin gflags)
 xrepo_package("gflags 2.2.2" CONFIGS "shared=true,mt=true")
 
 # `xrepo_package` add gflags install directory to CMAKE_PREFIX_PATH.
-# As gflags provides cmake config-files, we can now call `find_package` to find
-# gflags package.
+# As gflags provides CMake config-files, we can now call `find_package` to find
+# the gflags package.
 # Refer to https://cmake.org/cmake/help/latest/command/find_package.html#search-modes
 find_package(gflags CONFIG COMPONENTS shared)
 
@@ -193,11 +193,11 @@ package("myzlib")
     end)
 ```
 
-We can write a custom package in xmake.lua, please refer [Define Xrepo package](/guide/package-management/package-distribution.html#define-package-configuration).
+We can write a custom package in xmake.lua. Please refer to [Define Xrepo package](/guide/package-management/package-distribution.html#define-package-configuration).
 
 ## Options and variables for `xrepo.cmake`
 
-Following options can be speicified with `cmake -D<var>=<value>`.
+Following options can be specified with `cmake -D<var>=<value>`.
 Or use `set(var value)` in `CMakeLists.txt`.
 
 - `XMAKE_CMD`: string, defaults to empty string

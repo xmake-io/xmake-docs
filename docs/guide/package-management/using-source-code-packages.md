@@ -20,7 +20,7 @@ For example, we have the following project structure:
 └── xmake.lua
 ```
 
-The foo directory is a static library maintained by cmake, and the root directory is maintained by xmake. We can define the `package("foo")` package in xmake.lua to describe how to build the foo code library.
+The foo directory is a static library maintained by CMake, and the root directory is maintained by xmake. We can define the `package("foo")` package in xmake.lua to describe how to build the foo code library.
 
 ```lua
 add_rules("mode.debug", "mode.release")
@@ -47,13 +47,13 @@ target("demo")
     add_packages("foo")
 ```
 
-Among them, we set the code directory location of the foo package through `set_sourcedir()`, and then import the auxiliary module of `package.tools.cmake` through import to call cmake to build the code, xmake will automatically obtain the generated libfoo.a and the corresponding header document.
+Among them, we set the code directory location of the foo package through `set_sourcedir()`, and then import the auxiliary module of `package.tools.cmake` through import to call CMake to build the code. Xmake will automatically obtain the generated libfoo.a and the corresponding header file.
 
 ::: tip NOTE
 If only the local source code is integrated, we don't need to set additional `add_urls` and `add_versions`.
 :::
 
-For the configuration description of the package, see: [Package description description](/guide/package-management/package-distribution.html#define-package-configuration).
+For the configuration description of the package, see: [Package description](/guide/package-management/package-distribution.html#define-package-configuration).
 
 After defining the package, we can integrate it with `add_requires("foo")` and `add_packages("foo")`, just like integrating remote packages.
 
@@ -63,9 +63,9 @@ For a complete example, see: [Library with CMakeLists](https://github.com/xmake-
 
 ## Integrate Meson source library
 
-xmake supports the integration of more third-party source code libraries maintained by other build systems, such as meson. You only need to import and use the `package.tools.meson` auxiliary building module to call meson to build them.
+xmake supports the integration of more third-party source code libraries maintained by other build systems, such as Meson. You only need to import and use the `package.tools.meson` auxiliary building module to call Meson to build them.
 
-For example, we select a package built with meson from the xmake-repo repository as an example:
+For example, we select a package built with Meson from the xmake-repo repository as an example:
 
 ```lua
 package("harfbuzz")
@@ -142,11 +142,11 @@ package("pcre2")
     end)
 ```
 
-Both `package.tools.autoconf` and `package.tools.cmake` modules can support cross-compilation platforms and toolchains such as mingw/cross/iphoneos/android, xmake will automatically pass the corresponding toolchain into it, and the user does not need to do Anything else.
+Both `package.tools.autoconf` and `package.tools.cmake` modules can support cross-compilation platforms and toolchains such as mingw/cross/iphoneos/android. Xmake will automatically pass the corresponding toolchain into it, and the user does not need to do anything else.
 
 ## Integrate Scons source library
 
-We can also use `package.tools.scons` to locally integrate third-party code libraries maintained by Scons.
+We can also use `package.tools.scons` to locally integrate third-party code libraries maintained by SCons.
 
 ```lua
 package("godotcpp")
@@ -196,7 +196,7 @@ package("godotcpp")
 
 ### Use Nmake
 
-We can also use `package.tools.nmake` to locally integrate third-party code libraries maintained by nmake.
+We can also use `package.tools.nmake` to locally integrate third-party code libraries maintained by NMake.
 
 `nmake.install` will automatically bind the msvc build environment of the current user to ensure that the user can successfully call nmake.exe, msbuild and cl.exe and other programs.
 
