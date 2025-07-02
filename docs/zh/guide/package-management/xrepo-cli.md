@@ -8,19 +8,19 @@ outline: deep
 
 Xrepo 是一个基于 [Xmake](https://github.com/xmake-io/xmake) 的跨平台 C/C++ 包管理器。
 
-它基于 xmake 提供的运行时，但却是一个完整独立的包管理程序，相比 vcpkg/homebrew 此类包管理器，xrepo 能够同时提供更多平台和架构的 C/C++ 包。
+它基于 xmake 提供的运行时，但却是一个完整独立的包管理程序。相比 vcpkg、homebrew 等包管理器，xrepo 能够同时支持更多平台和架构的 C/C++ 包。
 
-并且还支持多版本语义选择，另外它还是一个去中心化的分布式仓库，不仅仅提供了官方的 [xmake-repo](https://github.com/xmake-io/xmake-repo) 仓库，还支持用户自建多个私有仓库。
+同时还支持多版本语义选择。此外，它还是一个去中心化的分布式仓库，不仅提供官方的 [xmake-repo](https://github.com/xmake-io/xmake-repo) 仓库，还支持用户自建多个私有仓库。
 
-同时，xrepo 也支持从 vcpkg/homebrew/conan 等第三方包管理器中安装包，并提供统一一致的库链接信息，方便与第三方项目的集成对接。
+此外，xrepo 也支持从 vcpkg、homebrew、conan 等第三方包管理器中安装包，并提供统一一致的库链接信息，方便与第三方项目集成。
 
-如果你想要了解更多，请参考：[在线文档](https://xmake.io/zh/), [Github](https://github.com/xmake-io/xrepo) 以及 [Gitee](https://gitee.com/tboox/xrepo)
+如果你想了解更多，请参考：[在线文档](https://xmake.io/zh/)、[Github](https://github.com/xmake-io/xrepo) 以及 [Gitee](https://gitee.com/tboox/xrepo)
 
 ![](https://github.com/xmake-io/xrepo-docs/raw/master/assets/img/xrepo.gif)
 
 ## 安装
 
-我们只需要安装上 xmake 就可以使用 xrepo 命令，关于 xmake 的安装，我们可以看下：[Xmake 安装文档](/zh/guide/quick-start.html#installation)。
+只需安装 xmake 即可使用 xrepo 命令。关于 xmake 的安装，请参见：[Xmake 安装文档](/zh/guide/quick-start.html#installation)。
 
 ## 支持平台
 
@@ -37,9 +37,9 @@ Xrepo 是一个基于 [Xmake](https://github.com/xmake-io/xmake) 的跨平台 C/
 ## 分布式仓库支持
 
 除了可以直接从官方仓库：[xmake-repo](https://github.com/xmake-io/xmake-repo) 检索安装包之外，
-我们还可以添加任意多个自建的仓库，甚至可以完全隔离外网，仅仅在公司内部网络维护私有包的安装集成。
+我们还可以添加任意多个自建仓库，甚至可以完全隔离外网，仅在公司内部网络维护私有包的安装集成。
 
-只需要通过下面的命令，添加上自己的仓库地址：
+只需通过下面的命令，添加自己的仓库地址：
 
 ```sh
 $ xrepo add-repo myrepo https://github.com/mygroup/myrepo
@@ -56,7 +56,7 @@ target("test")
     add_packages("tbox", "libuv", "vcpkg::ffmpeg", "brew::pcre2/libpcre2-8", "openssl")
 ```
 
-下面是与 xmake 集成的整体架构和编译流程。
+下面是与 xmake 集成的整体架构和编译流程示意图。
 
 <img src="https://xmake.io/assets/img/index/package_arch.png" width="650px" />
 
@@ -72,7 +72,7 @@ $ xrepo install zlib tbox
 
 #### 安装指定版本包
 
-完整支持 Semantic Versioning (语义版本)。
+完全支持 Semantic Versioning（语义版本）。
 
 ```sh
 $ xrepo install "zlib 1.2.x"
@@ -157,7 +157,7 @@ $ xrepo fetch --cflags --ldflags conan::zlib/1.2.11
 
 ### 导出安装后的包
 
-xrepo 可以快速导出已经安装后的包，包括对应的库文件，头文件等等。
+xrepo 可以快速导出已安装的包，包括对应的库文件、头文件等。
 
 ```sh
 $ xrepo export -o /tmp/output zlib
@@ -223,7 +223,7 @@ set_toolchains("msvc")
 $ xrepo env --add /tmp/base.lua
 ```
 
-这个时候，我们就保存了一个名叫 base 的全局虚拟环境，我们可以通过 list 命令去查看它。
+此时，我们就保存了一个名为 base 的全局虚拟环境，可以通过 list 命令查看。
 
 ```sh
 $ xrepo env --list
@@ -240,14 +240,14 @@ $ xrepo env --remove base
 
 #### 切换全局虚拟环境
 
-如果我们注册了多个虚拟环境，我们也可以快速切换它们。
+如果我们注册了多个虚拟环境，也可以快速切换它们。
 
 ```sh
 $ xrepo env -b base shell
 > python --version
 ```
 
-或者直接加载指定虚拟环境运行特定命令
+或者直接加载指定虚拟环境运行特定命令。
 
 ```sh
 $ xrepo env -b base python --version

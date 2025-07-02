@@ -1,6 +1,6 @@
 # 使用第三方依赖包 {#using-third-party-packages}
 
-2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan, brew, vcpkg等
+2.2.5 版本之后，xmake 支持对第三方包管理器中的依赖库进行安装，例如：conan、brew、vcpkg 等。
 
 ## 使用 homebrew 的依赖包
 
@@ -25,7 +25,7 @@ target("test")
     add_packages("vcpkg::zlib", "vcpkg::pcre2")
 ```
 
-我们也可以加个包别名，简化对`add_packages`的使用：
+我们也可以为包添加别名，简化 `add_packages` 的使用：
 
 ```lua
 add_requires("vcpkg::zlib", {alias = "zlib"})
@@ -45,7 +45,7 @@ target("test")
 add_requires("vcpkg::boost[core]")
 ```
 
-v2.6.3 之后，xmake 支持 vcpkg 新的清单模式，通过它，我们就能支持 vcpkg 包的版本选择，例如：
+v2.6.3 之后，xmake 支持 vcpkg 的新清单模式，通过它可以支持 vcpkg 包的版本选择，例如：
 
 ```lua
 add_requires("vcpkg::zlib 1.2.11")
@@ -58,7 +58,7 @@ target("test")
     add_packages("vcpkg::zlib", "vcpkg::fmt", "vcpkg::libpng")
 ```
 
-v2.6.8 之后，还可以额外配置私有仓库，仅清单模式有效。
+v2.6.8 之后，还可以额外配置私有仓库，仅在清单模式下有效。
 
 ```lua
 local registries = {
@@ -168,7 +168,7 @@ xmake
 
 clib是一款基于源码的依赖包管理器，拉取的依赖包是直接下载对应的库源码，集成到项目中编译，而不是二进制库依赖。
 
-其在xmake中集成也很方便，唯一需要注意的是，还需要自己使用上对应库的源码到xmake.lua，例如：
+其在 xmake 中集成也很方便，唯一需要注意的是，还需要自己在 xmake.lua 中引用对应库的源码，例如：
 
 ```lua
 add_requires("clib::clibs/bytes@0.0.4", {alias = "bytes"})
@@ -182,7 +182,7 @@ target("test")
 
 ## 使用 dub/dlang 的依赖包
 
-xmake 也支持 dlang 的 dub 包管理器，集成 dlang 的依赖包来使用。
+xmake 也支持 dlang 的 dub 包管理器，可集成 dlang 的依赖包来使用。
 
 ```lua
 add_rules("mode.debug", "mode.release")
@@ -201,7 +201,7 @@ target("test")
 
 ## 使用 ubuntu/apt 的依赖包
 
-v2.5.4 之后版本支持使用 apt 集成依赖包，也会自动查找 ubuntu 系统上已经安装的包。
+v2.5.4 之后的版本支持使用 apt 集成依赖包，也会自动查找 Ubuntu 系统上已安装的包。
 
 ```lua
 add_requires("apt::zlib1g-dev", {alias = "zlib"})
@@ -214,7 +214,7 @@ target("test")
 
 ## 使用 gentoo/portage 的依赖包
 
-v2.5.4 之后版本支持使用 Portage 集成依赖包，也会自动查找 Gentoo 系统上已经安装的包。
+v2.5.4 之后的版本支持使用 Portage 集成依赖包，也会自动查找 Gentoo 系统上已安装的包。
 
 ```lua
 add_requires("portage::libhandy", {alias = "libhandy"})
@@ -227,7 +227,7 @@ target("test")
 
 ## 使用 nimble 的依赖包
 
-v2.5.8 之后支持集成 nimble 包管理器中的包，但是目前仅用于 nim 项目，因为它并没有提供二进制的包，而是直接安装的 nim 代码包。
+v2.5.8 之后支持集成 nimble 包管理器中的包，但目前仅用于 nim 项目，因为它并没有提供二进制包，而是直接安装的 nim 代码包。
 
 ```lua
 add_requires("nimble::zip >1.3")
@@ -240,7 +240,7 @@ target("test")
 
 ## 使用 cargo 的依赖包
 
-Cargo 依赖包主要给 rust 项目集成使用，例如：
+Cargo 依赖包主要用于 rust 项目的集成，例如：
 
 ```lua
 add_rules("mode.release", "mode.debug")

@@ -76,7 +76,7 @@ $ xmake project -k xcode
 
 ### 生成 VisualStudio 工程 {#generate-vs-project}
 
-#### 使用 xmake 集成编译 {#geneerate-vsxmake}
+#### 使用 xmake 集成编译 {#generate-vsxmake}
 
 v2.2.8以上版本，提供了新版本的vs工程生成插件扩展，与之前的生成vs的插件处理模式有很大不同，之前生成的vs工程是把所有文件的编译展开后，转交给vs来处理编译。
 
