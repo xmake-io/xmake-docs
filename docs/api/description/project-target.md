@@ -753,6 +753,73 @@ In addition, its execution time is earlier than before_build, and the approximat
 on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 ```
 
+## on_prepare
+
+### Run custom prepare phase script
+
+Added in 3.0, the on_prepare phase enables two-stage builds. The prepare phase is dedicated to source-level preprocessing, code generation, and source dependency analysis, before entering the build phase.
+
+on_prepare scripts are called before all build scripts. You can use this to do preparation work, such as scanning C++ module source files, autogenerating code, etc.
+
+```lua
+rule("scan_module_files")
+    on_prepare(function (target, opt)
+        -- scan module files
+    end)
+```
+
+on_prepare also supports the jobgraph parameter for parallel task scheduling:
+
+```lua
+rule("scan_module_files")
+    on_prepare(function (target, jobgraph, opt)
+        jobgraph:add(target:name() .. "/scanfiles", function (index, total, opt)
+            -- scan module files
+        end)
+    end, {jobgraph = true})
+```
+
+## on_prepare_file
+
+### Run custom prepare phase single file script
+
+Through this interface, you can hook the built-in prepare phase process to preprocess, analyze, or generate code for each source file during the prepare phase.
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_prepare_file(function (target, sourcefile, opt)
+        -- process single source file
+    end)
+```
+
+
+## on_prepare_files
+
+### Run custom prepare phase batch files script
+
+Through this interface, you can hook the built-in prepare phase process to batch preprocess, analyze, or generate code for a group of source files of the same type during the prepare phase. Supports jobgraph for parallel tasks.
+
+Usually used with set_extensions to process specific file types in batch:
+
+```lua
+rule("scan_module_files")
+    set_extensions("*.mpp")
+    on_prepare_files(function (target, jobgraph, sourcebatch, opt)
+        jobgraph:add(target:name() .. "/scanfiles", function (index, total, opt)
+            -- batch scan module files
+        end)
+    end, {jobgraph = true})
+```
+
+Parameter description:
+- `target`: current target object
+- `jobgraph`: jobgraph object for parallel tasks (optional, requires {jobgraph = true})
+- `sourcebatch`: batch object for files of the same type, use sourcebatch.sourcefiles() to get the file list
+- `opt`: optional parameters
+
+
 ## on_link
 
 ### Run custom link target script
@@ -963,6 +1030,45 @@ target("test")
     end)
 ```
 
+## before_prepare
+
+### Run custom script before prepare phase
+
+It does not override the default prepare operation, just adds some custom actions before the prepare phase.
+
+```lua
+target("test")
+    before_prepare(function (target)
+        print("before prepare")
+    end)
+```
+
+## before_prepare_file
+
+### Run custom script before prepare phase single file
+
+Does not override the default single file operation, just adds some custom actions before on_prepare_file.
+
+```lua
+target("test")
+    before_prepare_file(function (target, sourcefile, opt)
+        print("before prepare file")
+    end)
+```
+
+## before_prepare_files
+
+### Run custom script before prepare phase batch files
+
+Does not override the default batch operation, just adds some custom actions before on_prepare_files.
+
+```lua
+target("test")
+    before_prepare_files(function (target, sourcebatch, opt)
+        print("before prepare files")
+    end)
+```
+
 ## before_link
 
 ### Run custom script before linking target
@@ -1080,6 +1186,45 @@ It does not override the default run operation, just add some custom actions bef
 target("test")
     before_run(function (target)
         print("")
+    end)
+```
+
+## after_prepare
+
+### Run custom script after prepare phase
+
+It does not override the default prepare operation, just adds some custom actions after the prepare phase.
+
+```lua
+target("test")
+    after_prepare(function (target)
+        print("after prepare")
+    end)
+```
+
+## after_prepare_file
+
+### Run custom script after prepare phase single file
+
+Does not override the default single file operation, just adds some custom actions after on_prepare_file.
+
+```lua
+target("test")
+    after_prepare_file(function (target, sourcefile, opt)
+        print("after prepare file")
+    end)
+```
+
+## after_prepare_files
+
+### Run custom script after prepare phase batch files
+
+Does not override the default batch operation, just adds some custom actions after on_prepare_files.
+
+```lua
+target("test")
+    after_prepare_files(function (target, sourcebatch, opt)
+        print("after prepare files")
     end)
 ```
 
