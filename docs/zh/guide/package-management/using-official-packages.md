@@ -4,7 +4,7 @@ outline: deep
 
 # 使用官方包 {#using-official-packages}
 
-这个在2.2.2版本后已经初步支持，用法上更加的简单，只需要设置对应的依赖包就行了，例如：
+该功能在 2.2.2 版本后已初步支持，用法上更加简单，只需设置对应的依赖包即可，例如：
 
 ```lua
 add_requires("tbox 1.6.*", "libpng ~1.16", "zlib")
@@ -15,7 +15,7 @@ target("test")
     add_packages("tbox", "libpng", "zlib")
 ```
 
-上面的`add_requires`用于描述当前项目需要的依赖包，而`add_packages`用于应用依赖包到test目标，只有设置这个才会自动追加links, linkdirs, includedirs等设置。
+上面的 `add_requires` 用于描述当前项目需要的依赖包，而 `add_packages` 用于将依赖包应用到 test 目标，只有设置这个才会自动追加 links、linkdirs、includedirs 等设置。
 
 然后直接执行编译即可：
 
@@ -23,18 +23,18 @@ target("test")
 $ xmake
 ```
 
-xmake会去远程拉取相关源码包，然后自动编译安装，最后编译项目，进行依赖包的链接，具体效果见下图：
+xmake 会去远程拉取相关源码包，然后自动编译安装，最后编译项目，进行依赖包的链接，具体效果见下图：
 
 <img src="/assets/img/index/package_manage.png" width="80%" />
 
-关于包依赖管理的更多相关信息和进展见相关issues：[Remote package management](https://github.com/xmake-io/xmake/issues/69)
+关于包依赖管理的更多相关信息和进展见相关 issues：[Remote package management](https://github.com/xmake-io/xmake/issues/69)
 
 ## 目前支持的特性
 
-* 语义版本支持，例如：">= 1.1.0 < 1.2", "~1.6", "1.2.x", "1.*"
+* 语义版本支持，例如：">= 1.1.0 < 1.2"、"~1.6"、"1.2.x"、"1.*"
 * 提供官方包仓库、自建私有仓库、项目内置仓库等多仓库管理支持
 * 跨平台包编译集成支持（不同平台、不同架构的包可同时安装，快速切换使用）
-* debug依赖包支持，实现源码调试
+* debug 依赖包支持，实现源码调试
 
 ## 依赖包处理机制
 
@@ -42,33 +42,33 @@ xmake会去远程拉取相关源码包，然后自动编译安装，最后编译
 
 <img src="/assets/img/index/package_arch.png" width="80%" />
 
-1. 优先检测当前系统目录、第三方包管理下有没有存在指定的包，如果有匹配的包，那么就不需要下载安装了 （当然也可以设置不使用系统包）
-2. 检索匹配对应版本的包，然后下载、编译、安装（注：安装在特定xmake目录，不会干扰系统库环境）
+1. 优先检测当前系统目录、第三方包管理下是否存在指定的包，如果有匹配的包，那么就不需要下载安装了（当然也可以设置不使用系统包）
+2. 检索匹配对应版本的包，然后下载、编译、安装（注：安装在特定 xmake 目录，不会干扰系统库环境）
 3. 编译项目，最后自动链接启用的依赖包
 
 ## 快速上手
 
-新建一个依赖tbox库的空工程：
+新建一个依赖 tbox 库的空工程：
 
 ```sh
 $ xmake create -t console_tbox test
 $ cd test
 ```
 
-执行编译即可，如果当前没有安装tbox库，则会自动下载安装后使用：
+执行编译即可，如果当前没有安装 tbox 库，则会自动下载安装后使用：
 
 ```sh
 $ xmake
 ```
 
-切换到iphoneos平台进行编译，将会重新安装iphoneos版本的tbox库进行链接使用：
+切换到 iphoneos 平台进行编译，将会重新安装 iphoneos 版本的 tbox 库进行链接使用：
 
 ```sh
 $ xmake f -p iphoneos
 $ xmake
 ```
 
-切换到android平台arm64-v8a架构编译：
+切换到 android 平台 arm64-v8a 架构编译：
 
 ```sh
 $ xmake f -p android [--ndk=~/android-ndk-r16b]
@@ -77,7 +77,7 @@ $ xmake
 
 ## 语义版本设置
 
-xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：[https://semver.org/](https://semver.org/)
+xmake 的依赖包管理完全支持语义版本选择，例如："~1.6.1"，关于语义版本的具体描述见：[https://semver.org/](https://semver.org/)
 
 一些语义版本写法：
 
@@ -86,15 +86,15 @@ add_requires("tbox 1.6.*", "pcre 1.3.x", "libpng ^1.18")
 add_requires("libpng ~1.16", "zlib 1.1.2 || >=1.2.11 <1.3.0")
 ```
 
-目前xmake使用的语义版本解析器是[uael](https://github.com/uael)贡献的[sv](https://github.com/uael/sv)库，里面也有对版本描述写法的详细说明，可以参考下：[版本描述说明](https://github.com/uael/sv#versions)
+当前 xmake 使用的语义版本解析器是 [uael](https://github.com/uael) 贡献的 [sv](https://github.com/uael/sv) 库，里面也有对版本描述写法的详细说明，可参考：[版本描述说明](https://github.com/uael/sv#versions)
 
-当然，如果我们对当前的依赖包的版本没有特殊要求，那么可以直接这么写：
+当然，如果我们对当前的依赖包的版本没有特殊要求，可以直接这样写：
 
 ```lua
 add_requires("tbox", "libpng", "zlib")
 ```
 
-这会使用已知的最新版本包，或者是master分支的源码编译的包，如果当前包有git repo地址，我们也能指定特定分支版本：
+这会使用已知的最新版本包，或者是 master 分支源码编译的包。如果当前包有 git repo 地址，也能指定特定分支版本：
 
 ```lua
 add_requires("tbox master")
@@ -105,8 +105,8 @@ add_requires("tbox dev")
 
 ### 可选包设置
 
-如果指定的依赖包当前平台不支持，或者编译安装失败了，那么xmake会编译报错，这对于有些必须要依赖某些包才能工作的项目，这是合理的。
-但是如果有些包是可选的依赖，即使没有也可以正常编译使用的话，可以设置为可选包：
+如果指定的依赖包当前平台不支持，或者编译安装失败，xmake 会编译报错。对于必须依赖某些包才能工作的项目，这是合理的。
+但如果有些包是可选依赖，即使没有也可以正常编译使用，可以设置为可选包：
 
 ```lua
 add_requires("tbox", {optional = true})
@@ -114,7 +114,7 @@ add_requires("tbox", {optional = true})
 
 ### 禁用系统库
 
-默认的设置，xmake会去优先检测系统库是否存在（如果没设置版本要求），如果用户完全不想使用系统库以及第三方包管理提供的库，那么可以设置：
+默认设置下，xmake 会优先检测系统库是否存在（如果没设置版本要求）。如果用户完全不想使用系统库以及第三方包管理器提供的库，可以设置：
 
 ```lua
 add_requires("tbox", {system = false})
@@ -122,13 +122,13 @@ add_requires("tbox", {system = false})
 
 ### 使用调试版本的包
 
-如果我们想同时源码调试依赖包，那么可以设置为使用debug版本的包（当然前提是这个包支持debug编译）：
+如果我们想同时源码调试依赖包，可以设置为使用 debug 版本的包（前提是该包支持 debug 编译）：
 
 ```lua
 add_requires("tbox", {debug = true})
 ```
 
-如果当前包还不支持debug编译，可在仓库中提交修改编译规则，对debug进行支持，例如：
+如果当前包还不支持 debug 编译，可以在仓库中提交修改编译规则，对 debug 进行支持，例如：
 
 ```lua
 package("openssl")
@@ -141,17 +141,17 @@ package("openssl")
 
 ### 传递额外的编译信息到包
 
-某些包在编译时候有各种编译选项，我们也可以传递进来，当然包本身得支持：
+某些包在编译时有各种编译选项，我们也可以传递进来，当然包本身得支持：
 
 ```lua
 add_requires("tbox", {configs = {small = true}})
 ```
 
-传递`--small=true`给tbox包，使得编译安装的tbox包是启用此选项的。
+传递 `--small=true` 给 tbox 包，使得编译安装的 tbox 包启用此选项。
 
-我们可以通过在工程目录中执行：`xmake require --info tbox` 来获取指定包所有的可配置参数列表和取值说明。
+我们可以通过在工程目录中执行：`xmake require --info tbox` 来获取指定包所有可配置参数列表和取值说明。
 
-比如：
+例如：
 
 ```sh
 xmake require --info spdlog
@@ -181,24 +181,24 @@ xmake require --info spdlog
             -> values: {"MT","MD"}
 ```
 
-其中，configs里面就是spdlog包自身提供的可配置参数，而下面带有builtin的configs部分，是所有包都会有的内置配置参数。
-最上面requires部分，是项目当前配置值。
+其中，configs 里是 spdlog 包自身提供的可配置参数，而下方带有 builtin 的 configs 部分，是所有包都会有的内置配置参数。
+最上面 requires 部分，是项目当前配置值。
 
 ::: tip 注意
-`vs_runtime`是用于msvc下vs runtime的设置，v2.2.9版本中，还支持所有static依赖包的自动继承，也就是说spdlog如果设置了MD，那么它依赖的fmt包也会自动继承设置MD。
+`vs_runtime` 是用 emsvc 下 vs runtime 的设置，v2.2.9 版本中，还支持所有 static 依赖包的自动继承，也就是说 spdlog 如果设置了 MD，那么它依赖的 fmt 包也会自动继承设置 MD。
 :::
 
-可以看到，我们已经能够很方便的定制化获取需要的包，但是每个包自身也许有很多依赖，如果这些依赖也要各种定制化配置，怎么办？
+可以看到，我们已经能够很方便地定制化获取需要的包，但每个包自身也许有很多依赖，如果这些依赖也要各种定制化配置，怎么办？
 
 可以通过 `add_requireconfs` 去重写内部依赖包的配置参数。
 
 ### 安装任意版本的包
 
-默认情况下，`add_requires("zlib >1.2.x")` 只能选择到 `xmake-repo` 仓库中存在的包版本，因为每个版本的包，它们都会有一个sha256的校验值，用于包的完整性校验。
+默认情况下，`add_requires("zlib >1.2.x")` 只能选择到 `xmake-repo` 仓库中存在的包版本，因为每个版本的包都会有一个 sha256 校验值，用于包的完整性校验。
 
-因此，未知版本的包不存在校验值，xmake 默认是不让选择使用的，这并不安全。
+因此，未知版本的包不存在校验值，xmake 默认不允许选择使用，这样更安全。
 
-那如果，我们需要的包版本无法选择使用怎么办呢？有两种方式，一种是提交一个 pr 给 [xmake-repo](https://github.com/xmake-io/xmake-repo)，增加指定包的新版本以及对应的 sha256，例如：
+那么，如果我们需要的包版本无法选择使用怎么办呢？有两种方式，一种是提交一个 PR 给 [xmake-repo](https://github.com/xmake-io/xmake-repo)，增加指定包的新版本以及对应的 sha256，例如：
 
 ```lua
 package("zlib")
@@ -206,7 +206,7 @@ package("zlib")
     add_versions("1.2.11", "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1")
 ```
 
-另外，还有一种方式，就是用户传递 `{verify = false}` 配置给 `add_requires`，强制忽略包的文件完整性校验，这样就不需要 sha256 值，因此就可以安装任意版本的包。
+另外，还有一种方式，就是用户传递 `{verify = false}` 配置给 `add_requires`，强制忽略包的文件完整性校验，这样就可以安装任意版本的包。
 
 当然，这也会存在一定的安全性以及包不完整的风险，这就需要用户自己去选择评估了。
 

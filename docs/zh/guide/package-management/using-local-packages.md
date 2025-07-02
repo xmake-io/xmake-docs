@@ -2,7 +2,7 @@
 
 ## 生成本地包
 
-2.5.5 版本之后，我们提供了一种新的本地包打包方案，将会更加无缝的对接 `add_requires` 和 `add_packages`。
+2.5.5 版本之后，我们提供了一种新的本地包打包方案，将会更加无缝地对接 `add_requires` 和 `add_packages`。
 
 我们执行 `xmake package` 命令就能够生成默认的新版打包格式。
 
@@ -11,7 +11,7 @@ $ xmake package
 package(foo): build/packages/f/foo generated
 ```
 
-它将会产生 `build/packages/f/foo/xmake.lua` 文件，内容如下：
+它会生成 `build/packages/f/foo/xmake.lua` 文件，内容如下：
 
 ```lua
 package("foo")
@@ -32,7 +32,7 @@ package("foo")
     end)
 ```
 
-其实就是采用 `package()` 来定义描述本地包，就跟远程包一样。
+其实就是采用 `package()` 来定义描述本地包，和远程包一样。
 
 而生成的目录结构如下：
 
@@ -67,7 +67,7 @@ target("bar")
 
 其中，add_repositories 配置指定本地包的仓库根目录，然后就可以通过 `add_requires` 来引用这个包了。
 
-另外，生成的本地包，还有一个特性，就是支持 `target/add_deps`，会自动关联多个包的依赖关系，集成时候，也会自动对接所有依赖链接。
+另外，生成的本地包还有一个特性，就是支持 `target/add_deps`，会自动关联多个包的依赖关系，集成时也会自动对接所有依赖链。
 
 这里有完整的[测试例子](https://github.com/xmake-io/xmake/blob/dev/tests/actions/package/localpkg/test.lua)。
 
@@ -119,7 +119,7 @@ $ xmake l find_package cmake::LibXml2
 
 ### 在项目中集成包
 
-如果我们在 xmake.lua 项目配置中集成查找 cmake 的依赖包，通常不需要直接使用 find_package，我们可以用更加通用、简单的包集成方式。
+如果我们在 xmake.lua 项目配置中集成查找 cmake 的依赖包，通常不需要直接使用 find_package，可以用更加通用、简单的包集成方式。
 
 ```lua
 add_requires("cmake::ZLIB", {alias = "zlib", system = true})
@@ -129,8 +129,7 @@ target("test")
     add_packages("zlib")
 ```
 
-我们指定 `system = true` 告诉 xmake 强制从系统中调用 cmake 查找包，如果找不到，不再走安装逻辑，因为 cmake 没有提供类似 vcpkg/conan 等包管理器的安装功能，
-只提供了包查找特性。
+我们指定 `system = true` 告诉 xmake 强制从系统中调用 cmake 查找包，如果找不到，不再走安装逻辑，因为 cmake 没有提供类似 vcpkg/conan 等包管理器的安装功能，只提供了包查找特性。
 
 ### 指定版本
 
@@ -205,3 +204,5 @@ xmake 在查找 cmake 包的时候，内部会自动追加下面的配置。
 ```cmake
 find_package(ABC CONFIG REQUIRED)
 ```
+
+这样会同时查找到 pcre、pcre2 等包。

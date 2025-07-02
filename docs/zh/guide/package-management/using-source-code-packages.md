@@ -2,7 +2,7 @@
 
 ## 集成 CMake 代码库
 
-2.5.8 版本之后，我们也能够通过 xmake 的包模式直接集成自己项目中带有 CMakeLists.txt 的代码库，而不是通过远程下载安装。
+2.5.8 版本之后，我们也可以通过 xmake 的包模式直接集成自己项目中带有 CMakeLists.txt 的代码库，而不是通过远程下载安装。
 
 相关 issues: [#1714](https://github.com/xmake-io/xmake/issues/1714)
 
@@ -20,7 +20,7 @@
 └── xmake.lua
 ```
 
-foo 目录下是一个使用 cmake 维护的静态库，而根目录下使用了 xmake 来维护，我们可以在 xmake.lua 中通过定义 `package("foo")` 包来描述如何构建 foo 代码库。
+foo 目录下是一个使用 cmake 维护的静态库，而根目录下使用了 xmake 进行维护。我们可以在 xmake.lua 中通过定义 `package("foo")` 包来描述如何构建 foo 代码库。
 
 ```lua
 add_rules("mode.debug", "mode.release")
@@ -47,7 +47,7 @@ target("demo")
     add_packages("foo")
 ```
 
-其中，我们通过 `set_sourcedir()` 来设置 foo 包的代码目录位置，然后通过 import 导入 `package.tools.cmake` 辅助模块来调用 cmake 构建代码，xmake 会自动获取生成的 libfoo.a 和对应的头文件。
+其中，我们通过 `set_sourcedir()` 来设置 foo 包的代码目录位置，然后通过 import 导入 `package.tools.cmake` 辅助模块来调用 cmake 构建代码，xmake 会自动获取生成的 libfoo.a 及对应的头文件。
 
 ::: tip 注意
 如果仅仅本地源码集成，我们不需要额外设置 `add_urls` 和 `add_versions`。
@@ -55,15 +55,15 @@ target("demo")
 
 关于包的配置描述，详情见：[包描述说明](/zh/guide/package-management/package-distribution.html#define-package-configuration)。
 
-定义完包后，我们就可以通过 `add_requires("foo")` 和 `add_packages("foo")` 来集成使用它了，就跟集成远程包一样的使用方式。
+定义完包后，我们就可以通过 `add_requires("foo")` 和 `add_packages("foo")` 来集成使用它了，和集成远程包的方式完全一致。
 
-另外，`on_test` 是可选的，如果想要严格检测包的编译安装是否成功，可以在里面做一些测试。
+另外，`on_test` 是可选的。如果想要严格检测包的编译安装是否成功，可以在里面做一些测试。
 
 完整例子见：[Library with CMakeLists](https://github.com/xmake-io/xmake/tree/master/tests/projects/c/library_with_cmakelists)
 
 ## 集成 Meson 代码库
 
-xmake 支持集成更多其他构建系统维护的第三方源码库，比如 meson，仅仅只需要导入使用 `package.tools.meson` 辅助构建模块调用 meson 来构建它们。
+xmake 支持集成更多其他构建系统维护的第三方源码库，比如 meson，仅需导入使用 `package.tools.meson` 辅助构建模块调用 meson 来构建它们。
 
 例如，我们从 xmake-repo 仓库中挑选一个使用 meson 构建的包作为例子：
 
@@ -97,7 +97,7 @@ package("harfbuzz")
 
 ## 集成 autoconf 代码库
 
-我们也可以使用 `package.tools.autoconf` 来本地集成带有 autoconf 维护的第三方代码库。
+xmake 也可以使用 `package.tools.autoconf` 来本地集成带有 autoconf 维护的第三方代码库。
 
 ```lua
 package("pcre2")
@@ -142,11 +142,11 @@ package("pcre2")
     end)
 ```
 
-`package.tools.autoconf` 和 `package.tools.cmake` 模块都是可以支持 mingw/cross/iphoneos/android 等交叉编译平台和工具链的，xmake 会自动传递对应的工具链进去，用户不需要做任何其他事情。
+`package.tools.autoconf` 和 `package.tools.cmake` 模块都可以支持 mingw/cross/iphoneos/android 等交叉编译平台和工具链，xmake 会自动传递对应的工具链进去，用户无需做任何其他操作。
 
 ## 集成 Scons 代码库
 
-我们也可以使用 `package.tools.scons` 来本地集成带有 Scons 维护的第三方代码库。
+xmake 也可以使用 `package.tools.scons` 来本地集成带有 Scons 维护的第三方代码库。
 
 ```lua
 package("godotcpp")
@@ -196,9 +196,9 @@ package("godotcpp")
 
 ### 使用 Nmake
 
-我们也可以使用 `package.tools.nmake` 来本地集成带有 nmake 维护的第三方代码库。
+xmake 也可以使用 `package.tools.nmake` 来本地集成带有 nmake 维护的第三方代码库。
 
-`nmake.install` 会自动绑定当前用户的 msvc 构建环境，确保用户能够顺利调用到 nmake.exe 以及 msbuild 和 cl.exe 等程序。
+nmake.install 会自动绑定当前用户的 msvc 构建环境，确保用户能够顺利调用到 nmake.exe 以及 msbuild 和 cl.exe 等程序。
 
 ```lua
 package("libxml2")
@@ -236,7 +236,7 @@ package("libxml2")
 
 ### 使用 GnuMake
 
-我们也可以使用 `package.tools.make` 来本地集成带有 gnumake 维护的第三方代码库。
+xmake 也可以使用 `package.tools.make` 来本地集成带有 gnumake 维护的第三方代码库。
 
 ```lua
 package("openssl")

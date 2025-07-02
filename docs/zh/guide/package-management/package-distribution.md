@@ -8,7 +8,7 @@ outline: deep
 
 ### 仓库包结构
 
-在制作自己的包之前，我们需要先了解下一个包仓库的结构，不管是官方包仓库，还是自建私有包仓库，结构都是相同的：
+在制作自己的包之前，我们需要先了解包仓库的结构，无论是官方包仓库还是自建私有包仓库，结构都是相同的：
 
 ```
 xmake-repo
@@ -17,15 +17,15 @@ xmake-repo
     - z/zlib/xmake.lua
 ```
 
-通过上面的结构，可以看到每个包都会有个xmake.lua用于描述它的安装规则，并且根据`z/zlib`两级子目录分类存储，方便快速检索。
+通过上面的结构，可以看到每个包都会有个 xmake.lua 用于描述它的安装规则，并且根据 `z/zlib` 两级子目录分类存储，方便快速检索。
 
 ### 包描述说明
 
-关于包的描述规则，基本上都是在它的xmake.lua里面完成的，这跟项目工程里面的xmake.lua描述很类似，不同的是描述域仅支持`package()`，
+关于包的描述规则，基本上都是在它的 xmake.lua 里面完成的，这跟项目工程里的 xmake.lua 描述很类似，不同的是描述域仅支持 `package()`，
 
-不过，在项目xmake.lua里面，也是可以直接添加`package()`来内置包描述的，连包仓库都省了，有时候这样会更加方便。
+不过，在项目 xmake.lua 里面，也可以直接添加 `package()` 来内置包描述的，连包仓库都省了，有时候这样会更加方便。
 
-首先，我们先拿zlib的描述规则，来直观感受下，这个规则可以在[xmake-repo/z/zlib/xmake.lua](https://github.com/xmake-io/xmake-repo/blob/master/packages/z/zlib/xmake.lua)下找到。
+首先，我们先拿 zlib 的描述规则，来直观感受下，这个规则可以在 [xmake-repo/z/zlib/xmake.lua](https://github.com/xmake-repo/z/zlib/xmake.lua) 下找到。
 
 ```
 package("zlib")
@@ -63,7 +63,7 @@ package("zlib")
     end)
 ```
 
-这个包规则对windows, linux, macosx, iphoneos，mingw等平台都添加了安装规则，基本上已经做到了全平台覆盖，甚至一些交叉编译平台，算是一个比较典型的例子了。
+这个包规则对 windows、linux、macosx、iphoneos、mingw 等平台都添加了安装规则，基本上已经做到了全平台覆盖，甚至一些交叉编译平台，算是一个比较典型的例子了。
 
 当然，有些包依赖源码实现力度，并不能完全跨平台，那么只需对它支持的平台设置安装规则即可。
 
@@ -71,11 +71,11 @@ package("zlib")
 
 ### 扩展配置参数
 
-详情见：[add_configs](/zh/api/description/package-dependencies#add-configs)
+详细见：[add_configs](/zh/api/description/package-dependencies#add-configs)
 
 ### 内置配置参数
 
-除了可以通过[add_configs](/zh/api/description/package-dependencies#add-configs)设置一些扩展的配置参数以外，xmake还提供了一些内置的配置参数，可以使用
+除了可以通过 [add_configs](/zh/api/description/package-dependencies#add-configs) 设置一些扩展的配置参数以外，xmake 还提供了一些内置的配置参数，可以使用
 
 #### 启用调试包
 
@@ -101,7 +101,7 @@ end)
 add_requires("xxx", {configs = {vs_runtime = "MT"}})
 ```
 
-通常情况下，通过`import("package.tools.autoconf").install`等内置工具脚本安装的包，内部都对vs_runtime自动处理过了。
+通常情况下，通过 `import("package.tools.autoconf").install` 等内置工具脚本安装的包，内部都对 vs_runtime 自动处理过了。
 
 但是如果是一些特殊的源码包，构建规则比较特殊，那么需要自己处理了：
 
@@ -113,7 +113,7 @@ end)
 
 ### 添加环境变量
 
-对于一些库，里面也带了可执行的工具，如果需要在集成包的时候，使用上这些工具，那么也可以设置上对应PATH环境变量：
+对于一些库，里面也带了可执行的工具，如果需要在集成包的时候使用这些工具，也可以设置上对应 PATH 环境变量：
 
 ```lua
 package("luajit")
@@ -125,7 +125,7 @@ package("luajit")
     end)
 ```
 
-而在项目工程中，只有通过`add_packages`集成对应的包后，对应的环境变量才会生效。
+而在项目工程中，只有通过 `add_packages` 集成对应的包后，对应的环境变量才会生效。
 
 ```lua
 add_requires("luajit")
@@ -139,7 +139,7 @@ target("test")
 
 ### 安装二进制包
 
-xmake也是支持直接引用二进制版本包，直接安装使用，例如：
+xmake 也支持直接引用二进制版本包，直接安装使用，例如：
 
 ```lua
 if is_plat("windows") then
@@ -156,7 +156,7 @@ end)
 
 ### 本地测试
 
-如果在本地xmake-repo仓库中，已经添加和制作好了新的包，可以在本地运行测试下，是否通过，如果测试通过，即可提交pr到官方仓库，请求merge。
+如果在本地 xmake-repo 仓库中，已经添加和制作好了新的包，可以在本地运行测试下是否通过，如果测试通过，即可提交 PR 到官方仓库，请求 merge。
 
 我们可以执行下面的脚本进行测试指定包：
 
@@ -165,16 +165,16 @@ cd xmake-repo
 xmake l scripts/test.lua -v -D zlib
 ```
 
-上面的命令，会强制重新下载和安装zlib包，测试整个安装流程是否ok，加上`-v -D`是为了可以看到完整详细的日志信息和出错信息，方便调试分析。
+上面的命令会强制重新下载和安装 zlib 包，测试整个安装流程是否 ok，加上 `-v -D` 是为了可以看到完整详细的日志信息和出错信息，方便调试分析。
 
-如果网络环境不好，不想每次测试都去重新下载所有依赖，可以加上`--shallow`参数来执行，这个参数告诉脚本，仅仅重新解压本地缓存的zlib源码包，重新执行安装命令，但不会下载各种依赖。
+如果网络环境不好，不想每次测试都去重新下载所有依赖，可以加上 `--shallow` 参数来执行，这个参数告诉脚本，仅仅重新解压本地缓存的 zlib 源码包，重新执行安装命令，但不会下载各种依赖。
 
 ```sh
 cd xmake-repo
 xmake l scripts/test.lua -v -D --shallow zlib
 ```
 
-如果我们想测试其他平台的包规则是否正常，比如: android, iphoneos等平台，可以通过`-p/--plat`或者`-a/--arch`来指定。
+如果我们想测试其他平台的包规则是否正常，比如 android、iphoneos 等平台，可以通过 `-p/--plat` 或者 `-a/--arch` 来指定。
 
 ```sh
 cd xmake-repo
@@ -184,9 +184,9 @@ xmake l scripts/test.lua -v -D --shallow -p android --ndk=/xxxx zlib
 
 ## 生成远程包 {#generate-remote-package}
 
-除了本地包格式，`xmake package` 现在也支持生成远程包，便于用户将他们快速提交到远程仓库。
+除了本地包格式，`xmake package` 现在也支持生成远程包，便于用户将其快速提交到远程仓库。
 
-我们只需要在打包时候，修改包格式。
+我们只需要在打包的时候，修改包格式。
 
 ```sh
 $ xmake package -f remote
@@ -217,7 +217,7 @@ package("foo")
 
 包定义配置相比本地包，多了实际的安装逻辑，以及 urls 和 versions 的设置，
 
-我们也能够通过附加参数，去修改 urls，versions 等配置值，例如：
+我们也能够通过附加参数，去修改 urls、versions 等配置值，例如：
 
 ```sh
 $ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepage=xxxxx`
@@ -229,7 +229,7 @@ xmake 也会从 target 的 `set_license` 和 `set_version` 等配置中读取相
 
 目前这个特性刚完成不久，目前官方仓库的包还不是很多，有些包也许还不支持部分平台，不过这并不是太大问题，后期迭代几个版本后，我会不断扩充完善包仓库。
 
-如果你需要的包，当前的官方仓库还没有收录，可以提交issues或者自己可以在本地调通后，贡献提交到官方仓库：[xmake-repo](https://github.com/xmake-io/xmake-repo)
+如果你需要的包，目前的官方仓库还没有收录，可以提交 issues 或者自己可以在本地调通后，贡献提交到官方仓库：[xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 详细的贡献说明，见：[CONTRIBUTING.md](https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md)
 
@@ -237,13 +237,13 @@ xmake 也会从 target 的 `set_license` 和 `set_version` 等配置中读取相
 
 ## 分发和使用自定义包规则 {#custom-rule-distribution}
 
-2.7.2 版本之后，我们可以在包管理仓库中，添加自定义构架规则脚本，实现跟随包进行动态下发和安装。
+2.7.2 版本之后，我们可以在包管理仓库中，添加自定义构建规则脚本，实现跟随包进行动态下发和安装。
 
 我们需要将自定义规则放到仓库的 `packages/x/xxx/rules` 目录中，它会跟随包一起被安装。
 
 但是，它也存在一些限制：
 
-- 在包中规则，我们不能添加 `on_load`, `after_load` 脚本，但是通常我们可以使用 `on_config` 来代替。
+- 在包中规则，我们不能添加 `on_load`、`after_load` 脚本，但是通常可以使用 `on_config` 来代替。
 
 ### 添加包规则
 
