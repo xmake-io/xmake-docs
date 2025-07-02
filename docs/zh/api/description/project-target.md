@@ -742,6 +742,71 @@ target("test")
 on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 ```
 
+## on_prepare
+
+### 自定义准备阶段脚本
+
+3.0 新增了 on_prepare 阶段，实现二阶段编译。prepare 阶段会专门用于处理各种源码级的预处理、codegen 以及源码依赖分析，后续才会进入 build 阶段。
+
+on_prepare 脚本会在所有 build 脚本之前被调用，我们可以在这里做一些准备工作，比如扫描 C++ module 源文件、自动生成代码等。
+
+```lua
+rule("scan_module_files")
+    on_prepare(function (target, opt)
+        -- 扫描模块文件
+    end)
+```
+
+on_prepare 还支持 jobgraph 参数，可以实现并行任务调度：
+
+```lua
+rule("scan_module_files")
+    on_prepare(function (target, jobgraph, opt)
+        jobgraph:add(target:name() .. "/scanfiles", function (index, total, opt)
+            -- 扫描模块文件
+        end)
+    end, {jobgraph = true})
+```
+
+## on_prepare_file
+
+### 自定义准备阶段单文件处理脚本
+
+通过此接口，可以 hook 内置的准备阶段流程，在 prepare 阶段对每个源文件进行预处理、分析、自动生成等操作。
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    on_prepare_file(function (target, sourcefile, opt)
+        -- 处理单个源文件
+    end)
+```
+
+## on_prepare_files
+
+### 自定义准备阶段批量文件处理脚本
+
+通过此接口，可以 hook 内置的准备阶段流程，在 prepare 阶段对一批同类型源文件进行批量预处理、分析、自动生成等操作，支持 jobgraph 并行任务。
+
+通常结合 set_extensions 使用，针对特定类型文件批量处理：
+
+```lua
+rule("scan_module_files")
+    set_extensions("*.mpp")
+    on_prepare_files(function (target, jobgraph, sourcebatch, opt)
+        jobgraph:add(target:name() .. "/scanfiles", function (index, total, opt)
+            -- 批量扫描模块文件
+        end)
+    end, {jobgraph = true})
+```
+
+参数说明：
+- `target`：当前目标对象
+- `jobgraph`：任务调度对象（可选，需 {jobgraph = true}）
+- `sourcebatch`：同类型源文件批次对象，sourcebatch.sourcefiles() 获取文件列表
+- `opt`：可选参数
+
 ## on_link
 
 ### 自定义链接脚本
@@ -953,6 +1018,45 @@ target("test")
     end)
 ```
 
+## before_prepare
+
+### 在准备阶段之前执行自定义脚本
+
+不会覆盖默认的准备操作，只是在准备阶段之前增加一些自定义操作。
+
+```lua
+target("test")
+    before_prepare(function (target)
+        print("before prepare")
+    end)
+```
+
+## before_prepare_file
+
+### 在准备阶段单文件处理前执行自定义脚本
+
+不会覆盖默认的单文件处理操作，只是在 on_prepare_file 之前增加一些自定义操作。
+
+```lua
+target("test")
+    before_prepare_file(function (target, sourcefile, opt)
+        print("before prepare file")
+    end)
+```
+
+## before_prepare_files
+
+### 在准备阶段批量文件处理前执行自定义脚本
+
+不会覆盖默认的批量处理操作，只是在 on_prepare_files 之前增加一些自定义操作。
+
+```lua
+target("test")
+    before_prepare_files(function (target, sourcebatch, opt)
+        print("before prepare files")
+    end)
+```
+
 ## before_link
 
 ### 在链接之前执行一些自定义脚本
@@ -1069,6 +1173,47 @@ target("test")
 target("test")
     before_run(function (target)
         print("")
+    end)
+```
+
+## after_prepare
+
+### 在准备阶段之后执行自定义脚本
+
+不会覆盖默认的准备操作，只是在准备阶段之后增加一些自定义操作。
+
+```lua
+target("test")
+    after_prepare(function (target)
+        print("after prepare")
+    end)
+```
+
+
+
+## after_prepare_file
+
+### 在准备阶段单文件处理后执行自定义脚本
+
+不会覆盖默认的单文件处理操作，只是在 on_prepare_file 之后增加一些自定义操作。
+
+```lua
+target("test")
+    after_prepare_file(function (target, sourcefile, opt)
+        print("after prepare file")
+    end)
+```
+
+## after_prepare_files
+
+### 在准备阶段批量文件处理后执行自定义脚本
+
+不会覆盖默认的批量处理操作，只是在 on_prepare_files 之后增加一些自定义操作。
+
+```lua
+target("test")
+    after_prepare_files(function (target, sourcebatch, opt)
+        print("after prepare files")
     end)
 ```
 
