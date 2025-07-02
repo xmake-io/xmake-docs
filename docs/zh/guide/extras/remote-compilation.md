@@ -1,12 +1,12 @@
 # 远程编译 {#remote-compilation}
 
-2.6.5 版本提供了远程编译支持，我们可以通过它可以远程服务器上编译代码，远程运行和调试。
+2.6.5 版本提供了远程编译支持，我们可以通过它在远程服务器上编译代码、远程运行和调试。
 
-服务器可以部署在 Linux/MacOS/Windows 上，实现跨平台编译，例如：在 Linux 上编译运行 Windows 程序，在 Windows 上编译运行 macOS/Linux 程序。
+服务器可以部署在 Linux/MacOS/Windows 上，实现跨平台编译。例如：在 Linux 上编译运行 Windows 程序，在 Windows 上编译运行 macOS/Linux 程序。
 
-相比 ssh 远程登入编译，它更加的稳定，使用更加流畅，不会因为网络不稳定导致 ssh 终端输入卡顿，也可以实现本地快速编辑代码文件。
+相比 ssh 远程登录编译，它更加稳定，使用更加流畅，不会因为网络不稳定导致 ssh 终端输入卡顿，也可以实现本地快速编辑代码文件。
 
-甚至我们可以在 vs/sublime/vscode/idea 等编辑器和IDE 中无缝实现远程编译，而不需要依赖 IDE 本身对远程编译的支持力度。
+甚至我们可以在 VS/Sublime/VSCode/IDEA 等编辑器和 IDE 中无缝实现远程编译，而不需要依赖 IDE 本身对远程编译的支持。
 
 ## 开启服务 {#start-service}
 
@@ -32,13 +32,13 @@ $ xmake service --stop
 
 ## 配置服务端 {#configure-server}
 
-我们首先，运行 `xmake service` 命令，它会自动生成一个默认的 `server.conf` 配置文件，存储到 `~/.xmake/service/server.conf`。
+我们首先运行 `xmake service` 命令，它会自动生成一个默认的 `server.conf` 配置文件，存储到 `~/.xmake/service/server.conf`。
 
 ::: tip 注意
 2.6.5 版本，配置地址在 `~/.xmake/service.conf`，后续版本做了大量改进，分离了配置文件，如果用的是 2.6.6 以上版本，请使用新的配置文件。
 :::
 
-然后，我们编辑它，修复服务器的监听端口（可选）。
+然后，我们编辑它，修改服务器的监听端口（可选）。
 
 ```sh
 $ cat ~/.xmake/service/server.conf
@@ -89,7 +89,7 @@ $ cat ~/.xmake/service/client.conf
 
 这也是我们默认推荐的方式，更加安全，配置和连接也更加方便，每次连接也不用输入密码。
 
-我们在执行 `xmake service` 命令时候，默认就会生成一个服务端和客户端的配置文件，并且自动生成一个默认的 token，因此本地直连是不需要任何配置的。
+我们在执行 `xmake service` 命令时，默认就会生成一个服务端和客户端的配置文件，并且自动生成一个默认的 token，因此本地直连是不需要任何配置的。
 
 #### 服务端认证配置
 
@@ -135,11 +135,11 @@ New token a7b9fc2d3bfca1472aabc38bb5f5d612 is generated!
 
 ### 密码认证
 
-我们也提供密码认证的授权模式，相比 token 认证，它需要用户每次连接的时候，输入密码，验证通过后，才能连接上。
+我们也提供密码认证的授权模式。相比 token 认证，它需要用户每次连接时输入密码，验证通过后才能连接上。
 
 #### 服务端认证配置
 
-密码认证，我们不需要手动配置 token，只需要执行下面的命令，添加用户就行了，添加过程中，会提示用户输入密码。
+密码认证不需要手动配置 token，只需要执行下面的命令添加用户即可，添加过程中会提示用户输入密码。
 
 ```sh
 $ xmake service --add-user=ruki
@@ -148,7 +148,7 @@ Please input user ruki password:
 Add user ruki ok!
 ```
 
-然后，xmake 就会通过用户名，密码生成一个新的 token 添加到服务器配置的 token 列表中去。
+然后，xmake 就会通过用户名和密码生成一个新的 token，添加到服务器配置的 token 列表中去。
 
 ```sh
 $ cat ~/.xmake/service/server.conf
@@ -177,7 +177,7 @@ Remove user ruki ok!
 
 #### 客户端认证配置
 
-对于客户端，我们不再需要设置服务器的 token 了，只需要在连接配置中，追加需要连接的用户名即可开启密码认证，格式：`user@address:port`
+对于客户端，我们不再需要设置服务器的 token，只需要在连接配置中追加需要连接的用户名即可开启密码认证，格式：`user@address:port`
 
 ```sh
 $ cat ~/.xmake/service/client.conf
@@ -189,12 +189,12 @@ $ cat ~/.xmake/service/client.conf
 ```
 
 ::: tip 注意
-如果去掉用户名，也没配置 token，那就是匿名模式，如果服务器也没配置 token，就是完全禁用认证，直接连接。
+如果去掉用户名，也没配置 token，那就是匿名模式。如果服务器也没配置 token，就是完全禁用认证，直接连接。
 :::
 
 ### 可信主机验证
 
-另外，为了更进一步提高安全性，我们还提供了服务端可信主机验证，如果在服务器配置的 known_hosts 列表中，配置了可以连接的客户端主机 ip 地址，
+另外，为了进一步提高安全性，我们还提供了服务端可信主机验证。如果在服务器配置的 known_hosts 列表中，配置了可以连接的客户端主机 IP 地址，
 那么只有这些主机可以成功连接上这台服务器，其他主机对它的连接都会被提示为不可信而拒绝连接，即使 token 和密码认证都没问题也不行。
 
 ```sh

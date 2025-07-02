@@ -153,7 +153,7 @@ add_requires("cmake::Boost", {system = true, configs = {components = {"regex", "
 
 相当于内部调用 find_package 查找包之前，在 CMakeLists.txt 中预定义一些配置，控制 find_package 的查找策略和状态。
 
-```
+```cmake
 set(Boost_USE_STATIC_LIB ON) -- will be used in FindBoost.cmake
 find_package(Boost REQUIRED COMPONENTS regex system)
 ```

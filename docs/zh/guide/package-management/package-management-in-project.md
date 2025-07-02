@@ -1,4 +1,3 @@
-
 # 工程内包管理命令 {#package-management-in-project}
 
 包管理命令`$ xmake require` 可用于手动显示的下载编译安装、卸载、检索、查看包信息。

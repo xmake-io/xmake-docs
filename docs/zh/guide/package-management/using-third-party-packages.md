@@ -1,4 +1,3 @@
-
 # 使用第三方依赖包 {#using-third-party-packages}
 
 2.2.5版本之后，xmake支持对对第三方包管理器里面的依赖库安装支持，例如：conan, brew, vcpkg等
