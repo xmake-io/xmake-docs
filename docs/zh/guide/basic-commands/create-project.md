@@ -47,7 +47,7 @@ target("hello")
 -- ...
 ```
 
-另外，文件尾部还提供了一些注释，里面有提供常用的配置示例，方便快速查看。
+此外，文件结尾还提供了一些注释，里面有提供常用的配置示例，方便快速查看。
 
 然后，我们只需要进入刚刚创建的 hello 工程根目录，执行 xmake 命令，即可完成编译。
 
@@ -103,9 +103,9 @@ create ok!
                                             - objc++
 ```
 
-## 指定工程模版
+## 指定工程模板
 
-另外，我们也可以通过 `-t [template]` 参数，去指定需要创建的工程模块类型。
+另外，我们也可以通过 `-t [template]` 参数，去指定需要创建的工程模板类型。
 
 例如，创建一个静态库工程：
 
@@ -129,7 +129,7 @@ $ xmake
 [100%]: build ok, spent 1.795s
 ```
 
-完整模版列表，也可以通过 `xmake create -h` 来查看。
+完整模板列表，也可以通过 `xmake create -h` 来查看。
 
 ```sh
     -t TEMPLATE, --template=TEMPLATE    Select the project template id or name of the given language.
@@ -162,5 +162,5 @@ $ xmake
                                             - xmake.cli: c++, c
 ```
 
-其中，最常用的就是创建控制台（console），静态库（static）和动态库（shared）等程序。
+其中，最常用的就是创建控制台（console）、静态库（static）和动态库（shared）等程序。
 

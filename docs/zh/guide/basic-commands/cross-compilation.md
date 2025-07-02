@@ -20,7 +20,7 @@ outline: deep
        - xxx.h
 ```
 
-每个工具链都有对应的include/lib目录，用于放置一些系统库和头文件，例如libc, stdc++等，而bin目录下放置的就是编译工具链一系列工具。例如：
+每个工具链都有对应的include/lib目录，用于放置一些系统库和头文件，比如libc, stdc++等，而bin目录下放置的就是编译工具链一系列工具。例如：
 
 ```
 arm-linux-armeabi-ar
@@ -37,11 +37,11 @@ arm-linux-armeabi-strip
 其中`arm-linux-armeabi-`前缀就是cross，通过用来标示目标平台和架构，主要用于跟主机自身的gcc/clang进行区分。
 
 里面的gcc/g++就是c/c++的编译器，通常也可以作为链接器使用，链接的时候内部会去调用ld来链接，并且自动追加一些c++库。
-cpp是预处理器，as是汇编器，ar用于生成静态库，strip用于裁剪掉一些符号信息，使得目标程序会更加的小。nm用于查看导出符号列表。
+cpp是预处理器，as是汇编器，ar用于生成静态库，strip用于裁剪掉一些符号信息，使得目标程序会更小。nm用于查看导出符号列表。
 
 ## 自动探测和编译
 
-如果我们的交叉编译工具链是上文的结构，xmake会自动检测识别这个sdk的结构，提取里面的cross，以及include/lib路径位置，用户通常不需要做额外的参数设置，只需要配置好sdk根目录就可以编译了，例如：
+如果我们的交叉编译工具链是上述结构，xmake会自动检测识别这个sdk的结构，提取里面的cross，以便于include/lib路径位置，用户通常不需要做额外的参数设置，只需要配置好sdk根目录就可以编译了，例如：
 
 ```sh
 $ xmake f -p cross --sdk=/home/toolchains_sdkdir
@@ -52,14 +52,14 @@ $ xmake
 
 注：我们也可以指定`-p linux`平台来配置交叉编译，效果是一样的，唯一的区别是额外标识了linux平台名，方便xmake.lua里面通过`is_plat("linux")`来判断平台。
 
-这个时候，xmake会去自动探测gcc等编译器的前缀名cross：`arm-linux-armeabi-`，并且编译的时候，也会自动加上`链接库`和`头文件`的搜索选项，例如：
+此时，xmake会去自动检测gcc等编译器的前缀cross：`arm-linux-armeabi-`，并且编译的时候，也会自动加上`链接库`和`头文件`的搜索选项，比如：
 
 ```
 -I/home/toolchains_sdkdir/include
 -L/home/toolchains_sdkdir/lib
 ```
 
-这些都是xmake自动处理的，不需要手动配置他们。
+这些都是xmake自动处理的，不需要手动配置它们。
 
 ## 手动配置编译
 
@@ -67,7 +67,7 @@ $ xmake
 
 ## 设置工具链bin目录
 
-对于不规则工具链目录结构，靠单纯地[--sdk](#sdk)选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。
+对于不规则工具链目录结构，单纯地设置[--sdk](#sdk)选项还不够，可以继续通过这个选项设置工具链的bin目录位置。
 
 例如：一些特殊的交叉工具链的，编译器bin目录，并不在  `/home/toolchains_sdkdir/bin`  这个位置，而是独立到了  `/usr/opt/bin`
 
@@ -80,9 +80,9 @@ $ xmake
 
 ## 设置交叉工具链工具前缀
 
-像aarch64-linux-android-这种，通常如果你配置了--sdk或者--bin的情况下，xmake会去自动检测的，不需要自己手动设置。
+像aarch64-linux-android-，通常如果你配置了--sdk或者--bin，xmake会自动检测的，不需要自己手动设置。
 
-但是对于一些极特殊的工具链，一个目录下同时有多个cross前缀的工具bin混在一起的情况，你需要手动设置这个配置，来区分到底需要选用哪个bin。
+但是对于一些极特殊的工具链，一个目录下同时有多个cross前缀的工具bin混在一起的情况，你需要手动设置这个配置，来区分到底需要选用哪一个bin。
 
 例如，toolchains的bin目录下同时存在两个不同的编译器：
 
@@ -100,17 +100,13 @@ $ xmake f -p cross --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 
 ## 设置c/c++编译器
 
-如果还要继续细分选择编译器，则继续追加相关编译器选项，例如：
+如果还要继续细分选择编译器，则继续追加相关编译器选项，比如：
 
 ```sh
 $ xmake f -p cross --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-clang++
 ```
 
-当然，我们也可以指定编译器全路径。
-
-`--cc`用于指定c编译器名，`--cxx`用于指定c++编译器名。
-
-注：如果存在CC/CXX环境变量的话，会优先使用当前环境变量中指定的值。
+注意：如果存在CC/CXX环境变量的话，会优先使用当前环境变量中指定的值。
 
 如果指定的编译器名不是那些xmake内置可识别的名字（带有gcc, clang等字样），那么编译器工具检测就会失败。
 
@@ -126,7 +122,7 @@ xmake f --cxx=clang++@/home/xxx/c++mips.exe
 
 ## 设置c/c++链接器
 
-如果还要继续细分选择链接器，则继续追加相关链接器选项，例如：
+如果还要继续细分选择链接器，则继续追加相关链接器选项，比如：
 
 ```sh
 $ xmake f -p cross --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
@@ -134,7 +130,7 @@ $ xmake f -p cross --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux
 
 ld指定可执行程序链接器，sh指定共享库程序链接器，ar指定生成静态库的归档器。
 
-注：如果存在LD/SH/AR环境变量的话，会优先使用当前环境变量中指定的值。
+注意：如果存在LD/SH/AR环境变量的话，会优先使用当前环境变量中指定的值。
 
 ## 设置头文件和库搜索目录
 
@@ -144,7 +140,7 @@ ld指定可执行程序链接器，sh指定共享库程序链接器，ar指定�
 $ xmake f -p cross --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --linkdirs=/usr/toolsdk/xxx/lib --links=pthread
 ```
 
-注：如果要指定多个搜索目录，可以通过`:`或者`;`来分割，也就是不同主机平台的路径分隔符，linux/macos下用`:`，win下用`;`。
+注意：如果要指定多个搜索目录，可以通过`:`或者`;`来分割，也就是不同主机平台的路径分隔符，linux/macos下用`:`，win下用`;`。
 
 ## 设置编译和链接选项
 
@@ -166,22 +162,7 @@ $ xmake f -p cross --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-l
 
 ## 自定义编译平台
 
-如果某个交叉工具链编译后目标程序有对应的平台需要指定，并且需要在xmake.lua里面根据不同的交叉编译平台，还需要配置一些额外的编译参数，那么上文的`-p cross`设置就不能满足需求了。
-
-其实，`-p/--plat=`参数也可以设置为其他自定义的值，只需要跟`is_plat`保持对应关系就可以，所有非内置平台名，都会默认采用交叉编译模式，例如：
-
-```sh
-$ xmake f -p myplat --sdk=/usr/local/arm-xxx-gcc/
-$ xmake
-```
-
-我们传入了myplat自定义平台名，作为当前交叉工具链的编译平台，然后xmake.lua里面我们对这个平台，配置下对应的设置：
-
-```lua
-if is_plat("myplat") then
-    add_defines("TEST")
-end
-```
+如果某个交叉工具链编译后目标程序有对应的平台需要指定，并且需要在xmake.lua里面根据不同交叉编译平台，还需要配置一些额外的编译参数，那么上文的`-p cross`设置就不能满足需求了。
 
 通过这种方式，xmake就可以很方便的扩展处理各种编译平台，用户可以自己扩展支持freebsd, netbsd, sunos等其他各种平台的交叉编译。
 
@@ -509,13 +490,13 @@ $ xmake
 -I/home/toolchains_sdkdir/include -L/home/toolchains_sdkdir/lib
 ```
 
-这些都是xmake自动处理的，不需要手动配置他们。。
+这些都是xmake自动处理的，不需要手动配置它们。
 
 ### --bin
 
 - 设置工具链bin目录
 
-对于不规则工具链目录结构，靠单纯地[--sdk](#-sdk)选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。
+对于不规则工具链目录结构，单纯地设置[--sdk](#-sdk)选项还不够，可以继续通过这个选项设置工具链的bin目录位置。
 
 例如：一些特殊的交叉工具链的，编译器bin目录，并不在 `/home/toolchains_sdkdir/bin` 这个位置，而是独立到了 `/usr/opt/bin`
 
@@ -534,7 +515,7 @@ v2.2.1版本之前，这个参数名是`--toolchains`，比较有歧义，因此
 
 像`aarch64-linux-android-`这种，通常如果你配置了[--sdk](#-sdk)或者[--bin](#-bin)的情况下，xmake会去自动检测的，不需要自己手动设置。
 
-但是对于一些极特殊的工具链，一个目录下同时有多个cross前缀的工具bin混在一起的情况，你需要手动设置这个配置，来区分到底需要选用哪个bin。
+但是对于一些极特殊的工具链，一个目录下同时有多个cross前缀的工具bin混在一起的情况，你需要手动设置这个配置，来区分到底需要选用哪一个bin。
 
 例如，toolchains的bin目录下同时存在两个不同的编译器：
 

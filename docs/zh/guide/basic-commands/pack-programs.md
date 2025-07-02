@@ -23,7 +23,7 @@ build/packages/f/foo/
 
 一般用于分发二进制的库，以及本地集成使用，更多详细介绍，可以看下文档：[使用本地包](/zh/guide/package-management/using-local-packages)。
 
-另外，这种方式在配合 [内置的宏插件](/zh/guide/extensions/builtin-plugins#builtin-macro-scripts) 可以实现 ios 的 universal 二进制打包。
+此外，这种方式在配合 [内置的宏插件](/zh/guide/extensions/builtin-plugins#builtin-macro-scripts) 可以实现 ios 的 universal 二进制打包。
 
 ```sh
 $ xmake macro package -p iphoneos -a "arm64,x86_64"
@@ -52,7 +52,7 @@ $ tree ./build/foo.pkg/
 我们可以将这个包配置文件，提交到 [xmake-repo](https://github.com/xmake-io/xmake-repo) 官方仓库进行分发，也可以提交到自建的私有仓库中。
 
 ::: tip 注意
-不过生成的配置文件，也许不能直接可用，它只是生成一个大概的模版，具体还是需要用户自己编辑修改，调整对应的安装和测试逻辑。
+不过生成的配置文件，也许不能直接可用，它只是生成一个大概的模板，具体还是需要用户自己编辑修改，调整对应的安装和测试逻辑。
 :::
 
 具体详情，我们可以查看文档：[生成远程包](/zh/guide/package-management/package-distribution#generate-remote-package)。

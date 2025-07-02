@@ -12,7 +12,7 @@
 
 ## Gcc
 
-如果 linux 上安装了 gcc 工具链，通常 xmake 都会优先探测使用，当然我们也可以手动切换到 gcc 来构建。
+如果 linux 上安装了 gcc 工具链，通常 xmake 都会优先检测使用，当然我们也可以手动切换到 gcc 来构建。
 
 ```sh
 $ xmake f --toolchain=gcc -c
@@ -36,7 +36,7 @@ $ xmake
 
 ## Clang
 
-在 macOS 和 linux，通常 xmake 也会优先尝试去自动探测和使用它，当然我们也可以手动切换。
+在 macOS 和 linux，通常 xmake 也会优先尝试去自动检测和使用它，当然我们也可以手动切换。
 
 ```sh
 $ xmake f --toolchain=clang -c
@@ -65,6 +65,8 @@ C:\Users\star\scoop\apps\llvm\current\bin\clang++ -o build\windows\x64\release\t
 $ xmake f --cc=clang-cl --cxx=clang-cl -c
 $ xmake
 ```
+
+自 v2.7.2 起，也有专门的 clang-cl 工具链。使用 clang-cl 工具链相较于 msvc 工具链的优势在于，在 windows 上，`--vs_toolset` 选项会被正确处理。
 
 ## LLVM
 
@@ -174,14 +176,14 @@ $ xmake f -p mingw -c
 $ xmake
 ```
 
-xmake 默认会自动探测 mingw 工具链位置，macOS 和 msys/mingw64 环境通常都能自动探测到，如果检测到，也可以手动指定 mingw sdk 路径。
+如果 mingw 工具链安装在 linux、macOS 或 msys/mingw64 环境，通常都能自动检测到，如果检测到，也可以手动指定 mingw sdk 路径。
 
 ```sh
 $ xmake f -p mingw --mingw=/xxx/mingw -c
 $ xmake
 ```
 
-注，这里使用了 `--mingw` 而不是 `--sdk`，其实这两个都可以，但是使用 `--mingw` 单独的参数可以更好的保证个其他交叉编译工具链不冲突。
+注意，这里使用了 `--mingw` 而不是 `--sdk`。其实这两个都可以，但是使用 `--mingw` 单独的参数可以更好的保证其他交叉编译工具链不冲突。
 
 ## LLVM-Mingw
 

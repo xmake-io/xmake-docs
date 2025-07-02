@@ -38,16 +38,16 @@ $ xmake f -p android --ndk=~/files/android-ndk-r10e/ [-a armeabi-v7a|arm64-v8a]
 $ xmake
 ```
 
-如果要手动指定ndk中具体某个工具链，而不是使用默认检测的配置，可以通过[--bin](#-bin)来设置，例如：
+如果要手动指定 ndk 中具体某个工具链，而不是使用默认检测的配置，可以通过 [--bin](#-bin) 来设置，例如：
 
 ```sh
 $ xmake f -p android --ndk=~/files/android-ndk-r10e/ -a arm64-v8a --bin=~/files/android-ndk-r10e/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64/bin
 ```
 
-[--bin](#-bin)主要用于设置选择编译工具的具体bin目录，这个的使用跟[交叉编译](#交叉编译)中的[--bin](#-bin)的行为是一致的。
+[--bin](#-bin) 主要用于设置选择编译工具的具体 bin 目录，这个的使用跟[交叉编译](#交叉编译)中的 [--bin](#-bin) 的行为是一致的。
 
 ::: tip 注意
-如果手动设置了bin目录，没有通过检测，可以看下是否`--arch=`参数没有匹配对。
+如果手动设置了 bin 目录，没有通过检测，可以看下是否 `--arch=` 参数没有匹配对。
 :::
 
 ### iPhoneOS
@@ -113,16 +113,16 @@ $ xmake f -p wasm [--qt=~/Qt]
 $ xmake
 ```
 
-其中 `--qt` 参数设置是可选的，通常xmake都能检测到qt的sdk路径。
+其中 `--qt` 参数设置是可选的，通常 xmake 都能检测到 qt 的 sdk 路径。
 
 
-需要注意的一点是，Emscripten 和 Qt SDK 的版本是有对应关系的，不匹配的版本，可能会有Qt/Wasm之间的兼容问题。
+需要注意的一点是，Emscripten 和 Qt SDK 的版本是有对应关系的，不匹配的版本，可能会有 Qt/Wasm 之间的兼容问题。
 
 关于版本对应关系，可以看下：[https://wiki.qt.io/Qt_for_WebAssembly](https://wiki.qt.io/Qt_for_WebAssembly)
 
 更多详情见：[https://github.com/xmake-io/xmake/issues/956](https://github.com/xmake-io/xmake/issues/956)
 
-除了 emscripten 以外，还有一个常用的wasm工具链 wasi-sdk，用于构建基于wasi的程序，我们仅仅只需要切换工具链即可。
+除了 emscripten 以外，还有一个常用的 wasm 工具链 wasi-sdk，用于构建基于 wasi 的程序，我们仅仅只需要切换工具链即可。
 
 ```sh
 $ xmake f -p wasm --toolchain=wasi
@@ -161,7 +161,7 @@ $ xmake f -p android
 $ xmake
 ```
 
-以后，就不需要每次重复配置`--ndk=`参数了。
+以后，就不需要每次重复配置 `--ndk=` 参数了。
 
 ::: tip 注意
 每个命令都有其简写，例如: `xmake g` 或者 `xmake global`.
@@ -169,7 +169,7 @@ $ xmake
 
 ## 清除配置
 
-有时候，配置出了问题编译不过，或者需要重新检测各种依赖库和接口，可以加上`-c`参数，清除缓存的配置，强制重新检测和配置
+有时候，配置出了问题编译不过，或者需要重新检测各种依赖库和接口，可以加上 `-c` 参数，清除缓存的配置，强制重新检测和配置
 
 ```sh
 $ xmake f -c

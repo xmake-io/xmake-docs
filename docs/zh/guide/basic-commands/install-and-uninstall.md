@@ -5,7 +5,7 @@
 这通常用于 linux, unix, bsd 等系统环境下的安装。
 
 ::: tip 注意
-尽管 Windows 下也支持，但不常用，因为 Windows 上没有默认的安装目录，因此更推荐直接生成安装包。具体见：[XPack 打包](/zh/api/description/xpack-interfaces)
+尽管 Windows 下也支持，但是不常用，因为 Windows 上没有默认的安装目录，因此更推荐直接生成安装包。具体见：[XPack 打包](/zh/api/description/xpack-interfaces)
 :::
 
 ## 命令格式
