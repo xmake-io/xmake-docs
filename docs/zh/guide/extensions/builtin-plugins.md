@@ -64,16 +64,15 @@ $ xmake project -k compile_commands
 
 ### 生成 Xcode 工程文件 {#generate-xcode-project}
 
-目前，我们还没有时间去自己实现xcode工程的生成，但不代表不支持，因为xmake支持生成cmakelists.txt文件，而cmake是支持xcode工程文件生成的，在官方还没有实现之前，
-我们也可以通过cmake变相支持它，xmake会自动内部调用cmake中转下生成结果，对用户而言使用上没啥区别，只需要确保cmake已经安装即可：
+当前历史版本是利用 CMake 来生成的 Xcode 工程，不过最新的 dev 版本，也就是后续即将发布的 3.0.1 版本，将会带来原生的 Xcode 生成器。
+
+如果想要提前体验，可以更新到 xmake dev 版本尝试，`xmake update -s dev`。
+
+具体详情见：[#4810](https://github.com/xmake-io/xmake/issues/4810)。
 
 ```sh
 $ xmake project -k xcode
 ```
-
-::: tip 注意
-等之后有时间，我们会重新自己实现各更加完善的xcode输出插件，也欢迎大家帮忙贡献。
-:::
 
 ### 生成 VisualStudio 工程 {#generate-vs-project}
 

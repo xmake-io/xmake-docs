@@ -54,16 +54,15 @@ Please see [JSONCompilationDatabase](https://clang.llvm.org/docs/JSONCompilation
 
 ### Generate Xcode project file
 
-At present, we have no time to implement the generation of xcode projects by ourselves, but it does not mean that it is not supported, because xmake supports the generation of cmakelists.txt files, and cmake supports the generation of xcode project files. Before the official implementation,
-We can also support it in disguise through cmake, xmake will automatically call cmake internally to transfer the generated results, there is no difference in use for users, just make sure that cmake has been installed:
+The current historical version uses CMake to generate Xcode projects, but the latest dev version, which is the upcoming 3.0.1 version, will bring a native Xcode generator.
+
+If you want to experience it in advance, you can update to the xmake dev version and try it, `xmake update -s dev`.
+
+For details, see: [#4810](https://github.com/xmake-io/xmake/issues/4810).
 
 ```sh
 $ xmake project -k xcode
 ```
-
-::: tip NOTE
-After we have time, we will re-implement each more complete xcode output plugin by ourselves, and welcome everyone to contribute.
-:::
 
 ### Generate VisualStudio Project
 
