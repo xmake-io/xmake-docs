@@ -88,7 +88,7 @@ add_requires("xxx", {debug = true})
 ```lua
 on_install(function (package)
     local configs = {}
-    if package:debug() then
+    if package:is_debug() then
         table.insert(configs, "--enable-debug")
     end
     import("package.tools.autoconf").install(package)

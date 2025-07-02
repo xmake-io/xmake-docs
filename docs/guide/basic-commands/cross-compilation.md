@@ -458,6 +458,8 @@ Xmake will detect the prefix: arm-linux- and add the include and library search 
 -I/home/toolchains_sdkdir/include -L/home/toolchains_sdkdir/lib
 ```
 
+These are handled automatically by Xmake; there is no need to configure them manually.
+
 ### --bin
 
 - Set the `bin` directory of toolchains

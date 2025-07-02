@@ -6,7 +6,7 @@ outline: deep
 
 ## Switch Theme
 
-If users don't like xmake's default display color and style, we can use the following global configuration commands to switch to other configuration topics provided by xmake, for example:
+If users don't like xmake's default display color and style, we can use the following global configuration commands to switch to other configuration themes provided by xmake, for example:
 
 ```sh
 $ xmake g --theme=dark
@@ -48,7 +48,7 @@ $ xmake g --theme=default
 
 ### Ninja Theme
 
-This is the theme provided by the version after v2.3.4. The construction progress style is similar to ninja. It uses a single-line progress bar, and the progress is no longer rolled back.
+This is the theme provided by the version after v2.3.4. The build progress style is similar to ninja. It uses a single-line progress bar, and the progress is no longer rolled back.
 
 The configuration of the default theme is the same except that the progress is displayed differently.
 

@@ -18,7 +18,7 @@ Plugins:
 * lua: Run a given lua script.
 * macro: Record and playback some xmake commands repeatedly.
 * doxygen: Generate doxygen documentation automatically.
-* hello:  The demo plugin and only print: 'hello xmake!'
+* hello:  The demo plugin and only prints: 'hello xmake!'
 * project: Generate project files for IDEs. It can generate make, cmake, vs, xcode (needs cmake), ninja project files, compile_commands.json, and compile_flags.txt
 
 ## Quick Start

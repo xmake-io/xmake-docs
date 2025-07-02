@@ -12,9 +12,9 @@ Before making our own package, we need to understand the structure of the packag
 
 ```
 xmake-repo
-   - packages
-     - t/tbox/xmake.lua
-     - z/zlib/xmake.lua
+   - packages
+     - t/tbox/xmake.lua
+     - z/zlib/xmake.lua
 ```
 
 Through the above structure, you can see that each package will have an xmake.lua to describe its installation rules, and according to the `z/zlib` two-level sub-category storage, it is convenient for quick retrieval.
@@ -87,11 +87,11 @@ There must be relevant processing in the package description to support:
 
 ```lua
 on_install(function (package)
-    Local configs = {}
-    if package:debug() then
-        Table.insert(configs, "--enable-debug")
-    end
-    import("package.tools.autoconf").install(package)
+    Local configs = {}
+    if package:is_debug() then
+        table.insert(configs, "--enable-debug")
+    end
+    import("package.tools.autoconf").install(package)
 end)
 ```
 
@@ -107,7 +107,7 @@ But if it is a special source package, the build rules are special, then you nee
 
 ```lua
 on_install(function (package)
-    io.gsub("build/Makefile.win32.common", "%-MD", "-" .. package:config("vs_runtime"))
+    io.gsub("build/Makefile.win32.common", "%-MD", "-" .. package:config("vs_runtime"))
 end)
 ```
 
@@ -117,12 +117,12 @@ For some libraries, there are also executable tools. If you need to use these to
 
 ```lua
 package("luajit")
-    on_load(function (package)
-        if is_plat("windows") then
-            Package:addenv("PATH", "lib")
-        end
-        Package:addenv("PATH", "bin")
-    end)
+    on_load(function (package)
+        if is_plat("windows") then
+            Package:addenv("PATH", "lib")
+        end
+        Package:addenv("PATH", "bin")
+    end)
 ```
 
 In the project, the corresponding environment variables will only take effect after the corresponding package is integrated by `add_packages`.
@@ -130,11 +130,11 @@ In the project, the corresponding environment variables will only take effect af
 ```lua
 add_requires("luajit")
 target("test")
-    set_kind("binary")
-    add_packages("luajit")
-    after_run(function (package)
-        os.exec("luajit --version")
-    end)
+    set_kind("binary")
+    add_packages("luajit")
+    after_run(function (package)
+        os.exec("luajit --version")
+    end)
 ```
 
 ### Installing binary packages
@@ -143,14 +143,14 @@ Xmake also supports direct reference to the binary version package, which is use
 
 ```lua
 if is_plat("windows") then
-    set_urls("https://www.libsdl.org/release/SDL2-devel-$(version)-VC.zip")
-    add_versions("2.0.8", "68505e1f7c16d8538e116405411205355a029dcf2df738dbbc768b2fe95d20fd")
+    set_urls("https://www.libsdl.org/release/SDL2-devel-$(version)-VC.zip")
+    add_versions("2.0.8", "68505e1f7c16d8538e116405411205355a029dcf2df738dbbc768b2fe95d20fd")
 end
 
 on_install("windows", function (package)
-    os.cp("include", package:installdir())
-    os.cp("lib/$(arch)/*.lib", package:installdir("lib"))
-    os.cp("lib/$(arch)/*.dll", package:installdir("lib"))
+    os.cp("include", package:installdir())
+    os.cp("lib/$(arch)/*.lib", package:installdir("lib"))
+    os.cp("lib/$(arch)/*.dll", package:installdir("lib"))
 end)
 ```
 
@@ -304,4 +304,3 @@ rule("bar")
         print("bar: on_config %s", target:name())
     end)
 ```
-ry, so it maybe unreliable to detect the correct paths.

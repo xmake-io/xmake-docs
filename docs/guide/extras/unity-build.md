@@ -63,7 +63,7 @@ target("test")
 
 We use `{unity_group = "foo"}` to specify the name of each group and which files are included. The files in each group will be merged into one code file separately.
 
-In addition, `batchsize = 0` also forcibly disables the Batch mode, that is, if there is no unity_group grouped code files, we will still compile them separately, and will not automatically turn on automatic merging.
+In addition, `batchsize = 0` also forcibly disables the Batch mode, that is, if there are no unity_group grouped code files, we will still compile them separately, and will not automatically turn on automatic merging.
 
 ## Batch and Group mixed mode
 
