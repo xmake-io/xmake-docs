@@ -8,13 +8,13 @@ outline: deep
 
 ### 简介
 
-XMake跟`cmake`, `premake`等其他一些构建工具的区别在于：
+XMake 跟 `cmake`、`premake` 等其他一些构建工具的区别在于：
 
 ::: tip 注意
-`xmake` 默认是直接构建运行的，生成第三方的IDE的工程文件仅仅作为`插件`来提供。
+`xmake` 默认是直接构建运行的，生成第三方 IDE 的工程文件仅仅作为 `插件` 来提供。
 :::
 
-这样做的一个好处是：插件更加容易扩展，维护也更加独立和方便。
+这样做的一个好处是：插件更容易扩展，维护也更加独立和方便。
 
 ### 生成 Makefile {#generate-makefile}
 
@@ -42,7 +42,7 @@ $ xmake project -k compiler_flags
 
 ### 生成 compile_commands {#generate-compile-commands}
 
-导出每个源文件的编译信息，生成基于clang的编译数据库文件，json格式，可用于跟ide，编辑器，静态分析工具进行交互。
+导出每个源文件的编译信息，生成基于 clang 的编译数据库文件，json 格式，可用于与 IDE、编辑器、静态分析工具进行交互。
 
 ```sh
 $ xmake project -k compile_commands
@@ -60,15 +60,15 @@ $ xmake project -k compile_commands
 
 ```
 
-对于`compile_commands`的详细说明见：[JSONCompilationDatabase](https://clang.llvm.org/docs/JSONCompilationDatabase.html)
+对于 `compile_commands` 的详细说明见：[JSONCompilationDatabase](https://clang.llvm.org/docs/JSONCompilationDatabase.html)
 
 ### 生成 Xcode 工程文件 {#generate-xcode-project}
 
-当前历史版本是利用 CMake 来生成的 Xcode 工程，不过最新的 dev 版本，也就是后续即将发布的 3.0.1 版本，将会带来原生的 Xcode 生成器。
+目前历史版本是利用 CMake 来生成的 Xcode 工程，不过最新的 dev 版本，也就是后续即将发布的 3.0.1 版本，将会带来原生的 Xcode 生成器。
 
-如果想要提前体验，可以更新到 xmake dev 版本尝试，`xmake update -s dev`。
+如果想要提前体验，可以更新到 xmake dev 版本试用，`xmake update -s dev`。
 
-具体详情见：[#4810](https://github.com/xmake-io/xmake/issues/4810)。
+具体详情见：[issue #4810](https://github.com/xmake-io/xmake/issues/4810)。
 
 ```sh
 $ xmake project -k xcode
@@ -78,7 +78,7 @@ $ xmake project -k xcode
 
 #### 使用 xmake 集成编译 {#geneerate-vsxmake}
 
-v2.2.8以上版本，提供了新版本的vs工程生成插件扩展，跟之前的生成vs的插件处理模式上有很大的不同，之前生成的vs工程是把所有文件的编译展开后，转交给vs来处理编译。
+v2.2.8以上版本，提供了新版本的vs工程生成插件扩展，与之前的生成vs的插件处理模式有很大不同，之前生成的vs工程是把所有文件的编译展开后，转交给vs来处理编译。
 
 但是这种模式，对xmake的rules是没法支持的。因为xmake的rules里面用了很多的`on_build`此类自定义脚本，无法展开，所以像qt， wdk此类的项目就没法支持导出到vs里面进行编译了。
 
@@ -102,7 +102,7 @@ $ xmake project -k vsxmake -m "debug,release"
 
 ![](/assets/img/manual/property_page_vsxmake.png)
 
-v2.5.1 版本提供了一个 `add_rules("plugin.vsxmake.autoupdate")` 规则，如果应用此规则，生产的vs工程在编译完成后，会检测 xmake.lua 和代码文件列表的改动，如果有变化，就会自动更新 vs 工程。
+v2.5.1 版本提供了一个 `add_rules("plugin.vsxmake.autoupdate")` 规则，如果应用此规则，生成的vs工程在编译完成后，会检测 xmake.lua 和代码文件列表的改动，如果有变化，就会自动更新 vs 工程。
 
 ```lua
 add_rules("plugin.vsxmake.autoupdate")
@@ -111,7 +111,7 @@ target("test")
     add_files("src/*.c")
 ```
 
-另外，我们可以通过 `set_group` 接口对每个 target 设置分组，使得生成的 vs 工程可以按指定结构进行分组。更多详情见：[issue 1026](https://github.com/xmake-io/xmake/issues/1026)
+另外，我们可以通过 `set_group` 接口对每个 target 设置分组，使得生成的 vs 工程可以按指定结构进行分组。更多详情见：[issue #1026](https://github.com/xmake-io/xmake/issues/1026)
 
 #### 使用 vs 内置编译机制 {#generate-vs}
 
@@ -138,7 +138,7 @@ $ xmake project -k vs2017 -m "debug,release"
 add_rules("mode.debug", "mode.release")
 ```
 
-另外，我们可以通过 `set_group` 接口对每个 target 设置分组，使得生成的 vs 工程可以按指定结构进行分组。更多详情见：[issue 1026](https://github.com/xmake-io/xmake/issues/1026)
+另外，我们可以通过 `set_group` 接口对每个 target 设置分组，使得生成的 vs 工程可以按指定结构进行分组。更多详情见：[issue #1026](https://github.com/xmake-io/xmake/issues/1026)
 
 ## 运行自定义 lua 脚本 {#run-lua-scripts}
 
@@ -189,7 +189,7 @@ $ xmake lua versioninfo
 
 ### 运行交互命令 (REPL)
 
-有时候在交互模式下，运行命令更加的方便测试和验证一些模块和api，也更加的灵活，不需要再去额外写一个脚本文件来加载。
+有时候在交互模式下，运行命令更加方便测试和验证一些模块和 API，也更加灵活，不需要再去额外写一个脚本文件来加载。
 
 我们先看下，如何进入交互模式：
 

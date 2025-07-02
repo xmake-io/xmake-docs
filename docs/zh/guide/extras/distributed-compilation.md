@@ -1,10 +1,10 @@
 # 分布式编译 {#distributed-compilation}
 
-Xmake 提供了内置的分布式编译服务，通常它可以跟 本地编译缓存，远程编译缓存 相互配合，实现最优的编译的加速。
+Xmake 提供了内置的分布式编译服务，通常它可以与本地编译缓存、远程编译缓存相互配合，实现最优的编译加速。
 
-另外，它是完全跨平台支持，我们不仅支持 gcc/clang，也能够很好地支持 Windows 和 msvc。
+另外，它是完全跨平台支持的，我们不仅支持 gcc/clang，也能够很好地支持 Windows 和 msvc。
 
-对于交叉编译，只要交叉工具链支持，我们不要求服务器的系统环境，即使混用 linux, macOS 和 Windows 的服务器资源，也可以很好的实现分布式编译。
+对于交叉编译，只要交叉工具链支持，我们不要求服务器的系统环境，即使混用 linux、macOS 和 Windows 的服务器资源，也可以很好地实现分布式编译。
 
 ## 开启服务 {#start-service}
 
@@ -16,7 +16,7 @@ $ xmake service --distcc
 <distcc_build_server>: listening 0.0.0.0:9093 ..
 ```
 
-我们也可以开启服务的同时，回显详细日志信息。
+我们也可以在开启服务的同时，回显详细日志信息。
 
 ```sh
 $ xmake service --distcc -vD
@@ -33,7 +33,7 @@ $ xmake service --distcc --stop
 
 ## 配置服务端 {#configure-server}
 
-我们首先，运行 `xmake service` 命令，它会自动生成一个默认的 `server.conf` 配置文件，存储到 `~/.xmake/service/server.conf`。
+我们首先运行 `xmake service` 命令，它会自动生成一个默认的 `server.conf` 配置文件，存储到 `~/.xmake/service/server.conf`。
 
 ```sh
 $ xmake service
@@ -43,7 +43,7 @@ generating the config file to /Users/ruki/.xmake/service/client.conf ..
 <distcc_build_server>: listening 0.0.0.0:9693 ..
 ```
 
-然后，我们编辑它，修复每台服务器的监听端口（可选）。
+然后，我们编辑它，修正每台服务器的监听端口（可选）。
 
 ```sh
 $ cat ~/.xmake/service/server.conf
@@ -64,10 +64,10 @@ $ cat ~/.xmake/service/server.conf
 
 客户端配置文件在 `~/.xmake/service/client.conf`，我们可以在里面配置客户端需要连接的服务器地址。
 
-我们可以在 hosts 列表里面配置多个服务器地址，以及对应的 token。
+我们可以在 hosts 列表中配置多个服务器地址，以及对应的 token。
 
 ::: tip 注意
-分布式编译，推荐使用 token 认证模式，因为密码模式，每台服务器连接时候都要输入一次密码，很繁琐。
+分布式编译，推荐使用 token 认证模式，因为密码模式下每台服务器连接时都要输入一次密码，很繁琐。
 :::
 
 ```sh
@@ -90,11 +90,11 @@ $cat ~/.xmake/service/client.conf
 
 ### 配置超时 {#configure-timeout}
 
-默认情况下，客户端连接，收发数据都是无限等待不超时的，但是如果访问服务端的网络不稳定，那么有可能会导致访问卡死，这个时候可以配置超时来解决。
+默认情况下，客户端连接、收发数据都是无限等待不超时的，但是如果访问服务端的网络不稳定，有可能会导致访问卡死，这时可以配置超时来解决。
 
 如果发生超时异常，就会自动退化到本地编译，不会永远卡死。
 
-我们可以配置，`send_timeout`, `recv_timeout` 和 `connect_timeout` 三种超时，如果在根节点设置，那么所有客户端服务都会生效。
+我们可以配置 `send_timeout`、`recv_timeout` 和 `connect_timeout` 三种超时，如果在根节点设置，那么所有客户端服务都会生效。
 
 ```sh
 $ cat ~/.xmake/service/client.conf
@@ -105,7 +105,7 @@ $ cat ~/.xmake/service/client.conf
 }
 ```
 
-我们也可以仅仅针对当前分布式构建服务配置超时，其他服务还是默认超时。
+我们也可以仅针对当前分布式构建服务配置超时，其他服务还是默认超时。
 
 ```sh
 $ cat ~/.xmake/service/client.conf
@@ -128,9 +128,9 @@ $ cat ~/.xmake/service/client.conf
 
 ## 连接服务器 {#connect-server}
 
-配置完认证和服务器地址后，就可以输入下面的命令，将当前工程连接到配置的服务器上了。
+配置完认证和服务器地址后，就可以输入下面的命令，将当前工程连接到配置的服务器上。
 
-我们需要在连接时候，输入 `--distcc`，指定仅仅连接分布式服务。
+我们需要在连接时，输入 `--distcc`，指定仅连接分布式服务。
 
 ```sh
 $ cd projectdir
@@ -173,9 +173,9 @@ $ xmake
 [100%]: build ok!
 ```
 
-其中，带有 distcc 字样的是远程编译任务，其他的都是本地编译任务，默认 xmake 还开启了本地编译缓存，对分布式编译结果进行缓存，避免频繁请求服务器。
+其中，带有 distcc 字样的是远程编译任务，其他的都是本地编译任务。默认 xmake 还开启了本地编译缓存，对分布式编译结果进行缓存，避免频繁请求服务器。
 
-另外，我们也可以开启远程编译缓存，跟其他人共享编译缓存，进一步加速多人协同开发的编译。
+另外，我们也可以开启远程编译缓存，与其他人共享编译缓存，进一步加速多人协同开发的编译。
 
 ## 断开连接 {#disconnect}
 

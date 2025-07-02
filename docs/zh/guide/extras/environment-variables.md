@@ -1,6 +1,6 @@
 # 环境变量 {#environment-variables}
 
-我们可以执行下面的命令，获取所有 xmake 用到的环境变量，以及当前被设置的值。
+我们可以执行下面的命令，获取所有 xmake 用到的环境变量，以及当前被设置的值：
 
 ```sh
 $ xmake show -l envs
@@ -34,7 +34,7 @@ XMAKE_LOGFILE           Set the log output file path.
 
 - 设置 ramdisk 目录路径
 
-ramdisk 目录是内存文件系统的目录位置，通常 `os.tmpdir()` 接口会用到，xmake 内部使用的临时文件，如果用户设置 ramdisk 路径，则会优先存储在这个上面，提升整体编译速度。
+ramdisk 目录是内存文件系统的目录位置，通常 `os.tmpdir()` 接口会用到。xmake 内部使用的临时文件，如果用户设置 ramdisk 路径，则会优先存储在这个上面，提升整体编译速度。
 
 ## XMAKE_TMPDIR
 
@@ -46,19 +46,19 @@ ramdisk 目录是内存文件系统的目录位置，通常 `os.tmpdir()` 接口
 
 - 设置本地工程配置目录
 
-每个项目的本地编译配置，默认会存储在当前项目根目录的 `.xmake` 路径下，然后根据不同的平台，架构区分，例如：
+每个项目的本地编译配置，默认会存储在当前项目根目录的 `.xmake` 路径下，然后根据不同的平台、架构区分，例如：
 
 ```sh
 .xmake/macosx/x86_64
 ```
 
-我们如果不想存储在项目根目录，也可以自己设置到其他路径，比如 build 目录下等等。
+我们如果不想存储在项目根目录，也可以自己设置到其他路径，比如 build 目录下等。
 
 ## XMAKE_GLOBALDIR
 
 - 设置全局配置文件根目录
 
-xmake将在该目录下创建 `.xmake`，作为 `xmake g/global` 全局配置的存储目录，还有安装包，缓存等其他全局文件，默认都会存储在这个目录下。
+xmake 会在该目录下创建 `.xmake`，作为 `xmake g/global` 全局配置的存储目录，还有安装包、缓存等其他全局文件，默认都会存储在这个目录下。
 
 默认路径为：`~`。
 
@@ -66,7 +66,7 @@ xmake将在该目录下创建 `.xmake`，作为 `xmake g/global` 全局配置的
 
 - 允许用户在 root 模式下运行
 
-通常 xmake 是默认禁止在 root 下运行，这非常不安全。但是如果用户非要在 root 下运行，也可以设置这个变量，强制开启。
+通常 xmake 默认禁止在 root 下运行，这非常不安全。但是如果用户非要在 root 下运行，也可以设置这个变量，强制开启。
 
 ```sh
 export XMAKE_ROOT=y
@@ -85,7 +85,7 @@ export XMAKE_ROOT=y
 | color256  | 256 色输出支持 |
 | truecolor | 真彩色输出支持 |
 
-通常，用户不需要设置它们，xmake 会自动探测用户终端支持的色彩范围，如果用户不想输出色彩，可以设置 nocolor 来全局禁用。
+通常，用户不需要设置它们，xmake 会自动探测用户终端支持的色彩范围。如果用户不想输出色彩，可以设置 nocolor 来全局禁用。
 
 或者用 `xmake g --theme=plain` 也可以全局禁用。
 
@@ -95,7 +95,7 @@ export XMAKE_ROOT=y
 
 xmake 的远程包安装的全局目录默认是 `$XMAKE_GLOBALDIR/.xmake/packages`，但是用户也可以设置这个变量，去单独修改它。
 
-我们也可以使用 `xmake g --pkg_installdir=/xxx` 去设置它，效果是一样的。但环境变量的优先级高于此配置。
+我们也可以使用 `xmake g --pkg_installdir=/xxx` 去设置它，效果是一样的。但是环境变量的优先级高于此配置。
 
 ## XMAKE_PKG_CACHEDIR
 
@@ -109,7 +109,7 @@ xmake 的远程包安装的全局目录默认是 `$XMAKE_GLOBALDIR/.xmake/packag
 
 - 设置 xmake 的脚本目录
 
-xmake 的所有 lua 脚本随安装程序一起安装，默认都在安装目录下，但是如果想要切到自己下载的脚本目录下，方便本地修改调试，可以设置此变量。
+xmake 的所有 lua 脚本随安装程序一起安装，默认都在安装目录下，但是如果想要切换到自己下载的脚本目录下，方便本地修改调试，可以设置此变量。
 
 如果要查看当前 xmake 在使用的脚本目录，可以执行：
 
@@ -122,7 +122,7 @@ $ xmake l os.programdir
 
 - 开启性能分析
 
-这仅仅对 xmake 的开发者开放，用于分析 xmake 运行过程中的耗时情况，追踪调用过程。
+这个仅对 xmake 的开发者开放，用于分析 xmake 运行过程中的耗时情况，追踪调用过程。
 
 ### 分析函数调用耗时
 
@@ -206,8 +206,7 @@ $ XMAKE_PROFILE=stuck xmake l test.lua
 stack traceback:
         [C]: in function 'base/io.file_read'
         @programdir/core/base/io.lua:177: in method '_read'
-        @programdir/core/sandbox/modules/io.lua:90: in function <@programdir/core/sandbox/module
-s/io.lua:89>
+        @programdir/core/sandbox/modules/io.lua:90: in function <@programdir/core/sandbox/modules/io.lua:89>
         (...tail calls...)
         /Users/ruki/share/test.lua:2: in function </Users/ruki/share/test.lua:1>
         (...tail calls...)
@@ -218,8 +217,7 @@ s/io.lua:89>
         (...tail calls...)
         @programdir/core/base/task.lua:519: in function 'base/task.run'
         @programdir/core/main.lua:278: in upvalue 'cotask'
-        @programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lu
-a:368>
+        @programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lua:368>
 ```
 
 ## XMAKE_RCFILES

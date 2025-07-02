@@ -6,25 +6,25 @@
 
 <img src="https://raw.githubusercontent.com/xmake-io/xmake-vscode/master/res/problem.gif" width="650px" />
 
-[VSCode](https://code.visualstudio.com/)是常用的文本编辑器，xmake提供了插件支持。
+[VSCode](https://code.visualstudio.com/) 是常用的文本编辑器，xmake 提供了插件支持。
 
 ### 插件安装
 
-由于VSCode本身只提供了文本编辑的功能，我们需要安装插件以支持配置，编译，调试，语法提示等功能:
+由于 VSCode 本身只提供了文本编辑功能，我们需要安装插件以支持配置、编译、调试、语法提示等功能：
 
 * XMake
 * C/C++
 * CodeLLDB
 
-在完成插件的安装后，重启VSCode可以看到下方的状态栏:
+在完成插件的安装后，重启 VSCode 可以看到下方的状态栏：
 
 ![](/assets/img/guide/vscode_status_bar.png)
 
-可以在状态栏设置平台，架构，编译模式，工具链等选项，随后点击Build开始构建。
+可以在状态栏设置平台、架构、编译模式、工具链等选项，随后点击 Build 开始构建。
 
 ### 自定义选项
 
-如果这些选项不够，可以创建.vscode/settings.json并编写xmake需要的设置，如
+如果这些选项不够，可以创建 .vscode/settings.json 并编写 xmake 需要的设置，如：
 
 ```
 {
@@ -36,13 +36,13 @@
 }
 ```
 
-其他xmake的选项也同样可以在settings.json中完成设置。修改后可通过 >XMake: Configure 命令刷新配置。
+其他 xmake 的选项也同样可以在 settings.json 中完成设置。修改后可通过 >XMake: Configure 命令刷新配置。
 
 ### 配置 IntelliSense {#intellisense}
 
-为了更好的 C++ 语法提示体验，xmake提供了对[Language Server Protocol](https://microsoft.github.io/language-server-protocol/)（简称LSP）的支持。
+为了更好的 C++ 语法提示体验，xmake 提供了对 [Language Server Protocol](https://microsoft.github.io/language-server-protocol/)（简称 LSP）的支持。
 
-在 vscode 中，我们可以通过使用 vscode-cpptools 或者 clangd 来提供 intellisense 支持。
+在 VSCode 中，我们可以通过使用 vscode-cpptools 或 clangd 来提供 intellisense 支持。
 
 另外，为了支持 intellisense，xmake 提供了 compile_commands.json 的生成支持。
 
@@ -56,11 +56,11 @@
 
 ##### 手动触发生成
 
-当然，如果没看到文件被生成，我们也可以在 vscode 中，可以使用 `>XMake: UpdateIntellisense` 命令手动触发生成 .vscode/compile_commands.json。
+当然，如果没看到文件被生成，我们也可以在 VSCode 中，使用 `>XMake: UpdateIntellisense` 命令手动触发生成 .vscode/compile_commands.json。
 
 ##### 配置 xmake.lua 自动生成
 
-或者，我们也可以使用这个规则来自动更新生成 compile_commandss.json
+或者，我们也可以使用这个规则来自自动更新生成 compile_commands.json
 
 ```lua
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
@@ -81,9 +81,9 @@ $ xmake project -k compile_commands .vscode
 
 #### vscode-cpptools
 
-如果我们使用 vscode-cpptools 插件来提供 intellisense 支持，需要先去 vscode 插件市场，搜下 C++，默认第一个插件就是，安装下。
+如果我们使用 vscode-cpptools 插件来提供 intellisense 支持，需要先去 VSCode 插件市场，搜索 C++，默认第一个插件就是，安装即可。
 
-装完后，这个插件提供了 intellisense 和 调试支持。
+安装后，这个插件提供了 intellisense 和调试支持。
 
 然后，我们需要配置下 c_cpp_properties.json 文件，关联上我们生成的 `.vscode/compile_commands.json`。
 
@@ -123,16 +123,16 @@ $ xmake project -k compile_commands .vscode
 - https://code.visualstudio.com/docs/cpp/configure-intellisense-crosscompilation
 - https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference
 
-当然，理论上可以做到 xmake-vscode 插件自动关联设置这个文件，但是考虑到用户不一定使用 cpptools，有可能还会使用 clangd。
+当然，理论上可以做到 xmake-vscode 插件自动关联设置这个文件，但考虑到用户不一定使用 cpptools，也有可能会使用 clangd。
 
-因此，默认自动配置并不是很好，而且作者暂时也没时间精力去改进它。
+因此，默认自动配置并不是很好，而且作者暂时也没有时间和精力去改进它。
 
 #### clangd
 
-与此同时，我们可以选择安装支持 LSP 的语法提示插件，如 LLVM 推出的[clangd](https://clangd.llvm.org/)，其功能稳定且提示流畅，
+与此同时，我们可以选择安装支持 LSP 的语法提示插件，如 LLVM 推出的 [clangd](https://clangd.llvm.org/)，其功能稳定且提示流畅，
 并通过 LSP 标准完成对不同编译工具链的支持。
 
-使用 clangd 时，可能与上述的C/C++插件的提示功能有冲突，可以在 .vscode/settings.json 中添加设置将C/C++的语法提示功能关闭:
+使用 clangd 时，可能与上述的 C/C++ 插件的提示功能有冲突，可以在 .vscode/settings.json 中添加设置将 C/C++ 的语法提示功能关闭：
 
 ```
 {
@@ -147,7 +147,7 @@ $ xmake project -k compile_commands .vscode
 }
 ```
 
-同时由于 XMake 生成的 compile_commands.json 在 .vscode 目录，还需要设置 clangd 传参使其在正确位置寻找:
+同时由于 XMake 生成的 compile_commands.json 在 .vscode 目录，还需要设置 clangd 参数使其在正确位置寻找：
 
 ```
 {
@@ -159,7 +159,7 @@ $ xmake project -k compile_commands .vscode
 }
 ```
 
-如果配置后，还是没生效，可以尝试重启 vscode 和 clangd 进程，再验证下。
+如果配置后，还是没生效，可以尝试重启 VSCode 和 clangd 进程，再验证。
 
 ## Sublime 插件 {#sublime-plugin}
 
@@ -187,9 +187,9 @@ $ xmake project -k compile_commands .vscode
 
 ## Gradle插件（JNI）{#gradle-plugin}
 
-* [xmake-gradle](https://github.com/xmake-io/xmake-gradle): 一个无缝整合xmake的gradle插件
+* [xmake-gradle](https://github.com/xmake-io/xmake-gradle): 一个无缝整合 xmake 的 gradle 插件
 
-### 通过插件DSL集成
+### 通过插件 DSL 集成
 
 ```
 plugins {
