@@ -1,6 +1,6 @@
 # Packing Programs {#pack-programs}
 
-Xmake mainly provides the following three packaging methods for distributing the target program externally.
+Xmake mainly provides the following three packaging methods for distributing the target program externally:
 
 ## Generate local package {#local-package}
 
@@ -21,9 +21,9 @@ build/packages/f/foo/
 └── xmake.lua
 ```
 
-Generally used to distribute binary libraries and local integration. For more detailed introduction, please refer to the document: [Using Local Packages](/guide/package-management/using-local-packages).
+This is generally used to distribute binary libraries and for local integration. For more detailed introduction, please refer to the document: [Using Local Packages](/guide/package-management/using-local-packages).
 
-In addition, this method can be used with [built-in macro plugins](/guide/extensions/builtin-plugins#builtin-macros) to achieve universal binary packaging for ios.
+In addition, this method can be used with [built-in macro plugins](/guide/extensions/builtin-plugins#builtin-macros) to achieve universal binary packaging for iOS.
 
 ```sh
 $ xmake macro package -p iphoneos -a "arm64,x86_64"
@@ -47,19 +47,17 @@ $ tree ./build/foo.pkg/
 
 ## Generate remote package {#remote-package}
 
-We can also use `xmake package -f` Command to generate a remote package for submission to the warehouse for distribution. This package is similar to a local package and also has an xmake.lua configuration file, but the difference is that it does not directly store binary libraries, but only has a configuration file.
+We can also use the `xmake package -f` command to generate a remote package for submission to the repository for distribution. This package is similar to a local package and also has an xmake.lua configuration file, but the difference is that it does not directly store binary libraries, but only has a configuration file.
 
-We can submit this package configuration file to the [xmake-repo](https://github.com/xmake-io/xmake-repo) official warehouse for distribution, or submit it to a self-built private warehouse.
+We can submit this package configuration file to the [xmake-repo](https://github.com/xmake-io/xmake-repo) official repository for distribution, or submit it to a self-built private repository.
 
-::: tip NOTE
-However, the generated configuration file may not be directly usable. It only generates a rough template. The user still needs to edit and modify it by himself to adjust the corresponding installation and test logic.
-:::
+However, the generated configuration file may not be directly usable. It only generates a rough template. The user still needs to edit and modify it to adjust the corresponding installation and test logic.
 
-For specific details, we can view the document: [Generate Remote Package](/guide/package-management/package-distribution#generate-package-configuration).
+For specific details, see the document: [Generate Remote Package](/guide/package-management/package-distribution#generate-package-configuration).
 
 ## Generate installation package (XPack) {#xpack}
 
-The last packaging method is the most powerful, implemented through the `xmake pack` plug-in command. It is comparable to CMake's CPack packaging and can provide packaging for various system installation packages to achieve the distribution of target programs.
+The last packaging method is the most powerful, implemented through the `xmake pack` plugin command. It is comparable to CMake's CPack packaging and can provide packaging for various system installation packages to achieve the distribution of target programs.
 
 - Windows NSIS binary installation package
 - Windows WIX binary installation package
@@ -70,7 +68,7 @@ The last packaging method is the most powerful, implemented through the `xmake p
 - SRPM source installation package
 - DEB binary installation package
 
-It provides a complete packaging configuration mechanism, which can write flexible configuration scripts and generate more customized installation packages, not only binary packages, but also source packages, self-compiled installation packages, and archive packages.
+It provides a complete packaging configuration mechanism, which can write flexible configuration scripts and generate more customized installation packages—not only binary packages, but also source packages, self-compiled installation packages, and archive packages.
 
 For example, generate Windows NSIS installation packages.
 

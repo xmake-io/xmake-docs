@@ -32,9 +32,9 @@ $ xmake run --help
 $ xmake [-q|--quiet]
 ```
 
-## What do do if Xmake fails?
+## What to do if Xmake fails?
 
-Please attempt to clean configuration and rebuild it first.
+Please attempt to clean the configuration and rebuild it first.
 
 ```sh
 $ xmake f -c
@@ -49,7 +49,7 @@ For example:
 $ xmake [-v|--verbose]
 ```
 
-And add `-D` to get the verbose backtrace and diagnosis info, then you can submit this to [issues](https://github.com/xmake-io/xmake/issues).
+And add `-D` to get the verbose backtrace and diagnostic info, then you can submit this to [issues](https://github.com/xmake-io/xmake/issues).
 
 ```sh
 $ xmake -v -D
@@ -65,7 +65,7 @@ $ xmake [-w|--warning]
 
 Xmake.lua is divided into description fields and script fields. In the description field, various configuration fields are parsed multiple times in stages, and it is possible to execute multiple times. Therefore, do not write complex scripts in the description field.
 
-If you want to write a variety of complex scripts, please configure them in the script domain. The script domain of `target/on_load` can also flexibly configure various target related settings and provide more powerful lua script module support.
+If you want to write a variety of complex scripts, please configure them in the script domain. The script domain of `target/on_load` can also flexibly configure various target-related settings and provide more powerful Lua script module support.
 
 See: [Description of Syntax Description](/guide/project-configuration/syntax-description) for more details.
 
@@ -174,21 +174,21 @@ Normally, to debug Xmake's Lua scripts, you just need to modify the Lua scripts 
 
 However, if there is a problem with Xmake's C-side core program and you need to debug it or add modules to it, you will need to recompile it.
 
-You can use Xmake's internal logging functions like so to aide in debugging:
+You can use Xmake's internal logging functions like so to aid in debugging:
 
 ```c
 tb_trace_i("hello %s", "xmake");
 ```
 
-If there is a problem with the various submodules that Xmake relies on, such as tbox, and you need to debug it, you can also go directly to the submodule source code, modify it and recompile it for execution.
+If there is a problem with the various submodules that Xmake relies on, such as tbox, and you need to debug it, you can also go directly to the submodule source code, modify it, and recompile it for execution.
 
-However, if we need to contribute a patch, we need to commit PR to the submodule's repository and the patch will be merged and synced to the Xmake source repository by the author at a later date and time.
+However, if we need to contribute a patch, we need to submit a PR to the submodule's repository and the patch will be merged and synced to the Xmake source repository by the author at a later date and time.
 
 ### Breakpoint Debugging
 
 In version 2.8.3, we added Lua breakpoint debugging support, with [VSCode-EmmyLua](https://github.com/EmmyLua/VSCode-EmmyLua) plugin, we can easily debug Xmake source code in VSCode breakpoints.
 
-First of all, we need to install VSCode-EmmyLua plugin in VSCode's plugin market, and then run the following command to update the xmake-repo repository to keep it up-to-date.
+First of all, we need to install the VSCode-EmmyLua plugin in VSCode's plugin market, and then run the following command to update the xmake-repo repository to keep it up-to-date.
 
 ```sh
 xrepo update-repo

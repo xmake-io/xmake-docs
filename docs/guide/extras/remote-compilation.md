@@ -1,8 +1,8 @@
 # Remote Compilation
 
-Version 2.6.5 provides remote compilation support, through which we can compile code on a remote server, run and debug remotely. The server can be deployed on Linux/MacOS/Windows to achieve cross-platform compilation, for example: compile and run Windows programs on Linux, and compile and run macOS/Linux programs on Windows.
+Version 2.6.5 provides remote compilation support, through which we can compile code on a remote server, run, and debug remotely. The server can be deployed on Linux/MacOS/Windows to achieve cross-platform compilation, for example: compile and run Windows programs on Linux, and compile and run macOS/Linux programs on Windows.
 
-Compared with ssh remote login and compilation, it is more stable and smoother to use. It will not cause ssh terminal input to be stuck due to network instability, and it can also quickly edit code files locally. Even we can seamlessly implement remote compilation in editors and IDEs such as vs/sublime/vscode/idea without relying on the IDE's own support for remote compilation.
+Compared with ssh remote login and compilation, it is more stable and smoother to use. It will not cause ssh terminal input to be stuck due to network instability, and it can also quickly edit code files locally. We can even seamlessly implement remote compilation in editors and IDEs such as VS/Sublime/VSCode/IDEA without relying on the IDE's own support for remote compilation.
 
 ## Start the service
 
@@ -11,7 +11,7 @@ $ xmake service
 <remote_build_server>: listening 0.0.0.0:9091 ..
 ```
 
-We can also start the service and echo detailed log information.
+We can also start the service and display detailed log information.
 
 ```sh
 $ xmake service -vD
@@ -184,8 +184,8 @@ If the username is removed and the token is not configured, it is anonymous mode
 
 ### Trusted host verification
 
-In addition, in order to further improve security, we also provide server-side trusted host verification. If the server-configured `known_hosts` list is configured with the ip address of the client host that can be connected,
-Then only these hosts can successfully connect to this server, and other host's connections to it will be prompted to be untrusted and refuse the connection, even if token and password authentication are OK.
+In addition, in order to further improve security, we also provide server-side trusted host verification. If the server-configured `known_hosts` list is configured with the IP address of the client host that can be connected,
+then only these hosts can successfully connect to this server, and other hosts' connections to it will be prompted to be untrusted and refuse the connection, even if token and password authentication are OK.
 
 ```sh
 {

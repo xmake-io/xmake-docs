@@ -1,9 +1,8 @@
-
 # Distributed Compilation
 
-Xmake provides a built-in distributed compilation service, usually it can cooperate with local compilation cache and remote compilation cache to achieve optimal compilation acceleration. It is fully cross-platform supported, we not only support GCC and Clang, but also Windows and MSVC as well.
+Xmake provides a built-in distributed compilation service. Usually, it can cooperate with local compilation cache and remote compilation cache to achieve optimal compilation acceleration. It is fully cross-platform supported; we not only support GCC and Clang, but also Windows and MSVC as well.
 
-For cross-compilation, as long as the cross-toolchain supports it, we do not require the system environment of the server. Even if the server resources of linux, macOS and Windows are mixed, distributed compilation can be realized to its fullest potensial!
+For cross-compilation, as long as the cross-toolchain supports it, we do not require the system environment of the server. Even if the server resources of Linux, macOS, and Windows are mixed, distributed compilation can be realized to its fullest potential!
 
 ## Start the service
 
@@ -87,7 +86,7 @@ With distributed compilation, it is recommended to use the token authentication 
 
 ### Timeout configuration
 
-By default, clients connect, send and receive data with unlimited waiting without timeout, but if the network to access the server is unstable, then there is a chance that access may get stuck, and this can be solved by configuring a timeout. If a timeout exception occurs, it will automatically degrade to local compilation and will not be stuck forever.
+By default, clients connect, send, and receive data with unlimited waiting without timeout, but if the network to access the server is unstable, then there is a chance that access may get stuck, and this can be solved by configuring a timeout. If a timeout exception occurs, it will automatically degrade to local compilation and will not be stuck forever.
 
 We can configure, `send_timeout`, `recv_timeout` and `connect_timeout` to take effect for all client services if set at the root.
 
@@ -164,7 +163,7 @@ $ xmake
 
 Among them, the words with distcc are remote compilation tasks, and the others are local compilation tasks. By default, xmake also enables local compilation caching to cache distributed compilation results to avoid frequent requests to the server.
 
-In addition, we can also open the remote compilation cache and share the compilation cache with others to further accelerate the compilation of multi-person collaborative development.
+In addition, we can also enable the remote compilation cache and share the compilation cache with others to further accelerate the compilation of multi-person collaborative development.
 
 ## Disconnect
 
@@ -176,7 +175,7 @@ $ xmake service --disconnect --distcc
 
 ## Specify the number of parallel compilation tasks
 
-Let's briefly introduce the number of parallel tasks currently calculated by default based on the number of host cpu cores:
+Let's briefly introduce the number of parallel tasks currently calculated by default based on the number of host CPU cores:
 
 ```lua
 -- let n = number of CPUs

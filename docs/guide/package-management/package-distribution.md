@@ -8,7 +8,7 @@ outline: deep
 
 ### Package structure in repository
 
-Before making our own package, we need to understand the structure of the next package repository, whether it is the official package repository or the self-built private package repository, the structure is the same:
+Before making our own package, we need to understand the structure of the package repository. Whether it is the official package repository or a self-built private package repository, the structure is the same:
 
 ```
 xmake-repo
@@ -17,15 +17,15 @@ xmake-repo
      - z/zlib/xmake.lua
 ```
 
-Through the above structure, you can see that each package will have a xmake.lua to describe its installation rules, and according to the `z/zlib` two-level sub-category storage, convenient for quick retrieval.
+Through the above structure, you can see that each package will have an xmake.lua to describe its installation rules, and according to the `z/zlib` two-level sub-category storage, it is convenient for quick retrieval.
 
 ### Package Description
 
-The description rules for the package are basically done in its xmake.lua, which is similar to the xmake.lua description in the project project. The difference is that the description field only supports `package()`.
+The description rules for the package are basically done in its xmake.lua, which is similar to the xmake.lua description in the project. The difference is that the description field only supports `package()`.
 
-However, in the project xmake.lua, you can also directly add `package()` to the built-in package description, and even the package warehouse is saved, sometimes it will be more convenient.
+However, in the project xmake.lua, you can also directly add `package()` to the built-in package description, and even the package repository is saved, which is sometimes more convenient.
 
-First, let's take a look at zlib's description rules first. This rule can be found at [xmake-repo/z/zlib/xmake.lua](https://github.com/xmake-io/xmake-repo/blob Found under /master/packages/z/zlib/xmake.lua).
+First, let's take a look at zlib's description rules first. This rule can be found at [xmake-repo/z/zlib/xmake.lua](https://github.com/xmake-io/xmake-repo/blob/master/packages/z/zlib/xmake.lua).
 
 ```
 package("zlib")
@@ -63,11 +63,11 @@ package("zlib")
     end)
 ```
 
-This package rule adds installation rules to windows, linux, macosx, iphoneos, mingw and other platforms. Basically, it has achieved full platform coverage, and even some cross-compilation platforms, which is a typical example.
+This package rule adds installation rules to Windows, Linux, macOS, iPhoneOS, MinGW, and other platforms. Basically, it has achieved full platform coverage, and even some cross-compilation platforms, which is a typical example.
 
 Of course, some packages rely on source code implementation and are not completely cross-platform, so you only need to set the installation rules for the platforms it supports.
 
-For more detailed package configuration API descriptions see: [Package Interface Documentation](/api/description/package-dependencies)
+For more detailed package configuration API descriptions, see: [Package Interface Documentation](/api/description/package-dependencies)
 
 ### Extended configuration parameters
 
@@ -113,7 +113,7 @@ end)
 
 ### Adding environment variables
 
-For some libraries, there are also executable tools. if you need to use these tools in the integration package, you can also set the corresponding PATH environment variable:
+For some libraries, there are also executable tools. If you need to use these tools in the integration package, you can also set the corresponding PATH environment variable:
 
 ```lua
 package("luajit")
@@ -125,7 +125,7 @@ package("luajit")
     end)
 ```
 
-In the project project, the corresponding environment variables will only take effect after the corresponding package is integrated by `add_packages`.
+In the project, the corresponding environment variables will only take effect after the corresponding package is integrated by `add_packages`.
 
 ```lua
 add_requires("luajit")
@@ -156,7 +156,7 @@ end)
 
 ### Local test
 
-If you have added and created a new package in the local xmake-repo repository, you can run the test locally and pass it. If the test passes, you can submit the pr to the official repository and request the merge.
+If you have added and created a new package in the local xmake-repo repository, you can run the test locally and pass it. If the test passes, you can submit the PR to the official repository and request the merge.
 
 We can execute the following script to test the specified package:
 
@@ -165,16 +165,16 @@ cd xmake-repo
 xmake l scripts/test.lua -v -D zlib
 ```
 
-The above command will force the download and installation of the zlib package to test whether the entire installation process is ok, plus `-v -D` is to see the complete detailed log information and error information, which is convenient for debugging analysis.
+The above command will force the download and installation of the zlib package to test whether the entire installation process is ok. Adding `-v -D` is to see the complete detailed log information and error information, which is convenient for debugging analysis.
 
-If the network environment is not good, do not want to re-download all dependencies every time, you can add the `--shallow` parameter to execute, this parameter tells the script, just re-decompress the local cached zlib source package, re-execute the installation command, but Will not download various dependencies.
+If the network environment is not good, and you do not want to re-download all dependencies every time, you can add the `--shallow` parameter to execute. This parameter tells the script to just re-decompress the local cached zlib source package, re-execute the installation command, but will not download various dependencies.
 
 ```sh
 cd xmake-repo
 xmake l scripts/test.lua -v -D --shallow zlib
 ```
 
-If we want to test the package rules of other platforms, such as: android, iphoneos and other platforms, you can specify by `-p/--plat` or `-a/--arch`.
+If we want to test the package rules of other platforms, such as: Android, iPhoneOS, and other platforms, you can specify by `-p/--plat` or `-a/--arch`.
 
 ```sh
 cd xmake-repo

@@ -38,7 +38,7 @@ We can export the compilation commands info of all source files and it is JSON c
 $ xmake project -k compile_commands
 ```
 
-The the content of the output file:
+The content of the output file:
 
 ```
 [
@@ -50,13 +50,13 @@ The the content of the output file:
 
 ```
 
-Please see [JSONCompilationDatabase](https://clang.llvm.org/docs/JSONCompilationDatabase.html) if need known more info about `compile_commands`.
+Please see [JSONCompilationDatabase](https://clang.llvm.org/docs/JSONCompilationDatabase.html) if you need to know more about `compile_commands`.
 
 ### Generate Xcode project file
 
 The current historical version uses CMake to generate Xcode projects, but the latest dev version, which is the upcoming 3.0.1 version, will bring a native Xcode generator.
 
-If you want to experience it in advance, you can update to the xmake dev version and try it, `xmake update -s dev`.
+If you want to experience it in advance, you can update to the xmake dev version and try it: `xmake update -s dev`.
 
 For details, see: [#4810](https://github.com/xmake-io/xmake/issues/4810).
 
@@ -70,9 +70,11 @@ $ xmake project -k xcode
 
 v2.2.8 or later, provides a new version of the vs project generation plugin extension, which is very different from the previous plugin processing mode for generating vs. The previously generated vs project is the compilation of all files and then transferred to vs. To handle compilation.
 
-But this mode, there is no way to support the rules of xmake. Because xmake's rules use a lot of custom scripts like `on_build`, they can't be expanded, so projects like qt, wdk can't support exporting to vs. compile.
+But in this mode, there is no way to support the rules of xmake. Because xmake's rules use a lot of custom scripts like `on_build`, they can't be expanded, so projects like qt, wdk can't support exporting to vs. compile.
 
-Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellisense and definition jumps, as well as breakpoint debugging.
+Therefore, in order to solve this problem, the new version of the vs. build plugin performs the compile operation by directly calling the xmake command under vs, and also supports intellisense, definition jumps, as well as breakpoint debugging.
+
+But the premise is that the user has installed the corresponding toolchain environment on the system.
 
 The specific use is similar to the old version:
 
@@ -80,7 +82,7 @@ The specific use is similar to the old version:
 $ xmake project -k [vsxmake2010|vsxmake2013|vsxmake2015|..] -m "debug;release"
 ```
 
-If no version is specified, xmake will automatically detect the current version of vs to generate:
+If no version is specified, xmake will automatically detect the current version of VS to generate:
 
 ```sh
 $ xmake project -k vsxmake -m "debug,release"
@@ -88,11 +90,11 @@ $ xmake project -k vsxmake -m "debug,release"
 
 ![](/assets/img/manual/qt_vs.png)
 
-In addition, the vsxmake plugin will additionally generate a custom configuration property page for easy and flexible modification and appending some xmake compilation configuration in the vs., and even switch to other cross toolchains in the configuration to achieve the vs. vs. Cross-compilation of other platforms such as android, linux.
+In addition, the vsxmake plugin will additionally generate a custom configuration property page for easy and flexible modification and appending some xmake compilation configuration in VS, and even switch to other cross toolchains in the configuration to achieve cross-compilation of other platforms such as Android, Linux.
 
 ![](/assets/img/manual/property_page_vsxmake.png)
 
-The v2.5.1 version provides a `add_rules("plugin.vsxmake.autoupdate")` rule. If this rule is applied, the production vs project will be checked for changes in xmake.lua and the code file list after the compilation is completed. If there are changes , The vs project will be updated automatically.
+The v2.5.1 version provides a `add_rules("plugin.vsxmake.autoupdate")` rule. If this rule is applied, the generated VS project will be checked for changes in xmake.lua and the code file list after the compilation is completed. If there are changes, the VS project will be updated automatically.
 
 ```lua
 add_rules("plugin.vsxmake.autoupdate")
@@ -101,7 +103,7 @@ target("test")
      add_files("src/*.c")
 ```
 
-In addition, we can group each target through the `set_group` interface, so that the generated vs project can be grouped according to the specified structure. For more details, please see: [issue 1026](https://github.com/xmake-io/xmake/issues/1026)
+In addition, we can group each target through the `set_group` interface, so that the generated VS project can be grouped according to the specified structure. For more details, please see: [issue 1026](https://github.com/xmake-io/xmake/issues/1026)
 
 #### Using vs built-in compilation mechanism
 
@@ -123,7 +125,7 @@ $ xmake project -k vs2017 -m "debug,release"
 
 It will generate four project configurations: `debug|x86`, `debug|x64`, `release|x86`, `release|x64`.
 
-Or you can set modes to `xmake.lua`:
+Or you can set modes in `xmake.lua`:
 
 ```lua
 set_modes("debug", "release")
@@ -135,9 +137,9 @@ Then, we run the following command:
 $ xmake project -k vs2017
 ```
 
-The effect is same.
+The effect is the same.
 
-In addition, we can group each target through the `set_group` interface, so that the generated vs project can be grouped according to the specified structure. For more details, please see: [issue 1026](https://github.com/xmake-io/xmake/issues/1026)
+In addition, we can group each target through the `set_group` interface, so that the generated VS project can be grouped according to the specified structure. For more details, please see: [issue 1026](https://github.com/xmake-io/xmake/issues/1026)
 
 ## Run the Custom Lua Script
 
@@ -158,7 +160,7 @@ $ xmake lua /tmp/test.lua
 ```
 
 ::: tip NOTE
-You can also use `import` api to write a more advance lua script.
+You can also use the `import` API to write a more advanced Lua script.
 :::
 
 ### Run the builtin script

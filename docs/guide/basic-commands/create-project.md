@@ -2,15 +2,15 @@
 
 ## Introduction
 
-Xmake provides some common commands to allow users to easily and quickly create projects, as well as configure, compile and run.
+Xmake provides some common commands to allow users to easily and quickly create projects, as well as configure, compile, and run them.
 
-All commands can be viewed through `xmake -h`, the command format is as follows:
+All commands can be viewed through `xmake -h`. The command format is as follows:
 
 ```sh
 xmake [action] [arguments] ...
 ```
 
-Among them, action is the subcommand provided by xmake cli, and for creating a project, it is `xmake create`.
+Here, action is the subcommand provided by the xmake CLI, and for creating a project, it is `xmake create`.
 
 ## Create a C++ empty project
 
@@ -25,7 +25,7 @@ create hello ...
 create ok!
 ```
 
-After execution, a simple project structure will be generated.
+After execution, a simple project structure will be generated:
 
 ```
 hello
@@ -47,7 +47,7 @@ add_files("src/*.cpp")
 -- ...
 ```
 
-In addition, some comments are provided at the end of the file, which provide common configuration examples for quick viewing.
+In addition, some comments are provided at the end of the file, which offer common configuration examples for quick reference.
 
 Then, we only need to enter the root directory of the hello project just created and execute the xmake command to complete the compilation.
 
@@ -60,7 +60,7 @@ $ xmake
 
 ## Specify language
 
-We can use the `-l [languages]` parameter to specify the creation of projects in other languages, such as creating a C language project.
+We can use the `-l [language]` parameter to specify the creation of projects in other languages, such as creating a C language project.
 
 ```sh
 $ xmake create -l c hello
@@ -82,7 +82,7 @@ create hello ...
 create ok!
 ```
 
-The complete language can be viewed through `xmake create -h`.
+The complete list of supported languages can be viewed through `xmake create -h`.
 
 ```sh
 -l LANGUAGE, --language=LANGUAGE The project language (default: c++)
@@ -105,9 +105,9 @@ The complete language can be viewed through `xmake create -h`.
 
 ## Specify the project template
 
-In addition, we can also use the `-t [template]` parameter to specify the type of project module to be created.
+In addition, we can also use the `-t [template]` parameter to specify the type of project template to be created.
 
-For example, create a static library project:
+For example, to create a static library project:
 
 ```sh
 $ xmake create -t ​​static test
@@ -162,4 +162,4 @@ fortran, c
 - xmake.cli: c++, c
 ```
 
-Among them, the most commonly used are programs such as creating consoles (console), static libraries (static) and dynamic libraries (shared).
+Among them, the most commonly used are templates for creating console programs (console), static libraries (static), and dynamic libraries (shared).

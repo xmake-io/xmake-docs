@@ -1,6 +1,6 @@
 # Build Targets {#build-targets}
 
-We have briefly mentioned before that we can use the `xmake build` command to build a project.
+We briefly mentioned before that we can use the `xmake build` command to build a project.
 
 Here we will explain it in detail. First, let's take a look at its complete command format.
 
@@ -10,7 +10,7 @@ Here we will explain it in detail. First, let's take a look at its complete comm
 $ xmake build [options] [target]
 ```
 
-Among them, `[target]` specifies the target to be built. This is optional. If it is not set, all target programs will be built by default (except those marked as default = false).
+Here, `[target]` specifies the target to be built. This is optional. If it is not set, all target programs will be built by default (except those marked as default = false).
 
 The execution results are as follows:
 
@@ -23,7 +23,7 @@ $ xmake build
 [100%]: build ok, spent 1.173s
 ```
 
-Usually we can omit the `build` subcommand, because the default behavior of the xmake command is to perform the build.
+Usually, we can omit the `build` subcommand, because the default behavior of the xmake command is to perform the build.
 
 ```sh
 $ xmake
@@ -36,15 +36,13 @@ $ xmake
 
 ## Build a specific target
 
-If you want to build a specific target program, you can execute:
+If you want to build a specific target program, you can run:
 
 ```sh
 $ xmake build foo
 ```
 
-:::tip NOTE
 At this time, you need to write the full build subcommand, otherwise the target name may conflict with other subcommands.
-:::
 
 ## Rebuild the target
 
@@ -62,7 +60,7 @@ Both can achieve forced recompilation of the target program.
 
 ## Build all target programs
 
-If target is configured as `default = false`, it will not be compiled by default.
+If a target is configured as `default = false`, it will not be compiled by default.
 
 ```lua
 target("test")
@@ -84,7 +82,7 @@ $ xmake build --all
 
 ## Find detailed compilation commands
 
-If we want to view the complete compiler command parameters to troubleshoot flags configuration and other issues, we can use `xmake -v`.
+If we want to view the complete compiler command parameters to troubleshoot flag configuration and other issues, we can use `xmake -v`.
 
 ```sh
 $ xmake -v

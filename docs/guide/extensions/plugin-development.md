@@ -2,9 +2,9 @@
 
 ## Introduction
 
-XMake supports the plugin module and we can develop ourself plugin module conveniently.
+XMake supports the plugin module and we can conveniently develop our own plugin modules.
 
-We can run command `xmake -h` to look over some builtin plugins of xmake
+We can run the command `xmake -h` to look over some built-in plugins of xmake
 
 ```
 Plugins:
@@ -16,14 +16,14 @@ Plugins:
 ```
 
 * lua: Run a given lua script.
-* macro: Record and playback some xmake commands repeatably.
-* doxygen：Generate doxygen document automatically.
+* macro: Record and playback some xmake commands repeatedly.
+* doxygen: Generate doxygen documentation automatically.
 * hello:  The demo plugin and only print: 'hello xmake!'
-* project：Generate project file for IDE, and now it can generate make, cmake, vs, xcode (need cmake), ninja project file and compile_commands.json and compile_flags.txt
+* project: Generate project files for IDEs. It can generate make, cmake, vs, xcode (needs cmake), ninja project files, compile_commands.json, and compile_flags.txt
 
 ## Quick Start
 
-Now we write a simple plugin demo for printing 'hello xmake!'
+Now let's write a simple plugin demo for printing 'hello xmake!'
 
 ```lua
 -- define a plugin task
@@ -62,11 +62,11 @@ plugins
 | notice no xmake.lua in plugins directory
 ```
 
-Now one of the most simple plugin finished, how was it to be xmake detected it, there are three ways:
+Now one of the most simple plugins is finished. How does xmake detect it? There are three ways:
 
-1. Put this plugin directory into xmake/plugins the source codes as the builtin plugin.
-2. Put this plugin directory into ~/.xmake/plugins as the global user plugin.
-3. Put this plugin directory (hello) to the `./plugins` directory of the current project and call `add_plugindirs("plugins")` in xmake.lua as the local project plugin.
+1. Put this plugin directory into xmake/plugins in the source code as a built-in plugin.
+2. Put this plugin directory into ~/.xmake/plugins as a global user plugin.
+3. Put this plugin directory (hello) into the `./plugins` directory of the current project and call `add_plugindirs("plugins")` in xmake.lua as a local project plugin.
 
 ## Run Plugin
 
@@ -76,7 +76,7 @@ Next we run this plugin
 xmake hello
 ```
 
-The results is
+The result is
 
 ```
 hello xmake!

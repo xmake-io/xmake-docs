@@ -34,7 +34,7 @@ XMAKE_LOGFILE Set the log output file path.
 
 - Set the ramdisk directory path
 
-The ramdisk directory is the directory location of the memory file system. Usually the `os.tmpdir()` interface will use the temporary files used by xmake. If the user sets the ramdisk path, it will be stored in this first to improve the overall compilation speed.
+The ramdisk directory is the directory location of the memory file system. Usually, the `os.tmpdir()` interface will use the temporary files used by xmake. If the user sets the ramdisk path, it will be stored here first to improve the overall compilation speed.
 
 ## XMAKE_TMPDIR
 
@@ -52,7 +52,7 @@ The local compilation configuration of each project will be stored in the `.xmak
 .xmake/macosx/x86_64
 ```
 
-If we don't want to store it in the root directory of the project, we can also set it to other paths ourselves, such as the build directory and so on.
+If we don't want to store it in the root directory of the project, we can also set it to other paths ourselves, such as the build directory, and so on.
 
 ## XMAKE_GLOBALDIR
 
@@ -66,7 +66,7 @@ The default path is: `~`.
 
 -Allow users to run in root mode
 
-Usually xmake is forbidden to run under root by default, which is very insecure. But if the user has to run under root, he can also set this variable to force it on.
+Usually, xmake is forbidden to run under root by default, which is very insecure. But if the user has to run under root, they can also set this variable to force it on.
 
 ```sh
 export XMAKE_ROOT=y
@@ -76,7 +76,7 @@ export XMAKE_ROOT=y
 
 - Set the color output of Terminal
 
-Currently, these values ​​can be set:
+Currently, these values can be set:
 
 | Value | Description |
 | --- | --- |
@@ -85,7 +85,7 @@ Currently, these values ​​can be set:
 | color256 | 256 color output support |
 | truecolor | True color output support |
 
-Generally, users don't need to set them, Xmake will automatically detect the color range supported by the user terminal. If the user doesn't want to output colors, they can set nocolor to disable them globally.
+Generally, users don't need to set them; Xmake will automatically detect the color range supported by the user terminal. If the user doesn't want to output colors, they can set nocolor to disable them globally.
 
 Or use `xmake g --theme=plain` to disable it globally.
 
@@ -109,7 +109,7 @@ Of course, Xmake will automatically clean up all cache files of the previous mon
 
 - Set the script directory of Xmake
 
-All lua scripts of Xmake are installed with the installer. By default, they are in the installation directory. However, if you want to switch to the script directory you downloaded to facilitate local modification and debugging, you can set the this variable.
+All lua scripts of Xmake are installed with the installer. By default, they are in the installation directory. However, if you want to switch to the script directory you downloaded to facilitate local modification and debugging, you can set this variable.
 
 If you want to view the script directory currently used by Xmake, you can execute:
 
@@ -122,7 +122,7 @@ $ xmake l os.programdir
 
 - Enable performance analysis
 
-This is only available to xmake developers, and is used to analyze the time spent in running xmake and track the calling process.
+This is only available to xmake developers, and is used to analyze the time spent running xmake and track the calling process.
 
 ### Analyze the time taken to call functions
 
@@ -206,8 +206,7 @@ $ XMAKE_PROFILE=stuck xmake l test.lua
 stack traceback:
 [C]: in function 'base/io.file_read'
 @programdir/core/base/io.lua:177: in method '_read'
-@programdir/core/sandbox/modules/io.lua:90: in function <@programdir/core/sandbox/module
-s/io.lua:89>
+@programdir/core/sandbox/modules/io.lua:90: in function <@programdir/core/sandbox/modules/io.lua:89>
 (...tail calls...)
 /Users/ruki/share/test.lua:2: in function </Users/ruki/share/test.lua:1>
 (...tail calls...)
@@ -218,8 +217,7 @@ s/io.lua:89>
 (...tail calls...)
 @programdir/core/base/task.lua:519: in function 'base/task.run'
 @programdir/core/main.lua:278: in upvalue 'cotask'
-@programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lu
-a:368>
+@programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lua:368>
 ```
 
 ## XMAKE_RCFILES

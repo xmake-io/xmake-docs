@@ -12,7 +12,7 @@ In addition, Xmake also provides some commonly used toolchains that can be switc
 
 ## Gcc
 
-If the gcc toolchain is installed on linux, xmake will usually be detected and used first. Of course, we can also manually switch to gcc to build.
+If the GCC toolchain is installed on Linux, xmake will usually detect and use it first. Of course, we can also manually switch to GCC to build.
 
 ```sh
 $ xmake f --toolchain=gcc -c
@@ -21,7 +21,7 @@ $ xmake
 
 ### Use the specified version of Gcc
 
-If the user additionally installs a specific version of the gcc toolchain such as gcc-11, gcc-10, the local gcc program may be named `/usr/bin/gcc-11`.
+If the user additionally installs a specific version of the GCC toolchain such as gcc-11, gcc-10, the local gcc program may be named `/usr/bin/gcc-11`.
 
 One way is to switch by specifying the configuration one by one through `xmake f --cc=gcc-11 --cxx=gcc-11 --ld=g++-11`, but it is very cumbersome.
 
@@ -32,18 +32,18 @@ $ xmake f --toolchain=gcc-11 -c
 $ xmake
 ```
 
-You only need to specify the version name corresponding to `gcc-11` to quickly switch the entire gcc toolchain.
+You only need to specify the version name corresponding to `gcc-11` to quickly switch the entire GCC toolchain.
 
 ## Clang
 
-In macOS and linux, usually xmake will try to automatically detect and use it first. Of course, we can also switch manually.
+In macOS and Linux, usually xmake will try to automatically detect and use it first. Of course, we can also switch manually.
 
 ```sh
 $ xmake f --toolchain=clang -c
 $ xmake
 ```
 
-On Windows, it will automatically load the msvc environment.
+On Windows, it will automatically load the MSVC environment.
 
 In addition, we also support PortableBuildTools + clang environment:
 
@@ -95,7 +95,7 @@ $ xmake
 
 ## Tinyc
 
-[Tiny C Compiler](https://bellard.org/tcc/) is very lightweight. In some cases where you don’t want to install heavy-weight compilers such as msvc/llvm, you may use it to quickly compile some c code.
+[Tiny C Compiler](https://bellard.org/tcc/) is very lightweight. In some cases where you don't want to install heavy-weight compilers such as msvc/llvm, you may use it to quickly compile some c code.
 
 ```sh
 $ xmake f --toolchain=tinycc

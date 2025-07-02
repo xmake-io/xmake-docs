@@ -2,9 +2,9 @@
 
 C++ compilation speed is usually very slow, because each file most likely includes headers, which include more headers, which include more headers, etc... In the end, a single C++ source file can exceed megabytes, all of which must be parsed for each file. That's a lot of duplicate work!
 
-With unity builds, we accelerate the compilation of the project by combining multiple cpp files into one. The main benefit is to reduce the repetitive work of parsing and compiling the contents of the header files contained in multiple source files. The contents of the header files are usually It accounts for most of the code in the source file after preprocessing.
+With unity builds, we accelerate the compilation of the project by combining multiple cpp files into one. The main benefit is to reduce the repetitive work of parsing and compiling the contents of the header files contained in multiple source files. The contents of the header files usually account for most of the code in the source file after preprocessing.
 
-Unity build also reduces the overhead caused by having a large number of small source files by reducing the number of object files created and processed by the compilation chain, and allows inter-procedural analysis and optimization across files that form a unified build task (similar to optimization during effect linking ).
+Unity build also reduces the overhead caused by having a large number of small source files by reducing the number of object files created and processed by the compilation chain, and allows inter-procedural analysis and optimization across files that form a unified build task (similar to optimization during effect linking).
 
 It can greatly improve the compilation speed of C/C++ code, usually by 30%. However, depending on the complexity of the project, the benefits it brings depend on the situation of the project. Xmake has also supported this build mode in v2.5.9. For related issues, see [#1019](https://github.com/xmake-io/xmake/issues/1019).
 
@@ -32,7 +32,7 @@ target("test")
     add_files("src/*.c", "src/*.cpp")
 ```
 
-We can additionally specify the size of each merged Batch by setting the `{batchsize = 2}` parameter to the rule, which means that every two C++ files are automatically merged and compiled. The compilation effect is roughly as follows:
+We can additionally specify the size of each merged batch by setting the `{batchsize = 2}` parameter to the rule, which means that every two C++ files are automatically merged and compiled. The compilation effect is roughly as follows:
 
 ```sh
 $ xmake -r
@@ -46,11 +46,11 @@ $ xmake -r
 [100%]: build ok
 ```
 
-Since we only enabled the Unity Build of C++, the C code is still compiled one by one normally. In addition, in the Unity Build mode, we can still speed up the parallel compilation as much as possible without conflicting each other. If the `batchsize` parameter is not set, all files will be merged into one file for compilation by default.
+Since we only enabled the Unity Build of C++, the C code is still compiled one by one normally. In addition, in the Unity Build mode, we can still speed up the parallel compilation as much as possible without conflicting with each other. If the `batchsize` parameter is not set, all files will be merged into one file for compilation by default.
 
 ## Group Mode
 
-If the automatic merging effect of the above Batch mode is not satisfactory, we can also use custom grouping to manually configure which files are merged together to participate in the compilation, which makes users more flexible and controllable.
+If the automatic merging effect of the above Batch mode is not satisfactory, we can also use custom grouping to manually configure which files are merged together to participate in the compilation, which makes users more flexible and gives more control.
 
 ```lua
 target("test")
@@ -67,7 +67,7 @@ In addition, `batchsize = 0` also forcibly disables the Batch mode, that is, if 
 
 ## Batch and Group mixed mode
 
-As long as we change the above `batchsize = 0` to a value other than 0, we can let the remaining code files continue to open the Batch mode in the grouping mode to automatically merge and compile.
+As long as we change the above `batchsize = 0` to a value other than 0, we can let the remaining code files continue to use the Batch mode in the grouping mode to automatically merge and compile.
 
 ```lua
 target("test")
@@ -96,7 +96,7 @@ target("test")
 
 Although the benefits of Unity Build are good, we still encounter some unexpected situations. For example, in our two code files, under the global namespace, there are global variables and functions with the same name. Then, merge compilation will bring about compilation conflicts, and the compiler usually reports global variable redefinition errors.
 
-In order to solve this problem, we need to make some modifications to the user code, and then cooperate with the build tool to solve it. For example, our `foo.cpp` and `bar.cpp` both have global variable i.
+In order to solve this problem, we need to make some modifications to the user code, and then cooperate with the build tool to solve it. For example, our `foo.cpp` and `bar.cpp` both have a global variable i.
 
 ```cpp
 /* foo.cpp */
@@ -149,7 +149,7 @@ int bar(void) {
 }
 ```
 
-Next, we also need to ensure that after the code is merged, the definitions of `MY_UNITY_ID` in foo and bar are completely different, and a unique ID value can be calculated according to the file name, which does not conflict with each other, which is to achieve the following merge effect:
+Next, we also need to ensure that after the code is merged, the definitions of `MY_UNITY_ID` in foo and bar are completely different, and a unique ID value can be calculated according to the file name, which does not conflict with each other. This is to achieve the following merge effect:
 
 ```c
 #define MY_UNITY_ID <hash(foo.cpp)>
@@ -160,7 +160,7 @@ Next, we also need to ensure that after the code is merged, the definitions of `
 #undef MY_UNITY_ID
 ```
 
-This may seem troublesome, but the user does not need to care about these, Xmake will automatically process them when merging! The user only needs to specify the name of the Unique ID, for example, the following:
+This may seem troublesome, but the user does not need to care about these; Xmake will automatically process them when merging! The user only needs to specify the name of the Unique ID, for example, the following:
 
 
 ```lua

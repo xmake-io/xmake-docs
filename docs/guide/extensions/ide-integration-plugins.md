@@ -6,17 +6,17 @@
 
 <img src="https://raw.githubusercontent.com/xmake-io/xmake-vscode/master/res/problem.gif" width="650px" />
 
-[VSCode](https://code.visualstudio.com/)is a commonly used text editor, and xmake provides plug-ins' support.
+[VSCode](https://code.visualstudio.com/) is a commonly used text editor, and xmake provides plugin support.
 
 ### Plugin installation
 
-Since VSCode itself only provides text editing functions, we need to install plug-ins to support configuration, compilation, debugging, intellisenses and other functions:
+Since VSCode itself only provides text editing functions, we need to install plugins to support configuration, compilation, debugging, intellisense, and other functions:
 
 * XMake
 * C/C++
 * CodeLLDB
 
-After completing the installation of the plug-in, restart VSCode to see the status bar below:
+After completing the installation of the plugin, restart VSCode to see the status bar below:
 
 ![](/assets/img/guide/vscode_status_bar.png)
 
@@ -36,15 +36,15 @@ If these options are not enough, you can create .vscode/settings.json and write 
 }
 ```
 
-Other xmake options can also be setted in settings.json. After modification, the configuration can be refreshed through the >XMake: Configure command.
+Other xmake options can also be set in settings.json. After modification, the configuration can be refreshed through the >XMake: Configure command.
 
 ### Configure Intellsence
 
 For a better C++ syntax prompt experience, xmake provides support for [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) (LSP for short).
 
-In vscode, we can provide intellsence support by using vscode-cpptools or clangd.
+In VSCode, we can provide intellisense support by using vscode-cpptools or clangd.
 
-In addition, in order to support intellsence, xmake provides compile_commands.json generation support.
+In addition, in order to support intellisense, xmake provides compile_commands.json generation support.
 
 #### generate compile_commands
 
@@ -52,15 +52,15 @@ In addition, in order to support intellsence, xmake provides compile_commands.js
 
 Usually after modifying xmake.lua and clicking Save, the xmake-vscode plugin will trigger the automatic generation of compile_commands.json, which is stored in the .vscode directory by default.
 
-This is also the recommended way. Usually after installing the xmake-vscode plug-in and opening the project with xmake.lua, you only need to edit xmake.lua to save and trigger without any other additional operations.
+This is also the recommended way. Usually after installing the xmake-vscode plugin and opening the project with xmake.lua, you only need to edit xmake.lua to save and trigger without any other additional operations.
 
 ##### Manually trigger generation
 
-Of course, if we don’t see the file being generated, we can also use the `>XMake: UpdateIntellisense` command to manually trigger the generation of .vscode/compile_commands.json in vscode.
+Of course, if we don't see the file being generated, we can also use the `>XMake: UpdateIntellisense` command to manually trigger the generation of .vscode/compile_commands.json in VSCode.
 
 ##### Configure xmake.lua to generate automatically
 
-Alternatively, we can also use this rule to automatically update and generate compile_commandss.json
+Alternatively, we can also use this rule to automatically update and generate compile_commands.json
 
 ```lua
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
@@ -73,7 +73,7 @@ This will automatically update this file after each build.
 
 ##### Manual execution command generation
 
-If the above methods are invalid, we can also execute the command to generate.
+If the above methods are invalid, we can also execute the command to generate it.
 
 ```sh
 $ xmake project -k compile_commands .vscode
@@ -81,9 +81,9 @@ $ xmake project -k compile_commands .vscode
 
 #### vscode-cpptools
 
-If we use the vscode-cpptools plug-in to provide intellsence support, we need to go to the vscode plug-in market first, search for C++, the default first plug-in is to install it.
+If we use the vscode-cpptools plugin to provide intellisense support, we need to go to the VSCode plugin marketplace first, search for C++, and install the default first plugin.
 
-When installed, this plugin provides intellsence and debugging support.
+When installed, this plugin provides intellisense and debugging support.
 
 Then, we need to configure the c_cpp_properties.json file and associate it with the `.vscode/compile_commands.json` we generated.
 
@@ -129,7 +129,7 @@ Therefore, the default automatic configuration is not very good, and the author 
 
 #### clangd
 
-When using clangd, there may be conflicts with the C/C++ plug-in, you can add settings in .vscode/settings.json:
+When using clangd, there may be conflicts with the C/C++ plugin, you can add settings in .vscode/settings.json:
 
 ```
 {
@@ -176,7 +176,7 @@ Also, since the compile_commands.json generated by XMake is in the .vscode direc
 
 * [xmake.nvim](https://github.com/Mythos-404/xmake.nvim) (third-party, thanks [@Mythos_404](https://github.com/Mythos-404))
 
-The plugin provides easy-to-use configuration UI and auto-generation of *compile_commands.json* files
+The plugin provides an easy-to-use configuration UI and auto-generation of *compile_commands.json* files
 
 <img src="https://raw.githubusercontent.com/Mythos-404/xmake.nvim/main/assets/XmakePreview.gif" width="650px" />
 

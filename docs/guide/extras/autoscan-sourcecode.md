@@ -1,12 +1,12 @@
 # Auto-scan Source Build
 
-Xmake supports the autogeneration of project files, including it's own! While it won't work for every project (as is the nature of these things), it should work for basic and medium complexity projects. You do not need to write any "make-like" file (`xmake.lua`, `makefile`, `CMakeLists.txt`, etc.).
+Xmake supports the autogeneration of project files, including its own! While it won't work for every project (as is the nature of these things), it should work for basic and medium complexity projects. You do not need to write any "make-like" file (`xmake.lua`, `Makefile`, `CMakeLists.txt`, etc.).
 
-The fool will scan all of the source files and generate an `xmake.lua` automatically based on your product structure. Xmake will try to detect a `main` function in the source files to distinguish between the source code for libraries and executable programs.
+The tool will scan all of the source files and generate an `xmake.lua` automatically based on your project structure. Xmake will try to detect a `main` function in the source files to distinguish between the source code for libraries and executable programs.
 
 If autogeneration succeeds, you should still look through the generated `xmake.lua` and make any changes you need, and make sure everything worked well.
 
-Currently, projects that use directories in multiple levels are *not* supported. Appologies.
+Currently, projects that use directories in multiple levels are *not* supported. Apologies.
 
 ## Use cases
 
@@ -35,7 +35,7 @@ $ xmake f -y
 
 ## Compile open source libraries
 
-Although this approach has some limitations, but it is already sufficient to generate for existing libraries.
+Although this approach has some limitations, it is already sufficient to generate for existing libraries.
 
 For example, if you download the source code for zlib-1.2.10 and want to compile it, you only need to enter the zlib source directory and run the following command:
 
@@ -131,7 +131,7 @@ build ok!👌
 
 Xmake will scan the current directory to detect all source codes and it do not found main function. As such, detect that it is a static library, and thus it will build it as a static library (with an output/artifact of `libzlib-1.2.a`).
 
-We did not write any make-like files (Xmake.lua, ..) and did not use the makefile of zlib project. Isn't that neat? It is compiled directly and a `xmake.lua` file was generated which we can edit this xmake.lua to build more complicated project.
+We did not write any make-like files (`xmake.lua`, etc.) and did not use the makefile of the zlib project. Isn't that neat? It is compiled directly and an `xmake.lua` file was generated, which we can edit to build a more complicated project.
 
 The content of the generated xmake.lua:
 
@@ -179,14 +179,14 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-If we use GCC to compile and run it, need run two commands:
+If we use GCC to compile and run it, we need to run two commands:
 
 ```sh
 $ gcc ./main.c -o main
 $ ./main
 ```
 
-If we use xmake to run it, only need to run:
+If we use xmake to run it, we only need to run:
 
 ```sh
 $ xmake run

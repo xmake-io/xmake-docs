@@ -4,9 +4,9 @@ outline: deep
 
 # Cross Compilation
 
-Generally, if we need to compile and generate object files that can be run on other devices in the current pc environment, we need to compile and generate them through the corresponding cross-compilation tool chain, such as compiling linux programs on win/macos, or Compile object files of other embedded devices, etc.
+Generally, if we need to compile and generate object files that can be run on other devices in the current PC environment, we need to compile and generate them through the corresponding cross-compilation toolchain, such as compiling Linux programs on Windows/macOS, or compiling object files for other embedded devices, etc.
 
-The usual cross-compilation tool chain is based on gcc/clang, and most of them have a structure similar to the following:
+The usual cross-compilation toolchain is based on GCC/Clang, and most of them have a structure similar to the following:
 
 ```
 /home/toolchains_sdkdir
@@ -20,7 +20,7 @@ The usual cross-compilation tool chain is based on gcc/clang, and most of them h
        - xxx.h
 ```
 
-Each toolchain has a corresponding include/lib directory, which is used to place some system libraries and header files, such as libc, stdc++, etc., and a series of tools for compiling the tool chain are placed under the bin directory. E.g:
+Each toolchain has a corresponding include/lib directory, which is used to place some system libraries and header files, such as libc, stdc++, etc., and a series of tools for compiling are placed under the bin directory. For example:
 
 ```
 arm-linux-armeabi-ar
@@ -34,44 +34,44 @@ arm-linux-armeabi-nm
 arm-linux-armeabi-strip
 ```
 
-The `arm-linux-armeabi-` prefix is cross, which is used to mark the target platform and architecture, and is mainly used to distinguish it from the host's own gcc/clang.
+The `arm-linux-armeabi-` prefix is the cross prefix, which is used to mark the target platform and architecture, and is mainly used to distinguish it from the host's own GCC/Clang.
 
-The gcc/g++ inside is the c/c++ compiler, which can also be used as a linker. When linking, it will internally call ld to link, and automatically add some c++ libraries.
-Cpp is a preprocessor, as is an assembler, ar is used to generate a static library, and strip is used to crop out some symbol information, making the target program smaller. nm is used to view the list of exported symbols.
+The gcc/g++ inside is the C/C++ compiler, which can also be used as a linker. When linking, it will internally call ld to link, and automatically add some C++ libraries.
+cpp is a preprocessor, as is is an assembler, ar is used to generate a static library, and strip is used to remove some symbol information, making the target program smaller. nm is used to view the list of exported symbols.
 
 ## Automatic detection and compilation
 
-If our cross-compilation tool chain is the above structure, Xmake will automatically detect and identify the structure of the SDK, extract the cross and include/lib path location, users usually do not need to do additional parameter settings, just configure the SDK The root directory can be compiled, for example:
+If our cross-compilation toolchain has the above structure, Xmake will automatically detect and identify the structure of the SDK, extract the cross prefix and include/lib path location. Users usually do not need to do additional parameter settings, just configure the SDK root directory to compile, for example:
 
 ```sh
 $ xmake f -p cross --sdk=/home/toolchains_sdkdir
 $ xmake
 ```
 
-Among them, `-p cross` is used to specify that the current platform is a cross-compilation platform, and `--sdk=` is used to specify the root directory of the cross toolchain.
+Here, `-p cross` is used to specify that the current platform is a cross-compilation platform, and `--sdk=` is used to specify the root directory of the cross toolchain.
 
-Note: We can also specify the `-p linux` platform to configure cross compilation, the effect is the same, the only difference is that the name of the linux platform is additionally identified, which is convenient for `xmake.lua` to determine the platform by` is_plat ("linux") ` .
+Note: We can also specify the `-p linux` platform to configure cross compilation. The effect is the same, the only difference is that the name of the linux platform is additionally identified, which is convenient for `xmake.lua` to determine the platform by `is_plat("linux")`.
 
-At this time, Xmake will automatically detect the prefix name cross of gcc and other compilers: `arm-linux-armeabi-`, and when compiling, it will also automatically add search options for` link library` and `header files` :
+At this time, Xmake will automatically detect the cross prefix of gcc and other compilers: `arm-linux-armeabi-`, and when compiling, it will also automatically add search options for `link library` and `header files`:
 
 ```
 -I/home/toolchains_sdkdir/include
 -L/home/toolchains_sdkdir/lib
 ```
 
-These are handled automatically by Xmake, there is no need to configure them manually.
+These are handled automatically by Xmake; there is no need to configure them manually.
 
 ## Manually configure and compile
 
-If the above automatic detection fails to completely compile for some tool chains, you need to manually set some configuration parameters related to cross compilation to adjust to these special tool chains. I will explain how to configure them one by one.
+If the above automatic detection fails for some toolchains, you need to manually set some configuration parameters related to cross compilation to adapt to these special toolchains. I will explain how to configure them one by one.
 
 ## Set toolchain bin directory
 
-For the irregular tool chain directory structure, by simply setting the [--sdk](#sdk) option, it is impossible to completely detect the passing situation Next, you can continue to set the location of the bin directory of the toolchain through this option.
+For irregular toolchain directory structures, simply setting the [--sdk](#sdk) option may not be enough. You can continue to set the location of the bin directory of the toolchain through this option.
 
-For example: for some special cross toolchains, the compiler bin directory is not in the `/home/toolchains_sdkdir/bin` position, but is instead in `/usr/opt/bin`
+For example, for some special cross toolchains, the compiler bin directory is not in the `/home/toolchains_sdkdir/bin` position, but is instead in `/usr/opt/bin`
 
-At this time, we can add the parameter setting of the bin directory on the basis of setting the sdk parameter to adjust the bin directory of the tool chain.
+At this time, we can add the parameter setting of the bin directory on the basis of setting the sdk parameter to adjust the bin directory of the toolchain.
 
 ```sh
 $ xmake f -p cross --sdk=/home/toolchains_sdkdir --bin=/usr/opt/bin
@@ -80,9 +80,9 @@ $ xmake
 
 ## Set tool prefix for cross toolchain
 
-Like aarch64-linux-android-, usually if you configure --sdk or --bin, Xmake will automatically detect it, you don't need to set it manually.
+Like aarch64-linux-android-, usually if you configure --sdk or --bin, Xmake will automatically detect it, and you don't need to set it manually.
 
-But for some very special tool chains, if there are multiple cross prefix tool bins in a directory at the same time, you need to manually set this configuration to distinguish which bin you need to choose.
+But for some very special toolchains, if there are multiple cross prefix tool bins in a directory at the same time, you need to manually set this configuration to distinguish which bin you need to choose.
 
 For example, there are two different compilers in the bin directory of toolchains:
 
@@ -92,7 +92,7 @@ For example, there are two different compilers in the bin directory of toolchain
   - aarch64-linux-gcc
 ```
 
-We now want to choose the armv7 version, then we can append `--cross=` to configure the compiler tool prefix name, for example:
+If we now want to choose the armv7 version, then we can append `--cross=` to configure the compiler tool prefix name, for example:
 
 ```sh
 $ xmake f -p cross --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
@@ -100,7 +100,7 @@ $ xmake f -p cross --sdk=/usr/toolsdk --bin=/opt/bin --cross=armv7-linux-
 
 ## Set the c/c++ compiler
 
-If you want to continue to subdivide and select compilers, continue to add relevant compiler options, for example:
+If you want to further specify compilers, continue to add relevant compiler options, for example:
 
 ```sh
 $ xmake f -p cross --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-clang++
@@ -108,25 +108,21 @@ $ xmake f -p cross --sdk=/user/toolsdk --cc=armv7-linux-clang --cxx=armv7-linux-
 
 Of course, we can also specify the full path of the compiler.
 
-`--cc` is used to specify the name of the c compiler, and `--cxx` is used to specify the name of the c++ compiler.
+Note: If the CC/CXX environment variable exists, the value specified in the current environment variable will be used first.
 
-Note: If the cc/cxx environment variable exists, the value specified in the current environment variable will be used first.
+If the specified compiler name is not a name recognized by Xmake (such as gcc, clang, etc.), then the compiler tool detection will fail.
 
-If the specified compiler name is not a name recognized by Xmake (with gcc, clang, etc.), then the compiler tool detection will fail.
-
-At this time we can pass:
+At this time we can use:
 
 ```sh
 xmake f --cxx=clang++@/home/xxx/c++mips.exe
 ```
 
-Set the c ++ mips.exe compiler as the clang ++-like way to compile.
- 
-That is to say, while specifying the compiler as `c++mips.exe`, tell Xmake that it is basically the same as clang ++ usage and parameter options.
+Set the c++ mips.exe compiler as the clang++ in usage and parameter options.
 
 ## Set the c/c++ linker
 
-If you want to continue to subdivide and select the linker, continue to add related linker options, for example:
+If you want to further specify the linker, continue to add related linker options, for example:
 
 ```sh
 $ xmake f -p cross --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux-clang++ --ar=armv7-linux-ar
@@ -134,25 +130,25 @@ $ xmake f -p cross --sdk=/user/toolsdk --ld=armv7-linux-clang++ --sh=armv7-linux
 
 ld specifies the executable program linker, sh specifies the shared library program linker, and ar specifies the archiver that generates the static library.
 
-Note: If there are ld/sh/ar environment variables, the value specified in the current environment variable will be used first.
+Note: If there are LD/SH/AR environment variables, the value specified in the current environment variable will be used first.
 
 ## Set header file and library search directory
 
-If there are additional other include/lib directories in the SDK that are not in the standard structure, resulting in cross compilation can not find the library and header files, then we can append the search path through `--includedirs` and` --linkdirs`, and then Add additional link libraries via `--links`.
+If there are additional include/lib directories in the SDK that are not in the standard structure, resulting in cross compilation not finding the library and header files, then we can append the search path through `--includedirs` and `--linkdirs`, and then add additional link libraries via `--links`.
 
 ```sh
 $ xmake f -p cross --sdk=/usr/toolsdk --includedirs=/usr/toolsdk/xxx/include --linkdirs=/usr/toolsdk/xxx/lib --links=pthread
 ```
 
-Note: If you want to specify multiple search directories, you can use `:` or `;` to separate, which is the path separator of different host platforms, use `:` under linux / macos, and `;` under win.
+Note: If you want to specify multiple search directories, you can use `:` or `;` to separate them, which is the path separator of different host platforms. Use `:` under Linux/macOS, and `;` under Windows.
 
 ## Set compile and link options
 
-We can also configure some additional compilation and linking options through `--cflags`,` --cxxflags`, `--ldflags`, `--shflags` and `--arflags` according to the actual situation.
+We can also configure some additional compilation and linking options through `--cflags`, `--cxxflags`, `--ldflags`, `--shflags` and `--arflags` according to the actual situation.
 
 * cflags: specify c compilation parameters
-* cxxflags: specify c ++ compilation parameters
-* cxflags: specify c / c ++ compilation parameters
+* cxxflags: specify c++ compilation parameters
+* cxflags: specify c/c++ compilation parameters
 * asflags: specify assembler compilation parameters
 * ldflags: specify executable program link parameters
 * shflags: specify dynamic library program link parameters
@@ -166,7 +162,7 @@ $ xmake f -p cross --sdk=/usr/toolsdk --cflags="-DTEST -I/xxx/xxx" --ldflags="-l
 
 ## Custom build platform
 
-If the target program has a corresponding platform to be specified after a cross tool chain is compiled, and it needs to be configured in `xmake.lua` according to different cross compilation platforms, and some additional compilation parameters need to be configured, then the `-p cross` setting above Can not meet the demand.
+If the target program has a corresponding platform to be specified after a cross toolchain is compiled, and it needs to be configured in `xmake.lua` according to different cross compilation platforms, and some additional compilation parameters need to be configured, then the `-p cross` setting above cannot meet the demand.
 
 In fact, the `-p/-plat=` parameter can also be set to other custom values. You only need to maintain the corresponding relationship with `is_plat`. All non-built-in platform names will default to cross-compilation mode, for example:
 
@@ -183,9 +179,9 @@ if is_plat("myplat") then
 end
 ```
 
-In this way, Xmake can be easily extended to deal with various compilation platforms, users can extend their own support for freebsd, netbsd, sunos and other cross-compiling platforms.
+In this way, Xmake can be easily extended to deal with various compilation platforms. Users can extend their own support for FreeBSD, NetBSD, SunOS and other cross-compiling platforms.
 
-I excerpted a cross-compilation configuration written before porting libuv, and intuitively feel:
+Here is a cross-compilation configuration excerpted from porting libuv, for reference:
 
 ```lua
 -- for dragonfly/freebsd/netbsd/openbsd platform
@@ -213,7 +209,7 @@ $ xmake f -p [dragonfly|freebsd|netbsd|openbsd|sunos] --sdk=/home/arm-xxx-gcc/
 $ xmake
 ```
 
-In addition, the built-in Linux platform also supports cross-compilation. If you do n’t want to configure other platform names, you can cross-compile as the linux platform.
+In addition, the built-in Linux platform also supports cross-compilation. If you do n't want to configure other platform names, you can cross-compile as the linux platform.
 
 ```sh
 $ xmake f -p linux --sdk=/usr/local/arm-xxx-gcc/
@@ -290,19 +286,19 @@ In addition, we can also customize the toolchain in `xmake.lua`, and then specif
 
 ```lua
 toolchain("myclang")
-    set_kind("standalone")
-    set_toolset("cc", "clang")
-    set_toolset("cxx", "clang", "clang++")
-    set_toolset("ld", "clang++", "clang")
-    set_toolset("sh", "clang++", "clang")
-    set_toolset("ar", "ar")
-    set_toolset("ex", "ar")
-    set_toolset("strip", "strip")
-    set_toolset("mm", "clang")
-    set_toolset("mxx", "clang", "clang++")
-    set_toolset("as", "clang")
+    set_kind("standalone")
+    set_toolset("cc", "clang")
+    set_toolset("cxx", "clang", "clang++")
+    set_toolset("ld", "clang++", "clang")
+    set_toolset("sh", "clang++", "clang")
+    set_toolset("ar", "ar")
+    set_toolset("ex", "ar")
+    set_toolset("strip", "strip")
+    set_toolset("mm", "clang")
+    set_toolset("mxx", "clang", "clang++")
+    set_toolset("as", "clang")
 
-    - ...
+    - ...
 ```
 
 For details about this piece, you can go to the [Custom Toolchain](/api/description/custom-toolchain).

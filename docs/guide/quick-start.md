@@ -7,7 +7,7 @@ outline: deep
 ## Installation
 
 ::: tip NOTE
-Xmake is not recommended for root installation, because this is very insecure. If the user has to download the root, if the prompt Xmake fails to run, please pass the `--root` parameter as prompted or set `XMAKE_ROOT=y`. The environment variable is forcibly enabled, provided that the user needs to pay attention to the risk of incorrect operating system file files under root.
+Xmake is not recommended for root installation, because this is very insecure. If you must install as root and Xmake fails to run, please pass the `--root` parameter as prompted or set `XMAKE_ROOT=y`. The environment variable is forcibly enabled, but please be aware of the risk of operating system file errors under root.
 :::
 
 ::: code-group
@@ -26,7 +26,7 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 
 :::
 
-If we want to install a specific version and branch, you can append the version number and branch parameters later
+If you want to install a specific version or branch, you can append the version number or branch parameter at the end
 
 ```sh
 curl -fsSL https://xmake.io/shget.text | bash -s dev
@@ -44,11 +44,11 @@ If the ps script execution prompt fails, you can try to execute in administrator
 2. Run xmake-[version].[win32|win64].exe
 
 ::: tip NOTE
-Releases/xmake-[version].[win32|win64].zip has not installer, we need unzip it and add PATH environment variables by ourself.
+Releases/xmake-[version].[win32|win64].zip does not have an installer. We need to unzip it and add the PATH environment variable ourselves.
 :::
 
-In addition, the installation package with `xmake-tinyc-xxx.exe`, which integrates the tinyc compiler environment, and comes with libc and winapi header files. By installing this package, you can compile c programs normally without msvc.
-This is very useful for users who want to write some c tests or algorithm codes temporarily, but don't want to install msvc, but the installation package will be slightly larger than 2-3M.
+In addition, the installation package with `xmake-tinyc-xxx.exe` integrates the tinyc compiler environment and comes with libc and winapi header files. By installing this package, you can compile C programs without MSVC.
+This is very useful for users who want to write some C tests or algorithm code temporarily, but don't want to install MSVC. However, the installation package will be slightly larger (by 2-3MB).
 
 ::: code-group
 
@@ -165,7 +165,7 @@ xmake-bundle-v2.9.8.win32.exe
 xmake-bundle-v2.9.8.win64.exe
 ```
 
-Among them, the package with the `.cosmocc` suffix provides the ability to run across platforms, but the support for Windows is still relatively weak, and it is not recommended to use it on Windows.
+Among them, the package with the `.cosmocc` suffix provides the ability to run across platforms, but support for Windows is still relatively weak, so it is not recommended to use it on Windows.
 
 The others are single executable files for specific platforms, and users can download and use them as needed according to their own systems.
 
@@ -178,7 +178,7 @@ git clone --recursive https://github.com/xmake-io/xmake.git
 cd ./xmake
 ```
 
-If you think the source of github is too slow, you can pull it through the mirror source of gitee or gitlab:
+If you think the source from GitHub is too slow, you can clone it from the mirror source on Gitee or GitLab:
 
 ```sh
 git clone --recursive https://gitee.com/tboox/xmake.git
@@ -186,10 +186,10 @@ git clone --recursive https://gitlab.com/tboox/xmake.git
 ```
 
 ::: tip NOTE
-Since the current Xmake source maintains dependencies via git submodule, it is necessary to add the `--recursive` parameter to pull all submodules at the same time. Please do not download the tar.gz source directly, because github does not automatically package submodules. Code.
+Since the current Xmake source maintains dependencies via git submodule, it is necessary to add the `--recursive` parameter to pull all submodules at the same time. Please do not download the tar.gz source directly, because GitHub does not automatically package submodules.
 :::
 
-If you forget to add `--recursive` when git clone, you can also execute `git submodule update --init` to pull all submodules, for example:
+If you forget to add `--recursive` when cloning, you can also execute `git submodule update --init` to pull all submodules, for example:
 
 ```sh
 git submodule update --init
@@ -215,40 +215,40 @@ xmake
 
 
 ::: tip NOTE
-`./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`, so after the installation, the current terminal fails to execute Xmake, If the prompt is not found, manually execute `source ~/.xmake/profile`, and the next time you open the terminal, you don't need it.
+`./get.sh __local__` is installed to `~/.local/xmake`, and then loaded by `source ~/.xmake/profile`. So after installation, if the current terminal fails to execute Xmake, and the prompt says it is not found, manually execute `source ~/.xmake/profile`. The next time you open the terminal, you won't need to do this again.
 
-If you encounter problems with readline, please install readline-devel or libreadline-dev dependencies. This is optional. It is only needed when the `xmake lua` command executes REPL.
+If you encounter problems with readline, please install the readline-devel or libreadline-dev dependencies. This is optional and only needed when the `xmake lua` command executes REPL.
 :::
 
 ### Update and Upgrade
 
-Starting with v2.2.3, the `xmake update` command has been added to quickly update and upgrade itself. The default is to upgrade to the latest version. Of course, you can also specify to upgrade or roll back to a version:
+Starting with v2.2.3, the `xmake update` command was added to quickly update and upgrade itself. By default, it upgrades to the latest version. Of course, you can also specify a version to upgrade or roll back to:
 
 ```sh
 xmake update 2.7.1
 ```
 
-We can also specify an update to the master/dev branch version:
+You can also specify an update to the master/dev branch version:
 
 ```sh
 xmake update master
 xmake update dev
 ```
 
-Update from the specified git source
+Update from a specified git source
 
 ```sh
 xmake update github:xmake-io/xmake#master
 xmake update gitee:tboox/xmake#dev # gitee mirror
 ```
 
-If just update the xmake lua script changes, you can add `-s/--scriptonly` to quickly update the lua script.
+If you just want to update the xmake lua script changes, you can add `-s/--scriptonly` to quickly update the lua script.
 
 ```sh
 xmake update -s dev
 ```
 
-Finally, if we want to uninstall Xmake, we're sorry to see you go! Still, it is supported: `xmake update --uninstall`.
+Finally, if you want to uninstall Xmake, we're sorry to see you go! Still, it is supported: `xmake update --uninstall`.
 
 ## Create Project
 
@@ -256,7 +256,7 @@ Finally, if we want to uninstall Xmake, we're sorry to see you go! Still, it is 
 $ xmake create hello
 ```
 
-And xmake will generate some files for c++ language project:
+And xmake will generate some files for a C++ language project:
 
 ```
 hello
@@ -265,7 +265,7 @@ hello
 └── xmake.lua
 ```
 
-It is a simple console program only for printing `hello xmake!`
+It is a simple console program that only prints `hello xmake!`
 
 The content of `xmake.lua` is very simple:
 
@@ -292,20 +292,20 @@ $ xmake run
 
 ## Debug Program
 
-To debug the hello, you need change to the debug mode and build it.
+To debug the hello program, you need to change to debug mode and build it.
 
 ```sh
 $ xmake config -m debug
 $ xmake
 ```
 
-Then run the following command to debug target program.
+Then run the following command to debug the target program.
 
 ```sh
 $ xmake run -d hello
 ```
 
-It will start the debugger (.e.g lldb, gdb, windbg, vsjitdebugger, ollydbg ..) to load our program.
+It will start the debugger (e.g. lldb, gdb, windbg, vsjitdebugger, ollydbg, etc.) to load your program.
 
 ```sh
 [lldb]$target create "build/hello"
@@ -325,9 +325,9 @@ hello`main:
 [lldb]$
 ```
 
-To study more debug command, please click the url [GDB to LLDB command map](https://lldb.llvm.org/use/map.html)
+To study more debug commands, please see the [GDB to LLDB command map](https://lldb.llvm.org/use/map.html)
 
-If you want to use the specify debugger, try
+If you want to use a specific debugger, try
 
 ```sh
 $ xmake f --debugger=gdb
@@ -336,7 +336,7 @@ $ xmake run -d hello
 
 ## What's Next?
 
-- Continue with the guide. [Create Project](/guide/basic-commands/create-project)
-- Checkout the examples. [Examples](/examples/cpp/basic)
-- Checkout API reference. [API Reference](/api/description/specification)
+Continue with the guide: [Create Project](/guide/basic-commands/create-project)
+Check out the examples: [Examples](/examples/cpp/basic)
+Check out the API reference: [API Reference](/api/description/specification)
 

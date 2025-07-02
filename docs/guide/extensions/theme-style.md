@@ -29,7 +29,7 @@ $ xmake g --theme=default
 In addition, xmake also provides a lot of interesting and practical built-in themes, everyone can try, the following will explain in detail.
 
 ::: tip NOTE
-If you have a better theme, you are welcome to mention pr contribution, thank you very much!
+If you have a better theme, you are welcome to submit a PR contribution. Thank you very much!
 :::
 
 ## Builtin Themes
@@ -78,7 +78,7 @@ $ xmake g --theme=dark
 
 ### Light theme
 
-This theme is mainly for the dark background of some terminals, which makes some outputs overlap invisible, so change the theme color to light color to improve visibility.
+This theme is mainly for the dark background of some terminals, which makes some outputs overlap and become invisible, so the theme color is changed to a light color to improve visibility.
 
 ```sh
 $ xmake g --theme=light
@@ -86,10 +86,10 @@ $ xmake g --theme=light
 
 ### Plain Theme
 
-In fact, this theme is to completely disable color and emoji output, mainly to deal with the problem of garbled display caused by some terminals that do not support colors code, and it is also the most simple theme style.
+In fact, this theme is to completely disable color and emoji output, mainly to deal with the problem of garbled display caused by some terminals that do not support color codes, and it is also the simplest theme style.
 
 ::: tip NOTE
-Some win terminals may not support colors, you can set this theme to solve the problem of garbled display
+Some Windows terminals may not support colors. You can set this theme to solve the problem of garbled display.
 :::
 
 ```sh
@@ -98,9 +98,9 @@ $ xmake g --theme=plain
 
 ### Powershell theme
 
-The background of the powershell terminal under win is blue, and its palette configuration seems to be changed. The magenta color is actually displayed as the background blue, which is very strange, resulting in the local output of xmake's default output will be invisible Overlapped)
+The background of the PowerShell terminal under Windows is blue, and its palette configuration seems to be changed. The magenta color is actually displayed as the background blue, which is very strange, resulting in the local output of xmake's default output being invisible (overlapped).
 
-Therefore, this theme is to better adapt the display output under the powershell terminal.
+Therefore, this theme is to better adapt the display output under the PowerShell terminal.
 
 ```sh
 $ xmake g --theme=powershell
