@@ -1,4 +1,4 @@
-Xmake 项目属于个人开源项目，它的发展需要您的帮助，如果您愿意支持xmake项目的开发，欢迎为其捐赠，支持它的发展。
+Xmake 项目属于个人开源项目，它的发展需要您的帮助。如果您愿意支持 Xmake 项目的开发，欢迎为其捐赠，支持它的发展。
 
 欢迎联系我们，获取更多赞助详情。
 
@@ -16,69 +16,69 @@ Xmake 项目属于个人开源项目，它的发展需要您的帮助，如果�
 
 <img src="/assets/img/weixin.png" alt="weixin" width="218" height="218">
 
-### Github Sponsor
+### GitHub Sponsor
 
-[![Github Sponsor](/assets/img/github_sponsor.png)](https://github.com/sponsors/waruqi)
+[![GitHub Sponsor](/assets/img/github_sponsor.png)](https://github.com/sponsors/waruqi)
 
-### Paypal
+### PayPal
 
-[![Paypal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
+[![PayPal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
 
 ### OpenCollective
 
-[[Become a sponsor](https://opencollective.com/xmake#sponsor)]
+[[Become a Sponsor](https://opencollective.com/xmake#sponsor)]
 
-## Sponsor tiers
+## 赞助等级
 
-### $5 a month
+### $5/月
 
-☕️ - Buy me a coffee every month.
+☕️ - 每月请我喝一杯咖啡。
 
-- You will receive a Sponsor badge on your profile!
+- 您将在您的个人资料上获得赞助者徽章！
 
-### $10 a month
+### $10/月
 
-🙏 - Thank you so much! For sponsoring me you'll receive:
+🙏 - 非常感谢您的赞助！您将获得：
 
-- All previous tier rewards
-- Membership in Discord channel is marked as sponsor
-- Add your name to the backers section on my personal website
+- 所有前一等级的奖励
+- Discord 频道内标记为赞助者
+- 您的名字将被添加到我个人网站的支持者名单中
 
-### $20 a month
+### $20/月
 
-🍨 - Thank you so much! For sponsoring me you'll receive:
+🍨 - 非常感谢您的赞助！您将获得：
 
-- All previous tier rewards
-- Handling Issues with higher priority
+- 所有前一等级的奖励
+- 优先处理您的 Issues
 
-### $50 a month
+### $50/月
 
-🐹 - Thank you so much! For sponsoring me you'll receive:
+🐹 - 非常感谢您的赞助！您将获得：
 
-- All previous tier rewards
-- Review your xmake.lua and provide suggestions for improvement
+- 所有前一等级的奖励
+- 帮您审查 xmake.lua 并提供改进建议
 
-### $200 a month
+### $200/月
 
-🐴 - Thank you so much! For sponsoring me you'll receive:
+🐴 - 非常感谢您的赞助！您将获得：
 
-- All previous tier rewards
-- Add a logo and link to the README.md of my major open source projects
-- One-to-one technical consulting service
+- 所有前一等级的奖励
+- 在我主要开源项目的 README.md 中添加您的 logo 和链接
+- 一对一技术咨询服务
 
-### $500 a month
+### $500/月
 
-🐬 - Thank you so much! For sponsoring me you'll receive:
+🐬 - 非常感谢您的赞助！您将获得：
 
-- All previous tier rewards
-- Add a large logo and link to the websites of my major open source projects
+- 所有前一等级的奖励
+- 在我主要开源项目网站添加大 logo 和链接
 
-### $1000 a month
+### $1000/月
 
-❤️ - Wow, thank you so much!
+❤️ - 哇，非常感谢您的慷慨赞助！
 
-- All previous tier rewards
-- Please contact me to discuss what you want for this tier!
+- 所有前一等级的奖励
+- 请联系我，讨论您希望获得的专属回馈！
 
 ## 支持者
 

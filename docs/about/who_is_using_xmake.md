@@ -1,13 +1,13 @@
-If you are using Xmake, please click to edit [this page](https://github.com/xmake-io/xmake-docs/edit/master/docs/zh/about/who_is_using_xmake.md) to submit information to the following list to let more users know how many users are using Xmake.
+If you are using Xmake, please click to edit [this page](https://github.com/xmake-io/xmake-docs/edit/master/docs/zh/about/who_is_using_xmake.md) to submit your information to the following list, so more users can know how many people are using Xmake.
 
-This also let users to use Xmake more confidently, and we will also have more motivation to maintain it continuously,
-so that the Xmake project and the community will grow stronger.
+This also allows users to use Xmake more confidently, and gives us more motivation to maintain it continuously,
+so that the Xmake project and community will grow stronger.
 
 ::: tip NOTE
-If you are inconvenient to add your project address, you can briefly describe the usage scenarios of the project.
+If it is inconvenient for you to add your project address, you can briefly describe the usage scenarios of your project.
 :::
 
-## User list
+## User List
 
 | User (Company Name or Personal Contact) | Project (Project Introduction or Address) | Comment (optional) |
 | :--- | :--- | :--- |

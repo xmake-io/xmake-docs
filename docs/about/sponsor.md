@@ -1,81 +1,81 @@
-The Xmake projects are personal open-source projects, their development need your help.
+The Xmake projects are personal open-source projects, and their development needs your help.
 
 If you would like to support the development of Xmake, you are encouraged to donate!
 
-Feel free to contact us for more details on sponsorship.
+Feel free to contact us for more details about sponsorship.
 
-- [Contact us](/about/contact)
+- [Contact Us](/about/contact)
 
 ## Payment Methods
 
-### Paypal
+### PayPal
 
-[![Paypal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
+[![PayPal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
 
-### Github Sponsor
+### GitHub Sponsor
 
-[![Github Sponsor](/assets/img/github_sponsor.png)](https://github.com/sponsors/waruqi)
+[![GitHub Sponsor](/assets/img/github_sponsor.png)](https://github.com/sponsors/waruqi)
 
 ### OpenCollective
 
-[[Become a sponsor](https://opencollective.com/xmake#sponsor)]
+[[Become a Sponsor](https://opencollective.com/xmake#sponsor)]
 
 ### Alipay
 
 <img src="/assets/img/alipay.png" alt="alipay" width="256" height="256">
 
-### Weixin
+### WeChat
 
 <img src="/assets/img/weixin.png" alt="weixin" width="218" height="218">
 
-## Sponsor tiers
+## Sponsor Tiers
 
-### $5 a month
+### $5 a Month
 
 ☕️ - Buy me a coffee every month.
 
-- You will receive a Sponsor badge on your profile!
+- You will receive a sponsor badge on your profile!
 
-### $10 a month
+### $10 a Month
 
-🙏 - Thank you so much! For sponsoring me you'll receive:
-
-- All previous tier rewards
-- Membership in Discord channel is marked as sponsor
-- Add your name to the backers section on my personal website
-
-### $20 a month
-
-🍨 - Thank you so much! For sponsoring me you'll receive:
+🙏 - Thank you so much! For sponsoring me, you'll receive:
 
 - All previous tier rewards
-- Handling Issues with higher priority
+- Membership in the Discord channel is marked as sponsor
+- Your name added to the backers section on my personal website
 
-### $50 a month
+### $20 a Month
 
-🐹 - Thank you so much! For sponsoring me you'll receive:
+🍨 - Thank you so much! For sponsoring me, you'll receive:
+
+- All previous tier rewards
+- Handling issues with higher priority
+
+### $50 a Month
+
+🐹 - Thank you so much! For sponsoring me, you'll receive:
 
 - All previous tier rewards
 - Review your `xmake.lua` and provide suggestions for improvement
 
-### $200 a month
+### $200 a Month
 
-🐴 - Thank you so much! That's a lot of money. For sponsoring me you'll receive:
+🐴 - Thank you so much! That's a lot of money. For sponsoring me, you'll receive:
 
 - All previous tier rewards
-- Add a logo and link to the README.md of my major open source projects
+- Add a logo and link to the README.md of my major open-source projects
 - One-to-one technical consulting service
 
-### $500 a month
+### $500 a Month
 
-🐬 - Should you really be spending this much? For sponsoring me you'll receive:
+🐬 - Should you really be spending this much? For sponsoring me, you'll receive:
 
 - All previous tier rewards
-- Add a large logo and link to the websites of my major open source projects
+- Add a large logo and link to the websites of my major open-source projects
 
-### $1000 a month
+### $1000 a Month
 
-❤️ - How do you have this much money to spend? For sponsoring me on this incredible tier, you'll receive:
+❤️ - How do you have this much money to spend? For sponsoring me at this incredible tier, you'll receive:
 
 - All previous tier rewards
 - Please contact me to discuss what you want for this tier!
