@@ -4,7 +4,7 @@
 
 ## jobgraph.new
 
-创建新的任务图实例。
+- 创建新的任务图实例。
 
 ```lua
 import("async.jobgraph")
@@ -64,7 +64,7 @@ rule("foo")
 
 ## jobgraph:add_orders
 
-- 添加依赖边（jobname 依赖 ...）。
+- 添加依赖执行顺序
 
 ```lua
 local jobs = jobgraph.new()
@@ -75,7 +75,7 @@ jobs:add_orders("job/child", "job/root")
 
 ## jobgraph:group
 
-- 分组批量管理任务依赖。可通过回调批量添加分组任务。
+- 分组批量管理任务依赖。可通过回调批量添加分组任务
 
 ```lua
 local jobs = jobgraph.new()

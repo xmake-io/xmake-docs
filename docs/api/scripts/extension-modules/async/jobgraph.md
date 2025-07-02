@@ -4,7 +4,7 @@ This module provides a job graph (DAG) for advanced asynchronous job scheduling 
 
 ## jobgraph.new
 
-Create a new job graph instance.
+- Create a new job graph instance.
 
 ```lua
 import("async.jobgraph")
@@ -64,7 +64,7 @@ rule("foo")
 
 ## jobgraph:add_orders
 
-- Add dependency edges (jobname depends on ...).
+- Add dependency orders.
 
 ```lua
 local jobs = jobgraph.new()
