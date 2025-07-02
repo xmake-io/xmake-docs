@@ -15,7 +15,7 @@ target("foo")
     end
 ```
 
-Then, we can enable this custom option in the command line, so that the macro definition of `-DTEST` is automatically added when the foo target is compiled.
+Then, we can enable this custom option in the command line, so that the macro definition of `-DTESTS` is automatically added when the foo target is compiled.
 
 ```lua
 $ xmake f --tests=y

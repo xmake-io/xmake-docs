@@ -35,7 +35,7 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 ```
 
 ::: tip NOTE
-If the ps script execution prompt fails, you can try to execute in administrator mode.
+If the ps script execution prompt fails, you can try to execute it in administrator mode.
 :::
 
 ### Windows

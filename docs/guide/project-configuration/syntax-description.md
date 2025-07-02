@@ -1,8 +1,8 @@
 # Syntax description
 
-Xmake's project description file `xmake.lua` is based on the lua syntax, but in order to make the project build logic more convenient and concise, Xmake encapsulates it, making writing `xmake.lua` not as cumbersome as some makefiles.
+Xmake's project description file `xmake.lua` is based on the Lua syntax, but in order to make the project build logic more convenient and concise, Xmake encapsulates it, making writing `xmake.lua` not as cumbersome as some makefiles.
 
-Basically write a simple project build description, just three lines, for example:
+Basically, to write a simple project build description, just three lines, for example:
 
 ```lua
 target("test")
@@ -14,16 +14,16 @@ target("test")
 
 Xmake.lua uses the 80:20 rule (aka [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle)) to implement a two-layer separate configuration of the description domain and the script domain.
 
-What is the 80:20 rule? In short, most of the project configuration, 80% of the cases, are basic basic configurations, such as: `add_cxflags`, `add_links`, etc.
+What is the 80:20 rule? In short, most of the project configuration, 80% of the cases, are basic configurations, such as: `add_cxflags`, `add_links`, etc.
 Only less than 20% of the space needs to be extra complex to meet some special configuration needs.
 
-The remaining 20% of the configuration is usually more complicated. if it is directly flooded in the whole `xmake.lua`, the whole project configuration will be very confusing and very unreadable.
+The remaining 20% of the configuration is usually more complicated. If it is directly flooded in the whole `xmake.lua`, the whole project configuration will be very confusing and very unreadable.
 
-Therefore, Xmake isolates 80% of simple configuration and 20% of complex configuration by describing two different configurations of domain and script domain, making the whole `xmake.lua` look very clear and intuitive, readable and maintainable. Get the best.
+Therefore, Xmake isolates 80% of simple configuration and 20% of complex configuration by describing two different configurations: description domain and script domain, making the whole `xmake.lua` look very clear and intuitive, readable and maintainable. Get the best results.
 
 ### Description Scope
 
-For beginners who are just getting started, or just to maintain some simple small projects, the requirements are fully met by describing the configuration completely. What is the description domain? It looks like this:
+For beginners who are just getting started, or just want to maintain some simple small projects, the requirements are fully met by describing the configuration completely. What is the description domain? It looks like this:
 
 ```lua
 target("test")
@@ -33,9 +33,9 @@ target("test")
     add_syslinks("pthread")
 ```
 
-At first glance, it is actually a configuration set of `set_xxx`/`add_xxx`. for the novice, you can not use it as a lua script, just as an ordinary, but there are some basic rules configuration files.
+At first glance, it is actually a configuration set of `set_xxx`/`add_xxx`. For the novice, you can use it not as a Lua script, but just as an ordinary, but there are some basic rules configuration file.
 
-if, by looking, there are parentheses, or function calls like scripting languages, then we can also write this (whether with parentheses to see personal preferences):
+If, by looking, there are parentheses, or function calls like scripting languages, then we can also write this (whether with parentheses is up to personal preference):
 
 ```lua
 target "test"
@@ -45,13 +45,13 @@ target "test"
     add_syslinks "pthread"
 ```
 
-Is this looking more like a profile? In fact, the description field is a configuration file, similar to the configuration of keys/values such as json, so even if you are not a newcomer to lua, you can quickly get started.
+Is this looking more like a profile? In fact, the description field is a configuration file, similar to the configuration of keys/values such as JSON, so even if you are not familiar with Lua, you can quickly get started.
 
-Moreover, for the usual projects, only the various settings of the project are configured by `set_xxx/add_xxx`, which has fully met the requirements.
+Moreover, for most projects, only the various settings of the project are configured by `set_xxx/add_xxx`, which has fully met the requirements.
 
 This is what I said at the beginning: 80% of the time, you can use the simplest configuration rules to simplify the configuration of the project, improve readability and maintainability, so that users and developers will be very friendly and more intuitive.
 
-What if we want to make some conditional judgments for different platforms and architectures? It doesn't matter, the description field is in addition to the basic configuration, it also supports conditional judgment, as well as the for loop:
+What if we want to make some conditional judgments for different platforms and architectures? It doesn't matter, the description field, in addition to the basic configuration, also supports conditional judgment, as well as the for loop:
 
 ```lua
 target("test")
@@ -73,24 +73,20 @@ target("test")
     end
 ```
 
-Is this looking a bit like lua? Although, it can usually be regarded as a common configuration problem, but Xmake is based on lua after all, so the description domain still supports the basic language features of lua.
+Is this looking a bit like Lua? Although, it can usually be regarded as a common configuration problem, but Xmake is based on Lua after all, so the description domain still supports the basic language features of Lua.
 
-::: tip NOTE
-However, it should be noted that although the description field supports lua script syntax, try not to write too complicated lua scripts in the description field, such as some time-consuming function calls and for loops.
-:::
+However, it should be noted that although the description field supports Lua script syntax, try not to write too complicated Lua scripts in the description field, such as some time-consuming function calls and for loops.
 
-And in the description field, the main purpose is to set the configuration item, so Xmake does not completely open all module interfaces, many interfaces are forbidden to be called in the description field.
+And in the description field, the main purpose is to set the configuration item, so Xmake does not completely open all module interfaces. Many interfaces are forbidden to be called in the description field.
 Even open callable interfaces are completely read-only, and time-consuming security interfaces such as `os.getenv()` read some general system information for configuration logic control.
 
-::: tip NOTE
 Also note that `xmake.lua` is parsed multiple times to resolve different configuration fields at different stages: for example: `option()`, `target()`, etc.
-:::
 
-So, don't think about writing complex lua scripts in the description field of `xmake.lua`, and don't call print in the description field to display the information, because it will be executed multiple times, remember: it will be executed multiple times! ! !
+So, don't think about writing complex Lua scripts in the description field of `xmake.lua`, and don't call print in the description field to display the information, because it will be executed multiple times, remember: it will be executed multiple times! ! !
 
 ### Script Scope
 
-Restrict the description field to write complex lua, all kinds of lua modules and interfaces are not used? How to do? This time is the time for the script domain to appear. If the user is already fully familiar with Xmake's description domain configuration and feels that some of the special configuration maintenance on the project is not met, then we can do more complex configuration logic in the script domain:
+Restrict the description field to write complex Lua, all kinds of Lua modules and interfaces are not used? How to do? This time is the time for the script domain to appear. If the user is already fully familiar with Xmake's description domain configuration and feels that some of the special configuration maintenance on the project is not met, then we can do more complex configuration logic in the script domain:
 
 ```lua
 target("test")
@@ -111,11 +107,11 @@ target("test")
 
 As long as it is similar: `on_xxx`, `after_xxx`, `before_xxx`, etc. The script inside the function body belongs to the script field.
 
-In the script domain, the user can do anything, Xmake provides an import interface to import various lua modules built into Xmake, and can also import user-supplied lua scripts.
+In the script domain, the user can do anything. Xmake provides an import interface to import various Lua modules built into Xmake, and can also import user-supplied Lua scripts.
 
 We can implement any function you want to implement in the script domain, even if you write a separate project.
 
-for some script fragments, it is not very bloated, such as the above built-in writing is enough, if you need to implement more complex scripts, do not want to be filled in a `xmake.lua`, you can separate the script into a separate lua file for maintenance.
+For some script fragments, if it is not very bloated, such as the above built-in writing is enough, if you need to implement more complex scripts, and do not want to be filled in a `xmake.lua`, you can separate the script into a separate Lua file for maintenance.
 
 E.g:
 
@@ -129,11 +125,11 @@ target("test")
 
 We can place the custom scripts in the corresponding directory of `xmake.lua`, and maintain them independently in `modules/test/load.lua` and `modules/test/install.lua`.
 
-In these independent lua scripts, we can also import various built-in modules and custom modules through [import](/api/scripts/builtin-modules/import), just like to write lua, java is no different. .
+In these independent Lua scripts, we can also import various built-in modules and custom modules through [import](/api/scripts/builtin-modules/import), just like writing Lua, Java is no different.
 
-for the different stages of the script's domain, `on_load` is mainly used for target loading, do some dynamic configuration, not like the description field, it will only be executed once!!!
+For the different stages of the script's domain, `on_load` is mainly used for target loading, to do some dynamic configuration. Unlike the description field, it will only be executed once!!!
 
-In other stages, there are many, such as: `on/after/before`_`build/install/package/run`, etc. See the target api manual section later, so I won’t go into details here.
+In other stages, there are many, such as: `on/after/before`_`build/install/package/run`, etc. See the target API manual section later, so I won't go into details here.
 
 ## Configuration Type
 
@@ -151,7 +147,7 @@ target("test2")
 
 In the above configuration, the target belongs to the configuration domain, and all the `set_xx`/`add_xxx` interface configurations below it belong to the configuration item, which is partially effective for this target.
 
-We can understand it as a local scope, similar to the block block in c:
+We can understand it as a local scope, similar to the block in C:
 
 ```c
 target("test1") {
@@ -166,31 +162,16 @@ target("test2") {
 ```
 
 However, in order to simplify the writing, Xmake stipulates that each newly defined target field starts, and the last configuration field ends automatically.
-Of course, if the user feels troubled, you can manually configure the leaving domain:
-
-```lua
-target("test1")
-    set_kind("binary")
-    add_files("src/*.c")
-target_end()
-
-target("test2")
-    set_kind("binary")
-    add_files("src/*.c")
-target_end()
-```
-
-### Configuration Scope
 
 Currently available configuration scopes are: `target()`, `option()`, `task()`, `package()`
 
-for a detailed description of each domain, see: [API Manual](/api/description/specification)
+For a detailed description of each domain, see: [API Manual](/api/description/specification)
 
 ### Configuration Item
 
 As long as the configuration with the words `set_xxx` and `add_xxx` is a configuration item, multiple configuration items can be set in one configuration field.
 
-for a description of the configuration items, see: [Interface Specifications](/api/description/specification)
+For a description of the configuration items, see: [Interface Specifications](/api/description/specification)
 
 ## Scope
 

@@ -5,7 +5,7 @@
 Previously, we mentioned that we can use the command line `xmake f --toolchain=[name]` to switch toolchains globally. For more information,
 see: [Command line toolchain switching](/guide/basic-commands/switch-toolchains).
 
-Although switching in the command line is fast and convenient, it can only switch globally. If there are multiple targets in the project, and we only want to switch the toolchain for one of them, we can only use [set_toolchains](/zh/api/description/project-target.html#set-toolchains) in the configuration file to configure it.
+Although switching in the command line is fast and convenient, it can only switch globally. If there are multiple targets in the project, and we only want to switch the toolchain for one of them, we can use [set_toolchains](/zh/api/description/project-target.html#set-toolchains) in the configuration file to configure it.
 
 For example:
 

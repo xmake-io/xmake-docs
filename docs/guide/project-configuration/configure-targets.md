@@ -10,11 +10,11 @@ target("test")
     add_files("src/*.cpp")
 ```
 
-Among them, `mode.release` is the default compilation mode rule, which will automatically add some common optimization compilation options for the target build, such as: `-O2` and so on.
+Among them, `mode.release` is the default compilation mode rule, which will automatically add some common optimization compilation options for the target build, such as: `-O2`, and so on.
 
-We can also switch to `mode.debug` debugging mode through `xmake f -m debug`, and automatically configure some debugging options, such as: `-g` and so on.
+We can also switch to `mode.debug` debugging mode through `xmake f -m debug`, which will automatically configure some debugging options, such as: `-g`, and so on.
 
-Of course, we can also configure them completely by ourselves without configuring the mode rules.
+Of course, we can also configure them completely by ourselves without using the mode rules.
 
 ```lua [xmake.lua]
 target("test")
@@ -85,7 +85,7 @@ target("bar")
 If the bar target is in the `bar/xmake.lua` sub-configuration file, it will also be effective.
 
 ::: tip NOTE
-However, the root scope configuration in the sub-file cannot affect the target in the same level, parent configuration file.
+However, the root scope configuration in the sub-file cannot affect the target in the same level or parent configuration file.
 :::
 
 ```lua [xmake.lua]
@@ -108,13 +108,13 @@ target("zoo")
     add_files("src/*.cpp")
 ```
 
-Here, although `add_defines` is configured to the root scope, it only affects the bar and zoo targets, and cannot affect the foo target.
+Here, although `add_defines` is configured in the root scope, it only affects the bar and zoo targets, and cannot affect the foo target.
 
 In other words, the scope of influence of the root scope is in a tree structure, and it takes effect layer by layer.
 
 ## Configure optimization options {#configure-optimization}
 
-`mode.release` will automatically introduce some optimization options, and we can also configure it ourselves through the [set_optimize](/api/description/project-target#set-optimize) interface.
+`mode.release` will automatically introduce some optimization options, and we can also configure them ourselves through the [set_optimize](/api/description/project-target#set-optimize) interface.
 
 For example:
 
@@ -137,7 +137,7 @@ For more details, please refer to the document: [set_optimize](/api/description/
 add_includedirs("/tmp")
 ```
 
-It will add the `-I/tmp` compilation option to the compiler.
+It will add the `-I/tmp` compilation option to the compiler's command line.
 
 For more details, please refer to the document: [add_includedirs](/api/description/project-target#add-includedirs).
 
@@ -147,7 +147,7 @@ For more details, please refer to the document: [add_includedirs](/api/descripti
 add_linkdirs("/tmp")
 ```
 
-It will add the `-L/tmp` link option to the linker.
+It will add the `-L/tmp` link option to the linker command line.
 
 For more details, please refer to the document: [add_linkdirs](/api/description/project-target#add-linkdirs).
 
@@ -157,7 +157,7 @@ For more details, please refer to the document: [add_linkdirs](/api/description/
 add_links("foo")
 ```
 
-It will add the `-lfoo` link option to the linker, which usually needs to be used with [add_linkdirs](/api/description/project-target#add-linkdirs).
+It will add the `-lfoo` link option to the linker command line, which usually needs to be used with [add_linkdirs](/api/description/project-target#add-linkdirs).
 
 ```lua
 add_links("foo")
@@ -170,7 +170,7 @@ For more details, please refer to the document: [add_links](/api/description/pro
 
 `add_links` is usually used to link user-generated libraries, while `add_syslinks` can add system libraries without the need for an additional `add_linkdirs`.
 
-And its link order is relatively late.
+And its link order is relatively late (after user libraries).
 
 ```lua
 add_links("foo")
@@ -193,8 +193,7 @@ However, we can also add specific compilation options for C++ code through the `
 add_cxflags("-DDEBUG")
 ```
 
-It is equivalent to `add_defines("DEBUG")`, but `add_defines` is more general and applicable to all compilers,
-while `add_cxxflags("-DDEBUG")` may only be applicable to a few compilers, because not all compilers define macros through `-D`.
+It is equivalent to `add_defines("DEBUG")`, but `add_defines` is more general and applicable to all compilers, while `add_cxxflags("-DDEBUG")` may only be applicable to a few compilers, because not all compilers define macros through `-D`.
 
 In addition, we can also add compilation options for C code through the `add_cflags` interface, and `add_cxflags` to add compilation options for C/C++ code at the same time.
 
