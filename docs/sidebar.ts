@@ -35,6 +35,7 @@ export function extensionModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
     develModulesApiSidebar(),
     libModulesApiSidebar(),
     netModulesApiSidebar(),
+    packageModulesApiSidebar(),
     privilegeModulesApiSidebar(),
     utilsModulesApiSidebar(),
   ]
@@ -167,6 +168,16 @@ function utilsModulesApiSidebar(): DefaultTheme.SidebarItem {
     items: [
       { text: 'archive', link: 'extension-modules/utils/archive' },
       { text: 'platform', link: 'extension-modules/utils/platform' },
+    ]
+  }
+}
+
+function packageModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'package',
+    collapsed: true,
+    items: [
+      { text: 'tools', link: 'extension-modules/package/tools' },
     ]
   }
 }

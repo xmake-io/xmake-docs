@@ -8,6 +8,7 @@ function extensionModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
     netModulesApiSidebar(),
     privilegeModulesApiSidebar(),
     utilsModulesApiSidebar(),
+    packageModulesApiSidebar(),
   ]
 }
 
@@ -18,6 +19,16 @@ function asyncModulesApiSidebar(): DefaultTheme.SidebarItem {
     items: [
       { text: 'jobgraph', link: 'extension-modules/async/jobgraph' },
       { text: 'runjobs', link: 'extension-modules/async/runjobs' },
+    ]
+  }
+}
+
+function packageModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'package',
+    collapsed: true,
+    items: [
+      { text: 'tools', link: 'extension-modules/package/tools' },
     ]
   }
 } 
