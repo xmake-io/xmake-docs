@@ -24,6 +24,8 @@ wget https://xmake.io/shget.text -O - | bash
 Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
 ```
 
+:::
+
 如果要安装指定版本和分支，后面可以追加版本号和分支参数
 
 ```sh
