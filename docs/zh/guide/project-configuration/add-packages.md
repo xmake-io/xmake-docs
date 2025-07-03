@@ -1,4 +1,6 @@
-# 添加包 {#add-packages}
+# 添加依赖包 {#add-packages}
+
+## 简介
 
 Xmake 内置支持包依赖集成，可以通过 [add_requires](/zh/api/description/global-interfaces.html#add-requires) 接口声明需要的依赖包。
 

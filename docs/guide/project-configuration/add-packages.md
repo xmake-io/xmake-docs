@@ -1,5 +1,7 @@
 # Add Packages {#add-packages}
 
+## Introduction
+
 Xmake has built-in support for package dependency integration. You can declare the required dependency packages through the [add_requires](/api/description/global-interfaces#add-requires) interface.
 
 Then, through the [add_packages](/api/description/project-target#add-packages) interface, bind the declared package to the required compilation target, for example:
