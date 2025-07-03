@@ -1,7 +1,10 @@
-Xmake uses `.mpp` as the default module extension, but also supports `.ixx`, `.cppm`, `.mxx` and other extensions.
+# C++ Modules Usage & Examples
 
-At present, xmake has fully supported the C++20 Modules construction support of gcc11/clang/msvc,
-and can automatically analyze the dependencies between modules to maximize parallel compilation.
+## 1. Introduction
+
+Xmake uses `.mpp` as the default module extension, but also supports `.ixx`, `.cppm`, `.mxx`, etc. It fully supports C++20 Modules with gcc11/clang/msvc, and can automatically analyze module dependencies for maximum parallel compilation.
+
+**Basic usage:**
 
 ```lua
 set_languages("c++20")
@@ -10,23 +13,18 @@ target("class")
     add_files("src/*.cpp", "src/*.mpp")
 ```
 
-For more examples, see: [C++ Modules](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules)
+> More official examples: [C++ Modules Examples](https://github.com/xmake-io/xmake/tree/dev/tests/projects/c%2B%2B/modules)
 
-## Cpp-only project
+---
 
-The v2.7.1 release has refactored and upgraded the C++20 module implementation to include support for Headerunits,
-which allows us to introduce Stl and user header modules into the module.
+## 2. Advanced Usage
 
-The relevant patch is available at: [#2641](https://github.com/xmake-io/xmake/pull/2641).
+### 2.1 Cpp-only Project with Modules
 
-Note: Normally we need to add at least one `.mpp` file to enable C++20 modules compilation, if we only have a cpp file, module compilation will not be enabled by default.
-
-However, if we just want to use the module's Headerunits feature in the cpp file, e.g. by introducing some stl Headerunits into the cpp, then we can also set `set_policy` to `.mpp`.
-then we can also force C++ Modules compilation by setting `set_policy("build.c++.modules", true)`, for example:
+From v2.7.1, Headerunits are supported. Normally, at least one `.mpp` file is needed to enable modules, but you can also force it:
 
 ```lua
 add_rules("mode.debug", "mode.release")
-
 target("test")
     set_kind("binary")
     add_files("src/*.cpp")
@@ -34,31 +32,30 @@ target("test")
     set_policy("build.c++.modules", true)
 ```
 
-## C++ Module distribution
+### 2.2 Headerunits Example
 
-Many thanks to [Arthapz](https://github.com/Arthapz) for continuing to help improve xmake's support for C++ Modules in this new release.
+See [headerunits example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/c%2B%2B/modules/headerunits) for how to use STL or custom headers as headerunits.
 
-We can now distribute C++ Modules as packages for quick integration and reuse in other projects.
+---
 
-This is a prototype implementation based on the draft design for module distribution in [p2473r1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2473r1.pdf).
+## 3. Module Package Distribution & Integration
 
-### Creating a C++ Modules package for distribution
+### 3.1 Distributing C++ Modules as Packages
 
-We start by maintaining a build of the modules using xmake.lua and telling xmake which module files to install for external distribution by specifying ``{install = true}`''.
+Specify `{install = true}` for module files to be distributed:
 
 ```lua
 add_rules("mode.release", "mode.debug")
 set_languages("c++20")
-
 target("foo")
     set_kind("static")
     add_files("*.cpp")
     add_files("*.mpp", { install = true })
 ```
 
-We then make it into a package that we can commit to the [xmake-repo](https://github.com/xmake-io/xmake-repo) repository, or of course directly into a local package, or a private repository package.
+You can make it a package for [xmake-repo](https://github.com/xmake-io/xmake-repo) or local/private repo.
 
-Here, for testing purposes, we just make it a local package via ``set_sourcedir``.
+Local package example:
 
 ```lua
 package("foo")
@@ -66,23 +63,17 @@ package("foo")
     on_install(function(package)
         import("package.tools.xmake").install(package, {})
     end)
-````
+```
 
-### Integrating the C++ Modules package
+### 3.2 Integrating C++ Modules Packages
 
-We then quickly integrate the C++ Modules package for use via the package integration interface with `add_requires("foo")`.
-
-Since the modules packages for foo are defined in a private repository, we introduce our own package repository via `add_repositories("my-repo my-repo")`.
-
-If the package has already been committed to the official xmake-repo repository, there is no need to configure it additionally.
+Quickly integrate with `add_requires("foo")`:
 
 ```lua
 add_rules("mode.release", "mode.debug")
 set_languages("c++20")
-
 add_repositories("my-repo my-repo")
 add_requires("foo", "bar")
-
 target("packages")
     set_kind("binary")
     add_files("src/*.cpp")
@@ -90,70 +81,44 @@ target("packages")
     set_policy("build.c++.modules", true)
 ```
 
-Once the packages are integrated, we can run the `xmake` command to download, compile and integrate the C++ Modules package for use with one click.
+---
 
-```sh
-$ xmake
-checking for platform ... linux
-checking for architecture ... x86_64
-note: install or modify (m) these packages (pass -y to skip confirm)?
-in my-repo:
-  -> foo latest
-  -> bar latest
-please input: y (y/n/m)
+## 4. C++23 Standard Library Modules
 
-  => install bar latest ... ok
-  => install foo latest ... ok
-[ 0%]: generating.module.deps src/main.cpp
-[ 0%]: generating.module.deps /mnt/xmake/tests/projects/c++/modules/packages/build/.packages/b/bar/latest/ 4e0143c97b65425b855ad5fd03038b6a/modules/bar/bar.mpp
-[ 0%]: generating.module.deps /mnt/xmake/tests/projects/c++/modules/packages/build/.packages/f/foo/latest/ 4e0143c97b65425b855ad5fd03038b6a/modules/foo/foo.mpp
-[ 14%]: compiling.module.release bar
-[ 14%]: compiling.module.release foo
-[ 57%]: compiling.release src/main.cpp
-[ 71%]: linking.release packages
-[ 100%]: build ok!
-```''
-
-Note: After each package is installed, a meta-info file for the maintenance module is stored in the package path, this is a format specification agreed in ``p2473r1.pdf``, it may not be the final standard, but this does not affect our ability to use the distribution of the module now.
-
-```sh
-$ cat . /build/.packages/f/f/foo/latest/4e0143c97b65425b855ad5fd03038b6a/modules/foo/foo.mpp.meta-info
-{"_VENDOR_extension":{"xmake":{"name": "foo", "file": "foo.mpp"}}, "definitions":{}, "include_paths":{}}
-```
-
-The full example project is available at: [C++ Modules package distribution example project](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules/packages)
-
-## Support for C++23 Std Modules
-
-[Arthapz](https://github.com/Arthapz) has also helped to improve support for C++23 Std Modules.
+Support for C++23 stdmodules:
 
 ```lua
 add_rules("mode.debug", "mode.release")
 set_languages("c++latest")
-
 target("mod")
     set_kind("static")
     add_files("src/*.cpp")
     add_files("src/*.mpp", {public = true})
-
 target("stdmodules")
     set_kind("binary")
     add_files("test/*.cpp")
     add_deps("mod")
 ```
 
-```c++ [my_module.mpp]
+```c++
+// my_module.mpp
 export module my_module;
-
 import std;
-
 export auto my_sum(std::size_t a, std::size_t b) -> std::size_t;
 ```
 
-```c++ [my_module.cpp]
-module my_module;
+---
 
-import std;
+## 5. More C++ Modules Example Collection
 
-auto my_sum(std::size_t a, std::size_t b) -> std::size_t { return a + b; }
-```
+The official [C++ Modules Example Collection](https://github.com/xmake-io/xmake/tree/dev/tests/projects/c%2B%2B/modules) provides a variety of C++20/23 Modules projects, each subdirectory is a standalone example:
+
+- **basic**: Basic module usage
+- **class**: Exporting classes in modules
+- **headerunits**: Using headerunits
+- **import_std**: Standard library modules
+- **partition**: Module partitions
+- **packages**: Module package distribution & integration
+- **stdmodules**: C++23 standard library modules
+
+Each example contains a complete `xmake.lua` and source code for in-depth learning and reference.
