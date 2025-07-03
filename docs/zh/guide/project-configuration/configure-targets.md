@@ -205,6 +205,66 @@ add_cxflags("-DDEBUG")
 - [add_cxflags](/zh/api/description/project-target#add-cxflags)
 - [add_cxxflags](/zh/api/description/project-target#add-cxxflags)
 
+
+## 目标类型配置 {#configure-target-types}
+
+### 设置目标类型
+
+通过 `set_kind()` 可以设置不同的目标类型：
+
+```lua
+target("app")
+    set_kind("binary")      -- 可执行程序
+    add_files("src/*.cpp")
+
+target("lib")
+    set_kind("static")      -- 静态库
+    add_files("src/*.cpp")
+
+target("dll")
+    set_kind("shared")      -- 动态库
+    add_files("src/*.cpp")
+
+target("obj")
+    set_kind("object")      -- 对象文件集合
+    add_files("src/*.cpp")
+
+target("header")
+    set_kind("headeronly")  -- 纯头文件库
+    add_headerfiles("include/*.h")
+```
+
+### 目标类型说明
+
+| 类型 | 描述 | 输出文件 |
+|------|------|----------|
+| binary | 可执行程序 | app.exe, app |
+| static | 静态库 | libapp.a, app.lib |
+| shared | 动态库 | libapp.so, app.dll |
+| object | 对象文件集合 | *.o, *.obj |
+| headeronly | 纯头文件库 | 无编译输出 |
+| phony | 虚拟目标 | 无输出，仅用于依赖管理 |
+
+### 虚拟目标 (phony)
+
+虚拟目标不生成实际文件，仅用于管理依赖关系：
+
+```lua
+target("test1")
+    set_kind("binary")
+    add_files("src/test1.cpp")
+
+target("test2")
+    set_kind("binary")
+    add_files("src/test2.cpp")
+
+target("all-tests")
+    set_kind("phony")
+    add_deps("test1", "test2")
+```
+
+执行 `xmake build all-tests` 会同时构建 test1 和 test2。
+
 ## 配置目标依赖 {#configure-targetdeps}
 
 我们可以通过 [add_deps](/zh/api/description/project-target#add-deps) 接口来配置两个目标程序间的依赖。
@@ -226,7 +286,278 @@ target("test")
 
 更多关于依赖的配置说明，请参考文档：[add_deps](/zh/api/description/project-target#add-deps)。
 
-## 其他
+## 目标文件配置 {#configure-target-files}
 
-更多关于目标配置 API 的完整说明，可以查看文档：[工程目标 API 手册](/zh/api/description/project-target)。
+### 添加源文件
+
+```lua
+target("app")
+    add_files("src/*.cpp")           -- 添加所有 cpp 文件
+    add_files("src/*.c")             -- 添加所有 c 文件
+    add_files("src/*.asm")           -- 添加汇编文件
+    add_files("src/*.m")             -- 添加 Objective-C 文件
+    add_files("src/*.mm")            -- 添加 Objective-C++ 文件
+```
+
+### 排除特定文件
+
+```lua
+target("app")
+    add_files("src/*.cpp", {exclude = "src/test.cpp"})  -- 排除测试文件
+```
+
+### 添加头文件
+
+```lua
+target("header-lib")
+    set_kind("headeronly")
+    add_headerfiles("include/*.h")           -- 添加头文件
+    add_headerfiles("include/*.hpp")         -- 添加 C++ 头文件
+    add_headerfiles("include/*.h", {install = false})  -- 不安装的头文件
+```
+
+### 添加安装文件
+
+```lua
+target("app")
+    add_installfiles("assets/*.png", {prefixdir = "share/app"})  -- 安装资源文件
+    add_installfiles("config/*.conf", {prefixdir = "etc"})       -- 安装配置文件
+```
+
+## 目标属性配置 {#configure-target-properties}
+
+### 设置目标文件名
+
+```lua
+target("app")
+    set_basename("myapp")  -- 生成的文件名为 myapp.exe
+```
+
+### 设置目标目录
+
+```lua
+target("app")
+    set_targetdir("bin")   -- 输出到 bin 目录
+```
+
+### 设置安装目录
+
+```lua
+target("app")
+    set_installdir("bin")  -- 安装到 bin 目录
+```
+
+### 设置版本信息
+
+```lua
+target("app")
+    set_version("1.0.0")   -- 设置版本号
+```
+
+## 目标可见性配置 {#configure-target-visibility}
+
+### 设置符号可见性
+
+```lua
+target("lib")
+    set_kind("shared")
+    set_symbols("hidden")  -- 隐藏符号，减少导出表大小
+```
+
+### 设置可见性级别
+
+```lua
+target("lib")
+    set_kind("shared")
+    set_visibility("hidden")  -- 设置默认可见性为隐藏
+```
+
+## 目标优化配置 {#configure-target-optimization}
+
+### 设置优化级别
+
+```lua
+target("app")
+    set_optimize("fast")     -- 快速优化
+    set_optimize("faster")   -- 更快速优化
+    set_optimize("fastest")  -- 最快优化
+    set_optimize("small")    -- 大小优化
+    set_optimize("none")     -- 无优化
+```
+
+### 设置调试信息
+
+```lua
+target("app")
+    set_symbols("debug")     -- 添加调试符号
+    set_strip("debug")       -- 链接时去除调试符号
+    set_strip("all")         -- 链接时去除所有符号
+```
+
+## 目标语言配置 {#configure-target-languages}
+
+### 设置语言标准
+
+```lua
+target("app")
+    set_languages("c++17")   -- 设置 C++ 标准
+    set_languages("c11")     -- 设置 C 标准
+```
+
+### 设置语言特性
+
+```lua
+target("app")
+    set_languages("c++17", "c11")  -- 同时支持 C++17 和 C11
+```
+
+## 目标平台配置 {#configure-target-platforms}
+
+### 设置目标平台
+
+```lua
+target("app")
+    set_plat("android")      -- 设置为 Android 平台
+    set_arch("arm64-v8a")    -- 设置为 ARM64 架构
+```
+
+### 条件配置
+
+```lua
+target("app")
+    if is_plat("windows") then
+        add_defines("WIN32")
+        add_links("user32")
+    elseif is_plat("linux") then
+        add_defines("LINUX")
+        add_links("pthread")
+    end
+```
+
+## 目标选项配置 {#configure-target-options}
+
+### 关联选项
+
+```lua
+option("enable_gui")
+    set_default(false)
+    set_description("Enable GUI support")
+
+target("app")
+    set_options("enable_gui")  -- 关联选项
+```
+
+### 条件选项
+
+```lua
+target("app")
+    if has_config("enable_gui") then
+        add_defines("GUI_ENABLED")
+        add_links("gtk+-3.0")
+    end
+```
+
+## 目标规则配置 {#configure-target-rules}
+
+### 添加构建规则
+
+```lua
+target("app")
+    add_rules("mode.debug", "mode.release")  -- 添加调试和发布模式
+    add_rules("qt.widgetapp")                -- 添加 Qt 应用规则
+    add_rules("wdk.driver")                  -- 添加 WDK 驱动规则
+```
+
+### 自定义规则
+
+```lua
+rule("myrule")
+    set_extensions(".my")
+    on_build_file(function (target, sourcefile, opt)
+        -- 自定义构建逻辑
+    end)
+
+target("app")
+    add_rules("myrule")  -- 应用自定义规则
+```
+
+## 目标运行时配置 {#configure-target-runtime}
+
+### 设置运行时库
+
+```lua
+target("app")
+    set_runtimes("MT")      -- 静态运行时 (MSVC)
+    set_runtimes("MD")      -- 动态运行时 (MSVC)
+```
+
+### 设置运行时路径
+
+```lua
+target("app")
+    set_runtimes("MD")
+    add_rpathdirs("$ORIGIN")  -- 设置相对路径查找
+```
+
+## 目标工具链配置 {#configure-target-toolchain}
+
+### 设置工具链
+
+```lua
+target("app")
+    set_toolset("clang")    -- 使用 Clang 工具链
+    set_toolset("gcc")      -- 使用 GCC 工具链
+    set_toolset("msvc")     -- 使用 MSVC 工具链
+```
+
+### 设置编译器
+
+```lua
+target("app")
+    set_toolset("cc", "clang")   -- 设置 C 编译器
+    set_toolset("cxx", "clang++") -- 设置 C++ 编译器
+```
+
+## 目标分组配置 {#configure-target-groups}
+
+### 设置目标分组
+
+```lua
+target("app")
+    set_group("apps")       -- 设置分组为 apps
+
+target("lib")
+    set_group("libs")       -- 设置分组为 libs
+
+target("test")
+    set_group("tests")      -- 设置分组为 tests
+```
+
+## 目标默认配置 {#configure-target-defaults}
+
+### 设置默认目标
+
+```lua
+target("app")
+    set_default(true)       -- 设为默认构建目标
+
+target("test")
+    set_default(false)      -- 不设为默认构建目标
+```
+
+### 启用/禁用目标
+
+```lua
+target("app")
+    set_enabled(true)       -- 启用目标
+
+target("old")
+    set_enabled(false)      -- 禁用目标
+```
+
+## 更多信息 {#more-information}
+
+- 完整的 API 文档：[工程目标 API](/zh/api/description/project-target)
+- 目标实例接口：[目标实例 API](/zh/api/scripts/target-instance)
+- 内置规则参考：[内置规则](/zh/api/description/builtin-rules)
 

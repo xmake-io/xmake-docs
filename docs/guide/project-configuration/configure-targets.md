@@ -203,6 +203,65 @@ For more details, please refer to the documentation:
 - [add_cxflags](/api/description/project-target#add-cxflags)
 - [add_cxxflags](/api/description/project-target#add-cxxflags)
 
+## Target Type Configuration {#configure-target-types}
+
+### Setting Target Types
+
+You can set different target types through `set_kind()`:
+
+```lua
+target("app")
+    set_kind("binary")      -- executable program
+    add_files("src/*.cpp")
+
+target("lib")
+    set_kind("static")      -- static library
+    add_files("src/*.cpp")
+
+target("dll")
+    set_kind("shared")      -- dynamic library
+    add_files("src/*.cpp")
+
+target("obj")
+    set_kind("object")      -- object file collection
+    add_files("src/*.cpp")
+
+target("header")
+    set_kind("headeronly")  -- header-only library
+    add_headerfiles("include/*.h")
+```
+
+### Target Type Description
+
+| Type | Description | Output Files |
+|------|-------------|--------------|
+| binary | Executable program | app.exe, app |
+| static | Static library | libapp.a, app.lib |
+| shared | Dynamic library | libapp.so, app.dll |
+| object | Object file collection | *.o, *.obj |
+| headeronly | Header-only library | No compilation output |
+| phony | Virtual target | No output, only for dependency management |
+
+### Virtual Targets (phony)
+
+Virtual targets don't generate actual files, they're only used for managing dependencies:
+
+```lua
+target("test1")
+    set_kind("binary")
+    add_files("src/test1.cpp")
+
+target("test2")
+    set_kind("binary")
+    add_files("src/test2.cpp")
+
+target("all-tests")
+    set_kind("phony")
+    add_deps("test1", "test2")
+```
+
+Executing `xmake build all-tests` will build both test1 and test2.
+
 ## Configure target dependency {#configure-targetdeps}
 
 We can configure the dependency between two target programs through the [add_deps](/api/description/project-target#add-deps) interface.
@@ -224,6 +283,278 @@ Since the dependency between test and foo library programs is configured through
 
 For more information about dependency configuration, please refer to the document: [add_deps](/api/description/project-target#add-deps).
 
-## Others
+## Target File Configuration {#configure-target-files}
 
-For a more complete description of the target configuration API, please refer to the documentation: [Project Target API Manual](/api/description/project-target).
+### Adding Source Files
+
+```lua
+target("app")
+    add_files("src/*.cpp")           -- add all cpp files
+    add_files("src/*.c")             -- add all c files
+    add_files("src/*.asm")           -- add assembly files
+    add_files("src/*.m")             -- add Objective-C files
+    add_files("src/*.mm")            -- add Objective-C++ files
+```
+
+### Excluding Specific Files
+
+```lua
+target("app")
+    add_files("src/*.cpp", {exclude = "src/test.cpp"})  -- exclude test files
+```
+
+### Adding Header Files
+
+```lua
+target("header-lib")
+    set_kind("headeronly")
+    add_headerfiles("include/*.h")           -- add header files
+    add_headerfiles("include/*.hpp")         -- add C++ header files
+    add_headerfiles("include/*.h", {install = false})  -- non-installable header files
+```
+
+### Adding Install Files
+
+```lua
+target("app")
+    add_installfiles("assets/*.png", {prefixdir = "share/app"})  -- install resource files
+    add_installfiles("config/*.conf", {prefixdir = "etc"})       -- install config files
+```
+
+## Target Property Configuration {#configure-target-properties}
+
+### Setting Target Filename
+
+```lua
+target("app")
+    set_basename("myapp")  -- generated filename will be myapp.exe
+```
+
+### Setting Target Directory
+
+```lua
+target("app")
+    set_targetdir("bin")   -- output to bin directory
+```
+
+### Setting Install Directory
+
+```lua
+target("app")
+    set_installdir("bin")  -- install to bin directory
+```
+
+### Setting Version Information
+
+```lua
+target("app")
+    set_version("1.0.0")   -- set version number
+```
+
+## Target Visibility Configuration {#configure-target-visibility}
+
+### Setting Symbol Visibility
+
+```lua
+target("lib")
+    set_kind("shared")
+    set_symbols("hidden")  -- hide symbols, reduce export table size
+```
+
+### Setting Visibility Level
+
+```lua
+target("lib")
+    set_kind("shared")
+    set_visibility("hidden")  -- set default visibility to hidden
+```
+
+## Target Optimization Configuration {#configure-target-optimization}
+
+### Setting Optimization Level
+
+```lua
+target("app")
+    set_optimize("fast")     -- fast optimization
+    set_optimize("faster")   -- faster optimization
+    set_optimize("fastest")  -- fastest optimization
+    set_optimize("small")    -- size optimization
+    set_optimize("none")     -- no optimization
+```
+
+### Setting Debug Information
+
+```lua
+target("app")
+    set_symbols("debug")     -- add debug symbols
+    set_strip("debug")       -- strip debug symbols during linking
+    set_strip("all")         -- strip all symbols during linking
+```
+
+## Target Language Configuration {#configure-target-languages}
+
+### Setting Language Standards
+
+```lua
+target("app")
+    set_languages("c++17")   -- set C++ standard
+    set_languages("c11")     -- set C standard
+```
+
+### Setting Language Features
+
+```lua
+target("app")
+    set_languages("c++17", "c11")  -- support both C++17 and C11
+```
+
+## Target Platform Configuration {#configure-target-platforms}
+
+### Setting Target Platform
+
+```lua
+target("app")
+    set_plat("android")      -- set to Android platform
+    set_arch("arm64-v8a")    -- set to ARM64 architecture
+```
+
+### Conditional Configuration
+
+```lua
+target("app")
+    if is_plat("windows") then
+        add_defines("WIN32")
+        add_links("user32")
+    elseif is_plat("linux") then
+        add_defines("LINUX")
+        add_links("pthread")
+    end
+```
+
+## Target Option Configuration {#configure-target-options}
+
+### Associating Options
+
+```lua
+option("enable_gui")
+    set_default(false)
+    set_description("Enable GUI support")
+
+target("app")
+    set_options("enable_gui")  -- associate option
+```
+
+### Conditional Options
+
+```lua
+target("app")
+    if has_config("enable_gui") then
+        add_defines("GUI_ENABLED")
+        add_links("gtk+-3.0")
+    end
+```
+
+## Target Rule Configuration {#configure-target-rules}
+
+### Adding Build Rules
+
+```lua
+target("app")
+    add_rules("mode.debug", "mode.release")  -- add debug and release modes
+    add_rules("qt.widgetapp")                -- add Qt application rule
+    add_rules("wdk.driver")                  -- add WDK driver rule
+```
+
+### Custom Rules
+
+```lua
+rule("myrule")
+    set_extensions(".my")
+    on_build_file(function (target, sourcefile, opt)
+        -- custom build logic
+    end)
+
+target("app")
+    add_rules("myrule")  -- apply custom rule
+```
+
+## Target Runtime Configuration {#configure-target-runtime}
+
+### Setting Runtime Library
+
+```lua
+target("app")
+    set_runtimes("MT")      -- static runtime (MSVC)
+    set_runtimes("MD")      -- dynamic runtime (MSVC)
+```
+
+### Setting Runtime Path
+
+```lua
+target("app")
+    set_runtimes("MD")
+    add_rpathdirs("$ORIGIN")  -- set relative path lookup
+```
+
+## Target Toolchain Configuration {#configure-target-toolchain}
+
+### Setting Toolchain
+
+```lua
+target("app")
+    set_toolset("clang")    -- use Clang toolchain
+    set_toolset("gcc")      -- use GCC toolchain
+    set_toolset("msvc")     -- use MSVC toolchain
+```
+
+### Setting Compiler
+
+```lua
+target("app")
+    set_toolset("cc", "clang")   -- set C compiler
+    set_toolset("cxx", "clang++") -- set C++ compiler
+```
+
+## Target Group Configuration {#configure-target-groups}
+
+### Setting Target Groups
+
+```lua
+target("app")
+    set_group("apps")       -- set group to apps
+
+target("lib")
+    set_group("libs")       -- set group to libs
+
+target("test")
+    set_group("tests")      -- set group to tests
+```
+
+## Target Default Configuration {#configure-target-defaults}
+
+### Setting Default Targets
+
+```lua
+target("app")
+    set_default(true)       -- set as default build target
+
+target("test")
+    set_default(false)      -- not set as default build target
+```
+
+### Enabling/Disabling Targets
+
+```lua
+target("app")
+    set_enabled(true)       -- enable target
+
+target("old")
+    set_enabled(false)      -- disable target
+```
+
+## More Information {#more-information}
+
+- Complete API documentation: [Project Target API](/api/description/project-target)
+- Target instance interfaces: [Target Instance API](/api/scripts/target-instance)
+- Built-in rules reference: [Built-in Rules](/api/description/builtin-rules)
+
