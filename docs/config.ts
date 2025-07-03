@@ -98,6 +98,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Toolchain Configuration', link: 'project-configuration/toolchain-configuration' },
         { text: 'Namespace Isolation', link: 'project-configuration/namespace-isolation' },
         { text: 'Custom Rules', link: 'project-configuration/custom-rule' },
+        { text: 'Plugins and Tasks', link: 'project-configuration/plugin-and-task' },
       ]
     },
     {

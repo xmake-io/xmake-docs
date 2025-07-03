@@ -179,6 +179,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: '工具链配置', link: 'project-configuration/toolchain-configuration' },
         { text: '命名空间隔离', link: 'project-configuration/namespace-isolation' },
         { text: '自定义规则', link: 'project-configuration/custom-rule' },
+        { text: '插件和任务', link: 'project-configuration/plugin-and-task' },
       ]
     },
     {
