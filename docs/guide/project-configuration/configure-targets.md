@@ -375,11 +375,11 @@ target("lib")
 
 ```lua
 target("app")
-    set_optimize("fast")     -- fast optimization
-    set_optimize("faster")   -- faster optimization
-    set_optimize("fastest")  -- fastest optimization
-    set_optimize("small")    -- size optimization
-    set_optimize("none")     -- no optimization
+    set_optimize("fast")        -- fast optimization
+    set_optimize("faster")      -- faster optimization
+    set_optimize("fastest")     -- fastest optimization
+    set_optimize("smallest")    -- size optimization
+    set_optimize("none")        -- no optimization
 ```
 
 ### Setting Debug Information
