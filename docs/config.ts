@@ -97,6 +97,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Multi-level Directories', link: 'project-configuration/multi-level-directories' },
         { text: 'Toolchain Configuration', link: 'project-configuration/toolchain-configuration' },
         { text: 'Namespace Isolation', link: 'project-configuration/namespace-isolation' },
+        { text: 'Custom Rules', link: 'project-configuration/custom-rule' },
       ]
     },
     {
