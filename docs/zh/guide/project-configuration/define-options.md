@@ -122,7 +122,7 @@ target("foo")
 
 ```lua
 option("rootdir")
-    set_default("$(tmpdir)")
+    set_default("/tmp/")
     set_showmenu(true)
     set_description("Set root directory")
 
@@ -139,14 +139,6 @@ option("arch")
     set_description("Select architecture")
     set_values("x86_64", "arm64", "mips")
 ```
-
-## 最佳实践 {#option-best-practices}
-
-1. 使用 `set_showmenu` 让常用选项在菜单中可见
-2. 通过 `add_options` 绑定选项，减少手动判断
-3. 复杂依赖用 `add_deps` + `on_check/after_check` 控制
-4. 选项描述要简明清晰，便于团队协作
-5. 善用 `set_values` 提供可选项，提升交互体验
 
 ## 更多信息 {#more-information}
 
