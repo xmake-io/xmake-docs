@@ -211,9 +211,11 @@ $ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
 
 ### 来自 xmake-repo 仓库的 Qt 包
 
-xmake 现在官方提供了 Qt5 SDK 的各种模块包，可以自动集成使用，无需任何手动安装。
+xmake 现在官方提供了 Qt5 和 Qt6 SDK 的各种模块包，可以自动集成使用，无需任何手动安装。
 
 只需要配置集成包就行了，xmake 会自动处理 Qt 的安装集成，并且自动编译项目。
+
+#### Qt5 示例
 
 ```lua
 add_rules("mode.debug", "mode.release")
@@ -231,7 +233,25 @@ target("test")
     add_files("src/mainwindow.h")
 ```
 
-除了 `qt5widgets` 包，仓库还提供了 `qt5gui`, `qt5network` 等包，可以使用。
+#### Qt6 示例
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("qt6widgets")
+
+target("test")
+    add_rules("qt.widgetapp")
+    add_packages("qt6widgets")
+
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    -- add files with Q_OBJECT meta (only for qt.moc)
+    add_files("src/mainwindow.h")
+```
+
+除了 `qt6widgets` 包，仓库还提供了 `qt6gui`, `qt6network` 等 Qt6 包，可以使用。
 
 配置完，只需要执行：
 
@@ -240,7 +260,7 @@ $ xmake
 ```
 
 ::: tip 注意
-Qt6 的包还在开发中，暂时仅仅只支持 Qt5
+Qt6 的包现已支持，可同时使用 Qt5 和 Qt6 包。
 :::
 
 ### 来自 vcpkg/conan 的 Qt 包

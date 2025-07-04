@@ -57,9 +57,9 @@ target("qt_console")
 
 ```lua
 target("qt_quickapp")
-    add_rules("qt.quickapp")
-    add_files("src/*.cpp")
-    add_files("src/qml.qrc")
+    add_rules("qt.quickapp")
+    add_files("src/*.cpp")
+    add_files("src/qml.qrc")
 ```
 
 ::: tip NOTE
@@ -209,9 +209,11 @@ $ xmake f --qt=[target Qt sdk] --qt_host=[host Qt sdk]
 
 ### Qt packages from the xmake-repo repository
 
-xmake now officially provides a variety of modules for the Qt5 SDK that can be integrated automatically without any manual installation.
+xmake now officially provides a variety of modules for both the Qt5 and Qt6 SDKs that can be integrated automatically without any manual installation.
 
 Just configure the integration packages and xmake will automatically handle the Qt installation and integration and compile the project automatically.
+
+#### Qt5 Example
 
 ```lua
 add_rules("mode.debug", "mode.release")
@@ -229,17 +231,31 @@ target("test")
     add_files("src/mainwindow.h")
 ```
 
-In addition to the `qt5widgets` package, the repository also provides `qt5gui`, `qt5network` and other packages that can be used.
+#### Qt6 Example
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("qt6widgets")
+
+target("test")
+    add_rules("qt.widgetapp")
+    add_packages("qt6widgets")
+
+    add_headerfiles("src/*.h")
+    add_files("src/*.cpp")
+    add_files("src/mainwindow.ui")
+    -- add files with Q_OBJECT meta (only for qt.moc)
+    add_files("src/mainwindow.h")
+```
+
+In addition to the `qt6widgets` package, the repository also provides `qt6gui`, `qt6network` and other Qt6 packages that can be used.
 
 Once configured, simply execute:
 
 ```sh
 $ xmake
 ```
-
-::: tip NOTE
-The Qt6 package is still under development and only supports Qt5 for now
-:::
 
 ### Qt packages from vcpkg/conan
 
