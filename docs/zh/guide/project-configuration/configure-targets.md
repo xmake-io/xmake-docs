@@ -381,7 +381,7 @@ target("app")
     set_optimize("fast")     -- 快速优化
     set_optimize("faster")   -- 更快速优化
     set_optimize("fastest")  -- 最快优化
-    set_optimize("small")    -- 大小优化
+    set_optimize("smallest") -- 大小优化
     set_optimize("none")     -- 无优化
 ```
 
