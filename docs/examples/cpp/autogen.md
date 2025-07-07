@@ -1,14 +1,14 @@
-# 自动代码生成 {#autogen}
+# Automatic Code Generation {#autogen}
 
-在许多情况下，我们需要在编译之前对代码进行预处理和自动生成，然后将生成的代码参与到后续的编译流程中。
+In many cases, we need to preprocess and automatically generate code before compilation, and then include the generated code in the subsequent build process.
 
-随着 Xmake 的不断迭代，对代码生成特性的支持也在持续更新和改进。目前主要支持以下几种方式：
+As Xmake continues to evolve, its support for code generation features is also being updated and improved. Currently, the following approaches are supported:
 
-## 最简单的方式
+## The Simplest Approach
 
-这种方式最为简单直接，只需在构建之前生成代码，并通过 `add_files` 强制添加进来。
+This is the most straightforward method: simply generate the code before building and forcibly add it using `add_files`.
 
-由于 `add_files` 默认不会添加不存在的文件，所以需要配置 `always_added = true`，即使文件当前还不存在也能强制添加。
+By default, `add_files` will not add files that do not exist, so you need to set `always_added = true` to force the addition, even if the file does not exist yet.
 
 ```lua
 add_rules("mode.debug", "mode.release")
@@ -28,11 +28,11 @@ int main(int argc, char** argv) {
     end)
 ```
 
-这种方式有很多局限性，实际场景下不常用，但胜在简单易懂。
+This approach has many limitations and is not commonly used in real-world scenarios, but it is simple and easy to understand.
 
-## 依赖目标生成
+## Generation via Dependent Target
 
-有时我们需要通过执行项目中的某个目标程序来生成代码，可以通过如下方式实现：
+Sometimes, code generation requires running a target program within the project. This can be achieved as follows:
 
 ```lua
 add_rules("mode.debug", "mode.release")
@@ -57,11 +57,11 @@ rule("autogen")
 target("autogen")
     set_default(false)
     set_kind("binary")
-    set_plat(os.host()) -- 生成当前主机平台程序
+    set_plat(os.host()) -- Build for the host platform
     set_arch(os.arch())
     add_files("src/autogen.cpp")
     set_languages("c++11")
-    set_policy("build.fence", true) -- 禁用源码间并行编译
+    set_policy("build.fence", true) -- Disable parallel compilation between source files
 
 target("test")
     set_kind("binary")
@@ -71,19 +71,19 @@ target("test")
     add_files("src/*.in")
 ```
 
-首先需要配置一个 autogen 目标程序，它必须能在当前编译平台运行，因此需通过 `set_plat(os.host())` 强制为主机平台编译。
+First, configure an `autogen` target program that must be runnable on the current build platform, so use `set_plat(os.host())` to force building for the host platform.
 
-另外，需要配置 `build.fence` 策略，禁用源码间并行编译，确保 autogen 目标源码优先编译，提前生成 autogen 可执行程序。
+Also, set the `build.fence` policy to disable parallel compilation between source files, ensuring the `autogen` target is built first and its executable is available in advance.
 
-然后，配置自定义规则，在构建前调用 autogen 目标程序生成源码，并直接将生成的源码编译为对象文件，插入到后续链接流程中。
+Then, define a custom rule to invoke the `autogen` target program before building, generate the source code, and compile the generated code into object files for linking.
 
-完整例子见：[autogen_codedep](https://github.com/xmake-io/xmake/blob/dev/tests/projects/other/autogen/autogen_codedep/xmake.lua)
+See the full example: [autogen_codedep](https://github.com/xmake-io/xmake/blob/dev/tests/projects/other/autogen/autogen_codedep/xmake.lua)
 
-## 通过原生模块生成
+## Generation via Native Module
 
-Xmake 新增了原生模块开发特性，即使不定义额外的 autogen 目标程序，也可以通过原生模块生成代码。
+Xmake introduces native module development, allowing code generation via native modules without defining an extra `autogen` target program.
 
-关于原生模块开发，可参考文档：[Native 模块开发](/zh/api/scripts/native-modules)。
+For details on native module development, see: [Native Module Development](/api/scripts/native-modules).
 
 ```lua
 add_rules("mode.debug", "mode.release")
@@ -119,12 +119,12 @@ target("test")
     add_files("src/*.in")
 ```
 
-完整例子见：[Native 模块自动生成](https://github.com/xmake-io/xmake/blob/dev/tests/projects/other/autogen/autogen_shared_module/xmake.lua)。
+See the full example: [Native Module Autogen](https://github.com/xmake-io/xmake/blob/dev/tests/projects/other/autogen/autogen_shared_module/xmake.lua).
 
-## Prepare 阶段生成
+## Generation in the Prepare Phase
 
-Xmake 3.x 之后，新增了 `on_prepare` 和 `on_prepare_files` 接口，实现两阶段编译。在 Prepare 阶段，可专门处理源码生成和预处理。
+Since Xmake 3.x, the `on_prepare` and `on_prepare_files` interfaces have been introduced to enable two-phase builds. The Prepare phase can be used specifically for source code generation and preprocessing.
 
-它会在所有 `on_build` 和 `on_build_files` 接口之前执行。
+The Prepare phase is executed before all `on_build` and `on_build_files` interfaces.
 
-相关接口说明见文档：[Prepare 接口手册](/zh/api/description/project-target.html#on-prepare)。
+For details, see: [Prepare Interface Manual](/api/description/project-target.html#on-prepare).
