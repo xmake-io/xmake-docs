@@ -11,7 +11,7 @@ import("xxx.xxx", {inherit = true})
 
 用`inherit`接口的话，会更简洁些：
 
-```lu
+```lua
 inherit("xxx.xxx")
 ```
 

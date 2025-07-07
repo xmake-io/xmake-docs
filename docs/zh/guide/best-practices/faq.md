@@ -45,7 +45,7 @@ $ xmake
 
 例如：
 
-```hash
+```sh
 $ xmake [-v|--verbose]
 ```
 
