@@ -262,6 +262,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'CppFront Programs', link: 'cpp/cppfront' },
         { text: 'Cosmocc Programs', link: 'cpp/cosmocc' },
         { text: 'Merge Static Libraries', link: 'cpp/merge-static-libraries' },
+        { text: 'Autogen Programs', link: 'cpp/autogen' },
       ]
     },
     {

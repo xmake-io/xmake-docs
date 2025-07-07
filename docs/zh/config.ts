@@ -343,6 +343,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'CppFront 程序', link: 'cpp/cppfront' },
         { text: 'Cosmocc 程序', link: 'cpp/cosmocc' },
         { text: '合并静态库', link: 'cpp/merge-static-libraries' },
+        { text: '自动代码生成', link: 'cpp/autogen' },
       ]
     },
     {
