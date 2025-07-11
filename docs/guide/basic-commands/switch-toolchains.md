@@ -1,4 +1,4 @@
-# Switch toolchain {#switch-toolchains}
+# Switch Toolchains {#switch-toolchains}
 
 We can switch toolchains globally by passing the `--toolchain=[name]` parameter to the `xmake f/config` command.
 
