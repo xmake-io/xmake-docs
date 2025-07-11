@@ -1,4 +1,4 @@
-# Builtin variables
+# Builtin Variables
 
 Xmake provides the syntax of `$(varname)` to support the acquisition of built-in variables, for example:
 

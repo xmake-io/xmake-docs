@@ -1,4 +1,4 @@
-# Custom toolchain
+# Custom Toolchain
 
 After version 2.3.4, xmake has supported custom toolchain in user's project xmake.lua, for example:
 

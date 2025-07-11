@@ -1,4 +1,4 @@
-# Namespace isolation {#namespace-isolation}
+# Namespace Isolation {#namespace-isolation}
 
 If the user maintains two independent sub-projects, and there are some targets, options, and rule names with the same name, when they are integrated into one project through includes, there may be a naming conflict that causes compilation errors.
 

@@ -1,4 +1,4 @@
-# Build policies
+# Build Policies
 
 Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users' habits and needs.
 

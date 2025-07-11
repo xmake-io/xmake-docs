@@ -1,4 +1,4 @@
-# Environment variables
+# Environment Variables
 
 We can execute the following command to get all the environment variables used by xmake and the currently set values.
 

@@ -1,4 +1,4 @@
-# Target instance
+# Target Instance
 
 This page describes the interface for `target` of functions like `on_load()`, `before_build()` or `after_install()` of the [Project target](/api/description/project-target).
 

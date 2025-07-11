@@ -1,4 +1,4 @@
-# Package instance
+# Package Instance
 
 This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](/api/description/package-dependencies)
 

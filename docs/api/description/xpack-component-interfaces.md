@@ -1,4 +1,4 @@
-# XPack Component interfaces
+# XPack Component Interfaces
 
 ## set_title
 

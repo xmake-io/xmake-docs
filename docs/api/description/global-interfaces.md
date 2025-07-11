@@ -1,4 +1,4 @@
-# Global interfaces
+# Global Interfaces
 
 The global interface affects the whole project description scope and all sub-project files.
 

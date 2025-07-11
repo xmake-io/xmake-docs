@@ -1,4 +1,4 @@
-# Using Local packages
+# Using Local Packages
 
 ## Generate a local package
 

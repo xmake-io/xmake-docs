@@ -1,5 +1,5 @@
 
-# Builtin rules
+# Builtin Rules
 
 sinceAfter the 2.2.1 release, xmake provides some built-in rules to simplify the daily xmake.lua description and support for some common build environments.
 

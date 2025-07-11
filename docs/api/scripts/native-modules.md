@@ -1,3 +1,4 @@
+# Native Modules
 
 We know that in xmake, you can import some lua modules through the import interface for use in the script domain. However, if the operation of some modules is time-consuming, then lua implementation is not an ideal choice.
 Therefore, in the new version, we have added support for the native lua module, which can be implemented through native to achieve speed-up optimization. Moreover, importing and using the module is as simple as the lua module.

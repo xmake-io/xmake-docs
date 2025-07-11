@@ -1,4 +1,4 @@
-# Packaging interface
+# XPack Interfaces
 
 Xpack is provided as a plug-in, and all its APIs need to be introduced through `includes("@builtin/xpack")`.
 

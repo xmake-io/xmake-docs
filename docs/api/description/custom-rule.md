@@ -1,4 +1,4 @@
-# Custom rule
+# Custom Rule
 
 After the 2.2.1 release, xmake not only natively supports the construction of multi-language files, but also allows users to implement complex unknown file builds by custom building rules.
 
