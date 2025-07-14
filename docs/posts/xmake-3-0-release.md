@@ -1,8 +1,9 @@
 ---
+---
 title: Announcing Xmake 3.0
-date: 2024-01-15
-author: waruqi
 tags: [release, xmake, build-system]
+date: 2024-01-15
+author: Ruki
 ---
 
 We are excited to announce the release of Xmake 3.0! This major release brings significant improvements in performance, usability, and feature completeness.

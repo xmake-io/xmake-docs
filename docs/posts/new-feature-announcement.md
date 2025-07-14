@@ -1,9 +1,9 @@
 ---
-title: "New Feature: Enhanced Package Management"
-date: "2024-01-20"
-author: "waruqi"
-tags: ["feature", "package-management", "xmake"]
-excerpt: "We're excited to announce a major enhancement to Xmake's package management system that will make dependency handling even more powerful and user-friendly."
+---
+title: New Feature, Enhanced Package Management
+tags: [feature, package-management, xmake]
+date: 2024-01-20
+author: Ruki
 ---
 
 # New Feature: Enhanced Package Management

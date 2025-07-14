@@ -3,17 +3,17 @@
 import { readdirSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 
-// 为英文博客文章添加导航标记
+// Add navigation mark to English blog posts
 function addNavToEnglishPosts() {
   const postsDir = join(process.cwd(), 'docs/posts')
   const files = readdirSync(postsDir)
-  
+
   for (const file of files) {
     if (file.endsWith('.md')) {
       const filePath = join(postsDir, file)
       const content = readFileSync(filePath, 'utf-8')
-      
-      // 检查是否已经添加了导航标记
+
+      // Check if the navigation mark has already been added
       if (!content.includes('<!-- BLOG_NAV -->')) {
         const navMark = '\n\n<!-- BLOG_NAV -->\n'
         const newContent = content + navMark
@@ -24,17 +24,17 @@ function addNavToEnglishPosts() {
   }
 }
 
-// 为中文博客文章添加导航标记
+// Add navigation mark to Chinese blog posts
 function addNavToChinesePosts() {
   const postsDir = join(process.cwd(), 'docs/zh/posts')
   const files = readdirSync(postsDir)
-  
+
   for (const file of files) {
     if (file.endsWith('.md')) {
       const filePath = join(postsDir, file)
       const content = readFileSync(filePath, 'utf-8')
-      
-      // 检查是否已经添加了导航标记
+
+      // Check if the navigation mark has already been added
       if (!content.includes('<!-- BLOG_NAV -->')) {
         const navMark = '\n\n<!-- BLOG_NAV -->\n'
         const newContent = content + navMark
@@ -45,7 +45,7 @@ function addNavToChinesePosts() {
   }
 }
 
-// 执行脚本
+// Execute script
 console.log('Adding navigation marks to blog posts...')
 addNavToEnglishPosts()
 addNavToChinesePosts()

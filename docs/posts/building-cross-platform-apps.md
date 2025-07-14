@@ -1,8 +1,9 @@
 ---
+---
 title: Building Cross-Platform Applications with Xmake
-date: 2024-01-10
-author: waruqi
 tags: [cross-platform, tutorial, cpp]
+date: 2024-01-10
+author: Ruki
 ---
 
 Building applications that work across multiple platforms can be challenging, but Xmake makes it much easier. In this post, we'll explore how to use Xmake to build cross-platform applications.

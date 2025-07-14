@@ -1,8 +1,9 @@
 ---
+---
 title: Xmake 3.0 正式发布
-date: 2024-01-15
-author: waruqi
 tags: [发布, xmake, 构建系统]
+date: 2024-01-15
+author: Ruki
 ---
 
 我们很高兴地宣布 Xmake 3.0 正式发布！这个重大版本在性能、易用性和功能完整性方面都带来了显著改进。

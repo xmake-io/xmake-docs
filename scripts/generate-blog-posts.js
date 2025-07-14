@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// 英文博客文章模板
+// English blog post templates
 const enTemplates = [
   {
     title: "Getting Started with Xmake",
@@ -153,7 +153,7 @@ Proper IDE integration significantly improves the development experience.`
   }
 ];
 
-// 中文博客文章模板
+// Chinese blog post templates
 const zhTemplates = [
   {
     title: "Xmake 入门指南",
@@ -305,7 +305,7 @@ CLion 原生支持 Xmake 项目：
   }
 ];
 
-// 生成英文博客文章
+// Generate English blog posts
 enTemplates.forEach((template, index) => {
   const filename = `docs/posts/post-${index + 3}.md`;
   const content = `---
@@ -316,12 +316,12 @@ tags: [${template.tags.join(', ')}]
 ---
 
 ${template.content}`;
-  
+
   fs.writeFileSync(filename, content);
   console.log(`Generated: ${filename}`);
 });
 
-// 生成中文博客文章
+// Generate Chinese blog posts
 zhTemplates.forEach((template, index) => {
   const filename = `docs/zh/posts/post-${index + 3}.md`;
   const content = `---
@@ -332,7 +332,7 @@ tags: [${template.tags.join(', ')}]
 ---
 
 ${template.content}`;
-  
+
   fs.writeFileSync(filename, content);
   console.log(`Generated: ${filename}`);
 });
