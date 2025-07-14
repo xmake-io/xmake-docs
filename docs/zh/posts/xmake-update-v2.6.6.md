@@ -166,7 +166,9 @@ $ cat ~/.xmake/service/client.conf
 }
 ```
 
-!> 如果去掉用户名，也没配置 token，那就是匿名模式，如果服务器也没配置 token，就是完全禁用认证，直接连接。
+:::注意
+如果去掉用户名，也没配置 token，那就是匿名模式，如果服务器也没配置 token，就是完全禁用认证，直接连接。
+:::
 
 #### 可信主机验证
 
@@ -307,7 +309,9 @@ $ cat ~/.xmake/service/server.conf
 
 我们可以在 hosts 列表里面配置多个服务器地址，以及对应的 token。
 
-!> 分布式编译，推荐使用 token 认证模式，因为密码模式，每台服务器连接时候都要输入一次密码，很繁琐。
+:::注意
+分布式编译，推荐使用 token 认证模式，因为密码模式，每台服务器连接时候都要输入一次密码，很繁琐。
+:::
 
 ```console
 $cat ~/.xmake/service/client.conf
@@ -342,7 +346,9 @@ $ xmake service --connect --distcc
 $ xmake service --connect --distcc --ccache
 ```
 
-!> 如果不带任何参数，默认连接的是远程编译服务。
+:::注意
+如果不带任何参数，默认连接的是远程编译服务。
+:::
 
 #### 分布式编译项目
 
@@ -648,7 +654,9 @@ $ xmake service --connect --ccache
 $ xmake service --connect --distcc --ccache
 ```
 
-!> 如果不带任何参数，默认连接的是远程编译服务。
+:::注意
+如果不带任何参数，默认连接的是远程编译服务。
+:::
 
 #### 断开连接
 

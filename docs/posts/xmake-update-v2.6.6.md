@@ -366,7 +366,9 @@ We can also connect to multiple services at the same time, such as distributed c
 $ xmake service --connect --distcc --ccache
 ```
 
-!> If there is no parameter, the default connection is the remote compilation service.
+:::NOTE
+If there is no parameter, the default connection is the remote compilation service.
+:::
 
 #### Distributed compilation project
 
@@ -690,7 +692,9 @@ We can also connect to multiple services at the same time, such as distributed c
 $ xmake service --connect --distcc --ccache
 ```
 
-!> If there is no parameter, the default connection is the remote compilation service.
+:::NOTE
+If there is no parameter, the default connection is the remote compilation service.
+:::
 
 #### Disconnect server
 

@@ -5,4 +5,5 @@ npm add vitepress-plugin-llms -D
 npm add gray-matter -D
 npm add markdown-it -D
 npm install
+npm run generate-blog
 vitepress build docs

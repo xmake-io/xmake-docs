@@ -271,7 +271,9 @@ packing build/xpack/test/test-macosx-v1.0.0.tar.gz ..
 pack ok
 ```
 
-!> It should be noted that to add binary files to the package, use `add_installfiles` instead of `add_sourcefiles`.
+:::NOTE
+It should be noted that to add binary files to the package, use `add_installfiles` instead of `add_sourcefiles`.
+:::
 
 We can also use `add_targets` to bind the target target programs and libraries that need to be installed. See the interface description for `add_targets` below for more details.
 

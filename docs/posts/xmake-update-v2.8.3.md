@@ -46,7 +46,9 @@ First of all, we need to install VSCode-EmmyLua plugin in VSCode's plugin market
 $ xrepo update-repo
 ```
 
-!> Xmake also needs to be kept up to date.
+:::NOTE
+Xmake also needs to be kept up to date.
+:::
 
 Then, execute the following command in your own project directory:
 

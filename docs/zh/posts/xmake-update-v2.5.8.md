@@ -256,7 +256,9 @@ target("demo")
 
 其中，我们通过 `set_sourcedir()` 来设置 foo 包的代码目录位置，然后通过 import 导入 `package.tools.cmake` 辅助模块来调用 cmake 构建代码，xmake 会自动获取生成的 libfoo.a 和对应的头文件。
 
-!> 如果仅仅本地源码集成，我们不需要额外设置 `add_urls` 和 `add_versions`。
+:::注意
+如果仅仅本地源码集成，我们不需要额外设置 `add_urls` 和 `add_versions`。
+:::
 
 关于包的配置描述，详情见：[包描述说明](https://xmake.io/zh/)
 

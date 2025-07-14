@@ -49,7 +49,9 @@ Xmake ≈ Make/Ninja + CMake/Meson + Vcpkg/Conan + distcc + ccache/sccache
 xrepo update-repo
 ```
 
-!> Xmake 也需要保持最新版本。
+:::注意
+Xmake 也需要保持最新版本。
+:::
 
 然后，在自己的工程目录下执行以下命令：
 

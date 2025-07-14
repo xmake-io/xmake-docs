@@ -451,7 +451,9 @@ $ xmake test -g "foo"
 $ xmake test -g "foo*"
 ```
 
-!> Running grouping also supports pattern matching.
+:::NOTE
+Running grouping also supports pattern matching.
+:::
 
 In addition, if the `group` parameter is not set to `add_tests`, we can also get the group name bound to the target by default.
 

@@ -274,7 +274,9 @@ packing build/xpack/test/test-macosx-v1.0.0.tar.gz ..
 pack ok
 ```
 
-!> 需要注意的是，打二进制文件到包里，使用的是 `add_installfiles` 而不是 `add_sourcefiles`。
+:::注意
+需要注意的是，打二进制文件到包里，使用的是 `add_installfiles` 而不是 `add_sourcefiles`。
+:::
 
 我们也可以通过 `add_targets` 去绑定需要安装的 target 目标程序和库。更多详情见下面关于 `add_targets` 的接口描述。
 

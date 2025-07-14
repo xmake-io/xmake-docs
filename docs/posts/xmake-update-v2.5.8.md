@@ -255,7 +255,9 @@ target("demo")
 
 Among them, we set the code directory location of the foo package through `set_sourcedir()`, and then import the auxiliary module of `package.tools.cmake` through import to call cmake to build the code, xmake will automatically obtain the generated libfoo.a and the corresponding header document.
 
-!> If only the local source code is integrated, we don't need to set additional `add_urls` and `add_versions`.
+:::NOTE
+If only the local source code is integrated, we don't need to set additional `add_urls` and `add_versions`.
+:::
 
 For the configuration description of the package, see: [Package description description](/zh/guide/package-management/package-distribution).
 

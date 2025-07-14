@@ -90,7 +90,9 @@ The final configuration result is: zlib/pcre/libpng/libwebp is a shared library,
 
 Through pattern matching, we can put some common configurations of each package into the unified `add_requireconfs` to pre-configure, which greatly simplifies the definition of each `add_requires`.
 
-!> By default, for the same configuration, xmake will give priority to the configuration in add_requires instead of add_requireconfs.
+:::NOTE
+By default, for the same configuration, xmake will give priority to the configuration in add_requires instead of add_requireconfs.
+:::
 
 If the version is set in `add_requires("zlib 1.2.11")`, the configuration of add_requires will be used first, and the version configuration in add_requireconfs will be completely ignored. Of course, we can also completely override the version specified in `add_requires` through override .
 
