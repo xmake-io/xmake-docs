@@ -5,9 +5,6 @@ date: 2021-10-30
 author: Ruki
 ---
 
-author: Ruki}
----
-
 [xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
 
 这个版本，我们增加了大量重量级的新特性，例如：Nim 语言项目的构建支持，Keil MDK，Circle 和 Wasi 工具链支持。
