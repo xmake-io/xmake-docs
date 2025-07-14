@@ -66,11 +66,11 @@ target("test")
 ```lua
 target("test")
     set_kind("binary")
-    add_files("src/*.md", {rule = "markdown"})  -- specify rule for specific files
+    add_files("src/*.md", {rules = "markdown"})  -- specify rule for specific files
 ```
 
 ::: tip Note
-Rules specified via `add_files("*.md", {rule = "markdown"})` have higher priority than rules set via `add_rules("markdown")`.
+Rules specified via `add_files("*.md", {rules = "markdown"})` have higher priority than rules set via `add_rules("markdown")`.
 :::
 
 ## Rule Lifecycle {#rule-lifecycle}

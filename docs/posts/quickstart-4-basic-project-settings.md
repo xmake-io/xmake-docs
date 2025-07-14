@@ -333,7 +333,7 @@ After version 2.1.9, it supports adding unknown code files. By setting rule cust
 ```lua
 target("test")
     -- ...
-    add_files("src/test/*. md", {rule = "markdown"})
+    add_files("src/test/*. md", {rules = "markdown"})
 ```
 
 And after version 2.1.9, you can use the force parameter to forcibly disable the automatic detection of cxflags, cflags and other compilation options, and pass it directly to the compiler, even if the compiler may not support it, it will be set:

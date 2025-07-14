@@ -1744,7 +1744,7 @@ After version 2.1.9, support for adding unknown code files, by setting rule cust
 ```lua
 target("test")
     -- ...
-    add_files("src/test/*.md", {rule = "markdown"})
+    add_files("src/test/*.md", {rules = "markdown"})
 ```
 
 After version 2.3.1, you can use the sourcekind parameter to force the use of the C or C++ compiler:
@@ -2587,7 +2587,7 @@ rule("markdown")
     end)
 
 target("test")
-    add_files("src/*.md", {rule = "markdown"})
+    add_files("src/*.md", {rules = "markdown"})
     set_values("markdown.flags", "xxx", "xxx")
 ```
 

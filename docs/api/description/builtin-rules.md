@@ -395,7 +395,7 @@ target("nonpnp")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"})
+    add_files("driver/*.c", {rules = "wdk.tracewpp"})
 ```
 
 ## wdk.shared
@@ -414,7 +414,7 @@ target("nonpnp")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"})
+    add_files("driver/*.c", {rules = "wdk.tracewpp"})
 ```
 
 ## wdk.tracewpp
@@ -431,7 +431,7 @@ target("nonpnp")
     add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 
     -- add files
-    add_files("driver/*.c", {rule = "wdk.tracewpp"})
+    add_files("driver/*.c", {rules = "wdk.tracewpp"})
     add_files("driver/*.rc")
 ```
 
@@ -453,7 +453,7 @@ target("usbview")
 
     -- add files
     add_files("*.c", "*.rc")
-    add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
+    add_files("xmlhelper.cpp", {rules = "win.sdk.dotnet"})
 ```
 
 ## wdk.sdk.dotnet
@@ -461,7 +461,7 @@ target("usbview")
 Used to specify certain c++ source files to be compiled as c++.net.
 
 ```lua
-add_files("xmlhelper.cpp", {rule = "win.sdk.dotnet"})
+add_files("xmlhelper.cpp", {rules = "win.sdk.dotnet"})
 ```
 
 For more information on WDK rules, see: [#159](https://github.com/xmake-io/xmake/issues/159)

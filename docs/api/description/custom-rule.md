@@ -85,13 +85,13 @@ Files can be assigned to a specific rule regardless of their file extension. You
 
 ```lua
 target("test")
-    add_files("src/test/*.md.in", {rule = "markdown"})
+    add_files("src/test/*.md.in", {rules = "markdown"})
 ```
 
 A target can be superimposed to apply multiple rules to more customize its own build behavior, and even support different build environments.
 
 ::: tip NOTE
-Rules specified by `add_files("*.md", {rule = "markdown"})`, with a higher priority than the rule set by `add_rules("markdown")`.
+Rules specified by `add_files("*.md", {rules = "markdown"})`, with a higher priority than the rule set by `add_rules("markdown")`.
 :::
 
 ## rule
