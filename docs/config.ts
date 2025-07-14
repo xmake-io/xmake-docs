@@ -39,6 +39,11 @@ function nav(): DefaultTheme.NavItem[] {
       ]
     },
     {
+      text: 'Blog',
+      link: '/blog/',
+      activeMatch: '/blog/'
+    },
+    {
       text: 'Ecosystem',
       items: [
         {

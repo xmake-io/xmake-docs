@@ -1,10 +1,16 @@
 {
+  "type": "module",
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:dev": "node scripts/generate-blog-data.js && vitepress dev docs",
+    "docs:build": "node scripts/generate-blog-data.js && vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "generate-blog": "node scripts/generate-blog-data.js"
   },
   "devDependencies": {
     "vitepress": "^2.0.0-alpha.6"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0"
   }
 }

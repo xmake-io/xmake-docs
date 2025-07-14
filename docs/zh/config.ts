@@ -114,6 +114,11 @@ function nav(): DefaultTheme.NavItem[] {
       ]
     },
     {
+      text: '博客',
+      link: '/zh/blog/',
+      activeMatch: '/zh/blog/'
+    },
+    {
       text: '生态系统',
       items: [
         {
