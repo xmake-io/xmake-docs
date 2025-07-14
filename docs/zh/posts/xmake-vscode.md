@@ -75,7 +75,7 @@ $ yo code
 
 #### 创建发布者
 
-首先我们需要在[marketplace.visualstudio.com](https://www.visualstudio.com/products/visual-studio-team-services-vs)上注册一个账号，创建一个发布者，这里我取名为tboox
+首先我们需要在[marketplace.visualstudio.com](https://xmake.io/zh/)上注册一个账号，创建一个发布者，这里我取名为tboox
 
 然后，我们需要在自己的账号里面，添加一个Personal Access Token（地址：`https://[your name].visualstudio.com/_details/security/tokens`，注意Token只显示一次，最好自己保存一份）
 

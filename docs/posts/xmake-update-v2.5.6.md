@@ -18,7 +18,7 @@ This is a stability fix version, which mainly fixes and improves some compatibil
 
 The previous version provided preliminary support for the installation of pre-compiled packages under Windows, but because the compatibility of the toolset version was not considered, if the user's VS version is too low, link problems will occur when the package is integrated.
 
-According to the official description of ms, the binary library of msvc is backward compatible with the version of toolset. [https://docs.microsoft.com/en-us/cpp/porting/binary-compat-2015-2017?view=msvc-160](https://docs.microsoft.com/en-us/cpp/ porting/binary-compat-2015-2017?view=msvc-160)
+According to the official description of ms, the binary library of msvc is backward compatible with the version of toolset. [https://docs.microsoft.com/en-us/cpp/porting/binary-compat-2015-2017?view=msvc-160](https://xmake.io)
 
 > You can mix binaries built by different versions of the v140, v141, and v142 toolsets. However, you must link by using a toolset at least as recent as the most recent binary in your app. Here's an example: you can link an app compiled using any 2017 toolset (v141, versions 15.0 through 15.9) to a static library compiled using, say, Visual Studio 2019 version 16.2 (v142), if they're linked using a version 16.2 or later toolset. You can link a version 16.2 library to a version 16.4 app as long as you use a 16.4 or later toolset.
 

@@ -338,7 +338,7 @@ $ xmake service --connect --distcc
 
 我们也可以同时连接多个服务，比如分布式编译和远程编译缓存服务。
 
-```hash
+```sh
 $ xmake service --connect --distcc --ccache
 ```
 
@@ -644,7 +644,7 @@ $ xmake service --connect --ccache
 
 我们也可以同时连接多个服务，比如分布式编译和远程编译缓存服务。
 
-```hash
+```sh
 $ xmake service --connect --distcc --ccache
 ```
 

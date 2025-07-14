@@ -362,7 +362,7 @@ $ xmake service --connect --distcc
 
 We can also connect to multiple services at the same time, such as distributed compilation and remote compilation cache services.
 
-```hash
+```sh
 $ xmake service --connect --distcc --ccache
 ```
 
@@ -686,7 +686,7 @@ $ xmake service --connect --ccache
 
 We can also connect to multiple services at the same time, such as distributed compilation and remote compilation cache services.
 
-```hash
+```sh
 $ xmake service --connect --distcc --ccache
 ```
 

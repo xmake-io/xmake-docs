@@ -466,7 +466,7 @@ $ xmake [-w|--warning]
 
 例如：
 
-```hash
+```sh
 $ xmake [-v|--verbose] 
 ```
 
