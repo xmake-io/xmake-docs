@@ -7,12 +7,12 @@ import { join } from 'path'
 function addNavToEnglishPosts() {
   const postsDir = join(process.cwd(), 'docs/posts')
   const files = readdirSync(postsDir)
-
+  
   for (const file of files) {
     if (file.endsWith('.md')) {
       const filePath = join(postsDir, file)
       const content = readFileSync(filePath, 'utf-8')
-
+      
       // Check if the navigation mark has already been added
       if (!content.includes('<!-- BLOG_NAV -->')) {
         const navMark = '\n\n<!-- BLOG_NAV -->\n'
@@ -28,12 +28,12 @@ function addNavToEnglishPosts() {
 function addNavToChinesePosts() {
   const postsDir = join(process.cwd(), 'docs/zh/posts')
   const files = readdirSync(postsDir)
-
+  
   for (const file of files) {
     if (file.endsWith('.md')) {
       const filePath = join(postsDir, file)
       const content = readFileSync(filePath, 'utf-8')
-
+      
       // Check if the navigation mark has already been added
       if (!content.includes('<!-- BLOG_NAV -->')) {
         const navMark = '\n\n<!-- BLOG_NAV -->\n'

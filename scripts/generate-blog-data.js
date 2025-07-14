@@ -12,13 +12,13 @@ function getPosts(postsDir) {
   try {
     const files = readdirSync(postsDir)
     const posts = []
-
+    
     for (const file of files) {
       if (file.endsWith('.md')) {
         const filePath = join(postsDir, file)
         const content = readFileSync(filePath, 'utf-8')
         const { data: frontmatter } = matter(content)
-
+        
         if (frontmatter.title && frontmatter.date) {
           posts.push({
             title: frontmatter.title,
@@ -33,7 +33,7 @@ function getPosts(postsDir) {
         }
       }
     }
-
+    
     // Sort by date, newest first
     return posts.sort((a, b) => new Date(b.date.time) - new Date(a.date.time))
   } catch (error) {
@@ -58,43 +58,43 @@ function formatDate(raw) {
 function generateExcerpt(content) {
   // Remove frontmatter
   const contentWithoutFrontmatter = content.replace(/---[\s\S]*?---/, '')
-
+  
   // Split by paragraphs (separated by blank lines)
   const paragraphs = contentWithoutFrontmatter
     .split(/\n\s*\n/)
     .map(p => p.trim())
     .filter(p => p.length > 0)
-
+  
   // Take the first three complete paragraphs
   let excerpt = ''
   let paragraphCount = 0
   const maxParagraphs = 3
-
+  
   for (const paragraph of paragraphs) {
     // Skip heading lines (starting with #)
     if (paragraph.startsWith('#')) {
       continue
     }
-
+    
     // If the paragraph is too long (>300 chars), truncate to 300 chars
     const truncatedParagraph = paragraph.length > 300 
       ? paragraph.slice(0, 300).trim() + '...'
       : paragraph
-
+    
     excerpt += truncatedParagraph + '\n\n'
     paragraphCount++
-
+    
     if (paragraphCount >= maxParagraphs) {
       break
     }
   }
-
+  
   // If no suitable paragraph found, use the original method
   if (!excerpt.trim()) {
     const rawExcerpt = contentWithoutFrontmatter.slice(0, 200).trim() + '...'
     return md.render(rawExcerpt)
   }
-
+  
   // Convert to HTML
   return md.render(excerpt.trim())
 }

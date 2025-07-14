@@ -316,7 +316,7 @@ tags: [${template.tags.join(', ')}]
 ---
 
 ${template.content}`;
-
+  
   fs.writeFileSync(filename, content);
   console.log(`Generated: ${filename}`);
 });
@@ -332,7 +332,7 @@ tags: [${template.tags.join(', ')}]
 ---
 
 ${template.content}`;
-
+  
   fs.writeFileSync(filename, content);
   console.log(`Generated: ${filename}`);
 });
