@@ -67,4 +67,4 @@ target("embedded_app")
 
 使用 Xmake，跨平台开发变得更加容易管理。统一的构建系统和优秀的包管理使得从单一配置针对多个平台变得简单。
 
-更多信息，请查看我们的[交叉编译指南](/zh/guide/basic-commands/cross-compilation)。 
+更多信息，请查看我们的[交叉编译指南](https://xmake.io/zh/)。 

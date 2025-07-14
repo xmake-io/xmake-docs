@@ -35,7 +35,7 @@ target("test")
     add_runenvs("LD_LIBRARY_PATH", "/tmp/lib", "xxx/lib")
 ```
 
-更多关于此接口的描述，可以看下文档：[add_runenvs接口文档](/zh/manual/project_target#add-runenvs)
+更多关于此接口的描述，可以看下文档：[add_runenvs接口文档](https://xmake.io/zh/)
 
 
 

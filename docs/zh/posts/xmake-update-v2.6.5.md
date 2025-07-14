@@ -21,7 +21,7 @@ Xmake = Build backend + Project Generator + Package Manager
 
 * [项目源码](https://github.com/xmake-io/xmake)
 * [官方文档](https://xmake.io/zh/)
-* [入门课程](/zh/about/course)
+* [入门课程](https://xmake.io/zh/)
 
 ## 新特性介绍
 
@@ -262,7 +262,7 @@ target("test")
 
 如果我们是在用 Xmake 开发 C/C++ 项目，但是需要引入一些 Rust 子模块给 C/C++ 项目使用，那么就可以借助这种方式，快速方便地在 C/C++ 中调用 Rust 库和代码。
 
-更多关于 C/C++ 中调用 Rust 代码库的说明，见：[使用 cxxbridge 在 C/C++ 中调用 Rust](/zh/examples/cpp/cxxbridge)
+更多关于 C/C++ 中调用 Rust 代码库的说明，见：[使用 cxxbridge 在 C/C++ 中调用 Rust](https://xmake.io/zh/)
 
 ### 支持源文件分组
 

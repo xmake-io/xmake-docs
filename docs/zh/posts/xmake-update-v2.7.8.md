@@ -27,7 +27,7 @@ Xmake ≈ Make/Ninja + CMake/Meson + Vcpkg/Conan + distcc + ccache/sccache
 
 * [项目源码](https://github.com/xmake-io/xmake)
 * [官方文档](https://xmake.io/zh/)
-* [入门课程](/zh/about/course)
+* [入门课程](https://xmake.io/zh/)
 
 <img src="https://github.com/xmake-io/xmake-docs/raw/master/assets/img/index/package.gif" width="650px" />
 
@@ -90,7 +90,7 @@ $
 
 has_cfuncs/check_cxxsnippets 等系列检测接口，在 option 中已经有提供，并且有对应的辅助 API 来帮助检测。
 
-相关文档可以参考：[辅助检测接口](/zh/manual/helper_interfaces)。
+相关文档可以参考：[辅助检测接口](https://xmake.io/zh/)。
 
 但是目前 option 提供的检测接口仅仅针对全局平台工具链，无法根据每个特定的 target 配置在针对性做一些检测。
 
@@ -142,7 +142,7 @@ target("test")
 
 - 检测目标编译配置能否获取给定的 C++ 函数
 
-用法跟 [target:has_cfuncs](/zh/api/description/project-target.html#has-cfuncs) 类似，只是这里主要用于检测 C++ 的函数。
+用法跟 [target:has_cfuncs](https://xmake.io/zh/) 类似，只是这里主要用于检测 C++ 的函数。
 
 不过，在检测函数的同时，我们还可以额外配置 std languages，来辅助检测。
 

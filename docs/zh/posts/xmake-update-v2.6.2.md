@@ -21,7 +21,7 @@ Xmake = Build backend + Project Generator + Package Manager
 
 * [项目源码](https://github.com/xmake-io/xmake)
 * [官方文档](https://xmake.io/zh/)
-* [入门课程](/zh/about/course)
+* [入门课程](https://xmake.io/zh/)
 
 
 <img src="https://tboox.org/static/img/xmake/xmake-cmake.jpeg" width="30%" />
@@ -168,7 +168,7 @@ add_requires("linux-headers 5.9.x", {configs = {driver_modules = true}})
 
 这里用到的交叉工具链，可以从这里下载: [Download toolchains](https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/)
 
-更多，交叉编译配置文档，见：[配置交叉编译](/zh/guide/configuration#common-cross-compilation-configuration)
+更多，交叉编译配置文档，见：[配置交叉编译](https://xmake.io/zh/)
 
 注：目前仅仅支持 arm/arm64 交叉编译架构，后续会支持更多的平台架构。
 
@@ -342,7 +342,7 @@ add_requires("cmake::Foo", {system = true, configs = {moduledirs = "mydir/cmake_
 
 感谢各位贡献者对 xmake-repo 仓库 和 Xmake 的贡献，完整贡献者列表见：[Contributors](https://github.com/xmake-io/xmake/graphs/contributors)。
 
-也非常感谢大家对 Xmake 的赞助的支持，使得我能够有足够的动力去持续维护，完整捐助列表见：[Sponsors](/zh/about/sponsor)。
+也非常感谢大家对 Xmake 的赞助的支持，使得我能够有足够的动力去持续维护，完整捐助列表见：[Sponsors](https://xmake.io/zh/)。
 
 ## 更新内容
 

@@ -29,5 +29,5 @@ target("test")
 
 可以在`add_files`的最后一个参数，传入一个配置table，去控制指定files的编译选项，里面的配置参数跟target的一致，并且这些文件还会继承target的通用配置`-DTEST1`。
 
-针对`add_files`的更多描述，见[手册文档](/zh/api/description/project-target#add-files)，大家可以下载master版本来预先体验这一新特性。
+针对`add_files`的更多描述，见[手册文档](https://xmake.io/zh/)，大家可以下载master版本来预先体验这一新特性。
 

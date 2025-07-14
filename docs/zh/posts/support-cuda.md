@@ -73,7 +73,7 @@ target("test")
 
 里面大部分跟C/C++的工程描述类似，唯一的区别就是通过`add_cuflags`设置了一些cuda代码特有的编译选项，这部分配置根据用户的需求，可自己调整。
 
-关于`add_cuflags`的更多说明，可阅读[xmake的官方文档](/zh/api/description/project-target#add-cuflags)。
+关于`add_cuflags`的更多说明，可阅读[xmake的官方文档](https://xmake.io/zh/)。
 
 #### Cuda编译环境的配置
 

@@ -234,7 +234,7 @@ set_optimize("fastest")
 
 If you set it through flags, you also need to consider the different compilation options of different compilers. Xmake has an internal mapping process for it, which greatly facilitates users to provide cross-platform.
 
-If you want to view detailed mapping rules, you can go to the official documentation of xmake to check it: [Compile Optimization Settings](/zh/manual/project_target#set-optimize)
+If you want to view detailed mapping rules, you can go to the official documentation of xmake to check it: [Compile Optimization Settings](https://xmake.io)
 
 ### Debug and Release Mode
 

@@ -259,7 +259,7 @@ At this point, one might ask why we need to configure xmake.lua when we are alre
 
 If we are developing a C/C++ project in Xmake, but need to introduce some Rust submodules for use in the C/C++ project, this is a quick and easy way to call Rust libraries and code in C/C++.
 
-For more instructions on calling Rust code libraries in C/C++, see: [Calling Rust in C/C++ using cxxbridge](/zh/guide/project_examples#%e4%bd%bf%e7%94%a8- cxxbridge-%e5%9c%a8-c-%e4%b8%ad%e8%b0%83%e7%94%a8-rust)
+For more instructions on calling Rust code libraries in C/C++, see: [Calling Rust in C/C++ using cxxbridge](https://xmake.io)
 
 ### Support for source file grouping
 

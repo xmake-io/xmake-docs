@@ -107,7 +107,7 @@ $ vsce package
 $ vsce publish [version]
 ```
 
-这个时候，我们就可以在[xmake-vscode on marketplace](https://marketplace.visualstudio.com/items?itemName=tboox.xmake-vscode#overview)上看到你的插件了，用户也可以直接通过vscode进行搜索和安装使用。
+这个时候，我们就可以在[xmake-vscode on marketplace](https://xmake.io/zh/)上看到你的插件了，用户也可以直接通过vscode进行搜索和安装使用。
 
 <img src="/assets/img/posts/xmake/xmake-vscode-market.png">
 

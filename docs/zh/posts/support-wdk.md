@@ -116,7 +116,7 @@ add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)")
 add_values("wdk.tracewpp.flags", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
 ```
 
-关于`add_values`的使用说明，可以看下文档：[add_values和set_values的使用说明](/zh/api/description/project-target.html#set-values)，简单来说，就是用来给对应规则传递扩展参数设置的。
+关于`add_values`的使用说明，可以看下文档：[add_values和set_values的使用说明](https://xmake.io/zh/)，简单来说，就是用来给对应规则传递扩展参数设置的。
 
 #### wdm驱动程序
 
@@ -284,4 +284,4 @@ target:values("wdk.env.ntddi_version"): NTDDI_VERSION
 target:values("wdk.env.winver_version"): WINVER
 ```
 
-关于更多xmake下WDK开发相关介绍，请参考文档：[WDK驱动程序开发](/zh/examples/cpp/wdk.html)
+关于更多xmake下WDK开发相关介绍，请参考文档：[WDK驱动程序开发](https://xmake.io/zh/)

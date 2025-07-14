@@ -143,7 +143,7 @@ function main(target)
 end
 ```
 
-这些独立的lua脚本里面，我们还可以通过[import](/zh/manual/builtin_modules#import)导入各种内置模块和自定义模块进来使用，就跟平常写lua, java没啥区别。
+这些独立的lua脚本里面，我们还可以通过[import](https://xmake.io/zh/)导入各种内置模块和自定义模块进来使用，就跟平常写lua, java没啥区别。
 
 而对于脚本的域的不同阶段，`on_load`主要用于target加载时候，做一些动态化的配置，这里不像描述域，只会执行一遍哦!!!
 
@@ -155,7 +155,7 @@ end
 
 在讲解各个脚本域之前，我们先来简单介绍下xmake的模块导入和使用方式，xmake采用import来引入其他的扩展模块，以及用户自己定义的模块，它可以在下面一些地方使用：
 
-* 自定义脚本([on_build](/zh/manual/project_target#targeton_build), [on_run](/zh/manual/project_target#targeton_run) ..)
+* 自定义脚本([on_build](https://xmake.io/zh/), [on_run](https://xmake.io/zh/) ..)
 * 插件开发
 * 模板开发
 * 平台扩展
@@ -551,7 +551,7 @@ os.cp("$(projectdir)/src/test/**.h", "$(buildir)/inc")
 
 其中`$(scriptdir)`, `$(projectdir)` 这些变量是xmake的内置变量，具体详情见：[内置变量](https://xmake.io/mirror/zh-cn/manual/builtin_variables.html)的相关文档。
 
-而`*.h`和`**.h`中的匹配模式，跟[add_files](/zh/manual/project_target#add-files)中的类似，前者是单级目录匹配，后者是递归多级目录匹配。
+而`*.h`和`**.h`中的匹配模式，跟[add_files](https://xmake.io/zh/)中的类似，前者是单级目录匹配，后者是递归多级目录匹配。
 
 
 上面的复制，会把所有文件全部展开复制到指定目录，丢失源目录层级，如果要按保持原有的目录结构复制，可以设置rootdir参数：
@@ -602,7 +602,7 @@ os.execv("echo", {"hello", "xmake!"}, {stdout = outfile, stderr = errfile, envs 
 
 其相关类似接口还有，os.runv, os.exec, os.execv, os.iorun, os.iorunv等等，比如os.iorun可以获取运行的输出内容。
 
-这块的具体详情和差异，还有更多os接口，都可以到：[os接口文档](/zh/manual/builtin_modules#os) 查看。
+这块的具体详情和差异，还有更多os接口，都可以到：[os接口文档](https://xmake.io/zh/) 查看。
 
 #### io.readfile
 
@@ -630,4 +630,4 @@ print(path.join("$(tmpdir)", "dir1", "dir2", "file.txt"))
 
 上述拼接在unix上相当于：`$(tmpdir)/dir1/dir2/file.txt`，而在windows上相当于：`$(tmpdir)\\dir1\\dir2\\file.txt`
 
-更多内置模块详情见：[内置模块文档](/zh/manual/builtin_modules)
+更多内置模块详情见：[内置模块文档](https://xmake.io/zh/)

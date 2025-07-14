@@ -234,7 +234,7 @@ set_optimize("fastest")
 
 如果用户通过flags来设置，还需额外考虑不同编译器的不同编译选项，xmake对其进行了内部映射处理，极大程度方便用户提供跨平台性。
 
-如果想查看详细的映射规则，可以到xmake的官方文档进行查看：[编译优化设置](/zh/manual/project_target#set-optimize)
+如果想查看详细的映射规则，可以到xmake的官方文档进行查看：[编译优化设置](https://xmake.io/zh/)
 
 ### 调试和发布模式
 

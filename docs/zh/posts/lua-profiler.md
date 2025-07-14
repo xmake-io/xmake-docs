@@ -5,7 +5,7 @@ date: 2017-01-12
 author: Ruki
 ---
 
-之前在给[xmake](/cn/project)做构建的效率优化的时候，需要对lua脚本的api调用性能进行分析，分析出最耗时一些lua调用api，
+之前在给[xmake](https://xmake.io/zh/)做构建的效率优化的时候，需要对lua脚本的api调用性能进行分析，分析出最耗时一些lua调用api，
 找出性能瓶颈，来针对性地进行优化，那么问题来了，如果对lua脚本像c程序那样进行profile呢？
 
 我们现在看下最后实现完的最终效果：

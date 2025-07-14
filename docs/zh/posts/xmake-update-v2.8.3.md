@@ -27,7 +27,7 @@ Xmake ≈ Make/Ninja + CMake/Meson + Vcpkg/Conan + distcc + ccache/sccache
 
 * [项目源码](https://github.com/xmake-io/xmake)
 * [官方文档](https://xmake.io/zh/)
-* [入门课程](/zh/about/course)
+* [入门课程](https://xmake.io/zh/)
 
 <img src="https://github.com/xmake-io/xmake-docs/raw/master/assets/img/index/package.gif" width="650px" />
 
@@ -150,7 +150,7 @@ target("test")
     add_packages("directxshadercompiler")
 ```
 
-关于这个规则的详细描述，可以参考文档：[utils.glsl2spv](/zh/manual/custom_rule#utilsglsl2spv)，两者的使用方式和原理都是类似的。
+关于这个规则的详细描述，可以参考文档：[utils.glsl2spv](https://xmake.io/zh/)，两者的使用方式和原理都是类似的。
 
 ### 新增 lib.lua.package 模块
 

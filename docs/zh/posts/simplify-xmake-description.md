@@ -150,7 +150,7 @@ end
 
 这其实有点像c/c++中的宏，不过rule更加强大，因为它还可以对一个target同时叠加多个rule，甚至用户可以自定义一些rule去简化自己的常用配置，或者自定义扩展构建规则。
 
-具体对rule的使用说明，我后续会有单独的文章来介绍，如果用户感兴趣的话，可以先看下相关文档深入了解下，里面还有很多xmake提供的内建规则: [构建规则文档](/zh/api/description/builtin-rules)
+具体对rule的使用说明，我后续会有单独的文章来介绍，如果用户感兴趣的话，可以先看下相关文档深入了解下，里面还有很多xmake提供的内建规则: [构建规则文档](https://xmake.io/zh/)
 
 ## 利用内建变量条件配置
 
@@ -189,7 +189,7 @@ target("test2")
     add_files("src2/*.c")
 ```
 
-相比最初的配置，现在已经相当精简了，并且更加可读，易维护。如果想了解更多的内建变量，请参考文档：[内建变量](/zh/api/description/builtin-variables)
+相比最初的配置，现在已经相当精简了，并且更加可读，易维护。如果想了解更多的内建变量，请参考文档：[内建变量](https://xmake.io/zh/)
 
 ## 利用lua脚本简化配置
 
@@ -318,7 +318,7 @@ target("test")
     del_files("src/test.c")
 ```
 
-灵活合理运用[add_files](/zh/api/description/project-target#add-files)和[del_files](/zh/api/description/project-target#del-files)，我们可以极大程度的简化工程源码的配置管理。
+灵活合理运用[add_files](https://xmake.io/zh/)和[del_files](https://xmake.io/zh/)，我们可以极大程度的简化工程源码的配置管理。
 
 ## 利用内置配置简化flags设置
 
@@ -331,4 +331,4 @@ set_languages("cxx11")
 set_warnings("all", "error")
 ```
 
-具体配置说明，以及目前提供的配置值，都可以去看下相关文档，里面有详细说明：[内置配置说明](/zh/api/description/project-target#set-symbols)
+具体配置说明，以及目前提供的配置值，都可以去看下相关文档，里面有详细说明：[内置配置说明](https://xmake.io/zh/)

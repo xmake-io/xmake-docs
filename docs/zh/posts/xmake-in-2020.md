@@ -33,7 +33,7 @@ xmake 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua �
 
 ### 上线官方课程
 
-今年还上线了一门 xmake 相关的入门课程：[Xmake 带你轻松构建 C/C++ 项目](/zh/about/course)
+今年还上线了一门 xmake 相关的入门课程：[Xmake 带你轻松构建 C/C++ 项目](https://xmake.io/zh/)
 
 
 

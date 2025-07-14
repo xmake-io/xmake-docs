@@ -37,10 +37,10 @@ Xmake 3.0 引入了完全重写的构建引擎，相比之前的版本提供了�
 
 ## 迁移指南
 
-对于现有项目，迁移到 Xmake 3.0 应该很简单。大多数配置文件无需更改即可工作，但我们建议查看[迁移指南](/zh/guide/migration)以获得最佳体验。
+对于现有项目，迁移到 Xmake 3.0 应该很简单。大多数配置文件无需更改即可工作，但我们建议查看[迁移指南](https://xmake.io/zh/)以获得最佳体验。
 
 ## 开始使用
 
-要开始使用 Xmake 3.0，请访问我们的[快速开始指南](/zh/guide/quick-start)或查看[示例](/zh/examples/cpp/basic)来了解 Xmake 的实际应用。
+要开始使用 Xmake 3.0，请访问我们的[快速开始指南](https://xmake.io/zh/)或查看[示例](https://xmake.io/zh/)来了解 Xmake 的实际应用。
 
 我们很期待看到您用 Xmake 3.0 构建出什么！ 

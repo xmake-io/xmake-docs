@@ -18,7 +18,7 @@ author: Ruki
 
 * [项目源码](https://github.com/xmake-io/xmake)
 * [官方文档](https://xmake.io/zh/)
-* [入门课程](/zh/about/course.html)
+* [入门课程](https://xmake.io/zh/)
 
 
 
@@ -241,9 +241,9 @@ target("test")
 
 ### 新增 Git 相关内置配置变量
 
-xmake 一直有提供 config.h 的自动生成特性，可以通过 [add_configfiles](/zh/api/description/project-target#add-configfiles) 接口来配置，并且它还支持模板变量的替换，用户可以自己定义一些变量。
+xmake 一直有提供 config.h 的自动生成特性，可以通过 [add_configfiles](https://xmake.io/zh/) 接口来配置，并且它还支持模板变量的替换，用户可以自己定义一些变量。
 
-不过，xmake 也提供了一些常用的内置变量替换，比如 版本信息，平台架构等。具体详情见：[/zh/api/description/project-target#add-configfiles](/zh/api/description/project-target#add-configfiles)
+不过，xmake 也提供了一些常用的内置变量替换，比如 版本信息，平台架构等。具体详情见：[/zh/api/description/project-target#add-configfiles](https://xmake.io/zh/)
 
 模板配置使用方式很简单，只需要：
 

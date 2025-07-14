@@ -81,7 +81,7 @@ $ xmake
 
 #### 设置工具链bin目录
 
-对于不规则工具链目录结构，靠单纯地[--sdk](/zh/guide/configuration#-sdk)选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。
+对于不规则工具链目录结构，靠单纯地[--sdk](https://xmake.io/zh/)选项设置，没法完全检测通过的情况下，可以通过这个选项继续附加设置工具链的bin目录位置。
 
 例如：一些特殊的交叉工具链的，编译器bin目录，并不在  `/home/toolchains_sdkdir/bin`  这个位置，而是独立到了  `/usr/opt/bin`
 

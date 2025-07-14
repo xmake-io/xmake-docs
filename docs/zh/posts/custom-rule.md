@@ -7,7 +7,7 @@ author: Ruki
 
 在2.1.9版本之后，xmake不仅原生内置支持多种语言文件的构建，而且还可以通过自定义构建规则，让用户自己来实现复杂的未知文件构建。
 
-具体使用介绍，可参考相关文档：[rule规则使用手册](/zh/manual#%E6%9E%84%E5%BB%BA%E8%A7%84%E5%88%99)
+具体使用介绍，可参考相关文档：[rule规则使用手册](https://xmake.io/zh/)
 
 #### 通用规则
 
@@ -59,7 +59,7 @@ rule("man")
     end)
 ```
 
-其中`add_imports`用于预先导入扩展模块，可在多个自定义脚本中直接使用，具体说明见：[add_imports文档](/zh/manual#add-imports)
+其中`add_imports`用于预先导入扩展模块，可在多个自定义脚本中直接使用，具体说明见：[add_imports文档](https://xmake.io/zh/)
 
 #### 多文件构建
 

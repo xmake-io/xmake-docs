@@ -50,7 +50,7 @@ Mentor 负责指导报名的 Student 完成并达成预期的目标
 
 相关资料文档：
 
-- [包制作和提交文档](/zh/package/remote_package#%e6%b7%bb%e5%8a%a0%e5%8c%85%e5%88%b0%e4%bb%93%e5%ba%93)
+- [包制作和提交文档](https://xmake.io/zh/)
 - [包仓库地址](https://github.com/xmake-io/xmake-repo)
 
 #### 实现 xcode 工程生成插件
@@ -78,7 +78,7 @@ xmake 当前版本也是有提供生成 xcode 工程生成的，但是是基于 
 
 相关资料文档：
 
-- [插件开发文档](/zh/plugin/plugin_development)
+- [插件开发文档](https://xmake.io/zh/)
 - [现有插件代码目录](https://github.com/xmake-io/xmake/tree/master/xmake/plugins/project/xcode)
 
 #### 重构升级基于 xmake 的 IntelliJ IDEA 插件

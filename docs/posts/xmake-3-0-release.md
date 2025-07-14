@@ -37,7 +37,7 @@ The package management system has been completely redesigned with:
 
 ## Migration Guide
 
-For existing projects, the migration to Xmake 3.0 should be straightforward. Most configuration files will work without changes, but we recommend reviewing the [migration guide](/guide/migration) for the best experience.
+For existing projects, the migration to Xmake 3.0 should be straightforward. Most configuration files will work without changes, but we recommend reviewing the [migration guide](https://xmake.io) for the best experience.
 
 ## Getting Started
 

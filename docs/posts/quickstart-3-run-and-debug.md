@@ -35,7 +35,7 @@ target("test")
     add_runenvs("LD_LIBRARY_PATH", "/tmp/lib", "xxx/lib")
 ```
 
-For more description of this interface, you can see the documentation: [add_runenvs interface documentation](/zh/manual/project_target#add-runenvs)
+For more description of this interface, you can see the documentation: [add_runenvs interface documentation](https://xmake.io)
 
 
 

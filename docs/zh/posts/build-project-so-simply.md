@@ -103,7 +103,7 @@ add_files("src/**.cpp|test.cpp|arm/*.cpp")
 
 上述描述，在递归添加源文件的同时，排除掉了test.cpp以及arm目录下的源文件。
 
-更多`add_files`用法，请参考文档:[add_files接口使用文档](/zh/api/description/project-target#add-files) 
+更多`add_files`用法，请参考文档:[add_files接口使用文档](https://xmake.io/zh/) 
 
 ## 使用演示
 
@@ -367,7 +367,7 @@ task("hello")
 
 上述代码就是一个最为简单的`hello xmake!`插件，运行`$xmake hello`就可看到执行输出，`set_menu`用于配置插件命令行选项，这个不设置就是内部task，无法在命令行下调用。
 
-更加详细的插件说明以及内置插件列表可参考文档：[插件手册](/zh/guide/extensions/builtin-plugins.html)
+更加详细的插件说明以及内置插件列表可参考文档：[插件手册](https://xmake.io/zh/)
 
 ## 查找依赖包
 
@@ -492,7 +492,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/g
 
 对于windows用户，提供了安装包来快速安装，可到[Github Releases](https://github.com/xmake-io/xmake/releases)上下载对应版本。
 
-更加详细的安装过程，见相关文档: [安装说明](/zh/guide/basic-commands/install-and-uninstall.html)
+更加详细的安装过程，见相关文档: [安装说明](https://xmake.io/zh/)
 
 ## 结语
 

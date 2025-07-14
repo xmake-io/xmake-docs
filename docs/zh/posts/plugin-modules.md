@@ -67,7 +67,7 @@ xmake通过import接口，可以在自定义脚本中导入各种内置类库和
 
 在根目录下的模块和api都是属于内建的，不需要import也可以直接使用，属于常用api，提供了xmake最基础的特性。。
 
-在子目录下的是扩展模块，需要import后才能使用，导入规则见[import](/cn/2016/06/09/api-import/)，例如：
+在子目录下的是扩展模块，需要import后才能使用，导入规则见[import](https://xmake.io/zh/)，例如：
 
 ```lua
     import("core.project.task")

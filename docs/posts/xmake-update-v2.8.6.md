@@ -405,7 +405,7 @@ $ xmake pack --autobuild=n
 
 ### Interface description
 
-For more descriptions of the XPack packaging interface, see: [XPack Packaging Interface Document](/zh/guide/extras/xpack).
+For more descriptions of the XPack packaging interface, see: [XPack Packaging Interface Document](https://xmake.io).
 
 ### Install the package locally
 

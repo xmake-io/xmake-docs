@@ -181,7 +181,7 @@ task("hello")
 
 在此作用域中，不仅可以使用大部分lua的api，还可以使用很多xmake提供的扩展模块，所有扩展模块，通过`import`来导入
 
-具体可参考：[插件开发之import类库](/cn/2016/06/09/api-import/)
+具体可参考：[插件开发之import类库](https://xmake.io/zh/)
 
 这里我们给个简单的例子，在编译完成后，对ios目标程序进行ldid签名：
 

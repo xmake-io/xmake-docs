@@ -227,6 +227,6 @@ checking for the c function pthread_create ... ok
 add_cxxfuncs(...)
 ```
 
-就行了，更加详细的检测设置，可以参考[依赖包的添加和自动检测机制](/cn/2016/08/06/add-package-and-autocheck/)
+就行了，更加详细的检测设置，可以参考[依赖包的添加和自动检测机制](https://xmake.io/zh/)
 
 

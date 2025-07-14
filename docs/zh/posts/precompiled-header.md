@@ -129,8 +129,8 @@ target("test")
     set_pcxxheader("header.h")
 ```
 
-更多使用说明见：[target.set_pcheader](/zh/manual#set-pcheader)
+更多使用说明见：[target.set_pcheader](https://xmake.io/zh/)
 
 #### 参考资料
 
-[Speed up C++ compilation, part 1: precompiled headers](http://itscompiling.eu/2017/01/12/precompiled-headers-cpp-compilation)
+[Speed up C++ compilation, part 1: precompiled headers](https://xmake.io/zh/)

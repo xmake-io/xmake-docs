@@ -25,7 +25,7 @@ target("test")
     end)
 ```
 
-通过`core.tool.compiler`模块的[compiler.has_features](/zh/manual#compiler-has_features)接口，在`xmake.lua`中预先判断当前编译期支持的语言特性，实现条件编译。
+通过`core.tool.compiler`模块的[compiler.has_features](https://xmake.io/zh/)接口，在`xmake.lua`中预先判断当前编译期支持的语言特性，实现条件编译。
 
 此处也是参考了cmake的设计，具体详情见：[issues#83](https://github.com/xmake-io/xmake/issues/83)。
 
@@ -78,7 +78,7 @@ target("test")
 #endif
 ```
 
-目前支持的所有c/c++编译器特性列表，见：[compiler.features](/zh/manual#compiler-features)
+目前支持的所有c/c++编译器特性列表，见：[compiler.features](https://xmake.io/zh/)
 
 #### 更加底层的检测接口
 
@@ -92,14 +92,14 @@ local features = has_features("clang", {"cxx_constexpr", "c_static_assert"}, {fl
 local features = has_features("clang", {"cxx_constexpr", "c_static_assert"}, {flags = "-g"})
 ```
 
-[lib.detect.has_features](/zh/manual#detect-has_features)属于探测模块的接口，可以指定需要检测的工具名，例如这里通过传入clang，只对clang编译器进行检测。
+[lib.detect.has_features](https://xmake.io/zh/)属于探测模块的接口，可以指定需要检测的工具名，例如这里通过传入clang，只对clang编译器进行检测。
 
 当然此接口，还可以检测其他非编译器的工具特性，更加的通用。
 
 
 #### 通过自定义c/c++代码片段来检测特性
 
-对于一些复杂的编译器特性，连[compiler.has_features](/zh/manual#compiler-has_features)都无法检测到的时候，可以通过自定义代码片段尝试编译来检测它。
+对于一些复杂的编译器特性，连[compiler.has_features](https://xmake.io/zh/)都无法检测到的时候，可以通过自定义代码片段尝试编译来检测它。
 
 ```lua
 import("lib.detect.check_cxsnippets")
@@ -109,7 +109,7 @@ local ok = check_cxsnippets("constexpr int f(int x) { return x ? x+f(x-1) : 0; }
 
 上述代码通过自定义一个constexpr的测试代码，去检测c++11的constexpr支持。
 
-此接口是[detect.has_cfuncs](/zh/manual#detect-has_cfuncs), [detect.has_cincludes](/zh/manual#detect-has_cincludes)和[detect.has_ctypes](/zh/manual#detect-has_ctypes)等接口的通用版本，也更加底层。
+此接口是[detect.has_cfuncs](https://xmake.io/zh/), [detect.has_cincludes](https://xmake.io/zh/)和[detect.has_ctypes](https://xmake.io/zh/)等接口的通用版本，也更加底层。
 
 因此我们可以用它来检测：types, functions, includes 还有 links，或者是组合起来一起检测。
 
