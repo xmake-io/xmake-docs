@@ -5,9 +5,6 @@ date: 2021-10-30
 author: Ruki
 ---
 
-Unity Build', tags: [xmake, lua, C/C++, Nim, Keil, MDK, circle, Unity, Build,]
----
-
 [xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started quickly in a short time, allowing users to focus more on actual project development.
 
 In this version, we have added a lot of heavyweight new features, such as: Nim language project build support, Keil MDK, Circle and Wasi toolchain support.

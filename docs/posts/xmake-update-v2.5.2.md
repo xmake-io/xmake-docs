@@ -5,8 +5,6 @@ date: 2021-02-27
 author: Ruki
 ---
 
-tags: [xmake, lua, C/C++, toolchains, xrepo, packages, cross-toolchains], date: '2021-02-27',]
----
 
 [xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started quickly in a short time, allowing users to focus more on actual project development.
 

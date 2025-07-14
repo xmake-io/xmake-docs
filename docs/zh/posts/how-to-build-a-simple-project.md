@@ -5,12 +5,7 @@ date: 2016-07-16
 author: Ruki
 ---
 
-title: 如何快速构建一个简单的程序
-tags: [xmake, 编译, 交叉编译]
-date: 2016-07-16
-author: Ruki
 
----
 首先我们通过内置的工程模板创建一个空工程:
 
 ```bash

@@ -5,9 +5,6 @@ date: 2021-01-16
 author: Ruki
 ---
 
-package management', tags: [xmake, lua, C/C++, toolchains, xrepo, packages, vcpkg,]
----
-
 [xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, very friendly to novices, can get started quickly in a short time, allowing users to focus more on the actual project development.
 
 This is the first version of xmake this year and the first version that is fully adapted to support Apple Silicon (macOS ARM) devices.

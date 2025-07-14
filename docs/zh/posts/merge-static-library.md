@@ -5,12 +5,7 @@ date: 2016-02-04
 author: Ruki
 ---
 
-title: xmake高级特性之合并静态库
-tags: [xmake, 静态库]
-date: 2016-02-04
-author: Ruki
 
----
 xmake的add_files接口不仅可以添加源代码文件进行编译，还可以直接添加*.o/obj对象文件、以及*.a/lib的库文件到编译目标中，这个跟add_links是有区别的
 
 * add_links：只能添加链接，例如： -lxxxx 这种，链接的目标也只能是可执行程序、动态库，而且只会链接需要的代码进去

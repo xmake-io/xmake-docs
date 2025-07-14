@@ -5,12 +5,6 @@ date: 2024-02-25
 author: Ruki
 ---
 
-title: Xmake v2.8.7 released, Add cosmocc toolchain support, build-once run-anywhere
-tags: [xmake, lua, C/C++, package, cosmocc]
-date: 2024-02-25
-author: Ruki
-
----
 [Xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build utility based on Lua.
 
 It is very lightweight and has no dependencies because it has a built-in Lua runtime.

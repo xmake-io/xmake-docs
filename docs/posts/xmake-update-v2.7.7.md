@@ -4,23 +4,6 @@ date: 2023-02-23
 author: Ruki
 ---
 
-title: Xmake v2.7.7 released, Support Haiku, Improve API check and C++ Modules
-date: 2023-02-23
-author: Ruki
-
-Checks:          'clang-diagnostic-*,clang-analyzer-*,*'
-WarningsAsErrors: ''
-HeaderFilterRegex: ''
-AnalyzeTemporaryDtors: false
-FormatStyle:     none
-User:            ruki
-CheckOptions:
-  - key:             readability-suspicious-call-argument.PrefixSimilarAbove
-    value:           '30'
-  - key:             cppcoreguidelines-no-malloc.Reallocations
-    value:           '::realloc'
-
-```
 
 ### Improve target configuration source analysis
 

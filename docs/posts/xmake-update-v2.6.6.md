@@ -5,8 +5,6 @@ date: 2022-05-24
 author: Ruki
 ---
 
-tags: [xmake, lua, C/C++, remote, ccache, distributed-compilation], date: '2022-05-24',]
----
 
 [Xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build utility based on Lua.
 

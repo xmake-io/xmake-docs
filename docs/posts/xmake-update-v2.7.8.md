@@ -5,9 +5,6 @@ date: 2023-04-04
 author: Ruki
 ---
 
-tags: [xmake, lua, C/C++, package, performance, mingw64, wasm], date: '2023-04-04',]
----
-
 [Xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build utility based on Lua.
 
 It is very lightweight and has no dependencies because it has a built-in Lua runtime.
