@@ -4,19 +4,6 @@ tags: [xmake, lua, C/C++, Rust, Lua5.4, C++20, Modules]
 date: 2021-12-03
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
-
-这个版本，我们正式将默认的 Luajit 运行时切换到 Lua5.4 运行时，并且新增了 Rust 和 C++ 的混合编译支持，我们也集成了 Cargo 的包管理支持。
-
-另外，我们新增了一个实用的 `utils.glsl2spv` 规则，用于实现对 glsl shader 的编译支持，并自动生成对应的 C 代码头文件，方便快速内嵌编译后的 .spv 文件数据到代码中。
-
-* [项目源码](https://github.com/xmake-io/xmake)
-* [官方文档](https://xmake.io/zh/)
-* [入门课程](https://xmake.io/zh/)
-
-## 新特性介绍
-
 ### 默认切换到 Lua5.4 运行时
 
 历经几个版本的迭代测试，我们在 2.6.1 版本，正式切换到 Lua5.4 运行时。

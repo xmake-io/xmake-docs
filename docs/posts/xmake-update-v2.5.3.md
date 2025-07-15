@@ -4,26 +4,6 @@ tags: [xmake, lua, C/C++, toolchains, bpf, conda, linux]
 date: 2021-04-08
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started quickly in a short time, allowing users to focus more on actual project development.
-
-In version 2.5.3, we have been able to build linux and android bpf programs.
-
-Although bpf has certain requirements for the compilation toolchain, such as the newer llvm/clang and android ndk toolchains, xmake can automatically pull a specific version of llvm/ndk for compilation, and it can also automatically pull libbpf dependencies. Library.
-
-In addition, in the new version we have added support for the integration of C/C++ packages from Conda.
-
-* [Github](https://github.com/xmake-io/xmake)
-* [Document](https://xmake.io/)
-
-
-
-
-
-
-
-## New feature introduction
-
 ### Build a Linux Bpf program
 
 In the new version, we started to support the compilation of bpf programs, as well as linux and android platforms, and can automatically pull the llvm and android ndk toolchains.

@@ -4,9 +4,6 @@ tags: [xmake, lua, C/C++, toolchains, bpf, conda, linux]
 date: 2021-04-08
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
-
 在 2.5.3 版本，我们新增了对 linux bpf 程序的构建支持，并且同时支持 android bpf 程序的构建。
 
 尽管 bpf 对 编译工具链有一定的要求，比如需要较新的 llvm/clang 和 android ndk 工具链，但是 xmake 能够自动拉取特定版本的 llvm/ndk 来用于编译，并且还能自动拉取 libbpf 等依赖库，完全省去了用户折腾编译环境和 libbpf 库集成的问题。
@@ -19,12 +16,6 @@ author: Ruki
 * [项目源码](https://github.com/xmake-io/xmake)
 * [官方文档](https://xmake.io/zh/)
 * [入门课程](https://xmake.io/zh/)
-
-
-
-
-
-
 
 
 

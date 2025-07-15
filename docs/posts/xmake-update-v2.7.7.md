@@ -3,8 +3,6 @@ title: Xmake v2.7.7 released, Support Haiku, Improve API check and C++ Modules
 date: 2023-02-23
 author: Ruki
 ---
-
-
 ### Improve target configuration source analysis
 
 We have improved the presentation of target information in the `xmake show -t target` command by adding a new configuration source analysis and streamlining some of the relatively redundant information.

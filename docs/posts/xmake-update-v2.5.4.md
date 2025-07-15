@@ -4,20 +4,6 @@ tags: [xmake, lua, C/C++, apt, portage, shell, package]
 date: 2021-05-15
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started quickly in a short time, allowing users to focus more on actual project development.
-
-In version 2.5.4, we added support for Apt and Portage package managers. On Ubuntu/Gentoo, we can also use `add_requires` to quickly integrate the packages they provide.
-
-And we have also improved the support for the Vcpkg package manager, and added support for the installation of arm/arm64 architecture packages.
-
-In addition, we have also enhanced the `xrepo env shell` environment. You can load a shell environment with a specific package configuration by configuring a series of `add_requires` package configurations in `xmake.lua`.
-
-* [Github](https://github.com/xmake-io/xmake)
-* [Document](https://xmake.io/)
-
-## New feature introduction
-
 ### New package manager support
 
 #### Add dependency package of ubuntu/apt

@@ -4,19 +4,6 @@ tags: [xmake, lua, C/C++, pascal, swig, lua5.3]
 date: 2021-10-08
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
-
-这个版本，我们主要增加了对 Pascal 语言项目和 Swig 模块的构建支持，而对于上个版本新增的 Vala 语言支持，我们也做了进一步改进，增加了对动态库和静态库的构建支持。
-
-除此之外，xmake 现在也已经支持了可选的 Lua5.3 运行时，提供更好的跨平台支持能力，目前 xmake 已经能够在 LoongArch 架构上正常运行。
-
-* [项目源码](https://github.com/xmake-io/xmake)
-* [官方文档](https://xmake.io/zh/)
-* [入门课程](https://xmake.io/zh/)
-
-## 新特性介绍
-
 ### Pascal 语言支持
 
 目前，我们可以使用跨平台的 Free pascal 工具链 fpc 去编译构建 Pascal 程序，例如：

@@ -5,18 +5,6 @@ date: 2021-10-30
 author: Ruki
 ---
 
-[xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
-
-这个版本，我们增加了大量重量级的新特性，例如：Nim 语言项目的构建支持，Keil MDK，Circle 和 Wasi 工具链支持。
-
-另外，我们对 C++20 Modules 进行了大改进，不仅支持最新 gcc-11, clang 和 msvc 编译器，而且还得模块间依赖做了自动分析，实现最大程度的并行化编译支持。
-
-最后，还有一个比较有用的特性就是 Unity Build 支持，通过它我们可以对 C++ 代码的编译速度做到很大程度的提升。
-
-* [项目源码](https://github.com/xmake-io/xmake)
-* [官方文档](https://xmake.io/zh/)
-* [入门课程](https://xmake.io/zh/)
-
 ## 新特性介绍
 
 ### Nimlang 项目构建

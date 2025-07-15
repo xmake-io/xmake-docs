@@ -4,18 +4,6 @@ tags: [xmake, lua, C/C++, mirror, package]
 date: 2021-06-30
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started quickly in a short time, allowing users to focus more on actual project development.
-
-In version 2.5.5, we continue to improve the experience of remote package integration, realize the pre-compiled package in the cloud, and then directly download the integrated pre-compiled binary package. This can greatly reduce the installation time of some packages that are very slow to compile.
-
-In addition, in the new version, we have also re-implemented the new version of the local package generation scheme, which fully supports `add_requires` and `add_packages` seamlessly. From then on, remote packages and local packages can be maintained in a unified way.
-
-* [Github](https://github.com/xmake-io/xmake)
-* [Document](https://xmake.io/)
-
-## New feature introduction
-
 ### Download and install the pre-compiled package
 
 Each time you install a package by the built-in package manager of xmake, you must download the corresponding package source code, and then perform local compilation and installation integration. This is for some large packages that compile very slowly, and some packages that rely on a lot of compilation tools. It will be very slow.

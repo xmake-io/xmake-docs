@@ -4,9 +4,6 @@ tags: [xmake, lua, C/C++, toolchains, xrepo, packages, cross-toolchains]
 date: 2021-02-27
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
-
 在 2.5.2 版本中，我们增加了一个重量级的新特性：`自动拉取远程交叉编译工具链`。
 
 这是用来干什么的呢，做过交叉编译以及有 C/C++ 项目移植经验的同学应该知道，折腾各种交叉编译工具链，移植编译项目是非常麻烦的一件事，需要自己下载对应工具链，并且配置工具链和编译环境很容易出错导致编译失败。

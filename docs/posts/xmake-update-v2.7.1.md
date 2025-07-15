@@ -5,27 +5,6 @@ date: 2022-08-25
 author: Ruki
 ---
 
-[Xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build utility based on Lua.
-
-It is very lightweight and has no dependencies because it has a built-in Lua runtime.
-
-It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.
-
-We can use it to build project directly like Make/Ninja, or generate project files like CMake/Meson, and it also has a built-in package management system to help users solve the integrated use of C/C++ dependent libraries.
-
-```
-Xmake = Build backend + Project Generator + Package Manager + [Remote|Distributed] Build + Cache
-```
-
-Although not very precise, we can still understand Xmake in the following way:
-
-```
-Xmake ~= Make/Ninja + CMake/Meson + Vcpkg/Conan + distcc + ccache/sccache
-```
-
-* [Github](https://github.com/xmake-io/xmake)
-* [Document](https://xmake.io/)
-
 ## Introduction of new features
 
 In this release, we have refactored and improved the C++20 Modules implementation, improved the dependency graph parsing of module files, added support for STL and User HeaderUnits, and made the CMakelists/compile_commands generator support C++ Modules.

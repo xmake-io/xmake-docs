@@ -4,9 +4,6 @@ tags: [xmake, lua, C/C++, apt, portage, shell, package]
 date: 2021-05-15
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
-
 在 2.5.4 版本中，我们新增了对 Apt、Portage 这两个包管理器的支持，在 Ubuntu/Gentoo 上我们也可以使用 `add_requires` 可以快速集成它们提供的包。
 
 并且我们也改进支持了 Vcpkg 包管理器的支持，新增对 arm/arm64 架构包的安装支持。

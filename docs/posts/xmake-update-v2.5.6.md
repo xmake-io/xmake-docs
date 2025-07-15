@@ -4,16 +4,6 @@ tags: [xmake, lua, C/C++, mirror, package]
 date: 2021-07-26
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started quickly in a short time, allowing users to focus more on actual project development.
-
-This is a stability fix version, which mainly fixes and improves some compatibility issues related to pre-compiled binary packages. In addition, some useful interfaces have been added to set the default compilation platform, architecture and mode, as well as the allowed compilation platform, architecture list, and so on.
-
-* [Github](https://github.com/xmake-io/xmake)
-* [Document](https://xmake.io/)
-
-## New feature introduction
-
 ### Fix windows precompiled package compatibility
 
 The previous version provided preliminary support for the installation of pre-compiled packages under Windows, but because the compatibility of the toolset version was not considered, if the user's VS version is too low, link problems will occur when the package is integrated.

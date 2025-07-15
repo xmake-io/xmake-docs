@@ -4,37 +4,6 @@ tags: [xmake, lua, C/C++, toolchains, xrepo, packages, vcpkg, conan, Apple, Sili
 date: 2021-01-16
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, very friendly to novices, can get started quickly in a short time, allowing users to focus more on the actual project development.
-
-This is the first version of xmake this year and the first version that is fully adapted to support Apple Silicon (macOS ARM) devices.
-
-In this version, we mainly improved the integrated support for C/C++ dependent packages, which is more stable, and can be more flexible to achieve customized configuration compilation.
-
-In addition, we also focused on improving the vs/vsxmake two vs project generator plugins, fixing many details, and also supporting the sub-project `group`, and now it is possible to generate a project structure similar to the following figure.
-
-![](/assets/img/manual/set_group.png)
-
-About Zig, because it has fixed a lot of problems that I have reported before in v0.7.1. Now xmake can already support the compilation of zig projects.
-
-At the same time, we have newly developed a [luarocks-build-xmake](https://github.com/xmake-io/luarocks-build-xmake) plugin to replace luarocks' built-in build system with xmake.
-
-Finally, in this version, we continue to improve the `xmake f --menu` graphical configuration menu, which fully supports mouse operation and scrolling support, and also supports utf8.
-
-* [Github](https://github.com/xmake-io/xmake)
-* [Document](https://xmake.io/)
-
-
-
-
-
-
-
-
-
-
-## New feature introduction
-
 ### Add add_requireconfs to improve package configuration
 
 Despite the previous version, we can define and configure dependent packages by `add_requires("libpng", {configs = {shared = true}})`.

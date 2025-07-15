@@ -4,9 +4,6 @@ tags: [xmake, lua, C/C++, mirror, package]
 date: 2021-06-30
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
-
 2.5.5 版本中，我们继续改进远程包集成的体验，实现在云端预编译包，然后直接下载集成预编译的二进制包。这对于一些编译非常慢的包，可以极大的减少包的安装时间。
 
 另外，新版本中，我们还重新实现了新版的本地包生成方案，完全无缝支持 `add_requires` 和 `add_packages`，从此远程包和本地包可以使用统一的集成方式来维护。

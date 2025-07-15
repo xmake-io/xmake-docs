@@ -5,16 +5,6 @@ date: 2021-08-29
 author: Ruki
 ---
 
-[xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
-
-这个版本，我们新增了很多新特性，不仅增加了对 Vala 和 Metal 语言的编译支持，另外我们还改进了包依赖管理，能够像 npm/package.lock 那样支持对依赖包的锁定和更新，使得用户的项目不会受到上游包仓库的更新变动影响。
-
-此外，我们还提供了一些比较实用的规则， 比如 `utils.bin2c` 可以让用户方便快速的内嵌一些二进制资源文件到代码中去，以头文件的方式获取相关数据。
-
-* [项目源码](https://github.com/xmake-io/xmake)
-* [官方文档](https://xmake.io/zh/)
-* [入门课程](https://xmake.io/zh/)
-
 ## 新特性介绍
 
 ### 新增 Vala 语言支持

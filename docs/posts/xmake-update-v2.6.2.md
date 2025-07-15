@@ -4,35 +4,6 @@ tags: [xmake, lua, C/C++, Linux, Driver]
 date: 2021-12-17
 author: Ruki
 ---
-
-[Xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build utility based on Lua.
-
-It is very lightweight and has no dependencies because it has a built-in Lua runtime.
-
-It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.
-
-We can use it to build project directly like Make/Ninja, or generate project files like CMake/Meson, and it also has a built-in package management system to help users solve the integrated use of C/C++ dependent libraries.
-
-```
-Xmake = Build backend + Project Generator + Package Manager
-```
-
-* [Github](https://github.com/xmake-io/xmake)
-* [Document](https://xmake.io/)
-
-<img src="https://tboox.org/static/img/xmake/xmake-cmake.jpeg" width="30%" />
-
-## New version changes
-
-There are two major new features in this version:
-
-1. Linux kernel driver module construction support
-2. Support for group building and batch running, which can be used to realize the function of `Run all tests`
-
-The rest are mainly scattered function improvements and bugs fixes. You can see the details of the update content at the end of the following. Some of the larger changes will be explained one by one below.
-
-## New feature introduction
-
 ### Build Linux kernel driver module
 
 Xmake may be the first third-party build tool that provides built-in support for Linux kernel driver development.

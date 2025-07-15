@@ -4,9 +4,6 @@ tags: [xmake, lua, C/C++, precompiled, package]
 date: 2021-07-26
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。
-
 这是一个稳定性修复版本，主要修复和改进了一些跟预编译二进制包相关的兼容性问题。另外新增了一些实用的接口来设置默认的编译平台、架构和模式，以及允许的编译平台、架构列表等等。
 
 * [项目源码](https://github.com/xmake-io/xmake)

@@ -4,45 +4,6 @@ tags: [xmake, lua, C/C++, toolchains, xrepo, packages, cross-toolchains]
 date: 2021-02-27
 author: Ruki
 ---
-
-
-[xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started quickly in a short time, allowing users to focus more on actual project development.
-
-In version 2.5.2, we added a heavyweight new feature: `Pull remote cross-compilation toolchain automatically`.
-
-Those who have done cross-compilation and have experience in C/C++ project migration should know that it is very troublesome to toss various cross-compilation toolchains
-and transplant and compile projects. You need to download the corresponding toolchain yourself.
-
-And it is easy to make mistakes in configuring the toolchain and the compilation environment to cause compilation failure.
-
-Now, xmake can already support the automatic download of the toolchain required by the project, and then use the corresponding toolchain to directly compile the project.
-The user does not need to care about how to configure the toolchain. In any case, just execute the `xmake` command to complete the compilation.
-
-![](/assets/img/posts/xmake/muslcc.gif)
-
-Even for the integration of C/C++ dependent packages, you can automatically switch to the corresponding toolchain to compile, install, and integrate.
-Everything is fully automated and does not require users to worry about it.
-
-In addition to the cross-compilation toolchain, we can also automatically pull toolchains, such as specific versions of llvm, llvm-mingw, zig
-and other toolchains to participate in the compilation of C/C++/Zig projects.
-
-Even cmake does not support the automatic pull of the toolchain. At most, it can only cooperate with third-party package management such as vcpkg/conan to integrate C/C++ dependent packages.
-In addition, even for C/C++ dependent packages, xmake has its own native The built-in package management tool has no dependencies at all.
-
-* [Github](https://github.com/xmake-io/xmake)
-* [Document](https://xmake.io/)
-
-
-
-
-
-
-
-
-
-
-## New feature introduction
-
 ### Automatically pull the remote cross-compilation toolchain
 
 Starting from version 2.5.2, we can pull the specified toolchain to integrate the compilation project, and we also support switching the dependent package to the corresponding remote toolchain to participate in the compilation and integration.

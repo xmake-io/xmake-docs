@@ -4,18 +4,6 @@ tags: [xmake, lua, C/C++, lock, package, vala]
 date: 2021-08-29
 author: Ruki
 ---
-
-[xmake](https://github.com/xmake-io/xmake) is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started quickly in a short time, allowing users to focus more on actual project development.
-
-In this version, we have added a lot of new features. Not only did we increase the compilation support for Vala and Metal languages, we also improved the package dependency management, which can support the locking and updating of dependent packages like npm/package.lock, so The user's project will not be affected by the update and change of the upstream package repository.
-
-In addition, we also provide some more practical rules. For example, `utils.bin2c` allows users to easily and quickly embed some binary resource files into the code, and obtain relevant data in the form of header files.
-
-* [Github](https://github.com/xmake-io/xmake)
-* [Document](https://xmake.io/)
-
-## New feature introduction
-
 ### Added Vala language support
 
 In this version, we can already initially support the construction of Vala programs, just apply the `add_rules("vala")` rule.
@@ -44,13 +32,6 @@ More examples: [Vala examples](https://github.com/xmake-io/xmake/tree/master/tes
 ### Added package dependency lock support
 
 This feature is similar to npm's package.lock and cargo's cargo.lock.
-
-
-
-
-
-
-
 
 For example, if we quote some packages, by default, if the version is not specified, xmake will automatically pull the latest version of the package for integrated use each time, for example:
 
