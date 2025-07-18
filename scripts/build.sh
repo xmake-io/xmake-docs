@@ -6,4 +6,4 @@ npm add gray-matter -D
 npm add markdown-it -D
 npm install
 npm run generate-blog
-vitepress build docs
+npx vitepress build docs
