@@ -109,21 +109,21 @@ target("test")
     add_files("src/*.c")
 
     -- 在编译完ios程序后，对目标程序进行ldid签名
-    after_build(function (target))
+    after_build(function (target)
         os.run("ldid -S %s", target:targetfile())
     end
 ```
 
 只需要一行`os.run`就行了，也不需要返回值判断是否运行成功，因为运行失败后，xmake会自动抛异常，中断程序并且提示错误
 
-如果你想在运行失败后，不直接中断xmake，继续往下运行，可以自己加个try快就行了：
+如果你想在运行失败后，不直接中断xmake，继续往下运行，可以自己加个try块就行了：
 
 ```lua
 target("test")
     set_kind("binary")
     add_files("src/*.c")
 
-    after_build(function (target))
+    after_build(function (target)
         try
         {
             function ()
@@ -140,7 +140,7 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 
-    after_build(function (target))
+    after_build(function (target)
         try
         {
             function ()
