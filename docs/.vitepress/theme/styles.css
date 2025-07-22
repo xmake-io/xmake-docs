@@ -84,3 +84,9 @@
 .DocSearch {
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
+
+/* sidebar */
+:root {
+  --vp-sidebar-width: 300px;
+  --vp-sidebar-bg-color: var(--vp-c-bg-alt);
+}

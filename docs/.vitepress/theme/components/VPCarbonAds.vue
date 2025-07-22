@@ -60,8 +60,7 @@ if (carbonOptions) {
   align-items: center;
   padding: 24px;
   border-radius: 12px;
-  min-height: 100px;
-  max-height: 220px;
+  max-width: 300px;
   text-align: center;
   line-height: 18px;
   font-size: 12px;
