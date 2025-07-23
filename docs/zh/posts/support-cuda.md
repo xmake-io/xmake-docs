@@ -89,7 +89,7 @@ $ xmake
 如果想要测试xmake对当前cuda环境的探测支持，可以直接运行：
 
 ```bash
-$ xmake l detect.sdks.find_cuda_toolchains
+$ xmake l detect.sdks.find_cuda
 ```
 
 ```js
@@ -109,7 +109,7 @@ $ xmake l detect.sdks.find_cuda_toolchains
 }
 ```
 
-来测试检测情况，甚至可以帮忙贡献相关检测代码[find_cuda_toolchains.lua](https://github.com/xmake-io/xmake/blob/master/xmake/modules/detect/sdks/find_cuda_toolchains.lua)来改进xmake的检测过程。
+来测试检测情况，甚至可以帮忙贡献相关检测代码[find_cuda.lua](https://github.com/xmake-io/xmake/blob/master/xmake/modules/detect/sdks/find_cuda.lua)来改进xmake的检测过程。
 
 
 #### 其他说明
