@@ -9,8 +9,6 @@ import { fileURLToPath, URL } from 'node:url'
 
 import llmstxt from 'vitepress-plugin-llms'
 
-const prod = !!process.env.NETLIFY
-
 export default defineConfig({
   title: "Xmake",
   metaChunk: true,
@@ -77,8 +75,7 @@ export default defineConfig({
   vite: {
     plugins: [
       groupIconVitePlugin(),
-      prod &&
-        llmstxt()
+      llmstxt()
     ],
     experimental: {
       enableNativePlugin: true
@@ -112,17 +109,15 @@ export default defineConfig({
     zh: { label: '简体中文' }
   },
 
-  transformPageData: prod
-    ? (pageData, ctx) => {
-        const site = resolveSiteDataByRoute(
-          ctx.siteConfig.site,
-          pageData.relativePath
-        )
-        const title = `${pageData.title || site.title} | ${pageData.description || site.description}`
-        ;((pageData.frontmatter.head ??= []) as HeadConfig[]).push(
-          ['meta', { property: 'og:locale', content: site.lang }],
-          ['meta', { property: 'og:title', content: title }]
-        )
-      }
-    : undefined
+  transformPageData: (pageData, ctx) => {
+    const site = resolveSiteDataByRoute(
+      ctx.siteConfig.site,
+      pageData.relativePath
+    )
+    const title = `${pageData.title || site.title} | ${pageData.description || site.description}`
+    ;((pageData.frontmatter.head ??= []) as HeadConfig[]).push(
+      ['meta', { property: 'og:locale', content: site.lang }],
+      ['meta', { property: 'og:title', content: title }]
+    )
+  }
 })
