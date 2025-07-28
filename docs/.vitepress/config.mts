@@ -57,6 +57,11 @@ export default defineConfig({
 
     search: {
       provider: 'local',
+      options: {
+        searchOptions: {
+          detailedView: true
+        }
+      }
     },
 
     /*
