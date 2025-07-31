@@ -74,7 +74,7 @@ export default defineConfig({
       }
     },*/
 
-    carbonAds: { code: 'CEBDT27Y', placement: 'xmakeio' }
+    carbonAds: { code: 'CE7I52QU', placement: 'xmakeio' }
   },
 
   vite: {
