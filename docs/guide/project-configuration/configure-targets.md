@@ -300,7 +300,7 @@ target("app")
 
 ```lua
 target("app")
-    add_files("src/*.cpp", {exclude = "src/test.cpp"})  -- exclude test files
+    add_files("src/*.cpp|test.cpp")  -- exclude src/test.cpp file
 ```
 
 ### Adding Header Files

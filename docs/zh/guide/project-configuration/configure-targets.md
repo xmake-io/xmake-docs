@@ -303,7 +303,7 @@ target("app")
 
 ```lua
 target("app")
-    add_files("src/*.cpp", {exclude = "src/test.cpp"})  -- 排除测试文件
+    add_files("src/*.cpp|test.cpp")  -- 排除src目录下测试文件
 ```
 
 ### 添加头文件
