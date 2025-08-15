@@ -21,7 +21,7 @@ wget https://xmake.io/shget.text -O - | bash
 ```
 
 ```powershell [powershell]
-Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content
+irm https://xmake.io/psget.text | iex
 ```
 
 :::
@@ -31,7 +31,7 @@ Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicPars
 ```sh
 curl -fsSL https://xmake.io/shget.text | bash -s dev
 curl -fsSL https://xmake.io/shget.text | bash -s v2.7.7
-Invoke-Expression (Invoke-Webrequest 'https://xmake.io/psget.text' -UseBasicParsing).Content v2.7.7
+& ([ScriptBlock]::Create((irm https://xmake.io/psget.text))) -version 2.7.7
 ```
 
 ::: tip 注意
