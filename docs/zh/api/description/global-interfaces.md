@@ -1,10 +1,10 @@
-# 全局接口
+# 全局接口 {#global-interfaces}
 
 全局接口影响整个工程描述，被调用后，后面被包含进来的所有子`xmake.lua`都会受影响。
 
 ## includes
 
-### 添加子工程文件和目录
+### 添加子工程文件和目录 {#add-sub-project-and-configurations}
 
 #### 引入子目录配置
 
