@@ -49,6 +49,8 @@ target("test")
     add_files("src/*.c")
 ```
 
+#### Add helper configurations {add-helper-configurations}
+
 Above v2.8.5 can includes include some built-in helper configuration scripts, e.g.:
 
 ```lua
@@ -79,7 +81,7 @@ only introduces the helper scripts related to check_cfuncs in the check director
 
 With `@builtin` we can distinguish between the files in the current user's project directory and the built-in files in the xmake installation directory.
 
-#### Scope Description
+#### Scope Description {#scope-description}
 
 Configurations introduced by `includes` inherit and take effect in a tree-like hierarchy. That is, global configurations in the current `xmake.lua` file will apply to all `includes` sub-xmake.lua files. For example:
 
@@ -106,7 +108,7 @@ For example, if the imported `foo/xmake.lua` contains a global `add_defines` con
 This scope isolation can avoid many hidden configuration conflicts and scope pollution. In highly nested project configurations, implicit global imports can cause many problems.
 :::
 
-#### Modular and Reusable Configurations
+#### Modular and Reusable Configurations {#modular-reusable}
 
 So, if I want to modularize and reuse configurations, how should I do it? Simply encapsulate the configurations you want to reuse within a function, for example:
 

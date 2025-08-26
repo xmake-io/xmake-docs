@@ -37,7 +37,7 @@ target("test")
     add_files("src/*.c")
 ```
 
-#### 递归引入子配置
+#### 递归引入子配置 {#recursively-add-configurations}
 
 我们也可以通过模式匹配的方式，递归添加多个工程子目录文件：
 
@@ -49,7 +49,7 @@ target("test")
     add_files("src/*.c")
 ```
 
-#### 引入内置的辅助配置
+#### 引入内置的辅助配置 {#add-helper-configurations}
 
 2.8.5 版本可以 includes 包含内置的一些辅助配置脚本，例如：
 
@@ -81,7 +81,7 @@ includes("@builtin/check/check_cfuncs.lua")
 
 而通过 `@builtin` 我们就能很好的区分是引入当前用户工程目录下的文件，还是 xmake 安装目录下的内置文件。
 
-#### 作用域说明
+#### 作用域说明 {#scope-description}
 
 includes 引入的配置是按树状层级结构来继承生效的，也就是当前 xmake.lua 中的全局配置，会对所有 includes 的子 xmake.lua 配置生效，例如：
 
@@ -108,7 +108,7 @@ target("test")
 这种作用域隔离，能规避很多隐藏的配置冲突和作用域污染，在嵌套层级过多的工程配置中，隐式的全局引入，会导致很多的问题。
 :::
 
-#### 模块化复用配置
+#### 模块化复用配置 {#modular-reusable}
 
 那如果我想模块化复用配置，应该怎么做呢？只需要通过 function 去封装下需要复用的配置就行了，例如：
 
