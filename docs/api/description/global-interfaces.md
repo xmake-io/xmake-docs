@@ -6,6 +6,8 @@ The global interface affects the whole project description scope and all sub-pro
 
 ### Add sub-project files and directories
 
+#### Add subdirectory configuration
+
 We can use this interfaces to add sub-project files (xmake.lua) or directories with xmake.lua.
 
 ```
@@ -34,6 +36,8 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 ```
+
+#### Recursively add sub-configuration
 
 We can also recursively add multiple project sub-directory files through pattern matching.
 
@@ -74,6 +78,86 @@ includes("@builtin/check/check_cfuncs.lua")
 only introduces the helper scripts related to check_cfuncs in the check directory.
 
 With `@builtin` we can distinguish between the files in the current user's project directory and the built-in files in the xmake installation directory.
+
+#### Scope Description
+
+Configurations introduced by `includes` inherit and take effect in a tree-like hierarchy. That is, global configurations in the current `xmake.lua` file will apply to all `includes` sub-xmake.lua files. For example:
+
+```
+projectdir
+    - xmake.lua
+    - foo/xmake.lua
+    - bar/xmake.lua
+```
+
+In the above structure, all `includes` configurations in `projectdir/xmake.lua` are accessible in `foo/xmake.lua` and `bar/xmake.lua`, but not vice versa.
+
+```lua
+includes("foo")
+includes("bar")
+
+target("test")
+    add_files("src/*.c")
+```
+
+For example, if the imported `foo/xmake.lua` contains a global `add_defines` configuration, it will not take effect on the test target because foo/xmake.lua is a child configuration and cannot affect the parent configuration.
+
+::: Tip NOTE
+This scope isolation can avoid many hidden configuration conflicts and scope pollution. In highly nested project configurations, implicit global imports can cause many problems.
+:::
+
+#### Modular and Reusable Configurations
+
+So, if I want to modularize and reuse configurations, how should I do it? Simply encapsulate the configurations you want to reuse within a function, for example:
+
+```lua [foo/xmake.lua]
+function add_foo_configs()
+    add_defines("FOO")
+    -- ...
+end
+```
+
+```lua [bar/xmake.lua]
+function add_bar_configs()
+    add_defines("BAR")
+    -- ...
+end
+```
+
+```lua [xmake.lua]
+includes("foo")
+includes("bar")
+
+target("test1")
+    add_files("src/*.c")
+    add_foo_configs()
+
+target("test2")
+    add_files("src/*.c")
+    add_bar_configs()
+```
+
+This approach not only avoids configuration conflicts caused by implicit global imports but also supports per-target configuration, enabling configuration module reuse and greater flexibility.
+
+If you want this to take effect globally, just move it to the global scope.
+
+```lua [xmake.lua]
+includes("foo")
+includes("bar")
+
+add_foo_configs()
+add_bar_configs()
+
+target("test1")
+    add_files("src/*.c")
+
+target("test2")
+    add_files("src/*.c")
+```
+
+::: Tip NOTE
+Also, target scope configurations can be added repeatedly. In many cases, you don't need to encapsulate functions. Simply organize your configurations with includes, then update the target configurations repeatedly in different xmake.lua files.
+:::
 
 ## set_project
 

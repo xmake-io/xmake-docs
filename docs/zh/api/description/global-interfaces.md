@@ -6,7 +6,9 @@
 
 ### 添加子工程文件和目录
 
-我们能够使用此接口添加工程子文件(xmake.lua)或者带有xmake.lua的工程子目录。
+#### 引入子目录配置
+
+我们能够使用此接口添加工程子文件 (xmake.lua) 或者带有 xmake.lua 的工程子目录。
 
 ```
 projectdir
@@ -35,6 +37,8 @@ target("test")
     add_files("src/*.c")
 ```
 
+#### 递归引入子配置
+
 我们也可以通过模式匹配的方式，递归添加多个工程子目录文件：
 
 ```lua
@@ -44,6 +48,8 @@ target("test")
     set_kind("binary")
     add_files("src/*.c")
 ```
+
+#### 引入内置的辅助配置
 
 2.8.5 版本可以 includes 包含内置的一些辅助配置脚本，例如：
 
@@ -74,6 +80,86 @@ includes("@builtin/check/check_cfuncs.lua")
 仅仅引入 check 目录下 check_cfuncs 相关的辅助脚本。
 
 而通过 `@builtin` 我们就能很好的区分是引入当前用户工程目录下的文件，还是 xmake 安装目录下的内置文件。
+
+#### 作用域说明
+
+includes 引入的配置是按树状层级结构来继承生效的，也就是当前 xmake.lua 中的全局配置，会对所有 includes 的子 xmake.lua 配置生效，例如：
+
+```
+projectdir
+  - xmake.lua
+  - foo/xmake.lua
+  - bar/xmake.lua
+```
+
+上面的组织结构中，在 `projectdir/xmake.lua` 中的 includes 的所有配置，在 `foo/xmake.lua` 和 `bar/xmake.lua` 中都是可以访问的，但是反过来不行。
+
+```lua
+includes("foo")
+includes("bar")
+
+target("test")
+    add_files("src/*.c")
+```
+
+就比如上面的情况，如果引入的 `foo/xmake.lua` 中有全局的 `add_defines` 配置，是无法对 test target 生效的，因为 foo/xmake.lua 属于子配置，无法影响到父配置。
+
+::: tip 注意
+这种作用域隔离，能规避很多隐藏的配置冲突和作用域污染，在嵌套层级过多的工程配置中，隐式的全局引入，会导致很多的问题。
+:::
+
+#### 模块化复用配置
+
+那如果我想模块化复用配置，应该怎么做呢？只需要通过 function 去封装下需要复用的配置就行了，例如：
+
+```lua [foo/xmake.lua]
+function add_foo_configs()
+    add_defines("FOO")
+    -- ...
+end
+```
+
+```lua [bar/xmake.lua]
+function add_bar_configs()
+    add_defines("BAR")
+    -- ...
+end
+```
+
+```lua [xmake.lua]
+includes("foo")
+includes("bar")
+
+target("test1")
+    add_files("src/*.c")
+    add_foo_configs()
+
+target("test2")
+    add_files("src/*.c")
+    add_bar_configs()
+```
+
+这种方式，不仅可以规避隐式的全局引入导致的配置冲突，而且还能支持按 target 粒度分别配置，不仅支持配置模块复用，而且更加地灵活。
+
+如果想要全局生效，也只需要移到全局跟作用域就行。
+
+```lua [xmake.lua]
+includes("foo")
+includes("bar")
+
+add_foo_configs()
+add_bar_configs()
+
+target("test1")
+    add_files("src/*.c")
+
+target("test2")
+    add_files("src/*.c")
+```
+
+::: tip 注意
+另外，target 的域配置是可以重复进入追加配置的，很多情况下，都不需要封装 function，简简单单 includes 组织配置，重复进入 target 配置域在不同 xmake.lua 中更新 target 配置即可。
+:::
 
 ## set_project
 
