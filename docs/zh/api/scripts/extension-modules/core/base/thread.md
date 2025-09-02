@@ -1,0 +1,322 @@
+# core.base.thread
+
+提供原生线程支持，用于并发编程，包括线程创建、同步原语和线程间通信。
+
+## thread.start
+
+- 启动线程
+
+创建并启动一个线程执行回调函数。
+
+```lua
+local t = thread.start(callback_function, ...)
+```
+
+参数：`callback` 在线程中执行的回调函数，`...` 传递给回调函数的额外参数
+
+返回值：返回一个线程对象，可用于等待线程完成
+
+## thread.start_named
+
+- 启动命名线程
+
+创建并启动一个具有指定名称和回调函数的新线程。
+
+```lua
+local t = thread.start_named("thread_name", callback_function, ...)
+```
+
+参数：`name` 线程名称，`callback` 在线程中执行的回调函数，`...` 传递给回调函数的额外参数
+
+返回值：返回一个线程对象，可用于等待线程完成
+
+示例：
+
+```lua
+import("core.base.thread")
+
+function callback(id)
+    import("core.base.thread")
+    print("%s: %d starting ..", thread.running(), id)
+    for i = 1, 10 do
+        print("%s: %d", thread.running(), i)
+        os.sleep(1000)
+    end
+    print("%s: %d end", thread.running(), id)
+end
+
+function main()
+    local t0 = thread.start_named("thread_0", callback, 0)
+    local t1 = thread.start_named("thread_1", callback, 1)
+    t0:wait(-1)
+    t1:wait(-1)
+end
+```
+
+## thread.running
+
+- 获取当前线程名称
+
+返回当前运行线程的名称。
+
+```lua
+local name = thread.running()
+```
+
+返回值：返回当前线程的名称字符串
+
+## thread.mutex
+
+- 创建互斥锁对象
+
+创建一个新的互斥锁用于线程同步。
+
+```lua
+local mutex = thread.mutex()
+```
+
+返回值：返回一个互斥锁对象，具有以下方法：`mutex:lock()` 锁定互斥锁，`mutex:unlock()` 解锁互斥锁
+
+示例：
+
+```lua
+import("core.base.thread")
+
+function callback(mutex)
+    import("core.base.thread")
+    print("%s: starting ..", thread.running())
+    for i = 1, 10 do
+        mutex:lock()
+        print("%s: %d", thread.running(), i)
+        mutex:unlock()
+        os.sleep(1000)
+    end
+    print("%s: end", thread.running())
+end
+
+function main()
+    local mutex = thread.mutex()
+    local t0 = thread.start_named("thread_0", callback, mutex)
+    local t1 = thread.start_named("thread_1", callback, mutex)
+    t0:wait(-1)
+    t1:wait(-1)
+end
+```
+
+## thread.event
+
+- 创建事件对象
+
+创建一个新的事件用于线程信号和同步。
+
+```lua
+local event = thread.event()
+```
+
+返回值：返回一个事件对象，具有以下方法：`event:wait(timeout)` 等待事件信号，`event:post()` 发送事件信号
+
+参数：`timeout` 超时时间（毫秒），-1表示无限等待
+
+示例：
+
+```lua
+import("core.base.thread")
+
+function callback(event)
+    import("core.base.thread")
+    print("%s: starting ..", thread.running())
+    while true do
+        print("%s: waiting ..", thread.running())
+        if event:wait(-1) > 0 then
+            print("%s: triggered", thread.running())
+        end
+    end
+end
+
+function main()
+    local event = thread.event()
+    local t = thread.start_named("keyboard", callback, event)
+    while true do
+        local ch = io.read()
+        if ch then
+            event:post()
+        end
+    end
+    t:wait(-1)
+end
+```
+
+## thread.semaphore
+
+- 创建信号量对象
+
+创建一个新的信号量用于线程同步和资源计数。
+
+```lua
+local semaphore = thread.semaphore(name, initial_count)
+```
+
+参数：`name` 信号量名称，`initial_count` 初始计数值
+
+返回值：返回一个信号量对象，具有以下方法：`semaphore:wait(timeout)` 等待信号量（减少计数），`semaphore:post(count)` 发送信号量（增加计数）
+
+示例：
+
+```lua
+import("core.base.thread")
+
+function callback(semaphore)
+    import("core.base.thread")
+    print("%s: starting ..", thread.running())
+    while true do
+        print("%s: waiting ..", thread.running())
+        if semaphore:wait(-1) > 0 then
+            print("%s: triggered", thread.running())
+        end
+    end
+end
+
+function main()
+    local semaphore = thread.semaphore("", 1)
+    local t = thread.start_named("keyboard", callback, semaphore)
+    while true do
+        local ch = io.read()
+        if ch then
+            semaphore:post(2)
+        end
+    end
+    t:wait(-1)
+end
+```
+
+## thread.queue
+
+- 创建线程安全队列对象
+
+创建一个新的线程安全队列用于线程间数据通信。
+
+```lua
+local queue = thread.queue()
+```
+
+返回值：返回一个队列对象，具有以下方法：`queue:push(value)` 向队列推送值，`queue:pop()` 从队列弹出值，`queue:empty()` 检查队列是否为空
+
+示例：
+
+```lua
+import("core.base.thread")
+
+function callback(event, queue)
+    print("starting ..")
+    while true do
+        print("waiting ..")
+        if event:wait(-1) > 0 then
+            while not queue:empty() do
+                print("  -> %s", queue:pop())
+            end
+        end
+    end
+end
+
+function main()
+    local event = thread.event()
+    local queue = thread.queue()
+    local t = thread.start_named("", callback, event, queue)
+    while true do
+        local ch = io.read()
+        if ch then
+            queue:push(ch)
+            event:post()
+        end
+    end
+    t:wait(-1)
+end
+```
+
+## thread.sharedata
+
+- 创建共享数据对象
+
+创建一个新的共享数据对象用于线程间数据共享。
+
+```lua
+local sharedata = thread.sharedata()
+```
+
+返回值：返回一个共享数据对象，具有以下方法：`sharedata:set(value)` 设置共享数据值，`sharedata:get()` 获取共享数据值
+
+示例：
+
+```lua
+import("core.base.thread")
+
+function callback(event, sharedata)
+    print("starting ..")
+    while true do
+        print("waiting ..")
+        if event:wait(-1) > 0 then
+            print("  -> %s", sharedata:get())
+        end
+    end
+end
+
+function main()
+    local event = thread.event()
+    local sharedata = thread.sharedata()
+    local t = thread.start_named("", callback, event, sharedata)
+    while true do
+        local ch = io.read()
+        if ch then
+            sharedata:set(ch)
+            event:post()
+        end
+    end
+    t:wait(-1)
+end
+```
+
+## thread:wait
+
+- 等待线程完成（线程实例方法）
+
+等待线程完成执行。此方法支持与协程混合调度，可以在协程中等待线程完成。
+
+```lua
+thread:wait(timeout)
+```
+
+参数：`timeout` 超时时间（毫秒），-1表示无限等待
+
+返回值：返回表示等待结果的状态码
+
+示例（线程与协程混合调度）：
+
+```lua
+import("core.base.thread")
+import("core.base.scheduler")
+
+function thread_loop()
+    import("core.base.thread")
+    print("%s: starting ..", thread.running())
+    for i = 1, 10 do
+        print("%s: %d", thread.running(), i)
+        os.sleep(1000)
+    end
+    print("%s: end", thread.running())
+end
+
+function coroutine_loop()
+    print("%s: starting ..", scheduler.co_running())
+    for i = 1, 10 do
+        print("%s: %d", scheduler.co_running(), i)
+        os.sleep(1000)
+    end
+    print("%s: end", scheduler.co_running())
+end
+
+function main()
+    scheduler.co_start_named("coroutine", coroutine_loop)
+    local t = thread.start_named("thread", thread_loop)
+    t:wait(-1)  -- 在协程中等待线程完成
+end
+```
