@@ -16,6 +16,10 @@ local t = thread.start(callback_function, ...)
 
 返回值：返回一个线程对象，可用于等待线程完成
 
+::: tip 注意
+每个线程都是单独的 Lua VM 实例，它们的 Lua 变量状态是完全隔离的，不能直接共享。参数传入是单向的，内部通过序列化方式传入，因此只支持 `string`、`table`、`number` 等支持序列化的参数。
+:::
+
 ## thread.start_named
 
 - 启动命名线程
@@ -29,6 +33,10 @@ local t = thread.start_named("thread_name", callback_function, ...)
 参数：`name` 线程名称，`callback` 在线程中执行的回调函数，`...` 传递给回调函数的额外参数
 
 返回值：返回一个线程对象，可用于等待线程完成
+
+::: tip 注意
+参数传入是单向的，内部通过序列化方式传入，因此只支持 `string`、`table`、`number` 等支持序列化的参数。
+:::
 
 示例：
 
@@ -77,6 +85,10 @@ local mutex = thread.mutex()
 
 返回值：返回一个互斥锁对象，具有以下方法：`mutex:lock()` 锁定互斥锁，`mutex:unlock()` 解锁互斥锁
 
+::: tip 注意
+互斥锁可以跨线程访问，用于线程间同步。
+:::
+
 示例：
 
 ```lua
@@ -113,9 +125,13 @@ end
 local event = thread.event()
 ```
 
+参数：`timeout` 超时时间（毫秒），-1表示无限等待
+
 返回值：返回一个事件对象，具有以下方法：`event:wait(timeout)` 等待事件信号，`event:post()` 发送事件信号
 
-参数：`timeout` 超时时间（毫秒），-1表示无限等待
+::: tip 注意
+事件对象可以跨线程访问，用于线程间信号通信。
+:::
 
 示例：
 
@@ -160,6 +176,10 @@ local semaphore = thread.semaphore(name, initial_count)
 
 返回值：返回一个信号量对象，具有以下方法：`semaphore:wait(timeout)` 等待信号量（减少计数），`semaphore:post(count)` 发送信号量（增加计数）
 
+::: tip 注意
+信号量可以跨线程访问，用于线程间资源计数和同步。
+:::
+
 示例：
 
 ```lua
@@ -200,6 +220,10 @@ local queue = thread.queue()
 ```
 
 返回值：返回一个队列对象，具有以下方法：`queue:push(value)` 向队列推送值，`queue:pop()` 从队列弹出值，`queue:empty()` 检查队列是否为空
+
+::: tip 注意
+队列是线程间数据通信的主要方式，支持跨线程访问。
+:::
 
 示例：
 
@@ -244,6 +268,10 @@ local sharedata = thread.sharedata()
 ```
 
 返回值：返回一个共享数据对象，具有以下方法：`sharedata:set(value)` 设置共享数据值，`sharedata:get()` 获取共享数据值
+
+::: tip 注意
+共享数据对象是线程间数据共享的主要方式，支持跨线程访问。
+:::
 
 示例：
 

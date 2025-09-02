@@ -12,14 +12,13 @@ Creates and starts a thread to execute a callback function.
 local t = thread.start(callback_function, ...)
 ```
 
-### Parameters
+Parameters: `callback` callback function to execute in the thread, `...` additional arguments passed to the callback function
 
-- `callback`: Callback function to execute in the thread
-- `...`: Additional arguments passed to the callback function
+Return Value: Returns a thread object that can be used to wait for thread completion
 
-### Return Value
-
-Returns a thread object that can be used to wait for thread completion.
+::: tip NOTE
+Each thread is a separate Lua VM instance, their Lua variable states are completely isolated and cannot be directly shared. Parameters are passed unidirectionally and internally serialized, therefore only support serializable parameters like `string`, `table`, `number`, etc.
+:::
 
 ## thread.start_named
 
@@ -31,15 +30,13 @@ Creates and starts a new thread with the specified name and callback function.
 local t = thread.start_named("thread_name", callback_function, ...)
 ```
 
-### Parameters
+Parameters: `name` thread name, `callback` callback function to execute in the thread, `...` additional arguments passed to the callback function
 
-- `name`: Thread name
-- `callback`: Callback function to execute in the thread
-- `...`: Additional arguments passed to the callback function
+Return Value: Returns a thread object that can be used to wait for thread completion
 
-### Return Value
-
-Returns a thread object that can be used to wait for thread completion.
+::: tip NOTE
+Parameters are passed unidirectionally and internally serialized, therefore only support serializable parameters like `string`, `table`, `number`, etc.
+:::
 
 ### Example
 
@@ -88,12 +85,11 @@ Creates a new mutex for thread synchronization.
 local mutex = thread.mutex()
 ```
 
-### Return Value
+Return Value: Returns a mutex object with the following methods: `mutex:lock()` lock the mutex, `mutex:unlock()` unlock the mutex
 
-Returns a mutex object with the following methods:
-
-- `mutex:lock()`: Lock the mutex
-- `mutex:unlock()`: Unlock the mutex
+::: tip NOTE
+Mutex can be accessed across threads for inter-thread synchronization.
+:::
 
 ### Example
 
@@ -131,16 +127,13 @@ Creates a new event for thread signaling and synchronization.
 local event = thread.event()
 ```
 
-### Return Value
+Parameters: `timeout` timeout in milliseconds (-1 for infinite wait)
 
-Returns an event object with the following methods:
+Return Value: Returns an event object with the following methods: `event:wait(timeout)` wait for the event to be signaled, `event:post()` signal the event
 
-- `event:wait(timeout)`: Wait for the event to be signaled
-- `event:post()`: Signal the event
-
-### Parameters
-
-- `timeout`: Timeout in milliseconds (-1 for infinite wait)
+::: tip NOTE
+Event object can be accessed across threads for inter-thread signaling.
+:::
 
 ### Example
 
@@ -181,17 +174,13 @@ Creates a new semaphore for thread synchronization and resource counting.
 local semaphore = thread.semaphore(name, initial_count)
 ```
 
-### Parameters
+Parameters: `name` semaphore name, `initial_count` initial count value
 
-- `name`: Semaphore name
-- `initial_count`: Initial count value
+Return Value: Returns a semaphore object with the following methods: `semaphore:wait(timeout)` wait for semaphore (decrement count), `semaphore:post(count)` post to semaphore (increment count)
 
-### Return Value
-
-Returns a semaphore object with the following methods:
-
-- `semaphore:wait(timeout)`: Wait for semaphore (decrement count)
-- `semaphore:post(count)`: Post to semaphore (increment count)
+::: tip NOTE
+Semaphore can be accessed across threads for inter-thread resource counting and synchronization.
+:::
 
 ### Example
 
@@ -232,13 +221,11 @@ Creates a new thread-safe queue for inter-thread data communication.
 local queue = thread.queue()
 ```
 
-### Return Value
+Return Value: Returns a queue object with the following methods: `queue:push(value)` push a value to the queue, `queue:pop()` pop a value from the queue, `queue:empty()` check if the queue is empty
 
-Returns a queue object with the following methods:
-
-- `queue:push(value)`: Push a value to the queue
-- `queue:pop()`: Pop a value from the queue
-- `queue:empty()`: Check if the queue is empty
+::: tip NOTE
+Queue is the primary way for inter-thread data communication and supports cross-thread access.
+:::
 
 ### Example
 
@@ -282,12 +269,11 @@ Creates a new shared data object for inter-thread data sharing.
 local sharedata = thread.sharedata()
 ```
 
-### Return Value
+Return Value: Returns a shared data object with the following methods: `sharedata:set(value)` set the shared data value, `sharedata:get()` get the shared data value
 
-Returns a shared data object with the following methods:
-
-- `sharedata:set(value)`: Set the shared data value
-- `sharedata:get()`: Get the shared data value
+::: tip NOTE
+Shared data object is the primary way for inter-thread data sharing and supports cross-thread access.
+:::
 
 ### Example
 
@@ -329,13 +315,9 @@ Waits for the thread to complete execution. This method supports mixed schedulin
 thread:wait(timeout)
 ```
 
-### Parameters
+Parameters: `timeout` timeout in milliseconds (-1 for infinite wait)
 
-- `timeout`: Timeout in milliseconds (-1 for infinite wait)
-
-### Return Value
-
-Returns a status code indicating the wait result.
+Return Value: Returns a status code indicating the wait result
 
 ### Example (Mixed Thread and Coroutine Scheduling)
 
