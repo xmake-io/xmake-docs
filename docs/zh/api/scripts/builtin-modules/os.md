@@ -478,7 +478,7 @@ os.raise("an error occurred")
 
 ```lua
 -- 抛出一个带 "an error occurred" 信息的异常
-os.raise(3, "an error occurred")
+os.raiselevel(3, "an error occurred")
 ```
 
 ## os.features
