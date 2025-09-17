@@ -663,10 +663,10 @@ Similar to the usage of bin2c rules, see the complete example: [glsl2spv example
 
 In addition to the `utils.glsl2spv` rule, we now support the `utils.hlsl2spv` rule.
 
-```sh
+```lua
 add_rules("mode.debug", "mode.release")
 
-add_requires("glslang", {configs = {binaryonly = true}})
+add_requires("directxshadercompiler")
 
 target("test")
     set_kind("binary")
