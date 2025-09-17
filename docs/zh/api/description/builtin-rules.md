@@ -663,16 +663,16 @@ static unsigned char g_test_frag_spv_data[] = {
 
 除了 `utils.glsl2spv` 规则，我们现在还支持 `utils.hlsl2spv` 规则。
 
-```sh
+```lua
 add_rules("mode.debug", "mode.release")
 
-add_requires("glslang", {configs = {binaryonly = true}})
+add_requires("directxshadercompiler")
 
 target("test")
     set_kind("binary")
     add_rules("utils.hlsl2spv", {bin2c = true})
     add_files("src/*.c")
-    add_files("src/*.hlsl", "src/*.hlsl")
+    add_files("src/*.hlsl")
     add_packages("directxshadercompiler")
 ```
 
