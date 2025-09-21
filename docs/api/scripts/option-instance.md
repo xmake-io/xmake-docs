@@ -36,6 +36,10 @@ option:set("defines", "SDL_MAIN_HANDLED")
 option:set("configvar", option:name(), option:value(), {quote = false})
 ```
 
+::: tip NOTE
+Any script scope configuration using `option:set("xxx", ...)` is completely consistent with the corresponding `set_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `set_xxx` interface documentation in the description scope.
+:::
+
 ## option:add
 
 - Add to the values of the option by name
@@ -46,6 +50,10 @@ option:add("links", "sdl2")
 -- add defined macros
 option:add("defines", "SDL_MAIN_HANDLED")
 ```
+
+::: tip NOTE
+Any script scope configuration using `option:add("xxx", ...)` is completely consistent with the corresponding `add_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `add_xxx` interface documentation in the description scope.
+:::
 
 ::: tip NOTE
 The document here is still in progress, please be patient, you can also speed up the update of the document by sponsoring or submiting pr

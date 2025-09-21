@@ -39,6 +39,10 @@ option:set("defines", "SDL_MAIN_HANDLED")
 option:set("configvar", option:name(), option:value(), {quote = false})
 ```
 
+::: tip 注意
+任何脚本域下对 `option:set("xxx", ...)` 的配置，都是完全跟描述域的 `set_xxx` 接口保持一致的，具体参数说明，可以直接参考描述域下对应的 `set_xxx` 接口说明。
+:::
+
 ## option:add
 
 - 按名称添加到选项的值
@@ -49,6 +53,10 @@ option:add("links", "sdl2")
 -- add defined macros
 option:add("defines", "SDL_MAIN_HANDLED")
 ```
+
+::: tip 注意
+任何脚本域下对 `option:add("xxx", ...)` 的配置，都是完全跟描述域的 `add_xxx` 接口保持一致的，具体参数说明，可以直接参考描述域下对应的 `add_xxx` 接口说明。
+:::
 
 ::: tip 注意
 此处文档还在进行中，请耐心等待，你也可以通过赞助或者提 pr 来加速文档的更新

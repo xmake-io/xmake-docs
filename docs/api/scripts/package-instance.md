@@ -34,6 +34,10 @@ package:set("links", "sdl2")
 package:set("defines", "SDL_MAIN_HANDLED")
 ```
 
+::: tip NOTE
+Any script scope configuration using `package:set("xxx", ...)` is completely consistent with the corresponding `set_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `set_xxx` interface documentation in the description scope.
+:::
+
 ## package:add
 
 - Add to the values of the package by name
@@ -46,6 +50,10 @@ package:add("links", "sdl2")
 -- add defined macros
 package:add("defines", "SDL_MAIN_HANDLED")
 ```
+
+::: tip NOTE
+Any script scope configuration using `package:add("xxx", ...)` is completely consistent with the corresponding `add_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `add_xxx` interface documentation in the description scope.
+:::
 
 ## package:license
 

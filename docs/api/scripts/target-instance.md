@@ -30,6 +30,10 @@ target:set("links", "sdl2")
 target:set("defines", "SDL_MAIN_HANDLED")
 ```
 
+::: tip NOTE
+Any script scope configuration using `target:set("xxx", ...)` is completely consistent with the corresponding `set_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `set_xxx` interface documentation in the description scope.
+:::
+
 ## target:add
 
 - Add to the values of the target by name
@@ -40,6 +44,10 @@ target:add("links", "sdl2")
 -- add defined macros
 target:add("defines", "SDL_MAIN_HANDLED")
 ```
+
+::: tip NOTE
+Any script scope configuration using `target:add("xxx", ...)` is completely consistent with the corresponding `add_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `add_xxx` interface documentation in the description scope.
+:::
 
 ## target:kind
 

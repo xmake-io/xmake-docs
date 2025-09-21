@@ -36,6 +36,10 @@ package:set("links", "sdl2")
 package:set("defines", "SDL_MAIN_HANDLED")
 ```
 
+::: tip 注意
+任何脚本域下对 `package:set("xxx", ...)` 的配置，都是完全跟描述域的 `set_xxx` 接口保持一致的，具体参数说明，可以直接参考描述域下对应的 `set_xxx` 接口说明。
+:::
+
 ## package:add
 
 - 按名称添加到包的值
@@ -48,6 +52,10 @@ package:add("links", "sdl2")
 -- add defined macros
 package:add("defines", "SDL_MAIN_HANDLED")
 ```
+
+::: tip 注意
+任何脚本域下对 `package:add("xxx", ...)` 的配置，都是完全跟描述域的 `add_xxx` 接口保持一致的，具体参数说明，可以直接参考描述域下对应的 `add_xxx` 接口说明。
+:::
 
 ## package:license
 
