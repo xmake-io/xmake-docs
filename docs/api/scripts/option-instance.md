@@ -38,6 +38,10 @@ option:set("configvar", option:name(), option:value(), {quote = false})
 
 ::: tip NOTE
 Any script scope configuration using `option:set("xxx", ...)` is completely consistent with the corresponding `set_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `set_xxx` interface documentation in the description scope.
+
+For example:
+- Description scope: `set_default(false)`
+- Script scope: `option:set("default", false)`
 :::
 
 ## option:add
@@ -53,6 +57,10 @@ option:add("defines", "SDL_MAIN_HANDLED")
 
 ::: tip NOTE
 Any script scope configuration using `option:add("xxx", ...)` is completely consistent with the corresponding `add_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `add_xxx` interface documentation in the description scope.
+
+For example:
+- Description scope: `add_defines("DEBUG", "VERSION=1")`
+- Script scope: `option:add("defines", "DEBUG", "VERSION=1")`
 :::
 
 ::: tip NOTE

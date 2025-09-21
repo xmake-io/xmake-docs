@@ -36,6 +36,10 @@ package:set("defines", "SDL_MAIN_HANDLED")
 
 ::: tip NOTE
 Any script scope configuration using `package:set("xxx", ...)` is completely consistent with the corresponding `set_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `set_xxx` interface documentation in the description scope.
+
+For example:
+- Description scope: `set_urls("https://github.com/madler/zlib/archive/$(version).tar.gz")`
+- Script scope: `package:set("urls", "https://github.com/madler/zlib/archive/$(version).tar.gz")`
 :::
 
 ## package:add
@@ -53,6 +57,10 @@ package:add("defines", "SDL_MAIN_HANDLED")
 
 ::: tip NOTE
 Any script scope configuration using `package:add("xxx", ...)` is completely consistent with the corresponding `add_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `add_xxx` interface documentation in the description scope.
+
+For example:
+- Description scope: `add_deps("zlib", {configs = {shared = true}})`
+- Script scope: `package:add("deps", "zlib", {configs = {shared = true}})`
 :::
 
 ## package:license

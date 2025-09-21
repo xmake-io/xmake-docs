@@ -41,6 +41,10 @@ option:set("configvar", option:name(), option:value(), {quote = false})
 
 ::: tip 注意
 任何脚本域下对 `option:set("xxx", ...)` 的配置，都是完全跟描述域的 `set_xxx` 接口保持一致的，具体参数说明，可以直接参考描述域下对应的 `set_xxx` 接口说明。
+
+例如：
+- 描述域：`set_default(false)`
+- 脚本域：`option:set("default", false)`
 :::
 
 ## option:add
@@ -56,6 +60,10 @@ option:add("defines", "SDL_MAIN_HANDLED")
 
 ::: tip 注意
 任何脚本域下对 `option:add("xxx", ...)` 的配置，都是完全跟描述域的 `add_xxx` 接口保持一致的，具体参数说明，可以直接参考描述域下对应的 `add_xxx` 接口说明。
+
+例如：
+- 描述域：`add_defines("DEBUG", "VERSION=1")`
+- 脚本域：`option:add("defines", "DEBUG", "VERSION=1")`
 :::
 
 ::: tip 注意

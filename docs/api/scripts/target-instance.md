@@ -32,6 +32,10 @@ target:set("defines", "SDL_MAIN_HANDLED")
 
 ::: tip NOTE
 Any script scope configuration using `target:set("xxx", ...)` is completely consistent with the corresponding `set_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `set_xxx` interface documentation in the description scope.
+
+For example:
+- Description scope: `set_kind("binary")`
+- Script scope: `target:set("kind", "binary")`
 :::
 
 ## target:add
@@ -47,6 +51,10 @@ target:add("defines", "SDL_MAIN_HANDLED")
 
 ::: tip NOTE
 Any script scope configuration using `target:add("xxx", ...)` is completely consistent with the corresponding `add_xxx` interface in the description scope. For specific parameter descriptions, you can directly refer to the corresponding `add_xxx` interface documentation in the description scope.
+
+For example:
+- Description scope: `add_files("src/*.c", {defines = "PRIVATE"})`
+- Script scope: `target:add("files", "src/*.c", {defines = "PRIVATE"})`
 :::
 
 ## target:kind

@@ -34,6 +34,10 @@ target:set("defines", "SDL_MAIN_HANDLED")
 
 ::: tip 注意
 任何脚本域下对 `target:set("xxx", ...)` 的配置，都是完全跟描述域的 `set_xxx` 接口保持一致的，具体参数说明，可以直接参考描述域下对应的 `set_xxx` 接口说明。
+
+例如：
+- 描述域：`set_kind("binary")`
+- 脚本域：`target:set("kind", "binary")`
 :::
 
 ## target:add
@@ -49,6 +53,10 @@ target:add("defines", "SDL_MAIN_HANDLED")
 
 ::: tip 注意
 任何脚本域下对 `target:add("xxx", ...)` 的配置，都是完全跟描述域的 `add_xxx` 接口保持一致的，具体参数说明，可以直接参考描述域下对应的 `add_xxx` 接口说明。
+
+例如：
+- 描述域：`add_files("src/*.c", {defines = "PRIVATE"})`
+- 脚本域：`target:add("files", "src/*.c", {defines = "PRIVATE"})`
 :::
 
 ## target:kind
