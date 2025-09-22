@@ -60,14 +60,60 @@ Set the package description information, generally see the relevant package info
 
 - Set package kind
 
-Set the package type. For the dependent library, you don't need to set it. If it is an executable package, you need to set it to binary.
+Used to set the package type. xmake packages currently support the following types:
 
+### library
+
+This is the default package type and usually does not need to be explicitly configured. Used for regular library packages, including static and dynamic libraries.
+
+```lua
+package("zlib")
+    -- library type, no need to set explicitly
+    set_homepage("http://www.zlib.net")
+    set_description("A Massively Spiffy Yet Delicately Unobtrusive Compression Library")
 ```
-package("cmake")
 
+For header-only libraries (libraries that contain only header files), explicit configuration is required:
+
+```lua
+package("fmt")
+    set_kind("library", {headeronly = true})
+    set_homepage("https://fmt.dev")
+    set_description("A modern formatting library")
+```
+
+### binary
+
+Used for executable program packages. These packages provide executable files after installation and generally run on the current compilation host system.
+
+```lua
+package("cmake")
     set_kind("binary")
     set_homepage("https://cmake.org")
     set_description("A cross-platform family of tool designed to build, test and package software")
+```
+
+### toolchain
+
+Used for complete compilation toolchain packages. These packages contain complete compilation toolchains (such as compilers, linkers, etc.) and can be used with `set_toolchains` + `add_requires` to achieve automatic toolchain download and binding.
+
+```lua
+package("llvm")
+    set_kind("toolchain")
+    set_homepage("https://llvm.org/")
+    set_description("The LLVM Compiler Infrastructure")
+```
+
+Example of using a toolchain package:
+
+```lua
+add_rules("mode.debug", "mode.release")
+add_requires("llvm 14.0.0", {alias = "llvm-14"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("llvm@llvm-14")
 ```
 
 ## set_urls

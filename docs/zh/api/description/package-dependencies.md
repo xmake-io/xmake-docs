@@ -56,14 +56,60 @@ package("libxml2")
 
 - 设置包类型
 
-对于依赖库，则不用设置，如果是可执行包，需要设置为binary。
+用于设置包的类型，xmake 包目前支持以下几种类型：
 
+### library
+
+这是默认的包类型，通常不需要显式配置。用于普通的库包，包括静态库和动态库。
+
+```lua
+package("zlib")
+    -- library 类型，不需要显式设置
+    set_homepage("http://www.zlib.net")
+    set_description("A Massively Spiffy Yet Delicately Unobtrusive Compression Library")
 ```
-package("cmake")
 
+对于 header-only 库（仅包含头文件的库），需要显式配置：
+
+```lua
+package("fmt")
+    set_kind("library", {headeronly = true})
+    set_homepage("https://fmt.dev")
+    set_description("A modern formatting library")
+```
+
+### binary
+
+用于可执行程序包，这类包安装后会提供可执行文件，一般运行于当前编译主机的系统。
+
+```lua
+package("cmake")
     set_kind("binary")
     set_homepage("https://cmake.org")
     set_description("A cross-platform family of tool designed to build, test and package software")
+```
+
+### toolchain
+
+用于完整的编译工具链包，这类包包含完整的编译工具链（如编译器、链接器等），可以与 `set_toolchains` + `add_requires` 配合使用，实现工具链的自动下载和绑定。
+
+```lua
+package("llvm")
+    set_kind("toolchain")
+    set_homepage("https://llvm.org/")
+    set_description("The LLVM Compiler Infrastructure")
+```
+
+使用工具链包的示例：
+
+```lua
+add_rules("mode.debug", "mode.release")
+add_requires("llvm 14.0.0", {alias = "llvm-14"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("llvm@llvm-14")
 ```
 
 ## set_urls
