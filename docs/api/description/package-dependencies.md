@@ -246,7 +246,7 @@ end
 
 - Adjust the link order within the package
 
-For specific details, please see the target's internal documentation for `add_linkorders`, [target:add_linkorders](/zh/api/description/project-target#add-linkorders).
+For specific details, please see the target's internal documentation for `add_linkorders`, [target:add_linkorders](/api/description/project-target#add-linkorders).
 
 ```lua
 package("libpng")

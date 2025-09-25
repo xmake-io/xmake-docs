@@ -191,7 +191,7 @@ We can set build version in v2.1.7 version:
 set_version("1.5.1", {build = "%Y%m%d%H%M"})
 ```
 
-We can also add version to the config header files, @see [add_configfiles](/zh/api/description/project-target#add-configfiles)
+We can also add version to the config header files, @see [add_configfiles](/api/description/project-target#add-configfiles)
 
 :::tip NOTE
 We can set the version globally, but now we can also set it individually in the target field.
