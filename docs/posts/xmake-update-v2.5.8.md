@@ -241,7 +241,7 @@ Among them, we set the code directory location of the foo package through `set_s
 If only the local source code is integrated, we don't need to set additional `add_urls` and `add_versions`.
 :::
 
-For the configuration description of the package, see: [Package description description](/zh/guide/package-management/package-distribution).
+For the configuration description of the package, see: [Package description description](/guide/package-management/package-distribution).
 
 After defining the package, we can integrate it with `add_requires("foo")` and `add_packages("foo")`, just like integrating remote packages.
 
@@ -300,7 +300,7 @@ Both `package.tools.autoconf` and `package.tools.cmake` modules can support cros
 
 #### Integrate with other build systems
 
-We also support the integration of code libraries maintained by other build systems such as Meson/Scons/Make. You only need to import the corresponding build auxiliary modules. I won’t go into details here. We can further check the documentation: [Integrate local third-party source code libraries ](/zh/guide/package-management/using-official-packages)
+We also support the integration of code libraries maintained by other build systems such as Meson/Scons/Make. You only need to import the corresponding build auxiliary modules. I won’t go into details here. We can further check the documentation: [Integrate local third-party source code libraries ](/guide/package-management/using-official-packages)
 
 ### Improve compiler feature detection
 

@@ -59,7 +59,7 @@ $ xmake run foo --arg1=xxx --arg2=yyy
 At this time, we cannot omit the target name, and must specify the target name to be run, otherwise it will cause parameter ambiguity.
 :::
 
-We can also use the [set_runargs](/zh/api/description/project-target#set-runargs) configuration interface of the target to specify the incoming run parameters without having to specify them in the command line every time.
+We can also use the [set_runargs](/api/description/project-target#set-runargs) configuration interface of the target to specify the incoming run parameters without having to specify them in the command line every time.
 
 ## Set the working directory for running
 
@@ -73,7 +73,7 @@ $ xmake run -w /tmp foo
 
 We changed the running directory of the foo program to /tmp/.
 
-In addition, we can also specify the running parameters passed in through the target's [set_rundir](/zh/api/description/project-target#set-rundir) configuration interface, without having to specify them in the command line each time.
+In addition, we can also specify the running parameters passed in through the target's [set_rundir](/api/description/project-target#set-rundir) configuration interface, without having to specify them in the command line each time.
 
 ## Debugging programs
 

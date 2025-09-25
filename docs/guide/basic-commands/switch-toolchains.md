@@ -6,7 +6,7 @@ We can switch toolchains globally by passing the `--toolchain=[name]` parameter 
 This method is global. If we want to switch toolchains for a specific target, we need to use the [set_toolchains](/api/description/project-target#set-toolchains) interface in the xmake.lua configuration.
 :::
 
-If we want to switch it in the xmake.lua project configuration file, we can go to: [Configure the toolchain](/zh/guide/project-configuration/toolchain-configuration) for further information.
+If we want to switch it in the xmake.lua project configuration file, we can go to: [Configure the toolchain](/guide/project-configuration/toolchain-configuration) for further information.
 
 In addition, Xmake also provides some commonly used toolchains that can be switched directly, but the premise is that the user has installed the corresponding toolchain environment on the system.
 

@@ -1,4 +1,4 @@
-If you are using Xmake, please click to edit [this page](https://github.com/xmake-io/xmake-docs/edit/master/docs/zh/about/who_is_using_xmake.md) to submit your information to the following list, so more users can know how many people are using Xmake.
+If you are using Xmake, please click to edit [this page](https://github.com/xmake-io/xmake-docs/edit/master/docs/about/who_is_using_xmake.md) to submit your information to the following list, so more users can know how many people are using Xmake.
 
 This also allows users to use Xmake more confidently, and gives us more motivation to maintain it continuously,
 so that the Xmake project and community will grow stronger.
