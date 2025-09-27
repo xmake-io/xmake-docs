@@ -1494,7 +1494,7 @@ target("demo")
 
 ### 调整链接顺序
 
-这是 xmake 2.8.5 以后得版本才支持的特性，主要用于调整 target 内部的链接顺序。
+这是 xmake 2.8.5 以后的版本才支持的特性，主要用于调整 target 内部的链接顺序。
 
 由于 xmake 提供了 `add_links`, `add_deps`, `add_packages`, `add_options` 接口，可以配置目标、依赖，包和选项中的链接。
 
@@ -1598,7 +1598,7 @@ target("demo")
 
 ### 添加链接组
 
-这是 xmake 2.8.5 以后得版本才支持的特性，这个链接组的特性，目前主要用于 linux 平台的编译，仅支持 gcc/clang 编译器。
+这是 xmake 2.8.5 以后的版本才支持的特性，这个链接组的特性，目前主要用于 linux 平台的编译，仅支持 gcc/clang 编译器。
 
 需要注意的是 gcc/clang 里面的链接组概念主要特指：`-Wl,--start-group`
 

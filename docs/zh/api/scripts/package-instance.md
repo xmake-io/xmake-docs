@@ -492,7 +492,7 @@ end)
 
 ```lua
 on_test(function (package)
-  assert(package:has_cincludes("foo.hpp"))
+  assert(package:has_cxxincludes("foo.hpp"))
 end)
 ```
 

@@ -235,7 +235,7 @@ add_requires("zlib 1.x", {external = false})
 -I /Users/ruki/.xmake/packages/z/zlib/1.2.11/d639b7d6e3244216b403b39df5101abf/include
 ```
 
-## 使用自建私有包仓库 {#using-self-repository}
+## 使用自建私有包仓库 {#using-self-built-private-package-repository}
 
 如果需要的包不在官方仓库[xmake-repo](https://github.com/xmake-io/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。
 但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：[xmake-repo](https://github.com/xmake-io/xmake-repo)
@@ -315,7 +315,7 @@ target("test")
     add_packages("libjpeg")
 ```
 
-关于如何编写自定义包描述规则，详情见：[添加包到仓库](/zh/guide/package-management/package-distribution.html#submit-package-to-official-repository)
+关于如何编写自定义包描述规则，详情见：[添加包到仓库](/zh/guide/package-management/package-distribution.html#submit-packages-to-the-official-repository)
 
 ## 依赖包的锁定和升级 {#lock-and-upgrade-package}
 

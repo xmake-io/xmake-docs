@@ -223,13 +223,13 @@ $ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepag
 
 xmake will also read the relevant configuration information from the target's `set_license` and `set_version` configurations.
 
-## Submit package to the official repository
+## Submit packages to the official repository
 
 If you need a package that is not supported by the current official repository, you can commit it to the official repository after local tuning: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 For detailed contribution descriptions, see: [CONTRIBUTING.md](https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md)
 
-For how to make your own package, you can look at the above: [Submit packages to the official repository](#submit-packages-to-the-official-repository).
+For how to make and use your self-built private package, you can read this: [Using self-built private package repository ](/guide/package-management/using-official-packages.html#using-self-built-private-package-repository).
 
 ## Distributing and using custom package rules
 
