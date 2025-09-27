@@ -225,7 +225,7 @@ $ xmake package -f remote --url=https://xxxx/xxx.tar.gz --shasum=xxxxx --homepag
 
 xmake 也会从 target 的 `set_license` 和 `set_version` 等配置中读取相关配置信息。
 
-## 提交包到官方仓库 {#submit-package-to-official-repository}
+## 提交包到官方仓库 {#submit-packages-to-the-official-repository}
 
 目前这个特性刚完成不久，目前官方仓库的包还不是很多，有些包也许还不支持部分平台，不过这并不是太大问题，后期迭代几个版本后，我会不断扩充完善包仓库。
 
@@ -233,7 +233,7 @@ xmake 也会从 target 的 `set_license` 和 `set_version` 等配置中读取相
 
 详细的贡献说明，见：[CONTRIBUTING.md](https://github.com/xmake-io/xmake-repo/blob/master/CONTRIBUTING.md)
 
-关于如何制作自己的包，可以看下上文：[添加包到仓库](#添加包到仓库)。
+关于如何制作使用自建私有包仓库，可以查看：[使用自建私有包仓库](/zh/guide/package-management/using-official-packages.html#using-self-built-private-package-repository)。
 
 ## 分发和使用自定义包规则 {#custom-rule-distribution}
 
