@@ -479,7 +479,7 @@ target("test")
 
 ## plugin.compile_commands.autoupdate
 
-We can also use this rule to automatically update the generated compile_commandss.json
+We can also use this rule to automatically update the generated `compile_commands.json`
 
 ```lua
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
