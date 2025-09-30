@@ -342,7 +342,7 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 
 - Get temporary directory
 
-Consistent with the result of [$(tmpdir)](#var-tmpdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
+Consistent with the result of [$(tmpdir)](/api/description/builtin-variables#var-tmpdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
 ```lua
 print(path.join(os.tmpdir(), "file.txt"))
@@ -364,7 +364,7 @@ Used to get a temporary file path, just a path, the file needs to be created by 
 
 - Get the current directory path
 
-Consistent with the result of [$(curdir)](#var-curdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
+Consistent with the result of [$(curdir)](/api/description/builtin-variables#var-curdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
 Usage reference: [os.tmpdir](#os-tmpdir).
 
@@ -380,7 +380,7 @@ print(os.filesize("/tmp/a"))
 
 - Get the path of the current description script
 
-Consistent with the result of [$(scriptdir)](#var-scriptdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
+Consistent with the result of [$(scriptdir)](/api/description/builtin-variables#var-scriptdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
 Usage reference: [os.tmpdir](#os-tmpdir).
 
@@ -388,7 +388,7 @@ Usage reference: [os.tmpdir](#os-tmpdir).
 
 - Get the xmake installation main program script directory
 
-Consistent with the result of [$(programdir)](#var-programdir), it is just a direct get returned to a variable, which can be maintained with subsequent strings.
+Consistent with the result of [$(programdir)](/api/description/builtin-variables#var-programdir), it is just a direct get returned to a variable, which can be maintained with subsequent strings.
 
 ## os.programfile
 
@@ -398,7 +398,7 @@ Consistent with the result of [$(programdir)](#var-programdir), it is just a dir
 
 - Get the project home directory
 
-Consistent with the result of [$(projectdir)](#var-projectdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
+Consistent with the result of [$(projectdir)](/api/description/builtin-variables#var-projectdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
 ## os.arch
 
@@ -410,7 +410,7 @@ That is the default architecture of the current host system, for example, I exec
 
 - Get the operating system of the current host
 
-Consistent with the result of [$(host)](#var-host), for example, if I execute xmake on `linux x86_64` to build, the return value is: `linux`
+Consistent with the result of [$(host)](/api/description/builtin-variables#var-host), for example, if I execute xmake on `linux x86_64` to build, the return value is: `linux`
 
 ## os.subhost
 
