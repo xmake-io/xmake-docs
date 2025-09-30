@@ -352,7 +352,7 @@ os.setenv("HOME", "/tmp/")
 
 - 获取临时目录
 
-跟[$(tmpdir)](#var-tmpdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+跟[$(tmpdir)](/zh/api/description/builtin-variables#var-tmpdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 ```lua
 print(path.join(os.tmpdir(), "file.txt"))
@@ -374,7 +374,7 @@ print("$(tmpdir)/file.txt")
 
 - 获取当前目录路径
 
-跟[$(curdir)](#var-curdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+跟[$(curdir)](/zh/api/description/builtin-variables#var-curdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 用法参考：[os.tmpdir](#os-tmpdir)。
 
@@ -390,7 +390,7 @@ print(os.filesize("/tmp/a"))
 
 - 获取当前描述脚本的路径
 
-跟[$(scriptdir)](#var-scriptdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+跟[$(scriptdir)](/zh/api/description/builtin-variables#var-scriptdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 用法参考：[os.tmpdir](#os-tmpdir)。
 
@@ -398,7 +398,7 @@ print(os.filesize("/tmp/a"))
 
 - 获取xmake安装主程序脚本目录
 
-跟[$(programdir)](#var-programdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+跟[$(programdir)](/zh/api/description/builtin-variables#var-programdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 ## os.programfile
 
@@ -408,7 +408,7 @@ print(os.filesize("/tmp/a"))
 
 - 获取工程主目录
 
-跟[$(projectdir)](#var-projectdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
+跟[$(projectdir)](/zh/api/description/builtin-variables#var-projectdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 ## os.arch
 
@@ -420,7 +420,7 @@ print(os.filesize("/tmp/a"))
 
 - 获取当前主机的操作系统
 
-跟[$(host)](#var-host)结果一致，例如我在`linux x86_64`上执行xmake进行构建，那么返回值是：`linux`
+跟[$(host)](/zh/api/description/builtin-variables#var-host)结果一致，例如我在`linux x86_64`上执行xmake进行构建，那么返回值是：`linux`
 
 ## os.subhost
 
