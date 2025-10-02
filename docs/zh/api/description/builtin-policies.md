@@ -1,4 +1,4 @@
-# 内置策略 {#builtin-policies}
+# 内置策略 <Badge type="tip" text="v2.3.4" /> {#builtin-policies}
 
 Xmake 有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。
 
@@ -66,7 +66,7 @@ $ xmake f --policies=package.precompiled:n
 $ xmake f --policies=package.precompiled:n,package.install_only
 ```
 
-## check.auto_ignore_flags
+## check.auto_ignore_flags <Badge type="tip" text="v2.3.4" />
 
 xmake默认会对所有`add_cxflags`, `add_ldflags`接口设置的原始flags进行自动检测，如果检测当前编译器和链接器不支持它们，就会自动忽略。
 
@@ -98,7 +98,7 @@ target("test")
 
 然后我们就可以随意设置各种原始flags，xmake不会去自动检测和忽略他们了。
 
-## check.auto_map_flags
+## check.auto_map_flags <Badge type="tip" text="v2.3.4" />
 
 这是xmake的另外一个对flags的智能分析处理，通常像`add_links`, `add_defines`这种xmake内置的api去设置的配置，是具有跨平台特性的，不同编译器平台会自动处理成对应的原始flags。
 
@@ -128,7 +128,7 @@ add_cxflags("-O0")
 set_policy("check.auto_map_flags", false)
 ```
 
-## build.across_targets_in_parallel
+## build.across_targets_in_parallel <Badge type="tip" text="v2.3.4" />
 
 这个策略也是默认开启的，主要用于跨target间执行并行构建，v2.3.3之前的版本，并行构建只能针对单个target内部的所有源文件，
 跨target的编译，必须要要等先前的target完全link成功，才能执行下一个target的编译，这在一定程度上会影响编译速度。
@@ -141,7 +141,7 @@ set_policy("check.auto_map_flags", false)
 set_policy("build.across_targets_in_parallel", false)
 ```
 
-## build.fence
+## build.fence <Badge type="tip" text="v2.9.2" />
 
 由于配置 `set_policy("build.across_targets_in_parallel", false)` 存在局限性，它会限制父 target 和它的所有依赖的子 target 之间的并行度，影响的范围有点大。
 
@@ -177,7 +177,7 @@ target("test")
 
 而针对 autogen 配置 `set_policy("build.fence", true)` 就可以实现这个目的。
 
-## build.merge_archive
+## build.merge_archive <Badge type="tip" text="v2.5.8" />
 
 如果设置了这个策略，那么使用 `add_deps()` 依赖的目标库不再作为链接存在，而是直接把它们合并到父目标库中去。
 
@@ -210,7 +210,7 @@ target("test")
 libmul.a 静态库会自动合并 libadd.a 和 libsub.a 两个子依赖的静态库。
 
 
-## build.ccache
+## build.ccache <Badge type="tip" text="v2.6.7" />
 
 Xmake 默认是开启内置的编译缓存的，通过设置这个策略，可以显式禁用缓存。
 
@@ -230,7 +230,7 @@ $ xmake f --ccache=n
 $ xmake f --policies=build.ccache:n
 ```
 
-## build.warning
+## build.warning <Badge type="tip" text="v2.6.8" />
 
 默认编译通常不会实时回显警告输出，我们通常需要使用 `xmake -w` 开启，或者通过 `xmake g --build_warning=y` 来全局开启它。
 
@@ -243,7 +243,7 @@ set_warnings("all", "extra")
 
 这个时候，即使我们执行 `xmake` 命令，也能直接回显警告输出。
 
-## build.optimization.lto
+## build.optimization.lto <Badge type="tip" text="v2.6.9" />
 
 2.6.9 版本 xmake 改进了对 LTO 链接时优化的支持，对 gcc/clang/msvc 等不同平台下都进行了适配，只需要启用这个策略，就能对特定 target 开启 LTO。
 
@@ -257,7 +257,7 @@ set_policy("build.optimization.lto", true)
 $ xmake f --policies=build.optimization.lto
 ```
 
-## build.cuda.devlink
+## build.cuda.devlink <Badge type="tip" text="v2.7.7" />
 
 2.7.7 版本可以通过这个配置，显示开启对特定目标的设备链接。
 
@@ -273,7 +273,7 @@ target("test")
 
 关于这个的详细背景说明，见：[#1976](https://github.com/xmake-io/xmake/issues/1976)
 
-## build.sanitizer.address
+## build.sanitizer.address <Badge type="tip" text="v2.8.3" />
 
 Address Sanitizer（ASan）是一个快速的内存错误检测工具，由编译器内置支持，通常我们需要在编译和链接的 flags 中同时配置 `-fsanitize-address` 才能正确开启。
 
@@ -327,23 +327,23 @@ set_policy("build.sanitizer.undefined", true)
 $ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
 ```
 
-## build.sanitizer.thread
+## build.sanitizer.thread <Badge type="tip" text="v2.8.3" />
 
 与 [build.sanitizer.address](#build-sanitizer-address) 类似，用于检测线程安全问题。
 
-## build.sanitizer.memory
+## build.sanitizer.memory <Badge type="tip" text="v2.8.3" />
 
 与 [build.sanitizer.address](#build-sanitizer-address) 类似，用于检测内存问题。
 
-## build.sanitizer.leak
+## build.sanitizer.leak <Badge type="tip" text="v2.8.3" />
 
 与 [build.sanitizer.address](#build-sanitizer-address) 类似，用于检测内存泄漏问题。
 
-## build.sanitizer.undefined
+## build.sanitizer.undefined <Badge type="tip" text="v2.8.3" />
 
 与 [build.sanitizer.address](#build-sanitizer-address) 类似，用于检测 undefined 问题。
 
-## build.always_update_configfiles
+## build.always_update_configfiles <Badge type="tip" text="v2.8.7" />
 
 这个策略用于对 `add_configfiles` 配置文件的自动生成行为。默认情况下，xmake 仅仅只会在首次 `xmake config` 时候，或者 xmake.lua 配置有改动的是否，才会触发 configfiles 的重新生成。
 
@@ -353,7 +353,7 @@ $ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
 
 具体使用背景，可以看下：[#4747](https://github.com/xmake-io/xmake/issues/4747)
 
-## build.intermediate_directory
+## build.intermediate_directory <Badge type="tip" text="v2.9.4" />
 
 配置启用或禁用构建的内部子目录。
 
@@ -374,7 +374,7 @@ build/
 └─ test
 ```
 
-## build.rpath
+## build.rpath <Badge type="tip" text="v2.9.4" />
 
 配置启用或者禁用构建时的 target rpath 设置。
 
@@ -382,7 +382,7 @@ build/
 
 如果你想禁用这个行为，可以显式配置禁用它。
 
-## install.rpath
+## install.rpath <Badge type="tip" text="v2.9.4" />
 
 尽管构建后的程序，会被设置 rpath，但是当 `xmake install` 安装后，它构建时候的 rpath 就不一定完全适用了，因此 xmake 会自动修改调整 rpath，使得安装后的程序，同样可以找到它的依赖库。
 
@@ -390,7 +390,7 @@ build/
 
 而我们也可以通过这个 policy 去禁用默认的安装阶段 rpath 设置行为。
 
-## run.autobuild
+## run.autobuild <Badge type="tip" text="v2.8.3" />
 
 这个策略用于调整 `xmake run` 的行为，默认情况下，执行 `xmake run` 并不会自动构建目标程序，如果程序还没被编译，就是提示用户手动构建一下。
 
@@ -407,36 +407,36 @@ $ xmake run
 $ xmake g --policies=run.autobuild
 ```
 
-## preprocessor.linemarkers
+## preprocessor.linemarkers <Badge type="tip" text="v2.6.8" />
 
 通常用户编译缓存中，预处理器的生成策略，默认开启，如果配置关闭这个策略，那么缓存生成的预处理文件内容将不包含 linemarkers 信息，这会极大减少预处理文件大小。
 也会提升缓存的处理效率，但是缺点就是会丢失源码行信息，如果遇到编译错误，将无法看到准确的出错代码行。
 
-## preprocessor.gcc.directives_only
+## preprocessor.gcc.directives_only <Badge type="tip" text="v2.6.8" />
 
 这也是用于预处理器的策略，默认开启，这会提升 gcc 下编译缓存预处理的效率，但是如果源文件中包含 `__DATE__`, `__TIME__` 等宏，就会导致缓存出现不一致。
 
 因此，可以根据自身工程代码，按需关闭此策略，确保生成的结果一致。
 
-## package.requires_lock
+## package.requires_lock <Badge type="tip" text="v2.5.7" />
 
 可用于开启 `add_requires()` 引入的依赖包的版本锁定。
 
 具体看下：[依赖包的锁定和升级](/zh/guide/package-management/using-official-packages#lock-and-upgrade-package)。
 
-## package.precompiled
+## package.precompiled <Badge type="tip" text="v2.6.4" />
 
 可用于禁用 windows 下预编译依赖包的获取。
 
-## package.fetch_only
+## package.fetch_only <Badge type="tip" text="v2.6.7" />
 
 如果开启这个策略，那么所有的依赖包仅仅只会从系统获取，不会从远程下载安装。
 
-## package.install_only
+## package.install_only <Badge type="tip" text="v2.6.7" />
 
 如果开启这个策略，那么所有的依赖包仅仅只会走远程下载安装，不会从系统查找获取。
 
-## package.librarydeps.strict_compatibility
+## package.librarydeps.strict_compatibility <Badge type="tip" text="v2.7.2" />
 
 默认禁用，如果启用它，那么当前包和它的所有库依赖包之间会保持严格的兼容性，任何依赖包的版本更新，都会强制触发当前包的重新编译安装。
 
@@ -450,7 +450,7 @@ package("foo")
 
 例如，如果 bar 或者 zoo 的版本有更新，那么 foo 也会重新编译安装。
 
-## package.strict_compatibility
+## package.strict_compatibility <Badge type="tip" text="v2.7.2" />
 
 默认禁用，如果启用它，那么当前包和其他所有依赖它的包之间会保持严格的兼容性，这个包的版本更新，都会强制触发其他父包的重新编译安装。
 
@@ -470,7 +470,7 @@ package("zoo")
 
 例如，如果 foo 的版本有更新，那么 bar 和 zoo 都会被强制重新编译安装。
 
-## package.install_always
+## package.install_always <Badge type="tip" text="v2.7.2" />
 
 每次运行 `xmake f -c` 重新配置的时候，总是会重新安装包，这对于本地第三方源码包集成时候比较有用。
 
@@ -504,7 +504,7 @@ target("demo")
     add_packages("foo")
 ```
 
-## package.download.http_headers
+## package.download.http_headers <Badge type="tip" text="v2.7.7" />
 
 设置包下载的 http headers
 
@@ -523,7 +523,7 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 })
 ```
 
-## windows.manifest.uac
+## windows.manifest.uac <Badge type="tip" text="v2.8.5" />
 
 通过这个策略，我们可以快速方便的设置并启用 Windows UAC。
 
@@ -551,7 +551,7 @@ end
 
 但是更加方便简洁，并且不需要判断平台，其他平台自动忽略。
 
-## windows.manifest.uac.ui
+## windows.manifest.uac.ui <Badge type="tip" text="v2.8.5" />
 
 设置 Windows UAC 的 uiAccess，如果没有设置它，默认是 false。
 
