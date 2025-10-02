@@ -1,66 +1,52 @@
 # 内置策略 <Badge type="tip" text="v2.3.4" /> {#builtin-policies}
 
-Xmake 有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。
+Xmake 有很多的默认行为，比如：自动检测和映射编译、链接标志、跨工程目标并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定能满足所有的用户的使用习惯和需求。
+因此， xmake 提供了**针对默认策略的修改设置**，在一定程度上给予了用户**修改策略**的权限。这个功能主要通过 [set_policy](/zh/api/description/project-target#set-policy) 接口来实现，我们通常可以使用这个接口来配置修改 target, package 以及工程整体的一些行为策略。
 
-因此，从v2.3.4开始，xmake 提供默认构建策略的修改设置，开放给用户一定程度上的可配置性。
-
-它主要通过 [set_policy](/zh/api/description/project-target#set-policy) 接口来配置。
-
-我们通常可以用它来配置修改 target，package 以及工程整体的一些行为策略。
-
-使用方式如下：
-
-```lua
-set_policy("check.auto_ignore_flags", false)
-```
-
-只需要在项目根域设置这个配置，就可以禁用flags的自动检测和忽略机制，另外`set_policy`也可以针对某个特定的target局部生效。
-
-```lua
-target("test")
-    set_policy("check.auto_ignore_flags", false)
-```
+## 使用方式
 
 ::: tip 注意
-另外，如果设置的策略名是无效的，xmake也会有警告提示。
+如果设置的策略名是无效的， xmake 会有警告提示。
 :::
 
-如果要获取当前xmake支持的所有策略配置列表和描述，可以执行下面的命令：
+### 1. 获取当前版本所支持的所有策略
+
+执行下面的命令可以返回所有的配置及其描述、值类型和默认值：
 
 ```sh
 $ xmake l core.project.policy.policies
-{
-  "check.auto_map_flags" = {
-    type = "boolean",
-    description = "Enable map gcc flags to the current compiler and linker automatically.",
-    default = true
-  },
-  "build.across_targets_in_parallel" = {
-    type = "boolean",
-    description = "Enable compile the source files for each target in parallel.",
-    default = true
-  },
-  "check.auto_ignore_flags" = {
-    type = "boolean",
-    description = "Enable check and ignore unsupported flags automatically.",
-    default = true
-  }
-}
 ```
 
-我们也可以通过命令行的方式去设置修改内部的策略:
+### 2. 在 `xmake.lua` 中直接调用接口进行策略的配置
+
+::: code-group
+```lua [全局设置]
+-- 在项目根域设置这个配置，就可以全局禁用 flags 的自动检测和忽略机制
+set_policy("check.auto_ignore_flags", false)
+```
+
+```lua [局部设置]
+target("test")
+    -- 针对特定的 target `test` 生效
+    set_policy("check.auto_ignore_flags", false)
+```
+:::
+
+### 3. 通过命令行进行策略的配置
+
+当我们构建工程时，可能需要暂时性地启用或是禁用一些策略。在这种情况下，使用命令行就更加贴合需求了。使用命令行设置策略时，默认该策略为启用状态：
 
 ```sh
 $ xmake f --policies=package.fetch_only
 ```
 
-默认设置策略名，就是启用状态，当然我们也可以指定设置其他值，禁用它。
+当然，我们也可以指定其他值以达到禁用等效果：
 
 ```sh
 $ xmake f --policies=package.precompiled:n
 ```
 
-或者同时配置多个策略值，用逗号分割。
+值得注意的是，同时配置多个策略需要用逗号进行分割：
 
 ```sh
 $ xmake f --policies=package.precompiled:n,package.install_only

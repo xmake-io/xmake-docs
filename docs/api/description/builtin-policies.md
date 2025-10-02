@@ -1,64 +1,54 @@
 # Built-in Policies <Badge type="tip" text="v2.3.4" />
 
-Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users' habits and needs.
+Xmake incorporates many default behaviors, such as automatically detecting and mapping for flags and enabling parallel builds across different targets. Although it provides intelligent processing to some extent, it is difficult to satisfy all users' habits, needs and preferences.
 
-Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy,
-which is open to users to a certain degree of configurability. It is mainly configured through the [set_policy](/api/description/project-target#set-policy) interface.
+Therefore, xmake provides a way to override its default build policies, giving users a higher degree of control.
+This is primarily achieved through the [set_policy](/api/description/project-target#set-policy) API, which can be used to modify the default behavior of targets, packages, or the entire project.
 
-The usage is as follows:
-
-```lua
-set_policy("check.auto_ignore_flags", false)
-```
-
-You only need to set this configuration in the project root domain to disable the automatic detection and ignore mechanism of flags.
-In addition, set_policy can also take effect locally for a specific target.
-
-```lua
-target ("test")
-    set_policy ("check.auto_ignore_flags", false)
-```
+## Usage
 
 ::: tip NOTE
-In addition, if the set policy name is invalid, xmake will also have a warning prompt.
+If the policy name you provide is invalid, xmake will show a warning.
 :::
 
-If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:
+### 1. Get All the Policies Supported by the Current Version
+
+We can run the following command to get a list of all the policy configurations, including their descriptions, types, and default values:
 
 ```sh
 $ xmake l core.project.policy.policies
-{
-  "check.auto_map_flags" = {
-    type = "boolean",
-    description = "Enable map gcc flags to the current compiler and linker automatically.",
-    default = true
-  },
-  "build.across_targets_in_parallel" = {
-    type = "boolean",
-    description = "Enable compile the source files for each target in parallel.",
-    default = true
-  },
-  "check.auto_ignore_flags" = {
-    type = "boolean",
-    description = "Enable check and ignore unsupported flags automatically.",
-    default = true
-  }
-}
 ```
 
-We can also set up internal policy changes via the command line:
+### 2. Configuring Policies in `xmake.lua`
+
+::: code-group
+```lua [globally]
+-- Set this in the root domain to globally disable the automatic detection and ignore mechanism of flags
+set_policy("check.auto_ignore_flags", false)
+```
+
+```lua [locally]
+target ("test")
+    -- This applies only to the `test` target.
+    set_policy ("check.auto_ignore_flags", false)
+```
+:::
+
+### 3. Configuring Policies via the Command Line
+
+When building projects, we may need to temporarily enable or disable certain policies. In such cases, it's more suitable to use the command line. And when a policy is set from the command line, it is enabled by default:
 
 ```sh
 $ xmake f --policies=package.fetch_only
 ```
 
-The policy name is set by default, which is the enabled state, but we can of course specify to set other values to disable it.
+Also, we can specify other values to disable the policy or achieve other effects:
 
 ```sh
 $ xmake f --policies=package.precompiled:n
 ```
 
-Or configure multiple policy values at the same time, separated by commas.
+Please note that when specifying multiple policies, you should use commas to separate them:
 
 ```sh
 $ xmake f --policies=package.precompiled:n,package.install_only
