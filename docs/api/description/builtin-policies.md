@@ -56,35 +56,44 @@ $ xmake f --policies=package.precompiled:n,package.install_only
 
 ## check.auto_ignore_flags <Badge type="tip" text="v2.3.4" />
 
-By default, xmake will automatically detect all the original flags set by the `add_cxflags` and` add_ldflags` interfaces. If the current compiler and linker do not support them, they will be automatically ignored.
+::: danger Potential Risk
+Disabling the default policy for auto-detecting and ignoring flags without careful consideration may cause unexpected compiling errors for others, as compilers' support for specific flags varies.
+:::
 
-This is usually very useful. Like some optional compilation flags, it can be compiled normally even if it is not supported, but it is forced to set up. When compiling, other users may have a certain degree of difference due to the different support of the compiler. The compilation failed.
+### Default policy
 
-However, because automatic detection does not guarantee 100% reliability, sometimes there will be a certain degree of misjudgment, so some users do not like this setting (especially for cross-compilation tool chains, which are more likely to fail).
+By default, xmake will automatically detect all the compilation and linking flags set by the `add_cxflags` and `add_ldflags` interfaces. If the current compiler or linker does not support a certain flag, xmake will automatically ignore it and show a warning.
 
-At present, if the detection fails in v2.3.4, there will be a warning prompt to prevent users from lying inexplicably, for example:
+This can be extremely useful especially when dealing with optional compilation flags. It can still be compiled normally even if the flag in question is not supported.
+
+### Use Cases
+
+However, in some circumstances, this default policy can result in false positives, especially during cross-compilation. What's more, the resulting warnings can be annoying and create a lot of noise in the build output.
+
+For example:
 
 ```
 warning: add_ldflags("-static") is ignored, please pass `{force = true}` or call `set_policy("check.auto_ignore_flags", false)` if you want to set it.
 ```
 
-According to the prompt, we can analyze and judge ourselves whether it is necessary to set this flags. One way is to pass:
+Based on this warning, we can determine if we need to add this flag. Depending on the number of flags involved, you can choose one of the following two solutions:
 
+#### 1. Add the `force` parameter
 ```lua
 add_ldflags("-static", {force = true})
 ```
 
-To display the mandatory settings, skip automatic detection, which is an effective and fast way to deal with occasional flags failure, but for cross-compilation, if a bunch of flags settings cannot be detected, each set force Too tedious.
+The `{force = true}` parameter can explicitly force the flag(s) to be added, skipping the automatic check. This is an effective and fast way to deal with a few flags. However, when dealing with complex projects like cross-compilation, where a large number of flags might fail the detection, setting this parameter for each one becomes tedious.
 
-At this time, we can use `set_policy` to directly disable the default automatic detection behavior for a target or the entire project:
+#### 2. Set the Policy
+
+To avoid the limitation of the first approach, we can use `set_policy` to directly disable the default automatic detection behavior for a specified target or the entire project. Meanwhile, this will suppress all related warnings.
 
 ```lua
 set_policy("check.auto_ignore_flags", false)
 target("test")
     add_ldflags("-static")
 ```
-
-Then we can set various original flags at will, xmake will not automatically detect and ignore them.
 
 ## check.auto_map_flags <Badge type="tip" text="v2.3.4" />
 
