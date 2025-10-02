@@ -64,7 +64,7 @@ Or configure multiple policy values at the same time, separated by commas.
 $ xmake f --policies=package.precompiled:n,package.install_only
 ```
 
-### check.auto_ignore_flags
+## check.auto_ignore_flags
 
 By default, xmake will automatically detect all the original flags set by the `add_cxflags` and` add_ldflags` interfaces. If the current compiler and linker do not support them, they will be automatically ignored.
 
@@ -96,7 +96,7 @@ target("test")
 
 Then we can set various original flags at will, xmake will not automatically detect and ignore them.
 
-### check.auto_map_flags
+## check.auto_map_flags
 
 This is another intelligent analysis and processing of flags by xmake. Usually, the configuration set by xmake built-in APIs like `add_links`,` add_defines` is cross-platform, and different compiler platforms will automatically process them into corresponding Original flags.
 
@@ -126,7 +126,7 @@ Some users do not like this automatic mapping behavior, so we can completely dis
 set_policy("check.auto_map_flags", false)
 ```
 
-### build.across_targets_in_parallel
+## build.across_targets_in_parallel
 
 This strategy is also enabled by default and is mainly used to perform parallel builds between targets. In versions prior to v2.3.3, parallel builds can only target all source files within a single target.
 For cross-target compilation, you must wait until the previous target is fully linked before you can execute the compilation of the next target, which will affect the compilation speed to a certain extent.
@@ -139,7 +139,7 @@ Of course, if the build source files in some special targets depend on previous 
 set_policy("build.across_targets_in_parallel", false)
 ```
 
-### build.fence
+## build.fence
 
 Due to the limitation of `set_policy(‘build.across_targets_in_parallel’, false)`, it will limit the parallelism between the parent target and all of its dependent subtargets, which is a bit wide.
 
@@ -175,7 +175,7 @@ The autogen target needs to be compiled and linked before the source code of the
 
 The autogen configuration `set_policy(‘build.fence’, true)` does this.
 
-### build.merge_archive
+## build.merge_archive
 
 If this policy is set, then the target libraries that are dependent on using `add_deps()` no longer exist as links, but are merged directly into the parent target library.
 
@@ -208,7 +208,7 @@ target("test")
 The libmul.a static library automatically merges the libadd.a and libsub.a sub-dependent static libraries.
 
 
-### build.ccache
+## build.ccache
 
 Xmake has a built-in build cache enabled by default, which can be explicitly disabled by setting this policy.
 
@@ -228,7 +228,7 @@ or
 $ xmake f --policies=build.ccache:n
 ```
 
-### build.warning
+## build.warning
 
 The default compilation usually does not echo the warning output in real time, we usually need to use `xmake -w` to turn it on, or to turn it on globally with `xmake g --build_warning=y`.
 
@@ -241,7 +241,7 @@ set_warnings("all", "extra")
 
 At this time, even if we execute the `xmake` command, the warning output can be echoed directly.
 
-### build.optimization.lto
+## build.optimization.lto
 
 xmake v2.6.9 has improved support for link-time optimisation (LTO), with adaptations for different platforms such as gcc/clang/msvc, simply by enabling this policy to enable LTO for specific targets.
 
@@ -255,7 +255,7 @@ We can also turn it on quickly via the command line option.
 $ xmake f --policies=build.optimization.lto
 ```
 
-### build.cuda.devlink
+## build.cuda.devlink
 
 Version 2.7.7 can be configured to show that device links to specific targets are turned on.
 
@@ -271,7 +271,7 @@ Whereas by default Cuda binary/shared is devlink enabled, we can also disable it
 
 For a detailed background on this, see: [#1976](https://github.com/xmake-io/xmake/issues/1976)
 
-### build.sanitizer.address
+## build.sanitizer.address
 
 Address Sanitizer (ASan) is a fast memory error detection tool that is built-in by the compiler, and usually requires `-fsanitize-address` to be configured in both the build and link flags to enable it correctly.
 
@@ -325,23 +325,23 @@ or
 $ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
 ```
 
-### build.sanitizer.thread
+## build.sanitizer.thread
 
 Similar to [build.sanitizer.address](#build-sanitizer-address) for detecting thread safety issues.
 
-### build.sanitizer.memory
+## build.sanitizer.memory
 
 Similar to [build.sanitizer.address](#build-sanitizer-address) for detecting memory issues.
 
-### build.sanitizer.leak
+## build.sanitizer.leak
 
 Similar to [build.sanitizer.address](#build-sanitizer-address) for detecting memory leaks.
 
-### build.sanitizer.undefined
+## build.sanitizer.undefined
 
 Similar to [build.sanitizer.address](#build-sanitizer-address) for detecting undefined issues.
 
-### build.always_update_configfiles
+## build.always_update_configfiles
 
 This policy is used for the automatic generation of `add_configfiles` configuration files. By default, xmake only triggers the regeneration of configfiles the first time `xmake config` is done, or if the xmake.lua configuration is changed.
 
@@ -351,7 +351,7 @@ However, if we use a variable such as GIT_COMMIT in our configfiles and want to 
 
 For background on how to use it, see: [#4747](https://github.com/xmake-io/xmake/issues/4747)
 
-### build.intermediate_directory
+## build.intermediate_directory
 
 Configures whether to enable or disable internal subdirectories of the build.
 
@@ -372,7 +372,7 @@ build/
 └─ test
 ```
 
-### build.rpath
+## build.rpath
 
 Configures to enable or disable the target rpath setting during build.
 
@@ -380,7 +380,7 @@ By default, if `target(foo)` depends on the dynamic library bar, the generated f
 
 If you want to disable this behavior, you can explicitly configure it.
 
-### install.rpath
+## install.rpath
 
 Although the rpath will be set for the built program, the rpath when it is built may not be completely applicable after `xmake install` is installed, so xmake will automatically modify and adjust the rpath so that the installed program can also find its dependent libraries.
 
@@ -388,7 +388,7 @@ However, the premise is that the user must first configure an independent instal
 
 And we can also use this policy to disable the default installation phase rpath setting behavior.
 
-### run.autobuild
+## run.autobuild
 
 This policy is used to adjust the behaviour of `xmake run`. By default, running `xmake run` does not build the target program automatically, but prompts the user to build it manually if it has not been compiled yet.
 
@@ -405,36 +405,36 @@ If you want this policy to take effect globally, you can turn it on globally.
 $ xmake g --policies=run.autobuild
 ```
 
-### preprocessor.linemarkers
+## preprocessor.linemarkers
 
 If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.
 This will greatly reduce the size of the preprocessor file and improve the efficiency of the cache, but the downside is that the source line information will be lost and if you encounter a compilation error, you will not be able to see the exact line of code that went wrong.
 
-### preprocessor.gcc.directives_only
+## preprocessor.gcc.directives_only
 
 This is also used as a preprocessor policy and is enabled by default. This will improve the efficiency of compile cache preprocessing under gcc, but can lead to cache inconsistencies if the source file contains macros such as `__DATE__`, `__TIME__`, etc.
 
 Therefore, you can turn this policy off as needed to ensure consistent results, depending on your project code.
 
-### package.requires_lock
+## package.requires_lock
 
 Can be used to enable version locking of dependency packages introduced by `add_requires()`.
 
 See [Dependent package lock and upgrade](/guide/package-management/using-official-packages#dependent-package-lock-and-upgrade).
 
-### package.precompiled
+## package.precompiled
 
 Can be used to disable fetching of precompiled dependency packages under windows.
 
-### package.fetch_only
+## package.fetch_only
 
 If this policy is enabled, then all dependencies will only be fetched from the system and not downloaded and installed from a remote location.
 
-### package.install_only
+## package.install_only
 
 If this policy is enabled, then all dependencies will only be downloaded and installed remotely, not fetched from the system.
 
-### package.librarydeps.strict_compatibility
+## package.librarydeps.strict_compatibility
 
 Disabled by default, if enabled then strict compatibility is maintained between the current package and all its library dependencies, any version update of a dependent package will force a recompile install of the current package.
 
@@ -448,7 +448,7 @@ package("foo")
 
 For example, if there is an updated version of bar or zoo, then foo will also be recompiled and installed.
 
-### package.strict_compatibility
+## package.strict_compatibility
 
 is disabled by default, if it is enabled then strict compatibility is maintained between the current package and all other packages that depend on it, and any version update of this package will force a recompile and install of the other parent packages.
 
@@ -468,7 +468,7 @@ package("zoo")
 
 For example, if there is an updated version of foo, then both bar and zoo will be forced to be recompiled and installed.
 
-### package.install_always
+## package.install_always
 
 This is useful for local integration of third-party source packages,
 as the package will always be reinstalled each time `xmake f -c` is run to reconfigure it.
@@ -504,7 +504,7 @@ target("demo")
     add_packages("foo")
 ```
 
-### package.download.http_headers
+## package.download.http_headers
 
 Setting http headers for package downloads
 
@@ -523,7 +523,7 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 })
 ```
 
-### windows.manifest.uac
+## windows.manifest.uac
 
 This policy allows us to quickly and easily setup and enable Windows UAC.
 
@@ -551,7 +551,7 @@ end
 
 But it's easier and cleaner, and doesn't need to judge the platform, other platforms are automatically ignored.
 
-### windows.manifest.uac.ui
+## windows.manifest.uac.ui
 
 Sets uiAccess for Windows UAC, defaults to false if it is not set.
 
