@@ -3,13 +3,13 @@
 Xmake 有很多的默认行为，比如：自动检测和映射编译、链接标志、跨工程目标并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定能满足所有的用户的使用习惯和需求。
 因此， xmake 提供了**针对默认策略的修改设置**，在一定程度上给予了用户**修改策略**的权限。这个功能主要通过 [set_policy](/zh/api/description/project-target#set-policy) 接口来实现，我们通常可以使用这个接口来配置修改 target, package 以及工程整体的一些行为策略。
 
-## 使用方式
+## 使用方式 {#usage}
 
 ::: tip 注意
 如果设置的策略名是无效的， xmake 会有警告提示。
 :::
 
-### 1. 获取当前版本所支持的所有策略
+### 1. 获取当前版本所支持的所有策略 {#_1-get-all-the-policies-supported-by-the-current-version}
 
 执行下面的命令可以返回所有的配置及其描述、值类型和默认值：
 
@@ -17,7 +17,7 @@ Xmake 有很多的默认行为，比如：自动检测和映射编译、链接�
 $ xmake l core.project.policy.policies
 ```
 
-### 2. 在 `xmake.lua` 中直接调用接口进行策略的配置
+### 2. 在 `xmake.lua` 中直接调用接口进行策略的配置 {#_2-configuring-policies-in-xmake-lua}
 
 ::: code-group
 ```lua [全局设置]
@@ -32,7 +32,7 @@ target("test")
 ```
 :::
 
-### 3. 通过命令行进行策略的配置
+### 3. 通过命令行进行策略的配置 {#_3-configuring-policies-via-the-command-line}
 
 当我们构建工程时，可能需要暂时性地启用或是禁用一些策略。在这种情况下，使用命令行就更加贴合需求了。使用命令行设置策略时，默认该策略为启用状态：
 
