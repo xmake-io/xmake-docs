@@ -120,6 +120,18 @@ add_cxflags("-O0")
 set_policy("check.auto_map_flags", false)
 ```
 
+## check.target_package_licenses <Badge type="tip" text="v2.3.9" />
+
+### 默认策略 {#default-policy-2}
+在软件开发过程中引入开源软件作为第三方依赖，可以有效避免“重造轮子”。我们应当**尊重并认可**其他开发者的劳动成果，**遵守**相应的开源许可证。为了帮助开发者发现潜在的**许可证冲突等风险**， xmake 默认会对项目和引入依赖的许可证进行**兼容性检查**。
+
+### 用法 {#usage-2}
+这个策略主要用于辅助用户发现潜在的许可证合规问题，起一个提醒的作用。在某些学习或特定场景下，如果用户希望暂时屏蔽检测产生的冲突警告，可以通过以下设置禁用许可证兼容性检测并去除警告信息：
+
+```lua
+set_policy("check.target_package_licenses", false)
+```
+
 ## build.across_targets_in_parallel <Badge type="tip" text="v2.3.4" />
 
 这个策略也是默认开启的，主要用于跨target间执行并行构建，v2.3.3之前的版本，并行构建只能针对单个target内部的所有源文件，
