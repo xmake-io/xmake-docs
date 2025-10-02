@@ -97,31 +97,33 @@ target("test")
 
 ## check.auto_map_flags <Badge type="tip" text="v2.3.4" />
 
-This is another intelligent analysis and processing of flags by xmake. Usually, the configuration set by xmake built-in APIs like `add_links`,` add_defines` is cross-platform, and different compiler platforms will automatically process them into corresponding Original flags.
+::: tip NOTE
+The current implementation of auto-mapping is not yet complete and doesn't cover 100% of all gcc flags, so there are still some flags that may not be mapped.
+:::
 
-However, in some cases, users still need to set the original compilation link flags by add_cxflags, add_ldflags, these flags are not good cross compiler
+### Default Policy
 
-Take `-O0` compiler optimization flags. Although` set_optimize` is used to implement cross-compiler configuration, what if the user directly sets `add_cxflags ("-O0 ")`? It can be processed normally under gcc / clang, but it is not supported under msvc
+This policy controls another intelligent feature for flag-handling. Usually, the configurations set by xmake built-in APIs like `add_links`, `add_defines` are cross-platform, which means xmake will automatically translate them into appropriate raw flags for different compilers.
 
-Maybe we can use `if is_plat () then` to process by platform, but it is very cumbersome, so xmake has built-in automatic mapping function of flags.
+However, in some cases, users still need to set the raw compilation or linking flags by APIs like `add_cxflags` and `add_ldflags`. These APIs takes raw flags as parameters, and therefore are probably compiler-specified and not portable.
 
-Based on the popularity of gcc flags, xmake uses gcc's flags naming convention to automatically map it according to different compilations, for example:
+Take `-O0`, a compiler optimization flag, for example. Although `set_optimize` can be used to implement cross-platform configuration, some users still prefer to use `add_cxflags("-O0")`. `-O0` can be recognized by gcc and clang, but not by msvc.
+
+To solve this, xmake has a built-in auto-mapping function for flags. Based on the widely-used gcc flags, xmake uses gcc's flags naming convention to automatically map them. For example:
 
 ```lua
 add_cxflags("-O0")
 ```
 
-This line setting is still `-O0` under gcc/clang, but if it is currently msvc compiler, it will be automatically mapped to msvc corresponding to` -Od` compilation option to disable optimization.
+Xmake will pass `-O0` to gcc and clang as it is, but for msvc, it will be automatically mapped to msvc-specified `-Od` flag to disable optimization.
 
-Throughout the process, users are completely unaware, and can execute xmake directly to compile across compilers.
+During this transparent process, simply run xmake, and it will handle the necessary flag translations automatically.
 
-::: tip NOTE
-Of course, the current implementation of automatic mapping is not very mature. There is no 100% coverage of all gcc flags, so there are still many flags that are not mapped.
-:::
+### Usage
 
-Some users do not like this automatic mapping behavior, so we can completely disable this default behavior through the following settings:
+Some users do not like this auto-mapping behavior, so we can completely disable this default behavior through the following settings:
 
-```sh
+```lua
 set_policy("check.auto_map_flags", false)
 ```
 

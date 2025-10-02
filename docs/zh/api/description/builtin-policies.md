@@ -93,31 +93,30 @@ target("test")
 
 ## check.auto_map_flags <Badge type="tip" text="v2.3.4" />
 
-这是xmake的另外一个对flags的智能分析处理，通常像`add_links`, `add_defines`这种xmake内置的api去设置的配置，是具有跨平台特性的，不同编译器平台会自动处理成对应的原始flags。
+::: tip 注意
+目前的自动映射实现还不是很完整，没有 100% 覆盖所有 gcc 的标志，所以还是有部分标志是无法去映射的。
+:::
 
-但是，有些情况，用户还是需要自己通过`add_cxflags`, `add_ldflags`设置原始的编译链接flags，这些flags并不能很好的跨编译器
+### 默认策略 {#default-policy-1}
+这是 xmake 的另外一个对标志的智能分析处理。通常情况下，通过 `add_links`, `add_defines` 这种 xmake 内置的 API 去设置的配置是具有跨平台特性的。针对不同的编译器平台， xmake 会自动处理成对应的原始标志。
 
-就拿`-O0`的编译优化flags来说，虽然有`set_optimize`来实现跨编译器配置，但如果用户直接设置`add_cxflags("-O0")`呢？gcc/clang下可以正常处理，但是msvc下就不支持了
+但是有些情况下，用户还是会通过 `add_cxflags`, `add_ldflags` 等接口设置原始的编译链接标志。这些 API 接收原始标志为参数，但部分标志本身并不是被所有的编译器支持的。
 
-也许我们能通过`if is_plat() then`来分平台处理，但很繁琐，因此xmake内置了flags的自动映射功能。
+例如 `-O0` 这个编译优化标志。虽然有 `set_optimize` 来实现跨编译器配置，但如果用户可能会直接使用 `add_cxflags("-O0")` 。这种情况下， gcc/clang 下可以正常处理，但是 msvc 下就不支持它了。
 
-基于gcc flags的普及性，xmake采用gcc的flags命名规范，对其根据不同的编译实现自动映射，例如：
+因此， xmake 内置了标志的自动映射功能：基于 gcc 编译标志的普及性， xmake 采用 gcc 的标志命名规范，针对不同的编译器对其进行自动映射，例如：
 
 ```lua
 add_cxflags("-O0")
 ```
 
-这一行设置，在gcc/clang下还是`-O0`，但如果当前是msvc编译器，那边会自动映射为msvc对应`-Od`编译选项来禁用优化。
+这一行设置，在 gcc/clang 编译器下还是 `-O0` ，但针对 msvc 编译器 xmake 就会自动将其映射为 msvc 中对应的 `-Od` 编译标志来禁用优化。整个过程，用户是完全无感知的，直接执行 xmake 就可以跨编译器完成标志的映射和编译。
 
-整个过程，用户是完全无感知的，直接执行xmake就可以跨编译器完成编译。
-
-::: tip 注意
-当然，目前的自动映射实现还不是很成熟，没有100%覆盖所有gcc的flags，所以还是有不少flags是没去映射的。
-:::
+### 用法 {#usage-1}
 
 也有部分用户并不喜欢这种自动映射行为，那么我们可以通过下面的设置完全禁用这个默认的行为：
 
-```sh
+```lua
 set_policy("check.auto_map_flags", false)
 ```
 
