@@ -73,7 +73,7 @@ xmake 默认会对所有通过 `add_cxflags`, `add_ldflags` 等接口添加的�
 warning: add_ldflags("-static") is ignored, please pass `{force = true}` or call `set_policy("check.auto_ignore_flags", false)` if you want to set it.
 ```
 
-根据警告提示，我们可以自己分析判断是否需要强制添加这个标志 。我们可以根据 flag 的数量来选择以下两种方案：
+根据警告提示，我们可以自己分析判断是否需要强制添加这个标志。我们可以根据 flag 的数量来选择以下两种方案：
 
 #### 1. 添加 force 参数 {#_1-add-the-force-parameter}
 ```lua
@@ -110,7 +110,7 @@ target("test")
 add_cxflags("-O0")
 ```
 
-这一行设置，在 gcc/clang 编译器下还是 `-O0` ，但针对 msvc 编译器 xmake 就会自动将其映射为 msvc 中对应的 `-Od` 编译标志来禁用优化。整个过程，用户是完全无感知的，直接执行 xmake 就可以跨编译器完成标志的映射和编译。
+这一行设置，在 gcc/clang 编译器下还是 `-O0` ，但针对 msvc 编译器， xmake 就会自动将其映射为 msvc 中对应的 `-Od` 编译标志来禁用优化。整个过程，用户是完全无感知的，直接执行 xmake 就可以跨编译器完成标志的映射和编译。
 
 ### 用法 {#usage-1}
 
