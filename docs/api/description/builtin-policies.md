@@ -1,92 +1,93 @@
-# Build Policies
+# Built-in Policies <Badge type="tip" text="v2.3.4" />
 
-Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users' habits and needs.
+Xmake incorporates many default behaviors, such as automatically detecting and mapping for flags and enabling parallel builds across different targets. Although it provides intelligent processing to some extent, it is difficult to satisfy all users' habits, needs and preferences.
 
-Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy,
-which is open to users to a certain degree of configurability. It is mainly configured through the [set_policy](/api/description/project-target#set-policy) interface.
+Therefore, xmake provides a way to override its default build policies, giving users a higher degree of control.
+This is primarily achieved through the [set_policy](/api/description/project-target#set-policy) API, which can be used to modify the default behavior of targets, packages, or the entire project.
 
-The usage is as follows:
-
-```lua
-set_policy("check.auto_ignore_flags", false)
-```
-
-You only need to set this configuration in the project root domain to disable the automatic detection and ignore mechanism of flags.
-In addition, set_policy can also take effect locally for a specific target.
-
-```lua
-target ("test")
-    set_policy ("check.auto_ignore_flags", false)
-```
+## Usage
 
 ::: tip NOTE
-In addition, if the set policy name is invalid, xmake will also have a warning prompt.
+If the policy name you provide is invalid, xmake will show a warning.
 :::
 
-If you want to get a list and description of all the policy configurations supported by the current xmake, you can execute the following command:
+### 1. Get All the Policies Supported by the Current Version
+
+We can run the following command to get a list of all the policy configurations, including their descriptions, types, and default values:
 
 ```sh
 $ xmake l core.project.policy.policies
-{
-  "check.auto_map_flags" = {
-    type = "boolean",
-    description = "Enable map gcc flags to the current compiler and linker automatically.",
-    default = true
-  },
-  "build.across_targets_in_parallel" = {
-    type = "boolean",
-    description = "Enable compile the source files for each target in parallel.",
-    default = true
-  },
-  "check.auto_ignore_flags" = {
-    type = "boolean",
-    description = "Enable check and ignore unsupported flags automatically.",
-    default = true
-  }
-}
 ```
 
-We can also set up internal policy changes via the command line:
+### 2. Configuring Policies in `xmake.lua`
+
+::: code-group
+```lua [globally]
+-- Set this in the root domain to globally disable the automatic detection and ignore mechanism of flags
+set_policy("check.auto_ignore_flags", false)
+```
+
+```lua [locally]
+target ("test")
+    -- This applies only to the `test` target.
+    set_policy("check.auto_ignore_flags", false)
+```
+:::
+
+### 3. Configuring Policies via the Command Line
+
+When building projects, we may need to temporarily enable or disable certain policies. In such cases, it's more suitable to use the command line. And when a policy is set from the command line, it is enabled by default:
 
 ```sh
 $ xmake f --policies=package.fetch_only
 ```
 
-The policy name is set by default, which is the enabled state, but we can of course specify to set other values to disable it.
+Also, we can specify other values to disable the policy or achieve other effects:
 
 ```sh
 $ xmake f --policies=package.precompiled:n
 ```
 
-Or configure multiple policy values at the same time, separated by commas.
+Please note that when specifying multiple policies, you should use commas to separate them:
 
 ```sh
 $ xmake f --policies=package.precompiled:n,package.install_only
 ```
 
-### check.auto_ignore_flags
+## check.auto_ignore_flags <Badge type="tip" text="v2.3.4" />
 
-By default, xmake will automatically detect all the original flags set by the `add_cxflags` and` add_ldflags` interfaces. If the current compiler and linker do not support them, they will be automatically ignored.
+::: danger Potential Risk
+Disabling the default policy for auto-detecting and ignoring flags without careful consideration may cause unexpected compiling errors for others, as compilers' support for specific flags varies.
+:::
 
-This is usually very useful. Like some optional compilation flags, it can be compiled normally even if it is not supported, but it is forced to set up. When compiling, other users may have a certain degree of difference due to the different support of the compiler. The compilation failed.
+### Default policy
 
-However, because automatic detection does not guarantee 100% reliability, sometimes there will be a certain degree of misjudgment, so some users do not like this setting (especially for cross-compilation tool chains, which are more likely to fail).
+By default, xmake will automatically detect all the compilation and linking flags set by the `add_cxflags` and `add_ldflags` interfaces. If the current compiler or linker does not support a certain flag, xmake will automatically ignore it and show a warning.
 
-At present, if the detection fails in v2.3.4, there will be a warning prompt to prevent users from lying inexplicably, for example:
+This can be extremely useful especially when dealing with optional compilation flags. It can still be compiled normally even if the flag in question is not supported.
+
+### Use Cases
+
+However, in some circumstances, this default policy can result in false positives, especially during cross-compilation. What's more, the resulting warnings can be annoying and create a lot of noise in the build output.
+
+For example:
 
 ```
 warning: add_ldflags("-static") is ignored, please pass `{force = true}` or call `set_policy("check.auto_ignore_flags", false)` if you want to set it.
 ```
 
-According to the prompt, we can analyze and judge ourselves whether it is necessary to set this flags. One way is to pass:
+Based on this warning, we can determine if we need to add this flag. Depending on the number of flags involved, you can choose one of the following two solutions:
 
+#### 1. Add the `force` parameter
 ```lua
 add_ldflags("-static", {force = true})
 ```
 
-To display the mandatory settings, skip automatic detection, which is an effective and fast way to deal with occasional flags failure, but for cross-compilation, if a bunch of flags settings cannot be detected, each set force Too tedious.
+The `{force = true}` parameter can explicitly force the flag(s) to be added, skipping the automatic check. This is an effective and fast way to deal with a few flags. However, when dealing with complex projects like cross-compilation, where a large number of flags might fail the detection, setting this parameter for each one becomes tedious.
 
-At this time, we can use `set_policy` to directly disable the default automatic detection behavior for a target or the entire project:
+#### 2. Set the Policy
+
+To avoid the limitation of the first approach, we can use `set_policy` to directly disable the default automatic detection behavior for a specified target or the entire project. Meanwhile, this will suppress all related warnings.
 
 ```lua
 set_policy("check.auto_ignore_flags", false)
@@ -94,39 +95,51 @@ target("test")
     add_ldflags("-static")
 ```
 
-Then we can set various original flags at will, xmake will not automatically detect and ignore them.
+## check.auto_map_flags <Badge type="tip" text="v2.3.4" />
 
-### check.auto_map_flags
+::: tip NOTE
+The current implementation of auto-mapping is not yet complete and doesn't cover 100% of all gcc flags, so there are still some flags that may not be mapped.
+:::
 
-This is another intelligent analysis and processing of flags by xmake. Usually, the configuration set by xmake built-in APIs like `add_links`,` add_defines` is cross-platform, and different compiler platforms will automatically process them into corresponding Original flags.
+### Default Policy
 
-However, in some cases, users still need to set the original compilation link flags by add_cxflags, add_ldflags, these flags are not good cross compiler
+This policy controls another intelligent feature for flag-handling. Usually, the configurations set by xmake built-in APIs like `add_links`, `add_defines` are cross-platform, which means xmake will automatically translate them into appropriate raw flags for different compilers.
 
-Take `-O0` compiler optimization flags. Although` set_optimize` is used to implement cross-compiler configuration, what if the user directly sets `add_cxflags ("-O0 ")`? It can be processed normally under gcc / clang, but it is not supported under msvc
+However, in some cases, users still need to set the raw compilation or linking flags by APIs like `add_cxflags` and `add_ldflags`. These APIs takes raw flags as parameters, and therefore are probably compiler-specified and not portable.
 
-Maybe we can use `if is_plat () then` to process by platform, but it is very cumbersome, so xmake has built-in automatic mapping function of flags.
+Take `-O0`, a compiler optimization flag, for example. Although `set_optimize` can be used to implement cross-platform configuration, some users still prefer to use `add_cxflags("-O0")`. `-O0` can be recognized by gcc and clang, but not by msvc.
 
-Based on the popularity of gcc flags, xmake uses gcc's flags naming convention to automatically map it according to different compilations, for example:
+To solve this, xmake has a built-in auto-mapping function for flags. Based on the widely-used gcc flags, xmake uses gcc's flags naming convention to automatically map them. For example:
 
 ```lua
 add_cxflags("-O0")
 ```
 
-This line setting is still `-O0` under gcc/clang, but if it is currently msvc compiler, it will be automatically mapped to msvc corresponding to` -Od` compilation option to disable optimization.
+Xmake will pass `-O0` to gcc and clang as it is, but for msvc, it will be automatically mapped to msvc-specified `-Od` flag to disable optimization.
 
-Throughout the process, users are completely unaware, and can execute xmake directly to compile across compilers.
+During this transparent process, simply run xmake, and it will handle the necessary flag translations automatically.
 
-::: tip NOTE
-Of course, the current implementation of automatic mapping is not very mature. There is no 100% coverage of all gcc flags, so there are still many flags that are not mapped.
-:::
+### Usage
 
-Some users do not like this automatic mapping behavior, so we can completely disable this default behavior through the following settings:
+Some users do not like this auto-mapping behavior, so we can completely disable this default behavior through the following settings:
 
-```sh
+```lua
 set_policy("check.auto_map_flags", false)
 ```
 
-### build.across_targets_in_parallel
+## check.target_package_licenses <Badge type="tip" text="v2.3.9" />
+
+### Default Policy
+Using open-source software as third-party dependencies can avoid "reinventing the wheel" in software development. We should **respect and value** other developers' work by following their licenses. In order to help developers find potential risks, xmake performs a **license compatibility check** on projects and its imported dependencies by default.
+
+### Usage
+This policy is intended to help developers identify potential license compliance issues. But in some learning or experimental scenarios, you may want to temporarily silence the conflict warnings generated by this check. To do so, you can configure your project like this:
+
+```lua
+set_policy("check.target_package_licenses", false)
+```
+
+## build.across_targets_in_parallel <Badge type="tip" text="v2.3.4" />
 
 This strategy is also enabled by default and is mainly used to perform parallel builds between targets. In versions prior to v2.3.3, parallel builds can only target all source files within a single target.
 For cross-target compilation, you must wait until the previous target is fully linked before you can execute the compilation of the next target, which will affect the compilation speed to a certain extent.
@@ -139,7 +152,7 @@ Of course, if the build source files in some special targets depend on previous 
 set_policy("build.across_targets_in_parallel", false)
 ```
 
-### build.fence
+## build.fence <Badge type="tip" text="v2.9.2" />
 
 Due to the limitation of `set_policy(‘build.across_targets_in_parallel’, false)`, it will limit the parallelism between the parent target and all of its dependent subtargets, which is a bit wide.
 
@@ -175,7 +188,7 @@ The autogen target needs to be compiled and linked before the source code of the
 
 The autogen configuration `set_policy(‘build.fence’, true)` does this.
 
-### build.merge_archive
+## build.merge_archive <Badge type="tip" text="v2.5.8" />
 
 If this policy is set, then the target libraries that are dependent on using `add_deps()` no longer exist as links, but are merged directly into the parent target library.
 
@@ -208,7 +221,7 @@ target("test")
 The libmul.a static library automatically merges the libadd.a and libsub.a sub-dependent static libraries.
 
 
-### build.ccache
+## build.ccache <Badge type="tip" text="v2.6.7" />
 
 Xmake has a built-in build cache enabled by default, which can be explicitly disabled by setting this policy.
 
@@ -228,7 +241,7 @@ or
 $ xmake f --policies=build.ccache:n
 ```
 
-### build.warning
+## build.warning <Badge type="tip" text="v2.6.8" />
 
 The default compilation usually does not echo the warning output in real time, we usually need to use `xmake -w` to turn it on, or to turn it on globally with `xmake g --build_warning=y`.
 
@@ -241,7 +254,7 @@ set_warnings("all", "extra")
 
 At this time, even if we execute the `xmake` command, the warning output can be echoed directly.
 
-### build.optimization.lto
+## build.optimization.lto <Badge type="tip" text="v2.6.9" />
 
 xmake v2.6.9 has improved support for link-time optimisation (LTO), with adaptations for different platforms such as gcc/clang/msvc, simply by enabling this policy to enable LTO for specific targets.
 
@@ -255,7 +268,7 @@ We can also turn it on quickly via the command line option.
 $ xmake f --policies=build.optimization.lto
 ```
 
-### build.cuda.devlink
+## build.cuda.devlink <Badge type="tip" text="v2.7.7" />
 
 Version 2.7.7 can be configured to show that device links to specific targets are turned on.
 
@@ -271,7 +284,7 @@ Whereas by default Cuda binary/shared is devlink enabled, we can also disable it
 
 For a detailed background on this, see: [#1976](https://github.com/xmake-io/xmake/issues/1976)
 
-### build.sanitizer.address
+## build.sanitizer.address <Badge type="tip" text="v2.8.3" />
 
 Address Sanitizer (ASan) is a fast memory error detection tool that is built-in by the compiler, and usually requires `-fsanitize-address` to be configured in both the build and link flags to enable it correctly.
 
@@ -325,23 +338,23 @@ or
 $ xmake f --policies=build.sanitizer.address,build.sanitizer.undefined
 ```
 
-### build.sanitizer.thread
+## build.sanitizer.thread <Badge type="tip" text="v2.8.3" />
 
 Similar to [build.sanitizer.address](#build-sanitizer-address) for detecting thread safety issues.
 
-### build.sanitizer.memory
+## build.sanitizer.memory <Badge type="tip" text="v2.8.3" />
 
 Similar to [build.sanitizer.address](#build-sanitizer-address) for detecting memory issues.
 
-### build.sanitizer.leak
+## build.sanitizer.leak <Badge type="tip" text="v2.8.3" />
 
 Similar to [build.sanitizer.address](#build-sanitizer-address) for detecting memory leaks.
 
-### build.sanitizer.undefined
+## build.sanitizer.undefined <Badge type="tip" text="v2.8.3" />
 
 Similar to [build.sanitizer.address](#build-sanitizer-address) for detecting undefined issues.
 
-### build.always_update_configfiles
+## build.always_update_configfiles <Badge type="tip" text="v2.8.7" />
 
 This policy is used for the automatic generation of `add_configfiles` configuration files. By default, xmake only triggers the regeneration of configfiles the first time `xmake config` is done, or if the xmake.lua configuration is changed.
 
@@ -351,7 +364,7 @@ However, if we use a variable such as GIT_COMMIT in our configfiles and want to 
 
 For background on how to use it, see: [#4747](https://github.com/xmake-io/xmake/issues/4747)
 
-### build.intermediate_directory
+## build.intermediate_directory <Badge type="tip" text="v2.9.4" />
 
 Configures whether to enable or disable internal subdirectories of the build.
 
@@ -372,7 +385,7 @@ build/
 └─ test
 ```
 
-### build.rpath
+## build.rpath <Badge type="tip" text="v2.9.4" />
 
 Configures to enable or disable the target rpath setting during build.
 
@@ -380,7 +393,7 @@ By default, if `target(foo)` depends on the dynamic library bar, the generated f
 
 If you want to disable this behavior, you can explicitly configure it.
 
-### install.rpath
+## install.rpath <Badge type="tip" text="v2.9.4" />
 
 Although the rpath will be set for the built program, the rpath when it is built may not be completely applicable after `xmake install` is installed, so xmake will automatically modify and adjust the rpath so that the installed program can also find its dependent libraries.
 
@@ -388,7 +401,7 @@ However, the premise is that the user must first configure an independent instal
 
 And we can also use this policy to disable the default installation phase rpath setting behavior.
 
-### run.autobuild
+## run.autobuild <Badge type="tip" text="v2.8.3" />
 
 This policy is used to adjust the behaviour of `xmake run`. By default, running `xmake run` does not build the target program automatically, but prompts the user to build it manually if it has not been compiled yet.
 
@@ -405,36 +418,36 @@ If you want this policy to take effect globally, you can turn it on globally.
 $ xmake g --policies=run.autobuild
 ```
 
-### preprocessor.linemarkers
+## preprocessor.linemarkers <Badge type="tip" text="v2.6.8" />
 
 If this policy is turned off, then the cache will generate preprocessor files without linemarkers, which will greatly reduce the size of the preprocessor files.
 This will greatly reduce the size of the preprocessor file and improve the efficiency of the cache, but the downside is that the source line information will be lost and if you encounter a compilation error, you will not be able to see the exact line of code that went wrong.
 
-### preprocessor.gcc.directives_only
+## preprocessor.gcc.directives_only <Badge type="tip" text="v2.6.8" />
 
 This is also used as a preprocessor policy and is enabled by default. This will improve the efficiency of compile cache preprocessing under gcc, but can lead to cache inconsistencies if the source file contains macros such as `__DATE__`, `__TIME__`, etc.
 
 Therefore, you can turn this policy off as needed to ensure consistent results, depending on your project code.
 
-### package.requires_lock
+## package.requires_lock <Badge type="tip" text="v2.5.7" />
 
 Can be used to enable version locking of dependency packages introduced by `add_requires()`.
 
 See [Dependent package lock and upgrade](/guide/package-management/using-official-packages#dependent-package-lock-and-upgrade).
 
-### package.precompiled
+## package.precompiled <Badge type="tip" text="v2.6.4" />
 
 Can be used to disable fetching of precompiled dependency packages under windows.
 
-### package.fetch_only
+## package.fetch_only <Badge type="tip" text="v2.6.7" />
 
 If this policy is enabled, then all dependencies will only be fetched from the system and not downloaded and installed from a remote location.
 
-### package.install_only
+## package.install_only <Badge type="tip" text="v2.6.7" />
 
 If this policy is enabled, then all dependencies will only be downloaded and installed remotely, not fetched from the system.
 
-### package.librarydeps.strict_compatibility
+## package.librarydeps.strict_compatibility <Badge type="tip" text="v2.7.2" />
 
 Disabled by default, if enabled then strict compatibility is maintained between the current package and all its library dependencies, any version update of a dependent package will force a recompile install of the current package.
 
@@ -448,7 +461,7 @@ package("foo")
 
 For example, if there is an updated version of bar or zoo, then foo will also be recompiled and installed.
 
-### package.strict_compatibility
+## package.strict_compatibility <Badge type="tip" text="v2.7.2" />
 
 is disabled by default, if it is enabled then strict compatibility is maintained between the current package and all other packages that depend on it, and any version update of this package will force a recompile and install of the other parent packages.
 
@@ -468,7 +481,7 @@ package("zoo")
 
 For example, if there is an updated version of foo, then both bar and zoo will be forced to be recompiled and installed.
 
-### package.install_always
+## package.install_always <Badge type="tip" text="v2.7.2" />
 
 This is useful for local integration of third-party source packages,
 as the package will always be reinstalled each time `xmake f -c` is run to reconfigure it.
@@ -504,7 +517,7 @@ target("demo")
     add_packages("foo")
 ```
 
-### package.download.http_headers
+## package.download.http_headers <Badge type="tip" text="v2.7.7" />
 
 Setting http headers for package downloads
 
@@ -523,7 +536,7 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 })
 ```
 
-### windows.manifest.uac
+## windows.manifest.uac <Badge type="tip" text="v2.8.5" />
 
 This policy allows us to quickly and easily setup and enable Windows UAC.
 
@@ -551,7 +564,7 @@ end
 
 But it's easier and cleaner, and doesn't need to judge the platform, other platforms are automatically ignored.
 
-### windows.manifest.uac.ui
+## windows.manifest.uac.ui <Badge type="tip" text="v2.8.5" />
 
 Sets uiAccess for Windows UAC, defaults to false if it is not set.
 
