@@ -187,7 +187,7 @@ $ xmake
 
 ## LLVM-Mingw
 
-这其实是一个独立于 Mingw 的项目，用法跟 Mingw 完全一直，但是它是基于 LLVM 的，并且提供了 arm/arm64 等其他更多架构的支持，而不仅仅是 i386/x86_64
+这其实是一个独立于 Mingw 的项目，用法和 Mingw 完全一致，但是它是基于 LLVM 的，并且提供了 arm/arm64 等其他更多架构的支持，而不仅仅是 i386/x86_64
 
 ```sh
 $ xmake f -p mingw -a arm64 --mingw=/xxx/llvm-mingw -c
