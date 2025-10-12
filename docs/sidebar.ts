@@ -15,14 +15,15 @@ export function builtinModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
     { text: 'vformat', link: 'builtin-modules/vformat' },
     { text: 'raise', link: 'builtin-pmodules/raise' },
     { text: 'os', link: 'builtin-modules/os' },
-    { text: 'winos', link: 'builtin-modules/winos' },
-    { text: 'macos', link: 'builtin-modules/macos' },
-    { text: 'linuxos', link: 'builtin-modules/linuxos' },
     { text: 'io', link: 'builtin-modules/io' },
     { text: 'path', link: 'builtin-modules/path' },
+    { text: 'hash', link: 'builtin-modules/hash' },
     { text: 'table', link: 'builtin-modules/table' },
     { text: 'string', link: 'builtin-modules/string' },
     { text: 'coroutine', link: 'builtin-modules/coroutine' },
+    { text: 'winos', link: 'builtin-modules/winos' },
+    { text: 'macos', link: 'builtin-modules/macos' },
+    { text: 'linuxos', link: 'builtin-modules/linuxos' },
     { text: 'signal', link: 'builtin-modules/signal' },
   ]
 }
@@ -47,6 +48,7 @@ function coreModulesApiSidebar(): DefaultTheme.SidebarItem {
     collapsed: true,
     items: [
       coreBaseModulesApiSidebar(),
+      coreCompressModulesApiSidebar(),
       coreLanguageModulesApiSidebar(),
       coreProjectModulesApiSidebar(),
       coreToolModulesApiSidebar(),
@@ -65,6 +67,16 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
       { text: 'semver', link: 'extension-modules/core/base/semver' },
       { text: 'task', link: 'extension-modules/core/base/task' },
       { text: 'thread', link: 'extension-modules/core/base/thread' },
+    ]
+  }
+}
+
+function coreCompressModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'compress',
+    collapsed: true,
+    items: [
+      { text: 'lz4', link: 'extension-modules/core/compress/lz4' },
     ]
   }
 }
