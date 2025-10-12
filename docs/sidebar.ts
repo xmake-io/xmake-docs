@@ -66,6 +66,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
       { text: 'option', link: 'extension-modules/core/base/option' },
       { text: 'pipe', link: 'extension-modules/core/base/pipe' },
       { text: 'semver', link: 'extension-modules/core/base/semver' },
+      { text: 'socket', link: 'extension-modules/core/base/socket' },
       { text: 'task', link: 'extension-modules/core/base/task' },
       { text: 'thread', link: 'extension-modules/core/base/thread' },
     ]
