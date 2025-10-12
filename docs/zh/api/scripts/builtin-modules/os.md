@@ -490,7 +490,19 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH = 
 - 获取系统环境变量
 
 ```lua
-print(os.getenv("PATH"))
+local value = os.getenv("PATH")
+```
+
+获取指定环境变量的值。如果环境变量不存在，返回 nil。
+
+```lua
+local path = os.getenv("PATH")
+if path then
+    print("PATH:", path)
+end
+
+-- 获取带默认值的环境变量
+local home = os.getenv("HOME") or "/tmp"
 ```
 
 ## os.setenv
@@ -499,6 +511,17 @@ print(os.getenv("PATH"))
 
 ```lua
 os.setenv("HOME", "/tmp/")
+```
+
+设置指定环境变量的值。设置后会影响当前进程及其子进程的环境变量。
+
+```lua
+-- 设置环境变量
+os.setenv("MY_VAR", "my_value")
+print(os.getenv("MY_VAR"))  -- 输出: my_value
+
+-- 设置 PATH
+os.setenv("PATH", "/new/path:" .. os.getenv("PATH"))
 ```
 
 ## os.tmpdir
@@ -521,7 +544,24 @@ print("$(tmpdir)/file.txt")
 
 - 获取临时文件路径
 
-用于获取生成一个临时文件路径，仅仅是个路径，文件需要自己创建。
+```lua
+local tmpfile = os.tmpfile()
+```
+
+生成一个唯一的临时文件路径，返回的仅是路径字符串，文件本身不会自动创建，需要自己创建。
+
+每次调用都会生成不同的临时文件路径，适合用于创建临时文件：
+
+```lua
+-- 生成临时文件路径
+local tmpfile = os.tmpfile()
+print("临时文件:", tmpfile)  -- 例如: /tmp/xmake_XXXXXX
+
+-- 创建并使用临时文件
+io.writefile(tmpfile, "temporary data")
+-- 使用完后删除
+os.rm(tmpfile)
+```
 
 ## os.curdir
 
@@ -536,7 +576,23 @@ print("$(tmpdir)/file.txt")
 - 获取文件大小
 
 ```lua
-print(os.filesize("/tmp/a"))
+local size = os.filesize("/tmp/a")
+```
+
+返回文件的大小（字节数）。如果文件不存在或无法访问，返回 0。
+
+实用示例：
+
+```lua
+local size = os.filesize("build/output.bin")
+if size > 0 then
+    print(string.format("文件大小: %.2f KB", size / 1024))
+end
+
+-- 检查文件是否为空
+if os.filesize("config.txt") == 0 then
+    print("配置文件为空")
+end
 ```
 
 ## os.scriptdir
@@ -557,6 +613,17 @@ print(os.filesize("/tmp/a"))
 
 - 获取xmake可执行文件路径
 
+```lua
+local xmake_path = os.programfile()
+```
+
+返回 xmake 可执行文件的完整路径。
+
+```lua
+print("xmake 路径:", os.programfile())
+-- 例如: /usr/local/bin/xmake
+```
+
 ## os.projectdir
 
 - 获取工程主目录
@@ -567,37 +634,145 @@ print(os.filesize("/tmp/a"))
 
 - 获取当前系统架构
 
-也就是当前主机系统的默认架构，例如我在`linux x86_64`上执行xmake进行构建，那么返回值是：`x86_64`
+```lua
+local arch = os.arch()
+```
+
+返回当前主机系统的默认架构。例如在 `linux x86_64` 上执行 xmake 进行构建，返回值是：`x86_64`
+
+常见架构值：`x86_64`、`i386`、`arm64`、`armv7`、`mips` 等。
+
+```lua
+print("当前架构:", os.arch())
+
+-- 根据架构执行不同的操作
+if os.arch() == "x86_64" then
+    add_defines("ARCH_X64")
+end
+```
 
 ## os.host
 
 - 获取当前主机的操作系统
 
-跟[$(host)](/zh/api/description/builtin-variables#var-host)结果一致，例如我在`linux x86_64`上执行xmake进行构建，那么返回值是：`linux`
+```lua
+local host = os.host()
+```
+
+跟 [$(host)](/zh/api/description/builtin-variables#var-host) 结果一致。例如在 `linux x86_64` 上执行 xmake 进行构建，返回值是：`linux`
+
+常见系统值：`linux`、`macosx`、`windows`、`bsd` 等。
+
+```lua
+print("当前系统:", os.host())
+
+-- 根据系统执行不同的操作
+if os.host() == "windows" then
+    add_defines("WINDOWS")
+elseif os.host() == "linux" then
+    add_defines("LINUX")
+end
+```
 
 ## os.subhost
 
-- 获取当前子系统，如：在Windows上的msys、cygwin
+- 获取当前子系统
+
+```lua
+local subhost = os.subhost()
+```
+
+获取当前子系统环境，如：在 Windows 上的 msys、cygwin 等。
+
+如果不在子系统环境中运行，返回值与 [os.host()](#os-host) 相同。
+
+```lua
+-- 在 MSYS2 环境中
+print(os.subhost())  -- 返回: msys
+
+-- 检测是否在子系统环境中
+if os.subhost() ~= os.host() then
+    print("在子系统环境中运行")
+end
+```
 
 ## os.subarch
 
 - 获取子系统架构
 
+```lua
+local subarch = os.subarch()
+```
+
+获取子系统的架构。如果不在子系统环境中运行，返回值与 [os.arch()](#os-arch) 相同。
+
 ## os.is_host
 
 - 判断给定系统是否为当前系统
+
+```lua
+if os.is_host("linux") then
+    -- 在 Linux 系统上
+end
+
+if os.is_host("macosx", "linux") then
+    -- 在 macOS 或 Linux 系统上
+end
+```
+
+支持同时判断多个系统，只要匹配其中一个就返回 true。
+
+::: tip 提示
+推荐使用更简洁的内置接口 `is_host()`，无需 `os.` 前缀，用法一致：
+
+```lua
+if is_host("linux") then
+    -- 在 Linux 系统上
+end
+```
+:::
 
 ## os.is_arch
 
 - 判断给定架构是否为当前架构
 
+```lua
+if os.is_arch("x86_64") then
+    -- 在 x86_64 架构上
+end
+
+if os.is_arch("x86_64", "arm64") then
+    -- 在 x86_64 或 arm64 架构上
+end
+```
+
+支持同时判断多个架构。
+
 ## os.is_subhost
 
 - 判断给定子系统是否为当前子系统
 
+```lua
+if os.is_subhost("msys") then
+    -- 在 MSYS 子系统中
+end
+```
+
+用于检测是否运行在特定的子系统环境中，如 msys、cygwin 等。
+
+::: tip 提示
+推荐使用更简洁的内置接口 `is_subhost()`，用法一致。
+:::
+
 ## os.is_subarch
 
 - 判断给定子系统架构是否为当前子系统架构
+
+```lua
+if os.is_subarch("x86_64") then
+    -- 子系统架构是 x86_64
+end
+```
 
 ## os.ln
 
@@ -654,6 +829,12 @@ os.raiselevel(3, "an error occurred")
 
 - 获取系统特性
 
+```lua
+local features = os.features()
+```
+
+获取当前操作系统支持的特性列表。返回一个 table，包含系统支持的各种特性。
+
 ## os.getenvs
 
 - 获取所有当前系统变量
@@ -697,21 +878,100 @@ local envs1 = {CUSTOM = "some/path/"}
 print(os.joinenvs(envs0, envs1)) -- result is : { CUSTION = "a/path;some/path/" }
 ```
 
+## os.addenv
+
+- 向指定环境变量添加值
+
+```lua
+os.addenv("PATH", "/new/path")
+```
+
+向指定的环境变量追加新值，使用系统默认的分隔符（Unix 上是 `:`，Windows 上是 `;`）。
+
+```lua
+-- 向 PATH 添加新路径
+os.addenv("PATH", "/usr/local/bin")
+
+-- 验证
+print(os.getenv("PATH"))  -- 新路径会被追加到现有 PATH 中
+```
+
 ## os.setenvp
 
 - 使用给定分隔符设置环境变量
+
+```lua
+os.setenvp("VAR", "value", "separator")
+```
+
+设置环境变量，使用指定的分隔符。与 [os.setenv](#os-setenv) 类似，但可以自定义分隔符。
+
+## os.addenvp
+
+- 使用给定分隔符向环境变量添加值
+
+```lua
+os.addenvp("VAR", "value", "separator")
+```
+
+向环境变量追加值，使用指定的分隔符。与 [os.addenv](#os-addenv) 类似，但可以自定义分隔符。
 
 ## os.workingdir
 
 - 获取工作目录
 
+```lua
+local workdir = os.workingdir()
+```
+
+获取当前工作目录的绝对路径。与 `os.curdir()` 类似，但返回的是工作目录而不是当前脚本执行目录。
+
+```lua
+print("工作目录:", os.workingdir())
+```
+
 ## os.isroot
 
 - 判断xmake是否以管理员权限运行
 
+```lua
+if os.isroot() then
+    print("以管理员权限运行")
+end
+```
+
+在 Unix 系统上检查是否以 root 用户运行，在 Windows 上检查是否以管理员权限运行。
+
+某些操作需要管理员权限时很有用：
+
+```lua
+if not os.isroot() then
+    raise("此操作需要管理员权限，请使用 sudo 或以管理员身份运行")
+end
+```
+
 ## os.fscase
 
 - 判断操作系统的文件系统是否大小写敏感
+
+```lua
+if os.fscase() then
+    print("文件系统区分大小写")
+else
+    print("文件系统不区分大小写")
+end
+```
+
+返回 true 表示文件系统区分大小写（如 Linux），false 表示不区分（如 Windows、macOS 默认）。
+
+用于处理跨平台的文件名兼容性：
+
+```lua
+if not os.fscase() then
+    -- 在不区分大小写的系统上，避免使用仅大小写不同的文件名
+    print("警告: 文件系统不区分大小写")
+end
+```
 
 ## os.term
 

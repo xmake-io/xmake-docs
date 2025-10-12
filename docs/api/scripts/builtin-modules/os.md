@@ -497,7 +497,24 @@ print("$(tmpdir)/file.txt")
 
 - Get temporary file path
 
-Used to get a temporary file path, just a path, the file needs to be created by itself.
+```lua
+local tmpfile = os.tmpfile()
+```
+
+Generates a unique temporary file path, returns only the path string, the file itself is not automatically created and needs to be created manually.
+
+Each call generates a different temporary file path, suitable for creating temporary files:
+
+```lua
+-- Generate temporary file path
+local tmpfile = os.tmpfile()
+print("Temp file:", tmpfile)  -- e.g.: /tmp/xmake_XXXXXX
+
+-- Create and use temporary file
+io.writefile(tmpfile, "temporary data")
+-- Delete after use
+os.rm(tmpfile)
+```
 
 ## os.curdir
 
@@ -512,7 +529,23 @@ Usage reference: [os.tmpdir](#os-tmpdir).
 - Get file size
 
 ```lua
-print(os.filesize("/tmp/a"))
+local size = os.filesize("/tmp/a")
+```
+
+Returns the size of the file in bytes. Returns 0 if the file doesn't exist or is inaccessible.
+
+Practical examples:
+
+```lua
+local size = os.filesize("build/output.bin")
+if size > 0 then
+    print(string.format("File size: %.2f KB", size / 1024))
+end
+
+-- Check if file is empty
+if os.filesize("config.txt") == 0 then
+    print("Config file is empty")
+end
 ```
 
 ## os.scriptdir
@@ -533,6 +566,17 @@ Consistent with the result of [$(programdir)](/api/description/builtin-variables
 
 - Get the path of the xmake executable
 
+```lua
+local xmake_path = os.programfile()
+```
+
+Returns the full path to the xmake executable.
+
+```lua
+print("xmake path:", os.programfile())
+-- e.g.: /usr/local/bin/xmake
+```
+
 ## os.projectdir
 
 - Get the project home directory
@@ -543,37 +587,145 @@ Consistent with the result of [$(projectdir)](/api/description/builtin-variables
 
 - Get current system architecture
 
-That is the default architecture of the current host system, for example, I execute xmake on `linux x86_64` to build, then the return value is: `x86_64`
+```lua
+local arch = os.arch()
+```
+
+Returns the default architecture of the current host system. For example, executing xmake on `linux x86_64` returns: `x86_64`
+
+Common architecture values: `x86_64`, `i386`, `arm64`, `armv7`, `mips`, etc.
+
+```lua
+print("Current architecture:", os.arch())
+
+-- Execute different operations based on architecture
+if os.arch() == "x86_64" then
+    add_defines("ARCH_X64")
+end
+```
 
 ## os.host
 
 - Get the operating system of the current host
 
-Consistent with the result of [$(host)](/api/description/builtin-variables#var-host), for example, if I execute xmake on `linux x86_64` to build, the return value is: `linux`
+```lua
+local host = os.host()
+```
+
+Consistent with the result of [$(host)](/api/description/builtin-variables#var-host). For example, executing xmake on `linux x86_64` returns: `linux`
+
+Common system values: `linux`, `macosx`, `windows`, `bsd`, etc.
+
+```lua
+print("Current system:", os.host())
+
+-- Execute different operations based on system
+if os.host() == "windows" then
+    add_defines("WINDOWS")
+elseif os.host() == "linux" then
+    add_defines("LINUX")
+end
+```
 
 ## os.subhost
 
-- Get Subsystem host, e.g. msys, cygwin on windows
+- Get Subsystem host
+
+```lua
+local subhost = os.subhost()
+```
+
+Gets the current subsystem environment, such as msys or cygwin on Windows.
+
+If not running in a subsystem environment, returns the same value as [os.host()](#os-host).
+
+```lua
+-- In MSYS2 environment
+print(os.subhost())  -- Returns: msys
+
+-- Detect if running in subsystem
+if os.subhost() ~= os.host() then
+    print("Running in subsystem environment")
+end
+```
 
 ## os.subarch
 
 - Get Subsystem host architecture
 
+```lua
+local subarch = os.subarch()
+```
+
+Gets the architecture of the subsystem. If not running in a subsystem environment, returns the same value as [os.arch()](#os-arch).
+
 ## os.is_host
 
 - Test if a given host is the current
+
+```lua
+if os.is_host("linux") then
+    -- On Linux system
+end
+
+if os.is_host("macosx", "linux") then
+    -- On macOS or Linux system
+end
+```
+
+Supports checking multiple systems at once, returns true if any matches.
+
+::: tip TIP
+It's recommended to use the more concise built-in interface `is_host()` without the `os.` prefix, with the same usage:
+
+```lua
+if is_host("linux") then
+    -- On Linux system
+end
+```
+:::
 
 ## os.is_arch
 
 - Test if a given arch is the current
 
+```lua
+if os.is_arch("x86_64") then
+    -- On x86_64 architecture
+end
+
+if os.is_arch("x86_64", "arm64") then
+    -- On x86_64 or arm64 architecture
+end
+```
+
+Supports checking multiple architectures at once.
+
 ## os.is_subhost
 
 - Test if a given sub host is the current
 
+```lua
+if os.is_subhost("msys") then
+    -- In MSYS subsystem
+end
+```
+
+Used to detect if running in a specific subsystem environment, such as msys or cygwin.
+
+::: tip TIP
+It's recommended to use the more concise built-in interface `is_subhost()` with the same usage.
+:::
+
 ## os.is_subarch
 
 - Test if a given sub arch is the current
+
+```lua
+if os.is_subarch("x86_64") then
+    -- Subsystem architecture is x86_64
+end
+```
 
 ## os.ln
 
@@ -630,6 +782,12 @@ os.raiselevel(3,"an error occurred")
 
 - Get features
 
+```lua
+local features = os.features()
+```
+
+Gets a list of features supported by the current operating system. Returns a table containing various system-supported features.
+
 ## os.getenvs
 
 - Get all current environment variables
@@ -673,7 +831,19 @@ The result is: `{ CUSTOM = "a/path;some/path/" }`
 - Get system environment variables
 
 ```lua
-print(os.getenv("PATH"))
+local value = os.getenv("PATH")
+```
+
+Gets the value of the specified environment variable. Returns nil if the environment variable doesn't exist.
+
+```lua
+local path = os.getenv("PATH")
+if path then
+    print("PATH:", path)
+end
+
+-- Get environment variable with default value
+local home = os.getenv("HOME") or "/tmp"
 ```
 
 ## os.setenv
@@ -684,34 +854,111 @@ print(os.getenv("PATH"))
 os.setenv("HOME", "/tmp/")
 ```
 
+Sets the value of the specified environment variable. After setting, it affects the current process and its child processes.
+
+```lua
+-- Set environment variable
+os.setenv("MY_VAR", "my_value")
+print(os.getenv("MY_VAR"))  -- Output: my_value
+
+-- Set PATH
+os.setenv("PATH", "/new/path:" .. os.getenv("PATH"))
+```
+
 ## os.addenv
 
 - Add values to one environment variable
 
 ```lua
--- Add 'bin' to PATH
-os.addenv("PATH", "bin")
+os.addenv("PATH", "/new/path")
+```
+
+Appends a new value to the specified environment variable, using the system default separator (`:` on Unix, `;` on Windows).
+
+```lua
+-- Add new path to PATH
+os.addenv("PATH", "/usr/local/bin")
+
+-- Verify
+print(os.getenv("PATH"))  -- New path will be appended to existing PATH
 ```
 
 ## os.setenvp
 
 - Setting environment variables with a given separator
 
+```lua
+os.setenvp("VAR", "value", "separator")
+```
+
+Sets an environment variable using a specified separator. Similar to [os.setenv](#os-setenv), but allows custom separator.
+
 ## os.addenvp
 
 - Add values to one environment variable with a given separator
+
+```lua
+os.addenvp("VAR", "value", "separator")
+```
+
+Appends a value to an environment variable using a specified separator. Similar to [os.addenv](#os-addenv), but allows custom separator.
 
 ## os.workingdir
 
 - Get the working directory
 
+```lua
+local workdir = os.workingdir()
+```
+
+Gets the absolute path of the current working directory. Similar to `os.curdir()`, but returns the working directory instead of the current script execution directory.
+
+```lua
+print("Working directory:", os.workingdir())
+```
+
 ## os.isroot
 
 - Test if xmake is running as root
 
+```lua
+if os.isroot() then
+    print("Running as root/administrator")
+end
+```
+
+On Unix systems, checks if running as root user; on Windows, checks if running with administrator privileges.
+
+Useful when certain operations require administrator privileges:
+
+```lua
+if not os.isroot() then
+    raise("This operation requires administrator privileges, please use sudo or run as administrator")
+end
+```
+
 ## os.fscase
 
 - Test if the os has a case sensitive filesystem
+
+```lua
+if os.fscase() then
+    print("Filesystem is case-sensitive")
+else
+    print("Filesystem is case-insensitive")
+end
+```
+
+Returns true if the filesystem is case-sensitive (like Linux), false if not (like Windows, macOS default).
+
+Useful for handling cross-platform filename compatibility:
+
+```lua
+if not os.fscase() then
+    -- On case-insensitive systems, avoid using filenames that differ only in case
+    print("Warning: Filesystem is case-insensitive")
+end
+```
 
 ## os.term
 
