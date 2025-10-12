@@ -52,6 +52,12 @@ os.cp("src/**.h", "/tmp/", {rootdir = "src"})
 os.cp("/xxx/foo", "/xxx/bar", {symlink = true})
 ```
 
+v3.0.4 以上版本，新增 `{copy_if_different = true}` 参数，仅在源文件和目标文件内容不同时才执行复制操作。如果文件内容相同，则不会重新复制，这样可以保持目标文件的 mtime 等元数据不变，避免不必要的增量构建。
+
+```lua
+os.cp("$(scriptdir)/config.h", "$(builddir)/inc/config.h", {copy_if_different = true})
+```
+
 ## os.mv
 
 - 移动重命名文件或目录

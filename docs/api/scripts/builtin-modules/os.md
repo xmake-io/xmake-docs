@@ -53,6 +53,12 @@ Under 2.5.7, the parameter `{symlink = true}` is added to keep the symbolic link
 os.cp("/xxx/foo", "/xxx/bar", {symlink = true})
 ```
 
+Since v3.0.4, the parameter `{copy_if_different = true}` is added to copy files only when the source and destination file contents differ. If the file contents are the same, the copy operation will be skipped, preserving the destination file's metadata such as mtime. This helps avoid unnecessary incremental builds.
+
+```lua
+os.cp("$(scriptdir)/config.h", "$(builddir)/inc/config.h", {copy_if_different = true})
+```
+
 ## os.mv
 
 - Move to rename a file or directory
