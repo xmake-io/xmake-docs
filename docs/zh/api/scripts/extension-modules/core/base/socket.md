@@ -234,7 +234,7 @@ local sock = socket.connect_unix(addr, opt)
   - `is_abstract`：是否使用抽象命名空间（仅 Linux）
   - `timeout`：连接超时时间
 
-## sock:bind
+## socket:bind
 
 - 绑定套接字到地址
 
@@ -246,7 +246,7 @@ local ok = sock:bind(addr, port)
 
 返回值：成功返回正数，失败返回 -1 和错误信息。
 
-## sock:listen
+## socket:listen
 
 - 开始监听连接
 
@@ -261,7 +261,7 @@ local ok = sock:listen(backlog)
 
 必须在 `bind` 之后、`accept` 之前调用。
 
-## sock:accept
+## socket:accept
 
 - 接受客户端连接
 
@@ -287,7 +287,7 @@ if events == socket.EV_ACPT then
 end
 ```
 
-## sock:connect
+## socket:connect
 
 - 连接到远程地址
 
@@ -305,7 +305,7 @@ local ok = sock:connect(addr, port, opt)
 
 返回值：成功返回正数，失败返回 -1 和错误信息。
 
-## sock:send
+## socket:send
 
 - 发送数据
 
@@ -337,7 +337,7 @@ if sent > 0 then
 end
 ```
 
-## sock:recv
+## socket:recv
 
 - 接收数据
 
@@ -373,7 +373,7 @@ if recv > 0 then
 end
 ```
 
-## sock:sendto
+## socket:sendto
 
 - 发送数据报（UDP）
 
@@ -399,7 +399,7 @@ sock:sendto("hello", "127.0.0.1", 9091)
 sock:close()
 ```
 
-## sock:recvfrom
+## socket:recvfrom
 
 - 接收数据报（UDP）
 
@@ -446,7 +446,7 @@ function main()
 end
 ```
 
-## sock:wait
+## socket:wait
 
 - 等待套接字事件
 
@@ -482,7 +482,7 @@ if events == socket.EV_SEND then
 end
 ```
 
-## sock:close
+## socket:close
 
 - 关闭套接字
 
@@ -492,7 +492,7 @@ sock:close()
 
 关闭套接字并释放资源。使用完套接字后应及时关闭。
 
-## sock:ctrl
+## socket:ctrl
 
 - 控制套接字选项
 

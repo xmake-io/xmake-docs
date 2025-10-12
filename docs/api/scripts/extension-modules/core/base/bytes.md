@@ -116,7 +116,7 @@ local buff3 = buff1 .. buff2
 print(buff3:str())  -- Output: 123456
 ```
 
-## buff:size
+## bytes:size
 
 - Get buffer size
 
@@ -131,7 +131,7 @@ local buff = bytes(1024)
 print(buff:size())  -- Output: 1024
 ```
 
-## buff:str
+## bytes:str
 
 - Convert to string
 
@@ -157,7 +157,7 @@ print(buff:str(1, 5))    -- Output: hello
 print(buff:str(7))       -- Output: world
 ```
 
-## buff:slice
+## bytes:slice
 
 - Create a slice
 
@@ -180,7 +180,7 @@ print(slice:str())  -- Output: 345
 print(slice:size()) -- Output: 3
 ```
 
-## buff:clone
+## bytes:clone
 
 - Clone the buffer
 
@@ -203,7 +203,7 @@ print(cloned:str())    -- Output: Hello
 print(original:str())  -- Output: hello (unchanged)
 ```
 
-## buff:copy
+## bytes:copy
 
 - Copy data to buffer
 
@@ -229,7 +229,7 @@ buff:copy("123456789", 5, 9)
 print(buff:str())  -- Output: 56789
 ```
 
-## buff:copy2
+## bytes:copy2
 
 - Copy data to specified position
 
@@ -254,7 +254,7 @@ buff:copy2(10, "123456789")  -- Copy to position 10
 print(buff:str())  -- Output: 123456789123456789
 ```
 
-## buff:move
+## bytes:move
 
 - Move data to buffer beginning
 
@@ -274,7 +274,7 @@ buff:move(5, 9)
 print(buff:str())  -- Output: 567896789 (5-9 moved to beginning)
 ```
 
-## buff:move2
+## bytes:move2
 
 - Move data to specified position
 
@@ -295,7 +295,7 @@ buff:move2(2, 5, 9)
 print(buff:str())  -- Output: 156789789
 ```
 
-## buff:u8
+## bytes:u8
 
 - Read unsigned 8-bit integer
 
@@ -305,7 +305,7 @@ local value = buff:u8(offset)
 
 Reads a byte from the specified offset as an unsigned 8-bit integer (0-255).
 
-## buff:u8_set
+## bytes:u8_set
 
 - Write unsigned 8-bit integer
 
@@ -322,7 +322,7 @@ local value = buff:u8(1)
 print(value)  -- Output: 255
 ```
 
-## buff:s8
+## bytes:s8
 
 - Read signed 8-bit integer
 
@@ -332,7 +332,7 @@ local value = buff:s8(offset)
 
 Reads a byte from the specified offset as a signed 8-bit integer (-128 to 127).
 
-## buff:u16le
+## bytes:u16le
 
 - Read unsigned 16-bit integer (little-endian)
 
@@ -342,7 +342,7 @@ local value = buff:u16le(offset)
 
 Reads 2 bytes from the specified offset as an unsigned 16-bit integer (little-endian byte order).
 
-## buff:u16le_set
+## bytes:u16le_set
 
 - Write unsigned 16-bit integer (little-endian)
 
@@ -359,7 +359,7 @@ local value = buff:u16le(5)
 print(value)  -- Output: 12346
 ```
 
-## buff:u16be
+## bytes:u16be
 
 - Read unsigned 16-bit integer (big-endian)
 
@@ -369,7 +369,7 @@ local value = buff:u16be(offset)
 
 Reads 2 bytes from the specified offset as an unsigned 16-bit integer (big-endian byte order).
 
-## buff:u16be_set
+## bytes:u16be_set
 
 - Write unsigned 16-bit integer (big-endian)
 
@@ -379,7 +379,7 @@ buff:u16be_set(offset, value)
 
 Writes an unsigned 16-bit integer to the specified offset (big-endian byte order).
 
-## buff:u32le
+## bytes:u32le
 
 - Read unsigned 32-bit integer (little-endian)
 
@@ -389,7 +389,7 @@ local value = buff:u32le(offset)
 
 Reads 4 bytes from the specified offset as an unsigned 32-bit integer (little-endian byte order).
 
-## buff:u32le_set
+## bytes:u32le_set
 
 - Write unsigned 32-bit integer (little-endian)
 
@@ -414,7 +414,7 @@ local length = buff:u32le(3)
 print(string.format("Magic: 0x%04X, Length: %d", magic, length))
 ```
 
-## buff:u32be
+## bytes:u32be
 
 - Read unsigned 32-bit integer (big-endian)
 
@@ -424,7 +424,7 @@ local value = buff:u32be(offset)
 
 Reads 4 bytes from the specified offset as an unsigned 32-bit integer (big-endian byte order).
 
-## buff:u32be_set
+## bytes:u32be_set
 
 - Write unsigned 32-bit integer (big-endian)
 
@@ -434,7 +434,7 @@ buff:u32be_set(offset, value)
 
 Writes an unsigned 32-bit integer to the specified offset (big-endian byte order).
 
-## buff:dump
+## bytes:dump
 
 - Display buffer contents in hexadecimal format
 
@@ -459,7 +459,7 @@ buff:dump()
 -- 00000010  73 20 69 73 20 61 20 74  65 73 74                 s is a test
 ```
 
-## buff:readonly
+## bytes:readonly
 
 - Check if buffer is read-only
 

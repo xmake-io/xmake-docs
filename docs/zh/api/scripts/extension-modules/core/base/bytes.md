@@ -116,7 +116,7 @@ local buff3 = buff1 .. buff2
 print(buff3:str())  -- 输出: 123456
 ```
 
-## buff:size
+## bytes:size
 
 - 获取缓冲区大小
 
@@ -131,7 +131,7 @@ local buff = bytes(1024)
 print(buff:size())  -- 输出: 1024
 ```
 
-## buff:str
+## bytes:str
 
 - 转换为字符串
 
@@ -157,7 +157,7 @@ print(buff:str(1, 5))    -- 输出: hello
 print(buff:str(7))       -- 输出: world
 ```
 
-## buff:slice
+## bytes:slice
 
 - 创建切片
 
@@ -180,7 +180,7 @@ print(slice:str())  -- 输出: 345
 print(slice:size()) -- 输出: 3
 ```
 
-## buff:clone
+## bytes:clone
 
 - 克隆缓冲区
 
@@ -203,7 +203,7 @@ print(cloned:str())    -- 输出: Hello
 print(original:str())  -- 输出: hello (未改变)
 ```
 
-## buff:copy
+## bytes:copy
 
 - 复制数据到缓冲区
 
@@ -229,7 +229,7 @@ buff:copy("123456789", 5, 9)
 print(buff:str())  -- 输出: 56789
 ```
 
-## buff:copy2
+## bytes:copy2
 
 - 复制数据到指定位置
 
@@ -254,7 +254,7 @@ buff:copy2(10, "123456789")  -- 复制到位置 10
 print(buff:str())  -- 输出: 123456789123456789
 ```
 
-## buff:move
+## bytes:move
 
 - 移动数据到缓冲区开头
 
@@ -274,7 +274,7 @@ buff:move(5, 9)
 print(buff:str())  -- 输出: 567896789 (5-9 移动到开头)
 ```
 
-## buff:move2
+## bytes:move2
 
 - 移动数据到指定位置
 
@@ -295,7 +295,7 @@ buff:move2(2, 5, 9)
 print(buff:str())  -- 输出: 156789789
 ```
 
-## buff:u8
+## bytes:u8
 
 - 读取无符号 8 位整数
 
@@ -305,7 +305,7 @@ local value = buff:u8(offset)
 
 从指定偏移位置读取一个字节作为无符号 8 位整数（0-255）。
 
-## buff:u8_set
+## bytes:u8_set
 
 - 写入无符号 8 位整数
 
@@ -322,7 +322,7 @@ local value = buff:u8(1)
 print(value)  -- 输出: 255
 ```
 
-## buff:s8
+## bytes:s8
 
 - 读取有符号 8 位整数
 
@@ -332,7 +332,7 @@ local value = buff:s8(offset)
 
 从指定偏移位置读取一个字节作为有符号 8 位整数（-128 到 127）。
 
-## buff:u16le
+## bytes:u16le
 
 - 读取无符号 16 位整数（小端）
 
@@ -342,7 +342,7 @@ local value = buff:u16le(offset)
 
 从指定偏移位置读取 2 字节的无符号 16 位整数（小端字节序）。
 
-## buff:u16le_set
+## bytes:u16le_set
 
 - 写入无符号 16 位整数（小端）
 
@@ -359,7 +359,7 @@ local value = buff:u16le(5)
 print(value)  -- 输出: 12346
 ```
 
-## buff:u16be
+## bytes:u16be
 
 - 读取无符号 16 位整数（大端）
 
@@ -369,7 +369,7 @@ local value = buff:u16be(offset)
 
 从指定偏移位置读取 2 字节的无符号 16 位整数（大端字节序）。
 
-## buff:u16be_set
+## bytes:u16be_set
 
 - 写入无符号 16 位整数（大端）
 
@@ -379,7 +379,7 @@ buff:u16be_set(offset, value)
 
 向指定偏移位置写入 2 字节的无符号 16 位整数（大端字节序）。
 
-## buff:u32le
+## bytes:u32le
 
 - 读取无符号 32 位整数（小端）
 
@@ -389,7 +389,7 @@ local value = buff:u32le(offset)
 
 从指定偏移位置读取 4 字节的无符号 32 位整数（小端字节序）。
 
-## buff:u32le_set
+## bytes:u32le_set
 
 - 写入无符号 32 位整数（小端）
 
@@ -414,7 +414,7 @@ local length = buff:u32le(3)
 print(string.format("魔数: 0x%04X, 长度: %d", magic, length))
 ```
 
-## buff:u32be
+## bytes:u32be
 
 - 读取无符号 32 位整数（大端）
 
@@ -424,7 +424,7 @@ local value = buff:u32be(offset)
 
 从指定偏移位置读取 4 字节的无符号 32 位整数（大端字节序）。
 
-## buff:u32be_set
+## bytes:u32be_set
 
 - 写入无符号 32 位整数（大端）
 
@@ -434,7 +434,7 @@ buff:u32be_set(offset, value)
 
 向指定偏移位置写入 4 字节的无符号 32 位整数（大端字节序）。
 
-## buff:dump
+## bytes:dump
 
 - 以十六进制格式显示缓冲区内容
 
@@ -459,7 +459,7 @@ buff:dump()
 -- 00000010  73 20 69 73 20 61 20 74  65 73 74                 s is a test
 ```
 
-## buff:readonly
+## bytes:readonly
 
 - 判断缓冲区是否只读
 

@@ -144,7 +144,7 @@ end
 pipefile:close()
 ```
 
-## pipefile:read
+## pipe:read
 
 - 从管道读取数据
 
@@ -179,7 +179,7 @@ if read > 0 then
 end
 ```
 
-## pipefile:write
+## pipe:write
 
 - 向管道写入数据
 
@@ -210,7 +210,7 @@ if write > 0 then
 end
 ```
 
-## pipefile:connect
+## pipe:connect
 
 - 连接命名管道（服务端）
 
@@ -237,7 +237,7 @@ if pipefile:connect() > 0 then
 end
 ```
 
-## pipefile:wait
+## pipe:wait
 
 - 等待管道事件
 
@@ -275,7 +275,7 @@ if events == pipe.EV_WRITE then
 end
 ```
 
-## pipefile:close
+## pipe:close
 
 - 关闭管道
 
@@ -285,7 +285,7 @@ pipefile:close()
 
 关闭管道并释放资源。使用完管道后应该及时关闭。
 
-## pipefile:name
+## pipe:name
 
 - 获取管道名称
 

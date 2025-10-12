@@ -234,7 +234,7 @@ Parameters:
   - `is_abstract`: Whether to use abstract namespace (Linux only)
   - `timeout`: Connection timeout
 
-## sock:bind
+## socket:bind
 
 - Bind socket to address
 
@@ -246,7 +246,7 @@ Binds the socket to the specified IP address and port.
 
 Return value: Returns a positive number on success, -1 and error message on failure.
 
-## sock:listen
+## socket:listen
 
 - Start listening for connections
 
@@ -261,7 +261,7 @@ Parameters:
 
 Must be called after `bind` and before `accept`.
 
-## sock:accept
+## socket:accept
 
 - Accept client connection
 
@@ -287,7 +287,7 @@ if events == socket.EV_ACPT then
 end
 ```
 
-## sock:connect
+## socket:connect
 
 - Connect to remote address
 
@@ -305,7 +305,7 @@ Parameters:
 
 Return value: Returns a positive number on success, -1 and error message on failure.
 
-## sock:send
+## socket:send
 
 - Send data
 
@@ -337,7 +337,7 @@ if sent > 0 then
 end
 ```
 
-## sock:recv
+## socket:recv
 
 - Receive data
 
@@ -373,7 +373,7 @@ if recv > 0 then
 end
 ```
 
-## sock:sendto
+## socket:sendto
 
 - Send datagram (UDP)
 
@@ -399,7 +399,7 @@ sock:sendto("hello", "127.0.0.1", 9091)
 sock:close()
 ```
 
-## sock:recvfrom
+## socket:recvfrom
 
 - Receive datagram (UDP)
 
@@ -446,7 +446,7 @@ function main()
 end
 ```
 
-## sock:wait
+## socket:wait
 
 - Wait for socket events
 
@@ -482,7 +482,7 @@ if events == socket.EV_SEND then
 end
 ```
 
-## sock:close
+## socket:close
 
 - Close socket
 
@@ -492,7 +492,7 @@ sock:close()
 
 Closes the socket and releases resources. Sockets should be closed promptly after use.
 
-## sock:ctrl
+## socket:ctrl
 
 - Control socket options
 

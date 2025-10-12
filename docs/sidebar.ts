@@ -63,6 +63,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
     items: [
       { text: 'bytes', link: 'extension-modules/core/base/bytes' },
       { text: 'global', link: 'extension-modules/core/base/global' },
+      { text: 'hashset', link: 'extension-modules/core/base/hashset' },
       { text: 'json', link: 'extension-modules/core/base/json' },
       { text: 'option', link: 'extension-modules/core/base/option' },
       { text: 'pipe', link: 'extension-modules/core/base/pipe' },

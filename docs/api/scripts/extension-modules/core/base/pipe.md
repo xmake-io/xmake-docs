@@ -144,7 +144,7 @@ end
 pipefile:close()
 ```
 
-## pipefile:read
+## pipe:read
 
 - Read data from pipe
 
@@ -179,7 +179,7 @@ if read > 0 then
 end
 ```
 
-## pipefile:write
+## pipe:write
 
 - Write data to pipe
 
@@ -210,7 +210,7 @@ if write > 0 then
 end
 ```
 
-## pipefile:connect
+## pipe:connect
 
 - Connect to named pipe (server-side)
 
@@ -237,7 +237,7 @@ if pipefile:connect() > 0 then
 end
 ```
 
-## pipefile:wait
+## pipe:wait
 
 - Wait for pipe events
 
@@ -275,7 +275,7 @@ if events == pipe.EV_WRITE then
 end
 ```
 
-## pipefile:close
+## pipe:close
 
 - Close the pipe
 
@@ -285,7 +285,7 @@ pipefile:close()
 
 Closes the pipe and releases resources. Pipes should be closed promptly after use.
 
-## pipefile:name
+## pipe:name
 
 - Get pipe name
 
