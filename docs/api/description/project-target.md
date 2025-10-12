@@ -2534,6 +2534,18 @@ The above effect is similar to `set_toolchains("msvc", {vs = "2015", arch = "x86
 
 Generally, we recommend using `set_arch` to switch the architecture of the entire target.
 
+Since v3.0.4, for the mingw toolchain, we can specify a particular MSYS2 environment using the `msystem` parameter, for example:
+
+```lua
+target("ucrt64")
+    set_arch("x86_64")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("mingw", {msystem = "ucrt64"})
+```
+
+This allows xmake to use the mingw toolchain from the specified MSYS2 environment (ucrt64 in this case). Supported msystem values include: `mingw32`, `mingw64`, `ucrt64`, `clang64`, etc.
+
 ## set_plat
 
 ### Set the compilation platform for the specified target

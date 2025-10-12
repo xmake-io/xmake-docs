@@ -2522,6 +2522,18 @@ target("test")
 
 通常，我们更推荐使用 `set_arch` 来对整个target实现架构切换。
 
+v3.0.4 以上版本，对于 mingw 工具链，我们还可以通过 `msystem` 参数来指定使用特定的 MSYS2 环境，例如：
+
+```lua
+target("ucrt64")
+    set_arch("x86_64")
+    set_kind("binary")
+    add_files("src/*.c")
+    set_toolchains("mingw", {msystem = "ucrt64"})
+```
+
+这样可以让 xmake 使用 MSYS2 的 ucrt64 环境中的 mingw 工具链来编译，支持的 msystem 值包括：`mingw32`、`mingw64`、`ucrt64`、`clang64` 等。
+
 ## set_plat
 
 ### 设置指定目标的编译平台
