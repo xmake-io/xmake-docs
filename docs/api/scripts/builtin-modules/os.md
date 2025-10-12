@@ -309,13 +309,77 @@ In addition, this interface also supports an optional parameter for passing sett
 os.execv("echo", {"hello", "xmake!"}, {stdout = outfile, stderr = errfile, envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
 ```
 
-Among them, the stdout and stderr parameters are used to pass redirected output and error output. You can directly pass in the file path or the file object opened by io.open.
+The stdout and stderr parameters are used to pass redirected output and error output. You can directly pass in the file path or the file object opened by io.open.
 
 After v2.5.1, we also support setting the stdin parameter to support redirecting input files.
 
 ::: tip NOTE
 stdout/stderr/stdin can simultaneously support three types of values: file path, file object, and pipe object.
 :::
+
+### Redirecting to Files
+
+```lua
+-- Redirect output to file
+os.execv("echo", {"hello"}, {stdout = "output.txt"})
+
+-- Using file object
+local outfile = io.open("output.txt", "w")
+os.execv("echo", {"hello"}, {stdout = outfile})
+outfile:close()
+```
+
+### Redirecting to Pipes
+
+Combined with the pipe module, you can capture subprocess output for processing:
+
+```lua
+import("core.base.pipe")
+import("core.base.bytes")
+
+-- Create pipe
+local rpipe, wpipe = pipe.openpair()
+
+-- Redirect subprocess stdout to pipe
+os.execv("ls", {"-l"}, {stdout = wpipe})
+
+-- Close write end, read output
+wpipe:close()
+local buff = bytes(8192)
+local read, data = rpipe:read(buff, 8192)
+if read > 0 then
+    print("Command output:", data:str())
+end
+rpipe:close()
+```
+
+Redirecting both stdout and stderr simultaneously:
+
+```lua
+import("core.base.pipe")
+import("core.base.bytes")
+
+local rpipe_out, wpipe_out = pipe.openpair()
+local rpipe_err, wpipe_err = pipe.openpair()
+
+-- Redirect stdout and stderr separately
+os.execv("make", {}, {stdout = wpipe_out, stderr = wpipe_err})
+
+wpipe_out:close()
+wpipe_err:close()
+
+-- Read stdout
+local buff = bytes(8192)
+local read, output = rpipe_out:read(buff, 8192)
+print("Stdout:", output and output:str() or "")
+
+-- Read stderr
+local read, errors = rpipe_err:read(buff, 8192)
+print("Stderr:", errors and errors:str() or "")
+
+rpipe_out:close()
+rpipe_err:close()
+```
 
 In addition, if you want to temporarily set and rewrite some environment variables during this execution, you can pass the envs parameter. The environment variable settings inside will replace the existing settings, but will not affect the outer execution environment, only the current command.
 

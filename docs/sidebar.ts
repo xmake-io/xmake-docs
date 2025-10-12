@@ -64,6 +64,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
       { text: 'global', link: 'extension-modules/core/base/global' },
       { text: 'json', link: 'extension-modules/core/base/json' },
       { text: 'option', link: 'extension-modules/core/base/option' },
+      { text: 'pipe', link: 'extension-modules/core/base/pipe' },
       { text: 'semver', link: 'extension-modules/core/base/semver' },
       { text: 'task', link: 'extension-modules/core/base/task' },
       { text: 'thread', link: 'extension-modules/core/base/thread' },

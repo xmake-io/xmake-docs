@@ -298,13 +298,77 @@ os.execv("echo", {"hello", "xmake!"})
 os.execv("echo", {"hello", "xmake!"}, {stdout = outfile, stderr = errfile, envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
 ```
 
-其中，stdout和stderr参数用于传递重定向输出和错误输出，可以直接传入文件路径，也可以传入io.open打开的文件对象。
+其中，stdout 和 stderr 参数用于传递重定向输出和错误输出，可以直接传入文件路径，也可以传入 io.open 打开的文件对象。
 
 v2.5.1 之后的版本，我们还支持设置 stdin 参数，来支持重定向输入文件。
 
 ::: tip 注意
 stdout/stderr/stdin 可以同时支持：文件路径、文件对象、管道对象等三种类型值。
 :::
+
+### 重定向到文件
+
+```lua
+-- 重定向输出到文件
+os.execv("echo", {"hello"}, {stdout = "output.txt"})
+
+-- 使用文件对象
+local outfile = io.open("output.txt", "w")
+os.execv("echo", {"hello"}, {stdout = outfile})
+outfile:close()
+```
+
+### 重定向到管道
+
+配合 pipe 模块，可以捕获子进程的输出进行处理：
+
+```lua
+import("core.base.pipe")
+import("core.base.bytes")
+
+-- 创建管道
+local rpipe, wpipe = pipe.openpair()
+
+-- 将子进程 stdout 重定向到管道
+os.execv("ls", {"-l"}, {stdout = wpipe})
+
+-- 关闭写端，读取输出
+wpipe:close()
+local buff = bytes(8192)
+local read, data = rpipe:read(buff, 8192)
+if read > 0 then
+    print("命令输出:", data:str())
+end
+rpipe:close()
+```
+
+同时重定向 stdout 和 stderr：
+
+```lua
+import("core.base.pipe")
+import("core.base.bytes")
+
+local rpipe_out, wpipe_out = pipe.openpair()
+local rpipe_err, wpipe_err = pipe.openpair()
+
+-- 分别重定向标准输出和错误输出
+os.execv("make", {}, {stdout = wpipe_out, stderr = wpipe_err})
+
+wpipe_out:close()
+wpipe_err:close()
+
+-- 读取标准输出
+local buff = bytes(8192)
+local read, output = rpipe_out:read(buff, 8192)
+print("标准输出:", output and output:str() or "")
+
+-- 读取错误输出  
+local read, errors = rpipe_err:read(buff, 8192)
+print("错误输出:", errors and errors:str() or "")
+
+rpipe_out:close()
+rpipe_err:close()
+```
 
 另外，如果想在这次执行中临时设置和改写一些环境变量，可以传递envs参数，里面的环境变量设置会替换已有的设置，但是不影响外层的执行环境，只影响当前命令。
 
