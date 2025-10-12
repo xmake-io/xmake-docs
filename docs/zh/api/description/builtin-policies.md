@@ -277,6 +277,24 @@ target("test")
 
 关于这个的详细背景说明，见：[#1976](https://github.com/xmake-io/xmake/issues/1976)
 
+## build.distcc.remote_only <Badge type="tip" text="v3.0.4" />
+
+这个策略用于配置分布式编译的行为。默认情况下，在启用分布式编译后，本机既充当调度节点，也会参与实际的编译工作。
+
+如果启用这个策略，则强制仅让远程机器执行分布式编译任务，本机不参与实际编译，仅仅作为调度节点使用。这在本机资源有限，或者希望将所有编译工作都分配到远程服务器集群时非常有用。
+
+```lua
+set_policy("build.distcc.remote_only", true)
+```
+
+或者通过命令行启用：
+
+```sh
+$ xmake f --policies=build.distcc.remote_only
+```
+
+关于分布式编译的更多详细信息，请参阅：[分布式编译](/zh/guide/extras/distributed-compilation)
+
 ## build.sanitizer.address <Badge type="tip" text="v2.8.3" />
 
 Address Sanitizer（ASan）是一个快速的内存错误检测工具，由编译器内置支持，通常我们需要在编译和链接的 flags 中同时配置 `-fsanitize-address` 才能正确开启。

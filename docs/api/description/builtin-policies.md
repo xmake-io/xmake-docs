@@ -284,6 +284,24 @@ Whereas by default Cuda binary/shared is devlink enabled, we can also disable it
 
 For a detailed background on this, see: [#1976](https://github.com/xmake-io/xmake/issues/1976)
 
+## build.distcc.remote_only <Badge type="tip" text="v3.0.4" />
+
+This policy is used to configure the behavior of distributed compilation. By default, when distributed compilation is enabled, the local machine acts as both a scheduler and participates in the actual compilation work.
+
+If this policy is enabled, it forces only remote machines to execute distributed compilation tasks, while the local machine does not participate in actual compilation and only serves as a scheduler. This is very useful when local machine resources are limited, or when you want to offload all compilation work to a remote server cluster.
+
+```lua
+set_policy("build.distcc.remote_only", true)
+```
+
+Or enable it via command line:
+
+```sh
+$ xmake f --policies=build.distcc.remote_only
+```
+
+For more details about distributed compilation, please refer to: [Distributed Compilation](/guide/extras/distributed-compilation)
+
 ## build.sanitizer.address <Badge type="tip" text="v2.8.3" />
 
 Address Sanitizer (ASan) is a fast memory error detection tool that is built-in by the compiler, and usually requires `-fsanitize-address` to be configured in both the build and link flags to enable it correctly.
