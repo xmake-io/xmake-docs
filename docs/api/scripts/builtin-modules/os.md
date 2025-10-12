@@ -159,6 +159,24 @@ Support for batch creation and built-in variables, such as:
 os.mkdir("$(tmpdir)/test", "$(builddir)/inc")
 ```
 
+Supports recursive creation of multi-level directories, automatically creating parent directories if they don't exist.
+
+## os.touch
+
+- Create an empty file or update file timestamp
+
+```lua
+os.touch("path/to/file.txt")
+```
+
+If the file doesn't exist, creates an empty file. If the file already exists, updates the file's modification time to the current time.
+
+Supports batch creation:
+
+```lua
+os.touch("file1.txt", "file2.txt", "file3.txt")
+```
+
 ## os.isdir
 
 - Determine if it is a directory
@@ -199,6 +217,27 @@ end
 if os.exists("$(builddir)/libxxx.a") then
     -- ...
 end
+```
+
+## os.islink
+
+- Determine if it is a symbolic link
+
+Determines whether the specified path is a symbolic link. Returns false if it is not a symbolic link or doesn't exist.
+
+```lua
+if os.islink("path/to/symlink") then
+    -- It is a symbolic link
+    local target = os.readlink("path/to/symlink")
+    print("Link target:", target)
+end
+```
+
+Used with [os.ln](#os-ln):
+
+```lua
+os.ln("source.txt", "link.txt")
+assert(os.islink("link.txt"))
 ```
 
 ## os.dirs
@@ -244,6 +283,22 @@ end
 
 - Exit the program
 
+```lua
+os.exit(code)
+```
+
+Exits the current program and returns the specified exit code. If no exit code is specified, defaults to 0 (success).
+
+```lua
+-- Normal exit
+os.exit(0)
+
+-- Exit with error
+if error_occurred then
+    os.exit(1)
+end
+```
+
 ## os.isexec
 
 - Test if a file is executable
@@ -251,6 +306,20 @@ end
 ```lua
 if os.isexec("path/to/file.exe") then
     os.run("path/to/file.exe")
+end
+```
+
+Determines whether the specified file has executable permissions. On Unix systems, it checks the file's execute permission bits; on Windows, it checks the file extension.
+
+Used for dynamically detecting executable files:
+
+```lua
+local program = "/usr/bin/gcc"
+if os.isexec(program) then
+    print("Program is executable")
+    os.execv(program, {"--version"})
+else
+    print("Program is not executable or doesn't exist")
 end
 ```
 
@@ -519,6 +588,22 @@ os.ln("xxx.txt", "xxx.txt.ln")
 
 - Read the content of a symlink
 
+```lua
+local target = os.readlink("path/to/symlink")
+```
+
+Reads the target path that the symbolic link points to. Returns nil if the specified path is not a symbolic link.
+
+Used with [os.ln](#os-ln) and [os.islink](#os-islink):
+
+```lua
+os.ln("source.txt", "link.txt")
+if os.islink("link.txt") then
+    local target = os.readlink("link.txt")
+    print("Link points to:", target)  -- Output: source.txt
+end
+```
+
 ## os.raise
 
 - Raise an exception and abort the current script
@@ -680,4 +765,126 @@ print(os.meminfo())
 
 ## os.default_njob
 
-- Get default paralled jobs
+- Get default parallel jobs
+
+Returns the default number of parallel compilation jobs, typically equal to the number of CPU cores.
+
+```lua
+local njob = os.default_njob()
+print("Default parallel jobs:", njob)
+```
+
+## os.argv
+
+- Parse command line string into argument list
+
+```lua
+local args = os.argv("gcc -o test test.c -I/usr/include")
+```
+
+Parses a command line string into an argument array, supporting quotes, escape characters, and other complex formats.
+
+Parsing rules:
+- Supports double quotes and single quotes for wrapping arguments
+- Supports escape characters (`\`)
+- Automatically handles space separation
+- Handles special characters like parentheses, backslashes, etc.
+
+Examples:
+
+```lua
+-- Simple arguments
+os.argv("aa bb cc")  -- Returns: {"aa", "bb", "cc"}
+
+-- Arguments with quotes
+os.argv('"aa bb cc" dd')  -- Returns: {"aa bb cc", "dd"}
+
+-- Arguments with equals
+os.argv("--bb=bbb -c")  -- Returns: {"--bb=bbb", "-c"}
+
+-- Escaped quotes
+os.argv('-DTEST=\\"hello\\"')  -- Returns: {'-DTEST="hello"'}
+
+-- Complex arguments
+os.argv('-DTEST="hello world"')  -- Returns: {'-DTEST=hello world'}
+```
+
+Supports `splitonly` option to only split without processing quotes:
+
+```lua
+os.argv('-DTEST="hello world"', {splitonly = true})  -- Returns: {'-DTEST="hello world"'}
+```
+
+## os.args
+
+- Convert argument list to command line string
+
+```lua
+local cmdline = os.args({"gcc", "-o", "test", "test.c"})
+```
+
+Converts an argument array to a command line string, the inverse operation of [os.argv](#os-argv).
+
+Automatically handles special characters:
+- Arguments containing spaces are automatically quoted
+- Automatically escapes special characters
+- Handles backslashes in paths
+
+Examples:
+
+```lua
+-- Simple arguments
+os.args({"aa", "bb", "cc"})  -- Returns: "aa bb cc"
+
+-- Arguments with spaces
+os.args({"aa bb cc", "dd"})  -- Returns: '"aa bb cc" dd'
+
+-- Arguments with quotes
+os.args({'-DTEST="hello"'})  -- Returns: '-DTEST=\\"hello\\"'
+
+-- Path arguments
+os.args({"aa\\bb/cc dd", "ee"})  -- Returns: '"aa\\\\bb/cc dd" ee'
+```
+
+Supports `escape` option to enable additional escaping:
+
+```lua
+os.args({"aa\\bb/cc", "dd"}, {escape = true})  -- Returns: "aa\\\\bb/cc dd"
+```
+
+Round-trip conversion with `os.argv`:
+
+```lua
+local cmdline = "gcc -o test test.c"
+local args = os.argv(cmdline)
+local cmdline2 = os.args(args)
+-- cmdline2 should be equivalent to cmdline
+```
+
+## os.mclock
+
+- Get monotonic clock time (milliseconds)
+
+```lua
+local start = os.mclock()
+-- Perform some operations
+local elapsed = os.mclock() - start
+print("Elapsed:", elapsed, "ms")
+```
+
+Returns a monotonically increasing timestamp (milliseconds), suitable for measuring time intervals.
+
+Unlike `os.clock()`, `os.mclock()` returns a monotonic clock that is not affected by system time adjustments, making it more suitable for performance measurement:
+
+```lua
+local function benchmark(func)
+    local start = os.mclock()
+    func()
+    local elapsed = os.mclock() - start
+    print(string.format("Execution time: %.2f ms", elapsed))
+end
+
+benchmark(function()
+    os.sleep(100)
+end)
+```

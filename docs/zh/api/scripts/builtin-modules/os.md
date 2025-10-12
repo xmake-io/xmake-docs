@@ -158,6 +158,24 @@ os.cd(oldir)
 os.mkdir("$(tmpdir)/test", "$(builddir)/inc")
 ```
 
+支持递归创建多级目录，如果父目录不存在会自动创建。
+
+## os.touch
+
+- 创建空文件或更新文件时间戳
+
+```lua
+os.touch("path/to/file.txt")
+```
+
+如果文件不存在，则创建一个空文件。如果文件已存在，则更新文件的修改时间为当前时间。
+
+支持批量创建：
+
+```lua
+os.touch("file1.txt", "file2.txt", "file3.txt")
+```
+
 ## os.isdir
 
 - 判断是否为目录
@@ -200,6 +218,27 @@ if os.exists("$(builddir)/libxxx.a") then
 end
 ```
 
+## os.islink
+
+- 判断是否为符号链接
+
+判断指定路径是否为符号链接，如果不是符号链接或不存在则返回 false。
+
+```lua
+if os.islink("path/to/symlink") then
+    -- 是符号链接
+    local target = os.readlink("path/to/symlink")
+    print("链接目标:", target)
+end
+```
+
+配合 [os.ln](#os-ln) 使用：
+
+```lua
+os.ln("source.txt", "link.txt")
+assert(os.islink("link.txt"))
+```
+
 ## os.dirs
 
 - 遍历获取指定目录下的所有目录
@@ -236,6 +275,50 @@ end
 -- 递归遍历获取所有子文件和目录
 for _, filedir in ipairs(os.filedirs("$(builddir)/**")) do
     print(filedir)
+end
+```
+
+## os.exit
+
+- 退出程序
+
+```lua
+os.exit(code)
+```
+
+退出当前程序，并返回指定的退出码。如果不指定退出码，默认为 0（成功）。
+
+```lua
+-- 正常退出
+os.exit(0)
+
+-- 异常退出
+if error_occurred then
+    os.exit(1)
+end
+```
+
+## os.isexec
+
+- 判断文件是否可执行
+
+```lua
+if os.isexec("path/to/file.exe") then
+    os.run("path/to/file.exe")
+end
+```
+
+判断指定文件是否具有可执行权限。在 Unix 系统上检查文件的执行权限位，在 Windows 上检查文件扩展名。
+
+用于动态检测可执行文件：
+
+```lua
+local program = "/usr/bin/gcc"
+if os.isexec(program) then
+    print("程序可执行")
+    os.execv(program, {"--version"})
+else
+    print("程序不可执行或不存在")
 end
 ```
 
@@ -529,6 +612,22 @@ os.ln("xxx.txt", "xxx.txt.ln")
 
 - 读取符号链接内容
 
+```lua
+local target = os.readlink("path/to/symlink")
+```
+
+读取符号链接指向的目标路径。如果指定的路径不是符号链接，则返回 nil。
+
+配合 [os.ln](#os-ln) 和 [os.islink](#os-islink) 使用：
+
+```lua
+os.ln("source.txt", "link.txt")
+if os.islink("link.txt") then
+    local target = os.readlink("link.txt")
+    print("链接指向:", target)  -- 输出: source.txt
+end
+```
+
 ## os.raise
 
 - 抛出一个异常并且中止当前脚本运行
@@ -658,3 +757,125 @@ print(os.meminfo("pagesize")) -- probably got 4096
 ## os.default_njob
 
 - 获取默认编译任务数
+
+返回默认的并行编译任务数，通常等于 CPU 核心数。
+
+```lua
+local njob = os.default_njob()
+print("默认并行任务数:", njob)
+```
+
+## os.argv
+
+- 将命令行字符串解析为参数列表
+
+```lua
+local args = os.argv("gcc -o test test.c -I/usr/include")
+```
+
+将命令行字符串解析为参数数组，支持引号、转义字符等复杂格式。
+
+解析规则：
+- 支持双引号和单引号包裹参数
+- 支持转义字符（`\`）
+- 自动处理空格分隔
+- 处理特殊字符如括号、反斜杠等
+
+示例：
+
+```lua
+-- 简单参数
+os.argv("aa bb cc")  -- 返回: {"aa", "bb", "cc"}
+
+-- 带引号的参数
+os.argv('"aa bb cc" dd')  -- 返回: {"aa bb cc", "dd"}
+
+-- 带等号的参数
+os.argv("--bb=bbb -c")  -- 返回: {"--bb=bbb", "-c"}
+
+-- 转义引号
+os.argv('-DTEST=\\"hello\\"')  -- 返回: {'-DTEST="hello"'}
+
+-- 复杂参数
+os.argv('-DTEST="hello world"')  -- 返回: {'-DTEST=hello world'}
+```
+
+支持 `splitonly` 选项仅分割不处理引号：
+
+```lua
+os.argv('-DTEST="hello world"', {splitonly = true})  -- 返回: {'-DTEST="hello world"'}
+```
+
+## os.args
+
+- 将参数列表转换为命令行字符串
+
+```lua
+local cmdline = os.args({"gcc", "-o", "test", "test.c"})
+```
+
+将参数数组转换为命令行字符串，是 [os.argv](#os-argv) 的逆操作。
+
+自动处理特殊字符：
+- 含有空格的参数会自动加引号
+- 自动转义特殊字符
+- 处理路径中的反斜杠
+
+示例：
+
+```lua
+-- 简单参数
+os.args({"aa", "bb", "cc"})  -- 返回: "aa bb cc"
+
+-- 含空格的参数
+os.args({"aa bb cc", "dd"})  -- 返回: '"aa bb cc" dd'
+
+-- 带引号的参数
+os.args({'-DTEST="hello"'})  -- 返回: '-DTEST=\\"hello\\"'
+
+-- 路径参数
+os.args({"aa\\bb/cc dd", "ee"})  -- 返回: '"aa\\\\bb/cc dd" ee'
+```
+
+支持 `escape` 选项启用额外的转义：
+
+```lua
+os.args({"aa\\bb/cc", "dd"}, {escape = true})  -- 返回: "aa\\\\bb/cc dd"
+```
+
+配合 `os.argv` 进行往返转换：
+
+```lua
+local cmdline = "gcc -o test test.c"
+local args = os.argv(cmdline)
+local cmdline2 = os.args(args)
+-- cmdline2 应该与 cmdline 等价
+```
+
+## os.mclock
+
+- 获取单调时钟时间（毫秒）
+
+```lua
+local start = os.mclock()
+-- 执行一些操作
+local elapsed = os.mclock() - start
+print("耗时:", elapsed, "ms")
+```
+
+返回单调递增的时间戳（毫秒），适合用于测量时间间隔。
+
+与 `os.clock()` 不同，`os.mclock()` 返回的是单调时钟，不受系统时间调整的影响，更适合用于性能测量：
+
+```lua
+local function benchmark(func)
+    local start = os.mclock()
+    func()
+    local elapsed = os.mclock() - start
+    print(string.format("执行耗时: %.2f ms", elapsed))
+end
+
+benchmark(function()
+    os.sleep(100)
+end)
+```
