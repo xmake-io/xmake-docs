@@ -7,7 +7,22 @@ The io operation module extends lua's built-in io module to provide more easy-to
 
 - Open file for reading and writing
 
-This is a native interface for lua. For detailed usage, see Lua's official documentation: [The Complete I/O Model](https://www.lua.org/pil/21.2.html)
+This is a native Lua interface, extended by xmake. For detailed usage, see Lua's official documentation: [The Complete I/O Model](https://www.lua.org/pil/21.2.html)
+
+Supported open modes: `"r"` (read-only), `"w"` (write), `"a"` (append), `"r+"` (read-write), etc.
+
+It also supports specifying encoding format, for example:
+
+```lua
+-- Open file with UTF-8 encoding
+local file = io.open("xxx.txt", "r", {encoding = "utf8"})
+-- Open file with UTF-16LE encoding
+local file = io.open("xxx.txt", "r", {encoding = "utf16le"})
+-- Open in binary mode
+local file = io.open("xxx.txt", "r", {encoding = "binary"})
+```
+
+Supported encoding formats: `"utf8"` (default), `"utf16"`, `"utf16le"`, `"utf16be"`, `"binary"`
 
 If you want to read all the contents of the file, you can write:
 
@@ -20,6 +35,23 @@ end
 ```
 
 Or you can read it more quickly using [io.readfile](#io-readfile).
+
+File objects also support the following extended methods:
+
+```lua
+local file = io.open("xxx.txt", "r")
+-- Get file size
+local size = file:size()
+-- Get absolute file path
+local path = file:path()
+-- Read a line (preserving newline character)
+local line = file:read("L")
+-- Iterate line by line
+for line in file:lines() do
+    print(line)
+end
+file:close()
+```
 
 If you want to write a file, you can do this:
 
@@ -91,6 +123,25 @@ It is more convenient to directly read the contents of the entire file without o
 local data = io.readfile("xxx.txt")
 ```
 
+Supports option parameters to control read behavior:
+
+```lua
+-- Read in binary mode (no newline conversion)
+local data = io.readfile("xxx.txt", {encoding = "binary"})
+
+-- Read UTF-16LE encoded file
+local data = io.readfile("xxx.txt", {encoding = "utf16le"})
+
+-- Handle line continuation (lines ending with \ will be merged with the next line)
+local data = io.readfile("xxx.txt", {continuation = "\\"})
+```
+
+Option parameters:
+- `encoding`: File encoding format, supports `"utf8"` (default), `"utf16"`, `"utf16le"`, `"utf16be"`, `"binary"`
+- `continuation`: Line continuation character, when specified, lines ending with this character will be merged with the next line (removing newlines)
+
+xmake automatically detects and handles different newline formats (LF, CRLF) and automatically detects UTF-8 BOM.
+
 ## io.writefile
 
 - Write all content to the specified path file
@@ -153,20 +204,41 @@ Directly format the passed parameter to output a line of string to the file with
 io.printf("xxx.txt", "hello %s!\n", "xmake")
 ```
 
-# io.lines
+## io.lines
 
 - Read all lines from file
 
-Returns all lines from a given file name
+Returns an iterator function for all lines from a given file name.
 
 ```lua
-local lines = io.lines("xxx.txt")
-for line in lines do
+for line in io.lines("xxx.txt") do
     print(line)
 end
 ```
 
-# io.stdfile
+Can also be converted to an array:
+
+```lua
+local lines = table.to_array(io.lines("xxx.txt"))
+```
+
+Supports the same option parameters as [io.readfile](#io-readfile):
+
+```lua
+-- Read each line in binary mode (preserving CRLF)
+for line in io.lines("xxx.txt", {encoding = "binary"}) do
+    print(line)
+end
+
+-- Handle line continuation
+for line in io.lines("xxx.txt", {continuation = "\\"}) do
+    print(line)  -- Lines ending with \ will be merged with the next line
+end
+```
+
+By default, newline characters are removed from each line. If you need to preserve newlines, use `file:read("L")` method.
+
+## io.stdfile
 
 - Get a std file
 
@@ -181,7 +253,7 @@ io.stdout
 io.stderr
 ```
 
-# io.openlock
+## io.openlock
 
 - Open a lock of a file
 
@@ -194,7 +266,7 @@ lock:unlock()
 lock:close()
 ```
 
-# io.replace
+## io.replace
 
 - Replace text of the given file and return the replaced data
 
@@ -206,3 +278,7 @@ io.replace("xxx.txt", "Hello", "World")
 -- if you want to replace a string and not a pattern
 io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 ```
+
+Option parameters:
+- `plain`: If true, use simple string matching; if false, use pattern matching
+- `encoding`: Specify file encoding format

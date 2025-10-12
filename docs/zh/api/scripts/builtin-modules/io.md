@@ -7,7 +7,22 @@ io 操作模块，扩展了 lua 内置的 io 模块，提供更多易用的接�
 
 - 打开文件用于读写
 
-这个是属于lua的原生接口，详细使用可以参看lua的官方文档：[The Complete I/O Model](https://www.lua.org/pil/21.2.html)
+这个是属于lua的原生接口，xmake 在此基础上进行了扩展。详细使用可以参看lua的官方文档：[The Complete I/O Model](https://www.lua.org/pil/21.2.html)
+
+支持的打开模式：`"r"`（只读）、`"w"`（写入）、`"a"`（追加）、`"r+"`（读写）等。
+
+还支持指定编码格式，例如：
+
+```lua
+-- 以 UTF-8 编码打开文件
+local file = io.open("xxx.txt", "r", {encoding = "utf8"})
+-- 以 UTF-16LE 编码打开文件
+local file = io.open("xxx.txt", "r", {encoding = "utf16le"})
+-- 以二进制模式打开
+local file = io.open("xxx.txt", "r", {encoding = "binary"})
+```
+
+支持的编码格式：`"utf8"`（默认）、`"utf16"`、`"utf16le"`、`"utf16be"`、`"binary"`
 
 如果要读取文件所有内容，可以这么写：
 
@@ -20,6 +35,23 @@ end
 ```
 
 或者可以使用[io.readfile](#io-readfile)更加快速地读取。
+
+文件对象还支持以下扩展方法：
+
+```lua
+local file = io.open("xxx.txt", "r")
+-- 获取文件大小
+local size = file:size()
+-- 获取文件绝对路径
+local path = file:path()
+-- 读取一行（保留换行符）
+local line = file:read("L")
+-- 逐行迭代
+for line in file:lines() do
+    print(line)
+end
+file:close()
+```
 
 如果要写文件，可以这么操作：
 
@@ -91,6 +123,25 @@ io.save("xxx.txt", {a = "a", b = "b", c = "c"})
 local data = io.readfile("xxx.txt")
 ```
 
+支持选项参数来控制读取行为：
+
+```lua
+-- 以二进制模式读取（不进行换行符转换）
+local data = io.readfile("xxx.txt", {encoding = "binary"})
+
+-- 读取 UTF-16LE 编码的文件
+local data = io.readfile("xxx.txt", {encoding = "utf16le"})
+
+-- 处理行继续符（如 \ 结尾的行会与下一行合并）
+local data = io.readfile("xxx.txt", {continuation = "\\"})
+```
+
+选项参数说明：
+- `encoding`：文件编码格式，支持 `"utf8"`（默认）、`"utf16"`、`"utf16le"`、`"utf16be"`、`"binary"`
+- `continuation`：行继续字符，指定后会将以该字符结尾的行与下一行合并（去除换行符）
+
+xmake 会自动检测并处理不同的换行符格式（LF、CRLF），并自动检测 UTF-8 BOM。
+
 ## io.writefile
 
 - 写入所有内容到指定路径文件
@@ -157,14 +208,35 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 
 - 读取文件的所有行
 
-根据文件名返回该文件的所有行的内容
+根据文件名返回该文件的所有行的内容，返回一个迭代器函数。
 
 ```lua
-local lines = io.lines("xxx.txt")
-for line in lines do
+for line in io.lines("xxx.txt") do
     print(line)
 end
 ```
+
+也可以转换为数组：
+
+```lua
+local lines = table.to_array(io.lines("xxx.txt"))
+```
+
+支持与 [io.readfile](#io-readfile) 相同的选项参数：
+
+```lua
+-- 以二进制模式读取每一行（保留 CRLF）
+for line in io.lines("xxx.txt", {encoding = "binary"}) do
+    print(line)
+end
+
+-- 处理行继续符
+for line in io.lines("xxx.txt", {continuation = "\\"}) do
+    print(line)  -- 以 \ 结尾的行会与下一行合并
+end
+```
+
+默认情况下，每行会去除换行符。如果需要保留换行符，使用 `file:read("L")` 方式。
 
 ## io.stdfile
 
