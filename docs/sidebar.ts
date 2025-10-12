@@ -61,6 +61,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
     text: 'base',
     collapsed: true,
     items: [
+      { text: 'bytes', link: 'extension-modules/core/base/bytes' },
       { text: 'global', link: 'extension-modules/core/base/global' },
       { text: 'json', link: 'extension-modules/core/base/json' },
       { text: 'option', link: 'extension-modules/core/base/option' },
