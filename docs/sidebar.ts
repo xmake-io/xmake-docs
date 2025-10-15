@@ -70,6 +70,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
       { text: 'list', link: 'extension-modules/core/base/list' },
       { text: 'option', link: 'extension-modules/core/base/option' },
       { text: 'pipe', link: 'extension-modules/core/base/pipe' },
+      { text: 'process', link: 'extension-modules/core/base/process' },
       { text: 'queue', link: 'extension-modules/core/base/queue' },
       { text: 'semver', link: 'extension-modules/core/base/semver' },
       { text: 'socket', link: 'extension-modules/core/base/socket' },
