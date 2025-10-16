@@ -72,6 +72,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
       { text: 'pipe', link: 'extension-modules/core/base/pipe' },
       { text: 'process', link: 'extension-modules/core/base/process' },
       { text: 'queue', link: 'extension-modules/core/base/queue' },
+      { text: 'scheduler', link: 'extension-modules/core/base/scheduler' },
       { text: 'semver', link: 'extension-modules/core/base/semver' },
       { text: 'socket', link: 'extension-modules/core/base/socket' },
       { text: 'task', link: 'extension-modules/core/base/task' },
