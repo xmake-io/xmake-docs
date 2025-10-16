@@ -278,6 +278,10 @@ if get_config("myconfig") == "xxx" then
 end
 ```
 
+::: tip 提示
+此接口不仅能够获取通过[option](/zh/api/description/configuration-option#option)定义的自定义配置选项值，同时还能获取内置的全局配置、本地配置。
+:::
+
 ## set_config
 
 ### 设置给定的默认配置值

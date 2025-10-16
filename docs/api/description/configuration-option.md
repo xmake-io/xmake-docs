@@ -179,6 +179,8 @@ option("test")
 
 If it is an option of the `boolean` value, it can be judged by [has_config](/api/description/conditions#has-config), and the option is enabled.
 
+You can use the [get_config](/api/description/global-interfaces#get-config) and [has_config](/api/description/conditions#has-config) interfaces to get the defined option state, which is the state value set by the user through `xmake f --option1=xxx`.
+
 If it is an option of type `string`, it can be used directly in built-in variables, for example:
 
 ```lua

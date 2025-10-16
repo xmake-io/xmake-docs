@@ -176,6 +176,8 @@ option("test")
 
 如果是`boolean`值的选项，可以通过[has_config](/zh/api/description/conditions#has-config)来进行判断，选项是否被启用。
 
+可以通过[get_config](/zh/api/description/global-interfaces#get-config)和[has_config](/zh/api/description/conditions#has-config)接口来获取定义的选项状态，也就是用户通过`xmake f --option1=xxx`设置的状态值。
+
 如果是`string`类型的选项，可以在内建变量中直接使用，例如：
 
 ```lua

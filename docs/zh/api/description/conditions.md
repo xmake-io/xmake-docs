@@ -327,6 +327,8 @@ $ xmake f --test1=false
 
 ::: tip 提示
 此接口不仅能够判断内置的全局配置、本地配置，同时还可以判断通过[option](/zh/api/description/configuration-option#option)定义的自定义配置选项。
+
+此接口与[get_config](/zh/api/description/global-interfaces#get-config)接口配合使用，可以完整地获取和判断用户通过`xmake f --option1=xxx`设置的选项状态。
 :::
 
 ## has_package

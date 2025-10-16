@@ -276,6 +276,10 @@ if get_config("myconfig") == "xxx" then
 end
 ```
 
+::: tip NOTE
+This interface can get not only the custom configuration option values defined through [option](/api/description/configuration-option#option), but also the built-in global and local configurations.
+:::
+
 ## set_config
 
 ### Set the default configuration value

@@ -322,6 +322,8 @@ $ xmake f --test1=false
 ::: tip NOTE
 This interface can determine not only the built-in global and local configs,
 but also the custom options defined through the [option](/api/description/configuration-option#option).
+
+This interface works together with the [get_config](/api/description/global-interfaces#get-config) interface to completely get and determine the option state set by the user through `xmake f --option1=xxx`.
 :::
 
 ## has_package
