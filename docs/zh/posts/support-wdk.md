@@ -198,6 +198,7 @@ $ xmake [p|package] -o outputdir
 target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
+    set_values("wdk.sign.digest_algorithm", "sha256")
     add_files("src/*.c")
 ```
 
@@ -211,6 +212,7 @@ target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
+    set_values("wdk.sign.digest_algorithm", "sha256")
     add_files("src/*.c")
 ```
 
@@ -222,6 +224,7 @@ target("msdsm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.store", "PrivateCertStore")
     set_values("wdk.sign.company", "tboox.org(test)")
+    set_values("wdk.sign.digest_algorithm", "sha256")
     add_files("src/*.c")
 ```
 
@@ -235,6 +238,7 @@ target("msdsm")
     set_values("wdk.sign.mode", "release")
     set_values("wdk.sign.company", "xxxx")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
+    set_values("wdk.sign.digest_algorithm", "sha256")
 ```
 
 ## 生成低版本驱动

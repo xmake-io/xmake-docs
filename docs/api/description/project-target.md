@@ -2630,6 +2630,7 @@ The following is a list of some built-in extended configuration items currently 
 | wdk.sign.store              | Set wdk code signing store                             |
 | wdk.sign.certfile           | Set wdk code signing certificate file                  |
 | wdk.sign.thumbprint         | Set wdk code signing fingerprint                       |
+| wdk.sign.digest_algorithm   | Set wdk code signing digest algorithm                  |
 
 ## add_values
 

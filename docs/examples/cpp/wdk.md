@@ -93,6 +93,7 @@ We can use test certificate of xmake to do testsign, but please run `$xmake l ut
 target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
+    set_values("wdk.sign.digest_algorithm", "sha256")
 ```
 
 Or we set a valid certificate thumbprint to do it in local machine.
@@ -102,6 +103,7 @@ target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
+    set_values("wdk.sign.digest_algorithm", "sha256")
 ```
 
 We can also do testsign via setting store/company info.
@@ -112,6 +114,7 @@ target("msdsm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.store", "PrivateCertStore")
     set_values("wdk.sign.company", "tboox.org(test)")
+    set_values("wdk.sign.digest_algorithm", "sha256")
 ```
 
 ### ReleaseSign
@@ -124,6 +127,7 @@ target("msdsm")
     set_values("wdk.sign.mode", "release")
     set_values("wdk.sign.company", "xxxx")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
+    set_values("wdk.sign.digest_algorithm", "sha256")
 ```
 
 ## Support Low-version System
