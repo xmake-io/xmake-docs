@@ -107,6 +107,7 @@ target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
+    set_values("wdk.sign.digest_algorithm", "sha1")
 ```
 
 从store/company来选择合适的证书进行签名：
@@ -117,6 +118,7 @@ target("msdsm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.store", "PrivateCertStore")
     set_values("wdk.sign.company", "tboox.org(test)")
+    set_values("wdk.sign.digest_algorithm", "sha1")
 ```
 
 ### 正式签名 {#sign}
@@ -129,6 +131,7 @@ target("msdsm")
     set_values("wdk.sign.mode", "release")
     set_values("wdk.sign.company", "xxxx")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
+    set_values("wdk.sign.digest_algorithm", "sha1")
 ```
 
 ## 生成低版本驱动 {#low-version-driver}
