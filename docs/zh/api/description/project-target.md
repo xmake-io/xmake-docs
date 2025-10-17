@@ -2600,23 +2600,24 @@ target("test")
 
 下面是一些 xmake 目前支持的一些内置的扩展配置项列表。
 
-| 扩展配置名              | 配置描述                              |
-| ---                     | ---                                   |
-| fortran.moduledir       | 设置 fortran 模块的输出目录           |
-| ndk.arm_mode            | 设置 ndk 的 arm 编译模式（arm/thumb） |
-| objc.build.arc          | 设置启用或禁用 objc 的 arc            |
-| objc++.build.arc        | 设置启用或禁用 objc++ 的 arc          |
-| xcode.bundle_identifier | 设置 xcode 工具链的 Bundle Identifier |
-| xcode.mobile_provision  | 设置 xcode 工具链的证书信息           |
-| xcode.codesign_identity | 设置 xcode 工具链的代码签名标识       |
-| wasm.preloadfiles       | 设置 wasm 打包的预加载文件（preload file） |
-| wdk.env.winver          | 设置 wdk 的 win 支持版本              |
-| wdk.umdf.sdkver         | 设置 wdk 的 umdf sdk 版本             |
-| wdk.kmdf.sdkver         | 设置 wdk 的 kmdf sdk 版本             |
-| wdk.sign.mode           | 设置 wdk 的代码签名模式               |
-| wdk.sign.store          | 设置 wdk 的代码签名 store             |
-| wdk.sign.certfile       | 设置 wdk 的代码签名证书文件           |
-| wdk.sign.thumbprint     | 设置 wdk 的代码签名指纹               |
+| 扩展配置名                 | 配置描述                                 |
+| ---                       | ---                                     |
+| fortran.moduledir         | 设置 fortran 模块的输出目录               |
+| ndk.arm_mode              | 设置 ndk 的 arm 编译模式 (arm/thumb)      |
+| objc.build.arc            | 设置启用或禁用 objc 的 arc                |
+| objc++.build.arc          | 设置启用或禁用 objc++ 的 arc              |
+| xcode.bundle_identifier   | 设置 xcode 工具链的 Bundle Identifier    |
+| xcode.mobile_provision    | 设置 xcode 工具链的证书信息               |
+| xcode.codesign_identity   | 设置 xcode 工具链的代码签名标识            |
+| wasm.preloadfiles         | 设置 wasm 打包的预加载文件 (preload file) |
+| wdk.env.winver            | 设置 wdk 的 win 支持版本                 |
+| wdk.umdf.sdkver           | 设置 wdk 的 umdf sdk 版本                |
+| wdk.kmdf.sdkver           | 设置 wdk 的 kmdf sdk 版本                |
+| wdk.sign.mode             | 设置 wdk 的代码签名模式                   |
+| wdk.sign.store            | 设置 wdk 的代码签名 store                 |
+| wdk.sign.certfile         | 设置 wdk 的代码签名证书文件                |
+| wdk.sign.thumbprint       | 设置 wdk 的代码签名指纹                   |
+| wdk.sign.digest_algorithm | 设置 wdk 的代码签名摘要算法                |
 
 ## add_values
 

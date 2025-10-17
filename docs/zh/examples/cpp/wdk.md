@@ -93,6 +93,7 @@ $ xmake [p|package] -o outputdir
 target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
+    set_values("wdk.sign.digest_algorithm", "sha256")
 ```
 
 不过这种情况下，需要用户手动在管理员模式下，执行一遍：`$xmake l utils.wdk.testcert install`，来生成和注册test证书到本机环境。
@@ -107,6 +108,7 @@ target("msdsm")
     add_rules("wdk.driver", "wdk.env.wdm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.thumbprint", "032122545DCAA6167B1ADBE5F7FDF07AE2234AAA")
+    set_values("wdk.sign.digest_algorithm", "sha256")
 ```
 
 从store/company来选择合适的证书进行签名：
@@ -117,6 +119,7 @@ target("msdsm")
     set_values("wdk.sign.mode", "test")
     set_values("wdk.sign.store", "PrivateCertStore")
     set_values("wdk.sign.company", "tboox.org(test)")
+    set_values("wdk.sign.digest_algorithm", "sha256")
 ```
 
 ### 正式签名 {#sign}
@@ -129,6 +132,7 @@ target("msdsm")
     set_values("wdk.sign.mode", "release")
     set_values("wdk.sign.company", "xxxx")
     set_values("wdk.sign.certfile", path.join(os.projectdir(), "xxxx.cer"))
+    set_values("wdk.sign.digest_algorithm", "sha256")
 ```
 
 ## 生成低版本驱动 {#low-version-driver}
