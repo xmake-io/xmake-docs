@@ -99,6 +99,18 @@ target("test")
 
 - 定义规则
 
+#### 函数原型
+
+```lua
+rule(name: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 规则名称字符串 |
+
 ```lua
 rule("markdown")
     set_extensions(".md", ".markdown")
@@ -110,6 +122,22 @@ rule("markdown")
 ## add_deps
 
 - 添加规则依赖
+
+#### 函数原型
+
+```lua
+add_deps(deps: <string|array>, ..., {
+    order = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| deps | 依赖规则名称字符串或数组 |
+| ... | 可变参数，可传递多个依赖名称 |
+| order | 是否按顺序执行依赖 |
 
 关联依赖可以绑定一批规则，也就是不必对 target 挨个去使用 `add_rules()` 添加规则，只需要应用一个规则，就能生效它和它的所有依赖规则。
 
@@ -177,11 +205,37 @@ target("test")
 
 - 为所有自定义脚本预先导入扩展模块
 
+#### 函数原型
+
+```lua
+add_imports(modules: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| modules | 模块名称字符串或数组 |
+| ... | 可变参数，可传递多个模块名称 |
+
 使用方式和说明请见：[target:add_imports](/zh/api/description/project-target#add-imports)，用法相同。
 
 ## set_extensions
 
 - 设置规则支持的文件扩展类型
+
+#### 函数原型
+
+```lua
+set_extensions(extensions: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| extensions | 文件扩展名字符串或数组 |
+| ... | 可变参数，可传递多个扩展名 |
 
 通过设置支持的扩展文件类型，将规则应用于带这些后缀的文件上，例如：
 
@@ -208,6 +262,18 @@ target("test")
 
 - 自定义加载脚本
 
+#### 函数原型
+
+```lua
+on_load(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 加载脚本函数，参数为target |
+
 用于实现自定规则的加载脚本，当加载target的时候，会被执行，可在里面自定义设置一些target配置，例如：
 
 ```lua
@@ -221,6 +287,18 @@ rule("test")
 
 - 自定义链接脚本
 
+#### 函数原型
+
+```lua
+on_link(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 链接脚本函数，参数为target |
+
 用于实现自定规则的链接脚本，会覆盖被应用的target的默认链接行为，例如：
 
 ```lua
@@ -232,6 +310,18 @@ rule("test")
 ## on_config
 
 - 自定义配置脚本
+
+#### 函数原型
+
+```lua
+on_config(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 配置脚本函数，参数为target |
 
 在 `xmake config` 执行完成后，Build 之前会执行此脚本，通常用于编译前的配置工作。它与 on_load 不同的是，on_load 只要 target 被加载就会执行，执行时机更早。
 
@@ -247,6 +337,18 @@ on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 
 - 自定义编译脚本
 
+#### 函数原型
+
+```lua
+on_build(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译脚本函数，参数为target |
+
 用于实现自定规则的构建脚本，会覆盖被应用的target的默认构建行为，例如：
 
 ```lua
@@ -258,6 +360,18 @@ rule("markdown")
 ## on_clean
 
 - 自定义清理脚本
+
+#### 函数原型
+
+```lua
+on_clean(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 清理脚本函数，参数为target |
 
 用于实现自定规则的清理脚本会，覆盖被应用的target的默认清理行为，例如：
 
@@ -272,6 +386,18 @@ rule("markdown")
 
 - 自定义打包脚本
 
+#### 函数原型
+
+```lua
+on_package(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 打包脚本函数，参数为target |
+
 用于实现自定规则的打包脚本，覆盖被应用的target的默认打包行为, 例如：
 
 ```lua
@@ -285,6 +411,18 @@ rule("markdown")
 
 - 自定义安装脚本
 
+#### 函数原型
+
+```lua
+on_install(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装脚本函数，参数为target |
+
 用于实现自定规则的安装脚本，覆盖被应用的target的默认安装行为, 例如：
 
 ```lua
@@ -296,6 +434,18 @@ rule("markdown")
 ## on_uninstall
 
 - 自定义卸载脚本
+
+#### 函数原型
+
+```lua
+on_uninstall(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载脚本函数，参数为target |
 
 用于实现自定规则的卸载脚本，覆盖被应用的target的默认卸载行为, 例如：
 
@@ -309,6 +459,18 @@ rule("markdown")
 
 - 自定义编译脚本，一次处理一个源文件
 
+#### 函数原型
+
+```lua
+on_build_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译文件脚本函数，参数为target、sourcefile和opt |
+
 ```lua
 rule("markdown")
     on_build_file(function (target, sourcefile, opt)
@@ -321,6 +483,18 @@ rule("markdown")
 ## on_buildcmd_file
 
 - 自定义批处理编译脚本，一次处理一个源文件
+
+#### 函数原型
+
+```lua
+on_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 批处理编译文件脚本函数，参数为target、batchcmds、sourcefile和opt |
 
 这是 2.5.2 版本新加的接口，里面的脚本不会直接构建源文件，但是会通过 batchcmds 对象，构造一个批处理命令行任务，
 xmake 在实际执行构建的时候，一次性执行这些命令。
@@ -396,6 +570,18 @@ rule("lex")
 
 - 自定义编译脚本，一次处理多个源文件
 
+#### 函数原型
+
+```lua
+on_build_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译文件脚本函数，参数为target、sourcebatch和opt |
+
 大部分的自定义构建规则，每次都是处理单独一个文件，输出一个目标文件，例如：a.c => a.o
 
 但是，有些情况下，我们需要同时输入多个源文件一起构建生成一个目标文件，例如：a.c b.c d.c => x.o
@@ -416,6 +602,18 @@ rule("markdown")
 
 - 自定义批处理编译脚本，一次处理多个源文件
 
+#### 函数原型
+
+```lua
+on_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 批处理编译文件脚本函数，参数为target、batchcmds、sourcebatch和opt |
+
 关于这个的详细说明，见：[on_buildcmd_file](#on_buildcmd_file)
 
 ```lua
@@ -432,6 +630,18 @@ rule("foo")
 
 - 自定义配置前脚本
 
+#### 函数原型
+
+```lua
+before_config(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 配置前脚本函数，参数为target |
+
 用于实现自定义 target 配置前的执行脚本，例如：
 
 ```lua
@@ -446,6 +656,18 @@ rule("test")
 
 - 自定义链接前脚本
 
+#### 函数原型
+
+```lua
+before_link(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 链接前脚本函数，参数为target |
+
 用于实现自定义target链接前的执行脚本，例如：
 
 ```lua
@@ -457,6 +679,18 @@ rule("test")
 ## before_build
 
 - 自定义编译前脚本
+
+#### 函数原型
+
+```lua
+before_build(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译前脚本函数，参数为target |
 
 用于实现自定义target构建前的执行脚本，例如：
 
@@ -470,6 +704,18 @@ rule("markdown")
 
 - 自定义清理前脚本
 
+#### 函数原型
+
+```lua
+before_clean(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 清理前脚本函数，参数为target |
+
 用于实现自定义target清理前的执行脚本，例如：
 
 ```lua
@@ -481,6 +727,18 @@ rule("markdown")
 ## before_package
 
 - 自定义打包前脚本
+
+#### 函数原型
+
+```lua
+before_package(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 打包前脚本函数，参数为target |
 
 用于实现自定义target打包前的执行脚本, 例如：
 
@@ -494,6 +752,18 @@ rule("markdown")
 
 - 自定义安装前脚本
 
+#### 函数原型
+
+```lua
+before_install(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装前脚本函数，参数为target |
+
 用于实现自定义target安装前的执行脚本，例如：
 
 ```lua
@@ -505,6 +775,18 @@ rule("markdown")
 ## before_uninstall
 
 - 自定义卸载前脚本
+
+#### 函数原型
+
+```lua
+before_uninstall(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载前脚本函数，参数为target |
 
 用于实现自定义target卸载前的执行脚本，例如：
 
@@ -518,12 +800,36 @@ rule("markdown")
 
 - 自定义编译前脚本，一次处理一个源文件
 
+#### 函数原型
+
+```lua
+before_build_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译前文件脚本函数，参数为target、sourcefile和opt |
+
 跟[on_build_file](#on_build_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之前，
 一般用于对某些源文件进行编译前的预处理。
 
 ## before_buildcmd_file
 
 - 自定义编译前批处理脚本，一次处理一个源文件
+
+#### 函数原型
+
+```lua
+before_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译前批处理文件脚本函数，参数为target、batchcmds、sourcefile和opt |
 
 跟[on_buildcmd_file](#on_buildcmd_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之前，
 一般用于对某些源文件进行编译前的预处理。
@@ -532,6 +838,18 @@ rule("markdown")
 
 - 自定义编译前脚本，一次处理多个源文件
 
+#### 函数原型
+
+```lua
+before_build_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译前文件脚本函数，参数为target、sourcebatch和opt |
+
 跟[on_build_files](#on_build_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之前，
 一般用于对某些源文件进行编译前的预处理。
 
@@ -539,12 +857,36 @@ rule("markdown")
 
 - 自定义编译前批处理脚本，一次处理多个源文件
 
+#### 函数原型
+
+```lua
+before_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译前批处理文件脚本函数，参数为target、batchcmds、sourcebatch和opt |
+
 跟[on_buildcmd_files](#on_buildcmd_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之前，
 一般用于对某些源文件进行编译前的预处理。
 
 ## after_config
 
 - 自定义配置后脚本
+
+#### 函数原型
+
+```lua
+after_config(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 配置后脚本函数，参数为target |
 
 用于实现自定义 target 配置后的执行脚本，例如：
 
@@ -560,11 +902,35 @@ rule("test")
 
 - 自定义链接后脚本
 
+#### 函数原型
+
+```lua
+after_link(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 链接后脚本函数，参数为target |
+
 用于实现自定义target链接后的执行脚本，用法跟[before_link](#before_link)类似。
 
 ## after_build
 
 - 自定义编译后脚本
+
+#### 函数原型
+
+```lua
+after_build(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译后脚本函数，参数为target |
 
 用于实现自定义target构建后的执行脚本，用法跟[before_build](#before_build)类似。
 
@@ -572,11 +938,35 @@ rule("test")
 
 - 自定义清理后脚本
 
+#### 函数原型
+
+```lua
+after_clean(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 清理后脚本函数，参数为target |
+
 用于实现自定义target清理后的执行脚本，用法跟[before_clean](#before_clean)类似。
 
 ## after_package
 
 - 自定义打包后脚本
+
+#### 函数原型
+
+```lua
+after_package(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 打包后脚本函数，参数为target |
 
 用于实现自定义target打包后的执行脚本, 用法跟[before_package](#before_package)类似。
 
@@ -584,17 +974,53 @@ rule("test")
 
 - 自定义安装后脚本
 
+#### 函数原型
+
+```lua
+after_install(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装后脚本函数，参数为target |
+
 用于实现自定义target安装后的执行脚本，用法跟[before_install](#before_install)类似。
 
 ## after_uninstall
 
 - 自定义卸载后脚本
 
+#### 函数原型
+
+```lua
+after_uninstall(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载后脚本函数，参数为target |
+
 用于实现自定义target卸载后的执行脚本，用法跟[before_uninstall](#before_uninstall)类似。
 
 ## after_build_file
 
 - 自定义编译后脚本，一次处理一个源文件
+
+#### 函数原型
+
+```lua
+after_build_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译后文件脚本函数，参数为target、sourcefile和opt |
 
 跟[on_build_file](#on_build_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之后，
 一般用于对某些编译后对象文件进行后期处理。
@@ -603,12 +1029,36 @@ rule("test")
 
 - 自定义编译后批处理脚本，一次处理一个源文件
 
+#### 函数原型
+
+```lua
+after_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译后批处理文件脚本函数，参数为target、batchcmds、sourcefile和opt |
+
 跟[on_buildcmd_file](#on_buildcmd_file)用法类似，不过这个接口被调用的时机是在编译某个源文件之后，
 一般用于对某些编译后对象文件进行后期处理。
 
 ## after_build_files
 
 - 自定义编译后脚本，一次处理多个源文件
+
+#### 函数原型
+
+```lua
+after_build_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译后文件脚本函数，参数为target、sourcebatch和opt |
 
 跟[on_build_files](#on_build_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之后，
 一般用于对某些编译后对象文件进行后期处理。
@@ -617,12 +1067,36 @@ rule("test")
 
 - 自定义编译后批处理脚本，一次处理多个源文件
 
+#### 函数原型
+
+```lua
+after_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译后批处理文件脚本函数，参数为target、batchcmds、sourcebatch和opt |
+
 跟[on_buildcmd_files](#on_buildcmd_files)用法类似，不过这个接口被调用的时机是在编译某些源文件之后，
 一般用于对某些编译后对象文件进行后期处理。
 
 ## rule_end
 
 - 结束定义规则
+
+#### 函数原型
+
+```lua
+rule_end()
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| - | 无参数 |
 
 这个是可选的，如果想要手动结束rule的定义，可以调用它：
 

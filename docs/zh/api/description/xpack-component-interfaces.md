@@ -4,6 +4,18 @@
 
 - 设置包组件的简单描述
 
+#### 函数原型
+
+```lua
+set_title(title: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| title | 组件标题字符串 |
+
 ```lua
 xpack_component("LongPath")
     set_title("Enable Long Path")
@@ -13,6 +25,18 @@ xpack_component("LongPath")
 
 - 设置包组件的详细描述
 
+#### 函数原型
+
+```lua
+set_description(description: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| description | 组件详细描述字符串 |
+
 ```lua
 xpack_component("LongPath")
     set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
@@ -21,6 +45,18 @@ xpack_component("LongPath")
 ## set_default
 
 - 设置包组件的默认启用状态
+
+#### 函数原型
+
+```lua
+set_default(default: <boolean>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| default | 是否默认启用（布尔值） |
 
 通常包组件都会被默认启用，但是我们也可以使用这个接口，默认禁用这个组件，仅仅当用户安装包时候，选择勾选此组件，才会被启用安装。
 
@@ -33,6 +69,18 @@ xpack_component("LongPath")
 ## on_load
 
 - 自定义加载脚本
+
+#### 函数原型
+
+```lua
+on_load(script: <function (component)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 加载脚本函数，参数为component |
 
 我们可以在 on_load 自定义脚本域中，进一步灵活的配置包组件。
 
@@ -47,6 +95,18 @@ xpack_component("test")
 ## before_installcmd
 
 - 添加组件安装之前的脚本
+
+#### 函数原型
+
+```lua
+before_installcmd(script: <function (component, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装前脚本函数，参数为component和batchcmds |
 
 它不会重写整个安装脚本，但是会在现有的安装脚本执行之前，新增一些自定义的安装脚本：
 
@@ -67,6 +127,18 @@ xpack_component("test")
 
 - 重写组件的安装脚本
 
+#### 函数原型
+
+```lua
+on_installcmd(script: <function (component, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装脚本函数，参数为component和batchcmds |
+
 这会重写整个组件的安装脚本，类似 xpack 的 on_installcmd。
 
 ```lua
@@ -79,6 +151,18 @@ xpack_component("test")
 ## after_installcmd
 
 - 添加组件安装之后的脚本
+
+#### 函数原型
+
+```lua
+after_installcmd(script: <function (component, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装后脚本函数，参数为component和batchcmds |
 
 在组件安装之后，会执行这里的脚本，类似 xpack 的 after_installcmd。
 
@@ -93,6 +177,18 @@ xpack_component("test")
 
 - 添加组件卸载之前的脚本
 
+#### 函数原型
+
+```lua
+before_uninstallcmd(script: <function (component, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载前脚本函数，参数为component和batchcmds |
+
 在组件安装之后，会执行这里的脚本，类似 xpack 的 before_uninstallcmd。
 
 ```lua
@@ -105,6 +201,18 @@ xpack_component("test")
 ## on_uninstallcmd
 
 - 重写组件卸载的脚本
+
+#### 函数原型
+
+```lua
+on_uninstallcmd(script: <function (component, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载脚本函数，参数为component和batchcmds |
 
 这会重写整个组件的卸载脚本，类似 xpack 的 on_uninstallcmd。
 
@@ -119,6 +227,18 @@ xpack_component("test")
 
 - 添加组件卸载之后的脚本
 
+#### 函数原型
+
+```lua
+after_uninstallcmd(script: <function (component, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载后脚本函数，参数为component和batchcmds |
+
 在组件卸载之后，会执行这里的脚本，类似 xpack 的 before_uninstallcmd。
 
 ```lua
@@ -132,10 +252,50 @@ xpack_component("test")
 
 - 添加组件源文件
 
+#### 函数原型
+
+```lua
+add_sourcefiles(files: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| files | 源文件模式字符串或数组 |
+| ... | 可变参数，可传递多个文件模式 |
+| prefixdir | 安装前缀目录 |
+| rootdir | 源文件根目录 |
+| filename | 目标文件名 |
+
 这类似于 xpack 的 add_sourcefiles，但这里仅仅当组件被启用后，才会将这些源文件打入安装包。
 
 ## add_installfiles
 
 - 添加组件二进制安装文件
+
+#### 函数原型
+
+```lua
+add_installfiles(files: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| files | 安装文件模式字符串或数组 |
+| ... | 可变参数，可传递多个文件模式 |
+| prefixdir | 安装前缀目录 |
+| rootdir | 源文件根目录 |
+| filename | 目标文件名 |
 
 这类似于 xpack 的 add_installfiles，但这里仅仅当组件被启用后，才会将这些二进制文件打入安装包。

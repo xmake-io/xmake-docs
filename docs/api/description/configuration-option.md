@@ -30,6 +30,18 @@ The `option` field can be repeatedly entered to implement separate settings. If 
 
 ### Defining options
 
+#### Function Prototype
+
+```lua
+option(name: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Option name string |
+
 Define and set option switches for custom compilation configuration options, switch settings.
 
 For example, define an option to enable test:
@@ -59,11 +71,36 @@ $ xmake
 
 ### End definition option
 
+#### Function Prototype
+
+```lua
+option_end()
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| - | No parameters |
+
 This is an optional api that shows the departure option scope, similar to [target_end](/api/description/project-target#target-end).
 
 ## add_deps
 
 ### Adding options depends
+
+#### Function Prototype
+
+```lua
+add_deps(deps: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| deps | Dependency option name string or array |
+| ... | Variable parameters, can pass multiple dependency names |
 
 By setting the dependency, you can adjust the detection order of the options, which is generally used when the detection script is called by [on_check](#on_check).
 
@@ -94,6 +131,18 @@ Since on_check will only be executed when the default value is not set, if the d
 
 Execute this script before option detection
 
+#### Function Prototype
+
+```lua
+before_check(script: <function (option)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before check script function with option parameter |
+
 ```lua
 option("zlib")
     before_check(function (option)
@@ -103,6 +152,18 @@ option("zlib")
 ## on_check
 
 ### Custom Option Detection Script
+
+#### Function Prototype
+
+```lua
+on_check(script: <function (option)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Check script function with option parameter |
 
 This script overrides the built-in option detection logic.
 
@@ -126,6 +187,18 @@ Only when `set_default` is not set, will the `on_check` be executed for custom o
 
 Execute this script after option detection
 
+#### Function Prototype
+
+```lua
+after_check(script: <function (option)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After check script function with option parameter |
+
 After the option detection is complete, execute this script for some post-processing, or you can re-disable the option at this time:
 
 ```lua
@@ -140,6 +213,19 @@ option("test")
 ## set_values
 
 ### Setting the list of option values
+
+#### Function Prototype
+
+```lua
+set_values(values: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| values | Option value string or array |
+| ... | Variable parameters, can pass multiple values |
 
 For the graphical menu configuration of `xmake f --menu` only, a list of option values is provided for quick selection by the user, for example:
 
@@ -156,6 +242,18 @@ The effect chart is as follows:
 ## set_default
 
 ### Setting options defaults
+
+#### Function Prototype
+
+```lua
+set_default(value: <string|boolean|number>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| value | Default value (string, boolean, or number) |
 
 When the option value is not modified by the command `xmake f --option=[y|n}`, the option itself has a default value, which can be set through this interface:
 
@@ -215,6 +313,18 @@ Detection behavior of the
 
 ### Set whether to enable menu display
 
+#### Function Prototype
+
+```lua
+set_showmenu(showmenu: <boolean>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| showmenu | Whether to show in menu (boolean) |
+
 If set to `true`, then this option will appear in `xmake f --help`, which can also be configured via `xmake f --optionname=xxx`, otherwise it can only be used inside `xmake.lua` , the modification cannot be configured manually.
 
 ```lua
@@ -238,6 +348,18 @@ After 2.6.8, this option is enabled by default and there is usually no need to c
 ## set_category
 
 ### Setting option categories, only for menu display
+
+#### Function Prototype
+
+```lua
+set_category(category: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| category | Category name string |
 
 This is an optional configuration, only used in the help menu, the classification display options, the same category of options, will be displayed in the same group, so the menu looks more beautiful.
 
@@ -314,6 +436,19 @@ The effect chart is as follows:
 
 ### Setting menu display description
 
+#### Function Prototype
+
+```lua
+set_description(description: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| description | Description string or array |
+| ... | Variable parameters, can pass multiple description lines |
+
 When the option menu is displayed, the description on the right is used to help the user know more clearly about the purpose of this option, for example:
 
 ```lua
@@ -364,6 +499,19 @@ $ xmake f --mode=release
 
 ### Add Link Library Detection
 
+#### Function Prototype
+
+```lua
+add_links(links: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| links | Library name string or array |
+| ... | Variable parameters, can pass multiple library names |
+
 If the specified link library is passed, this option will be enabled and the associated target will automatically be added to this link, for example:
 
 ```lua
@@ -382,17 +530,56 @@ If the test passes, the `test` target will be automatically added when it is com
 
 ### Adding the search directory needed for link library detection
 
+#### Function Prototype
+
+```lua
+add_linkdirs(linkdirs: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| linkdirs | Link directory path string or array |
+| ... | Variable parameters, can pass multiple directory paths |
+
 This is optional. Generally, the system library does not need to add this, and it can also pass the test. If it is not found, you can add the search directory yourself to improve the detection pass rate. For details, see: [add_links](#add_links)
 
 ## add_rpathdirs
 
 ### Adding a load search directory for a dynamic library at runtime
 
+#### Function Prototype
+
+```lua
+add_rpathdirs(rpathdirs: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| rpathdirs | RPATH directory path string or array |
+| ... | Variable parameters, can pass multiple directory paths |
+
 After the option passes the detection, it will be automatically added to the corresponding target. For details, see: [target.add_rpathdirs](/api/description/project-target#add-rpathdirs).
 
 ## add_cincludes
 
 ### Add c header file detection
+
+#### Function Prototype
+
+```lua
+add_cincludes(includes: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| includes | Header file name string or array |
+| ... | Variable parameters, can pass multiple header file names |
 
 This option will be enabled if the c header file is passed, for example:
 
@@ -413,11 +600,37 @@ If you want more flexible detection, you can do this in [option.on_check](#on_ch
 
 ### Add c++ header file detection
 
+#### Function Prototype
+
+```lua
+add_cxxincludes(includes: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| includes | C++ header file name string or array |
+| ... | Variable parameters, can pass multiple header file names |
+
 Similar to [add_cincludes](#add_cincludes), except that the detected header file type is a c++ header file.
 
 ## add_ctypes
 
 ### Add c type detection
+
+#### Function Prototype
+
+```lua
+add_ctypes(types: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| types | C type name string or array |
+| ... | Variable parameters, can pass multiple type names |
 
 This option will be enabled if the c type is passed, for example:
 
@@ -438,11 +651,44 @@ If you want more flexible detection, you can do this in [option.on_check](#on_ch
 
 ### Adding c++ type detection
 
+#### Function Prototype
+
+```lua
+add_cxxtypes(types: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| types | C++ type name string or array |
+| ... | Variable parameters, can pass multiple type names |
+
 Similar to [add_ctypes](#add_ctypes), except that the type detected is a c++ type.
 
 ## add_csnippets
 
 ### Add c code fragment detection
+
+#### Function Prototype
+
+```lua
+add_csnippets(name: <string>, code: <string>, {
+    tryrun = <boolean>,
+    output = <boolean>,
+    number = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Code snippet name string |
+| code | C code fragment string |
+| tryrun | Whether to try running the code |
+| output | Whether to capture output |
+| number | Whether to parse output as number |
 
 If the existing [add_ctypes](#add_ctypes), [add_cfuncs](#add_cfuncs), etc. cannot meet the current detection requirements,
 You can use this interface to implement more custom detection of some compiler feature detection, see: [add_cxxsnippets](#add_cxxsnippets).
@@ -450,6 +696,26 @@ You can use this interface to implement more custom detection of some compiler f
 ## add_cxxsnippets
 
 ### Adding c++ code snippet detection
+
+#### Function Prototype
+
+```lua
+add_cxxsnippets(name: <string>, code: <string>, {
+    tryrun = <boolean>,
+    output = <boolean>,
+    number = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Code snippet name string |
+| code | C++ code fragment string |
+| tryrun | Whether to try running the code |
+| output | Whether to capture output |
+| number | Whether to parse output as number |
 
 This interface can be used to implement more custom detection of some compiler feature detection, especially the detection support of various features of C++, such as:
 
@@ -498,6 +764,19 @@ end
 
 ### Add c library function detection
 
+#### Function Prototype
+
+```lua
+add_cfuncs(funcs: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| funcs | C function name string or array |
+| ... | Variable parameters, can pass multiple function names |
+
 ```lua
 option("setjmp")
     add_cincludes("setjmp.h")
@@ -530,5 +809,18 @@ Note that the detected function usually needs to be accompanied by `add_cinclude
 ## add_cxxfuncs
 
 ### Add c++ library function detection
+
+#### Function Prototype
+
+```lua
+add_cxxfuncs(funcs: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| funcs | C++ function name string or array |
+| ... | Variable parameters, can pass multiple function names |
 
 The usage is consistent with [add_cfuncs](#add_cxxfuncs).

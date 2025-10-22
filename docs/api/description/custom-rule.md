@@ -98,6 +98,18 @@ Rules specified by `add_files("*.md", {rules = "markdown"})`, with a higher prio
 
 - Defining rules
 
+#### Function Prototype
+
+```lua
+rule(name: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Rule name string |
+
 ```lua
 rule("markdown")
     set_extensions(".md", ".markdown")
@@ -109,6 +121,22 @@ rule("markdown")
 ## add_deps
 
 - Adding rule dependencies
+
+#### Function Prototype
+
+```lua
+add_deps(deps: <string|array>, ..., {
+    order = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| deps | Dependency rule name string or array |
+| ... | Variable parameters, can pass multiple dependency names |
+| order | Whether to execute dependencies in order |
 
 Associated dependencies can bind a batch of rules, i.e. instead of adding rules one by one to a target using `add_rules()`, just apply a rule that will take effect for it and all its dependencies.
 
@@ -176,11 +204,37 @@ target("test")
 
 - Add imported modules for all custom scripts
 
+#### Function Prototype
+
+```lua
+add_imports(modules: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| modules | Module name string or array |
+| ... | Variable parameters, can pass multiple module names |
+
 For usage and description, please see: [target:add_imports](/api/description/project-target#add-imports), the usage is the same.
 
 ## set_extensions
 
 - Setting the file extension type supported by the rule
+
+#### Function Prototype
+
+```lua
+set_extensions(extensions: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| extensions | File extension string or array |
+| ... | Variable parameters, can pass multiple extensions |
 
 Apply rules to files with these suffixes by setting the supported extension file types, for example:
 
@@ -207,6 +261,18 @@ target("test")
 
 - Custom load script
 
+#### Function Prototype
+
+```lua
+on_load(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Load script function with target parameter |
+
 The load script used to implement the custom rules will be executed when the target is loaded. You can customize some target configurations in it, for example:
 
 ```lua
@@ -219,6 +285,18 @@ rule("test")
 ## on_config
 
 - custom configuration script
+
+#### Function Prototype
+
+```lua
+on_config(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Configuration script function with target parameter |
 
 After `xmake config` is executed, this script is executed before Build, which is usually used for configuration work before compilation. It differs from on_load in that on_load is executed as soon as the target is loaded, and the execution timing is earlier.
 
@@ -234,6 +312,18 @@ on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 
 - Custom link script
 
+#### Function Prototype
+
+```lua
+on_link(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Link script function with target parameter |
+
 The link script used to implement the custom rules overrides the default link behavior of the applied target, for example:
 
 ```lua
@@ -246,6 +336,18 @@ rule("test")
 
 - Custom compilation script
 
+#### Function Prototype
+
+```lua
+on_build(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Build script function with target parameter |
+
 The build script used to implement the custom rules overrides the default build behavior of the target being applied, for example:
 
 ```lua
@@ -257,6 +359,18 @@ rule("markdown")
 ## on_clean
 
 - Custom cleanup script
+
+#### Function Prototype
+
+```lua
+on_clean(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Clean script function with target parameter |
 
 The cleanup script used to implement the custom rules will override the default cleanup behavior of the applied target, for example:
 
@@ -271,6 +385,18 @@ rule("markdown")
 
 - Custom packaging script
 
+#### Function Prototype
+
+```lua
+on_package(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Package script function with target parameter |
+
 A packaging script for implementing custom rules that overrides the default packaging behavior of the target being applied, for example:
 
 ```lua
@@ -284,6 +410,18 @@ rule("markdown")
 
 - Custom installation script
 
+#### Function Prototype
+
+```lua
+on_install(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Install script function with target parameter |
+
 An installation script for implementing custom rules that overrides the default installation behavior of the target being applied, for example:
 
 ```lua
@@ -295,6 +433,18 @@ rule("markdown")
 ## on_uninstall
 
 - Custom Uninstall Script
+
+#### Function Prototype
+
+```lua
+on_uninstall(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Uninstall script function with target parameter |
 
 An uninstall script for implementing custom rules that overrides the default uninstall behavior of the target being applied, for example:
 
@@ -308,6 +458,18 @@ rule("markdown")
 
 - Customizing the build script to process one source file at a time
 
+#### Function Prototype
+
+```lua
+on_build_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Build file script function with target, sourcefile and opt parameters |
+
 ```lua
 rule("markdown")
     on_build_file(function (target, sourcefile, opt)
@@ -320,6 +482,18 @@ The third parameter opt is an optional parameter, which is used to obtain some i
 ## on_buildcmd_file
 
 - Custom batch compile script, process one source file at a time
+
+#### Function Prototype
+
+```lua
+on_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Build command file script function with target, batchcmds, sourcefile and opt parameters |
 
 This is a new interface added in version 2.5.2. The script inside will not directly construct the source file, but will construct a batch command line task through the batchcmds object.
 When xmake actually executes the build, it executes these commands once.
@@ -392,6 +566,18 @@ For a detailed description and background of this, see: [issue 1246](https://git
 
 - Customizing the build script to process multiple source files at once
 
+#### Function Prototype
+
+```lua
+on_build_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Build files script function with target, sourcebatch and opt parameters |
+
 Most of the custom build rules, each time processing a single file, output a target file, for example: a.c => a.o
 
 However, in some cases, we need to enter multiple source files together to build an object file, for example: a.c b.c d.c => x.o
@@ -412,6 +598,18 @@ rule("markdown")
 
 - Customize batch compiling script, process multiple source files at once
 
+#### Function Prototype
+
+```lua
+on_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Build command files script function with target, batchcmds, sourcebatch and opt parameters |
+
 For a detailed description of this, see: [on_buildcmd_file](#on_buildcmd_file)
 
 ```lua
@@ -428,6 +626,18 @@ rule("foo")
 
 - Custom pre-configuration script
 
+#### Function Prototype
+
+```lua
+before_config(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before config script function with target parameter |
+
 Used to implement the execution script before custom target configuration, for example:
 
 ```lua
@@ -442,6 +652,18 @@ It will be executed before on_config.
 
 - Custom pre-link script
 
+#### Function Prototype
+
+```lua
+before_link(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before link script function with target parameter |
+
 Execution scripts used to implement custom target links, for example:
 
 ```lua
@@ -453,6 +675,18 @@ rule("test")
 ## before_build
 
 - Custom pre-compilation script
+
+#### Function Prototype
+
+```lua
+before_build(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before build script function with target parameter |
 
 Used to implement the execution script before the custom target is built, for example:
 
@@ -466,6 +700,18 @@ rule("markdown")
 
 - Custom pre-cleanup script
 
+#### Function Prototype
+
+```lua
+before_clean(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before clean script function with target parameter |
+
 Used to implement the execution script before the custom target cleanup, for example:
 
 ```lua
@@ -477,6 +723,18 @@ rule("markdown")
 ## before_package
 
 - Custom the pre-package script
+
+#### Function Prototype
+
+```lua
+before_package(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before package script function with target parameter |
 
 Used to implement the execution script before the custom target is packaged, for example:
 
@@ -490,6 +748,18 @@ rule("markdown")
 
 - Custom pre-installation script
 
+#### Function Prototype
+
+```lua
+before_install(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before install script function with target parameter |
+
 Used to implement the execution script before the custom target installation, for example:
 
 ```lua
@@ -501,6 +771,18 @@ rule("markdown")
 ## before_uninstall
 
 - Custom pre-uninstall script
+
+#### Function Prototype
+
+```lua
+before_uninstall(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before uninstall script function with target parameter |
 
 Used to implement the execution script before the custom target is uninstalled, for example:
 
@@ -514,12 +796,36 @@ rule("markdown")
 
 - Custom pre-compilation script to process one source file at a time
 
+#### Function Prototype
+
+```lua
+before_build_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before build file script function with target, sourcefile and opt parameters |
+
 Similar to [on_build_file](#on_build_file), but the timing of this interface is called before compiling a source file.
 Generally used to preprocess some source files before compiling.
 
 ## before_buildcmd_file
 
 - Customize the pre-compilation batch script, process one source file at a time
+
+#### Function Prototype
+
+```lua
+before_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before build command file script function with target, batchcmds, sourcefile and opt parameters |
 
 Similar to the usage of [on_buildcmd_file](#on_buildcmd_file), but the time when this interface is called is before compiling a certain source file.
 It is generally used to pre-process certain source files before compilation.
@@ -528,6 +834,18 @@ It is generally used to pre-process certain source files before compilation.
 
 - Customize pre-compilation scripts to process multiple source files at once
 
+#### Function Prototype
+
+```lua
+before_build_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before build files script function with target, sourcebatch and opt parameters |
+
 Similar to the usage of [on_build_files](#on_build_files), but the time when this interface is called is before compiling some source files,
 It is generally used to pre-process certain source files before compilation.
 
@@ -535,12 +853,36 @@ It is generally used to pre-process certain source files before compilation.
 
 - Customize the pre-compilation batch script to process multiple source files at once
 
+#### Function Prototype
+
+```lua
+before_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Before build command files script function with target, batchcmds, sourcebatch and opt parameters |
+
 Similar to the usage of [on_buildcmd_files](#on_buildcmd_files), but the time when this interface is called is before compiling some source files,
 It is generally used to pre-process certain source files before compilation.
 
 ## after_config
 
 - Custom post-configuration script
+
+#### Function Prototype
+
+```lua
+after_config(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After config script function with target parameter |
 
 Used to implement the execution script after custom target configuration, for example:
 
@@ -556,11 +898,35 @@ It will be executed after on_config.
 
 - Custom post-linking script
 
+#### Function Prototype
+
+```lua
+after_link(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After link script function with target parameter |
+
 The execution script used to implement the custom target link is similar to [after_link](#after_link).
 
 ## after_build
 
 - Custom post-compilation script
+
+#### Function Prototype
+
+```lua
+after_build(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After build script function with target parameter |
 
 The execution script used to implement the custom target build is similar to [before_build](#before_build).
 
@@ -568,11 +934,35 @@ The execution script used to implement the custom target build is similar to [be
 
 - Custom post-cleaning script
 
+#### Function Prototype
+
+```lua
+after_clean(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After clean script function with target parameter |
+
 The execution script used to implement the custom target cleanup is similar to [before_clean](#before_clean).
 
 ## after_package
 
 - Custom post-packaging script
+
+#### Function Prototype
+
+```lua
+after_package(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After package script function with target parameter |
 
 The execution script used to implement the custom target package is similar to [before_package](#before_package).
 
@@ -580,17 +970,53 @@ The execution script used to implement the custom target package is similar to [
 
 - Custom post-installation script
 
+#### Function Prototype
+
+```lua
+after_install(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After install script function with target parameter |
+
 The execution script used to implement the custom target installation is similar to [before_install](#before_install).
 
 ## after_uninstall
 
 - Custom post-uninstallation Script
 
+#### Function Prototype
+
+```lua
+after_uninstall(script: <function (target)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After uninstall script function with target parameter |
+
 The execution script used to implement the custom target uninstallation is similar to [before_uninstall](#before_uninstall).
 
 ## after_build_file
 
 - Custom post-compilation scripts to process one source file at a time
+
+#### Function Prototype
+
+```lua
+after_build_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After build file script function with target, sourcefile and opt parameters |
 
 Similar to [on_build_file](#on_build_file), but the timing of this interface is called after compiling a source file.
 Generally used to post-process some compiled object files.
@@ -599,12 +1025,36 @@ Generally used to post-process some compiled object files.
 
 - Customize the compiled batch script, process one source file at a time
 
+#### Function Prototype
+
+```lua
+after_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After build command file script function with target, batchcmds, sourcefile and opt parameters |
+
 Similar to the usage of [on_buildcmd_file](#on_buildcmd_file), but the time when this interface is called is after compiling a certain source file,
 Generally used for post-processing some compiled object files.
 
 ## after_build_files
 
 - Customize the compiled script to process multiple source files at once
+
+#### Function Prototype
+
+```lua
+after_build_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After build files script function with target, sourcebatch and opt parameters |
 
 The usage is similar to [on_build_files](#on_build_files), but the time when this interface is called is after some source files are compiled,
 Generally used for post-processing some compiled object files.
@@ -613,12 +1063,36 @@ Generally used for post-processing some compiled object files.
 
 - Customize the compiled batch script to process multiple source files at once
 
+#### Function Prototype
+
+```lua
+after_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | After build command files script function with target, batchcmds, sourcebatch and opt parameters |
+
 The usage is similar to [on_buildcmd_files](#on_buildcmd_files), but the time when this interface is called is after compiling some source files,
 Generally used for post-processing some compiled object files.
 
 ## rule_end
 
 - End definition rules
+
+#### Function Prototype
+
+```lua
+rule_end()
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| - | No parameters |
 
 This is optional. If you want to manually end the rule definition, you can call it:
 

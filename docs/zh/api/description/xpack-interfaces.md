@@ -15,6 +15,18 @@ xpack("test")
 
 - 设置包版本
 
+#### 函数原型
+
+```lua
+set_version(version: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| version | 包版本字符串 |
+
 这个接口用于设置生成的安装包的版本：
 
 ```lua
@@ -51,6 +63,18 @@ xpack("xmake")
 
 - 设置主页信息
 
+#### 函数原型
+
+```lua
+set_homepage(homepage: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| homepage | 主页地址字符串 |
+
 ```lua
 xpack("xmake")
     set_homepage("https://xmake.io")
@@ -59,6 +83,18 @@ xpack("xmake")
 ## set_title
 
 - 设置标题信息
+
+#### 函数原型
+
+```lua
+set_title(title: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| title | 包标题字符串 |
 
 通常用于配置安装包的简单描述，相比 `set_description` 更加简短。
 
@@ -71,6 +107,18 @@ xpack("xmake")
 
 - 设置详细描述
 
+#### 函数原型
+
+```lua
+set_description(description: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| description | 包详细描述字符串 |
+
 这个接口可以设置安装包更加详细的描述信息，可以用一到两句话详细描述下包。
 
 ```lua
@@ -82,6 +130,18 @@ xpack("xmake")
 
 - 设置作者信息
 
+#### 函数原型
+
+```lua
+set_author(author: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| author | 作者信息字符串 |
+
 我们可以设置邮箱，姓名等来描述这个包的作者。
 
 ```lua
@@ -92,6 +152,18 @@ xpack("xmake")
 ## set_maintainer
 
 - 设置维护者信息
+
+#### 函数原型
+
+```lua
+set_maintainer(maintainer: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| maintainer | 维护者信息字符串 |
 
 我们可以设置邮箱，姓名等来描述这个包的维护者。
 
@@ -106,6 +178,18 @@ xpack("xmake")
 
 - 设置包的版权信息
 
+#### 函数原型
+
+```lua
+set_copyright(copyright: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| copyright | 版权信息字符串 |
+
 ```lua
 xpack("xmake")
     set_copyright("Copyright (C) 2015-present, TBOOX Open Source Group")
@@ -114,6 +198,18 @@ xpack("xmake")
 ## set_license
 
 - 设置包的 License
+
+#### 函数原型
+
+```lua
+set_license(license: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| license | License名称字符串 |
 
 目前像 srpm/rpm/deb 等包会用到，用于设置 License 名。
 
@@ -124,6 +220,18 @@ set_license("Apache-2.0")
 ## set_licensefile
 
 - 设置包的 License 文件
+
+#### 函数原型
+
+```lua
+set_licensefile(licensefile: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| licensefile | License文件路径字符串 |
 
 我们可以设置 LICENSE 所在的文件路径，像 NSIS 的安装包，它还会额外将 LICENSE 页面展示给安装用户。
 
@@ -136,6 +244,18 @@ xpack("xmake")
 
 - 设置包所属的公司
 
+#### 函数原型
+
+```lua
+set_company(company: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| company | 公司名称字符串 |
+
 我们可以用这个接口设置包所属的公司和组织名。
 
 ```lua
@@ -146,6 +266,18 @@ xpack("xmake")
 ## set_inputkind
 
 - 设置打包的输入源类型
+
+#### 函数原型
+
+```lua
+set_inputkind(inputkind: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| inputkind | 输入源类型: "binary" 或 "source" |
 
 这是个可选接口，可用于标识当前打包的输入源类型
 
@@ -180,6 +312,19 @@ xpack("test")
 ## set_formats
 
 - 设置打包格式
+
+#### 函数原型
+
+```lua
+set_formats(formats: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| formats | 打包格式名称字符串或数组 |
+| ... | 可变参数，可传递多个格式名称 |
 
 配置当前 XPack 包需要生成的打包格式，可以同时配置多个，`xmake pack` 命令会一次性全部生成。
 
@@ -219,6 +364,18 @@ $ xmake pack -f "nsis,zip"
 
 - 设置包文件名
 
+#### 函数原型
+
+```lua
+set_basename(basename: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| basename | 包文件名字符串（不含扩展名） |
+
 设置生成包的文件名，但不包含后缀名。
 
 ```lua
@@ -240,6 +397,18 @@ xpack("xmake")
 ## set_extension
 
 - 设置安装包的扩展名
+
+#### 函数原型
+
+```lua
+set_extension(extension: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| extension | 包扩展名字符串 |
 
 通常我们并不需要修改生成包的扩展名，因为指定了 `nsis`, `zip` 等格式后，都会有一个默认的后缀名，例如：`.exe`, `.zip`。
 
@@ -263,6 +432,19 @@ xpack("mypack")
 
 - 关联目标程序
 
+#### 函数原型
+
+```lua
+add_targets(targets: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| targets | 目标名称字符串或数组 |
+| ... | 可变参数，可传递多个目标名称 |
+
 我们可以通过这个接口，配置关联需要被安装的目标 target。
 
 ```lua
@@ -284,6 +466,19 @@ xpack("test")
 ## add_components
 
 - 添加安装包组件
+
+#### 函数原型
+
+```lua
+add_components(components: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| components | 组件名称字符串或数组 |
+| ... | 可变参数，可传递多个组件名称 |
 
 我们也支持为安装包添加自定义组件，按组件模式进行选择安装。目前仅仅对 NSIS 包会有比较的支持效果。
 
@@ -321,6 +516,18 @@ xpack_component("LongPath")
 
 - 设置包的二进制安装目录
 
+#### 函数原型
+
+```lua
+set_bindir(bindir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| bindir | 二进制安装目录字符串 |
+
 通常生成的安装包都会有一个安装根目录，而我们可以通过这个配置指定安装目录下的 bin 目录位置。
 
 如果没有指定，默认在 `installdir/bin`。
@@ -337,6 +544,18 @@ xpack("xmake")
 ## set_libdir
 
 - 设置包的库安装目录
+
+#### 函数原型
+
+```lua
+set_libdir(libdir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| libdir | 库安装目录字符串 |
 
 通常生成的安装包都会有一个安装根目录，而我们可以通过这个配置指定安装目录下的 lib 目录位置。
 
@@ -356,6 +575,18 @@ xpack("xmake")
 
 - 设置包的头文件安装目录
 
+#### 函数原型
+
+```lua
+set_includedir(includedir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| includedir | 头文件安装目录字符串 |
+
 通常生成的安装包都会有一个安装根目录，而我们可以通过这个配置指定安装目录下的 include 目录位置。
 
 如果没有指定，默认在 `installdir/include`。
@@ -372,6 +603,18 @@ xpack("xmake")
 ## set_prefixdir
 
 - 设置包的安装前缀目录
+
+#### 函数原型
+
+```lua
+set_prefixdir(prefixdir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| prefixdir | 安装前缀目录字符串 |
 
 如果配置了
 
@@ -393,6 +636,18 @@ installdir
 ## set_specfile
 
 - 设置包 spec 文件路径
+
+#### 函数原型
+
+```lua
+set_specfile(specfile: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| specfile | spec文件路径字符串 |
 
 有些包格式的生成，需要先生成特定的 spec 文件，然后才能调用第三方打包工具去生成包。
 
@@ -451,6 +706,19 @@ VIAddVersionKey /LANG=0 OriginalFilename "${PACKAGE_FILENAME}"
 
 - 设置包 spec 文件的自定义变量
 
+#### 函数原型
+
+```lua
+set_specvar(name: <string>, value: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 变量名称字符串 |
+| value | 变量值字符串 |
+
 通常配合 `set_specfile` 接口一起使用，用于在自定义的 spec 模版文件里面，设置一些自定义的包变量。
 
 ```lua
@@ -473,6 +741,18 @@ VIAddVersionKey /LANG=0 ProductName      "${FOO}"
 
 - 设置图标文件路径
 
+#### 函数原型
+
+```lua
+set_iconfile(iconfile: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| iconfile | 图标文件路径字符串 |
+
 我们可以额外配置一个 ico 的图标文件，可以用于设置 NSIS 等一些支持图标自定义的安装包的图标。
 
 ```lua
@@ -483,6 +763,26 @@ xpack("xmake")
 ## add_sourcefiles
 
 - 添加源文件
+
+#### 函数原型
+
+```lua
+add_sourcefiles(files: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| files | 源文件模式字符串或数组 |
+| ... | 可变参数，可传递多个文件模式 |
+| prefixdir | 安装前缀目录 |
+| rootdir | 源文件根目录 |
+| filename | 目标文件名 |
 
 这通常用于源码包，也就是 `srczip`, `srctargz` 这种纯源码包，以及 `runself` 格式的源码安装包。
 
@@ -495,6 +795,26 @@ xpack("xmake")
 ## add_installfiles
 
 - 添加二进制文件
+
+#### 函数原型
+
+```lua
+add_installfiles(files: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| files | 安装文件模式字符串或数组 |
+| ... | 可变参数，可传递多个文件模式 |
+| prefixdir | 安装前缀目录 |
+| rootdir | 源文件根目录 |
+| filename | 目标文件名 |
 
 这通常用于二进制包，也就是 `nsis`, `deb` 等格式的包，这些包会直接安装二进制文件。
 
@@ -530,6 +850,19 @@ xpack("test")
 
 - 添加包的构建依赖
 
+#### 函数原型
+
+```lua
+add_buildrequires(requires: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| requires | 构建依赖名称字符串或数组 |
+| ... | 可变参数，可传递多个依赖名称 |
+
 这通常用于一些源码包，例如 srpm。这些源码包在安装之前，需要先构建源码，而构建源码可能会需要用到一些其他的依赖包。
 
 我们可以通过这个接口去配置它们。
@@ -556,6 +889,18 @@ xpack("test")
 
 - 自定义加载脚本
 
+#### 函数原型
+
+```lua
+on_load(script: <function (package)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 加载脚本函数，参数为package |
+
 如果在描述域中配置无法满足我们的需求，还可以在 on_load 自定义脚本域中，进一步灵活的配置包。
 
 这个接口会在每个 XPack 包初始化加载期间就被调用，可以在里面做一些基础配置。
@@ -573,6 +918,18 @@ xpack("test")
 
 - 自定义打包之前的脚本
 
+#### 函数原型
+
+```lua
+before_package(script: <function (package)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 打包前脚本函数，参数为package |
+
 我们可以通过这个接口配置打包之前的自定义脚本。
 
 ```lua
@@ -585,6 +942,18 @@ xpack("test")
 ## on_package
 
 - 自定义打包脚本
+
+#### 函数原型
+
+```lua
+on_package(script: <function (package)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 打包脚本函数，参数为package |
 
 我们可以通过这个接口配置打包自定义脚本，这将会重写整个内置的打包逻辑。通常用于自定义包格式。
 
@@ -600,6 +969,18 @@ xpack("test")
 
 - 自定义打包之后的脚本
 
+#### 函数原型
+
+```lua
+after_package(script: <function (package)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 打包后脚本函数，参数为package |
+
 我们可以通过这个接口配置打包之后的自定义脚本。
 
 ```lua
@@ -612,6 +993,18 @@ xpack("test")
 ## before_installcmd
 
 - 添加安装之前的脚本
+
+#### 函数原型
+
+```lua
+before_installcmd(script: <function (package, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装前脚本函数，参数为package和batchcmds |
 
 它不会重写整个安装脚本，但是会在现有的安装脚本执行之前，新增一些自定义的安装脚本：
 
@@ -629,6 +1022,18 @@ xpack("test")
 ## on_buildcmd
 
 - 自定义构建脚本
+
+#### 函数原型
+
+```lua
+on_buildcmd(script: <function (package, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 构建脚本函数，参数为package和batchcmds |
 
 对于一些源码构建包，在安装之前，我们需要先构建源码，例如 srpm 包。
 
@@ -660,6 +1065,18 @@ xpack("test")
 
 - 自定义构建之前的脚本
 
+#### 函数原型
+
+```lua
+before_buildcmd(script: <function (package, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 构建前脚本函数，参数为package和batchcmds |
+
 通过这个接口，我们可以配置构建之前的脚本。
 
 ```lua
@@ -673,6 +1090,18 @@ xpack("test")
 ## after_buildcmd
 
 - 自定义构建之后的脚本
+
+#### 函数原型
+
+```lua
+after_buildcmd(script: <function (package, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 构建后脚本函数，参数为package和batchcmds |
 
 通过这个接口，我们可以配置构建之后的脚本。
 
@@ -688,11 +1117,35 @@ xpack("test")
 
 - 自定义安装脚本
 
+#### 函数原型
+
+```lua
+on_installcmd(script: <function (package, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装脚本函数，参数为package和batchcmds |
+
 这回完全重写内置默认的安装脚本，包括内部对 `add_installfiles` 配置的文件的自动安装，用户需要完全自己处理所有的安装逻辑。
 
 ## after_installcmd
 
 - 添加安装之后的脚本
+
+#### 函数原型
+
+```lua
+after_installcmd(script: <function (package, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装后脚本函数，参数为package和batchcmds |
 
 它不会重写整个安装脚本，但是会在现有的安装脚本执行之后，新增一些自定义的安装脚本：
 
@@ -711,11 +1164,35 @@ xpack("test")
 
 - 添加卸载之前的脚本
 
+#### 函数原型
+
+```lua
+before_uninstallcmd(script: <function (package, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载前脚本函数，参数为package和batchcmds |
+
 跟 before_installcmd 类似，请参考 before_installcmd 说明。
 
 ## on_uninstallcmd
 
 - 自定义卸载脚本
+
+#### 函数原型
+
+```lua
+on_uninstallcmd(script: <function (package, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载脚本函数，参数为package和batchcmds |
 
 跟 on_installcmd 类似，请参考 on_installcmd 说明。
 
@@ -723,11 +1200,35 @@ xpack("test")
 
 - 添加卸载之后的脚本
 
+#### 函数原型
+
+```lua
+after_uninstallcmd(script: <function (package, batchcmds)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载后脚本函数，参数为package和batchcmds |
+
 跟 after_installcmd 类似，请参考 after_installcmd 说明。
 
 ## set_nsis_displayicon
 
 - 设置 NSIS 的显示图标
+
+#### 函数原型
+
+```lua
+set_nsis_displayicon(iconfile: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| iconfile | 图标文件路径字符串 |
 
 这是一个 NSIS 专有 API，可以用于配置 NSIS 的显示图标：
 

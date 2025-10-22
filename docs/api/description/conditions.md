@@ -6,6 +6,19 @@ Conditions are generally used to handle some special compilation platforms.
 
 ### Is the current compilation target system
 
+#### Function Prototype
+
+```lua
+is_os(os: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| os | Operating system name string or array |
+| ... | Variable parameters, can pass multiple OS names |
+
 ```lua
 if is_os("ios") then
     add_files("src/xxx/*.m")
@@ -23,6 +36,19 @@ Support operation systems:
 ## is_arch
 
 ### Is the current compilation architecture
+
+#### Function Prototype
+
+```lua
+is_arch(arch: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| arch | Architecture name string or array |
+| ... | Variable parameters, can pass multiple architecture names |
 
 You can use this api to check the configuration command: `xmake f -a armv7`
 
@@ -50,6 +76,19 @@ end
 ## is_plat
 
 ### Is the current compilation platform
+
+#### Function Prototype
+
+```lua
+is_plat(plat: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| plat | Platform name string or array |
+| ... | Variable parameters, can pass multiple platform names |
 
 You can use this api to check the configuration command: `xmake f -p iphoneos`
 
@@ -90,6 +129,19 @@ Available platforms:
 
 ### Is the current compilation host system
 
+#### Function Prototype
+
+```lua
+is_host(host: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| host | Host system name string or array |
+| ... | Variable parameters, can pass multiple host names |
+
 Some compilation platforms can be built on multiple different operating systems, for example: android ndk (on linux, macOS and windows).
 
 So, we can use this api to determine the current host operating system.
@@ -113,6 +165,19 @@ We can also get it from [$(host)](/api/description/builtin-variables#var-host) o
 ## is_subhost
 
 ### Determine the subsystem environment of the current host
+
+#### Function Prototype
+
+```lua
+is_subhost(subhost: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| subhost | Subsystem name string or array |
+| ... | Variable parameters, can pass multiple subsystem names |
 
 At present, it is mainly used for detection of cygwin, msys2 and other subsystem environments on windows systems. If you run xmake in the msys2 shell environment, then `is_subhost("windows")` will return false, and `is_host("windows")` It will still return true.
 
@@ -139,6 +204,19 @@ It may also support other subsystem environments under linux and macos systems l
 
 ### Determine the architecture of the current host subsystem environment
 
+#### Function Prototype
+
+```lua
+is_subarch(subarch: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| subarch | Subsystem architecture name string or array |
+| ... | Variable parameters, can pass multiple subsystem architecture names |
+
 At present, it is mainly used for the detection of the architecture under the subsystem environment such as cygwin and msys2 on the windows system. The msvc tool chain is usually used on the windows compilation platform, and the architecture is x64, x86.
 In the msys/cygwin subsystem environment, the compiler architecture defaults to x86_64/i386, which is different.
 
@@ -148,11 +226,36 @@ We can also quickly view the current subsystem architecture by executing `xmake 
 
 ### Determines whether the current platform is cross-compiled or not.
 
+#### Function Prototype
+
+```lua
+is_cross()
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| - | No parameters |
+
 This interface returns true if the current target architecture and platform, which is not the current host platform, is cross-compiled.
 
 ## is_mode
 
 ### Is the current compilation mode
+
+#### Function Prototype
+
+```lua
+is_mode(mode: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| mode | Compilation mode name string or array |
+| ... | Variable parameters, can pass multiple mode names |
 
 You can use this api to check the configuration command: `xmake f -m debug`
 
@@ -206,6 +309,19 @@ end
 
 ### Is the current target kind
 
+#### Function Prototype
+
+```lua
+is_kind(kind: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| kind | Target kind name string or array |
+| ... | Variable parameters, can pass multiple kind names |
+
 You can use this api to check the configuration command: `xmake f -k [static|shared]`
 
 ```lua
@@ -238,6 +354,20 @@ $ xmake
 ## is_config
 
 ### Is the given config values?
+
+#### Function Prototype
+
+```lua
+is_config(name: <string>, values: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Configuration option name string |
+| values | Configuration value string or array |
+| ... | Variable parameters, can pass multiple values |
 
 This interface is introduced from version 2.2.2 to determine whether the specified configuration is a given value.
 
@@ -290,6 +420,19 @@ but also to determine the built-in global and local configuration.
 
 ### Is the given configs enabled?
 
+#### Function Prototype
+
+```lua
+has_config(configs: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| configs | Configuration name string or array |
+| ... | Variable parameters, can pass multiple configuration names |
+
 This interface is introduced from version 2.2.2 to detect whether a custom or built-in option/configuration exists or is enabled.
 
 For example, the following configuration will be true:
@@ -329,6 +472,19 @@ This interface works together with the [get_config](/api/description/global-inte
 ## has_package
 
 ### Is the given dependent package enabled?
+
+#### Function Prototype
+
+```lua
+has_package(packages: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| packages | Package name string or array |
+| ... | Variable parameters, can pass multiple package names |
 
 This interface is introduced from version 2.2.3 to detect whether a dependent package exists or is enabled.
 

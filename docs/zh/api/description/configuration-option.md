@@ -31,6 +31,18 @@ option("test2")
 
 ### 定义选项
 
+#### 函数原型
+
+```lua
+option(name: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 选项名称字符串 |
+
 定义和设置选项开关，可用于自定义编译配置选项、开关设置。
 
 例如，定义一个是否启用test的选项：
@@ -60,11 +72,36 @@ $ xmake
 
 ### 结束定义选项
 
+#### 函数原型
+
+```lua
+option_end()
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| - | 无参数 |
+
 这是一个可选api，显示离开选项作用域，用法和[target_end](/zh/api/description/project-target#target_end)类似。
 
 ## add_deps
 
 ### 添加选项依赖
+
+#### 函数原型
+
+```lua
+add_deps(deps: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| deps | 依赖选项名称字符串或数组 |
+| ... | 可变参数，可传递多个依赖名称 |
 
 通过设置依赖，可以调整选项的检测顺序，一般用于[on_check](#on_check)等检测脚本的调用时机。
 
@@ -95,6 +132,18 @@ option("test")
 
 ### 选项检测之前执行此脚本
 
+#### 函数原型
+
+```lua
+before_check(script: <function (option)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 检测前脚本函数，参数为option |
+
 ```lua
 option("zlib")
     before_check(function (option)
@@ -104,6 +153,18 @@ option("zlib")
 ## on_check
 
 ### 自定义选项检测脚本
+
+#### 函数原型
+
+```lua
+on_check(script: <function (option)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 检测脚本函数，参数为option |
 
 此脚本会覆盖内置的选项检测逻辑。
 
@@ -123,6 +184,18 @@ option("test")
 
 ### 选项检测之后执行此脚本
 
+#### 函数原型
+
+```lua
+after_check(script: <function (option)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 检测后脚本函数，参数为option |
+
 在选项检测完成后，执行此脚本做一些后期处理，也可以在此时重新禁用选项：
 
 ```lua
@@ -137,6 +210,19 @@ option("test")
 ## set_values
 
 ### 设置选项值列表
+
+#### 函数原型
+
+```lua
+set_values(values: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| values | 选项值字符串或数组 |
+| ... | 可变参数，可传递多个值 |
 
 仅用于`xmake f --menu`的图形菜单配置时，提供选项值列表供用户快速选择使用，例如：
 
@@ -153,6 +239,18 @@ option("test")
 ## set_default
 
 ### 设置选项默认值
+
+#### 函数原型
+
+```lua
+set_default(value: <string|boolean|number>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| value | 默认值（字符串、布尔值或数字） |
 
 在没有通过`xmake f --option=[y|n}`等命令修改选项值的时候，这个选项本身也是有个默认值的，可以通过这个接口来设置：
 
@@ -212,6 +310,18 @@ $ xmake
 
 ### 设置是否启用菜单显示
 
+#### 函数原型
+
+```lua
+set_showmenu(showmenu: <boolean>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| showmenu | 是否显示菜单（布尔值） |
+
 如果设置为`true`，那么在`xmake f --help`里面就会出现这个选项，也就能通过`xmake f --optionname=xxx`进行配置，否则只能在`xmake.lua`内部使用，无法手动配置修改。
 
 ```lua
@@ -235,6 +345,18 @@ Options:
 ## set_category
 
 ### 设置选项分类，仅用于菜单显示
+
+#### 函数原型
+
+```lua
+set_category(category: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| category | 分类名称字符串 |
 
 这个是个可选配置，仅用于在帮助菜单中，进行分类显示选项，同一类别的选项，会在同一个分组里面显示，这样菜单看起来更加的美观。
 
@@ -311,6 +433,19 @@ option("test4")
 
 ### 设置菜单显示描述
 
+#### 函数原型
+
+```lua
+set_description(description: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| description | 描述信息字符串或数组 |
+| ... | 可变参数，可传递多行描述 |
+
 设置选项菜单显示时，右边的描述信息，用于帮助用户更加清楚的知道这个选项的用途，例如：
 
 ```lua
@@ -361,6 +496,19 @@ $ xmake f --mode=release
 
 ### 添加链接库检测
 
+#### 函数原型
+
+```lua
+add_links(links: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| links | 链接库名称字符串或数组 |
+| ... | 可变参数，可传递多个库名称 |
+
 如果指定的链接库检测通过，此选项将被启用，并且对应关联的target会自动加上此链接，例如：
 
 ```lua
@@ -379,17 +527,56 @@ target("test")
 
 ### 添加链接库检测时候需要的搜索目录
 
+#### 函数原型
+
+```lua
+add_linkdirs(linkdirs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| linkdirs | 链接目录路径字符串或数组 |
+| ... | 可变参数，可传递多个目录路径 |
+
 这个是可选的，一般系统库不需要加这个，也能检测通过，如果确实没找到，可以自己追加搜索目录，提高检测通过率。具体使用见：[add_links](#add_links)
 
 ## add_rpathdirs
 
 ### 添加程序运行时动态库的加载搜索目录
 
+#### 函数原型
+
+```lua
+add_rpathdirs(rpathdirs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| rpathdirs | rpath目录路径字符串或数组 |
+| ... | 可变参数，可传递多个目录路径 |
+
 在选项通过检测后，会自动添加到对应的target上去，具体使用见：[target:add_rpathdirs](/zh/api/description/project-target#add-rpathdirs)。
 
 ## add_cincludes
 
 ### 添加c头文件检测
+
+#### 函数原型
+
+```lua
+add_cincludes(includes: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| includes | 头文件名称字符串或数组 |
+| ... | 可变参数，可传递多个头文件名称 |
 
 如果c头文件检测通过，此选项将被启用，例如：
 
@@ -410,11 +597,37 @@ target("test")
 
 ### 添加c++头文件检测
 
+#### 函数原型
+
+```lua
+add_cxxincludes(includes: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| includes | 头文件名称字符串或数组 |
+| ... | 可变参数，可传递多个头文件名称 |
+
 与[add_cincludes](#add_cincludes)类似，只是检测的头文件类型是c++头文件。
 
 ## add_ctypes
 
 ### 添加c类型检测
+
+#### 函数原型
+
+```lua
+add_ctypes(types: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| types | 类型名称字符串或数组 |
+| ... | 可变参数，可传递多个类型名称 |
 
 如果c类型检测通过，此选项将被启用，例如：
 
@@ -435,11 +648,44 @@ target("test")
 
 ### 添加c++类型检测
 
+#### 函数原型
+
+```lua
+add_cxxtypes(types: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| types | 类型名称字符串或数组 |
+| ... | 可变参数，可传递多个类型名称 |
+
 与[add_ctypes](#add_ctypes)类似，只是检测的类型是c++类型。
 
 ## add_csnippets
 
 ### 添加c代码片段检测
+
+#### 函数原型
+
+```lua
+add_csnippets(name: <string>, code: <string>, {
+    tryrun = <boolean>,
+    output = <boolean>,
+    number = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 代码片段名称字符串 |
+| code | 代码片段字符串 |
+| tryrun | 是否尝试运行检测 |
+| output | 是否捕获输出 |
+| number | 是否输出数字 |
 
 如果现有的[add_ctypes](#add_ctypes), [add_cfuncs](#add_cfuncs)等不能满足当前的检测需求，
 可以用这个接口实现更加定制化检测一些编译器特性检测，具体见: [add_cxxsnippets](#add_cxxsnippets)。
@@ -447,6 +693,26 @@ target("test")
 ## add_cxxsnippets
 
 ### 添加c++代码片段检测
+
+#### 函数原型
+
+```lua
+add_cxxsnippets(name: <string>, code: <string>, {
+    tryrun = <boolean>,
+    output = <boolean>,
+    number = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 代码片段名称字符串 |
+| code | 代码片段字符串 |
+| tryrun | 是否尝试运行检测 |
+| output | 是否捕获输出 |
+| number | 是否输出数字 |
 
 可以用这个接口实现更加定制化检测一些编译器特性检测，尤其是c++的各种特性的检测支持，例如：
 
@@ -495,6 +761,19 @@ end
 
 ### 添加c库函数检测
 
+#### 函数原型
+
+```lua
+add_cfuncs(funcs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| funcs | 函数名称字符串或数组 |
+| ... | 可变参数，可传递多个函数名称 |
+
 ```lua
 option("setjmp")
     add_cincludes("setjmp.h")
@@ -527,5 +806,18 @@ sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}
 ## add_cxxfuncs
 
 ### 添加c++库函数检测
+
+#### 函数原型
+
+```lua
+add_cxxfuncs(funcs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| funcs | 函数名称字符串或数组 |
+| ... | 可变参数，可传递多个函数名称 |
 
 用法跟 [add_cfuncs](#add_cxxfuncs) 一致。

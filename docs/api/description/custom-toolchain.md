@@ -77,6 +77,18 @@ $ xmake show -l toolchains
 
 - Define toolchain
 
+#### Function Prototype
+
+```lua
+toolchain(name: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Toolchain name string |
+
 It can be defined in the user project xmake.lua, or it can be independently defined by a separate xmake.lua to specifically define various toolchains
 
 ```lua
@@ -186,6 +198,18 @@ For more examples of custom toolchains, we can see the following interface docum
 
 - Set toolchain type
 
+#### Function Prototype
+
+```lua
+set_kind(kind: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| kind | Toolchain type: "standalone" |
+
 Currently only supports the setting of `standalone` type, which means that the current toolchain is an independent and complete toolchain, including a complete set of tool set configurations such as cc/cxx/ld/sh/ar and other compilers, archivers, and linkers.
 
 Usually used when a target is set with multiple toolchains at the same time, but only one independent toolchain can be effective at the same time. This configuration can ensure that the toolchains in effect are mutually exclusive. For example, the gcc/clang toolchain will not be simultaneously. Take effect.
@@ -199,6 +223,20 @@ Just remember that the toolchain with a complete compilation environment is set 
 ## set_toolset
 
 - Set Tool Set
+
+#### Function Prototype
+
+```lua
+set_toolset(tool: <string>, tools: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| tool | Tool name string (cc, cxx, ld, sh, ar, ex, strip, mm, mxx, as) |
+| tools | Tool program name string or array |
+| ... | Variable parameters, can pass multiple tool names |
 
 Used to set the name and path of each individual tool, for example:
 
@@ -237,6 +275,18 @@ For details about this interface, you can see: [target.set_toolset](/api/descrip
 
 - Set toolchain sdk directory path
 
+#### Function Prototype
+
+```lua
+set_sdkdir(sdkdir: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sdkdir | SDK directory path string |
+
 Usually we can configure the sdk directory through `xmake f --toolchain=myclang --sdk=xxx`, but each time the configuration is more cumbersome, we can also pre-configure to xmake.lua through this interface to facilitate quick switching.
 
 ```lua
@@ -250,6 +300,18 @@ toolchain("myclang")
 
 - Set toolchain bin directory path
 
+#### Function Prototype
+
+```lua
+set_bindir(bindir: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| bindir | Binary directory path string |
+
 Normally, we can configure the SDK directory through `xmake f --toolchain=myclang --bin=xxx`, but each time the configuration is more cumbersome, we can also pre-configure to xmake.lua through this interface, which is convenient for quick switching.
 
 ```lua
@@ -262,6 +324,18 @@ toolchain("myclang")
 ## on_check
 
 - Detection toolchain
+
+#### Function Prototype
+
+```lua
+on_check(script: <function (toolchain)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Check script function with toolchain parameter |
 
 It is used to detect whether the sdk or program where the specified toolchain exists exists on the current system. It is usually used in the case of multiple standalone toolchains to automatically detect and select an effective toolchain.
 
@@ -277,6 +351,18 @@ toolchain("myclang")
 ## on_load
 
 - Load toolchain
+
+#### Function Prototype
+
+```lua
+on_load(script: <function (toolchain)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Load script function with toolchain parameter |
 
 For some complex scenarios, we can dynamically and flexibly set various toolchain configurations in on_load, which is more flexible and powerful than setting in the description field:
 
@@ -300,6 +386,18 @@ toolchain("myclang")
 ## toolchain_end
 
 - End definition toolchain
+
+#### Function Prototype
+
+```lua
+toolchain_end()
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| - | No parameters |
 
 This is optional, if you want to manually end the definition of toolchain, you can call it:
 
