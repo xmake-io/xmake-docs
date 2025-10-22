@@ -106,6 +106,18 @@ target("test2")
 
 ### 设置目标编译类型
 
+#### 函数原型
+
+```lua
+set_kind(kind: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| kind | 目标类型字符串，指定编译目标的类型 |
+
 设置目标类型，目前支持的类型有：
 
 | 值     | 描述       |
@@ -1459,6 +1471,20 @@ add_deps("dep1", "dep2", {inherit = false})
 
 ### 添加链接库名
 
+#### 函数原型
+
+```lua
+add_links(links: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| links | 链接库名称字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个链接库名称字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+
 为当前目标添加链接库，一般这个要与[add_linkdirs](#add_linkdirs)配对使用。
 
 ```lua
@@ -1913,6 +1939,20 @@ target("test")
 
 ### 添加头文件搜索目录
 
+#### 函数原型
+
+```lua
+add_includedirs(includedirs: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| includedirs | 头文件搜索目录字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个头文件搜索目录字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+
 设置头文件的搜索目录，这个接口的使用方式如下：
 
 ```lua
@@ -1984,6 +2024,20 @@ target("test")
 
 ### 添加宏定义
 
+#### 函数原型
+
+```lua
+add_defines(defines: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| defines | 宏定义字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个宏定义字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+
 ```lua
 add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
 ```
@@ -2009,6 +2063,20 @@ add_undefines("DEBUG")
 ## add_cflags
 
 ### 添加c编译选项
+
+#### 函数原型
+
+```lua
+add_cflags(cflags: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| cflags | C编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个C编译选项字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
 
 仅对c代码添加编译选项
 
@@ -2283,6 +2351,20 @@ add_shflags("xxx")
 ## add_packages
 
 ### 添加包依赖
+
+#### 函数原型
+
+```lua
+add_packages(packages: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| packages | 包名称字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个包名称字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
 
 在target作用域中，添加集成包依赖，例如：
 

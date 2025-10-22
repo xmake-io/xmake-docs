@@ -108,6 +108,18 @@ target("test2")
 
 ### Set target kind
 
+#### Function Prototype
+
+```lua
+set_kind(kind: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| kind | Target type string, specifies the type of compilation target |
+
 Set the target type, currently supported types are:
 
 | Value  | Description                          |
@@ -1471,6 +1483,20 @@ For a detailed description of this, you can look at it: https://github.com/xmake
 
 ### Add link libraries
 
+#### Function Prototype
+
+```lua
+add_links(links: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| links | Link library name string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple link library name strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+
 Add a link library for the current target, which is usually paired with [add_linkdirs](#add_linkdirs).
 
 ```lua
@@ -1925,6 +1951,20 @@ After 2.9.4, we added `add_rpathdirs("xxx", {install_only = true})`, which can c
 
 ### Add include search directories
 
+#### Function Prototype
+
+```lua
+add_includedirs(includedirs: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| includedirs | Header file search directory string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple header file search directory strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+
 Set the search directory for the header file. This interface is used as follows:
 
 ```lua
@@ -1996,6 +2036,20 @@ In addition, the dependency package introduced with `add_requires()` will also u
 
 ### Add macro definition
 
+#### Function Prototype
+
+```lua
+add_defines(defines: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| defines | Macro definition string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple macro definition strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+
 ```lua
 add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
 ```
@@ -2021,6 +2075,20 @@ In the code is equivalent to: `#undef DEBUG`
 ## add_cflags
 
 ### Add c compilation flags
+
+#### Function Prototype
+
+```lua
+add_cflags(cflags: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| cflags | C compilation option string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple C compilation option strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
 
 Add compilation options only for c code
 
@@ -2296,6 +2364,20 @@ This interface is similar to [set_options](#set_options), the only difference is
 ## add_packages
 
 ### Add package dependencies
+
+#### Function Prototype
+
+```lua
+add_packages(packages: <string|array>, ..., {$visibility = <boolean>})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| packages | Package name string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple package name strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
 
 In the target scope, add integration package dependencies, for example:
 
