@@ -22,6 +22,33 @@ target("test2")
 `target()' interface can be repeatedly invoked in different places to set the same target.
 :::
 
+## Visibility Settings {#visibility}
+
+In xmake, many interfaces support `visibility` configuration parameters to control the visibility scope of configurations. The `visibility` parameter accepts an object containing the following key-value pairs:
+
+| Key | Description | Example |
+|-----|-------------|---------|
+| `public` | Export to dependent sub-targets, when other targets depend on this target, they will inherit these configurations | `{public = true}` |
+| `interface` | Export as interface, only effective for other targets that depend on this target, not effective for the current target itself | `{interface = true}` |
+| `private` | Only effective for the current target, will not be passed to other targets that depend on this target | `{private = true}` |
+
+### Usage Examples
+
+```lua
+-- Set public visibility, will be passed to other targets that depend on this target
+add_defines("PUBLIC_DEFINE", {public = true})
+
+-- Set interface visibility, only effective for other targets that depend on this target
+add_includedirs("include", {interface = true})
+
+-- Set private visibility, only effective for the current target
+add_defines("PRIVATE_DEFINE", {private = true})
+```
+
+### Default Behavior
+
+If the `visibility` parameter is not specified, most interfaces use `private` visibility by default, meaning configurations are only effective for the current target.
+
 ## target
 
 ### Define a project target
@@ -381,7 +408,7 @@ Some settings defined in [option](/api/description/configuration-option#option) 
 
 ```lua
 set_symbols(symbols: <string>, {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -390,7 +417,7 @@ set_symbols(symbols: <string>, {
 | Parameter | Description |
 |-----------|-------------|
 | symbols | Symbol mode string, optional values: debug, hidden, none |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Set the symbol mode of the target. If no target is currently defined, it will be set to the global state, affecting all subsequent targets.
 
@@ -548,7 +575,7 @@ target("test")
 
 ```lua
 set_warnings(warnings: <string>, {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -557,7 +584,7 @@ set_warnings(warnings: <string>, {
 | Parameter | Description |
 |-----------|-------------|
 | warnings | Warning level string, optional values: none, less, more, all, error |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Set the warning level of the compilation of the current target, generally supporting several levels:
 
@@ -614,7 +641,7 @@ set_optimize("fastest")
 
 ```lua
 set_languages(languages: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -624,7 +651,7 @@ set_languages(languages: <string|array>, ..., {
 |-----------|-------------|
 | languages | Language standard string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple language standard strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Set the language standard for target code compilation. If no target exists, it will be set to global mode. . .
 
@@ -1610,7 +1637,7 @@ For a detailed description of this, you can look at it: https://github.com/xmake
 
 ```lua
 add_links(links: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -1620,7 +1647,7 @@ add_links(links: <string|array>, ..., {
 |-----------|-------------|
 | links | Link library name string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple link library name strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Add a link library for the current target, which is usually paired with [add_linkdirs](#add_linkdirs).
 
@@ -1644,7 +1671,7 @@ Starting with version 2.8.1, add_links also supports adding the full path to the
 
 ```lua
 add_syslinks(syslinks: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -1654,7 +1681,7 @@ add_syslinks(syslinks: <string|array>, ..., {
 |-----------|-------------|
 | syslinks | System link library name string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple system link library name strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 This interface is similar to [add_links](#add_links). The only difference is that the link library added through this interface is in the order of all `add_links`.
 
@@ -2023,7 +2050,7 @@ This interface is only provided in v2.6.3 version.
 
 ```lua
 add_linkdirs(linkdirs: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2033,7 +2060,7 @@ add_linkdirs(linkdirs: <string|array>, ..., {
 |-----------|-------------|
 | linkdirs | Link library search directory string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple link library search directory strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Set the search directory of the link library. This interface is used as follows:
 
@@ -2110,7 +2137,7 @@ After 2.9.4, we added `add_rpathdirs("xxx", {install_only = true})`, which can c
 
 ```lua
 add_includedirs(includedirs: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2120,7 +2147,7 @@ add_includedirs(includedirs: <string|array>, ..., {
 |-----------|-------------|
 | includedirs | Header file search directory string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple header file search directory strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Set the search directory for the header file. This interface is used as follows:
 
@@ -2197,7 +2224,7 @@ In addition, the dependency package introduced with `add_requires()` will also u
 
 ```lua
 add_defines(defines: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2207,7 +2234,7 @@ add_defines(defines: <string|array>, ..., {
 |-----------|-------------|
 | defines | Macro definition string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple macro definition strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 ```lua
 add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
@@ -2239,7 +2266,7 @@ In the code is equivalent to: `#undef DEBUG`
 
 ```lua
 add_cflags(cflags: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2249,7 +2276,7 @@ add_cflags(cflags: <string|array>, ..., {
 |-----------|-------------|
 | cflags | C compilation option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple C compilation option strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Add compilation options only for c code
 
@@ -2282,7 +2309,7 @@ Add compilation options to c/c++ code at the same time
 
 ```lua
 add_cxxflags(cxxflags: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2292,7 +2319,7 @@ add_cxxflags(cxxflags: <string|array>, ..., {
 |-----------|-------------|
 | cxxflags | C++ compilation option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple C++ compilation option strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Add compilation options only to c++ code
 
@@ -2504,7 +2531,7 @@ add_cugencodes("sm_60")
 
 ```lua
 add_ldflags(ldflags: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2514,7 +2541,7 @@ add_ldflags(ldflags: <string|array>, ..., {
 |-----------|-------------|
 | ldflags | Link option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple link option strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Add static link option
 
@@ -2562,7 +2589,7 @@ This interface is similar to [set_options](#set_options), the only difference is
 
 ```lua
 add_packages(packages: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2572,7 +2599,7 @@ add_packages(packages: <string|array>, ..., {
 |-----------|-------------|
 | packages | Package name string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple package name strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 In the target scope, add integration package dependencies, for example:
 
@@ -2622,7 +2649,7 @@ target("test")
 
 ```lua
 add_languages(languages: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2667,7 +2694,7 @@ add_vectorexts("all")
 
 ```lua
 add_frameworks(frameworks: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2677,7 +2704,7 @@ add_frameworks(frameworks: <string|array>, ..., {
 |-----------|-------------|
 | frameworks | Framework name string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple framework name strings |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
 Currently used for the `objc` and `swift` programs of the `ios` and `macosx` platforms, for example:
 

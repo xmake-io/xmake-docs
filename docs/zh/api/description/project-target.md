@@ -1,4 +1,4 @@
-# 工程目标
+# 工程目标 {#project-target}
 
 定义和设置子工程模块，每个`target`对应一个子工程，最后会生成一个目标程序，有可能是可执行程序，也有可能是库模块。
 
@@ -22,6 +22,33 @@ target("test2")
 :::tip 注意
 `target`域是可以重复进入来实现分离设置的。
 :::
+
+## 可见性设置 (Visibility) {#visibility}
+
+在 xmake 中，许多接口支持 `visibility` 配置参数，用于控制配置的可见性范围。`visibility` 参数接受一个对象，其中包含以下键值对：
+
+| 键名 | 描述 | 示例 |
+|------|------|------|
+| `public` | 导出给依赖的子目标，当其他目标依赖此目标时，会继承这些配置 | `{public = true}` |
+| `interface` | 作为接口导出，仅对依赖此目标的其他目标生效，对当前目标本身不生效 | `{interface = true}` |
+| `private` | 仅对当前目标生效，不会传递给依赖此目标的其他目标 | `{private = true}` |
+
+### 使用示例
+
+```lua
+-- 设置公共可见性，会传递给依赖此目标的其他目标
+add_defines("PUBLIC_DEFINE", {public = true})
+
+-- 设置接口可见性，仅对依赖此目标的其他目标生效
+add_includedirs("include", {interface = true})
+
+-- 设置私有可见性，仅对当前目标生效
+add_defines("PRIVATE_DEFINE", {private = true})
+```
+
+### 默认行为
+
+如果不指定 `visibility` 参数，大多数接口默认使用 `private` 可见性，即配置仅对当前目标生效。
 
 ## target
 
@@ -380,7 +407,7 @@ target("test")
 
 ```lua
 set_symbols(symbols: <string>, {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -389,7 +416,7 @@ set_symbols(symbols: <string>, {
 | 参数 | 描述 |
 |------|------|
 | symbols | 符号模式字符串，可选值：debug、hidden、none |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 设置目标的符号模式，如果当前没有定义target，那么将会设置到全局状态中，影响所有后续的目标。
 
@@ -547,7 +574,7 @@ target("test")
 
 ```lua
 set_warnings(warnings: <string>, {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -556,7 +583,7 @@ set_warnings(warnings: <string>, {
 | 参数 | 描述 |
 |------|------|
 | warnings | 警告级别字符串，可选值：none、less、more、all、error |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 设置当前目标的编译的警告级别，一般支持一下几个级别：
 
@@ -613,7 +640,7 @@ set_optimize("fastest")
 
 ```lua
 set_languages(languages: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -623,7 +650,7 @@ set_languages(languages: <string|array>, ..., {
 |------|------|
 | languages | 语言标准字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个语言标准字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 设置目标代码编译的语言标准，如果当前没有目标存在，将会设置到全局模式中。。。
 
@@ -1598,7 +1625,7 @@ add_deps("dep1", "dep2", {inherit = false})
 
 ```lua
 add_links(links: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -1608,7 +1635,7 @@ add_links(links: <string|array>, ..., {
 |------|------|
 | links | 链接库名称字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个链接库名称字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 为当前目标添加链接库，一般这个要与[add_linkdirs](#add_linkdirs)配对使用。
 
@@ -1632,7 +1659,7 @@ target("demo")
 
 ```lua
 add_syslinks(syslinks: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -1642,7 +1669,7 @@ add_syslinks(syslinks: <string|array>, ..., {
 |------|------|
 | syslinks | 系统链接库名称字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个系统链接库名称字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 这个接口使用上跟[add_links](#add_links)类似，唯一的区别就是，通过这个接口添加的链接库顺序在所有`add_links`之后。
 
@@ -2011,7 +2038,7 @@ remove_files = remove_files or del_files
 
 ```lua
 add_linkdirs(linkdirs: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2021,7 +2048,7 @@ add_linkdirs(linkdirs: <string|array>, ..., {
 |------|------|
 | linkdirs | 链接库搜索目录字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个链接库搜索目录字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 设置链接库的搜索目录，这个接口的使用方式如下：
 
@@ -2098,7 +2125,7 @@ target("test")
 
 ```lua
 add_includedirs(includedirs: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2108,7 +2135,7 @@ add_includedirs(includedirs: <string|array>, ..., {
 |------|------|
 | includedirs | 头文件搜索目录字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个头文件搜索目录字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 设置头文件的搜索目录，这个接口的使用方式如下：
 
@@ -2185,7 +2212,7 @@ target("test")
 
 ```lua
 add_defines(defines: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2195,7 +2222,7 @@ add_defines(defines: <string|array>, ..., {
 |------|------|
 | defines | 宏定义字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个宏定义字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 ```lua
 add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
@@ -2227,7 +2254,7 @@ add_undefines("DEBUG")
 
 ```lua
 add_cflags(cflags: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2237,7 +2264,7 @@ add_cflags(cflags: <string|array>, ..., {
 |------|------|
 | cflags | C编译选项字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个C编译选项字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 仅对c代码添加编译选项
 
@@ -2270,7 +2297,7 @@ add_cflags("-g", "-O2", {force = true})
 
 ```lua
 add_cxxflags(cxxflags: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2280,7 +2307,7 @@ add_cxxflags(cxxflags: <string|array>, ..., {
 |------|------|
 | cxxflags | C++编译选项字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个C++编译选项字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 仅对c++代码添加编译选项，用法跟 add_cflags 一致。
 
@@ -2491,7 +2518,7 @@ add_cugencodes("sm_60")
 
 ```lua
 add_ldflags(ldflags: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2501,7 +2528,7 @@ add_ldflags(ldflags: <string|array>, ..., {
 |------|------|
 | ldflags | 链接选项字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个链接选项字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 添加静态链接选项
 
@@ -2549,7 +2576,7 @@ add_shflags("xxx")
 
 ```lua
 add_packages(packages: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2559,7 +2586,7 @@ add_packages(packages: <string|array>, ..., {
 |------|------|
 | packages | 包名称字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个包名称字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 在target作用域中，添加集成包依赖，例如：
 
@@ -2609,7 +2636,7 @@ target("test")
 
 ```lua
 add_languages(languages: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2653,7 +2680,7 @@ add_vectorexts("all")
 
 ```lua
 add_frameworks(frameworks: <string|array>, ..., {
-    $visibility = <boolean>
+    public|interface|private = <boolean>
 })
 ```
 
@@ -2663,7 +2690,7 @@ add_frameworks(frameworks: <string|array>, ..., {
 |------|------|
 | frameworks | 框架名称字符串或数组，支持通配符匹配模式 |
 | ... | 可变参数，可传入多个框架名称字符串 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 目前主要用于`ios`和`macosx`平台的`objc`和`swift`程序，例如：
 
