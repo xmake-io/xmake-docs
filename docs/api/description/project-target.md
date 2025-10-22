@@ -233,6 +233,18 @@ For more details, please see: [#1747](https://github.com/xmake-io/xmake/issues/1
 
 ### Strip target symbols
 
+#### Function Prototype
+
+```lua
+set_strip(strip: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| strip | Strip mode string, optional values: debug, all |
+
 Set the current target strip mode, currently supports the mode:
 
 | Value  | Description                                                   |
@@ -255,11 +267,35 @@ This api does not have to be used after the target. If no target is specified, i
 
 ### Enable or disable target
 
+#### Function Prototype
+
+```lua
+set_enabled(enabled: <boolean>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| enabled | Whether to enable the target, true means enabled, false means disabled |
+
 If `set_enabled(false)` is set, the corresponding target will be directly disabled, including target loading and information acquisition, while [set_default](#set_default) is just set to not compile by default, but the target can still get related information. , the default will also be loaded.
 
 ## set_default
 
 ### Mark as default target
+
+#### Function Prototype
+
+```lua
+set_default(default: <boolean>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| default | Whether to mark as default build target, true means default build, false means not default build |
 
 This interface is used to set whether the given project target is the default build. If this interface is not called for setting, then this target is built by default, for example:
 
@@ -306,6 +342,19 @@ $ xmake install [-a|--all]
 
 ### Set configuration options
 
+#### Function Prototype
+
+```lua
+set_options(options: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| options | Option name string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple option name strings |
+
 Add option dependencies. If you have customized some options through the [option](/api/description/configuration-option#option) interface, you can add associations only if you specify this option under the target target field.
 
 ```lua
@@ -327,6 +376,21 @@ Some settings defined in [option](/api/description/configuration-option#option) 
 ## set_symbols
 
 ### Set symbol info
+
+#### Function Prototype
+
+```lua
+set_symbols(symbols: <string>, {
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| symbols | Symbol mode string, optional values: debug, hidden, none |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
 
 Set the symbol mode of the target. If no target is currently defined, it will be set to the global state, affecting all subsequent targets.
 
@@ -393,6 +457,18 @@ It will switch from the default `-Zi -Pdxxx.pdb` to `-ZI -Pdxxx.pdb` compilation
 ## set_basename
 
 ### Set the base name of target file
+
+#### Function Prototype
+
+```lua
+set_basename(basename: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| basename | Target file base name string |
 
 By default, the generated target file name is based on the value configured in `target("name")`, for example:
 
@@ -468,6 +544,21 @@ target("test")
 
 ### Set compilation warning level
 
+#### Function Prototype
+
+```lua
+set_warnings(warnings: <string>, {
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| warnings | Warning level string, optional values: none, less, more, all, error |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+
 Set the warning level of the compilation of the current target, generally supporting several levels:
 
 | Value      | Description                               | gcc/clang                             | msvc                          |
@@ -518,6 +609,22 @@ set_optimize("fastest")
 ## set_languages
 
 ### Set source code language standards
+
+#### Function Prototype
+
+```lua
+set_languages(languages: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| languages | Language standard string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple language standard strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
 
 Set the language standard for target code compilation. If no target exists, it will be set to global mode. . .
 
@@ -1419,6 +1526,22 @@ target("test")
 
 ### Add target dependencies
 
+#### Function Prototype
+
+```lua
+add_deps(deps: <string|array>, ..., {
+    inherit = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| deps | Dependency target name string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple dependency target name strings |
+| inherit | Whether to inherit dependency target configuration, optional values: true (inherit), false (not inherit) |
+
 Add the dependency target of the current target. When compiling, it will first compile the target of the dependency and then compile the current target. . .
 
 ```lua
@@ -1486,7 +1609,9 @@ For a detailed description of this, you can look at it: https://github.com/xmake
 #### Function Prototype
 
 ```lua
-add_links(links: <string|array>, ..., {$visibility = <boolean>})
+add_links(links: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### Parameter Description
@@ -1514,6 +1639,22 @@ Starting with version 2.8.1, add_links also supports adding the full path to the
 ## add_syslinks
 
 ### Add system link libraries
+
+#### Function Prototype
+
+```lua
+add_syslinks(syslinks: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| syslinks | System link library name string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple system link library name strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
 
 This interface is similar to [add_links](#add_links). The only difference is that the link library added through this interface is in the order of all `add_links`.
 
@@ -1714,8 +1855,7 @@ add_files(files: <string|array>, ..., {
     rules = <string|array>,
     force = {$flags},
     sourcekind = <string>,
-    $flags = <string|array>,
-    $visibility = <boolean>
+    $flags = <string|array>
 })
 ```
 
@@ -1732,7 +1872,6 @@ add_files(files: <string|array>, ..., {
 | force | Force compilation option object, disable automatic detection, can contain various compilation options |
 | sourcekind | Force specified source file type string, such as "cc", "cxx", etc. |
 | $flags | Various compilation and linking options, including cflags, cxflags, cxxflags, mflags, mxflags, mxxflags, scflags, asflags, gcflags, dcflags, rcflags, fcflags, zcflags, cuflags, culdflags, cugencodes, ldflags, arflags, shflags, etc. |
-| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
 
 Source files used to add target projects, even library files, some file types currently supported:
 
@@ -1880,6 +2019,22 @@ This interface is only provided in v2.6.3 version.
 
 ### Add link search directories
 
+#### Function Prototype
+
+```lua
+add_linkdirs(linkdirs: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| linkdirs | Link library search directory string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple link library search directory strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+
 Set the search directory of the link library. This interface is used as follows:
 
 ```lua
@@ -1954,7 +2109,9 @@ After 2.9.4, we added `add_rpathdirs("xxx", {install_only = true})`, which can c
 #### Function Prototype
 
 ```lua
-add_includedirs(includedirs: <string|array>, ..., {$visibility = <boolean>})
+add_includedirs(includedirs: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### Parameter Description
@@ -2039,7 +2196,9 @@ In addition, the dependency package introduced with `add_requires()` will also u
 #### Function Prototype
 
 ```lua
-add_defines(defines: <string|array>, ..., {$visibility = <boolean>})
+add_defines(defines: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### Parameter Description
@@ -2079,7 +2238,9 @@ In the code is equivalent to: `#undef DEBUG`
 #### Function Prototype
 
 ```lua
-add_cflags(cflags: <string|array>, ..., {$visibility = <boolean>})
+add_cflags(cflags: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### Parameter Description
@@ -2116,6 +2277,22 @@ Add compilation options to c/c++ code at the same time
 ## add_cxxflags
 
 ### Add c++ compilation flags
+
+#### Function Prototype
+
+```lua
+add_cxxflags(cxxflags: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| cxxflags | C++ compilation option string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple C++ compilation option strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
 
 Add compilation options only to c++ code
 
@@ -2323,6 +2500,22 @@ add_cugencodes("sm_60")
 
 ### Add static library link flags
 
+#### Function Prototype
+
+```lua
+add_ldflags(ldflags: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| ldflags | Link option string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple link option strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+
 Add static link option
 
 ```lua
@@ -2368,7 +2561,9 @@ This interface is similar to [set_options](#set_options), the only difference is
 #### Function Prototype
 
 ```lua
-add_packages(packages: <string|array>, ..., {$visibility = <boolean>})
+add_packages(packages: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### Parameter Description
@@ -2423,6 +2618,21 @@ target("test")
 
 ### Add language standards
 
+#### Function Prototype
+
+```lua
+add_languages(languages: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| languages | Language standard string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple language standard strings |
+
 Similar to [set_languages](#set_languages), the only difference is that this interface will not overwrite the previous settings, but append settings.
 
 ## add_vectorexts
@@ -2452,6 +2662,22 @@ add_vectorexts("all")
 ## add_frameworks
 
 ### Add frameworks
+
+#### Function Prototype
+
+```lua
+add_frameworks(frameworks: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| frameworks | Framework name string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple framework name strings |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
 
 Currently used for the `objc` and `swift` programs of the `ios` and `macosx` platforms, for example:
 
@@ -2891,6 +3117,26 @@ installdir
 
 ### Add installation files
 
+#### Function Prototype
+
+```lua
+add_installfiles(installfiles: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| installfiles | Installation file path string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple installation file path strings |
+| prefixdir | Installation prefix directory, optional |
+| rootdir | Root directory, optional |
+| filename | Filename, optional |
+
 2.2.5 version of the new interface, used to set the corresponding file for each target, generally used for the `xmake install/uninstall` command.
 
 For example, we can specify to install various types of files to the installation directory:
@@ -2928,6 +3174,26 @@ For a detailed description of this interface, see: https://github.com/xmake-io/x
 ## add_headerfiles
 
 ### Add header files
+
+#### Function Prototype
+
+```lua
+add_headerfiles(headerfiles: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| headerfiles | Header file path string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple header file path strings |
+| prefixdir | Installation prefix directory, optional |
+| rootdir | Root directory, optional |
+| filename | Filename, optional |
 
 2.2.5 version of the new interface, used to set the corresponding header file for each target, generally used for the `xmake install/uninstall` command.
 
@@ -3008,6 +3274,26 @@ For related issues, see: [#1872](https://github.com/xmake-io/xmake/issues/1872)
 ## add_configfiles
 
 ### Add template configuration files
+
+#### Function Prototype
+
+```lua
+add_configfiles(configfiles: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| configfiles | Configuration file path string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple configuration file path strings |
+| prefixdir | Installation prefix directory, optional |
+| rootdir | Root directory, optional |
+| filename | Filename, optional |
 
 2.2.5 version of the new interface, used to add some configuration files that need to be pre-processed before compiling.
 

@@ -232,6 +232,18 @@ target("foo")
 
 ### 设置是否strip信息
 
+#### 函数原型
+
+```lua
+set_strip(strip: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| strip | strip模式字符串，可选值：debug、all |
+
 设置当前目标的strip模式，目前支持一下模式：
 
 | 值     | 描述                                      |
@@ -254,11 +266,35 @@ target("xxxx")
 
 ### 设置是否启用或禁用目标
 
+#### 函数原型
+
+```lua
+set_enabled(enabled: <boolean>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| enabled | 是否启用目标，true表示启用，false表示禁用 |
+
 如果设置`set_enabled(false)`，则会直接禁用对应的target，包括target的加载和信息获取，而[set_default](#set_default)仅仅只是设置默认不去编译，但是target还是能获取到相关信息的，默认也会被加载。
 
 ## set_default
 
 ### 设置是否为默认构建安装目标
+
+#### 函数原型
+
+```lua
+set_default(default: <boolean>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| default | 是否作为默认构建目标，true表示默认构建，false表示不默认构建 |
 
 这个接口用于设置给定工程目标是否作为默认构建，如果没有调用此接口进行设置，那么这个目标就是默认被构建的，例如：
 
@@ -305,6 +341,19 @@ $ xmake install [-a|--all]
 
 ### 设置关联选项
 
+#### 函数原型
+
+```lua
+set_options(options: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| options | 选项名称字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个选项名称字符串 |
+
 添加选项依赖，如果通过[option](/zh/api/description/configuration-option#option)接口自定义了一些选项，那么只有在指定`target`目标域下，添加此选项，才能进行关联生效。
 
 ```lua
@@ -326,6 +375,21 @@ target("test")
 ## set_symbols
 
 ### 设置符号信息
+
+#### 函数原型
+
+```lua
+set_symbols(symbols: <string>, {
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| symbols | 符号模式字符串，可选值：debug、hidden、none |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
 
 设置目标的符号模式，如果当前没有定义target，那么将会设置到全局状态中，影响所有后续的目标。
 
@@ -392,6 +456,18 @@ set_symbols("debug", "edit")
 ## set_basename
 
 ### 设置目标文件名
+
+#### 函数原型
+
+```lua
+set_basename(basename: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| basename | 目标文件基础名称字符串 |
 
 默认情况下，生成的目标文件名基于`target("name")`中配置的值，例如：
 
@@ -467,6 +543,21 @@ target("test")
 
 ### 设置警告级别
 
+#### 函数原型
+
+```lua
+set_warnings(warnings: <string>, {
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| warnings | 警告级别字符串，可选值：none、less、more、all、error |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+
 设置当前目标的编译的警告级别，一般支持一下几个级别：
 
 | 值         | 描述                    | gcc/clang                             | msvc                          |
@@ -517,6 +608,22 @@ set_optimize("fastest")
 ## set_languages
 
 ### 设置代码语言标准
+
+#### 函数原型
+
+```lua
+set_languages(languages: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| languages | 语言标准字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个语言标准字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
 
 设置目标代码编译的语言标准，如果当前没有目标存在，将会设置到全局模式中。。。
 
@@ -1407,6 +1514,22 @@ target("test")
 
 ### 添加子工程目标依赖
 
+#### 函数原型
+
+```lua
+add_deps(deps: <string|array>, ..., {
+    inherit = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| deps | 依赖目标名称字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个依赖目标名称字符串 |
+| inherit | 是否继承依赖目标的配置，可选值：true（继承）、false（不继承） |
+
 添加当前目标的依赖目标，编译的时候，会去优先编译依赖的目标，然后再编译当前目标。。。
 
 ```lua
@@ -1474,7 +1597,9 @@ add_deps("dep1", "dep2", {inherit = false})
 #### 函数原型
 
 ```lua
-add_links(links: <string|array>, ..., {$visibility = <boolean>})
+add_links(links: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### 参数说明
@@ -1502,6 +1627,22 @@ target("demo")
 ## add_syslinks
 
 ### 添加系统链接库名
+
+#### 函数原型
+
+```lua
+add_syslinks(syslinks: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| syslinks | 系统链接库名称字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个系统链接库名称字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
 
 这个接口使用上跟[add_links](#add_links)类似，唯一的区别就是，通过这个接口添加的链接库顺序在所有`add_links`之后。
 
@@ -1702,8 +1843,7 @@ add_files(files: <string|array>, ..., {
     rules = <string|array>,
     force = {$flags},
     sourcekind = <string>,
-    $flags = <string|array>,
-    $visibility = <boolean>
+    $flags = <string|array>
 })
 ```
 
@@ -1720,7 +1860,6 @@ add_files(files: <string|array>, ..., {
 | force | 强制编译选项对象，禁用自动检测，可包含各种编译选项 |
 | sourcekind | 强制指定源文件类型字符串，如 "cc", "cxx" 等 |
 | $flags | 各种编译和链接选项，包括 cflags, cxflags, cxxflags, mflags, mxflags, mxxflags, scflags, asflags, gcflags, dcflags, rcflags, fcflags, zcflags, cuflags, culdflags, cugencodes, ldflags, arflags, shflags 等 |
-| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
 
 用于添加目标工程的源文件，甚至库文件，目前支持的一些文件类型：
 
@@ -1868,6 +2007,22 @@ remove_files = remove_files or del_files
 
 ### 添加链接库搜索目录
 
+#### 函数原型
+
+```lua
+add_linkdirs(linkdirs: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| linkdirs | 链接库搜索目录字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个链接库搜索目录字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+
 设置链接库的搜索目录，这个接口的使用方式如下：
 
 ```lua
@@ -1942,7 +2097,9 @@ target("test")
 #### 函数原型
 
 ```lua
-add_includedirs(includedirs: <string|array>, ..., {$visibility = <boolean>})
+add_includedirs(includedirs: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### 参数说明
@@ -2027,7 +2184,9 @@ target("test")
 #### 函数原型
 
 ```lua
-add_defines(defines: <string|array>, ..., {$visibility = <boolean>})
+add_defines(defines: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### 参数说明
@@ -2067,7 +2226,9 @@ add_undefines("DEBUG")
 #### 函数原型
 
 ```lua
-add_cflags(cflags: <string|array>, ..., {$visibility = <boolean>})
+add_cflags(cflags: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### 参数说明
@@ -2104,6 +2265,22 @@ add_cflags("-g", "-O2", {force = true})
 ## add_cxxflags
 
 ### 添加c++编译选项
+
+#### 函数原型
+
+```lua
+add_cxxflags(cxxflags: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| cxxflags | C++编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个C++编译选项字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
 
 仅对c++代码添加编译选项，用法跟 add_cflags 一致。
 
@@ -2310,6 +2487,22 @@ add_cugencodes("sm_60")
 
 ### 添加链接选项
 
+#### 函数原型
+
+```lua
+add_ldflags(ldflags: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| ldflags | 链接选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个链接选项字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+
 添加静态链接选项
 
 ```lua
@@ -2355,7 +2548,9 @@ add_shflags("xxx")
 #### 函数原型
 
 ```lua
-add_packages(packages: <string|array>, ..., {$visibility = <boolean>})
+add_packages(packages: <string|array>, ..., {
+    $visibility = <boolean>
+})
 ```
 
 #### 参数说明
@@ -2410,6 +2605,21 @@ target("test")
 
 ### 添加语言标准
 
+#### 函数原型
+
+```lua
+add_languages(languages: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| languages | 语言标准字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个语言标准字符串 |
+
 与[set_languages](#set_languages)类似，唯一区别是这个接口不会覆盖掉之前的设置，而是追加设置。
 
 ## add_vectorexts
@@ -2438,6 +2648,22 @@ add_vectorexts("all")
 ## add_frameworks
 
 ### 添加链接框架
+
+#### 函数原型
+
+```lua
+add_frameworks(frameworks: <string|array>, ..., {
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| frameworks | 框架名称字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个框架名称字符串 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
 
 目前主要用于`ios`和`macosx`平台的`objc`和`swift`程序，例如：
 
@@ -2882,6 +3108,26 @@ installdir
 
 ### 添加安装文件
 
+#### 函数原型
+
+```lua
+add_installfiles(installfiles: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| installfiles | 安装文件路径字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个安装文件路径字符串 |
+| prefixdir | 安装前缀目录，可选 |
+| rootdir | 根目录，可选 |
+| filename | 文件名，可选 |
+
 2.2.5版本新增接口，用于针对每个target设置对应需要安装的文件，一般用于`xmake install/uninstall`命令。
 
 比如我们可以指定安装各种类型的文件到安装目录：
@@ -2919,6 +3165,26 @@ target("test")
 ## add_headerfiles
 
 ### 添加安装头文件
+
+#### 函数原型
+
+```lua
+add_headerfiles(headerfiles: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| headerfiles | 头文件路径字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个头文件路径字符串 |
+| prefixdir | 安装前缀目录，可选 |
+| rootdir | 根目录，可选 |
+| filename | 文件名，可选 |
 
 2.2.5版本新增接口，用于针对每个target设置对应需要安装的头文件，一般用于`xmake install/uninstall`命令。
 
@@ -2998,6 +3264,26 @@ set_configvar("TEST", "C:\\hello", {escape = true})
 ## add_configfiles
 
 ### 添加模板配置文件
+
+#### 函数原型
+
+```lua
+add_configfiles(configfiles: <string|array>, ..., {
+    prefixdir = <string>,
+    rootdir = <string>,
+    filename = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| configfiles | 配置文件路径字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个配置文件路径字符串 |
+| prefixdir | 安装前缀目录，可选 |
+| rootdir | 根目录，可选 |
+| filename | 文件名，可选 |
 
 2.2.5版本新增接口，用于在编译前，添加一些需要预处理的配置文件。
 
