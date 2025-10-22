@@ -4,6 +4,18 @@
 
 - 仓库依赖包定义描述
 
+#### 函数原型
+
+```lua
+package(name: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 包名称字符串 |
+
 可先参考官方仓库中现有包描述：[xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 这里给个比较具有代表性的实例供参考：
@@ -46,15 +58,54 @@ package("libxml2")
 
 - 设置包所在项目的官方页面地址
 
+#### 函数原型
+
+```lua
+set_homepage(url: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| url | 包主页URL字符串 |
+
 ## set_description
 
 - 设置包的相关描述信息
+
+#### 函数原型
+
+```lua
+set_description(description: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| description | 包描述字符串 |
 
 一般通过`xmake require --info zlib`查看相关包信息时候，会看到。
 
 ## set_kind
 
 - 设置包类型
+
+#### 函数原型
+
+```lua
+set_kind(kind: <string>, {
+    headeronly = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| kind | 包类型："library", "binary", "toolchain" |
+| headeronly | 对于library类型，是否为仅头文件库 |
 
 用于设置包的类型，xmake 包目前支持以下几种类型：
 
@@ -116,11 +167,53 @@ target("test")
 
 - 设置包源地址
 
+#### 函数原型
+
+```lua
+set_urls(urls: <string|array>, ..., {
+    excludes = <array>,
+    version = <function>,
+    http_headers = <array>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| urls | 包源URL字符串或数组 |
+| ... | 可变参数，可传入多个URL |
+| excludes | 解压时要排除的文件 |
+| version | 版本转换函数 |
+| http_headers | 下载时的HTTP头 |
+
 设置包的源码包或者git仓库地址，跟add_urls不同的是，此接口是覆盖性设置，而add_urls是追加设置，其他使用方式类似，这个根据不同需要来选择。
 
 ## add_urls
 
 - 添加包源地址
+
+#### 函数原型
+
+```lua
+add_urls(urls: <string|array>, ..., {
+    alias = <string>,
+    excludes = <array>,
+    version = <function>,
+    http_headers = <array>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| urls | 包源URL字符串或数组 |
+| ... | 可变参数，可传入多个URL |
+| alias | 不同源的URL别名 |
+| excludes | 解压时要排除的文件 |
+| version | 版本转换函数 |
+| http_headers | 下载时的HTTP头 |
 
 添加包的源码包或者git仓库地址，此接口一般跟add_version配对使用，用于设置每个源码包的版本和对应的sha256值或者git的commit或者tag或者branch。
 
@@ -172,11 +265,36 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 
 - 设置每个源码包的版本
 
+#### 函数原型
+
+```lua
+add_versions(version: <string>, hash: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| version | 包版本字符串 |
+| hash | 用于验证的SHA256哈希值 |
+
 它也会设置对应的sha256值，具体描述见：[add_urls](#add_urls)
 
 ## add_versionfiles
 
 - 添加包版本列表
+
+#### 函数原型
+
+```lua
+add_versionfiles(file: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| file | 包含版本和哈希值对的文件路径 |
 
 通常我们可以通过 `add_versions` 接口添加包版本，但是如果版本越来越多，就会导致包配置太过臃肿，这个时候，我们可以使用 `add_versionfiles` 接口将所有的版本列表，存储到单独的文件中去维护。
 
@@ -200,6 +318,20 @@ package("libcurl")
 
 - 设置包补丁
 
+#### 函数原型
+
+```lua
+add_patches(version: <string>, url: <string>, hash: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| version | 补丁适用的包版本 |
+| url | 补丁文件URL |
+| hash | 补丁验证的SHA256哈希值 |
+
 此接口用于针对源码包，在编译安装前，先打对应设置的补丁包，再对其进行编译，并且可支持同时打多个补丁。
 
 ```lua
@@ -215,6 +347,19 @@ end
 
 - 设置库链接
 
+#### 函数原型
+
+```lua
+add_links(links: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| links | 库链接名称字符串或数组 |
+| ... | 可变参数，可传入多个链接名称 |
+
 默认情况下，xmake会去自动检测安装后的库，设置链接关系，但是有时候并不是很准，如果要自己手动调整链接顺序，以及链接名，则可以通过这个接口来设置。
 
 ```lua
@@ -224,6 +369,19 @@ add_links("mbedtls", "mbedx509", "mbedcrypto")
 ## add_syslinks
 
 - 设置系统库链接
+
+#### 函数原型
+
+```lua
+add_syslinks(syslinks: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| syslinks | 系统库名称字符串或数组 |
+| ... | 可变参数，可传入多个系统库名称 |
 
 添加一些系统库链接，有些包集成链接的时候，还需要依赖一些系统库，才能链接通过，这个时候可以在包描述里面都附加上去。
 
@@ -242,6 +400,19 @@ end
 
 - 调整包内部的链接顺序
 
+#### 函数原型
+
+```lua
+add_linkorders(orders: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| orders | 链接顺序字符串或数组 |
+| ... | 可变参数，可传入多个顺序规格 |
+
 具体详情可以看下 target 内部对 `add_linkorders` 的文档说明，[target:add_linkorders](/zh/api/description/project-target#add_linkorders)。
 
 ```lua
@@ -253,6 +424,24 @@ package("libpng")
 ## add_linkgroups
 
 - 配置包的链接组
+
+#### 函数原型
+
+```lua
+add_linkgroups(groups: <string|array>, ..., {
+    name = <string>,
+    group = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| groups | 链接组名称字符串或数组 |
+| ... | 可变参数，可传入多个组名称 |
+| name | 用于链接的组名称 |
+| group | 是否作为组处理 |
 
 具体详情可以看下 target 内部对 `add_linkgroups` 的文档说明，[target:add_linkgroups](/zh/api/description/project-target#add-linkgroups)。
 
@@ -266,11 +455,37 @@ package("libpng")
 
 - 添加依赖的系统 frameworks 链接
 
+#### 函数原型
+
+```lua
+add_frameworks(frameworks: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| frameworks | 框架名称字符串或数组 |
+| ... | 可变参数，可传入多个框架名称 |
+
 示例见：[add_syslinks](#add_syslinks)
 
 ## add_linkdirs
 
 - 添加链接目录
+
+#### 函数原型
+
+```lua
+add_linkdirs(dirs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| dirs | 链接目录路径字符串或数组 |
+| ... | 可变参数，可传入多个目录路径 |
 
 包的链接库搜索目录也是可以调整的，不过通常都不需要，除非一些库安装完不在prefix/lib下面，而在lib的子目录下，默认搜索不到的话。
 
@@ -278,9 +493,35 @@ package("libpng")
 
 - 添加其他头文件搜索目录
 
+#### 函数原型
+
+```lua
+add_includedirs(dirs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| dirs | 头文件目录路径字符串或数组 |
+| ... | 可变参数，可传入多个目录路径 |
+
 ## add_bindirs
 
 - 添加可执行文件目录
+
+#### 函数原型
+
+```lua
+add_bindirs(dirs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| dirs | 可执行文件目录路径字符串或数组 |
+| ... | 可变参数，可传入多个目录路径 |
 
 默认情况下，如果配置了 `set_kind("binary")` 或者 `set_kind("toolchain")` 作为可执行的包。
 
@@ -294,11 +535,45 @@ package("libpng")
 
 - 添加宏定义
 
+#### 函数原型
+
+```lua
+add_defines(defines: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| defines | 宏定义字符串或数组 |
+| ... | 可变参数，可传入多个定义 |
+
 可以对集成的包对外输出一些特定的定义选项。
 
 ## add_configs
 
 - 添加包配置
+
+#### 函数原型
+
+```lua
+add_configs(name: <string>, {
+    description = <string>,
+    default = <string|boolean|number>,
+    values = <array>,
+    type = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 配置参数名称 |
+| description | 配置描述字符串 |
+| default | 配置的默认值 |
+| values | 允许的值数组 |
+| type | 配置类型："string", "boolean", "number" |
 
 我们可以通过此接口添加每个包的对外输出配置参数：
 
@@ -343,6 +618,19 @@ add_requires("pcre2", {configs = {bitwidth = 16}})
 
 - 添加扩展的包源
 
+#### 函数原型
+
+```lua
+add_extsources(sources: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| sources | 外部源字符串或数组，格式："pkgconfig::name" 或 "brew::name" |
+| ... | 可变参数，可传入多个外部源 |
+
 2.5.2 版本开始，我们也新增了 `add_extsources` 和 `on_fetch` 两个配置接口，可以更好的配置 xmake 在安装 C/C++ 包的过程中，对系统库的查找过程。
 
 至于具体背景，我们可以举个例子，比如我们在 [xmake-repo](https://github.com/xmake-io/xmake-repo) 仓库新增了一个 `package("libusb")` 的包。
@@ -381,6 +669,19 @@ package("libusb")
 
 - 添加包依赖
 
+#### 函数原型
+
+```lua
+add_deps(deps: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| deps | 依赖包名称字符串或数组 |
+| ... | 可变参数，可传入多个依赖名称 |
+
 添加包依赖接口，通过配置包之间的依赖关系，我们能够在安装包的同时，自动安装它的所有依赖包。
 
 另外，默认情况下，我们只要配置了依赖关系，cmake/autoconf 就能够自动找到所有依赖包的库和头文件。
@@ -415,6 +716,22 @@ package("foo")
 
 - 添加包组件
 
+#### 函数原型
+
+```lua
+add_components(components: <string|array>, ..., {
+    deps = <array>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| components | 组件名称字符串或数组 |
+| ... | 可变参数，可传入多个组件名称 |
+| deps | 组件依赖数组 |
+
 这是 2.7.3 新加的接口，用于支持包的组件化配置，详情见：[#2636](https://github.com/xmake-io/xmake/issues/2636)。
 
 通过这个接口，我们可以配置当前包实际可以提供的组件列表。
@@ -444,6 +761,18 @@ target("test")
 ## set_base
 
 - 继承包配置
+
+#### 函数原型
+
+```lua
+set_base(package: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 要继承的基础包名称 |
 
 这是 2.6.4 新加的接口，我们可以通过它去继承一个已有的包的全部配置，然后在此基础上重写部分配置。
 
@@ -478,6 +807,18 @@ package("onetbb")
 
 - 加载包配置
 
+#### 函数原型
+
+```lua
+on_load(script: <function (package)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 包加载脚本函数，参数为package |
+
 这是个可选的接口，如果要更加灵活的动态判断各种平台架构，针对性做设置，可以在这个里面完成，例如：
 
 ```lua
@@ -495,6 +836,20 @@ pcre包需要做一些针对bitwidth的判断，才能确定对外输出的链�
 ## on_fetch
 
 - 从系统中查找库
+
+#### 函数原型
+
+```lua
+on_fetch(platforms: <string|array>, ..., script: <function (package, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| platforms | 平台过滤字符串或数组，可选 |
+| ... | 可变参数，可传入多个平台过滤器 |
+| script | 查找脚本函数，参数为package和opt |
 
 这是个可选配置，2.5.2 之后，如果不同系统下安装的系统库，仅仅只是包名不同，那么使用 `add_extsources` 改进系统库查找已经足够，简单方便。
 
@@ -514,6 +869,20 @@ package("libusb")
 ## on_check
 
 - 检测包是否支持当前平台
+
+#### 函数原型
+
+```lua
+on_check(platforms: <string|array>, ..., script: <function (package)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| platforms | 平台过滤字符串或数组，可选 |
+| ... | 可变参数，可传入多个平台过滤器 |
+| script | 检测脚本函数，参数为package |
 
 有时候，单纯用 `on_install("windows", "android", function () end)` 无法很好的限制包对当前平台的支持力度。
 
@@ -563,6 +932,20 @@ package("test")
 ## on_install
 
 - 安装包
+
+#### 函数原型
+
+```lua
+on_install(platforms: <string|array>, ..., script: <function (package)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| platforms | 平台过滤字符串或数组，可选 |
+| ... | 可变参数，可传入多个平台过滤器 |
+| script | 安装脚本函数，参数为package |
 
 这个接口主要用于添加安装脚本，前面的字符串参数用于设置支持的平台，像`on_load`, `on_test`等其他脚本域也是同样支持的。
 
@@ -738,6 +1121,18 @@ end)
 
 - 测试包
 
+#### 函数原型
+
+```lua
+on_test(script: <function (package)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 测试脚本函数，参数为package |
+
 安装后，需要设置对应的测试脚本，执行一些测试，确保安装包的可靠性，如果测试不通过，则会撤销整个安装包。
 
 ```lua
@@ -796,6 +1191,18 @@ end)
 ## on_download
 
 - 自定义下载包
+
+#### 函数原型
+
+```lua
+on_download(script: <function (package, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 下载脚本函数，参数为package和opt |
 
 自定义包的下载逻辑，这是 2.6.4 新加的接口，通常用不到，使用 Xmake 的内置下载就足够了。
 
@@ -870,6 +1277,19 @@ package("zlib")
 ## on_component
 
 - 配置包组件
+
+#### 函数原型
+
+```lua
+on_component(component: <string>, script: <function (package, component)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| component | 组件名称字符串，可选（如果不提供，则应用于所有组件） |
+| script | 组件配置脚本函数，参数为package和component |
 
 这是 2.7.3 新加的接口，用于支持包的组件化配置，详情见：[#2636](https://github.com/xmake-io/xmake/issues/2636)。
 

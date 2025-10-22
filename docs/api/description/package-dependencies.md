@@ -4,6 +4,18 @@
 
 - Define package configuration
 
+#### Function Prototype
+
+```lua
+package(name: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Package name string |
+
 The repository depends on the package definition description, the `package()` related interface definition, etc. There will be time to elaborate, so stay tuned. .
 
 Please refer to the existing package description in the official repository: [xmake-repo](https://github.com/xmake-io/xmake-repo)
@@ -48,17 +60,56 @@ package("libxml2")
 
 - Set package homepage
 
+#### Function Prototype
+
+```lua
+set_homepage(url: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| url | Package homepage URL string |
+
 Set the official page address of the project where the package is located.
 
 ## set_description
 
 - Set package description
 
+#### Function Prototype
+
+```lua
+set_description(description: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| description | Package description string |
+
 Set the package description information, generally see the relevant package information through `xmake require --info zlib`.
 
 ## set_kind
 
 - Set package kind
+
+#### Function Prototype
+
+```lua
+set_kind(kind: <string>, {
+    headeronly = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| kind | Package type: "library", "binary", "toolchain" |
+| headeronly | For library type, whether it's header-only library |
 
 Used to set the package type. xmake packages currently support the following types:
 
@@ -120,11 +171,53 @@ target("test")
 
 - Set package urls
 
+#### Function Prototype
+
+```lua
+set_urls(urls: <string|array>, ..., {
+    excludes = <array>,
+    version = <function>,
+    http_headers = <array>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| urls | Package source URL string or array |
+| ... | Variable parameters, can pass multiple URLs |
+| excludes | Files to exclude from extraction |
+| version | Version transformation function |
+| http_headers | HTTP headers for download |
+
 Set the source package or git repository address of the package. Unlike add_urls, this interface is the override setting, and add_urls is the additional setting. Other usage methods are similar. This is chosen according to different needs.
 
 ## add_urls
 
 - Add package urls
+
+#### Function Prototype
+
+```lua
+add_urls(urls: <string|array>, ..., {
+    alias = <string>,
+    excludes = <array>,
+    version = <function>,
+    http_headers = <array>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| urls | Package source URL string or array |
+| ... | Variable parameters, can pass multiple URLs |
+| alias | URL alias for different sources |
+| excludes | Files to exclude from extraction |
+| version | Version transformation function |
+| http_headers | HTTP headers for download |
 
 Add the source package of the package or the git repository address. This interface is generally paired with add_version to set the version of each source package and the corresponding sha256 value.
 
@@ -176,11 +269,36 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 
 - Add package versions
 
+#### Function Prototype
+
+```lua
+add_versions(version: <string>, hash: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| version | Package version string |
+| hash | SHA256 hash value for verification |
+
 Used to set the version of each source package and the corresponding sha256 value, as described in [add_urls](#add_urls)
 
 ## add_versionfiles
 
 - Adding a list of package versions
+
+#### Function Prototype
+
+```lua
+add_versionfiles(file: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| file | Version file path containing version and hash pairs |
 
 Normally we can add package versions through the `add_versions` interface, but if there are more and more versions, the package configuration will be too bloated, at this time, we can use the `add_versionfiles` interface to store a list of all the versions in a separate file to maintain.
 
@@ -204,6 +322,20 @@ package("libcurl")
 
 - Add package patches
 
+#### Function Prototype
+
+```lua
+add_patches(version: <string>, url: <string>, hash: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| version | Package version for which patch applies |
+| url | Patch file URL |
+| hash | SHA256 hash value for patch verification |
+
 This interface is used for the source code package. Before compiling and installing, firstly set the corresponding patch package, compile it, and support multiple patches at the same time.
 
 ```lua
@@ -219,6 +351,19 @@ For example, the above code, when compiled for macosx, is marked with the corres
 
 - Add package links
 
+#### Function Prototype
+
+```lua
+add_links(links: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| links | Library link name string or array |
+| ... | Variable parameters, can pass multiple link names |
+
 By default, xmake will automatically detect the installed libraries and set the link relationship, but sometimes it is not very accurate. If you want to manually adjust the link order and the link name, you can set it through this interface.
 
 ```lua
@@ -228,6 +373,19 @@ add_links("mbedtls", "mbedx509", "mbedcrypto")
 ## add_syslinks
 
 - Add system library links
+
+#### Function Prototype
+
+```lua
+add_syslinks(syslinks: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| syslinks | System library name string or array |
+| ... | Variable parameters, can pass multiple system library names |
 
 Add some system library links. When some packages integrate links, you also need to rely on some system libraries to link them. This time you can attach them to the package description.
 
@@ -246,6 +404,19 @@ end
 
 - Adjust the link order within the package
 
+#### Function Prototype
+
+```lua
+add_linkorders(orders: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| orders | Link order string or array |
+| ... | Variable parameters, can pass multiple order specifications |
+
 For specific details, please see the target's internal documentation for `add_linkorders`, [target:add_linkorders](/api/description/project-target#add-linkorders).
 
 ```lua
@@ -257,6 +428,24 @@ package("libpng")
 ## add_linkgroups
 
 - Configure the link group of the package
+
+#### Function Prototype
+
+```lua
+add_linkgroups(groups: <string|array>, ..., {
+    name = <string>,
+    group = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| groups | Link group name string or array |
+| ... | Variable parameters, can pass multiple group names |
+| name | Group name for linking |
+| group | Whether to treat as a group |
 
 For specific details, please see the target's internal documentation for `add_linkgroups`, [target:add_linkgroups](/api/description/project-target#add-linkgroups).
 
@@ -270,6 +459,19 @@ package("libpng")
 
 - Add frameworks
 
+#### Function Prototype
+
+```lua
+add_frameworks(frameworks: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| frameworks | Framework name string or array |
+| ... | Variable parameters, can pass multiple framework names |
+
 Add a dependent system frameworks link.
 
 See for example: [add_syslinks](#add_syslinks)
@@ -278,17 +480,56 @@ See for example: [add_syslinks](#add_syslinks)
 
 - Add link directories
 
+#### Function Prototype
+
+```lua
+add_linkdirs(dirs: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| dirs | Link directory path string or array |
+| ... | Variable parameters, can pass multiple directory paths |
+
 The package's link library search directory can also be adjusted, but it is usually not needed, unless some libraries are not installed under prefix/lib, but in the lib subdirectory, the default search is not available.
 
 ## add_includedirs
 
 - Add include directories
 
+#### Function Prototype
+
+```lua
+add_includedirs(dirs: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| dirs | Include directory path string or array |
+| ... | Variable parameters, can pass multiple directory paths |
+
 Add another header file search directory.
 
 ## add_bindirs
 
 - Add executable file directory
+
+#### Function Prototype
+
+```lua
+add_bindirs(dirs: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| dirs | Executable directory path string or array |
+| ... | Variable parameters, can pass multiple directory paths |
 
 By default, if `set_kind("binary")` or `set_kind("toolchain")` is configured as an executable package.
 
@@ -302,11 +543,45 @@ If you use this interface to configure `add_bindirs("bin")`, bin will be automat
 
 - Add definition
 
+#### Function Prototype
+
+```lua
+add_defines(defines: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| defines | Macro definition string or array |
+| ... | Variable parameters, can pass multiple definitions |
+
 Some specific definition options can be exported to the integrated package.
 
 ## add_configs
 
 - Add package configs
+
+#### Function Prototype
+
+```lua
+add_configs(name: <string>, {
+    description = <string>,
+    default = <string|boolean|number>,
+    values = <array>,
+    type = <string>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Configuration parameter name |
+| description | Configuration description string |
+| default | Default value for the configuration |
+| values | Allowed values array |
+| type | Configuration type: "string", "boolean", "number" |
 
 We can add the external output configuration parameters of each package through this interface:
 
@@ -351,6 +626,19 @@ add_requires("pcre2", {configs = {bitwidth = 16}})
 
 - Add external package sources
 
+#### Function Prototype
+
+```lua
+add_extsources(sources: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sources | External source string or array, format: "pkgconfig::name" or "brew::name" |
+| ... | Variable parameters, can pass multiple external sources |
+
 Starting from version 2.5.2, we have also added two configuration interfaces `add_extsources` and `on_fetch`, which can better configure xmake to search for system libraries during the process of installing C/C++ packages.
 
 As for the specific background, we can give an example. For example, we added a package of `package("libusb")` to the [xmake-repo](https://github.com/xmake-io/xmake-repo) repository .
@@ -389,6 +677,19 @@ In addition, we can also use this method to improve the search for packages inst
 
 - Add package dependencies
 
+#### Function Prototype
+
+```lua
+add_deps(deps: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| deps | Dependency package name string or array |
+| ... | Variable parameters, can pass multiple dependency names |
+
 This interface allows us to automatically install all dependencies of a package when we install it by configuring the dependencies between packages.
 
 Also, by default, cmake/autoconf will automatically find the libraries and headers of all dependent packages as soon as we have configured the dependencies.
@@ -419,9 +720,25 @@ package("foo")
     end)
 ```
 
-## packages:add_components
+## add_components
 
 - Add package components
+
+#### Function Prototype
+
+```lua
+add_components(components: <string|array>, ..., {
+    deps = <array>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| components | Component name string or array |
+| ... | Variable parameters, can pass multiple component names |
+| deps | Component dependencies array |
 
 This is a new interface added in 2.7.3 to support componentized configuration of packages, see: [#2636](https://github.com/xmake-io/xmake/issues/2636) for details.
 
@@ -452,6 +769,18 @@ A full example of the configuration and use of package components can be found a
 ## set_base
 
 - Inherit package configuration
+
+#### Function Prototype
+
+```lua
+set_base(package: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Base package name to inherit from |
 
 This is a newly added interface in 2.6.4, through which we can inherit all the configuration of an existing package, and then rewrite some of the configuration on this basis.
 
@@ -486,6 +815,18 @@ We can install the tbb package through `add_requires("onetbb")` integration, but
 
 - Load package configuration
 
+#### Function Prototype
+
+```lua
+on_load(script: <function (package)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Package load script function with package parameter |
+
 This is an optional interface. If you want to be more flexible and dynamically judge various platform architectures, you can do it in this way, for example:
 
 ```lua
@@ -505,6 +846,20 @@ To find out what methods are available to `package` look [here](/api/scripts/pac
 ## on_fetch
 
 - Fetch package libraries
+
+#### Function Prototype
+
+```lua
+on_fetch(platforms: <string|array>, ..., script: <function (package, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| platforms | Platform filter string or array, optional |
+| ... | Variable parameters, can pass multiple platform filters |
+| script | Fetch script function with package and opt parameters |
 
 This is an optional configuration. After 2.5.2, if the system libraries installed under different systems only have different package names, then using `add_extsources` to improve the system library search is sufficient, simple and convenient.
 
@@ -526,6 +881,20 @@ To find out what methods are available to `package` look [here](/api/scripts/pac
 ## on_check
 
 - Check whether the package supports the current platform
+
+#### Function Prototype
+
+```lua
+on_check(platforms: <string|array>, ..., script: <function (package)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| platforms | Platform filter string or array, optional |
+| ... | Variable parameters, can pass multiple platform filters |
+| script | Check script function with package parameter |
 
 Sometimes, simply using `on_install("windows", "android", function () end)` cannot properly limit the package's support for the current platform.
 
@@ -575,6 +944,20 @@ package("test")
 ## on_install
 
 - Installation package
+
+#### Function Prototype
+
+```lua
+on_install(platforms: <string|array>, ..., script: <function (package)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| platforms | Platform filter string or array, optional |
+| ... | Variable parameters, can pass multiple platform filters |
+| script | Install script function with package parameter |
 
 This interface is mainly used to add installation scripts. The previous string parameters are used to set supported platforms. Other script fields such as `on_load`, `on_test` are also supported.
 
@@ -749,6 +1132,18 @@ end)
 ## on_download
 
 - Custom download package
+
+#### Function Prototype
+
+```lua
+on_download(script: <function (package, opt)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Download script function with package and opt parameters |
 
 The download logic of the custom package, which is a new interface added in 2.6.4, is usually not used, and it is enough to use the built-in download of Xmake.
 
@@ -1017,6 +1412,18 @@ end)
 
 - Test package
 
+#### Function Prototype
+
+```lua
+on_test(script: <function (package)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Test script function with package parameter |
+
 After installation, you need to set the corresponding test script, perform some tests to ensure the reliability of the installation package, if the test does not pass, the entire installation package will be revoked.
 
 ```lua
@@ -1075,6 +1482,19 @@ if the run fails, the test will not pass.
 ## on_component
 
 - Define package component
+
+#### Function Prototype
+
+```lua
+on_component(component: <string>, script: <function (package, component)>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| component | Component name string, optional (if not provided, applies to all components) |
+| script | Component configuration script function with package and component parameters |
 
 This is a new interface added in 2.7.3 to support component-based configuration of packages, see: [#2636](https://github.com/xmake-io/xmake/issues/2636) for details.
 
