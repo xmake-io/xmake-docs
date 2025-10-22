@@ -1678,6 +1678,36 @@ It will generate the corresponding `-Wl,-Bstatic -la -lb -Wl,-Bdynamic` linkage 
 
 ### Add source files
 
+#### Function Prototype
+
+```lua
+add_files(files: <string|array>, ..., {
+    defines = <string|array>,
+    languages = <string|array>,
+    includedirs = <string|array>,
+    rules = <string|array>,
+    force = {$flags},
+    sourcekind = <string>,
+    $flags = <string|array>,
+    $visibility = <boolean>
+})
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| files | File path string or file path array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple file path strings |
+| defines | Macro definition string or array, set compilation macro definitions for specified files |
+| languages | Language standard string, such as "c99", "c++11", etc. |
+| includedirs | Header file search directory string or array |
+| rules | Custom build rule name string |
+| force | Force compilation option object, disable automatic detection, can contain various compilation options |
+| sourcekind | Force specified source file type string, such as "cc", "cxx", etc. |
+| $flags | Various compilation and linking options, including cflags, cxflags, cxxflags, mflags, mxflags, mxxflags, scflags, asflags, gcflags, dcflags, rcflags, fcflags, zcflags, cuflags, culdflags, cugencodes, ldflags, arflags, shflags, etc. |
+| $visibility | Visibility setting, optional values: public (export to dependent sub-targets), interface (export as interface), private (only effective for current target) |
+
 Source files used to add target projects, even library files, some file types currently supported:
 
 | Supported source file types | Description                                                                      |

@@ -1666,6 +1666,36 @@ add_linkgroups("a", "b", {static = true})
 
 ### 添加源代码文件
 
+#### 函数原型
+
+```lua
+add_files(files: <string|array>, ..., {
+    defines = <string|array>,
+    languages = <string|array>,
+    includedirs = <string|array>,
+    rules = <string|array>,
+    force = {$flags},
+    sourcekind = <string>,
+    $flags = <string|array>,
+    $visibility = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| files | 文件路径字符串或文件路径数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个文件路径字符串 |
+| defines | 宏定义字符串或数组，为指定文件设置编译宏定义 |
+| languages | 语言标准字符串，如 "c99", "c++11" 等 |
+| includedirs | 头文件搜索目录字符串或数组 |
+| rules | 自定义构建规则名称字符串 |
+| force | 强制编译选项对象，禁用自动检测，可包含各种编译选项 |
+| sourcekind | 强制指定源文件类型字符串，如 "cc", "cxx" 等 |
+| $flags | 各种编译和链接选项，包括 cflags, cxflags, cxxflags, mflags, mxflags, mxxflags, scflags, asflags, gcflags, dcflags, rcflags, fcflags, zcflags, cuflags, culdflags, cugencodes, ldflags, arflags, shflags 等 |
+| $visibility | 可见性设置，可选值：public（导出给依赖的子目标）、interface（作为接口导出）、private（仅对当前目标生效） |
+
 用于添加目标工程的源文件，甚至库文件，目前支持的一些文件类型：
 
 | 支持的源文件类型   | 描述                                    |
