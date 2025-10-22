@@ -1796,6 +1796,19 @@ add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 
 ### Remove source files
 
+#### Function Prototype
+
+```lua
+remove_files(files: <string|array>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| files | File path string or file path array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple file path strings |
+
 Through this interface, you can delete the specified file from the list of files added by the [add_files](#add_files) interface, for example:
 
 ```lua

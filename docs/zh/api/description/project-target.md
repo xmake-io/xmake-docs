@@ -1784,6 +1784,19 @@ add_files("*.cpp", {sourcekind = "cc"})  -- force to compile as c
 
 ### 从前面的源代码文件列表中删除指定文件
 
+#### 函数原型
+
+```lua
+remove_files(files: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| files | 文件路径字符串或文件路径数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个文件路径字符串 |
+
 通过此接口，可以从前面[add_files](#add_files)接口添加的文件列表中，删除指定的文件，例如：
 
 ```lua
