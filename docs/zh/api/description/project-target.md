@@ -54,6 +54,25 @@ add_defines("PRIVATE_DEFINE", {private = true})
 
 ### 定义工程目标
 
+#### 函数原型
+
+```lua
+target(name: <string>, {
+    kind = <string>,
+    files = <string|array>,
+    ...
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 目标名称字符串，用于标识工程目标 |
+| kind | 目标类型字符串，可选值：binary、static、shared、object、headeronly、phony |
+| files | 源文件路径字符串或数组，支持通配符匹配模式 |
+| ... | 其他配置选项，如 deps、defines、includedirs 等 |
+
 定义一个新的控制台工程目标，工程名为`test`，最后生成的目标名也是`test`。
 
 ```lua
@@ -99,6 +118,18 @@ target("test")
 ## target_end
 
 ### 结束定义工程目标
+
+#### 函数原型
+
+```lua
+target_end()
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| 无参数 | 此接口不需要任何参数 |
 
 这是一个可选的api，如果不调用，那么`target("xxx")`之后的所有设置都是针对这个target进行的，除非进入其他`target`, `option`, `task`域。
 
@@ -528,6 +559,18 @@ target("xxx")
 
 ### 设置目标文件全名
 
+#### 函数原型
+
+```lua
+set_filename(filename: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filename | 目标文件全名字符串，包括前后缀 |
+
 它跟[set_basename](#set_basename)的区别在于，[set_basename](#set_basename)设置名字不带后缀跟前缀，例如：`libtest.a`，basename如果改成test2后就变成了`libtest2.a`。
 
 而filename的修改，是修改整个目标文件名，包括前后缀，例如可以直接把`libtest.a`改成`test.dll`，这个对于[set_basename](#set_basename)是做不到的。
@@ -535,6 +578,18 @@ target("xxx")
 ## set_prefixname
 
 ### 设置目标文件的前置名
+
+#### 函数原型
+
+```lua
+set_prefixname(prefixname: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| prefixname | 目标文件前置名字符串，如 "lib" 或 "" |
 
 2.5.5 之后版本才支持，可以修改设置目标文件的前置名，例如将默认的：`libtest.so` 改成 `test.so`
 
@@ -547,6 +602,18 @@ target("test")
 
 ### 设置目标文件的后置名
 
+#### 函数原型
+
+```lua
+set_suffixname(suffixname: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| suffixname | 目标文件后置名字符串，如 "-d" 或 "" |
+
 2.5.5 之后版本才支持，可以修改设置目标文件的后置名，例如将默认的：`libtest.so` 改成 `libtest-d.so`
 
 ```lua
@@ -557,6 +624,18 @@ target("test")
 ## set_extension
 
 ### 设置目标文件的扩展名
+
+#### 函数原型
+
+```lua
+set_extension(extension: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| extension | 目标文件扩展名字符串，如 ".dll" 或 ".so" |
 
 2.5.5 之后版本才支持，可以修改设置目标文件的扩展名，例如将默认的：`libtest.so` 改成 `test.dll`
 
@@ -611,6 +690,18 @@ set_warnings("all", "error")
 ## set_optimize
 
 ### 设置优化级别
+
+#### 函数原型
+
+```lua
+set_optimize(optimize: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| optimize | 优化级别字符串，可选值：none、fast、faster、fastest、smallest、aggressive |
 
 设置目标的编译优化等级，如果当前没有设置目标，那么将会设置到全局状态中，影响所有后续的目标。
 
@@ -702,6 +793,22 @@ msvc 的编译器并不支持按 c99 的标准来编译c代码，只能支持到
 
 ### 设置float-point编译模式
 
+#### 函数原型
+
+```lua
+set_fpmodels(fpmodels: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| fpmodels | 浮点模式字符串或数组，可选值：fast、strict、except、precise |
+| ... | 可变参数，可传入多个浮点模式字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 此接口用于设置浮点的编译模式，对数学计算相关优化的编译抽象设置，提供：fast, strict, except, precise 等几种常用的级别，有些可同时设置，有些是有冲突的，最后设置的生效。
 
 关于这些级别的说明，可以参考下微软的文档：[Specify floating-point behavior](https://docs.microsoft.com/en-us/cpp/build/reference/fp-specify-floating-point-behavior?view=vs-2019)
@@ -720,6 +827,18 @@ set_fpmodels("precise") -- default
 ## set_targetdir
 
 ### 设置生成目标文件目录
+
+#### 函数原型
+
+```lua
+set_targetdir(targetdir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| targetdir | 目标文件输出目录路径字符串 |
 
 设置目标程序文件的输出目录，一般情况下，不需要设置，默认会输出在build目录下
 
@@ -755,6 +874,18 @@ target("test")
 
 ### 设置对象文件生成目录
 
+#### 函数原型
+
+```lua
+set_objectdir(objectdir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| objectdir | 对象文件输出目录路径字符串 |
+
 设置目标target的对象文件(`*.o/obj`)的输出目录，例如:
 
 ```lua
@@ -766,6 +897,18 @@ target("test")
 
 ### 设置依赖文件生成目录
 
+#### 函数原型
+
+```lua
+set_dependir(dependir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| dependir | 依赖文件输出目录路径字符串 |
+
 设置目标target的编译依赖文件(`.deps`)的输出目录，例如:
 
 ```lua
@@ -776,6 +919,19 @@ target("test")
 ## add_imports
 
 ### 为自定义脚本预先导入扩展模块
+
+#### 函数原型
+
+```lua
+add_imports(imports: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| imports | 模块名称字符串或数组，如 "core.base.task" |
+| ... | 可变参数，可传入多个模块名称字符串 |
 
 通常，我们在[on_build](#on_build)等自定义脚本内部，可以通过`import("core.base.task")`的方式导入扩展模块，
 但是对于自定义脚本比较多的情况下，每个自定义脚本都重复导入一遍，非常的繁琐，那么可以通过这个接口，实现预先导入，例如：
@@ -822,6 +978,22 @@ target("test")
 
 ### 添加规则到目标
 
+#### 函数原型
+
+```lua
+add_rules(rules: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| rules | 规则名称字符串或数组，如 "markdown" |
+| ... | 可变参数，可传入多个规则名称字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 我们可以通过预先设置规则支持的文件后缀，来扩展其他文件的构建支持：
 
 ```lua
@@ -861,6 +1033,18 @@ target("test")
 
 ### 自定义目标加载脚本
 
+#### 函数原型
+
+```lua
+on_load(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 加载脚本函数，接收 target 参数 |
+
 在target初始化加载的时候，将会执行此脚本，在里面可以做一些动态的目标配置，实现更灵活的目标描述定义，例如：
 
 ```lua
@@ -878,6 +1062,18 @@ target("test")
 
 ### 自定义配置脚本
 
+#### 函数原型
+
+```lua
+on_config(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 配置脚本函数，接收 target 参数 |
+
 在 `xmake config` 执行完成后，Build 之前会执行此脚本，通常用于编译前的配置工作。它与 on_load 不同的是，on_load 只要 target 被加载就会执行，执行时机更早。
 
 如果一些配置，无法在 on_load 中过早配置，那么都可以在 on_config 中去配置它。
@@ -891,6 +1087,18 @@ on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 ## on_prepare
 
 ### 自定义准备阶段脚本
+
+#### 函数原型
+
+```lua
+on_prepare(script: <function (target, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 准备阶段脚本函数，接收 target, opt 参数 |
 
 3.0 新增了 on_prepare 阶段，实现二阶段编译。prepare 阶段会专门用于处理各种源码级的预处理、codegen 以及源码依赖分析，后续才会进入 build 阶段。
 
@@ -918,6 +1126,18 @@ rule("scan_module_files")
 
 ### 自定义准备阶段单文件处理脚本
 
+#### 函数原型
+
+```lua
+on_prepare_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 单文件处理脚本函数，接收 target, sourcefile, opt 参数 |
+
 通过此接口，可以 hook 内置的准备阶段流程，在 prepare 阶段对每个源文件进行预处理、分析、自动生成等操作。
 
 ```lua
@@ -932,6 +1152,19 @@ target("test")
 ## on_prepare_files
 
 ### 自定义准备阶段批量文件处理脚本
+
+#### 函数原型
+
+```lua
+on_prepare_files(script: <function (target, jobgraph, sourcebatch, opt)>, {jobgraph = <boolean>})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 批量文件处理脚本函数，接收 target, jobgraph, sourcebatch, opt 参数 |
+| jobgraph | 是否启用并行任务处理，可选值：true、false |
 
 通过此接口，可以 hook 内置的准备阶段流程，在 prepare 阶段对一批同类型源文件进行批量预处理、分析、自动生成等操作，支持 jobgraph 并行任务。
 
@@ -957,6 +1190,18 @@ rule("scan_module_files")
 
 ### 自定义链接脚本
 
+#### 函数原型
+
+```lua
+on_link(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 链接脚本函数，接收 target 参数 |
+
 这个是在v2.2.7之后新加的接口，用于定制化处理target的链接过程。
 
 ```lua
@@ -969,6 +1214,18 @@ target("test")
 ## on_build
 
 ### 自定义编译脚本
+
+#### 函数原型
+
+```lua
+on_build(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 编译脚本函数，接收 target 参数 |
 
 覆盖target目标默认的构建行为，实现自定义的编译过程，一般情况下，并不需要这么做，除非确实需要做一些xmake默认没有提供的编译操作。
 
@@ -1012,6 +1269,18 @@ target("test")
 
 ### 自定义编译脚本, 实现单文件构建
 
+#### 函数原型
+
+```lua
+on_build_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 单文件编译脚本函数，接收 target, sourcefile, opt 参数 |
+
 通过此接口，可以用来hook指定target内置的构建过程，替换每个源文件编译过程：
 
 ```lua
@@ -1027,6 +1296,18 @@ target("test")
 ## on_build_files
 
 ### 自定义编译脚本, 实现多文件构建
+
+#### 函数原型
+
+```lua
+on_build_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 多文件编译脚本函数，接收 target, sourcebatch, opt 参数 |
 
 通过此接口，可以用来hook指定target内置的构建过程，替换一批同类型源文件编译过程：
 
@@ -1050,6 +1331,18 @@ target("test")
 ## on_clean
 
 ### 自定义清理脚本
+
+#### 函数原型
+
+```lua
+on_clean(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 清理脚本函数，接收 target 参数 |
 
 覆盖target目标的`xmake [c|clean}`的清理操作，实现自定义清理过程。
 
@@ -1082,6 +1375,18 @@ target("test")
 ## on_package
 
 ### 自定义打包脚本
+
+#### 函数原型
+
+```lua
+on_package(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 打包脚本函数，接收 target 参数 |
 
 覆盖target目标的`xmake [p|package}`的打包操作，实现自定义打包过程，如果你想对指定target打包成自己想要的格式，可以通过这个接口自定义它。
 
@@ -1117,6 +1422,18 @@ target("demo")
 
 ### 自定义安装脚本
 
+#### 函数原型
+
+```lua
+on_install(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装脚本函数，接收 target 参数 |
+
 覆盖target目标的`xmake [i|install}`的安装操作，实现自定义安装过程。
 
 例如，将生成的apk包，进行安装。
@@ -1136,6 +1453,18 @@ target("test")
 
 ### 自定义卸载脚本
 
+#### 函数原型
+
+```lua
+on_uninstall(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载脚本函数，接收 target 参数 |
+
 覆盖target目标的`xmake [u|uninstall}`的卸载操作，实现自定义卸载过程。
 
 ```lua
@@ -1148,6 +1477,18 @@ target("test")
 ## on_run
 
 ### 自定义运行脚本
+
+#### 函数原型
+
+```lua
+on_run(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 运行脚本函数，接收 target 参数 |
 
 覆盖target目标的`xmake [r|run}`的运行操作，实现自定义运行过程。
 
@@ -1168,6 +1509,18 @@ target("test")
 
 ### 在准备阶段之前执行自定义脚本
 
+#### 函数原型
+
+```lua
+before_prepare(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 准备前脚本函数，接收 target 参数 |
+
 不会覆盖默认的准备操作，只是在准备阶段之前增加一些自定义操作。
 
 ```lua
@@ -1180,6 +1533,18 @@ target("test")
 ## before_prepare_file
 
 ### 在准备阶段单文件处理前执行自定义脚本
+
+#### 函数原型
+
+```lua
+before_prepare_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 单文件准备前脚本函数，接收 target, sourcefile, opt 参数 |
 
 不会覆盖默认的单文件处理操作，只是在 on_prepare_file 之前增加一些自定义操作。
 
@@ -1194,6 +1559,18 @@ target("test")
 
 ### 在准备阶段批量文件处理前执行自定义脚本
 
+#### 函数原型
+
+```lua
+before_prepare_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 批量文件准备前脚本函数，接收 target, sourcebatch, opt 参数 |
+
 不会覆盖默认的批量处理操作，只是在 on_prepare_files 之前增加一些自定义操作。
 
 ```lua
@@ -1206,6 +1583,18 @@ target("test")
 ## before_link
 
 ### 在链接之前执行一些自定义脚本
+
+#### 函数原型
+
+```lua
+before_link(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 链接前脚本函数，接收 target 参数 |
 
 这个是在v2.2.7之后新加的接口，用于在链接之前增加一些自定义的操作。
 
@@ -1220,6 +1609,18 @@ target("test")
 
 ### 在构建之前执行一些自定义脚本
 
+#### 函数原型
+
+```lua
+before_build(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 构建前脚本函数，接收 target 参数 |
+
 并不会覆盖默认的构建操作，只是在构建之前增加一些自定义的操作。
 
 ```lua
@@ -1232,6 +1633,18 @@ target("test")
 ## before_build_file
 
 ### 自定义编译前的脚本, 实现单文件构建
+
+#### 函数原型
+
+```lua
+before_build_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 单文件构建前脚本函数，接收 target, sourcefile, opt 参数 |
 
 通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之前执行一些自定义脚本：
 
@@ -1247,6 +1660,18 @@ target("test")
 
 ### 自定义编译前的脚本, 实现多文件构建
 
+#### 函数原型
+
+```lua
+before_build_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 多文件构建前脚本函数，接收 target, sourcebatch, opt 参数 |
+
 通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之前执行一些自定义脚本：
 
 ```lua
@@ -1261,6 +1686,18 @@ target("test")
 
 ### 在清理之前执行一些自定义脚本
 
+#### 函数原型
+
+```lua
+before_clean(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 清理前脚本函数，接收 target 参数 |
+
 并不会覆盖默认的清理操作，只是在清理之前增加一些自定义的操作。
 
 ```lua
@@ -1273,6 +1710,18 @@ target("test")
 ## before_package
 
 ### 在打包之前执行一些自定义脚本
+
+#### 函数原型
+
+```lua
+before_package(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 打包前脚本函数，接收 target 参数 |
 
 并不会覆盖默认的打包操作，只是在打包之前增加一些自定义的操作。
 
@@ -1287,6 +1736,18 @@ target("test")
 
 ### 在安装之前执行一些自定义脚本
 
+#### 函数原型
+
+```lua
+before_install(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装前脚本函数，接收 target 参数 |
+
 并不会覆盖默认的安装操作，只是在安装之前增加一些自定义的操作。
 
 ```lua
@@ -1299,6 +1760,18 @@ target("test")
 ## before_uninstall
 
 ### 在卸载之前执行一些自定义脚本
+
+#### 函数原型
+
+```lua
+before_uninstall(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载前脚本函数，接收 target 参数 |
 
 并不会覆盖默认的卸载操作，只是在卸载之前增加一些自定义的操作。
 
@@ -1313,6 +1786,18 @@ target("test")
 
 ### 在运行之前执行一些自定义脚本
 
+#### 函数原型
+
+```lua
+before_run(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 运行前脚本函数，接收 target 参数 |
+
 并不会覆盖默认的运行操作，只是在运行之前增加一些自定义的操作。
 
 ```lua
@@ -1325,6 +1810,18 @@ target("test")
 ## after_prepare
 
 ### 在准备阶段之后执行自定义脚本
+
+#### 函数原型
+
+```lua
+after_prepare(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 准备后脚本函数，接收 target 参数 |
 
 不会覆盖默认的准备操作，只是在准备阶段之后增加一些自定义操作。
 
@@ -1341,6 +1838,18 @@ target("test")
 
 ### 在准备阶段单文件处理后执行自定义脚本
 
+#### 函数原型
+
+```lua
+after_prepare_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 单文件准备后脚本函数，接收 target, sourcefile, opt 参数 |
+
 不会覆盖默认的单文件处理操作，只是在 on_prepare_file 之后增加一些自定义操作。
 
 ```lua
@@ -1353,6 +1862,18 @@ target("test")
 ## after_prepare_files
 
 ### 在准备阶段批量文件处理后执行自定义脚本
+
+#### 函数原型
+
+```lua
+after_prepare_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 批量文件准备后脚本函数，接收 target, sourcebatch, opt 参数 |
 
 不会覆盖默认的批量处理操作，只是在 on_prepare_files 之后增加一些自定义操作。
 
@@ -1367,6 +1888,18 @@ target("test")
 
 ### 在链接之后执行一些自定义脚本
 
+#### 函数原型
+
+```lua
+after_link(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 链接后脚本函数，接收 target 参数 |
+
 这个是在v2.2.7之后新加的接口，用于在链接之后增加一些自定义的操作。
 
 ```lua
@@ -1379,6 +1912,18 @@ target("test")
 ## after_build
 
 ### 在构建之后执行一些自定义脚本
+
+#### 函数原型
+
+```lua
+after_build(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 构建后脚本函数，接收 target 参数 |
 
 并不会覆盖默认的构建操作，只是在构建之后增加一些自定义的操作。
 
@@ -1395,6 +1940,18 @@ target("test")
 
 ### 自定义编译前的脚本, 实现单文件构建
 
+#### 函数原型
+
+```lua
+after_build_file(script: <function (target, sourcefile, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 单文件构建后脚本函数，接收 target, sourcefile, opt 参数 |
+
 通过此接口，可以用来hook指定target内置的构建过程，在每个源文件编译过程之后执行一些自定义脚本：
 
 ```lua
@@ -1409,6 +1966,18 @@ target("test")
 
 ### 自定义编译前的脚本, 实现多文件构建
 
+#### 函数原型
+
+```lua
+after_build_files(script: <function (target, sourcebatch, opt)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 多文件构建后脚本函数，接收 target, sourcebatch, opt 参数 |
+
 通过此接口，可以用来hook指定target内置的构建过程，在一批同类型源文件编译过程之后执行一些自定义脚本：
 
 ```lua
@@ -1422,6 +1991,18 @@ target("test")
 ## after_clean
 
 ### 在清理之后执行一些自定义脚本
+
+#### 函数原型
+
+```lua
+after_clean(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 清理后脚本函数，接收 target 参数 |
 
 并不会覆盖默认的清理操作，只是在清理之后增加一些自定义的操作。
 
@@ -1438,6 +2019,18 @@ target("test")
 
 ### 在打包之后执行一些自定义脚本
 
+#### 函数原型
+
+```lua
+after_package(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 打包后脚本函数，接收 target 参数 |
+
 并不会覆盖默认的打包操作，只是在打包之后增加一些自定义的操作。
 
 ```lua
@@ -1451,6 +2044,18 @@ target("test")
 
 ### 在安装之后执行一些自定义脚本
 
+#### 函数原型
+
+```lua
+after_install(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 安装后脚本函数，接收 target 参数 |
+
 并不会覆盖默认的安装操作，只是在安装之后增加一些自定义的操作。
 
 ```lua
@@ -1462,6 +2067,18 @@ target("test")
 ## after_uninstall
 
 ### 在卸载之后执行一些自定义脚本
+
+#### 函数原型
+
+```lua
+after_uninstall(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 卸载后脚本函数，接收 target 参数 |
 
 并不会覆盖默认的卸载操作，只是在卸载之后增加一些自定义的操作。
 
@@ -1476,6 +2093,18 @@ target("test")
 
 ### 在运行之后执行一些自定义脚本
 
+#### 函数原型
+
+```lua
+after_run(script: <function (target)>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 运行后脚本函数，接收 target 参数 |
+
 并不会覆盖默认的运行操作，只是在运行之后增加一些自定义的操作。
 
 ```lua
@@ -1488,6 +2117,18 @@ target("test")
 ## set_pcheader
 
 ### 设置 C 预编译头文件
+
+#### 函数原型
+
+```lua
+set_pcheader(header: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| header | C预编译头文件路径字符串 |
 
 xmake支持通过预编译头文件去加速c程序编译，目前支持的编译器有：gcc, clang和msvc。
 
@@ -1502,6 +2143,18 @@ target("test")
 
 ### 设置 C++ 预编译头文件
 
+#### 函数原型
+
+```lua
+set_pcxxheader(header: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| header | C++预编译头文件路径字符串 |
+
 xmake支持通过预编译头文件去加速c++程序编译，目前支持的编译器有：gcc, clang和msvc。
 
 使用方式如下：
@@ -1515,6 +2168,18 @@ target("test")
 
 ### 设置 ObjC 预编译头文件
 
+#### 函数原型
+
+```lua
+set_pmheader(header: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| header | ObjC预编译头文件路径字符串 |
+
 xmake支持通过预编译头文件去加速 ObjC 程序编译，目前支持的编译器有：gcc, clang和msvc。
 
 使用方式如下：
@@ -1527,6 +2192,18 @@ target("test")
 ## set_pmxxheader
 
 ### 设置 ObjC++ 预编译头文件
+
+#### 函数原型
+
+```lua
+set_pmxxheader(header: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| header | ObjC++预编译头文件路径字符串 |
 
 xmake支持通过预编译头文件去加速 ObjC++ 程序编译，目前支持的编译器有：gcc, clang和msvc。
 
@@ -1688,6 +2365,19 @@ target("demo")
 
 ### 调整链接顺序
 
+#### 函数原型
+
+```lua
+add_linkorders(linkorders: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| linkorders | 链接顺序字符串或数组，如 "dep1", "dep2" |
+| ... | 可变参数，可传入多个链接顺序字符串 |
+
 这是 xmake 2.8.5 以后的版本才支持的特性，主要用于调整 target 内部的链接顺序。
 
 由于 xmake 提供了 `add_links`, `add_deps`, `add_packages`, `add_options` 接口，可以配置目标、依赖，包和选项中的链接。
@@ -1791,6 +2481,22 @@ target("demo")
 ## add_linkgroups
 
 ### 添加链接组
+
+#### 函数原型
+
+```lua
+add_linkgroups(linkgroups: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| linkgroups | 链接组名称字符串或数组，如 "group1", "group2" |
+| ... | 可变参数，可传入多个链接组名称字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 这是 xmake 2.8.5 以后的版本才支持的特性，这个链接组的特性，目前主要用于 linux 平台的编译，仅支持 gcc/clang 编译器。
 
@@ -2026,6 +2732,19 @@ remove_files = remove_files or del_files
 
 ### 从前面的头文件列表中删除指定文件
 
+#### 函数原型
+
+```lua
+remove_headerfiles(headerfiles: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| headerfiles | 头文件路径字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个头文件路径字符串 |
+
 主要用于从 `add_headerfiles` 设置的头文件列表中删除文件，用法与 `remove_files` 类似。
 
 这个接口，v2.6.3 版本才提供。
@@ -2068,6 +2787,22 @@ target("test")
 ## add_rpathdirs
 
 ### 添加程序运行时动态库的加载搜索目录
+
+#### 函数原型
+
+```lua
+add_rpathdirs(rpathdirs: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| rpathdirs | 运行时库搜索目录字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个运行时库搜索目录字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 通过[add_linkdirs](#add_linkdirs)设置动态库的链接搜索目录后，程序被正常链接，但是在linux平台想要正常运行编译后的程序，会报加载动态库失败。
 
@@ -2174,6 +2909,22 @@ target("demo")
 
 ### 添加系统头文件搜索目录
 
+#### 函数原型
+
+```lua
+add_sysincludedirs(includedirs: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| includedirs | 系统头文件搜索目录字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个系统头文件搜索目录字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 `add_includedirs` 通常用于添加工程头文件搜索目录，而一些系统库头文件的引入，有可能会触发一些内部的警告信息，但是这些警告对于用户来讲也许是无法避免，也修复不了的。
 
 那么，每次显示这些警告反而会干扰用户，因此，gcc/clang 提供了 `-isystem` 专门用来设置系统头文件搜索路径，通过此接口设置的头文件，会压制一些警告信息来避免干扰用户。
@@ -2238,6 +2989,22 @@ add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
 
 ### 取消宏定义
 
+#### 函数原型
+
+```lua
+add_undefines(undefines: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| undefines | 宏定义名称字符串或数组，如 "DEBUG" |
+| ... | 可变参数，可传入多个宏定义名称字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 ```lua
 add_undefines("DEBUG")
 ```
@@ -2286,6 +3053,22 @@ add_cflags("-g", "-O2", {force = true})
 ## add_cxflags
 
 ### 添加c/c++编译选项
+
+#### 函数原型
+
+```lua
+add_cxflags(cxflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| cxflags | C/C++编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个C/C++编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 同时对c/c++代码添加编译选项，用法跟 add_cflags 一致。
 
@@ -2338,6 +3121,22 @@ add_cxxflags("/GR-", {tools = {"clang_cl", "cl"}})
 
 ### 添加objc编译选项
 
+#### 函数原型
+
+```lua
+add_mflags(mflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| mflags | ObjC编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个ObjC编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 仅对objc代码添加编译选项
 
 ```lua
@@ -2354,6 +3153,22 @@ add_mflags("-g", "-O2", {force = true})
 
 ### 添加objc/objc++编译选项
 
+#### 函数原型
+
+```lua
+add_mxflags(mxflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| mxflags | ObjC/ObjC++编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个ObjC/ObjC++编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 同时对objc/objc++代码添加编译选项
 
 ```lua
@@ -2363,6 +3178,22 @@ add_mxflags("-framework CoreFoundation")
 ## add_mxxflags
 
 ### 添加objc++编译选项
+
+#### 函数原型
+
+```lua
+add_mxxflags(mxxflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| mxxflags | ObjC++编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个ObjC++编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 仅对objc++代码添加编译选项
 
@@ -2374,6 +3205,22 @@ add_mxxflags("-framework CoreFoundation")
 
 ### 添加swift编译选项
 
+#### 函数原型
+
+```lua
+add_scflags(scflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| scflags | Swift编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个Swift编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 对swift代码添加编译选项
 
 ```lua
@@ -2383,6 +3230,22 @@ add_scflags("xxx")
 ## add_asflags
 
 ### 添加汇编编译选项
+
+#### 函数原型
+
+```lua
+add_asflags(asflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| asflags | 汇编编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个汇编编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 对汇编代码添加编译选项
 
@@ -2394,6 +3257,22 @@ add_asflags("xxx")
 
 ### 添加go编译选项
 
+#### 函数原型
+
+```lua
+add_gcflags(gcflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| gcflags | Go编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个Go编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 对golang代码添加编译选项
 
 ```lua
@@ -2403,6 +3282,22 @@ add_gcflags("xxx")
 ## add_dcflags
 
 ### 添加dlang编译选项
+
+#### 函数原型
+
+```lua
+add_dcflags(dcflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| dcflags | D语言编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个D语言编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 对dlang代码添加编译选项
 
@@ -2414,6 +3309,22 @@ add_dcflags("xxx")
 
 ### 添加rust编译选项
 
+#### 函数原型
+
+```lua
+add_rcflags(rcflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| rcflags | Rust编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个Rust编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 对rust代码添加编译选项
 
 ```lua
@@ -2423,6 +3334,22 @@ add_rcflags("xxx")
 ## add_fcflags
 
 ### 添加fortran编译选项
+
+#### 函数原型
+
+```lua
+add_fcflags(fcflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| fcflags | Fortran编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个Fortran编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 对fortran代码添加编译选项
 
@@ -2434,6 +3361,22 @@ add_fcflags("xxx")
 
 ### 添加zig编译选项
 
+#### 函数原型
+
+```lua
+add_zcflags(zcflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| zcflags | Zig编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个Zig编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 对zig代码添加编译选项
 
 ```lua
@@ -2444,6 +3387,22 @@ add_zcflags("xxx")
 
 ### 添加cuda编译选项
 
+#### 函数原型
+
+```lua
+add_cuflags(cuflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| cuflags | CUDA编译选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个CUDA编译选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 对cuda代码添加编译选项
 
 ```lua
@@ -2453,6 +3412,22 @@ add_cuflags("-gencode arch=compute_30,code=sm_30")
 ## add_culdflags
 
 ### 添加cuda设备链接选项
+
+#### 函数原型
+
+```lua
+add_culdflags(culdflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| culdflags | CUDA设备链接选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个CUDA设备链接选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 v2.2.7之后，cuda默认构建会使用device-link，这个阶段如果要设置一些链接flags，则可以通过这个接口来设置。
 而最终的程序链接，会使用ldflags，不会调用nvcc，直接通过gcc/clang等c/c++链接器来链接。
@@ -2466,6 +3441,22 @@ add_culdflags("-gencode arch=compute_30,code=sm_30")
 ## add_cugencodes
 
 ### 添加cuda设备的gencode设置
+
+#### 函数原型
+
+```lua
+add_cugencodes(cugencodes: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| cugencodes | CUDA设备gencode设置字符串或数组，如 "sm_30", "sm_50" |
+| ... | 可变参数，可传入多个CUDA设备gencode设置字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 `add_cugencodes()`接口其实就是对`add_cuflags("-gencode arch=compute_xx,code=compute_xx")`编译flags设置的简化封装，其内部参数值对应的实际flags映射关系如下：
 
@@ -2547,6 +3538,22 @@ add_ldflags({"-L/my lib"}, {expand = false}) -- OK
 
 ### 添加静态库归档选项
 
+#### 函数原型
+
+```lua
+add_arflags(arflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| arflags | 静态库归档选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个静态库归档选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 影响对静态库的生成
 
 ```lua
@@ -2555,6 +3562,22 @@ add_arflags("xxx")
 ## add_shflags
 
 ### 添加动态库链接选项
+
+#### 函数原型
+
+```lua
+add_shflags(shflags: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| shflags | 动态库链接选项字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个动态库链接选项字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
 
 影响对动态库的生成
 
@@ -2653,6 +3676,22 @@ add_languages(languages: <string|array>, ..., {
 
 ### 添加向量扩展指令
 
+#### 函数原型
+
+```lua
+add_vectorexts(vectorexts: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| vectorexts | 向量扩展指令字符串或数组，如 "mmx", "neon", "avx" |
+| ... | 可变参数，可传入多个向量扩展指令字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 添加扩展指令优化选项，目前支持以下几种扩展指令集：
 
 ```lua
@@ -2713,6 +3752,22 @@ target("test")
 
 ### 添加链接框架搜索目录
 
+#### 函数原型
+
+```lua
+add_frameworkdirs(frameworkdirs: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| frameworkdirs | 框架搜索目录字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个框架搜索目录字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 对于一些第三方framework，那么仅仅通过[add_frameworks](#add_frameworks)是没法找到的，还需要通过这个接口来添加搜索目录。
 
 ```lua
@@ -2724,6 +3779,19 @@ target("test")
 ## set_toolset
 
 ### 设置工具集
+
+#### 函数原型
+
+```lua
+set_toolset(toolname: <string>, tool: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| toolname | 工具名称字符串，如 "cc", "cxx", "ld", "ar" |
+| tool | 工具路径字符串，如 "/usr/bin/gcc" |
 
 针对特定target单独设置切换某个编译器，链接器，不过我们更推荐使用[set_toolchains](#set_toolchains)对某个target进行整体工具链的切换。
 
@@ -2786,6 +3854,19 @@ set_toolset("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 ## set_toolchains
 
 ### 设置工具链
+
+#### 函数原型
+
+```lua
+set_toolchains(toolchains: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| toolchains | 工具链名称字符串或数组，如 "gcc", "clang", "msvc" |
+| ... | 可变参数，可传入多个工具链名称字符串 |
 
 这对某个特定的target单独切换设置不同的工具链，和set_toolset不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。
 
@@ -2916,6 +3997,18 @@ target("ucrt64")
 
 ### 设置指定目标的编译平台
 
+#### 函数原型
+
+```lua
+set_plat(plat: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| plat | 平台名称字符串，如 "linux", "macosx", "windows", "android" |
+
 通常配合[set_arch](#set_arch)使用，将指定target的编译平台切换到指定平台，xmake会自动根据切换的平台，选择合适的工具链。
 
 一般用于需要同时编译host平台目标、交叉编译目标的场景，更多详情见：[set_toolchains](#set_toolchains)
@@ -2945,11 +4038,37 @@ target("test")
 
 ### 设置指定目标的编译架构
 
+#### 函数原型
+
+```lua
+set_arch(arch: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| arch | 架构名称字符串，如 "x86", "x64", "arm64", "armv7" |
+
 详情见：[set_plat](#set_plat)
 
 ## set_values
 
 ### 设置一些扩展配置值
+
+#### 函数原型
+
+```lua
+set_values(name: <string>, values: <any>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 配置名称字符串，如 "markdown_flags" |
+| values | 配置值，可以是任意类型 |
+| ... | 可变参数，可传入多个配置值 |
 
 给target设置一些扩展的配置值，这些配置没有像`set_ldflags`这种内置的api可用，通过第一个参数传入一个配置名，来扩展配置。
 一般用于传入配置参数给自定义rule中的脚本使用，例如：
@@ -3001,11 +4120,37 @@ target("test")
 
 ### 添加一些扩展配置值
 
+#### 函数原型
+
+```lua
+add_values(name: <string>, values: <any>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 配置名称字符串，如 "markdown_flags" |
+| values | 配置值，可以是任意类型 |
+| ... | 可变参数，可传入多个配置值 |
+
 用法跟[set_values](#set_values)类似，区别就是这个接口是追加设置，而不会每次覆盖设置。
 
 ## set_rundir
 
 ### 设置运行目录
+
+#### 函数原型
+
+```lua
+set_rundir(rundir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| rundir | 运行目录路径字符串 |
 
 此接口用于设置默认运行target程序的当前运行目录，如果不设置，默认情况下，target是在可执行文件所在目录加载运行。
 
@@ -3024,6 +4169,19 @@ target("test")
 
 ### 设置运行参数列表
 
+#### 函数原型
+
+```lua
+set_runargs(runargs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| runargs | 运行参数字符串或数组，如 "-x", "--arg1=val" |
+| ... | 可变参数，可传入多个运行参数字符串 |
+
 2.6.9 新增接口，可用于设置 `xmake run` 的默认运行参数，通过它，我们可以避免每次命令行输入运行参数，`xmake run -x --arg1=val`
 
 ```lua
@@ -3033,6 +4191,20 @@ set_runargs("-x", "--arg1=val")
 ## add_runenvs
 
 ### 添加运行环境变量
+
+#### 函数原型
+
+```lua
+add_runenvs(name: <string>, values: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 环境变量名称字符串，如 "PATH", "LD_LIBRARY_PATH" |
+| values | 环境变量值字符串或数组，支持多个值 |
+| ... | 可变参数，可传入多个环境变量值 |
 
 此接口用于添加设置默认运行target程序的环境变量，跟[set_runenv](#set_runenv)不同的是，此接口是对已有系统env中的值进行追加，并不会覆盖。
 
@@ -3050,6 +4222,19 @@ target("test")
 
 ### 设置运行环境变量
 
+#### 函数原型
+
+```lua
+set_runenv(name: <string>, value: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 环境变量名称字符串，如 "PATH", "LD_LIBRARY_PATH" |
+| value | 环境变量值字符串 |
+
 此接口跟[add_runenvs](#add_runenvs)不同的是，`set_runenv`是对某个环境变量的覆盖设置，会覆盖原有系统环境的env值，并且此接口是单数设置，不能传递多参。
 
 所以，如果要覆盖设置PATH这中多路径的env，需要自己去拼接：
@@ -3066,6 +4251,18 @@ target("test")
 
 ### 设置安装目录
 
+#### 函数原型
+
+```lua
+set_installdir(installdir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| installdir | 安装目录路径字符串 |
+
 2.2.5版本新增接口，用于针对每个target设置不同的默认安装目录，一般用于`xmake install/uninstall`命令。
 
 默认情况下执行`xmake install`会安装到系统`/usr/local`目录，我们除了可以通过`xmake install -o /usr/local`指定其他安装目录外，
@@ -3076,6 +4273,18 @@ target("test")
 ## set_prefixdir
 
 ### 设置安装前置子目录
+
+#### 函数原型
+
+```lua
+set_prefixdir(prefixdir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| prefixdir | 安装前置子目录路径字符串 |
 
 尽管通过 `set_installdir` 和 `xmake install -o [installdir]` 设置了安装根目录，但是如果我们还想进一步调整 bin, lib 和 include 的子路径。
 
@@ -3240,11 +4449,36 @@ add_headerfiles("src/test.h", {install = false})
 
 ### 设置模板配置文件的输出目录
 
+#### 函数原型
+
+```lua
+set_configdir(configdir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| configdir | 模板配置文件输出目录路径字符串 |
+
 2.2.5版本新增接口，主要用于[add_configfiles](#add_configfiles)接口设置的模板配置文件的输出目录。
 
 ## set_configvar
 
 ### 设置模板配置变量
+
+#### 函数原型
+
+```lua
+set_configvar(name: <string>, value: <any>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 配置变量名称字符串，如 "HAS_FOO" |
+| value | 配置变量值，可以是任意类型 |
 
 2.2.5版本新增接口，用于在编译前，添加一些需要预处理的模板配置变量，一般用于[add_configfiles](#add_configfiles)接口。
 
@@ -3620,6 +4854,19 @@ define CUSTOM_FOO foo
 
 ### 设置构建行为策略
 
+#### 函数原型
+
+```lua
+set_policy(policy: <string>, value: <boolean>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| policy | 策略名称字符串，如 "check.auto_ignore_flags", "build.warning" |
+| value | 策略值，true表示启用，false表示禁用 |
+
 xmake有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。
 
 因此，从v2.3.4开始，xmake提供默认构建策略的修改设置，开放给用户一定程度上的可配置性。
@@ -3641,6 +4888,19 @@ target("test")
 ## set_runtimes
 
 ### 设置编译目标依赖的运行时库
+
+#### 函数原型
+
+```lua
+set_runtimes(runtimes: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| runtimes | 运行时库字符串或数组，如 "MT", "MD", "MTd", "MDd" |
+| ... | 可变参数，可传入多个运行时库字符串 |
 
 这是 v2.5.1 开始新增的接口，用于抽象化设置编译目标依赖的运行时库，目前仅仅支持对 msvc 运行时库的抽象，但后续也许会扩展对其他编译器运行时库的映射。
 
@@ -3687,6 +4947,18 @@ target("test")
 ## set_group
 
 ### 设置目标分组
+
+#### 函数原型
+
+```lua
+set_group(group: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| group | 分组名称字符串，如 "test", "libs", "tools" |
 
 #### 用于工程文件分组展示
 
@@ -3785,6 +5057,20 @@ $ xmake run -g bench*
 
 ### 添加源文件分组
 
+#### 函数原型
+
+```lua
+add_filegroups(name: <string>, files: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 分组名称字符串，如 "source", "header", "test" |
+| files | 源文件路径字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个源文件路径字符串 |
+
 这个接口目前主要用于对 vs/vsxmake/cmakelists generator 生成的工程文件进行源文件分组展示。
 
 如果不设置分组展示，Xmake 也会默认按照树状模式展示，但是有些极端情况下，目录层级显示不是很好，例如：
@@ -3842,6 +5128,19 @@ target("test")
 
 ### 启用或者禁用异常
 
+#### 函数原型
+
+```lua
+set_exceptions(exceptions: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| exceptions | 异常模式字符串或数组，如 "cxx", "objc", "no-cxx" |
+| ... | 可变参数，可传入多个异常模式字符串 |
+
 我们可以通过这个配置，配置启用和禁用 C++/Objc 的异常。
 
 通常，如果我们通过 add_cxxflags 接口去配置它们，需要根据不同的平台，编译器分别处理它们，非常繁琐。
@@ -3892,6 +5191,19 @@ Xmake 会在内部自动根据不同的编译器，去适配对应的 flags。
 
 ### 设置编码
 
+#### 函数原型
+
+```lua
+set_encodings(encodings: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| encodings | 编码字符串或数组，如 "utf-8", "gb2312" |
+| ... | 可变参数，可传入多个编码字符串 |
+
 这是 2.8.2 版本新增的接口，我们可以用这个接口设置源文件、目标执行文件的编码。
 
 目前支持的编码：utf-8, gb2312 (msvc)
@@ -3935,6 +5247,22 @@ set_encodings("utf-8")
 
 ### 强制添加 includes
 
+#### 函数原型
+
+```lua
+add_forceincludes(includes: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| includes | 头文件路径字符串或数组，如 "config.h" |
+| ... | 可变参数，可传入多个头文件路径字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
 这是 2.8.2 新增的接口，用于在配置文件中直接强制添加 `includes` 头文件。
 
 ```lua
@@ -3967,6 +5295,19 @@ add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
 
 ### 添加额外的文件
 
+#### 函数原型
+
+```lua
+add_extrafiles(extrafiles: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| extrafiles | 额外文件路径字符串或数组，如 "assets/other.txt" |
+| ... | 可变参数，可传入多个额外文件路径字符串 |
+
 这个接口也是 2.8.2 新加的，主要用于 vs/vsxmake project generator 生成的工程中，添加额外的文件到工程列表中去，这样，用户也可以快速点击编辑它们，尽管它们不是代码文件。
 
 将来，我们也可能用此接口做更多其他的事情。
@@ -3978,6 +5319,28 @@ add_extrafiles("assets/other.txt")
 ## add_tests
 
 ### 添加测试用例
+
+#### 函数原型
+
+```lua
+add_tests(tests: <string|array>, ..., {
+    runargs = <string|array>,
+    runenvs = <table>,
+    timeout = <number>,
+    ... = <any>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| tests | 测试用例名称字符串或数组，如 "test1", "test2" |
+| ... | 可变参数，可传入多个测试用例名称字符串 |
+| runargs | 测试运行参数字符串或数组，可选 |
+| runenvs | 测试运行环境变量表，可选 |
+| timeout | 测试超时时间（秒），可选 |
+| ... | 其他测试配置参数，可选 |
 
 2.8.5 版本开始，我们增加了内置的测试命令：`xmake test`，我们只需要在需要测试的 target 上通过 add_tests 配置一些测试用例，就可以自动执行测试。
 
