@@ -3805,19 +3805,87 @@ set_toolset("cc", "gcc@$(projectdir)/tools/bin/Mipscc.exe")
 #### Function Prototype
 
 ```lua
-set_toolchains(toolchains: <string|array>, ...)
+set_toolchains(toolchains: <string|array>, ..., {
+    vs = <string>,
+    plat = <string>,
+    arch = <string>,
+    clang = <boolean>,
+    gcc = <boolean>,
+    vs_sdkver = <string>,
+    vs_toolset = <string>,
+    ... = <any>
+})
 ```
 
 #### Parameter Description
 
 | Parameter | Description |
 |-----------|-------------|
-| toolchains | Toolchain name string or array, such as "gcc", "clang", "msvc" |
+| toolchains | Toolchain name string or array, such as "gcc", "clang", "msvc", "ndk[gcc]", "mingw[clang]@llvm-mingw", "msvc[vs=2025]" |
+| vs | Visual Studio version, such as "2022", "2025" |
+| plat | Platform name, such as "android", "ios" |
+| arch | Architecture name, such as "arm64", "x64" |
+| clang | Use Clang compiler in MinGW toolchain, boolean value |
+| gcc | Use GCC compiler in Android NDK toolchain, boolean value |
+| vs_sdkver | Visual Studio SDK version |
+| vs_toolset | Visual Studio toolset version |
 | ... | Variable parameters, can pass multiple toolchain name strings |
 
 This sets up different tool chains for a specific target individually. Unlike set_toolset, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.
 
 This is also a recommended practice, because most compiler tool chains like gcc/clang, the compiler and the linker are used together. To cut it, you have to cut it as a whole. Separate and scattered switch settings will be cumbersome.
+
+### Toolchain Configuration Syntax
+
+Starting from xmake 3.0.5, you can use simplified syntax for toolchain configuration:
+
+```lua
+-- Basic toolchain names
+set_toolchains("gcc", "clang", "msvc")
+
+-- With configuration options (new syntax)
+set_toolchains("ndk[gcc]")                    -- Use GCC in Android NDK
+set_toolchains("mingw[clang]@llvm-mingw")     -- Use Clang in MinGW from llvm-mingw package
+set_toolchains("msvc[vs=2025]")               -- Use Visual Studio 2025
+
+-- Traditional configuration syntax
+set_toolchains("ndk", {gcc = true})           -- Use GCC in Android NDK
+set_toolchains("mingw", {clang = true})       -- Use Clang in MinGW (requires add_requires("llvm-mingw"))
+set_toolchains("msvc", {vs = "2025"})
+set_toolchains("msvc", {vs = "2022", vs_sdkver = "10.0.19041.0"})
+set_toolchains("ndk", {plat = "android", arch = "arm64", gcc = true})
+```
+
+### Package Dependencies
+
+When using `mingw[clang]@llvm-mingw` syntax, you need to add the package dependency:
+
+```lua
+add_requires("llvm-mingw")
+set_toolchains("mingw[clang]@llvm-mingw")
+```
+
+Or with traditional syntax:
+
+```lua
+add_requires("llvm-mingw")
+set_toolchains("mingw", {clang = true})
+```
+
+### Command Line Usage
+
+You can also specify toolchain configurations via command line:
+
+```bash
+# Switch to GCC in Android NDK
+xmake f -p android --ndk=~/Downloads/android-ndk-r14b/ --toolchain=ndk[gcc] -c
+
+# Switch to Clang in MinGW (package dependency handled automatically)
+xmake f --toolchain=mingw[clang]@llvm-mingw -c
+
+# Switch to Visual Studio 2025
+xmake f --toolchain=msvc[vs=2025] -c
+```
 
 For example, we switch the test target to two tool chains of clang+yasm:
 

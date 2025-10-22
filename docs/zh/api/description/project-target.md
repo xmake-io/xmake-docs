@@ -3858,19 +3858,87 @@ set_toolset("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 #### 函数原型
 
 ```lua
-set_toolchains(toolchains: <string|array>, ...)
+set_toolchains(toolchains: <string|array>, ..., {
+    vs = <string>,
+    plat = <string>,
+    arch = <string>,
+    clang = <boolean>,
+    gcc = <boolean>,
+    vs_sdkver = <string>,
+    vs_toolset = <string>,
+    ... = <any>
+})
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| toolchains | 工具链名称字符串或数组，如 "gcc", "clang", "msvc" |
+| toolchains | 工具链名称字符串或数组，如 "gcc", "clang", "msvc", "ndk[gcc]", "mingw[clang]@llvm-mingw", "msvc[vs=2025]" |
+| vs | Visual Studio 版本，如 "2022", "2025" |
+| plat | 平台名称，如 "android", "ios" |
+| arch | 架构名称，如 "arm64", "x64" |
+| clang | 在 MinGW 工具链中使用 Clang 编译器，布尔值 |
+| gcc | 在 Android NDK 工具链中使用 GCC 编译器，布尔值 |
+| vs_sdkver | Visual Studio SDK 版本 |
+| vs_toolset | Visual Studio 工具集版本 |
 | ... | 可变参数，可传入多个工具链名称字符串 |
 
 这对某个特定的target单独切换设置不同的工具链，和set_toolset不同的是，此接口是对完整工具链的整体切换，比如cc/ld/sh等一系列工具集。
 
 这也是推荐做法，因为像gcc/clang等大部分编译工具链，编译器和链接器都是配套使用的，要切就得整体切，单独零散的切换设置会很繁琐。
+
+### 工具链配置语法
+
+从 xmake 3.0.5 开始，可以使用简化的语法进行工具链配置：
+
+```lua
+-- 基础工具链名称
+set_toolchains("gcc", "clang", "msvc")
+
+-- 带配置选项（新语法）
+set_toolchains("ndk[gcc]")                    -- 在 Android NDK 中使用 GCC
+set_toolchains("mingw[clang]@llvm-mingw")     -- 在 MinGW 中使用 Clang，来自 llvm-mingw 包
+set_toolchains("msvc[vs=2025]")               -- 使用 Visual Studio 2025
+
+-- 传统配置语法
+set_toolchains("ndk", {gcc = true})           -- 在 Android NDK 中使用 GCC
+set_toolchains("mingw", {clang = true})       -- 在 MinGW 中使用 Clang（需要 add_requires("llvm-mingw")）
+set_toolchains("msvc", {vs = "2025"})
+set_toolchains("msvc", {vs = "2022", vs_sdkver = "10.0.19041.0"})
+set_toolchains("ndk", {plat = "android", arch = "arm64", gcc = true})
+```
+
+### 包依赖
+
+使用 `mingw[clang]@llvm-mingw` 语法时，需要添加包依赖：
+
+```lua
+add_requires("llvm-mingw")
+set_toolchains("mingw[clang]@llvm-mingw")
+```
+
+或使用传统语法：
+
+```lua
+add_requires("llvm-mingw")
+set_toolchains("mingw", {clang = true})
+```
+
+### 命令行使用
+
+也可以通过命令行指定工具链配置：
+
+```bash
+# 切换到 Android NDK 中的 GCC
+xmake f -p android --ndk=~/Downloads/android-ndk-r14b/ --toolchain=ndk[gcc] -c
+
+# 切换到 MinGW 中的 Clang（包依赖自动处理）
+xmake f --toolchain=mingw[clang]@llvm-mingw -c
+
+# 切换到 Visual Studio 2025
+xmake f --toolchain=msvc[vs=2025] -c
+```
 
 比如我们切换test目标到clang+yasm两个工具链：
 
