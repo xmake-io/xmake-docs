@@ -6,6 +6,22 @@
 
 ### 添加子工程文件和目录 {#add-sub-project-and-configurations}
 
+#### 函数原型
+
+```lua
+includes(paths: <string|array>, ..., {
+    rootdir = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| paths | 子工程文件或目录路径，支持模式匹配如 "**/xmake.lua" |
+| ... | 可变参数，可传入多个路径 |
+| rootdir | 相对路径解析的根目录，可选 |
+
 #### 引入子目录配置
 
 我们能够使用此接口添加工程子文件 (xmake.lua) 或者带有 xmake.lua 的工程子目录。
@@ -165,6 +181,18 @@ target("test2")
 
 ### 设置工程名
 
+#### 函数原型
+
+```lua
+set_project(name: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 工程名称字符串 |
+
 设置工程名，在doxygen自动文档生成插件、工程文件生成插件中会用到，一般设置在xmake.lua的最开头，当然放在其他地方也是可以的
 
 ```lua
@@ -178,6 +206,23 @@ set_version("1.5.1")
 ## set_version
 
 ### 设置工程版本
+
+#### 函数原型
+
+```lua
+set_version(version: <string>, {
+    build = <string>,
+    soname = <string|boolean>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| version | 工程版本字符串，如 "1.5.1" |
+| build | 构建版本字符串，支持时间格式如 "%Y%m%d%H%M" |
+| soname | 动态库兼容性控制的 soname 版本，可为字符串或布尔值 |
 
 设置项目版本，可以放在 xmake.lua 任何地方，一般放在最开头，例如：
 
@@ -235,6 +280,18 @@ set_version("1.0.1") -> libfoo.so, libfoo.dylib
 
 ### 设置最小xmake版本
 
+#### 函数原型
+
+```lua
+set_xmakever(version: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| version | 最小要求的 xmake 版本字符串，如 "2.1.0" |
+
 用于处理xmake版本兼容性问题，如果项目的`xmake.lua`，通过这个接口设置了最小xmake版本支持，那么用户环境装的xmake低于要求的版本，就会提示错误。
 
 一般情况下，建议默认对其进行设置，这样对用户比较友好，如果`xmake.lua`中用到了高版本的api接口，用户那边至少可以知道是否因为版本不对导致的构建失败。
@@ -250,12 +307,38 @@ set_xmakever("2.1.0")
 
 ### 添加模块目录
 
+#### 函数原型
+
+```lua
+add_moduledirs(dirs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| dirs | 模块目录路径字符串或数组 |
+| ... | 可变参数，可传入多个目录路径 |
+
 xmake内置的扩展模块都在`xmake/modules`目录下，可通过[import](/zh/api/scripts/builtin-modules/import)来导入他们，如果自己在工程里面实现了一些扩展模块，
 可以放置在这个接口指定的目录下，import也就会能找到，并且优先进行导入。
 
 ## add_plugindirs
 
 ### 添加插件目录
+
+#### 函数原型
+
+```lua
+add_plugindirs(dirs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| dirs | 插件目录路径字符串或数组 |
+| ... | 可变参数，可传入多个目录路径 |
 
 xmake内置的插件都是放在`xmake/plugins`目录下，但是对于用户自定义的一些特定工程的插件，如果不想放置在xmake安装目录下，那么可以在`xmake.lua`中进行配置指定的其他插件路径。
 
@@ -269,6 +352,18 @@ add_plugindirs("$(projectdir)/plugins")
 ## get_config
 
 ### 获取给定的配置值
+
+#### 函数原型
+
+```lua
+get_config(name: <string>): <string|boolean|number>
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 配置选项名称字符串 |
 
 此接口从2.2.2版本开始引入，用于快速获取给定的配置值，可用于描述域。
 
@@ -286,6 +381,19 @@ end
 
 ### 设置给定的默认配置值
 
+#### 函数原型
+
+```lua
+set_config(name: <string>, value: <string|boolean|number>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 配置选项名称字符串 |
+| value | 配置值，可为字符串、布尔值或数字 |
+
 此接口从2.2.2版本开始引入，用于快速在xmake.lua中设置一个默认配置值，仅用于描述域。
 
 之前很多配置，包括编译工具链，构建目录等只能通过`$ xmake f --name=value`的方式来配置，如果我们想写死在xmake.lua提供一个默认值，就可以通过下面的方式来配置：
@@ -302,6 +410,36 @@ set_config("ld", "g++")
 ## add_requires
 
 ### 添加需要的依赖包
+
+#### 函数原型
+
+```lua
+add_requires(packages: <string|array>, ..., {
+    optional = <boolean>,
+    system = <boolean>,
+    verify = <boolean>,
+    debug = <boolean>,
+    private = <boolean>,
+    configs = <table>,
+    alias = <string>,
+    ... = <any>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| packages | 包名称字符串或数组，支持语义版本如 "tbox 1.6.*" |
+| ... | 可变参数，可传入多个包名称 |
+| optional | 设置为可选包，布尔值 |
+| system | 禁用系统包检测，布尔值 |
+| verify | 禁用包校验，布尔值 |
+| debug | 使用调试版本包，布尔值 |
+| private | 作为私有包使用，布尔值 |
+| configs | 包特定配置表 |
+| alias | 包别名 |
+| ... | 其他包特定配置参数 |
 
 xmake的依赖包管理是完全支持语义版本选择的，例如："~1.6.1"，对于语义版本的具体描述见：[https://semver.org/](https://semver.org/)
 
@@ -538,6 +676,30 @@ add_requires("ffmpeg[shared,debug,codecs=[foo,bar,zoo]]")
 
 ### 设置指定依赖包的配置
 
+#### 函数原型
+
+```lua
+add_requireconfs(packages: <string|array>, ..., {
+    configs = <table>,
+    override = <boolean>,
+    version = <string>,
+    debug = <boolean>,
+    ... = <any>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| packages | 包名称字符串或数组，支持模式匹配如 "*" 或 "libpng.zlib" |
+| ... | 可变参数，可传入多个包名称 |
+| configs | 包配置表 |
+| override | 覆盖现有配置，布尔值 |
+| version | 包版本字符串 |
+| debug | 使用调试版本，布尔值 |
+| ... | 其他包特定配置参数 |
+
 这是 v2.5.1 之后的版本新增的接口，我们可以用它来对 `add_requires()` 定义的包和它的依赖包的配置进行扩充和改写，它有下面几种用法。
 
 #### 扩充指定包的配置
@@ -667,6 +829,22 @@ add_requireconfs("libwebp.*|cmake", {debug = true})
 
 ### 添加依赖包仓库
 
+#### 函数原型
+
+```lua
+add_repositories(repos: <string|array>, ..., {
+    rootdir = <string>
+})
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| repos | 仓库名称和URL字符串或数组，格式："name url" |
+| ... | 可变参数，可传入多个仓库 |
+| rootdir | 相对路径解析的根目录，可选 |
+
 如果需要的包不在官方仓库[xmake-repo](https://github.com/xmake-io/xmake-repo)中，我们可以提交贡献代码到仓库进行支持。
 但如果有些包仅用于个人或者私有项目，我们可以建立一个私有仓库repo，仓库组织结构可参考：[xmake-repo](https://github.com/xmake-io/xmake-repo)
 
@@ -711,6 +889,18 @@ add_repositories("my-repo myrepo", {rootdir = os.scriptdir()})
 
 ### 设置默认的编译平台
 
+#### 函数原型
+
+```lua
+set_defaultplat(platform: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| platform | 默认编译平台名称，如 "iphoneos", "windows" |
+
 v2.5.6 以上版本才支持，用于设置工程默认的编译平台，如果没有设置，默认平台跟随当前系统平台，也就是 os.host()。
 
 比如，在 macOS 上默认编译平台是 macosx，如果当前项目是 ios 项目，那么可以设置默认编译平台为 iphoneos。
@@ -724,6 +914,19 @@ set_defaultplat("iphoneos")
 ## set_defaultarchs
 
 ### 设置默认的编译架构
+
+#### 函数原型
+
+```lua
+set_defaultarchs(archs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| archs | 默认编译架构字符串或数组，支持平台特定格式如 "iphoneos|arm64" |
+| ... | 可变参数，可传入多个架构规格 |
 
 v2.5.6 以上版本才支持，用于设置工程默认的编译架构，如果没有设置，默认平台跟随当前系统架构，也就是 os.arch()。
 
@@ -746,6 +949,18 @@ set_defaultarchs("iphoneos|arm64", "windows|x64")
 
 ### 设置默认的编译模式
 
+#### 函数原型
+
+```lua
+set_defaultmode(mode: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| mode | 默认编译模式名称，如 "release", "debug", "releasedbg" |
+
 v2.5.6 以上版本才支持，用于设置工程默认的编译模式，如果没有设置，默认是 release 模式编译。
 
 ```lua
@@ -757,6 +972,19 @@ set_defaultmode("releasedbg")
 ## set_allowedplats
 
 ### 设置允许编译的平台列表
+
+#### 函数原型
+
+```lua
+set_allowedplats(platforms: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| platforms | 允许的编译平台名称字符串或数组 |
+| ... | 可变参数，可传入多个平台名称 |
 
 v2.5.6 以上版本才支持，用于设置工程支持的编译平台列表，如果用户指定了其他平台，会提示错误，这通常用于限制用户指定错误的无效平台。
 
@@ -771,6 +999,19 @@ set_allowedplats("windows", "mingw")
 ## set_allowedarchs
 
 ### 设置允许编译的平台架构
+
+#### 函数原型
+
+```lua
+set_allowedarchs(archs: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| archs | 允许的编译架构字符串或数组，支持平台特定格式如 "windows|x64" |
+| ... | 可变参数，可传入多个架构规格 |
 
 v2.5.6 以上版本才支持，用于设置工程支持的编译架构列表，如果用户指定了其他架构，会提示错误，这通常用于限制用户指定错误的无效架构。
 
@@ -794,6 +1035,19 @@ set_allowedarchs("windows|x64", "iphoneos|arm64")
 
 ### 设置允许的编译模式列表
 
+#### 函数原型
+
+```lua
+set_allowedmodes(modes: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| modes | 允许的编译模式名称字符串或数组 |
+| ... | 可变参数，可传入多个模式名称 |
+
 v2.5.6 以上版本才支持，用于设置工程支持的编译模式列表，如果用户指定了其他模式，会提示错误，这通常用于限制用户指定错误的无效模式。
 
 如果没有设置，那么没有任何模式限制。
@@ -805,6 +1059,21 @@ set_allowedmodes("release", "releasedbg")
 设置当前项目仅仅支持 release/releasedbg 两个编译模式。
 
 ## namespace
+
+### 进入命名空间
+
+#### 函数原型
+
+```lua
+namespace(name: <string>, script: <function>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 命名空间名称字符串 |
+| script | 命名空间脚本函数 |
 
 进入命名空间，xmake 2.9.8 版本支持，可以用于隔离子工程的重名 target，option 等各种域名冲突。
 
@@ -1102,6 +1371,20 @@ end)
 ```
 
 ## namespace_end
+
+### 结束命名空间
+
+#### 函数原型
+
+```lua
+namespace_end()
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| (无) | 无需参数 |
 
 结束当前的命名空间。
 
