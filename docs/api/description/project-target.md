@@ -391,7 +391,7 @@ The three goals of the above code, when executing the `xmake`, `xmake install`, 
 Through the above example, you can see that the default target can be set more than one, and it will run in turn when running.
 
 :::tip NOTE
-    Note that the `xmake uninstall` and `xmake clean` commands are not affected by this interface setting, as most users prefer to clean and unload all of them.
+Note that the `xmake uninstall` and `xmake clean` commands are not affected by this interface setting, as most users prefer to clean and unload all of them.
 :::
 
 If you don't want to use the default target, you can manually specify which targets you need to build the installation:
