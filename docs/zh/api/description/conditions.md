@@ -9,14 +9,14 @@
 #### 函数原型
 
 ```lua
-is_os(os: <string|array>, ...)
+is_os(os: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| os | 操作系统名称字符串或数组 |
+| os | 操作系统名称字符串 |
 | ... | 可变参数，可传递多个操作系统名称 |
 
 ```lua
@@ -41,14 +41,14 @@ end
 #### 函数原型
 
 ```lua
-is_arch(arch: <string|array>, ...)
+is_arch(arch: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| arch | 架构名称字符串或数组 |
+| arch | 架构名称字符串 |
 | ... | 可变参数，可传递多个架构名称 |
 
 用于检测编译配置：`xmake f -a armv7`
@@ -83,14 +83,14 @@ end
 #### 函数原型
 
 ```lua
-is_plat(plat: <string|array>, ...)
+is_plat(plat: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| plat | 平台名称字符串或数组 |
+| plat | 平台名称字符串 |
 | ... | 可变参数，可传递多个平台名称 |
 
 用于检测编译配置：`xmake f -p iphoneos`
@@ -132,14 +132,14 @@ $ xmake f -p other --sdk=...
 #### 函数原型
 
 ```lua
-is_host(host: <string|array>, ...)
+is_host(host: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| host | 主机系统名称字符串或数组 |
+| host | 主机系统名称字符串 |
 | ... | 可变参数，可传递多个主机名称 |
 
 有些编译平台是可以在多个不同的操作系统进行构建的，例如：android的ndk就支持linux,macOS还有windows环境。
@@ -170,14 +170,14 @@ end
 #### 函数原型
 
 ```lua
-is_subhost(subhost: <string|array>, ...)
+is_subhost(subhost: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| subhost | 子系统名称字符串或数组 |
+| subhost | 子系统名称字符串 |
 | ... | 可变参数，可传递多个子系统名称 |
 
 目前主要用于 windows 系统上 cygwin, msys2 等子系统环境的探测，如果在 msys2 shell 环境下运行 xmake，那么 `is_subhost("windows")` 想将会返回 false，而 `is_host("windows")` 依旧会返回 true。
@@ -208,14 +208,14 @@ end
 #### 函数原型
 
 ```lua
-is_subarch(subarch: <string|array>, ...)
+is_subarch(subarch: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| subarch | 子系统架构名称字符串或数组 |
+| subarch | 子系统架构名称字符串 |
 | ... | 可变参数，可传递多个子系统架构名称 |
 
 目前主要用于 windows 系统上 cygwin, msys2 等子系统环境下架构的探测，通常在 windows 编译平台采用 msvc 工具链，那边编译架构时 x64，x86。
@@ -248,14 +248,14 @@ is_cross()
 #### 函数原型
 
 ```lua
-is_mode(mode: <string|array>, ...)
+is_mode(mode: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| mode | 编译模式名称字符串或数组 |
+| mode | 编译模式名称字符串 |
 | ... | 可变参数，可传递多个模式名称 |
 
 用于检测编译配置：`xmake f -m debug`
@@ -265,44 +265,15 @@ is_mode(mode: <string|array>, ...)
 ```lua
 -- 如果当前编译模式是debug
 if is_mode("debug") then
-
-    -- 添加DEBUG编译宏
     add_defines("DEBUG")
-
-    -- 启用调试符号
     set_symbols("debug")
-
-    -- 禁用优化
     set_optimize("none")
-
 end
 
--- 如果是release或者profile模式
-if is_mode("release", "profile") then
-
-    -- 如果是release模式
-    if is_mode("release") then
-
-        -- 隐藏符号
-        set_symbols("hidden")
-
-        -- strip所有符号
-        set_strip("all")
-
-        -- 忽略帧指针
-        add_cxflags("-fomit-frame-pointer")
-        add_mxflags("-fomit-frame-pointer")
-
-    -- 如果是profile模式
-    else
-
-        -- 启用调试符号
-        set_symbols("debug")
-
-    end
-
-    -- 添加扩展指令集
-    add_vectorexts("sse2", "sse3", "ssse3", "mmx")
+-- 如果是release模式
+if is_mode("release") then
+    set_symbols("hidden")
+    set_strip("all")
 end
 ```
 
@@ -313,14 +284,14 @@ end
 #### 函数原型
 
 ```lua
-is_kind(kind: <string|array>, ...)
+is_kind(kind: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| kind | 目标类型名称字符串或数组 |
+| kind | 目标类型名称字符串 |
 | ... | 可变参数，可传递多个类型名称 |
 
 判断当前是否编译的是动态库还是静态库，用于检测编译配置：`xmake f -k [static|shared]`
@@ -361,7 +332,7 @@ $ xmake
 #### 函数原型
 
 ```lua
-is_config(name: <string>, values: <string|array>, ...)
+is_config(name: <string>, values: <string>, ...)
 ```
 
 #### 参数说明
@@ -369,7 +340,7 @@ is_config(name: <string>, values: <string|array>, ...)
 | 参数 | 描述 |
 |------|------|
 | name | 配置选项名称字符串 |
-| values | 配置值字符串或数组 |
+| values | 配置值字符串 |
 | ... | 可变参数，可传递多个值 |
 
 此接口从2.2.2版本开始引入，用于判断指定配置是否为给定的值，可用于描述域。
@@ -428,14 +399,14 @@ end
 #### 函数原型
 
 ```lua
-has_config(configs: <string|array>, ...)
+has_config(configs: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| configs | 配置名称字符串或数组 |
+| configs | 配置名称字符串 |
 | ... | 可变参数，可传递多个配置名称 |
 
 此接口从2.2.2版本开始引入，用于检测自定义或者内置的编译配置是否存在或启用，可用于描述域。
@@ -481,14 +452,14 @@ $ xmake f --test1=false
 #### 函数原型
 
 ```lua
-has_package(packages: <string|array>, ...)
+has_package(packages: <string>, ...)
 ```
 
 #### 参数说明
 
 | 参数 | 描述 |
 |------|------|
-| packages | 包名称字符串或数组 |
+| packages | 包名称字符串 |
 | ... | 可变参数，可传递多个包名称 |
 
 此接口从2.2.3版本开始引入，用于检测远程依赖包是否存在或启用，可用于描述域。
