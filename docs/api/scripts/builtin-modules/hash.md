@@ -7,6 +7,20 @@ The hash module provides hash value calculation and UUID generation functions. I
 
 - Calculate the MD5 hash value of a string or file
 
+#### Function Prototype
+
+```lua
+hash.md5(input: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | String or file path |
+
+#### Usage
+
 ```lua
 local hashval = hash.md5("hello")
 local hashval = hash.md5("/path/to/file")
@@ -27,6 +41,20 @@ print("MD5: " .. checksum)
 
 - Calculate the SHA1 hash value of a string or file
 
+#### Function Prototype
+
+```lua
+hash.sha1(input: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | String or file path |
+
+#### Usage
+
 ```lua
 local hashval = hash.sha1("hello")
 local hashval = hash.sha1("/path/to/file")
@@ -37,6 +65,20 @@ Calculates the SHA1 hash value of the specified string or file and returns a hex
 ## hash.sha256
 
 - Calculate the SHA256 hash value of a string or file
+
+#### Function Prototype
+
+```lua
+hash.sha256(input: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | String or file path |
+
+#### Usage
 
 ```lua
 local hashval = hash.sha256("hello")
@@ -60,6 +102,20 @@ end
 
 - Generate a UUID based on a name
 
+#### Function Prototype
+
+```lua
+hash.uuid(name: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Name string for UUID generation |
+
+#### Usage
+
 ```lua
 local id = hash.uuid("name")
 ```
@@ -79,10 +135,19 @@ local config_id = hash.uuid("debug-x64-windows")
 
 - Calculate the 32-bit xxHash hash value of a string or file
 
+#### Function Prototype
+
 ```lua
-local hashval = hash.xxhash32("hello")
-local hashval = hash.xxhash32("/path/to/file")
+hash.xxhash32(input: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | String or file path |
+
+#### Usage
 
 Calculates hash value using the xxHash32 algorithm. xxHash is an extremely fast non-cryptographic hash algorithm suitable for hash tables, checksums, and other scenarios.
 
@@ -90,10 +155,19 @@ Calculates hash value using the xxHash32 algorithm. xxHash is an extremely fast 
 
 - Calculate the 64-bit xxHash hash value of a string or file
 
+#### Function Prototype
+
 ```lua
-local hashval = hash.xxhash64("hello")
-local hashval = hash.xxhash64("/path/to/file")
+hash.xxhash64(input: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | String or file path |
+
+#### Usage
 
 Calculates hash value using the xxHash64 algorithm. Fast and suitable for quick verification:
 
@@ -106,10 +180,19 @@ local key = hash.xxhash64(table.concat(params, "|"))
 
 - Calculate the 128-bit xxHash hash value of a string or file
 
+#### Function Prototype
+
 ```lua
-local hashval = hash.xxhash128("hello")
-local hashval = hash.xxhash128("/path/to/file")
+hash.xxhash128(input: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | String or file path |
+
+#### Usage
 
 Calculates hash value using the xxHash128 algorithm, providing longer hash values to reduce collisions.
 
@@ -117,9 +200,19 @@ Calculates hash value using the xxHash128 algorithm, providing longer hash value
 
 - Generate a 32-bit hash value from a string
 
+#### Function Prototype
+
 ```lua
-local hashval = hash.strhash32("hello")
+hash.strhash32(input: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | String |
+
+#### Usage
 
 Generates a 32-bit hash value from a string, returns format like: `91e8ecf1`
 
@@ -129,9 +222,19 @@ This interface uses xxhash32 internally, specifically designed for fast string h
 
 - Generate a 64-bit hash value from a string
 
+#### Function Prototype
+
 ```lua
-local hashval = hash.strhash64("hello")
+hash.strhash64(input: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | String |
+
+#### Usage
 
 Generates a 64-bit hash value from a string, returns format like: `91e8ecf191e8ecf1`
 
@@ -139,9 +242,19 @@ Generates a 64-bit hash value from a string, returns format like: `91e8ecf191e8e
 
 - Generate a 128-bit hash value from a string
 
+#### Function Prototype
+
 ```lua
-local hashval = hash.strhash128("hello")
+hash.strhash128(input: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | String |
+
+#### Usage
 
 Generates a 128-bit hash value from a string, returns format like: `91e8ecf1417f4edfa574e22d7d8d204a`
 
@@ -156,9 +269,17 @@ local cache_key = hash.strhash128(compiler .. flags .. source)
 
 - Generate a 32-bit random hash value
 
+#### Function Prototype
+
 ```lua
-local randval = hash.rand32()
+hash.rand32()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Generates a 32-bit random hash value.
 
@@ -170,9 +291,17 @@ This interface is prone to hash collisions and is not recommended for scenarios 
 
 - Generate a 64-bit random hash value
 
+#### Function Prototype
+
 ```lua
-local randval = hash.rand64()
+hash.rand64()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Generates a 64-bit random hash value.
 
@@ -180,9 +309,17 @@ Generates a 64-bit random hash value.
 
 - Generate a 128-bit random hash value
 
+#### Function Prototype
+
 ```lua
-local randval = hash.rand128()
+hash.rand128()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Generates a 128-bit random hash value.
 

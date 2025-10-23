@@ -3,6 +3,20 @@
 
 - Wrap color print terminal log
 
+#### Function Prototype
+
+```lua
+cprint(...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| ... | Variable arguments, can pass multiple values |
+
+#### Usage
+
 The behavior is similar to [print](/api/scripts/builtin-modules/print), the difference is that this interface also supports color terminal output, and supports `emoji` character output.
 
 E.g:

@@ -3,6 +3,20 @@
 
 - Wrapping print terminal log
 
+#### Function Prototype
+
+```lua
+print(...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| ... | Variable arguments, can pass multiple values |
+
+#### Usage
+
 This interface is also the native interface of lua. xmake is also extended based on the original behavior, and supports: formatted output, multivariable output.
 
 First look at the way native support:

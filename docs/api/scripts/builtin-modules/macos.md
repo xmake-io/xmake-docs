@@ -6,6 +6,18 @@ The macOS system operation module is a built-in module, no need to use [import](
 
 - Get macOS system version
 
+#### Function Prototype
+
+```lua
+macos.version()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 The version returned is the semver semantic version object
 
 ```lua

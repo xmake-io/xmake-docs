@@ -7,6 +7,21 @@
 
 - 拼接路径
 
+#### 函数原型
+
+```lua
+path.join(paths: <string|array>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| paths | 路径字符串或数组 |
+| ... | 可变参数，可传递多个路径字符串 |
+
+#### 用法说明
+
 将多个路径项进行追加拼接，由于`windows/unix`风格的路径差异，使用api来追加路径更加跨平台，例如：
 
 ```lua
@@ -20,6 +35,20 @@ print(path.join("$(tmpdir)", "dir1", "dir2", "file.txt"))
 ## path.translate
 
 - 转换路径到当前平台的路径风格
+
+#### 函数原型
+
+```lua
+path.translate(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 要转换的路径字符串 |
+
+#### 用法说明
 
 格式化转化指定路径字符串到当前平台支持的路径风格，同时支持`windows/unix`格式的路径字符串参数传入，甚至混合传入，例如：
 
@@ -35,6 +64,20 @@ print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
 
 - 获取路径最后不带后缀的文件名
 
+#### 函数原型
+
+```lua
+path.basename(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 路径字符串 |
+
+#### 用法说明
+
 ```lua
 print(path.basename("$(tmpdir)/dir/file.txt"))
 ```
@@ -44,6 +87,20 @@ print(path.basename("$(tmpdir)/dir/file.txt"))
 ## path.filename
 
 - 获取路径最后带后缀的文件名
+
+#### 函数原型
+
+```lua
+path.filename(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 路径字符串 |
+
+#### 用法说明
 
 ```lua
 print(path.filename("$(tmpdir)/dir/file.txt"))
@@ -55,8 +112,22 @@ print(path.filename("$(tmpdir)/dir/file.txt"))
 
 - 获取路径的后缀名
 
+#### 函数原型
+
 ```lua
-print(path.extensione("$(tmpdir)/dir/file.txt"))
+path.extension(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 路径字符串 |
+
+#### 用法说明
+
+```lua
+print(path.extension("$(tmpdir)/dir/file.txt"))
 ```
 
 显示结果为：`.txt`
@@ -64,6 +135,20 @@ print(path.extensione("$(tmpdir)/dir/file.txt"))
 ## path.directory
 
 - 获取路径的目录名
+
+#### 函数原型
+
+```lua
+path.directory(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 路径字符串 |
+
+#### 用法说明
 
 ```lua
 print(path.directory("$(tmpdir)/dir/file.txt"))
@@ -74,6 +159,21 @@ print(path.directory("$(tmpdir)/dir/file.txt"))
 ## path.relative
 
 - 转换成相对路径
+
+#### 函数原型
+
+```lua
+path.relative(path: <string>, rootdir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 要转换的路径字符串 |
+| rootdir | 相对转换的根目录 |
+
+#### 用法说明
 
 ```lua
 print(path.relative("$(tmpdir)/dir/file.txt", "$(tmpdir)"))
@@ -94,6 +194,21 @@ print(path.relative("$(tmpdir)/dir/file.txt"))
 
 - 转换成绝对路径
 
+#### 函数原型
+
+```lua
+path.absolute(path: <string>, rootdir: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 要转换的路径字符串 |
+| rootdir | 绝对转换的根目录 |
+
+#### 用法说明
+
 ```lua
 print(path.absolute("dir/file.txt", "$(tmpdir)"))
 ```
@@ -113,6 +228,20 @@ print(path.absolute("dir/file.txt"))
 
 - 判断是否为绝对路径
 
+#### 函数原型
+
+```lua
+path.is_absolute(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 要检查的路径字符串 |
+
+#### 用法说明
+
 ```lua
 if path.is_absolute("/tmp/file.txt") then
     -- 如果是绝对路径
@@ -122,6 +251,20 @@ end
 ## path.splitenv
 
 - 分割环境变量中的路径
+
+#### 函数原型
+
+```lua
+path.splitenv(envpath: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| envpath | 环境变量路径字符串 |
+
+#### 用法说明
 
 ```lua
 local pathes = path.splitenv(vformat("$(env PATH)"))

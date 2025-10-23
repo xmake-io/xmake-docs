@@ -3,6 +3,20 @@
 
 - 导入并继承基类模块
 
+#### 函数原型
+
+```lua
+inherit(modulename: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| modulename | 模块名称字符串 |
+
+#### 用法说明
+
 这个等价于[import](/zh/api/scripts/builtin-modules/import)接口的 `inherit` 模式，也就是：
 
 ```lua

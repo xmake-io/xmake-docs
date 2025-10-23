@@ -62,6 +62,21 @@ os.cp("$(scriptdir)/config.h", "$(builddir)/inc/config.h", {copy_if_different = 
 
 - 移动重命名文件或目录
 
+#### 函数原型
+
+```lua
+os.mv(source: <string>, destination: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| source | 源路径或模式 |
+| destination | 目标路径 |
+
+#### 用法说明
+
 跟[os.cp](#os-cp)的使用类似，同样支持多文件移动操作和模式匹配，例如：
 
 ```lua
@@ -76,6 +91,20 @@ os.mv("$(builddir)/libtest.a", "$(builddir)/libdemo.a")
 
 - 删除文件或目录树
 
+#### 函数原型
+
+```lua
+os.rm(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 文件或目录路径 |
+
+#### 用法说明
+
 支持递归删除目录，批量删除操作，以及模式匹配和内置变量，例如：
 
 ```lua
@@ -86,6 +115,21 @@ os.rm("$(builddir)/lib/")
 ## os.trycp
 
 - 尝试复制文件或目录
+
+#### 函数原型
+
+```lua
+os.trycp(source: <string>, destination: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| source | 源路径或模式 |
+| destination | 目标路径 |
+
+#### 用法说明
 
 跟[os.cp](#os-cp)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
 
@@ -98,6 +142,21 @@ end
 
 - 尝试移动文件或目录
 
+#### 函数原型
+
+```lua
+os.trymv(source: <string>, destination: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| source | 源路径或模式 |
+| destination | 目标路径 |
+
+#### 用法说明
+
 跟[os.mv](#os-mv)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
 
 ```lua
@@ -109,6 +168,20 @@ end
 
 - 尝试删除文件或目录
 
+#### 函数原型
+
+```lua
+os.tryrm(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 文件或目录路径 |
+
+#### 用法说明
+
 跟[os.rm](#os-rm)类似，唯一的区别就是，此接口操作失败不会抛出异常中断xmake，而是通过返回值标示是否执行成功。
 
 ```lua
@@ -119,6 +192,20 @@ end
 ## os.cd
 
 - 进入指定目录
+
+#### 函数原型
+
+```lua
+os.cd(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 目录路径 |
+
+#### 用法说明
 
 这个操作用于目录切换，同样也支持内置变量，但是不支持模式匹配和多目录处理，例如：
 
@@ -146,11 +233,40 @@ os.cd(oldir)
 
 - 仅删除目录
 
+#### 函数原型
+
+```lua
+os.rmdir(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 目录路径 |
+
+#### 用法说明
+
 如果不是目录就无法删除。
 
 ## os.mkdir
 
 - 创建目录
+
+#### 函数原型
+
+```lua
+os.mkdir(path: <string>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 目录路径 |
+| ... | 可变参数，可传递多个目录路径 |
+
+#### 用法说明
 
 支持批量创建和内置变量，例如：
 
@@ -164,9 +280,20 @@ os.mkdir("$(tmpdir)/test", "$(builddir)/inc")
 
 - 创建空文件或更新文件时间戳
 
+#### 函数原型
+
 ```lua
-os.touch("path/to/file.txt")
+os.touch(path: <string>, ...)
 ```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 文件路径 |
+| ... | 可变参数，可传递多个文件路径 |
+
+#### 用法说明
 
 如果文件不存在，则创建一个空文件。如果文件已存在，则更新文件的修改时间为当前时间。
 
@@ -180,6 +307,20 @@ os.touch("file1.txt", "file2.txt", "file3.txt")
 
 - 判断是否为目录
 
+#### 函数原型
+
+```lua
+os.isdir(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 目录路径 |
+
+#### 用法说明
+
 如果目录不存在，则返回false
 
 ```lua
@@ -192,6 +333,20 @@ end
 
 - 判断是否为文件
 
+#### 函数原型
+
+```lua
+os.isfile(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 文件路径 |
+
+#### 用法说明
+
 如果文件不存在，则返回false
 
 ```lua
@@ -203,6 +358,20 @@ end
 ## os.exists
 
 - 判断文件或目录是否存在
+
+#### 函数原型
+
+```lua
+os.exists(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 文件或目录路径 |
+
+#### 用法说明
 
 如果文件或目录不存在，则返回false
 
@@ -221,6 +390,20 @@ end
 ## os.islink
 
 - 判断是否为符号链接
+
+#### 函数原型
+
+```lua
+os.islink(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 符号链接路径 |
+
+#### 用法说明
 
 判断指定路径是否为符号链接，如果不是符号链接或不存在则返回 false。
 
@@ -242,6 +425,20 @@ assert(os.islink("link.txt"))
 ## os.dirs
 
 - 遍历获取指定目录下的所有目录
+
+#### 函数原型
+
+```lua
+os.dirs(pattern: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| pattern | 文件模式 |
+
+#### 用法说明
 
 支持[add_files](#targetadd_files)中的模式匹配，支持递归和非递归模式遍历，返回的结果是一个table数组，如果获取不到，返回空数组，例如：
 
@@ -302,11 +499,19 @@ end
 
 - 判断文件是否可执行
 
+#### 函数原型
+
 ```lua
-if os.isexec("path/to/file.exe") then
-    os.run("path/to/file.exe")
-end
+os.isexec(path: <string>)
 ```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 文件路径 |
+
+#### 用法说明
 
 判断指定文件是否具有可执行权限。在 Unix 系统上检查文件的执行权限位，在 Windows 上检查文件扩展名。
 
@@ -325,6 +530,21 @@ end
 ## os.run
 
 - 安静运行原生shell命令
+
+#### 函数原型
+
+```lua
+os.run(command: <string>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| command | 命令字符串 |
+| ... | 命令的可变参数 |
+
+#### 用法说明
 
 用于执行第三方的shell命令，但不会回显输出，仅仅在出错后，高亮输出错误信息。
 
@@ -347,6 +567,22 @@ os.run("ls -l $(builddir)")
 
 - 安静运行原生shell命令，带参数列表
 
+#### 函数原型
+
+```lua
+os.runv(program: <string>, args: <table>, options: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| program | 程序名 |
+| args | 参数表 |
+| options | 选项表（可选） |
+
+#### 用法说明
+
 跟[os.run](#os-run)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
 
 ```lua
@@ -363,11 +599,42 @@ os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}})
 
 - 回显运行原生shell命令
 
+#### 函数原型
+
+```lua
+os.exec(command: <string>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| command | 命令字符串 |
+| ... | 命令的可变参数 |
+
+#### 用法说明
+
 与[os.run](#os-run)接口类似，唯一的不同是，此接口执行shell程序时，是带回显输出的，一般调试的时候用的比较多
 
 ## os.execv
 
 - 回显运行原生shell命令，带参数列表
+
+#### 函数原型
+
+```lua
+os.execv(program: <string>, args: <table>, options: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| program | 程序名 |
+| args | 参数表 |
+| options | 选项表（可选） |
+
+#### 用法说明
 
 跟[os.exec](#os-exec)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
 
@@ -489,9 +756,19 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH = 
 
 - 获取系统环境变量
 
+#### 函数原型
+
 ```lua
-local value = os.getenv("PATH")
+os.getenv(name: <string>)
 ```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 环境变量名 |
+
+#### 用法说明
 
 获取指定环境变量的值。如果环境变量不存在，返回 nil。
 
@@ -509,9 +786,20 @@ local home = os.getenv("HOME") or "/tmp"
 
 - 设置系统环境变量
 
+#### 函数原型
+
 ```lua
-os.setenv("HOME", "/tmp/")
+os.setenv(name: <string>, value: <string>)
 ```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 环境变量名 |
+| value | 环境变量值 |
+
+#### 用法说明
 
 设置指定环境变量的值。设置后会影响当前进程及其子进程的环境变量。
 
@@ -527,6 +815,18 @@ os.setenv("PATH", "/new/path:" .. os.getenv("PATH"))
 ## os.tmpdir
 
 - 获取临时目录
+
+#### 函数原型
+
+```lua
+os.tmpdir()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 跟[$(tmpdir)](/zh/api/description/builtin-variables#var-tmpdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
@@ -567,6 +867,18 @@ os.rm(tmpfile)
 
 - 获取当前目录路径
 
+#### 函数原型
+
+```lua
+os.curdir()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 跟[$(curdir)](/zh/api/description/builtin-variables#var-curdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 用法参考：[os.tmpdir](#os-tmpdir)。
@@ -575,9 +887,19 @@ os.rm(tmpfile)
 
 - 获取文件大小
 
+#### 函数原型
+
 ```lua
-local size = os.filesize("/tmp/a")
+os.filesize(filepath: <string>)
 ```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filepath | 文件路径 |
+
+#### 用法说明
 
 返回文件的大小（字节数）。如果文件不存在或无法访问，返回 0。
 
@@ -599,6 +921,18 @@ end
 
 - 获取当前描述脚本的路径
 
+#### 函数原型
+
+```lua
+os.scriptdir()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 跟[$(scriptdir)](/zh/api/description/builtin-variables#var-scriptdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 用法参考：[os.tmpdir](#os-tmpdir)。
@@ -607,15 +941,35 @@ end
 
 - 获取xmake安装主程序脚本目录
 
+#### 函数原型
+
+```lua
+os.programdir()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 跟[$(programdir)](/zh/api/description/builtin-variables#var-programdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 ## os.programfile
 
 - 获取xmake可执行文件路径
 
+#### 函数原型
+
 ```lua
-local xmake_path = os.programfile()
+os.programfile()
 ```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回 xmake 可执行文件的完整路径。
 
@@ -628,15 +982,35 @@ print("xmake 路径:", os.programfile())
 
 - 获取工程主目录
 
+#### 函数原型
+
+```lua
+os.projectdir()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 跟[$(projectdir)](/zh/api/description/builtin-variables#var-projectdir)结果一致，只不过是直接获取返回一个变量，可以用后续字符串维护。
 
 ## os.arch
 
 - 获取当前系统架构
 
+#### 函数原型
+
 ```lua
-local arch = os.arch()
+os.arch()
 ```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回当前主机系统的默认架构。例如在 `linux x86_64` 上执行 xmake 进行构建，返回值是：`x86_64`
 
@@ -655,9 +1029,17 @@ end
 
 - 获取当前主机的操作系统
 
+#### 函数原型
+
 ```lua
-local host = os.host()
+os.host()
 ```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 跟 [$(host)](/zh/api/description/builtin-variables#var-host) 结果一致。例如在 `linux x86_64` 上执行 xmake 进行构建，返回值是：`linux`
 
@@ -678,9 +1060,17 @@ end
 
 - 获取当前子系统
 
+#### 函数原型
+
 ```lua
-local subhost = os.subhost()
+os.subhost()
 ```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 获取当前子系统环境，如：在 Windows 上的 msys、cygwin 等。
 
@@ -700,15 +1090,37 @@ end
 
 - 获取子系统架构
 
+#### 函数原型
+
 ```lua
-local subarch = os.subarch()
+os.subarch()
 ```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 获取子系统的架构。如果不在子系统环境中运行，返回值与 [os.arch()](#os-arch) 相同。
 
 ## os.is_host
 
 - 判断给定系统是否为当前系统
+
+#### 函数原型
+
+```lua
+os.is_host(host: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| host | 系统名称 |
+
+#### 用法说明
 
 ```lua
 if os.is_host("linux") then
@@ -736,6 +1148,21 @@ end
 
 - 判断给定架构是否为当前架构
 
+#### 函数原型
+
+```lua
+os.is_arch(arch: <string>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| arch | 架构名称 |
+| ... | 可变参数，可以传递多个架构 |
+
+#### 用法说明
+
 ```lua
 if os.is_arch("x86_64") then
     -- 在 x86_64 架构上
@@ -751,6 +1178,21 @@ end
 ## os.is_subhost
 
 - 判断给定子系统是否为当前子系统
+
+#### 函数原型
+
+```lua
+os.is_subhost(subhost: <string>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| subhost | 子系统名称 |
+| ... | 可变参数，可以传递多个子系统 |
+
+#### 用法说明
 
 ```lua
 if os.is_subhost("msys") then
@@ -768,6 +1210,21 @@ end
 
 - 判断给定子系统架构是否为当前子系统架构
 
+#### 函数原型
+
+```lua
+os.is_subarch(subarch: <string>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| subarch | 子系统架构名称 |
+| ... | 可变参数，可以传递多个子系统架构 |
+
+#### 用法说明
+
 ```lua
 if os.is_subarch("x86_64") then
     -- 子系统架构是 x86_64
@@ -778,6 +1235,21 @@ end
 
 - 为一个文件或目录创建符号链接
 
+#### 函数原型
+
+```lua
+os.ln(source: <string>, target: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| source | 源文件或目录路径 |
+| target | 目标符号链接路径 |
+
+#### 用法说明
+
 ```lua
 -- 创建一个指向 "tmp.txt" 文件的符号链接 "tmp.txt.ln"
 os.ln("xxx.txt", "xxx.txt.ln")
@@ -786,6 +1258,20 @@ os.ln("xxx.txt", "xxx.txt.ln")
 ## os.readlink
 
 - 读取符号链接内容
+
+#### 函数原型
+
+```lua
+os.readlink(path: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 符号链接路径 |
+
+#### 用法说明
 
 ```lua
 local target = os.readlink("path/to/symlink")
@@ -820,6 +1306,21 @@ os.raise("an error occurred")
 
 - 与 [os.raise](#os-raise) 类似但是可以指定异常等级
 
+#### 函数原型
+
+```lua
+os.raiselevel(level: <number>, message: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| level | 异常等级 |
+| message | 异常信息 |
+
+#### 用法说明
+
 ```lua
 -- 抛出一个带 "an error occurred" 信息的异常
 os.raiselevel(3, "an error occurred")
@@ -829,15 +1330,35 @@ os.raiselevel(3, "an error occurred")
 
 - 获取系统特性
 
+#### 函数原型
+
 ```lua
-local features = os.features()
+os.features()
 ```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 获取当前操作系统支持的特性列表。返回一个 table，包含系统支持的各种特性。
 
 ## os.getenvs
 
 - 获取所有当前系统变量
+
+#### 函数原型
+
+```lua
+os.getenvs()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 ```lua
 local envs = os.getenvs()
@@ -849,9 +1370,37 @@ print(envs["HOME"])
 
 - 使用给定系统变量替换当前所有系统变量，并返回旧系统变量
 
+#### 函数原型
+
+```lua
+os.setenvs(envs: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| envs | 环境变量表 |
+
+#### 用法说明
+
 ## os.addenvs
 
 - 向当前系统变量添加新变量，并且返回所有旧系统变量
+
+#### 函数原型
+
+```lua
+os.addenvs(envs: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| envs | 要添加的环境变量表 |
+
+#### 用法说明
 
 ```lua
 os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
@@ -865,14 +1414,22 @@ print(oldenvs["EXAMPLE"]) -- got a/path
 
 - 拼接系统变量，与 [os.addenvs](#os-addenvs) 类似，但是不会对当前环境变量产生影响，若第二个参数为 `nil`，则使用原有环境变量
 
+#### 函数原型
+
 ```lua
--- os.joinenvs(envs, oldenvs)
---
--- @param envs      table 类型，新插入的环境变量
---
--- @param oldenvs   table 类型，被插入的环境变量，若为 nil, 则为原有环境变量
---
--- @return          table 类型，拼接后的环境变量
+os.joinenvs(envs1: <table>, envs2: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| envs1 | 第一个环境变量表 |
+| envs2 | 第二个环境变量表 |
+
+#### 用法说明
+
+```lua
 local envs0 = {CUSTOM = "a/path"}
 local envs1 = {CUSTOM = "some/path/"}
 print(os.joinenvs(envs0, envs1)) -- result is : { CUSTION = "a/path;some/path/" }
@@ -882,9 +1439,20 @@ print(os.joinenvs(envs0, envs1)) -- result is : { CUSTION = "a/path;some/path/" 
 
 - 向指定环境变量添加值
 
+#### 函数原型
+
 ```lua
-os.addenv("PATH", "/new/path")
+os.addenv(name: <string>, value: <string>)
 ```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 环境变量名 |
+| value | 要添加的值 |
+
+#### 用法说明
 
 向指定的环境变量追加新值，使用系统默认的分隔符（Unix 上是 `:`，Windows 上是 `;`）。
 

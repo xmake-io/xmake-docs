@@ -2,6 +2,22 @@
 
 - Used to traverse the dictionary
 
+#### Function Prototype
+
+```lua
+pairs(t: <table>, f: <function>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| t | Table to traverse |
+| f | Function to process values (optional) |
+| ... | Variable arguments for function (optional) |
+
+#### Usage
+
 This is lua's native built-in api. In xmake, it has been extended in its original behavior to simplify some of the daily lua traversal code.
 
 First look at the default native notation:

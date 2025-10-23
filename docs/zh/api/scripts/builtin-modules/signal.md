@@ -6,6 +6,21 @@
 
 - 注册信号处理器
 
+#### 函数原型
+
+```lua
+signal.register(signo: <number>, handler: <function>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| signo | 信号编号（例如：signal.SIGINT） |
+| handler | 信号处理函数 |
+
+#### 用法说明
+
 目前仅仅支持 SIGINT 信号的处理，同时它也是支持 windows 等主流平台的。
 
 ```lua
@@ -48,6 +63,20 @@ end
 
 - 忽略某个信号
 
+#### 函数原型
+
+```lua
+signal.ignore(signo: <number>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| signo | 信号编号（例如：signal.SIGINT） |
+
+#### 用法说明
+
 我们也可以通过 `signal.ignore` 这个接口，去忽略屏蔽某个信号的处理。
 
 ```lua
@@ -57,6 +86,20 @@ signal.ignore(signal.SIGINT)
 ## signal.reset
 
 - 重置某个信号
+
+#### 函数原型
+
+```lua
+signal.reset(signo: <number>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| signo | 信号编号（例如：signal.SIGINT） |
+
+#### 用法说明
 
 我们也可以清除某个信号的处理函数，回退到默认的处理逻辑。
 

@@ -9,6 +9,21 @@ It has been extended in xmake to add some extension interfaces:
 
 - Merge multiple tables and return
 
+#### Function Prototype
+
+```lua
+table.join(tables: <table>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| tables | Table to merge |
+| ... | Variable arguments, can pass multiple tables |
+
+#### Usage
+
 You can merge the elements in multiple tables and return to a new table, for example:
 
 ```lua
@@ -29,6 +44,22 @@ The result is: `{a = "a", b = "b", c = "c", d = "d"}`
 
 - Combine multiple tables into the first table
 
+#### Function Prototype
+
+```lua
+table.join2(target: <table>, tables: <table>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| target | Target table to merge into |
+| tables | Table to merge |
+| ... | Variable arguments, can pass multiple tables |
+
+#### Usage
+
 Similar to [table.join](#table-join), the only difference is that the result of the merge is placed in the first argument, for example:
 
 ```lua
@@ -42,6 +73,20 @@ The result is: `t = {0, 9, 1, 2, 3}`
 
 - Deduplicate the contents of the table
 
+#### Function Prototype
+
+```lua
+table.unique(tbl: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| tbl | Table to deduplicate |
+
+#### Usage
+
 To de-table elements, generally used in array tables, for example:
 
 ```lua
@@ -53,6 +98,23 @@ The result is: `{1, 2, 3, 4, 5}`
 ## table.slice
 
 - Get the slice of the table
+
+#### Function Prototype
+
+```lua
+table.slice(tbl: <table>, start: <number>, stop: <number>, step: <number>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| tbl | Table to slice |
+| start | Start index |
+| stop | Stop index (optional) |
+| step | Step size (optional) |
+
+#### Usage
 
 Used to extract some elements of an array table, for example:
 
@@ -71,6 +133,22 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 
 - Determine that the table contains the specified value
 
+#### Function Prototype
+
+```lua
+table.contains(tbl: <table>, values: <any>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| tbl | Table to check |
+| values | Values to check for |
+| ... | Variable arguments, can pass multiple values |
+
+#### Usage
+
 ```lua
 if table.contains(t, 1, 2, 3) then
      - ...
@@ -82,5 +160,19 @@ As long as the table contains any value from 1, 2, 3, it returns true
 ## table.orderkeys
 
 - Get an ordered list of keys
+
+#### Function Prototype
+
+```lua
+table.orderkeys(tbl: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| tbl | Table to get keys from |
+
+#### Usage
 
 The order of the key list returned by `table.keys(t)` is random. If you want to get an ordered key list, you can use this interface.

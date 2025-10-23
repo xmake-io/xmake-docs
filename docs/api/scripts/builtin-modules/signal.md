@@ -6,6 +6,21 @@
 
 - Register signal handler
 
+#### Function Prototype
+
+```lua
+signal.register(signo: <number>, handler: <function>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| signo | Signal number (e.g., signal.SIGINT) |
+| handler | Signal handler function |
+
+#### Usage
+
 Currently, it only supports SIGINT signal processing, and it also supports mainstream platforms such as windows.
 
 ```lua
@@ -48,6 +63,20 @@ For the background of this issue, please refer to: [#4889](https://github.com/xm
 
 - Ignore a signal
 
+#### Function Prototype
+
+```lua
+signal.ignore(signo: <number>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| signo | Signal number (e.g., signal.SIGINT) |
+
+#### Usage
+
 We can also ignore the processing of blocking a certain signal through the `signal.ignore` interface.
 
 ```lua
@@ -57,6 +86,20 @@ signal.ignore(signal.SIGINT)
 ## signal.reset
 
 - Reset a signal
+
+#### Function Prototype
+
+```lua
+signal.reset(signo: <number>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| signo | Signal number (e.g., signal.SIGINT) |
+
+#### Usage
 
 We can also clear the processing function of a certain signal and fall back to the default processing logic.
 

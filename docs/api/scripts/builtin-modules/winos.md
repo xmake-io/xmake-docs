@@ -7,6 +7,18 @@ you can directly call its interface in the script scope.
 
 - Get windows system version
 
+#### Function Prototype
+
+```lua
+winos.version()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 The version returned is the semver semantic version object
 
 ```lua
@@ -41,6 +53,20 @@ win10 = "10.0"
 
 - Get the list of registry builds
 
+#### Function Prototype
+
+```lua
+winos.registry_keys(pattern: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| pattern | Pattern string for matching registry keys |
+
+#### Usage
+
 Support through pattern matching, traverse to obtain the registry key path list, `*` is single-level path matching, `**` is recursive path matching.
 
 ```lua
@@ -54,6 +80,20 @@ end
 
 - Get a list of registry value names
 
+#### Function Prototype
+
+```lua
+winos.registry_values(pattern: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| pattern | Pattern string for matching registry values |
+
+#### Usage
+
 Support to obtain the value name list of the specified key path through pattern matching, and the string after the `;` is the specified key name pattern matching string.
 
 ```lua
@@ -66,6 +106,20 @@ end
 ## winos.registry_query
 
 - Get the registry value
+
+#### Function Prototype
+
+```lua
+winos.registry_query(keypath: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| keypath | Registry key path |
+
+#### Usage
 
 Get the value under the specified registry path, if the value name is not specified, then get the default value of the key path
 

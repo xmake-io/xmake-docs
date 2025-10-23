@@ -8,6 +8,18 @@ and its interface can be called directly in the script scope.
 
 - Get linux system name
 
+#### Function Prototype
+
+```lua
+linuxos.name()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 We can also quickly get the view through the following command
 
 ```sh
@@ -29,6 +41,18 @@ Some names currently supported are:
 
 - Get linux system version
 
+#### Function Prototype
+
+```lua
+linuxos.version()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 The version returned is the semver semantic version object
 
 ```lua
@@ -40,5 +64,17 @@ end
 ## linuxos.kernelver
 
 - Get linux system kernel version
+
+#### Function Prototype
+
+```lua
+linuxos.kernelver()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 What is returned is also a semantic version object, you can also execute `xmake l linuxos.kernelver` to quickly view.

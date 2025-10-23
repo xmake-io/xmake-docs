@@ -3,6 +3,20 @@
 
 - Import and inherit base class modules
 
+#### Function Prototype
+
+```lua
+inherit(modulename: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| modulename | Module name string |
+
+#### Usage
+
 This is equivalent to the `inherit` mode of the [import](/api/scripts/builtin-modules/import) interface, which is:
 
 ```lua

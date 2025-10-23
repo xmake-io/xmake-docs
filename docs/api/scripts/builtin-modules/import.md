@@ -1,5 +1,22 @@
 # import
 
+- Import extension modules
+
+#### Function Prototype
+
+```lua
+import(modulename: <string>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| modulename | Module name string |
+| options | Import options table (optional) |
+
+#### Usage
+
 Used in script code such as custom scripts, plug-in scripts, task scripts, platform extensions, template extensions, etc., that is, in code blocks like the following, you can use these module interfaces:
 
 ```lua

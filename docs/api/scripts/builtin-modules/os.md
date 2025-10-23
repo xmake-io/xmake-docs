@@ -12,6 +12,22 @@ Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os mo
 
 - Copy files or directories
 
+#### Function Prototype
+
+```lua
+os.cp(source: <string>, destination: <string>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| source | Source path or pattern |
+| destination | Destination path |
+| options | Options table (optional) |
+
+#### Usage
+
 The behavior is similar to the `cp` command in the shell, supporting path wildcard matching (using lua pattern matching), support for multi-file copying, and built-in variable support.
 
 e.g:
@@ -63,6 +79,21 @@ os.cp("$(scriptdir)/config.h", "$(builddir)/inc/config.h", {copy_if_different = 
 
 - Move to rename a file or directory
 
+#### Function Prototype
+
+```lua
+os.mv(source: <string>, destination: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| source | Source path or pattern |
+| destination | Destination path |
+
+#### Usage
+
 Similar to the use of [os.cp](#os-cp), it also supports multi-file move operations and pattern matching, for example:
 
 ```lua
@@ -77,6 +108,20 @@ os.mv("$(builddir)/libtest.a", "$(builddir)/libdemo.a")
 
 - Delete files or directory trees
 
+#### Function Prototype
+
+```lua
+os.rm(path: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | File or directory path |
+
+#### Usage
+
 Support for recursive deletion of directories, bulk delete operations, and pattern matching and built-in variables, such as:
 
 ```lua
@@ -87,6 +132,21 @@ os.rm("$(builddir)/lib/")
 ## os.trycp
 
 - Try copying files or directories
+
+#### Function Prototype
+
+```lua
+os.trycp(source: <string>, destination: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| source | Source path or pattern |
+| destination | Destination path |
+
+#### Usage
 
 Similar to [os.cp](#os-cp), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
 
@@ -99,6 +159,21 @@ end
 
 - Try moving a file or directory
 
+#### Function Prototype
+
+```lua
+os.trymv(source: <string>, destination: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| source | Source path or pattern |
+| destination | Destination path |
+
+#### Usage
+
 Similar to [os.mv](#os-mv), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
 
 ```lua
@@ -110,6 +185,20 @@ end
 
 - Try deleting files or directories
 
+#### Function Prototype
+
+```lua
+os.tryrm(path: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | File or directory path |
+
+#### Usage
+
 Similar to [os.rm](#os-rm), the only difference is that this interface operation will not throw an exception interrupt xmake, but the return value indicates whether the execution is successful.
 
 ```lua
@@ -120,6 +209,20 @@ end
 ## os.cd
 
 - Enter the specified directory
+
+#### Function Prototype
+
+```lua
+os.cd(path: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | Directory path |
+
+#### Usage
 
 This operation is used for directory switching and also supports built-in variables, but does not support pattern matching and multi-directory processing, for example:
 
@@ -147,11 +250,40 @@ os.cd(oldir)
 
 - delete only the directory
 
+#### Function Prototype
+
+```lua
+os.rmdir(path: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | Directory path |
+
+#### Usage
+
 If it is not a directory, it cannot be deleted.
 
 ## os.mkdir
 
 - Create a directory
+
+#### Function Prototype
+
+```lua
+os.mkdir(path: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | Directory path |
+| ... | Variable arguments, can pass multiple directory paths |
+
+#### Usage
 
 Support for batch creation and built-in variables, such as:
 
@@ -165,9 +297,20 @@ Supports recursive creation of multi-level directories, automatically creating p
 
 - Create an empty file or update file timestamp
 
+#### Function Prototype
+
 ```lua
-os.touch("path/to/file.txt")
+os.touch(path: <string>, ...)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | File path |
+| ... | Variable arguments, can pass multiple file paths |
+
+#### Usage
 
 If the file doesn't exist, creates an empty file. If the file already exists, updates the file's modification time to the current time.
 
@@ -181,6 +324,20 @@ os.touch("file1.txt", "file2.txt", "file3.txt")
 
 - Determine if it is a directory
 
+#### Function Prototype
+
+```lua
+os.isdir(path: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | Directory path |
+
+#### Usage
+
 Return false if the directory does not exist
 
 ```lua
@@ -193,6 +350,20 @@ end
 
 - Determine if it is a file
 
+#### Function Prototype
+
+```lua
+os.isfile(path: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | File path |
+
+#### Usage
+
 Return false if the file does not exist
 
 ```lua
@@ -204,6 +375,20 @@ end
 ## os.exists
 
 - Determine if a file or directory exists
+
+#### Function Prototype
+
+```lua
+os.exists(path: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | File or directory path |
+
+#### Usage
 
 Return false if the file or directory does not exist
 
@@ -222,6 +407,20 @@ end
 ## os.islink
 
 - Determine if it is a symbolic link
+
+#### Function Prototype
+
+```lua
+os.islink(path: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | Symbolic link path |
+
+#### Usage
 
 Determines whether the specified path is a symbolic link. Returns false if it is not a symbolic link or doesn't exist.
 
@@ -244,6 +443,20 @@ assert(os.islink("link.txt"))
 
 - Traverse to get all the directories under the specified directory
 
+#### Function Prototype
+
+```lua
+os.dirs(pattern: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| pattern | File pattern |
+
+#### Usage
+
 Supports pattern matching in [add_files](#targetadd_files), supports recursive and non-recursive mode traversal, and returns a table array. If not, returns an empty array, for example:
 
 ```lua
@@ -256,6 +469,20 @@ end
 ## os.files
 
 - Traverse to get all the files in the specified directory
+
+#### Function Prototype
+
+```lua
+os.files(pattern: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| pattern | File pattern |
+
+#### Usage
 
 Supports pattern matching in [add_files](#targetadd_files), supports recursive and non-recursive mode traversal, and returns a table array. If not, returns an empty array, for example:
 
@@ -270,6 +497,20 @@ end
 
 - Traverse to get all files and directories under the specified directory
 
+#### Function Prototype
+
+```lua
+os.filedirs(pattern: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| pattern | File pattern |
+
+#### Usage
+
 Supports pattern matching in [add_files](#targetadd_files), supports recursive and non-recursive mode traversal, and returns a table array. If not, returns an empty array, for example:
 
 ```lua
@@ -283,9 +524,19 @@ end
 
 - Exit the program
 
+#### Function Prototype
+
 ```lua
-os.exit(code)
+os.exit(code: <number>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| code | Exit code |
+
+#### Usage
 
 Exits the current program and returns the specified exit code. If no exit code is specified, defaults to 0 (success).
 
@@ -303,11 +554,19 @@ end
 
 - Test if a file is executable
 
+#### Function Prototype
+
 ```lua
-if os.isexec("path/to/file.exe") then
-    os.run("path/to/file.exe")
-end
+os.isexec(path: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | File path |
+
+#### Usage
 
 Determines whether the specified file has executable permissions. On Unix systems, it checks the file's execute permission bits; on Windows, it checks the file extension.
 
@@ -326,6 +585,21 @@ end
 ## os.run
 
 - Quietly running native shell commands
+
+#### Function Prototype
+
+```lua
+os.run(command: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| command | Command string |
+| ... | Variable arguments for command |
+
+#### Usage
 
 Used to execute third-party shell commands, but will not echo the output, only after the error, highlight the error message.
 
@@ -350,6 +624,22 @@ For more advanced process operations and control, see the [process](#process) mo
 
 - Quietly running native shell commands with parameter list
 
+#### Function Prototype
+
+```lua
+os.runv(program: <string>, args: <table>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| program | Program name |
+| args | Arguments table |
+| options | Options table (optional) |
+
+#### Usage
+
 Similar to [os.run](#os-run), just the way to pass parameters is passed through the parameter list, not the string command, for example:
 
 ```lua
@@ -360,11 +650,42 @@ os.runv("echo", {"hello", "xmake!"})
 
 - Echo running native shell commands
 
+#### Function Prototype
+
+```lua
+os.exec(command: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| command | Command string |
+| ... | Variable arguments for command |
+
+#### Usage
+
 Similar to the [os.run](#os-run) interface, the only difference is that when this interface executes the shell program, it has the output output, which is used in general debugging.
 
 ## os.execv
 
 - Echo running native shell commands with parameter list
+
+#### Function Prototype
+
+```lua
+os.execv(program: <string>, args: <table>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| program | Program name |
+| args | Arguments table |
+| options | Options table (optional) |
+
+#### Usage
 
 Similar to [os.exec](#os-exec), just the way to pass parameters is passed through the parameter list, not the string command, for example:
 
@@ -458,6 +779,21 @@ We can also get all the current environment variables through the `os.getenvs()`
 
 - Quietly running native shell commands and getting output
 
+#### Function Prototype
+
+```lua
+os.iorun(command: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| command | Command string |
+| ... | Variable arguments for command |
+
+#### Usage
+
 Similar to the [os.run](#os-run) interface, the only difference is that after executing the shell program, this interface will get the execution result of the shell program, which is equivalent to redirecting the output.
 
 You can get the contents of `stdout`, `stderr` at the same time, for example:
@@ -470,6 +806,22 @@ local outdata, errdata = os.iorun("echo hello xmake!")
 
 - Run the native shell command quietly and get the output with a list of parameters
 
+#### Function Prototype
+
+```lua
+os.iorunv(program: <string>, args: <table>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| program | Program name |
+| args | Arguments table |
+| options | Options table (optional) |
+
+#### Usage
+
 Similar to [os.iorun](#os-iorun), just the way to pass arguments is passed through the argument list, not the string command, for example:
 
 ```lua
@@ -480,6 +832,18 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 ## os.tmpdir
 
 - Get temporary directory
+
+#### Function Prototype
+
+```lua
+os.tmpdir()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Consistent with the result of [$(tmpdir)](/api/description/builtin-variables#var-tmpdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
@@ -497,9 +861,17 @@ print("$(tmpdir)/file.txt")
 
 - Get temporary file path
 
+#### Function Prototype
+
 ```lua
-local tmpfile = os.tmpfile()
+os.tmpfile()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Generates a unique temporary file path, returns only the path string, the file itself is not automatically created and needs to be created manually.
 
@@ -528,9 +900,19 @@ Usage reference: [os.tmpdir](#os-tmpdir).
 
 - Get file size
 
+#### Function Prototype
+
 ```lua
-local size = os.filesize("/tmp/a")
+os.filesize(filepath: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filepath | File path |
+
+#### Usage
 
 Returns the size of the file in bytes. Returns 0 if the file doesn't exist or is inaccessible.
 
@@ -552,6 +934,18 @@ end
 
 - Get the path of the current description script
 
+#### Function Prototype
+
+```lua
+os.scriptdir()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 Consistent with the result of [$(scriptdir)](/api/description/builtin-variables#var-scriptdir), it is just a direct return to return a variable that can be maintained with subsequent strings.
 
 Usage reference: [os.tmpdir](#os-tmpdir).
@@ -560,15 +954,35 @@ Usage reference: [os.tmpdir](#os-tmpdir).
 
 - Get the xmake installation main program script directory
 
+#### Function Prototype
+
+```lua
+os.programdir()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 Consistent with the result of [$(programdir)](/api/description/builtin-variables#var-programdir), it is just a direct get returned to a variable, which can be maintained with subsequent strings.
 
 ## os.programfile
 
 - Get the path of the xmake executable
 
+#### Function Prototype
+
 ```lua
-local xmake_path = os.programfile()
+os.programfile()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the full path to the xmake executable.
 
@@ -587,9 +1001,17 @@ Consistent with the result of [$(projectdir)](/api/description/builtin-variables
 
 - Get current system architecture
 
+#### Function Prototype
+
 ```lua
-local arch = os.arch()
+os.arch()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the default architecture of the current host system. For example, executing xmake on `linux x86_64` returns: `x86_64`
 
@@ -608,9 +1030,17 @@ end
 
 - Get the operating system of the current host
 
+#### Function Prototype
+
 ```lua
-local host = os.host()
+os.host()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Consistent with the result of [$(host)](/api/description/builtin-variables#var-host). For example, executing xmake on `linux x86_64` returns: `linux`
 
@@ -631,9 +1061,17 @@ end
 
 - Get Subsystem host
 
+#### Function Prototype
+
 ```lua
-local subhost = os.subhost()
+os.subhost()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Gets the current subsystem environment, such as msys or cygwin on Windows.
 
@@ -663,6 +1101,21 @@ Gets the architecture of the subsystem. If not running in a subsystem environmen
 
 - Test if a given host is the current
 
+#### Function Prototype
+
+```lua
+os.is_host(host: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| host | Host name |
+| ... | Variable arguments, can pass multiple hosts |
+
+#### Usage
+
 ```lua
 if os.is_host("linux") then
     -- On Linux system
@@ -689,6 +1142,21 @@ end
 
 - Test if a given arch is the current
 
+#### Function Prototype
+
+```lua
+os.is_arch(arch: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| arch | Architecture name |
+| ... | Variable arguments, can pass multiple architectures |
+
+#### Usage
+
 ```lua
 if os.is_arch("x86_64") then
     -- On x86_64 architecture
@@ -704,6 +1172,21 @@ Supports checking multiple architectures at once.
 ## os.is_subhost
 
 - Test if a given sub host is the current
+
+#### Function Prototype
+
+```lua
+os.is_subhost(subhost: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| subhost | Sub host name |
+| ... | Variable arguments, can pass multiple sub hosts |
+
+#### Usage
 
 ```lua
 if os.is_subhost("msys") then
@@ -721,6 +1204,21 @@ It's recommended to use the more concise built-in interface `is_subhost()` with 
 
 - Test if a given sub arch is the current
 
+#### Function Prototype
+
+```lua
+os.is_subarch(subarch: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| subarch | Sub architecture name |
+| ... | Variable arguments, can pass multiple sub architectures |
+
+#### Usage
+
 ```lua
 if os.is_subarch("x86_64") then
     -- Subsystem architecture is x86_64
@@ -731,6 +1229,21 @@ end
 
 - Create a symlink to a file or directory
 
+#### Function Prototype
+
+```lua
+os.ln(source: <string>, target: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| source | Source file or directory path |
+| target | Target symlink path |
+
+#### Usage
+
 ```lua
 -- creates a symlink file "xxx.txt.ln" which is pointing to "xxx.txt"
 os.ln("xxx.txt", "xxx.txt.ln")
@@ -740,9 +1253,19 @@ os.ln("xxx.txt", "xxx.txt.ln")
 
 - Read the content of a symlink
 
+#### Function Prototype
+
 ```lua
-local target = os.readlink("path/to/symlink")
+os.readlink(path: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | Symlink path |
+
+#### Usage
 
 Reads the target path that the symbolic link points to. Returns nil if the specified path is not a symbolic link.
 
@@ -760,6 +1283,20 @@ end
 
 - Raise an exception and abort the current script
 
+#### Function Prototype
+
+```lua
+os.raise(message: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| message | Error message |
+
+#### Usage
+
 ```lua
 -- Raise exception with message "an error occurred"
 os.raise("an error occurred")
@@ -773,6 +1310,21 @@ Recommanded to use builtin function `raise` instead of `os.raise`
 
 - Similar to [os.raise](#os-raise) but you can specify the level of the error
 
+#### Function Prototype
+
+```lua
+os.raiselevel(level: <number>, message: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| level | Error level |
+| message | Error message |
+
+#### Usage
+
 ```lua
 -- Raise exception with message "an error occurred"
 os.raiselevel(3,"an error occurred")
@@ -782,15 +1334,35 @@ os.raiselevel(3,"an error occurred")
 
 - Get features
 
+#### Function Prototype
+
 ```lua
-local features = os.features()
+os.features()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Gets a list of features supported by the current operating system. Returns a table containing various system-supported features.
 
 ## os.getenvs
 
 - Get all current environment variables
+
+#### Function Prototype
+
+```lua
+os.getenvs()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 ```lua
 local envs = os.getenvs()
@@ -802,9 +1374,37 @@ print(envs["HOME"])
 
 - Set environment variables. Replace the current envs by a new one and return old envs
 
+#### Function Prototype
+
+```lua
+os.setenvs(envs: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| envs | Environment variables table |
+
+#### Usage
+
 ## os.addenvs
 
 - Add environment variables to current envs, return the all old envs
+
+#### Function Prototype
+
+```lua
+os.addenvs(envs: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| envs | Environment variables table to add |
+
+#### Usage
 
 ```lua
 os.setenvs({EXAMPLE = "a/path"}) -- add a custom variable to see addenvs impact on it
@@ -818,6 +1418,21 @@ print(oldenvs["EXAMPLE"]) -- got a/path
 
 - Join environment variables. Similar to [os.addenvs](#os-addenvs) but with two envs variable
 
+#### Function Prototype
+
+```lua
+os.joinenvs(envs1: <table>, envs2: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| envs1 | First environment variables table |
+| envs2 | Second environment variables table |
+
+#### Usage
+
 ```lua
 local envs = {CUSTOM = "a/path"}
 local envs2 = {CUSTOM = "some/path/"}
@@ -830,9 +1445,19 @@ The result is: `{ CUSTOM = "a/path;some/path/" }`
 
 - Get system environment variables
 
+#### Function Prototype
+
 ```lua
-local value = os.getenv("PATH")
+os.getenv(name: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Environment variable name |
+
+#### Usage
 
 Gets the value of the specified environment variable. Returns nil if the environment variable doesn't exist.
 
@@ -850,9 +1475,20 @@ local home = os.getenv("HOME") or "/tmp"
 
 - Set system environment variables
 
+#### Function Prototype
+
 ```lua
-os.setenv("HOME", "/tmp/")
+os.setenv(name: <string>, value: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Environment variable name |
+| value | Environment variable value |
+
+#### Usage
 
 Sets the value of the specified environment variable. After setting, it affects the current process and its child processes.
 

@@ -7,6 +7,22 @@ The io operation module extends lua's built-in io module to provide more easy-to
 
 - Open file for reading and writing
 
+#### Function Prototype
+
+```lua
+io.open(filename: <string>, mode: <string>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| mode | Open mode string |
+| options | Options table (optional) |
+
+#### Usage
+
 This is a native Lua interface, extended by xmake. For detailed usage, see Lua's official documentation: [The Complete I/O Model](https://www.lua.org/pil/21.2.html)
 
 Supported open modes: `"r"` (read-only), `"w"` (write), `"a"` (append), `"r+"` (read-write), etc.
@@ -81,6 +97,20 @@ end
 
 - Load all table contents from the specified path file deserialization
 
+#### Function Prototype
+
+```lua
+io.load(filename: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+
+#### Usage
+
 You can load serialized table contents from a file, generally used with [io.save](#iosave), for example:
 
 ```lua
@@ -96,6 +126,21 @@ end
 ## io.save
 
 - Serialize all table contents to the specified path file
+
+#### Function Prototype
+
+```lua
+io.save(filename: <string>, data: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| data | Table data to serialize |
+
+#### Usage
 
 You can serialize the contents of the table to the specified file, generally used in conjunction with [io.load](#ioload), for example:
 
@@ -116,6 +161,21 @@ The result of the storage is:
 ## io.readfile
 
 - Read everything from the specified path file
+
+#### Function Prototype
+
+```lua
+io.readfile(filename: <string>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| options | Options table (optional) |
+
+#### Usage
 
 It is more convenient to directly read the contents of the entire file without opening the file, for example:
 
@@ -146,6 +206,21 @@ xmake automatically detects and handles different newline formats (LF, CRLF) and
 
 - Write all content to the specified path file
 
+#### Function Prototype
+
+```lua
+io.writefile(filename: <string>, data: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| data | Data string to write |
+
+#### Usage
+
 It is more convenient to directly write the contents of the entire file without opening the file, for example:
 
 ```lua
@@ -155,6 +230,22 @@ io.writefile("xxx.txt", "all data")
 ## io.gsub
 
 - Full text replaces the contents of the specified path file
+
+#### Function Prototype
+
+```lua
+io.gsub(filename: <string>, pattern: <string>, replacement: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| pattern | Pattern string |
+| replacement | Replacement string |
+
+#### Usage
 
 Similar to the [string.gsub](#stringgsub) interface, the full-text pattern matches the replacement content, but here is the direct operation file, for example:
 
@@ -167,6 +258,21 @@ io.gsub("xxx.txt", "%s+", "")
 
 - Read and display the tail content of the file
 
+#### Function Prototype
+
+```lua
+io.tail(filename: <string>, lines: <number>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| lines | Number of lines to read |
+
+#### Usage
+
 Reads the data of the specified number of lines at the end of the file and displays a command like `cat xxx.txt | tail -n 10`, for example:
 
 ```lua
@@ -178,6 +284,20 @@ io.tail("xxx.txt", 10)
 
 - read and display all contents of the file
 
+#### Function Prototype
+
+```lua
+io.cat(filename: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+
+#### Usage
+
 Read all the contents of the file and display it, similar to the `cat xxx.txt` command, for example:
 
 ```lua
@@ -187,6 +307,22 @@ io.cat("xxx.txt")
 ## io.print
 
 - Formatted output content to file with newline
+
+#### Function Prototype
+
+```lua
+io.print(filename: <string>, formatstring: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| formatstring | Format string |
+| ... | Variable arguments for formatting |
+
+#### Usage
 
 Directly format the passed parameter to output a line of string to the file with a line break, for example:
 
@@ -198,6 +334,22 @@ io.print("xxx.txt", "hello %s!", "xmake")
 
 - Formatted output to file without line breaks
 
+#### Function Prototype
+
+```lua
+io.printf(filename: <string>, formatstring: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| formatstring | Format string |
+| ... | Variable arguments for formatting |
+
+#### Usage
+
 Directly format the passed parameter to output a line of string to the file without a line break, for example:
 
 ```lua
@@ -207,6 +359,21 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 ## io.lines
 
 - Read all lines from file
+
+#### Function Prototype
+
+```lua
+io.lines(filename: <string>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| options | Options table (optional) |
+
+#### Usage
 
 Returns an iterator function for all lines from a given file name.
 
@@ -242,6 +409,20 @@ By default, newline characters are removed from each line. If you need to preser
 
 - Get a std file
 
+#### Function Prototype
+
+```lua
+io.stdfile(stdname: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| stdname | Standard file name string |
+
+#### Usage
+
 Returns a file for a given std file name
 
 ```lua
@@ -257,6 +438,20 @@ io.stderr
 
 - Open a lock of a file
 
+#### Function Prototype
+
+```lua
+io.openlock(filename: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+
+#### Usage
+
 Returns a file lock object when successfully locking the file
 
 ```lua
@@ -269,6 +464,23 @@ lock:close()
 ## io.replace
 
 - Replace text of the given file and return the replaced data
+
+#### Function Prototype
+
+```lua
+io.replace(filename: <string>, pattern: <string>, replacement: <string>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filename | File path string |
+| pattern | Pattern string |
+| replacement | Replacement string |
+| options | Options table (optional) |
+
+#### Usage
 
 Replaces a given pattern in a file by a replacement string
 

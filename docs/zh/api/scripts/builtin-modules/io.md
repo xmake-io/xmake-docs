@@ -7,6 +7,22 @@ io 操作模块，扩展了 lua 内置的 io 模块，提供更多易用的接�
 
 - 打开文件用于读写
 
+#### 函数原型
+
+```lua
+io.open(filename: <string>, mode: <string>, options: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filename | 文件路径字符串 |
+| mode | 打开模式字符串 |
+| options | 选项表（可选） |
+
+#### 用法说明
+
 这个是属于lua的原生接口，xmake 在此基础上进行了扩展。详细使用可以参看lua的官方文档：[The Complete I/O Model](https://www.lua.org/pil/21.2.html)
 
 支持的打开模式：`"r"`（只读）、`"w"`（写入）、`"a"`（追加）、`"r+"`（读写）等。
@@ -81,6 +97,20 @@ end
 
 -  从指定路径文件反序列化加载所有table内容
 
+#### 函数原型
+
+```lua
+io.load(filename: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filename | 文件路径字符串 |
+
+#### 用法说明
+
 可以从文件中加载序列化好的table内容，一般与[io.save](#iosave)配合使用，例如：
 
 ```lua
@@ -96,6 +126,21 @@ end
 ## io.save
 
 - 序列化保存所有table内容到指定路径文件
+
+#### 函数原型
+
+```lua
+io.save(filename: <string>, data: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filename | 文件路径字符串 |
+| data | 要序列化的表数据 |
+
+#### 用法说明
 
 可以序列化存储table内容到指定文件，一般与[io.load](#ioload)配合使用，例如：
 
@@ -116,6 +161,21 @@ io.save("xxx.txt", {a = "a", b = "b", c = "c"})
 ## io.readfile
 
 - 从指定路径文件读取所有内容
+
+#### 函数原型
+
+```lua
+io.readfile(filename: <string>, options: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filename | 文件路径字符串 |
+| options | 选项表（可选） |
+
+#### 用法说明
 
 可在不打开文件的情况下，直接读取整个文件的内容，更加的方便，例如：
 
@@ -146,6 +206,22 @@ xmake 会自动检测并处理不同的换行符格式（LF、CRLF），并自�
 
 - 写入所有内容到指定路径文件
 
+#### 函数原型
+
+```lua
+io.writefile(filename: <string>, content: <string>, options: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filename | 文件路径字符串 |
+| content | 文件内容字符串 |
+| options | 选项表（可选） |
+
+#### 用法说明
+
 可在不打开文件的情况下，直接写入整个文件的内容，更加的方便，例如：
 
 ```lua
@@ -155,6 +231,23 @@ io.writefile("xxx.txt", "all data")
 ## io.gsub
 
 - 全文替换指定路径文件的内容
+
+#### 函数原型
+
+```lua
+io.gsub(filepath: <string>, pattern: <string>, replace: <string|function>, options: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filepath | 文件路径字符串 |
+| pattern | 用于匹配的模式字符串 |
+| replace | 替换字符串或函数 |
+| options | 选项表（可选） |
+
+#### 用法说明
 
 类似[string.gsub](#stringgsub)接口，全文模式匹配替换内容，不过这里是直接操作文件，例如：
 
@@ -167,6 +260,21 @@ io.gsub("xxx.txt", "%s+", "")
 
 - 读取和显示文件的尾部内容
 
+#### 函数原型
+
+```lua
+io.tail(filepath: <string>, lines: <number>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filepath | 文件路径字符串 |
+| lines | 要读取的行数 |
+
+#### 用法说明
+
 读取文件尾部指定行数的数据，并显示，类似`cat xxx.txt | tail -n 10`命令，例如：
 
 ```lua
@@ -178,6 +286,20 @@ io.tail("xxx.txt", 10)
 
 - 读取和显示文件的所有内容
 
+#### 函数原型
+
+```lua
+io.cat(filepath: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filepath | 文件路径字符串 |
+
+#### 用法说明
+
 读取文件的所有内容并显示，类似`cat xxx.txt`命令，例如：
 
 ```lua
@@ -187,6 +309,20 @@ io.cat("xxx.txt")
 ## io.print
 
 - 带换行格式化输出内容到文件
+
+#### 函数原型
+
+```lua
+io.print(content: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| content | 输出内容字符串 |
+
+#### 用法说明
 
 直接格式化传参输出一行字符串到文件，并且带换行，例如：
 
@@ -198,6 +334,21 @@ io.print("xxx.txt", "hello %s!", "xmake")
 
 - 无换行格式化输出内容到文件
 
+#### 函数原型
+
+```lua
+io.printf(format: <string>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| format | 格式字符串 |
+| ... | 可变参数 |
+
+#### 用法说明
+
 直接格式化传参输出一行字符串到文件，不带换行，例如：
 
 ```lua
@@ -207,6 +358,21 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 ## io.lines
 
 - 读取文件的所有行
+
+#### 函数原型
+
+```lua
+io.lines(filepath: <string>, mode: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filepath | 文件路径字符串 |
+| mode | 读取模式字符串 |
+
+#### 用法说明
 
 根据文件名返回该文件的所有行的内容，返回一个迭代器函数。
 
@@ -242,6 +408,18 @@ end
 
 - 获取标准输入输出文件
 
+#### 函数原型
+
+```lua
+io.stdfile()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 根据文件名返回标准输入输出文件
 
 ```lua
@@ -257,6 +435,20 @@ io.stderr
 
 - 创建一把文件锁
 
+#### 函数原型
+
+```lua
+io.openlock(filepath: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filepath | 文件路径字符串 |
+
+#### 用法说明
+
 为给定的文件返回一个文件锁对象
 
 ```lua
@@ -269,6 +461,23 @@ lock:close()
 ## io.replace
 
 - 根据表达式替换文件内容
+
+#### 函数原型
+
+```lua
+io.replace(filepath: <string>, pattern: <string>, replace: <string|function>, options: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filepath | 文件路径字符串 |
+| pattern | 用于匹配的模式字符串 |
+| replace | 替换字符串或函数 |
+| options | 选项表（可选） |
+
+#### 用法说明
 
 根据表达式和参数对文件进行全文替换
 

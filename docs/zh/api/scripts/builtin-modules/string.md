@@ -9,6 +9,21 @@ Xmake 中对其进行了扩展，增加了一些扩展接口：
 
 - 判断字符串开头是否匹配
 
+#### 函数原型
+
+```lua
+string.startswith(str: <string>, prefix: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| str | 要检查的字符串 |
+| prefix | 要匹配的前缀字符串 |
+
+#### 用法说明
+
 ```lua
 local s = "hello xmake"
 if s:startswith("hello") then
@@ -20,6 +35,21 @@ end
 
 - 判断字符串结尾是否匹配
 
+#### 函数原型
+
+```lua
+string.endswith(str: <string>, suffix: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| str | 要检查的字符串 |
+| suffix | 要匹配的后缀字符串 |
+
+#### 用法说明
+
 ```lua
 local s = "hello xmake"
 if s:endswith("xmake") then
@@ -30,6 +60,22 @@ end
 ## string.split
 
 - 分割字符串
+
+#### 函数原型
+
+```lua
+string.split(str: <string>, separator: <string>, options: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| str | 要分割的字符串 |
+| separator | 分隔符字符串 |
+| options | 分割选项表（可选） |
+
+#### 用法说明
 
 v2.2.7版本对这个接口做了改进，以下是对2.2.7之后版本的使用说明。
 
@@ -74,6 +120,20 @@ v2.2.7版本对这个接口做了改进，以下是对2.2.7之后版本的使用
 
 - 去掉字符串左右空白字符
 
+#### 函数原型
+
+```lua
+string.trim(str: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| str | 要处理的字符串 |
+
+#### 用法说明
+
 ```lua
 string.trim("    hello xmake!    ")
 ```
@@ -84,6 +144,20 @@ string.trim("    hello xmake!    ")
 
 - 去掉字符串左边空白字符
 
+#### 函数原型
+
+```lua
+string.ltrim(str: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| str | 要处理的字符串 |
+
+#### 用法说明
+
 ```lua
 string.ltrim("    hello xmake!    ")
 ```
@@ -93,6 +167,20 @@ string.ltrim("    hello xmake!    ")
 ## string.rtrim
 
 - 去掉字符串右边空白字符
+
+#### 函数原型
+
+```lua
+string.rtrim(str: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| str | 要处理的字符串 |
+
+#### 用法说明
 
 ```lua
 string.rtrim("    hello xmake!    ")

@@ -9,6 +9,21 @@ It has been extended in xmake to add some extension interfaces:
 
 - Determine if the beginning of the string matches
 
+#### Function Prototype
+
+```lua
+string.startswith(str: <string>, prefix: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| str | String to check |
+| prefix | Prefix string to match |
+
+#### Usage
+
 ```lua
 local s = "hello xmake"
 if s:startswith("hello") then
@@ -20,6 +35,21 @@ end
 
 - Determine if the end of the string matches
 
+#### Function Prototype
+
+```lua
+string.endswith(str: <string>, suffix: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| str | String to check |
+| suffix | Suffix string to match |
+
+#### Usage
+
 ```lua
 local s = "hello xmake"
 if s:endswith("xmake") then
@@ -28,6 +58,24 @@ end
 ```
 
 ## string.split
+
+- Split string by separator
+
+#### Function Prototype
+
+```lua
+string.split(str: <string>, separator: <string>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| str | String to split |
+| separator | Separator string |
+| options | Split options table (optional) |
+
+#### Usage
 
 pattern match and ignore empty string
 
@@ -70,6 +118,20 @@ limit split count
 
 - Remove the left and right whitespace characters of the string
 
+#### Function Prototype
+
+```lua
+string.trim(str: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| str | String to trim |
+
+#### Usage
+
 ```lua
 string.trim("    hello xmake!    ")
 ```
@@ -80,6 +142,20 @@ The result is: "hello xmake!"
 
 - Remove the whitespace character to the left of the string
 
+#### Function Prototype
+
+```lua
+string.ltrim(str: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| str | String to trim |
+
+#### Usage
+
 ```lua
 string.ltrim("    hello xmake!    ")
 ```
@@ -89,6 +165,20 @@ The result is: "hello xmake!    "
 ## string.rtrim
 
 - Remove the whitespace character to the right of the string
+
+#### Function Prototype
+
+```lua
+string.rtrim(str: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| str | String to trim |
+
+#### Usage
 
 ```lua
 string.rtrim("    hello xmake!    ")
