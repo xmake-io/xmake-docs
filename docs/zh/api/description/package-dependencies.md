@@ -708,7 +708,7 @@ package("foo")
     add_deps("cmake", "bar")
     on_install(function (package)
         local configs = {}
-        import("package.tools.cmake").install(package, configs, {packages = "bar"})
+        import("package.tools.cmake").install(package, configs, {packagedeps = "bar"})
     end)
 ```
 
