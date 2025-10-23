@@ -16,6 +16,8 @@ package(name: <string>)
 |-----------|-------------|
 | name | Package name string |
 
+#### Usage
+
 The repository depends on the package definition description, the `package()` related interface definition, etc. There will be time to elaborate, so stay tuned. .
 
 Please refer to the existing package description in the official repository: [xmake-repo](https://github.com/xmake-io/xmake-repo)
@@ -72,6 +74,8 @@ set_homepage(url: <string>)
 |-----------|-------------|
 | url | Package homepage URL string |
 
+#### Usage
+
 Set the official page address of the project where the package is located.
 
 ## set_description
@@ -89,6 +93,8 @@ set_description(description: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | description | Package description string |
+
+#### Usage
 
 Set the package description information, generally see the relevant package information through `xmake require --info zlib`.
 
@@ -110,6 +116,8 @@ set_kind(kind: <string>, {
 |-----------|-------------|
 | kind | Package type: "library", "binary", "toolchain" |
 | headeronly | For library type, whether it's header-only library |
+
+#### Usage
 
 Used to set the package type. xmake packages currently support the following types:
 
@@ -190,6 +198,8 @@ set_urls(urls: <string|array>, ..., {
 | excludes | Files to exclude from extraction |
 | version | Version transformation function |
 | http_headers | HTTP headers for download |
+
+#### Usage
 
 Set the source package or git repository address of the package. Unlike add_urls, this interface is the override setting, and add_urls is the additional setting. Other usage methods are similar. This is chosen according to different needs.
 

@@ -16,6 +16,8 @@ package(name: <string>)
 |------|------|
 | name | 包名称字符串 |
 
+#### 用法说明
+
 可先参考官方仓库中现有包描述：[xmake-repo](https://github.com/xmake-io/xmake-repo)
 
 这里给个比较具有代表性的实例供参考：
@@ -70,6 +72,10 @@ set_homepage(url: <string>)
 |------|------|
 | url | 包主页URL字符串 |
 
+#### 用法说明
+
+设置包所在项目的官方页面地址。
+
 ## set_description
 
 - 设置包的相关描述信息
@@ -85,6 +91,8 @@ set_description(description: <string>)
 | 参数 | 描述 |
 |------|------|
 | description | 包描述字符串 |
+
+#### 用法说明
 
 一般通过`xmake require --info zlib`查看相关包信息时候，会看到。
 

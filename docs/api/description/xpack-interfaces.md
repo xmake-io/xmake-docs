@@ -27,6 +27,8 @@ set_version(version: <string>)
 |-----------|-------------|
 | version | Package version string |
 
+#### Usage
+
 This interface is used to set the version of the generated installation package:
 
 ```lua
@@ -75,6 +77,8 @@ set_homepage(homepage: <string>)
 |-----------|-------------|
 | homepage | Homepage URL string |
 
+#### Usage
+
 ```lua
 xpack("xmake")
      set_homepage("https://xmake.io")
@@ -95,6 +99,8 @@ set_title(title: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | title | Package title string |
+
+#### Usage
 
 A simple description usually used to configure the installation package, shorter than `set_description`.
 

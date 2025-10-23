@@ -42,6 +42,8 @@ option(name: <string>)
 |-----------|-------------|
 | name | Option name string |
 
+#### Usage
+
 Define and set option switches for custom compilation configuration options, switch settings.
 
 For example, define an option to enable test:
@@ -83,6 +85,8 @@ option_end()
 |-----------|-------------|
 | - | No parameters |
 
+#### Usage
+
 This is an optional api that shows the departure option scope, similar to [target_end](/api/description/project-target#target-end).
 
 ## add_deps
@@ -101,6 +105,8 @@ add_deps(deps: <string|array>, ...)
 |-----------|-------------|
 | deps | Dependency option name string or array |
 | ... | Variable parameters, can pass multiple dependency names |
+
+#### Usage
 
 By setting the dependency, you can adjust the detection order of the options, which is generally used when the detection script is called by [on_check](#on_check).
 
@@ -143,6 +149,8 @@ before_check(script: <function (option)>)
 |-----------|-------------|
 | script | Before check script function with option parameter |
 
+#### Usage
+
 ```lua
 option("zlib")
     before_check(function (option)
@@ -164,6 +172,8 @@ on_check(script: <function (option)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Check script function with option parameter |
+
+#### Usage
 
 This script overrides the built-in option detection logic.
 
@@ -199,6 +209,8 @@ after_check(script: <function (option)>)
 |-----------|-------------|
 | script | After check script function with option parameter |
 
+#### Usage
+
 After the option detection is complete, execute this script for some post-processing, or you can re-disable the option at this time:
 
 ```lua
@@ -227,6 +239,8 @@ set_values(values: <string|array>, ...)
 | values | Option value string or array |
 | ... | Variable parameters, can pass multiple values |
 
+#### Usage
+
 For the graphical menu configuration of `xmake f --menu` only, a list of option values is provided for quick selection by the user, for example:
 
 ```lua
@@ -254,6 +268,8 @@ set_default(value: <string|boolean|number>)
 | Parameter | Description |
 |-----------|-------------|
 | value | Default value (string, boolean, or number) |
+
+#### Usage
 
 When the option value is not modified by the command `xmake f --option=[y|n}`, the option itself has a default value, which can be set through this interface:
 
@@ -325,6 +341,8 @@ set_showmenu(showmenu: <boolean>)
 |-----------|-------------|
 | showmenu | Whether to show in menu (boolean) |
 
+#### Usage
+
 If set to `true`, then this option will appear in `xmake f --help`, which can also be configured via `xmake f --optionname=xxx`, otherwise it can only be used inside `xmake.lua` , the modification cannot be configured manually.
 
 ```lua
@@ -360,6 +378,8 @@ set_category(category: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | category | Category name string |
+
+#### Usage
 
 This is an optional configuration, only used in the help menu, the classification display options, the same category of options, will be displayed in the same group, so the menu looks more beautiful.
 
@@ -449,6 +469,8 @@ set_description(description: <string|array>, ...)
 | description | Description string or array |
 | ... | Variable parameters, can pass multiple description lines |
 
+#### Usage
+
 When the option menu is displayed, the description on the right is used to help the user know more clearly about the purpose of this option, for example:
 
 ```lua
@@ -512,6 +534,8 @@ add_links(links: <string|array>, ...)
 | links | Library name string or array |
 | ... | Variable parameters, can pass multiple library names |
 
+#### Usage
+
 If the specified link library is passed, this option will be enabled and the associated target will automatically be added to this link, for example:
 
 ```lua
@@ -543,6 +567,8 @@ add_linkdirs(linkdirs: <string|array>, ...)
 | linkdirs | Link directory path string or array |
 | ... | Variable parameters, can pass multiple directory paths |
 
+#### Usage
+
 This is optional. Generally, the system library does not need to add this, and it can also pass the test. If it is not found, you can add the search directory yourself to improve the detection pass rate. For details, see: [add_links](#add_links)
 
 ## add_rpathdirs
@@ -562,6 +588,8 @@ add_rpathdirs(rpathdirs: <string|array>, ...)
 | rpathdirs | RPATH directory path string or array |
 | ... | Variable parameters, can pass multiple directory paths |
 
+#### Usage
+
 After the option passes the detection, it will be automatically added to the corresponding target. For details, see: [target.add_rpathdirs](/api/description/project-target#add-rpathdirs).
 
 ## add_cincludes
@@ -580,6 +608,8 @@ add_cincludes(includes: <string|array>, ...)
 |-----------|-------------|
 | includes | Header file name string or array |
 | ... | Variable parameters, can pass multiple header file names |
+
+#### Usage
 
 This option will be enabled if the c header file is passed, for example:
 
@@ -613,6 +643,8 @@ add_cxxincludes(includes: <string|array>, ...)
 | includes | C++ header file name string or array |
 | ... | Variable parameters, can pass multiple header file names |
 
+#### Usage
+
 Similar to [add_cincludes](#add_cincludes), except that the detected header file type is a c++ header file.
 
 ## add_ctypes
@@ -631,6 +663,8 @@ add_ctypes(types: <string|array>, ...)
 |-----------|-------------|
 | types | C type name string or array |
 | ... | Variable parameters, can pass multiple type names |
+
+#### Usage
 
 This option will be enabled if the c type is passed, for example:
 
@@ -664,6 +698,8 @@ add_cxxtypes(types: <string|array>, ...)
 | types | C++ type name string or array |
 | ... | Variable parameters, can pass multiple type names |
 
+#### Usage
+
 Similar to [add_ctypes](#add_ctypes), except that the type detected is a c++ type.
 
 ## add_csnippets
@@ -689,6 +725,8 @@ add_csnippets(name: <string>, code: <string>, {
 | tryrun | Whether to try running the code |
 | output | Whether to capture output |
 | number | Whether to parse output as number |
+
+#### Usage
 
 If the existing [add_ctypes](#add_ctypes), [add_cfuncs](#add_cfuncs), etc. cannot meet the current detection requirements,
 You can use this interface to implement more custom detection of some compiler feature detection, see: [add_cxxsnippets](#add_cxxsnippets).
@@ -716,6 +754,8 @@ add_cxxsnippets(name: <string>, code: <string>, {
 | tryrun | Whether to try running the code |
 | output | Whether to capture output |
 | number | Whether to parse output as number |
+
+#### Usage
 
 This interface can be used to implement more custom detection of some compiler feature detection, especially the detection support of various features of C++, such as:
 
@@ -777,6 +817,8 @@ add_cfuncs(funcs: <string|array>, ...)
 | funcs | C function name string or array |
 | ... | Variable parameters, can pass multiple function names |
 
+#### Usage
+
 ```lua
 option("setjmp")
     add_cincludes("setjmp.h")
@@ -822,5 +864,7 @@ add_cxxfuncs(funcs: <string|array>, ...)
 |-----------|-------------|
 | funcs | C++ function name string or array |
 | ... | Variable parameters, can pass multiple function names |
+
+#### Usage
 
 The usage is consistent with [add_cfuncs](#add_cxxfuncs).

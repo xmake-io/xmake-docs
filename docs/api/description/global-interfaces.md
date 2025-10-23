@@ -22,6 +22,8 @@ includes(paths: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple paths |
 | rootdir | Root directory for relative path resolution, optional |
 
+#### Usage
+
 #### Add subdirectory configuration
 
 We can use this interfaces to add sub-project files (xmake.lua) or directories with xmake.lua.
@@ -193,6 +195,8 @@ set_project(name: <string>)
 |-----------|-------------|
 | name | Project name string |
 
+#### Usage
+
 Set the whole project name, we can set it at the beginning of `xmake.lua`.
 
 ```lua
@@ -223,6 +227,8 @@ set_version(version: <string>, {
 | version | Project version string, e.g. "1.5.1" |
 | build | Build version string, supports time format like "%Y%m%d%H%M" |
 | soname | Soname version for dynamic library compatibility control, can be string or boolean |
+
+#### Usage
 
 Set the whole project version, we can set it at the beginning of `xmake.lua`.
 
@@ -292,6 +298,8 @@ set_xmakever(version: <string>)
 |-----------|-------------|
 | version | Minimum required xmake version string, e.g. "2.1.0" |
 
+#### Usage
+
 If the current xmake version less than the required version, it will prompt an error.
 
 ```lua
@@ -315,6 +323,8 @@ add_moduledirs(dirs: <string|array>, ...)
 |-----------|-------------|
 | dirs | Module directory path string or array |
 | ... | Variable parameters, can pass multiple directory paths |
+
+#### Usage
 
 The builtin modules are placed in the 'xmake/modules' directory, but for user-defined modules for a specific project, you can configure additional module directories in the 'xmake.lua` file.
 
@@ -340,6 +350,8 @@ add_plugindirs(dirs: <string|array>, ...)
 | dirs | Plugin directory path string or array |
 | ... | Variable parameters, can pass multiple directory paths |
 
+#### Usage
+
 The builtin plugins are placed in the 'xmake/plugins' directory, but for user-defined plugins for a specific project, you can configure additional plugin directories in the 'xmake.lua` file.
 
 ```lua
@@ -362,6 +374,8 @@ get_config(name: <string>): <string|boolean|number>
 | Parameter | Description |
 |-----------|-------------|
 | name | Configuration option name string |
+
+#### Usage
 
 This interface is introduced from version 2.2.2 to get the configuration value from the given name.
 
@@ -391,6 +405,8 @@ set_config(name: <string>, value: <string|boolean|number>)
 |-----------|-------------|
 | name | Configuration option name string |
 | value | Configuration value, can be string, boolean, or number |
+
+#### Usage
 
 This interface is introduced from version 2.2.2 to set the default configuration value in xmake.lua.
 
@@ -439,6 +455,8 @@ add_requires(packages: <string|array>, ..., {
 | configs | Package-specific configuration table |
 | alias | Package alias name |
 | ... | Other package-specific configuration parameters |
+
+#### Usage
 
 The dependency package management of xmake fully supports semantic version selection, for example: "~1.6.1". For a detailed description of the semantic version, please see: [https://semver.org/](https://semver.org/)
 
@@ -699,6 +717,8 @@ add_requireconfs(packages: <string|array>, ..., {
 | debug | Use debug version, boolean value |
 | ... | Other package-specific configuration parameters |
 
+#### Usage
+
 This is a newly added interface after v2.5.1. We can use it to expand and rewrite the configuration of the package defined by `add_requires()` and its dependent packages. It has the following uses.
 
 #### Expand the configuration of the specified package
@@ -832,6 +852,8 @@ add_repositories(repos: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple repositories |
 | rootdir | Root directory for relative path resolution, optional |
 
+#### Usage
+
 If the required package is not in the official repository [xmake-repo](https://github.com/xmake-io/xmake-repo), we can submit the contribution code to the repository for support.
 But if some packages are only for personal or private projects, we can create a private repository repo. The repository organization structure can be found at: [xmake-repo](https://github.com/xmake-io/xmake-repo)
 
@@ -888,6 +910,8 @@ set_defaultplat(platform: <string>)
 |-----------|-------------|
 | platform | Default compilation platform name, e.g. "iphoneos", "windows" |
 
+#### Usage
+
 Only supported by v2.5.6 and above, it is used to set the default compilation platform of the project. If it is not set, the default platform follows the current system platform, which is os.host().
 
 For example, the default compilation platform on macOS is macosx, if the current project is an ios project, you can set the default compilation platform to iphoneos.
@@ -914,6 +938,8 @@ set_defaultarchs(archs: <string|array>, ...)
 |-----------|-------------|
 | archs | Default compilation architecture string or array, supports platform-specific format like "iphoneos|arm64" |
 | ... | Variable parameters, can pass multiple architecture specifications |
+
+#### Usage
 
 Only supported by v2.5.6 and above, it is used to set the default compilation architecture of the project. If it is not set, the default platform follows the current system architecture, which is os.arch().
 
@@ -948,6 +974,8 @@ set_defaultmode(mode: <string>)
 |-----------|-------------|
 | mode | Default compilation mode name, e.g. "release", "debug", "releasedbg" |
 
+#### Usage
+
 Only supported by v2.5.6 and above, it is used to set the default compilation mode of the project. If it is not set, the default is to compile in release mode.
 
 ```lua
@@ -972,6 +1000,8 @@ set_allowedplats(platforms: <string|array>, ...)
 |-----------|-------------|
 | platforms | Allowed compilation platform name string or array |
 | ... | Variable parameters, can pass multiple platform names |
+
+#### Usage
 
 It is only supported by v2.5.6 and above. It is used to set the list of compilation platforms supported by the project. If the user specifies other platforms, an error will be prompted. This is usually used to restrict the user from specifying the wrong invalid platform.
 
@@ -999,6 +1029,8 @@ set_allowedarchs(archs: <string|array>, ...)
 |-----------|-------------|
 | archs | Allowed compilation architecture string or array, supports platform-specific format like "windows|x64" |
 | ... | Variable parameters, can pass multiple architecture specifications |
+
+#### Usage
 
 Only supported by v2.5.6 and above. It is used to set the list of compiled architectures supported by the project. If the user specifies other architectures, an error will be prompted. This is usually used to restrict users from specifying incorrect invalid architectures.
 
@@ -1035,6 +1067,8 @@ set_allowedmodes(modes: <string|array>, ...)
 | modes | Allowed compilation mode name string or array |
 | ... | Variable parameters, can pass multiple mode names |
 
+#### Usage
+
 It is only supported by v2.5.6 and above. It is used to set the list of compilation modes supported by the project. If the user specifies other modes, an error will be prompted. This is usually used to restrict the user from specifying incorrect invalid modes.
 
 If it is not set, then there is no mode restriction.
@@ -1061,6 +1095,8 @@ namespace(name: <string>, script: <function>)
 |-----------|-------------|
 | name | Namespace name string |
 | script | Namespace script function |
+
+#### Usage
 
 Enter the namespace, which is supported by xmake 2.9.8. It can be used to isolate various domain name conflicts such as duplicate target and option in sub-projects.
 
@@ -1372,6 +1408,8 @@ namespace_end()
 | Parameter | Description |
 |-----------|-------------|
 | (none) | No parameters required |
+
+#### Usage
 
 End the current namespace.
 

@@ -19,6 +19,8 @@ is_os(os: <string>, ...)
 | os | Operating system name string |
 | ... | Variable parameters, can pass multiple OS names |
 
+#### Usage
+
 ```lua
 if is_os("ios") then
     add_files("src/xxx/*.m")
@@ -49,6 +51,8 @@ is_arch(arch: <string>, ...)
 |-----------|-------------|
 | arch | Architecture name string |
 | ... | Variable parameters, can pass multiple architecture names |
+
+#### Usage
 
 You can use this api to check the configuration command: `xmake f -a armv7`
 
@@ -89,6 +93,8 @@ is_plat(plat: <string>, ...)
 |-----------|-------------|
 | plat | Platform name string |
 | ... | Variable parameters, can pass multiple platform names |
+
+#### Usage
 
 You can use this api to check the configuration command: `xmake f -p iphoneos`
 
@@ -142,6 +148,8 @@ is_host(host: <string>, ...)
 | host | Host system name string |
 | ... | Variable parameters, can pass multiple host names |
 
+#### Usage
+
 Some compilation platforms can be built on multiple different operating systems, for example: android ndk (on linux, macOS and windows).
 
 So, we can use this api to determine the current host operating system.
@@ -178,6 +186,8 @@ is_subhost(subhost: <string>, ...)
 |-----------|-------------|
 | subhost | Subsystem name string |
 | ... | Variable parameters, can pass multiple subsystem names |
+
+#### Usage
 
 At present, it is mainly used for detection of cygwin, msys2 and other subsystem environments on windows systems. If you run xmake in the msys2 shell environment, then `is_subhost("windows")` will return false, and `is_host("windows")` It will still return true.
 
@@ -217,6 +227,8 @@ is_subarch(subarch: <string>, ...)
 | subarch | Subsystem architecture name string |
 | ... | Variable parameters, can pass multiple subsystem architecture names |
 
+#### Usage
+
 At present, it is mainly used for the detection of the architecture under the subsystem environment such as cygwin and msys2 on the windows system. The msvc tool chain is usually used on the windows compilation platform, and the architecture is x64, x86.
 In the msys/cygwin subsystem environment, the compiler architecture defaults to x86_64/i386, which is different.
 
@@ -238,6 +250,8 @@ is_cross()
 |-----------|-------------|
 | - | No parameters |
 
+#### Usage
+
 This interface returns true if the current target architecture and platform, which is not the current host platform, is cross-compiled.
 
 ## is_mode
@@ -256,6 +270,8 @@ is_mode(mode: <string>, ...)
 |-----------|-------------|
 | mode | Compilation mode name string |
 | ... | Variable parameters, can pass multiple mode names |
+
+#### Usage
 
 You can use this api to check the configuration command: `xmake f -m debug`
 
@@ -294,6 +310,8 @@ is_kind(kind: <string>, ...)
 |-----------|-------------|
 | kind | Target kind name string |
 | ... | Variable parameters, can pass multiple kind names |
+
+#### Usage
 
 You can use this api to check the configuration command: `xmake f -k [static|shared]`
 
@@ -341,6 +359,8 @@ is_config(name: <string>, values: <string>, ...)
 | name | Configuration option name string |
 | values | Configuration value string |
 | ... | Variable parameters, can pass multiple values |
+
+#### Usage
 
 This interface is introduced from version 2.2.2 to determine whether the specified configuration is a given value.
 
@@ -406,6 +426,8 @@ has_config(configs: <string>, ...)
 | configs | Configuration name string |
 | ... | Variable parameters, can pass multiple configuration names |
 
+#### Usage
+
 This interface is introduced from version 2.2.2 to detect whether a custom or built-in option/configuration exists or is enabled.
 
 For example, the following configuration will be true:
@@ -458,6 +480,8 @@ has_package(packages: <string>, ...)
 |-----------|-------------|
 | packages | Package name string |
 | ... | Variable parameters, can pass multiple package names |
+
+#### Usage
 
 This interface is introduced from version 2.2.3 to detect whether a dependent package exists or is enabled.
 

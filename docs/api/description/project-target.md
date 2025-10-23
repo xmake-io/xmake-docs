@@ -72,6 +72,8 @@ target(name: <string>, {
 | files | Source file path string or array, supports wildcard matching patterns |
 | ... | Other configuration options, such as deps, defines, includedirs, etc. |
 
+#### Usage
+
 Defines a console target named `test` in project and the default target filename is `test`.
 
 ```lua
@@ -131,6 +133,8 @@ target_end()
 |-----------|-------------|
 | No parameters | This interface does not require any parameters |
 
+#### Usage
+
 This is an optional api. If not called, then all settings after
 `target("xxx")` are made for that target, unless you enter other
 `target`, `option` or `task` scope. If you want to leave the current
@@ -177,6 +181,8 @@ set_kind(kind: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | kind | Target type string, specifies the type of compilation target |
+
+#### Usage
 
 Set the target type, currently supported types are:
 
@@ -303,6 +309,8 @@ set_strip(strip: <string>)
 |-----------|-------------|
 | strip | Strip mode string, optional values: debug, all |
 
+#### Usage
+
 Set the current target strip mode, currently supports the mode:
 
 | Value  | Description                                                   |
@@ -337,6 +345,8 @@ set_enabled(enabled: <boolean>)
 |-----------|-------------|
 | enabled | Whether to enable the target, true means enabled, false means disabled |
 
+#### Usage
+
 If `set_enabled(false)` is set, the corresponding target will be directly disabled, including target loading and information acquisition, while [set_default](#set_default) is just set to not compile by default, but the target can still get related information. , the default will also be loaded.
 
 ## set_default
@@ -354,6 +364,8 @@ set_default(default: <boolean>)
 | Parameter | Description |
 |-----------|-------------|
 | default | Whether to mark as default build target, true means default build, false means not default build |
+
+#### Usage
 
 This interface is used to set whether the given project target is the default build. If this interface is not called for setting, then this target is built by default, for example:
 
@@ -413,6 +425,8 @@ set_options(options: <string|array>, ...)
 | options | Option name string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple option name strings |
 
+#### Usage
+
 Add option dependencies. If you have customized some options through the [option](/api/description/configuration-option#option) interface, you can add associations only if you specify this option under the target target field.
 
 ```lua
@@ -449,6 +463,8 @@ set_symbols(symbols: <string>, {
 |-----------|-------------|
 | symbols | Symbol mode string, optional values: debug, hidden, none |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Set the symbol mode of the target. If no target is currently defined, it will be set to the global state, affecting all subsequent targets.
 
@@ -528,6 +544,8 @@ set_basename(basename: <string>)
 |-----------|-------------|
 | basename | Target file base name string |
 
+#### Usage
+
 By default, the generated target file name is based on the value configured in `target("name")`, for example:
 
 ```lua
@@ -572,6 +590,8 @@ set_filename(filename: <string>)
 |-----------|-------------|
 | filename | Target file full name string, including prefix and suffix |
 
+#### Usage
+
 The difference between it and [set_basename](#set_basename) is that [set_basename](#set_basename) sets the name without a suffix and a prefix, for example: `libtest.a`, if the basename is changed to test2, it becomes `libtest2.a `.
 
 The modification of filename is to modify the entire target file name, including the prefix and suffix. For example, you can directly change `libtest.a` to `test.dll`, which is not available for [set_basename](#set_basename).
@@ -591,6 +611,8 @@ set_prefixname(prefixname: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | prefixname | Target file prefix name string, such as "lib" or "" |
+
+#### Usage
 
 Only supported after version 2.5.5, you can modify the prefix name of the target file, for example, change the default: `libtest.so` to `test.so`
 
@@ -615,6 +637,8 @@ set_suffixname(suffixname: <string>)
 |-----------|-------------|
 | suffixname | Target file suffix name string, such as "-d" or "" |
 
+#### Usage
+
 Only supported after version 2.5.5, you can modify the postname of the target file, for example, change the default: `libtest.so` to `libtest-d.so`
 
 ```lua
@@ -637,6 +661,8 @@ set_extension(extension: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | extension | Target file extension string, such as ".dll" or ".so" |
+
+#### Usage
 
 Only supported after version 2.5.5, you can modify the extension of the set target file, for example, change the default: `libtest.so` to `test.dll`
 
@@ -664,6 +690,8 @@ set_warnings(warnings: <string>, {
 |-----------|-------------|
 | warnings | Warning level string, optional values: none, less, more, all, error |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Set the warning level of the compilation of the current target, generally supporting several levels:
 
@@ -704,6 +732,8 @@ set_optimize(optimize: <string>)
 |-----------|-------------|
 | optimize | Optimization level string, optional values: none, fast, faster, fastest, smallest, aggressive |
 
+#### Usage
+
 Set the compile optimization level of the target. If no target is currently set, it will be set to the global state, affecting all subsequent targets.
 
 At present, we mainly support several levels:
@@ -743,6 +773,8 @@ set_languages(languages: <string|array>, ..., {
 | languages | Language standard string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple language standard strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Set the language standard for target code compilation. If no target exists, it will be set to global mode. . .
 
@@ -819,6 +851,8 @@ set_fpmodels(fpmodels: <string|array>, ..., {
 | fpmodels | Float-point mode string or array, optional values: fast, strict, except, precise |
 | ... | Variable parameters, can pass multiple float-point mode strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 This interface is used to set the floating-point compilation mode and the compilation abstract settings for mathematical calculation related optimizations. It provides several commonly used levels such as fast, strict, except, precise, etc. Some of them can be set at the same time, and some are conflicting. Effective.
 
@@ -956,6 +990,8 @@ add_rules(rules: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple rule name strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 We can extend the build support for other files by pre-setting the file suffixes supported by the rules:
 
 ```lua
@@ -1007,6 +1043,8 @@ on_load(script: <function (target)>)
 |-----------|-------------|
 | script | Load script function, receives target parameter |
 
+#### Usage
+
 This script will be executed when the target is initialized and loaded, and some dynamic target configurations can be made to achieve more flexible target description definitions, for example:
 
 ```lua
@@ -1036,6 +1074,8 @@ on_config(script: <function (target)>)
 |-----------|-------------|
 | script | Configuration script function, receives target parameter |
 
+#### Usage
+
 After `xmake config` is executed, this script is executed before Build, which is usually used for configuration work before compilation. It differs from on_load in that on_load is executed as soon as the target is loaded, and the execution timing is earlier.
 
 If some configuration cannot be configured prematurely in on_load, it can be configured in on_config.
@@ -1061,6 +1101,8 @@ on_prepare(script: <function (target, opt)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Prepare phase script function, receives target, opt parameters |
+
+#### Usage
 
 Added in 3.0, the on_prepare phase enables two-stage builds. The prepare phase is dedicated to source-level preprocessing, code generation, and source dependency analysis, before entering the build phase.
 
@@ -1100,6 +1142,8 @@ on_prepare_file(script: <function (target, sourcefile, opt)>)
 |-----------|-------------|
 | script | Single file processing script function, receives target, sourcefile, opt parameters |
 
+#### Usage
+
 Through this interface, you can hook the built-in prepare phase process to preprocess, analyze, or generate code for each source file during the prepare phase.
 
 ```lua
@@ -1129,6 +1173,8 @@ on_prepare_files(script: <function (target, jobgraph, sourcebatch, opt)>, {jobgr
 | script | Batch file processing script function, receives target, jobgraph, sourcebatch, opt parameters |
 | jobgraph | Whether to enable parallel task processing, optional values: true, false |
 
+#### Usage
+
 Through this interface, you can hook the built-in prepare phase process to batch preprocess, analyze, or generate code for a group of source files of the same type during the prepare phase. Supports jobgraph for parallel tasks.
 
 Usually used with set_extensions to process specific file types in batch:
@@ -1142,13 +1188,6 @@ rule("scan_module_files")
         end)
     end, {jobgraph = true})
 ```
-
-Parameter description:
-- `target`: current target object
-- `jobgraph`: jobgraph object for parallel tasks (optional, requires {jobgraph = true})
-- `sourcebatch`: batch object for files of the same type, use sourcebatch.sourcefiles() to get the file list
-- `opt`: optional parameters
-
 
 ## on_link
 
@@ -1165,6 +1204,8 @@ on_link(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Link script function, receives target parameter |
+
+#### Usage
 
 This is a new interface after v2.2.7, which is used to customize the link process of the target.
 
@@ -1190,6 +1231,8 @@ on_build(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Build script function, receives target parameter |
+
+#### Usage
 
 Override the target build behavior of the target target, implement a custom compilation process, in general, do not need to do this, unless you really need to do some compiler operations that xmake does not provide by default.
 
@@ -1244,6 +1287,8 @@ on_build_file(script: <function (target, sourcefile, opt)>)
 |-----------|-------------|
 | script | Single file build script function, receives target, sourcefile, opt parameters |
 
+#### Usage
+
 Through this interface, you can use hook to specify the built-in build process of the target, replacing each source file compilation process:
 
 ```lua
@@ -1271,6 +1316,8 @@ on_build_files(script: <function (target, sourcebatch, opt)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Multi-file build script function, receives target, sourcebatch, opt parameters |
+
+#### Usage
 
 Through this interface, you can use hook to specify the built-in build process of the target, and replace a batch of the same type of source file compilation process:
 
@@ -1306,6 +1353,8 @@ on_clean(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Clean script function, receives target parameter |
+
+#### Usage
 
 Override the cleanup operation of the target target's `xmake [c|clean}` to implement a custom cleanup process.
 
@@ -1350,6 +1399,8 @@ on_package(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Package script function, receives target parameter |
+
+#### Usage
 
 Override the target object's `xmake [p|package}` package operation to implement the custom packaging process. If you want to package the specified target into the format you want, you can customize it through this interface.
 
@@ -1397,6 +1448,8 @@ on_install(script: <function (target)>)
 |-----------|-------------|
 | script | Install script function, receives target parameter |
 
+#### Usage
+
 Override the installation of `xmake [i|install}` of the target target to implement a custom installation process.
 
 For example, the generated apk package will be installed.
@@ -1428,6 +1481,8 @@ on_uninstall(script: <function (target)>)
 |-----------|-------------|
 | script | Uninstall script function, receives target parameter |
 
+#### Usage
+
 Override the uninstallation of `xmake [u|uninstall}` of the target target to implement a custom uninstall process.
 
 ```lua
@@ -1452,6 +1507,8 @@ on_run(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Run script function, receives target parameter |
+
+#### Usage
 
 Override the running operation of the target target's `xmake [r|run}` to implement a custom running process.
 
@@ -1484,6 +1541,8 @@ before_prepare(script: <function (target)>)
 |-----------|-------------|
 | script | Before prepare script function, receives target parameter |
 
+#### Usage
+
 It does not override the default prepare operation, just adds some custom actions before the prepare phase.
 
 ```lua
@@ -1508,6 +1567,8 @@ before_prepare_file(script: <function (target, sourcefile, opt)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Before prepare single file script function, receives target, sourcefile, opt parameters |
+
+#### Usage
 
 Does not override the default single file operation, just adds some custom actions before on_prepare_file.
 
@@ -1534,6 +1595,8 @@ before_prepare_files(script: <function (target, sourcebatch, opt)>)
 |-----------|-------------|
 | script | Before prepare batch files script function, receives target, sourcebatch, opt parameters |
 
+#### Usage
+
 Does not override the default batch operation, just adds some custom actions before on_prepare_files.
 
 ```lua
@@ -1558,6 +1621,8 @@ before_link(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Before link script function, receives target parameter |
+
+#### Usage
 
 This is a new interface after v2.2.7 to add custom script before linking target.
 
@@ -1584,6 +1649,8 @@ before_build(script: <function (target)>)
 |-----------|-------------|
 | script | Before build script function, receives target parameter |
 
+#### Usage
+
 It does not override the default build operation, just add some custom actions before building.
 
 ```lua
@@ -1608,6 +1675,8 @@ before_build_file(script: <function (target, sourcefile, opt)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Before build single file script function, receives target, sourcefile, opt parameters |
+
+#### Usage
 
 Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts before each source file compilation process:
 
@@ -1634,6 +1703,8 @@ before_build_files(script: <function (target, sourcebatch, opt)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Before build files script function, receives target, sourcebatch, opt parameters |
+
+#### Usage
 
 Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts before a batch of source files of the same type:
 
@@ -1662,6 +1733,8 @@ before_clean(script: <function (target)>)
 |-----------|-------------|
 | script | Before clean script function, receives target parameter |
 
+#### Usage
+
 It does not override the default cleanup operation, just add some custom actions before cleaning.
 
 ```lua
@@ -1686,6 +1759,8 @@ before_package(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Before package script function, receives target parameter |
+
+#### Usage
 
 It does not override the default packaging operation, just add some custom operations before packaging.
 
@@ -1712,6 +1787,8 @@ before_install(script: <function (target)>)
 |-----------|-------------|
 | script | Before install script function, receives target parameter |
 
+#### Usage
+
 It does not override the default installation operation, just add some custom actions before installation.
 
 ```lua
@@ -1736,6 +1813,8 @@ before_uninstall(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Before uninstall script function, receives target parameter |
+
+#### Usage
 
 It does not override the default uninstall operation, just add some custom actions before uninstalling.
 
@@ -1762,6 +1841,8 @@ before_run(script: <function (target)>)
 |-----------|-------------|
 | script | Before run script function, receives target parameter |
 
+#### Usage
+
 It does not override the default run operation, just add some custom actions before running.
 
 ```lua
@@ -1786,6 +1867,8 @@ after_prepare(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | After prepare script function, receives target parameter |
+
+#### Usage
 
 It does not override the default prepare operation, just adds some custom actions after the prepare phase.
 
@@ -1812,6 +1895,8 @@ after_prepare_file(script: <function (target, sourcefile, opt)>)
 |-----------|-------------|
 | script | After prepare single file script function, receives target, sourcefile, opt parameters |
 
+#### Usage
+
 Does not override the default single file operation, just adds some custom actions after on_prepare_file.
 
 ```lua
@@ -1836,6 +1921,8 @@ after_prepare_files(script: <function (target, sourcebatch, opt)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | After prepare batch files script function, receives target, sourcebatch, opt parameters |
+
+#### Usage
 
 Does not override the default batch operation, just adds some custom actions after on_prepare_files.
 
@@ -1862,6 +1949,8 @@ after_link(script: <function (target)>)
 |-----------|-------------|
 | script | After link script function, receives target parameter |
 
+#### Usage
+
 This is a new interface after v2.2.7 to add custom script after linking target.
 
 ```lua
@@ -1886,6 +1975,8 @@ after_build(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | After build script function, receives target parameter |
+
+#### Usage
 
 It does not override the default build operation, just add some custom actions after the build.
 
@@ -1914,6 +2005,8 @@ after_build_file(script: <function (target, sourcefile, opt)>)
 |-----------|-------------|
 | script | After build single file script function, receives target, sourcefile, opt parameters |
 
+#### Usage
+
 Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts after each source file compilation process:
 
 ```lua
@@ -1940,6 +2033,8 @@ after_build_files(script: <function (target, sourcebatch, opt)>)
 |-----------|-------------|
 | script | After build files script function, receives target, sourcebatch, opt parameters |
 
+#### Usage
+
 Through this interface, you can use hook to specify the built-in build process of the target, and execute some custom scripts after a batch of source files of the same type:
 
 ```lua
@@ -1965,6 +2060,8 @@ after_clean(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | After clean script function, receives target parameter |
+
+#### Usage
 
 It does not override the default cleanup operation, just add some custom actions after cleanup.
 
@@ -1994,6 +2091,8 @@ after_package(script: <function (target)>)
 |-----------|-------------|
 | script | After package script function, receives target parameter |
 
+#### Usage
+
 It does not override the default packaging operation, just add some custom operations after packaging.
 
 ```lua
@@ -2019,6 +2118,8 @@ after_install(script: <function (target)>)
 |-----------|-------------|
 | script | After install script function, receives target parameter |
 
+#### Usage
+
 It does not override the default installation operation, just add some custom actions after installation.
 
 ```lua
@@ -2042,6 +2143,8 @@ after_uninstall(script: <function (target)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | After uninstall script function, receives target parameter |
+
+#### Usage
 
 It does not override the default uninstall operation, just add some custom actions after uninstalling.
 
@@ -2068,6 +2171,8 @@ after_run(script: <function (target)>)
 |-----------|-------------|
 | script | After run script function, receives target parameter |
 
+#### Usage
+
 It does not override the default run operation, just add some custom actions after the run.
 
 ```lua
@@ -2092,6 +2197,8 @@ set_pcheader(header: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | header | C precompiled header file path string |
+
+#### Usage
 
 Xmake supports accelerating c program compilation by precompiling header files. Currently supported compilers are: gcc, clang, and msvc.
 
@@ -2118,6 +2225,8 @@ set_pcxxheader(header: <string>)
 |-----------|-------------|
 | header | C++ precompiled header file path string |
 
+#### Usage
+
 Xmake supports precompiled header files to speed up C++ program compilation. Currently supported compilers are: gcc, clang, and msvc.
 
 The usage is as follows:
@@ -2143,6 +2252,8 @@ set_pmheader(header: <string>)
 |-----------|-------------|
 | header | ObjC precompiled header file path string |
 
+#### Usage
+
 Xmake supports accelerating objc program compilation by precompiling header files. Currently supported compilers are: gcc, clang, and msvc.
 
 The usage is as follows:
@@ -2167,6 +2278,8 @@ set_pmxxheader(header: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | header | ObjC++ precompiled header file path string |
+
+#### Usage
 
 Xmake supports precompiled header files to speed up ObjC++ program compilation. Currently supported compilers are: gcc, clang, and msvc.
 
@@ -2196,6 +2309,8 @@ add_deps(deps: <string|array>, ..., {
 | deps | Dependency target name string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple dependency target name strings |
 | inherit | Whether to inherit dependency target configuration, optional values: true (inherit), false (not inherit) |
+
+#### Usage
 
 Add the dependency target of the current target. When compiling, it will first compile the target of the dependency and then compile the current target. . .
 
@@ -2277,6 +2392,8 @@ add_links(links: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple link library name strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Add a link library for the current target, which is usually paired with [add_linkdirs](#add_linkdirs).
 
 ```lua
@@ -2311,6 +2428,8 @@ add_syslinks(syslinks: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple system link library name strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 This interface is similar to [add_links](#add_links). The only difference is that the link library added through this interface is in the order of all `add_links`.
 
 Therefore, it is mainly used to add system library dependencies, because the link order of the system libraries is very backward, for example:
@@ -2340,6 +2459,8 @@ add_linkorders(linkorders: <string|array>, ...)
 |-----------|-------------|
 | linkorders | Link order string or array, such as "dep1", "dep2" |
 | ... | Variable parameters, can pass multiple link order strings |
+
+#### Usage
 
 This is a feature only supported by xmake 2.8.5 and later, and is mainly used to adjust the link order within the target.
 
@@ -2461,6 +2582,8 @@ add_linkgroups(linkgroups: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple link group name strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 This is a feature only supported by versions after xmake 2.8.5. This link group feature is currently mainly used for compilation on the Linux platform and only supports the gcc/clang compiler.
 
 It should be noted that the concept of link group in gcc/clang mainly refers to: `-Wl,--start-group`
@@ -2556,6 +2679,8 @@ add_files(files: <string|array>, ..., {
 | force | Force compilation option object, disable automatic detection, can contain various compilation options |
 | sourcekind | Force specified source file type string, such as "cc", "cxx", etc. |
 | $flags | Various compilation and linking options, including cflags, cxflags, cxxflags, mflags, mxflags, mxxflags, scflags, asflags, gcflags, dcflags, rcflags, fcflags, zcflags, cuflags, culdflags, cugencodes, ldflags, arflags, shflags, etc. |
+
+#### Usage
 
 Source files used to add target projects, even library files, some file types currently supported:
 
@@ -2658,6 +2783,8 @@ remove_files(files: <string|array>, ...)
 | files | File path string or file path array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple file path strings |
 
+#### Usage
+
 Through this interface, you can delete the specified file from the list of files added by the [add_files](#add_files) interface, for example:
 
 ```lua
@@ -2708,6 +2835,8 @@ remove_headerfiles(headerfiles: <string|array>, ...)
 | headerfiles | Header file path string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple header file path strings |
 
+#### Usage
+
 Mainly used to remove files from the list of header files set by `add_headerfiles`, similar to `remove_files`.
 
 This interface is only provided in v2.6.3 version.
@@ -2731,6 +2860,8 @@ add_linkdirs(linkdirs: <string|array>, ..., {
 | linkdirs | Link library search directory string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple link library search directory strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Set the search directory of the link library. This interface is used as follows:
 
@@ -2766,6 +2897,8 @@ add_rpathdirs(rpathdirs: <string|array>, ..., {
 | rpathdirs | Runtime library search directory string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple runtime library search directory strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 After [add_linkdirs](#add_linkdirs) sets the link search directory of the dynamic library, the program is normally linked, but in the Linux platform, if you want to run the compiled program normally, it will report that the dynamic library fails to be loaded.
 
@@ -2835,6 +2968,8 @@ add_includedirs(includedirs: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple header file search directory strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Set the search directory for the header file. This interface is used as follows:
 
 ```lua
@@ -2888,6 +3023,8 @@ add_sysincludedirs(includedirs: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple system header file search directory strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 `add_includedirs` is usually used to add search directories for project header files. The introduction of some system library header files may trigger some internal warning messages, but these warnings may be unavoidable for users and cannot be fixed.
 
 Then, every time these warnings are displayed, it will interfere with the user. Therefore, gcc/clang provides `-isystem` to set the system header file search path. The header files set through this interface will suppress some warning messages to avoid disturbing users .
@@ -2938,6 +3075,8 @@ add_defines(defines: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple macro definition strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 ```lua
 add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
 ```
@@ -2968,6 +3107,8 @@ add_undefines(undefines: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple macro definition name strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 ```lua
 add_undefines("DEBUG")
 ```
@@ -2995,6 +3136,8 @@ add_cflags(cflags: <string|array>, ..., {
 | cflags | C compilation option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple C compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Add compilation options only for c code
 
@@ -3038,6 +3181,8 @@ add_cxxflags(cxxflags: <string|array>, ..., {
 | cxxflags | C++ compilation option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple C++ compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Add compilation options only to c++ code
 
@@ -3085,6 +3230,8 @@ add_mflags(mflags: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple ObjC compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Add compilation options only to objc code
 
 ```lua
@@ -3117,6 +3264,8 @@ add_mxflags(mxflags: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple ObjC/ObjC++ compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Also add compile options to objc/objc++ code
 
 ```lua
@@ -3142,6 +3291,8 @@ add_mxxflags(mxxflags: <string|array>, ..., {
 | mxxflags | ObjC++ compilation option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple ObjC++ compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Add compilation options only to objc++ code
 
@@ -3169,6 +3320,8 @@ add_scflags(scflags: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple Swift compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Add compilation options to swift code
 
 ```lua
@@ -3194,6 +3347,8 @@ add_asflags(asflags: <string|array>, ..., {
 | asflags | Assembly compilation option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple assembly compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Add compilation options to assembly code
 
@@ -3221,6 +3376,8 @@ add_gcflags(gcflags: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple Go compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Add compile options to golang code
 
 ```lua
@@ -3246,6 +3403,8 @@ add_dcflags(dcflags: <string|array>, ..., {
 | dcflags | D language compilation option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple D language compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Add compilation options to dlang code
 
@@ -3273,6 +3432,8 @@ add_rcflags(rcflags: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple Rust compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Add compilation options to the rust code
 
 ```lua
@@ -3298,6 +3459,8 @@ add_fcflags(fcflags: <string|array>, ..., {
 | fcflags | Fortran compilation option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple Fortran compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Add compilation options to the fortran code
 
@@ -3325,6 +3488,8 @@ add_zcflags(zcflags: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple Zig compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Add compilation options to the zig code
 
 ```lua
@@ -3351,6 +3516,8 @@ add_cuflags(cuflags: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple CUDA compilation option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Add compilation options to cuda code
 
 ```lua
@@ -3376,6 +3543,8 @@ add_culdflags(culdflags: <string|array>, ..., {
 | culdflags | CUDA device link option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple CUDA device link option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 After v2.2.7, cuda default build will use device-link. If you want to set some link flags in this stage, you can set it through this interface.
 The final program link will use ldflags, will not call nvcc, and directly link through c/c++ linker such as gcc/clang.
@@ -3405,6 +3574,8 @@ add_cugencodes(cugencodes: <string|array>, ..., {
 | cugencodes | CUDA device gencode setting string or array, such as "sm_30", "sm_50" |
 | ... | Variable parameters, can pass multiple CUDA device gencode setting strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 The `add_cugencodes()` interface is actually a simplified encapsulation of `add_cuflags("-gencode arch=compute_xx, code=compute_xx")` compilation flags settings. The actual flags mapping relationship corresponding to the internal parameter values is as follows:
 
@@ -3469,6 +3640,8 @@ add_ldflags(ldflags: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple link option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Add static link option
 
 ```lua
@@ -3502,6 +3675,8 @@ add_arflags(arflags: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple static library archive option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Affect the generation of static libraries
 
 ```lua
@@ -3526,6 +3701,8 @@ add_shflags(shflags: <string|array>, ..., {
 | shflags | Dynamic library link option string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple dynamic library link option strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Affect the generation of dynamic libraries
 
@@ -3558,6 +3735,8 @@ add_packages(packages: <string|array>, ..., {
 | packages | Package name string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple package name strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 In the target scope, add integration package dependencies, for example:
 
@@ -3618,6 +3797,8 @@ add_languages(languages: <string|array>, ..., {
 | languages | Language standard string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple language standard strings |
 
+#### Usage
+
 Similar to [set_languages](#set_languages), the only difference is that this interface will not overwrite the previous settings, but append settings.
 
 ## add_vectorexts
@@ -3639,6 +3820,8 @@ add_vectorexts(vectorexts: <string|array>, ..., {
 | vectorexts | Vector extension instruction string or array, such as "mmx", "neon", "avx" |
 | ... | Variable parameters, can pass multiple vector extension instruction strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
 
 Add extended instruction optimization options, currently supports the following extended instruction sets:
 
@@ -3680,6 +3863,8 @@ add_frameworks(frameworks: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple framework name strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 Currently used for the `objc` and `swift` programs of the `ios` and `macosx` platforms, for example:
 
 ```lua
@@ -3717,6 +3902,8 @@ add_frameworkdirs(frameworkdirs: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple framework search directory strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 For some third-party frameworks, it is impossible to find them only through [add_frameworks](#add_frameworks). You also need to add a search directory through this interface.
 
 ```lua
@@ -3741,6 +3928,8 @@ set_toolset(toolname: <string>, tool: <string>)
 |-----------|-------------|
 | toolname | Tool name string, such as "cc", "cxx", "ld", "ar" |
 | tool | Tool path string, such as "/usr/bin/gcc" |
+
+#### Usage
 
 Separate settings for a specific target to switch a compiler, linker, but we recommend using [set_toolchains](#set_toolchains) to switch the overall tool chain of a target.
 
@@ -3830,6 +4019,8 @@ set_toolchains(toolchains: <string|array>, ..., {
 | vs_sdkver | Visual Studio SDK version |
 | vs_toolset | Visual Studio toolset version |
 | ... | Variable parameters, can pass multiple toolchain name strings |
+
+#### Usage
 
 This sets up different tool chains for a specific target individually. Unlike set_toolset, this interface is an overall switch for a complete tool chain, such as cc/ld/sh and a series of tool sets.
 
@@ -4024,6 +4215,8 @@ set_plat(plat: <string>)
 |-----------|-------------|
 | plat | Platform name string, such as "linux", "macosx", "windows", "android" |
 
+#### Usage
+
 Usually used with [set_arch](#set_arch) to switch the compilation platform of the specified target to the specified platform, xmake will automatically select the appropriate tool chain according to the switched platform.
 
 Generally used in scenarios where the host platform target and cross-compilation target need to be compiled at the same time. For more details, see: [set_toolchains](#set_toolchains)
@@ -4065,6 +4258,8 @@ set_arch(arch: <string>)
 |-----------|-------------|
 | arch | Architecture name string, such as "x86", "x64", "arm64", "armv7" |
 
+#### Usage
+
 For details, see: [set_plat](#set_plat)
 
 ## set_values
@@ -4084,6 +4279,8 @@ set_values(name: <string>, values: <any>, ...)
 | name | Configuration name string, such as "markdown_flags" |
 | values | Configuration value, can be any type |
 | ... | Variable parameters, can pass multiple configuration values |
+
+#### Usage
 
 Set some extended configuration values for the target. These configurations do not have a built-in api like `set_ldflags`. You can extend the configuration by passing in a configuration name with the first argument.
 Generally used to pass configuration parameters to scripts in custom rules, for example:
@@ -4150,6 +4347,8 @@ add_values(name: <string>, values: <any>, ...)
 | values | Configuration value, can be any type |
 | ... | Variable parameters, can pass multiple configuration values |
 
+#### Usage
+
 Usage is similar to [set_values](#set_values), the difference is that this interface is an additional setting, and will not override the settings each time.
 
 ## set_rundir
@@ -4167,6 +4366,8 @@ set_rundir(rundir: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | rundir | Running directory path string |
+
+#### Usage
 
 This interface is used to set the current running directory of the default running target program. If not set, by default, the target is loaded and run in the directory where the executable file is located.
 
@@ -4198,6 +4399,8 @@ set_runargs(runargs: <string|array>, ...)
 | runargs | Run argument string or array, such as "-x", "--arg1=val" |
 | ... | Variable parameters, can pass multiple run argument strings |
 
+#### Usage
+
 2.6.9 New interface to set default run arguments for ``xmake run``, with which we can avoid typing run arguments every time on the command line, ``xmake run -x --arg1=val``
 
 ```lua
@@ -4221,6 +4424,8 @@ add_runenvs(name: <string>, values: <string|array>, ...)
 | name | Environment variable name string, such as "PATH", "LD_LIBRARY_PATH" |
 | values | Environment variable value string or array, supports multiple values |
 | ... | Variable parameters, can pass multiple environment variable values |
+
+#### Usage
 
 This interface is used to add an environment variable that sets the default running target program. Unlike [set_runenv](#set_runenv), this interface appends the value in the existing system env and does not overwrite it.
 
@@ -4251,6 +4456,8 @@ set_runenv(name: <string>, value: <string>)
 | name | Environment variable name string, such as "PATH", "LD_LIBRARY_PATH" |
 | value | Environment variable value string |
 
+#### Usage
+
 This interface differs from [add_runenvs](#add_runenvs) in that `set_runenv` is an override setting for an environment variable that overrides the env value of the original system environment, and this interface is singular and cannot pass multiple parameters.
 
 So, if you want to override the env that sets the multipath in PATH, you need to splicing yourself:
@@ -4279,6 +4486,8 @@ set_installdir(installdir: <string>)
 |-----------|-------------|
 | installdir | Installation directory path string |
 
+#### Usage
+
 By default, `xmake install` will be installed to the system `/usr/local` directory. We can specify other installation directories except `xmake install -o /usr/local`.
 You can also set a different installation directory for the target in xmake.lua instead of the default directory.
 
@@ -4297,6 +4506,8 @@ set_prefixdir(prefixdir: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | prefixdir | Installation prefix subdirectory path string |
+
+#### Usage
 
 Although the installation root directory is set by `set_installdir` and `xmake install -o [installdir]`, if we still want to further adjust the subpaths of bin, lib and include.
 
@@ -4376,6 +4587,8 @@ add_installfiles(installfiles: <string|array>, ..., {
 | rootdir | Root directory, optional |
 | filename | Filename, optional |
 
+#### Usage
+
 2.2.5 version of the new interface, used to set the corresponding file for each target, generally used for the `xmake install/uninstall` command.
 
 For example, we can specify to install various types of files to the installation directory:
@@ -4434,6 +4647,8 @@ add_headerfiles(headerfiles: <string|array>, ..., {
 | rootdir | Root directory, optional |
 | filename | Filename, optional |
 
+#### Usage
+
 2.2.5 version of the new interface, used to set the corresponding header file for each target, generally used for the `xmake install/uninstall` command.
 
 This interface is used in almost the same way as the [add_installfiles](#add_installfiles) interface. But it is provided for installing header files.
@@ -4474,6 +4689,8 @@ set_configdir(configdir: <string>)
 |-----------|-------------|
 | configdir | Template configuration file output directory path string |
 
+#### Usage
+
 Version 2.2.5 adds a new interface, mainly used for the output directory of the template configuration file set by the [add_configfiles](#add_configfiles) interface.
 
 ## set_configvar
@@ -4492,6 +4709,8 @@ set_configvar(name: <string>, value: <any>)
 |-----------|-------------|
 | name | Configuration variable name string, such as "HAS_FOO" |
 | value | Configuration variable value, can be any type |
+
+#### Usage
 
 The new interface in version 2.2.5 is used to add some template configuration variables that need to be pre-processed before compilation, generally used in the [add_configfiles](#add_configfiles) interface.
 
@@ -4558,6 +4777,8 @@ add_configfiles(configfiles: <string|array>, ..., {
 | prefixdir | Installation prefix directory, optional |
 | rootdir | Root directory, optional |
 | filename | Filename, optional |
+
+#### Usage
 
 2.2.5 version of the new interface, used to add some configuration files that need to be pre-processed before compiling.
 
@@ -4880,6 +5101,8 @@ set_policy(policy: <string>, value: <boolean>)
 | policy | Policy name string, such as "check.auto_ignore_flags", "build.warning" |
 | value | Policy value, true means enable, false means disable |
 
+#### Usage
+
 Xmake has many default behaviors, such as: automatic detection and mapping of flags, cross-target parallel construction, etc. Although it provides a certain amount of intelligent processing, it is difficult to adjust and may not meet all users' habits and needs.
 
 Therefore, starting with v2.3.4, xmake provides modified settings for the default build strategy, which is open to users to a certain degree of configurability.
@@ -4915,6 +5138,8 @@ set_runtimes(runtimes: <string|array>, ...)
 |-----------|-------------|
 | runtimes | Runtime library string or array, such as "MT", "MD", "MTd", "MDd" |
 | ... | Variable parameters, can pass multiple runtime library strings |
+
+#### Usage
 
 This is a newly added interface since v2.5.1, which is used to abstractly set the runtime library that the compilation target depends on. Currently, only the abstraction of the msvc runtime library is supported, but the mapping to other compiler runtime libraries may be expanded in the future.
 
@@ -4973,6 +5198,8 @@ set_group(group: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | group | Group name string, such as "test", "libs", "tools" |
+
+#### Usage
 
 #### Used for group display of project files
 
@@ -5083,6 +5310,8 @@ add_filegroups(name: <string>, files: <string|array>, ...)
 | files | Source file path string or array, supports wildcard matching patterns |
 | ... | Variable parameters, can pass multiple source file path strings |
 
+#### Usage
+
 This interface is currently used to group the source files generated by the vs/vsxmake/cmakelists generator.
 
 If you don't set up grouping, Xmake will also display them in tree mode by default, but in some extreme cases, the directory hierarchy is not very good, e.g.
@@ -5153,6 +5382,8 @@ set_exceptions(exceptions: <string|array>, ...)
 | exceptions | Exception mode string or array, such as "cxx", "objc", "no-cxx" |
 | ... | Variable parameters, can pass multiple exception mode strings |
 
+#### Usage
+
 We can configure C++/Objc exceptions to be enabled and disabled via this configuration.
 
 Normally, if we configure them via the add_cxxflags interface, it would be cumbersome for the compiler to handle them separately, depending on the platform.
@@ -5216,6 +5447,8 @@ set_encodings(encodings: <string|array>, ...)
 | encodings | Encoding string or array, such as "utf-8", "gb2312" |
 | ... | Variable parameters, can pass multiple encoding strings |
 
+#### Usage
+
 This is a new interface in version 2.8.2, we can use this interface to set the encoding of source and target files.
 
 All supported encodings: utf-8, gb2312 (msvc)
@@ -5275,6 +5508,8 @@ add_forceincludes(includes: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple header file path strings |
 | public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
 
+#### Usage
+
 This is a new interface in 2.8.2 for forcing `includes` headers directly into configuration files.
 
 ```lua
@@ -5320,6 +5555,8 @@ add_extrafiles(extrafiles: <string|array>, ...)
 | extrafiles | Extra file path string or array, such as "assets/other.txt" |
 | ... | Variable parameters, can pass multiple extra file path strings |
 
+#### Usage
+
 This interface, also new in 2.8.2, is mainly used in projects generated by the vs/vsxmake project generator to add extra files to the project list, so that users can also quickly click on them to edit them, even though they are not code files.
 
 In the future, we may use this interface for more other things as well.
@@ -5353,6 +5590,8 @@ add_tests(tests: <string|array>, ..., {
 | runenvs | Test run environment variable table, optional |
 | timeout | Test timeout time in seconds, optional |
 | ... | Other test configuration parameters, optional |
+
+#### Usage
 
 Starting from version 2.8.5, we have added a built-in test command: `xmake test`. We only need to configure some test cases through add_tests on the target that needs to be tested to automatically execute the test.
 

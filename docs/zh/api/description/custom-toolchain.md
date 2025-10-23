@@ -89,6 +89,8 @@ toolchain(name: <string>)
 |------|------|
 | name | 工具链名称字符串 |
 
+#### 用法说明
+
 可以在用户项目xmake.lua中定义，也可以通过includes独立到单独的xmake.lua去专门定义各种工具链
 
 ```lua
@@ -210,6 +212,8 @@ set_kind(kind: <string>)
 |------|------|
 | kind | 工具链类型: "standalone" |
 
+#### 用法说明
+
 目前仅支持设置为`standalone`类型，表示当前工具链是独立完整的工具链，包括cc/cxx/ld/sh/ar等编译器、归档器、链接器等一整套工具集的配置。
 
 通常用于某个target被同时设置了多个工具链的情况，但同时只能生效一个独立工具链，通过此配置可以保证生效的工具链存在互斥关系，比如gcc/clang工具链不会同时生效。
@@ -237,6 +241,8 @@ set_toolset(tool: <string>, tools: <string|array>, ...)
 | tool | 工具名称字符串 (cc, cxx, ld, sh, ar, ex, strip, mm, mxx, as) |
 | tools | 工具程序名称字符串或数组 |
 | ... | 可变参数，可传递多个工具名称 |
+
+#### 用法说明
 
 用于设置每个单独工具名和路径，例如：
 
@@ -273,6 +279,8 @@ set_sdkdir(sdkdir: <string>)
 |------|------|
 | sdkdir | SDK目录路径字符串 |
 
+#### 用法说明
+
 通常我们可以通过`xmake f --toolchain=myclang --sdk=xxx` 来配置 sdk 目录，但是每次配置比较繁琐，我们也可以通过此接口预先配置到 xmake.lua 中去，方便快速切换使用。
 
 ```lua
@@ -298,6 +306,8 @@ set_bindir(bindir: <string>)
 |------|------|
 | bindir | 二进制目录路径字符串 |
 
+#### 用法说明
+
 通常我们可以通过`xmake f --toolchain=myclang --bin=xxx`来配置 sdk 目录，但是每次配置比较繁琐，我们也可以通过此接口预先配置到 xmake.lua 中去，方便快速切换使用。
 
 ```lua
@@ -322,6 +332,8 @@ on_check(script: <function (toolchain)>)
 | 参数 | 描述 |
 |------|------|
 | script | 检测脚本函数，参数为toolchain |
+
+#### 用法说明
 
 用于检测指定工具链所在sdk或者程序在当前系统上是否存在，通常用于多个 standalone 工具链的情况，进行自动探测和选择有效工具链。
 
@@ -349,6 +361,8 @@ on_load(script: <function (toolchain)>)
 | 参数 | 描述 |
 |------|------|
 | script | 加载脚本函数，参数为toolchain |
+
+#### 用法说明
 
 对于一些复杂的场景，我们可以在 on_load 中动态灵活的设置各种工具链配置，比在描述域设置更加灵活，更加强大：
 
@@ -384,6 +398,8 @@ toolchain_end()
 | 参数 | 描述 |
 |------|------|
 | - | 无参数 |
+
+#### 用法说明
 
 这个是可选的，如果想要手动结束 toolchain 的定义，可以调用它：
 

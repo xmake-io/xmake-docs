@@ -43,6 +43,8 @@ option(name: <string>)
 |------|------|
 | name | 选项名称字符串 |
 
+#### 用法说明
+
 定义和设置选项开关，可用于自定义编译配置选项、开关设置。
 
 例如，定义一个是否启用test的选项：
@@ -84,6 +86,8 @@ option_end()
 |------|------|
 | - | 无参数 |
 
+#### 用法说明
+
 这是一个可选api，显示离开选项作用域，用法和[target_end](/zh/api/description/project-target#target_end)类似。
 
 ## add_deps
@@ -102,6 +106,8 @@ add_deps(deps: <string|array>, ...)
 |------|------|
 | deps | 依赖选项名称字符串或数组 |
 | ... | 可变参数，可传递多个依赖名称 |
+
+#### 用法说明
 
 通过设置依赖，可以调整选项的检测顺序，一般用于[on_check](#on_check)等检测脚本的调用时机。
 
@@ -144,6 +150,8 @@ before_check(script: <function (option)>)
 |------|------|
 | script | 检测前脚本函数，参数为option |
 
+#### 用法说明
+
 ```lua
 option("zlib")
     before_check(function (option)
@@ -165,6 +173,8 @@ on_check(script: <function (option)>)
 | 参数 | 描述 |
 |------|------|
 | script | 检测脚本函数，参数为option |
+
+#### 用法说明
 
 此脚本会覆盖内置的选项检测逻辑。
 
@@ -196,6 +206,8 @@ after_check(script: <function (option)>)
 |------|------|
 | script | 检测后脚本函数，参数为option |
 
+#### 用法说明
+
 在选项检测完成后，执行此脚本做一些后期处理，也可以在此时重新禁用选项：
 
 ```lua
@@ -224,6 +236,8 @@ set_values(values: <string|array>, ...)
 | values | 选项值字符串或数组 |
 | ... | 可变参数，可传递多个值 |
 
+#### 用法说明
+
 仅用于`xmake f --menu`的图形菜单配置时，提供选项值列表供用户快速选择使用，例如：
 
 ```lua
@@ -251,6 +265,8 @@ set_default(value: <string|boolean|number>)
 | 参数 | 描述 |
 |------|------|
 | value | 默认值（字符串、布尔值或数字） |
+
+#### 用法说明
 
 在没有通过`xmake f --option=[y|n}`等命令修改选项值的时候，这个选项本身也是有个默认值的，可以通过这个接口来设置：
 
@@ -322,6 +338,8 @@ set_showmenu(showmenu: <boolean>)
 |------|------|
 | showmenu | 是否显示菜单（布尔值） |
 
+#### 用法说明
+
 如果设置为`true`，那么在`xmake f --help`里面就会出现这个选项，也就能通过`xmake f --optionname=xxx`进行配置，否则只能在`xmake.lua`内部使用，无法手动配置修改。
 
 ```lua
@@ -357,6 +375,8 @@ set_category(category: <string>)
 | 参数 | 描述 |
 |------|------|
 | category | 分类名称字符串 |
+
+#### 用法说明
 
 这个是个可选配置，仅用于在帮助菜单中，进行分类显示选项，同一类别的选项，会在同一个分组里面显示，这样菜单看起来更加的美观。
 
@@ -446,6 +466,8 @@ set_description(description: <string|array>, ...)
 | description | 描述信息字符串或数组 |
 | ... | 可变参数，可传递多行描述 |
 
+#### 用法说明
+
 设置选项菜单显示时，右边的描述信息，用于帮助用户更加清楚的知道这个选项的用途，例如：
 
 ```lua
@@ -509,6 +531,8 @@ add_links(links: <string|array>, ...)
 | links | 链接库名称字符串或数组 |
 | ... | 可变参数，可传递多个库名称 |
 
+#### 用法说明
+
 如果指定的链接库检测通过，此选项将被启用，并且对应关联的target会自动加上此链接，例如：
 
 ```lua
@@ -540,6 +564,8 @@ add_linkdirs(linkdirs: <string|array>, ...)
 | linkdirs | 链接目录路径字符串或数组 |
 | ... | 可变参数，可传递多个目录路径 |
 
+#### 用法说明
+
 这个是可选的，一般系统库不需要加这个，也能检测通过，如果确实没找到，可以自己追加搜索目录，提高检测通过率。具体使用见：[add_links](#add_links)
 
 ## add_rpathdirs
@@ -559,6 +585,8 @@ add_rpathdirs(rpathdirs: <string|array>, ...)
 | rpathdirs | rpath目录路径字符串或数组 |
 | ... | 可变参数，可传递多个目录路径 |
 
+#### 用法说明
+
 在选项通过检测后，会自动添加到对应的target上去，具体使用见：[target:add_rpathdirs](/zh/api/description/project-target#add-rpathdirs)。
 
 ## add_cincludes
@@ -577,6 +605,8 @@ add_cincludes(includes: <string|array>, ...)
 |------|------|
 | includes | 头文件名称字符串或数组 |
 | ... | 可变参数，可传递多个头文件名称 |
+
+#### 用法说明
 
 如果c头文件检测通过，此选项将被启用，例如：
 
@@ -610,6 +640,8 @@ add_cxxincludes(includes: <string|array>, ...)
 | includes | 头文件名称字符串或数组 |
 | ... | 可变参数，可传递多个头文件名称 |
 
+#### 用法说明
+
 与[add_cincludes](#add_cincludes)类似，只是检测的头文件类型是c++头文件。
 
 ## add_ctypes
@@ -628,6 +660,8 @@ add_ctypes(types: <string|array>, ...)
 |------|------|
 | types | 类型名称字符串或数组 |
 | ... | 可变参数，可传递多个类型名称 |
+
+#### 用法说明
 
 如果c类型检测通过，此选项将被启用，例如：
 
@@ -661,6 +695,8 @@ add_cxxtypes(types: <string|array>, ...)
 | types | 类型名称字符串或数组 |
 | ... | 可变参数，可传递多个类型名称 |
 
+#### 用法说明
+
 与[add_ctypes](#add_ctypes)类似，只是检测的类型是c++类型。
 
 ## add_csnippets
@@ -686,6 +722,8 @@ add_csnippets(name: <string>, code: <string>, {
 | tryrun | 是否尝试运行检测 |
 | output | 是否捕获输出 |
 | number | 是否输出数字 |
+
+#### 用法说明
 
 如果现有的[add_ctypes](#add_ctypes), [add_cfuncs](#add_cfuncs)等不能满足当前的检测需求，
 可以用这个接口实现更加定制化检测一些编译器特性检测，具体见: [add_cxxsnippets](#add_cxxsnippets)。
@@ -713,6 +751,8 @@ add_cxxsnippets(name: <string>, code: <string>, {
 | tryrun | 是否尝试运行检测 |
 | output | 是否捕获输出 |
 | number | 是否输出数字 |
+
+#### 用法说明
 
 可以用这个接口实现更加定制化检测一些编译器特性检测，尤其是c++的各种特性的检测支持，例如：
 
@@ -774,6 +814,8 @@ add_cfuncs(funcs: <string|array>, ...)
 | funcs | 函数名称字符串或数组 |
 | ... | 可变参数，可传递多个函数名称 |
 
+#### 用法说明
+
 ```lua
 option("setjmp")
     add_cincludes("setjmp.h")
@@ -819,5 +861,7 @@ add_cxxfuncs(funcs: <string|array>, ...)
 |------|------|
 | funcs | 函数名称字符串或数组 |
 | ... | 可变参数，可传递多个函数名称 |
+
+#### 用法说明
 
 用法跟 [add_cfuncs](#add_cxxfuncs) 一致。

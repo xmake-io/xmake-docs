@@ -27,6 +27,8 @@ set_version(version: <string>)
 |------|------|
 | version | 包版本字符串 |
 
+#### 用法说明
+
 这个接口用于设置生成的安装包的版本：
 
 ```lua
@@ -75,6 +77,8 @@ set_homepage(homepage: <string>)
 |------|------|
 | homepage | 主页地址字符串 |
 
+#### 用法说明
+
 ```lua
 xpack("xmake")
     set_homepage("https://xmake.io")
@@ -95,6 +99,8 @@ set_title(title: <string>)
 | 参数 | 描述 |
 |------|------|
 | title | 包标题字符串 |
+
+#### 用法说明
 
 通常用于配置安装包的简单描述，相比 `set_description` 更加简短。
 
