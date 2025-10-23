@@ -229,6 +229,8 @@ add_urls(urls: <string|array>, ..., {
 | version | Version transformation function |
 | http_headers | HTTP headers for download |
 
+#### Usage
+
 Add the source package of the package or the git repository address. This interface is generally paired with add_version to set the version of each source package and the corresponding sha256 value.
 
 ::: tip NOTE
@@ -292,6 +294,8 @@ add_versions(version: <string>, hash: <string>)
 | version | Package version string |
 | hash | SHA256 hash value for verification |
 
+#### Usage
+
 Used to set the version of each source package and the corresponding sha256 value, as described in [add_urls](#add_urls)
 
 ## add_versionfiles
@@ -309,6 +313,8 @@ add_versionfiles(file: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | file | Version file path containing version and hash pairs |
+
+#### Usage
 
 Normally we can add package versions through the `add_versions` interface, but if there are more and more versions, the package configuration will be too bloated, at this time, we can use the `add_versionfiles` interface to store a list of all the versions in a separate file to maintain.
 
@@ -346,6 +352,8 @@ add_patches(version: <string>, url: <string>, hash: <string>)
 | url | Patch file URL |
 | hash | SHA256 hash value for patch verification |
 
+#### Usage
+
 This interface is used for the source code package. Before compiling and installing, firstly set the corresponding patch package, compile it, and support multiple patches at the same time.
 
 ```lua
@@ -374,6 +382,8 @@ add_links(links: <string|array>, ...)
 | links | Library link name string or array |
 | ... | Variable parameters, can pass multiple link names |
 
+#### Usage
+
 By default, xmake will automatically detect the installed libraries and set the link relationship, but sometimes it is not very accurate. If you want to manually adjust the link order and the link name, you can set it through this interface.
 
 ```lua
@@ -396,6 +406,8 @@ add_syslinks(syslinks: <string|array>, ...)
 |-----------|-------------|
 | syslinks | System library name string or array |
 | ... | Variable parameters, can pass multiple system library names |
+
+#### Usage
 
 Add some system library links. When some packages integrate links, you also need to rely on some system libraries to link them. This time you can attach them to the package description.
 
@@ -427,6 +439,8 @@ add_linkorders(orders: <string|array>, ...)
 | orders | Link order string or array |
 | ... | Variable parameters, can pass multiple order specifications |
 
+#### Usage
+
 For specific details, please see the target's internal documentation for `add_linkorders`, [target:add_linkorders](/api/description/project-target#add-linkorders).
 
 ```lua
@@ -457,6 +471,8 @@ add_linkgroups(groups: <string|array>, ..., {
 | name | Group name for linking |
 | group | Whether to treat as a group |
 
+#### Usage
+
 For specific details, please see the target's internal documentation for `add_linkgroups`, [target:add_linkgroups](/api/description/project-target#add-linkgroups).
 
 ```lua
@@ -482,6 +498,8 @@ add_frameworks(frameworks: <string|array>, ...)
 | frameworks | Framework name string or array |
 | ... | Variable parameters, can pass multiple framework names |
 
+#### Usage
+
 Add a dependent system frameworks link.
 
 See for example: [add_syslinks](#add_syslinks)
@@ -503,6 +521,8 @@ add_linkdirs(dirs: <string|array>, ...)
 | dirs | Link directory path string or array |
 | ... | Variable parameters, can pass multiple directory paths |
 
+#### Usage
+
 The package's link library search directory can also be adjusted, but it is usually not needed, unless some libraries are not installed under prefix/lib, but in the lib subdirectory, the default search is not available.
 
 ## add_includedirs
@@ -522,6 +542,8 @@ add_includedirs(dirs: <string|array>, ...)
 | dirs | Include directory path string or array |
 | ... | Variable parameters, can pass multiple directory paths |
 
+#### Usage
+
 Add another header file search directory.
 
 ## add_bindirs
@@ -540,6 +562,8 @@ add_bindirs(dirs: <string|array>, ...)
 |-----------|-------------|
 | dirs | Executable directory path string or array |
 | ... | Variable parameters, can pass multiple directory paths |
+
+#### Usage
 
 By default, if `set_kind("binary")` or `set_kind("toolchain")` is configured as an executable package.
 
@@ -565,6 +589,8 @@ add_defines(defines: <string|array>, ...)
 |-----------|-------------|
 | defines | Macro definition string or array |
 | ... | Variable parameters, can pass multiple definitions |
+
+#### Usage
 
 Some specific definition options can be exported to the integrated package.
 
@@ -592,6 +618,8 @@ add_configs(name: <string>, {
 | default | Default value for the configuration |
 | values | Allowed values array |
 | type | Configuration type: "string", "boolean", "number" |
+
+#### Usage
 
 We can add the external output configuration parameters of each package through this interface:
 
@@ -649,6 +677,8 @@ add_extsources(sources: <string|array>, ...)
 | sources | External source string or array, format: "pkgconfig::name" or "brew::name" |
 | ... | Variable parameters, can pass multiple external sources |
 
+#### Usage
+
 Starting from version 2.5.2, we have also added two configuration interfaces `add_extsources` and `on_fetch`, which can better configure xmake to search for system libraries during the process of installing C/C++ packages.
 
 As for the specific background, we can give an example. For example, we added a package of `package("libusb")` to the [xmake-repo](https://github.com/xmake-io/xmake-repo) repository .
@@ -700,6 +730,8 @@ add_deps(deps: <string|array>, ...)
 | deps | Dependency package name string or array |
 | ... | Variable parameters, can pass multiple dependency names |
 
+#### Usage
+
 This interface allows us to automatically install all dependencies of a package when we install it by configuring the dependencies between packages.
 
 Also, by default, cmake/autoconf will automatically find the libraries and headers of all dependent packages as soon as we have configured the dependencies.
@@ -750,6 +782,8 @@ add_components(components: <string|array>, ..., {
 | ... | Variable parameters, can pass multiple component names |
 | deps | Component dependencies array |
 
+#### Usage
+
 This is a new interface added in 2.7.3 to support componentized configuration of packages, see: [#2636](https://github.com/xmake-io/xmake/issues/2636) for details.
 
 With this interface we can configure the list of components that are actually available for the current package.
@@ -791,6 +825,8 @@ set_base(package: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | package | Base package name to inherit from |
+
+#### Usage
 
 This is a newly added interface in 2.6.4, through which we can inherit all the configuration of an existing package, and then rewrite some of the configuration on this basis.
 
@@ -837,6 +873,8 @@ on_load(script: <function (package)>)
 |-----------|-------------|
 | script | Package load script function with package parameter |
 
+#### Usage
+
 This is an optional interface. If you want to be more flexible and dynamically judge various platform architectures, you can do it in this way, for example:
 
 ```lua
@@ -870,6 +908,8 @@ on_fetch(platforms: <string|array>, ..., script: <function (package, opt)>)
 | platforms | Platform filter string or array, optional |
 | ... | Variable parameters, can pass multiple platform filters |
 | script | Fetch script function with package and opt parameters |
+
+#### Usage
 
 This is an optional configuration. After 2.5.2, if the system libraries installed under different systems only have different package names, then using `add_extsources` to improve the system library search is sufficient, simple and convenient.
 
@@ -905,6 +945,8 @@ on_check(platforms: <string|array>, ..., script: <function (package)>)
 | platforms | Platform filter string or array, optional |
 | ... | Variable parameters, can pass multiple platform filters |
 | script | Check script function with package parameter |
+
+#### Usage
 
 Sometimes, simply using `on_install("windows", "android", function () end)` cannot properly limit the package's support for the current platform.
 
@@ -968,6 +1010,8 @@ on_install(platforms: <string|array>, ..., script: <function (package)>)
 | platforms | Platform filter string or array, optional |
 | ... | Variable parameters, can pass multiple platform filters |
 | script | Install script function with package parameter |
+
+#### Usage
 
 This interface is mainly used to add installation scripts. The previous string parameters are used to set supported platforms. Other script fields such as `on_load`, `on_test` are also supported.
 
@@ -1154,6 +1198,8 @@ on_download(script: <function (package, opt)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Download script function with package and opt parameters |
+
+#### Usage
 
 The download logic of the custom package, which is a new interface added in 2.6.4, is usually not used, and it is enough to use the built-in download of Xmake.
 
@@ -1434,6 +1480,8 @@ on_test(script: <function (package)>)
 |-----------|-------------|
 | script | Test script function with package parameter |
 
+#### Usage
+
 After installation, you need to set the corresponding test script, perform some tests to ensure the reliability of the installation package, if the test does not pass, the entire installation package will be revoked.
 
 ```lua
@@ -1505,6 +1553,8 @@ on_component(component: <string>, script: <function (package, component)>)
 |-----------|-------------|
 | component | Component name string, optional (if not provided, applies to all components) |
 | script | Component configuration script function with package and component parameters |
+
+#### Usage
 
 This is a new interface added in 2.7.3 to support component-based configuration of packages, see: [#2636](https://github.com/xmake-io/xmake/issues/2636) for details.
 

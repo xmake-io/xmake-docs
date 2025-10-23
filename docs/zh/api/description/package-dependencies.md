@@ -223,6 +223,8 @@ add_urls(urls: <string|array>, ..., {
 | version | 版本转换函数 |
 | http_headers | 下载时的HTTP头 |
 
+#### 用法说明
+
 添加包的源码包或者git仓库地址，此接口一般跟add_version配对使用，用于设置每个源码包的版本和对应的sha256值或者git的commit或者tag或者branch。
 
 ::: tip 注意
@@ -286,6 +288,8 @@ add_versions(version: <string>, hash: <string>)
 | version | 包版本字符串 |
 | hash | 用于验证的SHA256哈希值 |
 
+#### 用法说明
+
 它也会设置对应的sha256值，具体描述见：[add_urls](#add_urls)
 
 ## add_versionfiles
@@ -303,6 +307,8 @@ add_versionfiles(file: <string>)
 | 参数 | 描述 |
 |------|------|
 | file | 包含版本和哈希值对的文件路径 |
+
+#### 用法说明
 
 通常我们可以通过 `add_versions` 接口添加包版本，但是如果版本越来越多，就会导致包配置太过臃肿，这个时候，我们可以使用 `add_versionfiles` 接口将所有的版本列表，存储到单独的文件中去维护。
 
@@ -340,6 +346,8 @@ add_patches(version: <string>, url: <string>, hash: <string>)
 | url | 补丁文件URL |
 | hash | 补丁验证的SHA256哈希值 |
 
+#### 用法说明
+
 此接口用于针对源码包，在编译安装前，先打对应设置的补丁包，再对其进行编译，并且可支持同时打多个补丁。
 
 ```lua
@@ -368,6 +376,8 @@ add_links(links: <string|array>, ...)
 | links | 库链接名称字符串或数组 |
 | ... | 可变参数，可传入多个链接名称 |
 
+#### 用法说明
+
 默认情况下，xmake会去自动检测安装后的库，设置链接关系，但是有时候并不是很准，如果要自己手动调整链接顺序，以及链接名，则可以通过这个接口来设置。
 
 ```lua
@@ -390,6 +400,8 @@ add_syslinks(syslinks: <string|array>, ...)
 |------|------|
 | syslinks | 系统库名称字符串或数组 |
 | ... | 可变参数，可传入多个系统库名称 |
+
+#### 用法说明
 
 添加一些系统库链接，有些包集成链接的时候，还需要依赖一些系统库，才能链接通过，这个时候可以在包描述里面都附加上去。
 
@@ -421,6 +433,8 @@ add_linkorders(orders: <string|array>, ...)
 | orders | 链接顺序字符串或数组 |
 | ... | 可变参数，可传入多个顺序规格 |
 
+#### 用法说明
+
 具体详情可以看下 target 内部对 `add_linkorders` 的文档说明，[target:add_linkorders](/zh/api/description/project-target#add_linkorders)。
 
 ```lua
@@ -451,6 +465,8 @@ add_linkgroups(groups: <string|array>, ..., {
 | name | 用于链接的组名称 |
 | group | 是否作为组处理 |
 
+#### 用法说明
+
 具体详情可以看下 target 内部对 `add_linkgroups` 的文档说明，[target:add_linkgroups](/zh/api/description/project-target#add-linkgroups)。
 
 ```lua
@@ -476,6 +492,8 @@ add_frameworks(frameworks: <string|array>, ...)
 | frameworks | 框架名称字符串或数组 |
 | ... | 可变参数，可传入多个框架名称 |
 
+#### 用法说明
+
 示例见：[add_syslinks](#add_syslinks)
 
 ## add_linkdirs
@@ -494,6 +512,8 @@ add_linkdirs(dirs: <string|array>, ...)
 |------|------|
 | dirs | 链接目录路径字符串或数组 |
 | ... | 可变参数，可传入多个目录路径 |
+
+#### 用法说明
 
 包的链接库搜索目录也是可以调整的，不过通常都不需要，除非一些库安装完不在prefix/lib下面，而在lib的子目录下，默认搜索不到的话。
 
@@ -514,6 +534,10 @@ add_includedirs(dirs: <string|array>, ...)
 | dirs | 头文件目录路径字符串或数组 |
 | ... | 可变参数，可传入多个目录路径 |
 
+#### 用法说明
+
+添加其他头文件搜索目录，用于指定包的头文件位置。
+
 ## add_bindirs
 
 - 添加可执行文件目录
@@ -530,6 +554,8 @@ add_bindirs(dirs: <string|array>, ...)
 |------|------|
 | dirs | 可执行文件目录路径字符串或数组 |
 | ... | 可变参数，可传入多个目录路径 |
+
+#### 用法说明
 
 默认情况下，如果配置了 `set_kind("binary")` 或者 `set_kind("toolchain")` 作为可执行的包。
 
@@ -555,6 +581,8 @@ add_defines(defines: <string|array>, ...)
 |------|------|
 | defines | 宏定义字符串或数组 |
 | ... | 可变参数，可传入多个定义 |
+
+#### 用法说明
 
 可以对集成的包对外输出一些特定的定义选项。
 
@@ -582,6 +610,8 @@ add_configs(name: <string>, {
 | default | 配置的默认值 |
 | values | 允许的值数组 |
 | type | 配置类型："string", "boolean", "number" |
+
+#### 用法说明
 
 我们可以通过此接口添加每个包的对外输出配置参数：
 
@@ -637,7 +667,10 @@ add_extsources(sources: <string|array>, ...)
 | 参数 | 描述 |
 |------|------|
 | sources | 外部源字符串或数组，格式："pkgconfig::name" 或 "brew::name" |
-| ... | 可变参数，可传入多个外部源 |
+
+#### 用法说明
+
+添加扩展的包源，用于指定包的外部源。
 
 2.5.2 版本开始，我们也新增了 `add_extsources` 和 `on_fetch` 两个配置接口，可以更好的配置 xmake 在安装 C/C++ 包的过程中，对系统库的查找过程。
 
@@ -690,6 +723,10 @@ add_deps(deps: <string|array>, ...)
 | deps | 依赖包名称字符串或数组 |
 | ... | 可变参数，可传入多个依赖名称 |
 
+#### 用法说明
+
+添加包依赖，用于指定包之间的依赖关系。
+
 添加包依赖接口，通过配置包之间的依赖关系，我们能够在安装包的同时，自动安装它的所有依赖包。
 
 另外，默认情况下，我们只要配置了依赖关系，cmake/autoconf 就能够自动找到所有依赖包的库和头文件。
@@ -740,6 +777,10 @@ add_components(components: <string|array>, ..., {
 | ... | 可变参数，可传入多个组件名称 |
 | deps | 组件依赖数组 |
 
+#### 用法说明
+
+添加包组件，用于指定包的组件结构。
+
 这是 2.7.3 新加的接口，用于支持包的组件化配置，详情见：[#2636](https://github.com/xmake-io/xmake/issues/2636)。
 
 通过这个接口，我们可以配置当前包实际可以提供的组件列表。
@@ -781,6 +822,8 @@ set_base(package: <string>)
 | 参数 | 描述 |
 |------|------|
 | package | 要继承的基础包名称 |
+
+#### 用法说明
 
 这是 2.6.4 新加的接口，我们可以通过它去继承一个已有的包的全部配置，然后在此基础上重写部分配置。
 
@@ -827,6 +870,8 @@ on_load(script: <function (package)>)
 |------|------|
 | script | 包加载脚本函数，参数为package |
 
+#### 用法说明
+
 这是个可选的接口，如果要更加灵活的动态判断各种平台架构，针对性做设置，可以在这个里面完成，例如：
 
 ```lua
@@ -858,6 +903,8 @@ on_fetch(platforms: <string|array>, ..., script: <function (package, opt)>)
 | platforms | 平台过滤字符串或数组，可选 |
 | ... | 可变参数，可传入多个平台过滤器 |
 | script | 查找脚本函数，参数为package和opt |
+
+#### 用法说明
 
 这是个可选配置，2.5.2 之后，如果不同系统下安装的系统库，仅仅只是包名不同，那么使用 `add_extsources` 改进系统库查找已经足够，简单方便。
 
@@ -891,6 +938,8 @@ on_check(platforms: <string|array>, ..., script: <function (package)>)
 | platforms | 平台过滤字符串或数组，可选 |
 | ... | 可变参数，可传入多个平台过滤器 |
 | script | 检测脚本函数，参数为package |
+
+#### 用法说明
 
 有时候，单纯用 `on_install("windows", "android", function () end)` 无法很好的限制包对当前平台的支持力度。
 
@@ -954,6 +1003,8 @@ on_install(platforms: <string|array>, ..., script: <function (package)>)
 | platforms | 平台过滤字符串或数组，可选 |
 | ... | 可变参数，可传入多个平台过滤器 |
 | script | 安装脚本函数，参数为package |
+
+#### 用法说明
 
 这个接口主要用于添加安装脚本，前面的字符串参数用于设置支持的平台，像`on_load`, `on_test`等其他脚本域也是同样支持的。
 
@@ -1141,6 +1192,8 @@ on_test(script: <function (package)>)
 |------|------|
 | script | 测试脚本函数，参数为package |
 
+#### 用法说明
+
 安装后，需要设置对应的测试脚本，执行一些测试，确保安装包的可靠性，如果测试不通过，则会撤销整个安装包。
 
 ```lua
@@ -1211,6 +1264,10 @@ on_download(script: <function (package, opt)>)
 | 参数 | 描述 |
 |------|------|
 | script | 下载脚本函数，参数为package和opt |
+
+#### 用法说明
+
+自定义下载包，用于指定包的下载方式。
 
 自定义包的下载逻辑，这是 2.6.4 新加的接口，通常用不到，使用 Xmake 的内置下载就足够了。
 
@@ -1298,6 +1355,8 @@ on_component(component: <string>, script: <function (package, component)>)
 |------|------|
 | component | 组件名称字符串，可选（如果不提供，则应用于所有组件） |
 | script | 组件配置脚本函数，参数为package和component |
+
+#### 用法说明
 
 这是 2.7.3 新加的接口，用于支持包的组件化配置，详情见：[#2636](https://github.com/xmake-io/xmake/issues/2636)。
 

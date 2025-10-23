@@ -125,6 +125,8 @@ set_description(description: <string>)
 |-----------|-------------|
 | description | Package description string |
 
+#### Usage
+
 This interface can set more detailed description information of the installation package. You can use one or two sentences to describe the package in detail.
 
 ```lua
@@ -148,6 +150,8 @@ set_author(author: <string>)
 |-----------|-------------|
 | author | Author information string |
 
+#### Usage
+
 We can set the email address, name, etc. to describe the author of this package.
 
 ```lua
@@ -170,6 +174,8 @@ set_maintainer(maintainer: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | maintainer | Maintainer information string |
+
+#### Usage
 
 We can set the email address, name, etc. to describe the maintainer of this package.
 

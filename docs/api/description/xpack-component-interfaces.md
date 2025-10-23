@@ -16,6 +16,8 @@ set_title(title: <string>)
 |-----------|-------------|
 | title | Component title string |
 
+#### Usage
+
 ```lua
 xpack_component("LongPath")
      set_title("Enable Long Path")
@@ -37,6 +39,8 @@ set_description(description: <string>)
 |-----------|-------------|
 | description | Component description string |
 
+#### Usage
+
 ```lua
 xpack_component("LongPath")
      set_description("Increases the maximum path length limit, up to 32,767 characters (before 256).")
@@ -57,6 +61,8 @@ set_default(default: <boolean>)
 | Parameter | Description |
 |-----------|-------------|
 | default | Whether component is enabled by default (boolean) |
+
+#### Usage
 
 Usually the package component is enabled by default, but we can also use this interface to disable this component by default. Only when the user chooses to check this component when installing the package will it be enabled for installation.
 
@@ -81,6 +87,8 @@ on_load(script: <function (component)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Load script function with component parameter |
+
+#### Usage
 
 We can further flexibly configure package components in the on_load custom script field.
 
@@ -107,6 +115,8 @@ before_installcmd(script: <function (component, batchcmds)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | Before install script function with component and batchcmds parameters |
+
+#### Usage
 
 It will not rewrite the entire installation script, but will add some custom installation scripts before the existing installation scripts are executed:
 
@@ -139,6 +149,10 @@ on_installcmd(script: <function (component, batchcmds)>)
 |-----------|-------------|
 | script | Install script function with component and batchcmds parameters |
 
+#### Usage
+
+Custom installation script for implementing specific component installation logic.
+
 This will rewrite the entire component's installation script, similar to xpack's on_installcmd.
 
 ```lua
@@ -163,6 +177,10 @@ after_installcmd(script: <function (component, batchcmds)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | After install script function with component and batchcmds parameters |
+
+#### Usage
+
+Custom script executed after component installation, used for post-processing operations.
 
 After the component is installed, the script here will be executed, similar to xpack's after_installcmd.
 
@@ -214,6 +232,10 @@ on_uninstallcmd(script: <function (component, batchcmds)>)
 |-----------|-------------|
 | script | Uninstall script function with component and batchcmds parameters |
 
+#### Usage
+
+Custom uninstall script for implementing specific component uninstall logic.
+
 This will rewrite the entire component's uninstall script, similar to xpack's on_uninstallcmd.
 
 ```lua
@@ -238,6 +260,10 @@ after_uninstallcmd(script: <function (component, batchcmds)>)
 | Parameter | Description |
 |-----------|-------------|
 | script | After uninstall script function with component and batchcmds parameters |
+
+#### Usage
+
+Custom script executed after component uninstallation, used for post-processing operations.
 
 After the component is uninstalled, the script here will be executed, similar to xpack's before_uninstallcmd.
 
@@ -297,5 +323,7 @@ add_installfiles(files: <string|array>, ..., {
 | prefixdir | Installation prefix directory |
 | rootdir | Source root directory |
 | filename | Target filename |
+
+#### Usage
 
 This is similar to xpack's add_installfiles, but here only the binaries are added to the installation package when the component is enabled.
