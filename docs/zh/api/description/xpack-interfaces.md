@@ -40,7 +40,7 @@ xpack("test")
     -- ...
 ```
 
-如果我们没有设置，但是通过 `set_targets` 绑定了安装的目标程序，那么也会使用 target 中的版本配置。
+如果我们没有设置，但是通过 `add_targets` 绑定了安装的目标程序，那么也会使用 target 中的版本配置。
 
 
 ```lua
@@ -48,7 +48,7 @@ target("foo")
     set_version("1.0")
 
 xpack("test")
-    set_targets("foo")
+    add_targets("foo")
     -- ...
 ```
 
