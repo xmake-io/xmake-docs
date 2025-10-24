@@ -8,6 +8,21 @@
 
 - 获取选项的名字
 
+#### 函数原型
+
+::: tip API
+```lua
+option:name()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+
 ```lua
 option("test")
     on_check(function (option)
@@ -18,6 +33,21 @@ option("test")
 ## option:fullname
 
 - 获取选项的完整名字
+
+#### 函数原型
+
+::: tip API
+```lua
+option:fullname()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 
 ```lua
 option("mymod::test")
@@ -30,6 +60,21 @@ option("mymod::test")
 
 - 获取选项的命名空间
 
+#### 函数原型
+
+::: tip API
+```lua
+option:namespace()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+
 ```lua
 option("mymod::test")
     on_check(function (option)
@@ -40,6 +85,21 @@ option("mymod::test")
 ## option:description
 
 - 获取选项的描述信息
+
+#### 函数原型
+
+::: tip API
+```lua
+option:description()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 
 ```lua
 option("test")
@@ -52,6 +112,21 @@ option("test")
 ## option:value
 
 - 获取选项的值
+
+#### 函数原型
+
+::: tip API
+```lua
+option:value()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 
 ```lua
 option("demo")
@@ -70,6 +145,21 @@ option("demo")
 
 - 检查选项是否已启用
 
+#### 函数原型
+
+::: tip API
+```lua
+option:enabled()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+
 ```lua
 option("test")
     after_check(function (option)
@@ -82,6 +172,23 @@ option("test")
 ## option:enable
 
 - 启用或禁用选项
+
+#### 函数原型
+
+::: tip API
+```lua
+option:enable(enable: <boolean>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| enable | 是否启用 |
+
+#### 用法说明
+
 
 ```lua
 option("float")
@@ -97,6 +204,23 @@ option("float")
 
 - 设置选项的值
 
+#### 函数原型
+
+::: tip API
+```lua
+option:set_value(value: <any>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| value | 选项值 |
+
+#### 用法说明
+
+
 ```lua
 option("test")
     on_check(function (option)
@@ -109,6 +233,21 @@ option("test")
 
 - 清除选项状态，需要重新检查
 
+#### 函数原型
+
+::: tip API
+```lua
+option:clear()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+
 ```lua
 option("test")
     after_check(function (option)
@@ -120,6 +259,23 @@ option("test")
 ## option:get
 
 - 获取选项在描述域的配置值
+
+#### 函数原型
+
+::: tip API
+```lua
+option:get(key: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| key | 配置键名 |
+
+#### 用法说明
+
 
 任何在描述域的 `set_xxx` 和 `add_xxx` 配置值都可以通过这个接口获取到。
 
@@ -148,6 +304,24 @@ option("test")
 ## option:set
 
 - 设置选项的配置值
+
+#### 函数原型
+
+::: tip API
+```lua
+option:set(key: <string>, value: <any>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| key | 配置键名 |
+| value | 配置值 |
+
+#### 用法说明
+
 
 如果你想添加值可以用 [option:add](#option-add)。
 
@@ -185,6 +359,24 @@ option("test")
 ## option:add
 
 - 按名称添加到选项的值
+
+#### 函数原型
+
+::: tip API
+```lua
+option:add(key: <string>, value: <any>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| key | 配置键名 |
+| value | 要添加的值 |
+
+#### 用法说明
+
 
 ```lua
 option("test")
@@ -230,6 +422,24 @@ option("test")
 
 - 从选项中移除指定的值
 
+#### 函数原型
+
+::: tip API
+```lua
+option:remove(key: <string>, value: <any>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| key | 配置键名 |
+| value | 要移除的值 |
+
+#### 用法说明
+
+
 ```lua
 option("test")
     on_check(function (option)
@@ -248,6 +458,21 @@ option("test")
 
 - 获取选项的所有依赖
 
+#### 函数原型
+
+::: tip API
+```lua
+option:deps()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+
 ```lua
 option("info")
     add_deps("small", "micro")
@@ -265,6 +490,23 @@ option("info")
 
 - 获取指定的依赖选项
 
+#### 函数原型
+
+::: tip API
+```lua
+option:dep(name: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 依赖名称 |
+
+#### 用法说明
+
+
 ```lua
 option("float")
     add_deps("micro")
@@ -280,6 +522,21 @@ option("float")
 ## option:orderdeps
 
 - 获取选项的顺序依赖
+
+#### 函数原型
+
+::: tip API
+```lua
+option:orderdeps()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 
 ```lua
 option("test")
@@ -297,6 +554,24 @@ option("test")
 ## option:extraconf
 
 - 获取额外配置信息
+
+#### 函数原型
+
+::: tip API
+```lua
+option:extraconf(name: <string>, key: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 配置名称 |
+| key | 配置键名 |
+
+#### 用法说明
+
 
 ```lua
 option("test")

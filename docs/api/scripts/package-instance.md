@@ -6,9 +6,41 @@ This page describes the interface for `package` of functions like `on_load()`, `
 
 - Get the name of the package
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:name()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ## package:get
 
 - Get the values of the package by name
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:get(key: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+
+#### Usage
+
 
 ```lua
 -- get the dependencies
@@ -22,6 +54,24 @@ package:get("defines")
 ## package:set
 
 - Set the values of the package by name
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:set(key: <string>, value: <any>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+| value | Configuration value |
+
+#### Usage
+
 
 If you just want to add values use [package:add](#package-add)
 
@@ -46,6 +96,24 @@ For example:
 
 - Add to the values of the package by name
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:add(key: <string>, value: <any>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+| value | Value to add |
+
+#### Usage
+
+
 ```lua
 -- add dependencies
 package:add("deps", "python")
@@ -67,17 +135,62 @@ For example:
 
 - Get the license of the package
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:license()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 Same as `package:get("license")`
 
 ## package:description
 
 - Get the description of the package
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:description()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 Same as `package:get("description")`
 
 ## package:plat
 
 - Get the platform of the package. Can be any of:
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:plat()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
   + windows
   + linux
   + macosx
@@ -94,11 +207,41 @@ If the package is binary [`os.host`](/api/scripts/builtin-modules/os#os-host) is
 
 - Get the architecture of the package (e.g. x86, x64, x86_64)
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:arch()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 If the package is binary [`os.arch`](/api/scripts/builtin-modules/os#os-arch) is returned
 
 ## package:targetos
 
 - Get the targeted OS of the package.
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:targetos()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 There are the same values as [package:plat](#package-plat)
 
@@ -106,11 +249,43 @@ There are the same values as [package:plat](#package-plat)
 
 - Get the targeted architecture of the package.
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:targetarch()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 There are the same values as [package:arch](#package-arch)
 
 ## package:is_plat
 
 - Wether the current platform is one of the given platforms
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_plat(plat: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| plat | Platform name |
+
+#### Usage
+
 
 ```lua
 -- Is the current platform android?
@@ -123,6 +298,23 @@ package:is_plat("windows", "linux", "macosx")
 
 - Wether the current platform is one of the given platforms
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_arch(arch: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| arch | Architecture name |
+
+#### Usage
+
+
 ```lua
 -- Is the current architecture x86
 package:is_arch("x86")
@@ -133,6 +325,21 @@ package:is_arch("x64", "x86_64")
 ## package:is_targetos
 
 - Wether the currently targeted OS is one of the given OS
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_targetos()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 -- Is the currently targeted OS windows?
@@ -145,6 +352,21 @@ package:is_targetos("android", "iphoneos")
 
 - Wether the currently targeted architecture is one of the given architectures
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_targetarch()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ```lua
 -- Is the currently targeted architecture x86
 package:is_targetarch("x86")
@@ -155,6 +377,21 @@ package:is_targetarch("x64", "x86_64")
 ## package:alias
 
 - Get the alias of the package
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:alias()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 If the user sets an alias like so:
 ```lua
@@ -169,6 +406,21 @@ package:alias()
 ## package:urls
 
 - Get the URLs of the package
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:urls()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 Retrieve the URLs set by:
 ```lua
@@ -186,6 +438,23 @@ package:urls()
 
 - Get a dependency of the package by name. The name needs to be a dependency of the package.
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:dep(name: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Dependency name |
+
+#### Usage
+
+
 ```lua
 local python = package:dep("python")
 -- returns "python"
@@ -195,6 +464,21 @@ python:name()
 ## package:deps
 
 - Get all dependencies of the package
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:deps()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 -- prints the names of all dependencies
@@ -206,6 +490,21 @@ end
 ## package:sourcehash
 
 - Get the sha256 checksum of an URL alias
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:sourcehash()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 If the checksum is provided like so:
 ```lua
@@ -223,6 +522,21 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 ## package:kind
 
 - Get the kind of the package. Can be any of:
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:kind()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
   + binary
   + toolchain (is also binary)
   + library (default)
@@ -233,38 +547,158 @@ package:sourcehash(package:url_alias(package:urls()[1]))
 
 - Wether the package is of kind binary
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_binary()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:is_toolchain
 
 - Wether the package is of kind toolchain
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_toolchain()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 
 ## package:is_library
 
 - Wether the package is of kind library
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_library()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ## package:is_toplevel
 
 - Wether the package is directly required by the user (e.g. xmake.lua)
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_toplevel()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ## package:is_thirdparty
 
 - Wether the package is provided by a thirdparty package manager (e.g. brew, conan, vcpkg)
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_thirdparty()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 
 ## package:is_debug
 
 - Wether the package is build with debug mode (Same as `package:config("debug")`)
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_debug()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:is_supported
 
 - Wether the package is supported by the current platform and architecture
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_supported()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:debug
 
 - Wether the the package gets built with debug mode
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:debug()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 It's deprecated, please use [`package:is_debug`](#package-is_debug) instead
 
@@ -272,15 +706,60 @@ It's deprecated, please use [`package:is_debug`](#package-is_debug) instead
 
 - Wether the package is getting cross-compiled
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:is_cross()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:cachedir
 
 - Get the cache directory of the package
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:cachedir()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:installdir
 
 - Get the installation directory of the package. Can also be used to get a subdirectory. If the given directory tree does not exist it will be created.
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:installdir()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 -- returns the installation directory
@@ -295,15 +774,60 @@ package:installdir("include", "files")
 
 - Get the directory where the xmake.lua of the package lies
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:scriptdir()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:envs
 
 - Get the exported environment variables of the package
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:envs()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:getenv
 
 - Get the given environment variable
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:getenv()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 -- returns a table
@@ -314,6 +838,21 @@ package:getenv("PATH")
 
 - Set the given environment variable. Overwrites the variable
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:setenv()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ```lua
 -- sets PATH to {"bin", "lib"}
 package:setenv("PATH", "bin", "lib")
@@ -322,6 +861,21 @@ package:setenv("PATH", "bin", "lib")
 ## package:addenv
 
 - Add the given values to the environment variable
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:addenv()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 -- adds "bin" and "lib" to PATH
@@ -332,10 +886,40 @@ package:addenv("PATH", "bin", "lib")
 
 - Get all version strings of the package. Returns a table containing all versions as strings
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:versions()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:version
 
 - Get the version of the package
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:version()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 local version = package:version()
@@ -351,10 +935,40 @@ version:patch()
 
 - Get the version of the package as string
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:version_str()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:config
 
 - Get the given configuration value of the package
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:config()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 -- if configurations are set like so
@@ -370,6 +984,21 @@ package:config("value_y")
 
 - Set the given configuration value of the package
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:config_set()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ```lua
 package:config_set("enable_x", true)
 package:config_set("value_y", 6)
@@ -378,6 +1007,21 @@ package:config_set("value_y", 6)
 ## package:configs
 
 - Get all configurations of the package
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:configs()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 -- returns a table with the configuration names as keys and their values as values
@@ -390,10 +1034,40 @@ local value_y = configs["value_y"]
 
 - Get the build hash of the package
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:buildhash()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 
 ## package:patches
 
 - Get all patches of the current version
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:patches()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 -- returns a table with all patches
@@ -406,6 +1080,21 @@ local sha256 = patches[1]["sha256"]
 ## package:has_cfuncs
 
 - Wether the package has the given C functions
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:has_cfuncs()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 This should be used inside `on_test` like so:
 ```lua
@@ -423,6 +1112,23 @@ end)
 
 - Wether the package has the given C++ functions
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:has_cxxfuncs(funcs: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| funcs | Function name or function name list |
+
+#### Usage
+
+
 This should be used inside `on_test` like so:
 ```lua
 on_test(function (package)
@@ -438,6 +1144,23 @@ end)
 ## package:has_ctypes
 
 - Wether the package has the given C types
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:has_ctypes(types: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| types | Type name or type name list |
+
+#### Usage
+
 
 This should be used inside `on_test` like so:
 ```lua
@@ -455,6 +1178,23 @@ end)
 
 - Wether the package has the given C++ types
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:has_cxxtypes(types: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| types | Type name or type name list |
+
+#### Usage
+
+
 This should be used inside `on_test` like so:
 ```lua
 on_test(function (package)
@@ -471,6 +1211,23 @@ end)
 
 - Wether the package has the given C header files
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:has_cincludes(includes: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| includes | Include file or include file list |
+
+#### Usage
+
+
 This should be used in `on_test` like so:
 ```lua
 on_test(function (package)
@@ -482,6 +1239,23 @@ end)
 
 - Wether the package has the given C++ header files
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:has_cxxincludes(includes: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| includes | Include file or include file list |
+
+#### Usage
+
+
 This should be used in `on_test` like so:
 ```lua
 on_test(function (package)
@@ -492,6 +1266,23 @@ end)
 ## package:check_csnippets
 
 - Wether the given C snippet can be compiled and linked
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:check_csnippets(snippets: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| snippets | Code snippet or code snippet list |
+
+#### Usage
+
 
 This should be used in `on_test` like so:
 ```lua
@@ -511,6 +1302,23 @@ end)
 
 - Wether the given C++ snippet can be compiled and linked
 
+#### Function Prototype
+
+::: tip API
+```lua
+package:check_cxxsnippets(snippets: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| snippets | Code snippet or code snippet list |
+
+#### Usage
+
+
 This should be used in `on_test` like so:
 ```lua
 on_test(function (package)
@@ -528,5 +1336,20 @@ end)
 ## package:check_fcsnippets
 
 - Wether the given Fortran snippet can be compiled and linked
+
+#### Function Prototype
+
+::: tip API
+```lua
+package:check_fcsnippets()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 see above

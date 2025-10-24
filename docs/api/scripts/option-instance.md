@@ -8,6 +8,21 @@ In the script scope, you can operate various properties and configurations of th
 
 - Get the name of the option (without namespace)
 
+#### Function Prototype
+
+::: tip API
+```lua
+option:name()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ```lua
 option("test")
     on_check(function (option)
@@ -18,6 +33,21 @@ option("test")
 ## option:fullname
 
 - Get the full name of the option (with namespace)
+
+#### Function Prototype
+
+::: tip API
+```lua
+option:fullname()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 option("mymod::test")
@@ -30,6 +60,21 @@ option("mymod::test")
 
 - Get the namespace of the option
 
+#### Function Prototype
+
+::: tip API
+```lua
+option:namespace()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ```lua
 option("mymod::test")
     on_check(function (option)
@@ -40,6 +85,21 @@ option("mymod::test")
 ## option:description
 
 - Get the description of the option
+
+#### Function Prototype
+
+::: tip API
+```lua
+option:description()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 option("test")
@@ -52,6 +112,21 @@ option("test")
 ## option:value
 
 - Get the current value of the option
+
+#### Function Prototype
+
+::: tip API
+```lua
+option:value()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 option("demo")
@@ -70,6 +145,21 @@ option("demo")
 
 - Check if the option is enabled
 
+#### Function Prototype
+
+::: tip API
+```lua
+option:enabled()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ```lua
 option("test")
     after_check(function (option)
@@ -82,6 +172,23 @@ option("test")
 ## option:enable
 
 - Enable or disable the option
+
+#### Function Prototype
+
+::: tip API
+```lua
+option:enable(enable: <boolean>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| enable | Whether to enable |
+
+#### Usage
+
 
 ```lua
 option("float")
@@ -97,6 +204,23 @@ option("float")
 
 - Set the value of the option
 
+#### Function Prototype
+
+::: tip API
+```lua
+option:set_value(value: <any>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| value | Option value |
+
+#### Usage
+
+
 ```lua
 option("test")
     on_check(function (option)
@@ -109,6 +233,21 @@ option("test")
 
 - Clear the option status, need to recheck
 
+#### Function Prototype
+
+::: tip API
+```lua
+option:clear()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ```lua
 option("test")
     after_check(function (option)
@@ -120,6 +259,23 @@ option("test")
 ## option:get
 
 - Get the configuration values of the option in the description scope
+
+#### Function Prototype
+
+::: tip API
+```lua
+option:get(key: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+
+#### Usage
+
 
 Any configuration values set by `set_xxx` and `add_xxx` in the description scope can be obtained through this interface.
 
@@ -148,6 +304,24 @@ option("test")
 ## option:set
 
 - Set the configuration values of the option
+
+#### Function Prototype
+
+::: tip API
+```lua
+option:set(key: <string>, value: <any>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+| value | Configuration value |
+
+#### Usage
+
 
 If you want to add values, you can use [option:add](#option-add).
 
@@ -185,6 +359,24 @@ For example:
 ## option:add
 
 - Add values to the option by name
+
+#### Function Prototype
+
+::: tip API
+```lua
+option:add(key: <string>, value: <any>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+| value | Value to add |
+
+#### Usage
+
 
 ```lua
 option("test")
@@ -230,6 +422,24 @@ For example:
 
 - Remove specified values from the option
 
+#### Function Prototype
+
+::: tip API
+```lua
+option:remove(key: <string>, value: <any>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+| value | Value to remove |
+
+#### Usage
+
+
 ```lua
 option("test")
     on_check(function (option)
@@ -248,6 +458,21 @@ option("test")
 
 - Get all dependencies of the option
 
+#### Function Prototype
+
+::: tip API
+```lua
+option:deps()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ```lua
 option("info")
     add_deps("small", "micro")
@@ -265,6 +490,23 @@ option("info")
 
 - Get the specified dependent option
 
+#### Function Prototype
+
+::: tip API
+```lua
+option:dep(name: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Dependency name |
+
+#### Usage
+
+
 ```lua
 option("float")
     add_deps("micro")
@@ -280,6 +522,21 @@ option("float")
 ## option:orderdeps
 
 - Get the ordered dependencies of the option
+
+#### Function Prototype
+
+::: tip API
+```lua
+option:orderdeps()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 ```lua
 option("test")
@@ -297,6 +554,24 @@ option("test")
 ## option:extraconf
 
 - Get extra configuration information
+
+#### Function Prototype
+
+::: tip API
+```lua
+option:extraconf(name: <string>, key: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Configuration name |
+| key | Configuration key |
+
+#### Usage
+
 
 ```lua
 option("test")

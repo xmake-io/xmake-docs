@@ -6,9 +6,41 @@ This page describes the interface for `target` of functions like `on_load()`, `b
 
 - Get the name of the target
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:name()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 ## target:get
 
 - Get the values of the target by name
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:get(key: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+
+#### Usage
+
 
 ```lua
 -- get the links
@@ -20,6 +52,24 @@ target:get("defines")
 ## target:set
 
 - Set the values of the target by name
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:set(key: <string>, value: <any>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+| value | Configuration value |
+
+#### Usage
+
 
 If you just want to add values use [target:add](#target-add).
 
@@ -42,6 +92,24 @@ For example:
 
 - Add to the values of the target by name
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:add(key: <string>, value: <any>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Configuration key name |
+| value | Value to add |
+
+#### Usage
+
+
 ```lua
 -- add links
 target:add("links", "sdl2")
@@ -61,11 +129,43 @@ For example:
 
 - Get the target program type
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:kind()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 Corresponding to `set_kind` description domain interface settings. The main target types are: binary, static, shared, phony, object, headeronly.
 
 ## target:is_plat
 
 - Whether the current platform is one of the given platforms
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:is_plat(plat: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| plat | Platform name |
+
+#### Usage
+
 
 Although we can also use the `is_plat` global interface to directly determine the platform, xmake supports the use of `set_plat` to set the compilation platform separately for a specific target.
 
@@ -82,6 +182,23 @@ target:is_plat("windows", "linux", "macosx")
 
 - Is the current architecture one of the given architectures
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:is_arch(arch: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| arch | Architecture name |
+
+#### Usage
+
+
 Although we can also use the `is_arch` global interface to directly determine the architecture, xmake supports the use of `set_arch` to set the compilation architecture separately for a specific target.
 
 At this time, using the global interface is not applicable, so we usually recommend using the interface provided by the target to directly judge the compilation architecture of the current target, which is more reliable.
@@ -97,6 +214,21 @@ target:is_arch("x64", "x86_64")
 
 - Get the target file path
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:targetfile()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 It is mainly used to obtain the output path of static, shared, and binary object program files.
 
 ```lua
@@ -106,6 +238,21 @@ os.cp(target:targetfile(), "/tmp/")
 ## target:artifactfile
 
 - Get the artifact file of the target
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:artifactfile()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 Currently, only the implib file output path of Windows DLL can be obtained.
 
@@ -119,11 +266,41 @@ However, it may be extended to other types of artifact file path acquisition in 
 
 - Get the output directory of the target file
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:targetdir()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 That is, the storage directory corresponding to target:targetfile().
 
 ## target:basename
 
 - Get the base name of the target file
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:basename()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 That is, `foo` in libfoo.a, foo.dll, foo.exe.
 
@@ -131,17 +308,62 @@ That is, `foo` in libfoo.a, foo.dll, foo.exe.
 
 - Get the target file name
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:filename()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 The full file name of the target file, equivalent to `path.filename(target:targetfile())`.
 
 ## target:installdir
 
 - Get the installation directory of the target file
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:installdir()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 It is usually used to obtain the corresponding installation directory path in scripts such as after_install of `xmake install/uninstall`, which can be used for user-defined installation scripts.
 
 ## target:autogendir
 
 - Get auto-generated catalog
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:autogendir()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 This is usually used in some custom rule scripts to store some target-specific automatically generated files, and the path is usually under `build/.gens/target`.
 
@@ -150,6 +372,23 @@ For example, when we are processing lex/yacc, some source code files are automat
 ## target:objectfile
 
 - Get the object file path
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:objectfile(sourcefile: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sourcefile | Source file path |
+
+#### Usage
+
 
 Usually used in custom scripts to obtain the target file path corresponding to the source file, for example
 
@@ -160,6 +399,21 @@ local objectfile = target:objectfile(sourcefile)
 ## target:sourcebatches
 
 - Get all source files
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:sourcebatches()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 It can get all the source files added by `add_files` and store them separately according to different source file types.
 
@@ -219,6 +473,21 @@ sourcebatch.sourcefiles is a list of source files, sourcebatch.objectfiles is a 
 
 - Get a list of all object files
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:objectfiles()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 Although `target:sourcebatches()` can also obtain all object files, they are classified according to the source file type and do not directly participate in the final link.
 
 If we want to dynamically modify the final linked object file list, we can modify `target:objectfiles()`, which is an array list.
@@ -226,6 +495,21 @@ If we want to dynamically modify the final linked object file list, we can modif
 ## target:headerfiles
 
 - Get a list of all header files
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:headerfiles()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 
 You can get a list of all header files set by the `add_headerfiles()` interface.
 
@@ -239,11 +523,43 @@ end
 
 - Get the xmake.lua directory where the target definition is located
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:scriptdir()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
 This is usually used in custom rules. If you want to get the directory where the current target is actually defined in xmake.lua, it is convenient to reference some resource files. You can use this interface.
 
 ## target:has_cxxfuncs
 
 - Check whether the target compilation configuration can obtain the given C++ function
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:has_cxxfuncs(funcs: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| funcs | Function name or function name list |
+
+#### Usage
+
 
 The usage is similar to [target:has_cfuncs](#target-has_cfuncs), except that it is mainly used to detect C++ functions.
 
@@ -256,6 +572,23 @@ target:has_cxxfuncs("foo", {includes = "foo.h", configs = {languages = "cxx17"}}
 ## target:has_ctypes
 
 - Check whether the target compilation configuration can obtain the given C type
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:has_ctypes(types: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| types | Type name or type name list |
+
+#### Usage
+
 
 This should be used in `on_config` like this:
 
@@ -276,11 +609,45 @@ target("test")
 
 - Check whether the target compilation configuration can get the given C++ type
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:has_cxxtypes(types: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| types | Type name or type name list |
+
+#### Usage
+
+
 The usage is similar to [target:has_ctypes](#target-has_ctypes), except that it is mainly used to detect the type of C++.
 
 ## target:has_cflags
 
 - Check whether the target compilation configuration can obtain the given C compilation flags
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:has_cflags(flags: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| flags | Compilation flags or flag list |
+
+#### Usage
+
 
 ```lua
 target("test")
@@ -297,11 +664,45 @@ target("test")
 
 - Check whether the target compilation configuration can obtain the given C++ compilation flags
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:has_cxxflags(flags: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| flags | Compilation flags or flag list |
+
+#### Usage
+
+
 The usage is similar to [target:has_cflags](#target-has_cflags), except that it is mainly used to detect the compilation flags of C++.
 
 ## target:has_cincludes
 
 - Check whether the target compilation configuration can obtain the given C header file
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:has_cincludes(includes: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| includes | Include file or include file list |
+
+#### Usage
+
 
 This should be used in `on_config`, for example, it can be used to determine whether the current target can obtain the zlib.h header file of the zlib dependency package, and then automatically define `HAVE_INFLATE`:
 
@@ -322,17 +723,68 @@ target("test")
 
 - Check whether the target compilation configuration can obtain the given C++ header file
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:has_cxxincludes(includes: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| includes | Include file or include file list |
+
+#### Usage
+
+
 The usage is similar to [target:has_cincludes](#target-has_cincludes), except that it is mainly used to detect C++ header files.
 
 ## target:check_csnippets
 
 - Detect whether a given piece of C code can be compiled and linked
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:check_csnippets(snippets: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| snippets | Code snippet or code snippet list |
+
+#### Usage
+
+
 The usage is similar to [target:check_cxxsnippets](#target-check_cxxsnippets), except that it is mainly used to detect C code snippets.
 
 ## target:check_cxxsnippets
 
 - Detect if a given piece of C++ code can be compiled and linked
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:check_cxxsnippets(snippets: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| snippets | Code snippet or code snippet list |
+
+#### Usage
+
 
 This should be used in `on_config` like this:
 
@@ -394,6 +846,23 @@ target("test")
 
 - Detect type size
 
+#### Function Prototype
+
+::: tip API
+```lua
+target:check_sizeof(types: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| types | Type name or type name list |
+
+#### Usage
+
+
 ```lua
 add_rules("mode.debug", "mode.release")
 
@@ -418,6 +887,23 @@ sizeof(string) = 24
 ## target:has_features
 
 - Detect if specified C/C++ compiler feature
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:has_features(features: <string|table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| features | Feature name or feature name list |
+
+#### Usage
+
 
 It is faster than using `check_cxxsnippets`, because it only performs preprocessing once to check all compiler features, instead of calling the compiler every time to try to compile.
 
