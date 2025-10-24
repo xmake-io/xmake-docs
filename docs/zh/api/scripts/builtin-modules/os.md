@@ -1502,11 +1502,17 @@ print("工作目录:", os.workingdir())
 
 - 判断xmake是否以管理员权限运行
 
+#### 函数原型
+
 ```lua
-if os.isroot() then
-    print("以管理员权限运行")
-end
+os.isroot()
 ```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 在 Unix 系统上检查是否以 root 用户运行，在 Windows 上检查是否以管理员权限运行。
 
@@ -1522,13 +1528,17 @@ end
 
 - 判断操作系统的文件系统是否大小写敏感
 
+#### 函数原型
+
 ```lua
-if os.fscase() then
-    print("文件系统区分大小写")
-else
-    print("文件系统不区分大小写")
-end
+os.fscase()
 ```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回 true 表示文件系统区分大小写（如 Linux），false 表示不区分（如 Windows、macOS 默认）。
 
@@ -1545,9 +1555,35 @@ end
 
 - 获取当前终端 (windows-terminal, vscode, xterm, ...)
 
+#### 函数原型
+
+```lua
+os.term()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 ## os.shell
 
-- 获取当前shell (pwsh, cmd, bash, zsh, ...)
+- 获取当前shell
+
+#### 函数原型
+
+```lua
+os.shell()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+获取当前使用的 shell 程序名称，支持多种 shell 类型如 pwsh, cmd, bash, zsh 等。
 
 ## os.cpuinfo
 
@@ -1571,6 +1607,20 @@ print(os.cpuinfo("march")) -- probably got "Alder Lake"
 
 - 获取内存信息
 
+#### 函数原型
+
+```lua
+os.meminfo(key: <string>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| key | 内存信息键名（可选） |
+
+#### 用法说明
+
 ```lua
 print(os.meminfo())
 -- probably got {
@@ -1586,6 +1636,18 @@ print(os.meminfo("pagesize")) -- probably got 4096
 
 - 获取默认编译任务数
 
+#### 函数原型
+
+```lua
+os.default_njob()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 返回默认的并行编译任务数，通常等于 CPU 核心数。
 
 ```lua
@@ -1597,9 +1659,19 @@ print("默认并行任务数:", njob)
 
 - 将命令行字符串解析为参数列表
 
+#### 函数原型
+
 ```lua
-local args = os.argv("gcc -o test test.c -I/usr/include")
+os.argv(command: <string>)
 ```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| command | 命令行字符串 |
+
+#### 用法说明
 
 将命令行字符串解析为参数数组，支持引号、转义字符等复杂格式。
 
@@ -1638,9 +1710,20 @@ os.argv('-DTEST="hello world"', {splitonly = true})  -- 返回: {'-DTEST="hello 
 
 - 将参数列表转换为命令行字符串
 
+#### 函数原型
+
 ```lua
-local cmdline = os.args({"gcc", "-o", "test", "test.c"})
+os.args(args: <table>, options: <table>)
 ```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| args | 参数数组 |
+| options | 选项表（可选） |
+
+#### 用法说明
 
 将参数数组转换为命令行字符串，是 [os.argv](#os-argv) 的逆操作。
 
@@ -1684,12 +1767,17 @@ local cmdline2 = os.args(args)
 
 - 获取单调时钟时间（毫秒）
 
+#### 函数原型
+
 ```lua
-local start = os.mclock()
--- 执行一些操作
-local elapsed = os.mclock() - start
-print("耗时:", elapsed, "ms")
+os.mclock()
 ```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回单调递增的时间戳（毫秒），适合用于测量时间间隔。
 

@@ -1505,9 +1505,20 @@ os.setenv("PATH", "/new/path:" .. os.getenv("PATH"))
 
 - Add values to one environment variable
 
+#### Function Prototype
+
 ```lua
-os.addenv("PATH", "/new/path")
+os.addenv(name: <string>, value: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Environment variable name |
+| value | Value to add |
+
+#### Usage
 
 Appends a new value to the specified environment variable, using the system default separator (`:` on Unix, `;` on Windows).
 
@@ -1523,9 +1534,21 @@ print(os.getenv("PATH"))  -- New path will be appended to existing PATH
 
 - Setting environment variables with a given separator
 
+#### Function Prototype
+
 ```lua
-os.setenvp("VAR", "value", "separator")
+os.setenvp(name: <string>, value: <string>, separator: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Environment variable name |
+| value | Environment variable value |
+| separator | Separator string |
+
+#### Usage
 
 Sets an environment variable using a specified separator. Similar to [os.setenv](#os-setenv), but allows custom separator.
 
@@ -1533,15 +1556,39 @@ Sets an environment variable using a specified separator. Similar to [os.setenv]
 
 - Add values to one environment variable with a given separator
 
+#### Function Prototype
+
 ```lua
-os.addenvp("VAR", "value", "separator")
+os.addenvp(name: <string>, value: <string>, separator: <string>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Environment variable name |
+| value | Value to add |
+| separator | Separator string |
+
+#### Usage
 
 Appends a value to an environment variable using a specified separator. Similar to [os.addenv](#os-addenv), but allows custom separator.
 
 ## os.workingdir
 
 - Get the working directory
+
+#### Function Prototype
+
+```lua
+os.workingdir()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 ```lua
 local workdir = os.workingdir()
@@ -1557,11 +1604,17 @@ print("Working directory:", os.workingdir())
 
 - Test if xmake is running as root
 
+#### Function Prototype
+
 ```lua
-if os.isroot() then
-    print("Running as root/administrator")
-end
+os.isroot()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 On Unix systems, checks if running as root user; on Windows, checks if running with administrator privileges.
 
@@ -1577,13 +1630,17 @@ end
 
 - Test if the os has a case sensitive filesystem
 
+#### Function Prototype
+
 ```lua
-if os.fscase() then
-    print("Filesystem is case-sensitive")
-else
-    print("Filesystem is case-insensitive")
-end
+os.fscase()
 ```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns true if the filesystem is case-sensitive (like Linux), false if not (like Windows, macOS default).
 
@@ -1600,6 +1657,18 @@ end
 
 - Get current terminal (windows-terminal, vscode, ... )
 
+#### Function Prototype
+
+```lua
+os.term()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 ```lua
 print(os.term())
 -- got vscode
@@ -1609,6 +1678,18 @@ print(os.term())
 
 - Get current shell  (pwsh, cmd, ...)
 
+#### Function Prototype
+
+```lua
+os.shell()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 ```lua
 print(os.shell())
 -- got pwsh
@@ -1617,6 +1698,20 @@ print(os.shell())
 ## os.cpuinfo
 
 - Get cpu information
+
+#### Function Prototype
+
+```lua
+os.cpuinfo(key: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | CPU info key (optional) |
+
+#### Usage
 
 ```lua
 print(os.cpuinfo())
@@ -1636,6 +1731,20 @@ print(os.cpuinfo("march")) -- got "Kaby Lake"
 
 - Get memory information
 
+#### Function Prototype
+
+```lua
+os.meminfo(key: <string>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| key | Memory info key (optional) |
+
+#### Usage
+
 ```lua
 print(os.meminfo())
 -- got {
@@ -1650,6 +1759,18 @@ print(os.meminfo())
 
 - Get default parallel jobs
 
+#### Function Prototype
+
+```lua
+os.default_njob()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 Returns the default number of parallel compilation jobs, typically equal to the number of CPU cores.
 
 ```lua
@@ -1661,9 +1782,20 @@ print("Default parallel jobs:", njob)
 
 - Parse command line string into argument list
 
+#### Function Prototype
+
 ```lua
-local args = os.argv("gcc -o test test.c -I/usr/include")
+os.argv(command: <string>, options: <table>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| command | Command line string |
+| options | Options table (optional) |
+
+#### Usage
 
 Parses a command line string into an argument array, supporting quotes, escape characters, and other complex formats.
 
@@ -1702,9 +1834,20 @@ os.argv('-DTEST="hello world"', {splitonly = true})  -- Returns: {'-DTEST="hello
 
 - Convert argument list to command line string
 
+#### Function Prototype
+
 ```lua
-local cmdline = os.args({"gcc", "-o", "test", "test.c"})
+os.args(args: <table>, options: <table>)
 ```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| args | Arguments array |
+| options | Options table (optional) |
+
+#### Usage
 
 Converts an argument array to a command line string, the inverse operation of [os.argv](#os-argv).
 
@@ -1747,6 +1890,18 @@ local cmdline2 = os.args(args)
 ## os.mclock
 
 - Get monotonic clock time (milliseconds)
+
+#### Function Prototype
+
+```lua
+os.mclock()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 ```lua
 local start = os.mclock()

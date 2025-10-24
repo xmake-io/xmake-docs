@@ -6,6 +6,18 @@ This module provides a job graph (DAG) for advanced asynchronous job scheduling 
 
 - Create a new job graph instance.
 
+#### Function Prototype
+
+```lua
+jobgraph.new()
+```
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 ```lua
 import("async.jobgraph")
 local jobs = jobgraph.new()
@@ -16,6 +28,22 @@ local jobs = jobgraph.new()
 ## jobgraph:add
 
 - Add a job node to the job graph.
+
+#### Function Prototype
+
+```lua
+jobgraph:add(name: <string>, jobfunc: <function>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Job name string |
+| jobfunc | Job function |
+| options | Options table (optional) |
+
+#### Usage
 
 ```lua
 local jobs = jobgraph.new()
@@ -66,6 +94,21 @@ rule("foo")
 
 - Add dependency orders.
 
+#### Function Prototype
+
+```lua
+jobgraph:add_orders(jobname: <string>, ...)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| jobname | Job name string |
+| ... | Variable arguments for dependency jobs |
+
+#### Usage
+
 ```lua
 local jobs = jobgraph.new()
 jobs:add("job/root", function() print("root job") end)
@@ -76,6 +119,21 @@ jobs:add_orders("job/child", "job/root")
 ## jobgraph:group
 
 - Group jobs for batch dependency management. You can use a callback to add jobs to a group.
+
+#### Function Prototype
+
+```lua
+jobgraph:group(groupname: <string>, callback: <function>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| groupname | Group name string |
+| callback | Callback function to add jobs to group |
+
+#### Usage
 
 ```lua
 local jobs = jobgraph.new()

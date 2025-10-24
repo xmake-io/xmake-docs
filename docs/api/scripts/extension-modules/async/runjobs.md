@@ -6,6 +6,22 @@ This module runs all jobs in a job graph concurrently, respecting dependencies.
 
 Run all jobs in the job graph concurrently.
 
+#### Function Prototype
+
+```lua
+runjobs(name: <string>, jobs: <jobgraph>, options: <table>)
+```
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Job name string |
+| jobs | Job graph instance |
+| options | Options table |
+
+#### Usage
+
 - `comax`: Maximum number of concurrent jobs.
 - `timeout`: Timeout for each job (ms).
 - `timer`: Timer callback for monitoring running jobs.

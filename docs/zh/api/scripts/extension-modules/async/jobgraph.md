@@ -6,6 +6,18 @@
 
 - 创建新的任务图实例。
 
+#### 函数原型
+
+```lua
+jobgraph.new()
+```
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 ```lua
 import("async.jobgraph")
 local jobs = jobgraph.new()
@@ -16,6 +28,22 @@ local jobs = jobgraph.new()
 ## jobgraph:add
 
 - 向任务图添加一个任务节点。
+
+#### 函数原型
+
+```lua
+jobgraph:add(name: <string>, jobfunc: <function>, options: <table>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 任务名称字符串 |
+| jobfunc | 任务函数 |
+| options | 选项表（可选） |
+
+#### 用法说明
 
 ```lua
 local jobs = jobgraph.new()
@@ -66,6 +94,21 @@ rule("foo")
 
 - 添加依赖执行顺序
 
+#### 函数原型
+
+```lua
+jobgraph:add_orders(jobname: <string>, ...)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| jobname | 任务名称字符串 |
+| ... | 依赖任务的可变参数 |
+
+#### 用法说明
+
 ```lua
 local jobs = jobgraph.new()
 jobs:add("job/root", function() print("root job") end)
@@ -76,6 +119,21 @@ jobs:add_orders("job/child", "job/root")
 ## jobgraph:group
 
 - 分组批量管理任务依赖。可通过回调批量添加分组任务
+
+#### 函数原型
+
+```lua
+jobgraph:group(groupname: <string>, callback: <function>)
+```
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| groupname | 分组名称字符串 |
+| callback | 向分组添加任务的回调函数 |
+
+#### 用法说明
 
 ```lua
 local jobs = jobgraph.new()
