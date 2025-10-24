@@ -6,9 +6,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_title(title: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -29,9 +32,12 @@ xpack_component("LongPath")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_description(description: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -52,9 +58,12 @@ xpack_component("LongPath")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_default(default: <boolean>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -78,9 +87,12 @@ xpack_component("LongPath")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_load(script: <function (component)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -108,9 +120,12 @@ xpack_component("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_installcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -139,9 +154,12 @@ xpack_component("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_installcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -168,9 +186,12 @@ xpack_component("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_installcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -197,9 +218,12 @@ xpack_component("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_uninstallcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -222,9 +246,12 @@ xpack_component("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_uninstallcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -251,9 +278,12 @@ xpack_component("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_uninstallcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -280,6 +310,7 @@ xpack_component("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_sourcefiles(files: <string|array>, ..., {
     prefixdir = <string>,
@@ -287,6 +318,8 @@ add_sourcefiles(files: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -306,6 +339,7 @@ add_sourcefiles(files: <string|array>, ..., {
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_installfiles(files: <string|array>, ..., {
     prefixdir = <string>,
@@ -313,6 +347,8 @@ add_installfiles(files: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 

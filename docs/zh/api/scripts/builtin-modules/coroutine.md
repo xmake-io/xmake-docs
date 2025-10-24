@@ -9,9 +9,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 coroutine.create(f: <function>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -35,9 +38,12 @@ end)
 
 #### 函数原型
 
+::: tip API
 ```lua
 coroutine.resume(co: <thread>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -60,9 +66,12 @@ local success, result = coroutine.resume(co, "arg1", "arg2")
 
 #### 函数原型
 
+::: tip API
 ```lua
 coroutine.yield(...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -84,9 +93,12 @@ coroutine.yield("value1", "value2")
 
 #### 函数原型
 
+::: tip API
 ```lua
 coroutine.status(co: <thread>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -108,9 +120,12 @@ local status = coroutine.status(co)
 
 #### 函数原型
 
+::: tip API
 ```lua
 coroutine.wrap(f: <function>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -135,9 +150,12 @@ local result = func()
 
 #### 函数原型
 
+::: tip API
 ```lua
 coroutine.running()
 ```
+:::
+
 
 #### 参数说明
 

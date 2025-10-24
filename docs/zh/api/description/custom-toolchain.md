@@ -79,9 +79,12 @@ $ xmake show -l toolchains
 
 #### 函数原型
 
+::: tip API
 ```lua
 toolchain(name: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -202,9 +205,12 @@ toolchain("my_toolchain")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_kind(kind: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -230,9 +236,12 @@ set_kind(kind: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_toolset(tool: <string>, tools: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -269,9 +278,12 @@ toolchain("myclang")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_sdkdir(sdkdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -296,9 +308,12 @@ toolchain("myclang")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_bindir(bindir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -323,9 +338,12 @@ toolchain("myclang")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_check(script: <function (toolchain)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -352,9 +370,12 @@ toolchain("myclang")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_load(script: <function (toolchain)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -389,9 +410,12 @@ toolchain("myclang")
 
 #### 函数原型
 
+::: tip API
 ```lua
 toolchain_end()
 ```
+:::
+
 
 #### 参数说明
 

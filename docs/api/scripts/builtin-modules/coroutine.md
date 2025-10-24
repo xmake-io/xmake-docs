@@ -9,9 +9,12 @@ The coroutine module is a native module of lua. For use, see: [lua official manu
 
 #### Function Prototype
 
+::: tip API
 ```lua
 coroutine.create(f: <function>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -35,9 +38,12 @@ end)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 coroutine.resume(co: <thread>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -60,9 +66,12 @@ local success, result = coroutine.resume(co, "arg1", "arg2")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 coroutine.yield(...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -84,9 +93,12 @@ coroutine.yield("value1", "value2")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 coroutine.status(co: <thread>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -108,9 +120,12 @@ local status = coroutine.status(co)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 coroutine.wrap(f: <function>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -135,9 +150,12 @@ local result = func()
 
 #### Function Prototype
 
+::: tip API
 ```lua
 coroutine.running()
 ```
+:::
+
 
 #### Parameter Description
 

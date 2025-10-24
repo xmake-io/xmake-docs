@@ -8,9 +8,12 @@
 
 #### Function Prototype
 
+::: tip API
 ```lua
 signal.register(signo: <number>, handler: <function>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -65,9 +68,12 @@ For the background of this issue, please refer to: [#4889](https://github.com/xm
 
 #### Function Prototype
 
+::: tip API
 ```lua
 signal.ignore(signo: <number>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -89,9 +95,12 @@ signal.ignore(signal.SIGINT)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 signal.reset(signo: <number>)
 ```
+:::
+
 
 #### Parameter Description
 

@@ -4,9 +4,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 pairs(t: <table>, f: <function>, ...)
 ```
+:::
+
 
 #### 参数说明
 

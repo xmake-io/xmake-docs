@@ -4,9 +4,12 @@
 
 #### Function Prototype
 
+::: tip API
 ```lua
 pairs(t: <table>, f: <function>, ...)
 ```
+:::
+
 
 #### Parameter Description
 

@@ -11,9 +11,12 @@ It has been extended in xmake to add some extension interfaces:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 string.startswith(str: <string>, prefix: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -37,9 +40,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 string.endswith(str: <string>, suffix: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -63,9 +69,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 string.split(str: <string>, separator: <string>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -120,9 +129,12 @@ limit split count
 
 #### Function Prototype
 
+::: tip API
 ```lua
 string.trim(str: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -144,9 +156,12 @@ The result is: "hello xmake!"
 
 #### Function Prototype
 
+::: tip API
 ```lua
 string.ltrim(str: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -168,9 +183,12 @@ The result is: "hello xmake!    "
 
 #### Function Prototype
 
+::: tip API
 ```lua
 string.rtrim(str: <string>)
 ```
+:::
+
 
 #### Parameter Description
 

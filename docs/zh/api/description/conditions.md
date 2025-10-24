@@ -8,9 +8,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_os(os: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -42,9 +45,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_arch(arch: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -86,9 +92,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_plat(plat: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -137,9 +146,12 @@ $ xmake f -p other --sdk=...
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_host(host: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -177,9 +189,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_subhost(subhost: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -217,9 +232,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_subarch(subarch: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -241,9 +259,12 @@ is_subarch(subarch: <string>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_cross()
 ```
+:::
+
 
 #### 参数说明
 
@@ -261,9 +282,12 @@ is_cross()
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_mode(mode: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -299,9 +323,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_kind(kind: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -349,9 +376,12 @@ $ xmake
 
 #### 函数原型
 
+::: tip API
 ```lua
 is_config(name: <string>, values: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -418,9 +448,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 has_config(configs: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -473,9 +506,12 @@ $ xmake f --test1=false
 
 #### 函数原型
 
+::: tip API
 ```lua
 has_package(packages: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 

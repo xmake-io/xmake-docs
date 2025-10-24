@@ -8,9 +8,12 @@ Run all jobs in the job graph concurrently.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 runjobs(name: <string>, jobs: <jobgraph>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 

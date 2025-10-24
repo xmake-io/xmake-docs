@@ -5,9 +5,12 @@
 
 #### Function Prototype
 
+::: tip API
 ```lua
 print(...)
 ```
+:::
+
 
 #### Parameter Description
 

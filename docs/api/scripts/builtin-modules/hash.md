@@ -9,9 +9,12 @@ The hash module provides hash value calculation and UUID generation functions. I
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.md5(input: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -43,9 +46,12 @@ print("MD5: " .. checksum)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.sha1(input: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -68,9 +74,12 @@ Calculates the SHA1 hash value of the specified string or file and returns a hex
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.sha256(input: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -104,9 +113,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.uuid(name: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -137,9 +149,12 @@ local config_id = hash.uuid("debug-x64-windows")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.xxhash32(input: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -157,9 +172,12 @@ Calculates hash value using the xxHash32 algorithm. xxHash is an extremely fast 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.xxhash64(input: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -182,9 +200,12 @@ local key = hash.xxhash64(table.concat(params, "|"))
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.xxhash128(input: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -202,9 +223,12 @@ Calculates hash value using the xxHash128 algorithm, providing longer hash value
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.strhash32(input: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -224,9 +248,12 @@ This interface uses xxhash32 internally, specifically designed for fast string h
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.strhash64(input: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -244,9 +271,12 @@ Generates a 64-bit hash value from a string, returns format like: `91e8ecf191e8e
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.strhash128(input: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -271,9 +301,12 @@ local cache_key = hash.strhash128(compiler .. flags .. source)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.rand32()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -293,9 +326,12 @@ This interface is prone to hash collisions and is not recommended for scenarios 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.rand64()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -311,9 +347,12 @@ Generates a 64-bit random hash value.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 hash.rand128()
 ```
+:::
+
 
 #### Parameter Description
 

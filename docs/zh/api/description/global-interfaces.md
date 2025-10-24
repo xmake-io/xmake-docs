@@ -8,11 +8,14 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 includes(paths: <string|array>, ..., {
     rootdir = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -185,9 +188,12 @@ target("test2")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_project(name: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -213,12 +219,15 @@ set_version("1.5.1")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_version(version: <string>, {
     build = <string>,
     soname = <string|boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -288,9 +297,12 @@ set_version("1.0.1") -> libfoo.so, libfoo.dylib
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_xmakever(version: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -317,9 +329,12 @@ set_xmakever("2.1.0")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_moduledirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -339,9 +354,12 @@ xmake内置的扩展模块都在`xmake/modules`目录下，可通过[import](/zh
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_plugindirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -367,9 +385,12 @@ add_plugindirs("$(projectdir)/plugins")
 
 #### 函数原型
 
+::: tip API
 ```lua
 get_config(name: <string>): <string|boolean|number>
 ```
+:::
+
 
 #### 参数说明
 
@@ -397,9 +418,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_config(name: <string>, value: <string|boolean|number>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -429,6 +453,7 @@ set_config("ld", "g++")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_requires(packages: <string|array>, ..., {
     optional = <boolean>,
@@ -441,6 +466,8 @@ add_requires(packages: <string|array>, ..., {
     ... = <any>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -696,6 +723,7 @@ add_requires("ffmpeg[shared,debug,codecs=[foo,bar,zoo]]")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_requireconfs(packages: <string|array>, ..., {
     configs = <table>,
@@ -705,6 +733,8 @@ add_requireconfs(packages: <string|array>, ..., {
     ... = <any>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -851,11 +881,14 @@ add_requireconfs("libwebp.*|cmake", {debug = true})
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_repositories(repos: <string|array>, ..., {
     rootdir = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -913,9 +946,12 @@ add_repositories("my-repo myrepo", {rootdir = os.scriptdir()})
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_defaultplat(platform: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -941,9 +977,12 @@ set_defaultplat("iphoneos")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_defaultarchs(archs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -977,9 +1016,12 @@ set_defaultarchs("iphoneos|arm64", "windows|x64")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_defaultmode(mode: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1003,9 +1045,12 @@ set_defaultmode("releasedbg")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_allowedplats(platforms: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1032,9 +1077,12 @@ set_allowedplats("windows", "mingw")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_allowedarchs(archs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1069,9 +1117,12 @@ set_allowedarchs("windows|x64", "iphoneos|arm64")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_allowedmodes(modes: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1098,9 +1149,12 @@ set_allowedmodes("release", "releasedbg")
 
 #### 函数原型
 
+::: tip API
 ```lua
 namespace(name: <string>, script: <function>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1412,9 +1466,12 @@ end)
 
 #### 函数原型
 
+::: tip API
 ```lua
 namespace_end()
 ```
+:::
+
 
 #### 参数说明
 

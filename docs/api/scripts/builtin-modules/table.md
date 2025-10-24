@@ -11,9 +11,12 @@ It has been extended in xmake to add some extension interfaces:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 table.join(tables: <table>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -46,9 +49,12 @@ The result is: `{a = "a", b = "b", c = "c", d = "d"}`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 table.join2(target: <table>, tables: <table>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -75,9 +81,12 @@ The result is: `t = {0, 9, 1, 2, 3}`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 table.unique(tbl: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -101,9 +110,12 @@ The result is: `{1, 2, 3, 4, 5}`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 table.slice(tbl: <table>, start: <number>, stop: <number>, step: <number>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -135,9 +147,12 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 table.contains(tbl: <table>, values: <any>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -163,9 +178,12 @@ As long as the table contains any value from 1, 2, 3, it returns true
 
 #### Function Prototype
 
+::: tip API
 ```lua
 table.orderkeys(tbl: <table>)
 ```
+:::
+
 
 #### Parameter Description
 

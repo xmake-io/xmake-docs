@@ -79,9 +79,12 @@ $ xmake show -l toolchains
 
 #### Function Prototype
 
+::: tip API
 ```lua
 toolchain(name: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -202,9 +205,12 @@ For more examples of custom toolchains, we can see the following interface docum
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_kind(kind: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -230,9 +236,12 @@ Just remember that the toolchain with a complete compilation environment is set 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_toolset(tool: <string>, tools: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -283,9 +292,12 @@ For details about this interface, you can see: [target.set_toolset](/api/descrip
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_sdkdir(sdkdir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -310,9 +322,12 @@ toolchain("myclang")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_bindir(bindir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -337,9 +352,12 @@ toolchain("myclang")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_check(script: <function (toolchain)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -366,9 +384,12 @@ toolchain("myclang")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_load(script: <function (toolchain)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -403,9 +424,12 @@ toolchain("myclang")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 toolchain_end()
 ```
+:::
+
 
 #### Parameter Description
 

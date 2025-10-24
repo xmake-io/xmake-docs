@@ -14,9 +14,12 @@ Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os mo
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.cp(source: <string>, destination: <string>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -81,9 +84,12 @@ os.cp("$(scriptdir)/config.h", "$(builddir)/inc/config.h", {copy_if_different = 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.mv(source: <string>, destination: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -110,9 +116,12 @@ os.mv("$(builddir)/libtest.a", "$(builddir)/libdemo.a")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.rm(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -135,9 +144,12 @@ os.rm("$(builddir)/lib/")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.trycp(source: <string>, destination: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -161,9 +173,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.trymv(source: <string>, destination: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -187,9 +202,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.tryrm(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -212,9 +230,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.cd(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -252,9 +273,12 @@ os.cd(oldir)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.rmdir(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -272,9 +296,12 @@ If it is not a directory, it cannot be deleted.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.mkdir(path: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -299,9 +326,12 @@ Supports recursive creation of multi-level directories, automatically creating p
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.touch(path: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -326,9 +356,12 @@ os.touch("file1.txt", "file2.txt", "file3.txt")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.isdir(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -352,9 +385,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.isfile(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -378,9 +414,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.exists(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -410,9 +449,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.islink(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -445,9 +487,12 @@ assert(os.islink("link.txt"))
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.dirs(pattern: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -472,9 +517,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.files(pattern: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -499,9 +547,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.filedirs(pattern: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -526,9 +577,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.exit(code: <number>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -556,9 +610,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.isexec(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -588,9 +645,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.run(command: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -626,9 +686,12 @@ For more advanced process operations and control, see the [process](#process) mo
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.runv(program: <string>, args: <table>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -652,9 +715,12 @@ os.runv("echo", {"hello", "xmake!"})
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.exec(command: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -673,9 +739,12 @@ Similar to the [os.run](#os-run) interface, the only difference is that when thi
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.execv(program: <string>, args: <table>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -781,9 +850,12 @@ We can also get all the current environment variables through the `os.getenvs()`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.iorun(command: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -808,9 +880,12 @@ local outdata, errdata = os.iorun("echo hello xmake!")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.iorunv(program: <string>, args: <table>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -835,9 +910,12 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH=".
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.tmpdir()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -863,9 +941,12 @@ print("$(tmpdir)/file.txt")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.tmpfile()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -902,9 +983,12 @@ Usage reference: [os.tmpdir](#os-tmpdir).
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.filesize(filepath: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -936,9 +1020,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.scriptdir()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -956,9 +1043,12 @@ Usage reference: [os.tmpdir](#os-tmpdir).
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.programdir()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -974,9 +1064,12 @@ Consistent with the result of [$(programdir)](/api/description/builtin-variables
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.programfile()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1003,9 +1096,12 @@ Consistent with the result of [$(projectdir)](/api/description/builtin-variables
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.arch()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1032,9 +1128,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.host()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1063,9 +1162,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.subhost()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1103,9 +1205,12 @@ Gets the architecture of the subsystem. If not running in a subsystem environmen
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.is_host(host: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1144,9 +1249,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.is_arch(arch: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1175,9 +1283,12 @@ Supports checking multiple architectures at once.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.is_subhost(subhost: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1206,9 +1317,12 @@ It's recommended to use the more concise built-in interface `is_subhost()` with 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.is_subarch(subarch: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1231,9 +1345,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.ln(source: <string>, target: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1255,9 +1372,12 @@ os.ln("xxx.txt", "xxx.txt.ln")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.readlink(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1285,9 +1405,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.raise(message: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1312,9 +1435,12 @@ Recommanded to use builtin function `raise` instead of `os.raise`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.raiselevel(level: <number>, message: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1336,9 +1462,12 @@ os.raiselevel(3,"an error occurred")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.features()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1354,9 +1483,12 @@ Gets a list of features supported by the current operating system. Returns a tab
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.getenvs()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1376,9 +1508,12 @@ print(envs["HOME"])
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.setenvs(envs: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1394,9 +1529,12 @@ os.setenvs(envs: <table>)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.addenvs(envs: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1420,9 +1558,12 @@ print(oldenvs["EXAMPLE"]) -- got a/path
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.joinenvs(envs1: <table>, envs2: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1447,9 +1588,12 @@ The result is: `{ CUSTOM = "a/path;some/path/" }`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.getenv(name: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1477,9 +1621,12 @@ local home = os.getenv("HOME") or "/tmp"
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.setenv(name: <string>, value: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1507,9 +1654,12 @@ os.setenv("PATH", "/new/path:" .. os.getenv("PATH"))
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.addenv(name: <string>, value: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1536,9 +1686,12 @@ print(os.getenv("PATH"))  -- New path will be appended to existing PATH
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.setenvp(name: <string>, value: <string>, separator: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1558,9 +1711,12 @@ Sets an environment variable using a specified separator. Similar to [os.setenv]
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.addenvp(name: <string>, value: <string>, separator: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1580,9 +1736,12 @@ Appends a value to an environment variable using a specified separator. Similar 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.workingdir()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1606,9 +1765,12 @@ print("Working directory:", os.workingdir())
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.isroot()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1632,9 +1794,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.fscase()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1659,9 +1824,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.term()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1680,9 +1848,12 @@ print(os.term())
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.shell()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1701,9 +1872,12 @@ print(os.shell())
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.cpuinfo(key: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1733,9 +1907,12 @@ print(os.cpuinfo("march")) -- got "Kaby Lake"
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.meminfo(key: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1761,9 +1938,12 @@ print(os.meminfo())
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.default_njob()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1784,9 +1964,12 @@ print("Default parallel jobs:", njob)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.argv(command: <string>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1836,9 +2019,12 @@ os.argv('-DTEST="hello world"', {splitonly = true})  -- Returns: {'-DTEST="hello
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.args(args: <table>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1893,9 +2079,12 @@ local cmdline2 = os.args(args)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 os.mclock()
 ```
+:::
+
 
 #### Parameter Description
 

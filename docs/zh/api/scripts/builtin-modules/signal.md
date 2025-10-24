@@ -8,9 +8,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 signal.register(signo: <number>, handler: <function>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -65,9 +68,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 signal.ignore(signo: <number>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -89,9 +95,12 @@ signal.ignore(signal.SIGINT)
 
 #### 函数原型
 
+::: tip API
 ```lua
 signal.reset(signo: <number>)
 ```
+:::
+
 
 #### 参数说明
 

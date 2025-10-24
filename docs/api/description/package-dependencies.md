@@ -6,9 +6,12 @@
 
 #### Function Prototype
 
+::: tip API
 ```lua
 package(name: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -64,9 +67,12 @@ package("libxml2")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_homepage(url: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -84,9 +90,12 @@ Set the official page address of the project where the package is located.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_description(description: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -104,11 +113,14 @@ Set the package description information, generally see the relevant package info
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_kind(kind: <string>, {
     headeronly = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -181,6 +193,7 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_urls(urls: <string|array>, ..., {
     excludes = <array>,
@@ -188,6 +201,8 @@ set_urls(urls: <string|array>, ..., {
     http_headers = <array>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -209,6 +224,7 @@ Set the source package or git repository address of the package. Unlike add_urls
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_urls(urls: <string|array>, ..., {
     alias = <string>,
@@ -217,6 +233,8 @@ add_urls(urls: <string|array>, ..., {
     http_headers = <array>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -283,9 +301,12 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_versions(version: <string>, hash: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -304,9 +325,12 @@ Used to set the version of each source package and the corresponding sha256 valu
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_versionfiles(file: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -340,9 +364,12 @@ package("libcurl")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_patches(version: <string>, url: <string>, hash: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -371,9 +398,12 @@ For example, the above code, when compiled for macosx, is marked with the corres
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_links(links: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -396,9 +426,12 @@ add_links("mbedtls", "mbedx509", "mbedcrypto")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_syslinks(syslinks: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -428,9 +461,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_linkorders(orders: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -455,12 +491,15 @@ package("libpng")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_linkgroups(groups: <string|array>, ..., {
     name = <string>,
     group = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -487,9 +526,12 @@ package("libpng")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_frameworks(frameworks: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -510,9 +552,12 @@ See for example: [add_syslinks](#add_syslinks)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_linkdirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -531,9 +576,12 @@ The package's link library search directory can also be adjusted, but it is usua
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_includedirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -552,9 +600,12 @@ Add another header file search directory.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_bindirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -579,9 +630,12 @@ If you use this interface to configure `add_bindirs("bin")`, bin will be automat
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_defines(defines: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -600,6 +654,7 @@ Some specific definition options can be exported to the integrated package.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_configs(name: <string>, {
     description = <string>,
@@ -608,6 +663,8 @@ add_configs(name: <string>, {
     type = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -666,9 +723,12 @@ add_requires("pcre2", {configs = {bitwidth = 16}})
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_extsources(sources: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -719,9 +779,12 @@ In addition, we can also use this method to improve the search for packages inst
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_deps(deps: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -768,11 +831,14 @@ package("foo")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_components(components: <string|array>, ..., {
     deps = <array>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -816,9 +882,12 @@ A full example of the configuration and use of package components can be found a
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_base(package: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -863,9 +932,12 @@ We can install the tbb package through `add_requires("onetbb")` integration, but
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_load(script: <function (package)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -897,9 +969,12 @@ To find out what methods are available to `package` look [here](/api/scripts/pac
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_fetch(platforms: <string|array>, ..., script: <function (package, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -934,9 +1009,12 @@ To find out what methods are available to `package` look [here](/api/scripts/pac
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_check(platforms: <string|array>, ..., script: <function (package)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -999,9 +1077,12 @@ package("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_install(platforms: <string|array>, ..., script: <function (package)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1189,9 +1270,12 @@ end)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_download(script: <function (package, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1470,9 +1554,12 @@ end)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_test(script: <function (package)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1543,9 +1630,12 @@ if the run fails, the test will not pass.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_component(component: <string>, script: <function (package, component)>)
 ```
+:::
+
 
 #### Parameter Description
 

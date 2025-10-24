@@ -10,9 +10,12 @@ and its interface can be called directly in the script scope.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 linuxos.name()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -43,9 +46,12 @@ Some names currently supported are:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 linuxos.version()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -67,9 +73,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 linuxos.kernelver()
 ```
+:::
+
 
 #### Parameter Description
 

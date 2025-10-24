@@ -32,9 +32,12 @@ The `option` field can be repeatedly entered to implement separate settings. If 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 option(name: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -75,9 +78,12 @@ $ xmake
 
 #### Function Prototype
 
+::: tip API
 ```lua
 option_end()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -95,9 +101,12 @@ This is an optional api that shows the departure option scope, similar to [targe
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_deps(deps: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -139,9 +148,12 @@ Execute this script before option detection
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_check(script: <function (option)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -163,9 +175,12 @@ option("zlib")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_check(script: <function (option)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -199,9 +214,12 @@ Execute this script after option detection
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_check(script: <function (option)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -228,9 +246,12 @@ option("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_values(values: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -259,9 +280,12 @@ The effect chart is as follows:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_default(value: <string|boolean|number>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -331,9 +355,12 @@ Detection behavior of the
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_showmenu(showmenu: <boolean>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -369,9 +396,12 @@ After 2.6.8, this option is enabled by default and there is usually no need to c
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_category(category: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -458,9 +488,12 @@ The effect chart is as follows:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_description(description: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -523,9 +556,12 @@ $ xmake f --mode=release
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_links(links: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -556,9 +592,12 @@ If the test passes, the `test` target will be automatically added when it is com
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_linkdirs(linkdirs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -577,9 +616,12 @@ This is optional. Generally, the system library does not need to add this, and i
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_rpathdirs(rpathdirs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -598,9 +640,12 @@ After the option passes the detection, it will be automatically added to the cor
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cincludes(includes: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -632,9 +677,12 @@ If you want more flexible detection, you can do this in [option.on_check](#on_ch
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cxxincludes(includes: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -653,9 +701,12 @@ Similar to [add_cincludes](#add_cincludes), except that the detected header file
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_ctypes(types: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -687,9 +738,12 @@ If you want more flexible detection, you can do this in [option.on_check](#on_ch
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cxxtypes(types: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -708,6 +762,7 @@ Similar to [add_ctypes](#add_ctypes), except that the type detected is a c++ typ
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_csnippets(name: <string>, code: <string>, {
     tryrun = <boolean>,
@@ -715,6 +770,8 @@ add_csnippets(name: <string>, code: <string>, {
     number = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -737,6 +794,7 @@ You can use this interface to implement more custom detection of some compiler f
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cxxsnippets(name: <string>, code: <string>, {
     tryrun = <boolean>,
@@ -744,6 +802,8 @@ add_cxxsnippets(name: <string>, code: <string>, {
     number = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -806,9 +866,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cfuncs(funcs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -854,9 +917,12 @@ Note that the detected function usually needs to be accompanied by `add_cinclude
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cxxfuncs(funcs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 

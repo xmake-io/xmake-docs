@@ -33,9 +33,12 @@ option("test2")
 
 #### 函数原型
 
+::: tip API
 ```lua
 option(name: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -76,9 +79,12 @@ $ xmake
 
 #### 函数原型
 
+::: tip API
 ```lua
 option_end()
 ```
+:::
+
 
 #### 参数说明
 
@@ -96,9 +102,12 @@ option_end()
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_deps(deps: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -140,9 +149,12 @@ option("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_check(script: <function (option)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -164,9 +176,12 @@ option("zlib")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_check(script: <function (option)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -196,9 +211,12 @@ option("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_check(script: <function (option)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -225,9 +243,12 @@ option("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_values(values: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -256,9 +277,12 @@ option("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_default(value: <string|boolean|number>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -328,9 +352,12 @@ $ xmake
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_showmenu(showmenu: <boolean>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -366,9 +393,12 @@ Options:
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_category(category: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -455,9 +485,12 @@ option("test4")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_description(description: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -520,9 +553,12 @@ $ xmake f --mode=release
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_links(links: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -553,9 +589,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_linkdirs(linkdirs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -574,9 +613,12 @@ add_linkdirs(linkdirs: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_rpathdirs(rpathdirs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -595,9 +637,12 @@ add_rpathdirs(rpathdirs: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cincludes(includes: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -629,9 +674,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cxxincludes(includes: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -650,9 +698,12 @@ add_cxxincludes(includes: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_ctypes(types: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -684,9 +735,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cxxtypes(types: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -705,6 +759,7 @@ add_cxxtypes(types: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_csnippets(name: <string>, code: <string>, {
     tryrun = <boolean>,
@@ -712,6 +767,8 @@ add_csnippets(name: <string>, code: <string>, {
     number = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -734,6 +791,7 @@ add_csnippets(name: <string>, code: <string>, {
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cxxsnippets(name: <string>, code: <string>, {
     tryrun = <boolean>,
@@ -741,6 +799,8 @@ add_cxxsnippets(name: <string>, code: <string>, {
     number = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -803,9 +863,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cfuncs(funcs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -851,9 +914,12 @@ sigsetjmp{int a = 0; sigsetjmp((void*)a, a);}
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cxxfuncs(funcs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 

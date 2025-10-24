@@ -12,6 +12,24 @@ os 模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）�
 
 - 复制文件或目录
 
+#### 函数原型
+
+::: tip API
+```lua
+os.cp(source: <string>, destination: <string>, options: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| source | 源路径或模式 |
+| destination | 目标路径 |
+| options | 选项表（可选） |
+
+#### 用法说明
+
 行为和shell中的`cp`命令类似，支持路径通配符匹配（使用的是lua模式匹配），支持多文件复制，以及内置变量支持。
 
 例如：
@@ -64,9 +82,12 @@ os.cp("$(scriptdir)/config.h", "$(builddir)/inc/config.h", {copy_if_different = 
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.mv(source: <string>, destination: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -93,9 +114,12 @@ os.mv("$(builddir)/libtest.a", "$(builddir)/libdemo.a")
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.rm(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -118,9 +142,12 @@ os.rm("$(builddir)/lib/")
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.trycp(source: <string>, destination: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -144,9 +171,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.trymv(source: <string>, destination: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -170,9 +200,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.tryrm(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -195,9 +228,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.cd(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -235,9 +271,12 @@ os.cd(oldir)
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.rmdir(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -255,9 +294,12 @@ os.rmdir(path: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.mkdir(path: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -282,9 +324,12 @@ os.mkdir("$(tmpdir)/test", "$(builddir)/inc")
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.touch(path: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -309,9 +354,12 @@ os.touch("file1.txt", "file2.txt", "file3.txt")
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.isdir(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -335,9 +383,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.isfile(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -361,9 +412,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.exists(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -393,9 +447,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.islink(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -428,9 +485,12 @@ assert(os.islink("link.txt"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.dirs(pattern: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -453,6 +513,22 @@ end
 
 - 遍历获取指定目录下的所有文件
 
+#### 函数原型
+
+::: tip API
+```lua
+os.files(pattern: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| pattern | 文件模式 |
+
+#### 用法说明
+
 支持[add_files](#targetadd_files)中的模式匹配，支持递归和非递归模式遍历，返回的结果是一个table数组，如果获取不到，返回空数组，例如：
 
 ```lua
@@ -465,6 +541,22 @@ end
 ## os.filedirs
 
 - 遍历获取指定目录下的所有文件和目录
+
+#### 函数原型
+
+::: tip API
+```lua
+os.filedirs(pattern: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| pattern | 文件模式 |
+
+#### 用法说明
 
 支持[add_files](#targetadd_files)中的模式匹配，支持递归和非递归模式遍历，返回的结果是一个table数组，如果获取不到，返回空数组，例如：
 
@@ -479,9 +571,21 @@ end
 
 - 退出程序
 
+#### 函数原型
+
+::: tip API
 ```lua
-os.exit(code)
+os.exit(code: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| code | 退出码（可选） |
+
+#### 用法说明
 
 退出当前程序，并返回指定的退出码。如果不指定退出码，默认为 0（成功）。
 
@@ -501,9 +605,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.isexec(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -533,9 +640,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.run(command: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -569,9 +679,12 @@ os.run("ls -l $(builddir)")
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.runv(program: <string>, args: <table>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -601,9 +714,12 @@ os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}})
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.exec(command: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -622,9 +738,12 @@ os.exec(command: <string>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.execv(program: <string>, args: <table>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -728,6 +847,23 @@ rpipe_err:close()
 
 - 安静运行原生shell命令并获取输出内容
 
+#### 函数原型
+
+::: tip API
+```lua
+os.iorun(command: <string>, options: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| command | 命令字符串 |
+| options | 选项表（可选） |
+
+#### 用法说明
+
 与[os.run](#os-run)接口类似，唯一的不同是，此接口执行shell程序后，会获取shell程序的执行结果，相当于重定向输出。
 
 可同时获取`stdout`, `stderr`中的内容，例如：
@@ -739,6 +875,24 @@ local outdata, errdata = os.iorun("echo hello xmake!")
 ## os.iorunv
 
 - 安静运行原生shell命令并获取输出内容，带参数列表
+
+#### 函数原型
+
+::: tip API
+```lua
+os.iorunv(program: <string>, args: <table>, options: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| program | 程序名称 |
+| args | 参数列表 |
+| options | 选项表（可选） |
+
+#### 用法说明
 
 跟[os.iorun](#os-iorun)类似，只是传递参数的方式是通过参数列表传递，而不是字符串命令，例如：
 
@@ -758,9 +912,12 @@ local outdata, errdata = os.iorunv("echo", {"hello", "xmake!"}, {envs = {PATH = 
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.getenv(name: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -788,9 +945,12 @@ local home = os.getenv("HOME") or "/tmp"
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.setenv(name: <string>, value: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -818,9 +978,12 @@ os.setenv("PATH", "/new/path:" .. os.getenv("PATH"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.tmpdir()
 ```
+:::
+
 
 #### 参数说明
 
@@ -844,9 +1007,19 @@ print("$(tmpdir)/file.txt")
 
 - 获取临时文件路径
 
+#### 函数原型
+
+::: tip API
 ```lua
-local tmpfile = os.tmpfile()
+os.tmpfile()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 生成一个唯一的临时文件路径，返回的仅是路径字符串，文件本身不会自动创建，需要自己创建。
 
@@ -869,9 +1042,12 @@ os.rm(tmpfile)
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.curdir()
 ```
+:::
+
 
 #### 参数说明
 
@@ -889,9 +1065,12 @@ os.curdir()
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.filesize(filepath: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -923,9 +1102,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.scriptdir()
 ```
+:::
+
 
 #### 参数说明
 
@@ -943,9 +1125,12 @@ os.scriptdir()
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.programdir()
 ```
+:::
+
 
 #### 参数说明
 
@@ -961,9 +1146,12 @@ os.programdir()
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.programfile()
 ```
+:::
+
 
 #### 参数说明
 
@@ -984,9 +1172,12 @@ print("xmake 路径:", os.programfile())
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.projectdir()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1002,9 +1193,12 @@ os.projectdir()
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.arch()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1031,9 +1225,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.host()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1062,9 +1259,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.subhost()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1092,9 +1292,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.subarch()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1110,9 +1313,12 @@ os.subarch()
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.is_host(host: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1150,9 +1356,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.is_arch(arch: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1181,9 +1390,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.is_subhost(subhost: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1212,9 +1424,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.is_subarch(subarch: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1237,9 +1452,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.ln(source: <string>, target: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1261,9 +1479,12 @@ os.ln("xxx.txt", "xxx.txt.ln")
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.readlink(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1293,6 +1514,22 @@ end
 
 - 抛出一个异常并且中止当前脚本运行
 
+#### 函数原型
+
+::: tip API
+```lua
+os.raise(message: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| message | 错误信息字符串 |
+
+#### 用法说明
+
 ```lua
 -- 抛出一个带 "an error occurred" 信息的异常
 os.raise("an error occurred")
@@ -1308,9 +1545,12 @@ os.raise("an error occurred")
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.raiselevel(level: <number>, message: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1332,9 +1572,12 @@ os.raiselevel(3, "an error occurred")
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.features()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1350,9 +1593,12 @@ os.features()
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.getenvs()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1372,9 +1618,12 @@ print(envs["HOME"])
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.setenvs(envs: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1390,9 +1639,12 @@ os.setenvs(envs: <table>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.addenvs(envs: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1416,9 +1668,12 @@ print(oldenvs["EXAMPLE"]) -- got a/path
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.joinenvs(envs1: <table>, envs2: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1441,9 +1696,12 @@ print(os.joinenvs(envs0, envs1)) -- result is : { CUSTION = "a/path;some/path/" 
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.addenv(name: <string>, value: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1468,9 +1726,23 @@ print(os.getenv("PATH"))  -- 新路径会被追加到现有 PATH 中
 
 - 使用给定分隔符设置环境变量
 
+#### 函数原型
+
+::: tip API
 ```lua
-os.setenvp("VAR", "value", "separator")
+os.setenvp(name: <string>, value: <string>, separator: <string>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 环境变量名 |
+| value | 环境变量值 |
+| separator | 分隔符字符串 |
+
+#### 用法说明
 
 设置环境变量，使用指定的分隔符。与 [os.setenv](#os-setenv) 类似，但可以自定义分隔符。
 
@@ -1478,9 +1750,23 @@ os.setenvp("VAR", "value", "separator")
 
 - 使用给定分隔符向环境变量添加值
 
+#### 函数原型
+
+::: tip API
 ```lua
-os.addenvp("VAR", "value", "separator")
+os.addenvp(name: <string>, value: <string>, separator: <string>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 环境变量名 |
+| value | 要添加的值 |
+| separator | 分隔符字符串 |
+
+#### 用法说明
 
 向环境变量追加值，使用指定的分隔符。与 [os.addenv](#os-addenv) 类似，但可以自定义分隔符。
 
@@ -1488,9 +1774,19 @@ os.addenvp("VAR", "value", "separator")
 
 - 获取工作目录
 
+#### 函数原型
+
+::: tip API
 ```lua
-local workdir = os.workingdir()
+os.workingdir()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 获取当前工作目录的绝对路径。与 `os.curdir()` 类似，但返回的是工作目录而不是当前脚本执行目录。
 
@@ -1504,9 +1800,12 @@ print("工作目录:", os.workingdir())
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.isroot()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1530,9 +1829,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.fscase()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1557,9 +1859,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.term()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1573,9 +1878,12 @@ os.term()
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.shell()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1588,6 +1896,22 @@ os.shell()
 ## os.cpuinfo
 
 - 获取当前CPU信息
+
+#### 函数原型
+
+::: tip API
+```lua
+os.cpuinfo(key: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| key | CPU信息键名（可选） |
+
+#### 用法说明
 
 ```lua
 print(os.cpuinfo())
@@ -1609,9 +1933,12 @@ print(os.cpuinfo("march")) -- probably got "Alder Lake"
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.meminfo(key: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1638,9 +1965,12 @@ print(os.meminfo("pagesize")) -- probably got 4096
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.default_njob()
 ```
+:::
+
 
 #### 参数说明
 
@@ -1661,9 +1991,12 @@ print("默认并行任务数:", njob)
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.argv(command: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1712,9 +2045,12 @@ os.argv('-DTEST="hello world"', {splitonly = true})  -- 返回: {'-DTEST="hello 
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.args(args: <table>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1769,9 +2105,12 @@ local cmdline2 = os.args(args)
 
 #### 函数原型
 
+::: tip API
 ```lua
 os.mclock()
 ```
+:::
+
 
 #### 参数说明
 

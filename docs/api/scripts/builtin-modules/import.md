@@ -4,9 +4,12 @@
 
 #### Function Prototype
 
+::: tip API
 ```lua
 import(modulename: <string>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 

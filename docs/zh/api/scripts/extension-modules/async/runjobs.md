@@ -8,9 +8,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 runjobs(name: <string>, jobs: <jobgraph>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 

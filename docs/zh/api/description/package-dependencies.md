@@ -6,9 +6,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 package(name: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -62,9 +65,12 @@ package("libxml2")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_homepage(url: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -82,9 +88,12 @@ set_homepage(url: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_description(description: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -102,11 +111,14 @@ set_description(description: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_kind(kind: <string>, {
     headeronly = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -177,6 +189,7 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_urls(urls: <string|array>, ..., {
     excludes = <array>,
@@ -184,6 +197,8 @@ set_urls(urls: <string|array>, ..., {
     http_headers = <array>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -203,6 +218,7 @@ set_urls(urls: <string|array>, ..., {
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_urls(urls: <string|array>, ..., {
     alias = <string>,
@@ -211,6 +227,8 @@ add_urls(urls: <string|array>, ..., {
     http_headers = <array>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -277,9 +295,12 @@ add_urls("https://github.com/madler/zlib/archive/$(version).tar.gz", {
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_versions(version: <string>, hash: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -298,9 +319,12 @@ add_versions(version: <string>, hash: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_versionfiles(file: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -334,9 +358,12 @@ package("libcurl")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_patches(version: <string>, url: <string>, hash: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -365,9 +392,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_links(links: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -390,9 +420,12 @@ add_links("mbedtls", "mbedx509", "mbedcrypto")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_syslinks(syslinks: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -422,9 +455,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_linkorders(orders: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -449,12 +485,15 @@ package("libpng")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_linkgroups(groups: <string|array>, ..., {
     name = <string>,
     group = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -481,9 +520,12 @@ package("libpng")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_frameworks(frameworks: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -502,9 +544,12 @@ add_frameworks(frameworks: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_linkdirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -523,9 +568,12 @@ add_linkdirs(dirs: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_includedirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -544,9 +592,12 @@ add_includedirs(dirs: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_bindirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -571,9 +622,12 @@ add_bindirs(dirs: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_defines(defines: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -592,6 +646,7 @@ add_defines(defines: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_configs(name: <string>, {
     description = <string>,
@@ -600,6 +655,8 @@ add_configs(name: <string>, {
     type = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -658,9 +715,12 @@ add_requires("pcre2", {configs = {bitwidth = 16}})
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_extsources(sources: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -712,9 +772,12 @@ package("libusb")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_deps(deps: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -763,11 +826,14 @@ package("foo")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_components(components: <string|array>, ..., {
     deps = <array>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -813,9 +879,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_base(package: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -860,9 +929,12 @@ package("onetbb")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_load(script: <function (package)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -892,9 +964,12 @@ pcre包需要做一些针对bitwidth的判断，才能确定对外输出的链�
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_fetch(platforms: <string|array>, ..., script: <function (package, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -927,9 +1002,12 @@ package("libusb")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_check(platforms: <string|array>, ..., script: <function (package)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -992,9 +1070,12 @@ package("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_install(platforms: <string|array>, ..., script: <function (package)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1182,9 +1263,12 @@ end)
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_test(script: <function (package)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1255,9 +1339,12 @@ end)
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_download(script: <function (package, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1345,9 +1432,12 @@ package("zlib")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_component(component: <string>, script: <function (package, component)>)
 ```
+:::
+
 
 #### 参数说明
 

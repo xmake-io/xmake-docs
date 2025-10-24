@@ -9,9 +9,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.join(paths: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -38,9 +41,12 @@ print(path.join("$(tmpdir)", "dir1", "dir2", "file.txt"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.translate(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -66,9 +72,12 @@ print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.basename(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -90,9 +99,12 @@ print(path.basename("$(tmpdir)/dir/file.txt"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.filename(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -114,9 +126,12 @@ print(path.filename("$(tmpdir)/dir/file.txt"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.extension(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -138,9 +153,12 @@ print(path.extension("$(tmpdir)/dir/file.txt"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.directory(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -162,9 +180,12 @@ print(path.directory("$(tmpdir)/dir/file.txt"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.relative(path: <string>, rootdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -196,9 +217,12 @@ print(path.relative("$(tmpdir)/dir/file.txt"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.absolute(path: <string>, rootdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -230,9 +254,12 @@ print(path.absolute("dir/file.txt"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.is_absolute(path: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -254,9 +281,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 path.splitenv(envpath: <string>)
 ```
+:::
+
 
 #### 参数说明
 

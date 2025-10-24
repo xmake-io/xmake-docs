@@ -8,9 +8,12 @@ This module provides a job graph (DAG) for advanced asynchronous job scheduling 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 jobgraph.new()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -31,9 +34,12 @@ local jobs = jobgraph.new()
 
 #### Function Prototype
 
+::: tip API
 ```lua
 jobgraph:add(name: <string>, jobfunc: <function>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -96,9 +102,12 @@ rule("foo")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 jobgraph:add_orders(jobname: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -122,9 +131,12 @@ jobs:add_orders("job/child", "job/root")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 jobgraph:group(groupname: <string>, callback: <function>)
 ```
+:::
+
 
 #### Parameter Description
 

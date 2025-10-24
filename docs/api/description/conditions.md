@@ -8,9 +8,12 @@ Conditions are generally used to handle some special compilation platforms.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_os(os: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -41,9 +44,12 @@ Support operation systems:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_arch(arch: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -83,9 +89,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_plat(plat: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -137,9 +146,12 @@ Available platforms:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_host(host: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -176,9 +188,12 @@ We can also get it from [$(host)](/api/description/builtin-variables#var-host) o
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_subhost(subhost: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -216,9 +231,12 @@ It may also support other subsystem environments under linux and macos systems l
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_subarch(subarch: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -240,9 +258,12 @@ We can also quickly view the current subsystem architecture by executing `xmake 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_cross()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -260,9 +281,12 @@ This interface returns true if the current target architecture and platform, whi
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_mode(mode: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -300,9 +324,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_kind(kind: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -348,9 +375,12 @@ $ xmake
 
 #### Function Prototype
 
+::: tip API
 ```lua
 is_config(name: <string>, values: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -415,9 +445,12 @@ but also to determine the built-in global and local configuration.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 has_config(configs: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -470,9 +503,12 @@ This interface works together with the [get_config](/api/description/global-inte
 
 #### Function Prototype
 
+::: tip API
 ```lua
 has_package(packages: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 

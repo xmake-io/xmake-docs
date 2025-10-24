@@ -9,9 +9,12 @@ Linux 系统操作模块，属于内置模块，无需使用[import](/zh/api/scr
 
 #### 函数原型
 
+::: tip API
 ```lua
 linuxos.name()
 ```
+:::
+
 
 #### 参数说明
 
@@ -42,9 +45,12 @@ xmake l linuxos.name
 
 #### 函数原型
 
+::: tip API
 ```lua
 linuxos.version()
 ```
+:::
+
 
 #### 参数说明
 
@@ -66,9 +72,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 linuxos.kernelver()
 ```
+:::
+
 
 #### 参数说明
 

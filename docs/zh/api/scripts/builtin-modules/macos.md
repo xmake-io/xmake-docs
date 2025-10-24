@@ -9,9 +9,12 @@ macOS 系统操作模块，属于内置模块，无需使用[import](/zh/api/scr
 
 #### 函数原型
 
+::: tip API
 ```lua
 macos.version()
 ```
+:::
+
 
 #### 参数说明
 

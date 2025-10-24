@@ -9,9 +9,12 @@ io 操作模块，扩展了 lua 内置的 io 模块，提供更多易用的接�
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.open(filename: <string>, mode: <string>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -99,9 +102,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.load(filename: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -129,9 +135,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.save(filename: <string>, data: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -164,9 +173,12 @@ io.save("xxx.txt", {a = "a", b = "b", c = "c"})
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.readfile(filename: <string>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -208,9 +220,12 @@ xmake 会自动检测并处理不同的换行符格式（LF、CRLF），并自�
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.writefile(filename: <string>, content: <string>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -234,9 +249,12 @@ io.writefile("xxx.txt", "all data")
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.gsub(filepath: <string>, pattern: <string>, replace: <string|function>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -262,9 +280,12 @@ io.gsub("xxx.txt", "%s+", "")
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.tail(filepath: <string>, lines: <number>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -288,9 +309,12 @@ io.tail("xxx.txt", 10)
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.cat(filepath: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -312,9 +336,12 @@ io.cat("xxx.txt")
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.print(content: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -336,9 +363,12 @@ io.print("xxx.txt", "hello %s!", "xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.printf(format: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -361,9 +391,12 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.lines(filepath: <string>, mode: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -410,9 +443,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.stdfile()
 ```
+:::
+
 
 #### 参数说明
 
@@ -437,9 +473,12 @@ io.stderr
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.openlock(filepath: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -464,9 +503,12 @@ lock:close()
 
 #### 函数原型
 
+::: tip API
 ```lua
 io.replace(filepath: <string>, pattern: <string>, replace: <string|function>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 

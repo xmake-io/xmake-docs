@@ -101,9 +101,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 rule(name: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -127,11 +130,14 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_deps(deps: <string|array>, ..., {
     order = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -211,9 +217,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_imports(modules: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -232,9 +241,12 @@ add_imports(modules: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_extensions(extensions: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -272,9 +284,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_load(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -299,9 +314,12 @@ rule("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_link(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -325,9 +343,12 @@ rule("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_config(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -353,9 +374,12 @@ on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_build(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -379,9 +403,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_clean(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -406,9 +433,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_package(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -433,9 +463,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_install(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -459,9 +492,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -485,9 +521,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -512,9 +551,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -600,9 +642,12 @@ rule("lex")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -634,9 +679,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -664,9 +712,12 @@ rule("foo")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_config(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -692,9 +743,12 @@ rule("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_link(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -718,9 +772,12 @@ rule("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_build(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -744,9 +801,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_clean(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -770,9 +830,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_package(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -796,9 +859,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_install(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -822,9 +888,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -848,9 +917,12 @@ rule("markdown")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -869,9 +941,12 @@ before_build_file(script: <function (target, sourcefile, opt)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -890,9 +965,12 @@ before_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -911,9 +989,12 @@ before_build_files(script: <function (target, sourcebatch, opt)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -932,9 +1013,12 @@ before_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_config(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -960,9 +1044,12 @@ rule("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_link(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -980,9 +1067,12 @@ after_link(script: <function (target)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_build(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1000,9 +1090,12 @@ after_build(script: <function (target)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_clean(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1020,9 +1113,12 @@ after_clean(script: <function (target)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_package(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1040,9 +1136,12 @@ after_package(script: <function (target)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_install(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1060,9 +1159,12 @@ after_install(script: <function (target)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1080,9 +1182,12 @@ after_uninstall(script: <function (target)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1101,9 +1206,12 @@ after_build_file(script: <function (target, sourcefile, opt)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1122,9 +1230,12 @@ after_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1143,9 +1254,12 @@ after_build_files(script: <function (target, sourcebatch, opt)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1164,9 +1278,12 @@ after_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 rule_end()
 ```
+:::
+
 
 #### 参数说明
 

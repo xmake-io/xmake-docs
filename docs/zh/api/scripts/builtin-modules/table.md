@@ -11,9 +11,12 @@ Xmake 中对其进行了扩展，增加了一些扩展接口：
 
 #### 函数原型
 
+::: tip API
 ```lua
 table.join(tables: <table>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -46,9 +49,12 @@ local newtable = table.join({a = "a", b = "b"}, {c = "c"}, {d = "d"})
 
 #### 函数原型
 
+::: tip API
 ```lua
 table.join2(target: <table>, tables: <table>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -75,9 +81,12 @@ table.join2(t, {1, 2, 3})
 
 #### 函数原型
 
+::: tip API
 ```lua
 table.unique(tbl: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -101,9 +110,12 @@ local newtable = table.unique({1, 1, 2, 3, 4, 4, 5})
 
 #### 函数原型
 
+::: tip API
 ```lua
 table.slice(tbl: <table>, start: <number>, stop: <number>, step: <number>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -135,9 +147,12 @@ table.slice({1, 2, 3, 4, 5, 6, 7, 8, 9}, 4, 8, 2)
 
 #### 函数原型
 
+::: tip API
 ```lua
 table.contains(tbl: <table>, values: <any>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -164,9 +179,12 @@ then
 
 #### 函数原型
 
+::: tip API
 ```lua
 table.orderkeys(tbl: <table>)
 ```
+:::
+
 
 #### 参数说明
 

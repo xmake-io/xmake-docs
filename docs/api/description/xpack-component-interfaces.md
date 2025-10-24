@@ -6,9 +6,12 @@
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_title(title: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -29,9 +32,12 @@ xpack_component("LongPath")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_description(description: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -52,9 +58,12 @@ xpack_component("LongPath")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_default(default: <boolean>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -78,9 +87,12 @@ xpack_component("LongPath")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_load(script: <function (component)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -106,9 +118,12 @@ xpack_component("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_installcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -139,9 +154,12 @@ It is exactly the same as xpack's before_installcmd. The only difference is that
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_installcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -168,9 +186,12 @@ xpack_component("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_installcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -197,9 +218,12 @@ xpack_component("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_uninstallcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -222,9 +246,12 @@ xpack_component("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_uninstallcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -251,9 +278,12 @@ xpack_component("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_uninstallcmd(script: <function (component, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -280,6 +310,7 @@ xpack_component("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_sourcefiles(files: <string|array>, ..., {
     prefixdir = <string>,
@@ -287,6 +318,8 @@ add_sourcefiles(files: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -306,6 +339,7 @@ This is similar to xpack's add_sourcefiles, but here only when the component is 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_installfiles(files: <string|array>, ..., {
     prefixdir = <string>,
@@ -313,6 +347,8 @@ add_installfiles(files: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 

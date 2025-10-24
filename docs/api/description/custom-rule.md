@@ -100,9 +100,12 @@ Rules specified by `add_files("*.md", {rules = "markdown"})`, with a higher prio
 
 #### Function Prototype
 
+::: tip API
 ```lua
 rule(name: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -126,11 +129,14 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_deps(deps: <string|array>, ..., {
     order = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -210,9 +216,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_imports(modules: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -231,9 +240,12 @@ For usage and description, please see: [target:add_imports](/api/description/pro
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_extensions(extensions: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -271,9 +283,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_load(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -298,9 +313,12 @@ rule("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_config(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -326,9 +344,12 @@ on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_link(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -352,9 +373,12 @@ rule("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_build(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -378,9 +402,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_clean(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -405,9 +432,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_package(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -432,9 +462,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_install(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -458,9 +491,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -484,9 +520,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -511,9 +550,12 @@ The third parameter opt is an optional parameter, which is used to obtain some i
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -596,9 +638,12 @@ For a detailed description and background of this, see: [issue 1246](https://git
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -630,9 +675,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -660,9 +708,12 @@ rule("foo")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_config(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -688,9 +739,12 @@ It will be executed before on_config.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_link(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -714,9 +768,12 @@ rule("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_build(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -740,9 +797,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_clean(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -766,9 +826,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_package(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -792,9 +855,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_install(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -818,9 +884,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -844,9 +913,12 @@ rule("markdown")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -865,9 +937,12 @@ Generally used to preprocess some source files before compiling.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -886,9 +961,12 @@ It is generally used to pre-process certain source files before compilation.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -907,9 +985,12 @@ It is generally used to pre-process certain source files before compilation.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -928,9 +1009,12 @@ It is generally used to pre-process certain source files before compilation.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_config(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -956,9 +1040,12 @@ It will be executed after on_config.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_link(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -976,9 +1063,12 @@ The execution script used to implement the custom target link is similar to [aft
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_build(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -996,9 +1086,12 @@ The execution script used to implement the custom target build is similar to [be
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_clean(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1016,9 +1109,12 @@ The execution script used to implement the custom target cleanup is similar to [
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_package(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1036,9 +1132,12 @@ The execution script used to implement the custom target package is similar to [
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_install(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1056,9 +1155,12 @@ The execution script used to implement the custom target installation is similar
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1076,9 +1178,12 @@ The execution script used to implement the custom target uninstallation is simil
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1097,9 +1202,12 @@ Generally used to post-process some compiled object files.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_buildcmd_file(script: <function (target, batchcmds, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1118,9 +1226,12 @@ Generally used for post-processing some compiled object files.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1139,9 +1250,12 @@ Generally used for post-processing some compiled object files.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_buildcmd_files(script: <function (target, batchcmds, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1160,9 +1274,12 @@ Generally used for post-processing some compiled object files.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 rule_end()
 ```
+:::
+
 
 #### Parameter Description
 

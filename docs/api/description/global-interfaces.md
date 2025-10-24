@@ -8,11 +8,14 @@ The global interface affects the whole project description scope and all sub-pro
 
 #### Function Prototype
 
+::: tip API
 ```lua
 includes(paths: <string|array>, ..., {
     rootdir = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -185,9 +188,12 @@ Also, target scope configurations can be added repeatedly. In many cases, you do
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_project(name: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -213,12 +219,15 @@ set_version("1.5.1")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_version(version: <string>, {
     build = <string>,
     soname = <string|boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -288,9 +297,12 @@ set_version("1.0.1") -> libfoo.so, libfoo.dylib
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_xmakever(version: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -313,9 +325,12 @@ set_xmakever("2.1.0")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_moduledirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -339,9 +354,12 @@ xmake will load the given module in the given directory when calling [`import`](
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_plugindirs(dirs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -365,9 +383,12 @@ xmake will load all plugins in the given directory.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 get_config(name: <string>): <string|boolean|number>
 ```
+:::
+
 
 #### Parameter Description
 
@@ -395,9 +416,12 @@ This interface can get not only the custom configuration option values defined t
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_config(name: <string>, value: <string|boolean|number>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -428,6 +452,7 @@ However, we can still modify the default configuration in xmake.lua by `$xmake f
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_requires(packages: <string|array>, ..., {
     optional = <boolean>,
@@ -440,6 +465,8 @@ add_requires(packages: <string|array>, ..., {
     ... = <any>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -695,6 +722,7 @@ add_requires("ffmpeg[shared,debug,codecs=[foo,bar,zoo]]")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_requireconfs(packages: <string|array>, ..., {
     configs = <table>,
@@ -704,6 +732,8 @@ add_requireconfs(packages: <string|array>, ..., {
     ... = <any>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -838,11 +868,14 @@ add_requireconfs("libwebp.*|cmake", {debug = true})
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_repositories(repos: <string|array>, ..., {
     rootdir = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -900,9 +933,12 @@ However, this parameter setting is only supported by v2.5.7 and above.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_defaultplat(platform: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -928,9 +964,12 @@ It is equivalent to `xmake f -p iphoneos`.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_defaultarchs(archs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -964,9 +1003,12 @@ The arm64 architecture is compiled by default on iphoneos, and the x64 architect
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_defaultmode(mode: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -990,9 +1032,12 @@ It is equivalent to `xmake f -m releasedbg`.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_allowedplats(platforms: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1019,9 +1064,12 @@ Set the current project to only support windows and mingw platforms.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_allowedarchs(archs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1056,9 +1104,12 @@ Set the current project to only support x64 architecture on windows, and only su
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_allowedmodes(modes: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1085,9 +1136,12 @@ Set the current project to only support the two compilation modes release/releas
 
 #### Function Prototype
 
+::: tip API
 ```lua
 namespace(name: <string>, script: <function>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1399,9 +1453,12 @@ end)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 namespace_end()
 ```
+:::
+
 
 #### Parameter Description
 

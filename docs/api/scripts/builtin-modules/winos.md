@@ -9,9 +9,12 @@ you can directly call its interface in the script scope.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 winos.version()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -55,9 +58,12 @@ win10 = "10.0"
 
 #### Function Prototype
 
+::: tip API
 ```lua
 winos.registry_keys(pattern: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -82,9 +88,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 winos.registry_values(pattern: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -109,9 +118,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 winos.registry_query(keypath: <string>)
 ```
+:::
+
 
 #### Parameter Description
 

@@ -17,9 +17,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_version(version: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -67,9 +70,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_homepage(homepage: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -90,9 +96,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_title(title: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -115,9 +124,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_description(description: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -140,9 +152,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_author(author: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -165,9 +180,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_maintainer(maintainer: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -192,9 +210,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_copyright(copyright: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -215,9 +236,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_license(license: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -239,9 +263,12 @@ set_license("Apache-2.0")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_licensefile(licensefile: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -264,9 +291,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_company(company: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -289,9 +319,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_inputkind(inputkind: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -337,9 +370,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_formats(formats: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -390,9 +426,12 @@ $ xmake pack -f "nsis,zip"
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_basename(basename: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -426,9 +465,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_extension(extension: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -462,9 +504,12 @@ xpack("mypack")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_targets(targets: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -499,9 +544,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_components(components: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -550,9 +598,12 @@ xpack_component("LongPath")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_bindir(bindir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -581,9 +632,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_libdir(libdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -613,9 +667,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_includedir(includedir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -644,9 +701,12 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_prefixdir(prefixdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -679,9 +739,12 @@ installdir
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_specfile(specfile: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -750,9 +813,12 @@ VIAddVersionKey /LANG=0 OriginalFilename "${PACKAGE_FILENAME}"
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_specvar(name: <string>, value: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -787,9 +853,12 @@ VIAddVersionKey /LANG=0 ProductName      "${FOO}"
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_iconfile(iconfile: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -812,6 +881,7 @@ xpack("xmake")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_sourcefiles(files: <string|array>, ..., {
     prefixdir = <string>,
@@ -819,6 +889,8 @@ add_sourcefiles(files: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -846,6 +918,7 @@ add_sourcefiles(files: <string|array>, ..., {
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_installfiles(files: <string|array>, ..., {
     prefixdir = <string>,
@@ -853,6 +926,8 @@ add_installfiles(files: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -902,9 +977,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_buildrequires(requires: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -945,9 +1023,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_load(script: <function (package)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -976,9 +1057,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_package(script: <function (package)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1003,9 +1087,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_package(script: <function (package)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1033,9 +1120,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_package(script: <function (package)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1062,9 +1152,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_installcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1095,9 +1188,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_buildcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1141,9 +1237,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_buildcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1171,9 +1270,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_buildcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1201,9 +1303,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_installcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1223,9 +1328,12 @@ on_installcmd(script: <function (package, batchcmds)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_installcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1256,9 +1364,12 @@ xpack("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_uninstallcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1278,9 +1389,12 @@ before_uninstallcmd(script: <function (package, batchcmds)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_uninstallcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1300,9 +1414,12 @@ on_uninstallcmd(script: <function (package, batchcmds)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_uninstallcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1322,9 +1439,12 @@ after_uninstallcmd(script: <function (package, batchcmds)>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_nsis_displayicon(iconfile: <string>)
 ```
+:::
+
 
 #### 参数说明
 

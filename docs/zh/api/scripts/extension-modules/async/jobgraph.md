@@ -8,9 +8,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 jobgraph.new()
 ```
+:::
+
 
 #### 参数说明
 
@@ -31,9 +34,12 @@ local jobs = jobgraph.new()
 
 #### 函数原型
 
+::: tip API
 ```lua
 jobgraph:add(name: <string>, jobfunc: <function>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -96,9 +102,12 @@ rule("foo")
 
 #### 函数原型
 
+::: tip API
 ```lua
 jobgraph:add_orders(jobname: <string>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -122,9 +131,12 @@ jobs:add_orders("job/child", "job/root")
 
 #### 函数原型
 
+::: tip API
 ```lua
 jobgraph:group(groupname: <string>, callback: <function>)
 ```
+:::
+
 
 #### 参数说明
 

@@ -9,9 +9,12 @@ The path operation module implements cross-platform path operations, which is a 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.new(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -34,9 +37,12 @@ The result is: `file.txt`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.join(paths: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -63,9 +69,12 @@ If you find this cumbersome and not clear enough, you can use: [path.translate](
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.translate(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -91,9 +100,12 @@ The path strings of the above three different formats, after being standardized 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.basename(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -115,9 +127,12 @@ The result is: `file`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.filename(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -139,9 +154,12 @@ The result is: `file.txt`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.extension(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -163,9 +181,12 @@ The result is: `.txt`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.directory(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -187,9 +208,12 @@ The result is: `$(tmpdir)/dir`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.relative(path: <string>, rootdir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -221,9 +245,12 @@ The result is the same.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.absolute(path: <string>, rootdir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -255,9 +282,12 @@ The result is the same.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.is_absolute(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -279,9 +309,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.split(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -302,9 +335,12 @@ The result is: `{ "tmp", "file.txt" }`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.sep()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -326,9 +362,12 @@ The result is: `/`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.islastsep(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -350,9 +389,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.splitenv(envpath: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -382,9 +424,12 @@ The result is an array of strings, each item is a path in the input string.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.joinenv(paths: <array>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -405,9 +450,12 @@ The result is: `/tmp/dir;/tmp/dir2` (on Windows)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.envsep()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -429,9 +477,12 @@ The result is: `;`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.cygwin_path(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -452,9 +503,12 @@ The result is: `/C/Windows`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 path.pattern(path: <string>)
 ```
+:::
+
 
 #### Parameter Description
 

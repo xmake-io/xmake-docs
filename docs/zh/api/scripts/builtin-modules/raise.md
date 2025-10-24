@@ -5,9 +5,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 raise(message: <string>)
 ```
+:::
+
 
 #### 参数说明
 

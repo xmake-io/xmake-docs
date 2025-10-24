@@ -5,9 +5,12 @@
 
 #### Function Prototype
 
+::: tip API
 ```lua
 inherit(modulename: <string>)
 ```
+:::
+
 
 #### Parameter Description
 

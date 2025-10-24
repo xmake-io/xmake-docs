@@ -17,9 +17,12 @@ xpack("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_version(version: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -67,9 +70,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_homepage(homepage: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -90,9 +96,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_title(title: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -115,9 +124,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_description(description: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -140,9 +152,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_author(author: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -165,9 +180,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_maintainer(maintainer: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -192,9 +210,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_copyright(copyright: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -213,9 +234,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_license(license: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -235,9 +259,12 @@ set_license("Apache-2.0")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_licensefile(licensefile: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -258,9 +285,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_company(company: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -281,9 +311,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_inputkind(inputkind: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -327,9 +360,12 @@ If the above packaging configuration is an nsis package, the binary file will be
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_formats(formats: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -378,9 +414,12 @@ Currently supported formats are:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_basename(basename: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -412,9 +451,12 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_extension(extension: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -446,9 +488,12 @@ The package output file name returned by `package:outputfile()` will contain thi
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_targets(targets: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -481,9 +526,12 @@ And we can also use `on_installcmd`, `after_installcmd` and other custom packagi
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_components(components: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -530,9 +578,12 @@ Except for the NSIS package, although other packages do not have complete suppor
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_bindir(bindir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -559,9 +610,12 @@ Then the executable file will be installed under `installdir/mybin`. If it is an
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_libdir(libdir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -589,9 +643,12 @@ Then the static library files will be installed under `installdir/mylib`.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_includedir(includedir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -618,9 +675,12 @@ Then the header files will be installed under `installdir/myinc`.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_prefixdir(prefixdir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -651,9 +711,12 @@ installdir
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_specfile(specfile: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -720,9 +783,12 @@ In addition to built-in variables, we can also configure some custom template va
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_specvar(name: <string>, value: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -755,9 +821,12 @@ Before generating the package, xmake will replace `${FOO}` with hello, and then 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_iconfile(iconfile: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -778,6 +847,7 @@ xpack("xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_sourcefiles(files: <string|array>, ..., {
     prefixdir = <string>,
@@ -785,6 +855,8 @@ add_sourcefiles(files: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -810,6 +882,7 @@ Its detailed usage is similar to `add_installfiles`, you can refer to its docume
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_installfiles(files: <string|array>, ..., {
     prefixdir = <string>,
@@ -817,6 +890,8 @@ add_installfiles(files: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -864,9 +939,12 @@ xpack("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_buildrequires(requires: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -903,9 +981,12 @@ Since different installation packages have some differences in their dependent p
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_load(script: <function (package)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -931,9 +1012,12 @@ xpack("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_package(script: <function (package)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -956,9 +1040,12 @@ xpack("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_package(script: <function (package)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -982,9 +1069,12 @@ xpack("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_package(script: <function (package)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1007,9 +1097,12 @@ xpack("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_buildcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1049,9 +1142,12 @@ In addition, we can also use `add_buildrequires` to configure some build depende
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_buildcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1075,9 +1171,12 @@ xpack("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_buildcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1101,9 +1200,12 @@ xpack("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_installcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1130,9 +1232,12 @@ It should be noted that the cp, mkdir and other commands added through `batchcmd
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_installcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1148,9 +1253,12 @@ This time, the built-in default installation script is completely rewritten, inc
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_installcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1177,9 +1285,12 @@ It should be noted that the cp, mkdir and other commands added through `batchcmd
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_uninstallcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1195,9 +1306,12 @@ Similar to before_installcmd, please refer to before_installcmd description.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_uninstallcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1213,9 +1327,12 @@ Similar to on_installcmd, please refer to on_installcmd description.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_uninstallcmd(script: <function (package, batchcmds)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1231,9 +1348,12 @@ Similar to after_installcmd, please refer to after_installcmd description.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_nsis_displayicon(iconfile: <string>)
 ```
+:::
+
 
 #### Parameter Description
 

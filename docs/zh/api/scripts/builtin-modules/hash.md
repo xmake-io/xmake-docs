@@ -9,9 +9,12 @@ hash 模块提供了哈希值计算和 UUID 生成功能，这是 xmake 的一�
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.md5(input: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -38,9 +41,12 @@ print("MD5: " .. checksum)
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.sha1(input: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -58,9 +64,12 @@ hash.sha1(input: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.sha256(input: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -89,9 +98,12 @@ end
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.uuid(name: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -118,9 +130,12 @@ local config_id = hash.uuid("debug-x64-windows")
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.xxhash32(input: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -138,9 +153,12 @@ hash.xxhash32(input: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.xxhash64(input: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -163,9 +181,12 @@ local key = hash.xxhash64(table.concat(params, "|"))
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.xxhash128(input: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -183,9 +204,12 @@ hash.xxhash128(input: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.strhash32(input: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -205,9 +229,12 @@ hash.strhash32(input: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.strhash64(input: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -225,9 +252,12 @@ hash.strhash64(input: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.strhash128(input: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -252,9 +282,12 @@ local cache_key = hash.strhash128(compiler .. flags .. source)
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.rand32()
 ```
+:::
+
 
 #### 参数说明
 
@@ -274,9 +307,12 @@ hash.rand32()
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.rand64()
 ```
+:::
+
 
 #### 参数说明
 
@@ -292,9 +328,12 @@ hash.rand64()
 
 #### 函数原型
 
+::: tip API
 ```lua
 hash.rand128()
 ```
+:::
+
 
 #### 参数说明
 

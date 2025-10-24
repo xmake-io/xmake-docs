@@ -4,9 +4,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 import(modulename: <string>, options: <table>)
 ```
+:::
+
 
 #### 参数说明
 

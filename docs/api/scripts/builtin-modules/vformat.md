@@ -4,9 +4,12 @@
 
 #### Function Prototype
 
+::: tip API
 ```lua
 vformat(formatstring: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 

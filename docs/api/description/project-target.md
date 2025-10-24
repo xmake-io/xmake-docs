@@ -55,6 +55,7 @@ If the `visibility` parameter is not specified, most interfaces use `private` vi
 
 #### Function Prototype
 
+::: tip API
 ```lua
 target(name: <string>, {
     kind = <string>,
@@ -62,6 +63,8 @@ target(name: <string>, {
     ...
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -123,9 +126,12 @@ target("test")                   -- add -DDEBUG
 
 #### Function Prototype
 
+::: tip API
 ```lua
 target_end()
 ```
+:::
+
 
 #### Parameter Description
 
@@ -172,9 +178,12 @@ target("test2")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_kind(kind: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -299,9 +308,12 @@ For more details, please see: [#1747](https://github.com/xmake-io/xmake/issues/1
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_strip(strip: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -335,9 +347,12 @@ This api does not have to be used after the target. If no target is specified, i
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_enabled(enabled: <boolean>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -355,9 +370,12 @@ If `set_enabled(false)` is set, the corresponding target will be directly disabl
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_default(default: <boolean>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -414,9 +432,12 @@ $ xmake install [-a|--all]
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_options(options: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -451,11 +472,14 @@ Some settings defined in [option](/api/description/configuration-option#option) 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_symbols(symbols: <string>, {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -534,9 +558,12 @@ It will switch from the default `-Zi -Pdxxx.pdb` to `-ZI -Pdxxx.pdb` compilation
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_basename(basename: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -580,9 +607,12 @@ Or implement more advanced logic by writing custom scripts, see: [after_build](#
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_filename(filename: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -602,9 +632,12 @@ The modification of filename is to modify the entire target file name, including
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_prefixname(prefixname: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -627,9 +660,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_suffixname(suffixname: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -652,9 +688,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_extension(extension: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -678,11 +717,14 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_warnings(warnings: <string>, {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -722,9 +764,12 @@ If there is no target currently, calling this api will set it to global mode. .
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_optimize(optimize: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -760,11 +805,14 @@ set_optimize("fastest")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_languages(languages: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -838,11 +886,14 @@ However, the latest msvc compilation already supports the c11/c17 standard, and 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_fpmodels(fpmodels: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -976,11 +1027,14 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_rules(rules: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1033,9 +1087,12 @@ We can also specify the application of local files to the rules, see: [add_files
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_load(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1064,9 +1121,12 @@ You can dynamically add various target attributes in `on_load` via `set`, `add`.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_config(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1092,9 +1152,12 @@ on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_prepare(script: <function (target, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1132,9 +1195,12 @@ rule("scan_module_files")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_prepare_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1162,9 +1228,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_prepare_files(script: <function (target, jobgraph, sourcebatch, opt)>, {jobgraph = <boolean>})
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1195,9 +1264,12 @@ rule("scan_module_files")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_link(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1222,9 +1294,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_build(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1277,9 +1352,12 @@ Once the build process is set for this target target, the default build process 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1307,9 +1385,12 @@ If you don't want to rewrite the built-in build script, just add some of your ow
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1344,9 +1425,12 @@ Where sourcebatch describes the same source files of the same type:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_clean(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1390,9 +1474,12 @@ Some target interfaces are described as follows:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_package(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1438,9 +1525,12 @@ target("demo")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_install(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1471,9 +1561,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1498,9 +1591,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 on_run(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1531,9 +1627,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_prepare(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1558,9 +1657,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_prepare_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1585,9 +1687,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_prepare_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1612,9 +1717,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_link(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1639,9 +1747,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_build(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1666,9 +1777,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1694,9 +1808,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1723,9 +1840,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_clean(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1750,9 +1870,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_package(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1777,9 +1900,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_install(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1804,9 +1930,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1831,9 +1960,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 before_run(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1858,9 +1990,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_prepare(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1885,9 +2020,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_prepare_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1912,9 +2050,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_prepare_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1939,9 +2080,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_link(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1966,9 +2110,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_build(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -1995,9 +2142,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2023,9 +2173,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2051,9 +2204,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_clean(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2081,9 +2237,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_package(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2108,9 +2267,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_install(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2134,9 +2296,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2161,9 +2326,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 after_run(script: <function (target)>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2188,9 +2356,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_pcheader(header: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2215,9 +2386,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_pcxxheader(header: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2242,9 +2416,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_pmheader(header: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2269,9 +2446,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_pmxxheader(header: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2296,11 +2476,14 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_deps(deps: <string|array>, ..., {
     inherit = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2378,11 +2561,14 @@ For a detailed description of this, you can look at it: https://github.com/xmake
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_links(links: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2414,11 +2600,14 @@ Starting with version 2.8.1, add_links also supports adding the full path to the
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_syslinks(syslinks: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2449,9 +2638,12 @@ The above configuration, even if `add_syslinks` is set in advance, the final lin
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_linkorders(linkorders: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2568,11 +2760,14 @@ The complete project is at: [linkorders example](https://github.com/xmake-io/xma
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_linkgroups(linkgroups: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2654,6 +2849,7 @@ It will generate the corresponding `-Wl,-Bstatic -la -lb -Wl,-Bdynamic` linkage 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_files(files: <string|array>, ..., {
     defines = <string|array>,
@@ -2665,6 +2861,8 @@ add_files(files: <string|array>, ..., {
     $flags = <string|array>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2772,9 +2970,12 @@ add_files("src/*.c", {force = {cxflags = "-DTEST", mflags = "-framework xxx"}})
 
 #### Function Prototype
 
+::: tip API
 ```lua
 remove_files(files: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2824,9 +3025,12 @@ remove_files = remove_files or del_files
 
 #### Function Prototype
 
+::: tip API
 ```lua
 remove_headerfiles(headerfiles: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2847,11 +3051,14 @@ This interface is only provided in v2.6.3 version.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_linkdirs(linkdirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2884,11 +3091,14 @@ If you don't want to write to death in the project, you can set it by: `xmake f 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_rpathdirs(rpathdirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -2954,11 +3164,14 @@ After 2.9.4, we added `add_rpathdirs("xxx", {install_only = true})`, which can c
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_includedirs(includedirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3009,11 +3222,14 @@ If the user insists on doing this, it can be achieved by `add_includedirs(os.dir
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_sysincludedirs(includedirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3061,11 +3277,14 @@ In addition, the dependency package introduced with `add_requires()` will also u
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_defines(defines: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3093,11 +3312,14 @@ Equivalent to setting the compile option:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_undefines(undefines: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3123,11 +3345,14 @@ In the code is equivalent to: `#undef DEBUG`
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cflags(cflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3168,11 +3393,14 @@ Add compilation options to c/c++ code at the same time
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cxxflags(cxxflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3216,11 +3444,14 @@ if they want to target the C or C++ linker, such as "clang" for C and "clangxx" 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_mflags(mflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3250,11 +3481,14 @@ add_mflags("-g", "-O2", {force = true})
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_mxflags(mxflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3278,11 +3512,14 @@ add_mxflAgs("-framework CoreFoundation")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_mxxflags(mxxflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3306,11 +3543,14 @@ add_mxxflags("-framework CoreFoundation")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_scflags(scflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3334,11 +3574,14 @@ add_scflags("xxx")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_asflags(asflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3362,11 +3605,14 @@ add_asflags("xxx")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_gcflags(gcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3390,11 +3636,14 @@ add_gcflags("xxx")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_dcflags(dcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3418,11 +3667,14 @@ add_dcflags("xxx")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_rcflags(rcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3446,11 +3698,14 @@ add_rcflags("xxx")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_fcflags(fcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3474,11 +3729,14 @@ add_fcflags("xxx")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_zcflags(zcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3502,11 +3760,14 @@ add_zcflags("xxx")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cuflags(cuflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3530,11 +3791,14 @@ add_cuflags("-gencode arch=compute_30,code=sm_30")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_culdflags(culdflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3561,11 +3825,14 @@ add_culdflags("-gencode arch=compute_30,code=sm_30")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_cugencodes(cugencodes: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3626,11 +3893,14 @@ add_cugencodes("sm_60")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_ldflags(ldflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3661,11 +3931,14 @@ add_ldflags({"-L/my lib"}, {expand = false}) -- OK
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_arflags(arflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3688,11 +3961,14 @@ add_arflags("xxx")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_shflags(shflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3722,11 +3998,14 @@ This interface is similar to [set_options](#set_options), the only difference is
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_packages(packages: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3784,11 +4063,14 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_languages(languages: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3807,11 +4089,14 @@ Similar to [set_languages](#set_languages), the only difference is that this int
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_vectorexts(vectorexts: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3849,11 +4134,14 @@ add_vectorexts("all")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_frameworks(frameworks: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3888,11 +4176,14 @@ If it is not for both platforms, these settings will be ignored.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_frameworkdirs(frameworkdirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3918,9 +4209,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_toolset(toolname: <string>, tool: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -3993,6 +4287,7 @@ set_toolset("cc", "gcc@$(projectdir)/tools/bin/Mipscc.exe")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_toolchains(toolchains: <string|array>, ..., {
     vs = <string>,
@@ -4005,6 +4300,8 @@ set_toolchains(toolchains: <string|array>, ..., {
     ... = <any>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4205,9 +4502,12 @@ This allows xmake to use the mingw toolchain from the specified MSYS2 environmen
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_plat(plat: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4248,9 +4548,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_arch(arch: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4268,9 +4571,12 @@ For details, see: [set_plat](#set_plat)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_values(name: <string>, values: <any>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4335,9 +4641,12 @@ The following is a list of some built-in extended configuration items currently 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_values(name: <string>, values: <any>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4357,9 +4666,12 @@ Usage is similar to [set_values](#set_values), the difference is that this inter
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_rundir(rundir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4388,9 +4700,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_runargs(runargs: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4413,9 +4728,12 @@ set_runargs("-x", "--arg1=val")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_runenvs(name: <string>, values: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4445,9 +4763,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_runenv(name: <string>, value: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4476,9 +4797,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_installdir(installdir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4497,9 +4821,12 @@ You can also set a different installation directory for the target in xmake.lua 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_prefixdir(prefixdir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4569,6 +4896,7 @@ installdir
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_installfiles(installfiles: <string|array>, ..., {
     prefixdir = <string>,
@@ -4576,6 +4904,8 @@ add_installfiles(installfiles: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4629,6 +4959,7 @@ For a detailed description of this interface, see: https://github.com/xmake-io/x
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_headerfiles(headerfiles: <string|array>, ..., {
     prefixdir = <string>,
@@ -4636,6 +4967,8 @@ add_headerfiles(headerfiles: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4679,9 +5012,12 @@ The above two header files will be displayed in the vs project, but only foo.h w
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_configdir(configdir: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4699,9 +5035,12 @@ Version 2.2.5 adds a new interface, mainly used for the output directory of the 
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_configvar(name: <string>, value: <any>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -4760,6 +5099,7 @@ For related issues, see: [#1872](https://github.com/xmake-io/xmake/issues/1872)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_configfiles(configfiles: <string|array>, ..., {
     prefixdir = <string>,
@@ -4767,6 +5107,8 @@ add_configfiles(configfiles: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -5090,9 +5432,12 @@ define CUSTOM_FOO foo
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_policy(policy: <string>, value: <boolean>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -5128,9 +5473,12 @@ For a complete list of policies support and instructions, see: [build policies](
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_runtimes(runtimes: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -5189,9 +5537,12 @@ Issues related to this api: [#1071](https://github.com/xmake-io/xmake/issues/107
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_group(group: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -5298,9 +5649,12 @@ For more information: [#1913](https://github.com/xmake-io/xmake/issues/1913)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_filegroups(name: <string>, files: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -5371,9 +5725,12 @@ target("test")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_exceptions(exceptions: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -5436,9 +5793,12 @@ Xmake will automatically adapt the flags internally to the different compilers.
 
 #### Function Prototype
 
+::: tip API
 ```lua
 set_encodings(encodings: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -5494,11 +5854,14 @@ set_encodings("utf-8")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_forceincludes(includes: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### Parameter Description
 
@@ -5544,9 +5907,12 @@ add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_extrafiles(extrafiles: <string|array>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -5571,6 +5937,7 @@ add_extrafiles("assets/other.txt")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 add_tests(tests: <string|array>, ..., {
     runargs = <string|array>,
@@ -5579,6 +5946,8 @@ add_tests(tests: <string|array>, ..., {
     ... = <any>
 })
 ```
+:::
+
 
 #### Parameter Description
 

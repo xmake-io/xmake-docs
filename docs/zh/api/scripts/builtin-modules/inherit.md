@@ -5,9 +5,12 @@
 
 #### 函数原型
 
+::: tip API
 ```lua
 inherit(modulename: <string>)
 ```
+:::
+
 
 #### 参数说明
 

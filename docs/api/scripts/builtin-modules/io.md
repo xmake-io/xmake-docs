@@ -9,9 +9,12 @@ The io operation module extends lua's built-in io module to provide more easy-to
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.open(filename: <string>, mode: <string>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -99,9 +102,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.load(filename: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -129,9 +135,12 @@ end
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.save(filename: <string>, data: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -164,9 +173,12 @@ The result of the storage is:
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.readfile(filename: <string>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -208,9 +220,12 @@ xmake automatically detects and handles different newline formats (LF, CRLF) and
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.writefile(filename: <string>, data: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -233,9 +248,12 @@ io.writefile("xxx.txt", "all data")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.gsub(filename: <string>, pattern: <string>, replacement: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -260,9 +278,12 @@ io.gsub("xxx.txt", "%s+", "")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.tail(filename: <string>, lines: <number>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -286,9 +307,12 @@ io.tail("xxx.txt", 10)
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.cat(filename: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -310,9 +334,12 @@ io.cat("xxx.txt")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.print(filename: <string>, formatstring: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -336,9 +363,12 @@ io.print("xxx.txt", "hello %s!", "xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.printf(filename: <string>, formatstring: <string>, ...)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -362,9 +392,12 @@ io.printf("xxx.txt", "hello %s!\n", "xmake")
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.lines(filename: <string>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -411,9 +444,12 @@ By default, newline characters are removed from each line. If you need to preser
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.stdfile(stdname: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -440,9 +476,12 @@ io.stderr
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.openlock(filename: <string>)
 ```
+:::
+
 
 #### Parameter Description
 
@@ -467,9 +506,12 @@ lock:close()
 
 #### Function Prototype
 
+::: tip API
 ```lua
 io.replace(filename: <string>, pattern: <string>, replacement: <string>, options: <table>)
 ```
+:::
+
 
 #### Parameter Description
 

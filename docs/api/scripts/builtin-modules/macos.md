@@ -8,9 +8,12 @@ The macOS system operation module is a built-in module, no need to use [import](
 
 #### Function Prototype
 
+::: tip API
 ```lua
 macos.version()
 ```
+:::
+
 
 #### Parameter Description
 

@@ -56,6 +56,7 @@ add_defines("PRIVATE_DEFINE", {private = true})
 
 #### 函数原型
 
+::: tip API
 ```lua
 target(name: <string>, {
     kind = <string>,
@@ -63,6 +64,8 @@ target(name: <string>, {
     ...
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -123,9 +126,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 target_end()
 ```
+:::
+
 
 #### 参数说明
 
@@ -170,9 +176,12 @@ target("test2")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_kind(kind: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -298,9 +307,12 @@ target("foo")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_strip(strip: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -334,9 +346,12 @@ target("xxxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_enabled(enabled: <boolean>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -354,9 +369,12 @@ set_enabled(enabled: <boolean>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_default(default: <boolean>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -413,9 +431,12 @@ $ xmake install [-a|--all]
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_options(options: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -450,11 +471,14 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_symbols(symbols: <string>, {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -533,9 +557,12 @@ set_symbols("debug", "edit")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_basename(basename: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -579,9 +606,12 @@ target("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_filename(filename: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -601,9 +631,12 @@ set_filename(filename: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_prefixname(prefixname: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -626,9 +659,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_suffixname(suffixname: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -651,9 +687,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_extension(extension: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -677,11 +716,14 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_warnings(warnings: <string>, {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -721,9 +763,12 @@ set_warnings("all", "error")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_optimize(optimize: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -759,11 +804,14 @@ set_optimize("fastest")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_languages(languages: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -827,11 +875,14 @@ msvc 的编译器并不支持按 c99 的标准来编译c代码，只能支持到
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_fpmodels(fpmodels: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -864,9 +915,12 @@ set_fpmodels("precise") -- default
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_targetdir(targetdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -912,9 +966,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_objectdir(objectdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -937,9 +994,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_dependir(dependir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -962,9 +1022,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_imports(imports: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1022,11 +1085,14 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_rules(rules: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -1079,9 +1145,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_load(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1110,9 +1179,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_config(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1138,9 +1210,12 @@ on_load -> after_load -> on_config -> before_build -> on_build -> after_build
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_prepare(script: <function (target, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1178,9 +1253,12 @@ rule("scan_module_files")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_prepare_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1207,9 +1285,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_prepare_files(script: <function (target, jobgraph, sourcebatch, opt)>, {jobgraph = <boolean>})
 ```
+:::
+
 
 #### 参数说明
 
@@ -1246,9 +1327,12 @@ rule("scan_module_files")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_link(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1273,9 +1357,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_build(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1329,9 +1416,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1359,9 +1449,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1396,9 +1489,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_clean(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1442,9 +1538,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_package(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1490,9 +1589,12 @@ target("demo")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_install(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1523,9 +1625,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1550,9 +1655,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 on_run(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1583,9 +1691,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_prepare(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1610,9 +1721,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_prepare_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1637,9 +1751,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_prepare_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1664,9 +1781,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_link(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1691,9 +1811,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_build(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1718,9 +1841,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1746,9 +1872,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1774,9 +1903,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_clean(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1801,9 +1933,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_package(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1828,9 +1963,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_install(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1855,9 +1993,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1882,9 +2023,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 before_run(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1909,9 +2053,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_prepare(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1938,9 +2085,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_prepare_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1965,9 +2115,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_prepare_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -1992,9 +2145,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_link(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2019,9 +2175,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_build(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2048,9 +2207,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_build_file(script: <function (target, sourcefile, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2076,9 +2238,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_build_files(script: <function (target, sourcebatch, opt)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2104,9 +2269,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_clean(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2133,9 +2301,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_package(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2160,9 +2331,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_install(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2186,9 +2360,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_uninstall(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2213,9 +2390,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 after_run(script: <function (target)>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2240,9 +2420,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_pcheader(header: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2267,9 +2450,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_pcxxheader(header: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2294,9 +2480,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_pmheader(header: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2321,9 +2510,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_pmxxheader(header: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2348,11 +2540,14 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_deps(deps: <string|array>, ..., {
     inherit = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -2430,11 +2625,14 @@ add_deps("dep1", "dep2", {inherit = false})
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_links(links: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -2466,11 +2664,14 @@ target("demo")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_syslinks(syslinks: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -2501,9 +2702,12 @@ target("demo")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_linkorders(linkorders: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2620,11 +2824,14 @@ target("demo")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_linkgroups(linkgroups: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -2706,6 +2913,7 @@ add_linkgroups("a", "b", {static = true})
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_files(files: <string|array>, ..., {
     defines = <string|array>,
@@ -2717,6 +2925,8 @@ add_files(files: <string|array>, ..., {
     $flags = <string|array>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -2824,9 +3034,12 @@ add_files("*.cpp", {sourcekind = "cc"})  -- force to compile as c
 
 #### 函数原型
 
+::: tip API
 ```lua
 remove_files(files: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2876,9 +3089,12 @@ remove_files = remove_files or del_files
 
 #### 函数原型
 
+::: tip API
 ```lua
 remove_headerfiles(headerfiles: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -2899,11 +3115,14 @@ remove_headerfiles(headerfiles: <string|array>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_linkdirs(linkdirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -2936,11 +3155,14 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_rpathdirs(rpathdirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3006,11 +3228,14 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_includedirs(includedirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3061,11 +3286,14 @@ target("demo")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_sysincludedirs(includedirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3113,11 +3341,14 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_defines(defines: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3145,11 +3376,14 @@ add_defines("DEBUG", "TEST=0", "TEST2=\"hello\"")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_undefines(undefines: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3175,11 +3409,14 @@ add_undefines("DEBUG")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cflags(cflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3214,11 +3451,14 @@ add_cflags("-g", "-O2", {force = true})
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cxflags(cxflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3238,11 +3478,14 @@ add_cxflags(cxflags: <string|array>, ..., {
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cxxflags(cxxflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3285,11 +3528,14 @@ add_cxxflags("/GR-", {tools = {"clang_cl", "cl"}})
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_mflags(mflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3319,11 +3565,14 @@ add_mflags("-g", "-O2", {force = true})
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_mxflags(mxflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3347,11 +3596,14 @@ add_mxflags("-framework CoreFoundation")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_mxxflags(mxxflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3375,11 +3627,14 @@ add_mxxflags("-framework CoreFoundation")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_scflags(scflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3403,11 +3658,14 @@ add_scflags("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_asflags(asflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3431,11 +3689,14 @@ add_asflags("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_gcflags(gcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3459,11 +3720,14 @@ add_gcflags("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_dcflags(dcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3487,11 +3751,14 @@ add_dcflags("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_rcflags(rcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3515,11 +3782,14 @@ add_rcflags("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_fcflags(fcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3543,11 +3813,14 @@ add_fcflags("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_zcflags(zcflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3571,11 +3844,14 @@ add_zcflags("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cuflags(cuflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3599,11 +3875,14 @@ add_cuflags("-gencode arch=compute_30,code=sm_30")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_culdflags(culdflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3630,11 +3909,14 @@ add_culdflags("-gencode arch=compute_30,code=sm_30")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_cugencodes(cugencodes: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3695,11 +3977,14 @@ add_cugencodes("sm_60")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_ldflags(ldflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3730,11 +4015,14 @@ add_ldflags({"-L/my lib"}, {expand = false}) -- OK
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_arflags(arflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3757,11 +4045,14 @@ add_arflags("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_shflags(shflags: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3793,11 +4084,14 @@ add_shflags("xxx")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_packages(packages: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3855,11 +4149,14 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_languages(languages: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3876,11 +4173,14 @@ add_languages(languages: <string|array>, ..., {
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_vectorexts(vectorexts: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3915,11 +4215,14 @@ add_vectorexts("all")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_frameworks(frameworks: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3954,11 +4257,14 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_frameworkdirs(frameworkdirs: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -3984,9 +4290,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_toolset(toolname: <string>, tool: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4061,6 +4370,7 @@ set_toolset("cc", "gcc@$(projectdir)/tools/bin/mipscc.exe")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_toolchains(toolchains: <string|array>, ..., {
     vs = <string>,
@@ -4073,6 +4383,8 @@ set_toolchains(toolchains: <string|array>, ..., {
     ... = <any>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -4273,9 +4585,12 @@ target("ucrt64")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_plat(plat: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4316,9 +4631,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_arch(arch: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4336,9 +4654,12 @@ set_arch(arch: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_values(name: <string>, values: <any>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4402,9 +4723,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_values(name: <string>, values: <any>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4424,9 +4748,12 @@ add_values(name: <string>, values: <any>, ...)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_rundir(rundir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4455,9 +4782,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_runargs(runargs: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4480,9 +4810,12 @@ set_runargs("-x", "--arg1=val")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_runenvs(name: <string>, values: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4512,9 +4845,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_runenv(name: <string>, value: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4541,9 +4877,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_installdir(installdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4566,9 +4905,12 @@ set_installdir(installdir: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_prefixdir(prefixdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4638,6 +4980,7 @@ installdir
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_installfiles(installfiles: <string|array>, ..., {
     prefixdir = <string>,
@@ -4645,6 +4988,8 @@ add_installfiles(installfiles: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -4698,6 +5043,7 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_headerfiles(headerfiles: <string|array>, ..., {
     prefixdir = <string>,
@@ -4705,6 +5051,8 @@ add_headerfiles(headerfiles: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -4747,9 +5095,12 @@ add_headerfiles("src/test.h", {install = false})
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_configdir(configdir: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4767,9 +5118,12 @@ set_configdir(configdir: <string>)
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_configvar(name: <string>, value: <any>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -4828,6 +5182,7 @@ set_configvar("TEST", "C:\\hello", {escape = true})
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_configfiles(configfiles: <string|array>, ..., {
     prefixdir = <string>,
@@ -4835,6 +5190,8 @@ add_configfiles(configfiles: <string|array>, ..., {
     filename = <string>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -5158,9 +5515,12 @@ define CUSTOM_FOO foo
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_policy(policy: <string>, value: <boolean>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -5195,9 +5555,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_runtimes(runtimes: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -5254,9 +5617,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_group(group: <string>)
 ```
+:::
+
 
 #### 参数说明
 
@@ -5363,9 +5729,12 @@ $ xmake run -g bench*
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_filegroups(name: <string>, files: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -5434,9 +5803,12 @@ target("test")
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_exceptions(exceptions: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -5497,9 +5869,12 @@ Xmake 会在内部自动根据不同的编译器，去适配对应的 flags。
 
 #### 函数原型
 
+::: tip API
 ```lua
 set_encodings(encodings: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -5553,11 +5928,14 @@ set_encodings("utf-8")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_forceincludes(includes: <string|array>, ..., {
     public|interface|private = <boolean>
 })
 ```
+:::
+
 
 #### 参数说明
 
@@ -5601,9 +5979,12 @@ add_forceincludes("config.h", {sourcekinds = {"cxx", "mxx"}})
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_extrafiles(extrafiles: <string|array>, ...)
 ```
+:::
+
 
 #### 参数说明
 
@@ -5628,6 +6009,7 @@ add_extrafiles("assets/other.txt")
 
 #### 函数原型
 
+::: tip API
 ```lua
 add_tests(tests: <string|array>, ..., {
     runargs = <string|array>,
@@ -5636,6 +6018,8 @@ add_tests(tests: <string|array>, ..., {
     ... = <any>
 })
 ```
+:::
+
 
 #### 参数说明
 
