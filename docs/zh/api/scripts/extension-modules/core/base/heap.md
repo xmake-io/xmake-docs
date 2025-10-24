@@ -11,11 +11,21 @@ heap 模块提供了使用二叉堆实现的优先队列数据结构。这是 xm
 
 - 创建值堆
 
-```lua
-import("core.base.heap")
+#### 函数原型
 
-local h = heap.valueheap(options)
+::: tip API
+```lua
+heap.valueheap(options: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| options | 可选的配置表，包含比较函数等选项 |
+
+#### 用法说明
 
 使用 Lua 表创建一个新的值堆。默认情况下堆是最小堆，但可以使用比较函数进行自定义。
 
@@ -52,9 +62,21 @@ local h = heap.valueheap{1, 5, 3, 7, 2}
 
 - 向堆中推入一个值
 
+#### 函数原型
+
+::: tip API
 ```lua
-heap:push(value)
+heap:push(value: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| value | 要推入堆中的值（不能为 nil） |
+
+#### 用法说明
 
 向堆中添加一个值并维护堆属性。该值将根据比较函数放置在正确的位置。
 
@@ -92,14 +114,23 @@ print(h:peek().data)  -- 输出: high (优先级 10)
 
 - 从堆中弹出一个值
 
+#### 函数原型
+
+::: tip API
 ```lua
-local value = heap:pop(index)
+heap:pop(index: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| index | 可选。要弹出的位置（从 1 开始）。默认为 1（堆顶） |
+
+#### 用法说明
 
 从堆中移除并返回一个值。如果未提供索引，则移除顶部元素（最高优先级）。移除后，堆属性将得到维护。
-
-参数：
-- `index` - 可选。要弹出的位置（从 1 开始）。默认为 1（堆顶）
 
 ```lua
 local h = heap.valueheap()
@@ -133,14 +164,23 @@ print(item.data)      -- 输出: foo
 
 - 查看值而不移除它
 
+#### 函数原型
+
+::: tip API
 ```lua
-local value = heap:peek(index)
+heap:peek(index: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| index | 可选。要查看的位置（从 1 开始）。默认为 1（堆顶） |
+
+#### 用法说明
 
 从堆中返回一个值而不移除它。如果未提供索引，则返回顶部元素（最高优先级）。
-
-参数：
-- `index` - 可选。要查看的位置（从 1 开始）。默认为 1（堆顶）
 
 ```lua
 local h = heap.valueheap()
@@ -177,15 +217,24 @@ end
 
 - 替换给定索引处的值
 
+#### 函数原型
+
+::: tip API
 ```lua
-heap:replace(index, value)
+heap:replace(index: <number>, value: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| index | 必需。要替换的位置（从 1 开始） |
+| value | 必需。新值 |
+
+#### 用法说明
 
 将指定索引处的值替换为新值，并重新平衡堆以维护堆属性。
-
-参数：
-- `index` - 必需。要替换的位置（从 1 开始）
-- `value` - 必需。新值
 
 ```lua
 local h = heap.valueheap()
@@ -228,9 +277,19 @@ print(h:pop().id)  -- 输出: 2 (现在具有最高优先级)
 
 - 获取堆中的元素数量
 
+#### 函数原型
+
+::: tip API
 ```lua
-local count = heap.length()
+heap.length()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回堆中当前的元素数量。这是一个函数，不是方法。
 

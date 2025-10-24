@@ -6,13 +6,24 @@
 
 - 启动线程
 
-创建并启动一个线程执行回调函数。
+#### 函数原型
 
+::: tip API
 ```lua
-local t = thread.start(callback_function, ...)
+thread.start(callback: <function>, ...)
 ```
+:::
 
-参数：`callback` 在线程中执行的回调函数，`...` 传递给回调函数的额外参数
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| callback | 必需。在线程中执行的回调函数 |
+| ... | 可选。传递给回调函数的额外参数 |
+
+#### 用法说明
+
+创建并启动一个线程执行回调函数。
 
 返回值：返回一个线程对象，可用于等待线程完成
 
@@ -24,13 +35,25 @@ local t = thread.start(callback_function, ...)
 
 - 启动命名线程
 
-创建并启动一个具有指定名称和回调函数的新线程。
+#### 函数原型
 
+::: tip API
 ```lua
-local t = thread.start_named("thread_name", callback_function, ...)
+thread.start_named(name: <string>, callback: <function>, ...)
 ```
+:::
 
-参数：`name` 线程名称，`callback` 在线程中执行的回调函数，`...` 传递给回调函数的额外参数
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 必需。线程名称 |
+| callback | 必需。在线程中执行的回调函数 |
+| ... | 可选。传递给回调函数的额外参数 |
+
+#### 用法说明
+
+创建并启动一个具有指定名称和回调函数的新线程。
 
 返回值：返回一个线程对象，可用于等待线程完成
 
@@ -65,11 +88,21 @@ end
 
 - 获取当前线程名称
 
-返回当前运行线程的名称。
+#### 函数原型
 
+::: tip API
 ```lua
-local name = thread.running()
+thread.running()
 ```
+:::
+
+#### 参数说明
+
+无参数。
+
+#### 用法说明
+
+返回当前运行线程的名称。
 
 返回值：返回当前线程的名称字符串
 
@@ -77,11 +110,21 @@ local name = thread.running()
 
 - 创建互斥锁对象
 
-创建一个新的互斥锁用于线程同步。
+#### 函数原型
 
+::: tip API
 ```lua
-local mutex = thread.mutex()
+thread.mutex()
 ```
+:::
+
+#### 参数说明
+
+无参数。
+
+#### 用法说明
+
+创建一个新的互斥锁用于线程同步。
 
 返回值：返回一个互斥锁对象，具有以下方法：`mutex:lock()` 锁定互斥锁，`mutex:unlock()` 解锁互斥锁
 
@@ -119,13 +162,21 @@ end
 
 - 创建事件对象
 
-创建一个新的事件用于线程信号和同步。
+#### 函数原型
 
+::: tip API
 ```lua
-local event = thread.event()
+thread.event()
 ```
+:::
 
-参数：`timeout` 超时时间（毫秒），-1表示无限等待
+#### 参数说明
+
+无参数。
+
+#### 用法说明
+
+创建一个新的事件用于线程信号和同步。
 
 返回值：返回一个事件对象，具有以下方法：`event:wait(timeout)` 等待事件信号，`event:post()` 发送事件信号
 
@@ -166,13 +217,24 @@ end
 
 - 创建信号量对象
 
-创建一个新的信号量用于线程同步和资源计数。
+#### 函数原型
 
+::: tip API
 ```lua
-local semaphore = thread.semaphore(name, initial_count)
+thread.semaphore(name: <string>, initial_count: <number>)
 ```
+:::
 
-参数：`name` 信号量名称，`initial_count` 初始计数值
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 必需。信号量名称 |
+| initial_count | 必需。初始计数值 |
+
+#### 用法说明
+
+创建一个新的信号量用于线程同步和资源计数。
 
 返回值：返回一个信号量对象，具有以下方法：`semaphore:wait(timeout)` 等待信号量（减少计数），`semaphore:post(count)` 发送信号量（增加计数）
 
@@ -213,11 +275,21 @@ end
 
 - 创建线程安全队列对象
 
-创建一个新的线程安全队列用于线程间数据通信。
+#### 函数原型
 
+::: tip API
 ```lua
-local queue = thread.queue()
+thread.queue()
 ```
+:::
+
+#### 参数说明
+
+无参数。
+
+#### 用法说明
+
+创建一个新的线程安全队列用于线程间数据通信。
 
 返回值：返回一个队列对象，具有以下方法：`queue:push(value)` 向队列推送值，`queue:pop()` 从队列弹出值，`queue:empty()` 检查队列是否为空
 
@@ -261,11 +333,21 @@ end
 
 - 创建共享数据对象
 
-创建一个新的共享数据对象用于线程间数据共享。
+#### 函数原型
 
+::: tip API
 ```lua
-local sharedata = thread.sharedata()
+thread.sharedata()
 ```
+:::
+
+#### 参数说明
+
+无参数。
+
+#### 用法说明
+
+创建一个新的共享数据对象用于线程间数据共享。
 
 返回值：返回一个共享数据对象，具有以下方法：`sharedata:set(value)` 设置共享数据值，`sharedata:get()` 获取共享数据值
 
@@ -307,13 +389,23 @@ end
 
 - 等待线程完成（线程实例方法）
 
-等待线程完成执行。此方法支持与协程混合调度，可以在协程中等待线程完成。
+#### 函数原型
 
+::: tip API
 ```lua
-thread:wait(timeout)
+thread:wait(timeout: <number>)
 ```
+:::
 
-参数：`timeout` 超时时间（毫秒），-1表示无限等待
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| timeout | 必需。超时时间（毫秒），-1表示无限等待 |
+
+#### 用法说明
+
+等待线程完成执行。此方法支持与协程混合调度，可以在协程中等待线程完成。
 
 返回值：返回表示等待结果的状态码
 

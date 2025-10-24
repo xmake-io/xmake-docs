@@ -11,21 +11,30 @@ socket 模块提供了跨平台的网络套接字功能，支持 TCP、UDP 和 U
 
 - 创建 TCP 套接字
 
-```lua
-import("core.base.socket")
+#### 函数原型
 
-local sock = socket.tcp()
+::: tip API
+```lua
+socket.tcp(opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 创建一个 TCP 套接字对象（`socket.TCP`），默认使用 IPv4。
 
 TCP 是面向连接的、可靠的流式协议，保证数据按序到达，适合大多数网络通信场景。
 
-参数：
-- `opt`（可选）：选项参数
-  - `family`：地址族，可选值：
-    - `socket.IPV4` (1) - IPv4 地址族（默认）
-    - `socket.IPV6` (2) - IPv6 地址族
+`opt` 选项：
+- `family`：地址族，可选值：
+  - `socket.IPV4` (1) - IPv4 地址族（默认）
+  - `socket.IPV6` (2) - IPv6 地址族
 
 ```lua
 -- 创建 IPv4 TCP 套接字
@@ -39,19 +48,28 @@ local sock = socket.tcp({family = socket.IPV6})
 
 - 创建 UDP 套接字
 
-```lua
-import("core.base.socket")
+#### 函数原型
 
-local sock = socket.udp()
+::: tip API
+```lua
+socket.udp(opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 创建一个 UDP 套接字对象（`socket.UDP`），用于无连接的数据报通信。
 
 UDP 是无连接的、不可靠的数据报协议，不保证数据到达和顺序，但延迟低，适合实时通信、广播等场景。
 
-参数：
-- `opt`（可选）：选项参数
-  - `family`：地址族，可选值为 `socket.IPV4`（默认）或 `socket.IPV6`
+`opt` 选项：
+- `family`：地址族，可选值为 `socket.IPV4`（默认）或 `socket.IPV6`
 
 UDP 适合需要低延迟、可以容忍少量丢包的场景：
 
@@ -75,11 +93,19 @@ sock:close()
 
 - 创建 Unix 域套接字
 
-```lua
-import("core.base.socket")
+#### 函数原型
 
-local sock = socket.unix()
+::: tip API
+```lua
+socket.unix()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 创建一个 Unix 域套接字（地址族为 `socket.UNIX`），用于同一台机器上的进程间通信。
 
@@ -91,18 +117,25 @@ Unix 域套接字使用文件系统路径而不是 IP 地址和端口，性能�
 
 - 创建并绑定 TCP 套接字
 
-```lua
-import("core.base.socket")
+#### 函数原型
 
-local sock = socket.bind(addr, port, opt)
+::: tip API
+```lua
+socket.bind(addr: <string>, port: <number>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| addr | 必需。IP 地址，如 "127.0.0.1" 或 "0.0.0.0" |
+| port | 必需。端口号 |
+| opt | 可选。选项参数，同 socket.tcp |
+
+#### 用法说明
 
 创建 TCP 套接字并绑定到指定地址和端口，通常用于服务端。
-
-参数：
-- `addr`：IP 地址，如 `"127.0.0.1"` 或 `"0.0.0.0"`
-- `port`：端口号
-- `opt`（可选）：选项参数，同 [socket.tcp](#socket-tcp)
 
 完整的 TCP 回显服务器示例：
 
@@ -145,18 +178,27 @@ end
 
 - 创建并绑定 Unix 域套接字
 
-```lua
-import("core.base.socket")
+#### 函数原型
 
-local sock = socket.bind_unix(addr, opt)
+::: tip API
+```lua
+socket.bind_unix(addr: <string>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| addr | 必需。Unix 域套接字路径 |
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 创建 Unix 域套接字并绑定到指定路径。
 
-参数：
-- `addr`：Unix 域套接字路径
-- `opt`（可选）：选项参数
-  - `is_abstract`：是否使用抽象命名空间（仅 Linux）
+`opt` 选项：
+- `is_abstract`：是否使用抽象命名空间（仅 Linux）
 
 ```lua
 import("core.base.socket")
@@ -170,20 +212,29 @@ server:listen(10)
 
 - 创建并连接 TCP 套接字
 
-```lua
-import("core.base.socket")
+#### 函数原型
 
-local sock = socket.connect(addr, port, opt)
+::: tip API
+```lua
+socket.connect(addr: <string>, port: <number>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| addr | 必需。服务器 IP 地址 |
+| port | 必需。服务器端口号 |
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 创建 TCP 套接字并连接到指定地址和端口，用于客户端。
 
-参数：
-- `addr`：服务器 IP 地址
-- `port`：服务器端口号
-- `opt`（可选）：选项参数
-  - `family`：地址族
-  - `timeout`：连接超时时间（毫秒）
+`opt` 选项：
+- `family`：地址族
+- `timeout`：连接超时时间（毫秒）
 
 完整的 TCP 客户端示例：
 
@@ -220,27 +271,49 @@ end
 
 - 创建并连接 Unix 域套接字
 
-```lua
-import("core.base.socket")
+#### 函数原型
 
-local sock = socket.connect_unix(addr, opt)
+::: tip API
+```lua
+socket.connect_unix(addr: <string>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| addr | 必需。Unix 域套接字路径 |
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 创建 Unix 域套接字并连接到指定路径。
 
-参数：
-- `addr`：Unix 域套接字路径
-- `opt`（可选）：选项参数
-  - `is_abstract`：是否使用抽象命名空间（仅 Linux）
-  - `timeout`：连接超时时间
+`opt` 选项：
+- `is_abstract`：是否使用抽象命名空间（仅 Linux）
+- `timeout`：连接超时时间
 
 ## socket:bind
 
 - 绑定套接字到地址
 
+#### 函数原型
+
+::: tip API
 ```lua
-local ok = sock:bind(addr, port)
+socket:bind(addr: <string>, port: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| addr | 必需。IP 地址 |
+| port | 必需。端口号 |
+
+#### 用法说明
 
 将套接字绑定到指定的 IP 地址和端口。
 
@@ -250,14 +323,23 @@ local ok = sock:bind(addr, port)
 
 - 开始监听连接
 
+#### 函数原型
+
+::: tip API
 ```lua
-local ok = sock:listen(backlog)
+socket:listen(backlog: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| backlog | 必需。等待连接队列的最大长度，默认 10 |
+
+#### 用法说明
 
 使套接字开始监听客户端连接，用于服务端。
-
-参数：
-- `backlog`：等待连接队列的最大长度，默认 10
 
 必须在 `bind` 之后、`accept` 之前调用。
 
@@ -265,15 +347,26 @@ local ok = sock:listen(backlog)
 
 - 接受客户端连接
 
+#### 函数原型
+
+::: tip API
 ```lua
-local client_sock = sock:accept(opt)
+socket:accept(opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 接受一个客户端连接，返回新的套接字对象用于与客户端通信。
 
-参数：
-- `opt`（可选）：选项参数
-  - `timeout`：超时时间（毫秒），默认 -1（无限等待）
+`opt` 选项：
+- `timeout`：超时时间（毫秒），默认 -1（无限等待）
 
 返回值：成功返回客户端套接字对象，失败返回 nil 和错误信息。
 
@@ -291,17 +384,28 @@ end
 
 - 连接到远程地址
 
+#### 函数原型
+
+::: tip API
 ```lua
-local ok = sock:connect(addr, port, opt)
+socket:connect(addr: <string>, port: <number>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| addr | 必需。目标 IP 地址 |
+| port | 必需。目标端口号 |
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 连接到指定的远程地址和端口。
 
-参数：
-- `addr`：目标 IP 地址
-- `port`：目标端口号
-- `opt`（可选）：选项参数
-  - `timeout`：连接超时时间（毫秒）
+`opt` 选项：
+- `timeout`：连接超时时间（毫秒）
 
 返回值：成功返回正数，失败返回 -1 和错误信息。
 
@@ -309,18 +413,29 @@ local ok = sock:connect(addr, port, opt)
 
 - 发送数据
 
+#### 函数原型
+
+::: tip API
 ```lua
-local sent = sock:send(data, opt)
+socket:send(data: <string|bytes>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| data | 必需。要发送的数据，可以是字符串或 bytes 对象 |
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 通过套接字发送数据。
 
-参数：
-- `data`：要发送的数据，可以是字符串或 bytes 对象
-- `opt`（可选）：选项参数
-  - `block`：是否阻塞发送，默认 false
-  - `start`：数据起始位置，默认 1
-  - `last`：数据结束位置，默认为数据大小
+`opt` 选项：
+- `block`：是否阻塞发送，默认 false
+- `start`：数据起始位置，默认 1
+- `last`：数据结束位置，默认为数据大小
 
 返回值：实际发送的字节数，失败返回 -1。
 
@@ -341,18 +456,29 @@ end
 
 - 接收数据
 
+#### 函数原型
+
+::: tip API
 ```lua
-local recv, data = sock:recv(buff, size, opt)
+socket:recv(buff: <bytes>, size: <number>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| buff | 必需。bytes 缓冲区对象 |
+| size | 必需。要接收的字节数 |
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 从套接字接收数据。
 
-参数：
-- `buff`：bytes 缓冲区对象
-- `size`：要接收的字节数
-- `opt`（可选）：选项参数
-  - `block`：是否阻塞接收，默认 false
-  - `timeout`：超时时间（毫秒）
+`opt` 选项：
+- `block`：是否阻塞接收，默认 false
+- `timeout`：超时时间（毫秒）
 
 返回值：
 - `recv`：实际接收的字节数，失败返回 -1
@@ -377,17 +503,26 @@ end
 
 - 发送数据报（UDP）
 
+#### 函数原型
+
+::: tip API
 ```lua
-local sent = sock:sendto(data, addr, port, opt)
+socket:sendto(data: <string|bytes>, addr: <string>, port: <number>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| data | 必需。要发送的数据，可以是字符串或 bytes 对象 |
+| addr | 必需。目标 IP 地址 |
+| port | 必需。目标端口号 |
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 通过 UDP 套接字发送数据报到指定地址。
-
-参数：
-- `data`：要发送的数据，可以是字符串或 bytes 对象
-- `addr`：目标 IP 地址
-- `port`：目标端口号
-- `opt`（可选）：选项参数
 
 返回值：实际发送的字节数，失败返回 -1。
 
@@ -403,17 +538,28 @@ sock:close()
 
 - 接收数据报（UDP）
 
+#### 函数原型
+
+::: tip API
 ```lua
-local recv, data, peer_addr, peer_port = sock:recvfrom(buff, size, opt)
+socket:recvfrom(buff: <bytes>, size: <number>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| buff | 必需。bytes 缓冲区对象 |
+| size | 必需。要接收的字节数 |
+| opt | 可选。选项参数 |
+
+#### 用法说明
 
 从 UDP 套接字接收数据报，同时获取发送方的地址信息。
 
-参数：
-- `buff`：bytes 缓冲区对象
-- `size`：要接收的字节数
-- `opt`（可选）：选项参数
-  - `block`：是否阻塞接收
+`opt` 选项：
+- `block`：是否阻塞接收
 
 返回值：
 - `recv`：实际接收的字节数
@@ -450,19 +596,30 @@ end
 
 - 等待套接字事件
 
+#### 函数原型
+
+::: tip API
 ```lua
-local events = sock:wait(events, timeout)
+socket:wait(events: <number>, timeout: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| events | 必需。要等待的事件 |
+| timeout | 必需。超时时间（毫秒），-1 表示无限等待 |
+
+#### 用法说明
 
 等待指定的套接字事件发生。
 
-参数：
-- `events`：要等待的事件，支持以下事件常量：
-  - `socket.EV_RECV` (1)：可接收事件
-  - `socket.EV_SEND` (2)：可发送事件
-  - `socket.EV_CONN` (2)：连接事件（等同于 EV_SEND）
-  - `socket.EV_ACPT` (1)：接受连接事件（等同于 EV_RECV）
-- `timeout`：超时时间（毫秒），-1 表示无限等待
+支持的事件常量：
+- `socket.EV_RECV` (1)：可接收事件
+- `socket.EV_SEND` (2)：可发送事件
+- `socket.EV_CONN` (2)：连接事件（等同于 EV_SEND）
+- `socket.EV_ACPT` (1)：接受连接事件（等同于 EV_RECV）
 
 返回值：返回实际发生的事件常量值。
 
@@ -486,9 +643,19 @@ end
 
 - 关闭套接字
 
+#### 函数原型
+
+::: tip API
 ```lua
-sock:close()
+socket:close()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 关闭套接字并释放资源。使用完套接字后应及时关闭。
 
@@ -496,9 +663,22 @@ sock:close()
 
 - 控制套接字选项
 
+#### 函数原型
+
+::: tip API
 ```lua
-local ok = sock:ctrl(code, value)
+socket:ctrl(code: <number>, value: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| code | 必需。控制码常量 |
+| value | 必需。控制值 |
+
+#### 用法说明
 
 设置套接字的控制选项，用于调整套接字的缓冲区等参数。
 

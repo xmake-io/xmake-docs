@@ -10,19 +10,24 @@ scheduler 模块提供了协程调度功能，用于管理协程的创建、执�
 
 - 启动新的协程任务
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-local co = scheduler.co_start(function()
-    print("Hello from coroutine!")
-end)
+::: tip API
+```lua
+scheduler.co_start(cotask: <function>, ...)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| cotask | 必需。要执行的协程任务函数 |
+| ... | 可选。传递给任务函数的参数 |
+
+#### 用法说明
 
 启动一个新的协程并执行指定的任务函数。协程会立即开始执行，除非调度器尚未启动。
-
-参数：
-- `cotask` - 必需。要执行的协程任务函数
-- `...` - 可选。传递给任务函数的参数
 
 返回值：
 - 成功时返回协程对象，失败时返回 nil 和错误信息
@@ -50,20 +55,25 @@ print("Completed", count, "tasks")
 
 - 启动指定名称的协程任务
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-local co = scheduler.co_start_named("worker", function()
-    print("Named coroutine started")
-end)
+::: tip API
+```lua
+scheduler.co_start_named(coname: <string>, cotask: <function>, ...)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| coname | 必需。协程名称 |
+| cotask | 必需。要执行的协程任务函数 |
+| ... | 可选。传递给任务函数的参数 |
+
+#### 用法说明
 
 启动一个带有指定名称的协程任务，便于调试和监控。
-
-参数：
-- `coname` - 必需。协程名称
-- `cotask` - 必需。要执行的协程任务函数
-- `...` - 可选。传递给任务函数的参数
 
 ```lua
 -- 启动多个命名协程
@@ -80,23 +90,25 @@ end
 
 - 使用选项启动协程任务
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-local co = scheduler.co_start_withopt({
-    name = "isolated-worker",
-    isolate = true
-}, function()
-    print("Isolated coroutine started")
-end)
+::: tip API
+```lua
+scheduler.co_start_withopt(opt: <table>, cotask: <function>, ...)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| opt | 必需。协程选项表 |
+| cotask | 必需。要执行的协程任务函数 |
+| ... | 可选。传递给任务函数的参数 |
+
+#### 用法说明
 
 启动一个带有特定选项的协程任务。
-
-参数：
-- `opt` - 必需。协程选项表
-- `cotask` - 必需。要执行的协程任务函数
-- `...` - 可选。传递给任务函数的参数
 
 `opt` 选项：
 - `name` - 协程名称
@@ -118,15 +130,19 @@ end)
 
 - 挂起当前协程
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-function task()
-    print("Task started")
-    scheduler.co_suspend()  -- 挂起协程
-    print("Task resumed")
-end
+::: tip API
+```lua
+scheduler.co_suspend()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 挂起当前正在执行的协程，让出执行权给其他协程。
 
@@ -148,23 +164,24 @@ end)
 
 - 恢复挂起的协程
 
+#### 函数原型
+
+::: tip API
 ```lua
-import("core.base.scheduler")
-
-local co = scheduler.co_start(function()
-    local value = scheduler.co_suspend()
-    print("Resumed with value:", value)
-end)
-
--- 恢复协程并传递参数
-scheduler.co_resume(co, "hello")
+scheduler.co_resume(co: <coroutine>, ...)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| co | 必需。要恢复的协程对象 |
+| ... | 可选。传递给协程的参数 |
+
+#### 用法说明
 
 恢复指定的挂起协程，可以传递参数给协程。
-
-参数：
-- `co` - 必需。要恢复的协程对象
-- `...` - 可选。传递给协程的参数
 
 ```lua
 -- 协程间通信示例
@@ -185,16 +202,19 @@ print("Got result:", result)
 
 - 让出当前协程的执行权
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-function task()
-    for i = 1, 5 do
-        print("Task step", i)
-        scheduler.co_yield()  -- 让出执行权
-    end
-end
+::: tip API
+```lua
+scheduler.co_yield()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 让出当前协程的执行权，允许其他协程运行。这是一个协作式多任务的关键函数。
 
@@ -217,20 +237,23 @@ scheduler.co_group_wait("cooperative")
 
 - 协程睡眠指定时间
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-function delayed_task()
-    print("Task started")
-    scheduler.co_sleep(1000)  -- 睡眠 1 秒
-    print("Task resumed after sleep")
-end
+::: tip API
+```lua
+scheduler.co_sleep(ms: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| ms | 必需。睡眠时间（毫秒），0 表示不睡眠 |
+
+#### 用法说明
 
 让当前协程睡眠指定的毫秒数，期间其他协程可以继续执行。
-
-参数：
-- `ms` - 必需。睡眠时间（毫秒），0 表示不睡眠
 
 ```lua
 -- 定时任务示例
@@ -247,22 +270,23 @@ end
 
 - 锁定指定的锁
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-function critical_section()
-    scheduler.co_lock("shared_resource")
-    print("Entering critical section")
-    -- 临界区代码
-    scheduler.co_unlock("shared_resource")
-    print("Leaving critical section")
-end
+::: tip API
+```lua
+scheduler.co_lock(lockname: <string>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| lockname | 必需。锁的名称 |
+
+#### 用法说明
 
 获取指定名称的锁，如果锁已被其他协程持有，当前协程会等待直到锁可用。
-
-参数：
-- `lockname` - 必需。锁的名称
 
 ```lua
 -- 互斥锁示例
@@ -284,43 +308,46 @@ end
 
 - 释放指定的锁
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-function critical_section()
-    scheduler.co_lock("my_lock")
-    -- 临界区代码
-    scheduler.co_unlock("my_lock")
-end
+::: tip API
+```lua
+scheduler.co_unlock(lockname: <string>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| lockname | 必需。要释放的锁名称 |
+
+#### 用法说明
 
 释放指定名称的锁，允许其他等待的协程获取锁。
-
-参数：
-- `lockname` - 必需。要释放的锁名称
 
 ## scheduler.co_group_begin
 
 - 开始协程组
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-scheduler.co_group_begin("workers", function(group)
-    -- 在这个作用域内启动的协程会加入该组
-    for i = 1, 5 do
-        scheduler.co_start(function()
-            print("Worker", i, "started")
-        end)
-    end
-end)
+::: tip API
+```lua
+scheduler.co_group_begin(name: <string>, scopefunc: <function>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 必需。协程组名称 |
+| scopefunc | 必需。作用域函数 |
+
+#### 用法说明
 
 开始一个新的协程组，在指定函数内启动的所有协程都会加入该组。
-
-参数：
-- `name` - 必需。协程组名称
-- `scopefunc` - 必需. 作用域函数
 
 ```lua
 -- 批量任务处理示例
@@ -340,27 +367,24 @@ end)
 
 - 等待协程组完成
 
+#### 函数原型
+
+::: tip API
 ```lua
-import("core.base.scheduler")
-
-scheduler.co_group_begin("test", function()
-    for i = 1, 10 do
-        scheduler.co_start(function()
-            print("Task", i, "completed")
-        end)
-    end
-end)
-
--- 等待所有协程完成
-scheduler.co_group_wait("test")
-print("All tasks completed")
+scheduler.co_group_wait(name: <string>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 必需。协程组名称 |
+| opt | 可选。等待选项 |
+
+#### 用法说明
 
 等待指定协程组中的所有协程完成执行。
-
-参数：
-- `name` - 必需。协程组名称
-- `opt` - 可选。等待选项
 
 `opt` 选项：
 - `limit` - 等待完成的最大协程数量（默认等待所有协程）
@@ -386,17 +410,19 @@ print("First 3 tasks completed")
 
 - 获取当前运行的协程
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-function task()
-    local co = scheduler.co_running()
-    if co then
-        print("Current coroutine name:", co:name())
-        print("Current coroutine status:", co:status())
-    end
-end
+::: tip API
+```lua
+scheduler.co_running()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 获取当前正在运行的协程对象。
 
@@ -419,11 +445,19 @@ end)
 
 - 获取协程总数
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-print("Total coroutines:", scheduler.co_count())
+::: tip API
+```lua
+scheduler.co_count()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 获取当前调度器中活跃协程的总数。
 
@@ -449,17 +483,24 @@ print("After starting tasks:", scheduler.co_count())
 
 - 创建协程信号量
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-local semaphore = scheduler.co_semaphore("test", 2)  -- 初始值为 2
+::: tip API
+```lua
+scheduler.co_semaphore(name: <string>, value: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 必需。信号量名称 |
+| value | 可选。信号量初始值（默认为 0） |
+
+#### 用法说明
 
 创建一个新的协程信号量，用于协程间的同步和资源控制。
-
-参数：
-- `name` - 必需。信号量名称
-- `value` - 可选。信号量初始值（默认为 0）
 
 返回值：
 - 信号量对象
@@ -484,17 +525,23 @@ end
 
 - 等待信号量
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-local semaphore = scheduler.co_semaphore("test", 1)
-local value = semaphore:wait(5000)  -- 等待 5 秒
+::: tip API
+```lua
+co_semaphore:wait(timeout: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| timeout | 可选。超时时间（毫秒），-1 表示无限等待，0 表示不等待 |
+
+#### 用法说明
 
 等待信号量，如果信号量值大于 0 则立即返回，否则挂起当前协程直到信号量可用。
-
-参数：
-- `timeout` - 可选。超时时间（毫秒），-1 表示无限等待，0 表示不等待
 
 返回值：
 - 成功时返回信号量值，超时时返回 0，错误时返回 -1
@@ -525,17 +572,23 @@ end)
 
 - 释放信号量
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-local semaphore = scheduler.co_semaphore("test", 0)
-local new_value = semaphore:post(2)  -- 增加 2
+::: tip API
+```lua
+co_semaphore:post(value: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| value | 必需。要增加的值 |
+
+#### 用法说明
 
 释放信号量，增加信号量的值并唤醒等待的协程。
-
-参数：
-- `value` - 必需。要增加的值
 
 返回值：
 - 释放后的信号量新值
@@ -563,12 +616,19 @@ end
 
 - 获取信号量名称
 
-```lua
-import("core.base.scheduler")
+#### 函数原型
 
-local semaphore = scheduler.co_semaphore("my_semaphore", 1)
-print("Semaphore name:", semaphore:name())
+::: tip API
+```lua
+co_semaphore:name()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 获取信号量的名称。
 

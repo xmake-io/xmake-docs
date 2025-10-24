@@ -120,9 +120,19 @@ print(buff3:str())  -- Output: 123456
 
 - Get buffer size
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local size = buff:size()
+bytes:size()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the number of bytes in the buffer.
 
@@ -135,10 +145,22 @@ print(buff:size())  -- Output: 1024
 
 - Convert to string
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local str = buff:str()
-local str = buff:str(start, last)
+bytes:str(start: <number>, last: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| start | Start position (optional, default 1) |
+| last | End position (optional, default buffer size) |
+
+#### Usage
 
 Converts a bytes object to a string, optionally specifying the conversion range.
 
@@ -161,9 +183,22 @@ print(buff:str(7))       -- Output: world
 
 - Create a slice
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local slice = buff:slice(start, last)
+bytes:slice(start: <number>, last: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| start | Start position |
+| last | End position |
+
+#### Usage
 
 Creates a slice of the buffer, returns a new bytes object that shares the underlying memory (no data copying).
 
@@ -184,9 +219,19 @@ print(slice:size()) -- Output: 3
 
 - Clone the buffer
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local new_buff = buff:clone()
+bytes:clone()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Creates a complete copy of the buffer, allocating new memory and copying all data.
 
@@ -207,9 +252,23 @@ print(original:str())  -- Output: hello (unchanged)
 
 - Copy data to buffer
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:copy(src, start, last)
+bytes:copy(src: <string|bytes>, start: <number>, last: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| src | Source data, can be string or bytes object |
+| start | Source data start position (optional, default 1) |
+| last | Source data end position (optional, default source data size) |
+
+#### Usage
 
 Copies data from source to the beginning of the buffer.
 
@@ -233,9 +292,24 @@ print(buff:str())  -- Output: 56789
 
 - Copy data to specified position
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:copy2(pos, src, start, last)
+bytes:copy2(pos: <number>, src: <string|bytes>, start: <number>, last: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| pos | Target position |
+| src | Source data, can be string or bytes object |
+| start | Source data start position (optional) |
+| last | Source data end position (optional) |
+
+#### Usage
 
 Copies data from source to the specified position in the buffer.
 
@@ -258,9 +332,22 @@ print(buff:str())  -- Output: 123456789123456789
 
 - Move data to buffer beginning
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:move(start, last)
+bytes:move(start: <number>, last: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| start | Source data start position |
+| last | Source data end position (optional) |
+
+#### Usage
 
 Moves the specified range of data within the buffer to the beginning, supporting memory overlap-safe movement.
 
@@ -278,9 +365,23 @@ print(buff:str())  -- Output: 567896789 (5-9 moved to beginning)
 
 - Move data to specified position
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:move2(pos, start, last)
+bytes:move2(pos: <number>, start: <number>, last: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| pos | Target position |
+| start | Source data start position |
+| last | Source data end position (optional) |
+
+#### Usage
 
 Moves the specified range of data within the buffer to the specified position.
 
@@ -299,9 +400,21 @@ print(buff:str())  -- Output: 156789789
 
 - Read unsigned 8-bit integer
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local value = buff:u8(offset)
+bytes:u8(offset: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+
+#### Usage
 
 Reads a byte from the specified offset as an unsigned 8-bit integer (0-255).
 
@@ -309,9 +422,24 @@ Reads a byte from the specified offset as an unsigned 8-bit integer (0-255).
 
 - Write unsigned 8-bit integer
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:u8_set(offset, value)
+bytes:u8_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+| value | Value to write (0-255) |
+
+#### Usage
+
+Writes an unsigned 8-bit integer to the specified offset.
 
 Writes an unsigned 8-bit integer value to the specified offset.
 
@@ -326,9 +454,21 @@ print(value)  -- Output: 255
 
 - Read signed 8-bit integer
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local value = buff:s8(offset)
+bytes:s8(offset: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+
+#### Usage
 
 Reads a byte from the specified offset as a signed 8-bit integer (-128 to 127).
 
@@ -336,9 +476,21 @@ Reads a byte from the specified offset as a signed 8-bit integer (-128 to 127).
 
 - Read unsigned 16-bit integer (little-endian)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local value = buff:u16le(offset)
+bytes:u16le(offset: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+
+#### Usage
 
 Reads 2 bytes from the specified offset as an unsigned 16-bit integer (little-endian byte order).
 
@@ -346,9 +498,22 @@ Reads 2 bytes from the specified offset as an unsigned 16-bit integer (little-en
 
 - Write unsigned 16-bit integer (little-endian)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:u16le_set(offset, value)
+bytes:u16le_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+| value | Value to write (0-65535) |
+
+#### Usage
 
 Writes an unsigned 16-bit integer to the specified offset (little-endian byte order).
 
@@ -363,9 +528,21 @@ print(value)  -- Output: 12346
 
 - Read unsigned 16-bit integer (big-endian)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local value = buff:u16be(offset)
+bytes:u16be(offset: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+
+#### Usage
 
 Reads 2 bytes from the specified offset as an unsigned 16-bit integer (big-endian byte order).
 
@@ -373,9 +550,22 @@ Reads 2 bytes from the specified offset as an unsigned 16-bit integer (big-endia
 
 - Write unsigned 16-bit integer (big-endian)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:u16be_set(offset, value)
+bytes:u16be_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+| value | Value to write (0-65535) |
+
+#### Usage
 
 Writes an unsigned 16-bit integer to the specified offset (big-endian byte order).
 
@@ -383,9 +573,21 @@ Writes an unsigned 16-bit integer to the specified offset (big-endian byte order
 
 - Read unsigned 32-bit integer (little-endian)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local value = buff:u32le(offset)
+bytes:u32le(offset: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+
+#### Usage
 
 Reads 4 bytes from the specified offset as an unsigned 32-bit integer (little-endian byte order).
 
@@ -393,9 +595,22 @@ Reads 4 bytes from the specified offset as an unsigned 32-bit integer (little-en
 
 - Write unsigned 32-bit integer (little-endian)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:u32le_set(offset, value)
+bytes:u32le_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+| value | Value to write (0-4294967295) |
+
+#### Usage
 
 Writes an unsigned 32-bit integer to the specified offset (little-endian byte order).
 
@@ -418,9 +633,21 @@ print(string.format("Magic: 0x%04X, Length: %d", magic, length))
 
 - Read unsigned 32-bit integer (big-endian)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local value = buff:u32be(offset)
+bytes:u32be(offset: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+
+#### Usage
 
 Reads 4 bytes from the specified offset as an unsigned 32-bit integer (big-endian byte order).
 
@@ -428,9 +655,22 @@ Reads 4 bytes from the specified offset as an unsigned 32-bit integer (big-endia
 
 - Write unsigned 32-bit integer (big-endian)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:u32be_set(offset, value)
+bytes:u32be_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| offset | Byte offset position |
+| value | Value to write (0-4294967295) |
+
+#### Usage
 
 Writes an unsigned 32-bit integer to the specified offset (big-endian byte order).
 
@@ -438,10 +678,22 @@ Writes an unsigned 32-bit integer to the specified offset (big-endian byte order
 
 - Display buffer contents in hexadecimal format
 
+#### Function Prototype
+
+::: tip API
 ```lua
-buff:dump()
-buff:dump(start, last)
+bytes:dump(start: <number>, last: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| start | Start position (optional, default 1) |
+| last | End position (optional, default buffer size) |
+
+#### Usage
 
 Displays buffer contents in hexadecimal and ASCII format, similar to the hexdump tool.
 
@@ -463,9 +715,19 @@ buff:dump()
 
 - Check if buffer is read-only
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local is_readonly = buff:readonly()
+bytes:readonly()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns true if the buffer is read-only and cannot be modified. bytes objects created from strings are read-only.
 

@@ -7,6 +7,24 @@
 
 - 运行指定任务
 
+#### 函数原型
+
+::: tip API
+```lua
+task.run(name: <string>, opt: <table>, ...)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 必需。任务名称 |
+| opt | 可选。任务选项表 |
+| ... | 可选。传递给任务函数的参数 |
+
+#### 用法说明
+
 用于在自定义脚本、插件任务中运行[task](/zh/api/description/plugin-and-task.html#task)定义的任务或插件，例如：
 
 ```lua
