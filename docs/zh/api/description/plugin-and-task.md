@@ -8,6 +8,22 @@ Xmake 可以实现自定义任务或者插件，其两者的核心就是`task`�
 
 - 定义插件或者任务
 
+#### 函数原型
+
+::: tip API
+```lua
+task(name: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 任务名称字符串 |
+
+#### 用法说明
+
 `task`域用于描述一个自定义的任务实现，与[target](/zh/api/description/project-target)和[option](/zh/api/description/configuration-option)同级。
 
 例如，这里定义一个最简单的任务：
@@ -44,11 +60,41 @@ target("test")
 
 - 结束定义插件或任务
 
+#### 函数原型
+
+::: tip API
+```lua
+task_end()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
 这是一个可选api，显示离开选项作用域，用法和[target_end](/zh/api/description/project-target#target-end)类似。
 
 ## set_menu
 
 - 设置任务菜单
+
+#### 函数原型
+
+::: tip API
+```lua
+set_menu(options: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| options | 菜单选项表 |
+
+#### 用法说明
 
 通过设置一个菜单，这个任务就可以开放给用户自己通过命令行手动调用，菜单的设置如下：
 
@@ -197,6 +243,22 @@ $ xmake echo --color=red --bright hello xmake!
 
 - 设置任务类别
 
+#### 函数原型
+
+::: tip API
+```lua
+set_category(category: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| category | 类别名称字符串 |
+
+#### 用法说明
+
 仅仅用于菜单的分组显示，当然插件默认会用`plugin`，内置任务默认会用：`action`，但也仅仅只是个约定。
 
 ::: tip 注意
@@ -220,6 +282,22 @@ Plugins:
 ## on_run
 
 - 设置任务运行脚本
+
+#### 函数原型
+
+::: tip API
+```lua
+on_run(script: <function>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| script | 任务执行函数 |
+
+#### 用法说明
 
 可以有两种设置方式，最简单的就是设置内嵌函数：
 

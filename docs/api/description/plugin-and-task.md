@@ -6,6 +6,22 @@ Xmake can implement custom tasks or plugins. The core of both is the `task` task
 
 - Defining plugins or tasks
 
+#### Function Prototype
+
+::: tip API
+```lua
+task(name: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Task name string |
+
+#### Usage
+
 The `task` field is used to describe a custom task implementation, in the same level as [target](/api/description/project-target) and [option](/api/description/configuration-option).
 
 For example, here is a simple task defined:
@@ -42,11 +58,41 @@ Run the `hello` task after building the `test` target.
 
 - End defining plugins or tasks
 
+#### Function Prototype
+
+::: tip API
+```lua
+task_end()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
 This is an optional api that shows the departure option scope, similar to [target_end](/api/description/project-target#target-end).
 
 ## set_menu
 
 - Setting the task menu
+
+#### Function Prototype
+
+::: tip API
+```lua
+set_menu(options: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| options | Menu options table |
+
+#### Usage
 
 By setting a menu, this task can be opened to the user to manually call through the command line. The menu settings are as follows:
 
@@ -195,6 +241,22 @@ The last variable argument list is retrieved by `option.get("contents")` in the 
 
 - Setting task categories
 
+#### Function Prototype
+
+::: tip API
+```lua
+set_category(category: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| category | Category name string |
+
+#### Usage
+
 It is only used for grouping of menus. Of course, the plugin will use `plugin` by default. The built-in task will use `action` by default, but it is just a convention.
 
 ::: tip NOTE
@@ -219,6 +281,22 @@ If you do not call this interface to set the classification, the default is to u
 ## on_run
 
 - Setting up a task to run a script
+
+#### Function Prototype
+
+::: tip API
+```lua
+on_run(script: <function>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| script | Task execution function |
+
+#### Usage
 
 There are two ways to set it up. The easiest way is to set the inline function:
 
