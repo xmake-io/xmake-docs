@@ -10,19 +10,24 @@ To use this module, you need to import it first: `import("core.base.scheduler")`
 
 - Start a new coroutine task
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-local co = scheduler.co_start(function()
-    print("Hello from coroutine!")
-end)
+::: tip API
+```lua
+scheduler.co_start(cotask: <function>, ...)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| cotask | Required. The coroutine task function to execute |
+| ... | Optional. Arguments to pass to the task function |
+
+#### Usage
 
 Start a new coroutine and execute the specified task function. The coroutine will start executing immediately unless the scheduler is not yet started.
-
-Parameters:
-- `cotask` - Required. The coroutine task function to execute
-- `...` - Optional. Arguments to pass to the task function
 
 Return value:
 - Returns coroutine object on success, nil and error message on failure
@@ -50,20 +55,25 @@ print("Completed", count, "tasks")
 
 - Start a named coroutine task
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-local co = scheduler.co_start_named("worker", function()
-    print("Named coroutine started")
-end)
+::: tip API
+```lua
+scheduler.co_start_named(coname: <string>, cotask: <function>, ...)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| coname | Required. Coroutine name |
+| cotask | Required. The coroutine task function to execute |
+| ... | Optional. Arguments to pass to the task function |
+
+#### Usage
 
 Start a coroutine task with a specified name for easier debugging and monitoring.
-
-Parameters:
-- `coname` - Required. Coroutine name
-- `cotask` - Required. The coroutine task function to execute
-- `...` - Optional. Arguments to pass to the task function
 
 ```lua
 -- Start multiple named coroutines
@@ -80,23 +90,25 @@ end
 
 - Start a coroutine task with options
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-local co = scheduler.co_start_withopt({
-    name = "isolated-worker",
-    isolate = true
-}, function()
-    print("Isolated coroutine started")
-end)
+::: tip API
+```lua
+scheduler.co_start_withopt(opt: <table>, cotask: <function>, ...)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| opt | Required. Coroutine options table |
+| cotask | Required. The coroutine task function to execute |
+| ... | Optional. Arguments to pass to the task function |
+
+#### Usage
 
 Start a coroutine task with specific options.
-
-Parameters:
-- `opt` - Required. Coroutine options table
-- `cotask` - Required. The coroutine task function to execute
-- `...` - Optional. Arguments to pass to the task function
 
 `opt` options:
 - `name` - Coroutine name
@@ -118,15 +130,19 @@ end)
 
 - Suspend the current coroutine
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-function task()
-    print("Task started")
-    scheduler.co_suspend()  -- Suspend coroutine
-    print("Task resumed")
-end
+::: tip API
+```lua
+scheduler.co_suspend()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Suspend the currently executing coroutine and yield execution to other coroutines.
 
@@ -148,23 +164,24 @@ end)
 
 - Resume a suspended coroutine
 
+#### Function Prototype
+
+::: tip API
 ```lua
-import("core.base.scheduler")
-
-local co = scheduler.co_start(function()
-    local value = scheduler.co_suspend()
-    print("Resumed with value:", value)
-end)
-
--- Resume coroutine and pass arguments
-scheduler.co_resume(co, "hello")
+scheduler.co_resume(co: <coroutine>, ...)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| co | Required. The coroutine object to resume |
+| ... | Optional. Arguments to pass to the coroutine |
+
+#### Usage
 
 Resume the specified suspended coroutine and optionally pass arguments to it.
-
-Parameters:
-- `co` - Required. The coroutine object to resume
-- `...` - Optional. Arguments to pass to the coroutine
 
 ```lua
 -- Coroutine communication example
@@ -185,16 +202,19 @@ print("Got result:", result)
 
 - Yield execution of the current coroutine
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-function task()
-    for i = 1, 5 do
-        print("Task step", i)
-        scheduler.co_yield()  -- Yield execution
-    end
-end
+::: tip API
+```lua
+scheduler.co_yield()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Yield execution of the current coroutine to allow other coroutines to run. This is a key function for cooperative multitasking.
 
@@ -217,20 +237,23 @@ scheduler.co_group_wait("cooperative")
 
 - Sleep the coroutine for specified time
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-function delayed_task()
-    print("Task started")
-    scheduler.co_sleep(1000)  -- Sleep for 1 second
-    print("Task resumed after sleep")
-end
+::: tip API
+```lua
+scheduler.co_sleep(ms: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| ms | Required. Sleep time in milliseconds, 0 means no sleep |
+
+#### Usage
 
 Make the current coroutine sleep for the specified number of milliseconds, during which other coroutines can continue executing.
-
-Parameters:
-- `ms` - Required. Sleep time in milliseconds, 0 means no sleep
 
 ```lua
 -- Timed task example
@@ -247,22 +270,23 @@ end
 
 - Lock the specified lock
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-function critical_section()
-    scheduler.co_lock("shared_resource")
-    print("Entering critical section")
-    -- Critical section code
-    scheduler.co_unlock("shared_resource")
-    print("Leaving critical section")
-end
+::: tip API
+```lua
+scheduler.co_lock(lockname: <string>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| lockname | Required. The name of the lock |
+
+#### Usage
 
 Acquire the lock with the specified name. If the lock is already held by another coroutine, the current coroutine will wait until the lock becomes available.
-
-Parameters:
-- `lockname` - Required. The name of the lock
 
 ```lua
 -- Mutex lock example
@@ -284,43 +308,46 @@ end
 
 - Release the specified lock
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-function critical_section()
-    scheduler.co_lock("my_lock")
-    -- Critical section code
-    scheduler.co_unlock("my_lock")
-end
+::: tip API
+```lua
+scheduler.co_unlock(lockname: <string>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| lockname | Required. The name of the lock to release |
+
+#### Usage
 
 Release the lock with the specified name, allowing other waiting coroutines to acquire the lock.
-
-Parameters:
-- `lockname` - Required. The name of the lock to release
 
 ## scheduler.co_group_begin
 
 - Begin a coroutine group
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-scheduler.co_group_begin("workers", function(group)
-    -- All coroutines started in this scope will join the group
-    for i = 1, 5 do
-        scheduler.co_start(function()
-            print("Worker", i, "started")
-        end)
-    end
-end)
+::: tip API
+```lua
+scheduler.co_group_begin(name: <string>, scopefunc: <function>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. The coroutine group name |
+| scopefunc | Required. The scope function |
+
+#### Usage
 
 Begin a new coroutine group. All coroutines started within the specified function will join this group.
-
-Parameters:
-- `name` - Required. The coroutine group name
-- `scopefunc` - Required. The scope function
 
 ```lua
 -- Batch job processing example
@@ -340,30 +367,27 @@ end)
 
 - Wait for coroutine group completion
 
+#### Function Prototype
+
+::: tip API
 ```lua
-import("core.base.scheduler")
-
-scheduler.co_group_begin("test", function()
-    for i = 1, 10 do
-        scheduler.co_start(function()
-            print("Task", i, "completed")
-        end)
-    end
-end)
-
--- Wait for all coroutines to complete
-scheduler.co_group_wait("test")
-print("All tasks completed")
+scheduler.co_group_wait(name: <string>, opt: <table>)
 ```
+:::
 
-Wait for all coroutines in the specified group to complete execution.
+#### Parameter Description
 
-Parameters:
-- `name` - Required. The coroutine group name
-- `opt` - Optional. Wait options
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. The coroutine group name |
+| opt | Optional. Wait options |
 
 `opt` options:
 - `limit` - Maximum number of coroutines to wait for completion (default wait for all coroutines)
+
+#### Usage
+
+Wait for all coroutines in the specified group to complete execution.
 
 ```lua
 -- Limited wait example
@@ -386,17 +410,19 @@ print("First 3 tasks completed")
 
 - Get the currently running coroutine
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-function task()
-    local co = scheduler.co_running()
-    if co then
-        print("Current coroutine name:", co:name())
-        print("Current coroutine status:", co:status())
-    end
-end
+::: tip API
+```lua
+scheduler.co_running()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Get the currently running coroutine object.
 
@@ -419,11 +445,19 @@ end)
 
 - Get the total number of coroutines
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-print("Total coroutines:", scheduler.co_count())
+::: tip API
+```lua
+scheduler.co_count()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Get the total number of active coroutines in the current scheduler.
 
@@ -449,17 +483,24 @@ print("After starting tasks:", scheduler.co_count())
 
 - Create a coroutine semaphore
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-local semaphore = scheduler.co_semaphore("test", 2)  -- Initial value is 2
+::: tip API
+```lua
+scheduler.co_semaphore(name: <string>, value: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Semaphore name |
+| value | Optional. Initial semaphore value (default 0) |
+
+#### Usage
 
 Create a new coroutine semaphore for synchronization and resource control between coroutines.
-
-Parameters:
-- `name` - Required. Semaphore name
-- `value` - Optional. Initial semaphore value (default 0)
 
 Return value:
 - Semaphore object
@@ -484,17 +525,23 @@ end
 
 - Wait for semaphore
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-local semaphore = scheduler.co_semaphore("test", 1)
-local value = semaphore:wait(5000)  -- Wait for 5 seconds
+::: tip API
+```lua
+co_semaphore:wait(timeout: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| timeout | Optional. Timeout in milliseconds, -1 means wait indefinitely, 0 means don't wait |
+
+#### Usage
 
 Wait for the semaphore. If the semaphore value is greater than 0, return immediately; otherwise, suspend the current coroutine until the semaphore becomes available.
-
-Parameters:
-- `timeout` - Optional. Timeout in milliseconds, -1 means wait indefinitely, 0 means don't wait
 
 Return value:
 - Returns semaphore value on success, 0 on timeout, -1 on error
@@ -525,17 +572,23 @@ end)
 
 - Release semaphore
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-local semaphore = scheduler.co_semaphore("test", 0)
-local new_value = semaphore:post(2)  -- Increase by 2
+::: tip API
+```lua
+co_semaphore:post(value: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| value | Required. The value to increase by |
+
+#### Usage
 
 Release the semaphore by increasing its value and wake up waiting coroutines.
-
-Parameters:
-- `value` - Required. The value to increase by
 
 Return value:
 - The new semaphore value after release
@@ -563,12 +616,19 @@ end
 
 - Get semaphore name
 
-```lua
-import("core.base.scheduler")
+#### Function Prototype
 
-local semaphore = scheduler.co_semaphore("my_semaphore", 1)
-print("Semaphore name:", semaphore:name())
+::: tip API
+```lua
+co_semaphore:name()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Get the semaphore name.
 

@@ -7,6 +7,22 @@ Commonly used to get the value of the xmake command parameter option, often used
 
 - Get parameter option values
 
+#### Function Prototype
+
+::: tip API
+```lua
+option.get(name: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Option name |
+
+#### Usage
+
 Used to get parameter option values in plugin development, for example:
 
 ```lua

@@ -6,13 +6,24 @@ Provides native thread support for concurrent programming, including thread crea
 
 - Start a thread
 
-Creates and starts a thread to execute a callback function.
+#### Function Prototype
 
+::: tip API
 ```lua
-local t = thread.start(callback_function, ...)
+thread.start(callback: <function>, ...)
 ```
+:::
 
-Parameters: `callback` callback function to execute in the thread, `...` additional arguments passed to the callback function
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| callback | Required. Callback function to execute in the thread |
+| ... | Optional. Additional arguments passed to the callback function |
+
+#### Usage
+
+Creates and starts a thread to execute a callback function.
 
 Return Value: Returns a thread object that can be used to wait for thread completion
 
@@ -24,13 +35,25 @@ Each thread is a separate Lua VM instance, their Lua variable states are complet
 
 - Start a named thread
 
-Creates and starts a new thread with the specified name and callback function.
+#### Function Prototype
 
+::: tip API
 ```lua
-local t = thread.start_named("thread_name", callback_function, ...)
+thread.start_named(name: <string>, callback: <function>, ...)
 ```
+:::
 
-Parameters: `name` thread name, `callback` callback function to execute in the thread, `...` additional arguments passed to the callback function
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Thread name |
+| callback | Required. Callback function to execute in the thread |
+| ... | Optional. Additional arguments passed to the callback function |
+
+#### Usage
+
+Creates and starts a new thread with the specified name and callback function.
 
 Return Value: Returns a thread object that can be used to wait for thread completion
 
@@ -65,13 +88,21 @@ end
 
 - Get the current thread name
 
-Returns the name of the currently running thread.
+#### Function Prototype
 
+::: tip API
 ```lua
-local name = thread.running()
+thread.running()
 ```
+:::
 
-### Return Value
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+Returns the name of the currently running thread.
 
 Returns the name of the current thread as a string.
 
@@ -79,11 +110,21 @@ Returns the name of the current thread as a string.
 
 - Create a mutex object
 
-Creates a new mutex for thread synchronization.
+#### Function Prototype
 
+::: tip API
 ```lua
-local mutex = thread.mutex()
+thread.mutex()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+Creates a new mutex for thread synchronization.
 
 Return Value: Returns a mutex object with the following methods: `mutex:lock()` lock the mutex, `mutex:unlock()` unlock the mutex
 
@@ -121,13 +162,21 @@ end
 
 - Create an event object
 
-Creates a new event for thread signaling and synchronization.
+#### Function Prototype
 
+::: tip API
 ```lua
-local event = thread.event()
+thread.event()
 ```
+:::
 
-Parameters: `timeout` timeout in milliseconds (-1 for infinite wait)
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+Creates a new event for thread signaling and synchronization.
 
 Return Value: Returns an event object with the following methods: `event:wait(timeout)` wait for the event to be signaled, `event:post()` signal the event
 
@@ -168,13 +217,24 @@ end
 
 - Create a semaphore object
 
-Creates a new semaphore for thread synchronization and resource counting.
+#### Function Prototype
 
+::: tip API
 ```lua
-local semaphore = thread.semaphore(name, initial_count)
+thread.semaphore(name: <string>, initial_count: <number>)
 ```
+:::
 
-Parameters: `name` semaphore name, `initial_count` initial count value
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Semaphore name |
+| initial_count | Required. Initial count value |
+
+#### Usage
+
+Creates a new semaphore for thread synchronization and resource counting.
 
 Return Value: Returns a semaphore object with the following methods: `semaphore:wait(timeout)` wait for semaphore (decrement count), `semaphore:post(count)` post to semaphore (increment count)
 
@@ -215,11 +275,21 @@ end
 
 - Create a thread-safe queue object
 
-Creates a new thread-safe queue for inter-thread data communication.
+#### Function Prototype
 
+::: tip API
 ```lua
-local queue = thread.queue()
+thread.queue()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+Creates a new thread-safe queue for inter-thread data communication.
 
 Return Value: Returns a queue object with the following methods: `queue:push(value)` push a value to the queue, `queue:pop()` pop a value from the queue, `queue:empty()` check if the queue is empty
 
@@ -263,11 +333,21 @@ end
 
 - Create a shared data object
 
-Creates a new shared data object for inter-thread data sharing.
+#### Function Prototype
 
+::: tip API
 ```lua
-local sharedata = thread.sharedata()
+thread.sharedata()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+Creates a new shared data object for inter-thread data sharing.
 
 Return Value: Returns a shared data object with the following methods: `sharedata:set(value)` set the shared data value, `sharedata:get()` get the shared data value
 
@@ -309,13 +389,23 @@ end
 
 - Wait for thread completion (thread instance method)
 
-Waits for the thread to complete execution. This method supports mixed scheduling with coroutines, allowing you to wait for thread completion within a coroutine.
+#### Function Prototype
 
+::: tip API
 ```lua
-thread:wait(timeout)
+thread:wait(timeout: <number>)
 ```
+:::
 
-Parameters: `timeout` timeout in milliseconds (-1 for infinite wait)
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| timeout | Required. Timeout in milliseconds (-1 for infinite wait) |
+
+#### Usage
+
+Waits for the thread to complete execution. This method supports mixed scheduling with coroutines, allowing you to wait for thread completion within a coroutine.
 
 Return Value: Returns a status code indicating the wait result
 

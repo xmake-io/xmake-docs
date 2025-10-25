@@ -11,11 +11,19 @@ To use this module, you need to import it first: `import("core.base.queue")`
 
 - Create an empty queue
 
-```lua
-import("core.base.queue")
+#### Function Prototype
 
-local q = queue.new()
+::: tip API
+```lua
+queue.new()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Creates a new empty queue object.
 
@@ -29,9 +37,21 @@ print(q:empty())  -- Output: true
 
 - Enqueue (add element to the end)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-queue:push(item)
+queue:push(item: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| item | Required. Element to add to the queue |
+
+#### Usage
 
 Adds an element to the end of the queue. This is a fundamental queue operation.
 
@@ -60,9 +80,19 @@ q:push(true)
 
 - Dequeue (remove and return element from the front)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local item = queue:pop()
+queue:pop()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Removes and returns an element from the front of the queue. Returns nil if the queue is empty. This is a fundamental queue operation.
 
@@ -96,9 +126,19 @@ end
 
 - Peek at the front element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local item = queue:first()
+queue:first()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the first element (front) of the queue without removing it. Returns nil if the queue is empty.
 
@@ -129,9 +169,19 @@ end
 
 - Peek at the rear element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local item = queue:last()
+queue:last()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the last element (rear) of the queue without removing it. Returns nil if the queue is empty.
 
@@ -149,9 +199,19 @@ print(q:size())   -- Output: 3 (element not removed)
 
 - Get queue size
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local count = queue:size()
+queue:size()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the number of elements in the queue.
 
@@ -171,9 +231,19 @@ print(q:size())  -- Output: 2
 
 - Check if queue is empty
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local is_empty = queue:empty()
+queue:empty()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns true if the queue is empty (contains no elements).
 
@@ -203,9 +273,19 @@ end
 
 - Clear the queue
 
+#### Function Prototype
+
+::: tip API
 ```lua
 queue:clear()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Removes all elements from the queue, resetting it to an empty queue.
 
@@ -226,9 +306,19 @@ print(q:empty()) -- Output: true
 
 - Clone the queue
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local new_queue = queue:clone()
+queue:clone()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Creates a complete copy of the queue, with the new queue being independent of the original.
 
@@ -252,11 +342,19 @@ print(q2:size())  -- Output: 2 (copy modified)
 
 - Iterate forward through the queue
 
+#### Function Prototype
+
+::: tip API
 ```lua
-for item in queue:items() do
-    -- Process item
-end
+queue:items()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns an iterator function for traversing all elements in the queue from front to rear.
 
@@ -297,11 +395,19 @@ Iteration does not modify the queue content; elements remain in the queue after 
 
 - Iterate backward through the queue
 
+#### Function Prototype
+
+::: tip API
 ```lua
-for item in queue:ritems() do
-    -- Process item
-end
+queue:ritems()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns an iterator function for traversing all elements in the queue from rear to front.
 

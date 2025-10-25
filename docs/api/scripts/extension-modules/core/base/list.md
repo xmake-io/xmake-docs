@@ -11,11 +11,19 @@ To use this module, you need to import it first: `import("core.base.list")`
 
 - Create an empty linked list
 
-```lua
-import("core.base.list")
+#### Function Prototype
 
-local l = list.new()
+::: tip API
+```lua
+list.new()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Creates a new empty doubly linked list object.
 
@@ -29,9 +37,21 @@ print(l:empty())  -- Output: true
 
 - Add element to the end of the list
 
+#### Function Prototype
+
+::: tip API
 ```lua
-list:push(item)
+list:push(item: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| item | Required. The element to add |
+
+#### Usage
 
 Adds an element to the end of the list. Equivalent to `list:insert_last(item)`.
 
@@ -56,9 +76,19 @@ The list stores references to elements, not copies. You can store values of any 
 
 - Remove element from the end of the list
 
+#### Function Prototype
+
+::: tip API
 ```lua
 list:pop()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Removes an element from the end of the list. Equivalent to `list:remove_last()`.
 
@@ -76,9 +106,21 @@ print(l:last().value)  -- Output: 2
 
 - Add element to the beginning of the list
 
+#### Function Prototype
+
+::: tip API
 ```lua
-list:unshift(item)
+list:unshift(item: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| item | Required. The element to add |
+
+#### Usage
 
 Adds an element to the beginning of the list. Equivalent to `list:insert_first(item)`.
 
@@ -97,9 +139,19 @@ end
 
 - Remove element from the beginning of the list
 
+#### Function Prototype
+
+::: tip API
 ```lua
 list:shift()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Removes an element from the beginning of the list. Equivalent to `list:remove_first()`.
 
@@ -117,15 +169,24 @@ print(l:first().value)  -- Output: 2
 
 - Insert an element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-list:insert(item, after)
+list:insert(item: <any>, after: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| item | Required. The element to insert |
+| after | Optional. Insert after this element; if nil, inserts at the end |
+
+#### Usage
 
 Inserts a new element after the specified element. If the `after` parameter is not provided, inserts at the end of the list.
-
-Parameters:
-- `item`: The element to insert
-- `after`: Optional, insert after this element; if nil, inserts at the end
 
 ```lua
 local l = list.new()
@@ -147,9 +208,21 @@ end
 
 - Insert element at the beginning
 
+#### Function Prototype
+
+::: tip API
 ```lua
-list:insert_first(item)
+list:insert_first(item: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| item | Required. The element to insert |
+
+#### Usage
 
 Inserts an element at the beginning of the list.
 
@@ -168,9 +241,21 @@ print(l:first().value)  -- Output: 1
 
 - Insert element at the end
 
+#### Function Prototype
+
+::: tip API
 ```lua
-list:insert_last(item)
+list:insert_last(item: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| item | Required. The element to insert |
+
+#### Usage
 
 Inserts an element at the end of the list.
 
@@ -187,9 +272,21 @@ print(l:last().value)  -- Output: 3
 
 - Remove specified element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local removed_item = list:remove(item)
+list:remove(item: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| item | Required. The element to remove |
+
+#### Usage
 
 Removes the specified element from the list and returns the removed element.
 
@@ -228,9 +325,19 @@ print(l:empty())  -- Output: true
 
 - Remove element from the beginning
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local removed_item = list:remove_first()
+list:remove_first()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Removes an element from the beginning of the list and returns the removed element. Returns nil if the list is empty.
 
@@ -248,9 +355,19 @@ print(l:first().value)  -- Output: 2
 
 - Remove element from the end
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local removed_item = list:remove_last()
+list:remove_last()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Removes an element from the end of the list and returns the removed element. Returns nil if the list is empty.
 
@@ -268,9 +385,19 @@ print(l:last().value)  -- Output: 2
 
 - Get the first element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local item = list:first()
+list:first()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the first element of the list without removing it. Returns nil if the list is empty.
 
@@ -287,9 +414,19 @@ print(l:first().value)  -- Output: 1
 
 - Get the last element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local item = list:last()
+list:last()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the last element of the list without removing it. Returns nil if the list is empty.
 
@@ -306,9 +443,21 @@ print(l:last().value)  -- Output: 3
 
 - Get the next element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local next_item = list:next(current)
+list:next(current: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| current | Optional. The current element; if nil, returns the first element |
+
+#### Usage
 
 Gets the next element after the specified element. If `current` is nil, returns the first element.
 
@@ -342,9 +491,21 @@ end
 
 - Get the previous element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local prev_item = list:prev(current)
+list:prev(current: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| current | Optional. The current element; if nil, returns the last element |
+
+#### Usage
 
 Gets the previous element before the specified element. If `current` is nil, returns the last element.
 
@@ -378,9 +539,19 @@ end
 
 - Get list size
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local count = list:size()
+list:size()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the number of elements in the list.
 
@@ -397,9 +568,19 @@ print(l:size())  -- Output: 3
 
 - Check if list is empty
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local is_empty = list:empty()
+list:empty()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns true if the list is empty (contains no elements).
 
@@ -415,9 +596,19 @@ print(l:empty())  -- Output: false
 
 - Clear the list
 
+#### Function Prototype
+
+::: tip API
 ```lua
 list:clear()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Removes all elements from the list, resetting it to an empty list.
 
@@ -436,11 +627,19 @@ print(l:size())   -- Output: 0
 
 - Iterate forward through the list
 
+#### Function Prototype
+
+::: tip API
 ```lua
-for item in list:items() do
-    -- Process item
-end
+list:items()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns an iterator function for traversing all elements in the list from head to tail.
 
@@ -476,11 +675,19 @@ end
 
 - Iterate backward through the list
 
+#### Function Prototype
+
+::: tip API
 ```lua
-for item in list:ritems() do
-    -- Process item
-end
+list:ritems()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns an iterator function for traversing all elements in the list from tail to head.
 

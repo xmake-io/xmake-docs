@@ -11,23 +11,30 @@ To use this module, you need to import it first: `import("core.base.process")`
 
 - Open a subprocess with command string
 
+#### Function Prototype
+
+::: tip API
 ```lua
-import("core.base.process")
-
-local proc = process.open(command, opt)
+process.open(command: <string>, opt: <table>)
 ```
+:::
 
-Creates a new subprocess by executing a command string. Returns a subprocess object that can be used to control and communicate with the process.
+#### Parameter Description
 
-Parameters:
-- `command` - Required. The command string to execute
-- `opt` - Optional. Process options table
+| Parameter | Description |
+|-----------|-------------|
+| command | Required. The command string to execute |
+| opt | Optional. Process options table |
 
 Options in `opt`:
 - `stdin` - Input source (file path, file object, or pipe object)
 - `stdout` - Output destination (file path, file object, or pipe object)
 - `stderr` - Error output destination (file path, file object, or pipe object)
 - `envs` - Environment variables array (e.g., `{"PATH=xxx", "XXX=yyy"}`)
+
+#### Usage
+
+Creates a new subprocess by executing a command string. Returns a subprocess object that can be used to control and communicate with the process.
 
 ```lua
 -- Basic process execution
@@ -64,18 +71,25 @@ proc:close()
 
 - Open a subprocess with program and arguments list
 
-```lua
-import("core.base.process")
+#### Function Prototype
 
-local proc = process.openv(program, argv, opt)
+::: tip API
+```lua
+process.openv(program: <string>, argv: <table>, opt: <table>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| program | Required. The program to execute |
+| argv | Required. Array of arguments to pass to the program |
+| opt | Optional. Process options table (same as `process.open`) |
+
+#### Usage
 
 Creates a new subprocess by executing a program with a list of arguments. This is safer than `process.open` as it avoids shell interpretation issues.
-
-Parameters:
-- `program` - Required. The program to execute
-- `argv` - Required. Array of arguments to pass to the program
-- `opt` - Optional. Process options table (same as `process.open`)
 
 ```lua
 -- Execute program with arguments
@@ -111,14 +125,23 @@ proc:close()
 
 - Wait for subprocess to complete
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local ok, status = process:wait(timeout)
+process:wait(timeout: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| timeout | Optional. Timeout in milliseconds. Use -1 for infinite wait, 0 for non-blocking |
+
+#### Usage
 
 Waits for the subprocess to complete and returns the exit status. Can be used with or without timeout.
-
-Parameters:
-- `timeout` - Optional. Timeout in milliseconds. Use -1 for infinite wait, 0 for non-blocking
 
 Returns:
 - `ok` - Exit code (0 for success, negative for error)
@@ -160,9 +183,19 @@ proc:close()
 
 - Kill the subprocess
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local success, error = process:kill()
+process:kill()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Terminates the subprocess immediately. Returns true if successful, false with error message if failed.
 
@@ -197,9 +230,19 @@ proc:close()
 
 - Close the subprocess
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local success = process:close()
+process:close()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Closes the subprocess and releases associated resources. Should be called when done with the process.
 
@@ -223,9 +266,19 @@ proc:close()
 
 - Get the process name
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local name = process:name()
+process:name()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the name of the process (filename without path).
 
@@ -239,9 +292,19 @@ proc:close()
 
 - Get the process program path
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local program = process:program()
+process:program()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the full program path that was used to start the process.
 
@@ -255,9 +318,19 @@ proc:close()
 
 - Get the process cdata
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local cdata = process:cdata()
+process:cdata()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the underlying cdata object for the process. Used internally by the scheduler and other low-level operations.
 
@@ -272,9 +345,19 @@ proc:close()
 
 - Get the object type
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local type = process:otype()
+process:otype()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the object type identifier. For subprocess objects, this returns 3 (poller.OT_PROC).
 

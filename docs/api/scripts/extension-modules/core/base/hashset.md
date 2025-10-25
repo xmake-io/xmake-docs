@@ -11,11 +11,19 @@ To use this module, you need to import it first: `import("core.base.hashset")`
 
 - Create an empty hash set
 
-```lua
-import("core.base.hashset")
+#### Function Prototype
 
-local set = hashset.new()
+::: tip API
+```lua
+hashset.new()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Creates an empty hash set object.
 
@@ -29,11 +37,21 @@ print(set:empty())  -- Output: true
 
 - Create hash set from parameter list
 
-```lua
-import("core.base.hashset")
+#### Function Prototype
 
-local set = hashset.of(1, 2, 3, 5, 5, 7, 1, 9)
+::: tip API
+```lua
+hashset.of(...)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| ... | Variable number of values to initialize the set |
+
+#### Usage
 
 Creates a hash set from a parameter list, automatically removing duplicate elements.
 
@@ -53,11 +71,21 @@ assert(not set:has(10))
 
 - Create hash set from array
 
-```lua
-import("core.base.hashset")
+#### Function Prototype
 
-local set = hashset.from(array)
+::: tip API
+```lua
+hashset.from(array: <table>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| array | Required. Array to create the set from |
+
+#### Usage
 
 Creates a hash set from an array, automatically removing duplicate elements.
 
@@ -76,9 +104,21 @@ local unique_array = set:to_array()
 
 - Insert an element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local inserted = set:insert(value)
+hashset:insert(value: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| value | Required. Element to insert |
+
+#### Usage
 
 Inserts an element into the hash set. If the element already exists, it will not be inserted.
 
@@ -112,9 +152,21 @@ set:insert(nil)  -- Can also insert nil value
 
 - Remove an element
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local removed = set:remove(value)
+hashset:remove(value: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| value | Required. Element to remove |
+
+#### Usage
 
 Removes an element from the hash set.
 
@@ -137,9 +189,21 @@ print(result)  -- Output: false (element doesn't exist)
 
 - Check if element exists
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local exists = set:has(value)
+hashset:has(value: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| value | Required. Element to check |
+
+#### Usage
 
 Checks if the specified element is in the hash set.
 
@@ -165,9 +229,19 @@ end
 
 - Get set size
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local count = set:size()
+hashset:size()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the number of elements in the hash set.
 
@@ -186,9 +260,19 @@ print(set:size())  -- Output: 5
 
 - Check if set is empty
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local is_empty = set:empty()
+hashset:empty()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns true if the set is empty (contains no elements).
 
@@ -204,9 +288,19 @@ print(set:empty())  -- Output: false
 
 - Clear the set
 
+#### Function Prototype
+
+::: tip API
 ```lua
-set:clear()
+hashset:clear()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Removes all elements from the set, resetting it to an empty set.
 
@@ -223,9 +317,19 @@ print(set:empty()) -- Output: true
 
 - Clone the set
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local new_set = set:clone()
+hashset:clone()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Creates a complete copy of the hash set, with the new set being independent of the original.
 
@@ -249,9 +353,19 @@ assert(set1 == set2)  -- Equal
 
 - Convert to array
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local array = set:to_array()
+hashset:to_array()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Converts the hash set to an array, returning a table containing all elements. nil values are ignored.
 
@@ -271,11 +385,19 @@ print("Deduplicated size:", #unique_array)    -- 5
 
 - Iterate over set elements
 
+#### Function Prototype
+
+::: tip API
 ```lua
-for item in set:items() do
-    -- Process item
-end
+hashset:items()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns an iterator function for traversing all elements in the set (unordered).
 
@@ -310,11 +432,19 @@ print("Sum:", sum)  -- Output: 15
 
 - Iterate over set elements in order
 
+#### Function Prototype
+
+::: tip API
 ```lua
-for item in set:orderitems() do
-    -- Process item
-end
+hashset:orderitems()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns an iterator function for traversing all elements in the set in ascending order.
 

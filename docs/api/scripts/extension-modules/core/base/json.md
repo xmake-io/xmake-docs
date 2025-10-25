@@ -11,6 +11,24 @@ There are also some examples here: [Json Examples](https://github.com/xmake-io/x
 
 - Get the lua table directly from the string decoding json
 
+#### Function Prototype
+
+::: tip API
+```lua
+json.decode(jsonstr: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| jsonstr | Required. JSON string to decode |
+
+#### Usage
+
+Decodes a JSON string into a Lua table.
+
 ```lua
 import("core.base.json")
 local luatable = json.decode('[1,"2", {"a":1, "b":true}]')
@@ -36,6 +54,24 @@ If there is null in it, you can use `json.null` to judge
 
 - Encode a lua table
 
+#### Function Prototype
+
+::: tip API
+```lua
+json.encode(t: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| t | Required. Lua table to encode |
+
+#### Usage
+
+Encodes a Lua table into a JSON string.
+
 ```lua
 local jsonstr = json.encode({1, "2", {a = 1}})
 ```
@@ -50,6 +86,24 @@ local jsonstr = json.encode({json.null, 1, "2", false, true})
 
 - Load the json file directly and parse it into a lua table
 
+#### Function Prototype
+
+::: tip API
+```lua
+json.loadfile(filepath: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filepath | Required. Path to the JSON file to load |
+
+#### Usage
+
+Loads a JSON file and parses it into a Lua table.
+
 ```lua
 local luatable = json.loadfile("/tmp/xxx.json")
 ```
@@ -57,6 +111,25 @@ local luatable = json.loadfile("/tmp/xxx.json")
 ## json.savefile
 
 - Save the lua table to the specified json file
+
+#### Function Prototype
+
+::: tip API
+```lua
+json.savefile(filepath: <string>, data: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filepath | Required. Path to save the JSON file |
+| data | Required. Lua table to save |
+
+#### Usage
+
+Saves a Lua table to a JSON file.
 
 ```lua
 json.savefile("/tmp/xxx.json", {1, {a = 1}})
