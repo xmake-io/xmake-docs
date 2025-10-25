@@ -313,11 +313,15 @@ socket:bind(addr: <string>, port: <number>)
 | addr | Required. IP address |
 | port | Required. Port number |
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Returns a positive number |
+
 #### Usage
 
 Binds the socket to the specified IP address and port.
-
-Return value: Returns a positive number on success, -1 and error message on failure.
 
 ## socket:listen
 
@@ -364,11 +368,15 @@ socket:accept(opt: <table>)
 Options:
 - `timeout`: Timeout (milliseconds), default -1 (infinite wait)
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| socket | Returns client socket object |
+
 #### Usage
 
 Accepts a client connection, returns a new socket object for communicating with the client.
-
-Return value: Returns client socket object on success, nil and error message on failure.
 
 Non-blocking by default, returns immediately if no client is connecting. Can be used with [sock:wait](#sock-wait) for event-driven approach:
 
@@ -403,11 +411,15 @@ socket:connect(addr: <string>, port: <number>, opt: <table>)
 Options:
 - `timeout`: Connection timeout (milliseconds)
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Returns a positive number |
+
 #### Usage
 
 Connects to the specified remote address and port.
-
-Return value: Returns a positive number on success, -1 and error message on failure.
 
 ## socket:send
 
@@ -433,11 +445,15 @@ Options:
 - `start`: Data start position, default 1
 - `last`: Data end position, default is data size
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Actual number of bytes sent |
+
 #### Usage
 
 Sends data through the socket.
-
-Return value: Actual number of bytes sent, returns -1 on failure.
 
 Non-blocking mode may only send partial data, blocking mode waits until all data is sent:
 
@@ -476,13 +492,16 @@ Options:
 - `block`: Whether to block receiving, default false
 - `timeout`: Timeout (milliseconds)
 
+#### Return Values
+
+| Type | Description |
+|------|-------------|
+| recv | Actual number of bytes received |
+| data | Received data (bytes object) |
+
 #### Usage
 
 Receives data from the socket.
-
-Return values:
-- `recv`: Actual number of bytes received, returns -1 on failure
-- `data`: Received data (bytes object)
 
 ```lua
 import("core.base.bytes")
@@ -520,11 +539,15 @@ socket:sendto(data: <string|bytes>, addr: <string>, port: <number>, opt: <table>
 | port | Required. Target port number |
 | opt | Optional. Option parameters |
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Actual number of bytes sent |
+
 #### Usage
 
 Sends a datagram to the specified address via UDP socket.
-
-Return value: Actual number of bytes sent, returns -1 on failure.
 
 ```lua
 import("core.base.socket")
@@ -557,15 +580,18 @@ socket:recvfrom(buff: <bytes>, size: <number>, opt: <table>)
 Options:
 - `block`: Whether to block receiving
 
+#### Return Values
+
+| Type | Description |
+|------|-------------|
+| recv | Actual number of bytes received |
+| data | Received data (bytes object) |
+| peer_addr | Sender's IP address |
+| peer_port | Sender's port number |
+
 #### Usage
 
 Receives a datagram from the UDP socket and gets the sender's address information.
-
-Return values:
-- `recv`: Actual number of bytes received
-- `data`: Received data (bytes object)
-- `peer_addr`: Sender's IP address
-- `peer_port`: Sender's port number
 
 Complete UDP echo server example:
 
@@ -617,11 +643,15 @@ Supported event constants:
 - `socket.EV_CONN` (2): Connection event (equivalent to EV_SEND)
 - `socket.EV_ACPT` (1): Accept connection event (equivalent to EV_RECV)
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Returns the actual event constant value that occurred |
+
 #### Usage
 
 Waits for specified socket events to occur.
-
-Return value: Returns the actual event constant value that occurred.
 
 Implementing event-driven in non-blocking mode:
 

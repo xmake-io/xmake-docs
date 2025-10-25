@@ -313,11 +313,15 @@ socket:bind(addr: <string>, port: <number>)
 | addr | 必需。IP 地址 |
 | port | 必需。端口号 |
 
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| number | 成功返回正数 |
+
 #### 用法说明
 
 将套接字绑定到指定的 IP 地址和端口。
-
-返回值：成功返回正数，失败返回 -1 和错误信息。
 
 ## socket:listen
 
@@ -361,16 +365,18 @@ socket:accept(opt: <table>)
 |------|------|
 | opt | 可选。选项参数 |
 
-#### 用法说明
-
-接受一个客户端连接，返回新的套接字对象用于与客户端通信。
-
 `opt` 选项：
 - `timeout`：超时时间（毫秒），默认 -1（无限等待）
 
-返回值：成功返回客户端套接字对象，失败返回 nil 和错误信息。
+#### 返回值说明
 
-默认是非阻塞的，如果没有客户端连接会立即返回。可配合 [sock:wait](#sock-wait) 实现事件驱动：
+| 类型 | 描述 |
+|------|------|
+| socket | 成功返回客户端套接字对象 |
+
+#### 用法说明
+
+接受一个客户端连接，返回新的套接字对象用于与客户端通信。默认是非阻塞的，如果没有客户端连接会立即返回。可配合 [sock:wait](#sock-wait) 实现事件驱动：
 
 ```lua
 -- 等待客户端连接
@@ -407,7 +413,11 @@ socket:connect(addr: <string>, port: <number>, opt: <table>)
 `opt` 选项：
 - `timeout`：连接超时时间（毫秒）
 
-返回值：成功返回正数，失败返回 -1 和错误信息。
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| number | 成功返回正数 |
 
 ## socket:send
 
@@ -437,7 +447,11 @@ socket:send(data: <string|bytes>, opt: <table>)
 - `start`：数据起始位置，默认 1
 - `last`：数据结束位置，默认为数据大小
 
-返回值：实际发送的字节数，失败返回 -1。
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| number | 实际发送的字节数 |
 
 非阻塞模式可能只发送部分数据，阻塞模式会等待直到所有数据发送完成：
 
@@ -480,9 +494,12 @@ socket:recv(buff: <bytes>, size: <number>, opt: <table>)
 - `block`：是否阻塞接收，默认 false
 - `timeout`：超时时间（毫秒）
 
-返回值：
-- `recv`：实际接收的字节数，失败返回 -1
-- `data`：接收的数据（bytes 对象）
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| recv | 实际接收的字节数 |
+| data | 接收的数据（bytes 对象） |
 
 ```lua
 import("core.base.bytes")
@@ -524,7 +541,11 @@ socket:sendto(data: <string|bytes>, addr: <string>, port: <number>, opt: <table>
 
 通过 UDP 套接字发送数据报到指定地址。
 
-返回值：实际发送的字节数，失败返回 -1。
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| number | 实际发送的字节数 |
 
 ```lua
 import("core.base.socket")
@@ -561,11 +582,14 @@ socket:recvfrom(buff: <bytes>, size: <number>, opt: <table>)
 `opt` 选项：
 - `block`：是否阻塞接收
 
-返回值：
-- `recv`：实际接收的字节数
-- `data`：接收的数据（bytes 对象）
-- `peer_addr`：发送方 IP 地址
-- `peer_port`：发送方端口号
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| recv | 实际接收的字节数 |
+| data | 接收的数据（bytes 对象） |
+| peer_addr | 发送方 IP 地址 |
+| peer_port | 发送方端口号 |
 
 完整的 UDP 回显服务器示例：
 
@@ -621,9 +645,15 @@ socket:wait(events: <number>, timeout: <number>)
 - `socket.EV_CONN` (2)：连接事件（等同于 EV_SEND）
 - `socket.EV_ACPT` (1)：接受连接事件（等同于 EV_RECV）
 
-返回值：返回实际发生的事件常量值。
+#### 返回值说明
 
-在非阻塞模式下实现事件驱动：
+| 类型 | 描述 |
+|------|------|
+| number | 返回实际发生的事件常量值 |
+
+#### 用法说明
+
+等待指定的套接字事件发生。在非阻塞模式下实现事件驱动：
 
 ```lua
 -- 等待套接字可读

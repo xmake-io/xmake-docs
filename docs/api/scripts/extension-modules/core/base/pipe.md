@@ -187,13 +187,16 @@ Options:
 - `start`: Buffer start position, default 1
 - `timeout`: Timeout in milliseconds, default -1 (infinite wait)
 
+#### Return Values
+
+| Type | Description |
+|------|-------------|
+| read | Actual number of bytes read |
+| data | Read data (bytes object) |
+
 #### Usage
 
 Reads data from the pipe into the specified buffer.
-
-Return values:
-- `read`: Actual number of bytes read, returns -1 on failure
-- `data`: Read data (bytes object), returns error message on failure
 
 Non-blocking mode (default) returns immediately, may return 0 indicating no data available. Blocking mode waits until the specified amount of data is read or an error occurs:
 
@@ -233,12 +236,15 @@ Options:
 - `last`: Data end position, default is data size
 - `timeout`: Timeout in milliseconds, default -1
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| write | Actual number of bytes written |
+
 #### Usage
 
 Writes data to the pipe.
-
-Return values:
-- `write`: Actual number of bytes written, returns -1 on failure
 
 Non-blocking mode (default) may only write partial data. Blocking mode waits until all data is successfully written:
 
@@ -271,12 +277,15 @@ pipe:connect(opt: <table>)
 Options:
 - `timeout`: Timeout in milliseconds, default -1
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Returns a positive number |
+
 #### Usage
 
 Connects to a named pipe, only used on the server-side of named pipes. After creating a named pipe on the server, call this method to wait for client connection.
-
-Return values:
-- Returns a positive number on success, -1 on failure
 
 ```lua
 import("core.base.pipe")
@@ -312,12 +321,15 @@ Event constants:
 - `pipe.EV_WRITE` (2): Writable event, indicates pipe can accept data
 - `pipe.EV_CONN` (2): Connection event, used for named pipes to wait for client connection
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Returns the actual event constant value that occurred |
+
 #### Usage
 
 Waits for specified pipe events to occur. In non-blocking mode, this method can be used to implement event-driven I/O.
-
-Return values:
-- Returns the actual event constant value that occurred
 
 In non-blocking mode, wait can be used to implement efficient event loops:
 

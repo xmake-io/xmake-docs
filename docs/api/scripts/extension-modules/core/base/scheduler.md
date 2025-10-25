@@ -25,12 +25,15 @@ scheduler.co_start(cotask: <function>, ...)
 | cotask | Required. The coroutine task function to execute |
 | ... | Optional. Arguments to pass to the task function |
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| coroutine | Returns coroutine object |
+
 #### Usage
 
 Start a new coroutine and execute the specified task function. The coroutine will start executing immediately unless the scheduler is not yet started.
-
-Return value:
-- Returns coroutine object on success, nil and error message on failure
 
 ```lua
 -- Start coroutine with arguments
@@ -142,12 +145,15 @@ scheduler.co_suspend()
 
 No parameters required for this function.
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| any | Returns arguments passed to `co_resume` |
+
 #### Usage
 
 Suspend the currently executing coroutine and yield execution to other coroutines.
-
-Return value:
-- Returns arguments passed to `co_resume`
 
 ```lua
 local co = scheduler.co_start(function()
@@ -422,12 +428,15 @@ scheduler.co_running()
 
 No parameters required for this function.
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| coroutine | Current coroutine object (nil if no coroutine is running) |
+
 #### Usage
 
 Get the currently running coroutine object.
-
-Return value:
-- Current coroutine object, or nil if no coroutine is running
 
 ```lua
 -- Coroutine info example
@@ -457,12 +466,15 @@ scheduler.co_count()
 
 No parameters required for this function.
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Number of coroutines |
+
 #### Usage
 
 Get the total number of active coroutines in the current scheduler.
-
-Return value:
-- Number of coroutines
 
 ```lua
 -- Coroutine counting example
@@ -498,12 +510,15 @@ scheduler.co_semaphore(name: <string>, value: <number>)
 | name | Required. Semaphore name |
 | value | Optional. Initial semaphore value (default 0) |
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| semaphore | Semaphore object |
+
 #### Usage
 
 Create a new coroutine semaphore for synchronization and resource control between coroutines.
-
-Return value:
-- Semaphore object
 
 ```lua
 -- Semaphore example
@@ -539,12 +554,15 @@ co_semaphore:wait(timeout: <number>)
 |-----------|-------------|
 | timeout | Optional. Timeout in milliseconds, -1 means wait indefinitely, 0 means don't wait |
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Returns semaphore value |
+
 #### Usage
 
 Wait for the semaphore. If the semaphore value is greater than 0, return immediately; otherwise, suspend the current coroutine until the semaphore becomes available.
-
-Return value:
-- Returns semaphore value on success, 0 on timeout, -1 on error
 
 ```lua
 -- Semaphore wait example
@@ -586,12 +604,15 @@ co_semaphore:post(value: <number>)
 |-----------|-------------|
 | value | Required. The value to increase by |
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | The new semaphore value after release |
+
 #### Usage
 
 Release the semaphore by increasing its value and wake up waiting coroutines.
-
-Return value:
-- The new semaphore value after release
 
 ```lua
 -- Semaphore post example
@@ -628,9 +649,12 @@ co_semaphore:name()
 
 No parameters required for this function.
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Semaphore name string |
+
 #### Usage
 
 Get the semaphore name.
-
-Return value:
-- Semaphore name string

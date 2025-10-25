@@ -118,13 +118,16 @@ hashset:insert(value: <any>)
 |-----------|-------------|
 | value | Required. Element to insert |
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| true | Element doesn't exist, insertion successful |
+| false | Element already exists, not inserted |
+
 #### Usage
 
 Inserts an element into the hash set. If the element already exists, it will not be inserted.
-
-Return value:
-- `true`: Element doesn't exist, insertion successful
-- `false`: Element already exists, not inserted
 
 ```lua
 local set = hashset.new()
@@ -166,13 +169,16 @@ hashset:remove(value: <any>)
 |-----------|-------------|
 | value | Required. Element to remove |
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| true | Element exists, removal successful |
+| false | Element doesn't exist, not removed |
+
 #### Usage
 
 Removes an element from the hash set.
-
-Return value:
-- `true`: Element exists, removal successful
-- `false`: Element doesn't exist, not removed
 
 ```lua
 local set = hashset.of(1, 2, 3)
@@ -203,13 +209,16 @@ hashset:has(value: <any>)
 |-----------|-------------|
 | value | Required. Element to check |
 
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| true | Element exists |
+| false | Element doesn't exist |
+
 #### Usage
 
 Checks if the specified element is in the hash set.
-
-Return value:
-- `true`: Element exists
-- `false`: Element doesn't exist
 
 Used for fast element lookup (O(1) time complexity):
 
