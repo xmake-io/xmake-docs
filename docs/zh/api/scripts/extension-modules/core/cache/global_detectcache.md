@@ -150,8 +150,7 @@ local name = global_detectcache.get2("mycache", "user", "name")
 
 ::: tip API
 ```lua
-global_detectcache.clear(cachename: <string>)
-global_detectcache.clear()
+global_detectcache.clear(cachename?: <string>)
 ```
 :::
 

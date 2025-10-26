@@ -151,8 +151,7 @@ local name = memcache.get2("mycache", "user", "name")
 
 ::: tip API
 ```lua
-memcache.clear(cachename: <string>)
-memcache.clear()
+memcache.clear(cachename?: <string>)
 ```
 :::
 
