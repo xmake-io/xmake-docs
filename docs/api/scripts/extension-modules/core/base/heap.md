@@ -11,16 +11,26 @@ To use this module, you need to import it first: `import("core.base.heap")`
 
 - Create a value heap
 
+#### Function Prototype
+
+::: tip API
 ```lua
-import("core.base.heap")
-
-local h = heap.valueheap(options)
+heap.valueheap(options: <table>)
 ```
+:::
 
-Creates a new value heap using a Lua table. The heap is a min-heap by default, but can be customized with a comparison function.
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| options | Optional. Lua table with options |
 
 Parameters in `options`:
 - `cmp` - Optional comparison function. Should return true if the first argument has higher priority than the second
+
+#### Usage
+
+Creates a new value heap using a Lua table. The heap is a min-heap by default, but can be customized with a comparison function.
 
 ```lua
 -- Create a min-heap (default)
@@ -52,9 +62,21 @@ local h = heap.valueheap{1, 5, 3, 7, 2}
 
 - Push a value onto the heap
 
+#### Function Prototype
+
+::: tip API
 ```lua
-heap:push(value)
+heap:push(value: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| value | Required. Value to push onto the heap |
+
+#### Usage
 
 Adds a value to the heap and maintains the heap property. The value will be placed in the correct position according to the comparison function.
 
@@ -92,14 +114,23 @@ The value cannot be nil.
 
 - Pop a value from the heap
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local value = heap:pop(index)
+heap:pop(index: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| index | Optional. The position to pop from (1-based). Defaults to 1 (top of heap) |
+
+#### Usage
 
 Removes and returns a value from the heap. If no index is provided, removes the top element (highest priority). After removal, the heap property is maintained.
-
-Parameters:
-- `index` - Optional. The position to pop from (1-based). Defaults to 1 (top of heap)
 
 ```lua
 local h = heap.valueheap()
@@ -133,14 +164,23 @@ print(item.data)      -- Output: foo
 
 - Peek at a value without removing it
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local value = heap:peek(index)
+heap:peek(index: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| index | Optional. The position to peek at (1-based). Defaults to 1 (top of heap) |
+
+#### Usage
 
 Returns a value from the heap without removing it. If no index is provided, returns the top element (highest priority).
-
-Parameters:
-- `index` - Optional. The position to peek at (1-based). Defaults to 1 (top of heap)
 
 ```lua
 local h = heap.valueheap()
@@ -177,15 +217,24 @@ end
 
 - Replace a value at a given index
 
+#### Function Prototype
+
+::: tip API
 ```lua
-heap:replace(index, value)
+heap:replace(index: <number>, value: <any>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| index | Required. The position to replace (1-based) |
+| value | Required. The new value |
+
+#### Usage
 
 Replaces the value at the specified index with a new value and rebalances the heap to maintain the heap property.
-
-Parameters:
-- `index` - Required. The position to replace (1-based)
-- `value` - Required. The new value
 
 ```lua
 local h = heap.valueheap()
@@ -228,9 +277,19 @@ Use `replace` when you need to update an element's priority without removing and
 
 - Get the number of elements in the heap
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local count = heap.length()
+heap:length()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Returns the current number of elements in the heap. This is a function, not a method.
 

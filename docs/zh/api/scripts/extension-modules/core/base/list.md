@@ -11,11 +11,19 @@ list 模块提供了双向链表数据结构，支持高效的头尾插入删除
 
 - 创建空的链表
 
-```lua
-import("core.base.list")
+#### 函数原型
 
-local l = list.new()
+::: tip API
+```lua
+list.new()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 创建一个新的空双向链表对象。
 
@@ -29,9 +37,21 @@ print(l:empty())  -- 输出: true
 
 - 在链表尾部添加元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-list:push(item)
+list:push(item: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| item | 要添加的元素 |
+
+#### 用法说明
 
 在链表的尾部添加一个元素。等同于 `list:insert_last(item)`。
 
@@ -56,9 +76,19 @@ print(l:last().value)  -- 输出: 3
 
 - 从链表尾部移除元素
 
+#### 函数原型
+
+::: tip API
 ```lua
 list:pop()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 从链表的尾部移除一个元素。等同于 `list:remove_last()`。
 
@@ -76,9 +106,21 @@ print(l:last().value)  -- 输出: 2
 
 - 在链表头部添加元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-list:unshift(item)
+list:unshift(item: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| item | 要添加的元素 |
+
+#### 用法说明
 
 在链表的头部添加一个元素。等同于 `list:insert_first(item)`。
 
@@ -97,9 +139,19 @@ end
 
 - 从链表头部移除元素
 
+#### 函数原型
+
+::: tip API
 ```lua
 list:shift()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 从链表的头部移除一个元素。等同于 `list:remove_first()`。
 
@@ -117,15 +169,24 @@ print(l:first().value)  -- 输出: 2
 
 - 插入元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-list:insert(item, after)
+list:insert(item: <any>, after: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| item | 要插入的元素 |
+| after | 可选，在此元素后插入，如果为 nil 则在尾部插入 |
+
+#### 用法说明
 
 在指定元素后面插入新元素。如果不提供 `after` 参数，则在链表尾部插入。
-
-参数：
-- `item`：要插入的元素
-- `after`：可选，在此元素后插入，如果为 nil 则在尾部插入
 
 ```lua
 local l = list.new()
@@ -147,9 +208,21 @@ end
 
 - 在链表头部插入元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-list:insert_first(item)
+list:insert_first(item: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| item | 要插入的元素 |
+
+#### 用法说明
 
 在链表的头部插入一个元素。
 
@@ -168,9 +241,21 @@ print(l:first().value)  -- 输出: 1
 
 - 在链表尾部插入元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-list:insert_last(item)
+list:insert_last(item: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| item | 要插入的元素 |
+
+#### 用法说明
 
 在链表的尾部插入一个元素。
 
@@ -187,9 +272,21 @@ print(l:last().value)  -- 输出: 3
 
 - 删除指定元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-local removed_item = list:remove(item)
+list:remove(item: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| item | 要删除的元素 |
+
+#### 用法说明
 
 从链表中删除指定的元素，返回被删除的元素。
 
@@ -228,9 +325,19 @@ print(l:empty())  -- 输出: true
 
 - 删除链表头部元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-local removed_item = list:remove_first()
+list:remove_first()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 从链表头部删除一个元素，返回被删除的元素。如果链表为空，返回 nil。
 
@@ -248,9 +355,19 @@ print(l:first().value)  -- 输出: 2
 
 - 删除链表尾部元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-local removed_item = list:remove_last()
+list:remove_last()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 从链表尾部删除一个元素，返回被删除的元素。如果链表为空，返回 nil。
 
@@ -268,9 +385,19 @@ print(l:last().value)  -- 输出: 2
 
 - 获取链表首元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-local item = list:first()
+list:first()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回链表的第一个元素，不删除。如果链表为空，返回 nil。
 
@@ -287,9 +414,19 @@ print(l:first().value)  -- 输出: 1
 
 - 获取链表尾元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-local item = list:last()
+list:last()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回链表的最后一个元素，不删除。如果链表为空，返回 nil。
 
@@ -306,9 +443,21 @@ print(l:last().value)  -- 输出: 3
 
 - 获取下一个元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-local next_item = list:next(current)
+list:next(current: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| current | 当前元素，如果为 nil 则返回第一个元素 |
+
+#### 用法说明
 
 获取指定元素的下一个元素。如果 `current` 为 nil，返回第一个元素。
 
@@ -342,9 +491,21 @@ end
 
 - 获取上一个元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-local prev_item = list:prev(current)
+list:prev(current: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| current | 当前元素，如果为 nil 则返回最后一个元素 |
+
+#### 用法说明
 
 获取指定元素的上一个元素。如果 `current` 为 nil，返回最后一个元素。
 
@@ -378,9 +539,19 @@ end
 
 - 获取链表大小
 
+#### 函数原型
+
+::: tip API
 ```lua
-local count = list:size()
+list:size()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回链表中元素的个数。
 
@@ -397,9 +568,19 @@ print(l:size())  -- 输出: 3
 
 - 判断链表是否为空
 
+#### 函数原型
+
+::: tip API
 ```lua
-local is_empty = list:empty()
+list:empty()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回 true 表示链表为空（不包含任何元素）。
 
@@ -415,9 +596,19 @@ print(l:empty())  -- 输出: false
 
 - 清空链表
 
+#### 函数原型
+
+::: tip API
 ```lua
 list:clear()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 删除链表中的所有元素，重置为空链表。
 
@@ -436,11 +627,19 @@ print(l:size())   -- 输出: 0
 
 - 正向遍历链表
 
+#### 函数原型
+
+::: tip API
 ```lua
-for item in list:items() do
-    -- 处理 item
-end
+list:items()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回一个迭代器函数，用于从头到尾遍历链表中的所有元素。
 
@@ -476,11 +675,19 @@ end
 
 - 反向遍历链表
 
+#### 函数原型
+
+::: tip API
 ```lua
-for item in list:ritems() do
-    -- 处理 item
-end
+list:ritems()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回一个迭代器函数，用于从尾到头遍历链表中的所有元素。
 

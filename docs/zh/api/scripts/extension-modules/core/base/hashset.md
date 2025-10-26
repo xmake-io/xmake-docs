@@ -11,11 +11,19 @@ hashset 模块提供了哈希集合（无重复元素的集合）数据结构，
 
 - 创建空的哈希集合
 
-```lua
-import("core.base.hashset")
+#### 函数原型
 
-local set = hashset.new()
+::: tip API
+```lua
+hashset.new()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 创建一个空的哈希集合对象。
 
@@ -29,11 +37,21 @@ print(set:empty())  -- 输出: true
 
 - 从参数列表创建哈希集合
 
-```lua
-import("core.base.hashset")
+#### 函数原型
 
-local set = hashset.of(1, 2, 3, 5, 5, 7, 1, 9)
+::: tip API
+```lua
+hashset.of(...)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| ... | 可变参数，要添加到集合中的元素 |
+
+#### 用法说明
 
 从参数列表创建哈希集合，自动去除重复元素。
 
@@ -53,11 +71,21 @@ assert(not set:has(10))
 
 - 从数组创建哈希集合
 
-```lua
-import("core.base.hashset")
+#### 函数原型
 
-local set = hashset.from(array)
+::: tip API
+```lua
+hashset.from(array: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| array | 要转换为集合的数组 |
+
+#### 用法说明
 
 从数组创建哈希集合，自动去除重复元素。
 
@@ -76,15 +104,30 @@ local unique_array = set:to_array()
 
 - 插入元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-local inserted = set:insert(value)
+hashset:insert(value: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| value | 要插入的元素值 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| true | 元素不存在，插入成功 |
+| false | 元素已存在，未插入 |
+
+#### 用法说明
 
 向哈希集合插入一个元素。如果元素已存在，则不插入。
-
-返回值：
-- `true`：元素不存在，插入成功
-- `false`：元素已存在，未插入
 
 ```lua
 local set = hashset.new()
@@ -112,15 +155,30 @@ set:insert(nil)  -- 也可以插入 nil 值
 
 - 删除元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-local removed = set:remove(value)
+hashset:remove(value: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| value | 要删除的元素值 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| true | 元素存在，删除成功 |
+| false | 元素不存在，未删除 |
+
+#### 用法说明
 
 从哈希集合中删除一个元素。
-
-返回值：
-- `true`：元素存在，删除成功
-- `false`：元素不存在，未删除
 
 ```lua
 local set = hashset.of(1, 2, 3)
@@ -137,15 +195,30 @@ print(result)  -- 输出: false (元素不存在)
 
 - 检查元素是否存在
 
+#### 函数原型
+
+::: tip API
 ```lua
-local exists = set:has(value)
+hashset:has(value: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| value | 要检查的元素值 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| true | 元素存在 |
+| false | 元素不存在 |
+
+#### 用法说明
 
 检查指定元素是否在哈希集合中。
-
-返回值：
-- `true`：元素存在
-- `false`：元素不存在
 
 用于快速查找元素（O(1) 时间复杂度）：
 
@@ -165,9 +238,19 @@ end
 
 - 获取集合大小
 
+#### 函数原型
+
+::: tip API
 ```lua
-local count = set:size()
+hashset:size()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回哈希集合中元素的个数。
 
@@ -186,9 +269,19 @@ print(set:size())  -- 输出: 5
 
 - 判断集合是否为空
 
+#### 函数原型
+
+::: tip API
 ```lua
-local is_empty = set:empty()
+hashset:empty()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回 true 表示集合为空（不包含任何元素）。
 
@@ -204,9 +297,19 @@ print(set:empty())  -- 输出: false
 
 - 清空集合
 
+#### 函数原型
+
+::: tip API
 ```lua
-set:clear()
+hashset:clear()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 删除集合中的所有元素，重置为空集合。
 
@@ -223,9 +326,19 @@ print(set:empty()) -- 输出: true
 
 - 克隆集合
 
+#### 函数原型
+
+::: tip API
 ```lua
-local new_set = set:clone()
+hashset:clone()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 创建哈希集合的完整副本，新集合与原集合独立。
 
@@ -249,9 +362,19 @@ assert(set1 == set2)  -- 相等
 
 - 转换为数组
 
+#### 函数原型
+
+::: tip API
 ```lua
-local array = set:to_array()
+hashset:to_array()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 将哈希集合转换为数组，返回包含所有元素的 table。nil 值会被忽略。
 
@@ -271,11 +394,19 @@ print("去重后大小:", #unique_array)   -- 5
 
 - 遍历集合元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-for item in set:items() do
-    -- 处理 item
-end
+hashset:items()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回一个迭代器函数，用于遍历集合中的所有元素（无序）。
 
@@ -310,11 +441,19 @@ print("总和:", sum)  -- 输出: 15
 
 - 按序遍历集合元素
 
+#### 函数原型
+
+::: tip API
 ```lua
-for item in set:orderitems() do
-    -- 处理 item
-end
+hashset:orderitems()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回一个迭代器函数，用于按升序遍历集合中的所有元素。
 

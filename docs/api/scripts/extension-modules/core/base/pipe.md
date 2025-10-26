@@ -11,23 +11,32 @@ To use this module, you need to import it first: `import("core.base.pipe")`
 
 - Create an anonymous pipe pair
 
-```lua
-import("core.base.pipe")
+#### Function Prototype
 
-local rpipe, wpipe = pipe.openpair()
+::: tip API
+```lua
+pipe.openpair(mode: <string>, buffsize: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| mode | Optional. Pipe mode, default is "AA" |
+| buffsize | Optional. Buffer size, default is 0 (system default) |
+
+Available modes:
+- `"BB"`: Both read and write in blocking mode
+- `"BA"`: Read blocking, write non-blocking
+- `"AB"`: Read non-blocking, write blocking
+- `"AA"`: Both read and write in non-blocking mode (default)
+
+#### Usage
 
 Creates a pair of anonymous pipes, returning read and write pipe objects.
 
 Anonymous pipes are mainly used for communication between related processes (such as parent-child processes). A common scenario is redirecting subprocess input/output.
-
-Parameters:
-- `mode` (optional): Pipe mode, default is `"AA"`
-  - `"BB"`: Both read and write in blocking mode
-  - `"BA"`: Read blocking, write non-blocking
-  - `"AB"`: Read non-blocking, write blocking
-  - `"AA"`: Both read and write in non-blocking mode (default)
-- `buffsize` (optional): Buffer size, default is 0 (system default)
 
 Basic usage example:
 
@@ -78,24 +87,33 @@ rpipe:close()
 
 - Open a named pipe
 
-```lua
-import("core.base.pipe")
+#### Function Prototype
 
-local pipefile = pipe.open(name, mode, buffsize)
+::: tip API
+```lua
+pipe.open(name: <string>, mode: <string>, buffsize: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Pipe name |
+| mode | Required. Open mode |
+| buffsize | Optional. Buffer size, default is 0 |
+
+Available modes:
+- `"r"` or `"rA"`: Read-only, non-blocking (client-side)
+- `"w"` or `"wA"`: Write-only, non-blocking (server-side)
+- `"rB"`: Read-only, blocking
+- `"wB"`: Write-only, blocking
+
+#### Usage
 
 Opens or creates a named pipe.
 
 Named pipes can be used for communication between completely independent processes without any relationship. Similar to local sockets but more lightweight. Suitable for scenarios where data needs to be passed between different applications.
-
-Parameters:
-- `name`: Pipe name
-- `mode`: Open mode
-  - `"r"` or `"rA"`: Read-only, non-blocking (client-side)
-  - `"w"` or `"wA"`: Write-only, non-blocking (server-side)
-  - `"rB"`: Read-only, blocking
-  - `"wB"`: Write-only, blocking
-- `buffsize` (optional): Buffer size, default is 0
 
 ### Server-side Example
 
@@ -148,23 +166,37 @@ pipefile:close()
 
 - Read data from pipe
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local read, data = pipefile:read(buff, size, opt)
+pipe:read(buff: <bytes>, size: <number>, opt: <table>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| buff | Required. bytes buffer object to store the read data |
+| size | Required. Number of bytes to read |
+| opt | Optional. Option parameters |
+
+Options:
+- `block`: Whether to block reading, default false
+- `start`: Buffer start position, default 1
+- `timeout`: Timeout in milliseconds, default -1 (infinite wait)
+
+#### Return Values
+
+| Type | Description |
+|------|-------------|
+| read | Actual number of bytes read |
+| data | Read data (bytes object) |
+
+#### Usage
 
 Reads data from the pipe into the specified buffer.
-
-Parameters:
-- `buff`: bytes buffer object to store the read data
-- `size`: Number of bytes to read
-- `opt` (optional): Option parameters
-  - `block`: Whether to block reading, default false
-  - `start`: Buffer start position, default 1
-  - `timeout`: Timeout in milliseconds, default -1 (infinite wait)
-
-Return values:
-- `read`: Actual number of bytes read, returns -1 on failure
-- `data`: Read data (bytes object), returns error message on failure
 
 Non-blocking mode (default) returns immediately, may return 0 indicating no data available. Blocking mode waits until the specified amount of data is read or an error occurs:
 
@@ -183,22 +215,36 @@ end
 
 - Write data to pipe
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local write = pipefile:write(data, opt)
+pipe:write(data: <string|bytes>, opt: <table>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| data | Required. Data to write, can be string or bytes object |
+| opt | Optional. Option parameters |
+
+Options:
+- `block`: Whether to block writing, default false
+- `start`: Data start position, default 1
+- `last`: Data end position, default is data size
+- `timeout`: Timeout in milliseconds, default -1
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| write | Actual number of bytes written |
+
+#### Usage
 
 Writes data to the pipe.
-
-Parameters:
-- `data`: Data to write, can be string or bytes object
-- `opt` (optional): Option parameters
-  - `block`: Whether to block writing, default false
-  - `start`: Data start position, default 1
-  - `last`: Data end position, default is data size
-  - `timeout`: Timeout in milliseconds, default -1
-
-Return values:
-- `write`: Actual number of bytes written, returns -1 on failure
 
 Non-blocking mode (default) may only write partial data. Blocking mode waits until all data is successfully written:
 
@@ -214,18 +260,32 @@ end
 
 - Connect to named pipe (server-side)
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local ok = pipefile:connect(opt)
+pipe:connect(opt: <table>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| opt | Optional. Option parameters |
+
+Options:
+- `timeout`: Timeout in milliseconds, default -1
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Returns a positive number |
+
+#### Usage
 
 Connects to a named pipe, only used on the server-side of named pipes. After creating a named pipe on the server, call this method to wait for client connection.
-
-Parameters:
-- `opt` (optional): Option parameters
-  - `timeout`: Timeout in milliseconds, default -1
-
-Return values:
-- Returns a positive number on success, -1 on failure
 
 ```lua
 import("core.base.pipe")
@@ -241,21 +301,35 @@ end
 
 - Wait for pipe events
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local events = pipefile:wait(events, timeout)
+pipe:wait(events: <number>, timeout: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| events | Required. Events to wait for |
+| timeout | Required. Timeout in milliseconds, -1 means wait indefinitely |
+
+Event constants:
+- `pipe.EV_READ` (1): Readable event, indicates pipe has data to read
+- `pipe.EV_WRITE` (2): Writable event, indicates pipe can accept data
+- `pipe.EV_CONN` (2): Connection event, used for named pipes to wait for client connection
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| number | Returns the actual event constant value that occurred |
+
+#### Usage
 
 Waits for specified pipe events to occur. In non-blocking mode, this method can be used to implement event-driven I/O.
-
-Parameters:
-- `events`: Events to wait for, supports the following event constants:
-  - `pipe.EV_READ` (1): Readable event, indicates pipe has data to read
-  - `pipe.EV_WRITE` (2): Writable event, indicates pipe can accept data
-  - `pipe.EV_CONN` (2): Connection event, used for named pipes to wait for client connection
-- `timeout`: Timeout in milliseconds, -1 means wait indefinitely
-
-Return values:
-- Returns the actual event constant value that occurred
 
 In non-blocking mode, wait can be used to implement efficient event loops:
 
@@ -279,9 +353,19 @@ end
 
 - Close the pipe
 
+#### Function Prototype
+
+::: tip API
 ```lua
-pipefile:close()
+pipe:close()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Closes the pipe and releases resources. Pipes should be closed promptly after use.
 
@@ -289,9 +373,19 @@ Closes the pipe and releases resources. Pipes should be closed promptly after us
 
 - Get pipe name
 
+#### Function Prototype
+
+::: tip API
 ```lua
-local name = pipefile:name()
+pipe:name()
 ```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
 
 Gets the name of a named pipe. Returns nil for anonymous pipes.
 

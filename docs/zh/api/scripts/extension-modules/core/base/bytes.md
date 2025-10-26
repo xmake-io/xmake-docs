@@ -120,9 +120,19 @@ print(buff3:str())  -- 输出: 123456
 
 - 获取缓冲区大小
 
+#### 函数原型
+
+::: tip API
 ```lua
-local size = buff:size()
+bytes:size()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回缓冲区的字节数。
 
@@ -135,10 +145,22 @@ print(buff:size())  -- 输出: 1024
 
 - 转换为字符串
 
+#### 函数原型
+
+::: tip API
 ```lua
-local str = buff:str()
-local str = buff:str(start, last)
+bytes:str(start: <number>, last: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| start | 起始位置（可选，默认 1） |
+| last | 结束位置（可选，默认为缓冲区大小） |
+
+#### 用法说明
 
 将 bytes 对象转换为字符串，可选择指定转换的范围。
 
@@ -161,9 +183,22 @@ print(buff:str(7))       -- 输出: world
 
 - 创建切片
 
+#### 函数原型
+
+::: tip API
 ```lua
-local slice = buff:slice(start, last)
+bytes:slice(start: <number>, last: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| start | 起始位置 |
+| last | 结束位置 |
+
+#### 用法说明
 
 创建缓冲区的切片，返回新的 bytes 对象，共享底层内存（不复制数据）。
 
@@ -184,9 +219,19 @@ print(slice:size()) -- 输出: 3
 
 - 克隆缓冲区
 
+#### 函数原型
+
+::: tip API
 ```lua
-local new_buff = buff:clone()
+bytes:clone()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 创建缓冲区的完整副本，分配新的内存并复制所有数据。
 
@@ -207,9 +252,23 @@ print(original:str())  -- 输出: hello (未改变)
 
 - 复制数据到缓冲区
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:copy(src, start, last)
+bytes:copy(src: <string|bytes>, start: <number>, last: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| src | 源数据，可以是字符串或 bytes 对象 |
+| start | 源数据起始位置（可选，默认 1） |
+| last | 源数据结束位置（可选，默认为源数据大小） |
+
+#### 用法说明
 
 从源数据复制到缓冲区的开头。
 
@@ -233,9 +292,24 @@ print(buff:str())  -- 输出: 56789
 
 - 复制数据到指定位置
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:copy2(pos, src, start, last)
+bytes:copy2(pos: <number>, src: <string|bytes>, start: <number>, last: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| pos | 目标位置 |
+| src | 源数据，可以是字符串或 bytes 对象 |
+| start | 源数据起始位置（可选） |
+| last | 源数据结束位置（可选） |
+
+#### 用法说明
 
 从源数据复制到缓冲区的指定位置。
 
@@ -258,9 +332,22 @@ print(buff:str())  -- 输出: 123456789123456789
 
 - 移动数据到缓冲区开头
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:move(start, last)
+bytes:move(start: <number>, last: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| start | 源数据起始位置 |
+| last | 源数据结束位置（可选） |
+
+#### 用法说明
 
 将缓冲区内指定范围的数据移动到开头，支持内存重叠安全移动。
 
@@ -278,9 +365,23 @@ print(buff:str())  -- 输出: 567896789 (5-9 移动到开头)
 
 - 移动数据到指定位置
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:move2(pos, start, last)
+bytes:move2(pos: <number>, start: <number>, last: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| pos | 目标位置 |
+| start | 源数据起始位置 |
+| last | 源数据结束位置（可选） |
+
+#### 用法说明
 
 将缓冲区内指定范围的数据移动到指定位置。
 
@@ -299,9 +400,21 @@ print(buff:str())  -- 输出: 156789789
 
 - 读取无符号 8 位整数
 
+#### 函数原型
+
+::: tip API
 ```lua
-local value = buff:u8(offset)
+bytes:u8(offset: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+
+#### 用法说明
 
 从指定偏移位置读取一个字节作为无符号 8 位整数（0-255）。
 
@@ -309,9 +422,24 @@ local value = buff:u8(offset)
 
 - 写入无符号 8 位整数
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:u8_set(offset, value)
+bytes:u8_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+| value | 要写入的值（0-255） |
+
+#### 用法说明
+
+将无符号 8 位整数写入到指定偏移位置。
 
 向指定偏移位置写入一个字节的无符号 8 位整数值。
 
@@ -326,9 +454,21 @@ print(value)  -- 输出: 255
 
 - 读取有符号 8 位整数
 
+#### 函数原型
+
+::: tip API
 ```lua
-local value = buff:s8(offset)
+bytes:s8(offset: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+
+#### 用法说明
 
 从指定偏移位置读取一个字节作为有符号 8 位整数（-128 到 127）。
 
@@ -336,9 +476,21 @@ local value = buff:s8(offset)
 
 - 读取无符号 16 位整数（小端）
 
+#### 函数原型
+
+::: tip API
 ```lua
-local value = buff:u16le(offset)
+bytes:u16le(offset: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+
+#### 用法说明
 
 从指定偏移位置读取 2 字节的无符号 16 位整数（小端字节序）。
 
@@ -346,9 +498,22 @@ local value = buff:u16le(offset)
 
 - 写入无符号 16 位整数（小端）
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:u16le_set(offset, value)
+bytes:u16le_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+| value | 要写入的值（0-65535） |
+
+#### 用法说明
 
 向指定偏移位置写入 2 字节的无符号 16 位整数（小端字节序）。
 
@@ -363,9 +528,21 @@ print(value)  -- 输出: 12346
 
 - 读取无符号 16 位整数（大端）
 
+#### 函数原型
+
+::: tip API
 ```lua
-local value = buff:u16be(offset)
+bytes:u16be(offset: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+
+#### 用法说明
 
 从指定偏移位置读取 2 字节的无符号 16 位整数（大端字节序）。
 
@@ -373,9 +550,22 @@ local value = buff:u16be(offset)
 
 - 写入无符号 16 位整数（大端）
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:u16be_set(offset, value)
+bytes:u16be_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+| value | 要写入的值（0-65535） |
+
+#### 用法说明
 
 向指定偏移位置写入 2 字节的无符号 16 位整数（大端字节序）。
 
@@ -383,9 +573,21 @@ buff:u16be_set(offset, value)
 
 - 读取无符号 32 位整数（小端）
 
+#### 函数原型
+
+::: tip API
 ```lua
-local value = buff:u32le(offset)
+bytes:u32le(offset: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+
+#### 用法说明
 
 从指定偏移位置读取 4 字节的无符号 32 位整数（小端字节序）。
 
@@ -393,9 +595,22 @@ local value = buff:u32le(offset)
 
 - 写入无符号 32 位整数（小端）
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:u32le_set(offset, value)
+bytes:u32le_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+| value | 要写入的值（0-4294967295） |
+
+#### 用法说明
 
 向指定偏移位置写入 4 字节的无符号 32 位整数（小端字节序）。
 
@@ -418,9 +633,21 @@ print(string.format("魔数: 0x%04X, 长度: %d", magic, length))
 
 - 读取无符号 32 位整数（大端）
 
+#### 函数原型
+
+::: tip API
 ```lua
-local value = buff:u32be(offset)
+bytes:u32be(offset: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+
+#### 用法说明
 
 从指定偏移位置读取 4 字节的无符号 32 位整数（大端字节序）。
 
@@ -428,9 +655,22 @@ local value = buff:u32be(offset)
 
 - 写入无符号 32 位整数（大端）
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:u32be_set(offset, value)
+bytes:u32be_set(offset: <number>, value: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| offset | 字节偏移位置 |
+| value | 要写入的值（0-4294967295） |
+
+#### 用法说明
 
 向指定偏移位置写入 4 字节的无符号 32 位整数（大端字节序）。
 
@@ -438,10 +678,22 @@ buff:u32be_set(offset, value)
 
 - 以十六进制格式显示缓冲区内容
 
+#### 函数原型
+
+::: tip API
 ```lua
-buff:dump()
-buff:dump(start, last)
+bytes:dump(start: <number>, last: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| start | 起始位置（可选，默认 1） |
+| last | 结束位置（可选，默认为缓冲区大小） |
+
+#### 用法说明
 
 以十六进制和 ASCII 格式显示缓冲区内容，类似于 hexdump 工具。
 
@@ -463,9 +715,19 @@ buff:dump()
 
 - 判断缓冲区是否只读
 
+#### 函数原型
+
+::: tip API
 ```lua
-local is_readonly = buff:readonly()
+bytes:readonly()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回 true 表示缓冲区只读，不能修改。从字符串创建的 bytes 对象是只读的。
 

@@ -11,17 +11,24 @@ process 模块提供了子进程管理功能，用于创建、控制和与外部
 
 - 使用命令字符串打开子进程
 
-```lua
-import("core.base.process")
+#### 函数原型
 
-local proc = process.open(command, opt)
+::: tip API
+```lua
+process.open(command: <string>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| command | 必需。要执行的命令字符串 |
+| opt | 可选。进程选项表 |
+
+#### 用法说明
 
 通过执行命令字符串创建新的子进程。返回一个子进程对象，可用于控制和与进程通信。
-
-参数：
-- `command` - 必需。要执行的命令字符串
-- `opt` - 可选。进程选项表
 
 `opt` 中的选项：
 - `stdin` - 输入源（文件路径、文件对象或管道对象）
@@ -64,18 +71,25 @@ proc:close()
 
 - 使用程序和参数列表打开子进程
 
-```lua
-import("core.base.process")
+#### 函数原型
 
-local proc = process.openv(program, argv, opt)
+::: tip API
+```lua
+process.openv(program: <string>, argv: <table>, opt: <table>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| program | 必需。要执行的程序 |
+| argv | 必需。传递给程序的参数数组 |
+| opt | 可选。进程选项表（与 `process.open` 相同） |
+
+#### 用法说明
 
 通过执行程序和参数列表创建新的子进程。这比 `process.open` 更安全，因为它避免了 shell 解释问题。
-
-参数：
-- `program` - 必需。要执行的程序
-- `argv` - 必需。传递给程序的参数数组
-- `opt` - 可选。进程选项表（与 `process.open` 相同）
 
 ```lua
 -- 使用参数执行程序
@@ -111,18 +125,30 @@ proc:close()
 
 - 等待子进程完成
 
+#### 函数原型
+
+::: tip API
 ```lua
-local ok, status = process:wait(timeout)
+process:wait(timeout: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| timeout | 可选。超时时间（毫秒）。使用 -1 表示无限等待，0 表示非阻塞 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| ok | 退出代码（0 表示成功，负数表示错误） |
+| status | 进程状态或错误消息 |
+
+#### 用法说明
 
 等待子进程完成并返回退出状态。可以带或不带超时使用。
-
-参数：
-- `timeout` - 可选。超时时间（毫秒）。使用 -1 表示无限等待，0 表示非阻塞
-
-返回值：
-- `ok` - 退出代码（0 表示成功，负数表示错误）
-- `status` - 进程状态或错误消息
 
 ```lua
 local proc = process.open("echo hello")
@@ -160,9 +186,19 @@ proc:close()
 
 - 终止子进程
 
+#### 函数原型
+
+::: tip API
 ```lua
-local success, error = process:kill()
+process:kill()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 立即终止子进程。成功返回 true，失败返回 false 和错误消息。
 
@@ -197,9 +233,19 @@ proc:close()
 
 - 关闭子进程
 
+#### 函数原型
+
+::: tip API
 ```lua
-local success = process:close()
+process:close()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 关闭子进程并释放相关资源。完成进程操作后应调用此方法。
 
@@ -223,9 +269,19 @@ proc:close()
 
 - 获取进程名称
 
+#### 函数原型
+
+::: tip API
 ```lua
-local name = process:name()
+process:name()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回进程的名称（不带路径的文件名）。
 
@@ -239,9 +295,19 @@ proc:close()
 
 - 获取进程程序路径
 
+#### 函数原型
+
+::: tip API
 ```lua
-local program = process:program()
+process:program()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回用于启动进程的完整程序路径。
 
@@ -255,9 +321,19 @@ proc:close()
 
 - 获取进程 cdata
 
+#### 函数原型
+
+::: tip API
 ```lua
-local cdata = process:cdata()
+process:cdata()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回进程的底层 cdata 对象。由调度器和其他低级操作内部使用。
 
@@ -272,9 +348,19 @@ proc:close()
 
 - 获取对象类型
 
+#### 函数原型
+
+::: tip API
 ```lua
-local type = process:otype()
+process:otype()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回对象类型标识符。对于子进程对象，返回 3（poller.OT_PROC）。
 

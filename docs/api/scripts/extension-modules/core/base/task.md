@@ -7,6 +7,24 @@ Used for task operations, generally used to call other task tasks in custom scri
 
 - Run the specified task
 
+#### Function Prototype
+
+::: tip API
+```lua
+task.run(name: <string>, opt: <table>, ...)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Task name |
+| opt | Optional. Task options table |
+| ... | Optional. Arguments passed to the task function |
+
+#### Usage
+
 Used to run tasks or plugins defined by [task](/api/description/plugin-and-task.html#task) in custom scripts, plugin tasks, for example:
 
 ```lua

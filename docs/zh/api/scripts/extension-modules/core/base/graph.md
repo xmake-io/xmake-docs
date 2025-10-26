@@ -11,11 +11,21 @@ graph 模块提供了图数据结构，支持有向图和无向图。它包含�
 
 - 创建新图
 
-```lua
-import("core.base.graph")
+#### 函数原型
 
-local g = graph.new(directed)
+::: tip API
+```lua
+graph.new(directed: <boolean>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| directed | 图是否有向（true）还是无向（false） |
+
+#### 用法说明
 
 创建一个新的图对象。`directed` 参数指定图是有向图（true）还是无向图（false）。
 
@@ -31,9 +41,19 @@ local ug = graph.new(false)
 
 - 清空图
 
+#### 函数原型
+
+::: tip API
 ```lua
 graph:clear()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 删除图中的所有顶点和边，将其重置为空状态。
 
@@ -53,9 +73,19 @@ print(g:empty())      -- 输出: true
 
 - 判断图是否为空
 
+#### 函数原型
+
+::: tip API
 ```lua
-local is_empty = graph:empty()
+graph:empty()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 如果图不包含任何顶点，返回 true。
 
@@ -71,9 +101,19 @@ print(g:empty())  -- 输出: false
 
 - 判断是否为有向图
 
+#### 函数原型
+
+::: tip API
 ```lua
-local directed = graph:is_directed()
+graph:is_directed()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 如果图是有向图返回 true，无向图返回 false。
 
@@ -89,9 +129,19 @@ print(ug:is_directed())   -- 输出: false
 
 - 获取所有顶点
 
+#### 函数原型
+
+::: tip API
 ```lua
-local vertices = graph:vertices()
+graph:vertices()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回包含图中所有顶点的数组。
 
@@ -111,9 +161,21 @@ end
 
 - 获取指定索引的顶点
 
+#### 函数原型
+
+::: tip API
 ```lua
-local v = graph:vertex(idx)
+graph:vertex(idx: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| idx | 顶点索引（从 1 开始） |
+
+#### 用法说明
 
 返回指定索引（从 1 开始）的顶点。
 
@@ -131,9 +193,21 @@ print(g:vertex(3))  -- 输出: c
 
 - 判断图中是否存在给定顶点
 
+#### 函数原型
+
+::: tip API
 ```lua
-local exists = graph:has_vertex(v)
+graph:has_vertex(v: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| v | 要检查的顶点值 |
+
+#### 用法说明
 
 如果顶点存在于图中，返回 true。
 
@@ -150,9 +224,21 @@ print(g:has_vertex(3))  -- 输出: false
 
 - 添加孤立顶点
 
+#### 函数原型
+
+::: tip API
 ```lua
-graph:add_vertex(v)
+graph:add_vertex(v: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| v | 要添加的顶点值 |
+
+#### 用法说明
 
 向图中添加一个没有边的顶点。如果顶点已存在，此操作无效。
 
@@ -170,9 +256,21 @@ print(#g:edges())     -- 输出: 0
 
 - 删除给定顶点
 
+#### 函数原型
+
+::: tip API
 ```lua
-graph:remove_vertex(v)
+graph:remove_vertex(v: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| v | 要删除的顶点值 |
+
+#### 用法说明
 
 从图中删除顶点及其所有关联的边。
 
@@ -191,9 +289,19 @@ print(g:has_vertex(2))  -- 输出: false
 
 - 获取所有边
 
+#### 函数原型
+
+::: tip API
 ```lua
-local edges = graph:edges()
+graph:edges()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回包含图中所有边的数组。每条边都有 `from()` 和 `to()` 方法。
 
@@ -213,9 +321,21 @@ end
 
 - 获取给定顶点的邻接边
 
+#### 函数原型
+
+::: tip API
 ```lua
-local edges = graph:adjacent_edges(v)
+graph:adjacent_edges(v: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| v | 顶点值 |
+
+#### 用法说明
 
 返回与指定顶点相邻的边的数组。
 
@@ -237,9 +357,22 @@ end
 
 - 添加边
 
+#### 函数原型
+
+::: tip API
 ```lua
-graph:add_edge(from, to)
+graph:add_edge(from: <any>, to: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| from | 源顶点 |
+| to | 目标顶点 |
+
+#### 用法说明
 
 添加一条从 `from` 到 `to` 的有向边。对于无向图，这会创建双向连接。如果顶点不存在，会自动创建。
 
@@ -259,9 +392,22 @@ ug:add_edge(1, 2)
 
 - 判断图中是否存在给定边
 
+#### 函数原型
+
+::: tip API
 ```lua
-local exists = graph:has_edge(from, to)
+graph:has_edge(from: <any>, to: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| from | 源顶点 |
+| to | 目标顶点 |
+
+#### 用法说明
 
 如果存在从 `from` 到 `to` 的边，返回 true。
 
@@ -277,9 +423,19 @@ print(g:has_edge(2, 1))  -- 输出: false (有向图)
 
 - 执行拓扑排序
 
+#### 函数原型
+
+::: tip API
 ```lua
-local order, has_cycle = graph:topo_sort()
+graph:topo_sort()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 使用 Kahn 算法对有向图执行拓扑排序。返回按拓扑顺序排列的顶点数组和一个表示是否检测到环的布尔值。仅适用于有向图。
 
@@ -315,9 +471,19 @@ end
 
 - 重置部分拓扑排序状态
 
+#### 函数原型
+
+::: tip API
 ```lua
 graph:partial_topo_sort_reset()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 重置部分拓扑排序的内部状态。在开始新的部分拓扑排序之前必须调用此方法。
 
@@ -334,9 +500,19 @@ dag:partial_topo_sort_reset()
 
 - 获取拓扑顺序中的下一个节点
 
+#### 函数原型
+
+::: tip API
 ```lua
-local node, has_cycle = graph:partial_topo_sort_next()
+graph:partial_topo_sort_next()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 返回拓扑排序中入度为零的下一个节点。完成或检测到环时返回 nil。`has_cycle` 标志指示是否检测到环。
 
@@ -372,9 +548,21 @@ end
 
 - 删除节点并更新入度
 
+#### 函数原型
+
+::: tip API
 ```lua
-graph:partial_topo_sort_remove(node)
+graph:partial_topo_sort_remove(node: <any>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| node | 要从排序中删除的节点 |
+
+#### 用法说明
 
 从部分拓扑排序中删除指定节点，并更新其依赖节点的入度。应在处理完 `partial_topo_sort_next()` 返回的每个节点后调用此方法。
 
@@ -397,9 +585,19 @@ end
 
 - 查找图中的环
 
+#### 函数原型
+
+::: tip API
 ```lua
-local cycle = graph:find_cycle()
+graph:find_cycle()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 使用深度优先搜索在图中查找环。返回构成环的顶点数组，如果不存在环则返回 nil。
 
@@ -422,9 +620,19 @@ end
 
 - 克隆图
 
+#### 函数原型
+
+::: tip API
 ```lua
-local new_graph = graph:clone()
+graph:clone()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 创建图的完整副本，包含所有顶点和边。新图与原图独立。
 
@@ -445,9 +653,19 @@ print(#g2:edges())  -- 输出: 3 (副本已修改)
 
 - 反转图
 
+#### 函数原型
+
+::: tip API
 ```lua
-local reversed = graph:reverse()
+graph:reverse()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 创建一个所有边都反转的新图。对于有向图，这会反转所有边的方向。对于无向图，这等同于 `clone()`。
 
@@ -468,9 +686,19 @@ print(rg:has_edge(3, 2))  -- 输出: true
 
 - 输出图信息
 
+#### 函数原型
+
+::: tip API
 ```lua
 graph:dump()
 ```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
 
 打印图的详细信息，包括所有顶点和边。用于调试。
 

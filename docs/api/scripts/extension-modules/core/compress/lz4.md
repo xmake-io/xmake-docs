@@ -13,12 +13,27 @@ To use this module, you need to import it first: `import("core.compress.lz4")`
 
 - Compress data (frame format)
 
-```lua
-import("core.compress.lz4")
+#### Function Prototype
 
-local compressed = lz4.compress("hello world")
-local compressed = lz4.compress(bytes_data)
+::: tip API
+```lua
+lz4.compress(data: <string|bytes>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| data | Required. Data to compress, can be a string or bytes object |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| bytes | Compressed data (bytes object) |
+
+#### Usage
 
 Compresses data using the LZ4 frame format. Supports string or bytes object as input and returns a compressed bytes object.
 
@@ -27,22 +42,41 @@ The frame format contains complete metadata and is self-contained, recommended f
 ```lua
 import("core.compress.lz4")
 
--- Compress text data
-local data = "hello world"
-local compressed = lz4.compress(data)
-print("Original size:", #data)
+-- Compress string
+local compressed = lz4.compress("hello world")
+print("Original size: 11")
 print("Compressed size:", compressed:size())
+
+-- Can also compress bytes object
+local bytes_data = bytes("hello world")
+local compressed = lz4.compress(bytes_data)
 ```
 
 ## lz4.decompress
 
 - Decompress data (frame format)
 
-```lua
-import("core.compress.lz4")
+#### Function Prototype
 
-local decompressed = lz4.decompress(compressed_data)
+::: tip API
+```lua
+lz4.decompress(compressed: <bytes>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| compressed | Required. Data compressed using LZ4 frame format (bytes object) |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| bytes | Decompressed data (bytes object) |
+
+#### Usage
 
 Decompresses data compressed using the LZ4 frame format and returns a decompressed bytes object.
 
@@ -61,26 +95,69 @@ assert(decompressed:str() == original)
 
 - Compress data (block format)
 
-```lua
-import("core.compress.lz4")
+#### Function Prototype
 
-local compressed = lz4.block_compress("hello world")
-local compressed = lz4.block_compress(bytes_data)
+::: tip API
+```lua
+lz4.block_compress(data: <string|bytes>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| data | Required. Data to compress, can be a string or bytes object |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| bytes | Compressed data (bytes object) |
+
+#### Usage
 
 Compresses data using the LZ4 block format. The block format is more lightweight, does not include frame header information, resulting in smaller compressed data, but requires managing and recording the original data size information yourself.
 
 Suitable for scenarios with higher compression ratio requirements where you can manage metadata yourself.
 
+```lua
+import("core.compress.lz4")
+
+-- Compress string
+local compressed = lz4.block_compress("hello world")
+
+-- Or compress bytes object
+local bytes_data = bytes("hello world")
+local compressed = lz4.block_compress(bytes_data)
+```
+
 ## lz4.block_decompress
 
 - Decompress data (block format)
 
-```lua
-import("core.compress.lz4")
+#### Function Prototype
 
-local decompressed = lz4.block_decompress(compressed_data, realsize)
+::: tip API
+```lua
+lz4.block_decompress(compressed: <bytes>, realsize: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| compressed | Required. Data compressed using LZ4 block format (bytes object) |
+| realsize | Required. Size of the original data |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| bytes | Decompressed data (bytes object) |
+
+#### Usage
 
 Decompresses data compressed using the LZ4 block format. The original data size `realsize` must be provided.
 
@@ -104,16 +181,33 @@ assert(decompressed:str() == original)
 
 - Compress a file
 
-```lua
-import("core.compress.lz4")
+#### Function Prototype
 
-lz4.compress_file("input.txt", "output.lz4")
+::: tip API
+```lua
+lz4.compress_file(srcfile: <string>, dstfile: <string>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| srcfile | Required. Path to the source file to compress |
+| dstfile | Required. Path to the compressed destination file |
+
+#### Return Value
+
+This function has no return value.
+
+#### Usage
 
 Directly compresses a file using the LZ4 frame format. Compared to reading the entire file content and then compressing, this interface is more suitable for handling large files with lower memory usage:
 
 ```lua
 import("core.compress.lz4")
+
+lz4.compress_file("input.txt", "output.lz4")
 
 -- Compress build output
 local srcfile = "build/output.log"
@@ -126,16 +220,33 @@ print("File compressed:", dstfile)
 
 - Decompress a file
 
-```lua
-import("core.compress.lz4")
+#### Function Prototype
 
-lz4.decompress_file("input.lz4", "output.txt")
+::: tip API
+```lua
+lz4.decompress_file(srcfile: <string>, dstfile: <string>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| srcfile | Required. Path to the source file to decompress |
+| dstfile | Required. Path to the decompressed destination file |
+
+#### Return Value
+
+This function has no return value.
+
+#### Usage
 
 Directly decompresses a file and restores the original file content:
 
 ```lua
 import("core.compress.lz4")
+
+lz4.decompress_file("input.lz4", "output.txt")
 
 -- Decompress log file
 local srcfile = "build/output.log.lz4"
@@ -151,16 +262,27 @@ print(content)
 
 - Open a compression stream
 
+#### Function Prototype
+
+::: tip API
 ```lua
-import("core.compress.lz4")
-
-local stream = lz4.compress_stream()
+lz4.compress_stream()
 ```
+:::
 
-Creates a compression stream object for streaming data compression. The compression stream supports the following methods:
+#### Parameter Description
 
-- `stream:write(data, opt)` - Write data for compression
-- `stream:read(buffer, size, opt)` - Read compressed data
+No parameters required for this function.
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| stream | Compression stream object supporting the following methods:<br>- `stream:write(data, opt)` - Write data for compression<br>- `stream:read(buffer, size, opt)` - Read compressed data |
+
+#### Usage
+
+Creates a compression stream object for streaming data compression.
 
 Streaming compression is suitable for the following scenarios:
 - Handling large files, compressing while reading, without loading all content at once
@@ -190,16 +312,27 @@ end
 
 - Open a decompression stream
 
+#### Function Prototype
+
+::: tip API
 ```lua
-import("core.compress.lz4")
-
-local stream = lz4.decompress_stream()
+lz4.decompress_stream()
 ```
+:::
 
-Creates a decompression stream object for streaming data decompression. The decompression stream supports the following methods:
+#### Parameter Description
 
-- `stream:write(data, opt)` - Write compressed data
-- `stream:read(buffer, size, opt)` - Read decompressed data
+No parameters required for this function.
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| stream | Decompression stream object supporting the following methods:<br>- `stream:write(data, opt)` - Write compressed data<br>- `stream:read(buffer, size, opt)` - Read decompressed data |
+
+#### Usage
+
+Creates a decompression stream object for streaming data decompression.
 
 Streaming decompression example:
 
