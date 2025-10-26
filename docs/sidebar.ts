@@ -48,6 +48,7 @@ function coreModulesApiSidebar(): DefaultTheme.SidebarItem {
     collapsed: true,
     items: [
       coreBaseModulesApiSidebar(),
+      coreCacheModulesApiSidebar(),
       coreCompressModulesApiSidebar(),
       coreLanguageModulesApiSidebar(),
       coreProjectModulesApiSidebar(),
@@ -77,6 +78,20 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
       { text: 'socket', link: 'extension-modules/core/base/socket' },
       { text: 'task', link: 'extension-modules/core/base/task' },
       { text: 'thread', link: 'extension-modules/core/base/thread' },
+    ]
+  }
+}
+
+function coreCacheModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'cache',
+    collapsed: true,
+    items: [
+      { text: 'detectcache', link: 'extension-modules/core/cache/detectcache' },
+      { text: 'global_detectcache', link: 'extension-modules/core/cache/global_detectcache' },
+      { text: 'globalcache', link: 'extension-modules/core/cache/globalcache' },
+      { text: 'localcache', link: 'extension-modules/core/cache/localcache' },
+      { text: 'memcache', link: 'extension-modules/core/cache/memcache' },
     ]
   }
 }
