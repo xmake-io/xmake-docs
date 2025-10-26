@@ -4850,7 +4850,7 @@ installdir
 If we configure:
 
 ```lua
-set_prefix("prefixdir")
+set_prefixdir("prefixdir")
 ```
 
 It is to add a general subdirectory:
@@ -4866,7 +4866,7 @@ installdir
 We can also configure bin, lib and include subdirectories separately, for example:
 
 ```lua
-set_prefix("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+set_prefixdir("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
 ```
 
 ```sh
@@ -4880,7 +4880,7 @@ installdir
 If we do not configure prefixdir and only modify the bin subdirectory, we can configure prefixdir to `/`.
 
 ```lua
-set_prefix("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+set_prefixdir("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
 ```
 
 ```sh

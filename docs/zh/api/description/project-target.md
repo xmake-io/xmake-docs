@@ -4934,7 +4934,7 @@ installdir
 如果我们配置：
 
 ```lua
-set_prefix("prefixdir")
+set_prefixdir("prefixdir")
 ```
 
 就是增加一个总的子目录：
@@ -4950,7 +4950,7 @@ installdir
 我们还可以单独配置 bin, lib 和 include 子目录，例如：
 
 ```lua
-set_prefix("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+set_prefixdir("prefixdir", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
 ```
 
 ```sh
@@ -4964,7 +4964,7 @@ installdir
 如果，我们不配置 prefixdir，仅仅修改 bin 子目录，可以将 prefixdir 配置成 `/`。
 
 ```lua
-set_prefix("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
+set_prefixdir("/", {bindir = "mybin", libdir = "mylib", includedir = "myinc"})
 ```
 
 ```sh
