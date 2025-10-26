@@ -7,6 +7,31 @@ Compiler related operations, often used for plugin development.
 
 - Perform compilation
 
+#### Function Prototype
+
+::: tip API
+```lua
+compiler.compile(sourcefile: <string>, objectfile: <string>, depfile: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sourcefile | Required. Source file path |
+| objectfile | Required. Target file path |
+| depfile | Optional. Dependency file path |
+| opt | Optional. Option parameters, supports `target` |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true on success, false on failure |
+
+#### Usage
+
 For the target, link the specified object file list to generate the corresponding target file, for example:
 
 ```lua
@@ -28,6 +53,30 @@ To simply compile a source file.
 ## compiler.compcmd
 
 - Get the compile command line
+
+#### Function Prototype
+
+::: tip API
+```lua
+compiler.compcmd(sourcefile: <string>, objectfile: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sourcefile | Required. Source file path |
+| objectfile | Required. Target file path |
+| opt | Optional. Option parameters, supports `target` and `configs` |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns compile command string |
+
+#### Usage
 
 Get the command line string executed directly in [compiler.compile](#compiler-compile), which is equivalent to:
 
@@ -61,6 +110,31 @@ end
 
 - Get compiled command line list
 
+#### Function Prototype
+
+::: tip API
+```lua
+compiler.compargv(sourcefile: <string>, objectfile: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sourcefile | Required. Source file path |
+| objectfile | Required. Target file path |
+| opt | Optional. Option parameters |
+
+#### Return Values
+
+| Type | Description |
+|------|-------------|
+| string | Compiler program path |
+| table | Compile arguments list |
+
+#### Usage
+
 A little different from [compiler.compcmd](#compiler-compcmd) is that this interface returns a list of parameters, table representation, more convenient to operate:
 
 ```lua
@@ -71,7 +145,30 @@ local program, argv = compiler.compargv("xxx.c", "xxx.o")
 
 - Get compilation options
 
-Get the compile option string part of [compiler.compcmd](#compiler-compcmd) without shList of ellnames and files, for example:
+#### Function Prototype
+
+::: tip API
+```lua
+compiler.compflags(sourcefile: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sourcefile | Required. Source file path |
+| opt | Optional. Option parameters, supports `target` |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table | Returns compilation options list array |
+
+#### Usage
+
+Get the compile option string part of [compiler.compcmd](#compiler-compcmd) without shellname and files, for example:
 
 ```lua
 local flags = compiler.compflags(sourcefile, {target = target})
@@ -85,6 +182,29 @@ The returned array of flags is an array.
 ## compiler.has_flags
 
 - Determine if the specified compilation option is supported
+
+#### Function Prototype
+
+::: tip API
+```lua
+compiler.has_flags(sourcekind: <string>, flag: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sourcekind | Required. Source file type, e.g., "c", "cxx" |
+| flag | Required. Compilation option to check |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if supported, false otherwise |
+
+#### Usage
 
 Although it can be judged by [lib.detect.has_flags](/api/scripts/extension-modules/lib/detect#detect-has_flags), but the interface is more low-level, you need to specify the compiler name.
 This interface only needs to specify the language type, it will automatically switch to select the currently supported compiler.
@@ -105,6 +225,29 @@ end
 
 - Get all compiler features
 
+#### Function Prototype
+
+::: tip API
+```lua
+compiler.features(sourcekind: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sourcekind | Required. Source file type, e.g., "c", "cxx" |
+| opt | Optional. Option parameters, supports `target` and `configs` |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table | Returns feature list array |
+
+#### Usage
+
 Although it can be obtained by [lib.detect.features](/api/scripts/extension-modules/lib/detect#detect-features), but the interface is more low-level, you need to specify the compiler name.
 This interface only needs to specify the language type, it will automatically switch to select the currently supported compiler, and then get the current list of compiler features.
 
@@ -113,7 +256,7 @@ This interface only needs to specify the language type, it will automatically sw
 local features = compiler.features("c")
 
 -- Get all the features of the current C++ language compiler, enable the C++11 standard, otherwise you will not get the new standard features.
-local features = compiler.features("cxx", {cofnig = {cxxflags = "-std=c++11"}})
+local features = compiler.features("cxx", {configs = {cxxflags = "-std=c++11"}})
 
 -- Get all the features of the current C++ language compiler, pass all configuration information of the project target
 local features = compiler.features("cxx", {target = target, configs = {defines = "..", includedirs = ".."}})
@@ -192,6 +335,29 @@ A list of all C++ compiler features:
 ## compiler.has_features
 
 - Determine if the specified compiler feature is supported
+
+#### Function Prototype
+
+::: tip API
+```lua
+compiler.has_features(features: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| features | Required. Feature name or feature name list |
+| opt | Optional. Option parameters, supports `languages`, `target`, `configs` |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if supported, false otherwise |
+
+#### Usage
 
 Although it can be obtained by [lib.detect.has_features](/api/scripts/extension-modules/lib/detect#detect-has_features), but the interface is more low-level, you need to specify the compiler name.
 And this interface only needs to specify the special name list that needs to be detected, it can automatically switch to select the currently supported compiler, and then determine whether the specified feature is supported in the current compiler.

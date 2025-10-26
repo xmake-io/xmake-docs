@@ -6,6 +6,32 @@
 
 - 执行链接
 
+#### 函数原型
+
+::: tip API
+```lua
+linker.link(targetkind: <string>, sourcekinds: <string|table>, objectfiles: <table>, targetfile: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| targetkind | 必需。目标类型，支持 "binary", "static", "shared" |
+| sourcekinds | 必需。源文件类型或类型列表，例如 "cc", "cxx", {"cc", "mxx", "sc"} |
+| objectfiles | 必需。对象文件路径列表 |
+| targetfile | 必需。目标文件路径 |
+| opt | 可选。选项参数，支持 `target` |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 链接成功返回 true，失败返回 false |
+
+#### 用法说明
+
 针对target，链接指定对象文件列表，生成对应的目标文件，例如：
 
 ```lua
@@ -48,6 +74,32 @@ linker.link("binary", {"cc", "mxx", "sc"}, {"a.o", "b.o", "c.o"}, "/tmp/targetfi
 
 - 获取链接命令行字符串
 
+#### 函数原型
+
+::: tip API
+```lua
+linker.linkcmd(targetkind: <string>, sourcekinds: <string|table>, objectfiles: <table>, targetfile: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| targetkind | 必需。目标类型，支持 "binary", "static", "shared" |
+| sourcekinds | 必需。源文件类型或类型列表 |
+| objectfiles | 必需。对象文件路径列表 |
+| targetfile | 必需。目标文件路径 |
+| opt | 可选。选项参数，支持 `target` 和 `configs` |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 返回链接命令字符串 |
+
+#### 用法说明
+
 直接获取[linker.link](#linker-link)中执行的命令行字符串，相当于：
 
 ```lua
@@ -66,6 +118,33 @@ local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:tar
 
 - 获取链接命令行参数列表
 
+#### 函数原型
+
+::: tip API
+```lua
+linker.linkargv(targetkind: <string>, sourcekinds: <string|table>, objectfiles: <table>, targetfile: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| targetkind | 必需。目标类型，支持 "binary", "static", "shared" |
+| sourcekinds | 必需。源文件类型或类型列表 |
+| objectfiles | 必需。对象文件路径列表 |
+| targetfile | 必需。目标文件路径 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 链接器程序路径 |
+| table | 链接参数列表 |
+
+#### 用法说明
+
 跟[linker.linkcmd](#linker-linkcmd)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
 
 ```lua
@@ -79,6 +158,30 @@ local program, argv = linker.linkargv("static", "cxx", {"a.o", "b.o", "c.o"}, ta
 ## linker.linkflags
 
 - 获取链接选项
+
+#### 函数原型
+
+::: tip API
+```lua
+linker.linkflags(targetkind: <string>, sourcekinds: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| targetkind | 必需。目标类型，支持 "binary", "static", "shared" |
+| sourcekinds | 必需。源文件类型或类型列表 |
+| opt | 可选。选项参数，支持 `target` |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| table | 返回链接选项列表数组 |
+
+#### 用法说明
 
 获取[linker.linkcmd](#linker-linkcmd)中的链接选项字符串部分，不带shellname和对象文件列表，并且是按数组返回，例如：
 
@@ -94,6 +197,30 @@ end
 ## linker.has_flags
 
 - 判断指定链接选项是否支持
+
+#### 函数原型
+
+::: tip API
+```lua
+linker.has_flags(targetkind: <string>, sourcekinds: <string|table>, flags: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| targetkind | 必需。目标类型，例如 "binary", "static" |
+| sourcekinds | 必需。源文件类型或类型列表 |
+| flags | 必需。要判断的链接选项 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 支持返回 true，不支持返回 false |
+
+#### 用法说明
 
 虽然通过[lib.detect.has_flags](/zh/api/scripts/extension-modules/lib/detect#detect-has_flags)也能判断，但是那个接口更加底层，需要指定链接器名称
 而此接口只需要指定target的目标类型，源文件类型，它会自动切换选择当前支持的链接器。

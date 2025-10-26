@@ -6,6 +6,32 @@ Linker related operations, often used for plugin development.
 
 - Execute link
 
+#### Function Prototype
+
+::: tip API
+```lua
+linker.link(targetkind: <string>, sourcekinds: <string|table>, objectfiles: <table>, targetfile: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| targetkind | Required. Target type, supports "binary", "static", "shared" |
+| sourcekinds | Required. Source file type or type list, e.g., "cc", "cxx", {"cc", "mxx", "sc"} |
+| objectfiles | Required. Object file path list |
+| targetfile | Required. Target file path |
+| opt | Optional. Option parameters, supports `target` |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true on success, false on failure |
+
+#### Usage
+
 For the target, link the specified object file list to generate the corresponding target file, for example:
 
 ```lua
@@ -48,6 +74,32 @@ The above code tells the linker that the three object files a, b, c may be c, ob
 
 - Get link command line string
 
+#### Function Prototype
+
+::: tip API
+```lua
+linker.linkcmd(targetkind: <string>, sourcekinds: <string|table>, objectfiles: <table>, targetfile: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| targetkind | Required. Target type, supports "binary", "static", "shared" |
+| sourcekinds | Required. Source file type or type list |
+| objectfiles | Required. Object file path list |
+| targetfile | Required. Target file path |
+| opt | Optional. Option parameters, supports `target` and `configs` |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns link command string |
+
+#### Usage
+
 Get the command line string executed in [linker.link](#linker-link) directly, which is equivalent to:
 
 ```lua
@@ -66,7 +118,34 @@ local cmdstr = linker.linkcmd("static", "cxx", {"a.o", "b.o", "c.o"}, target:tar
 
 - Get a list of link command line arguments
 
-A little different from [linker.linkcmd](#linkerlinkcmd) is that this interface returns a list of parameters, table representation, more convenient to operate:
+#### Function Prototype
+
+::: tip API
+```lua
+linker.linkargv(targetkind: <string>, sourcekinds: <string|table>, objectfiles: <table>, targetfile: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| targetkind | Required. Target type, supports "binary", "static", "shared" |
+| sourcekinds | Required. Source file type or type list |
+| objectfiles | Required. Object file path list |
+| targetfile | Required. Target file path |
+| opt | Optional. Option parameters |
+
+#### Return Values
+
+| Type | Description |
+|------|-------------|
+| string | Linker program path |
+| table | Link arguments list |
+
+#### Usage
+
+A little different from [linker.linkcmd](#linker-linkcmd) is that this interface returns a list of parameters, table representation, more convenient to operate:
 
 ```lua
 local program, argv = linker.linkargv("static", "cxx", {"a.o", "b.o", "c.o"}, target:targetfile(), {target = target})
@@ -79,6 +158,30 @@ We can also run it directly by passing the return value to [os.runv](/api/script
 ## linker.linkflags
 
 - Get link options
+
+#### Function Prototype
+
+::: tip API
+```lua
+linker.linkflags(targetkind: <string>, sourcekinds: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| targetkind | Required. Target type, supports "binary", "static", "shared" |
+| sourcekinds | Required. Source file type or type list |
+| opt | Optional. Option parameters, supports `target` |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table | Returns link options list array |
+
+#### Usage
 
 Get the link option string part of [linker.linkcmd](#linker-linkcmd) without shellname and object file list, and return by array, for example:
 
@@ -94,6 +197,30 @@ The returned array of flags is an array.
 ## linker.has_flags
 
 - Determine if the specified link option is supported
+
+#### Function Prototype
+
+::: tip API
+```lua
+linker.has_flags(targetkind: <string>, sourcekinds: <string|table>, flags: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| targetkind | Required. Target type, e.g., "binary", "static" |
+| sourcekinds | Required. Source file type or type list |
+| flags | Required. Link option to check |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if supported, false otherwise |
+
+#### Usage
 
 Although it can be judged by [lib.detect.has_flags](/api/scripts/extension-modules/lib/detect#detect-has_flags), but the interface is more low-level, you need to specify the linker name.
 This interface only needs to specify the target type of the target, the source file type, which will automatically switch to select the currently supported linker.

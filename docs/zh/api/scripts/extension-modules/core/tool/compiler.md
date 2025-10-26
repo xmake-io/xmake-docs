@@ -7,6 +7,31 @@
 
 - 执行编译
 
+#### 函数原型
+
+::: tip API
+```lua
+compiler.compile(sourcefile: <string>, objectfile: <string>, depfile: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| sourcefile | 必需。源文件路径 |
+| objectfile | 必需。目标文件路径 |
+| depfile | 可选。依赖文件路径 |
+| opt | 可选。选项参数，支持 `target` |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 编译成功返回 true，失败返回 false |
+
+#### 用法说明
+
 针对target，链接指定对象文件列表，生成对应的目标文件，例如：
 
 ```lua
@@ -27,6 +52,30 @@ compiler.compile("xxx.c", "xxx.o")
 ## compiler.compcmd
 
 - 获取编译命令行
+
+#### 函数原型
+
+::: tip API
+```lua
+compiler.compcmd(sourcefile: <string>, objectfile: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| sourcefile | 必需。源文件路径 |
+| objectfile | 必需。目标文件路径 |
+| opt | 可选。选项参数，支持 `target` 和 `configs` |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 返回编译命令字符串 |
+
+#### 用法说明
 
 直接获取[compiler.compile](#compiler-compile)中执行的命令行字符串，相当于：
 
@@ -60,6 +109,31 @@ end
 
 - 获取编译命令行列表
 
+#### 函数原型
+
+::: tip API
+```lua
+compiler.compargv(sourcefile: <string>, objectfile: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| sourcefile | 必需。源文件路径 |
+| objectfile | 必需。目标文件路径 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 编译器程序路径 |
+| table | 编译参数列表 |
+
+#### 用法说明
+
 跟[compiler.compcmd](#compiler-compcmd)稍微有点区别的是，此接口返回的是参数列表，table表示，更加方便操作：
 
 ```lua
@@ -69,6 +143,29 @@ local program, argv = compiler.compargv("xxx.c", "xxx.o")
 ## compiler.compflags
 
 - 获取编译选项
+
+#### 函数原型
+
+::: tip API
+```lua
+compiler.compflags(sourcefile: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| sourcefile | 必需。源文件路径 |
+| opt | 可选。选项参数，支持 `target` |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| table | 返回编译选项列表数组 |
+
+#### 用法说明
 
 获取[compiler.compcmd](#compiler-compcmd)中的编译选项字符串部分，不带shellname和文件列表，例如：
 
@@ -84,6 +181,29 @@ end
 ## compiler.has_flags
 
 - 判断指定编译选项是否支持
+
+#### 函数原型
+
+::: tip API
+```lua
+compiler.has_flags(sourcekind: <string>, flag: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| sourcekind | 必需。源文件类型，例如 "c", "cxx" |
+| flag | 必需。要判断的编译选项 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 支持返回 true，不支持返回 false |
+
+#### 用法说明
 
 虽然通过[lib.detect.has_flags](/zh/api/scripts/extension-modules/lib/detect#detect-has_flags)也能判断，但是那个接口更加底层，需要指定编译器名称。
 而此接口只需要指定语言类型，它会自动切换选择当前支持的编译器。
@@ -103,6 +223,29 @@ end
 ## compiler.features
 
 - 获取所有编译器特性
+
+#### 函数原型
+
+::: tip API
+```lua
+compiler.features(sourcekind: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| sourcekind | 必需。源文件类型，例如 "c", "cxx" |
+| opt | 可选。选项参数，支持 `target` 和 `configs` |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| table | 返回特性列表数组 |
+
+#### 用法说明
 
 虽然通过[lib.detect.features](/zh/api/scripts/extension-modules/lib/detect#detect-features)也能获取，但是那个接口更加底层，需要指定编译器名称。
 而此接口只需要指定语言类型，它会自动切换选择当前支持的编译器，然后获取当前的编译器特性列表。
@@ -191,6 +334,29 @@ local features = compiler.features("cxx", {target = target, configs = {defines =
 ## compiler.has_features
 
 - 判断指定的编译器特性是否支持
+
+#### 函数原型
+
+::: tip API
+```lua
+compiler.has_features(features: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| features | 必需。特性名称或特性名称列表 |
+| opt | 可选。选项参数，支持 `languages`, `target`, `configs` 等 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 支持返回 true，不支持返回 false |
+
+#### 用法说明
 
 虽然通过[lib.detect.has_features](/zh/api/scripts/extension-modules/lib/detect#detect-has_features)也能获取，但是那个接口更加底层，需要指定编译器名称。
 而此接口只需要指定需要检测的特姓名称列表，就能自动切换选择当前支持的编译器，然后判断指定特性在当前的编译器中是否支持。

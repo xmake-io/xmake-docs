@@ -7,20 +7,45 @@ for example: [target](/api/description/project-target), [option](/api/descriptio
 
 - Get the specified project target object
 
+#### Function Prototype
+
+::: tip API
+```lua
+project.target(name: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Target name |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| target | Returns the target object, or nil if it doesn't exist |
+
+#### Usage
+
 Get and access the specified project target configuration, for example:
 
 ```lua
 local target = project.target("test")
 if target then
 
+    -- Get the target name
+    print(target:name())
+
+    -- Get the target directory, available after version 2.1.9
+    print(target:targetdir())
+
     -- Get the target file name
     print(target:targetfile())
 
     -- Get the target type, which is: binary, static, shared
     print(target:targetkind())
-
-    -- Get the target name
-    print(target:name())
 
     -- Get the target source file
     local sourcefiles = target:sourcefiles()
@@ -37,6 +62,26 @@ end
 
 - Get a list of project target objects
 
+#### Function Prototype
+
+::: tip API
+```lua
+project.targets()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table | Returns a table containing all target objects, with target names as keys and target objects as values |
+
+#### Usage
+
 Returns all compilation targets for the current project, for example:
 
 ```lua
@@ -48,6 +93,28 @@ end
 ## project.option
 
 - Get the specified option object
+
+#### Function Prototype
+
+::: tip API
+```lua
+project.option(name: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Option name |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| option | Returns the option object, or nil if it doesn't exist |
+
+#### Usage
 
 Get and access the option objects specified in the project, for example:
 
@@ -62,10 +129,30 @@ end
 
 - Get all project option objects
 
+#### Function Prototype
+
+::: tip API
+```lua
+project.options()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table | Returns a table containing all option objects, with option names as keys and option objects as values |
+
+#### Usage
+
 Returns all compilation targets for the current project, for example:
 
 ```lua
-for optionname, option in pairs(project.options())
+for optionname, option in pairs(project.options()) do
     print(option:enabled())
 end
 ```
@@ -73,6 +160,26 @@ end
 ## project.name
 
 - Get the current project name
+
+#### Function Prototype
+
+::: tip API
+```lua
+project.name()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns the project name |
+
+#### Usage
 
 That is, get the project name configuration of [set_project](/api/description/global-interfaces#set-project).
 
@@ -84,7 +191,27 @@ print(project.name())
 
 - Get the current project version number
 
-That is, get [set_version](/api/description/global-interfaces.html#set-version) project version configuration.
+#### Function Prototype
+
+::: tip API
+```lua
+project.version()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns the project version number |
+
+#### Usage
+
+That is, get [set_version](/api/description/global-interfaces#set-version) project version configuration.
 
 ```lua
 print(project.version())
