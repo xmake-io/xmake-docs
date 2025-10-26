@@ -7,6 +7,28 @@
 
 - 将 mingw 的 libxxxdll.a 转换成 msvc 的 xxx.lib 库
 
+#### 函数原型
+
+::: tip API
+```lua
+gnu2mslib(outputlib: <string>, inputfile: <string>, options: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| outputlib | 必需。输出的 .lib 文件路径 |
+| inputfile | 必需。输入的 .dll.a 或 .def 文件路径 |
+| options | 可选。选项参数，支持以下选项：<br>- `dllname` - DLL 文件名<br>- `arch` - 架构（如 "x64"） |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
 这个功能对 Fortran & C++ 混合项目特别有帮助，因为 VS 不提供fortran编译器，只能用MinGW的gfortran来编译fortran部分，然后和VS的项目链接。
 往往这样的项目同时有一些其他的库以vs格式提供，因此纯用MinGW编译也不行，只能使用这个功能来混合编译。
 

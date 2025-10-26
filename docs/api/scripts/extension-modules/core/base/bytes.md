@@ -11,15 +11,38 @@ To use this module, you need to import it first: `import("core.base.bytes")`
 
 - Create a byte buffer
 
-```lua
-import("core.base.bytes")
+#### Function Prototype
 
-local buff = bytes(size)
+::: tip API
+```lua
+bytes(size: <number>, initval: <number|string>)
+bytes(str: <string>)
+bytes(buffer: <bytes>, offset: <number>, size: <number>)
 ```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| size | Required. Buffer size in bytes |
+| initval | Optional. Initial value for buffer (number or character) |
+| str | Required. String to convert to bytes object |
+| buffer | Required. Source bytes buffer for slice |
+| offset | Required. Offset position in source buffer |
+| size | Required. Size of the slice |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| bytes | Returns a bytes buffer object |
+
+#### Usage
 
 The bytes constructor supports multiple creation methods, providing flexible buffer creation and management.
 
-### Create a buffer of specified size
+##### Create a buffer of specified size
 
 ```lua
 -- Create a 1024-byte buffer
@@ -32,7 +55,7 @@ local buff = bytes(100, 255) -- Initialize to 255
 local buff = bytes(100, 'A') -- Initialize to character 'A'
 ```
 
-### Create from string
+##### Create from string
 
 Create a bytes object from a string, commonly used to convert strings to binary data:
 
@@ -46,7 +69,7 @@ print(buff:str())   -- Output: hello world
 bytes objects created from strings are read-only and cannot be modified.
 :::
 
-### Create a slice
+##### Create a slice
 
 Create a slice from an existing bytes object, sharing underlying memory without copying data:
 
@@ -56,7 +79,7 @@ local slice = bytes(original, 3, 5)  -- Slice bytes 3-5
 print(slice:str())  -- Output: 345
 ```
 
-### Concatenate multiple buffers
+##### Concatenate multiple buffers
 
 ```lua
 -- Concatenate using parameter list
@@ -68,14 +91,14 @@ local buff = bytes({bytes("123"), bytes("456"), bytes("789")})
 print(buff:str())  -- Output: 123456789
 ```
 
-### Create empty buffer
+##### Create empty buffer
 
 ```lua
 local buff = bytes()   -- Empty buffer
 local buff = bytes({}) -- Empty buffer
 ```
 
-### Index operations
+##### Index operations
 
 bytes objects support accessing and modifying individual bytes through indexing (indices start from 1):
 
@@ -105,7 +128,7 @@ buff[{1, 9}] = bytes("123456789")
 print(buff:str())  -- Output: 123456789
 ```
 
-### Concatenation operation
+##### Concatenation operation
 
 Use the `..` operator to concatenate two bytes objects, creating a new buffer:
 
@@ -492,7 +515,7 @@ bytes:u16le(offset: <number>)
 
 #### Usage
 
-Reads 2 bytes from the specified offset as an unsigned 16-bit integer (little-endian byte order).
+参数Reads 2 bytes from the specified offset as an unsigned 16-bit integer (little-endian byte order).
 
 ## bytes:u16le_set
 

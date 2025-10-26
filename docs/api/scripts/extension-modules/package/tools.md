@@ -10,6 +10,28 @@ This module provides helpers for integrating common build tools in xmake-repo an
 
 Install a package using CMake. Most commonly used for CMake-based packages in xmake-repo.
 
+#### Function Prototype
+
+::: tip API
+```lua
+cmake.install(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. CMake configuration parameter list |
+| opt | Optional. Option parameters, supports the following:<br>- `cxflags` - C/C++ compile flags<br>- `cflags` - C compile flags<br>- `packagedeps` - Package dependencies list |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
 #### Basic usage
 ```lua
 on_install(function (package)
@@ -39,12 +61,29 @@ end)
 
 Build a package using CMake (without install step).
 
-**Signature:**
-```lua
-cmake.build(package, configs, opt)
-```
+#### Function Prototype
 
-**Example:**
+::: tip API
+```lua
+cmake.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. CMake configuration parameter list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Example:
 ```lua
 on_install(function (package)
     import("package.tools.cmake").build(package, {"-DCMAKE_BUILD_TYPE=Release"})
@@ -54,6 +93,28 @@ end)
 ### cmake.configure
 
 Configure a CMake project (run cmake only, no build/install).
+
+#### Function Prototype
+
+::: tip API
+```lua
+cmake.configure(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. CMake configuration parameter list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
 
 #### Basic usage
 ```lua
@@ -72,6 +133,28 @@ end)
 ### autoconf.install
 
 Install a package using GNU Autotools (configure/make/make install).
+
+#### Function Prototype
+
+::: tip API
+```lua
+autoconf.install(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Configuration parameter list |
+| opt | Optional. Option parameters, supports the following:<br>- `packagedeps` - Package dependencies list |
+
+#### Return Value
+
+No return value
+
+#### Usage
 
 #### Basic usage
 ```lua
@@ -102,12 +185,29 @@ end)
 
 Build a package using Autotools (configure/make).
 
-**Signature:**
-```lua
-autoconf.build(package, configs, opt)
-```
+#### Function Prototype
 
-**Example:**
+::: tip API
+```lua
+autoconf.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Configuration parameter list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Example:
 ```lua
 on_install(function (package)
     import("package.tools.autoconf").build(package, {"--enable-static=yes"})
@@ -118,12 +218,29 @@ end)
 
 Run the configure script for an Autotools project.
 
-**Signature:**
-```lua
-autoconf.configure(package, configs, opt)
-```
+#### Function Prototype
 
-**Example:**
+::: tip API
+```lua
+autoconf.configure(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Configuration parameter list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Example:
 ```lua
 on_install(function (package)
     import("package.tools.autoconf").configure(package, {"--prefix=/usr/local"})
@@ -134,12 +251,29 @@ end)
 
 Run make with custom arguments.
 
-**Signature:**
-```lua
-autoconf.make(package, argv, opt)
-```
+#### Function Prototype
 
-**Example:**
+::: tip API
+```lua
+autoconf.make(package: <package>, argv: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| argv | Required. make argument list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Example:
 ```lua
 on_install(function (package)
     import("package.tools.autoconf").make(package, {"install"})
@@ -154,12 +288,29 @@ end)
 
 Install a package using Meson (setup/compile/install).
 
-**Signature:**
-```lua
-meson.install(package, configs, opt)
-```
+#### Function Prototype
 
-**Typical usage:**
+::: tip API
+```lua
+meson.install(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Meson configuration parameter list |
+| opt | Optional. Option parameters, supports the following:<br>- `packagedeps` - Package dependencies list |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Typical usage:
 ```lua
 add_deps("meson", "ninja")
 on_install(function (package)
@@ -182,12 +333,29 @@ end)
 
 Build a package using Meson (setup/compile).
 
-**Signature:**
-```lua
-meson.build(package, configs, opt)
-```
+#### Function Prototype
 
-**Example:**
+::: tip API
+```lua
+meson.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Meson configuration parameter list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Example:
 ```lua
 on_install(function (package)
     import("package.tools.meson").build(package, {"-Ddefault_library=static"})
@@ -196,14 +364,31 @@ end)
 
 ### meson.generate
 
-Generate build files for Meson (setup only).
+Generate Meson build files only (setup).
 
-**Signature:**
+#### Function Prototype
+
+::: tip API
 ```lua
-meson.generate(package, configs, opt)
+meson.generate(package: <package>, configs: <table>, opt: <table>)
 ```
+:::
 
-**Example:**
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Meson configuration parameter list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Example:
 ```lua
 on_install(function (package)
     import("package.tools.meson").generate(package, {"-Dbuildtype=release"})
@@ -216,14 +401,31 @@ end)
 
 ### make.install
 
-Install a package using Make (build then install target).
+Build and install a package using Make (build + install).
 
-**Signature:**
+#### Function Prototype
+
+::: tip API
 ```lua
-make.install(package, configs, opt)
+make.install(package: <package>, configs: <table>, opt: <table>)
 ```
+:::
 
-**Typical usage:**
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Configuration parameter list |
+| opt | Optional. Option parameters, supports the following:<br>- `packagedeps` - Package dependencies list |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Typical usage:
 ```lua
 add_deps("make")
 on_install(function (package)
@@ -240,12 +442,29 @@ end)
 
 Build a package using Make.
 
-**Signature:**
-```lua
-make.build(package, configs, opt)
-```
+#### Function Prototype
 
-**Example:**
+::: tip API
+```lua
+make.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Configuration parameter list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Example:
 ```lua
 on_install(function (package)
     import("package.tools.make").build(package, {"CC=gcc"})
@@ -256,12 +475,29 @@ end)
 
 Run make with custom arguments.
 
-**Signature:**
-```lua
-make.make(package, argv, opt)
-```
+#### Function Prototype
 
-**Example:**
+::: tip API
+```lua
+make.make(package: <package>, argv: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| argv | Required. make argument list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Example:
 ```lua
 on_install(function (package)
     import("package.tools.make").make(package, {"install"})
@@ -274,14 +510,31 @@ end)
 
 ### ninja.install
 
-Install a package using Ninja (build then install target).
+Build and install a package using Ninja (build + install).
 
-**Signature:**
+#### Function Prototype
+
+::: tip API
 ```lua
-ninja.install(package, configs, opt)
+ninja.install(package: <package>, configs: <table>, opt: <table>)
 ```
+:::
 
-**Typical usage:**
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Configuration parameter list |
+| opt | Optional. Option parameters, supports the following:<br>- `packagedeps` - Package dependencies list |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Typical usage:
 ```lua
 add_deps("ninja")
 on_install(function (package)
@@ -298,12 +551,29 @@ end)
 
 Build a package using Ninja.
 
-**Signature:**
-```lua
-ninja.build(package, configs, opt)
-```
+#### Function Prototype
 
-**Example:**
+::: tip API
+```lua
+ninja.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. Configuration parameter list |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Example:
 ```lua
 on_install(function (package)
     import("package.tools.ninja").build(package)
@@ -318,12 +588,29 @@ end)
 
 Build a package using MSBuild (Visual Studio projects).
 
-**Signature:**
-```lua
-msbuild.build(package, configs, opt)
-```
+#### Function Prototype
 
-**Typical usage:**
+::: tip API
+```lua
+msbuild.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| configs | Required. MSBuild configuration parameter list |
+| opt | Optional. Option parameters, supports the following:<br>- `packagedeps` - Package dependencies list |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
+Typical usage:
 ```lua
 on_install(function (package)
     local configs = {}
@@ -348,6 +635,27 @@ end)
 Install a package using xmake itself. This is suitable for:
 - Porting third-party libraries that cannot be built directly, by writing a `xmake.lua` to adapt the build.
 - Building and installing projects that already maintain their own `xmake.lua` build script.
+
+#### Function Prototype
+
+::: tip API
+```lua
+xmake.install(package: <package>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| package | Required. Package instance object |
+| opt | Optional. Option parameters |
+
+#### Return Value
+
+No return value
+
+#### Usage
 
 #### Usage for projects with their own xmake.lua
 If the source already contains a proper `xmake.lua`, you can simply:

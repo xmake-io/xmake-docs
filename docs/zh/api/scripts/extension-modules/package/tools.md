@@ -10,6 +10,28 @@
 
 通过 CMake 安装包，适用于大多数 CMake 类包。
 
+#### 函数原型
+
+::: tip API
+```lua
+cmake.install(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。CMake 配置参数列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `cxflags` - C/C++ 编译参数<br>- `cflags` - C 编译参数<br>- `packagedeps` - 包依赖列表 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
 #### 基础用法
 ```lua
 on_install(function (package)
@@ -39,12 +61,29 @@ end)
 
 仅用 CMake 构建包（不安装）。
 
-**签名：**
-```lua
-cmake.build(package, configs, opt)
-```
+#### 函数原型
 
-**示例：**
+::: tip API
+```lua
+cmake.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。CMake 配置参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+示例：
 ```lua
 on_install(function (package)
     import("package.tools.cmake").build(package, {"-DCMAKE_BUILD_TYPE=Release"})
@@ -54,6 +93,28 @@ end)
 ### cmake.configure
 
 仅配置 CMake 项目（只运行 cmake，不编译/安装）。
+
+#### 函数原型
+
+::: tip API
+```lua
+cmake.configure(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。CMake 配置参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
 
 #### 基础用法
 ```lua
@@ -72,6 +133,28 @@ end)
 ### autoconf.install
 
 通过 GNU Autotools（configure/make/make install）安装包。
+
+#### 函数原型
+
+::: tip API
+```lua
+autoconf.install(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。配置参数列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `packagedeps` - 包依赖列表 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
 
 #### 基础用法
 ```lua
@@ -102,12 +185,29 @@ end)
 
 通过 Autotools 构建包（configure/make）。
 
-**签名：**
-```lua
-autoconf.build(package, configs, opt)
-```
+#### 函数原型
 
-**示例：**
+::: tip API
+```lua
+autoconf.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。配置参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+示例：
 ```lua
 on_install(function (package)
     import("package.tools.autoconf").build(package, {"--enable-static=yes"})
@@ -118,12 +218,29 @@ end)
 
 运行 Autotools 项目的 configure 脚本。
 
-**签名：**
-```lua
-autoconf.configure(package, configs, opt)
-```
+#### 函数原型
 
-**示例：**
+::: tip API
+```lua
+autoconf.configure(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。配置参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+示例：
 ```lua
 on_install(function (package)
     import("package.tools.autoconf").configure(package, {"--prefix=/usr/local"})
@@ -134,12 +251,29 @@ end)
 
 自定义参数调用 make。
 
-**签名：**
-```lua
-autoconf.make(package, argv, opt)
-```
+#### 函数原型
 
-**示例：**
+::: tip API
+```lua
+autoconf.make(package: <package>, argv: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| argv | 必需。make 参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+示例：
 ```lua
 on_install(function (package)
     import("package.tools.autoconf").make(package, {"install"})
@@ -154,12 +288,29 @@ end)
 
 通过 Meson（setup/compile/install）安装包。
 
-**签名：**
-```lua
-meson.install(package, configs, opt)
-```
+#### 函数原型
 
-**典型用法：**
+::: tip API
+```lua
+meson.install(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。Meson 配置参数列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `packagedeps` - 包依赖列表 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+典型用法：
 ```lua
 add_deps("meson", "ninja")
 on_install(function (package)
@@ -182,12 +333,29 @@ end)
 
 通过 Meson 构建包（setup/compile）。
 
-**签名：**
-```lua
-meson.build(package, configs, opt)
-```
+#### 函数原型
 
-**示例：**
+::: tip API
+```lua
+meson.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。Meson 配置参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+示例：
 ```lua
 on_install(function (package)
     import("package.tools.meson").build(package, {"-Ddefault_library=static"})
@@ -198,12 +366,29 @@ end)
 
 仅生成 Meson 构建文件（setup）。
 
-**签名：**
-```lua
-meson.generate(package, configs, opt)
-```
+#### 函数原型
 
-**示例：**
+::: tip API
+```lua
+meson.generate(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。Meson 配置参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+示例：
 ```lua
 on_install(function (package)
     import("package.tools.meson").generate(package, {"-Dbuildtype=release"})
@@ -218,12 +403,29 @@ end)
 
 通过 Make 构建并安装包（build + install）。
 
-**签名：**
-```lua
-make.install(package, configs, opt)
-```
+#### 函数原型
 
-**典型用法：**
+::: tip API
+```lua
+make.install(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。配置参数列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `packagedeps` - 包依赖列表 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+典型用法：
 ```lua
 add_deps("make")
 on_install(function (package)
@@ -240,12 +442,29 @@ end)
 
 通过 Make 构建包。
 
-**签名：**
-```lua
-make.build(package, configs, opt)
-```
+#### 函数原型
 
-**示例：**
+::: tip API
+```lua
+make.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。配置参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+示例：
 ```lua
 on_install(function (package)
     import("package.tools.make").build(package, {"CC=gcc"})
@@ -256,12 +475,29 @@ end)
 
 自定义参数调用 make。
 
-**签名：**
-```lua
-make.make(package, argv, opt)
-```
+#### 函数原型
 
-**示例：**
+::: tip API
+```lua
+make.make(package: <package>, argv: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| argv | 必需。make 参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+示例：
 ```lua
 on_install(function (package)
     import("package.tools.make").make(package, {"install"})
@@ -276,12 +512,29 @@ end)
 
 通过 Ninja 构建并安装包（build + install）。
 
-**签名：**
-```lua
-ninja.install(package, configs, opt)
-```
+#### 函数原型
 
-**典型用法：**
+::: tip API
+```lua
+ninja.install(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。配置参数列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `packagedeps` - 包依赖列表 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+典型用法：
 ```lua
 add_deps("ninja")
 on_install(function (package)
@@ -298,12 +551,29 @@ end)
 
 通过 Ninja 构建包。
 
-**签名：**
-```lua
-ninja.build(package, configs, opt)
-```
+#### 函数原型
 
-**示例：**
+::: tip API
+```lua
+ninja.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。配置参数列表 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+示例：
 ```lua
 on_install(function (package)
     import("package.tools.ninja").build(package)
@@ -318,12 +588,29 @@ end)
 
 通过 MSBuild（Visual Studio 工程）构建包。
 
-**签名：**
-```lua
-msbuild.build(package, configs, opt)
-```
+#### 函数原型
 
-**典型用法：**
+::: tip API
+```lua
+msbuild.build(package: <package>, configs: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| configs | 必需。MSBuild 配置参数列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `packagedeps` - 包依赖列表 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
+
+典型用法：
 ```lua
 on_install(function (package)
     local configs = {}
@@ -348,6 +635,27 @@ end)
 通过 xmake 自身构建和安装包，适用于：
 - 移植一些三方库（原生编译不过时），可通过自定义 xmake.lua 适配后再用 xmake.install 安装。
 - 源码本身就维护有 xmake.lua 的项目包构建，无需额外配置，直接用 xmake.install 即可。
+
+#### 函数原型
+
+::: tip API
+```lua
+xmake.install(package: <package>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| package | 必需。包实例对象 |
+| opt | 可选。选项参数 |
+
+#### 返回值说明
+
+无返回值
+
+#### 用法说明
 
 #### 针对已有 xmake.lua 的项目
 如果源码目录下已有标准的 xmake.lua，直接：

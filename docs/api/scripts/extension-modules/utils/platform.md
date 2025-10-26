@@ -7,6 +7,28 @@ This module is used for some platform-related auxiliary operation interfaces
 
 - Convert mingw's libxxxdll.a to msvc's xxx.lib library
 
+#### Function Prototype
+
+::: tip API
+```lua
+gnu2mslib(outputlib: <string>, inputfile: <string>, options: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| outputlib | Required. Output .lib file path |
+| inputfile | Required. Input .dll.a or .def file path |
+| options | Optional. Option parameters, supports the following:<br>- `dllname` - DLL file name<br>- `arch` - Architecture (e.g. "x64") |
+
+#### Return Value
+
+No return value
+
+#### Usage
+
 This feature is particularly helpful for Fortran & C++ mixed projects, because VS does not provide the fortran compiler. You can only use MinGW's gfortran to compile the fortran part, and then link with the VS project.
 Often such projects also have some other libraries provided in the vs format, so pure MinGW compilation is not possible, you can only use this function to mix compilation.
 

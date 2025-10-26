@@ -11,15 +11,38 @@ bytes 模块提供了二进制数据缓冲区的操作功能，用于处理原�
 
 - 创建字节缓冲区
 
-```lua
-import("core.base.bytes")
+#### 函数原型
 
-local buff = bytes(size)
+::: tip API
+```lua
+bytes(size: <number>, initval: <number|string>)
+bytes(str: <string>)
+bytes(buffer: <bytes>, offset: <number>, size: <number>)
 ```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| size | 必需。缓冲区大小（字节数） |
+| initval | 可选。缓冲区的初始值（数字或字符） |
+| str | 必需。要转换为 bytes 对象的字符串 |
+| buffer | 必需。源 bytes 缓冲区（用于切片） |
+| offset | 必需。在源缓冲区中的偏移位置 |
+| size | 必需。切片的大小 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| bytes | 返回一个 bytes 缓冲区对象 |
+
+#### 用法说明
 
 bytes 构造函数支持多种创建方式，提供灵活的缓冲区创建和管理。
 
-### 创建指定大小的缓冲区
+##### 创建指定大小的缓冲区
 
 ```lua
 -- 创建 1024 字节的缓冲区
@@ -32,7 +55,7 @@ local buff = bytes(100, 255)  -- 初始化为 255
 local buff = bytes(100, 'A')  -- 初始化为字符 'A'
 ```
 
-### 从字符串创建
+##### 从字符串创建
 
 从字符串创建 bytes 对象，常用于将字符串转换为二进制数据处理：
 
@@ -46,7 +69,7 @@ print(buff:str())   -- 输出: hello world
 从字符串创建的 bytes 对象是只读的，不能修改。
 :::
 
-### 创建切片
+##### 创建切片
 
 从现有 bytes 对象创建切片，共享底层内存，不复制数据：
 
@@ -56,7 +79,7 @@ local slice = bytes(original, 3, 5)  -- 切片字节 3-5
 print(slice:str())  -- 输出: 345
 ```
 
-### 连接多个缓冲区
+##### 连接多个缓冲区
 
 ```lua
 -- 使用参数列表连接
@@ -68,14 +91,14 @@ local buff = bytes({bytes("123"), bytes("456"), bytes("789")})
 print(buff:str())  -- 输出: 123456789
 ```
 
-### 创建空缓冲区
+##### 创建空缓冲区
 
 ```lua
 local buff = bytes()  -- 空缓冲区
 local buff = bytes({})  -- 空缓冲区
 ```
 
-### 索引操作
+##### 索引操作
 
 bytes 对象支持通过索引访问和修改单个字节（下标从 1 开始）：
 
@@ -105,7 +128,7 @@ buff[{1, 9}] = bytes("123456789")
 print(buff:str())  -- 输出: 123456789
 ```
 
-### 连接操作
+##### 连接操作
 
 使用 `..` 操作符连接两个 bytes 对象，创建新的缓冲区：
 
