@@ -11,6 +11,30 @@ The interface of this module is spread across multiple module directories, try t
 
 - Find files
 
+#### Function Prototype
+
+::: tip API
+```lua
+find_file(file: <string>, paths: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| file | Required. File name or path |
+| paths | Required. Search path list |
+| opt | Optional. Option parameters, supports the following:<br>- `suffixes` - Subdirectory suffix list |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns file path if found, nil if not found |
+
+#### Usage
+
 This interface provides a more powerful project than [os.files](/api/scripts/builtin-modules/os#os-files),
 which can specify multiple search directories at the same time, and can also specify additional subdirectories for each directory to match the pattern lookup,
 which is equivalent to an enhanced version of [os.files](/api/scripts/builtin-modules/os#os-files).
@@ -68,6 +92,30 @@ We can also quickly call and test this interface with the `xmake lua` plugin: `x
 
 - Find the path
 
+#### Function Prototype
+
+::: tip API
+```lua
+find_path(file: <string>, paths: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| file | Required. File or directory path |
+| paths | Required. Search path list |
+| opt | Optional. Option parameters, supports the following:<br>- `suffixes` - Subdirectory suffix |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns path if found, nil if not found |
+
+#### Usage
+
 The usage of this interface is similar to [lib.detect.find_file](#detect-find_file), the only difference is that the returned results are different.
 After the interface finds the incoming file path, it returns the corresponding search path, not the file path itself. It is generally used to find the parent directory location corresponding to the file.
 
@@ -94,6 +142,30 @@ local p = find_path("include/*.h", { "/usr", "/usr/local/**"}, {suffixes = "/sub
 ## detect.find_library
 
 - Find library files
+
+#### Function Prototype
+
+::: tip API
+```lua
+find_library(name: <string>, paths: <table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Library name |
+| paths | Required. Search path list |
+| opt | Optional. Option parameters, supports the following:<br>- `kind` - Library type, static or shared<br>- `suffixes` - Subdirectory suffix |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table | Returns library info table (contains filename, linkdir, link, kind), nil if not found |
+
+#### Usage
 
 This interface is used to find library files (static libraries, dynamic libraries) in the specified search directory, for example:
 
@@ -131,6 +203,29 @@ local library = find_library("cryp*", {"/usr", "/usr/local"}, {suffixes = "/lib"
 ## detect.find_program
 
 - Find executable programs
+
+#### Function Prototype
+
+::: tip API
+```lua
+find_program(name: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Program name |
+| opt | Optional. Option parameters, supports the following:<br>- `paths` - Search path list<br>- `check` - Check command or function |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns program path if found, nil if not found |
+
+#### Usage
 
 This interface is more primitive than [lib.detect.find_tool](#detect-find_tool), looking for executables through the specified parameter directory.
 
@@ -174,6 +269,28 @@ We can also test quickly with `xmake lua lib.detect.find_program ccache`.
 
 - Find the executable version number
 
+#### Function Prototype
+
+::: tip API
+```lua
+find_programver(name: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Required. Program name |
+| opt | Optional. Option parameters, supports the following:<br>- `command` - Version command or function<br>- `parse` - Version parsing rule or function |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns version number if found, nil if not found |
+
+#### Usage
 
 ```lua
 import("lib.detect.find_programver")
@@ -212,16 +329,38 @@ We can also test quickly with `xmake lua lib.detect.find_programver ccache`.
 
 - Find package files
 
+::: warning NOTE
 After 2.6.x this interface is not recommended for direct use (internal use only), for library integration, please use `add_requires()` and `add_packages()` as much as possible.
+:::
 
 ## detect.find_tool
 
 - Find tool
 
-This interface is also used to find executable programs, but more
-advanced than [lib.detect.find_program](#detect-find_program), the
-function is also more powerful, it encapsulates the executable
-program, providing the concept of tools:
+#### Function Prototype
+
+::: tip API
+```lua
+find_tool(toolname: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| toolname | Required. Tool name |
+| opt | Optional. Option parameters, supports the following:<br>- `program` - Program command<br>- `version` - Whether to get version<br>- `paths` - Search paths<br>- `check` - Check command or function |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table | Returns tool info table (contains name, program, version), nil if not found |
+
+#### Usage
+
+This interface is also used to find executable programs, but more advanced than [lib.detect.find_program](#detect-find_program), the function is also more powerful, it encapsulates the executable program, providing the concept of tools:
 
 * toolname: tool name, short for executable program, used to mark a
 * tool, for example: `gcc`, `clang`, etc.  program: executable program
@@ -349,8 +488,29 @@ We can also test quickly with `xmake lua lib.detect.find_tool clang`.
 
 - Find tool name
 
-Match the corresponding tool name with the program command, for
-example:
+#### Function Prototype
+
+::: tip API
+```lua
+find_toolname(program: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| program | Required. Program command or path |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns tool name |
+
+#### Usage
+
+Match the corresponding tool name with the program command, for example:
 
 | program | toolname |
 | ------------------------- | ---------- |
@@ -366,6 +526,28 @@ Compared with program, toolname can uniquely mark a tool, and it is also conveni
 ## detect.find_cudadevices
 
 - Find CUDA devices of the host
+
+#### Function Prototype
+
+::: tip API
+```lua
+find_cudadevices(opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| opt | Optional. Option parameters, supports the following:<br>- `skip_compute_mode_prohibited` - Skip compute mode prohibited devices<br>- `min_sm_arch` - Minimum SM architecture<br>- `order_by_flops` - Order by performance |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table | Returns CUDA device list |
+
+#### Usage
 
 Enumerate CUDA devices through the CUDA Runtime API and query theirs properties.
 
@@ -384,6 +566,29 @@ Please refer to [CUDA Toolkit Documentation](https://docs.nvidia.com/cuda/cuda-r
 ## detect.features
 
 - Get all the features of the specified tool
+
+#### Function Prototype
+
+::: tip API
+```lua
+features(toolname: <string>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| toolname | Required. Tool name |
+| opt | Optional. Option parameters, supports the following:<br>- `flags` - Flag list<br>- `program` - Program command |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table | Returns feature list |
+
+#### Usage
 
 This interface is similar to [compiler.features](/api/scripts/extension-modules/core/tool/compiler#compiler-features). The difference is that this interface is more primitive. The passed argument is the actual tool name toolname.
 
@@ -405,6 +610,30 @@ A list of all compiler features can be found at [compiler.features](/api/scripts
 
 - Determine if the specified feature is supported
 
+#### Function Prototype
+
+::: tip API
+```lua
+has_features(toolname: <string>, features: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| toolname | Required. Tool name |
+| features | Required. Feature name or feature list |
+| opt | Optional. Option parameters, supports the following:<br>- `flags` - Flag list<br>- `program` - Program command |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean\|table | Returns boolean for single feature, returns supported feature sublist for list |
+
+#### Usage
+
 This interface is similar to [compiler.has_features](/api/scripts/extension-modules/core/tool/compiler#compiler-has_features), but more primitive, the passed argument is the actual tool name toolname.
 
 And this interface can not only judge the characteristics of the compiler, but the characteristics of any tool can be judged, so it is more versatile.
@@ -425,6 +654,30 @@ A list of all compiler features can be found at [compiler.features](/api/scripts
 
 - Determine if the specified parameter option is supported
 
+#### Function Prototype
+
+::: tip API
+```lua
+has_flags(toolname: <string>, flags: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| toolname | Required. Tool name |
+| flags | Required. Flag or flag list |
+| opt | Optional. Option parameters, supports the following:<br>- `program` - Program command<br>- `toolkind` - Tool type |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if supported, false otherwise |
+
+#### Usage
+
 This interface is similar to [compiler.has_flags](/api/scripts/extension-modules/core/tool/compiler#compiler-has_flags), but more primitive, the passed argument is the actual tool name toolname.
 
 ```lua
@@ -442,6 +695,29 @@ The detection of this interface has been optimized. Except for the cache mechani
 ## detect.has_cfuncs
 
 - Determine if the specified c function exists
+
+#### Function Prototype
+
+::: tip API
+```lua
+has_cfuncs(funcs: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| funcs | Required. Function name or function list |
+| opt | Optional. Option parameters, supports the following:<br>- `includes` - Include file list<br>- `configs` - Config options<br>- `target` - Target object<br>- `verbose` - Whether to output verbosely |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if exists, false otherwise |
+
+#### Usage
 
 This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect functions.
 
@@ -472,11 +748,57 @@ The verbose is used to echo the detection information, the target is used to app
 
 - Determine if the specified c++ function exists
 
+#### Function Prototype
+
+::: tip API
+```lua
+has_cxxfuncs(funcs: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| funcs | Required. Function name or function list |
+| opt | Optional. Option parameters, supports the following:<br>- `includes` - Include file list<br>- `configs` - Config options<br>- `target` - Target object<br>- `verbose` - Whether to output verbosely |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if exists, false otherwise |
+
+#### Usage
+
 This interface is similar to [lib.detect.has_cfuncs](#detect-has_cfuncs), please refer to its instructions for use. The only difference is that this interface is used to detect c++ functions.
 
 ## detect.has_cincludes
 
 - Determine if the specified c header file exists
+
+#### Function Prototype
+
+::: tip API
+```lua
+has_cincludes(includes: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| includes | Required. Include file name or include file list |
+| opt | Optional. Option parameters, supports the following:<br>- `target` - Target object<br>- `configs` - Config options |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if exists, false otherwise |
+
+#### Usage
 
 This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect header files.
 
@@ -492,13 +814,59 @@ local ok = has_cincludes({"stdio.h", "stdlib.h"}, {configs = {defines = "_GNU_SO
 
 - Determine if the specified c++ header file exists
 
-This interface is similar to [lib.detect.has_cincludess](#detect-has_cincludes), please refer to its instructions for use. The only difference is that this interface is used to detect c++ header files.
+#### Function Prototype
+
+::: tip API
+```lua
+has_cxxincludes(includes: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| includes | Required. Include file name or include file list |
+| opt | Optional. Option parameters, supports the following:<br>- `target` - Target object<br>- `configs` - Config options |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if exists, false otherwise |
+
+#### Usage
+
+This interface is similar to [lib.detect.has_cincludes](#detect-has_cincludes), please refer to its instructions for use. The only difference is that this interface is used to detect c++ header files.
 
 ## detect.has_ctypes
 
 - Determine if the specified c type exists
 
-This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect functions.
+#### Function Prototype
+
+::: tip API
+```lua
+has_ctypes(types: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| types | Required. Type name or type list |
+| opt | Optional. Option parameters, supports the following:<br>- `includes` - Include file list<br>- `configs` - Config options |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if exists, false otherwise |
+
+#### Usage
+
+This interface is a simplified version of [lib.detect.check_cxsnippets](#detect-check_cxsnippets) and is only used to detect types.
 
 ```lua
 import("lib.detect.has_ctypes")
@@ -512,13 +880,59 @@ local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, configs = 
 
 - Determine if the specified c++ type exists
 
-This interface is similar to [lib.detect.has_ctypess](#detect-has_ctypes). Please refer to its instructions for use. The only difference is that this interface is used to detect c++ types.
+#### Function Prototype
+
+::: tip API
+```lua
+has_cxxtypes(types: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| types | Required. Type name or type list |
+| opt | Optional. Option parameters, supports the following:<br>- `includes` - Include file list<br>- `configs` - Config options |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if exists, false otherwise |
+
+#### Usage
+
+This interface is similar to [lib.detect.has_ctypes](#detect-has_ctypes). Please refer to its instructions for use. The only difference is that this interface is used to detect c++ types.
 
 ## detect.check_cxsnippets
 
 - Check if the c/c++ code snippet can be compiled
 
-The generic c/c++ code snippet detection interface, by passing in a list of multiple code snippets, it will automatically generate a compiled file, and then common sense to compile it, if the compilation pass returns true.
+#### Function Prototype
+
+::: tip API
+```lua
+check_cxsnippets(snippets: <string|table>, opt: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| snippets | Required. Code snippet or code snippet list |
+| opt | Optional. Option parameters, supports the following:<br>- `types` - Type list<br>- `includes` - Include file list<br>- `funcs` - Function list<br>- `links` - Link library list<br>- `target` - Target object<br>- `sourcekind` - Source file type |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if compilation passes, false otherwise |
+
+#### Usage
+
+The generic c/c++ code snippet detection interface, by passing in a list of multiple code snippets, it will automatically generate a compiled file, and then try to compile it, if the compilation pass returns true.
 
 For some complex compiler features, even if [compiler.has_features](/api/scripts/extension-modules/core/tool/compiler#compiler-has_features) can't detect it,
 you can detect it by trying to compile through this interface.

@@ -11,6 +11,30 @@
 
 - 查找文件
 
+#### 函数原型
+
+::: tip API
+```lua
+find_file(file: <string>, paths: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| file | 必需。文件名或路径 |
+| paths | 必需。搜索路径列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `suffixes` - 子目录后缀列表 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 找到文件返回文件路径，未找到返回 nil |
+
+#### 用法说明
+
 这个接口提供了比[os.files](/zh/api/scripts/builtin-modules/os#os-files)更加强大的工程， 可以同时指定多个搜索目录，并且还能对每个目录指定附加的子目录，
 来模式匹配查找，相当于是[os.files](/zh/api/scripts/builtin-modules/os#os-files)的增强版。
 
@@ -67,6 +91,30 @@ local file = find_file("test.h", { "/usr", "/usr/local"}, {suffixes = {"/include
 
 - 查找路径
 
+#### 函数原型
+
+::: tip API
+```lua
+find_path(file: <string>, paths: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| file | 必需。文件或目录路径 |
+| paths | 必需。搜索路径列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `suffixes` - 子目录后缀 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 找到返回路径，未找到返回 nil |
+
+#### 用法说明
+
 这个接口的用法跟[lib.detect.find_file](#detect-find_file)类似，唯一的区别是返回的结果不同。
 此接口查找到传入的文件路径后，返回的是对应的搜索路径，而不是文件路径本身，一般用于查找文件对应的父目录位置。
 
@@ -93,6 +141,30 @@ local p = find_path("include/*.h", { "/usr", "/usr/local/**"}, {suffixes = "/sub
 ## detect.find_library
 
 - 查找库文件
+
+#### 函数原型
+
+::: tip API
+```lua
+find_library(name: <string>, paths: <table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 必需。库名称 |
+| paths | 必需。搜索路径列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `kind` - 库类型，static 或 shared<br>- `suffixes` - 子目录后缀 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| table | 返回库信息表（包含 filename, linkdir, link, kind），未找到返回 nil |
+
+#### 用法说明
 
 此接口用于指定的搜索目录中查找库文件（静态库，动态库），例如：
 
@@ -130,6 +202,29 @@ local library = find_library("cryp*", {"/usr", "/usr/local"}, {suffixes = "/lib"
 ## detect.find_program
 
 - 查找可执行程序
+
+#### 函数原型
+
+::: tip API
+```lua
+find_program(name: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 必需。程序名称 |
+| opt | 可选。选项参数，支持以下选项：<br>- `paths` - 搜索路径列表<br>- `check` - 检查命令或函数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 找到返回程序路径，未找到返回 nil |
+
+#### 用法说明
 
 这个接口比[lib.detect.find_tool](#detect-find_tool)较为原始底层，通过指定的参数目录来查找可执行程序。
 
@@ -173,6 +268,28 @@ local program = find_program("ccache", {paths = {"$(env PATH)", function () retu
 
 - 查找可执行程序版本号
 
+#### 函数原型
+
+::: tip API
+```lua
+find_programver(name: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 必需。程序名称 |
+| opt | 可选。选项参数，支持以下选项：<br>- `command` - 版本命令或函数<br>- `parse` - 版本解析规则或函数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 找到返回版本号，未找到返回 nil |
+
+#### 用法说明
 
 ```lua
 import("lib.detect.find_programver")
@@ -211,11 +328,36 @@ local version = find_programver("ccache", {command = "--version", parse = functi
 
 - 查找包文件
 
+::: warning 注意
 2.6.x 之后，这个接口不推荐直接使用（仅供内部使用），库集成，请尽量使用 `add_requires()` 和 `add_packages()`。
+:::
 
 ## detect.find_tool
 
 - 查找工具
+
+#### 函数原型
+
+::: tip API
+```lua
+find_tool(toolname: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| toolname | 必需。工具名称 |
+| opt | 可选。选项参数，支持以下选项：<br>- `program` - 程序命令<br>- `version` - 是否获取版本<br>- `paths` - 搜索路径<br>- `check` - 检查命令或函数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| table | 返回工具信息表（包含 name, program, version），未找到返回 nil |
+
+#### 用法说明
 
 此接口也是用于查找可执行程序，不过比[lib.detect.find_program](#detect-find_program)更加的高级，功能也更加强大，它对可执行程序进行了封装，提供了工具这个概念：
 
@@ -323,6 +465,28 @@ end
 
 - 查找工具名
 
+#### 函数原型
+
+::: tip API
+```lua
+find_toolname(program: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| program | 必需。程序命令或路径 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 返回工具名 |
+
+#### 用法说明
+
 通过program命令匹配对应的工具名，例如：
 
 | program                   | toolname   |
@@ -340,6 +504,28 @@ toolname相比program，更能唯一标示某个工具，也方便查找和加�
 
 - 查找本机的 CUDA 设备
 
+#### 函数原型
+
+::: tip API
+```lua
+find_cudadevices(opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| opt | 可选。选项参数，支持以下选项：<br>- `skip_compute_mode_prohibited` - 跳过计算模式禁止的设备<br>- `min_sm_arch` - 最小SM架构<br>- `order_by_flops` - 按性能排序 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| table | 返回CUDA设备列表 |
+
+#### 用法说明
+
 通过 CUDA Runtime API 枚举本机的 CUDA 设备，并查询其属性。
 
 ```lua
@@ -356,6 +542,29 @@ local devices = find_cudadevices({ min_sm_arch = 35, order_by_flops = true })
 ## detect.features
 
 - 获取指定工具的所有特性
+
+#### 函数原型
+
+::: tip API
+```lua
+features(toolname: <string>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| toolname | 必需。工具名称 |
+| opt | 可选。选项参数，支持以下选项：<br>- `flags` - 标志列表<br>- `program` - 程序命令 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| table | 返回特性列表 |
+
+#### 用法说明
 
 此接口跟[compiler.features](/zh/api/scripts/extension-modules/core/tool/compiler#compiler-features)类似，区别就是此接口更加的原始，传入的参数是实际的工具名toolname。
 
@@ -377,6 +586,30 @@ local features = features("clang", {flags = {"-g", "-O0", "-std=c++11"}})
 
 - 判断指定特性是否支持
 
+#### 函数原型
+
+::: tip API
+```lua
+has_features(toolname: <string>, features: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| toolname | 必需。工具名称 |
+| features | 必需。特性名或特性列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `flags` - 标志列表<br>- `program` - 程序命令 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean\|table | 如果传入单个特性返回boolean，传入列表返回支持的特性子列表 |
+
+#### 用法说明
+
 此接口跟[compiler.has_features](/zh/api/scripts/extension-modules/core/tool/compiler#compiler-has_features)类似，但是更加原始，传入的参数是实际的工具名toolname。
 
 并且此接口不仅能够判断编译器的特性，任何工具的特性都可以判断，因此更加通用。
@@ -397,6 +630,30 @@ local features = has_features("clang", {"cxx_constexpr", "c_static_assert"}, {fl
 
 - 判断指定参数选项是否支持
 
+#### 函数原型
+
+::: tip API
+```lua
+has_flags(toolname: <string>, flags: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| toolname | 必需。工具名称 |
+| flags | 必需。标志或标志列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `program` - 程序命令<br>- `toolkind` - 工具类型 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 支持返回 true，否则返回 false |
+
+#### 用法说明
+
 此接口跟[compiler.has_flags](/zh/api/scripts/extension-modules/core/tool/compiler#compiler-has_flags)类似，但是更加原始，传入的参数是实际的工具名toolname。
 
 ```lua
@@ -414,6 +671,29 @@ local ok = has_flags("clang", "-g -O0", {toolkind = "cxx"})
 ## detect.has_cfuncs
 
 - 判断指定c函数是否存在
+
+#### 函数原型
+
+::: tip API
+```lua
+has_cfuncs(funcs: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| funcs | 必需。函数名或函数列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `includes` - 头文件列表<br>- `configs` - 配置选项<br>- `target` - 目标对象<br>- `verbose` - 是否详细输出 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 存在返回 true，否则返回 false |
+
+#### 用法说明
 
 此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测函数。
 
@@ -444,11 +724,57 @@ local ok = has_cfuncs({"sigsetjmp((void*)0, 0)", "setjmp"}, {includes = "setjmp.
 
 - 判断指定c++函数是否存在
 
+#### 函数原型
+
+::: tip API
+```lua
+has_cxxfuncs(funcs: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| funcs | 必需。函数名或函数列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `includes` - 头文件列表<br>- `configs` - 配置选项<br>- `target` - 目标对象<br>- `verbose` - 是否详细输出 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 存在返回 true，否则返回 false |
+
+#### 用法说明
+
 此接口跟[lib.detect.has_cfuncs](#detect-has_cfuncs)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++函数。
 
 ## detect.has_cincludes
 
 - 判断指定c头文件是否存在
+
+#### 函数原型
+
+::: tip API
+```lua
+has_cincludes(includes: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| includes | 必需。头文件名或头文件列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `target` - 目标对象<br>- `configs` - 配置选项 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 存在返回 true，否则返回 false |
+
+#### 用法说明
 
 此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测头文件。
 
@@ -464,13 +790,59 @@ local ok = has_cincludes({"stdio.h", "stdlib.h"}, {configs = {defines = "_GNU_SO
 
 - 判断指定c++头文件是否存在
 
-此接口跟[lib.detect.has_cincludess](#detect-has_cincludes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++头文件。
+#### 函数原型
+
+::: tip API
+```lua
+has_cxxincludes(includes: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| includes | 必需。头文件名或头文件列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `target` - 目标对象<br>- `configs` - 配置选项 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 存在返回 true，否则返回 false |
+
+#### 用法说明
+
+此接口跟[lib.detect.has_cincludes](#detect-has_cincludes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++头文件。
 
 ## detect.has_ctypes
 
 - 判断指定c类型是否存在
 
-此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测函数。
+#### 函数原型
+
+::: tip API
+```lua
+has_ctypes(types: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| types | 必需。类型名或类型列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `includes` - 头文件列表<br>- `configs` - 配置选项 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 存在返回 true，否则返回 false |
+
+#### 用法说明
+
+此接口是[lib.detect.check_cxsnippets](#detect-check_cxsnippets)的简化版本，仅用于检测类型。
 
 ```lua
 import("lib.detect.has_ctypes")
@@ -484,13 +856,60 @@ local ok = has_ctypes("wchar_t", {includes = {"stdio.h", "stdlib.h"}, configs = 
 
 - 判断指定c++类型是否存在
 
-此接口跟[lib.detect.has_ctypess](#detect-has_ctypes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++类型。
+#### 函数原型
+
+::: tip API
+```lua
+has_cxxtypes(types: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| types | 必需。类型名或类型列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `includes` - 头文件列表<br>- `configs` - 配置选项 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 存在返回 true，否则返回 false |
+
+#### 用法说明
+
+此接口跟[lib.detect.has_ctypes](#detect-has_ctypes)类似，请直接参考它的使用说明，唯一区别是这个接口用于检测c++类型。
 
 ## detect.check_cxsnippets
 
 - 检测c/c++代码片段是否能够编译通过
 
-通用的c/c++代码片段检测接口，通过传入多个代码片段列表，它会自动生成一个编译文件，然后常识对它进行编译，如果编译通过返回true。
+#### 函数原型
+
+::: tip API
+```lua
+check_cxsnippets(snippets: <string|table>, opt: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| snippets | 必需。代码片段或代码片段列表 |
+| opt | 可选。选项参数，支持以下选项：<br>- `types` - 类型列表<br>- `includes` - 头文件列表<br>- `funcs` - 函数列表<br>- `links` - 链接库列表<br>- `target` - 目标对象<br>- `sourcekind` - 源文件类型 |
+| | |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 编译通过返回 true，否则返回 false |
+
+#### 用法说明
+
+通用的c/c++代码片段检测接口，通过传入多个代码片段列表，它会自动生成一个编译文件，然后尝试对它进行编译，如果编译通过返回true。
 
 对于一些复杂的编译器特性，连[compiler.has_features](/zh/api/scripts/extension-modules/core/tool/compiler#compiler-has_features)都无法检测到的时候，可以通过此接口通过尝试编译来检测它。
 
