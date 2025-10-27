@@ -82,6 +82,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
       { text: 'socket', link: 'extension-modules/core/base/socket' },
       { text: 'task', link: 'extension-modules/core/base/task' },
       { text: 'thread', link: 'extension-modules/core/base/thread' },
+      { text: 'tty', link: 'extension-modules/core/base/tty' },
     ]
   }
 }
