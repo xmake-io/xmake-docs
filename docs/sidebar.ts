@@ -63,6 +63,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
     collapsed: true,
     items: [
       { text: 'bit', link: 'extension-modules/core/base/bit' },
+      { text: 'bloom_filter', link: 'extension-modules/core/base/bloom_filter' },
       { text: 'bytes', link: 'extension-modules/core/base/bytes' },
       { text: 'cpu', link: 'extension-modules/core/base/cpu' },
       { text: 'global', link: 'extension-modules/core/base/global' },
