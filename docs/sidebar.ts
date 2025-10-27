@@ -62,6 +62,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
     text: 'base',
     collapsed: true,
     items: [
+      { text: 'bit', link: 'extension-modules/core/base/bit' },
       { text: 'bytes', link: 'extension-modules/core/base/bytes' },
       { text: 'global', link: 'extension-modules/core/base/global' },
       { text: 'graph', link: 'extension-modules/core/base/graph' },
@@ -164,6 +165,17 @@ function libModulesApiSidebar(): DefaultTheme.SidebarItem {
     collapsed: true,
     items: [
       { text: 'detect', link: 'extension-modules/lib/detect' },
+      libLuaModulesApiSidebar(),
+    ]
+  }
+}
+
+function libLuaModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'lua',
+    collapsed: true,
+    items: [
+      { text: 'package', link: 'extension-modules/lib/lua/package' },
     ]
   }
 }
