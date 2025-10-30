@@ -87,8 +87,8 @@ brew install xmake
 
 ::: code-group
 
-```sh [Archlinux]
-sudo pacman -Sy xmake
+```sh [Arch Linux]
+sudo pacman -S xmake
 ```
 
 ```sh [Alpine]
