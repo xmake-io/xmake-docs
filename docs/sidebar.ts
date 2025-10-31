@@ -53,6 +53,7 @@ function coreModulesApiSidebar(): DefaultTheme.SidebarItem {
       coreLanguageModulesApiSidebar(),
       coreProjectModulesApiSidebar(),
       coreToolModulesApiSidebar(),
+      coreUiModulesApiSidebar(),
     ]
   }
 }
@@ -133,6 +134,33 @@ function coreToolModulesApiSidebar(): DefaultTheme.SidebarItem {
   }
 }
 
+function coreUiModulesApiSidebar(): DefaultTheme.SidebarItem {
+  return {
+    text: 'ui',
+    collapsed: true,
+    items: [
+      { text: 'action', link: 'extension-modules/core/ui/action' },
+      { text: 'application', link: 'extension-modules/core/ui/application' },
+      { text: 'button', link: 'extension-modules/core/ui/button' },
+      { text: 'choicebox', link: 'extension-modules/core/ui/choicebox' },
+      { text: 'choicedialog', link: 'extension-modules/core/ui/choicedialog' },
+      { text: 'boxdialog', link: 'extension-modules/core/ui/boxdialog' },
+      { text: 'dialog', link: 'extension-modules/core/ui/dialog' },
+      { text: 'event', link: 'extension-modules/core/ui/event' },
+      { text: 'inputdialog', link: 'extension-modules/core/ui/inputdialog' },
+      { text: 'label', link: 'extension-modules/core/ui/label' },
+      { text: 'mconfdialog', link: 'extension-modules/core/ui/mconfdialog' },
+      { text: 'menubar', link: 'extension-modules/core/ui/menubar' },
+      { text: 'scrollbar', link: 'extension-modules/core/ui/scrollbar' },
+      { text: 'statusbar', link: 'extension-modules/core/ui/statusbar' },
+      { text: 'textdialog', link: 'extension-modules/core/ui/textdialog' },
+      { text: 'textedit', link: 'extension-modules/core/ui/textedit' },
+      { text: 'view', link: 'extension-modules/core/ui/view' },
+      { text: 'window', link: 'extension-modules/core/ui/window' },
+    ]
+  }
+}
+
 function cliModulesApiSidebar(): DefaultTheme.SidebarItem {
   return {
     text: 'cli',
@@ -191,6 +219,7 @@ function netModulesApiSidebar(): DefaultTheme.SidebarItem {
     collapsed: true,
     items: [
       { text: 'http', link: 'extension-modules/net/http' },
+      { text: 'ping', link: 'extension-modules/net/ping' },
     ]
   }
 }
