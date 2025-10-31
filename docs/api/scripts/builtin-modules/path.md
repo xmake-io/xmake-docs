@@ -11,25 +11,81 @@ The path operation module implements cross-platform path operations, which is a 
 
 ::: tip API
 ```lua
-path.new(path: <string>)
+path.new(p: <string>, transform?: <function>)
 ```
 :::
-
 
 #### Parameter Description
 
 | Parameter | Description |
 |-----------|-------------|
-| path | Path string |
+| p | Required. Path string |
+| transform | Optional. Path transformation function |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| path | Returns a path instance |
 
 #### Usage
 
+Create a path instance:
+
 ```lua
 local p = path.new("/tmp/file.txt")
+print(p:filename())  -- Output: file.txt
+```
+
+Using a transformation function:
+
+```lua
+local p = path.new("/tmp/a", function (raw_path)
+    return "--key=" .. raw_path
+end)
+print(p:str())      -- Output: --key=/tmp/a
+print(p:rawstr())   -- Output: /tmp/a
+```
+
+Or call the constructor directly:
+
+```lua
+local p = path("/tmp/file.txt")  -- Automatically creates an instance
 print(p:filename())
 ```
 
-The result is: `file.txt`
+## path.normalize
+
+- Normalize the path
+
+#### Function Prototype
+
+::: tip API
+```lua
+path.normalize(p: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| p | Required. Path string |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns the normalized path string |
+
+#### Usage
+
+Normalize the path (simplify `.` and `..`):
+
+```lua
+print(path.normalize("/tmp/./../file.txt"))  -- Output: /file.txt
+print(path.normalize("c:\\tmp\\..\\.."))     -- On Windows: c:\\..
+```
 
 ## path.join
 

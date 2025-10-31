@@ -3,6 +3,90 @@
 
 路径操作模块，实现跨平台的路径操作，这是 xmake 的一个自定义的模块。
 
+## path.new
+
+- 创建新的路径实例
+
+#### 函数原型
+
+::: tip API
+```lua
+path.new(p: <string>, transform?: <function>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| p | 必需。路径字符串 |
+| transform | 可选。路径转换函数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| path | 返回路径实例 |
+
+#### 用法说明
+
+创建一个路径实例：
+
+```lua
+local p = path.new("/tmp/file.txt")
+print(p:filename())  -- 输出: file.txt
+```
+
+使用转换函数：
+
+```lua
+local p = path.new("/tmp/a", function (raw_path)
+    return "--key=" .. raw_path
+end)
+print(p:str())      -- 输出: --key=/tmp/a
+print(p:rawstr())   -- 输出: /tmp/a
+```
+
+也可以直接调用构造函数：
+
+```lua
+local p = path("/tmp/file.txt")  -- 自动创建实例
+print(p:filename())
+```
+
+## path.normalize
+
+- 规范化路径
+
+#### 函数原型
+
+::: tip API
+```lua
+path.normalize(p: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| p | 必需。路径字符串 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 返回规范化后的路径字符串 |
+
+#### 用法说明
+
+规范化路径（简化 `.` 和 `..`）：
+
+```lua
+print(path.normalize("/tmp/./../file.txt"))  -- 输出: /file.txt
+print(path.normalize("c:\\tmp\\..\\.."))     -- 在 Windows 上输出: c:\\..
+```
+
 ## path.join
 
 - 拼接路径
