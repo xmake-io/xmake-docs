@@ -210,6 +210,30 @@ target:is_arch("x86")
 target:is_arch("x64", "x86_64")
 ```
 
+## target:is_arch64
+
+- Is the current architecture a 64-bit one
+
+#### Function Prototype
+
+::: tip API
+```lua
+target:is_arch64()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+
+```lua
+- Is the current architecture 64-bit?
+target:is_arch64()
+```
+
 ## target:targetfile
 
 - Get the target file path
