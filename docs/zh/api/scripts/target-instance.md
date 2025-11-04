@@ -212,6 +212,30 @@ target:is_arch("x86")
 target:is_arch("x64", "x86_64")
 ```
 
+## target:is_arch64
+
+- 当前架构是否是 64 位架构
+
+#### 函数原型
+
+::: tip API
+```lua
+target:is_arch64()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+
+```lua
+-- 当前架构是否是 64 位架构？
+target:is_arch64()
+```
+
 ## target:targetfile
 
 - 获取目标文件路径
