@@ -361,14 +361,6 @@ target("lib")
     set_symbols("hidden")  -- hide symbols, reduce export table size
 ```
 
-### Setting Visibility Level
-
-```lua
-target("lib")
-    set_kind("shared")
-    set_visibility("hidden")  -- set default visibility to hidden
-```
-
 ## Target Optimization Configuration {#configure-target-optimization}
 
 ### Setting Optimization Level
