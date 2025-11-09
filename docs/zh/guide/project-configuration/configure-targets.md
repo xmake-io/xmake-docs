@@ -364,14 +364,6 @@ target("lib")
     set_symbols("hidden")  -- 隐藏符号，减少导出表大小
 ```
 
-### 设置可见性级别
-
-```lua
-target("lib")
-    set_kind("shared")
-    set_visibility("hidden")  -- 设置默认可见性为隐藏
-```
-
 ## 目标优化配置 {#configure-target-optimization}
 
 ### 设置优化级别

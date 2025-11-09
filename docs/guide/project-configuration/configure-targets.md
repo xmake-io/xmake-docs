@@ -18,8 +18,8 @@ Of course, we can also configure them completely by ourselves without using the 
 
 ```lua [xmake.lua]
 target("test")
-set_kind("binary")
-add_files("src/*.cpp")
+    set_kind("binary")
+    add_files("src/*.cpp")
 ```
 
 ## Configure macro definition {#configure-defines}
