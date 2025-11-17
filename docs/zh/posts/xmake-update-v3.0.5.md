@@ -1,13 +1,38 @@
 ---
-title: Xmake v3.0.5 发布，多行进度输出、XML 模块、异步 OS API 和 Swift 互操作
+title: Xmake v3.0.5 预览，多行进度输出、XML 模块、异步 OS API 和 Swift 互操作
 tags: [xmake, swift, xml, async, progress, toolchain, cuda]
-date: 2024-12-20
+date: 2025-11-17
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍
 
 新版本中，我们引入了多个重要特性，显著提升了开发体验。重点包括**多行进度输出**（支持主题配置，提供更好的构建可见性）、全面的**XML 模块**（用于解析和编码 XML 数据）、**异步 OS API**（提升 I/O 性能）以及**Swift 互操作支持**（实现 Swift 与 C++/Objective-C 代码的无缝集成）。同时，我们也对工具链配置、TTY 处理进行了重大改进，并进行了各种性能优化。
+
+### 支持多行刷新进度输出
+
+我们改进了进度输出，支持多行刷新，在长时间运行的构建过程中提供显著更好的视觉体验。构建输出现在不再只更新单行进度，而是显示多个并发构建任务及其各自的进度，使得监控并行编译变得更加容易。
+
+输出现在显示并行构建的多行进度，每个编译任务都有实时状态更新：
+
+![progress](/assets/img/progress-multirow.png)
+
+您可以通过两种方式启用多行进度输出：
+
+1. **通过主题配置**：使用 `soong` 主题，它默认包含多行进度：
+   ```bash
+   $ xmake g --theme=soong
+   ```
+
+2. **通过项目策略**：在 `xmake.lua` 中直接启用：
+   ```lua
+   set_policy("build.progress_style", "multirow")
+   ```
+
+这提供了更好的并行构建进度可见性，更容易识别编译缓慢的单元，并为包含大量源文件或具有多个编译单元的并行构建的大型项目改善了整体用户体验。
+
+更多详情，请参考：[#6974](https://github.com/xmake-io/xmake/pull/6974)
 
 ### 添加 Swift 与 C++/Objective-C 互操作支持
 
@@ -371,30 +396,6 @@ target("myapp")
 
 更多详情，请参考：[#6963](https://github.com/xmake-io/xmake/pull/6963)
 
-### 支持多行刷新进度输出
-
-我们改进了进度输出，支持多行刷新，在长时间运行的构建过程中提供显著更好的视觉体验。构建输出现在不再只更新单行进度，而是显示多个并发构建任务及其各自的进度，使得监控并行编译变得更加容易。
-
-输出现在显示并行构建的多行进度，每个编译任务都有实时状态更新：
-
-![progress](assets/img/progress-multirow.png)
-
-您可以通过两种方式启用多行进度输出：
-
-1. **通过主题配置**：使用 `soong` 主题，它默认包含多行进度：
-   ```bash
-   $ xmake g --theme=soong
-   ```
-
-2. **通过项目策略**：在 `xmake.lua` 中直接启用：
-   ```lua
-   set_policy("build.progress_style", "multirow")
-   ```
-
-这提供了更好的并行构建进度可见性，更容易识别编译缓慢的单元，并为包含大量源文件或具有多个编译单元的并行构建的大型项目改善了整体用户体验。
-
-更多详情，请参考：[#6974](https://github.com/xmake-io/xmake/pull/6974)
-
 ### 添加 os API 异步支持
 
 我们为 os API 添加了异步支持，允许在 xmake 脚本中进行非阻塞的文件和进程操作。这使得能够并发执行 I/O 操作，在处理多个文件操作或长时间运行的进程时显著提高性能。
@@ -504,14 +505,6 @@ set_toolchains("mingw[clang]", {sdk = "/path/to/llvm-mingw"})
 
 更多详情，请参考：[#6924](https://github.com/xmake-io/xmake/pull/6924)、[讨论 #6903](https://github.com/xmake-io/xmake/discussions/6903) 和 [讨论 #6879](https://github.com/xmake-io/xmake/discussions/6879)
 
-### 重构工具链：分离注册和定义
-
-我们重构了工具链系统，将工具链注册与定义分离，使工具链架构更加清晰和可维护。
-
-这个改动提高了工具链的模块化程度，使得添加新的工具链支持变得更加容易。
-
-更多详情，请参考：[#6935](https://github.com/xmake-io/xmake/pull/6935)
-
 ### 改进文件读取性能
 
 我们显著改进了文件读取性能，特别是对于大文件和包含大量源文件的项目。
@@ -520,19 +513,21 @@ set_toolchains("mingw[clang]", {sdk = "/path/to/llvm-mingw"})
 
 更多详情，请参考：[#6942](https://github.com/xmake-io/xmake/pull/6942)
 
-### 为 Clang 工具链添加 LLD 链接器支持
+### 添加 xmake test 实时输出支持
 
-我们为 Clang 工具链添加了 LLD 链接器支持，相比默认链接器提供更快的链接时间。
+我们为 `xmake test` 添加了实时输出支持，允许测试输出在测试运行时实时显示，而不是等到测试完成后再缓冲输出。这对于长时间运行的测试或产生连续输出的测试特别有用，因为它提供了即时的测试进度反馈。
+
+要为测试启用实时输出，在测试配置中设置 `realtime_output = true`：
 
 ```lua
-target("app")
+target("test")
     set_kind("binary")
-    add_files("src/*.cpp")
-    set_toolchains("clang")
-    set_values("ldflags", "-fuse-ld=lld")  -- 使用 LLD 链接器
+    add_tests("stub_n", {realtime_output = true, files = "tests/stub_n*.cpp", defines = "STUB_N"})
 ```
 
-更多详情，请参考：[#6946](https://github.com/xmake-io/xmake/pull/6946)
+当启用 `realtime_output` 时，测试输出将在测试运行时直接流式传输到终端，使得实时监控测试进度和调试问题变得更加容易。
+
+更多详情，请参考：[#6993](https://github.com/xmake-io/xmake/pull/6993)
 
 ### 改进 TTY 处理和输出
 
@@ -715,9 +710,7 @@ $ ./xmake.sh --generator=ninja
 ### 改进
 
 * [#6924](https://github.com/xmake-io/xmake/pull/6924): 改进工具链配置，支持 add_toolchains("name[configs]") 语法
-* [#6935](https://github.com/xmake-io/xmake/pull/6935): 重构工具链：分离 gcc/clang 注册和定义
 * [#6942](https://github.com/xmake-io/xmake/pull/6942): 改进文件读取性能
-* [#6946](https://github.com/xmake-io/xmake/pull/6946): 为 Clang 工具链添加 LLD 链接器支持
 * [#6970](https://github.com/xmake-io/xmake/pull/6970): 改进 TTY 处理和输出
 * [#6977](https://github.com/xmake-io/xmake/pull/6977): 重构 Xcode 工具链，集成到 Apple 设备的 LLVM 工具链中
 * [#6987](https://github.com/xmake-io/xmake/pull/6987): 添加 Ghostty 终端检测支持

@@ -1,13 +1,38 @@
 ---
-title: Xmake v3.0.5 released, Multi-row progress output, XML module, async OS APIs and Swift interop
+title: Xmake v3.0.5 preview, Multi-row progress output, XML module, async OS APIs and Swift interop
 tags: [xmake, swift, xml, async, progress, toolchain, cuda]
-date: 2024-12-20
+date: 2025-11-17
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features
 
 In the new version, we have introduced several major features that significantly enhance the development experience. The highlights include **multi-row progress output** with theme support for better build visibility, a comprehensive **XML module** for parsing and encoding XML data, **asynchronous OS APIs** for improved I/O performance, and **Swift interop support** for seamless integration between Swift and C++/Objective-C code. We have also made significant improvements to toolchain configuration, TTY handling, and various performance optimizations.
+
+### Support multi-row refresh for progress output
+
+We have improved the progress output to support multi-row refresh, providing a significantly better visual experience during long-running builds. Instead of updating a single progress line, the build output now displays multiple concurrent build tasks with their individual progress, making it easier to monitor parallel compilation.
+
+The output now shows multiple progress lines for parallel builds with real-time status updates for each compilation task:
+
+![progress](/assets/img/progress-multirow.png)
+
+You can enable multi-row progress output in two ways:
+
+1. **Via theme configuration**: Use the `soong` theme which includes multi-row progress by default:
+   ```bash
+   $ xmake g --theme=soong
+   ```
+
+2. **Via project policy**: Enable it directly in your `xmake.lua`:
+   ```lua
+   set_policy("build.progress_style", "multirow")
+   ```
+
+This provides better visibility into parallel build progress, makes it easier to identify slow compilation units, and improves the overall user experience for large projects with many source files or parallel builds with multiple compilation units.
+
+For more details, see: [#6974](https://github.com/xmake-io/xmake/pull/6974)
 
 ### Add Swift interop support for C++ and Objective-C
 
@@ -371,30 +396,6 @@ This eliminates the need for manual patching of libtool scripts, ensures consist
 
 For more details, see: [#6963](https://github.com/xmake-io/xmake/pull/6963)
 
-### Support multi-row refresh for progress output
-
-We have improved the progress output to support multi-row refresh, providing a significantly better visual experience during long-running builds. Instead of updating a single progress line, the build output now displays multiple concurrent build tasks with their individual progress, making it easier to monitor parallel compilation.
-
-The output now shows multiple progress lines for parallel builds with real-time status updates for each compilation task:
-
-![progress](assets/img/progress-multirow.png)
-
-You can enable multi-row progress output in two ways:
-
-1. **Via theme configuration**: Use the `soong` theme which includes multi-row progress by default:
-   ```bash
-   $ xmake g --theme=soong
-   ```
-
-2. **Via project policy**: Enable it directly in your `xmake.lua`:
-   ```lua
-   set_policy("build.progress_style", "multirow")
-   ```
-
-This provides better visibility into parallel build progress, makes it easier to identify slow compilation units, and improves the overall user experience for large projects with many source files or parallel builds with multiple compilation units.
-
-For more details, see: [#6974](https://github.com/xmake-io/xmake/pull/6974)
-
 ### Add async support for os APIs
 
 We have added asynchronous support for os APIs, allowing non-blocking file and process operations in xmake scripts. This enables concurrent I/O operations, significantly improving performance when dealing with multiple file operations or long-running processes.
@@ -504,14 +505,6 @@ This makes toolchain configuration more concise and readable, enables declarativ
 
 For more details, see: [#6924](https://github.com/xmake-io/xmake/pull/6924), [discussion #6903](https://github.com/xmake-io/xmake/discussions/6903), and [discussion #6879](https://github.com/xmake-io/xmake/discussions/6879)
 
-### Refactor toolchain: separate registration from definition
-
-We have refactored the toolchain system to separate toolchain registration from definition, making the toolchain architecture cleaner and more maintainable.
-
-This change improves the modularity of toolchains and makes it easier to add new toolchain support.
-
-For more details, see: [#6935](https://github.com/xmake-io/xmake/pull/6935)
-
 ### Improve file reading performance
 
 We have significantly improved file reading performance, especially for large files and projects with many source files.
@@ -520,19 +513,21 @@ The improvements include better buffering strategies and optimized I/O operation
 
 For more details, see: [#6942](https://github.com/xmake-io/xmake/pull/6942)
 
-### Add LLD linker support for Clang toolchain
+### Add realtime output support for xmake test
 
-We have added LLD linker support for the Clang toolchain, providing faster linking times compared to the default linker.
+We have added realtime output support for `xmake test`, allowing test output to be displayed in real-time as tests run, rather than buffering output until the test completes. This is particularly useful for long-running tests or tests that produce continuous output, as it provides immediate feedback on test progress.
+
+To enable realtime output for a test, set `realtime_output = true` in the test configuration:
 
 ```lua
-target("app")
+target("test")
     set_kind("binary")
-    add_files("src/*.cpp")
-    set_toolchains("clang")
-    set_values("ldflags", "-fuse-ld=lld")  -- Use LLD linker
+    add_tests("stub_n", {realtime_output = true, files = "tests/stub_n*.cpp", defines = "STUB_N"})
 ```
 
-For more details, see: [#6946](https://github.com/xmake-io/xmake/pull/6946)
+When `realtime_output` is enabled, the test output will be streamed directly to the terminal as the test runs, making it easier to monitor test progress and debug issues in real-time.
+
+For more details, see: [#6993](https://github.com/xmake-io/xmake/pull/6993)
 
 ### Improve TTY handling and output
 
@@ -715,9 +710,7 @@ For more details, see: [#7027](https://github.com/xmake-io/xmake/pull/7027)
 ### Changes
 
 * [#6924](https://github.com/xmake-io/xmake/pull/6924): Improve toolchain configuration with add_toolchains("name[configs]") syntax
-* [#6935](https://github.com/xmake-io/xmake/pull/6935): Refactor toolchain: separate gcc/clang registration from definition
 * [#6942](https://github.com/xmake-io/xmake/pull/6942): Improve file reading performance
-* [#6946](https://github.com/xmake-io/xmake/pull/6946): Add LLD linker support for Clang toolchain
 * [#6970](https://github.com/xmake-io/xmake/pull/6970): Improve TTY handling and output
 * [#6977](https://github.com/xmake-io/xmake/pull/6977): Refactor Xcode toolchain and integrate it into LLVM toolchain for Apple devices
 * [#6987](https://github.com/xmake-io/xmake/pull/6987): Add Ghostty terminal detection support

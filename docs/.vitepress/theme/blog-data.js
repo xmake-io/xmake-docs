@@ -1,21 +1,22 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.5 released, Add Swift interop, XML module, JSON output and more",
+    "title": "Xmake v3.0.5 preview, Multi-row progress output, XML module, async OS APIs and Swift interop",
     "url": "/posts/xmake-update-v3.0.5",
     "date": {
-      "time": 1734696000000,
-      "string": "December 20, 2024"
+      "time": 1763380800000,
+      "string": "November 17, 2025"
     },
     "author": "Ruki",
     "tags": [
       "xmake",
       "swift",
       "xml",
-      "json",
+      "async",
+      "progress",
       "toolchain",
       "cuda"
     ],
-    "excerpt": "<p>In the new version, we have added Swift interop support for C++ and Objective-C, introduced a new XML module with parsing and encoding support, added JSON output format for target information, and improved toolchain configuration. We have also made significant performance improvements and bug fixes.</p>\n<p>We have added comprehensive Swift interop support, enabling seamless bidirectional interoperability between Swift and C++/Objective-C code in your projects. The <code>swift.interop</code> rule is automatically enabled when the <code>swift.interop</code> target value is set, making it easy to mix Swift and C++ code in the...</p>\n<p>The Swift interop support includes:</p>\n<ul>\n<li>Bidirectional Swift-C++ interoperability</li>\n<li>Automatic header generation for C++ to call Swift functions</li>\n<li>Support for both Objective-C and C++ interop modes</li>\n<li>Swift static library archiver toolset for enhanced compilation workflows</li>\n</ul>\n"
+    "excerpt": "<p>In the new version, we have introduced several major features that significantly enhance the development experience. The highlights include <strong>multi-row progress output</strong> with theme support for better build visibility, a comprehensive <strong>XML module</strong> for parsing and encoding XML data, **asynchronous O...</p>\n<p>We have improved the progress output to support multi-row refresh, providing a significantly better visual experience during long-running builds. Instead of updating a single progress line, the build output now displays multiple concurrent build tasks with their individual progress, making it easier...</p>\n<p>The output now shows multiple progress lines for parallel builds with real-time status updates for each compilation task:</p>\n"
   },
   {
     "title": "Xmake v2.9.1 released, Add native lua modules support",
