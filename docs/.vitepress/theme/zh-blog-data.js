@@ -1,5 +1,23 @@
 export const posts = [
   {
+    "title": "Xmake v3.0.5 发布，新增 Swift 互操作、XML 模块、JSON 输出等特性",
+    "url": "/zh/posts/xmake-update-v3.0.5",
+    "date": {
+      "time": 1734696000000,
+      "string": "December 20, 2024"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "swift",
+      "xml",
+      "json",
+      "toolchain",
+      "cuda"
+    ],
+    "excerpt": "<p>新版本中，我们新增了 Swift 与 C++/Objective-C 的互操作支持，引入了新的 XML 模块用于解析和编码，添加了目标信息的 JSON 输出格式，并改进了工具链配置。同时，我们也进行了大量的性能优化和 bug 修复。</p>\n<p>我们新增了全面的 Swift 互操作支持，实现了 Swift 与 C++/Objective-C 代码之间的无缝双向互操作性。当设置了 <code>swift.interop</code> 目标值时，<code>swift.interop</code> 规则会自动启用，使得在同一个项目中混合使用 Swift 和 C++ 代码变得非常容易。</p>\n<p>Swift 互操作支持包括：</p>\n<ul>\n<li>Swift-C++ 双向互操作性</li>\n<li>自动生成 C++ 头文件，使 C++ 可以调用 Swift 函数</li>\n<li>支持 Objective-C 和 C++ 两种互操作模式</li>\n<li>Swift 静态库归档工具集，增强编译工作流</li>\n</ul>\n"
+  },
+  {
     "title": "Xmake v2.9.1 发布，新增 native lua 模块和鸿蒙系统支持",
     "url": "/zh/posts/xmake-update-v2.9.1",
     "date": {
@@ -12,7 +30,7 @@ export const posts = [
       "lua",
       "C/C++"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>新版本中，我们新增了鸿蒙系统的 native 工具链支持，并且实现了一种新的 native 原生 lua 模块的导入支持。另外，我们也对构建速度做了很多的优化，效果非常明显。</p>\n<p>我们新增了鸿蒙 OS 平台的 native 工具链编译支持：</p>\n<pre><code class=\"language-bash\">$ xmake f -p harmony\n</code></pre>\n"
   },
   {
     "title": "Xmake v2.8.7 发布，新增 cosmocc 工具链支持，一次编译到处运行",
@@ -27,7 +45,7 @@ export const posts = [
       "lua",
       "C/C++"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>新版本中，我们新增了 cosmocc 工具链支持，使用它，我们可以实现一次编译，到处运行。另外，我们还重构了 C++ Modules 的实现，解决了很多 C++ Modules 相关的问题。</p>\n<p>cosmocc 工具链是 <a href=\"https://github.com/jart/cosmopolitan\">cosmopolitan</a> 项目提供的编译工具链，使用这个工具链编译的程序可以实现一次编译，到处运行。</p>\n<p>而新版本中，我们对这个工具链也做了支持，可以实现在 macosx/linux/windows 下编译程序，并且还能够支持自动下载 cosmocc 工具链。</p>\n"
   },
   {
     "title": "Xmake v2.8.6 发布，新的打包插件：XPack",
@@ -42,7 +60,7 @@ export const posts = [
       "lua",
       "C/C++"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>在介绍新特性之前，还有个好消息告诉大家，上个版本 Xmake 被收入到了 debian 仓库，而最近 Xmake 又进入了 Fedora 官方仓库，大家可以在 Fedora 39 上，直接通过下面的命令安装 Xmake。</p>\n<pre><code class=\"language-bash\">$ sudo dnf install xmake\n</code></pre>\n<p>非常感谢 @topazus @mochaaP 对 Xmake 的贡献，相关信息见：<a href=\"https://github.com/xmake-io/xmake/issues/941\">#941</a>。</p>\n"
   },
   {
     "title": "Xmake v2.8.5 发布，支持链接排序和单元测试",
@@ -57,7 +75,7 @@ export const posts = [
       "lua",
       "C/C++"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>在介绍新特性之前，我们有一个好消息要告诉大家，Xmake 最近进入了 Debian 的官方仓库：<a href=\"https://packages.debian.org/sid/xmake\">https://packages.debian.org/sid/xmake</a>，\n等到明年4月份 Ubuntu 24.04 发布，我们应该就能直接通过 <code>apt install xmake</code> 命令去快速安装 Xmake 了。</p>\n<p>同时也感谢 @Lance Lin 的帮助，他全程帮助我们维护并上传 Xmake 包到 Debian 仓库，真的非常感谢！</p>\n<p>接下来，我们来介绍下 2.8.5 版本引入的一些改动，这个版本带来了很多的新特性，尤其是对链接排序，链接组的支持，还有对 <code>xmake test</code> 内置单元测试的支持。\n另外，我们还新增了 Apple XROS 平台的构建支持，可以用于构建苹果新的 VisionOS 上的程序，还有我们还提供了更加灵活通用的 <code>check_sizeof</code> 检测接口，用于快速检测类型的大小。</p>\n"
   },
   {
     "title": "Xmake v2.8.3 发布，改进 Wasm 并支持 Xmake 源码调试",
@@ -75,7 +93,7 @@ export const posts = [
       "API",
       "rust"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>新版本中，我们新增了 Xmake 自身源码的断点调试支持，这可以帮助贡献者更加快速的熟悉 xmake 源码，也可以帮助用户去快速调试分析自身项目的配置脚本。</p>\n<p>另外，我们 <a href=\"https://github.com/xmake-io/xmake-repo\">xmake-repo</a> 官方仓库包的数量也即将突破 1100，短短一个月的时间，就新增了 100 多个包，非常感谢 @star-hengxing 的贡献。</p>\n<p>同时，我们重点改进了 Wasm 的构建支持，以及 Qt6 for wasm 的支持。</p>\n"
   },
   {
     "title": "Xmake v2.8.2 发布，官方包仓库数量突破 1k",
@@ -93,7 +111,7 @@ export const posts = [
       "API",
       "rust"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>这个版本，我们新增了不少实用的 API，并且移除了一些几年前就被标记为废弃的接口，另外改进了动态库对 soname 的支持。</p>\n<p>同时，在这期间，我们迎来了一些喜人的数据，我们的 <a href=\"https://github.com/xmake-io/xmake-repo\">xmake-repo</a> 官方仓库包的数量也突破了 1k，非常感谢 Xmake 的每位贡献者，我们的包仓库基本上都是社区贡献者贡献进来的。</p>\n<p>尤其是 @xq114, @star-hengxing, @SirLynix 帮忙贡献了大量的包，非常感谢~</p>\n"
   },
   {
     "title": "Xmake v2.8.1 发布，大量细节特性改进",
@@ -112,7 +130,7 @@ export const posts = [
       "mingw64",
       "wasm"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>windows 的长路径限制一直是一个大问题，嵌套层级太深的工程，在读写文件的时候，都有可能失败，这会影响 xmake 的可用性和体验。</p>\n<p>尽管，xmake 已经提供各种措施也避免这个问题，但是偶尔还是会受到一些限制。而在这个版本中，我们改进了安装器，提供一个安装选项，让用户选择性开启长路径支持。</p>\n<p>这需要管理员权限，因为它需要写注册表。</p>\n"
   },
   {
     "title": "Xmake v2.7.8 发布，改进包虚拟环境和构建速度",
@@ -131,7 +149,7 @@ export const posts = [
       "mingw64",
       "wasm"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>Xmake 很早就支持了包的虚拟环境管理，可以通过配置文件的方式，实现不同包环境之间的切换。</p>\n<p>我们可以通过在当前目录下，添加 xmake.lua 文件，定制化一些包配置，然后进入特定的包虚拟环境。</p>\n<pre><code class=\"language-lua\">add_requires(&quot;zlib 1.2.11&quot;)\nadd_requires(&quot;python 3.x&quot;, &quot;luajit&quot;)\n</code></pre>\n"
   },
   {
     "title": "Xmake v2.7.7 发布，支持 Haiku 平台，改进 API 检测和 C++ Modules 支持",
@@ -150,7 +168,7 @@ export const posts = [
       "haiku",
       "c++modules"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>Xmake 现在已经完全可以在 <a href=\"https://www.haiku-os.org/\">Haiku 系统</a> 上运行，并且我们对 Xmake 新增了一个 haiku 编译平台，用于在 Haiku 系统上进行代码编译。</p>\n<p>效果如下:</p>\n<p>&lt;img src=&quot;https://tboox.org/static/img/xmake/haiku.jpeg&quot; width=&quot;650px&quot; /&gt;</p>\n"
   },
   {
     "title": "Xmake v2.7.6 发布，新增 Verilog 和 C++ Modules 分发支持",
@@ -168,7 +186,7 @@ export const posts = [
       "modules",
       "verilog"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>通过 <code>add_requires(&quot;iverilog&quot;)</code> 配置，我们能够自动拉取 iverilog 工具链包，然后使用 <code>set_toolchains(&quot;@iverilog&quot;)</code> 自动绑定工具链来编译工程。</p>\n<pre><code class=\"language-lua\">add_requires(&quot;iverilog&quot;)\ntarget(&quot;hello&quot;)\n    add_rules(&quot;iverilog.binary&quot;)\n    set_toolchains(&quot;@iverilog&quot;)\n    add_files(&quot;src/*.v&quot;)\n</code></pre>\n<pre><code class=\"language-lua\">add_requires(&quot;iverilog&quot;)\ntarget(&quot;hello&quot;)\n    add_rules(&quot;iverilog.binary&quot;)\n    set_toolchains(&quot;@iverilog&quot;)\n    add_files(&quot;src/*.v&quot;)\n    add_defines(&quot;TEST&quot;)\n    add_includedirs(&quot;inc&quot;)\n    set_languages(&quot;v1800-2009&quot;)\n</code></pre>\n"
   },
   {
     "title": "Xmake v2.7.3 发布，包组件和 C++ 模块增量构建支持",
@@ -185,7 +203,7 @@ export const posts = [
       "package",
       "components"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>这个新特性主要用于实现从一个 C/C++ 包中集成特定的子库，一般用于一些比较大的包中的库组件集成。</p>\n<p>因为这种包里面提供了很多的子库，但不是每个子库用户都需要，全部链接反而有可能会出问题。</p>\n<p>尽管，之前的版本也能够支持子库选择的特性，例如：</p>\n"
   },
   {
     "title": "Xmake v2.7.2 发布，更加智能化构建第三方库",
@@ -204,7 +222,7 @@ export const posts = [
       "cmake",
       "autoconf"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>在先前的版本中，Xmake 提供了一种 TryBuild 模式，可以在没有 xmake.lua 的情况下，使用 Xmake 尝试对 autoconf/cmake/meson 等维护的第三方项目进行直接构建。</p>\n<p>其实，也就是让 Xmake 检测到对应的构建系统后，调用 cmake 等命令来实现，但是会帮助用户简化配置操作，另外还能对接 xmake 的交叉编译工具链配置。</p>\n<p>但是，这种模式有一定的失败率，比如以下一些情况，都会可能导致构建失败：</p>\n"
   },
   {
     "title": "Xmake v2.7.1 发布，更好的 C++ Modules 支持",
@@ -225,7 +243,7 @@ export const posts = [
       "headerunits",
       "fs-watcher"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>这个版本我们对 C++20 Modules 的实现进行了重构和改进，改进了模块文件的依赖图解析，新增了对 STL 和 User HeaderUnits 的支持，同时让 CMakelists/compile_commands 生成器也支持了 C++ Modules。</p>\n<p>另外，我们新增了一个 <code>xmake watch</code> 插件，可以实时监控当前工程文件更新，自动触发增量构建，或者运行一些自定义的命令。</p>\n<p>&lt;img src=&quot;/assets/img/posts/xmake/xmake-watch.gif&quot;&gt;</p>\n"
   },
   {
     "title": "Xmake v2.6.6 发布，分布式编译和缓存支持",
@@ -243,7 +261,7 @@ export const posts = [
       "ccache",
       "distributed-compilation"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>这个版本，我们增加了大量的重量级新特性：</p>\n<ul>\n<li>分布式编译支持</li>\n<li>内置本地编译缓存</li>\n<li>远程编译缓存支持</li>\n</ul>\n<p>通过这些特性，我们可以更加快速地编译大型 C/C++ 项目。另外，它们完全是跨平台的，不仅支持 gcc/clang 也支持 msvc，而且除了编译器无任何第三方依赖，使用也非常方便。</p>\n"
   },
   {
     "title": "Summer2022：暑期来 Xmake 社区做项目吧，还有奖金领取哦",
@@ -278,7 +296,7 @@ export const posts = [
       "rust",
       "remote-compilation"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>新版本提供了远程编译支持，我们可以通过它可以远程服务器上编译代码，远程运行和调试。</p>\n<p>服务器可以部署在 Linux/MacOS/Windows 上，实现跨平台编译，例如：在 Linux 上编译运行 Windows 程序，在 Windows 上编译运行 macOS/Linux 程序。</p>\n<p>相比 ssh 远程登入编译，它更加的稳定，使用更加流畅，不会因为网络不稳定导致 ssh 终端输入卡顿，也可以实现本地快速编辑代码文件。</p>\n"
   },
   {
     "title": "xmake v2.6.4 发布，大量包管理特性改进",
@@ -295,7 +313,7 @@ export const posts = [
       "Package",
       "Manager"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>现在，我们可以通过 <code>set_base</code> 接口去继承一个已有的包的全部配置，然后在此基础上重写部分配置。</p>\n<p>这通常在用户自己的项目中，修改 <a href=\"https://github.com/xmake-io/xmake-repo\">xmake-repo</a> 官方仓库的内置包比较有用，比如：修复改 urls，修改版本列表，安装逻辑等等。</p>\n<p>例如，修改内置 zlib 包的 url，切到自己的 zlib 源码地址。</p>\n"
   },
   {
     "title": "xmake v2.6.3 发布，支持 vcpkg 清单模式",
@@ -312,7 +330,7 @@ export const posts = [
       "Linux",
       "Vcpkg"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>这个版本主要新增下面几个特性：</p>\n<ol>\n<li>通过 vcpkg 的清单模式实现 vcpkg 包的版本选择</li>\n<li>python 模块构建支持</li>\n<li>支持在 CMakeLists.txt 中集成 Xrepo/Xmake 包管理</li>\n</ol>\n<p>剩下的主要是一些零散的功能改进和 Bugs 修复，可以看下文末的更新内容明细，一些比较大的改动，下面也会逐一说明。</p>\n"
   },
   {
     "title": "xmake v2.6.2 发布，新增 Linux 内核驱动模块构建支持",
@@ -329,7 +347,7 @@ export const posts = [
       "Linux",
       "Driver"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具。</p>\n<p>它非常的轻量，没有任何依赖，因为它内置了 Lua 运行时。</p>\n<p>它使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n"
+    "excerpt": "<p>这个版本主要新增两大特性：</p>\n<ol>\n<li>Linux 内核驱动模块的构建支持</li>\n<li>分组构建和批量运行支持，可用于实现 <code>Run all tests</code> 功能</li>\n</ol>\n<p>剩下的主要是一些零散的功能改进和 Bugs 修复，可以看下文末的更新内容明细，一些比较大的改动，下面也会逐一说明。</p>\n"
   },
   {
     "title": "xmake v2.6.1 发布，使用 Lua5.4 运行时，Rust 和 C++ 混合编译支持",
@@ -348,7 +366,7 @@ export const posts = [
       "C++20",
       "Modules"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>这个版本，我们正式将默认的 Luajit 运行时切换到 Lua5.4 运行时，并且新增了 Rust 和 C++ 的混合编译支持，我们也集成了 Cargo 的包管理支持。</p>\n<p>另外，我们新增了一个实用的 <code>utils.glsl2spv</code> 规则，用于实现对 glsl shader 的编译支持，并自动生成对应的 C 代码头文件，方便快速内嵌编译后的 .spv 文件数据到代码中。</p>\n"
+    "excerpt": "<p>历经几个版本的迭代测试，我们在 2.6.1 版本，正式切换到 Lua5.4 运行时。</p>\n<p>不过，这对于用户来说是完全无感知的，基本上没有任何兼容性问题，因为 xmake 对大部分接口都是封装过的，完全消除了 Lua 版本间的兼容性问题。</p>\n<p>对于构建性能方面，由于构建的性能瓶颈主要来自编译器，Lua 自身的性能损耗完全可以忽略，而且 xmake 用 c 重写了 lua 原生的所有 io 接口，并且对耗时的接口都用 c 实现了优化。</p>\n"
   },
   {
     "title": "xmake v2.5.9 发布，改进 C++20 模块，并支持 Nim, Keil MDK 和 Unity Build",
@@ -372,7 +390,7 @@ export const posts = [
       "Modules",
       "lua5.4"
     ],
-    "excerpt": "<h2>author: Ruki}</h2>\n<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>这个版本，我们增加了大量重量级的新特性，例如：Nim 语言项目的构建支持，Keil MDK，Circle 和 Wasi 工具链支持。</p>\n"
+    "excerpt": "<p>最近，我们新增了对 Nimlang 项目的构建支持，相关 issues 见：<a href=\"https://github.com/xmake-io/xmake/issues/1756\">#1756</a></p>\n<p>我们可以使用 <code>xmake create</code> 命令创建空工程。</p>\n<pre><code class=\"language-console\">xmake create -l nim -t console test\nxmake create -l nim -t static test\nxmake create -l nim -t shared test\n</code></pre>\n"
   },
   {
     "title": "xmake v2.5.8 发布，新增 Pascal/Swig 程序和 Lua53 运行时支持",
@@ -390,7 +408,7 @@ export const posts = [
       "swig",
       "lua5.3"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>这个版本，我们主要增加了对 Pascal 语言项目和 Swig 模块的构建支持，而对于上个版本新增的 Vala 语言支持，我们也做了进一步改进，增加了对动态库和静态库的构建支持。</p>\n<p>除此之外，xmake 现在也已经支持了可选的 Lua5.3 运行时，提供更好的跨平台支持能力，目前 xmake 已经能够在 LoongArch 架构上正常运行。</p>\n"
+    "excerpt": "<p>目前，我们可以使用跨平台的 Free pascal 工具链 fpc 去编译构建 Pascal 程序，例如：</p>\n<pre><code class=\"language-lua\">add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)\ntarget(&quot;test&quot;)\n    set_kind(&quot;binary&quot;)\n    add_files(&quot;src/*.pas&quot;)\n</code></pre>\n<pre><code class=\"language-lua\">add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)\ntarget(&quot;foo&quot;)\n    set_kind(&quot;shared&quot;)\n    add_files(&quot;src/foo.pas&quot;)</code></pre>\n"
   },
   {
     "title": "xmake v2.5.7 发布，包依赖锁定和 Vala/Metal 语言编译支持",
@@ -408,7 +426,7 @@ export const posts = [
       "package",
       "vala"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>这个版本，我们新增了很多新特性，不仅增加了对 Vala 和 Metal 语言的编译支持，另外我们还改进了包依赖管理，能够像 npm/package.lock 那样支持对依赖包的锁定和更新，使得用户的项目不会受到上游包仓库的更新变动影响。</p>\n<p>此外，我们还提供了一些比较实用的规则， 比如 <code>utils.bin2c</code> 可以让用户方便快速的内嵌一些二进制资源文件到代码中去，以头文件的方式获取相关数据。</p>\n"
+    "excerpt": "<p>这个版本，我们已经可以初步支持构建 Vala 程序，只需要应用 <code>add_rules(&quot;vala&quot;)</code> 规则。</p>\n<p>同时，我们需要添加一些依赖包，其中 glib 包是必须的，因为 vala 自身也会用到它。</p>\n<p><code>add_values(&quot;vala.packages&quot;)</code> 用于告诉 valac，项目需要哪些包，它会引入相关包的 vala api，但是包的依赖集成，还是需要通过 <code>add_requires(&quot;lua&quot;)</code> 下载集成。</p>\n"
   },
   {
     "title": "xmake v2.5.6 发布，改进预编译二进制镜像包兼容性",
@@ -425,7 +443,7 @@ export const posts = [
       "precompiled",
       "package"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>这是一个稳定性修复版本，主要修复和改进了一些跟预编译二进制包相关的兼容性问题。另外新增了一些实用的接口来设置默认的编译平台、架构和模式，以及允许的编译平台、架构列表等等。</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">项目源码</a></li>\n<li><a href=\"https://xmake.io/zh/\">官方文档</a></li>\n<li><a href=\"https://xmake.io/zh/\">入门课程</a></li>\n</ul>\n"
+    "excerpt": "<p>这是一个稳定性修复版本，主要修复和改进了一些跟预编译二进制包相关的兼容性问题。另外新增了一些实用的接口来设置默认的编译平台、架构和模式，以及允许的编译平台、架构列表等等。</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">项目源码</a></li>\n<li><a href=\"https://xmake.io/zh/\">官方文档</a></li>\n<li><a href=\"https://xmake.io/zh/\">入门课程</a></li>\n</ul>\n<p>上个版本对 Windows 下的 预编译包安装做了初步的支持，但是由于没有考虑 toolset 版本的兼容性问题，因此如果用户的 vs 版本过低，就会在集成包时候出现链接问题。</p>\n"
   },
   {
     "title": "xmake v2.5.5 发布，支持下载集成二进制镜像包",
@@ -442,7 +460,7 @@ export const posts = [
       "mirror",
       "package"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>2.5.5 版本中，我们继续改进远程包集成的体验，实现在云端预编译包，然后直接下载集成预编译的二进制包。这对于一些编译非常慢的包，可以极大的减少包的安装时间。</p>\n<p>另外，新版本中，我们还重新实现了新版的本地包生成方案，完全无缝支持 <code>add_requires</code> 和 <code>add_packages</code>，从此远程包和本地包可以使用统一的集成方式来维护。</p>\n"
+    "excerpt": "<p>2.5.5 版本中，我们继续改进远程包集成的体验，实现在云端预编译包，然后直接下载集成预编译的二进制包。这对于一些编译非常慢的包，可以极大的减少包的安装时间。</p>\n<p>另外，新版本中，我们还重新实现了新版的本地包生成方案，完全无缝支持 <code>add_requires</code> 和 <code>add_packages</code>，从此远程包和本地包可以使用统一的集成方式来维护。</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">项目源码</a></li>\n<li><a href=\"https://xmake.io/zh/\">官方文档</a></li>\n<li><a href=\"https://xmake.io/zh/\">入门课程</a></li>\n</ul>\n"
   },
   {
     "title": "xmake v2.5.4 发布，支持 apt/portage 包管理器，改进 xrepo shell 环境",
@@ -461,7 +479,7 @@ export const posts = [
       "shell",
       "package"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>在 2.5.4 版本中，我们新增了对 Apt、Portage 这两个包管理器的支持，在 Ubuntu/Gentoo 上我们也可以使用 <code>add_requires</code> 可以快速集成它们提供的包。</p>\n<p>并且我们也改进支持了 Vcpkg 包管理器的支持，新增对 arm/arm64 架构包的安装支持。</p>\n"
+    "excerpt": "<p>在 2.5.4 版本中，我们新增了对 Apt、Portage 这两个包管理器的支持，在 Ubuntu/Gentoo 上我们也可以使用 <code>add_requires</code> 可以快速集成它们提供的包。</p>\n<p>并且我们也改进支持了 Vcpkg 包管理器的支持，新增对 arm/arm64 架构包的安装支持。</p>\n<p>另外，我们还增强了 <code>xrepo env shell</code> 环境，可以通过在 <code>xmake.lua</code> 中配置一系列 <code>add_requires</code> 包配置，加载带有特定包配置的 shell 环境。</p>\n"
   },
   {
     "title": "Summer2021：暑期来 Xmake 社区做项目吧，还有奖金领取哦",
@@ -497,7 +515,7 @@ export const posts = [
       "conda",
       "linux"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>在 2.5.3 版本，我们新增了对 linux bpf 程序的构建支持，并且同时支持 android bpf 程序的构建。</p>\n<p>尽管 bpf 对 编译工具链有一定的要求，比如需要较新的 llvm/clang 和 android ndk 工具链，但是 xmake 能够自动拉取特定版本的 llvm/ndk 来用于编译，并且还能自动拉取 libbpf 等依赖库，完全省去了用户折腾编译环境和 libbpf 库集成的问题。</p>\n"
+    "excerpt": "<p>在 2.5.3 版本，我们新增了对 linux bpf 程序的构建支持，并且同时支持 android bpf 程序的构建。</p>\n<p>尽管 bpf 对 编译工具链有一定的要求，比如需要较新的 llvm/clang 和 android ndk 工具链，但是 xmake 能够自动拉取特定版本的 llvm/ndk 来用于编译，并且还能自动拉取 libbpf 等依赖库，完全省去了用户折腾编译环境和 libbpf 库集成的问题。</p>\n<p>另外，在新版本中我们还新增了对 Conda 包仓库的集成支持，现在除了能够从 Conan/Vcpkg/brew/pacman/clib/dub 等包仓库集成使用包，还能从 Conda 包仓库中集成各种二进制 C/C++ 包。</p>\n"
   },
   {
     "title": "xmake v2.5.2 发布, 支持自动拉取交叉工具链和依赖包集成",
@@ -516,7 +534,7 @@ export const posts = [
       "packages",
       "cross-toolchains"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>在 2.5.2 版本中，我们增加了一个重量级的新特性：<code>自动拉取远程交叉编译工具链</code>。</p>\n<p>这是用来干什么的呢，做过交叉编译以及有 C/C++ 项目移植经验的同学应该知道，折腾各种交叉编译工具链，移植编译项目是非常麻烦的一件事，需要自己下载对应工具链，并且配置工具链和编译环境很容易出错导致编译失败。</p>\n"
+    "excerpt": "<p>在 2.5.2 版本中，我们增加了一个重量级的新特性：<code>自动拉取远程交叉编译工具链</code>。</p>\n<p>这是用来干什么的呢，做过交叉编译以及有 C/C++ 项目移植经验的同学应该知道，折腾各种交叉编译工具链，移植编译项目是非常麻烦的一件事，需要自己下载对应工具链，并且配置工具链和编译环境很容易出错导致编译失败。</p>\n<p>现在，xmake 已经可以支持自动下载项目所需的工具链，然后使用对应工具链直接编译项目，用户不需要关心如何配置工具链，任何情况下只需要执行 <code>xmake</code> 命令即可完成编译。</p>\n"
   },
   {
     "title": "xmake v2.5.1 发布, 支持 Apple Silicon 并改进 C/C++ 包依赖管理",
@@ -538,7 +556,7 @@ export const posts = [
       "Apple",
       "Silicon"
     ],
-    "excerpt": "<h2>author: Ruki}</h2>\n<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。</p>\n<p>这是 xmake 在今年的首个版本，也是完全适配支持 Apple Silicon (macOS ARM) 设备的首个版本。</p>\n"
+    "excerpt": "<p>这是 xmake 在今年的首个版本，也是完全适配支持 Apple Silicon (macOS ARM) 设备的首个版本。</p>\n<p>这个版本，我们主要改进了对 C/C++ 依赖包的集成支持，更加的稳定，并且能够更加灵活的实现定制化配置编译。</p>\n<p>另外，我们还重点改进 vs/vsxmake 两个vs工程生成器插件，修复了很多细节问题，并且对子工程<code>分组</code>也做了支持，现在可以生成类似下图的工程结构。</p>\n"
   },
   {
     "title": "Xmake 2020 年终总结",

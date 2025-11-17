@@ -1,5 +1,23 @@
 export const posts = [
   {
+    "title": "Xmake v3.0.5 released, Add Swift interop, XML module, JSON output and more",
+    "url": "/posts/xmake-update-v3.0.5",
+    "date": {
+      "time": 1734696000000,
+      "string": "December 20, 2024"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "swift",
+      "xml",
+      "json",
+      "toolchain",
+      "cuda"
+    ],
+    "excerpt": "<p>In the new version, we have added Swift interop support for C++ and Objective-C, introduced a new XML module with parsing and encoding support, added JSON output format for target information, and improved toolchain configuration. We have also made significant performance improvements and bug fixes.</p>\n<p>We have added comprehensive Swift interop support, enabling seamless bidirectional interoperability between Swift and C++/Objective-C code in your projects. The <code>swift.interop</code> rule is automatically enabled when the <code>swift.interop</code> target value is set, making it easy to mix Swift and C++ code in the...</p>\n<p>The Swift interop support includes:</p>\n<ul>\n<li>Bidirectional Swift-C++ interoperability</li>\n<li>Automatic header generation for C++ to call Swift functions</li>\n<li>Support for both Objective-C and C++ interop modes</li>\n<li>Swift static library archiver toolset for enhanced compilation workflows</li>\n</ul>\n"
+  },
+  {
     "title": "Xmake v2.9.1 released, Add native lua modules support",
     "url": "/posts/xmake-update-v2.9.1",
     "date": {
@@ -14,7 +32,7 @@ export const posts = [
       "package",
       "cosmocc"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>In the new version, we have added native tool chain support for Hongmeng system and implemented a new native Lua module import support. In addition, we have also made a lot of optimizations to the build speed, and the effect is very obvious.</p>\n<p>We have added native toolchain compilation support for the Hongmeng OS platform:</p>\n<pre><code class=\"language-bash\">$ xmake f -p harmony\n</code></pre>\n"
   },
   {
     "title": "Xmake v2.8.7 released, Add cosmocc toolchain support, build-once run-anywhere",
@@ -31,7 +49,7 @@ export const posts = [
       "package",
       "cosmocc"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>In the new version, we have added cosmocc tool chain support. Using it, we can compile once and run everywhere. In addition, we also refactored the implementation of C++ Modules and solved many C++ Modules-related problems.</p>\n<p>The cosmocc tool chain is the compilation tool chain provided by the <a href=\"https://github.com/jart/cosmopolitan\">cosmopolitan</a> project. Programs compiled using this tool chain can be compiled once and run anywhere.</p>\n<p>In the new version, we also support this tool chain, which can compile programs under macosx/linux/windows, and can also support automatic downloading of the cosmocc tool chain.</p>\n"
   },
   {
     "title": "Xmake v2.8.6 released, New Packaging Plugin, XPack",
@@ -50,7 +68,7 @@ export const posts = [
       "API",
       "rust"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>Before introducing new features, there is good news to tell you that the previous version of Xmake was included in the debian repository, and recently Xmake has entered the Fedora official repository. You can install Xmake directly on Fedora 39 through the following command.</p>\n<pre><code class=\"language-bash\">$ sudo dnf install xmake\n</code></pre>\n<p>Many thanks to @topazus @mochaaP for their contribution to Xmake. For related information, see: <a href=\"https://github.com/xmake-io/xmake/issues/941\">#941</a>.</p>\n"
   },
   {
     "title": "Xmake v2.8.5 released, Support for link sorting and unit testing",
@@ -69,7 +87,7 @@ export const posts = [
       "API",
       "rust"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>Before introducing new features, we have good news to tell you that Xmake has recently entered Debian's official repository: [https://packages.debian.org/sid/xmake](https://packages.debian.org/ sid/xmake),\nWhen Ubuntu 24.04 is released in April next year, we should be able to quickly install Xmake d...</p>\n<p>I would also like to thank @Lance Lin for his help. He helped us maintain and upload the Xmake package to the Debian repository throughout the whole process. Thank you very much!</p>\n<p>Next, let’s introduce some changes introduced in version 2.8.5. This version brings many new features, especially support for link sorting, link groups, and support for <code>xmake test</code> built-in unit tests.\nIn addition, we have also added build support for the Apple XROS platform, which can be used to b...</p>\n"
   },
   {
     "title": "Xmake v2.8.3 Released, Improve Wasm and Support Xmake Source Debugging",
@@ -88,7 +106,7 @@ export const posts = [
       "API",
       "rust"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>In the new version, we have added breakpoint debugging support for Xmake's own source code, which can help contributors to get familiar with xmake's source code more quickly, and also help users to debug and analyse their own project's configure scripts.</p>\n<p>In addition, the number of packages in our <a href=\"https://github.com/xmake-io/xmake-repo\">xmake-repo</a> repository is about to exceed 1100, with more than 100 packages added in just one month, thanks to @star-hengxing's contribution.</p>\n<p>At the same time, we focused on improving build support for Wasm and Qt6 for wasm.</p>\n"
   },
   {
     "title": "Xmake v2.8.2 Released, Official package repository count over 1k",
@@ -107,7 +125,7 @@ export const posts = [
       "API",
       "rust"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>In this release, we've added a number of useful APIs, removed some interfaces that were marked as deprecated a few years ago, and improved soname support for dynamic libraries.</p>\n<p>Meanwhile, we've had some good news in the meantime: our <a href=\"https://github.com/xmake-io/xmake-repo\">xmake-repo</a> official repository has surpassed 1k packages, thanks to every contributor to Xmake, which is basically a repository of packages contributed by the community.</p>\n<p>Especially @xq114, @star-hengxing, @SirLynix contributed a lot of packages, thank you very much~.</p>\n"
   },
   {
     "title": "Xmake v2.8.1 Released, Lots of Detailed Feature Improvements",
@@ -126,7 +144,7 @@ export const posts = [
       "mingw64",
       "wasm"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>Windows' long path limitation has always been a big problem. Projects that are nested too deeply may fail when reading or writing files, which affects xmake's usability and experience.</p>\n<p>Although xmake has provided various measures to avoid this problem, it still suffers from some limitations occasionally. In this release, we have improved the installer by providing an installation option that lets you selectively enable long path support.</p>\n<p>This requires administrator privileges, as it requires a registry write.</p>\n"
   },
   {
     "title": "Xmake v2.7.8 released, Improve package virtual environment and build speed",
@@ -145,7 +163,7 @@ export const posts = [
       "mingw64",
       "wasm"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>Xmake has long supported the virtual environment management of packages, and can switch between different package environments through configuration files.</p>\n<p>We can customize some package configurations by adding the xmake.lua file in the current directory, and then enter a specific package virtual environment.</p>\n<pre><code class=\"language-lua\">add_requires(&quot;zlib 1.2.11&quot;)\nadd_requires(&quot;python 3.x&quot;, &quot;luajit&quot;)\n</code></pre>\n"
   },
   {
     "title": "Xmake v2.7.7 released, Support Haiku, Improve API check and C++ Modules",
@@ -165,7 +183,7 @@ export const posts = [
       "string": "January 22, 2023"
     },
     "author": "Ruki",
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>Through <code>add_requires(&quot;iverilog&quot;)</code> configuration, we can automatically pull the iverilog toolchain package, and then use <code>set_toolchains(&quot;@iverilog&quot;)</code> to automatically bind the toolchain to compile the project.</p>\n<pre><code class=\"language-lua\">add_requires(&quot;iverilog&quot;)\ntarget(&quot;hello&quot;)\n     add_rules(&quot;iverilog. binary&quot;)\n     set_toolchains(&quot;@iverilog&quot;)\n     add_files(&quot;src/*.v&quot;)\n</code></pre>\n<pre><code class=\"language-Lua\">add_requires(&quot;iverilog&quot;)\ntarget(&quot;hello&quot;)\n     add_rules(&quot;iverilog. binary&quot;)\n     set_toolchains(&quot;@iverilog&quot;)\n     add_files(&quot;src/*.v&quot;)\n     add_defines(&quot;TEST&quot;)\n     add_includedirs(&quot;inc&quot;)\n     set_languages(&quot;v1800-2009&quot;)\n</code></pre>\n"
   },
   {
     "title": "Xmake v2.7.3 Released, Package Components and C++ Modules Incremental Build Support",
@@ -182,7 +200,7 @@ export const posts = [
       "package",
       "components"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>This new feature is intended to enable the integration of specific sub-libraries from a C/C++ package, and is generally used for library component integration in larger packages.</p>\n<p>This is because such packages provide a number of sub-libraries, not all of which are required by the user, and linking them all may be problematic.</p>\n<p>Although, previous versions were able to support the feature of sublibrary selection, e.g.</p>\n"
   },
   {
     "title": "Xmake v2.7.2 released, build third-party libraries more intelligently",
@@ -201,7 +219,7 @@ export const posts = [
       "cmake",
       "autoconf"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>In previous versions, Xmake provided a TryBuild mode that allowed you to use Xmake to try to build third-party projects maintained by autoconf/cmake/meson etc. directly without xmake.lua.</p>\n<p>In effect, this means that Xmake detects the corresponding build system and invokes commands such as cmake to do so, but it will help the user to simplify the configuration operation, plus it will interface with xmake's cross-compilation toolchain configuration.</p>\n<p>However, this mode has a certain failure rate, which can lead to build failure if, for example</p>\n"
   },
   {
     "title": "Xmake v2.7.1 Released, Better C++ Modules Support",
@@ -222,7 +240,7 @@ export const posts = [
       "headerunits",
       "fs-watcher"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>In this release, we have refactored and improved the C++20 Modules implementation, improved the dependency graph parsing of module files, added support for STL and User HeaderUnits, and made the CMakelists/compile_commands generator support C++ Modules.</p>\n<p>In addition, we've added an <code>xmake watch</code> plugin that can monitor current project file updates in real time, automatically trigger incremental builds, or run some custom commands.</p>\n<p>&lt;img src=&quot;/assets/img/posts/xmake/xmake-watch.gif&quot;&gt;</p>\n"
   },
   {
     "title": "Xmake v2.6.6 Released, Support Distributed Compilation and Build Cache",
@@ -240,7 +258,7 @@ export const posts = [
       "ccache",
       "distributed-compilation"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>In this version, we have added a lot of heavyweight new features:</p>\n<ul>\n<li>Distributed compilation</li>\n<li>Local compilation cache</li>\n<li>Remote compilation cache</li>\n</ul>\n<p>With these features, we can compile large C/C++ projects faster.</p>\n"
   },
   {
     "title": "Xmake v2.6.5 released, Support remote compilation",
@@ -258,7 +276,7 @@ export const posts = [
       "rust",
       "remote-compilation"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>The new version provides remote compilation support, which allows us to compile code on a remote server, run and debug remotely.</p>\n<p>The server can be deployed on Linux/MacOS/Windows to enable cross-platform compilation, e.g. compile and run Windows programs on Linux and macOS/Linux programs on Windows.</p>\n<p>It is more stable and smoother to use than ssh remote login compilation, no lagging of ssh terminal input due to network instability, and allows for quick local editing of code files.</p>\n"
   },
   {
     "title": "Xmake v2.6.4 released, Improve a lot of package management features",
@@ -274,7 +292,7 @@ export const posts = [
       "C/C++",
       "Vcpkg"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>Now, we can inherit all the configuration of an existing package through the <code>set_base</code> interface, and then rewrite part of the configuration on this basis.</p>\n<p>This is usually in the user's own project, it is more useful to modify the built-in package of the official repository of <a href=\"https://github.com/xmake-io/xmake-repo\">xmake-repo</a>, such as: repairing and changing urls, modifying the version list, Install logic and more.</p>\n<p>For example, modify the url of the built-in zlib package to switch to your own zlib source address.</p>\n"
   },
   {
     "title": "Xmake v2.6.3 released, Support Vcpkg manifest mode",
@@ -290,7 +308,7 @@ export const posts = [
       "C/C++",
       "Vcpkg"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>This version mainly adds the following features:</p>\n<ol>\n<li>Implement version selection of vcpkg package through vcpkg's manifest mode</li>\n<li>Python module build support</li>\n<li>Support integration of Xrepo/Xmake package management in CMakeLists.txt</li>\n</ol>\n<p>The rest are mainly some scattered functional improvements and Bugs fixes. You can see the details of the update at the end of the following. Some major changes will be explained one by one below.</p>\n"
   },
   {
     "title": "Xmake v2.6.2 released, Support building Linux kernel driver module",
@@ -307,7 +325,7 @@ export const posts = [
       "Linux",
       "Driver"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">Xmake</a> is a lightweight cross-platform build utility based on Lua.</p>\n<p>It is very lightweight and has no dependencies because it has a built-in Lua runtime.</p>\n<p>It uses xmake.lua to maintain project builds and its configuration syntax is very simple and readable.</p>\n"
+    "excerpt": "<p>Xmake may be the first third-party build tool that provides built-in support for Linux kernel driver development.</p>\n<p>Although there are also instructions on how CMake configures and builds Linux drivers on the Internet, most of them use <code>add_custom_command</code> to customize various commands, and then execute <code>echo</code> to splice and generate Linux Makefile files by themselves.</p>\n<p>In other words, it is actually a build that relies on the Makefile of the Linux kernel source code to execute, so if you want to add some compilation configuration and macro definitions yourself, it will be very troublesome.</p>\n"
   },
   {
     "title": "xmake v2.6.1 released, Switch to Lua5.4 runtime, Support Rust and C++ mixed compilation",
@@ -326,7 +344,7 @@ export const posts = [
       "C++20",
       "Modules"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started qui...</p>\n<p>In this version, we have added a lot of heavyweight new features, such as: Nim language project build support, Keil MDK, Circle and Wasi toolchain support.</p>\n<p>In addition, we have made major improvements to C++20 Modules, not only supporting the latest gcc-11, clang and msvc compilers,\nbut also automatic analysis of inter-module dependencies to achieve maximum parallel compilation support.</p>\n"
+    "excerpt": "<p>After several versions of iterative testing, we officially switched to the Lua5.4 runtime in version 2.6.1.</p>\n<p>However, this is completely unaware to users, and basically there is no compatibility problem, because xmake encapsulates most of the interfaces, which completely eliminates the compatibility problem between Lua versions.</p>\n<p>In terms of build performance, because the performance bottleneck of the build mainly comes from the compiler, the performance loss of Lua itself is completely negligible, and xmake rewrites all lua native io interfaces with c, and optimizes the time-consuming interfaces with c .</p>\n"
   },
   {
     "title": "xmake v2.5.9 released, Improve C++20 Modules and support Nim, Keil MDK and Unity Build",
@@ -350,7 +368,7 @@ export const posts = [
       "Modules",
       "lua5.4"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started qui...</p>\n<p>In this version, we have added a lot of heavyweight new features, such as: Nim language project build support, Keil MDK, Circle and Wasi toolchain support.</p>\n<p>In addition, we have made major improvements to C++20 Modules, not only supporting the latest gcc-11, clang and msvc compilers,\nbut also automatic analysis of inter-module dependencies to achieve maximum parallel compilation support.</p>\n"
+    "excerpt": "<p>Recently, we have added build support for the Nimlang project. For related issues, see: <a href=\"https://github.com/xmake-io/xmake/issues/1756\">#1756</a></p>\n<p>We can use the <code>xmake create</code> command to create an empty project.</p>\n<pre><code class=\"language-console\">xmake create -l nim -t console test\nxmake create -l nim -t static test\nxmake create -l nim -t shared test\n</code></pre>\n"
   },
   {
     "title": "xmake v2.5.8 is released, Support Pascal/Swig program and Lua53 runtime",
@@ -368,7 +386,7 @@ export const posts = [
       "swig",
       "lua5.3"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started qui...</p>\n<p>In this version, we mainly added support for the construction of Pascal language projects and Swig modules, and for the Vala language support added in the previous version, we have also made further improvements, adding support for the construction of dynamic and static libraries.</p>\n<p>In addition, xmake now also supports the optional Lua5.3 runtime, which provides better cross-platform support. At present, xmake has been able to run normally on the LoongArch architecture.</p>\n"
+    "excerpt": "<p>Currently, we can use the cross-platform Free Pascal toolchain fpc to compile and build Pascal programs, for example:</p>\n<pre><code class=\"language-lua\">add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)\ntarget(&quot;test&quot;)\n    set_kind(&quot;binary&quot;)\n    add_files(&quot;src/*.pas&quot;)\n</code></pre>\n<pre><code class=\"language-lua\">add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)\ntarget(&quot;foo&quot;)\n    set_kind(&quot;shared&quot;)\n    add_files(&quot;src/foo.pas&quot;)</code></pre>\n"
   },
   {
     "title": "xmake v2.5.7 released, Use lockfile to freeze package dependencies and Vala/Metal language support",
@@ -386,7 +404,7 @@ export const posts = [
       "package",
       "vala"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started qui...</p>\n<p>In this version, we have added a lot of new features. Not only did we increase the compilation support for Vala and Metal languages, we also improved the package dependency management, which can support the locking and updating of dependent packages like npm/package.lock, so The user's project will...</p>\n<p>In addition, we also provide some more practical rules. For example, <code>utils.bin2c</code> allows users to easily and quickly embed some binary resource files into the code, and obtain relevant data in the form of header files.</p>\n"
+    "excerpt": "<p>In this version, we can already initially support the construction of Vala programs, just apply the <code>add_rules(&quot;vala&quot;)</code> rule.</p>\n<p>At the same time, we need to add some dependency packages, among which the glib package is necessary because Vala itself will also use it.</p>\n<p><code>add_values(&quot;vala.packages&quot;)</code> is used to tell valac which packages the project needs, it will introduce the vala api of the relevant package, but the dependency integration of the package still needs to be downloaded and integrated through <code>add_requires(&quot;lua&quot;)</code>.</p>\n"
   },
   {
     "title": "xmake v2.5.6 released, Improve compatibility of pre-compiled binary package",
@@ -403,7 +421,7 @@ export const posts = [
       "mirror",
       "package"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started qui...</p>\n<p>This is a stability fix version, which mainly fixes and improves some compatibility issues related to pre-compiled binary packages. In addition, some useful interfaces have been added to set the default compilation platform, architecture and mode, as well as the allowed compilation platform, archite...</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">Github</a></li>\n<li><a href=\"https://xmake.io/\">Document</a></li>\n</ul>\n"
+    "excerpt": "<p>The previous version provided preliminary support for the installation of pre-compiled packages under Windows, but because the compatibility of the toolset version was not considered, if the user's VS version is too low, link problems will occur when the package is integrated.</p>\n<p>According to the official description of ms, the binary library of msvc is backward compatible with the version of toolset. <a href=\"https://xmake.io\">https://docs.microsoft.com/en-us/cpp/porting/binary-compat-2015-2017?view=msvc-160</a></p>\n<blockquote>\n<p>You can mix binaries built by different versions of the v140, v141, and v142 toolsets. However, you must link by using a toolset at least as recent as the most recent binary in your app. Here's an example: you can link an app compiled using any 2017 toolset (v141, versions 15.0 through 15.9) to a...</p>\n</blockquote>\n"
   },
   {
     "title": "xmake v2.5.5 released, Support to download and install precompiled image packages",
@@ -420,7 +438,7 @@ export const posts = [
       "mirror",
       "package"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started qui...</p>\n<p>In version 2.5.5, we continue to improve the experience of remote package integration, realize the pre-compiled package in the cloud, and then directly download the integrated pre-compiled binary package. This can greatly reduce the installation time of some packages that are very slow to compile.</p>\n<p>In addition, in the new version, we have also re-implemented the new version of the local package generation scheme, which fully supports <code>add_requires</code> and <code>add_packages</code> seamlessly. From then on, remote packages and local packages can be maintained in a unified way.</p>\n"
+    "excerpt": "<p>Each time you install a package by the built-in package manager of xmake, you must download the corresponding package source code, and then perform local compilation and installation integration. This is for some large packages that compile very slowly, and some packages that rely on a lot of compil...</p>\n<p>Especially on windows, not only the dependence of the third party package on the compilation environment is more complicated, but also many packages and compilation are very slow, such as boost, openssl and so on.</p>\n<p>To this end, we implement cloud pre-compilation of packages based on github action, and pre-compile all commonly used packages, and then store them in [build-artifacts](https://github.com/xmake-mirror/build- artifacts) under Releases of the repository.</p>\n"
   },
   {
     "title": "xmake v2.5.4 Released, Support apt/portage package manager and improve xrepo shell",
@@ -439,7 +457,7 @@ export const posts = [
       "shell",
       "package"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started qui...</p>\n<p>In version 2.5.4, we added support for Apt and Portage package managers. On Ubuntu/Gentoo, we can also use <code>add_requires</code> to quickly integrate the packages they provide.</p>\n<p>And we have also improved the support for the Vcpkg package manager, and added support for the installation of arm/arm64 architecture packages.</p>\n"
+    "excerpt": "<p>Now we support the use of apt to integrate dependent packages, and will also automatically find packages that have been installed on the ubuntu system.</p>\n<pre><code class=\"language-lua\">add_requires(&quot;apt::zlib1g-dev&quot;, {alias = &quot;zlib&quot;})\n\ntarget(&quot;test&quot;)\n    set_kind(&quot;binary&quot;)\n    add_files(&quot;src/*.c&quot;)\n    add_packages(&quot;zlib&quot;)\n</code></pre>\n"
   },
   {
     "title": "xmake v2.5.3 Released, Support to build Linux bpf program and integrate Conda packages",
@@ -458,7 +476,7 @@ export const posts = [
       "conda",
       "linux"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started qui...</p>\n<p>In version 2.5.3, we have been able to build linux and android bpf programs.</p>\n<p>Although bpf has certain requirements for the compilation toolchain, such as the newer llvm/clang and android ndk toolchains, xmake can automatically pull a specific version of llvm/ndk for compilation, and it can also automatically pull libbpf dependencies. Library.</p>\n"
+    "excerpt": "<p>In the new version, we started to support the compilation of bpf programs, as well as linux and android platforms, and can automatically pull the llvm and android ndk toolchains.</p>\n<p>For more details, please see: <a href=\"https://github.com/xmake-io/xmake/issues/1274\">#1274</a></p>\n<p>The build configuration is as follows, it's very simple.</p>\n"
   },
   {
     "title": "xmake v2.5.2 released, Support pull remote cross-toolchain and package integration",
@@ -477,7 +495,7 @@ export const posts = [
       "packages",
       "cross-toolchains"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, it is very friendly to novices, and you can get started qui...</p>\n<p>In version 2.5.2, we added a heavyweight new feature: <code>Pull remote cross-compilation toolchain automatically</code>.</p>\n<p>Those who have done cross-compilation and have experience in C/C++ project migration should know that it is very troublesome to toss various cross-compilation toolchains\nand transplant and compile projects. You need to download the corresponding toolchain yourself.</p>\n"
+    "excerpt": "<p>Starting from version 2.5.2, we can pull the specified toolchain to integrate the compilation project, and we also support switching the dependent package to the corresponding remote toolchain to participate in the compilation and integration.</p>\n<p>For related example codes, see: <a href=\"https://github.com/xmake-io/xmake/tree/master/tests/projects/package\">Toolchain/Packages Examples</a></p>\n<p>Related issue <a href=\"https://github.com/xmake-io/xmake/issues/1217\">#1217</a></p>\n"
   },
   {
     "title": "xmake v2.5.1 released, Support for Apple Silicon and more powerful C/C++ package management",
@@ -499,7 +517,7 @@ export const posts = [
       "Apple",
       "Silicon"
     ],
-    "excerpt": "<p><a href=\"https://github.com/xmake-io/xmake\">xmake</a> is a lightweight cross-platform build tool based on Lua. It uses xmake.lua to maintain project builds. Compared with makefile/CMakeLists.txt, the configuration syntax is more Concise and intuitive, very friendly to novices, can get started quickly in a shor...</p>\n<p>This is the first version of xmake this year and the first version that is fully adapted to support Apple Silicon (macOS ARM) devices.</p>\n<p>In this version, we mainly improved the integrated support for C/C++ dependent packages, which is more stable, and can be more flexible to achieve customized configuration compilation.</p>\n"
+    "excerpt": "<p>Despite the previous version, we can define and configure dependent packages by <code>add_requires(&quot;libpng&quot;, {configs = {shared = true}})</code>.</p>\n<p>However, if the user project has a huge project and many dependent packages, and each package requires different compilation configuration parameters, the configuration will still be very cumbersome and has limitations, such as the inability to rewrite the internal sub-dependent package configuratio...</p>\n<p>Therefore, we have added <code>add_requireconfs</code> to configure the configuration of each package and its sub-dependencies more flexibly and conveniently. Below we focus on several usages:</p>\n"
   },
   {
     "title": "Xmake Getting Started Tutorial 5, Introduction to Android platform compilation",

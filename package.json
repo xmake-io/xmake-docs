@@ -9,6 +9,8 @@
   "devDependencies": {
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.1.0",
-    "vitepress": "^2.0.0-alpha.6"
+    "vitepress": "^2.0.0-alpha.6",
+    "vitepress-plugin-group-icons": "^1.6.5",
+    "vitepress-plugin-llms": "^1.9.2"
   }
 }
