@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.0.5 预览，多行进度输出、XML 模块、异步 OS API 和 Swift 互操作
+title: Xmake v3.0.5 预览：多行进度输出、XML 模块、异步 OS API 和 Swift 互操作
 tags: [xmake, swift, xml, async, progress, toolchain, cuda]
 date: 2025-11-17
 author: Ruki

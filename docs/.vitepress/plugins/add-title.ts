@@ -39,8 +39,9 @@ export function addTitleFromFrontmatter(src: string): string {
   }
 
   // Add title as H1 after frontmatter
-  // Escape any markdown special characters in the title to prevent parsing issues
+  // Replace newlines and ensure title is properly formatted
   const escapedTitle = title.replace(/\n/g, ' ').trim()
+  
   return frontmatterMatch[0] + `# ${escapedTitle}\n\n` + contentAfterFrontmatter
 }
 

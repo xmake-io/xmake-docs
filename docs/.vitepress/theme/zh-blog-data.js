@@ -1,6 +1,6 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.5 预览，多行进度输出、XML 模块、异步 OS API 和 Swift 互操作",
+    "title": "Xmake v3.0.5 预览：多行进度输出、XML 模块、异步 OS API 和 Swift 互操作",
     "url": "/zh/posts/xmake-update-v3.0.5",
     "date": {
       "time": 1763380800000,

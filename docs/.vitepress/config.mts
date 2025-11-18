@@ -16,14 +16,23 @@ export default defineConfig({
 
   markdown: {
     config(md) {
-      // Add title from frontmatter plugin FIRST, before other plugins
-      // Process all files - the function will check if title should be added
+      // Add title from frontmatter plugin FIRST, before groupIconMdPlugin
+      // Only process files in posts directory
       const originalParse = md.parse.bind(md)
       md.parse = (src: string, env: any) => {
-        // Always process - addTitleFromFrontmatter will check if title exists
-        // and content doesn't already start with H1
-        const processedSrc = addTitleFromFrontmatter(src)
-        return originalParse(processedSrc, env)
+        // Check if this is a posts file
+        const filePath = env?.relativePath || 
+                        env?.file?.relativePath || 
+                        env?.path?.relativePath ||
+                        (env?.id ? String(env.id) : '') ||
+                        ''
+        
+        // Only process posts files
+        if (filePath && filePath.includes('/posts/')) {
+          const processedSrc = addTitleFromFrontmatter(src)
+          return originalParse(processedSrc, env)
+        }
+        return originalParse(src, env)
       }
       
       md.use(groupIconMdPlugin, {

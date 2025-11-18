@@ -1,6 +1,6 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.5 preview, Multi-row progress output, XML module, async OS APIs and Swift interop",
+    "title": "Xmake v3.0.5 preview, Multi-row progress, XML module and Swift interop",
     "url": "/posts/xmake-update-v3.0.5",
     "date": {
       "time": 1763380800000,
