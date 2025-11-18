@@ -6,11 +6,11 @@ author: Ruki
 outline: deep
 ---
 
-## 新特性介绍
+## 新特性介绍 {#new-features}
 
 新版本中，我们引入了多个重要特性，显著提升了开发体验。重点包括**多行进度输出**（支持主题配置，提供更好的构建可见性）、全面的**XML 模块**（用于解析和编码 XML 数据）、**异步 OS API**（提升 I/O 性能）以及**Swift 互操作支持**（实现 Swift 与 C++/Objective-C 代码的无缝集成）。同时，我们也对工具链配置、TTY 处理进行了重大改进，并进行了各种性能优化。
 
-### 支持多行刷新进度输出
+### 支持多行刷新进度输出 {#support-multi-row-refresh-progress-output}
 
 我们改进了进度输出，支持多行刷新，在长时间运行的构建过程中提供显著更好的视觉体验。构建输出现在不再只更新单行进度，而是显示多个并发构建任务及其各自的进度，使得监控并行编译变得更加容易。
 
@@ -34,7 +34,7 @@ outline: deep
 
 更多详情，请参考：[#6974](https://github.com/xmake-io/xmake/pull/6974)
 
-### 添加 Swift 与 C++/Objective-C 互操作支持
+### 添加 Swift 与 C++/Objective-C 互操作支持 {#add-swift-interop-support}
 
 我们新增了全面的 Swift 互操作支持，实现了 Swift 与 C++/Objective-C 代码之间的无缝双向互操作性。当设置了 `swift.interop` 目标值时，`swift.interop` 规则会自动启用，使得在同一个项目中混合使用 Swift 和 C++ 代码变得非常容易。
 
@@ -131,7 +131,7 @@ x [swift]: 4
 
 更多详情，请参考：[#6967](https://github.com/xmake-io/xmake/pull/6967)
 
-### 添加 XML 模块支持
+### 添加 XML 模块支持 {#add-xml-module-support}
 
 我们引入了一个新的 `core.base.xml` 模块，提供了一个轻量级的 DOM 风格 XML 工具包，可在 Xmake 的沙箱环境中工作。它专注于可预测的数据结构、类似 JSON 的易用性，以及可选的流式解析，使您可以在不构建整个树的情况下解析大型 XML 文档。
 
@@ -263,7 +263,7 @@ local doctype    = xml.doctype('plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http
 
 更多详情，请参考：[#7025](https://github.com/xmake-io/xmake/pull/7025)
 
-### 添加目标信息的 JSON 输出格式
+### 添加目标信息的 JSON 输出格式 {#add-json-output-format-for-target-info}
 
 我们为 `xmake show` 命令添加了 JSON 输出格式支持，使得以编程方式提取目标信息变得更加容易。这个特性实现了与 IDE、构建自动化工具和需要解析 xmake 项目元数据的自定义脚本的无缝集成。
 
@@ -317,7 +317,7 @@ TARGET_NAME=$(echo $TARGET_INFO | jq -r '.targets[0].name')
 
 更多详情，请参考：[#7024](https://github.com/xmake-io/xmake/pull/7024)
 
-### 支持指定 CUDA SDK 版本
+### 支持指定 CUDA SDK 版本 {#support-specify-cuda-sdk-version}
 
 我们添加了通过 `cuda_sdkver` 配置选项指定 CUDA SDK 版本的支持，让您对 CUDA 编译有精确的控制。这在处理多个 CUDA 安装或需要针对特定 CUDA 版本以确保兼容性时非常重要。
 
@@ -368,7 +368,7 @@ target("cuda12_app")
 
 更多详情，请参考：[#6964](https://github.com/xmake-io/xmake/pull/6964)
 
-### 添加 GCC 15 工具链支持
+### 添加 GCC 15 工具链支持 {#add-gcc-15-toolchain-support}
 
 我们添加了对最新 GCC 15 工具链的支持，确保与最新的编译器特性和改进的兼容性。
 
@@ -378,7 +378,7 @@ $ xmake f --toolchain=gcc-15
 
 更多详情，请参考：[#6929](https://github.com/xmake-io/xmake/pull/6929)
 
-### 添加 os API 异步支持
+### 添加 os API 异步支持 {#add-os-api-async-support}
 
 我们为 os API 添加了异步支持，允许在 xmake 脚本中进行非阻塞的文件和进程操作。这使得能够并发执行 I/O 操作，在处理多个文件操作或长时间运行的进程时显著提高性能。
 
@@ -425,9 +425,9 @@ end
 
 更多详情，请参考：[#6989](https://github.com/xmake-io/xmake/pull/6989) 和 [#6868](https://github.com/xmake-io/xmake/issues/6868)
 
-## 改进
+## 改进 {#improvements}
 
-### 改进工具链配置语法
+### 改进工具链配置语法 {#improve-toolchain-config-syntax}
 
 我们改进了工具链配置语法，支持内联配置选项，使工具链设置更加简洁和声明式。新语法提供了三种主要的简化格式：
 
@@ -487,7 +487,7 @@ set_toolchains("mingw[clang]", {sdk = "/path/to/llvm-mingw"})
 
 更多详情，请参考：[#6924](https://github.com/xmake-io/xmake/pull/6924)、[讨论 #6903](https://github.com/xmake-io/xmake/discussions/6903) 和 [讨论 #6879](https://github.com/xmake-io/xmake/discussions/6879)
 
-### 改进文件读取性能
+### 改进文件读取性能 {#improve-file-reading-performance}
 
 我们显著改进了文件读取性能，特别是对于大文件和包含大量源文件的项目。
 
@@ -495,7 +495,7 @@ set_toolchains("mingw[clang]", {sdk = "/path/to/llvm-mingw"})
 
 更多详情，请参考：[#6942](https://github.com/xmake-io/xmake/pull/6942)
 
-### 添加 xmake test 实时输出支持
+### 添加 xmake test 实时输出支持 {#add-xmake-test-realtime-output-support}
 
 我们为 `xmake test` 添加了实时输出支持，允许测试输出在测试运行时实时显示，而不是等到测试完成后再缓冲输出。这对于长时间运行的测试或产生连续输出的测试特别有用，因为它提供了即时的测试进度反馈。
 
@@ -511,7 +511,7 @@ target("test")
 
 更多详情，请参考：[#6993](https://github.com/xmake-io/xmake/pull/6993)
 
-### 改进 TTY 处理和输出
+### 改进 TTY 处理和输出 {#improve-tty-handling-and-output}
 
 我们改进了 `core.base.tty` 模块的 TTY 处理和输出格式。新增了以下接口：
 
@@ -527,13 +527,13 @@ target("test")
 
 更多详情，请参考：[#6970](https://github.com/xmake-io/xmake/pull/6970)
 
-### 添加 Ghostty 终端检测支持
+### 添加 Ghostty 终端检测支持 {#add-ghostty-terminal-detection-support}
 
 我们添加了对 Ghostty 终端的检测支持，确保在这个现代终端模拟器中具有正确的输出格式和颜色支持。
 
 更多详情，请参考：[#6987](https://github.com/xmake-io/xmake/pull/6987)
 
-### 改进图模块性能
+### 改进图模块性能 {#improve-graph-module-performance}
 
 我们改进了图模块的性能，该模块用于依赖解析和构建图生成。
 
@@ -541,9 +541,9 @@ target("test")
 
 更多详情，请参考：[#7027](https://github.com/xmake-io/xmake/pull/7027)
 
-## 更新日志
+## 更新日志 {#changelog}
 
-### 新特性
+### 新特性 {#new-features-list}
 
 * [#6929](https://github.com/xmake-io/xmake/pull/6929): 添加 GCC 15 工具链支持
 * [#6967](https://github.com/xmake-io/xmake/pull/6967): 添加 Swift 与 C++/Objective-C 互操作支持
@@ -554,7 +554,7 @@ target("test")
 * [#7025](https://github.com/xmake-io/xmake/pull/7025): 添加 XML 模块，支持解析和编码
 * [#6989](https://github.com/xmake-io/xmake/pull/6989): 添加 os API 异步支持
 
-### 改进
+### 改进 {#improvements-list}
 
 * [#6924](https://github.com/xmake-io/xmake/pull/6924): 改进工具链配置，支持 add_toolchains("name[configs]") 语法
 * [#6942](https://github.com/xmake-io/xmake/pull/6942): 改进文件读取性能
@@ -569,7 +569,7 @@ target("test")
 * [#7031](https://github.com/xmake-io/xmake/pull/7031): 改进 require 解析
 * [#7032](https://github.com/xmake-io/xmake/pull/7032): 改进符号提取
 
-### Bugs 修复
+### Bugs 修复 {#bug-fixes}
 
 * [#6926](https://github.com/xmake-io/xmake/pull/6926): 修复 Windows 上加载 Unicode 主脚本路径的问题
 * [#6931](https://github.com/xmake-io/xmake/pull/6931): 修复 C++ 模块：当工具链版本未安装时回退到系统范围的 clang-scan-deps
