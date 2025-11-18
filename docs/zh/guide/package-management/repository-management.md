@@ -1,8 +1,17 @@
 # 仓库管理命令 {#repository-management}
 
-我们可以使用 `xmake repo` 来管理仓库，同时也提供了更为便捷的独立 `xrepo` 包管理器命令，用于全局安装、卸载和查找包。
+::: warning 重要提示
+**`xmake repo` 仅用于当前工程下的本地包仓库管理**，作用域限制在当前项目内。
+
+如果需要**全局管理仓库**（添加、删除、查看仓库），应该使用 **`xrepo` CLI** 命令，例如：
+- `xrepo add-repo myrepo https://github.com/mygroup/myrepo` - 全局添加仓库
+- `xrepo rm-repo myrepo` - 全局删除仓库
+- `xrepo list-repo` - 查看所有全局仓库
 
 详细文档见：[Xrepo 命令使用入门](/zh/guide/package-management/xrepo-cli)。
+:::
+
+我们可以使用 `xmake repo` 来管理**当前工程**的仓库，同时也提供了更为便捷的独立 `xrepo` 包管理器命令，用于**全局**安装、卸载和查找包。
 
 ```sh
 $ xmake repo --add myrepo git@github.com:myrepo/xmake-repo.git

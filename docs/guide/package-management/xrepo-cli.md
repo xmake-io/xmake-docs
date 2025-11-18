@@ -36,6 +36,12 @@ We only need to install xmake to use the xrepo command. About the installation o
 
 ## Support distributed repository
 
+::: tip Difference from xmake repo
+**`xrepo` CLI is used for global repository management**, applicable to all projects. The `xmake repo` command is only used for local package repository management within the current project.
+
+If you need to manage repositories globally (add, remove, view repositories), you should use the `xrepo` command.
+:::
+
 In addition to directly retrieving the installation package from the official repository: [xmake-repo](https://github.com/xmake-io/xmake-repo).
 
 We can also add any number of self-built repositories, and even completely isolate the external network, and only maintain the installation and integration of private packages on the company's internal network.
@@ -44,6 +50,18 @@ Just use the following command to add your own repository address:
 
 ```sh
 $ xrepo add-repo myrepo https://github.com/mygroup/myrepo
+```
+
+We can also remove an added repository:
+
+```sh
+$ xrepo rm-repo myrepo
+```
+
+Or view all added global repositories:
+
+```sh
+$ xrepo list-repo
 ```
 
 ## Seamless integration with xmake project

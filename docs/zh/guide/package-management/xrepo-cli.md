@@ -36,6 +36,12 @@ Xrepo 是一个基于 [Xmake](https://github.com/xmake-io/xmake) 的跨平台 C/
 
 ## 分布式仓库支持
 
+::: tip 与 xmake repo 的区别
+**`xrepo` CLI 用于全局管理仓库**，适用于所有项目。而 `xmake repo` 命令仅用于当前工程下的本地包仓库管理。
+
+如果需要全局管理仓库（添加、删除、查看仓库），应该使用 `xrepo` 命令。
+:::
+
 除了可以直接从官方仓库：[xmake-repo](https://github.com/xmake-io/xmake-repo) 检索安装包之外，
 我们还可以添加任意多个自建仓库，甚至可以完全隔离外网，仅在公司内部网络维护私有包的安装集成。
 
@@ -43,6 +49,18 @@ Xrepo 是一个基于 [Xmake](https://github.com/xmake-io/xmake) 的跨平台 C/
 
 ```sh
 $ xrepo add-repo myrepo https://github.com/mygroup/myrepo
+```
+
+我们也可以移除已添加的仓库：
+
+```sh
+$ xrepo rm-repo myrepo
+```
+
+或者查看所有已添加的全局仓库：
+
+```sh
+$ xrepo list-repo
 ```
 
 ## 与 xmake 的工程无缝集成
