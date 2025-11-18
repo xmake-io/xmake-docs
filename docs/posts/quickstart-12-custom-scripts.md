@@ -18,7 +18,7 @@ This article mainly explains in detail how to achieve more complex and flexible 
 
 xmake.lua uses the 80/20 principle to achieve two-layer separated configuration: description domain and script domain.
 
-What is the 80/20 principle? Simply put, for most project configurations, 80% of the time, they are basic常规配置, such as: `add_cxflags`, `add_links`, etc.
+What is the 80/20 principle? Simply put, for most project configurations, 80% of the time, they are basic regular configurations, such as: `add_cxflags`, `add_links`, etc.
 Only the remaining less than 20% of places need additional complexity to meet some special configuration requirements.
 
 And this remaining 20% of configurations are usually more complex. If they are directly filled throughout xmake.lua, it will make the entire project configuration very messy and unreadable.
@@ -74,7 +74,7 @@ However, it should be noted that although the description domain supports lua sc
 :::
 
 And in the description domain, the main purpose is to set configuration items, so xmake does not fully open all module interfaces. Many interfaces are prohibited from being called in the description domain.
-Even some of the callable interfaces that are opened are completely read-only, non-time-consuming safe interfaces, such as: `os.getenv()` to read some常规系统信息, used for configuration logic control.
+Even some of the callable interfaces that are opened are completely read-only, non-time-consuming safe interfaces, such as: `os.getenv()` to read some regular system information, used for configuration logic control.
 
 :::note
 Also note that xmake.lua will be parsed multiple times, used to parse different configuration domains at different stages: such as: `option()`, `target()` and other domains.

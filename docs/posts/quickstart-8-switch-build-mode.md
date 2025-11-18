@@ -89,7 +89,7 @@ If it's release mode, it will enable compilation optimization and strip all debu
 
 ### Customized Mode Configuration
 
-Of course, the compilation configurations set by these two built-in rules by default can only meet the常规需求 of most scenarios. If users want to customize some personal compilation configurations in different compilation modes, they need to make judgments in xmake.lua themselves.
+Of course, the compilation configurations set by these two built-in rules by default can only meet the regular needs of most scenarios. If users want to customize some personal compilation configurations in different compilation modes, they need to make judgments in xmake.lua themselves.
 
 For example, if we want to enable debugging symbols in release mode as well, we just need to:
 

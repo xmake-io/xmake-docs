@@ -253,60 +253,60 @@ running tests...
 
 ![](/assets/img/manual/xmake-test1.png)
 
-我们也可以执行 `xmake test -vD` 查看详细的测试失败的错误信息：
+We can also execute `xmake test -vD` to view detailed error information about test failures:
 
 ![](/assets/img/manual/xmake-test2.png)
 
-#### 运行指定测试目标
+#### Running Specified Test Targets
 
-我们也可以指定运行指定 target 的某个测试：
+We can also specify to run a specific test of a target:
 
 ```bash
 $ xmake test targetname/testname
 ```
 
-或者按模式匹配的方式，运行一个 target 的所有测试，或者一批测试：
+Or run all tests of a target, or a batch of tests, by pattern matching:
 
 ```bash
 $ xmake test targetname/*
 $ xmake test targetname/foo*
 ```
 
-也可以运行所有 target 的同名测试：
+We can also run tests with the same name across all targets:
 
 ```bash
 $ xmake test */testname
 ```
 
-#### 并行化运行测试
+#### Parallel Test Execution
 
-其实，默认就是并行化运行的，但是我们可以通过 `-jN` 调整运行的并行度。
+Actually, it runs in parallel by default, but we can adjust the parallelism level through `-jN`.
 
 ```bash
 $ xmake test -jN
 ```
 
-#### 分组运行测试
+#### Group Test Execution
 
 ```bash
 $ xmake test -g "foo"
 $ xmake test -g "foo*"
 ```
 
-#### 添加测试到目标（无参数）
+#### Adding Tests to Target (No Parameters)
 
-如果没有配置任何参数，仅仅配置了测试名到 `add_tests`，那么仅仅测试这个目标程序的是否会运行失败，根据退出代码来判断是否通过测试。
+If no parameters are configured, and only the test name is configured to `add_tests`, it will only test whether the target program will run and fail, judging whether the test passes based on the exit code.
 
 ```
 target("test")
     add_tests("testname")
 ```
 
-#### 配置运行参数
+#### Configuring Run Arguments
 
-我们也可以通过 `{runargs = {"arg1", "arg2"}}` 的方式，给 `add_tests` 配置指定测试需要运行的参数。
+We can also configure the arguments that the test needs to run through `{runargs = {"arg1", "arg2"}}` in `add_tests`.
 
-另外，一个 target 可以同时配置多个测试用例，每个测试用例可独立运行，互不冲突。
+In addition, a target can configure multiple test cases at the same time, and each test case can run independently without conflicts.
 
 ```lua
 target("test")
@@ -314,7 +314,7 @@ target("test")
     add_tests("testname", {runargs = {"arg1", "arg2"}})
 ```
 
-如果我们没有配置 runargs 到 `add_tests`，那么我们也会尝试从被绑定的 target 中，获取 `set_runargs` 设置的运行参数。
+If we haven't configured runargs to `add_tests`, we will also try to get the run arguments set by `set_runargs` from the bound target.
 
 ```lua
 target("test")
@@ -322,16 +322,16 @@ target("test")
     set_runargs("arg1", "arg2")
 ```
 
-#### 配置运行目录
+#### Configuring Run Directory
 
-我们也可以通过 rundir 设置测试运行的当前工作目录，例如：
+We can also set the current working directory for test execution through rundir, for example:
 
 ```lua
 target("test")
     add_tests("testname", {rundir = os.projectdir()})
 ```
 
-如果我们没有配置 rundir 到 `add_tests`，那么我们也会尝试从被绑定的 target 中，获取 `set_rundir` 设置的运行目录。
+If we haven't configured rundir to `add_tests`, we will also try to get the run directory set by `set_rundir` from the bound target.
 
 ```lua
 target("test")
@@ -339,16 +339,16 @@ target("test")
     set_rundir("$(projectdir)")
 ```
 
-#### 配置运行环境
+#### Configuring Run Environment
 
-我们也可以通过 runenvs 设置一些运行时候的环境变量，例如：
+We can also set some environment variables at runtime through runenvs, for example:
 
 ```lua
 target("test")
     add_tests("testname", {runenvs = {LD_LIBRARY_PATH = "/lib"}})
 ```
 
-如果我们没有配置 runenvs 到 `add_tests`，那么我们也会尝试从被绑定的 target 中，获取 `add_runenvs` 设置的运行环境。
+If we haven't configured runenvs to `add_tests`, we will also try to get the run environment set by `add_runenvs` from the bound target.
 
 ```lua
 target("test")
@@ -356,29 +356,31 @@ target("test")
     add_runenvs("LD_LIBRARY_PATH", "/lib")
 ```
 
-#### 匹配输出结果
+#### Matching Output Results
 
-默认情况下，`xmake test` 会根据测试运行的退出代码是否为 0，来判断是否测试通过。
+By default, `xmake test` will judge whether the test passes based on whether the exit code of the test run is 0.
 
-当然，我们也可以通过配置测试运行的输出结果是否满足我们的指定的匹配模式，来判断是否测试通过。
+Of course, we can also judge whether the test passes by configuring whether the output results of the test run meet our specified matching patterns.
 
-主要通过这两个参数控制：
+Mainly controlled by these two parameters:
 
-| 参数 | 说明 |
+| Parameter | Description |
 | --- | --- |
-| pass_outputs | 如果输出匹配，则测试通过 |
-| fail_outputs | 如果输出匹配，则测试失败 |
+| pass_outputs | If output matches, test passes |
+| fail_outputs | If output matches, test fails |
 
-传入 `pass_outputs` 和 `fail_outputs` 的是一个 lua 匹配模式的列表，但模式稍微做了一些简化，比如对 `*` 的处理。
+The `pass_outputs` and `fail_outputs` passed in are a list of lua matching patterns, but the patterns have been slightly simplified, such as the handling of `*`.
 
-如果要匹配成功，则测试通过，可以这么配置：
+If the match is successful, the test passes. You can configure it like this:
 
 ```lua
 target("test")
     add_tests("testname1", {pass_outputs = "hello"})
     add_tests("testname2", {pass_outputs = "hello *"})
     add_tests("testname3", {pass_outputs = {"hello", "hello *"}})
-```If the match is successful, the test fails. You can configure it like this:
+```
+
+If the match is successful, the test fails. You can configure it like this:
 
 ```lua
 target("test")
