@@ -536,6 +536,114 @@ export const posts = [
     "excerpt": "<p>Despite the previous version, we can define and configure dependent packages by <code>add_requires(&quot;libpng&quot;, {configs = {shared = true}})</code>.</p>\n<p>However, if the user project has a huge project and many dependent packages, and each package requires different compilation configuration parameters, the configuration will still be very cumbersome and has limitations, such as the inability to rewrite the internal sub-dependent package configuratio...</p>\n<p>Therefore, we have added <code>add_requireconfs</code> to configure the configuration of each package and its sub-dependencies more flexibly and conveniently. Below we focus on several usages:</p>\n"
   },
   {
+    "title": "Xmake Getting Started Tutorial 12, More Flexible Configuration Through Custom Scripts",
+    "url": "/posts/quickstart-12-custom-scripts",
+    "date": {
+      "time": 1595073600000,
+      "string": "July 18, 2020"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "subproject",
+      "submodule",
+      "custom script"
+    ],
+    "excerpt": "<p>xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance,\nand a consistent build experience across platforms.</p>\n<p>This article mainly explains in detail how to achieve more complex and flexible customization in the script domain by adding custom scripts.</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">Project Source</a></li>\n<li><a href=\"https://xmake.io\">Official Document</a></li>\n</ul>\n"
+  },
+  {
+    "title": "Xmake Getting Started Tutorial 11, How to Organize and Build Large Projects",
+    "url": "/posts/quickstart-11-subprojects",
+    "date": {
+      "time": 1586606400000,
+      "string": "April 11, 2020"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "subproject",
+      "submodule"
+    ],
+    "excerpt": "<p>xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance,\nand a consistent build experience across platforms.</p>\n<p>This article mainly explains in detail how to organize and build a large-scale project by configuring sub-project modules.</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">Project Source</a></li>\n<li><a href=\"https://xmake.io\">Official Document</a></li>\n</ul>\n"
+  },
+  {
+    "title": "Xmake Getting Started Tutorial 10, Multiple Sub-project Target Dependency Configuration",
+    "url": "/posts/quickstart-10-target-deps",
+    "date": {
+      "time": 1576238400000,
+      "string": "December 13, 2019"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "cross compilation"
+    ],
+    "excerpt": "<p>xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance,\nand a consistent build experience across platforms.</p>\n<p>This article mainly explains in detail how to maintain and generate multiple target files in a project, and how to set dependencies between them.</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">Project Source</a></li>\n<li><a href=\"https://xmake.io\">Official Document</a></li>\n</ul>\n"
+  },
+  {
+    "title": "Xmake Getting Started Tutorial 8, Switching Build Modes",
+    "url": "/posts/quickstart-8-switch-build-mode",
+    "date": {
+      "time": 1575547200000,
+      "string": "December 5, 2019"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "build mode"
+    ],
+    "excerpt": "<p>xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance,\nand a consistent build experience across platforms.</p>\n<p>In this article, we will explain in detail how to switch common build modes such as debug/release during the project build process, and how to customize other build modes.</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">Project Source</a></li>\n<li><a href=\"https://xmake.io\">Official Document</a></li>\n</ul>\n"
+  },
+  {
+    "title": "Xmake Getting Started Tutorial 9, Cross Compilation Explained",
+    "url": "/posts/quickstart-9-cross-compile",
+    "date": {
+      "time": 1575547200000,
+      "string": "December 5, 2019"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "cross compilation"
+    ],
+    "excerpt": "<p>xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance,\nand a consistent build experience across platforms.</p>\n<p>In addition to built-in build support for win, linux, macOS platforms, and android, ios and other mobile platforms, xmake also supports cross-compilation support for various other toolchains. In this article, we will explain in detail how to use xmake for cross-compilation.</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">Project Source</a></li>\n<li><a href=\"https://xmake.io\">Official Document</a></li>\n</ul>\n"
+  },
+  {
+    "title": "Xmake Getting Started Tutorial 7, Developing and Building CUDA Programs",
+    "url": "/posts/quickstart-7-build-cuda-project",
+    "date": {
+      "time": 1575115200000,
+      "string": "November 30, 2019"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "cuda"
+    ],
+    "excerpt": "<p>xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance,\nand a consistent build experience across platforms.</p>\n<p>In this article, we will explain in detail how to build CUDA programs and mixed compilation with c/c++ programs through xmake.</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">Project Source</a></li>\n<li><a href=\"https://xmake.io\">Official Document</a></li>\n</ul>\n"
+  },
+  {
+    "title": "Xmake Getting Started Tutorial 6, Developing and Building Qt Programs",
+    "url": "/posts/quickstart-6-build-qt-project",
+    "date": {
+      "time": 1574337600000,
+      "string": "November 21, 2019"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "qt"
+    ],
+    "excerpt": "<p>xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance,\nand a consistent build experience across platforms.</p>\n<p>xmake fully supports the maintenance and building of Qt5 projects. This article will guide you through how to maintain various types of Qt projects with xmake.</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">Project Source</a></li>\n<li><a href=\"https://xmake.io\">Official Document</a></li>\n</ul>\n"
+  },
+  {
     "title": "Xmake Getting Started Tutorial 5, Introduction to Android platform compilation",
     "url": "/posts/quickstart-5-build-android",
     "date": {
