@@ -9,6 +9,9 @@ hero:
     - theme: brand
       text: 快速上手 ->
       link: /zh/guide/quick-start
+    - theme: brand
+      text: 问 AI
+      link: /zh/guide/best-practices/ai-qa-optimization
     - theme: alt
       text: GitHub
       link: https://github.com/xmake-io/xmake
