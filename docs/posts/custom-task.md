@@ -1,5 +1,5 @@
 ---
-title: Advanced Feature: Custom Task
+title: "Advanced Feature: Custom Task"
 tags: [xmake, task, custom script, plugin]
 date: 2016-06-09
 author: Ruki

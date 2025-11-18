@@ -1,5 +1,5 @@
 ---
-title: Advanced Feature: Custom Options
+title: "Advanced Feature: Custom Options"
 tags: [xmake, custom options]
 date: 2016-08-07
 author: Ruki

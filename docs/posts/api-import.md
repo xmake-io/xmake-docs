@@ -1,5 +1,5 @@
 ---
-title: Plugin Development: Import Libraries
+title: "Plugin Development: Import Libraries"
 tags: [xmake, plugin, import, library, custom script]
 date: 2016-06-09
 author: Ruki

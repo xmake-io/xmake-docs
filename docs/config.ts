@@ -151,6 +151,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'FAQ', link: 'best-practices/faq' },
         { text: 'Performance', link: 'best-practices/performance' },
+        { text: 'AI Q&A Optimization', link: 'best-practices/ai-qa-optimization' },
       ]
     },
     {
