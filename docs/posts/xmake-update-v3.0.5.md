@@ -513,122 +513,7 @@ For more details, see: [#6993](https://github.com/xmake-io/xmake/pull/6993)
 
 ### Improve TTY handling and output
 
-We have improved TTY handling and output formatting, providing better terminal compatibility and visual feedback. The `core.base.tty` module now offers comprehensive cursor control and screen management capabilities for creating rich terminal interfaces.
-
-**Key features:**
-
-- **Cursor movement**: Move cursor up, down, left, right, or to specific columns
-- **Line operations**: Clear lines, erase to end of line, move to start of line
-- **Cursor visibility**: Hide/show cursor for smoother animations
-- **Position management**: Save and restore cursor positions
-- **ANSI detection**: Check if terminal supports ANSI control codes
-
-**Basic usage:**
-
-```lua
-import("core.base.tty")
-
--- Check if ANSI is supported
-if tty.has_vtansi() then
-    -- Simple progress bar
-    for i = 0, 100, 5 do
-        tty.cr()              -- Move to start of line
-        tty.erase_line()      -- Clear the line
-        io.write(string.format("Progress: %d%%", i))
-        io.flush()
-        os.sleep(50)
-    end
-    print("")  -- New line after progress
-end
-```
-
-**Update previous lines:**
-
-```lua
-import("core.base.tty")
-
-io.write("Building project...\n")
-io.write("Status: Starting...\n")
-io.flush()
-
-os.sleep(1000)
-
--- Go back and update the status line
-tty.cursor_move_up(1)
-tty.cr()
-tty.erase_line()
-io.write("Status: Compiling files...\n")
-io.flush()
-```
-
-**Multi-line updates:**
-
-```lua
-import("core.base.tty")
-
--- Create a status board
-io.write("Task 1: Waiting...\n")
-io.write("Task 2: Waiting...\n")
-io.write("Task 3: Waiting...\n")
-io.flush()
-
-tty.cursor_hide()
-
--- Update Task 1
-tty.cursor_move_up(3)
-tty.cr()
-tty.erase_line()
-io.write("Task 1: Running...\n")
-io.flush()
-
--- Update Task 2
-tty.cr()
-tty.erase_line()
-io.write("Task 2: Done ✓\n")
-io.flush()
-
-tty.cursor_show()
-```
-
-**Live dashboard example:**
-
-```lua
-import("core.base.tty")
-
--- Create a build dashboard with multiple progress bars
-io.write("⏸ Parse project files       [" .. string.rep("░", 30) .. "]   0%\n")
-io.write("⏸ Compile sources           [" .. string.rep("░", 30) .. "]   0%\n")
-io.write("⏸ Link executable           [" .. string.rep("░", 30) .. "]   0%\n")
-io.flush()
-
-tty.cursor_hide()
-
--- Update each task line independently
-for i = 1, 100 do
-    tty.cursor_move_up(3)
-    
-    -- Update Task 1
-    local progress1 = i / 100
-    local bar1 = string.rep("█", math.floor(progress1 * 30)) .. string.rep("░", 30 - math.floor(progress1 * 30))
-    tty.cr()
-    tty.erase_line()
-    io.write(string.format("▶ Parse project files       [%s] %3d%%\n", bar1, math.floor(progress1 * 100)))
-    
-    -- Update Task 2 (starts later)
-    local progress2 = math.max(0, (i - 20) / 80)
-    local bar2 = string.rep("█", math.floor(progress2 * 30)) .. string.rep("░", 30 - math.floor(progress2 * 30))
-    tty.cr()
-    tty.erase_line()
-    io.write(string.format("▶ Compile sources           [%s] %3d%%\n", bar2, math.floor(progress2 * 100)))
-    
-    io.flush()
-    os.sleep(30)
-end
-
-tty.cursor_show()
-```
-
-**Available functions:**
+We have improved TTY handling and output formatting in the `core.base.tty` module. The following new interfaces have been added:
 
 - `tty.cursor_move_up(n)` / `tty.cursor_move_down(n)` - Move cursor vertically
 - `tty.cursor_move_left(n)` / `tty.cursor_move_right(n)` - Move cursor horizontally
@@ -640,33 +525,13 @@ tty.cursor_show()
 - `tty.erase_line_to_end()` - Erase from cursor to end of line
 - `tty.has_vtansi()` - Check if terminal supports ANSI control codes
 
-This enables creating rich terminal interfaces with progress bars, live dashboards, multi-line status updates, and smooth animations without clearing the entire screen.
-
 For more details, see: [#6970](https://github.com/xmake-io/xmake/pull/6970)
-
-### Refactor Xcode toolchain integration
-
-We have refactored the Xcode toolchain and integrated it into the LLVM toolchain for Apple devices, simplifying toolchain management for macOS and iOS development.
-
-This change makes it easier to switch between different LLVM-based toolchains on Apple platforms.
-
-For more details, see: [#6977](https://github.com/xmake-io/xmake/pull/6977)
 
 ### Add Ghostty terminal detection support
 
 We have added support for detecting the Ghostty terminal, ensuring proper output formatting and color support in this modern terminal emulator.
 
 For more details, see: [#6987](https://github.com/xmake-io/xmake/pull/6987)
-
-### Add Ninja generator support
-
-We have added Ninja generator support to the xmake.sh/configure script, allowing you to generate Ninja build files for faster builds.
-
-```bash
-$ ./xmake.sh --generator=ninja
-```
-
-For more details, see: [#7019](https://github.com/xmake-io/xmake/pull/7019)
 
 ### Improve graph module performance
 

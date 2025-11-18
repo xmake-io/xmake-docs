@@ -513,122 +513,7 @@ target("test")
 
 ### 改进 TTY 处理和输出
 
-我们改进了 TTY 处理和输出格式化，提供更好的终端兼容性和视觉反馈。`core.base.tty` 模块现在提供了全面的光标控制和屏幕管理功能，用于创建丰富的终端界面。
-
-**主要功能：**
-
-- **光标移动**：向上、向下、向左、向右移动光标，或移动到指定列
-- **行操作**：清除行、清除到行尾、移动到行首
-- **光标可见性**：隐藏/显示光标以实现更流畅的动画
-- **位置管理**：保存和恢复光标位置
-- **ANSI 检测**：检查终端是否支持 ANSI 控制码
-
-**基本用法：**
-
-```lua
-import("core.base.tty")
-
--- 检查是否支持 ANSI
-if tty.has_vtansi() then
-    -- 简单进度条
-    for i = 0, 100, 5 do
-        tty.cr()              -- 移动到行首
-        tty.erase_line()      -- 清除行
-        io.write(string.format("进度: %d%%", i))
-        io.flush()
-        os.sleep(50)
-    end
-    print("")  -- 进度后换行
-end
-```
-
-**更新上一行：**
-
-```lua
-import("core.base.tty")
-
-io.write("正在构建项目...\n")
-io.write("状态: 启动中...\n")
-io.flush()
-
-os.sleep(1000)
-
--- 返回并更新状态行
-tty.cursor_move_up(1)
-tty.cr()
-tty.erase_line()
-io.write("状态: 编译文件中...\n")
-io.flush()
-```
-
-**多行更新：**
-
-```lua
-import("core.base.tty")
-
--- 创建状态面板
-io.write("任务 1: 等待中...\n")
-io.write("任务 2: 等待中...\n")
-io.write("任务 3: 等待中...\n")
-io.flush()
-
-tty.cursor_hide()
-
--- 更新任务 1
-tty.cursor_move_up(3)
-tty.cr()
-tty.erase_line()
-io.write("任务 1: 运行中...\n")
-io.flush()
-
--- 更新任务 2
-tty.cr()
-tty.erase_line()
-io.write("任务 2: 完成 ✓\n")
-io.flush()
-
-tty.cursor_show()
-```
-
-**实时仪表板示例：**
-
-```lua
-import("core.base.tty")
-
--- 创建包含多个进度条的构建仪表板
-io.write("⏸ 解析项目文件       [" .. string.rep("░", 30) .. "]   0%\n")
-io.write("⏸ 编译源文件           [" .. string.rep("░", 30) .. "]   0%\n")
-io.write("⏸ 链接可执行文件       [" .. string.rep("░", 30) .. "]   0%\n")
-io.flush()
-
-tty.cursor_hide()
-
--- 独立更新每个任务行
-for i = 1, 100 do
-    tty.cursor_move_up(3)
-    
-    -- 更新任务 1
-    local progress1 = i / 100
-    local bar1 = string.rep("█", math.floor(progress1 * 30)) .. string.rep("░", 30 - math.floor(progress1 * 30))
-    tty.cr()
-    tty.erase_line()
-    io.write(string.format("▶ 解析项目文件       [%s] %3d%%\n", bar1, math.floor(progress1 * 100)))
-    
-    -- 更新任务 2（稍后开始）
-    local progress2 = math.max(0, (i - 20) / 80)
-    local bar2 = string.rep("█", math.floor(progress2 * 30)) .. string.rep("░", 30 - math.floor(progress2 * 30))
-    tty.cr()
-    tty.erase_line()
-    io.write(string.format("▶ 编译源文件           [%s] %3d%%\n", bar2, math.floor(progress2 * 100)))
-    
-    io.flush()
-    os.sleep(30)
-end
-
-tty.cursor_show()
-```
-
-**可用函数：**
+我们改进了 `core.base.tty` 模块的 TTY 处理和输出格式。新增了以下接口：
 
 - `tty.cursor_move_up(n)` / `tty.cursor_move_down(n)` - 垂直移动光标
 - `tty.cursor_move_left(n)` / `tty.cursor_move_right(n)` - 水平移动光标
@@ -640,33 +525,13 @@ tty.cursor_show()
 - `tty.erase_line_to_end()` - 清除从光标到行尾
 - `tty.has_vtansi()` - 检查终端是否支持 ANSI 控制码
 
-这使得能够创建丰富的终端界面，包括进度条、实时仪表板、多行状态更新和流畅的动画，而无需清除整个屏幕。
-
 更多详情，请参考：[#6970](https://github.com/xmake-io/xmake/pull/6970)
-
-### 重构 Xcode 工具链集成
-
-我们重构了 Xcode 工具链，并将其集成到 Apple 设备的 LLVM 工具链中，简化了 macOS 和 iOS 开发的工具链管理。
-
-这个改动使得在 Apple 平台上切换不同的基于 LLVM 的工具链变得更加容易。
-
-更多详情，请参考：[#6977](https://github.com/xmake-io/xmake/pull/6977)
 
 ### 添加 Ghostty 终端检测支持
 
 我们添加了对 Ghostty 终端的检测支持，确保在这个现代终端模拟器中具有正确的输出格式和颜色支持。
 
 更多详情，请参考：[#6987](https://github.com/xmake-io/xmake/pull/6987)
-
-### 添加 Ninja 生成器支持
-
-我们为 xmake.sh/configure 脚本添加了 Ninja 生成器支持，允许您生成 Ninja 构建文件以获得更快的构建速度。
-
-```bash
-$ ./xmake.sh --generator=ninja
-```
-
-更多详情，请参考：[#7019](https://github.com/xmake-io/xmake/pull/7019)
 
 ### 改进图模块性能
 
