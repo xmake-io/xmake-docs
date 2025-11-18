@@ -1,15 +1,37 @@
 <script lang="ts" setup>
 import { useScrollLock } from '@vueuse/core'
 import { inBrowser } from 'vitepress'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useLayout } from 'vitepress/dist/client/theme-default/composables/layout'
 import VPSidebarGroup from 'vitepress/dist/client/theme-default/components/VPSidebarGroup.vue'
 
 import { useData } from 'vitepress/dist/client/theme-default/composables/data'
 import VPDocAsideCarbonAds from 'vitepress/dist/client/theme-default/components/VPDocAsideCarbonAds.vue'
-const { theme } = useData()
+const { theme, page } = useData()
 
 const { sidebarGroups, hasSidebar } = useLayout()
+
+// Check if current page is a blog post article
+const isPost = computed(() => {
+  const path = page.value.relativePath || page.value.filePath || ''
+  const routePath = page.value.route || ''
+  
+  // Post pages are in /posts/ directory, but not the list pages
+  const isPostPath = (path.includes('/posts/') || path.startsWith('posts/')) && 
+                     path.endsWith('.md') &&
+                     path !== 'posts.md' && 
+                     path !== 'posts/index.md' &&
+                     path !== 'blog.md' &&
+                     path !== 'blog/index.md'
+  
+  const isPostRoute = routePath.includes('/posts/') && 
+                      routePath !== '/posts' && 
+                      routePath !== '/posts/' &&
+                      routePath !== '/blog' &&
+                      routePath !== '/blog/'
+  
+  return isPostPath || isPostRoute
+})
 
 const props = defineProps<{
   open: boolean
@@ -58,7 +80,11 @@ watch(
       tabindex="-1"
     >
 
-      <VPDocAsideCarbonAds v-if="theme.carbonAds" :carbon-ads="theme.carbonAds" />
+      <!-- Show carbonAds at the top of left sidebar, only for non-post pages (API docs, etc.) -->
+      <VPDocAsideCarbonAds 
+        v-if="!isPost && theme.carbonAds" 
+        :carbon-ads="theme.carbonAds" 
+      />
 
       <span class="visually-hidden" id="sidebar-aria-label">
         Sidebar Navigation
