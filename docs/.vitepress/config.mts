@@ -28,7 +28,7 @@ export default defineConfig({
                         ''
         
         // Only process posts files
-        if (filePath && filePath.includes('/posts/')) {
+        if (filePath && (filePath.startsWith('posts/') || filePath.includes('/posts/'))) {
           const processedSrc = addTitleFromFrontmatter(src)
           return originalParse(processedSrc, env)
         }
