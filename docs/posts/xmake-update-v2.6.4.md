@@ -3,6 +3,7 @@ title: Xmake v2.6.4 released, Improve a lot of package management features
 tags: [xmake, lua, C/C++, Vcpkg]
 date: 2022-03-07
 author: Ruki
+outline: deep
 ---
 ## Introduction of new features
 

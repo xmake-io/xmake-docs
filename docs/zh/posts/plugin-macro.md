@@ -3,6 +3,7 @@ title: 插件使用之宏脚本记录
 tags: [xmake, 插件, 宏脚本]
 date: 2016-06-09
 author: Ruki
+outline: deep
 ---
 
 xmake 提供了一些内置的比较实用的插件，其中宏脚本插件是最具有代表性和实用性的，也是xmake比较推荐的一款插件，那它有哪些使用功能呢？

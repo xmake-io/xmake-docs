@@ -3,6 +3,7 @@ title: xmake从入门到精通8：切换编译模式
 tags: [xmake, lua, 编译模式]
 date: 2019-12-05
 author: Ruki
+outline: deep
 ---
 
 xmake是一个基于Lua的轻量级现代化c/c++的项目构建工具，主要特点是：语法简单易上手，提供更加可读的项目维护，实现跨平台行为一致的构建体验。

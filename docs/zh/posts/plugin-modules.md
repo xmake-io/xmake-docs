@@ -3,6 +3,7 @@ title: xmake插件开发之类库使用
 tags: [xmake, 插件, 类库]
 date: 2016-07-07
 author: Ruki
+outline: deep
 ---
 
 xmake通过import接口，可以在自定义脚本中导入各种内置类库和扩展类库模块，使得xmake的插件开发具有更多的灵活性，提供更丰富的功能。

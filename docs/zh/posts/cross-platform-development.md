@@ -4,6 +4,7 @@ title: 使用 Xmake 构建跨平台应用
 tags: [跨平台, 教程, cpp]
 date: 2024-01-10
 author: Ruki
+outline: deep
 ---
 
 构建能在多个平台上运行的应用程序可能具有挑战性，但 Xmake 让这一切变得简单得多。在本文中，我们将探索如何使用 Xmake 构建跨平台应用程序。

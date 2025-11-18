@@ -3,6 +3,7 @@ title: xmake v2.5.2 released, Support pull remote cross-toolchain and package in
 tags: [xmake, lua, C/C++, toolchains, xrepo, packages, cross-toolchains]
 date: 2021-02-27
 author: Ruki
+outline: deep
 ---
 ### Automatically pull the remote cross-compilation toolchain
 

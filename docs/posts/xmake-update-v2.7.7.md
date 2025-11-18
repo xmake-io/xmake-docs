@@ -2,6 +2,7 @@
 title: Xmake v2.7.7 released, Support Haiku, Improve API check and C++ Modules
 date: 2023-02-23
 author: Ruki
+outline: deep
 ---
 ### Improve target configuration source analysis
 

@@ -3,6 +3,7 @@ title: xmake 自定义构建规则的使用
 tags: [xmake, lua, 自定义规则]
 date: 2017-11-13
 author: Ruki
+outline: deep
 ---
 
 在2.1.9版本之后，xmake不仅原生内置支持多种语言文件的构建，而且还可以通过自定义构建规则，让用户自己来实现复杂的未知文件构建。

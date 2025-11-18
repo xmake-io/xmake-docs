@@ -3,6 +3,7 @@ title: 如何为windows编译启用pdb支持
 tags: [xmake, pdb, 调试符号, windows]
 date: 2016-07-18
 author: Ruki
+outline: deep
 ---
 
 xmake默认情况下是不会去生成pdb文件，就算是debug编译，启用了调试符号：

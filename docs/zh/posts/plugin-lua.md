@@ -3,6 +3,7 @@ title: 插件使用之加载自定义lua脚本
 tags: [xmake, plugin, scripts]
 date: 2016-07-07
 author: Ruki
+outline: deep
 ---
 
 xmake里面的lua脚本加载插件，可以让你方便调试和编写一些自定义的lua脚本，这个时候xmake就是一个纯lua的加载引擎。。

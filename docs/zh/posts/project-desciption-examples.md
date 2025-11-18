@@ -3,6 +3,7 @@ title: 使用xmake优雅地描述工程
 tags: [xmake, lua, 工程描述]
 date: 2017-04-05
 author: Ruki
+outline: deep
 ---
 
 ### 描述语法

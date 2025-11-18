@@ -3,6 +3,7 @@ title: Xmake Getting Started Tutorial 3, Run and Debug Program
 tags: [xmake, lua, c/c++, run, debug]
 date: 2019-11-09
 author: Ruki
+outline: deep
 ---
 
 Xmake is a lightweight modern C/C++ project build tool based on Lua. Its main features are: easy to use syntax, more readable project maintenance, and a consistent build experience across platforms.

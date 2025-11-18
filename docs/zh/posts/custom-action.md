@@ -3,6 +3,7 @@ title: 高级特性之自定义脚本使用
 tags: [xmake, 自定义脚本, 安装, 打包, android, apk, jni]
 date: 2016-06-09
 author: Ruki
+outline: deep
 ---
 
 xmake提供了自定义打包、安装、运行脚本，可以更加灵活的针对个人实际需求来操作xmake

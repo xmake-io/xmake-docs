@@ -3,6 +3,7 @@ title: xmake v2.6.4 发布，大量包管理特性改进
 tags: [xmake, lua, C/C++, Package, Manager]
 date: 2022-03-07
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

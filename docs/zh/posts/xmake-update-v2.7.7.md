@@ -3,6 +3,7 @@ title: Xmake v2.7.7 发布，支持 Haiku 平台，改进 API 检测和 C++ Modu
 tags: [xmake, lua, C/C++, package, modules, haiku, c++modules]
 date: 2023-02-23
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

@@ -3,6 +3,7 @@ title: xmake v2.5.5 发布，支持下载集成二进制镜像包
 tags: [xmake, lua, C/C++, mirror, package]
 date: 2021-06-30
 author: Ruki
+outline: deep
 ---
 2.5.5 版本中，我们继续改进远程包集成的体验，实现在云端预编译包，然后直接下载集成预编译的二进制包。这对于一些编译非常慢的包，可以极大的减少包的安装时间。
 

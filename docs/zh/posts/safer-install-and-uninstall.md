@@ -3,6 +3,7 @@ title: xmake改进权限问题，提升操作安全性
 tags: [xmake, lua, root权限, 安装, 卸载]
 date: 2017-03-30
 author: Ruki
+outline: deep
 ---
 
 最近对xmake的操作权限进行了升级，提供更加安全的命令操作，例如：

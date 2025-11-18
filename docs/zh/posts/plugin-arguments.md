@@ -3,6 +3,7 @@ title: 插件开发之参数配置
 tags: [xmake, 插件, 菜单选项]
 date: 2016-06-09
 author: Ruki
+outline: deep
 ---
 
 

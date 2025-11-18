@@ -3,6 +3,7 @@ title: xmake v2.5.4 Released, Support apt/portage package manager and improve xr
 tags: [xmake, lua, C/C++, apt, portage, shell, package]
 date: 2021-05-15
 author: Ruki
+outline: deep
 ---
 ### New package manager support
 

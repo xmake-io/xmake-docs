@@ -3,6 +3,7 @@ title: xmake v2.5.7 released, Use lockfile to freeze package dependencies and Va
 tags: [xmake, lua, C/C++, lock, package, vala]
 date: 2021-08-29
 author: Ruki
+outline: deep
 ---
 ### Added Vala language support
 

@@ -3,6 +3,7 @@ title: xmake v2.5.6 发布，改进预编译二进制镜像包兼容性
 tags: [xmake, lua, C/C++, precompiled, package]
 date: 2021-07-26
 author: Ruki
+outline: deep
 ---
 这是一个稳定性修复版本，主要修复和改进了一些跟预编译二进制包相关的兼容性问题。另外新增了一些实用的接口来设置默认的编译平台、架构和模式，以及允许的编译平台、架构列表等等。
 

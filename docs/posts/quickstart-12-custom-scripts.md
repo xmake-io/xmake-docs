@@ -3,6 +3,7 @@ title: Xmake Getting Started Tutorial 12, More Flexible Configuration Through Cu
 tags: [xmake, lua, subproject, submodule, custom script]
 date: 2020-07-18
 author: Ruki
+outline: deep
 ---
 
 xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance, 

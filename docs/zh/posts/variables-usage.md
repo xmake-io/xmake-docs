@@ -3,6 +3,7 @@ title: xmake内建变量和外置变量的使用
 tags: [xmake, 内建变量, 外置变量]
 date: 2016-08-08
 author: Ruki
+outline: deep
 ---
 
 title: xmake内建变量和外置变量的使用

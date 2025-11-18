@@ -3,6 +3,7 @@ title: xmake新增对Cuda代码编译支持
 tags: [xmake, lua, cuda, NVIDIA, GPU]
 date: 2018-03-09
 author: Ruki
+outline: deep
 ---
 
 最近研究了下NVIDIA Cuda Toolkit的编译环境，并且在xmake 2.1.10开发版中，新增了对cuda编译环境的支持，可以直接编译`*.cu`代码。

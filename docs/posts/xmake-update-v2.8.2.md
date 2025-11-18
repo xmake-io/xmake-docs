@@ -3,6 +3,7 @@ title: Xmake v2.8.2 Released, Official package repository count over 1k
 tags: [xmake, lua, C/C++, package, performance, API, rust]
 date: 2023-08-22
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

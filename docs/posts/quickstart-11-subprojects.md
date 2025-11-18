@@ -3,6 +3,7 @@ title: Xmake Getting Started Tutorial 11, How to Organize and Build Large Projec
 tags: [xmake, lua, subproject, submodule]
 date: 2020-04-11
 author: Ruki
+outline: deep
 ---
 
 xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance, 

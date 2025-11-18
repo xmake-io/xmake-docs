@@ -3,6 +3,7 @@ title: xmake入门，构建项目原来可以如此简单
 tags: [xmake, lua, build, project]
 date: 2018-03-26
 author: Ruki
+outline: deep
 ---
 
 ## 前言

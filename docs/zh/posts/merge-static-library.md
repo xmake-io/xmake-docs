@@ -3,6 +3,7 @@ title: xmake高级特性之合并静态库
 tags: [xmake, 静态库]
 date: 2016-02-04
 author: Ruki
+outline: deep
 ---
 
 

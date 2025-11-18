@@ -3,6 +3,7 @@ title: xmake从入门到精通2：创建和编译工程
 tags: [xmake, lua, c/c++, 创建工程]
 date: 2019-11-09
 author: Ruki
+outline: deep
 ---
 
 xmake是一个基于Lua的轻量级现代化c/c++的项目构建工具，主要特点是：语法简单易上手，提供更加可读的项目维护，实现跨平台行为一致的构建体验。

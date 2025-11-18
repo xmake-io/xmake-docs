@@ -3,6 +3,7 @@ title: xmake v2.5.2 发布, 支持自动拉取交叉工具链和依赖包集成
 tags: [xmake, lua, C/C++, toolchains, xrepo, packages, cross-toolchains]
 date: 2021-02-27
 author: Ruki
+outline: deep
 ---
 在 2.5.2 版本中，我们增加了一个重量级的新特性：`自动拉取远程交叉编译工具链`。
 

@@ -3,6 +3,7 @@ title: Package target
 tags: [xmake, package]
 date: 2016-06-26
 author: Ruki
+outline: deep
 ---
 
 Packages all targets for the current platform:

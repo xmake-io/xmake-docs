@@ -3,6 +3,7 @@ title: xmake v2.6.1 released, Switch to Lua5.4 runtime, Support Rust and C++ mix
 tags: [xmake, lua, C/C++, Rust, Lua5.4, C++20, Modules]
 date: 2021-12-03
 author: Ruki
+outline: deep
 ---
 ### Switch to Lua5.4 runtime by default
 

@@ -3,6 +3,7 @@ title: Xmake v2.6.5 released, Support remote compilation
 tags: [xmake, lua, C/C++, cargo, rust, remote-compilation]
 date: 2022-04-24
 author: Ruki
+outline: deep
 ---
 ## Introduction of new features
 

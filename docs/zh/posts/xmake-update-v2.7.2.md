@@ -3,6 +3,7 @@ title: Xmake v2.7.2 发布，更加智能化构建第三方库
 tags: [xmake, lua, C/C++, trybuild, rule, cmake, autoconf]
 date: 2022-10-09
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

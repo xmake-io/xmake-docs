@@ -3,6 +3,7 @@ title: xmake v2.6.3 发布，支持 vcpkg 清单模式
 tags: [xmake, lua, C/C++, Linux, Vcpkg]
 date: 2022-01-22
 author: Ruki
+outline: deep
 ---
 
 ## 新版本改动

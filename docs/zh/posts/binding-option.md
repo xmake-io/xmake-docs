@@ -3,6 +3,7 @@ title: xmake高级特性之选项绑定
 tags: [xmake, 选项绑定]
 date: 2016-08-02
 author: Ruki
+outline: deep
 ---
 
 什么是选项的绑定呢？

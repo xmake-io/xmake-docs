@@ -3,6 +3,7 @@ title: Xmake v2.8.7 released, Add cosmocc toolchain support, build-once run-anyw
 tags: [xmake, lua, C/C++, package, cosmocc]
 date: 2024-02-25
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

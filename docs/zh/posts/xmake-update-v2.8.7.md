@@ -3,6 +3,7 @@ title: Xmake v2.8.7 发布，新增 cosmocc 工具链支持，一次编译到处
 tags: [xmake, lua, C/C++]
 date: 2024-02-25
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

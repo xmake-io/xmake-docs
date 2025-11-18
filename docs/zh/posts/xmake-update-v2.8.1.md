@@ -3,6 +3,7 @@ title: Xmake v2.8.1 发布，大量细节特性改进
 tags: [xmake, lua, C/C++, package, performance, mingw64, wasm]
 date: 2023-07-11
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

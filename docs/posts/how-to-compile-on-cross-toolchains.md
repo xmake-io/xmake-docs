@@ -3,6 +3,7 @@ title: How to complie project using the cross-toolchains
 tags: [xmake, cross-toolchains, cross-compiling]
 date: 2016-07-22
 author: Ruki
+outline: deep
 ---
 
 xmake provides a convenient and flexible cross-compiling support, in most cases, we need not to configure complex toolchains prefix, for example: `arm-linux-`

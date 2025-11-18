@@ -3,6 +3,7 @@ title: xmake v2.5.7 发布，包依赖锁定和 Vala/Metal 语言编译支持
 tags: [xmake, lua, C/C++, lock, package, vala]
 date: 2021-08-29
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

@@ -3,6 +3,7 @@ title: Xmake 2020 年终总结
 tags: [xmake, lua, C/C++]
 date: 2020-12-30
 author: Ruki
+outline: deep
 ---
 
 title: Xmake 2020 年终总结

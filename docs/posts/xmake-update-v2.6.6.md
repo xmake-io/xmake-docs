@@ -3,6 +3,7 @@ title: Xmake v2.6.6 Released, Support Distributed Compilation and Build Cache
 tags: [xmake, lua, C/C++, remote, ccache, distributed-compilation]
 date: 2022-05-24
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

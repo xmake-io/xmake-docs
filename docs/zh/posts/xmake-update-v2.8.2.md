@@ -3,6 +3,7 @@ title: Xmake v2.8.2 发布，官方包仓库数量突破 1k
 tags: [xmake, lua, C/C++, package, API, rust]
 date: 2023-08-22
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

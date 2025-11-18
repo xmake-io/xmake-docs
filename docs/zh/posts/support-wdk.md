@@ -3,6 +3,7 @@ title: xmake新增对WDK驱动编译环境支持
 tags: [xmake, lua, WDK, kmdf, umdf, wdm, driver]
 date: 2018-06-14
 author: Ruki
+outline: deep
 ---
 
 [xmake](https://github.com/xmake-io/xmake) v2.2.1新版本现已支持WDK驱动编译环境，我们可以直接在系统原生cmd终端下，执行xmake进行驱动编译，甚至配合vscode, sublime text, IDEA等编辑器+xmake插件去开发WDK驱动。

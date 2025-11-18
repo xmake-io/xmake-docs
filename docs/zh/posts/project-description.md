@@ -3,6 +3,7 @@ title: xmake工程描述入门
 tags: [xmake, premake]
 date: 2016-02-03
 author: Ruki
+outline: deep
 ---
 
 xmake的工程描述文件，摈弃了makefile的繁琐复杂，借鉴了premake的简洁明了，原生支持lua脚本，使得更加的灵活、方便扩展。

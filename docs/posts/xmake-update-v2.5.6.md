@@ -3,6 +3,7 @@ title: xmake v2.5.6 released, Improve compatibility of pre-compiled binary packa
 tags: [xmake, lua, C/C++, mirror, package]
 date: 2021-07-26
 author: Ruki
+outline: deep
 ---
 ### Fix windows precompiled package compatibility
 

@@ -3,6 +3,7 @@ title: 高级特性之自定义task任务
 tags: [xmake, task, 自定义脚本, 插件]
 date: 2016-06-09
 author: Ruki
+outline: deep
 ---
 
 task是xmake 2.0开始新增的特性，也是插件开发的核心，在 [插件开发之hello xmake](https://xmake.io/zh/) 中我们简单介绍了下task的定义和使用

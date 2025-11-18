@@ -3,6 +3,7 @@ title: xmake v2.6.5 发布，远程编译支持
 tags: [xmake, lua, C/C++, cargo, rust, remote-compilation]
 date: 2022-04-24
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

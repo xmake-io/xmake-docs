@@ -3,6 +3,7 @@ title: Summer2022：暑期来 Xmake 社区做项目吧，还有奖金领取哦
 tags: [xmake, lua, C/C++, summer, 开源之夏]
 date: 2022-05-01
 author: Ruki
+outline: deep
 ---
 
 ### "开源之夏" 简介

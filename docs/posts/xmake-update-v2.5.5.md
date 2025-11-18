@@ -3,6 +3,7 @@ title: xmake v2.5.5 released, Support to download and install precompiled image 
 tags: [xmake, lua, C/C++, mirror, package]
 date: 2021-06-30
 author: Ruki
+outline: deep
 ---
 ### Download and install the pre-compiled package
 

@@ -3,6 +3,7 @@ title: 更细粒度的文件编译选项控制
 tags: [xmake, lua, 编译选项]
 date: 2017-08-10
 author: Ruki
+outline: deep
 ---
 
 之前的版本对编译控制粒度，只能到target这一级：

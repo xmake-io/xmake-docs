@@ -3,6 +3,7 @@ title: 利用debug库实现对lua的性能分析
 tags: [xmake, lua, 性能分析]
 date: 2017-01-12
 author: Ruki
+outline: deep
 ---
 
 之前在给[xmake](https://xmake.io/zh/)做构建的效率优化的时候，需要对lua脚本的api调用性能进行分析，分析出最耗时一些lua调用api，

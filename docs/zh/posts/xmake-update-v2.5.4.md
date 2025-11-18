@@ -3,6 +3,7 @@ title: xmake v2.5.4 发布，支持 apt/portage 包管理器，改进 xrepo shel
 tags: [xmake, lua, C/C++, apt, portage, shell, package]
 date: 2021-05-15
 author: Ruki
+outline: deep
 ---
 在 2.5.4 版本中，我们新增了对 Apt、Portage 这两个包管理器的支持，在 Ubuntu/Gentoo 上我们也可以使用 `add_requires` 可以快速集成它们提供的包。
 

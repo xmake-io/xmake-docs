@@ -2,6 +2,7 @@
 title: Xmake v2.7.6 Released, Add Verilog and C++ Module Distribution Support
 date: 2023-01-22
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

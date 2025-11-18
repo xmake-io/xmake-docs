@@ -3,6 +3,7 @@ title: xmake 官方入门课程上线, Xmake 带你轻松构建 C/C++ 项目
 tags: [xmake, lua, C/C++, course, qt, 实验楼, 入门课程]
 date: 2020-10-09
 author: Ruki
+outline: deep
 ---
 
 ## 实验楼课程

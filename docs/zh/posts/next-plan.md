@@ -3,6 +3,7 @@ title: 关于xmake下一步的开发计划
 tags: [xmake, 插件, 后续计划]
 date: 2016-07-29
 author: Ruki
+outline: deep
 ---
 
 最近有很多用户反馈xmake在windows上编译体验不是很好，不方便进行调试和开发。。

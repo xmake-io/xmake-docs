@@ -3,6 +3,7 @@ title: Xmake v2.8.5 released, Support for link sorting and unit testing
 tags: [xmake, lua, C/C++, package, performance, API, rust]
 date: 2023-11-05
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

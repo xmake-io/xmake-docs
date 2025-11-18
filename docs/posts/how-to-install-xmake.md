@@ -3,6 +3,7 @@ title: How to install xmake
 tags: [xmake, install, linux, windows, macosx, homebrew]
 date: 2016-07-19
 author: Ruki
+outline: deep
 ---
 
 ### Install on windows

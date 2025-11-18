@@ -3,6 +3,7 @@ title: xmake默认启用pdb符号文件
 tags: [xmake, 编译, 符号文件, 调试符号]
 date: 2016-07-24
 author: Ruki
+outline: deep
 ---
 
 

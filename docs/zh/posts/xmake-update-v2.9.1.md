@@ -3,6 +3,7 @@ title: Xmake v2.9.1 发布，新增 native lua 模块和鸿蒙系统支持
 tags: [xmake, lua, C/C++]
 date: 2024-04-22
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

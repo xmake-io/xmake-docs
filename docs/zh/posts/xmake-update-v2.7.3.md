@@ -3,6 +3,7 @@ title: Xmake v2.7.3 发布，包组件和 C++ 模块增量构建支持
 tags: [xmake, lua, C/C++, package, components]
 date: 2022-11-08
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

@@ -3,6 +3,7 @@ title: xmake v2.5.1 released, Support for Apple Silicon and more powerful C/C++ 
 tags: [xmake, lua, C/C++, toolchains, xrepo, packages, vcpkg, conan, Apple, Silicon]
 date: 2021-01-16
 author: Ruki
+outline: deep
 ---
 ### Add add_requireconfs to improve package configuration
 

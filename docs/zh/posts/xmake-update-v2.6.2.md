@@ -3,6 +3,7 @@ title: xmake v2.6.2 发布，新增 Linux 内核驱动模块构建支持
 tags: [xmake, lua, C/C++, Linux, Driver]
 date: 2021-12-17
 author: Ruki
+outline: deep
 ---
 
 ## 新版本改动

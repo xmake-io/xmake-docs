@@ -3,6 +3,7 @@ title: xmake v2.6.1 发布，使用 Lua5.4 运行时，Rust 和 C++ 混合编译
 tags: [xmake, lua, C/C++, Rust, Lua5.4, C++20, Modules]
 date: 2021-12-03
 author: Ruki
+outline: deep
 ---
 ### 默认切换到 Lua5.4 运行时
 

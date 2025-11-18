@@ -3,6 +3,7 @@ title: Xmake v2.8.6 released, New Packaging Plugin, XPack
 tags: [xmake, lua, C/C++, package, performance, API, rust]
 date: 2023-12-15
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

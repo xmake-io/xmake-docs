@@ -3,6 +3,7 @@ title: 使用xmake编译swift代码
 tags: [xmake, swift]
 date: 2016-08-06
 author: Ruki
+outline: deep
 ---
 
 xmake不仅可以支持 c/c++文件，同时也支持 objc/c++，甚至swift代码的编译。

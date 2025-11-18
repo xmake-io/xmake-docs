@@ -3,6 +3,7 @@ title: xmake高级特性之自定义选项
 tags: [xmake, 自定义选项]
 date: 2016-08-07
 author: Ruki
+outline: deep
 ---
 
 xmake还可以支持一些自定义选项开关，使得工程支持可选编译，方便工程的模块化管理。

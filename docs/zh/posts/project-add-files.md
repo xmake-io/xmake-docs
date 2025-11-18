@@ -3,6 +3,7 @@ title: xmake中add_files的使用
 tags: [xmake, 模式匹配]
 date: 2016-02-04
 author: Ruki
+outline: deep
 ---
 
 如果你看了[工程描述入门](https://xmake.io/zh/)，那么是否觉得通过 add_files 添加源文件相当的方便？

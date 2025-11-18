@@ -3,6 +3,7 @@ title: Xmake v2.6.2 released, Support building Linux kernel driver module
 tags: [xmake, lua, C/C++, Linux, Driver]
 date: 2021-12-17
 author: Ruki
+outline: deep
 ---
 ### Build Linux kernel driver module
 

@@ -3,6 +3,7 @@ title: How to build a simple project quickly
 tags: [xmake, build, project, hello]
 date: 2016-07-16
 author: Ruki
+outline: deep
 ---
 
 We create an empty console project first:

@@ -3,6 +3,7 @@ title: xmake v2.5.8 发布，新增 Pascal/Swig 程序和 Lua53 运行时支持
 tags: [xmake, lua, C/C++, pascal, swig, lua5.3]
 date: 2021-10-08
 author: Ruki
+outline: deep
 ---
 ### Pascal 语言支持
 

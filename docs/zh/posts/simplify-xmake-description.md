@@ -3,6 +3,7 @@ title: xmake进阶之简化你的构建描述
 tags: [xmake, lua, 工程描述, xmake.lua, 简化]
 date: 2018-06-08
 author: Ruki
+outline: deep
 ---
 
 [xmake](https://github.com/xmake-io/xmake)的初衷就是为了让用户能够用最简单直接的方式去描述工程，提供跨平台项目构建，因此，`简洁，灵活` 是xmake.lua的核心设计思想。

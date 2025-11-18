@@ -3,6 +3,7 @@ title: xmake-vscode插件开发过程记录
 tags: [xmake, vscode, 插件开发]
 date: 2017-10-11
 author: Ruki
+outline: deep
 ---
 
 title: xmake-vscode插件开发过程记录

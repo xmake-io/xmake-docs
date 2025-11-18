@@ -3,6 +3,7 @@ title: 依赖包的添加和自动检测机制
 tags: [xmake, 依赖包, 自动检测]
 date: 2016-08-06
 author: Ruki
+outline: deep
 ---
 
 xmake将依赖库、依赖头文件、依赖类型、依赖接口统一用 option 选项机制进行了封装，更在上一层引入package包的机制，使得添加和检测依赖更加的模块化，简单化。。。

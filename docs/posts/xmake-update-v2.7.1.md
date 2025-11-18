@@ -3,6 +3,7 @@ title: Xmake v2.7.1 Released, Better C++ Modules Support
 tags: [xmake, lua, C/C++, remote, ccache, C++20, Modules, headerunits, fs-watcher]
 date: 2022-08-25
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

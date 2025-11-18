@@ -3,6 +3,7 @@ title: xmake支持vs2008生成
 tags: [xmake, VisualStudio, vs2008]
 date: 2016-08-12
 author: Ruki
+outline: deep
 ---
 
 xmake master上最新版本已经支持vs2008工程文件的生成，通过`project`插件的方式提供，例如：

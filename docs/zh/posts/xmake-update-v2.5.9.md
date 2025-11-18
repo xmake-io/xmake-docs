@@ -3,6 +3,7 @@ title: xmake v2.5.9 发布，改进 C++20 模块，并支持 Nim, Keil MDK 和 U
 tags: [xmake, lua, C/C++, Nim, Keil, MDK, circle, Unity, Build, C++20, Modules, lua5.4]
 date: 2021-10-30
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

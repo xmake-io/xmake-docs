@@ -3,6 +3,7 @@ title: xmake 新增ios app2ipa插件
 tags: [xmake, 插件, ios]
 date: 2016-11-09
 author: Ruki
+outline: deep
 ---
 
 最近在做ios app的企业测试包，需要频繁打包分发给测试，因此将编译完的.app打包成ipa单独分发出去，这里调研下几种打包方案：

@@ -3,6 +3,7 @@ title: Xmake v2.9.1 released, Add native lua modules support
 tags: [xmake, lua, C/C++, package, cosmocc]
 date: 2024-04-22
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

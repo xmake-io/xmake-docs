@@ -3,6 +3,7 @@ title: xmake v2.5.1 发布, 支持 Apple Silicon 并改进 C/C++ 包依赖管理
 tags: [xmake, lua, C/C++, toolchains, xrepo, packages, vcpkg, conan, Apple, Silicon]
 date: 2021-01-16
 author: Ruki
+outline: deep
 ---
 这是 xmake 在今年的首个版本，也是完全适配支持 Apple Silicon (macOS ARM) 设备的首个版本。
 

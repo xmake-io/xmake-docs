@@ -3,6 +3,7 @@ title: Xmake v2.8.3 Released, Improve Wasm and Support Xmake Source Debugging
 tags: [xmake, lua, C/C++, package, performance, API, rust]
 date: 2023-09-26
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

@@ -3,6 +3,7 @@ title: 使用xmake编译工程
 tags: [xmake, 编译, 跨平台]
 date: 2016-02-04
 author: Ruki
+outline: deep
 ---
 
 如果你只想编译当前主机环境的平台，例如在windows上编译windows版本，在macosx上编译macosx版本，那么你只需要敲以下命令即可：

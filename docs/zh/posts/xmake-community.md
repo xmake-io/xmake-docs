@@ -3,6 +3,7 @@ title: Xmake Discord 社区频道上线
 tags: [xmake, lua, C/C++, discord, 社区, 技术交流]
 date: 2020-12-10
 author: Ruki
+outline: deep
 ---
 
 [xmake](https://github.com/xmake-io/xmake) 是一个基于 Lua 的轻量级跨平台构建工具，使用 xmake.lua 维护项目构建，相比 makefile/CMakeLists.txt，配置语法更加简洁直观，对新手非常友好，短时间内就能快速入门，能够让用户把更多的精力集中在实际的项目开发上。

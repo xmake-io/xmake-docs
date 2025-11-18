@@ -3,6 +3,7 @@ title: Xmake v2.8.5 发布，支持链接排序和单元测试
 tags: [xmake, lua, C/C++]
 date: 2023-11-05
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

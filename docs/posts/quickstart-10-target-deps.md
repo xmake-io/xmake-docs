@@ -3,6 +3,7 @@ title: Xmake Getting Started Tutorial 10, Multiple Sub-project Target Dependency
 tags: [xmake, lua, cross compilation]
 date: 2019-12-13
 author: Ruki
+outline: deep
 ---
 
 xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance, 

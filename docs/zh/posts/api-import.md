@@ -3,6 +3,7 @@ title: 插件开发之import类库
 tags: [xmake, 插件, import, 类库, 自定义脚本]
 date: 2016-06-09
 author: Ruki
+outline: deep
 ---
 
 import的主要用于导入xmake的扩展类库以及一些自定义的类库模块，一般用于 自定义脚本(on_build, on_run ..)、插件开发、模板开发、平台扩展、自定义任务task等地方。

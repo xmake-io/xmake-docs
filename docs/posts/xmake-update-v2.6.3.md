@@ -3,6 +3,7 @@ title: Xmake v2.6.3 released, Support Vcpkg manifest mode
 tags: [xmake, lua, C/C++, Vcpkg]
 date: 2022-01-22
 author: Ruki
+outline: deep
 ---
 ## New version changes
 

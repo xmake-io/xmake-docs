@@ -3,6 +3,7 @@ title: 如何通过xmake进行交叉编译
 tags: [xmake, 交叉编译]
 date: 2016-07-22
 author: Ruki
+outline: deep
 ---
 
 xmake 提供了方便灵活的交叉编译支持，大部分情况下，都不需要配置很复杂的toolchains前缀，例如：`arm-linux-` 什么的

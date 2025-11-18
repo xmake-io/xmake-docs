@@ -3,6 +3,7 @@ title: xmake工程描述编写之选择性编译
 tags: [xmake, 编译, 工程描述, xmake.lua, 条件判断]
 date: 2016-07-23
 author: Ruki
+outline: deep
 ---
 
 xmake 提供了一些内置的条件判断api，用于在选择性编译时，获取到一些工程状态的相关信息，来调整编译逻辑。。

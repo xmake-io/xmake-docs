@@ -3,6 +3,7 @@ title: xmake从入门到精通1：安装和更新
 tags: [xmake, lua, 安装, 更新]
 date: 2019-11-09
 author: Ruki
+outline: deep
 ---
 
 xmake是一个基于Lua的轻量级现代化c/c++的项目构建工具，主要特点是：语法简单易上手，提供更加可读的项目维护，实现跨平台行为一致的构建体验。

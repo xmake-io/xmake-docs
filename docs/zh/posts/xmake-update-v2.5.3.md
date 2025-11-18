@@ -3,6 +3,7 @@ title: xmake v2.5.3 发布，支持构建 linux bpf 程序和 Conda 包集成
 tags: [xmake, lua, C/C++, toolchains, bpf, conda, linux]
 date: 2021-04-08
 author: Ruki
+outline: deep
 ---
 在 2.5.3 版本，我们新增了对 linux bpf 程序的构建支持，并且同时支持 android bpf 程序的构建。
 

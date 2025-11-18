@@ -3,6 +3,7 @@ title: 不同编译器对预编译头文件的处理
 tags: [xmake, lua, 预编译头文件, c++编译加速, 优化编译, 跨平台]
 date: 2017-07-31
 author: Ruki
+outline: deep
 ---
 
 最近为了给[xmake](https://xmake.io)实现预编译头文件的支持，研究了下各大主流编译器处理预编译头的机制以及之间的一些差异。

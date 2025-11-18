@@ -3,6 +3,7 @@ title: Xmake Getting Started Tutorial 6, Developing and Building Qt Programs
 tags: [xmake, lua, qt]
 date: 2019-11-21
 author: Ruki
+outline: deep
 ---
 
 xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance, 

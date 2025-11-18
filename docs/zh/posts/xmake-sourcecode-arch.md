@@ -3,6 +3,7 @@ title: xmake 源码架构剖析
 tags: [xmake, lua, 源码, 架构设计]
 date: 2017-09-28
 author: Ruki
+outline: deep
 ---
 
 title: xmake 源码架构剖析

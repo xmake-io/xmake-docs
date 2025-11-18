@@ -3,6 +3,7 @@ title: Xmake v2.7.6 发布，新增 Verilog 和 C++ Modules 分发支持
 tags: [xmake, lua, C/C++, package, modules, verilog]
 date: 2023-01-22
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

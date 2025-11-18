@@ -3,6 +3,7 @@ title: 利用xmake运行和调试程序
 tags: [xmake, 调试, 运行]
 date: 2016-07-16
 author: Ruki
+outline: deep
 ---
 
 xmake默认在编译完程序后，可以通过以下命令运行指定目标程序：

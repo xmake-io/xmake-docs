@@ -3,6 +3,7 @@ title: xmake从入门到精通4：常用C/C++项目描述设置详解
 tags: [xmake, lua, c/c++, xmake配置描述]
 date: 2019-11-10
 author: Ruki
+outline: deep
 ---
 
 xmake是一个基于Lua的轻量级现代化c/c++的项目构建工具，主要特点是：语法简单易上手，提供更加可读的项目维护，实现跨平台行为一致的构建体验。

@@ -3,6 +3,7 @@ title: Xmake v2.7.2 released, build third-party libraries more intelligently
 tags: [xmake, lua, C/C++, trybuild, rule, cmake, autoconf]
 date: 2022-10-09
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

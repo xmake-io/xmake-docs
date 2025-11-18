@@ -3,6 +3,7 @@ title: xmake插件使用之doxygen文档生成
 tags: [xmake, doxygen, 插件, 文档生成]
 date: 2016-08-02
 author: Ruki
+outline: deep
 ---
 
 这个doxygen插件比较简单，说白了就是一键生成工程文档，只需要执行下面这行命令就行了

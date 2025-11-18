@@ -3,6 +3,7 @@ title: Xmake v2.7.3 Released, Package Components and C++ Modules Incremental Bui
 tags: [xmake, lua, C/C++, package, components]
 date: 2022-11-08
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

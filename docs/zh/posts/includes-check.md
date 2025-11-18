@@ -3,6 +3,7 @@ title: 头文件自动依赖检测和构建
 tags: [xmake, 头文件依赖, 增量编译]
 date: 2016-07-12
 author: Ruki
+outline: deep
 ---
 
 为了进一步提升构建效率，减少没必要的重建，xmake新增了对头文件的依赖检测，以及自动构建仅仅需要重新编译的源文件，提升编译速度，并且完全支持windows、linux、macosx等大部分平台。。

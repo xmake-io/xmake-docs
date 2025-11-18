@@ -3,6 +3,7 @@ title: 使用lua实现try-catch异常捕获
 tags: [xmake, lua, try-catch, 异常捕获]
 date: 2016-12-14
 author: Ruki
+outline: deep
 ---
 
 lua原生并没有提供try-catch的语法来捕获异常处理，但是提供了`pcall/xpcall`等接口，可在保护模式下执行lua函数。

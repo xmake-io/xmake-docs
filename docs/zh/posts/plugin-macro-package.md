@@ -3,6 +3,7 @@ title: 插件使用之批量打包
 tags: [xmake, 插件, 宏脚本, 打包]
 date: 2016-06-09
 author: Ruki
+outline: deep
 ---
 
 xmake提供了一些比较实用的内置宏脚本，比如 批量打包宏脚本 `xmake macro package`

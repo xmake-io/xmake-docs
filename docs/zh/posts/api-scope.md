@@ -3,6 +3,7 @@ title: xmake 描述语法和作用域详解
 tags: [xmake, api, 工程描述, 作用域]
 date: 2016-10-26
 author: Ruki
+outline: deep
 ---
 
 xmake的工程描述文件xmake.lua虽然基于lua语法，但是为了使得更加方便简洁得编写项目构建逻辑，xmake对其进行了一层封装，使得编写xmake.lua不会像些makefile那样繁琐

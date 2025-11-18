@@ -3,6 +3,7 @@ title: 插件开发之色彩高亮显示
 tags: [xmake, 插件, 终端色彩高亮]
 date: 2016-07-14
 author: Ruki
+outline: deep
 ---
 
 xmake在开发插件脚本的时候，除了可以使用lua内置的print进行终端输出外，还可以通过另外一个接口：`cprint`实现终端的色彩高亮输出

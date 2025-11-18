@@ -3,6 +3,7 @@ title: Xmake Getting Started Tutorial 5, Introduction to Android platform compil
 tags: [xmake, lua, android, jni]
 date: 2019-11-15
 author: Ruki
+outline: deep
 ---
 
 xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance, 

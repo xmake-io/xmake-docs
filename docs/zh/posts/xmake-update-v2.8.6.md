@@ -3,6 +3,7 @@ title: Xmake v2.8.6 发布，新的打包插件：XPack
 tags: [xmake, lua, C/C++]
 date: 2023-12-15
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

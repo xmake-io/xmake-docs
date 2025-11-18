@@ -3,6 +3,7 @@ title: Xmake v2.6.6 发布，分布式编译和缓存支持
 tags: [xmake, lua, C/C++, remote, ccache, distributed-compilation]
 date: 2022-05-24
 author: Ruki
+outline: deep
 ---
 
 ## 新特性介绍

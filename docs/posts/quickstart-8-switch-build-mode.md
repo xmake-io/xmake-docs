@@ -3,6 +3,7 @@ title: Xmake Getting Started Tutorial 8, Switching Build Modes
 tags: [xmake, lua, build mode]
 date: 2019-12-05
 author: Ruki
+outline: deep
 ---
 
 xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance, 

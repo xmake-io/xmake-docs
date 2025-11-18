@@ -3,6 +3,7 @@ title: Xmake Getting Started Tutorial 7, Developing and Building CUDA Programs
 tags: [xmake, lua, cuda]
 date: 2019-11-30
 author: Ruki
+outline: deep
 ---
 
 xmake is a lightweight and modern c/c++ project building tool based on Lua. It's main features are: easy to use syntax, easy to use project maintenance, 

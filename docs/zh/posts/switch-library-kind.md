@@ -3,6 +3,7 @@ title: 静态库和动态库的编译切换
 tags: [xmake, 静态库, 动态库]
 date: 2016-08-03
 author: Ruki
+outline: deep
 ---
 
 如果你想在同一个target上既编译静态库，又能编译动态库，那么稍微修改下 xmale.lua就行了：

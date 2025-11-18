@@ -3,6 +3,7 @@ title: Xmake v2.7.8 released, Improve package virtual environment and build spee
 tags: [xmake, lua, C/C++, package, performance, mingw64, wasm]
 date: 2023-04-04
 author: Ruki
+outline: deep
 ---
 
 ## Introduction of new features

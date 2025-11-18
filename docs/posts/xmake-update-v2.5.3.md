@@ -3,6 +3,7 @@ title: xmake v2.5.3 Released, Support to build Linux bpf program and integrate C
 tags: [xmake, lua, C/C++, toolchains, bpf, conda, linux]
 date: 2021-04-08
 author: Ruki
+outline: deep
 ---
 ### Build a Linux Bpf program
 
