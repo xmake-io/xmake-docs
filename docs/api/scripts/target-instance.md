@@ -267,13 +267,15 @@ os.cp(target:targetfile(), "/tmp/")
 
 ::: tip API
 ```lua
-target:artifactfile()
+target:artifactfile(kind: <string>)
 ```
 :::
 
 #### Parameter Description
 
-No parameters required for this function.
+| Parameter | Description |
+|-----------|-------------|
+|   kind    | Target kind |
 
 #### Usage
 
