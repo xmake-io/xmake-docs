@@ -1,4 +1,6 @@
 import Theme from 'vitepress/theme'
+import { h } from 'vue'
+import VPDoc from './components/VPDoc.vue'
 import './styles.css'
 import 'virtual:group-icons.css'
 
@@ -20,6 +22,11 @@ const hashToRoute = {
 
 export default {
   extends: Theme,
+  Layout: () => {
+    return h(Theme.Layout, null, {
+      'doc-content-before': () => h(VPDoc)
+    })
+  },
   enhanceApp({ router }) {
     router.onBeforeRouteChange = (to) => {
       const u = new URL(to, 'https://xmake.io')

@@ -7,6 +7,7 @@
     "generate-blog": "node scripts/generate-blog-data.js"
   },
   "devDependencies": {
+    "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.1.0",
     "vitepress": "^2.0.0-alpha.6",

@@ -8,6 +8,7 @@ import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-i
 import { fileURLToPath, URL } from 'node:url'
 
 import llmstxt from 'vitepress-plugin-llms'
+import { addTitleFromFrontmatter } from './plugins/add-title'
 
 export default defineConfig({
   title: "Xmake",
@@ -15,6 +16,16 @@ export default defineConfig({
 
   markdown: {
     config(md) {
+      // Add title from frontmatter plugin FIRST, before other plugins
+      // Process all files - the function will check if title should be added
+      const originalParse = md.parse.bind(md)
+      md.parse = (src: string, env: any) => {
+        // Always process - addTitleFromFrontmatter will check if title exists
+        // and content doesn't already start with H1
+        const processedSrc = addTitleFromFrontmatter(src)
+        return originalParse(processedSrc, env)
+      }
+      
       md.use(groupIconMdPlugin, {
         titleBar: {
           includeSnippet: true,

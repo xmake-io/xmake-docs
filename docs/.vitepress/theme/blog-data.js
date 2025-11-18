@@ -53,6 +53,21 @@ export const posts = [
     "excerpt": "<p>In the new version, we have added cosmocc tool chain support. Using it, we can compile once and run everywhere. In addition, we also refactored the implementation of C++ Modules and solved many C++ Modules-related problems.</p>\n<p>The cosmocc tool chain is the compilation tool chain provided by the <a href=\"https://github.com/jart/cosmopolitan\">cosmopolitan</a> project. Programs compiled using this tool chain can be compiled once and run anywhere.</p>\n<p>In the new version, we also support this tool chain, which can compile programs under macosx/linux/windows, and can also support automatic downloading of the cosmocc tool chain.</p>\n"
   },
   {
+    "title": "New Feature, Enhanced Package Management",
+    "url": "/posts/new-feature-announcement",
+    "date": {
+      "time": 1705752000000,
+      "string": "January 20, 2024"
+    },
+    "author": "Ruki",
+    "tags": [
+      "feature",
+      "package-management",
+      "xmake"
+    ],
+    "excerpt": "<p>We're excited to announce a major enhancement to Xmake's package management system that will make dependency handling even more powerful and user-friendly.</p>\n<p>The new package management system features:</p>\n<ul>\n<li><strong>Smart dependency resolution</strong>: Automatically resolves complex dependency chains</li>\n<li><strong>Version conflict detection</strong>: Identifies and helps resolve version conflicts</li>\n<li><strong>Parallel downloads</strong>: Faster package installation with parallel downloading</li>\n<li><strong>Better caching</strong>: Improved caching system for faste...</li>\n</ul>\n"
+  },
+  {
     "title": "Xmake v2.8.6 released, New Packaging Plugin, XPack",
     "url": "/posts/xmake-update-v2.8.6",
     "date": {
