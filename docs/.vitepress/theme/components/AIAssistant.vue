@@ -32,6 +32,7 @@ const texts = computed(() => {
       description: '输入您的问题，复制提示词后可在任何 AI 助手（如 ChatGPT、Claude、Cursor、GitHub Copilot 等）中使用',
       placeholder: '例如：如何配置一个使用 C++20 模块的目标？',
       button: '复制提示词',
+      jumpButton: '在 Perplexity 提问',
       submitting: '复制中...',
       hint: '提示：按',
       hintKey: 'Ctrl/Cmd + Enter',
@@ -50,6 +51,7 @@ const texts = computed(() => {
       description: 'Enter your question, copy the prompt and use it in any AI assistant (such as ChatGPT, Claude, Cursor, GitHub Copilot, etc.)',
       placeholder: 'For example: How do I configure a target that uses C++20 modules?',
       button: 'Copy Prompt',
+      jumpButton: 'Ask on Perplexity',
       submitting: 'Copying...',
       hint: 'Tip: Press',
       hintKey: 'Ctrl/Cmd + Enter',
@@ -84,6 +86,23 @@ function copyPrompt() {
   })
 }
 
+function jumpToPerplexity() {
+  if (!question.value.trim()) {
+    alert(texts.value.alertEmpty)
+    return
+  }
+
+  // 构建完整的提示词（包含模板和用户问题）
+  const fullPrompt = texts.value.promptTemplate + question.value.trim()
+  
+  // URL 编码整个提示词
+  const encodedPrompt = encodeURIComponent(fullPrompt)
+  
+  // 跳转到 Perplexity AI
+  const url = `https://www.perplexity.ai/search/?q=${encodedPrompt}`
+  window.open(url, '_blank')
+}
+
 function handleKeyPress(event: KeyboardEvent) {
   if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
     event.preventDefault()
@@ -106,13 +125,22 @@ function handleKeyPress(event: KeyboardEvent) {
         rows="4"
         @keydown="handleKeyPress"
       ></textarea>
-      <button
-        class="ai-assistant-button"
-        :disabled="isSubmitting || !question.trim()"
-        @click="copyPrompt"
-      >
-        {{ isSubmitting ? texts.submitting : texts.button }}
-      </button>
+      <div class="ai-assistant-actions">
+        <button
+          class="ai-assistant-button"
+          :disabled="isSubmitting || !question.trim()"
+          @click="copyPrompt"
+        >
+          {{ isSubmitting ? texts.submitting : texts.button }}
+        </button>
+        <button
+          class="ai-assistant-button ai-assistant-button-secondary"
+          :disabled="!question.trim()"
+          @click="jumpToPerplexity"
+        >
+          {{ texts.jumpButton }}
+        </button>
+      </div>
       <p class="ai-assistant-hint">
         {{ texts.hint }} <kbd>{{ texts.hintKey }}</kbd> {{ texts.hintSuffix }}
       </p>
@@ -168,6 +196,12 @@ function handleKeyPress(event: KeyboardEvent) {
   box-shadow: 0 0 0 3px var(--vp-c-brand-soft);
 }
 
+.ai-assistant-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
 .ai-assistant-button {
   padding: 0.75rem 1.5rem;
   font-size: 0.95rem;
@@ -178,7 +212,17 @@ function handleKeyPress(event: KeyboardEvent) {
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
-  align-self: flex-start;
+}
+
+.ai-assistant-button-secondary {
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-alt);
+  border: 1px solid var(--vp-c-divider);
+}
+
+.ai-assistant-button-secondary:hover:not(:disabled) {
+  background: var(--vp-c-bg-soft);
+  border-color: var(--vp-c-brand);
 }
 
 .ai-assistant-button:hover:not(:disabled) {
