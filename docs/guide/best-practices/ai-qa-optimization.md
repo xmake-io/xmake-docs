@@ -1,5 +1,9 @@
 # AI Q&A Optimization {#ai-qa-optimization}
 
+<ClientOnly>
+  <AIAssistant />
+</ClientOnly>
+
 When asking questions about xmake to AI assistants (such as ChatGPT, Claude, Cursor, etc.), using some techniques can help AI better understand the context and provide more accurate, higher-quality answers.
 
 ## Provide Reference Documentation Links

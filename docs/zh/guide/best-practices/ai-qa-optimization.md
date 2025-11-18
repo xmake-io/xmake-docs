@@ -1,5 +1,9 @@
 # AI 问答优化 {#ai-qa-optimization}
 
+<ClientOnly>
+  <AIAssistant />
+</ClientOnly>
+
 在使用 AI 助手（如 ChatGPT、Claude、Cursor 等）提问关于 xmake 的问题时，通过一些技巧可以帮助 AI 更好地理解上下文，提供更准确、更高质量的回答。
 
 ## 提供参考文档链接

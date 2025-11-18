@@ -1,6 +1,7 @@
 import Theme from 'vitepress/theme'
 import { h } from 'vue'
 import VPDoc from './components/VPDoc.vue'
+import AIAssistant from './components/AIAssistant.vue'
 import './styles.css'
 import 'virtual:group-icons.css'
 
@@ -27,7 +28,10 @@ export default {
       'doc-content-before': () => h(VPDoc)
     })
   },
-  enhanceApp({ router }) {
+  enhanceApp({ app, router }) {
+    // Register global components
+    app.component('AIAssistant', AIAssistant)
+    
     router.onBeforeRouteChange = (to) => {
       const u = new URL(to, 'https://xmake.io')
       if (u.pathname === '/') {
