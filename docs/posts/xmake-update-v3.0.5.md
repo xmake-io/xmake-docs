@@ -378,24 +378,6 @@ $ xmake f --toolchain=gcc-15
 
 For more details, see: [#6929](https://github.com/xmake-io/xmake/pull/6929)
 
-### Add libtool patch support for cross compilation
-
-We have added libtool patch support for cross compilation scenarios, significantly improving compatibility when building packages that use autotools for different target platforms. When building packages with autotools in cross-compilation environments, libtool often generates incorrect paths and settings because it's designed primarily for native compilation. The new patch support automatically fixes library search paths, corrects toolchain detection, adjusts linking flags for the target platform, and handles shared library naming conventions.
-
-```lua
--- Cross-compiling for ARM Linux
-target("myapp")
-    set_kind("binary")
-    set_plat("linux")
-    set_arch("arm64")
-    add_packages("autotools_package")  -- Package using autotools
-    -- libtool patches are automatically applied
-```
-
-This eliminates the need for manual patching of libtool scripts, ensures consistent cross-compilation behavior, and reduces build failures. It works transparently with existing package configurations, making it particularly useful when building packages for embedded systems, cross-compiling for different architectures, or using autotools-based packages in cross-compilation workflows.
-
-For more details, see: [#6963](https://github.com/xmake-io/xmake/pull/6963)
-
 ### Add async support for os APIs
 
 We have added asynchronous support for os APIs, allowing non-blocking file and process operations in xmake scripts. This enables concurrent I/O operations, significantly improving performance when dealing with multiple file operations or long-running processes.

@@ -378,24 +378,6 @@ $ xmake f --toolchain=gcc-15
 
 更多详情，请参考：[#6929](https://github.com/xmake-io/xmake/pull/6929)
 
-### 添加交叉编译的 libtool 补丁支持
-
-我们添加了交叉编译场景下的 libtool 补丁支持，显著改进了在使用 autotools 为不同目标平台构建包时的兼容性。在交叉编译环境中使用 autotools 构建包时，libtool 经常生成错误的路径和设置，因为它主要是为原生编译设计的。新的补丁支持自动修复库搜索路径、纠正工具链检测、调整目标平台的链接标志，并处理共享库命名约定。
-
-```lua
--- 交叉编译 ARM Linux
-target("myapp")
-    set_kind("binary")
-    set_plat("linux")
-    set_arch("arm64")
-    add_packages("autotools_package")  -- 使用 autotools 的包
-    -- libtool 补丁会自动应用
-```
-
-这消除了手动修补 libtool 脚本的需要，确保一致的交叉编译行为，并减少构建失败。它与现有包配置透明地工作，在为嵌入式系统构建包、为不同架构进行交叉编译，或在交叉编译工作流中使用基于 autotools 的包时特别有用。
-
-更多详情，请参考：[#6963](https://github.com/xmake-io/xmake/pull/6963)
-
 ### 添加 os API 异步支持
 
 我们为 os API 添加了异步支持，允许在 xmake 脚本中进行非阻塞的文件和进程操作。这使得能够并发执行 I/O 操作，在处理多个文件操作或长时间运行的进程时显著提高性能。
