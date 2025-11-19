@@ -568,6 +568,8 @@ target("test")
 * [#7027](https://github.com/xmake-io/xmake/pull/7027): 改进图模块性能
 * [#7031](https://github.com/xmake-io/xmake/pull/7031): 改进 require 解析
 * [#7032](https://github.com/xmake-io/xmake/pull/7032): 改进符号提取
+* [#7037](https://github.com/xmake-io/xmake/pull/7037): 改进 xmake format
+* [#7038](https://github.com/xmake-io/xmake/pull/7038): 改进 clang-tidy 输出处理
 
 ### Bugs 修复 {#bug-fixes}
 
@@ -590,4 +592,5 @@ target("test")
 * [#7016](https://github.com/xmake-io/xmake/pull/7016): 修复 vsxmake 中的项目默认配置
 * [#7017](https://github.com/xmake-io/xmake/pull/7017): 修复 lock_packages 拼写错误
 * [#7018](https://github.com/xmake-io/xmake/pull/7018): 修复构建顺序：仅在禁用依赖链接继承时禁用
+* [#7035](https://github.com/xmake-io/xmake/pull/7035): 通过更新 tbox 修复进程重定向问题
 

@@ -568,6 +568,8 @@ For more details, see: [#7027](https://github.com/xmake-io/xmake/pull/7027)
 * [#7027](https://github.com/xmake-io/xmake/pull/7027): Improve graph module performance
 * [#7031](https://github.com/xmake-io/xmake/pull/7031): Improve require parsing
 * [#7032](https://github.com/xmake-io/xmake/pull/7032): Improve symbol extraction
+* [#7037](https://github.com/xmake-io/xmake/pull/7037): Improve xmake format
+* [#7038](https://github.com/xmake-io/xmake/pull/7038): Improve clang-tidy output handling
 
 ### Bugs fixed
 
@@ -590,4 +592,5 @@ For more details, see: [#7027](https://github.com/xmake-io/xmake/pull/7027)
 * [#7016](https://github.com/xmake-io/xmake/pull/7016): Fix project default configuration in vsxmake
 * [#7017](https://github.com/xmake-io/xmake/pull/7017): Fix lock_packages typo
 * [#7018](https://github.com/xmake-io/xmake/pull/7018): Fix build order: only disable when dependency linking inheritance is disabled
+* [#7035](https://github.com/xmake-io/xmake/pull/7035): Fix process redirection issues by updating tbox
 
