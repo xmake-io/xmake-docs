@@ -55,6 +55,60 @@ $ xmake [-v|--verbose]
 $ xmake -v -D
 ```
 
+## 如何使用 git bisect 快速定位问题？{#use-git-bisect-to-locate-issues}
+
+当你发现某个功能在某个版本之后出现了问题，但不确定是哪个提交引入的，可以使用 xmake 内置的 git bisect 功能来快速定位问题。
+
+git bisect 使用二分查找算法，通过测试不同版本的提交，快速定位引入问题的第一个坏提交（first bad commit）。
+
+### 基本用法
+
+```sh
+$ xmake l cli.bisect -g <good_version> -b <bad_version> --gitdir=<xmake_repo_path> -c "<test_command>"
+```
+
+参数说明：
+- `-g, --good`: 指定一个已知正常的版本（tag 或 commit）
+- `-b, --bad`: 指定一个已知有问题的版本（tag 或 commit）
+- `--gitdir`: 指定 xmake 源码仓库的路径
+- `-c, --command`: 指定测试命令，用于验证当前版本是否正常
+
+### 示例
+
+假设你发现在 v2.9.1 版本正常，但在 v2.9.2 版本出现了问题，想要定位是哪个提交引入的：
+
+```sh
+$ xmake l cli.bisect -g v2.9.1 -b v2.9.2 --gitdir=/Users/ruki/projects/personal/xmake -c "xrepo remove --all -y; xmake f -a arm64 -cvD -y"
+```
+
+这个命令会：
+1. 在 v2.9.1（好版本）和 v2.9.2（坏版本）之间进行二分查找
+2. 对每个测试的提交，执行指定的测试命令
+3. 根据测试结果自动标记为 good 或 bad
+4. 最终定位到第一个引入问题的提交
+
+### 输出结果
+
+执行完成后，会显示类似如下的结果：
+
+```
+aa278bc7fc0b723a315120bb95531991b7939229 is the first bad commit
+
+commit aa278bc7fc0b723a315120bb95531991b7939229
+
+Author: ruki <waruqi@gmail.com>
+
+Date:   Fri May 10 00:44:57 2024 +0800
+
+    improve to system/find_package
+
+ xmake/modules/package/manager/system/find_package.lua | 16 +++++++++++++---
+
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+```
+
+这样就能快速定位到引入问题的具体提交和修改内容，便于进一步分析和修复。
+
 ## 怎样看实时编译警告信息? {#see-verbose-compiling-warnings}
 
 为了避免刷屏，在构建时默认是不实时输出警告信息的，如果想要查看，可以加上 `-w` 选项启用编译警告输出。

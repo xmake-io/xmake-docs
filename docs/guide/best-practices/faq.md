@@ -55,6 +55,60 @@ And add `-D` to get the verbose backtrace and diagnostic info, then you can subm
 $ xmake -v -D
 ```
 
+## How to use git bisect to quickly locate issues? {#use-git-bisect-to-locate-issues}
+
+When you discover that a feature broke after a certain version but aren't sure which commit introduced the issue, you can use xmake's built-in git bisect feature to quickly locate the problem.
+
+git bisect uses a binary search algorithm to quickly locate the first bad commit that introduced the issue by testing different version commits.
+
+### Basic usage
+
+```sh
+$ xmake l cli.bisect -g <good_version> -b <bad_version> --gitdir=<xmake_repo_path> -c "<test_command>"
+```
+
+Parameter description:
+- `-g, --good`: Specify a known good version (tag or commit)
+- `-b, --bad`: Specify a known bad version (tag or commit)
+- `--gitdir`: Specify the path to the xmake source repository
+- `-c, --command`: Specify the test command to verify if the current version is working correctly
+
+### Example
+
+Suppose you found that version v2.9.1 works fine, but version v2.9.2 has issues, and you want to locate which commit introduced the problem:
+
+```sh
+$ xmake l cli.bisect -g v2.9.1 -b v2.9.2 --gitdir=/Users/ruki/projects/personal/xmake -c "xrepo remove --all -y; xmake f -a arm64 -cvD -y"
+```
+
+This command will:
+1. Perform a binary search between v2.9.1 (good version) and v2.9.2 (bad version)
+2. For each tested commit, execute the specified test command
+3. Automatically mark as good or bad based on test results
+4. Finally locate the first commit that introduced the issue
+
+### Output result
+
+After execution completes, it will display results similar to the following:
+
+```
+aa278bc7fc0b723a315120bb95531991b7939229 is the first bad commit
+
+commit aa278bc7fc0b723a315120bb95531991b7939229
+
+Author: ruki <waruqi@gmail.com>
+
+Date:   Fri May 10 00:44:57 2024 +0800
+
+    improve to system/find_package
+
+ xmake/modules/package/manager/system/find_package.lua | 16 +++++++++++++---
+
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+```
+
+This allows you to quickly locate the specific commit and changes that introduced the issue, making it easier to analyze and fix.
+
 ## How to see verbose compiling warnings?
 
 ```sh
