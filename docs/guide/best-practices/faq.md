@@ -71,7 +71,13 @@ Parameter description:
 - `-g, --good`: Specify a known good version (tag or commit)
 - `-b, --bad`: Specify a known bad version (tag or commit)
 - `--gitdir`: Specify the path to the xmake source repository
-- `-c, --command`: Specify the test command to verify if the current version is working correctly
+- `-c, --commands`: Specify test commands to verify if the current version is working correctly. Multiple commands can be executed, separated by semicolons
+- `-s, --script`: Run the given Lua script file for testing
+- `--`: Run an arbitrary command (specified after `--`)
+
+::: tip NOTE
+If using a Lua script for testing, `os.exec` will automatically raise an error on failure, and git bisect will automatically mark it as a bad commit. You only need to use `raise()` to throw an error when you need custom check logic (such as checking output content).
+:::
 
 ### Example
 
@@ -108,6 +114,37 @@ Date:   Fri May 10 00:44:57 2024 +0800
 ```
 
 This allows you to quickly locate the specific commit and changes that introduced the issue, making it easier to analyze and fix.
+
+### Custom test scripts
+
+In addition to using the `-c` parameter to execute commands, you can also use the `-s` parameter to run custom Lua scripts for more complex testing:
+
+```sh
+$ xmake l cli.bisect -s /tmp/test.lua -g v2.9.1 -b v2.9.2 --gitdir=/Users/ruki/projects/personal/xmake
+```
+
+In the Lua script, you need to put the test logic in the `main` function as the entry point. `os.exec` will automatically raise an error on failure, and git bisect will automatically mark it as a bad commit. If you need custom check logic (such as checking output content), you can use `raise()` to throw an error:
+
+```lua
+-- test.lua
+function main()
+    os.exec("xrepo remove --all -y")
+    os.exec("xmake f -a arm64 -cvD -y")
+    os.exec("xmake build")
+
+    -- If you need to check output content, you can use raise to throw an error
+    local output = os.iorun("xmake run hello")
+    if not output:find("expected output") then
+        raise("test output mismatch")
+    end
+end
+```
+
+You can also use the `--` parameter to directly run arbitrary commands:
+
+```sh
+$ xmake l cli.bisect -g 90846dd -b ddb86e4 --gitdir=/path/to/xmake -- xmake -rv
+```
 
 ## How to see verbose compiling warnings?
 

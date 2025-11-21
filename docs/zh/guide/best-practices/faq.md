@@ -71,7 +71,13 @@ $ xmake l cli.bisect -g <good_version> -b <bad_version> --gitdir=<xmake_repo_pat
 - `-g, --good`: 指定一个已知正常的版本（tag 或 commit）
 - `-b, --bad`: 指定一个已知有问题的版本（tag 或 commit）
 - `--gitdir`: 指定 xmake 源码仓库的路径
-- `-c, --command`: 指定测试命令，用于验证当前版本是否正常
+- `-c, --commands`: 指定测试命令，用于验证当前版本是否正常。可以执行多个命令，用分号分隔
+- `-s, --script`: 运行给定的 Lua 脚本文件进行测试
+- `--`: 运行任意命令（在 `--` 之后指定）
+
+::: tip 提示
+如果使用 Lua 脚本进行测试，`os.exec` 执行失败时会自动报错，git bisect 会自动将其标记为 bad commit。只有在需要自定义检查逻辑（如检查输出内容）时，才需要使用 `raise()` 抛出错误。
+:::
 
 ### 示例
 
@@ -108,6 +114,37 @@ Date:   Fri May 10 00:44:57 2024 +0800
 ```
 
 这样就能快速定位到引入问题的具体提交和修改内容，便于进一步分析和修复。
+
+### 自定义测试脚本
+
+除了使用 `-c` 参数执行命令外，你还可以使用 `-s` 参数运行自定义的 Lua 脚本进行更复杂的测试：
+
+```sh
+$ xmake l cli.bisect -s /tmp/test.lua -g v2.9.1 -b v2.9.2 --gitdir=/Users/ruki/projects/personal/xmake
+```
+
+在 Lua 脚本中，你需要将测试逻辑放在 `main` 函数中作为入口。`os.exec` 执行失败时会自动报错，git bisect 会自动将其标记为 bad commit。如果需要自定义检查逻辑（如检查输出内容），可以使用 `raise()` 抛出错误：
+
+```lua
+-- test.lua
+function main()
+    os.exec("xrepo remove --all -y")
+    os.exec("xmake f -a arm64 -cvD -y")
+    os.exec("xmake build")
+
+    -- 如果需要检查输出内容，可以使用 raise 抛出错误
+    local output = os.iorun("xmake run hello")
+    if not output:find("expected output") then
+        raise("test output mismatch")
+    end
+end
+```
+
+也可以使用 `--` 参数直接运行任意命令：
+
+```sh
+$ xmake l cli.bisect -g 90846dd -b ddb86e4 --gitdir=/path/to/xmake -- xmake -rv
+```
 
 ## 怎样看实时编译警告信息? {#see-verbose-compiling-warnings}
 
