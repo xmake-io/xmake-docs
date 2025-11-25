@@ -6,11 +6,11 @@ author: Ruki
 outline: deep
 ---
 
-**Download:** [GitHub Releases](https://github.com/xmake-io/xmake/releases/tag/v3.0.5) | [Source Repository](https://github.com/xmake-io/xmake)
-
 ## Introduction of new features
 
 In the new version, we have introduced several major features that significantly enhance the development experience. The highlights include **multi-row progress output** with theme support for better build visibility, a comprehensive **XML module** for parsing and encoding XML data, **asynchronous OS APIs** for improved I/O performance, and **Swift interop support** for seamless integration between Swift and C++/Objective-C code. We have also made significant improvements to toolchain configuration, TTY handling, and various performance optimizations.
+
+**Download:** [GitHub Releases](https://github.com/xmake-io/xmake/releases/tag/v3.0.5) | [Source Repository](https://github.com/xmake-io/xmake)
 
 ### Support multi-row refresh for progress output
 
