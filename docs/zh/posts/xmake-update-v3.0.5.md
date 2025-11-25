@@ -6,6 +6,8 @@ author: Ruki
 outline: deep
 ---
 
+**下载地址：** [GitHub Releases](https://github.com/xmake-io/xmake/releases/tag/v3.0.5) | [源码仓库](https://github.com/xmake-io/xmake)
+
 ## 新特性介绍 {#new-features}
 
 新版本中，我们引入了多个重要特性，显著提升了开发体验。重点包括**多行进度输出**（支持主题配置，提供更好的构建可见性）、全面的**XML 模块**（用于解析和编码 XML 数据）、**异步 OS API**（提升 I/O 性能）以及**Swift 互操作支持**（实现 Swift 与 C++/Objective-C 代码的无缝集成）。同时，我们也对工具链配置、TTY 处理进行了重大改进，并进行了各种性能优化。
