@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.0.5 预览：多行进度输出、XML 模块、异步 OS API 和 Swift 互操作
+title: Xmake v3.0.5 发布：多行进度输出、XML 模块、异步 OS API 和 Swift 互操作
 tags: [xmake, swift, xml, async, progress, toolchain, cuda]
 date: 2025-11-17
 author: Ruki
@@ -378,6 +378,17 @@ $ xmake f --toolchain=gcc-15
 
 更多详情，请参考：[#6929](https://github.com/xmake-io/xmake/pull/6929)
 
+### 添加 Solaris 平台支持 {#add-solaris-platform-support}
+
+我们新增了对 Solaris 平台的支持，包括 i386 和 x86_64 架构。这使得 xmake 可以在 Solaris 系统上进行构建，进一步扩展了跨平台支持。同时，我们也新增了对其他 BSD 系统的支持，包括 NetBSD、OpenBSD 和 DragonflyBSD。
+
+```bash
+$ xmake f -p solaris -a i386
+$ xmake f -p solaris -a x86_64
+```
+
+更多详情，请参考：[#7055](https://github.com/xmake-io/xmake/pull/7055) 和 [#7054](https://github.com/xmake-io/xmake/pull/7054)
+
 ### 添加 os API 异步支持 {#add-os-api-async-support}
 
 我们为 os API 添加了异步支持，允许在 xmake 脚本中进行非阻塞的文件和进程操作。这使得能够并发执行 I/O 操作，在处理多个文件操作或长时间运行的进程时显著提高性能。
@@ -553,6 +564,8 @@ target("test")
 * [#7024](https://github.com/xmake-io/xmake/pull/7024): 为 `xmake show -t target` 添加 JSON 输出格式
 * [#7025](https://github.com/xmake-io/xmake/pull/7025): 添加 XML 模块，支持解析和编码
 * [#6989](https://github.com/xmake-io/xmake/pull/6989): 添加 os API 异步支持
+* [#7055](https://github.com/xmake-io/xmake/pull/7055): 添加 Solaris 平台支持（i386, x86_64）
+* [#7054](https://github.com/xmake-io/xmake/pull/7054): 添加对其他 BSD 系统的支持（NetBSD, OpenBSD, DragonflyBSD）
 
 ### 改进 {#improvements-list}
 

@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.0.5 preview, Multi-row progress, XML module and Swift interop
+title: Xmake v3.0.5 release, Multi-row progress, XML module and Swift interop
 tags: [xmake, swift, xml, async, progress, toolchain, cuda]
 date: 2025-11-17
 author: Ruki
@@ -378,6 +378,17 @@ $ xmake f --toolchain=gcc-15
 
 For more details, see: [#6929](https://github.com/xmake-io/xmake/pull/6929)
 
+### Add Solaris platform support
+
+We have added support for the Solaris platform, including i386 and x86_64 architectures. This enables xmake to build on Solaris systems, further expanding cross-platform support. We have also added support for additional BSD systems, including NetBSD, OpenBSD, and DragonflyBSD.
+
+```bash
+$ xmake f -p solaris -a i386
+$ xmake f -p solaris -a x86_64
+```
+
+For more details, see: [#7055](https://github.com/xmake-io/xmake/pull/7055) and [#7054](https://github.com/xmake-io/xmake/pull/7054)
+
 ### Add async support for os APIs
 
 We have added asynchronous support for os APIs, allowing non-blocking file and process operations in xmake scripts. This enables concurrent I/O operations, significantly improving performance when dealing with multiple file operations or long-running processes.
@@ -553,6 +564,8 @@ For more details, see: [#7027](https://github.com/xmake-io/xmake/pull/7027)
 * [#7024](https://github.com/xmake-io/xmake/pull/7024): Add JSON output format for `xmake show -t target`
 * [#7025](https://github.com/xmake-io/xmake/pull/7025): Add XML module with parsing and encoding support
 * [#6989](https://github.com/xmake-io/xmake/pull/6989): Add async support for os APIs
+* [#7055](https://github.com/xmake-io/xmake/pull/7055): Add Solaris platform support (i386, x86_64)
+* [#7054](https://github.com/xmake-io/xmake/pull/7054): Add support for additional BSD systems (NetBSD, OpenBSD, DragonflyBSD)
 
 ### Changes
 
