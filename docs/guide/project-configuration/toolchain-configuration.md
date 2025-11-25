@@ -32,6 +32,64 @@ target("bar")
 
 For more description of this interface, please go to the [set_toolchains](/api/description/project-target#set-toolchains) API manual page for details.
 
+### Simplified Toolchain Configuration Syntax <Badge type="tip" text="v3.0.5" />
+
+Starting from v3.0.5, you can use simplified inline syntax for toolchain configuration, making toolchain settings more concise and declarative:
+
+**Simplified toolchain configuration formats:**
+
+1. **Toolchain name only**: `clang`, `gcc`
+2. **Toolchain@package**: `clang@llvm-10`, `@muslcc`, `zig`
+3. **Toolchain[configs]@package**: `mingw[clang]@llvm-mingw`, `msvc[vs=2025]`
+
+**Quick toolchain configuration switching:**
+
+You can now use inline syntax to quickly switch toolchain configurations:
+
+```lua
+-- Equivalent to: set_toolchains("mingw", {clang = true})
+set_toolchains("mingw[clang]")
+
+-- Command line usage
+-- xmake f --toolchain=mingw[clang]
+```
+
+**Examples:**
+
+```lua
+-- Simple toolchain
+set_toolchains("clang")
+
+-- Toolchain with package
+set_toolchains("clang@llvm-10")
+set_toolchains("@muslcc")
+set_toolchains("zig")
+
+-- Toolchain with config and package
+set_toolchains("mingw[clang]@llvm-mingw")
+set_toolchains("msvc[vs=2025]")
+
+-- Multiple configs
+set_toolchains("mingw[clang]", {sdk = "/path/to/llvm-mingw"})
+```
+
+**Other improvements:**
+
+- Added clang support for llvm-mingw toolchain:
+  ```bash
+  xmake f --toolchain=mingw[clang] --sdk=/xxx/llvm-mingw
+  ```
+  ```lua
+  set_toolchains("mingw[clang]@llvm-mingw")
+  ```
+
+- Added gcc support for older NDK toolchain versions:
+  ```bash
+  xmake f -p android --toolchain=ndk[gcc] --ndk=/xxxx
+  ```
+
+This makes toolchain configuration more concise and readable, supports declarative toolchain settings, and makes it easier to manage multiple toolchain variants.
+
 ## Switch toolset {#switch-toolsets}
 
 In addition to switching toolchains through set_toolchains, we can also use the set_toolset interface to switch a compiler locally for a target.

@@ -6136,6 +6136,20 @@ target("test")
      add_runenvs("LD_LIBRARY_PATH", "/lib")
 ```
 
+#### Realtime output support
+
+Starting from v3.0.5, you can enable realtime output support for tests, allowing test output to be displayed in real-time as tests run, rather than buffering output until the test completes. This is particularly useful for long-running tests or tests that produce continuous output.
+
+To enable realtime output for a test, set `realtime_output = true` in the test configuration:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_tests("stub_n", {realtime_output = true, files = "tests/stub_n*.cpp", defines = "STUB_N"})
+```
+
+When `realtime_output` is enabled, the test output will be streamed directly to the terminal as the test runs, making it easier to monitor test progress and debug issues in real-time.
+
 #### Matching output results
 
 By default, `xmake test` will determine whether the test passed based on whether the exit code of the test run is 0.

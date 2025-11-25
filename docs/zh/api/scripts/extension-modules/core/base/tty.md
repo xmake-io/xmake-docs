@@ -642,3 +642,223 @@ local oldmode = tty.term_mode("stdout")
 tty.term_mode("stdout", newmode)
 ```
 
+## tty.cursor_move_up <Badge type="tip" text="v3.0.5" />
+
+- 向上移动光标 n 行
+
+#### 函数原型
+
+::: tip API
+```lua
+tty.cursor_move_up(n: <number>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| n | 要向上移动的行数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| tty | 返回 tty 模块以支持链式调用 |
+
+#### 用法说明
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_up(3)  -- 向上移动光标 3 行
+```
+
+## tty.cursor_move_down <Badge type="tip" text="v3.0.5" />
+
+- 向下移动光标 n 行
+
+#### 函数原型
+
+::: tip API
+```lua
+tty.cursor_move_down(n: <number>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| n | 要向下移动的行数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| tty | 返回 tty 模块以支持链式调用 |
+
+#### 用法说明
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_down(2)  -- 向下移动光标 2 行
+```
+
+## tty.cursor_move_left <Badge type="tip" text="v3.0.5" />
+
+- 向左移动光标 n 列
+
+#### 函数原型
+
+::: tip API
+```lua
+tty.cursor_move_left(n: <number>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| n | 要向左移动的列数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| tty | 返回 tty 模块以支持链式调用 |
+
+#### 用法说明
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_left(5)  -- 向左移动光标 5 列
+```
+
+## tty.cursor_move_right <Badge type="tip" text="v3.0.5" />
+
+- 向右移动光标 n 列
+
+#### 函数原型
+
+::: tip API
+```lua
+tty.cursor_move_right(n: <number>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| n | 要向右移动的列数 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| tty | 返回 tty 模块以支持链式调用 |
+
+#### 用法说明
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_right(10)  -- 向右移动光标 10 列
+```
+
+## tty.cursor_move_to_col <Badge type="tip" text="v3.0.5" />
+
+- 移动光标到指定列
+
+#### 函数原型
+
+::: tip API
+```lua
+tty.cursor_move_to_col(n: <number>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| n | 要移动到的列号（从 1 开始） |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| tty | 返回 tty 模块以支持链式调用 |
+
+#### 用法说明
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_to_col(1)  -- 移动光标到行首
+```
+
+## tty.cursor_hide <Badge type="tip" text="v3.0.5" />
+
+- 隐藏光标
+
+#### 函数原型
+
+::: tip API
+```lua
+tty.cursor_hide()
+```
+:::
+
+#### 参数说明
+
+无参数
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| tty | 返回 tty 模块以支持链式调用 |
+
+#### 用法说明
+
+```lua
+import("core.base.tty")
+
+tty.cursor_hide()  -- 隐藏光标
+```
+
+## tty.cursor_show <Badge type="tip" text="v3.0.5" />
+
+- 显示光标
+
+#### 函数原型
+
+::: tip API
+```lua
+tty.cursor_show()
+```
+:::
+
+#### 参数说明
+
+无参数
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| tty | 返回 tty 模块以支持链式调用 |
+
+#### 用法说明
+
+```lua
+import("core.base.tty")
+
+tty.cursor_show()  -- 显示光标
+```
+

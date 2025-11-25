@@ -392,6 +392,50 @@ The information of target(tbox):
       -> -cr
 ```
 
+#### JSON 输出格式
+
+从 v3.0.5 开始，`xmake show -t target` 支持 JSON 输出格式，使得以编程方式提取目标信息变得更加容易。这个特性实现了与 IDE、构建自动化工具和需要解析 xmake 项目元数据的自定义脚本的无缝集成。
+
+您可以使用 `--json` 获得紧凑输出，或使用 `--pretty-json` 获得格式化输出：
+
+```bash
+$ xmake show -t target --json
+{"targets":[{"name":"test","kind":"binary","files":["src/main.cpp"],"links":["pthread"],"defines":["DEBUG"]}]}
+
+$ xmake show -t target --pretty-json
+{
+  "targets": [
+    {
+      "name": "test",
+      "kind": "binary",
+      "files": ["src/main.cpp"],
+      "links": ["pthread"],
+      "defines": ["DEBUG"],
+      "includedirs": ["include"],
+      "cxxflags": ["-std=c++17"],
+      "deps": ["mylib"]
+    }
+  ]
+}
+```
+
+您可以提取目标信息用于 IDE 集成或在脚本中使用：
+
+```bash
+# 提取目标信息用于 IDE 集成
+xmake show -t target --pretty-json > project_info.json
+
+# 在脚本中使用
+TARGET_INFO=$(xmake show -t target --json)
+TARGET_NAME=$(echo $TARGET_INFO | jq -r '.targets[0].name')
+```
+
+这对于以下场景特别有用：
+- IDE 集成（VS Code、CLion 等）
+- 自动化构建系统和 CI/CD 流水线
+- 自定义项目分析工具
+- 文档生成
+
 ### 显示内置编译模式列表
 
 ```sh

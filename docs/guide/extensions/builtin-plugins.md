@@ -383,6 +383,50 @@ The information of target(tbox):
       -> -cr
 ```
 
+#### JSON Output Format
+
+Starting from v3.0.5, `xmake show -t target` supports JSON output format, making it easier to programmatically extract target information. This feature enables seamless integration with IDEs, build automation tools, and custom scripts that need to parse xmake project metadata.
+
+You can use `--json` for compact output or `--pretty-json` for formatted output:
+
+```bash
+$ xmake show -t target --json
+{"targets":[{"name":"test","kind":"binary","files":["src/main.cpp"],"links":["pthread"],"defines":["DEBUG"]}]}
+
+$ xmake show -t target --pretty-json
+{
+  "targets": [
+    {
+      "name": "test",
+      "kind": "binary",
+      "files": ["src/main.cpp"],
+      "links": ["pthread"],
+      "defines": ["DEBUG"],
+      "includedirs": ["include"],
+      "cxxflags": ["-std=c++17"],
+      "deps": ["mylib"]
+    }
+  ]
+}
+```
+
+You can extract target information for IDE integration or use it in scripts:
+
+```bash
+# Extract target information for IDE integration
+xmake show -t target --pretty-json > project_info.json
+
+# Use in scripts
+TARGET_INFO=$(xmake show -t target --json)
+TARGET_NAME=$(echo $TARGET_INFO | jq -r '.targets[0].name')
+```
+
+This is particularly useful for:
+- IDE integration (VS Code, CLion, etc.)
+- Automated build systems and CI/CD pipelines
+- Custom project analysis tools
+- Documentation generation
+
 ### Show builtin compilation modes list
 
 ```sh

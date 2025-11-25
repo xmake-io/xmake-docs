@@ -6208,6 +6208,20 @@ target("test")
     add_runenvs("LD_LIBRARY_PATH", "/lib")
 ```
 
+#### 实时输出支持
+
+从 v3.0.5 开始，可以为测试启用实时输出支持，允许测试输出在测试运行时实时显示，而不是等到测试完成后再缓冲输出。这对于长时间运行的测试或产生连续输出的测试特别有用。
+
+要为测试启用实时输出，在测试配置中设置 `realtime_output = true`：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_tests("stub_n", {realtime_output = true, files = "tests/stub_n*.cpp", defines = "STUB_N"})
+```
+
+当启用 `realtime_output` 时，测试输出将在测试运行时直接流式传输到终端，使得实时监控测试进度和调试问题变得更加容易。
+
 #### 匹配输出结果
 
 默认情况下，`xmake test` 会根据测试运行的退出代码是否为 0，来判断是否测试通过。

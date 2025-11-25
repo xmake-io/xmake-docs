@@ -589,3 +589,26 @@ Sets uiAccess for Windows UAC, defaults to false if it is not set.
 ```lua
 set_policy("windows.manifest.uac.ui", true)
 ```
+
+## build.progress_style <Badge type="tip" text="v3.0.5" />
+
+Sets the build progress output style. Supports two styles:
+
+- `"single"` (default): Single-row progress output, only updates one line of progress information
+- `"multirow"`: Multi-row progress output, displays multiple concurrent build tasks with their individual progress
+
+Multi-row progress output provides a significantly better visual experience during long-running builds, making it easier to monitor parallel compilation.
+
+You can enable multi-row progress output in two ways:
+
+1. **Via theme configuration**: Use the `soong` theme which includes multi-row progress by default:
+   ```bash
+   $ xmake g --theme=soong
+   ```
+
+2. **Via project policy**: Enable it directly in your `xmake.lua`:
+   ```lua
+   set_policy("build.progress_style", "multirow")
+   ```
+
+This provides better visibility into parallel build progress, makes it easier to identify slow compilation units, and improves the overall user experience for large projects with many source files or parallel builds with multiple compilation units.

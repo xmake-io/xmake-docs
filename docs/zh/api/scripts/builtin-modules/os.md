@@ -76,6 +76,16 @@ v3.0.4 以上版本，新增 `{copy_if_different = true}` 参数，仅在源文�
 os.cp("$(scriptdir)/config.h", "$(builddir)/inc/config.h", {copy_if_different = true})
 ```
 
+从 v3.0.5 开始，支持异步操作：
+
+```lua
+-- 异步复制文件（阻塞等待）
+os.cp("src/*.h", "dest/", {async = true})
+
+-- 异步复制文件（非阻塞，后台执行）
+os.cp("src/*.h", "dest/", {async = true, detach = true})
+```
+
 ## os.mv
 
 - 移动重命名文件或目录
@@ -116,7 +126,7 @@ os.mv("$(builddir)/libtest.a", "$(builddir)/libdemo.a")
 
 ::: tip API
 ```lua
-os.rm(path: <string>)
+os.rm(path: <string>, options?: <table>)
 ```
 :::
 
@@ -126,6 +136,7 @@ os.rm(path: <string>)
 | 参数 | 描述 |
 |------|------|
 | path | 文件或目录路径 |
+| options | 选项表（可选），支持 `async` 和 `detach` 参数 |
 
 #### 用法说明
 
@@ -134,6 +145,16 @@ os.rm(path: <string>)
 ```lua
 os.rm("$(builddir)/inc/**.h")
 os.rm("$(builddir)/lib/")
+```
+
+从 v3.0.5 开始，支持异步操作：
+
+```lua
+-- 异步删除文件（阻塞等待）
+os.rm("/tmp/xxx.txt", {async = true})
+
+-- 异步删除文件（非阻塞，后台执行）
+os.rm("/tmp/xxx.txt", {async = true, detach = true})
 ```
 
 ## os.trycp
@@ -517,7 +538,7 @@ end
 
 ::: tip API
 ```lua
-os.files(pattern: <string>)
+os.files(pattern: <string>, options?: <table>)
 ```
 :::
 
@@ -526,6 +547,7 @@ os.files(pattern: <string>)
 | 参数 | 描述 |
 |------|------|
 | pattern | 文件模式 |
+| options | 选项表（可选），支持 `async` 参数 |
 
 #### 用法说明
 
@@ -536,6 +558,13 @@ os.files(pattern: <string>)
 for _, filepath in ipairs(os.files("$(builddir)/inc/*.h")) do
     print(filepath)
 end
+```
+
+从 v3.0.5 开始，支持异步操作：
+
+```lua
+-- 异步查找文件（阻塞等待返回值）
+local files = os.files("src/*.c", {async = true})
 ```
 
 ## os.filedirs

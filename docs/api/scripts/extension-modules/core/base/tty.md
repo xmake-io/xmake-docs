@@ -642,3 +642,223 @@ local oldmode = tty.term_mode("stdout")
 tty.term_mode("stdout", newmode)
 ```
 
+## tty.cursor_move_up <Badge type="tip" text="v3.0.5" />
+
+- Move cursor up by n lines
+
+#### Function Prototype
+
+::: tip API
+```lua
+tty.cursor_move_up(n: <number>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| n | Number of lines to move up |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| tty | Returns the tty module for method chaining |
+
+#### Usage
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_up(3)  -- Move cursor up 3 lines
+```
+
+## tty.cursor_move_down <Badge type="tip" text="v3.0.5" />
+
+- Move cursor down by n lines
+
+#### Function Prototype
+
+::: tip API
+```lua
+tty.cursor_move_down(n: <number>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| n | Number of lines to move down |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| tty | Returns the tty module for method chaining |
+
+#### Usage
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_down(2)  -- Move cursor down 2 lines
+```
+
+## tty.cursor_move_left <Badge type="tip" text="v3.0.5" />
+
+- Move cursor left by n columns
+
+#### Function Prototype
+
+::: tip API
+```lua
+tty.cursor_move_left(n: <number>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| n | Number of columns to move left |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| tty | Returns the tty module for method chaining |
+
+#### Usage
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_left(5)  -- Move cursor left 5 columns
+```
+
+## tty.cursor_move_right <Badge type="tip" text="v3.0.5" />
+
+- Move cursor right by n columns
+
+#### Function Prototype
+
+::: tip API
+```lua
+tty.cursor_move_right(n: <number>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| n | Number of columns to move right |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| tty | Returns the tty module for method chaining |
+
+#### Usage
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_right(10)  -- Move cursor right 10 columns
+```
+
+## tty.cursor_move_to_col <Badge type="tip" text="v3.0.5" />
+
+- Move cursor to specific column
+
+#### Function Prototype
+
+::: tip API
+```lua
+tty.cursor_move_to_col(n: <number>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| n | Column number to move to (1-based) |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| tty | Returns the tty module for method chaining |
+
+#### Usage
+
+```lua
+import("core.base.tty")
+
+tty.cursor_move_to_col(1)  -- Move cursor to start of line
+```
+
+## tty.cursor_hide <Badge type="tip" text="v3.0.5" />
+
+- Hide cursor
+
+#### Function Prototype
+
+::: tip API
+```lua
+tty.cursor_hide()
+```
+:::
+
+#### Parameter Description
+
+No parameters
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| tty | Returns the tty module for method chaining |
+
+#### Usage
+
+```lua
+import("core.base.tty")
+
+tty.cursor_hide()  -- Hide cursor
+```
+
+## tty.cursor_show <Badge type="tip" text="v3.0.5" />
+
+- Show cursor
+
+#### Function Prototype
+
+::: tip API
+```lua
+tty.cursor_show()
+```
+:::
+
+#### Parameter Description
+
+No parameters
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| tty | Returns the tty module for method chaining |
+
+#### Usage
+
+```lua
+import("core.base.tty")
+
+tty.cursor_show()  -- Show cursor
+```
+

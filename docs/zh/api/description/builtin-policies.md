@@ -580,3 +580,26 @@ end
 ```lua
 set_policy("windows.manifest.uac.ui", true)
 ```
+
+## build.progress_style <Badge type="tip" text="v3.0.5" />
+
+设置构建进度输出的样式。支持两种样式：
+
+- `"single"`（默认）：单行进度输出，只更新一行进度信息
+- `"multirow"`：多行进度输出，显示多个并发构建任务及其各自的进度
+
+多行进度输出在长时间运行的构建过程中提供更好的视觉体验，使得监控并行编译变得更加容易。
+
+您可以通过两种方式启用多行进度输出：
+
+1. **通过主题配置**：使用 `soong` 主题，它默认包含多行进度：
+   ```bash
+   $ xmake g --theme=soong
+   ```
+
+2. **通过项目策略**：在 `xmake.lua` 中直接启用：
+   ```lua
+   set_policy("build.progress_style", "multirow")
+   ```
+
+这提供了更好的并行构建进度可见性，更容易识别编译缓慢的单元，并为包含大量源文件或具有多个编译单元的并行构建的大型项目改善了整体用户体验。

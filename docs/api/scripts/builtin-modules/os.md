@@ -78,6 +78,16 @@ Since v3.0.4, the parameter `{copy_if_different = true}` is added to copy files 
 os.cp("$(scriptdir)/config.h", "$(builddir)/inc/config.h", {copy_if_different = true})
 ```
 
+Starting from v3.0.5, async operations are supported:
+
+```lua
+-- Async copy files (blocking wait)
+os.cp("src/*.h", "dest/", {async = true})
+
+-- Async copy files (non-blocking, background execution)
+os.cp("src/*.h", "dest/", {async = true, detach = true})
+```
+
 ## os.mv
 
 - Move to rename a file or directory
@@ -118,7 +128,7 @@ os.mv("$(builddir)/libtest.a", "$(builddir)/libdemo.a")
 
 ::: tip API
 ```lua
-os.rm(path: <string>)
+os.rm(path: <string>, options?: <table>)
 ```
 :::
 
@@ -128,6 +138,7 @@ os.rm(path: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | path | File or directory path |
+| options | Optional options table, supports `async` and `detach` parameters |
 
 #### Usage
 
@@ -136,6 +147,16 @@ Support for recursive deletion of directories, bulk delete operations, and patte
 ```lua
 os.rm("$(builddir)/inc/**.h")
 os.rm("$(builddir)/lib/")
+```
+
+Starting from v3.0.5, async operations are supported:
+
+```lua
+-- Async delete file (blocking wait)
+os.rm("/tmp/xxx.txt", {async = true})
+
+-- Async delete file (non-blocking, background execution)
+os.rm("/tmp/xxx.txt", {async = true, detach = true})
 ```
 
 ## os.trycp
@@ -519,7 +540,7 @@ end
 
 ::: tip API
 ```lua
-os.files(pattern: <string>)
+os.files(pattern: <string>, options?: <table>)
 ```
 :::
 
@@ -529,6 +550,7 @@ os.files(pattern: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | pattern | File pattern |
+| options | Optional options table, supports `async` parameter |
 
 #### Usage
 
@@ -539,6 +561,13 @@ Supports pattern matching in [add_files](#targetadd_files), supports recursive a
 for _, filepath in ipairs(os.files("$(builddir)/inc/*.h")) do
     print(filepath)
 end
+```
+
+Starting from v3.0.5, async operations are supported:
+
+```lua
+-- Async find files (blocking wait for return value)
+local files = os.files("src/*.c", {async = true})
 ```
 
 ## os.filedirs

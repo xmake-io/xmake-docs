@@ -31,6 +31,64 @@ target("bar")
 
 关于这个接口的更多描述，可以到 [set_toolchains](/zh/api/description/project-target#set-toolchains) API 手册页详细了解。
 
+### 简化的工具链配置语法 <Badge type="tip" text="v3.0.5" />
+
+从 v3.0.5 开始，支持使用简化的内联语法进行工具链配置，使工具链设置更加简洁和声明式：
+
+**简化的工具链配置格式：**
+
+1. **仅工具链名称**：`clang`、`gcc`
+2. **工具链@包**：`clang@llvm-10`、`@muslcc`、`zig`
+3. **工具链[配置]@包**：`mingw[clang]@llvm-mingw`、`msvc[vs=2025]`
+
+**快速切换工具链配置：**
+
+您现在可以使用内联语法快速切换工具链配置：
+
+```lua
+-- 等价于：set_toolchains("mingw", {clang = true})
+set_toolchains("mingw[clang]")
+
+-- 命令行用法
+-- xmake f --toolchain=mingw[clang]
+```
+
+**示例：**
+
+```lua
+-- 简单工具链
+set_toolchains("clang")
+
+-- 带包的工具链
+set_toolchains("clang@llvm-10")
+set_toolchains("@muslcc")
+set_toolchains("zig")
+
+-- 带配置和包的工具链
+set_toolchains("mingw[clang]@llvm-mingw")
+set_toolchains("msvc[vs=2025]")
+
+-- 多个配置
+set_toolchains("mingw[clang]", {sdk = "/path/to/llvm-mingw"})
+```
+
+**其他改进：**
+
+- 为 llvm-mingw 工具链添加了 clang 支持：
+  ```bash
+  xmake f --toolchain=mingw[clang] --sdk=/xxx/llvm-mingw
+  ```
+  ```lua
+  set_toolchains("mingw[clang]@llvm-mingw")
+  ```
+
+- 为旧版本 NDK 工具链添加了 gcc 支持：
+  ```bash
+  xmake f -p android --toolchain=ndk[gcc] --ndk=/xxxx
+  ```
+
+这使得工具链配置更加简洁和可读，支持声明式工具链设置，并更易于管理多个工具链变体。
+
 ## 切换工具集 {#switch-toolsets}
 
 除了通过 set_toolchains 进行工具链切换，我们还可以使用 set_toolset 接口对 target 局部切换某个编译器。

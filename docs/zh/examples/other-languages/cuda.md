@@ -1,5 +1,5 @@
 
-创建一个空工程：
+### 创建一个空工程
 
 ```sh
 $ xmake create -P test -l cuda
@@ -34,4 +34,45 @@ $ xmake f --cuda=9.1
 $ xmake
 ```
 
-更多详情可以参考：[#158](https://github.com/xmake-io/xmake/issues/158)
+### 指定 CUDA SDK 版本
+
+从 v3.0.5 开始，您可以通过 `cuda.sdkver` 配置选项为特定目标指定 CUDA SDK 版本，让您对 CUDA 编译有精确的控制：
+
+```lua
+target("cuda_app")
+    set_kind("binary")
+    add_files("src/*.cu")
+    add_rules("cuda")
+    set_values("cuda.sdkver", "12.0")  -- 指定 CUDA SDK 版本
+```
+
+您也可以将其与针对特定 GPU 架构的计算能力设置结合使用：
+
+```lua
+target("cuda_app")
+    set_kind("binary")
+    add_files("src/*.cu")
+    add_rules("cuda")
+    set_values("cuda.sdkver", "12.0")
+    set_values("cuda.arch", "sm_75", "sm_80", "sm_86")
+```
+
+不同的目标可以使用不同的 CUDA 版本：
+
+```lua
+-- 使用 CUDA 11.8 的目标
+target("cuda11_app")
+    set_kind("binary")
+    add_files("src/cuda11/*.cu")
+    add_rules("cuda")
+    set_values("cuda.sdkver", "11.8")
+
+-- 使用 CUDA 12.0 的目标
+target("cuda12_app")
+    set_kind("binary")
+    add_files("src/cuda12/*.cu")
+    add_rules("cuda")
+    set_values("cuda.sdkver", "12.0")
+```
+
+更多详情可以参考：[#158](https://github.com/xmake-io/xmake/issues/158) 和 [#6964](https://github.com/xmake-io/xmake/pull/6964)
