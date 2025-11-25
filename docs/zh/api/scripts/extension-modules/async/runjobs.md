@@ -34,7 +34,7 @@ runjobs(name: <string>, jobs: <function|jobpool|jobgraph>, options?: <table>)
 | `comax` | number | 4 | 最大并发数 |
 | `timeout` | number | 500 | 定时器回调超时（毫秒，需 < 60000） |
 | `on_timer` | function | nil | 定时器回调：`function(running_jobs_indices)` |
-| `waiting_indicator` | boolean\|table | nil | 启用等待指示器，参见 [utils.waiting_indicator](/zh/api/scripts/extension-modules/utils/waiting-indicator) |
+| `waiting_indicator` | boolean\|table | nil | 启用等待指示器 |
 | `progress` | boolean | nil | **已废弃**：使用 `waiting_indicator` 代替 |
 | `progress_factor` | number | 1.0 | 进度计算因子 |
 | `progress_refresh` | boolean | nil | 启用多行进度刷新（v3.0.5） |
@@ -205,4 +205,4 @@ end, {
 })
 ```
 
-相关链接：[async.jobgraph](/zh/api/scripts/extension-modules/async/jobgraph), [async.jobpool](/zh/api/scripts/extension-modules/async/jobpool)
+相关链接：[async.jobgraph](/zh/api/scripts/extension-modules/async/jobgraph)

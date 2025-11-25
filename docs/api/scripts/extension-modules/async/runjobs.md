@@ -34,7 +34,7 @@ runjobs(name: <string>, jobs: <function|jobpool|jobgraph>, options?: <table>)
 | `comax` | number | 4 | Max concurrent jobs |
 | `timeout` | number | 500 | Timer callback timeout in ms (must be < 60000) |
 | `on_timer` | function | nil | Timer callback: `function(running_jobs_indices)` |
-| `waiting_indicator` | boolean\|table | nil | Enable waiting indicator. See [utils.waiting_indicator](/api/scripts/extension-modules/utils/waiting-indicator) |
+| `waiting_indicator` | boolean\|table | nil | Enable waiting indicator |
 | `progress` | boolean | nil | **Deprecated**: Use `waiting_indicator` instead |
 | `progress_factor` | number | 1.0 | Progress calculation factor |
 | `progress_refresh` | boolean | nil | Enable progress refresh for multirow progress (v3.0.5) |
@@ -205,4 +205,4 @@ end, {
 })
 ```
 
-See also: [async.jobgraph](/api/scripts/extension-modules/async/jobgraph), [async.jobpool](/api/scripts/extension-modules/async/jobpool)
+See also: [async.jobgraph](/api/scripts/extension-modules/async/jobgraph)
