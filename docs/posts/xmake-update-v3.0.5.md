@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.0.5 release, Multi-row progress, XML module and Swift interop
+title: Xmake v3.0.5 released, Multi-row progress, XML module and Swift interop
 tags: [xmake, swift, xml, async, progress, toolchain, cuda]
 date: 2025-11-17
 author: Ruki
