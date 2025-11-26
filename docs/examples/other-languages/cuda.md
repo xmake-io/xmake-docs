@@ -37,43 +37,16 @@ $ xmake
 
 ### Specify CUDA SDK Version
 
-Starting from v3.0.5, you can specify the CUDA SDK version for a specific target via the `cuda.sdkver` configuration option, giving you precise control over CUDA compilation:
+Starting from v3.0.5, you can specify the CUDA SDK version via the `--cuda_sdkver` command-line option, giving you precise control over CUDA compilation:
 
-```lua
-target("cuda_app")
-    set_kind("binary")
-    add_files("src/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "12.0")  -- Specify CUDA SDK version
+```bash
+$ xmake f --cuda_sdkver=11.8
+$ xmake
 ```
 
-You can also combine it with compute capability settings for specific GPU architectures:
-
-```lua
-target("cuda_app")
-    set_kind("binary")
-    add_files("src/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "12.0")
-    set_values("cuda.arch", "sm_75", "sm_80", "sm_86")
-```
-
-Different targets can use different CUDA versions:
-
-```lua
--- Target using CUDA 11.8
-target("cuda11_app")
-    set_kind("binary")
-    add_files("src/cuda11/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "11.8")
-
--- Target using CUDA 12.0
-target("cuda12_app")
-    set_kind("binary")
-    add_files("src/cuda12/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "12.0")
-```
+Supported version values include:
+- `11.8` - Specify CUDA 11.8 version
+- `11.x` - Specify CUDA 11.x series version
+- `auto` - Auto detect (default)
 
 If you want to known more information, you can see [#158](https://github.com/xmake-io/xmake/issues/158) and [#6964](https://github.com/xmake-io/xmake/pull/6964).

@@ -321,52 +321,24 @@ For more details, see: [#7024](https://github.com/xmake-io/xmake/pull/7024)
 
 ### Support specifying CUDA SDK version
 
-We have added support for specifying the CUDA SDK version via the `cuda_sdkver` configuration option, giving you precise control over CUDA compilation. This is essential when working with multiple CUDA installations or when you need to target a specific CUDA version for compatibility.
+We have added support for specifying the CUDA SDK version via the `--cuda_sdkver` command-line option, giving you precise control over CUDA compilation. This is essential when working with multiple CUDA installations or when you need to target a specific CUDA version for compatibility.
 
-You can specify the CUDA SDK version for a target:
+You can specify the CUDA SDK version via command-line:
 
-```lua
-target("cuda_app")
-    set_kind("binary")
-    add_files("src/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "12.0")  -- Specify CUDA SDK version
+```bash
+$ xmake f --cuda_sdkver=11.8
+$ xmake
 ```
 
-You can also combine it with compute capability settings for specific GPU architectures:
-
-```lua
-target("cuda_app")
-    set_kind("binary")
-    add_files("src/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "12.0")
-    set_values("cuda.arch", "sm_75", "sm_80", "sm_86")
-```
-
-Different targets can use different CUDA versions:
-
-```lua
--- Target using CUDA 11.8
-target("cuda11_app")
-    set_kind("binary")
-    add_files("src/cuda11/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "11.8")
-
--- Target using CUDA 12.0
-target("cuda12_app")
-    set_kind("binary")
-    add_files("src/cuda12/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "12.0")
-```
+Supported version values include:
+- `11.8` - Specify CUDA 11.8 version
+- `11.x` - Specify CUDA 11.x series version
+- `auto` - Auto detect (default)
 
 This feature is particularly useful for:
 - Projects requiring specific CUDA versions for compatibility
 - Multi-version CUDA development environments
 - Ensuring consistent CUDA compilation across different systems
-- Targeting specific GPU architectures with appropriate CUDA features
 
 For more details, see: [#6964](https://github.com/xmake-io/xmake/pull/6964)
 

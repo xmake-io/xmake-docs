@@ -321,52 +321,24 @@ TARGET_NAME=$(echo $TARGET_INFO | jq -r '.targets[0].name')
 
 ### 支持指定 CUDA SDK 版本 {#support-specify-cuda-sdk-version}
 
-我们添加了通过 `cuda_sdkver` 配置选项指定 CUDA SDK 版本的支持，让您对 CUDA 编译有精确的控制。这在处理多个 CUDA 安装或需要针对特定 CUDA 版本以确保兼容性时非常重要。
+我们添加了通过 `--cuda_sdkver` 命令行选项指定 CUDA SDK 版本的支持，让您对 CUDA 编译有精确的控制。这在处理多个 CUDA 安装或需要针对特定 CUDA 版本以确保兼容性时非常重要。
 
-您可以为目标指定 CUDA SDK 版本：
+您可以通过命令行参数指定 CUDA SDK 版本：
 
-```lua
-target("cuda_app")
-    set_kind("binary")
-    add_files("src/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "12.0")  -- 指定 CUDA SDK 版本
+```bash
+$ xmake f --cuda_sdkver=11.8
+$ xmake
 ```
 
-您也可以将其与针对特定 GPU 架构的计算能力设置结合使用：
-
-```lua
-target("cuda_app")
-    set_kind("binary")
-    add_files("src/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "12.0")
-    set_values("cuda.arch", "sm_75", "sm_80", "sm_86")
-```
-
-不同的目标可以使用不同的 CUDA 版本：
-
-```lua
--- 使用 CUDA 11.8 的目标
-target("cuda11_app")
-    set_kind("binary")
-    add_files("src/cuda11/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "11.8")
-
--- 使用 CUDA 12.0 的目标
-target("cuda12_app")
-    set_kind("binary")
-    add_files("src/cuda12/*.cu")
-    add_rules("cuda")
-    set_values("cuda.sdkver", "12.0")
-```
+支持的版本值包括：
+- `11.8` - 指定 CUDA 11.8 版本
+- `11.x` - 指定 CUDA 11.x 系列版本
+- `auto` - 自动检测（默认值）
 
 这个特性特别适用于：
 - 需要特定 CUDA 版本以确保兼容性的项目
 - 多版本 CUDA 开发环境
 - 确保在不同系统上一致的 CUDA 编译
-- 针对特定 GPU 架构使用相应的 CUDA 特性
 
 更多详情，请参考：[#6964](https://github.com/xmake-io/xmake/pull/6964)
 
