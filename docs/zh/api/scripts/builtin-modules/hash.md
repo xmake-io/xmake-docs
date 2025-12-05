@@ -5,13 +5,13 @@ hash 模块提供了哈希值计算和 UUID 生成功能，这是 xmake 的一�
 
 ## hash.md5
 
-- 计算字符串或文件的 MD5 哈希值
+- 计算文件或二进制数据的 MD5 哈希值
 
 #### 函数原型
 
 ::: tip API
 ```lua
-hash.md5(input: <string>)
+hash.md5(input: <string|bytes>)
 ```
 :::
 
@@ -20,30 +20,59 @@ hash.md5(input: <string>)
 
 | 参数 | 描述 |
 |------|------|
-| input | 字符串或文件路径 |
+| input | 文件路径（string）或二进制数据（bytes） |
+
+::: warning 重要提示
+- **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
+- **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
+- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash32`、`hash.strhash64` 或 `hash.strhash128` 接口
+- **常见错误**：如果文件不存在，函数会错误地将文件路径作为字符串数据来计算哈希值，且不会报错，导致结果不正确
+:::
 
 #### 用法说明
 
-计算指定字符串或文件的 MD5 哈希值，返回十六进制格式的哈希字符串。支持传入字符串或文件路径。
+计算指定文件或二进制数据的 MD5 哈希值，返回十六进制格式的哈希字符串。
 
-通常用于计算文件内容校验和：
+**计算文件哈希值：**
 
 ```lua
--- 读取文件内容并计算 MD5
-local content = io.readfile("file.txt")
-local checksum = hash.md5(content)
+-- 计算文件的 MD5 哈希值
+local checksum = hash.md5("/path/to/file.txt")
 print("MD5: " .. checksum)
+```
+
+**计算二进制数据哈希值：**
+
+```lua
+import("core.base.bytes")
+
+-- 计算二进制数据的 MD5 哈希值
+local data = bytes("hello")
+local checksum = hash.md5(data)
+print("MD5: " .. checksum)
+```
+
+**错误用法（不要这样做）：**
+
+```lua
+-- ❌ 错误：如果 "hello" 不是文件路径，会错误地计算文件路径字符串的哈希值
+local checksum = hash.md5("hello")
+
+-- ✅ 正确：使用 strhash 接口计算字符串哈希值
+local checksum = hash.strhash32("hello")
+-- 或者使用 bytes 包装
+local checksum = hash.md5(bytes("hello"))
 ```
 
 ## hash.sha1
 
-- 计算字符串或文件的 SHA1 哈希值
+- 计算文件或二进制数据的 SHA1 哈希值
 
 #### 函数原型
 
 ::: tip API
 ```lua
-hash.sha1(input: <string>)
+hash.sha1(input: <string|bytes>)
 ```
 :::
 
@@ -52,21 +81,43 @@ hash.sha1(input: <string>)
 
 | 参数 | 描述 |
 |------|------|
-| input | 字符串或文件路径 |
+| input | 文件路径（string）或二进制数据（bytes） |
+
+::: warning 重要提示
+- **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
+- **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
+- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash32`、`hash.strhash64` 或 `hash.strhash128` 接口
+:::
 
 #### 用法说明
 
-计算指定字符串或文件的 SHA1 哈希值，返回十六进制格式的哈希字符串。
+计算指定文件或二进制数据的 SHA1 哈希值，返回十六进制格式的哈希字符串。
+
+**计算文件哈希值：**
+
+```lua
+-- 计算文件的 SHA1 哈希值
+local checksum = hash.sha1("/path/to/file.txt")
+```
+
+**计算二进制数据哈希值：**
+
+```lua
+import("core.base.bytes")
+
+-- 计算二进制数据的 SHA1 哈希值
+local checksum = hash.sha1(bytes("hello"))
+```
 
 ## hash.sha256
 
-- 计算字符串或文件的 SHA256 哈希值
+- 计算文件或二进制数据的 SHA256 哈希值
 
 #### 函数原型
 
 ::: tip API
 ```lua
-hash.sha256(input: <string>)
+hash.sha256(input: <string|bytes>)
 ```
 :::
 
@@ -75,13 +126,21 @@ hash.sha256(input: <string>)
 
 | 参数 | 描述 |
 |------|------|
-| input | 字符串或文件路径 |
+| input | 文件路径（string）或二进制数据（bytes） |
+
+::: warning 重要提示
+- **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
+- **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
+- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash32`、`hash.strhash64` 或 `hash.strhash128` 接口
+:::
 
 #### 用法说明
 
-计算指定字符串或文件的 SHA256 哈希值，返回十六进制格式的哈希字符串。
+计算指定文件或二进制数据的 SHA256 哈希值，返回十六进制格式的哈希字符串。
 
 SHA256 比 MD5 更安全，常用于包的完整性校验：
+
+**计算文件哈希值：**
 
 ```lua
 -- 校验下载的包文件
@@ -90,6 +149,15 @@ local checksum = hash.sha256(packagefile)
 if checksum ~= expected_hash then
     raise("checksum mismatch!")
 end
+```
+
+**计算二进制数据哈希值：**
+
+```lua
+import("core.base.bytes")
+
+-- 计算二进制数据的 SHA256 哈希值
+local checksum = hash.sha256(bytes("hello"))
 ```
 
 ## hash.uuid
@@ -126,13 +194,13 @@ local config_id = hash.uuid("debug-x64-windows")
 
 ## hash.xxhash32
 
-- 计算字符串或文件的 32 位 xxHash 哈希值
+- 计算文件或二进制数据的 32 位 xxHash 哈希值
 
 #### 函数原型
 
 ::: tip API
 ```lua
-hash.xxhash32(input: <string>)
+hash.xxhash32(input: <string|bytes>)
 ```
 :::
 
@@ -141,21 +209,43 @@ hash.xxhash32(input: <string>)
 
 | 参数 | 描述 |
 |------|------|
-| input | 字符串或文件路径 |
+| input | 文件路径（string）或二进制数据（bytes） |
+
+::: warning 重要提示
+- **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
+- **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
+- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash32` 接口
+:::
 
 #### 用法说明
 
-使用 xxHash32 算法计算哈希值，xxHash 是一个极快的非加密哈希算法，适合用于哈希表、校验和等场景。
+使用 xxHash32 算法计算文件或二进制数据的哈希值，xxHash 是一个极快的非加密哈希算法，适合用于哈希表、校验和等场景。
+
+**计算文件哈希值：**
+
+```lua
+-- 计算文件的 xxHash32 哈希值
+local checksum = hash.xxhash32("/path/to/file.txt")
+```
+
+**计算二进制数据哈希值：**
+
+```lua
+import("core.base.bytes")
+
+-- 计算二进制数据的 xxHash32 哈希值
+local checksum = hash.xxhash32(bytes("hello"))
+```
 
 ## hash.xxhash64
 
-- 计算字符串或文件的 64 位 xxHash 哈希值
+- 计算文件或二进制数据的 64 位 xxHash 哈希值
 
 #### 函数原型
 
 ::: tip API
 ```lua
-hash.xxhash64(input: <string>)
+hash.xxhash64(input: <string|bytes>)
 ```
 :::
 
@@ -164,26 +254,55 @@ hash.xxhash64(input: <string>)
 
 | 参数 | 描述 |
 |------|------|
-| input | 字符串或文件路径 |
+| input | 文件路径（string）或二进制数据（bytes） |
+
+::: warning 重要提示
+- **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
+- **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
+- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash64` 接口
+:::
 
 #### 用法说明
 
-使用 xxHash64 算法计算哈希值，速度快，适合快速校验：
+使用 xxHash64 算法计算文件或二进制数据的哈希值，速度快，适合快速校验。
+
+**计算文件哈希值：**
 
 ```lua
--- 为编译参数生成快速哈希键
+-- 计算文件的 xxHash64 哈希值
+local checksum = hash.xxhash64("/path/to/file.txt")
+```
+
+**计算二进制数据哈希值：**
+
+```lua
+import("core.base.bytes")
+
+-- 计算二进制数据的 xxHash64 哈希值
+local checksum = hash.xxhash64(bytes("hello"))
+```
+
+**错误用法（不要这样做）：**
+
+```lua
+-- ❌ 错误：不要直接传入字符串数据
 local key = hash.xxhash64(table.concat(params, "|"))
+
+-- ✅ 正确：使用 strhash64 接口计算字符串哈希值
+local key = hash.strhash64(table.concat(params, "|"))
+-- 或者使用 bytes 包装
+local key = hash.xxhash64(bytes(table.concat(params, "|")))
 ```
 
 ## hash.xxhash128
 
-- 计算字符串或文件的 128 位 xxHash 哈希值
+- 计算文件或二进制数据的 128 位 xxHash 哈希值
 
 #### 函数原型
 
 ::: tip API
 ```lua
-hash.xxhash128(input: <string>)
+hash.xxhash128(input: <string|bytes>)
 ```
 :::
 
@@ -192,11 +311,33 @@ hash.xxhash128(input: <string>)
 
 | 参数 | 描述 |
 |------|------|
-| input | 字符串或文件路径 |
+| input | 文件路径（string）或二进制数据（bytes） |
+
+::: warning 重要提示
+- **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
+- **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
+- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash128` 接口
+:::
 
 #### 用法说明
 
-使用 xxHash128 算法计算哈希值，提供更长的哈希值以减少冲突。
+使用 xxHash128 算法计算文件或二进制数据的哈希值，提供更长的哈希值以减少冲突。
+
+**计算文件哈希值：**
+
+```lua
+-- 计算文件的 xxHash128 哈希值
+local checksum = hash.xxhash128("/path/to/file.txt")
+```
+
+**计算二进制数据哈希值：**
+
+```lua
+import("core.base.bytes")
+
+-- 计算二进制数据的 xxHash128 哈希值
+local checksum = hash.xxhash128(bytes("hello"))
+```
 
 ## hash.strhash32
 

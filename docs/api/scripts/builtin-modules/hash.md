@@ -5,13 +5,13 @@ The hash module provides hash value calculation and UUID generation functions. I
 
 ## hash.md5
 
-- Calculate the MD5 hash value of a string or file
+- Calculate the MD5 hash value of a file or binary data
 
 #### Function Prototype
 
 ::: tip API
 ```lua
-hash.md5(input: <string>)
+hash.md5(input: <string|bytes>)
 ```
 :::
 
@@ -20,35 +20,59 @@ hash.md5(input: <string>)
 
 | Parameter | Description |
 |-----------|-------------|
-| input | String or file path |
+| input | File path (string) or binary data (bytes) |
+
+::: warning Important Notes
+- **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
+- **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
+- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash32`, `hash.strhash64`, or `hash.strhash128` interfaces
+- **Common mistake**: If the file doesn't exist, the function will incorrectly treat the file path as string data to calculate the hash value, and it won't report an error, resulting in incorrect results
+:::
 
 #### Usage
 
+Calculates the MD5 hash value of the specified file or binary data and returns a hexadecimal format hash string.
+
+**Calculate file hash value:**
+
 ```lua
-local hashval = hash.md5("hello")
-local hashval = hash.md5("/path/to/file")
+-- Calculate MD5 hash value of a file
+local checksum = hash.md5("/path/to/file.txt")
+print("MD5: " .. checksum)
 ```
 
-Calculates the MD5 hash value of the specified string or file and returns a hexadecimal format hash string. Supports both string and file path as input.
-
-Commonly used for calculating file content checksums:
+**Calculate binary data hash value:**
 
 ```lua
--- Read file content and calculate MD5
-local content = io.readfile("file.txt")
-local checksum = hash.md5(content)
+import("core.base.bytes")
+
+-- Calculate MD5 hash value of binary data
+local data = bytes("hello")
+local checksum = hash.md5(data)
 print("MD5: " .. checksum)
+```
+
+**Incorrect usage (don't do this):**
+
+```lua
+-- ❌ Wrong: If "hello" is not a file path, it will incorrectly calculate the hash of the file path string
+local checksum = hash.md5("hello")
+
+-- ✅ Correct: Use strhash interface to calculate string hash value
+local checksum = hash.strhash32("hello")
+-- Or use bytes wrapper
+local checksum = hash.md5(bytes("hello"))
 ```
 
 ## hash.sha1
 
-- Calculate the SHA1 hash value of a string or file
+- Calculate the SHA1 hash value of a file or binary data
 
 #### Function Prototype
 
 ::: tip API
 ```lua
-hash.sha1(input: <string>)
+hash.sha1(input: <string|bytes>)
 ```
 :::
 
@@ -57,26 +81,43 @@ hash.sha1(input: <string>)
 
 | Parameter | Description |
 |-----------|-------------|
-| input | String or file path |
+| input | File path (string) or binary data (bytes) |
+
+::: warning Important Notes
+- **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
+- **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
+- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash32`, `hash.strhash64`, or `hash.strhash128` interfaces
+:::
 
 #### Usage
 
+Calculates the SHA1 hash value of the specified file or binary data and returns a hexadecimal format hash string.
+
+**Calculate file hash value:**
+
 ```lua
-local hashval = hash.sha1("hello")
-local hashval = hash.sha1("/path/to/file")
+-- Calculate SHA1 hash value of a file
+local checksum = hash.sha1("/path/to/file.txt")
 ```
 
-Calculates the SHA1 hash value of the specified string or file and returns a hexadecimal format hash string.
+**Calculate binary data hash value:**
+
+```lua
+import("core.base.bytes")
+
+-- Calculate SHA1 hash value of binary data
+local checksum = hash.sha1(bytes("hello"))
+```
 
 ## hash.sha256
 
-- Calculate the SHA256 hash value of a string or file
+- Calculate the SHA256 hash value of a file or binary data
 
 #### Function Prototype
 
 ::: tip API
 ```lua
-hash.sha256(input: <string>)
+hash.sha256(input: <string|bytes>)
 ```
 :::
 
@@ -85,18 +126,21 @@ hash.sha256(input: <string>)
 
 | Parameter | Description |
 |-----------|-------------|
-| input | String or file path |
+| input | File path (string) or binary data (bytes) |
+
+::: warning Important Notes
+- **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
+- **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
+- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash32`, `hash.strhash64`, or `hash.strhash128` interfaces
+:::
 
 #### Usage
 
-```lua
-local hashval = hash.sha256("hello")
-local hashval = hash.sha256("/path/to/file")
-```
-
-Calculates the SHA256 hash value of the specified string or file and returns a hexadecimal format hash string.
+Calculates the SHA256 hash value of the specified file or binary data and returns a hexadecimal format hash string.
 
 SHA256 is more secure than MD5 and is commonly used for package integrity verification:
+
+**Calculate file hash value:**
 
 ```lua
 -- Verify downloaded package file
@@ -105,6 +149,15 @@ local checksum = hash.sha256(packagefile)
 if checksum ~= expected_hash then
     raise("checksum mismatch!")
 end
+```
+
+**Calculate binary data hash value:**
+
+```lua
+import("core.base.bytes")
+
+-- Calculate SHA256 hash value of binary data
+local checksum = hash.sha256(bytes("hello"))
 ```
 
 ## hash.uuid
@@ -145,13 +198,13 @@ local config_id = hash.uuid("debug-x64-windows")
 
 ## hash.xxhash32
 
-- Calculate the 32-bit xxHash hash value of a string or file
+- Calculate the 32-bit xxHash hash value of a file or binary data
 
 #### Function Prototype
 
 ::: tip API
 ```lua
-hash.xxhash32(input: <string>)
+hash.xxhash32(input: <string|bytes>)
 ```
 :::
 
@@ -160,21 +213,43 @@ hash.xxhash32(input: <string>)
 
 | Parameter | Description |
 |-----------|-------------|
-| input | String or file path |
+| input | File path (string) or binary data (bytes) |
+
+::: warning Important Notes
+- **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
+- **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
+- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash32` interface
+:::
 
 #### Usage
 
 Calculates hash value using the xxHash32 algorithm. xxHash is an extremely fast non-cryptographic hash algorithm suitable for hash tables, checksums, and other scenarios.
 
+**Calculate file hash value:**
+
+```lua
+-- Calculate xxHash32 hash value of a file
+local checksum = hash.xxhash32("/path/to/file.txt")
+```
+
+**Calculate binary data hash value:**
+
+```lua
+import("core.base.bytes")
+
+-- Calculate xxHash32 hash value of binary data
+local checksum = hash.xxhash32(bytes("hello"))
+```
+
 ## hash.xxhash64
 
-- Calculate the 64-bit xxHash hash value of a string or file
+- Calculate the 64-bit xxHash hash value of a file or binary data
 
 #### Function Prototype
 
 ::: tip API
 ```lua
-hash.xxhash64(input: <string>)
+hash.xxhash64(input: <string|bytes>)
 ```
 :::
 
@@ -183,26 +258,55 @@ hash.xxhash64(input: <string>)
 
 | Parameter | Description |
 |-----------|-------------|
-| input | String or file path |
+| input | File path (string) or binary data (bytes) |
+
+::: warning Important Notes
+- **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
+- **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
+- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash64` interface
+:::
 
 #### Usage
 
-Calculates hash value using the xxHash64 algorithm. Fast and suitable for quick verification:
+Calculates hash value using the xxHash64 algorithm. Fast and suitable for quick verification.
+
+**Calculate file hash value:**
 
 ```lua
--- Generate fast hash key for compilation parameters
+-- Calculate xxHash64 hash value of a file
+local checksum = hash.xxhash64("/path/to/file.txt")
+```
+
+**Calculate binary data hash value:**
+
+```lua
+import("core.base.bytes")
+
+-- Calculate xxHash64 hash value of binary data
+local checksum = hash.xxhash64(bytes("hello"))
+```
+
+**Incorrect usage (don't do this):**
+
+```lua
+-- ❌ Wrong: Don't pass string data directly
 local key = hash.xxhash64(table.concat(params, "|"))
+
+-- ✅ Correct: Use strhash64 interface to calculate string hash value
+local key = hash.strhash64(table.concat(params, "|"))
+-- Or use bytes wrapper
+local key = hash.xxhash64(bytes(table.concat(params, "|")))
 ```
 
 ## hash.xxhash128
 
-- Calculate the 128-bit xxHash hash value of a string or file
+- Calculate the 128-bit xxHash hash value of a file or binary data
 
 #### Function Prototype
 
 ::: tip API
 ```lua
-hash.xxhash128(input: <string>)
+hash.xxhash128(input: <string|bytes>)
 ```
 :::
 
@@ -211,11 +315,33 @@ hash.xxhash128(input: <string>)
 
 | Parameter | Description |
 |-----------|-------------|
-| input | String or file path |
+| input | File path (string) or binary data (bytes) |
+
+::: warning Important Notes
+- **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
+- **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
+- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash128` interface
+:::
 
 #### Usage
 
 Calculates hash value using the xxHash128 algorithm, providing longer hash values to reduce collisions.
+
+**Calculate file hash value:**
+
+```lua
+-- Calculate xxHash128 hash value of a file
+local checksum = hash.xxhash128("/path/to/file.txt")
+```
+
+**Calculate binary data hash value:**
+
+```lua
+import("core.base.bytes")
+
+-- Calculate xxHash128 hash value of binary data
+local checksum = hash.xxhash128(bytes("hello"))
+```
 
 ## hash.strhash32
 
