@@ -25,7 +25,6 @@ hash.md5(input: <string|bytes>)
 ::: warning 重要提示
 - **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
 - **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
-- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash32`、`hash.strhash64` 或 `hash.strhash128` 接口
 - **常见错误**：如果文件不存在，函数会错误地将文件路径作为字符串数据来计算哈希值，且不会报错，导致结果不正确
 :::
 
@@ -58,9 +57,7 @@ print("MD5: " .. checksum)
 -- ❌ 错误：如果 "hello" 不是文件路径，会错误地计算文件路径字符串的哈希值
 local checksum = hash.md5("hello")
 
--- ✅ 正确：使用 strhash 接口计算字符串哈希值
-local checksum = hash.strhash32("hello")
--- 或者使用 bytes 包装
+-- ✅ 正确：使用 bytes 包装二进制数据
 local checksum = hash.md5(bytes("hello"))
 ```
 
@@ -86,7 +83,6 @@ hash.sha1(input: <string|bytes>)
 ::: warning 重要提示
 - **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
 - **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
-- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash32`、`hash.strhash64` 或 `hash.strhash128` 接口
 :::
 
 #### 用法说明
@@ -131,7 +127,6 @@ hash.sha256(input: <string|bytes>)
 ::: warning 重要提示
 - **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
 - **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
-- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash32`、`hash.strhash64` 或 `hash.strhash128` 接口
 :::
 
 #### 用法说明
@@ -214,7 +209,6 @@ hash.xxhash32(input: <string|bytes>)
 ::: warning 重要提示
 - **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
 - **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
-- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash32` 接口
 :::
 
 #### 用法说明
@@ -259,7 +253,6 @@ hash.xxhash64(input: <string|bytes>)
 ::: warning 重要提示
 - **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
 - **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
-- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash64` 接口
 :::
 
 #### 用法说明
@@ -288,9 +281,7 @@ local checksum = hash.xxhash64(bytes("hello"))
 -- ❌ 错误：不要直接传入字符串数据
 local key = hash.xxhash64(table.concat(params, "|"))
 
--- ✅ 正确：使用 strhash64 接口计算字符串哈希值
-local key = hash.strhash64(table.concat(params, "|"))
--- 或者使用 bytes 包装
+-- ✅ 正确：使用 bytes 包装二进制数据
 local key = hash.xxhash64(bytes(table.concat(params, "|")))
 ```
 
@@ -316,7 +307,6 @@ hash.xxhash128(input: <string|bytes>)
 ::: warning 重要提示
 - **string 参数只能作为文件路径传入**：如果传入的字符串是文件路径，函数会计算该文件的哈希值
 - **二进制数据必须使用 bytes 参数**：要计算二进制数据的哈希值，必须使用 `bytes()` 函数包装数据
-- **字符串数据的哈希计算**：如果要计算字符串数据的哈希值，请使用 `hash.strhash128` 接口
 :::
 
 #### 用法说明

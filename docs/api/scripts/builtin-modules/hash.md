@@ -25,7 +25,6 @@ hash.md5(input: <string|bytes>)
 ::: warning Important Notes
 - **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
 - **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
-- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash32`, `hash.strhash64`, or `hash.strhash128` interfaces
 - **Common mistake**: If the file doesn't exist, the function will incorrectly treat the file path as string data to calculate the hash value, and it won't report an error, resulting in incorrect results
 :::
 
@@ -58,9 +57,7 @@ print("MD5: " .. checksum)
 -- ❌ Wrong: If "hello" is not a file path, it will incorrectly calculate the hash of the file path string
 local checksum = hash.md5("hello")
 
--- ✅ Correct: Use strhash interface to calculate string hash value
-local checksum = hash.strhash32("hello")
--- Or use bytes wrapper
+-- ✅ Correct: Use bytes wrapper for binary data
 local checksum = hash.md5(bytes("hello"))
 ```
 
@@ -86,7 +83,6 @@ hash.sha1(input: <string|bytes>)
 ::: warning Important Notes
 - **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
 - **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
-- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash32`, `hash.strhash64`, or `hash.strhash128` interfaces
 :::
 
 #### Usage
@@ -131,7 +127,6 @@ hash.sha256(input: <string|bytes>)
 ::: warning Important Notes
 - **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
 - **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
-- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash32`, `hash.strhash64`, or `hash.strhash128` interfaces
 :::
 
 #### Usage
@@ -218,7 +213,6 @@ hash.xxhash32(input: <string|bytes>)
 ::: warning Important Notes
 - **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
 - **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
-- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash32` interface
 :::
 
 #### Usage
@@ -263,7 +257,6 @@ hash.xxhash64(input: <string|bytes>)
 ::: warning Important Notes
 - **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
 - **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
-- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash64` interface
 :::
 
 #### Usage
@@ -292,9 +285,7 @@ local checksum = hash.xxhash64(bytes("hello"))
 -- ❌ Wrong: Don't pass string data directly
 local key = hash.xxhash64(table.concat(params, "|"))
 
--- ✅ Correct: Use strhash64 interface to calculate string hash value
-local key = hash.strhash64(table.concat(params, "|"))
--- Or use bytes wrapper
+-- ✅ Correct: Use bytes wrapper for binary data
 local key = hash.xxhash64(bytes(table.concat(params, "|")))
 ```
 
@@ -320,7 +311,6 @@ hash.xxhash128(input: <string|bytes>)
 ::: warning Important Notes
 - **String parameter is only for file paths**: If a string is passed, the function will calculate the hash value of that file
 - **Binary data must use bytes parameter**: To calculate the hash value of binary data, you must wrap the data with the `bytes()` function
-- **String data hashing**: To calculate the hash value of string data, please use `hash.strhash128` interface
 :::
 
 #### Usage
