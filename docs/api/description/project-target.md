@@ -3271,6 +3271,70 @@ In the case of the msvc compiler, it will be:
 In addition, the dependency package introduced with `add_requires()` will also use `-isystem` as the external system header file by default.
 :::
 
+## add_embeddirs
+
+### Add #embed search directory
+
+#### Function Prototype
+
+::: tip API
+```lua
+add_embeddirs(embeddirs: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| embeddirs | #embed search directory string or array, supports wildcard matching patterns |
+| ... | Variable parameters, can pass multiple #embed search directory strings |
+| public\|interface\|private | Visibility setting, see [Visibility Settings](#visibility) for details |
+
+#### Usage
+
+Set the search directory for the C23 `#embed` preprocessor directive, similar to how `add_includedirs` works. This interface is used to configure the directory paths that the compiler searches when looking for files referenced by `#embed` directives.
+
+Both clang and gcc support the C23 `#embed` feature and provide the `--embed-dir=` argument to set the search path.
+
+```lua
+target("test")
+    set_kind("binary")
+    set_languages("c23")
+    add_embeddirs("./my_dir")
+    add_files("src/*.c")
+```
+
+You can also set different search paths based on platform or configuration conditions:
+
+```lua
+target("test")
+    set_kind("binary")
+    set_languages("c23")
+    add_embeddirs("./my_dir")
+    on_config("linux", function(target)
+        target:add("embeddirs", "./linux/embeds")
+    end)
+    add_files("src/*.c")
+```
+
+The generated compilation options are as follows:
+
+```sh
+--embed-dir=./my_dir --embed-dir=./linux/embeds
+```
+
+:::tip NOTE
+Using the `#embed` feature requires setting the C23 language standard, which can be enabled via `set_languages("c23")`. If you don't want it to be fixed in the project, you can also set it through `cxflags`/`cxxflags`, but you need to provide different argument formats for different compilers. Using `add_embeddirs` can automatically adapt to different compilers.
+:::
+
+:::tip TIP
+For embedding binary files using `#embed`, you can also refer to the [utils.bin2c](builtin-rules.md#utilsbin2c) rule, which provides another way to embed binary files into code.
+:::
+
 ## add_defines
 
 ### Add macro definition

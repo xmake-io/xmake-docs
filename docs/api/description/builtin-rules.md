@@ -612,6 +612,10 @@ cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
   0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
 ```
 
+:::tip TIP
+If you are using a compiler that supports the C23 `#embed` feature (such as clang or gcc), you can also use the `#embed` directive directly to embed binary files. You need to set the C23 language standard first via `set_languages("c23")`, and then use [add_embeddirs](project-target.md#add_embeddirs) to set the search path. This approach is more aligned with the C23 standard and does not require generating additional header files.
+:::
+
 ## utils.glsl2spv
 
 This rule can be used in v2.6.1 and above. Import glsl shader files such as `*.vert/*.frag` into the project, and then realize automatic compilation to generate `*.spv` files.

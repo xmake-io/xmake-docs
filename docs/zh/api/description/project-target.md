@@ -3335,6 +3335,70 @@ target("test")
 另外，使用 `add_requires()` 引入的依赖包，默认也会使用 `-isystem` 作为外部系统头文件。
 :::
 
+## add_embeddirs
+
+### 添加 #embed 搜索目录
+
+#### 函数原型
+
+::: tip API
+```lua
+add_embeddirs(embeddirs: <string|array>, ..., {
+    public|interface|private = <boolean>
+})
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| embeddirs | #embed 搜索目录字符串或数组，支持通配符匹配模式 |
+| ... | 可变参数，可传入多个 #embed 搜索目录字符串 |
+| public\|interface\|private | 可见性设置，详见[可见性设置](#visibility) |
+
+#### 用法说明
+
+设置 C23 `#embed` 预处理器的搜索目录，类似于 `add_includedirs` 的工作方式。此接口用于配置编译器在查找 `#embed` 指令引用的文件时搜索的目录路径。
+
+clang 和 gcc 都支持 C23 `#embed` 特性，并且都提供了 `--embed-dir=` 参数来设置搜索路径。
+
+```lua
+target("test")
+    set_kind("binary")
+    set_languages("c23")
+    add_embeddirs("./my_dir")
+    add_files("src/*.c")
+```
+
+也可以根据平台或配置条件设置不同的搜索路径：
+
+```lua
+target("test")
+    set_kind("binary")
+    set_languages("c23")
+    add_embeddirs("./my_dir")
+    on_config("linux", function(target)
+        target:add("embeddirs", "./linux/embeds")
+    end)
+    add_files("src/*.c")
+```
+
+生成的编译选项如下：
+
+```sh
+--embed-dir=./my_dir --embed-dir=./linux/embeds
+```
+
+:::tip 注意
+使用 `#embed` 特性需要设置 C23 语言标准，通过 `set_languages("c23")` 来启用。如果不想在工程中写死，也可以通过 `cxflags`/`cxxflags` 来设置，但需要根据不同编译器提供不同的参数格式，使用 `add_embeddirs` 可以自动适配不同编译器。
+:::
+
+:::tip 提示
+关于使用 `#embed` 嵌入二进制文件，也可以参考 [utils.bin2c](builtin-rules.md#utilsbin2c) 规则，它提供了另一种将二进制文件嵌入到代码中的方式。
+:::
+
 ## add_defines
 
 ### 添加宏定义

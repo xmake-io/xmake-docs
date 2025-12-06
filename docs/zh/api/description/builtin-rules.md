@@ -601,6 +601,10 @@ cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
   0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x78, 0x6D, 0x61, 0x6B, 0x65, 0x21, 0x0A, 0x00
 ```
 
+:::tip 提示
+如果你使用支持 C23 `#embed` 特性的编译器（如 clang 或 gcc），也可以直接使用 `#embed` 指令来嵌入二进制文件。需要先通过 `set_languages("c23")` 设置 C23 语言标准，然后使用 [add_embeddirs](project-target.md#add_embeddirs) 来设置搜索路径。这种方式更符合 C23 标准，无需生成额外的头文件。
+:::
+
 ## utils.glsl2spv
 
 v2.6.1 以上版本可以使用此规则，在项目中引入 `*.vert/*.frag` 等 glsl shader 文件，然后实现自动编译生成 `*.spv` 文件。
