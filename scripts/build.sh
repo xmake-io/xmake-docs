@@ -8,3 +8,4 @@ npm add glob -D
 npm install
 npm run generate-blog
 npx vitepress build docs
+node scripts/fix-llms-txt.cjs

@@ -1,0 +1,19 @@
+{
+  "mimeTypes": {
+    ".txt": "text/plain; charset=utf-8"
+  },
+  "routes": [
+    {
+      "route": "/llms.txt",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8"
+      }
+    },
+    {
+      "route": "/llms-full.txt",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8"
+      }
+    }
+  ]
+}
