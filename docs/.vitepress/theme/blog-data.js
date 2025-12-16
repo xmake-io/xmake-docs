@@ -1,6 +1,6 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.5 preview, Multi-row progress, XML module and Swift interop",
+    "title": "Xmake v3.0.5 released, Multi-row progress, XML module and Swift interop",
     "url": "/posts/xmake-update-v3.0.5",
     "date": {
       "time": 1763380800000,
@@ -16,7 +16,7 @@ export const posts = [
       "toolchain",
       "cuda"
     ],
-    "excerpt": "<p>In the new version, we have introduced several major features that significantly enhance the development experience. The highlights include <strong>multi-row progress output</strong> with theme support for better build visibility, a comprehensive <strong>XML module</strong> for parsing and encoding XML data, **asynchronous O...</p>\n<p>We have improved the progress output to support multi-row refresh, providing a significantly better visual experience during long-running builds. Instead of updating a single progress line, the build output now displays multiple concurrent build tasks with their individual progress, making it easier...</p>\n<p>The output now shows multiple progress lines for parallel builds with real-time status updates for each compilation task:</p>\n"
+    "excerpt": "<p>In the new version, we have introduced several major features that significantly enhance the development experience. The highlights include <strong>multi-row progress output</strong> with theme support for better build visibility, a comprehensive <strong>XML module</strong> for parsing and encoding XML data, **asynchronous O...</p>\n<p><strong>Download:</strong> <a href=\"https://github.com/xmake-io/xmake/releases/tag/v3.0.5\">GitHub Releases</a> | <a href=\"https://github.com/xmake-io/xmake\">Source Repository</a></p>\n<p>We have improved the progress output to support multi-row refresh, providing a significantly better visual experience during long-running builds. Instead of updating a single progress line, the build output now displays multiple concurrent build tasks with their individual progress, making it easier...</p>\n"
   },
   {
     "title": "Xmake v2.9.1 released, Add native lua modules support",
@@ -725,6 +725,116 @@ export const posts = [
     "excerpt": "<p>Xmake is a lightweight modern C/C++ project build tool based on Lua. Its main features are: easy to use syntax, more readable project maintenance, and a consistent build experience across platforms.</p>\n<p>This article mainly explains in detail how to load and run the compiled target program, and how to debug.</p>\n<ul>\n<li><a href=\"https://github.com/xmake-io/xmake\">Project Source</a></li>\n<li><a href=\"https://xmake.io/\">Official Documents</a></li>\n</ul>\n"
   },
   {
+    "title": "Using Custom Build Rules in xmake",
+    "url": "/posts/custom-rule",
+    "date": {
+      "time": 1510574400000,
+      "string": "November 13, 2017"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "custom rules"
+    ],
+    "excerpt": "<p>After version 2.1.9, xmake not only natively supports building multiple language files, but also allows users to implement complex unknown file builds through custom build rules.</p>\n<p>For specific usage instructions, please refer to the relevant documentation: <a href=\"https://xmake.io/\">Rule Usage Manual</a></p>\n<p>We can extend build support for other files by pre-setting the file extensions supported by rules:</p>\n"
+  },
+  {
+    "title": "Precompiled Header File Handling by Different Compilers",
+    "url": "/posts/precompiled-header",
+    "date": {
+      "time": 1501502400000,
+      "string": "July 31, 2017"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "precompiled headers",
+      "c++ compilation acceleration",
+      "optimization compilation",
+      "cross-platform"
+    ],
+    "excerpt": "<p>Recently, in order to implement precompiled header file support for <a href=\"https://xmake.io\">xmake</a>, I studied the mechanisms and differences of how major mainstream compilers handle precompiled headers.</p>\n<p>Most c/c++ compilers now support precompiled headers, such as: gcc, clang, msvc, etc., to optimize c++ code compilation speed. After all, if c++ header files contain template definitions, compilation speed is very slow. If most common header files can be placed in a <code>header.h</code> and precompiled before...</p>\n<p>However, different compilers have different levels of support and handling methods for it, and it's not very universal. It took a lot of effort to encapsulate it into a unified interface and usage method in xmake.</p>\n"
+  },
+  {
+    "title": "xmake Description Syntax and Scope Explained",
+    "url": "/posts/api-scope",
+    "date": {
+      "time": 1477483200000,
+      "string": "October 26, 2016"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "api",
+      "project description",
+      "scope"
+    ],
+    "excerpt": "<p>Although xmake's project description file <code>xmake.lua</code> is based on lua syntax, xmake has wrapped it with an additional layer to make writing project build logic more convenient and concise, so that writing <code>xmake.lua</code> won't be as tedious as writing makefiles.</p>\n<p>Basically, writing a simple project build description only takes three lines, for example:</p>\n<pre><code class=\"language-lua\">target(&quot;test&quot;)\n    set_kind(&quot;binary&quot;)\n    add_files(&quot;src/*.c&quot;)\n</code></pre>\n"
+  },
+  {
+    "title": "Using Built-in Variables and External Variables in xmake",
+    "url": "/posts/variables-usage",
+    "date": {
+      "time": 1470657600000,
+      "string": "August 8, 2016"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "built-in variables",
+      "external variables"
+    ],
+    "excerpt": "<p>Embedded in strings, for example:</p>\n<pre><code class=\"language-lua\">    set_objectdir(&quot;$(buildir)/.objs&quot;)\n</code></pre>\n<p>Among them, <code>$(buildir)</code> is a built-in variable. These automatically change as the configuration changes with each <code>xmake config</code>.</p>\n"
+  },
+  {
+    "title": "Advanced Feature: Custom Options",
+    "url": "/posts/custom-option",
+    "date": {
+      "time": 1470571200000,
+      "string": "August 7, 2016"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "custom options"
+    ],
+    "excerpt": "<p>xmake can also support some custom option switches, making projects support optional compilation and facilitating modular project management.</p>\n<p>Let's take a practical example:</p>\n<p>We want to add a new switch option called <code>hello</code> to our project. If this switch is enabled, it will add some specific source files to the target, but this switch is disabled by default and needs to be linked and used by configuring <code>xmake f --hello=true</code>.</p>\n"
+  },
+  {
+    "title": "Adding Dependencies and Auto-detection Mechanism",
+    "url": "/posts/add-package-and-autocheck",
+    "date": {
+      "time": 1470484800000,
+      "string": "August 6, 2016"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "dependencies",
+      "auto-detection"
+    ],
+    "excerpt": "<p>xmake encapsulates dependency libraries, dependency headers, dependency types, and dependency interfaces uniformly using the option mechanism, and further introduces a package mechanism at a higher level, making adding and detecting dependencies more modular and simpler.</p>\n<p>Let's look at how xmake's package mechanism works through a specific example.</p>\n<p>Suppose your project already has two packages: <code>zlib.pkg</code> and <code>polarssl.pkg</code> (how to build packages will be explained in detail later; for now, you can refer to the examples of existing packages in <a href=\"https://github.com/waruqi/tbox/tree/master/pkg\">TBOX dependencies</a>). Your project directory structure...</p>\n"
+  },
+  {
+    "title": "Selective Compilation in xmake Project Description",
+    "url": "/posts/condition-and-select-compile",
+    "date": {
+      "time": 1469275200000,
+      "string": "July 23, 2016"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "compilation",
+      "project description",
+      "xmake.lua",
+      "conditional judgment"
+    ],
+    "excerpt": "<p>xmake provides some built-in conditional judgment APIs for obtaining relevant information about project status during selective compilation to adjust compilation logic.</p>\n<p>For example: <code>is_os</code>, <code>is_plat</code>, <code>is_arch</code>, <code>is_kind</code>, <code>is_mode</code>, <code>is_option</code></p>\n<p>Let's first talk about how to use the most commonly used <code>is_mode</code>. This API is mainly used to judge the current compilation mode. For example, when configuring compilation normally, you will execute:</p>\n"
+  },
+  {
     "title": "How to complie project using the cross-toolchains",
     "url": "/posts/how-to-compile-on-cross-toolchains",
     "date": {
@@ -786,5 +896,52 @@ export const posts = [
       "package"
     ],
     "excerpt": "<p>Packages all targets for the current platform:</p>\n<pre><code class=\"language-bash\">    $xmake p\n    $xmake package\n</code></pre>\n<p>Packages the target test to the output directory: /tmp</p>\n"
+  },
+  {
+    "title": "Plugin Development: Import Libraries",
+    "url": "/posts/api-import",
+    "date": {
+      "time": 1465473600000,
+      "string": "June 9, 2016"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "plugin",
+      "import",
+      "library",
+      "custom script"
+    ],
+    "excerpt": "<p><code>import</code> is mainly used to import xmake's extension libraries and some custom library modules. It is generally used in custom scripts (<code>on_build</code>, <code>on_run</code> ..), plugin development, template development, platform extensions, custom tasks, etc.</p>\n<p>The import mechanism is as follows:</p>\n<ol>\n<li>First import from the current script directory</li>\n<li>Then import from extension libraries</li>\n</ol>\n"
+  },
+  {
+    "title": "Advanced Feature: Custom Task",
+    "url": "/posts/custom-task",
+    "date": {
+      "time": 1465473600000,
+      "string": "June 9, 2016"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "task",
+      "custom script",
+      "plugin"
+    ],
+    "excerpt": "<p><code>task</code> is a new feature starting from xmake 2.0 and is also the core of plugin development. In <a href=\"https://xmake.io/\">Plugin Development: Hello xmake</a> we briefly introduced the definition and usage of tasks.</p>\n<p>Of course, tasks can not only be used to write plugins, but also to write some simple custom tasks.</p>\n<p>Let's first look at a simple task implementation:</p>\n"
+  },
+  {
+    "title": "Introduction to xmake Project Description",
+    "url": "/posts/project-description",
+    "date": {
+      "time": 1454500800000,
+      "string": "February 3, 2016"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "premake"
+    ],
+    "excerpt": "<p>xmake's project description file abandons the tedious complexity of makefiles, learns from premake's simplicity and clarity, and natively supports lua scripts, making it more flexible and convenient to extend.</p>\n<p>The default project description file name is <code>xmake.lua</code>, which supports multi-level directory nesting. You can also specify other files as project description files through the following commands:</p>\n<pre><code class=\"language-bash\">    xmake -f /tmp/xxx.lua\n    xmake --file=xxx.lua\n</code></pre>\n"
   }
 ]

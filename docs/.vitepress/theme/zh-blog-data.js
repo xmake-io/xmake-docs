@@ -1,6 +1,6 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.5 预览：多行进度输出、XML 模块、异步 OS API 和 Swift 互操作",
+    "title": "Xmake v3.0.5 发布：多行进度输出、XML 模块、异步 OS API 和 Swift 互操作",
     "url": "/zh/posts/xmake-update-v3.0.5",
     "date": {
       "time": 1763380800000,
@@ -16,7 +16,7 @@ export const posts = [
       "toolchain",
       "cuda"
     ],
-    "excerpt": "<p>新版本中，我们引入了多个重要特性，显著提升了开发体验。重点包括<strong>多行进度输出</strong>（支持主题配置，提供更好的构建可见性）、全面的<strong>XML 模块</strong>（用于解析和编码 XML 数据）、<strong>异步 OS API</strong>（提升 I/O 性能）以及<strong>Swift 互操作支持</strong>（实现 Swift 与 C++/Objective-C 代码的无缝集成）。同时，我们也对工具链配置、TTY 处理进行了重大改进，并进行了各种性能优化。</p>\n<p>我们改进了进度输出，支持多行刷新，在长时间运行的构建过程中提供显著更好的视觉体验。构建输出现在不再只更新单行进度，而是显示多个并发构建任务及其各自的进度，使得监控并行编译变得更加容易。</p>\n<p>输出现在显示并行构建的多行进度，每个编译任务都有实时状态更新：</p>\n"
+    "excerpt": "<p>新版本中，我们引入了多个重要特性，显著提升了开发体验。重点包括<strong>多行进度输出</strong>（支持主题配置，提供更好的构建可见性）、全面的<strong>XML 模块</strong>（用于解析和编码 XML 数据）、<strong>异步 OS API</strong>（提升 I/O 性能）以及<strong>Swift 互操作支持</strong>（实现 Swift 与 C++/Objective-C 代码的无缝集成）。同时，我们也对工具链配置、TTY 处理进行了重大改进，并进行了各种性能优化。</p>\n<p><strong>下载地址：</strong> <a href=\"https://github.com/xmake-io/xmake/releases/tag/v3.0.5\">GitHub Releases</a> | <a href=\"https://github.com/xmake-io/xmake\">源码仓库</a></p>\n<p>我们改进了进度输出，支持多行刷新，在长时间运行的构建过程中提供显著更好的视觉体验。构建输出现在不再只更新单行进度，而是显示多个并发构建任务及其各自的进度，使得监控并行编译变得更加容易。</p>\n"
   },
   {
     "title": "Xmake v2.9.1 发布，新增 native lua 模块和鸿蒙系统支持",

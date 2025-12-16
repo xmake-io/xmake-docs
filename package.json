@@ -2,16 +2,16 @@
   "type": "module",
   "scripts": {
     "docs:dev": "node scripts/generate-blog-data.js && vitepress dev docs",
-    "docs:build": "node scripts/generate-blog-data.js && vitepress build docs",
+    "docs:build": "node scripts/generate-blog-data.js && vitepress build docs && node scripts/fix-llms-txt.cjs",
     "docs:preview": "vitepress preview docs",
     "generate-blog": "node scripts/generate-blog-data.js"
   },
   "devDependencies": {
-    "glob": "^11.0.3",
+    "glob": "^11.1.0",
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.1.0",
     "vitepress": "^2.0.0-alpha.6",
     "vitepress-plugin-group-icons": "^1.6.5",
-    "vitepress-plugin-llms": "^1.9.2"
+    "vitepress-plugin-llms": "^1.9.3"
   }
 }
