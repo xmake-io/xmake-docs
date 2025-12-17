@@ -1,10 +1,14 @@
+---
+outline: deep
+---
+
 # 分发私有库 {#distribute-private-libraries}
 
 Xmake 不仅支持从官方仓库安装包，也支持用户创建和分发私有库。这对于公司内部的私有代码库复用非常有用。
 
 我们可以将编译好的静态库/动态库打包成[本地包](#distribute-as-local-package)或者[远程包](#distribute-as-remote-package)进行分发，也可以直接[安装到系统目录](#install-to-system)。
 
-## 准备库工程 {#prepare-library-project}
+## 创建库工程 {#prepare-library-project}
 
 首先，我们可以使用 [`xmake create`](/zh/guide/basic-commands/create-project.html) 命令快速创建一个空的静态库或者动态库工程。
 
@@ -35,7 +39,27 @@ target("test")
     add_files("src/main.cpp")
 ```
 
-## 分发为本地包 {#distribute-as-local-package}
+默认情况下，`add_headerfiles` 会将头文件直接安装到 `include` 目录下。
+
+如果想让头文件安装到子目录（例如 `include/foo/foo.h`），以避免文件名冲突，我们可以设置 `prefixdir`：
+
+```lua
+add_headerfiles("src/foo.h", {prefixdir = "foo"})
+```
+
+更多详细用法，请参考：[add_headerfiles 接口文档](/zh/api/description/project-target.html#add_headerfiles)。
+
+除了头文件，我们还可以使用 [`add_installfiles`](/zh/api/description/project-target.html#add_installfiles) 安装其他任意文件，比如文档、脚本、资源文件等。
+
+```lua
+-- 安装 readme.md 到 share/doc/foo 目录
+add_installfiles("readme.md", {prefixdir = "share/doc/foo"})
+
+-- 安装 assets 下的所有文件
+add_installfiles("assets/**", {prefixdir = "share/foo/assets"})
+```
+
+## 分发本地包 (Local Package) {#distribute-as-local-package}
 
 如果我们的库仅仅在本地局域网，或者通过网盘共享给其他人使用，不需要部署到远程 git 仓库，可以使用本地包分发。
 
@@ -44,7 +68,7 @@ target("test")
 - 编译好的二进制直接分发，集成速度快
 - 支持多平台、多架构、多编译模式（Debug/Release）的二进制包
 
-### 打包 {#local-package-packaging}
+### 打包生成 {#local-package-packaging}
 
 在库工程根目录下，执行 [`xmake package`](/zh/guide/basic-commands/pack-programs.html) 命令（或者完整命令 `xmake package -f local`）即可打包。
 
@@ -92,7 +116,7 @@ build/packages/
 
 每个包目录下都包含了生成的二进制库文件 (`.a`/`.lib`/`.so`/`.dll`) 和头文件。
 
-### 集成使用 {#local-package-integration}
+### 使用本地包 {#local-package-integration}
 
 我们将生成的 `build/packages` 目录复制到任意位置，或者直接使用它。然后在消费端的工程 `xmake.lua` 中配置：
 
@@ -142,7 +166,7 @@ repository/
 
 执行 `xmake` 编译时，Xmake 会直接从本地仓库中链接对应的二进制库。
 
-## 分发为远程包 {#distribute-as-remote-package}
+## 分发远程包 (Remote Package) {#distribute-as-remote-package}
 
 如果我们需要通过 git 仓库进行版本管理和分发，可以使用远程包模式。它既支持分发源码包，也支持分发二进制包。
 
@@ -151,7 +175,7 @@ repository/
 - 支持源码分发（自动编译）和二进制分发（直接安装）
 - 支持多版本切换
 
-### 生成包配置 {#generate-package-configuration}
+### 配置远程包 {#generate-package-configuration}
 
 我们运行 [`xmake package -f remote`](/zh/guide/basic-commands/pack-programs.html#remote-package) 来生成远程包的配置模板。
 
@@ -217,7 +241,7 @@ my-repo/
             └── xmake.lua
 ```
 
-### 集成使用 {#remote-package-integration}
+### 使用远程包 {#remote-package-integration}
 
 在消费端的工程中，我们需要添加这个私有仓库。
 
@@ -255,7 +279,7 @@ target("foo")
     add_files("src/*.mpp", {install = true})
 ```
 
-### 包仓库
+### 配置包仓库
 
 在私有包仓库（例如 `my-repo`）中，添加包描述文件 `packages/f/foo/xmake.lua`：
 
@@ -268,7 +292,7 @@ package("foo")
     end)
 ```
 
-### 集成使用
+### 使用模块包
 
 消费端集成时，只需要引入仓库，并开启 `build.c++.modules` 策略：
 
@@ -286,7 +310,7 @@ target("bar")
 
 更多完整示例，可以参考：[C++ Modules 包分发例子](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules/packages)。
 
-## 仓库管理方式 {#repository-management}
+## 管理包仓库 {#repository-management}
 
 不管是远程包还是本地包，我们都可以灵活选择包仓库的管理方式。
 
@@ -383,7 +407,7 @@ $ xmake install -o /tmp/output
 
 这样，其他非 xmake 的第三方项目（例如 CMake 项目）也可以通过 `find_package(foo)` 找到并集成它。
 
-## 在其他构建系统中使用 {#use-in-other-build-systems}
+## 集成到第三方构建系统 {#use-in-other-build-systems}
 
 如果我们开发的是一个库，最终需要给其他非 xmake 项目使用，我们可以通过以下几种方式进行集成。
 
@@ -446,10 +470,47 @@ Xmake 还支持使用 [XPack](/zh/guide/basic-commands/pack-programs.html#xpack)
 
 这对于分发二进制 SDK 或者部署到生产环境非常有用。
 
-```bash
-$ xmake pack -f nsis
+### 支持格式
+
+* **Windows**: `nsis`, `wix`, `zip`, `targz`
+* **Linux**: `deb`, `rpm`, `srpm`, `runself` (shell 自解压脚本), `targz`, `srczip`, `appimage`
+* **MacOS**: `dmg`, `zip`, `targz`, `runself`
+
+### 配置示例
+
+我们可以在 `xmake.lua` 中添加 `xpack` 配置域来定义打包规则。
+
+例如，配置生成一个 NSIS 安装包：
+
+```lua
+-- 引入 xpack 插件
+includes("@builtin/xpack")
+
+target("foo")
+    set_kind("shared")
+    add_files("src/*.cpp")
+    add_headerfiles("src/*.h")
+
+xpack("foo")
+    set_formats("nsis")
+    set_title("Foo Library")
+    set_description("The foo library package")
+    set_author("ruki")
+    set_version("1.0.0")
+    
+    -- 添加需要打包的目标
+    add_targets("foo")
+    
+    -- 添加其他文件
+    add_installfiles("doc/*.md", {prefixdir = "share/doc/foo"})
 ```
 
-生成的安装包可以双击安装，自动配置 PATH 等环境变量，方便用户使用。
+然后执行打包命令：
+
+```bash
+$ xmake pack
+```
+
+它会自动下载 NSIS 工具并生成安装包。生成的安装包可以双击安装，自动配置 PATH 等环境变量，方便用户使用。
 
 更多详情，请查看文档：[XPack 打包](/zh/guide/extensions/builtin-plugins.html#xpack)。
