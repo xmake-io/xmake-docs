@@ -123,6 +123,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Using Local Packages', link: 'package-management/using-local-packages' },
         { text: 'Using System Packages', link: 'package-management/using-system-packages' },
         { text: 'Using Sourcecode Packages', link: 'package-management/using-source-code-packages' },
+        { text: 'Distribute Private Libraries', link: 'package-management/distribute-private-libraries' },
         { text: 'Network Optimization', link: 'package-management/network-optimization' },
         {
           text: 'CLI',

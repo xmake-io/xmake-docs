@@ -204,6 +204,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: '使用本地包', link: 'package-management/using-local-packages' },
         { text: '使用系统包', link: 'package-management/using-system-packages' },
         { text: '使用源码包', link: 'package-management/using-source-code-packages' },
+        { text: '分发私有库', link: 'package-management/distribute-private-libraries' },
         { text: '网络优化', link: 'package-management/network-optimization' },
         {
           text: 'CLI',
