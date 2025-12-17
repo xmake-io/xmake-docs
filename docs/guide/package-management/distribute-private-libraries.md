@@ -23,7 +23,7 @@ create test ...
 create ok!
 ```
 
-The default generated `xmake.lua` is quite simple. We need to modify it slightly to add [`add_headerfiles`](/guide/project/target.html#add_headerfiles) to export header files, so that the library headers can be installed together during installation.
+The default generated `xmake.lua` is quite simple. We need to modify it slightly to add [`add_headerfiles`](/api/description/project-target.html#add_headerfiles) to export header files, so that the library headers can be installed together during installation.
 
 ```lua
 add_rules("mode.debug", "mode.release")
