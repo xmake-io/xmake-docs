@@ -442,6 +442,37 @@ local term = tty.term()
 print("Terminal:", term)  -- Output: "xterm", "vscode", etc.
 ```
 
+## tty.session_id
+
+- Get terminal session ID
+
+#### Function Prototype
+
+::: tip API
+```lua
+tty.session_id()
+```
+:::
+
+#### Parameter Description
+
+No parameters
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| string | Returns the terminal session ID |
+
+#### Usage
+
+```lua
+import("core.base.tty")
+
+local session_id = tty.session_id()
+print("Session ID:", session_id)
+```
+
 ## tty.has_emoji
 
 - Check if terminal supports emoji

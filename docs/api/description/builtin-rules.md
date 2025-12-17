@@ -324,10 +324,48 @@ Used to compile and generate ios/macos applications
 
 ```lua
 target("test")
-     add_rules("xcode.application")
-     add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
-     add_files("src/Info.plist")
+    add_rules("xcode.application")
+    add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
+    add_files("src/Info.plist")
 ```
+
+## android.native_app
+
+Used to build Android Native applications.
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("raylib 5.5.0")
+
+target("raydemo_custom_glue")
+    set_kind("binary")
+    set_languages("c++17")
+    add_files("src/main.cpp", "src/android_native_app_glue.c")
+    add_syslinks("log")
+    add_packages("raylib")
+    add_rules("android.native_app", {
+        android_sdk_version = "35",
+        android_manifest = "android/AndroidManifest.xml",
+        android_res = "android/res",
+        keystore = "android/debug.jks",
+        keystore_pass = "123456",
+        package_name = "com.raylib.custom_glue",
+        native_app_glue = false, -- Disable default glue
+        logcat_filters = {"raydemo_custom_glue", "raylib"}
+    })
+```
+
+### Parameter Description
+
+- `android_sdk_version`: Set Android SDK version
+- `android_manifest`: Set AndroidManifest.xml file path
+- `android_res`: Set resource directory
+- `keystore`: Set signing keystore file
+- `keystore_pass`: Set signing keystore password
+- `package_name`: Set package name
+- `native_app_glue`: Whether to use the default `android_native_app_glue` library, default is true. If set to false, you need to handle the entry and event loop yourself.
+- `logcat_filters`: Set logcat filter keywords
 
 ## wdk.env.kmdf
 
@@ -615,6 +653,52 @@ cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
 :::tip TIP
 If you are using a compiler that supports the C23 `#embed` feature (such as clang or gcc), you can also use the `#embed` directive directly to embed binary files. You need to set the C23 language standard first via `set_languages("c23")`, and then use [add_embeddirs](project-target.md#add_embeddirs) to set the search path. This approach is more aligned with the C23 standard and does not require generating additional header files.
 :::
+
+## utils.bin2obj
+
+New rule added in v3.0.6 to convert binary files to object files and link them into the target program.
+
+Compared to `utils.bin2c`, it generates object files directly, skipping the generation of C header files, so it is faster when dealing with large files.
+
+For example, embedding a 120MB file:
+- `utils.bin2c`: 354s
+- `utils.bin2obj`: 1.8s
+
+### Usage
+
+```lua
+target("myapp")
+    set_kind("binary")
+    add_rules("utils.bin2obj", {extensions = {".bin", ".ico"}})
+    add_files("src/*.c")
+    -- Embed data.bin and ensure it is zero-terminated
+    add_files("assets/data.bin", {zeroend = true})
+```
+
+### Access Data
+
+In C/C++ code, we can access the embedded data via symbols. The symbol name generation rule is: `_binary_<filename>_start` and `_binary_<filename>_end`.
+Non-alphanumeric characters in the filename are replaced with underscores.
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+
+extern const uint8_t _binary_data_bin_start[];
+extern const uint8_t _binary_data_bin_end[];
+
+int main() {
+    // Calculate size
+    const uint32_t size = (uint32_t)(_binary_data_bin_end - _binary_data_bin_start);
+    
+    // Access data
+    printf("Data size: %u bytes\n", size);
+    for (uint32_t i = 0; i < size; i++) {
+        printf("%02x ", _binary_data_bin_start[i]);
+    }
+    return 0;
+}
+```
 
 ## utils.glsl2spv
 

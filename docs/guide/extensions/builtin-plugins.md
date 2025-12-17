@@ -722,6 +722,9 @@ This plug-in can help users quickly generate installation packages and source co
 - RPM binary installation package
 - SRPM source code installation package
 - DEB binary installation package
+- MacOS App Bundle (Dmg)
+- Linux AppImage installation package
+- Qt installation package
 
 Here is a complete example, we can take a brief look at it first:
 
@@ -1031,6 +1034,58 @@ In XPack, we only need to configure `set_formats("rpm")` to support rpm package 
 xpack("test")
      set_formats("rpm")
      -- TODO
+```
+
+### Generate MacOS App Bundle (Dmg) <Badge type="tip" text="v3.0.6" />
+
+```lua
+xpack("test")
+    set_formats("dmg")
+    add_targets("demo")
+```
+
+### Generate AppImage installation package <Badge type="tip" text="v3.0.6" />
+
+Requires `appimagetool` to be installed.
+
+```lua
+xpack("test")
+    set_formats("appimage")
+    add_targets("demo")
+```
+
+### Generate Qt installation package <Badge type="tip" text="v3.0.6" />
+
+We support generating Qt installation packages, such as `qtinstaller`, `qtdmg`, `qtzip`, etc. It will automatically call `windeployqt`/`macdeployqt`/`linuxdeployqt` to deploy the required Qt libraries.
+
+#### Open Installer Framework (Qt)
+
+Requires `Qt` SDK to be installed.
+
+```lua
+xpack("test")
+    set_formats("qtinstaller")
+    add_targets("demo")
+```
+
+#### Drag-and-Drop (Qt)
+
+Requires `Qt` SDK to be installed.
+
+```lua
+xpack("test")
+    set_formats("qtdmg")
+    add_targets("demo")
+```
+
+#### Zip (Qt)
+
+Requires `Qt` SDK to be installed.
+
+```lua
+xpack("test")
+    set_formats("qtzip")
+    add_targets("demo")
 ```
 
 ### Packaging command

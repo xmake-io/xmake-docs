@@ -165,6 +165,16 @@ $ xmake check syntax
 
 If there are syntax errors, it will report the specific file and line number.
 
+### MSVC C++ Dynamic Debugging
+
+We have added support for C++ dynamic debugging in MSVC (requires MSVC toolset 14.44+, x64 only).
+
+It is incompatible with LTCG/PGO/OPT-ICF.
+
+```lua
+set_policy("build.c++.dynamic_debugging", true)
+```
+
 ---
 
 ## Changelog

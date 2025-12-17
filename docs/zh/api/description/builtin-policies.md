@@ -261,6 +261,14 @@ set_policy("build.optimization.lto", true)
 $ xmake f --policies=build.optimization.lto
 ```
 
+## build.c++.dynamic_debugging <Badge type="tip" text="v3.0.6" />
+
+启用 MSVC 的 C++ 动态调试功能（需要 MSVC 工具集 14.44+，仅 x64，与 LTCG/PGO/OPT-ICF 不兼容）。
+
+```lua
+set_policy("build.c++.dynamic_debugging", true)
+```
+
 ## build.cuda.devlink <Badge type="tip" text="v2.7.7" />
 
 2.7.7 版本可以通过这个配置，显示开启对特定目标的设备链接。

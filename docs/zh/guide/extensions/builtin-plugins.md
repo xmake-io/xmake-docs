@@ -738,6 +738,9 @@ $ xmake check clang.tidy --fix_notes
 - RPM 二进制安装包
 - SRPM 源码安装包
 - DEB 二进制安装包
+- MacOS App Bundle (Dmg)
+- Linux AppImage 安装包
+- Qt 安装包
 
 下面是一个完整例子，我们可以先简单看下：
 
@@ -1045,6 +1048,58 @@ RPM 包将会直接生成编译好的二进制安装包。xmake 会自动调用 
 xpack("test")
     set_formats("rpm")
     -- TODO
+```
+
+### 生成 MacOS App Bundle (Dmg) <Badge type="tip" text="v3.0.6" />
+
+```lua
+xpack("test")
+    set_formats("dmg")
+    add_targets("demo")
+```
+
+### 生成 AppImage 安装包 <Badge type="tip" text="v3.0.6" />
+
+需要先安装 `appimagetool` 工具。
+
+```lua
+xpack("test")
+    set_formats("appimage")
+    add_targets("demo")
+```
+
+### 生成 Qt 安装包 <Badge type="tip" text="v3.0.6" />
+
+我们支持生成 Qt 安装包，例如 `qtinstaller`, `qtdmg`, `qtzip` 等。它会自动调用 `windeployqt`/`macdeployqt`/`linuxdeployqt` 去部署 Qt 依赖库。
+
+#### Open Installer Framework (Qt)
+
+需要先安装 `Qt` SDK。
+
+```lua
+xpack("test")
+    set_formats("qtinstaller")
+    add_targets("demo")
+```
+
+#### Drag-and-Drop (Qt)
+
+需要先安装 `Qt` SDK。
+
+```lua
+xpack("test")
+    set_formats("qtdmg")
+    add_targets("demo")
+```
+
+#### Zip (Qt)
+
+需要先安装 `Qt` SDK。
+
+```lua
+xpack("test")
+    set_formats("qtzip")
+    add_targets("demo")
 ```
 
 ### 打包命令参数

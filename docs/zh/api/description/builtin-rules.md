@@ -332,6 +332,44 @@ target("test")
     add_files("src/Info.plist")
 ```
 
+## android.native_app
+
+用于构建 Android Native 应用程序。
+
+```lua
+add_rules("mode.debug", "mode.release")
+
+add_requires("raylib 5.5.0")
+
+target("raydemo_custom_glue")
+    set_kind("binary")
+    set_languages("c++17")
+    add_files("src/main.cpp", "src/android_native_app_glue.c")
+    add_syslinks("log")
+    add_packages("raylib")
+    add_rules("android.native_app", {
+        android_sdk_version = "35",
+        android_manifest = "android/AndroidManifest.xml",
+        android_res = "android/res",
+        keystore = "android/debug.jks",
+        keystore_pass = "123456",
+        package_name = "com.raylib.custom_glue",
+        native_app_glue = false, -- 禁用默认 glue
+        logcat_filters = {"raydemo_custom_glue", "raylib"}
+    })
+```
+
+### 参数说明
+
+- `android_sdk_version`: 设置 Android SDK 版本
+- `android_manifest`: 设置 AndroidManifest.xml 文件路径
+- `android_res`: 设置资源目录
+- `keystore`: 设置签名密钥文件
+- `keystore_pass`: 设置签名密钥密码
+- `package_name`: 设置包名
+- `native_app_glue`: 是否使用默认的 `android_native_app_glue` 库，默认为 true。如果设置为 false，则需要自己处理入口和事件循环。
+- `logcat_filters`: 设置 logcat 过滤关键字
+
 ## wdk.env.kmdf
 
 应用WDK下kmdf的编译环境设置，需要配合：`wdk.[driver|binary|static|shared]`等规则来使用。
@@ -604,6 +642,53 @@ cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
 :::tip 提示
 如果你使用支持 C23 `#embed` 特性的编译器（如 clang 或 gcc），也可以直接使用 `#embed` 指令来嵌入二进制文件。需要先通过 `set_languages("c23")` 设置 C23 语言标准，然后使用 [add_embeddirs](project-target.md#add_embeddirs) 来设置搜索路径。这种方式更符合 C23 标准，无需生成额外的头文件。
 :::
+
+## utils.bin2obj
+
+v3.0.6 以上版本可以使用此规则，相比 `utils.bin2c` 具有极快的构建速度。因为它跳过了 C 代码生成和编译步骤，直接生成对象文件（COFF, ELF, Mach-O）参与链接。
+
+**性能对比 (120MB 文件):**
+- **bin2obj**: ~1.8s
+- **bin2c**: ~354s
+
+它支持多种架构（x86, ARM, RISC-V 等）和格式（Windows COFF, Linux/Android ELF, macOS/iOS Mach-O）。
+
+**基本用法**
+
+```lua
+target("myapp")
+    set_kind("binary")
+    add_rules("utils.bin2obj", {extensions = {".bin", ".ico"}})
+    add_files("src/*.c")
+    -- 嵌入 data.bin，并确保以零结尾
+    add_files("assets/data.bin", {zeroend = true})
+```
+
+**在 C/C++ 中访问数据**
+
+符号名称会根据文件名自动生成（例如 `_binary_<filename>_start` 和 `_binary_<filename>_end`）。
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+
+extern const uint8_t _binary_data_bin_start[];
+extern const uint8_t _binary_data_bin_end[];
+
+int main() {
+    // 计算大小
+    const uint32_t size = (uint32_t)(_binary_data_bin_end - _binary_data_bin_start);
+    
+    // 访问数据
+    printf("Data size: %u bytes\n", size);
+    for (uint32_t i = 0; i < size; i++) {
+        printf("%02x ", _binary_data_bin_start[i]);
+    }
+    return 0;
+}
+```
+
+此外，`glsl2spv` 和 `hlsl2spv` 规则也新增了对 `bin2obj` 的支持，可以直接将编译后的 SPIR-V 文件作为对象文件嵌入。
 
 ## utils.glsl2spv
 

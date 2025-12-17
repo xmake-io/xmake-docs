@@ -165,6 +165,16 @@ $ xmake check syntax
 
 如果有语法错误，它会报告具体的文件和行号。
 
+### MSVC C++ 动态调试
+
+我们新增了对 MSVC 的 C++ 动态调试支持（需要 MSVC 工具集 14.44+，仅支持 x64）。
+
+它与 LTCG/PGO/OPT-ICF 不兼容。
+
+```lua
+set_policy("build.c++.dynamic_debugging", true)
+```
+
 ---
 
 ## 更新日志

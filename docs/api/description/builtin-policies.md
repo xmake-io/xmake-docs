@@ -268,6 +268,14 @@ We can also turn it on quickly via the command line option.
 $ xmake f --policies=build.optimization.lto
 ```
 
+## build.c++.dynamic_debugging <Badge type="tip" text="v3.0.6" />
+
+Enable C++ Dynamic Debugging for MSVC (requires MSVC toolset 14.44+, x64 only, incompatible with LTCG/PGO/OPT-ICF).
+
+```lua
+set_policy("build.c++.dynamic_debugging", true)
+```
+
 ## build.cuda.devlink <Badge type="tip" text="v2.7.7" />
 
 Version 2.7.7 can be configured to show that device links to specific targets are turned on.

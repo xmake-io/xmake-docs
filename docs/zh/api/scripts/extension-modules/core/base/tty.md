@@ -442,6 +442,37 @@ local term = tty.term()
 print("终端:", term)  -- 输出: "xterm"、"vscode" 等
 ```
 
+## tty.session_id
+
+- 获取终端会话 ID
+
+#### 函数原型
+
+::: tip API
+```lua
+tty.session_id()
+```
+:::
+
+#### 参数说明
+
+无参数
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| string | 返回终端会话 ID |
+
+#### 用法说明
+
+```lua
+import("core.base.tty")
+
+local session_id = tty.session_id()
+print("会话 ID:", session_id)
+```
+
 ## tty.has_emoji
 
 - 检查终端是否支持表情符号
