@@ -175,6 +175,29 @@ $ xmake check syntax
 set_policy("build.c++.dynamic_debugging", true)
 ```
 
+### 二进制工具库
+
+我们新增了 `core.base.binutils` 模块以及 `utils.binary` 扩展模块，用于处理二进制文件。
+
+它们提供了 `bin2c`, `bin2obj`, `readsyms`, `deplibs`, `extractlib` 等功能接口，可用于从二进制文件生成代码、读取符号、获取依赖库以及解压静态库等。
+
+```lua
+import("utils.binary.deplibs")
+import("utils.binary.readsyms")
+import("utils.binary.extractlib")
+
+-- 获取依赖库
+local deps = deplibs("/path/to/bin")
+
+-- 读取符号
+local syms = readsyms("/path/to/obj")
+
+-- 解压静态库
+extractlib("/path/to/lib.a", "/path/to/outputdir")
+```
+
+此外，我们还改进了依赖库解析，静态库合并用到的对象文件抽取，以及符号导出功能。
+
 ---
 
 ## 更新日志

@@ -252,6 +252,7 @@ function utilsModulesApiSidebar(): DefaultTheme.SidebarItem {
     collapsed: true,
     items: [
       { text: 'archive', link: 'extension-modules/utils/archive' },
+      { text: 'binary', link: 'extension-modules/utils/binary' },
       { text: 'platform', link: 'extension-modules/utils/platform' },
     ]
   }

@@ -175,6 +175,29 @@ It is incompatible with LTCG/PGO/OPT-ICF.
 set_policy("build.c++.dynamic_debugging", true)
 ```
 
+### Binary Utilities
+
+We added the `core.base.binutils` module and the `utils.binary` extension module for processing binary files.
+
+They provide functions such as `bin2c`, `bin2obj`, `readsyms`, `deplibs`, and `extractlib`, which can be used to generate code from binary files, read symbols, obtain dependent libraries, and extract static libraries.
+
+```lua
+import("utils.binary.deplibs")
+import("utils.binary.readsyms")
+import("utils.binary.extractlib")
+
+-- Get dependent libraries
+local deps = deplibs("/path/to/bin")
+
+-- Read symbols
+local syms = readsyms("/path/to/obj")
+
+-- Extract static library
+extractlib("/path/to/lib.a", "/path/to/outputdir")
+```
+
+In addition, we have improved dependent library resolution, support for extracting objects used in static library merging, and symbol dumping.
+
 ---
 
 ## Changelog
