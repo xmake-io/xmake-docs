@@ -64,7 +64,7 @@ binutils.readsyms(binaryfile: <string>)
 
 | 返回值 | 描述 |
 |--------|------|
-| <table> | 符号列表 |
+| `<table>` | 符号列表 |
 
 ## binutils.deplibs
 
@@ -88,7 +88,7 @@ binutils.deplibs(binaryfile: <string>)
 
 | 返回值 | 描述 |
 |--------|------|
-| <table> | 依赖库列表 |
+| `<table>` | 依赖库列表 |
 
 ## binutils.extractlib
 

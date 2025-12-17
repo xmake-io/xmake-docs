@@ -25,7 +25,7 @@ local deps = deplibs(binaryfile: <string>, opt: <table>)
 
 | Return Value | Description |
 |--------------|-------------|
-| <table> | Dependent libraries list |
+| `<table>` | Dependent libraries list |
 
 ## utils.binary.readsyms
 
@@ -49,7 +49,7 @@ local syms = readsyms(binaryfile: <string>)
 
 | Return Value | Description |
 |--------------|-------------|
-| <table> | Symbols list |
+| `<table>` | Symbols list |
 
 ## utils.binary.extractlib
 
