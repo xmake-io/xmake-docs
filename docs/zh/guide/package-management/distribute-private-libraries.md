@@ -263,38 +263,35 @@ Xmake 会自动拉取 `my-repo` 仓库中的包描述，然后根据 `add_urls` 
 
 ## 分发 C++ Modules {#distribute-cxx-modules}
 
-Xmake 也支持分发 C++ Modules 库。我们只需要在 `add_files` 中添加 `{install = true}`，即可将模块文件（`.mpp`, `.ixx` 等）一同打包分发。
+Xmake 也支持分发 C++ Modules 库。
 
-通常，我们需要将包定义在独立的仓库中。
+### 准备模块库 {#prepare-module-library}
 
-### 库工程
-
-在库工程的 `xmake.lua` 中，我们需要导出模块文件：
+如果是纯模块库，我们建议在工程 `xmake.lua` 中配置 `set_kind("moduleonly")`，并导出 `.mpp` 等模块文件。
 
 ```lua
 target("foo")
-    set_kind("static")
-    add_files("src/*.cpp")
-    -- 安装分发模块文件
-    add_files("src/*.mpp", {install = true})
+    set_kind("moduleonly")
+    add_files("src/*.mpp")
 ```
 
-### 配置包仓库
+### 定义模块包 {#define-module-package}
 
-在私有包仓库（例如 `my-repo`）中，添加包描述文件 `packages/f/foo/xmake.lua`：
+在包的描述域中，我们需要设置 `set_kind("library", {moduleonly = true})`，这样 Xmake 会将其作为纯模块包处理，不需要进行常规的库链接操作，也能更好地处理模块依赖。
 
 ```lua
 package("foo")
-    add_urls("git@github.com:mycompany/foo.git")
-    add_versions("1.0", "<commit-sha>")
-    on_install(function (package)
-        import("package.tools.xmake").install(package)
+    set_kind("library", {moduleonly = true})
+    set_sourcedir(path.join(os.scriptdir(), "src"))
+
+    on_install(function(package)
+        import("package.tools.xmake").install(package, {})
     end)
 ```
 
-### 使用模块包
+### 使用模块包 {#consume-module-package}
 
-消费端集成时，只需要引入仓库，并开启 `build.c++.modules` 策略：
+使用模块包时，我们需要开启 C++20 模块构建支持。
 
 ```lua
 add_repositories("my-repo git@github.com:mycompany/my-repo.git")
@@ -303,9 +300,9 @@ add_requires("foo")
 target("bar")
     set_kind("binary")
     set_languages("c++20")
-    -- 开启 C++ Modules 支持
-    set_policy("build.c++.modules", true)
     add_packages("foo")
+    -- 开启 C++ 模块构建策略
+    set_policy("build.c++.modules", true)
 ```
 
 更多完整示例，可以参考：[C++ Modules 包分发例子](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules/packages)。

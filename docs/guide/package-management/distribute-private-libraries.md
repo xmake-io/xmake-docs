@@ -265,38 +265,35 @@ Xmake will automatically pull the package description from the `my-repo` reposit
 
 ## Distribute C++ Modules Package {#distribute-cxx-modules}
 
-Xmake also supports distributing C++ Modules libraries. We only need to add `{install = true}` in `add_files` to package and distribute module files (`.mpp`, `.ixx`, etc.) together.
+Xmake also supports distributing C++ Modules libraries.
 
-Usually, we need to define the package in an independent repository.
+### Prepare Module Library {#prepare-module-library}
 
-### Configure Library Project
-
-In the `xmake.lua` of the library project, we need to export the module files:
+If it is a pure module library, we recommend configuring `set_kind("moduleonly")` in the project `xmake.lua` and exporting module files like `.mpp`.
 
 ```lua
 target("foo")
-    set_kind("static")
-    add_files("src/*.cpp")
-    -- Install and distribute module files
-    add_files("src/*.mpp", {install = true})
+    set_kind("moduleonly")
+    add_files("src/*.mpp")
 ```
 
-### Package Repository
+### Define Module Package {#define-module-package}
 
-In the private package repository (e.g., `my-repo`), add the package description file `packages/f/foo/xmake.lua`:
+In the package description, we need to set `set_kind("library", {moduleonly = true})`. This tells Xmake to treat it as a pure module package, which does not require conventional library linking and handles module dependencies better.
 
 ```lua
 package("foo")
-    add_urls("git@github.com:mycompany/foo.git")
-    add_versions("1.0", "<commit-sha>")
-    on_install(function (package)
-        import("package.tools.xmake").install(package)
+    set_kind("library", {moduleonly = true})
+    set_sourcedir(path.join(os.scriptdir(), "src"))
+
+    on_install(function(package)
+        import("package.tools.xmake").install(package, {})
     end)
 ```
 
-### Integration
+### Consume Module Package {#consume-module-package}
 
-When integrating on the consumer side, you only need to import the repository and enable the `build.c++.modules` policy:
+When using module packages, we need to enable C++20 module build support.
 
 ```lua
 add_repositories("my-repo git@github.com:mycompany/my-repo.git")
@@ -305,9 +302,9 @@ add_requires("foo")
 target("bar")
     set_kind("binary")
     set_languages("c++20")
-    -- Enable C++ Modules support
-    set_policy("build.c++.modules", true)
     add_packages("foo")
+    -- Enable C++ module build policy
+    set_policy("build.c++.modules", true)
 ```
 
 For more complete examples, please refer to: [C++ Modules Package Distribution Example](https://github.com/xmake-io/xmake/tree/master/tests/projects/c%2B%2B/modules/packages).
