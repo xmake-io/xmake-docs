@@ -221,6 +221,9 @@ extractlib("/path/to/lib.a", "/path/to/outputdir")
 
 ### 改进
 
+* [#7149](https://github.com/xmake-io/xmake/pull/7149)：改进 binutils 以优化 rpath 解析
+* [#7148](https://github.com/xmake-io/xmake/pull/7148)：更新 Zig 示例
+* [#7145](https://github.com/xmake-io/xmake/pull/7145)：改进 Clang/LLVM 运行时支持
 * [#7136](https://github.com/xmake-io/xmake/pull/7136)：改进 clang-cl 依赖文件生成
 * [#7135](https://github.com/xmake-io/xmake/pull/7135)：`xrepo env` 增加 session ID
 * [#7109](https://github.com/xmake-io/xmake/pull/7109)：binutils 支持从二进制文件读取符号

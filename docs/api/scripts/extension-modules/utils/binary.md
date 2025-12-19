@@ -70,3 +70,108 @@ extractlib(libraryfile: <string>, outputdir: <string>, opt: <table>)
 | libraryfile | Required. Input static library file path |
 | outputdir | Required. Output directory path |
 | opt | Optional. Options |
+
+## utils.binary.rpath.list
+
+Get rpath list.
+
+### Function Prototype
+
+::: tip API
+```lua
+local rpaths = rpath.list(binaryfile: <string>, opt: <table>)
+```
+:::
+
+### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| binaryfile | Required. Input binary file path |
+| opt | Optional. Options |
+
+### Return Value
+
+| Return Value | Description |
+|--------------|-------------|
+| `<table>` | Rpath list |
+
+## utils.binary.rpath.insert
+
+Insert rpath.
+
+### Function Prototype
+
+::: tip API
+```lua
+rpath.insert(binaryfile: <string>, rpath_path: <string>, opt: <table>)
+```
+:::
+
+### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| binaryfile | Required. Input binary file path |
+| rpath_path | Required. Rpath path to insert |
+| opt | Optional. Options |
+
+## utils.binary.rpath.change
+
+Change rpath.
+
+### Function Prototype
+
+::: tip API
+```lua
+rpath.change(binaryfile: <string>, rpath_old: <string>, rpath_new: <string>, opt: <table>)
+```
+:::
+
+### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| binaryfile | Required. Input binary file path |
+| rpath_old | Required. Old rpath path |
+| rpath_new | Required. New rpath path |
+| opt | Optional. Options |
+
+## utils.binary.rpath.remove
+
+Remove rpath.
+
+### Function Prototype
+
+::: tip API
+```lua
+rpath.remove(binaryfile: <string>, rpath_path: <string>, opt: <table>)
+```
+:::
+
+### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| binaryfile | Required. Input binary file path |
+| rpath_path | Required. Rpath path to remove |
+| opt | Optional. Options |
+
+## utils.binary.rpath.clean
+
+Clean all rpaths.
+
+### Function Prototype
+
+::: tip API
+```lua
+rpath.clean(binaryfile: <string>, opt: <table>)
+```
+:::
+
+### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| binaryfile | Required. Input binary file path |
+| opt | Optional. Options |

@@ -90,6 +90,30 @@ binutils.deplibs(binaryfile: <string>)
 |--------------|-------------|
 | `<table>` | Dependent libraries list |
 
+## binutils.rpath_list
+
+Get rpath list from binary file (auto-detect format: ELF or Mach-O).
+
+### Function Prototype
+
+::: tip API
+```lua
+binutils.rpath_list(binaryfile: <string>)
+```
+:::
+
+### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| binaryfile | Required. Input binary file path |
+
+### Return Value
+
+| Return Value | Description |
+|--------------|-------------|
+| `<table>` | Rpath list |
+
 ## binutils.extractlib
 
 Extract static library to directory.

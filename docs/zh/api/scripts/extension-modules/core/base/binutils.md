@@ -90,6 +90,30 @@ binutils.deplibs(binaryfile: <string>)
 |--------|------|
 | `<table>` | 依赖库列表 |
 
+## binutils.rpath_list
+
+从二进制文件获取 rpath 列表（自动检测格式：ELF 或 Mach-O）。
+
+### 函数原型
+
+::: tip API
+```lua
+binutils.rpath_list(binaryfile: <string>)
+```
+:::
+
+### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| binaryfile | 必需。输入二进制文件路径 |
+
+### 返回值说明
+
+| 返回值 | 描述 |
+|--------|------|
+| `<table>` | rpath 列表 |
+
 ## binutils.extractlib
 
 解压静态库到目录。

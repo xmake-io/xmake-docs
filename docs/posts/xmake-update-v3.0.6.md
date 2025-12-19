@@ -221,6 +221,9 @@ In addition, we have improved dependent library resolution, support for extracti
 
 ### Changes
 
+* [#7149](https://github.com/xmake-io/xmake/pull/7149): Improve binutils to optimize rpath parsing
+* [#7148](https://github.com/xmake-io/xmake/pull/7148): Update Zig examples
+* [#7145](https://github.com/xmake-io/xmake/pull/7145): Improve Clang/LLVM runtime support
 * [#7136](https://github.com/xmake-io/xmake/pull/7136): Improve clang-cl depfiles generation
 * [#7135](https://github.com/xmake-io/xmake/pull/7135): Improve `xrepo env` to add session ID
 * [#7109](https://github.com/xmake-io/xmake/pull/7109): Improve binutils to read symbols from binary file
