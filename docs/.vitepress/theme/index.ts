@@ -41,7 +41,10 @@ export default {
         if (isZh.value) {
           return h('div', { class: 'mobile-only-ads' }, h(WWAds))
         } else if (theme.value.carbonAds) {
-          return h('div', { class: 'mobile-only-ads' }, h(VPCarbonAds, { carbonAds: theme.value.carbonAds }))
+          return h('div', { class: 'mobile-only-ads' }, h(VPCarbonAds, { 
+            carbonAds: theme.value.carbonAds,
+            variant: 'mobile-bottom'
+          }))
         }
         return null
       }
