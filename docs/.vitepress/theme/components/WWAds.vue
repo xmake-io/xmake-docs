@@ -26,8 +26,8 @@ onMounted(() => {
     margin: 20px auto 0;
     display: flex;
     justify-content: center;
-    background-color: #f8f9fa; /* Placeholder to verify rendering */
-    min-height: 150px;
+    background-color: transparent !important; /* Remove debug bg */
+    min-height: auto !important; /* Allow auto height */
   }
 }
 </style>
