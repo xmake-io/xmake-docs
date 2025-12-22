@@ -11,7 +11,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="wwads-cn wwads-vertical wwads-sticky" data-id="239" style="max-width:180px"></div>
+  <div class="wwads-cn wwads-vertical" data-id="239" style="max-width:200px"></div>
 </template>
 
 <style scoped>
