@@ -8,26 +8,40 @@ If you'd like to support us, please consider making a donation. For corporate sp
 
 ### PayPal
 
-[![PayPal Me](/assets/img/paypal.png)](https://paypal.me/tboox/5)
+[Donate via PayPal](https://paypal.me/tboox/5)
 
 ### GitHub Sponsor
 
-[![GitHub Sponsor](/assets/img/github_sponsor.png)](https://github.com/sponsors/waruqi)
+[Become a sponsor via GitHub Sponsors](https://github.com/sponsors/waruqi)
 
 ### OpenCollective
 
-[[Become a Sponsor](https://opencollective.com/xmake#sponsor)]
+[Become a sponsor via OpenCollective](https://opencollective.com/xmake#sponsor)
 
-### Alipay
-
-<img src="/assets/img/alipay.png" alt="alipay" width="256" height="256">
-
-### WeChat
-
-<img src="/assets/img/weixin.png" alt="weixin" width="218" height="218">
 
 ## Supporters
 
+This list is updated periodically and is not real-time. If there are any omissions, please contact us for updates.
 
-<!-- @include: ../sponsors_list.md -->
+Additionally, if your monthly sponsorship exceeds $200, please contact us via email to display your logo and link in the Xmake project README.
+
+### OpenCollective
+
+<a href="https://opencollective.com/xmake#sponsors" target="_blank"><img src="https://opencollective.com/xmake/sponsors.svg?width=890"></a>
+<a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
+
+### GitHub Sponsor
+
+For more supporters, please visit [GitHub Sponsors](https://github.com/sponsors/waruqi).
+
+| Date | Supporter | Channel | Amount | Comment |
+| -- | -- | -- | -- | -- |
+| 2021.12.14 | SirLynix       | GitHub         | $10    |                                                                         |
+
+### PayPal
+
+| Date | Supporter | Channel | Amount | Comment |
+| -- | -- | -- | -- | -- |
+| 2021.09.06 | Stefan Boberg  | PayPal         | € 25  |                                                                         |
+| 2021.06.08 | Daniel Roussel | PayPal         | 5 EUR  |                                                                         |
 

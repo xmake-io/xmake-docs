@@ -4,6 +4,7 @@ import VPDoc from './components/VPDoc.vue'
 import AIAssistant from './components/AIAssistant.vue'
 import WWAds from './components/WWAds.vue'
 import VPCarbonAds from './components/VPCarbonAds.vue'
+import SponsorButton from './components/SponsorButton.vue'
 import { useData } from 'vitepress'
 import './styles.css'
 import 'virtual:group-icons.css'
@@ -48,6 +49,7 @@ export default {
   enhanceApp({ app, router }) {
     // Register global components
     app.component('AIAssistant', AIAssistant)
+    app.component('SponsorButton', SponsorButton)
     
     if (typeof window !== 'undefined') {
       const lang = navigator.language
