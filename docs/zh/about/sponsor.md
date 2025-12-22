@@ -28,6 +28,12 @@ Xmake 是一个完全由社区驱动的独立开源项目，其持续的开发�
 
 [通过 OpenCollective 成为赞助者](https://opencollective.com/xmake#sponsor)
 
+### 购买周边
+
+您也可以通过购买 Xmake 限量版周边纪念品（如马克杯）来支持我们。
+
+[点击查看周边详情](/zh/about/peripheral_items)
+
 ## 支持者
 
 此列表会不定期更新，并非实时数据。如有遗漏，请联系我们更新。
