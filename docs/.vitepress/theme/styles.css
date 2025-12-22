@@ -90,3 +90,10 @@
   --vp-sidebar-width: 300px;
   --vp-sidebar-bg-color: var(--vp-c-bg-alt);
 }
+
+/* Mobile only ads */
+@media (min-width: 1280px) {
+  .mobile-only-ads {
+    display: none;
+  }
+}

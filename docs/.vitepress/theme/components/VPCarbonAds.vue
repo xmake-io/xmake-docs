@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { DefaultTheme } from 'vitepress/theme'
 import { ref, watch, onMounted } from 'vue'
-import { useAside } from 'vitepress/dist/client/theme-default/composables/aside'
 import { useData } from 'vitepress/dist/client/theme-default/composables/data'
 
 const { page } = useData()
@@ -11,7 +10,6 @@ const props = defineProps<{
 
 const carbonOptions = props.carbonAds
 
-const { isAsideEnabled } = useAside()
 const container = ref()
 
 let isInitialized = false
@@ -28,7 +26,7 @@ function init() {
 }
 
 watch(() => page.value.relativePath, () => {
-  if (isInitialized && isAsideEnabled.value) {
+  if (isInitialized) {
     ;(window as any)._carbonads?.refresh()
   }
 })
@@ -37,14 +35,7 @@ watch(() => page.value.relativePath, () => {
 // refresh the page
 if (carbonOptions) {
   onMounted(() => {
-    // if the page is loaded when aside is active, load carbon directly.
-    // otherwise, only load it if the page resizes to wide enough. this avoids
-    // loading carbon at all on mobile where it's never shown
-    if (isAsideEnabled.value) {
-      init()
-    } else {
-      watch(isAsideEnabled, (wide) => wide && init())
-    }
+    init()
   })
 }
 </script>

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useData } from 'vitepress'
+import { useAside } from 'vitepress/dist/client/theme-default/composables/aside'
 import VPDocAsideOutline from 'vitepress/dist/client/theme-default/components/VPDocAsideOutline.vue'
 import VPCarbonAds from './VPCarbonAds.vue'
 import WWAds from './WWAds.vue'
 
 const { theme, page, lang } = useData()
+const { isAsideEnabled } = useAside()
 
 // Check if current page is a blog post article
 const isPost = computed(() => {
@@ -42,7 +44,7 @@ const isZh = computed(() => {
     <slot name="aside-top" />
     <!-- Show carbonAds at the top of right sidebar, only for post pages -->
     <VPCarbonAds 
-      v-if="isPost && theme.carbonAds" 
+      v-if="isPost && theme.carbonAds && isAsideEnabled" 
       :carbon-ads="theme.carbonAds" 
     />
 

@@ -39,9 +39,9 @@ export default {
       'doc-content-before': () => h(VPDoc),
       'doc-after': () => {
         if (isZh.value) {
-          return h(WWAds)
+          return h('div', { class: 'mobile-only-ads' }, h(WWAds))
         } else if (theme.value.carbonAds) {
-          return h(VPCarbonAds, { carbonAds: theme.value.carbonAds })
+          return h('div', { class: 'mobile-only-ads' }, h(VPCarbonAds, { carbonAds: theme.value.carbonAds }))
         }
         return null
       }
