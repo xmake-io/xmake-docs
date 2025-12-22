@@ -1,10 +1,8 @@
-The Xmake projects are personal open-source projects, and their development needs your help.
+Xmake is an independent, community-driven open-source project. Its ongoing development and maintenance rely on your support.
 
-If you would like to support the development of Xmake, you are encouraged to donate!
+Your sponsorship helps sustain the project, ensuring it remains robust, feature-rich, and free for everyone. Whether you're an individual user or a company benefiting from Xmake, your contribution makes a difference.
 
-Feel free to contact us for more details about sponsorship.
-
-- [Contact Us](/about/contact)
+If you'd like to support us, please consider making a donation. For corporate sponsorship inquiries or exclusive benefits, feel free to [contact us](/about/contact).
 
 ## Payment Methods
 
