@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.0.6 Preview — Android Native Apps, Flang, CUDA 13, Qt Pack, AppImage/dmg
+title: Xmake v3.0.6 Preview, Android Native Apps, Flang, CUDA 13, Qt Pack, AppImage/dmg
 tags: [xmake, android, flang, cuda, qt, packaging, msvc, binutils]
 date: 2025-12-17
 author: Ruki
