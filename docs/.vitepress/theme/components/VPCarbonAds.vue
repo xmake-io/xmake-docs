@@ -68,6 +68,15 @@ if (carbonOptions) {
   background-color: var(--vp-carbon-ads-bg-color);
 }
 
+/* Mobile view adjustment */
+@media (max-width: 1280px) {
+  .VPCarbonAds {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 20px auto 0;
+  }
+}
+
 .VPCarbonAds :deep(img) {
   margin: 0 auto;
   border-radius: 6px;

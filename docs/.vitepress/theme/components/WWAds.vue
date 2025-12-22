@@ -18,4 +18,14 @@ onMounted(() => {
 .wwads-cn {
   margin-top: 20px;
 }
+/* Mobile view adjustment */
+@media (max-width: 1280px) {
+  .wwads-cn {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 20px auto 0;
+    display: flex;
+    justify-content: center;
+  }
+}
 </style>

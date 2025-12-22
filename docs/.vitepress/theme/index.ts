@@ -3,6 +3,7 @@ import { h, computed } from 'vue'
 import VPDoc from './components/VPDoc.vue'
 import AIAssistant from './components/AIAssistant.vue'
 import WWAds from './components/WWAds.vue'
+import VPCarbonAds from './components/VPCarbonAds.vue'
 import { useData } from 'vitepress'
 import './styles.css'
 import 'virtual:group-icons.css'
@@ -26,8 +27,24 @@ const hashToRoute = {
 export default {
   extends: Theme,
   Layout: () => {
+    const { lang, page, theme } = useData()
+    const isZh = computed(() => {
+      return lang.value === 'zh' || 
+             lang.value === 'zh-CN' || 
+             page.value.relativePath.startsWith('zh/') || 
+             page.value.filePath.includes('/zh/')
+    })
+
     return h(Theme.Layout, null, {
-      'doc-content-before': () => h(VPDoc)
+      'doc-content-before': () => h(VPDoc),
+      'doc-after': () => {
+        if (isZh.value) {
+          return h(WWAds)
+        } else if (theme.value.carbonAds) {
+          return h(VPCarbonAds, { carbonAds: theme.value.carbonAds })
+        }
+        return null
+      }
     })
   },
   enhanceApp({ app, router }) {

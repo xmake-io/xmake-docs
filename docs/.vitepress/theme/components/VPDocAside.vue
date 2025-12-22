@@ -54,9 +54,20 @@ const isZh = computed(() => {
 
     <slot name="aside-bottom" />
     
-    <div v-if="isZh">
-      <WWAds />
+    <div class="aside-wwads-wrapper">
+      <div v-if="isZh">
+        <WWAds />
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Hide aside ads on small screens to avoid duplication with doc-after ads */
+@media (max-width: 1280px) {
+  .aside-wwads-wrapper {
+    display: none;
+  }
+}
+</style>
 
