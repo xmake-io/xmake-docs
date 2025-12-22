@@ -32,7 +32,7 @@ Additionally, if your monthly sponsorship exceeds $200, please contact us via em
 
 ### GitHub Sponsor
 
-For more supporters, please visit [GitHub Sponsors](https://github.com/sponsors/waruqi).
+We are grateful to all our GitHub Sponsors. View the full list of supporters on our [GitHub Sponsors page](https://github.com/sponsors/waruqi).
 
 ### PayPal
 
