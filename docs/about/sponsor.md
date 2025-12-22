@@ -34,10 +34,6 @@ Additionally, if your monthly sponsorship exceeds $200, please contact us via em
 
 For more supporters, please visit [GitHub Sponsors](https://github.com/sponsors/waruqi).
 
-| Date | Supporter | Channel | Amount | Comment |
-| -- | -- | -- | -- | -- |
-| 2021.12.14 | SirLynix       | GitHub         | $10    |                                                                         |
-
 ### PayPal
 
 | Date | Supporter | Channel | Amount | Comment |

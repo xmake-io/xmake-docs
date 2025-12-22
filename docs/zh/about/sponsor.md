@@ -43,10 +43,6 @@ Xmake 是一个完全由社区驱动的独立开源项目，其持续的开发�
 
 更多支持者请查看 [GitHub Sponsors](https://github.com/sponsors/waruqi)。
 
-| 日期 | 支持者 | 渠道 | 金额 | 评价 |
-| -- | -- | -- | -- | -- |
-| 2021.12.14 | SirLynix       | GitHub         | $10    |                                                                         |
-
 ### 微信 / 支付宝
 
 | 日期 | 支持者 | 渠道 | 金额 | 评价 |
