@@ -67,6 +67,9 @@ if (carbonOptions) {
     max-width: 350px !important;
     margin: 20px auto 0;
     float: none !important;
+    display: block !important;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
 
