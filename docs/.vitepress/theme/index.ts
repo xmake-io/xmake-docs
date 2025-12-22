@@ -49,6 +49,13 @@ export default {
     // Register global components
     app.component('AIAssistant', AIAssistant)
     
+    if (typeof window !== 'undefined') {
+      const lang = navigator.language
+      if (lang && lang.toLowerCase().startsWith('zh') && window.location.pathname === '/') {
+        window.location.pathname = '/zh/'
+      }
+    }
+
     router.onBeforeRouteChange = (to) => {
       const u = new URL(to, 'https://xmake.io')
       if (u.pathname === '/') {
