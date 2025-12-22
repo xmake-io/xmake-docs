@@ -3,8 +3,9 @@ import { computed } from 'vue'
 import { useData } from 'vitepress'
 import VPDocAsideOutline from 'vitepress/dist/client/theme-default/components/VPDocAsideOutline.vue'
 import VPCarbonAds from './VPCarbonAds.vue'
+import WWAds from './WWAds.vue'
 
-const { theme, page } = useData()
+const { theme, page, lang } = useData()
 
 // Check if current page is a blog post article
 const isPost = computed(() => {
@@ -28,12 +29,17 @@ const isPost = computed(() => {
   return isPostPath || isPostRoute
 })
 
+const isZh = computed(() => {
+  return lang.value === 'zh' || 
+         lang.value === 'zh-CN' || 
+         page.value.relativePath.startsWith('zh/') || 
+         page.value.filePath.includes('/zh/')
+})
 </script>
 
 <template>
   <div class="VPDocAside">
     <slot name="aside-top" />
-
     <!-- Show carbonAds at the top of right sidebar, only for post pages -->
     <VPCarbonAds 
       v-if="isPost && theme.carbonAds" 
@@ -47,6 +53,10 @@ const isPost = computed(() => {
     <div class="spacer" />
 
     <slot name="aside-bottom" />
+    
+    <div v-if="isZh">
+      <WWAds />
+    </div>
   </div>
 </template>
 

@@ -1,7 +1,9 @@
 import Theme from 'vitepress/theme'
-import { h } from 'vue'
+import { h, computed } from 'vue'
 import VPDoc from './components/VPDoc.vue'
 import AIAssistant from './components/AIAssistant.vue'
+import WWAds from './components/WWAds.vue'
+import { useData } from 'vitepress'
 import './styles.css'
 import 'virtual:group-icons.css'
 
