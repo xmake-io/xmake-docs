@@ -57,6 +57,7 @@ if (carbonOptions) {
   font-size: 12px;
   font-weight: 500;
   background-color: var(--vp-carbon-ads-bg-color);
+  min-height: 150px;
 }
 
 /* Mobile view adjustment */
