@@ -46,7 +46,6 @@ const isZh = computed(() => {
     <VPCarbonAds 
       v-if="isPost && theme.carbonAds && isAsideEnabled" 
       :carbon-ads="theme.carbonAds" 
-      variant="sidebar"
     />
 
     <slot name="aside-outline-before" />

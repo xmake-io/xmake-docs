@@ -6,7 +6,6 @@ import { useData } from 'vitepress/dist/client/theme-default/composables/data'
 const { page } = useData()
 const props = defineProps<{
   carbonAds: DefaultTheme.CarbonAdsOptions
-  variant?: 'sidebar' | 'mobile-bottom'
 }>()
 
 const carbonOptions = props.carbonAds
@@ -36,17 +35,6 @@ watch(() => page.value.relativePath, () => {
 // refresh the page
 if (carbonOptions) {
   onMounted(() => {
-    // Explicitly check variant to prevent ID conflicts
-    const isMobile = window.matchMedia('(max-width: 1280px)').matches
-    
-    if (props.variant === 'sidebar' && isMobile) {
-      return
-    }
-    
-    if (props.variant === 'mobile-bottom' && !isMobile) {
-      return
-    }
-
     // Only initialize if the container is visible to avoid ID conflicts
     // with other instances (e.g. sidebar vs bottom)
     if (container.value && container.value.offsetParent !== null) {
@@ -83,9 +71,6 @@ if (carbonOptions) {
     max-width: 350px !important;
     margin: 20px auto 0;
     float: none !important;
-    display: block !important;
-    padding-top: 20px;
-    padding-bottom: 20px;
   }
 }
 
