@@ -22,10 +22,12 @@ onMounted(() => {
 @media (max-width: 1280px) {
   .wwads-cn {
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: 350px !important; /* Limit width for better look */
     margin: 20px auto 0;
     display: flex;
     justify-content: center;
+    background-color: #f8f9fa; /* Placeholder to verify rendering */
+    min-height: 150px;
   }
 }
 </style>

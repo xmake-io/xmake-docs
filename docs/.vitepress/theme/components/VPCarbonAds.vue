@@ -72,8 +72,9 @@ if (carbonOptions) {
 @media (max-width: 1280px) {
   .VPCarbonAds {
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: 350px !important;
     margin: 20px auto 0;
+    float: none !important;
   }
 }
 
