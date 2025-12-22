@@ -31,6 +31,11 @@ const isPost = computed(() => {
   return isPostPath || isPostRoute
 })
 
+const isBlogHome = computed(() => {
+  const path = page.value.relativePath || page.value.filePath || ''
+  return path === 'blog.md' || path === 'blog/index.md'
+})
+
 const isZh = computed(() => {
   return lang.value === 'zh' || 
          lang.value === 'zh-CN' || 
@@ -44,7 +49,7 @@ const isZh = computed(() => {
     <slot name="aside-top" />
     <!-- Show carbonAds at the top of right sidebar, only for post pages -->
     <VPCarbonAds 
-      v-if="isPost && theme.carbonAds && isAsideEnabled" 
+      v-if="(isPost || isBlogHome) && theme.carbonAds && isAsideEnabled" 
       :carbon-ads="theme.carbonAds" 
     />
 
