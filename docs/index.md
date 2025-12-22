@@ -15,9 +15,6 @@ hero:
     - theme: alt
       text: GitHub
       link: https://github.com/xmake-io/xmake
-    - theme: alt
-      text: Gitee
-      link: https://gitee.com/tboox/xmake
 
 features:
   - icon: 🚀
