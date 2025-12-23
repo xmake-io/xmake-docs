@@ -7,15 +7,7 @@ v2.6.2 版本，xmake 完整支持了 Linux 内核驱动模块的构建，这也
 
 它的配置非常简单，只需要配置上支持模块的 linux-headers 包，然后应用 `platform.linux.module` 构建规则就行了。
 
-```lua
-add_requires("linux-headers", {configs = {driver_modules = true}})
-
-target("hello")
-    add_rules("platform.linux.module")
-    add_files("src/*.c")
-    add_packages("linux-headers")
-    set_license("GPL-2.0")
-```
+<FileExplorer rootFilesDir="examples/linux/driver/hello" />
 
 然后直接执行 xmake 命令，一键编译，生成内核驱动模块 hello.ko。
 
