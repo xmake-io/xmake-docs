@@ -84,6 +84,7 @@ const props = withDefaults(defineProps<Props>(), {
   showFullscreen: true,
   initialSidebarOpen: true,
   height: 'auto',
+  sidebarWidth: 'auto',
   showLineNumbers: true
 })
 
@@ -517,7 +518,7 @@ onUnmounted(() => {
 
 .explorer-tree {
   flex: 1;
-  overflow-y: auto;
+  overflow: auto;
   padding-bottom: 10px;
 }
 
