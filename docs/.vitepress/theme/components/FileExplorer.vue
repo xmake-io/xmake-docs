@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watchEffect, onMounted, onUnmounted, inject } from 'vue'
+import { ref, computed, watchEffect, onMounted, onUnmounted, inject, watch } from 'vue'
 import JSZip from 'jszip'
 import FileTreeNode from './FileTreeNode.vue'
 import type { File, TreeNode } from './types'
@@ -352,10 +352,12 @@ const containerStyle = computed(() => {
   return style
 })
 
-onMounted(() => {
-  window.addEventListener('keydown', handleKeydown)
-  
-  // Check URL params for file selection
+const urlParamsHandled = ref(false)
+
+const checkUrlParams = () => {
+  if (urlParamsHandled.value) return
+  if (effectiveFiles.value.length === 0) return
+
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search)
     const fileName = params.get('file')
@@ -367,19 +369,32 @@ onMounted(() => {
     if (fileName) {
       // If explorer_id param is present, only process if it matches our id
       if (targetExplorerId && targetExplorerId !== explorerId.value) {
+        urlParamsHandled.value = true
         return
       }
 
       const index = effectiveFiles.value.findIndex(f => f.name === fileName)
       if (index !== -1) {
         activeFileIndex.value = index
+        urlParamsHandled.value = true
         // Scroll to the component if a specific file was requested via URL
         setTimeout(() => {
           containerRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
         }, 300)
       }
+    } else {
+      urlParamsHandled.value = true
     }
   }
+}
+
+watch(() => effectiveFiles.value, () => {
+    checkUrlParams()
+})
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+  checkUrlParams()
 })
 
 onUnmounted(() => {
