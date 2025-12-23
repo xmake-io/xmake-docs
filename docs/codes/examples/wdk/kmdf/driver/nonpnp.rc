@@ -1,0 +1,9 @@
+#include <windows.h>
+
+#define VER_FILETYPE                VFT_DRV
+#define VER_FILESUBTYPE             VFT2_DRV_SYSTEM
+#define VER_FILEDESCRIPTION_STR     "KMDF Driver"
+#define VER_INTERNALNAME_STR        "nonpnp.sys"
+#define VER_ORIGINALFILENAME_STR    "nonpnp.sys"
+
+#include "common.ver"

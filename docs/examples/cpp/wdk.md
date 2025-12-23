@@ -11,54 +11,17 @@ And see [WDK examples](https://github.com/xmake-io/xmake/tree/master/tests/proje
 
 ## UMDF Driver Program
 
-```lua
-target("echo")
-    add_rules("wdk.driver", "wdk.env.umdf")
-    add_files("driver/*.c")
-    add_files("driver/*.inx")
-    add_includedirs("exe")
-
-target("app")
-    add_rules("wdk.binary", "wdk.env.umdf")
-    add_files("exe/*.cpp")
-```
+<FileExplorer rootFilesDir="examples/wdk/umdf" />
 
 ## KMDF Driver Program
 
-```lua
-target("nonpnp")
-    add_rules("wdk.driver", "wdk.env.kmdf")
-    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
-    add_files("driver/*.c", {rules = "wdk.tracewpp"})
-    add_files("driver/*.rc")
-
-target("app")
-    add_rules("wdk.binary", "wdk.env.kmdf")
-    add_files("exe/*.c")
-    add_files("exe/*.inf")
-```
+<FileExplorer rootFilesDir="examples/wdk/kmdf" />
 
 ## WDM Driver Program
 
-```lua
-target("kcs")
-    add_rules("wdk.driver", "wdk.env.wdm")
-    add_values("wdk.man.flags", "-prefix Kcs")
-    add_values("wdk.man.resource", "kcsCounters.rc")
-    add_values("wdk.man.header", "kcsCounters.h")
-    add_values("wdk.man.counter_header", "kcsCounters_counters.h")
-    add_files("*.c", "*.rc", "*.man")
-```
+<FileExplorer rootFilesDir="examples/wdk/wdm/kcs" />
 
-```lua
-target("msdsm")
-    add_rules("wdk.driver", "wdk.env.wdm")
-    add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
-    add_files("*.c", {rules = "wdk.tracewpp"})
-    add_files("*.rc", "*.inf")
-    add_files("*.mof|msdsm.mof")
-    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}})
-```
+<FileExplorer rootFilesDir="examples/wdk/wdm/msdsm" />
 
 ## Package Driver
 

@@ -1,0 +1,8 @@
+[Dynamic, Provider("WMIProv"), WMI, Description("MSDSM WMI")]
+class MSDSM_WMI
+{
+    [key, read]
+    string InstanceName;
+    [read]
+    boolean Active;
+};

@@ -1,0 +1,7 @@
+target("msdsm")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    add_values("wdk.tracewpp.flags", "-func:TracePrint((LEVEL,FLAGS,MSG,...))")
+    add_files("*.c", {rule = "wdk.tracewpp"})
+    add_files("*.rc", "*.inf")
+    add_files("*.mof|msdsm.mof")
+    add_files("msdsm.mof", {values = {wdk_mof_header = "msdsmwmi.h"}})

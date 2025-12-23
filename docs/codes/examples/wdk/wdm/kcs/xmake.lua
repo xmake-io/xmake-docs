@@ -1,0 +1,7 @@
+target("kcs")
+    add_rules("wdk.driver", "wdk.env.wdm")
+    add_values("wdk.man.flags", "-prefix Kcs")
+    add_values("wdk.man.resource", "kcsCounters.rc")
+    add_values("wdk.man.header", "kcsCounters.h")
+    add_values("wdk.man.counter_header", "kcsCounters_counters.h")
+    add_files("*.c", "*.rc", "*.man")

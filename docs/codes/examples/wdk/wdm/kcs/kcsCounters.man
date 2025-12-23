@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<instrumentationManifest
+    xmlns="http://schemas.microsoft.com/win/2004/08/events"
+    xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    >
+    <instrumentation>
+        <counters
+            xmlns="http://schemas.microsoft.com/win/2005/12/counters"
+            schemaVersion="1.1"
+            >
+            <provider
+                applicationIdentity="kcs.sys"
+                providerGuid="{12345678-1234-1234-1234-123456789012}"
+                providerName="KcsProvider"
+                providerType="kernelMode"
+                >
+                <counterSet
+                    guid="{87654321-4321-4321-4321-210987654321}"
+                    uri="Microsoft.Windows.System.PerfCounters.KcsCounterSet"
+                    name="KcsCounterSet"
+                    description="Kcs Counter Set"
+                    instances="single"
+                    >
+                    <counter
+                        id="1"
+                        uri="Microsoft.Windows.System.PerfCounters.KcsCounter"
+                        name="KcsCounter"
+                        description="Kcs Counter"
+                        type="perf_counter_large_rawcount_hex"
+                        />
+                </counterSet>
+            </provider>
+        </counters>
+    </instrumentation>
+</instrumentationManifest>

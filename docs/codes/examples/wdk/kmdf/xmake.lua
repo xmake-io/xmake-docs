@@ -1,0 +1,10 @@
+target("nonpnp")
+    add_rules("wdk.driver", "wdk.env.kmdf")
+    add_values("wdk.tracewpp.flags", "-func:TraceEvents(LEVEL,FLAGS,MSG,...)", "-func:Hexdump((LEVEL,FLAGS,MSG,...))")
+    add_files("driver/*.c", {rule = "wdk.tracewpp"})
+    add_files("driver/*.rc")
+
+target("app")
+    add_rules("wdk.binary", "wdk.env.kmdf")
+    add_files("exe/*.c")
+    add_files("exe/*.inf")
