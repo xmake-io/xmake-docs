@@ -701,7 +701,9 @@ onUnmounted(() => {
   }
   
   .file-explorer-sidebar {
-    width: 100%;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
     height: auto;
     max-height: 200px;
     border-right: none;
