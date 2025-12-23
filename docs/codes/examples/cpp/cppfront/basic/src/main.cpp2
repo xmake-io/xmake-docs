@@ -1,0 +1,4 @@
+main: () -> int = {
+    std::cout << "Hello from Cppfront!\n";
+    return 0;
+}

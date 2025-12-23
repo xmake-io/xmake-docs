@@ -3,25 +3,7 @@
 
 After 2.5.8, we can enable automatic merging of all dependent static libraries by setting the `build.merge_archive` strategy, for example:
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("add")
-    set_kind("static")
-    add_files("src/add.c")
-    add_files("src/subdir/add.c")
-
-target("sub")
-    set_kind("static")
-    add_files("src/sub.c")
-    add_files("src/subdir/sub.c")
-
-target("mul")
-    set_kind("static")
-    add_deps("add", "sub")
-    add_files("src/mul.c")
-    set_policy("build.merge_archive", true)
-```
+<FileExplorer rootFilesDir="examples/c/merge_archive/basic" />
 
 The mul static library automatically merges the add and sub static libraries to generate a complete libmul.a library containing add/sub code.
 

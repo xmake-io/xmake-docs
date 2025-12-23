@@ -10,23 +10,7 @@
 
 由于 `add_files` 默认不会添加不存在的文件，所以需要配置 `always_added = true`，即使文件当前还不存在也能强制添加。
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("test")
-    set_kind("binary")
-    add_files("$(builddir)/autogen.cpp", {always_added = true})
-    before_build(function (target)
-        io.writefile("$(builddir)/autogen.cpp", [[
-#include <iostream>
-using namespace std;
-int main(int argc, char** argv) {
-    cout << "hello world!" << endl;
-    return 0;
-}
-        ]])
-    end)
-```
+<FileExplorer rootFilesDir="examples/cpp/autogen/simple" />
 
 这种方式有很多局限性，实际场景下不常用，但胜在简单易懂。
 
@@ -34,42 +18,7 @@ int main(int argc, char** argv) {
 
 有时我们需要通过执行项目中的某个目标程序来生成代码，可以通过如下方式实现：
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-rule("autogen")
-    set_extensions(".in")
-    before_buildcmd_file(function (target, batchcmds, sourcefile, opt)
-        local sourcefile_cx = path.join(target:autogendir(), "rules", "autogen", path.basename(sourcefile) .. ".cpp")
-        local objectfile = target:objectfile(sourcefile_cx)
-        table.insert(target:objectfiles(), objectfile)
-
-        batchcmds:show_progress(opt.progress, "${color.build.object}compiling.autogen %s", sourcefile)
-        batchcmds:mkdir(path.directory(sourcefile_cx))
-        batchcmds:vrunv(target:dep("autogen"):targetfile(), {sourcefile, sourcefile_cx})
-        batchcmds:compile(sourcefile_cx, objectfile)
-
-        batchcmds:add_depfiles(sourcefile, target:dep("autogen"):targetfile())
-        batchcmds:set_depmtime(os.mtime(objectfile))
-        batchcmds:set_depcache(target:dependfile(objectfile))
-    end)
-
-target("autogen")
-    set_default(false)
-    set_kind("binary")
-    set_plat(os.host()) -- 生成当前主机平台程序
-    set_arch(os.arch())
-    add_files("src/autogen.cpp")
-    set_languages("c++11")
-    set_policy("build.fence", true) -- 禁用源码间并行编译
-
-target("test")
-    set_kind("binary")
-    add_deps("autogen")
-    add_rules("autogen")
-    add_files("src/main.cpp")
-    add_files("src/*.in")
-```
+<FileExplorer rootFilesDir="examples/cpp/autogen/rule" />
 
 首先需要配置一个 autogen 目标程序，它必须能在当前编译平台运行，因此需通过 `set_plat(os.host())` 强制为主机平台编译。
 

@@ -5,16 +5,6 @@ While Xmake provides built-in `add_rules("asn1c")` rules to process `.c` file ge
 
 Here is a basic configuration example:
 
-```lua
-add_rules("mode.debug", "mode.release")
-add_requires("asn1c")
-
-target("test")
-     set_kind("binary")
-     add_files("src/*.c")
-     add_files("src/*.asn1")
-     add_rules("asn1c")
-     add_packages("asn1c")
-```
+<FileExplorer rootFilesDir="examples/c/asn1/basic" />
 
 For details, see [Example Project](https://github.com/xmake-io/xmake/tree/master/tests/projects/c/asn1c).

@@ -3,25 +3,7 @@
 
 2.5.8 之后，我们可以通过设置 `build.merge_archive` 策略，启用自动合并依赖的所有静态库，例如：
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("add")
-    set_kind("static")
-    add_files("src/add.c")
-    add_files("src/subdir/add.c")
-
-target("sub")
-    set_kind("static")
-    add_files("src/sub.c")
-    add_files("src/subdir/sub.c")
-
-target("mul")
-    set_kind("static")
-    add_deps("add", "sub")
-    add_files("src/mul.c")
-    set_policy("build.merge_archive", true)
-```
+<FileExplorer rootFilesDir="examples/c/merge_archive/basic" />
 
 mul 静态库自动合并了 add 和 sub 静态库，生成一个包含 add/sub 代码的完整 libmul.a 库。
 

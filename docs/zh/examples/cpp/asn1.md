@@ -5,16 +5,6 @@ ASN.1 程序，需要借助 [ASN.1 Compiler](https://github.com/vlm/asn1c) 去�
 
 下面是一个基础的配置例子：
 
-```lua
-add_rules("mode.debug", "mode.release")
-add_requires("asn1c")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.c")
-    add_files("src/*.asn1")
-    add_rules("asn1c")
-    add_packages("asn1c")
-```
+<FileExplorer rootFilesDir="examples/c/asn1/basic" />
 
 具体见 [完整例子工程](https://github.com/xmake-io/xmake/tree/master/tests/projects/c/asn1c)。
