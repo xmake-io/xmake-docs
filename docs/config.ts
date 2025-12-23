@@ -1,6 +1,7 @@
 import { createRequire } from 'module'
 import { defineAdditionalConfig, type DefaultTheme } from 'vitepress'
 import { builtinModulesApiSidebarItems, extensionModulesApiSidebarItems } from './sidebar'
+import { posts } from './.vitepress/theme/blog-data.js'
 
 const require = createRequire(import.meta.url)
 const pkg = require('vitepress/package.json')
@@ -17,6 +18,7 @@ export default defineAdditionalConfig({
       '/api/description/': { base: '/api/description/', items: descriptionApiSidebar() },
       '/api/scripts/': { base: '/api/scripts/', items: scriptsApiSidebar() },
       '/examples/': { base: '/examples/', items: examplesSidebar() },
+      ...postsSidebar(),
     },
 
     editLink: {
@@ -65,6 +67,29 @@ function nav(): DefaultTheme.NavItem[] {
     },
     { text: 'Sponsor', link: '/about/sponsor' }
   ]
+}
+
+function postsSidebar(): Record<string, DefaultTheme.SidebarItem[]> {
+  const sidebar: Record<string, DefaultTheme.SidebarItem[]> = {}
+  for (let i = 0; i < posts.length; i++) {
+    const post = posts[i]
+    const next = i > 0 ? posts[i - 1] : null
+    const prev = i < posts.length - 1 ? posts[i + 1] : null
+    
+    const items = []
+    if (next) {
+      items.push({ text: 'Previous Post', link: next.url })
+    }
+    if (prev) {
+      items.push({ text: 'Next Post', link: prev.url })
+    }
+    items.push({ text: 'Return to Blog', link: '/blog/' })
+    
+    sidebar[post.url + '/'] = items
+    sidebar[post.url + '.html'] = items
+    sidebar[post.url] = items
+  }
+  return sidebar
 }
 
 function guideSidebar(): DefaultTheme.SidebarItem[] {

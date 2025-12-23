@@ -1,6 +1,7 @@
 import { createRequire } from 'module'
 import { defineAdditionalConfig, type DefaultTheme } from 'vitepress'
 import { builtinModulesApiSidebarItems, extensionModulesApiSidebarItems } from '../sidebar'
+import { posts } from '../.vitepress/theme/zh-blog-data.js'
 
 const require = createRequire(import.meta.url)
 const pkg = require('vitepress/package.json')
@@ -19,6 +20,7 @@ export default defineAdditionalConfig({
       '/zh/api/description/': { base: '/zh/api/description/', items: descriptionApiSidebar() },
       '/zh/api/scripts/': { base: '/zh/api/scripts/', items: scriptsApiSidebar() },
       '/zh/examples/': { base: '/zh/examples/', items: examplesSidebar() },
+      ...postsSidebar(),
     },
 
     editLink: {
@@ -146,6 +148,29 @@ function nav(): DefaultTheme.NavItem[] {
     },
     { text: '赞助', link: '/zh/about/sponsor' }
   ]
+}
+
+function postsSidebar(): Record<string, DefaultTheme.SidebarItem[]> {
+  const sidebar: Record<string, DefaultTheme.SidebarItem[]> = {}
+  for (let i = 0; i < posts.length; i++) {
+    const post = posts[i]
+    const next = i > 0 ? posts[i - 1] : null
+    const prev = i < posts.length - 1 ? posts[i + 1] : null
+    
+    const items = []
+    if (next) {
+      items.push({ text: '上一篇', link: next.url })
+    }
+    if (prev) {
+      items.push({ text: '下一篇', link: prev.url })
+    }
+    items.push({ text: '返回博客', link: '/zh/blog/' })
+    
+    sidebar[post.url + '/'] = items
+    sidebar[post.url + '.html'] = items
+    sidebar[post.url] = items
+  }
+  return sidebar
 }
 
 function guideSidebar(): DefaultTheme.SidebarItem[] {

@@ -80,9 +80,9 @@ watch(
       tabindex="-1"
     >
 
-      <!-- Show carbonAds at the top of left sidebar, only for non-post pages (API docs, etc.) -->
+      <!-- Show carbonAds at the top of left sidebar -->
       <VPDocAsideCarbonAds 
-        v-if="!isPost && theme.carbonAds" 
+        v-if="theme.carbonAds" 
         :carbon-ads="theme.carbonAds" 
       />
 
