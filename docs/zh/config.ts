@@ -20,6 +20,22 @@ export default defineAdditionalConfig({
       '/zh/api/description/': { base: '/zh/api/description/', items: descriptionApiSidebar() },
       '/zh/api/scripts/': { base: '/zh/api/scripts/', items: scriptsApiSidebar() },
       '/zh/examples/': { base: '/zh/examples/', items: examplesSidebar() },
+      '/zh/about/': [
+        {
+          text: '关于',
+          items: [
+            { text: '在线赞助', link: '/zh/about/sponsor' },
+            { text: '社区', link: '/zh/about/contact' },
+            { text: '谁在使用 Xmake?', link: '/zh/about/who_is_using_xmake' },
+          ]
+        },
+        {
+          text: '下一步',
+          items: [
+            { text: '文档', link: '/zh/guide/introduction' }
+          ]
+        }
+      ],
       '/zh/blog/': [
         {
           text: '博客',

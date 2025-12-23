@@ -18,6 +18,22 @@ export default defineAdditionalConfig({
       '/api/description/': { base: '/api/description/', items: descriptionApiSidebar() },
       '/api/scripts/': { base: '/api/scripts/', items: scriptsApiSidebar() },
       '/examples/': { base: '/examples/', items: examplesSidebar() },
+      '/about/': [
+        {
+          text: 'About',
+          items: [
+            { text: 'Sponsor', link: '/about/sponsor' },
+            { text: 'Contact', link: '/about/contact' },
+            { text: 'Who is using Xmake?', link: '/about/who_is_using_xmake' },
+          ]
+        },
+        {
+          text: 'Next Steps',
+          items: [
+            { text: 'Documentation', link: '/guide/introduction' }
+          ]
+        }
+      ],
       '/blog/': [
         {
           text: 'Blog',

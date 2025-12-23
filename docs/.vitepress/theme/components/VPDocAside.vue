@@ -36,6 +36,11 @@ const isBlogHome = computed(() => {
   return path === 'blog.md' || path === 'blog/index.md'
 })
 
+const isSponsor = computed(() => {
+  const path = page.value.relativePath || page.value.filePath || ''
+  return path.includes('about/sponsor')
+})
+
 const isZh = computed(() => {
   return lang.value === 'zh' || 
          lang.value === 'zh-CN' || 
@@ -51,6 +56,7 @@ const isZh = computed(() => {
     <VPCarbonAds 
       v-if="(isPost || isBlogHome) && theme.carbonAds && isAsideEnabled" 
       :carbon-ads="theme.carbonAds" 
+      :key="'aside-' + page.relativePath"
     />
 
     <slot name="aside-outline-before" />

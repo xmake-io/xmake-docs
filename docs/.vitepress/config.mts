@@ -9,6 +9,8 @@ import { fileURLToPath, URL } from 'node:url'
 
 import llmstxt from 'vitepress-plugin-llms'
 import { addTitleFromFrontmatter } from './plugins/add-title'
+import enConfig from '../config'
+import zhConfig from '../zh/config'
 
 export default defineConfig({
   title: "Xmake",
@@ -130,8 +132,8 @@ export default defineConfig({
   },
 
   locales: {
-    root: { label: 'English' },
-    zh: { label: '简体中文' }
+    root: { label: 'English', ...enConfig },
+    zh: { label: '简体中文', ...zhConfig }
   },
 
   transformPageData: (pageData, ctx) => {

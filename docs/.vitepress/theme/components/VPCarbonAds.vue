@@ -21,7 +21,10 @@ function init() {
     s.id = '_carbonads_js'
     s.src = `//cdn.carbonads.com/carbon.js?serve=${carbonOptions.code}&placement=${carbonOptions.placement}`
     s.async = true
-    container.value.appendChild(s)
+    // Only add if container exists and is empty to avoid duplication
+    if (container.value && container.value.innerHTML === '') {
+        container.value.appendChild(s)
+    }
   }
 }
 
@@ -42,6 +45,7 @@ if (carbonOptions) {
     }
   })
 }
+
 </script>
 
 <template>

@@ -9,6 +9,11 @@ import { useData } from 'vitepress/dist/client/theme-default/composables/data'
 import VPCarbonAds from './VPCarbonAds.vue'
 const { theme, page } = useData()
 
+const isSponsor = computed(() => {
+  const path = page.value.relativePath || page.value.filePath || ''
+  return path.includes('about/sponsor')
+})
+
 const { sidebarGroups, hasSidebar } = useLayout()
 
 // Check if current page is a blog post article
@@ -84,6 +89,7 @@ watch(
       <VPCarbonAds 
         v-if="theme.carbonAds" 
         :carbon-ads="theme.carbonAds" 
+        :key="'sidebar-' + page.relativePath"
       />
 
       <span class="visually-hidden" id="sidebar-aria-label">
