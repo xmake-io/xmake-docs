@@ -1,5 +1,5 @@
 import Theme from 'vitepress/theme'
-import { h, computed } from 'vue'
+import { h, computed, watch } from 'vue'
 import VPDoc from './components/VPDoc.vue'
 import AIAssistant from './components/AIAssistant.vue'
 import WWAds from './components/WWAds.vue'
@@ -35,8 +35,21 @@ export default {
              page.value.relativePath.startsWith('zh/') || 
              page.value.filePath.includes('/zh/')
     })
+    const isPost = computed(() => {
+      return page.value.filePath.includes('posts/')
+    })
 
-    return h(Theme.Layout, null, {
+    if (typeof window !== 'undefined') {
+      watch(isPost, (value) => {
+        if (value) {
+          document.body.classList.add('is-post')
+        } else {
+          document.body.classList.remove('is-post')
+        }
+      }, { immediate: true })
+    }
+
+    return h(Theme.Layout, { class: { 'is-post': isPost.value } }, {
       'doc-content-before': () => h(VPDoc),
       'doc-after': () => {
         if (isZh.value) {

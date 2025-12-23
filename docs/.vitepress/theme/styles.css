@@ -97,3 +97,9 @@
     display: none;
   }
 }
+
+/* Hide right sidebar carbon ads on post pages */
+body.is-post .VPDocAside .VPDocAsideCarbonAds,
+body.is-post .VPDocAside .VPCarbonAds {
+  display: none !important;
+}
