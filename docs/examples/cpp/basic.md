@@ -10,11 +10,9 @@ xmake create --help
 
 ## Executable Program
 
-```lua
-target("test")
-    set_kind("binary")
-    add_files("src/*.cpp")
-```
+<FileExplorer 
+  rootFilesDir="examples/cpp/console" 
+/>
 
 For a complete example, execute the following command to create:
 
@@ -30,16 +28,9 @@ xmake create -l c test
 
 ## Static Library Program
 
-```lua
-target("foo")
-    set_kind("static")
-    add_files("src/foo/*.cpp")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.cpp")
-    add_deps("foo")
-```
+<FileExplorer 
+  rootFilesDir="examples/cpp/static_library" 
+/>
 
 We use `add_deps` to link a static library to test target.
 
@@ -57,16 +48,9 @@ xmake create -l c static test
 
 ## Shared Library Program
 
-```lua
-target("foo")
-    set_kind("shared")
-    add_files("src/foo/*.cpp")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.cpp")
-    add_deps("foo")
-```
+<FileExplorer 
+  rootFilesDir="examples/cpp/shared_library" 
+/>
 
 We use `add_deps` to link a shared library to test target.
 

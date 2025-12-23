@@ -18,6 +18,7 @@
 *.zip
 *.gch
 *.gch.d
+.xmake
 cscope.*
 gmon.out
 tags

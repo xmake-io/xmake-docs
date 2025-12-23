@@ -9,11 +9,9 @@ xmake create --help
 
 ## 可执行程序 {#executable}
 
-```lua
-target("test")
-    set_kind("binary")
-    add_files("src/*cpp")
-```
+<FileExplorer 
+  rootFilesDir="examples/cpp/console" 
+/>
 
 完整例子请执行下面的命令来创建：
 
@@ -29,16 +27,9 @@ xmake create -l c test
 
 ## 静态库程序 {#static-library}
 
-```lua
-target("foo")
-    set_kind("static")
-    add_files("src/foo/*.cpp")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.cpp")
-    add_deps("foo")
-```
+<FileExplorer 
+  rootFilesDir="examples/cpp/static_library" 
+/>
 
 通过`add_deps`将一个静态库自动链接到test可执行程序。
 
@@ -56,16 +47,9 @@ xmake create -l c -t static test
 
 ## 动态库程序 {#shared-library}
 
-```lua
-target("foo")
-    set_kind("shared")
-    add_files("src/foo/*.cpp")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.cpp")
-    add_deps("foo")
-```
+<FileExplorer 
+  rootFilesDir="examples/cpp/shared_library" 
+/>
 
 通过`add_deps`将一个动态库自动链接到test可执行程序。
 

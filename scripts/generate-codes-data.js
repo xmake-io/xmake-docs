@@ -5,13 +5,13 @@ import { createHighlighter } from 'shiki'
 import { glob } from 'glob'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const examplesSrcDir = path.resolve(__dirname, '../docs/codes/examples')
+const codesSrcDir = path.resolve(__dirname, '../docs/codes')
 const outputDir = path.resolve(__dirname, '../docs/.vitepress/data')
 const outputFile = path.join(outputDir, 'codes-data.js')
 
 async function generate() {
-  if (!fs.existsSync(examplesSrcDir)) {
-    console.log('Examples directory not found:', examplesSrcDir)
+  if (!fs.existsSync(codesSrcDir)) {
+    console.log('Codes directory not found:', codesSrcDir)
     return
   }
 
@@ -20,7 +20,7 @@ async function generate() {
     fs.mkdirSync(outputDir, { recursive: true })
   }
 
-  console.log('Generating examples data...')
+  console.log('Generating codes data...')
 
   const highlighter = await createHighlighter({
     themes: ['github-dark', 'github-light'],
@@ -29,22 +29,22 @@ async function generate() {
   
   // Find all xmake.lua files to identify project roots
   const projectRoots = await glob('**/xmake.lua', { 
-    cwd: examplesSrcDir,
+    cwd: codesSrcDir,
     ignore: ['**/build/**', '**/.*/**'] 
   })
 
-  const examples = {}
+  const codes = {}
 
   for (const rootFile of projectRoots) {
     const projectDir = path.dirname(rootFile)
     // Use project directory relative path as key (e.g. "examples/cpp/basic_console")
-    const key = 'examples/' + projectDir
-    const fullProjectDir = path.join(examplesSrcDir, projectDir)
+    const key = projectDir
+    const fullProjectDir = path.join(codesSrcDir, projectDir)
     
     // Get all files in this project
     const projectFiles = await glob('**/*.*', {
       cwd: fullProjectDir,
-      ignore: ['**/build/**', '**/.*', '**/*.o', '**/*.obj', '**/*.exe', '**/*.bin'],
+      ignore: ['**/build/**', '**/.*', '**/*.o', '**/*.obj', '**/*.exe', '**/*.bin', '**/test.lua'],
       nodir: true
     })
 
@@ -90,10 +90,10 @@ async function generate() {
       return a.name.localeCompare(b.name)
     })
 
-    examples[key] = files
+    codes[key] = files
   }
 
-  const content = `export const data = ${JSON.stringify(examples, null, 2)}`
+  const content = `export const data = ${JSON.stringify(codes, null, 2)}`
   fs.writeFileSync(outputFile, content)
   console.log(`Generated ${outputFile}`)
 }
