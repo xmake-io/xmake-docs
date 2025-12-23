@@ -472,7 +472,7 @@ onUnmounted(() => {
                 ></div>
               </div>
               <!-- Use shiki highlighted code -->
-              <div v-if="activeFile.highlightedCode" class="vp-doc-code" v-html="activeFile.highlightedCode"></div>
+              <div v-if="activeFile.highlightedCode" class="file-explorer-shiki" v-html="activeFile.highlightedCode"></div>
               <pre v-else><code>{{ activeFile.code }}</code></pre>
             </div>
           </div>
@@ -682,32 +682,11 @@ onUnmounted(() => {
   border-left: 2px solid var(--vp-c-brand);
 }
 
-.vp-doc-code,
+.file-explorer-shiki,
 .code-wrapper > pre {
   grid-area: 1 / 1;
   position: relative;
   z-index: 1;
-}
-
-/* Shiki Styles Override */
-.vp-doc-code :deep(pre.shiki) {
-  margin: 0 !important;
-  padding: 20px !important;
-  background-color: transparent !important;
-  border-radius: 0 !important;
-  overflow: visible !important;
-  width: fit-content;
-  min-width: 100%;
-  height: 100%;
-  font-family: var(--vp-font-family-mono) !important;
-  font-size: 14px !important;
-  line-height: 24px !important;
-}
-
-.vp-doc-code :deep(code) {
-  font-family: var(--vp-font-family-mono) !important;
-  font-size: 14px !important;
-  line-height: 24px !important;
 }
 
 @media (max-width: 768px) {
@@ -728,5 +707,37 @@ onUnmounted(() => {
   .file-explorer-content {
     height: 100%;
   }
+}
+</style>
+
+<style>
+/* Global styles for Shiki in FileExplorer to avoid scoped CSS issues */
+.file-explorer-shiki pre.shiki {
+  margin: 0 !important;
+  padding: 20px !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  width: fit-content;
+  min-width: 100%;
+  height: 100%;
+  font-family: var(--vp-font-family-mono) !important;
+  font-size: 14px !important;
+  line-height: 24px !important;
+}
+
+.file-explorer-shiki code {
+  font-family: var(--vp-font-family-mono) !important;
+  font-size: 14px !important;
+  line-height: 24px !important;
+}
+
+/* Dark mode overrides */
+html.dark .file-explorer-shiki .shiki,
+html.dark .file-explorer-shiki .shiki span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 </style>
