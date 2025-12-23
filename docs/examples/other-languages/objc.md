@@ -6,13 +6,7 @@ Create an empty project:
 $ xmake create -l objc -t console test
 ```
 
-```lua [xmake.lua]
-add_rules("mode.debug", "mode.release")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.m")
-```
+<FileExplorer rootFilesDir="examples/other-languages/objc/console" />
 
 For more examples, see: [Objc Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/objc++)
 
@@ -171,12 +165,7 @@ $ xmake uninstall
 
 ## Framework Program
 
-```lua
-target("test")
-    add_rules("xcode.framework")
-    add_files("src/*.m")
-    add_files("src/Info.plist")
-```
+<FileExplorer rootFilesDir="examples/other-languages/objc/framework" />
 
 We can also quickly create project through template:
 

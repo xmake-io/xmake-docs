@@ -1,0 +1,3 @@
+proc foo() {.importc.}
+
+foo()

@@ -7,16 +7,7 @@ $ cd test
 $ xmake
 ```
 
-```lua
--- define target
-target("cuda_console")
-    set_kind("binary")
-    add_files("src/*.cu")
-    -- generate SASS code for SM architecture of current host
-    add_cugencodes("native")
-    -- generate PTX code for the virtual architecture to guarantee compatibility
-    add_cugencodes("compute_30")
-```
+<FileExplorer rootFilesDir="examples/other-languages/cuda/basic" />
 
 ::: tip NOTE
 Starting with v2.2.7, the default build will enable device-link. (see [Separate Compilation and Linking of CUDA C++ Device Code](https://devblogs.nvidia.com/separate-compilation-linking-cuda-device-code/))

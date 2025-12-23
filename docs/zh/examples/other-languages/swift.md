@@ -5,13 +5,7 @@
 $ xmake create -l swift -t console test
 ```
 
-```lua [xmake.lua]
-add_rules("mode.debug", "mode.release")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.swift")
-```
+<FileExplorer rootFilesDir="examples/other-languages/swift/basic" />
 
 ## Swift 与 C++/Objective-C 互操作
 
@@ -21,17 +15,7 @@ target("test")
 
 您可以使用以下目标值来配置 Swift 互操作：
 
-```lua
-target("cxx_interop")
-    set_kind("binary")
-    set_languages("cxx20")
-    add_files("lib/**.swift", {public = true})
-    add_files("src/**.cpp")
-    set_values("swift.modulename", "SwiftFibonacci")           -- 设置 Swift 模块名
-    set_values("swift.interop", "cxx")                         -- 启用互操作："objc" 或 "cxx"
-    set_values("swift.interop.headername", "fibonacci-Swift.h") -- 定义输出头文件名
-    set_values("swift.interop.cxxmain", true)                  -- 强制 -parse-as-library 以避免重复的 main 符号
-```
+<FileExplorer rootFilesDir="examples/other-languages/swift/cxx_interop" />
 
 ### 互操作模式
 

@@ -12,13 +12,7 @@ xmake create -l nim -t shared test
 
 ## Console Program
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("test")
-    set_kind("binary")
-    add_files("src/main.nim")
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/console" />
 
 ```sh
 $ xmake -v
@@ -30,18 +24,7 @@ uild/macosx/x86_64/release/test src/main.nim
 
 ## Static library program
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("foo")
-    set_kind("static")
-    add_files("src/foo.nim")
-
-target("test")
-    set_kind("binary")
-    add_deps("foo")
-    add_files("src/main.nim")
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/static_library" />
 
 ```sh
 $ xmake -v
@@ -58,18 +41,7 @@ ssL:-Lbuild/macosx/x86_64/release --passL:-lfoo -o:build/macosx/x86_64/release/t
 
 ## Dynamic library program
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("foo")
-    set_kind("shared")
-    add_files("src/foo.nim")
-
-target("test")
-    set_kind("binary")
-    add_deps("foo")
-    add_files("src/main.nim")
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/shared_library" />
 
 ```sh
 $ xmake -rv
@@ -84,59 +56,16 @@ ssL:-Lbuild/macosx/x86_64/release --passL:-lfoo -o:build/macosx/x86_64/release/t
 
 ## C code mixed compilation
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("foo")
-    set_kind("static")
-    add_files("src/*.c")
-
-target("test")
-    set_kind("binary")
-    add_deps("foo")
-    add_files("src/main.nim")
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/mix_c" />
 
 ## Nimble dependency package integration
 
 For a complete example, see: [Nimble Package Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/nim/nimble_package)
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-add_requires("nimble::zip >0.3")
-
-target("test")
-    set_kind("binary")
-    add_files("src/main.nim")
-    add_packages("nimble::zip")
-```
-
-```nim [main.nim]
-import zip/zlib
-
-echo zlibVersion()
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/nimble_package" />
 
 ## Native dependency package integration
 
 For a complete example, see: [Native Package Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/nim/native_package)
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-add_requires("zlib")
-
-target("test")
-    set_kind("binary")
-    add_files("src/main.nim")
-    add_packages("zlib")
-```
-
-main.nim
-
-```nim
-proc zlibVersion(): cstring {.cdecl, importc}
-
-echo zlibVersion()
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/native_package" />

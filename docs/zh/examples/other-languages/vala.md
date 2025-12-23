@@ -7,65 +7,16 @@
 
 ## 控制台程序 {#console}
 
-```lua
-add_rules("mode.release", "mode.debug")
-
-add_requires("lua", "glib")
-
-target("test")
-    set_kind("binary")
-    add_rules("vala")
-    add_files("src/*.vala")
-    add_packages("lua", "glib")
-    add_values("vala.packages", "lua")
-```
+<FileExplorer rootFilesDir="examples/other-languages/vala/console" />
 
 ## 静态库程序 {#static-library}
 
 v2.5.8 之后，我们继续支持构建库程序，能够通过 `add_values("vala.header", "mymath.h")` 设置导出的接口头文件名，通过 `add_values("vala.vapi", "mymath-1.0.vapi")` 设置导出的 vapi 文件名。
 
-```lua
-add_rules("mode.release", "mode.debug")
-
-add_requires("glib")
-
-target("mymath")
-    set_kind("static")
-    add_rules("vala")
-    add_files("src/mymath.vala")
-    add_values("vala.header", "mymath.h")
-    add_values("vala.vapi", "mymath-1.0.vapi")
-    add_packages("glib")
-
-target("test")
-    set_kind("binary")
-    add_deps("mymath")
-    add_rules("vala")
-    add_files("src/main.vala")
-    add_packages("glib")
-```
+<FileExplorer rootFilesDir="examples/other-languages/vala/static_library" />
 
 ## 动态库程序 {#shared-library}
 
-```lua
-add_rules("mode.release", "mode.debug")
-
-add_requires("glib")
-
-target("mymath")
-    set_kind("shared")
-    add_rules("vala")
-    add_files("src/mymath.vala")
-    add_values("vala.header", "mymath.h")
-    add_values("vala.vapi", "mymath-1.0.vapi")
-    add_packages("glib")
-
-target("test")
-    set_kind("binary")
-    add_deps("mymath")
-    add_rules("vala")
-    add_files("src/main.vala")
-    add_packages("glib")
-```
+<FileExplorer rootFilesDir="examples/other-languages/vala/shared_library" />
 
 更多例子：[Vala examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/vala)

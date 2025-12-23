@@ -7,12 +7,6 @@ After v2.3.8, xmake also supports Intel Fortran Compiler, you only need to switc
 $ xmake create -l fortran -t console test
 ```
 
-```lua [xmake.lua]
-add_rules("mode.debug", "mode.release")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.f90")
-```
+<FileExplorer rootFilesDir="examples/other-languages/fortran/basic" />
 
 More code examples can be viewed here: [Fortran Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/fortran)

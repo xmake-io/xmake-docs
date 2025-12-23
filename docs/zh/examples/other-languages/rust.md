@@ -5,13 +5,7 @@
 $ xmake create -l rust -t console test
 ```
 
-```lua [xmake.lua]
-add_rules("mode.debug", "mode.release")
-
-target("test")
-    set_kind("binary")
-    add_files("src/main.rs")
-```
+<FileExplorer rootFilesDir="examples/other-languages/rust/basic" />
 
 更多例子见：[Rust Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/rust)
 
@@ -19,16 +13,7 @@ target("test")
 
 例子: https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cargo_deps
 
-```lua
-add_rules("mode.release", "mode.debug")
-add_requires("cargo::base64 0.13.0")
-add_requires("cargo::flate2 1.0.17", {configs = {features = "zlib"}})
-
-target("test")
-    set_kind("binary")
-    add_files("src/main.rs")
-    add_packages("cargo::base64", "cargo::flate2")
-```
+<FileExplorer rootFilesDir="examples/other-languages/rust/cargo_deps" />
 
 ## 集成 Cargo.toml 的依赖包 {#cargo-toml}
 
@@ -38,15 +23,7 @@ target("test")
 
 例如：
 
-```lua
-add_rules("mode.release", "mode.debug")
-add_requires("cargo::test", {configs = {cargo_toml = path.join(os.projectdir(), "Cargo.toml")}})
-
-target("test")
-    set_kind("binary")
-    add_files("src/main.rs")
-    add_packages("cargo::test")
-```
+<FileExplorer rootFilesDir="examples/other-languages/rust/cargo_deps_with_toml" />
 
 完整例子见：[cargo_deps_with_toml](https://github.com/xmake-io/xmake/blob/dev/tests/projects/rust/cargo_deps_with_toml/xmake.lua)
 

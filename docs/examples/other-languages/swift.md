@@ -5,13 +5,7 @@
 $ xmake create -l swift -t console test
 ```
 
-```lua [xmake.lua]
-add_rules("mode.debug", "mode.release")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.swift")
-```
+<FileExplorer rootFilesDir="examples/other-languages/swift/basic" />
 
 ## Swift Interop with C++/Objective-C
 
@@ -21,17 +15,7 @@ Starting from v3.0.5, xmake supports Swift interop with C++/Objective-C. When th
 
 You can configure Swift interop using the following target values:
 
-```lua
-target("cxx_interop")
-    set_kind("binary")
-    set_languages("cxx20")
-    add_files("lib/**.swift", {public = true})
-    add_files("src/**.cpp")
-    set_values("swift.modulename", "SwiftFibonacci")           -- Set the Swift module name
-    set_values("swift.interop", "cxx")                         -- Enable interop: "objc" or "cxx"
-    set_values("swift.interop.headername", "fibonacci-Swift.h") -- Define output header name
-    set_values("swift.interop.cxxmain", true)                  -- Force -parse-as-library to avoid duplicate main symbols
-```
+<FileExplorer rootFilesDir="examples/other-languages/swift/cxx_interop" />
 
 ### Interop Modes
 

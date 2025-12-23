@@ -13,13 +13,7 @@ xmake create -l nim -t shared test
 
 ## 控制台程序 {#console}
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("test")
-    set_kind("binary")
-    add_files("src/main.nim")
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/console" />
 
 ```sh
 $ xmake -v
@@ -31,18 +25,7 @@ uild/macosx/x86_64/release/test src/main.nim
 
 ## 静态库程序 {#static-library}
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("foo")
-    set_kind("static")
-    add_files("src/foo.nim")
-
-target("test")
-    set_kind("binary")
-    add_deps("foo")
-    add_files("src/main.nim")
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/static_library" />
 
 ```sh
 $ xmake -v
@@ -59,18 +42,7 @@ ssL:-Lbuild/macosx/x86_64/release --passL:-lfoo -o:build/macosx/x86_64/release/t
 
 ## 动态库程序 {#shared-library}
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("foo")
-    set_kind("shared")
-    add_files("src/foo.nim")
-
-target("test")
-    set_kind("binary")
-    add_deps("foo")
-    add_files("src/main.nim")
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/shared_library" />
 
 ```sh
 $ xmake -rv
@@ -85,59 +57,16 @@ ssL:-Lbuild/macosx/x86_64/release --passL:-lfoo -o:build/macosx/x86_64/release/t
 
 ## C 代码混合编译 {#mix-c}
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("foo")
-    set_kind("static")
-    add_files("src/*.c")
-
-target("test")
-    set_kind("binary")
-    add_deps("foo")
-    add_files("src/main.nim")
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/mix_c" />
 
 ## Nimble 依赖包集成 {#nimble-package}
 
 完整例子见：[Nimble Package Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/nim/nimble_package)
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-add_requires("nimble::zip >0.3")
-
-target("test")
-    set_kind("binary")
-    add_files("src/main.nim")
-    add_packages("nimble::zip")
-```
-
-```nim [main.nim]
-import zip/zlib
-
-echo zlibVersion()
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/nimble_package" />
 
 ## Native 依赖包集成 {#native-package}
 
 完整例子见：[Native Package Example](https://github.com/xmake-io/xmake/tree/dev/tests/projects/nim/native_package)
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-add_requires("zlib")
-
-target("test")
-    set_kind("binary")
-    add_files("src/main.nim")
-    add_packages("zlib")
-```
-
-main.nim
-
-```nim [main.nim]
-proc zlibVersion(): cstring {.cdecl, importc}
-
-echo zlibVersion()
-```
+<FileExplorer rootFilesDir="examples/other-languages/nim/native_package" />

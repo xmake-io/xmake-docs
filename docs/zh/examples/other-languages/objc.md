@@ -6,13 +6,7 @@
 $ xmake create -l objc -t console test
 ```
 
-```lua [xmake.lua]
-add_rules("mode.debug", "mode.release")
-
-target("test")
-    set_kind("binary")
-    add_files("src/*.m")
-```
+<FileExplorer rootFilesDir="examples/other-languages/objc/console" />
 
 更多例子见：[Objc Examples](https://github.com/xmake-io/xmake/tree/master/tests/projects/objc++)
 
@@ -20,12 +14,7 @@ target("test")
 
 用于生成*.app/*.ipa应用程序，同时支持iOS/MacOS。
 
-```lua
-target("test")
-    add_rules("xcode.application")
-    add_files("src/*.m", "src/**.storyboard", "src/*.xcassets")
-    add_files("src/Info.plist")
-```
+<FileExplorer rootFilesDir="examples/other-languages/objc/application" />
 
 ::: tip 注意
 2.5.7 之后，可以支持直接添加 `*.metal` 文件，xmake 会自动生成 default.metallib 提供给应用程序加载使用。
@@ -171,12 +160,7 @@ $ xmake uninstall
 
 ## Framework 库程序 {#Framework}
 
-```lua
-target("test")
-    add_rules("xcode.framework")
-    add_files("src/*.m")
-    add_files("src/Info.plist")
-```
+<FileExplorer rootFilesDir="examples/other-languages/objc/framework" />
 
 我们也可以通过模板工程快速创建：
 
@@ -199,12 +183,7 @@ $ xmake run
 
 ## Bundle 程序 {#bundle}
 
-```lua
-target("test")
-    add_rules("xcode.bundle")
-    add_files("src/*.m")
-    add_files("src/Info.plist")
-```
+<FileExplorer rootFilesDir="examples/other-languages/objc/bundle" />
 
 我们也可以通过模板工程快速创建：
 
