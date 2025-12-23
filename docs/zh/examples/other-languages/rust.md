@@ -29,60 +29,7 @@ $ xmake create -l rust -t console test
 
 ## 使用 cxxbridge 在 c++ 中调用 rust {#call-rust-in-cxx}
 
-例子: https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library
-
-```lua
-add_rules("mode.debug", "mode.release")
-
-add_requires("cargo::cxx 1.0")
-
-target("foo")
-    set_kind("static")
-    add_files("src/foo.rs")
-    set_values("rust.cratetype", "staticlib")
-    add_packages("cargo::cxx")
-
-target("test")
-    set_kind("binary")
-    add_rules("rust.cxxbridge")
-    add_deps("foo")
-    add_files("src/main.cc")
-    add_files("src/bridge.rsx")
-```
-
-```rust [foo.rs]
-#[cxx::bridge]
-mod foo {
-    extern "Rust" {
-        fn add(a: i32, b: i32) -> i32;
-    }
-}
-
-pub fn add(a: i32, b: i32) -> i32 {
-    return a + b;
-}
-```
-
-我们还需要在 c++ 项目中添加桥接文件 bridge.rsx
-
-```rust
-#[cxx::bridge]
-mod foo {
-    extern "Rust" {
-        fn add(a: i32, b: i32) -> i32;
-    }
-}
-```
-
-```c++ [main.cc]
-#include <stdio.h>
-#include "bridge.rs.h"
-
-int main(int argc, char** argv) {
-    printf("add(1, 2) == %d\n", add(1, 2));
-    return 0;
-}
-```
+<FileExplorer rootFilesDir="examples/other-languages/rust/cxx_call_rust_library" />
 
 ## 在 Rust 中调用 C++ {#call-cxx-in-rust}
 

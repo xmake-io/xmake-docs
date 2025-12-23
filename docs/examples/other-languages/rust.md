@@ -28,8 +28,6 @@ For a complete example see: [cargo_deps_with_toml](https://github.com/xmake-io/x
 
 ## Use cxxbridge to call rust in c++
 
-example: https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/cxx_call_rust_library
-
 <FileExplorer rootFilesDir="examples/other-languages/rust/cxx_call_rust_library" />
 
 ## Call c++ in rust
