@@ -58,6 +58,12 @@ interface Props {
    */
   title?: string
   /**
+   * Width of the sidebar.
+   * Can be a CSS value or 'auto' to fit content.
+   * @default 'auto'
+   */
+  sidebarWidth?: string
+  /**
    * Whether to show line numbers in the code view.
    * @default true
    */
@@ -215,7 +221,23 @@ const activeHighlights = computed(() => {
 
 const lineCount = computed(() => {
   if (!activeFile.value.code) return 0
-  return activeFile.value.code.split('\n').length
+  const lines = activeFile.value.code.split('\n')
+  // Ignore the last empty line if it exists, as editors usually don't count it
+  if (lines.length > 0 && lines[lines.length - 1] === '') {
+    return lines.length - 1
+  }
+  return lines.length
+})
+
+const sidebarStyle = computed(() => {
+  if (props.sidebarWidth === 'auto') {
+    return {
+      width: 'auto',
+      minWidth: '200px',
+      maxWidth: '40%'
+    }
+  }
+  return { width: props.sidebarWidth }
 })
 
 const selectFile = (file: File) => {
@@ -362,7 +384,7 @@ onUnmounted(() => {
       {{ title }}
     </div>
     <div class="file-explorer-main-area">
-      <div class="file-explorer-sidebar" v-if="isSidebarOpen">
+      <div class="file-explorer-sidebar" v-if="isSidebarOpen" :style="sidebarStyle">
         <div class="explorer-header">{{ rootPath || 'EXPLORER' }}</div>
         <div class="explorer-tree">
           <template v-for="node in tree" :key="node.path">
@@ -598,7 +620,8 @@ onUnmounted(() => {
 .line-number {
   font-family: var(--vp-font-family-mono);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 24px;
+  height: 24px;
   color: var(--vp-c-text-3);
   padding-right: 10px;
 }
@@ -618,12 +641,13 @@ onUnmounted(() => {
   pointer-events: none;
   z-index: 0;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 24px;
+  font-family: var(--vp-font-family-mono);
 }
 
 .highlight-line {
   width: 100%;
-  height: 1.5em;
+  height: 24px;
 }
 
 .highlight-line.highlighted {
@@ -648,12 +672,15 @@ onUnmounted(() => {
   width: fit-content;
   min-width: 100%;
   height: 100%;
+  font-family: var(--vp-font-family-mono) !important;
+  font-size: 14px !important;
+  line-height: 24px !important;
 }
 
 .vp-doc-code :deep(code) {
-  font-family: var(--vp-font-family-mono);
-  font-size: 14px;
-  line-height: 1.5;
+  font-family: var(--vp-font-family-mono) !important;
+  font-size: 14px !important;
+  line-height: 24px !important;
 }
 
 @media (max-width: 768px) {

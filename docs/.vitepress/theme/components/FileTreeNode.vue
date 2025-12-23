@@ -75,6 +75,7 @@ const handleClick = () => {
   color: var(--vp-c-text-2);
   user-select: none;
   transition: color 0.1s;
+  white-space: nowrap;
 }
 
 .node-label:hover {
