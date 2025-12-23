@@ -1,31 +1,15 @@
 ## MFC Static Library
 
-```lua
-target("test")
-    add_rules("win.sdk.mfc.static")
-    add_files("src/*.c")
-```
+<FileExplorer rootFilesDir="examples/mfc/static_library" />
 
 ## MFC Shared Library
 
-```lua
-target("test")
-    add_rules("win.sdk.mfc.shared")
-    add_files("src/*.c")
-```
+<FileExplorer rootFilesDir="examples/mfc/shared_library" />
 
 ## MFC Application (Static)
 
-```lua
-target("test")
-    add_rules("win.sdk.mfc.static_app")
-    add_files("src/*.c")
-```
+<FileExplorer rootFilesDir="examples/mfc/static_app" />
 
 ## MFC Application (Shared)
 
-```lua
-target("test")
-    add_rules("win.sdk.mfc.shared_app")
-    add_files("src/*.c")
-```
+<FileExplorer rootFilesDir="examples/mfc/shared_app" />
