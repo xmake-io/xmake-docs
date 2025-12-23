@@ -5,7 +5,9 @@ import AIAssistant from './components/AIAssistant.vue'
 import WWAds from './components/WWAds.vue'
 import VPCarbonAds from './components/VPCarbonAds.vue'
 import SponsorButton from './components/SponsorButton.vue'
+import FileExplorer from './components/FileExplorer.vue'
 import { useData } from 'vitepress'
+import { data as examples } from '../data/examples.data'
 import './styles.css'
 import 'virtual:group-icons.css'
 
@@ -63,6 +65,10 @@ export default {
     // Register global components
     app.component('AIAssistant', AIAssistant)
     app.component('SponsorButton', SponsorButton)
+    app.component('FileExplorer', FileExplorer)
+    
+    // Provide examples data globally
+    app.provide('examples', examples)
     
     if (typeof window !== 'undefined') {
       const lang = navigator.language

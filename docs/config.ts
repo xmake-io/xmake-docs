@@ -1,4 +1,4 @@
-import { createRequire } from 'module'
+import { createRequire } from 'node:module'
 import { defineAdditionalConfig, type DefaultTheme } from 'vitepress'
 import { builtinModulesApiSidebarItems, extensionModulesApiSidebarItems } from './sidebar'
 import { posts } from './.vitepress/theme/blog-data.js'

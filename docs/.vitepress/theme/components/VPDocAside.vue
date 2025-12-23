@@ -52,9 +52,9 @@ const isZh = computed(() => {
 <template>
   <div class="VPDocAside">
     <slot name="aside-top" />
-    <!-- Show carbonAds at the top of right sidebar, only for post pages -->
+    <!-- Show carbonAds at the top of right sidebar, only for post pages and sponsor page -->
     <VPCarbonAds 
-      v-if="(isPost || isBlogHome) && theme.carbonAds && isAsideEnabled" 
+      v-if="(isPost || isBlogHome || isSponsor) && theme.carbonAds && isAsideEnabled" 
       :carbon-ads="theme.carbonAds" 
       :key="'aside-' + page.relativePath"
     />

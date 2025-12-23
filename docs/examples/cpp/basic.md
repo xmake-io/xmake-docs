@@ -1,3 +1,5 @@
+# Basic Examples
+
 We briefly introduce some commonly used project examples. More and more complete examples projects can be viewed in [project examples](https://github.com/xmake-io/xmake/tree/master/tests/projects).
 
 We can also use the `xmake create` command to create various commonly used empty projects to quickly start. For the introduction of this command and the supported project templates, you can type the following command to view:
@@ -19,6 +21,12 @@ For a complete example, execute the following command to create:
 ```sh
 xmake create test
 ```
+
+<FileExplorer 
+  rootFilesDir="examples/cpp/basic_console" 
+  title="Executable Program"
+  :highlights="{ 'src/main.cpp': '5-7' }"
+/>
 
 If we want to create c language program. We can add `-l c` argument. for example:
 
