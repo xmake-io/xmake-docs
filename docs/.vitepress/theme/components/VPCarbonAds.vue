@@ -37,7 +37,7 @@ if (carbonOptions) {
   onMounted(() => {
     // Only initialize if the container is visible to avoid ID conflicts
     // with other instances (e.g. sidebar vs bottom)
-    if (container.value && container.value.offsetParent !== null) {
+    if (container.value) {
       init()
     }
   })

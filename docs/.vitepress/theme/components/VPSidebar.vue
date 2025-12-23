@@ -6,7 +6,7 @@ import { useLayout } from 'vitepress/dist/client/theme-default/composables/layou
 import VPSidebarGroup from 'vitepress/dist/client/theme-default/components/VPSidebarGroup.vue'
 
 import { useData } from 'vitepress/dist/client/theme-default/composables/data'
-import VPDocAsideCarbonAds from 'vitepress/dist/client/theme-default/components/VPDocAsideCarbonAds.vue'
+import VPCarbonAds from './VPCarbonAds.vue'
 const { theme, page } = useData()
 
 const { sidebarGroups, hasSidebar } = useLayout()
@@ -81,7 +81,7 @@ watch(
     >
 
       <!-- Show carbonAds at the top of left sidebar -->
-      <VPDocAsideCarbonAds 
+      <VPCarbonAds 
         v-if="theme.carbonAds" 
         :carbon-ads="theme.carbonAds" 
       />

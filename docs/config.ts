@@ -18,6 +18,20 @@ export default defineAdditionalConfig({
       '/api/description/': { base: '/api/description/', items: descriptionApiSidebar() },
       '/api/scripts/': { base: '/api/scripts/', items: scriptsApiSidebar() },
       '/examples/': { base: '/examples/', items: examplesSidebar() },
+      '/blog/': [
+        {
+          text: 'Blog',
+          items: [
+            { text: 'Return to Home', link: '/' }
+          ]
+        },
+        {
+          text: 'Next Steps',
+          items: [
+            { text: 'Documentation', link: '/guide/introduction' }
+          ]
+        }
+      ],
       ...postsSidebar(),
     },
 
@@ -83,7 +97,12 @@ function postsSidebar(): Record<string, DefaultTheme.SidebarItem[]> {
     if (prev) {
       items.push({ text: 'Next Post', link: prev.url })
     }
-    items.push({ text: 'Return to Blog', link: '/blog/' })
+    items.push({ 
+      text: 'Next Steps',
+      items: [
+        { text: 'Documentation', link: '/guide/introduction' }
+      ]
+    })
     
     sidebar[post.url + '/'] = items
     sidebar[post.url + '.html'] = items

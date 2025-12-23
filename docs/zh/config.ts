@@ -20,6 +20,20 @@ export default defineAdditionalConfig({
       '/zh/api/description/': { base: '/zh/api/description/', items: descriptionApiSidebar() },
       '/zh/api/scripts/': { base: '/zh/api/scripts/', items: scriptsApiSidebar() },
       '/zh/examples/': { base: '/zh/examples/', items: examplesSidebar() },
+      '/zh/blog/': [
+        {
+          text: '博客',
+          items: [
+            { text: '返回首页', link: '/zh/' }
+          ]
+        },
+        {
+          text: '下一步',
+          items: [
+            { text: '文档', link: '/zh/guide/introduction' }
+          ]
+        }
+      ],
       ...postsSidebar(),
     },
 
@@ -164,7 +178,12 @@ function postsSidebar(): Record<string, DefaultTheme.SidebarItem[]> {
     if (prev) {
       items.push({ text: '下一篇', link: prev.url })
     }
-    items.push({ text: '返回博客', link: '/zh/blog/' })
+    items.push({ 
+      text: '下一步',
+      items: [
+        { text: '文档', link: '/zh/guide/introduction' }
+      ]
+    })
     
     sidebar[post.url + '/'] = items
     sidebar[post.url + '.html'] = items

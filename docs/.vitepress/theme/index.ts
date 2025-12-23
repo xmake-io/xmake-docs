@@ -36,7 +36,7 @@ export default {
              page.value.filePath.includes('/zh/')
     })
     const isPost = computed(() => {
-      return page.value.filePath.includes('posts/')
+      return page.value.filePath.includes('posts/') || page.value.filePath.includes('blog/')
     })
 
     if (typeof window !== 'undefined') {
