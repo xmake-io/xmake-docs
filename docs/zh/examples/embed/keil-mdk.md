@@ -19,14 +19,7 @@ $ xmake
 
 ## 可执行程序 {#executable}
 
-```lua
-target("hello")
-    add_deps("foo")
-    add_rules("mdk.binary")
-    add_files("src/*.c", "src/*.s")
-    add_includedirs("src/lib/cmsis")
-    set_runtimes("microlib")
-```
+<FileExplorer rootFilesDir="examples/embed/keil_mdk/binary" />
 
 需要注意的是，目前一些 mdk 程序都使用了 microlib 库运行时，它需要编译器加上 `__MICROLIB` 宏定义，链接器加上 `--library_type=microlib` 等各种配置。
 
@@ -34,11 +27,4 @@ target("hello")
 
 ## 静态库程序 {#static-library}
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("foo")
-    add_rules("mdk.static")
-    add_files("src/foo/*.c")
-    set_runtimes("microlib")
-```
+<FileExplorer rootFilesDir="examples/embed/keil_mdk/static_library" />

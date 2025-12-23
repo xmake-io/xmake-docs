@@ -1,15 +1,8 @@
-
 ## iVerilog 仿真器 {#iverilog}
 
 通过 `add_requires("iverilog")` 配置，我们能够自动拉取 iverilog 工具链包，然后使用 `set_toolchains("@iverilog")` 自动绑定工具链来编译工程。
 
-```lua
-add_requires("iverilog")
-target("hello")
-    add_rules("iverilog.binary")
-    set_toolchains("@iverilog")
-    add_files("src/*.v")
-```
+<FileExplorer rootFilesDir="examples/embed/verilog/iverilog" />
 
 ### 设置抽象配置
 
@@ -74,14 +67,7 @@ src/main.v:6: $finish called at 0 (1s)
 
 通过 `add_requires("verilator")` 配置，我们能够自动拉取 verilator 工具链包，然后使用 `set_toolchains("@verilator")` 自动绑定到工具链来编译工程。
 
-```lua
-add_requires("verilator")
-target("hello")
-    add_rules("verilator.binary")
-    set_toolchains("@verilator")
-    add_files("src/*.v")
-    add_files("src/*.cpp")
-```
+<FileExplorer rootFilesDir="examples/embed/verilog/verilator" />
 
 verilator 工程，我们需要一个额外的 `sim_main.cpp` 文件参与编译，作为程序的入口代码。
 

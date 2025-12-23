@@ -1,15 +1,8 @@
-
 ## iVerilog Simulator
 
 Through `add_requires("iverilog")` configuration, we can automatically pull the iverilog toolchain package, and then use `set_toolchains("@iverilog")` to automatically bind the toolchain to compile the project.
 
-```lua
-add_requires("iverilog")
-target("hello")
-     add_rules("iverilog.binary")
-     set_toolchains("@iverilog")
-     add_files("src/*.v")
-```
+<FileExplorer rootFilesDir="examples/embed/verilog/iverilog" />
 
 ### Set abstract configuration
 
@@ -74,14 +67,7 @@ More complete examples: [iVerilog Examples](https://github.com/xmake-io/xmake/tr
 
 Through `add_requires("verilator")` configuration, we can automatically pull the verilator toolchain package, and then use `set_toolchains("@verilator")` to automatically bind to the toolchain to compile the project.
 
-```lua
-add_requires("verilator")
-target("Hello")
-     add_rules("verilator.binary")
-     set_toolchains("@verilator")
-     add_files("src/*.v")
-     add_files("src/*.cpp")
-```
+<FileExplorer rootFilesDir="examples/embed/verilog/verilator" />
 
 verilator project, we need an additional `sim_main.cpp` file to participate in the compilation, as the entry code of the program.
 

@@ -18,14 +18,7 @@ $ xmake
 
 ### Executable program
 
-```lua
-target("hello")
-     add_deps("foo")
-     add_rules("mdk.console")
-     add_files("src/*.c", "src/*.s")
-     add_includedirs("src/lib/cmsis")
-     set_runtimes("microlib")
-```
+<FileExplorer rootFilesDir="examples/embed/keil_mdk/binary" />
 
 It should be noted that when some mdk programs all use the microlib library to run, it requires the compiler to add the `__MICROLIB` macro definition, and the linker to add various configurations such as `--library_type=microlib`.
 
@@ -33,12 +26,4 @@ We can set directly to the microlib runtime library through `set_runtimes("micro
 
 ### Static library program
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("foo")
-     add_rules("mdk.static")
-     add_files("src/foo/*.c")
-     set_runtimes("microlib")
-```
-
+<FileExplorer rootFilesDir="examples/embed/keil_mdk/static_library" />
