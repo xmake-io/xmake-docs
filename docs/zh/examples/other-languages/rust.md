@@ -86,35 +86,4 @@ int main(int argc, char** argv) {
 
 ## 在 Rust 中调用 C++ {#call-cxx-in-rust}
 
-例子: https://github.com/xmake-io/xmake/tree/dev/tests/projects/rust/rust_call_cxx_library
-
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("foo")
-    set_kind("static")
-    add_files("src/foo.cc")
-
-target("test")
-    set_kind("binary")
-    add_deps("foo")
-    add_files("src/main.rs")
-```
-
-```rust [main.rs]
-extern "C" {
-	fn add(a: i32, b: i32) -> i32;
-}
-
-fn main() {
-    unsafe {
-	    println!("add(1, 2) = {}", add(1, 2));
-    }
-}
-```
-
-```c++ [foo.cc]
-extern "C" int add(int a, int b) {
-    return a + b;
-}
-```
+<FileExplorer rootFilesDir="examples/other-languages/rust/rust_call_cxx_library" />
