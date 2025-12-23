@@ -7,7 +7,7 @@ import VPCarbonAds from './components/VPCarbonAds.vue'
 import SponsorButton from './components/SponsorButton.vue'
 import FileExplorer from './components/FileExplorer.vue'
 import { useData } from 'vitepress'
-import { data as examples } from '../data/examples.data'
+import { data as codes } from '../data/codes-data.js'
 import './styles.css'
 import 'virtual:group-icons.css'
 
@@ -67,8 +67,8 @@ export default {
     app.component('SponsorButton', SponsorButton)
     app.component('FileExplorer', FileExplorer)
     
-    // Provide examples data globally
-    app.provide('examples', examples)
+    // Provide codes data globally
+    app.provide('codes', codes)
     
     if (typeof window !== 'undefined') {
       const lang = navigator.language

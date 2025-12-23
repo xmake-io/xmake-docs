@@ -6,8 +6,10 @@ npm add gray-matter -D
 npm add markdown-it -D
 npm add glob -D
 npm add @types/node -D
+npm add shiki -D
 npm add jszip
 npm install
 npm run generate-blog
+npm run generate-codes
 npx vitepress build docs
 node scripts/fix-llms-txt.cjs

@@ -22,12 +22,6 @@ For a complete example, execute the following command to create:
 xmake create test
 ```
 
-<FileExplorer 
-  rootFilesDir="examples/cpp/basic_console" 
-  title="Executable Program"
-  :highlights="{ 'src/main.cpp': '5-7' }"
-/>
-
 If we want to create c language program. We can add `-l c` argument. for example:
 
 ```sh

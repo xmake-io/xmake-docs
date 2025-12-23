@@ -8,11 +8,11 @@ interface Props {
   /**
    * List of files to display in the explorer.
    * Example: [{ name: 'xmake.lua', code: '...' }, { name: 'src/main.cpp', code: '...' }]
-   * If not provided, will try to load from global 'examples' data using 'project' prop.
+   * If not provided, will try to load from global 'codes' data using 'project' prop.
    */
   files?: File[]
   /**
-   * Project directory path to load from global examples data.
+   * Project directory path to load from global codes data.
    * Example: 'examples/cpp/basic_console'
    * Used only if 'files' prop is not provided.
    */
@@ -81,14 +81,14 @@ const props = withDefaults(defineProps<Props>(), {
   showLineNumbers: true
 })
 
-const globalExamples = inject<Record<string, File[]>>('examples')
+const globalCodes = inject<Record<string, File[]>>('codes')
 
 const effectiveFiles = computed(() => {
   if (props.files && props.files.length > 0) {
     return props.files
   }
-  if (props.rootFilesDir && globalExamples && globalExamples[props.rootFilesDir]) {
-    return globalExamples[props.rootFilesDir]
+  if (props.rootFilesDir && globalCodes && globalCodes[props.rootFilesDir]) {
+    return globalCodes[props.rootFilesDir]
   }
   return []
 })
