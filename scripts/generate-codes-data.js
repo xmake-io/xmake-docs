@@ -44,7 +44,19 @@ async function generate() {
     // Get all files in this project
     const projectFiles = await glob('**/*.*', {
       cwd: fullProjectDir,
-      ignore: ['**/build/**', '**/.*', '**/*.o', '**/*.obj', '**/*.exe', '**/*.bin', '**/test.lua'],
+      ignore: [
+        '**/build/**', 
+        '**/.*', 
+        '**/*.o', 
+        '**/*.obj', 
+        '**/*.exe', 
+        '**/*.bin', 
+        '**/test.lua',
+        '**/*.cache/**',
+        '**/*.gcm',
+        '**/compile_commands.json',
+        '**/compile_command.json'
+      ],
       nodir: true
     })
 

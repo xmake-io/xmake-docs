@@ -1,0 +1,5 @@
+export module shape.circle;
+
+export float area(float r) {
+    return 3.14159f * r * r;
+}

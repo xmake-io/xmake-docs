@@ -1,0 +1,7 @@
+export module foo;
+
+import <iostream>;
+
+export void hello() {
+    std::cout << "hello shared module!" << std::endl;
+}

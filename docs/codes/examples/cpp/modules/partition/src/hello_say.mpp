@@ -1,0 +1,7 @@
+export module hello:say;
+
+import <iostream>;
+
+export void say() {
+    std::cout << "hello partition!" << std::endl;
+}

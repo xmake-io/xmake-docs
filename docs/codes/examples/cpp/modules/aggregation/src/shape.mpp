@@ -1,0 +1,4 @@
+export module shape;
+
+export import shape.circle;
+export import shape.rect;

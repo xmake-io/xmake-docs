@@ -1,0 +1,5 @@
+export module shape.rect;
+
+export float area(float w, float h) {
+    return w * h;
+}

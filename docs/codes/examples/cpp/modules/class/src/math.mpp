@@ -1,0 +1,10 @@
+export module math;
+
+export class Math {
+public:
+    Math() {}
+    
+    int add(int a, int b) {
+        return a + b;
+    }
+};

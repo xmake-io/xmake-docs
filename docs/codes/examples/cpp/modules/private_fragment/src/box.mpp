@@ -1,0 +1,13 @@
+export module box;
+
+export class Box {
+public:
+    void open();
+};
+
+module :private;
+import <iostream>;
+
+void Box::open() {
+    std::cout << "box opened" << std::endl;
+}

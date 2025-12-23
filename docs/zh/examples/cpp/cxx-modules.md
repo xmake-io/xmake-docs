@@ -4,121 +4,80 @@
 
 Xmake 采用 `.mpp` 作为默认的模块扩展名，同时也支持 `.ixx`、`.cppm`、`.mxx` 等。已完整支持 gcc11/clang/msvc 的 C++20 Modules 构建，并能自动分析模块间依赖，实现最大化并行编译。
 
-**最基础用法：**
+## 基础示例 {#basic-example}
 
-```lua
-set_languages("c++20")
-target("class")
-    set_kind("binary")
-    add_files("src/*.cpp", "src/*.mpp")
-```
+<FileExplorer rootFilesDir="examples/cpp/modules/basic" />
 
-> 更多官方示例见：[C++ Modules 示例集](https://github.com/xmake-io/xmake/tree/dev/tests/projects/c%2B%2B/modules)
+## 模块类导出示例 {#class-example}
 
----
+在模块中导出类：
 
-## 进阶用法 {#advanced-usage}
+<FileExplorer rootFilesDir="examples/cpp/modules/class" />
 
-### 仅 Cpp 工程启用 Modules
+## 模块分区示例 {#partition-example}
 
-v2.7.1 起支持 Headerunits，可在模块中引入 STL 和用户头文件模块。通常需至少有一个 `.mpp` 文件才会启用 modules 编译，但也可通过：
+使用模块分区（Module Partitions）：
 
-```lua
-add_rules("mode.debug", "mode.release")
-target("test")
-    set_kind("binary")
-    add_files("src/*.cpp")
-    set_languages("c++20")
-    set_policy("build.c++.modules", true)
-```
+<FileExplorer rootFilesDir="examples/cpp/modules/partition" />
 
-### Headerunits 示例
+## 动态库模块示例 {#shared-library-example}
 
-- 如何将 STL 或自定义头文件作为 headerunit 引入模块，见 [headerunits 示例](https://github.com/xmake-io/xmake/tree/dev/tests/projects/c%2B%2B/modules/headerunits)。
+创建带有模块的动态库：
 
----
+<FileExplorer rootFilesDir="examples/cpp/modules/shared_library" />
 
-## 模块包分发与集成 {#distribution}
+## 跨目标依赖示例 {#cross-target-example}
 
-### 分发 C++ Modules 包
+Target 之间的模块依赖：
 
-通过 `{install = true}` 指定需要安装分发的模块文件：
+<FileExplorer rootFilesDir="examples/cpp/modules/cross_target" />
 
-```lua
-add_rules("mode.release", "mode.debug")
-set_languages("c++20")
-target("foo")
-    set_kind("static")
-    add_files("*.cpp")
-    add_files("*.mpp", { install = true })
-```
+## 模块私有片段示例 {#private-fragment-example}
 
-可将其做成包，提交到 [xmake-repo](https://github.com/xmake-io/xmake-repo) 或本地/私有仓库。
+使用模块私有片段（Private Module Fragment）隐藏实现细节：
 
-本地包示例：
+<FileExplorer rootFilesDir="examples/cpp/modules/private_fragment" />
 
-```lua
-package("foo")
-    set_sourcedir(path.join(os.scriptdir(), "src"))
-    on_install(function(package)
-        import("package.tools.xmake").install(package, {})
-    end)
-```
+## 模块实现单元示例 {#implementation-unit-example}
 
-### 集成 C++ Modules 包
+分离模块接口和实现（Module Implementation Unit）：
 
-通过 `add_requires("foo")` 快速集成：
+<FileExplorer rootFilesDir="examples/cpp/modules/implementation_unit" />
 
-```lua
-add_rules("mode.release", "mode.debug")
-set_languages("c++20")
-add_repositories("my-repo my-repo")
-add_requires("foo", "bar")
-target("packages")
-    set_kind("binary")
-    add_files("src/*.cpp")
-    add_packages("foo", "bar")
-    set_policy("build.c++.modules", true)
-```
+## 模块聚合示例 {#aggregation-example}
 
----
+使用 `export import` 聚合子模块：
 
-## C++23 标准库模块 {#stdmodules}
+<FileExplorer rootFilesDir="examples/cpp/modules/aggregation" />
+
+## 仅 Cpp 工程启用 Modules {#cpp-only-example}
+
+v2.7.1 起支持 Headerunits，可在模块中引入 STL 和用户头文件模块。通常需至少有一个 `.mpp` 文件才会启用 modules 编译，但也可通过配置强制启用：
+
+<FileExplorer rootFilesDir="examples/cpp/modules/cpp_only" />
+
+## Headerunits 示例 {#headerunits-example}
+
+如何将 STL 或自定义头文件作为 headerunit 引入模块，见下面的示例：
+
+<FileExplorer rootFilesDir="examples/cpp/modules/headerunits" />
+
+## C++23 标准库模块 {#stdmodules-example}
 
 支持 C++23 标准库模块（stdmodules）：
 
-```lua
-add_rules("mode.debug", "mode.release")
-set_languages("c++latest")
-target("mod")
-    set_kind("static")
-    add_files("src/*.cpp")
-    add_files("src/*.mpp", {public = true})
-target("stdmodules")
-    set_kind("binary")
-    add_files("test/*.cpp")
-    add_deps("mod")
-```
+<FileExplorer rootFilesDir="examples/cpp/modules/stdmodules" />
 
-```c++
-// my_module.mpp
-export module my_module;
-import std;
-export auto my_sum(std::size_t a, std::size_t b) -> std::size_t;
-```
+## 模块包分发 {#distribution-example}
 
----
+定义和分发 C++ Modules 包：
 
-## 更多 C++ Modules 示例集锦 {#examples}
+<FileExplorer rootFilesDir="examples/cpp/modules/distribution" defaultOpenPath="src/xmake.lua" :highlights="{'src/xmake.lua': '8-9'}" />
 
-Xmake 官方仓库 [C++ Modules 示例集](https://github.com/xmake-io/xmake/tree/dev/tests/projects/c%2B%2B/modules) 提供了丰富的 C++20/23 Modules 工程，每个子目录为一个独立示例：
+## 模块包集成 {#integration-example}
 
-- **basic**：基础模块用法
-- **class**：模块中导出类
-- **headerunits**：Headerunits 用法
-- **import_std**：标准库模块
-- **partition**：模块分区
-- **packages**：模块包分发与集成
-- **stdmodules**：C++23 标准库模块
+通过 `add_requires("foo")` 快速集成：
 
-每个示例目录下均有完整的 `xmake.lua` 和源码，适合深入学习和参考。
+<FileExplorer rootFilesDir="examples/cpp/modules/integration" />
+
+> 更多官方示例见：[C++ Modules 示例集](https://github.com/xmake-io/xmake/tree/dev/tests/projects/c%2B%2B/modules)
