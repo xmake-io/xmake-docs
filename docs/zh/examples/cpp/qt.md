@@ -35,38 +35,19 @@ $ xmake f -p wasm
 
 ## 静态库程序 {#static-library}
 
-```lua
-target("qt_static_library")
-    add_rules("qt.static")
-    add_files("src/*.cpp")
-    add_frameworks("QtNetwork", "QtGui")
-```
+<FileExplorer rootFilesDir="examples/qt/static_library" />
 
 ## 动态库程序 {#shared-library}
 
-```lua
-target("qt_shared_library")
-    add_rules("qt.shared")
-    add_files("src/*.cpp")
-    add_frameworks("QtNetwork", "QtGui")
-```
+<FileExplorer rootFilesDir="examples/qt/shared_library" />
 
 ## 控制台程序 {#console}
 
-```lua
-target("qt_console")
-    add_rules("qt.console")
-    add_files("src/*.cpp")
-```
+<FileExplorer rootFilesDir="examples/qt/console" />
 
 ## Quick 应用程序 {#quickapp}
 
-```lua
-target("qt_quickapp")
-    add_rules("qt.quickapp")
-    add_files("src/*.cpp")
-    add_files("src/qml.qrc")
-```
+<FileExplorer rootFilesDir="examples/qt/quickapp" />
 
 ::: tip 注意
 如果使用的自己编译的static版本QT SDK，那么需要切换到`add_rules("qt.quickapp_static")`静态规则才行，因为链接的库是不同的，需要做静态链接。
@@ -99,28 +80,11 @@ $ xmake run
 
 ## Quick Plugin 程序 {#quick-plugin}
 
-完整例子见：[quickplugin example](https://github.com/xmake-io/xmake/tree/master/tests/projects/qt/quickplugin)
-
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("demo")
-    add_rules("qt.qmlplugin")
-    add_headerfiles("src/*.h")
-    add_files("src/*.cpp")
-
-    set_values("qt.qmlplugin.import_name", "My.Plugin")
-```
+<FileExplorer rootFilesDir="examples/qt/quickplugin" />
 
 ## Widgets 应用程序 {#widgetapp}
 
-```lua
-target("qt_widgetapp")
-    add_rules("qt.widgetapp")
-    add_files("src/*.cpp")
-    add_files("src/mainwindow.ui")
-    add_files("src/mainwindow.h")  -- 添加带有 Q_OBJECT 的meta头文件
-```
+<FileExplorer rootFilesDir="examples/qt/widgetapp" />
 
 ::: tip 注意
 如果使用的自己编译的static版本QT SDK，那么需要切换到`add_rules("qt.widgetapp_static")`静态规则才行，因为链接的库是不同的，需要做静态链接。

@@ -29,38 +29,19 @@ $ xmake f -p wasm
 
 ## Static Library
 
-```lua
-target("qt_static_library")
-    add_rules("qt.static")
-    add_files("src/*.cpp")
-    add_frameworks("QtNetwork", "QtGui")
-```
+<FileExplorer rootFilesDir="examples/qt/static_library" />
 
 ## Shared Library
 
-```lua
-target("qt_shared_library")
-    add_rules("qt.shared")
-    add_files("src/*.cpp")
-    add_frameworks("QtNetwork", "QtGui")
-```
+<FileExplorer rootFilesDir="examples/qt/shared_library" />
 
 ## Console Program
 
-```lua
-target("qt_console")
-    add_rules("qt.console")
-    add_files("src/*.cpp")
-```
+<FileExplorer rootFilesDir="examples/qt/console" />
 
 ## Quick Application
 
-```lua
-target("qt_quickapp")
-    add_rules("qt.quickapp")
-    add_files("src/*.cpp")
-    add_files("src/qml.qrc")
-```
+<FileExplorer rootFilesDir="examples/qt/quickapp" />
 
 ::: tip NOTE
 If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.quickapp_static")` static rule,
@@ -94,30 +75,11 @@ The effect is as follows:
 
 ## Quick Plugin
 
-For a full example see: [quickplugin example](https://github.com/xmake-io/xmake/tree/master/tests/projects/qt/quickplugin)
-
-```lua
-add_rules("mode.debug", "mode.release")
-
-target("demo")
-    add_rules("qt.qmlplugin")
-    add_headerfiles("src/*.h")
-    add_files("src/*.cpp")
-
-    set_values("qt.qmlplugin.import_name", "My.Plugin")
-```
+<FileExplorer rootFilesDir="examples/qt/quickplugin" />
 
 ## Widgets Application
 
-```lua
-target("qt_widgetapp")
-    add_rules("qt.widgetapp")
-    add_headerfiles("src/*.h")
-    add_files("src/*.cpp")
-    add_files("src/mainwindow.ui")
-    -- add files with Q_OBJECT meta (only for qt.moc)
-    add_files("src/mainwindow.h")
-```
+<FileExplorer rootFilesDir="examples/qt/widgetapp" />
 
 ::: tip NOTE
 If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.widgetapp_static")` static rule,
