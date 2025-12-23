@@ -9,10 +9,4 @@ $ xmake
 
 另外，在编译带有 `--preload-file assets/xxx.md` 设置的文件时候，我们也可以通过配置，简化对它的设置。
 
-```lua
-target("test5")
-    set_kind("binary")
-    add_files("src/*.cpp")
-    add_values("wasm.preloadfiles", "src/xxx.md")
-    add_values("wasm.preloadfiles", "src/xxx2.md")
-```
+<FileExplorer rootFilesDir="examples/wasm/preload" />

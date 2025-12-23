@@ -10,10 +10,4 @@ For detailed wasm compilation configuration see: [wasm configuration](/guide/bas
 
 Alternatively, when compiling a file with the `-preload-file assets/xxx.md` setting, we can also simplify its setup by configuring
 
-```lua
-target("test5")
-    set_kind("binary")
-    add_files("src/*.cpp")
-    add_values("wasm.preloadfiles", "src/xxx.md")
-    add_values("wasm.preloadfiles", "src/xxx2.md")
-```
+<FileExplorer rootFilesDir="examples/wasm/preload" />
