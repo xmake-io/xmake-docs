@@ -300,12 +300,17 @@ const downloadZip = async () => {
   }
 }
 
+const explorerId = computed(() => props.id || props.rootFilesDir)
+
 const shareLink = async () => {
   try {
     const url = new URL(window.location.href)
     // Add file path as hash param to be somewhat compatible with potential future routing
     // Using query param for simplicity in static site
     url.searchParams.set('file', activeFile.value.name)
+    if (explorerId.value) {
+      url.searchParams.set('explorer_id', explorerId.value)
+    }
     
     await navigator.clipboard.writeText(url.toString())
     shared.value = true
@@ -354,11 +359,17 @@ onMounted(() => {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search)
     const fileName = params.get('file')
+    const targetExplorerId = params.get('explorer_id')
     
     // First try to set default to xmake.lua
     initActiveFileIndex()
 
     if (fileName) {
+      // If explorer_id param is present, only process if it matches our id
+      if (targetExplorerId && targetExplorerId !== explorerId.value) {
+        return
+      }
+
       const index = effectiveFiles.value.findIndex(f => f.name === fileName)
       if (index !== -1) {
         activeFileIndex.value = index
