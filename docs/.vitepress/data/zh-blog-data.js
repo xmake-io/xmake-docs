@@ -1,5 +1,25 @@
 export const posts = [
   {
+    "title": "Xmake v3.0.6 预览版，原生 Android 应用、Flang、CUDA 13、Qt 打包",
+    "url": "/zh/posts/xmake-update-v3.0.6",
+    "date": {
+      "time": 1765972800000,
+      "string": "December 17, 2025"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "android",
+      "flang",
+      "cuda",
+      "qt",
+      "packaging",
+      "msvc",
+      "binutils"
+    ],
+    "excerpt": "<p>新版本对 Android 原生应用的构建支持进行了进一步改进。我们现在可以在 <code>android.native_app</code> 规则中配置更多参数，包括 <code>android_sdk_version</code>, <code>android_manifest</code>, <code>android_res</code>, <code>keystore</code> 等。</p>\n<p>此外，对于需要自定义入口和事件循环的场景（例如游戏引擎集成），我们支持通过设置 <code>native_app_glue = false</code> 来禁用默认的 <code>android_native_app_glue</code> 库。</p>\n<pre><code class=\"language-lua\">add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)</code></pre>\n"
+  },
+  {
     "title": "Xmake v3.0.5 发布：多行进度输出、XML 模块、异步 OS API 和 Swift 互操作",
     "url": "/zh/posts/xmake-update-v3.0.5",
     "date": {

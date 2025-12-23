@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module'
 import { defineAdditionalConfig, type DefaultTheme } from 'vitepress'
 import { builtinModulesApiSidebarItems, extensionModulesApiSidebarItems } from './sidebar'
-import { posts } from './.vitepress/theme/blog-data.js'
+import { posts } from './.vitepress/data/blog-data.js'
 
 const require = createRequire(import.meta.url)
 const pkg = require('vitepress/package.json')
@@ -120,7 +120,6 @@ function postsSidebar(): Record<string, DefaultTheme.SidebarItem[]> {
       ]
     })
     
-    sidebar[post.url + '/'] = items
     sidebar[post.url + '.html'] = items
     sidebar[post.url] = items
   }

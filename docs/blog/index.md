@@ -4,7 +4,7 @@ subtext: Updates, tips & opinions from the Xmake team.
 ---
 
 <script setup>
-import { posts } from '../.vitepress/theme/blog-data.js'
+import { posts } from '../.vitepress/data/blog-data.js'
 import BlogPagination from '../.vitepress/theme/BlogPagination.vue'
 </script>
 

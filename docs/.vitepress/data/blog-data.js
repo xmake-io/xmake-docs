@@ -1,5 +1,25 @@
 export const posts = [
   {
+    "title": "Xmake v3.0.6 Preview, Android Native Apps, Flang, AppImage/dmg Support",
+    "url": "/posts/xmake-update-v3.0.6",
+    "date": {
+      "time": 1765972800000,
+      "string": "December 17, 2025"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "android",
+      "flang",
+      "cuda",
+      "qt",
+      "packaging",
+      "msvc",
+      "binutils"
+    ],
+    "excerpt": "<p>The new version further improves the build support for Android native applications. We can now configure more parameters in the <code>android.native_app</code> rule, including <code>android_sdk_version</code>, <code>android_manifest</code>, <code>android_res</code>, <code>keystore</code>, etc.</p>\n<p>In addition, for scenarios that require custom entry and event loops (such as game engine integration), we support disabling the default <code>android_native_app_glue</code> library by setting <code>native_app_glue = false</code>.</p>\n<pre><code class=\"language-lua\">add_rules(&quot;mode.debug&quot;, &quot;mode.release&quot;)</code></pre>\n"
+  },
+  {
     "title": "Xmake v3.0.5 released, Multi-row progress, XML module and Swift interop",
     "url": "/posts/xmake-update-v3.0.5",
     "date": {

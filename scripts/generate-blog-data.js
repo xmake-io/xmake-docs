@@ -113,7 +113,7 @@ const zhPostsWithPrefix = zhPosts.map(post => ({
 const zhData = `export const posts = ${JSON.stringify(zhPostsWithPrefix, null, 2)}`
 
 // Write data files
-writeFileSync(join(process.cwd(), 'docs/.vitepress/theme/blog-data.js'), enData)
-writeFileSync(join(process.cwd(), 'docs/.vitepress/theme/zh-blog-data.js'), zhData)
+writeFileSync(join(process.cwd(), 'docs/.vitepress/data/blog-data.js'), enData)
+writeFileSync(join(process.cwd(), 'docs/.vitepress/data/zh-blog-data.js'), zhData)
 
 console.log(`Generated blog data: ${enPosts.length} English posts, ${zhPosts.length} Chinese posts`) 
