@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package test;
+
+message Request {
+  string query = 1;
+}
+
+message Response {
+  int32 code = 1;
+  string result = 2;
+}

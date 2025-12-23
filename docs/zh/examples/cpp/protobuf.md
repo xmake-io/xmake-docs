@@ -1,15 +1,6 @@
 ## 使用 C 库 {#use-c-library}
 
-```lua
-add_requires("protobuf-c")
-
-target("console_c")
-    set_kind("binary")
-    add_packages("protobuf-c")
-    add_rules("protobuf.c")
-    add_files("src/*.c")
-    add_files("src/*.proto")
-```
+<FileExplorer rootFilesDir="examples/protobuf/c" />
 
 我们还可以设置 `proto_public = true` 来导出 proto 的头文件搜索目录，开放给其他父 target 继承使用。
 
@@ -24,17 +15,7 @@ target("console_c")
 
 ## 使用 C++ 库 {#use-cpp-library}
 
-```lua
-add_requires("protobuf-cpp")
-
-target("console_c++")
-    set_kind("binary")
-    set_languages("c++11")
-    add_packages("protobuf-cpp")
-    add_rules("protobuf.cpp")
-    add_files("src/*.cpp")
-    add_files("src/*.proto")
-```
+<FileExplorer rootFilesDir="examples/protobuf/cpp" />
 
 我们还可以设置 `proto_public = true` 来导出 proto 的头文件搜索目录，开放给其他父 target 继承使用。
 
