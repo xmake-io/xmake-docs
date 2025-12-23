@@ -344,7 +344,7 @@ add_moduledirs(dirs: <string|array>, ...)
 The builtin modules are placed in the 'xmake/modules' directory, but for user-defined modules for a specific project, you can configure additional module directories in the 'xmake.lua` file.
 
 ```lua
-add_moduledirs("$(projectdir)/modules")
+add_moduledirs(os.projectdir() .. "/modules")
 ```
 xmake will load the given module in the given directory when calling [`import`](/api/scripts/builtin-modules/import).
 
@@ -373,7 +373,7 @@ add_plugindirs(dirs: <string|array>, ...)
 The builtin plugins are placed in the 'xmake/plugins' directory, but for user-defined plugins for a specific project, you can configure additional plugin directories in the 'xmake.lua` file.
 
 ```lua
-add_plugindirs("$(projectdir)/plugins")
+add_plugindirs(os.projectdir() .. "/plugins")
 ```
 xmake will load all plugins in the given directory.
 
