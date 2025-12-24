@@ -330,7 +330,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Merge Static Libraries', link: 'cpp/merge-static-libraries' },
         { text: 'Autogen Programs', link: 'cpp/autogen' },
         { text: 'Android Native App', link: 'cpp/android-native-app' },
-        { text: 'Bin2c/Bin2obj', link: '/examples/cpp/bin2c_obj' },
+        { text: 'Bin2c/Bin2obj', link: '/examples/cpp/bin2c-obj' },
         { text: 'GLSL/HLSL to SPIR-V', link: 'cpp/glsl2spv' },
         { text: 'XPack Packaging', link: 'cpp/xpack' },
       ]
