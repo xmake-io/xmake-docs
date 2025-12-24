@@ -2,5 +2,5 @@
 
 更多详情见：[#1274](https://github.com/xmake-io/xmake/issues/1274)
 
-<FileExplorer rootFilesDir="examples/linux/bpf/minimal" />
+<FileExplorer rootFilesDir="examples/platforms/linux/bpf/minimal" />
 

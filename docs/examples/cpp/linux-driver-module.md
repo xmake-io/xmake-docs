@@ -7,7 +7,7 @@ Full example: [Linux Kernel Driver Modules](https://github.com/xmake-io/xmake/tr
 
 Its configuration is very simple. You only need to configure the linux-headers package that supports the module, and then apply the `platform.linux.module` build rule.
 
-<FileExplorer rootFilesDir="examples/linux/driver/hello" />
+<FileExplorer rootFilesDir="examples/platforms/linux/driver/hello" />
 
 Then directly execute the xmake command, compile with one key, and generate the kernel driver module hello.ko.
 

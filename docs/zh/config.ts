@@ -410,6 +410,10 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Cosmocc 程序', link: 'cpp/cosmocc' },
         { text: '合并静态库', link: 'cpp/merge-static-libraries' },
         { text: '自动代码生成', link: 'cpp/autogen' },
+        { text: 'Android Native App', link: 'cpp/android-native-app' },
+        { text: 'Bin2c/Bin2obj 程序', link: '/zh/examples/cpp/bin2c_obj' },
+        { text: 'GLSL/HLSL 转 SPIR-V', link: 'cpp/glsl2spv' },
+        { text: 'XPack 打包程序', link: 'cpp/xpack' },
       ]
     },
     {
