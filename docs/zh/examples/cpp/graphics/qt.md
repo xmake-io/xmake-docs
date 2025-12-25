@@ -35,19 +35,19 @@ $ xmake f -p wasm
 
 ## 静态库程序 {#static-library}
 
-<FileExplorer rootFilesDir="examples/qt/static_library" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/static_library" />
 
 ## 动态库程序 {#shared-library}
 
-<FileExplorer rootFilesDir="examples/qt/shared_library" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/shared_library" />
 
 ## 控制台程序 {#console}
 
-<FileExplorer rootFilesDir="examples/qt/console" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/console" />
 
 ## Quick 应用程序 {#quickapp}
 
-<FileExplorer rootFilesDir="examples/qt/quickapp" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/quickapp" />
 
 ::: tip 注意
 如果使用的自己编译的static版本QT SDK，那么需要切换到`add_rules("qt.quickapp_static")`静态规则才行，因为链接的库是不同的，需要做静态链接。
@@ -80,11 +80,11 @@ $ xmake run
 
 ## Quick Plugin 程序 {#quick-plugin}
 
-<FileExplorer rootFilesDir="examples/qt/quickplugin" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/quickplugin" />
 
 ## Widgets 应用程序 {#widgetapp}
 
-<FileExplorer rootFilesDir="examples/qt/widgetapp" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/widgetapp" />
 
 ::: tip 注意
 如果使用的自己编译的static版本QT SDK，那么需要切换到`add_rules("qt.widgetapp_static")`静态规则才行，因为链接的库是不同的，需要做静态链接。

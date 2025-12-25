@@ -397,7 +397,6 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: '基础程序', link: 'cpp/basic' },
         { text: 'C++ 模块', link: 'cpp/cxx-modules' },
         { text: 'Wasm 程序', link: 'cpp/wasm' },
-        { text: 'Qt 程序', link: 'cpp/qt' },
         { text: 'WDK 程序', link: 'cpp/wdk' },
         { text: 'WinSDK 程序', link: 'cpp/winsdk' },
         { text: 'MFC 程序', link: 'cpp/mfc' },
@@ -426,6 +425,12 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SDL2 程序', link: 'cpp/graphics/sdl' },
         { text: 'Raylib 程序', link: 'cpp/graphics/raylib' },
         { text: 'ImGui 程序', link: 'cpp/graphics/imgui' },
+        { text: 'Qt 程序', link: 'cpp/graphics/qt' },
+        { text: 'Android Native App', link: 'cpp/graphics/android' },
+        { text: 'GLSL/HLSL 转 SPIR-V', link: 'cpp/graphics/glsl2spv' },
+        { text: 'Mac App 程序', link: 'cpp/graphics/mac_app' },
+        { text: 'iOS App 程序', link: 'cpp/graphics/ios_app' },
+        { text: 'Metal App 程序', link: 'cpp/graphics/metal_app' },
       ]
     },
     {

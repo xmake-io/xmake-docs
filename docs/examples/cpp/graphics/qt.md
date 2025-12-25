@@ -29,19 +29,19 @@ $ xmake f -p wasm
 
 ## Static Library
 
-<FileExplorer rootFilesDir="examples/qt/static_library" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/static_library" />
 
 ## Shared Library
 
-<FileExplorer rootFilesDir="examples/qt/shared_library" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/shared_library" />
 
 ## Console Program
 
-<FileExplorer rootFilesDir="examples/qt/console" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/console" />
 
 ## Quick Application
 
-<FileExplorer rootFilesDir="examples/qt/quickapp" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/quickapp" />
 
 ::: tip NOTE
 If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.quickapp_static")` static rule,
@@ -75,11 +75,11 @@ The effect is as follows:
 
 ## Quick Plugin
 
-<FileExplorer rootFilesDir="examples/qt/quickplugin" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/quickplugin" />
 
 ## Widgets Application
 
-<FileExplorer rootFilesDir="examples/qt/widgetapp" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/qt/widgetapp" />
 
 ::: tip NOTE
 If you are using your own compiled static version of the QT SDK, you need to switch to the `add_rules("qt.widgetapp_static")` static rule,

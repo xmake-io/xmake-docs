@@ -316,7 +316,6 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Basic Programs', link: 'cpp/basic' },
         { text: 'C++ Modules', link: 'cpp/cxx-modules' },
         { text: 'Wasm Programs', link: 'cpp/wasm' },
-        { text: 'Qt Programs', link: 'cpp/qt' },
         { text: 'WDK Programs', link: 'cpp/wdk' },
         { text: 'WinSDK Programs', link: 'cpp/winsdk' },
         { text: 'MFC Programs', link: 'cpp/mfc' },
@@ -329,9 +328,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Cosmocc Programs', link: 'cpp/cosmocc' },
         { text: 'Merge Static Libraries', link: 'cpp/merge-static-libraries' },
         { text: 'Autogen Programs', link: 'cpp/autogen' },
-        { text: 'Android Native App', link: 'cpp/android-native-app' },
         { text: 'Bin2c/Bin2obj', link: 'cpp/bin2c-obj' },
-        { text: 'GLSL/HLSL to SPIR-V', link: 'cpp/glsl2spv' },
         { text: 'Package Management', link: 'cpp/packages' },
         { text: 'XPack Packaging', link: 'cpp/xpack' },
       ]
@@ -345,6 +342,12 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SDL2', link: 'cpp/graphics/sdl' },
         { text: 'Raylib', link: 'cpp/graphics/raylib' },
         { text: 'ImGui', link: 'cpp/graphics/imgui' },
+        { text: 'Qt Programs', link: 'cpp/graphics/qt' },
+        { text: 'Android Native App', link: 'cpp/graphics/android' },
+        { text: 'GLSL/HLSL to SPIR-V', link: 'cpp/graphics/glsl2spv' },
+        { text: 'Mac App', link: 'cpp/graphics/mac_app' },
+        { text: 'iOS App', link: 'cpp/graphics/ios_app' },
+        { text: 'Metal App', link: 'cpp/graphics/metal_app' },
       ]
     },
     {

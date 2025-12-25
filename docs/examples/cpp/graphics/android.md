@@ -8,7 +8,7 @@ We can use the `android.native_app` rule to build Android native applications.
 
 ## Native App
 
-<FileExplorer rootFilesDir="examples/platforms/android/app" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/android/app" />
 
 ### Build and Run
 
@@ -23,4 +23,4 @@ $ xmake run
 
 If you want to use custom glue code (or standard `android_native_app_glue`), you can do so by creating a project with the appropriate `AndroidManifest.xml` and native code.
 
-<FileExplorer rootFilesDir="examples/platforms/android/custom_glue" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/android/custom_glue" />

@@ -8,7 +8,7 @@ outline: deep
 
 ## Native App
 
-<FileExplorer rootFilesDir="examples/platforms/android/app" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/android/app" />
 
 ### Build and Run
 
@@ -23,4 +23,4 @@ $ xmake run
 
 如果你想使用自定义 glue 代码（或标准的 `android_native_app_glue`），你可以通过创建包含相应 `AndroidManifest.xml` 和原生代码的项目来实现。
 
-<FileExplorer rootFilesDir="examples/platforms/android/custom_glue" />
+<FileExplorer rootFilesDir="examples/cpp/graphics/android/custom_glue" />
