@@ -13,9 +13,43 @@ int main(int argc, char* args[]) {
             printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
         } else {
             screenSurface = SDL_GetWindowSurface(window);
-            SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-            SDL_UpdateWindowSurface(window);
-            SDL_Delay(2000);
+
+            SDL_Event e;
+            int quit = 0;
+            int x = 0;
+            int y = 0;
+            int dx = 2;
+            int dy = 2;
+
+            while (!quit) {
+                while (SDL_PollEvent(&e)) {
+                    if (e.type == SDL_QUIT) {
+                        quit = 1;
+                    }
+                }
+
+                // Update position
+                x += dx;
+                y += dy;
+
+                // Bounce off walls
+                if (x < 0 || x > 640 - 50) dx = -dx;
+                if (y < 0 || y > 480 - 50) dy = -dy;
+
+                // Fill the surface white
+                SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+
+                // Draw a red rectangle
+                SDL_Rect rect;
+                rect.x = x;
+                rect.y = y;
+                rect.w = 50;
+                rect.h = 50;
+                SDL_FillRect(screenSurface, &rect, SDL_MapRGB(screenSurface->format, 0xFF, 0x00, 0x00));
+
+                SDL_UpdateWindowSurface(window);
+                SDL_Delay(10);
+            }
         }
     }
     SDL_DestroyWindow(window);
