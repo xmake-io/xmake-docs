@@ -332,8 +332,8 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
-      text: 'Graphics & Game',
-      collapsed: false,
+      text: 'Graphics & Audio',
+      collapsed: true,
       items: [
         { text: 'OpenGL', link: 'cpp/graphics/opengl' },
         { text: 'Vulkan', link: 'cpp/graphics/vulkan' },
@@ -350,11 +350,12 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Metal App', link: 'cpp/graphics/metal_app' },
         { text: 'Linux Framebuffer Programs', link: 'cpp/graphics/linux_framebuffer' },
         { text: 'TUI Programs', link: 'cpp/graphics/tui' },
+        { text: 'Audio Programs', link: 'cpp/graphics/audio' },
       ]
     },
     {
       text: 'Bindings Programs',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'Swig Modules', link: 'bindings/swig' },
         { text: 'Lua Modules', link: 'bindings/lua-module' },
@@ -364,7 +365,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
     },
     {
       text: 'Embed Programs',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'Keil/MDK Embed Programs', link: 'embed/keil-mdk' },
         { text: 'Keil/C51 Embed Programs', link: 'embed/keil-c51' },
@@ -373,7 +374,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
     },
     {
       text: 'Other Languages',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'ObjC Programs', link: 'other-languages/objc' },
         { text: 'Cuda Programs', link: 'other-languages/cuda' },

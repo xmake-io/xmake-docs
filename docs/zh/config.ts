@@ -413,8 +413,8 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
-      text: '图形与游戏',
-      collapsed: false,
+      text: '图形与音视频',
+      collapsed: true,
       items: [
         { text: 'OpenGL 程序', link: 'cpp/graphics/opengl' },
         { text: 'Vulkan 程序', link: 'cpp/graphics/vulkan' },
@@ -431,11 +431,12 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Metal App 程序', link: 'cpp/graphics/metal_app' },
         { text: 'Linux Framebuffer 程序', link: 'cpp/graphics/linux_framebuffer' },
         { text: 'TUI 程序', link: 'cpp/graphics/tui' },
+        { text: 'Audio 程序', link: 'cpp/graphics/audio' },
       ]
     },
     {
       text: '语言绑定模块',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'Swig 模块', link: 'bindings/swig' },
         { text: 'Lua 模块', link: 'bindings/lua-module' },
@@ -445,7 +446,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
     },
     {
       text: '嵌入式程序',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'Keil/MDK 程序', link: 'embed/keil-mdk' },
         { text: 'Keil/C51 程序', link: 'embed/keil-c51' },
@@ -454,7 +455,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
     },
     {
       text: '其他语言',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'ObjC 程序', link: 'other-languages/objc' },
         { text: 'Cuda 程序', link: 'other-languages/cuda' },
