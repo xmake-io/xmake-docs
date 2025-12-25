@@ -26,10 +26,10 @@ int main(int argc, char** argv) {
 
     // Print some text
     std::string text = "Hello from Xmake TUI!";
-    mvwprintw(win, win_height / 2, (win_width - text.length()) / 2, text.c_str());
+    mvwprintw(win, win_height / 2, (win_width - text.length()) / 2, "%s", text.c_str());
     
     std::string exit_text = "Press any key to exit...";
-    mvwprintw(win, win_height / 2 + 2, (win_width - exit_text.length()) / 2, exit_text.c_str());
+    mvwprintw(win, win_height / 2 + 2, (win_width - exit_text.length()) / 2, "%s", exit_text.c_str());
 
     // Refresh the window
     wrefresh(win);
