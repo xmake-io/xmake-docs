@@ -429,6 +429,8 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Mac App 程序', link: 'cpp/graphics/mac_app' },
         { text: 'iOS App 程序', link: 'cpp/graphics/ios_app' },
         { text: 'Metal App 程序', link: 'cpp/graphics/metal_app' },
+        { text: 'Linux Framebuffer 程序', link: 'cpp/graphics/linux_framebuffer' },
+        { text: 'TUI 程序', link: 'cpp/graphics/tui' },
       ]
     },
     {

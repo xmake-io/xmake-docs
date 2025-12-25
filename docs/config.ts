@@ -348,6 +348,8 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Mac App', link: 'cpp/graphics/mac_app' },
         { text: 'iOS App', link: 'cpp/graphics/ios_app' },
         { text: 'Metal App', link: 'cpp/graphics/metal_app' },
+        { text: 'Linux Framebuffer Programs', link: 'cpp/graphics/linux_framebuffer' },
+        { text: 'TUI Programs', link: 'cpp/graphics/tui' },
       ]
     },
     {
