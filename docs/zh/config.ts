@@ -413,6 +413,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Android Native App', link: 'cpp/android-native-app' },
         { text: 'Bin2c/Bin2obj 程序', link: 'cpp/bin2c-obj' },
         { text: 'GLSL/HLSL 转 SPIR-V', link: 'cpp/glsl2spv' },
+        { text: '包管理', link: 'cpp/packages' },
         { text: 'XPack 打包程序', link: 'cpp/xpack' },
       ]
     },

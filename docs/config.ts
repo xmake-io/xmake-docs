@@ -332,6 +332,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Android Native App', link: 'cpp/android-native-app' },
         { text: 'Bin2c/Bin2obj', link: 'cpp/bin2c-obj' },
         { text: 'GLSL/HLSL to SPIR-V', link: 'cpp/glsl2spv' },
+        { text: 'Package Management', link: 'cpp/packages' },
         { text: 'XPack Packaging', link: 'cpp/xpack' },
       ]
     },
