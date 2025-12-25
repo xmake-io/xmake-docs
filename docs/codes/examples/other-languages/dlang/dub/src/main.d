@@ -1,7 +1,6 @@
 import std.stdio;
 import log;
 
-void main()
-{
+void main() {
     info("Hello World!");
 }

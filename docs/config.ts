@@ -337,6 +337,17 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: 'Graphics & Game',
+      collapsed: false,
+      items: [
+        { text: 'OpenGL', link: 'cpp/graphics/opengl' },
+        { text: 'Vulkan', link: 'cpp/graphics/vulkan' },
+        { text: 'SDL2', link: 'cpp/graphics/sdl' },
+        { text: 'Raylib', link: 'cpp/graphics/raylib' },
+        { text: 'ImGui', link: 'cpp/graphics/imgui' },
+      ]
+    },
+    {
       text: 'Bindings Programs',
       collapsed: false,
       items: [

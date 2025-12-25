@@ -418,6 +418,17 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: '图形与游戏',
+      collapsed: false,
+      items: [
+        { text: 'OpenGL 程序', link: 'cpp/graphics/opengl' },
+        { text: 'Vulkan 程序', link: 'cpp/graphics/vulkan' },
+        { text: 'SDL2 程序', link: 'cpp/graphics/sdl' },
+        { text: 'Raylib 程序', link: 'cpp/graphics/raylib' },
+        { text: 'ImGui 程序', link: 'cpp/graphics/imgui' },
+      ]
+    },
+    {
       text: '语言绑定模块',
       collapsed: false,
       items: [

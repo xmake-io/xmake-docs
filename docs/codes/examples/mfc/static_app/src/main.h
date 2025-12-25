@@ -1,14 +1,12 @@
 #pragma once
 #include <afxwin.h>
 
-class CMyApp : public CWinApp
-{
+class CMyApp : public CWinApp {
 public:
     virtual BOOL InitInstance();
 };
 
-class CMyFrame : public CFrameWnd
-{
+class CMyFrame : public CFrameWnd {
 public:
     CMyFrame();
 };
