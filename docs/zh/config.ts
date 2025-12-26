@@ -420,6 +420,8 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: '自定义工具链', link: 'configuration/custom_toolchain' },
         { text: '自定义规则', link: 'configuration/custom_rule' },
         { text: '自定义模块', link: 'configuration/custom_module' },
+        { text: '自定义描述域 API', link: 'configuration/custom_scope_api' },
+        { text: '配置文件生成', link: 'configuration/add_configfiles' },
         { text: '自动代码生成', link: 'configuration/autogen' },
       ]
     },

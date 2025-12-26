@@ -339,6 +339,8 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Custom Toolchain', link: 'configuration/custom_toolchain' },
         { text: 'Custom Rule', link: 'configuration/custom_rule' },
         { text: 'Custom Module', link: 'configuration/custom_module' },
+        { text: 'Custom Scope API', link: 'configuration/custom_scope_api' },
+        { text: 'Config Header Generation', link: 'configuration/add_configfiles' },
         { text: 'Autogen Programs', link: 'configuration/autogen' },
       ]
     },

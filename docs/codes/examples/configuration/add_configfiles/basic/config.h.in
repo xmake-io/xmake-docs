@@ -1,0 +1,7 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define HELLO "${FOO_STRING}"
+${define FOO_ENABLE}
+
+#endif
