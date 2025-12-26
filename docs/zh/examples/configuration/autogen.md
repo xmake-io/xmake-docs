@@ -34,39 +34,7 @@ Xmake 新增了原生模块开发特性，即使不定义额外的 autogen 目�
 
 关于原生模块开发，可参考文档：[Native 模块开发](/zh/api/scripts/native-modules)。
 
-```lua
-add_rules("mode.debug", "mode.release")
-
-add_moduledirs("modules")
-
-rule("autogen")
-    set_extensions(".in")
-    before_build_file(function (target, sourcefile, opt)
-        import("utils.progress")
-        import("core.project.depend")
-        import("core.tool.compiler")
-        import("autogen.foo", {always_build = true})
-
-        local sourcefile_cx = path.join(target:autogendir(), "rules", "autogen", path.basename(sourcefile) .. ".cpp")
-        local objectfile = target:objectfile(sourcefile_cx)
-        table.insert(target:objectfiles(), objectfile)
-
-        depend.on_changed(function ()
-            progress.show(opt.progress, "${color.build.object}compiling.autogen %s", sourcefile)
-            os.mkdir(path.directory(sourcefile_cx))
-            foo.generate(sourcefile, sourcefile_cx)
-            compiler.compile(sourcefile_cx, objectfile, {target = target})
-        end, {dependfile = target:dependfile(objectfile),
-              files = sourcefile,
-              changed = target:is_rebuilt()})
-    end)
-
-target("test")
-    set_kind("binary")
-    add_rules("autogen")
-    add_files("src/main.cpp")
-    add_files("src/*.in")
-```
+<FileExplorer rootFilesDir="examples/configuration/autogen/modules" />
 
 完整例子见：[Native 模块自动生成](https://github.com/xmake-io/xmake/blob/dev/tests/projects/other/autogen/autogen_shared_module/xmake.lua)。
 
