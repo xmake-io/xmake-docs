@@ -325,10 +325,21 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'CppFront Programs', link: 'cpp/cppfront' },
         { text: 'Cosmocc Programs', link: 'cpp/cosmocc' },
         { text: 'Merge Static Libraries', link: 'cpp/merge-static-libraries' },
-        { text: 'Autogen Programs', link: 'cpp/autogen' },
         { text: 'Bin2c/Bin2obj', link: 'cpp/bin2c-obj' },
         { text: 'Package Management', link: 'cpp/packages' },
         { text: 'XPack Packaging', link: 'cpp/xpack' },
+      ]
+    },
+    {
+      text: 'Xmake Configuration',
+      collapsed: true,
+      items: [
+        { text: 'Multi-level Directories', link: 'configuration/multi_level_directories' },
+        { text: 'Namespace Isolation', link: 'configuration/namespace_isolation' },
+        { text: 'Custom Toolchain', link: 'configuration/custom_toolchain' },
+        { text: 'Custom Rule', link: 'configuration/custom_rule' },
+        { text: 'Custom Module', link: 'configuration/custom_module' },
+        { text: 'Autogen Programs', link: 'configuration/autogen' },
       ]
     },
     {

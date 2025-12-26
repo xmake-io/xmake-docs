@@ -1,0 +1,10 @@
+rule("markdown")
+    set_extensions(".md")
+    on_build_file(function (target, sourcefile, opt)
+        print("processing %s", sourcefile)
+    end)
+
+target("test")
+    set_kind("phony")
+    add_files("src/*.md")
+    add_rules("markdown")

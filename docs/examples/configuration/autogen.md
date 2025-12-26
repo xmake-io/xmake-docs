@@ -10,7 +10,7 @@ This is the most straightforward method: simply generate the code before buildin
 
 By default, `add_files` will not add files that do not exist, so you need to set `always_added = true` to force the addition, even if the file does not exist yet.
 
-<FileExplorer rootFilesDir="examples/cpp/autogen/simple" />
+<FileExplorer rootFilesDir="examples/configuration/autogen/simple" />
 
 This approach has many limitations and is not commonly used in real-world scenarios, but it is simple and easy to understand.
 
@@ -18,7 +18,7 @@ This approach has many limitations and is not commonly used in real-world scenar
 
 Sometimes, code generation requires running a target program within the project. This can be achieved as follows:
 
-<FileExplorer rootFilesDir="examples/cpp/autogen/rule" />
+<FileExplorer rootFilesDir="examples/configuration/autogen/rule" />
 
 First, configure an `autogen` target program that must be runnable on the current build platform, so use `set_plat(os.host())` to force building for the host platform.
 

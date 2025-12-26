@@ -406,10 +406,21 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'CppFront 程序', link: 'cpp/cppfront' },
         { text: 'Cosmocc 程序', link: 'cpp/cosmocc' },
         { text: '合并静态库', link: 'cpp/merge-static-libraries' },
-        { text: '自动代码生成', link: 'cpp/autogen' },
         { text: 'Bin2c/Bin2obj 程序', link: 'cpp/bin2c-obj' },
         { text: '包管理', link: 'cpp/packages' },
         { text: 'XPack 打包程序', link: 'cpp/xpack' },
+      ]
+    },
+    {
+      text: 'Xmake 配置',
+      collapsed: true,
+      items: [
+        { text: '多级目录配置', link: 'configuration/multi_level_directories' },
+        { text: '命名空间隔离', link: 'configuration/namespace_isolation' },
+        { text: '自定义工具链', link: 'configuration/custom_toolchain' },
+        { text: '自定义规则', link: 'configuration/custom_rule' },
+        { text: '自定义模块', link: 'configuration/custom_module' },
+        { text: '自动代码生成', link: 'configuration/autogen' },
       ]
     },
     {

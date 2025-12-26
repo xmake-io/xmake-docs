@@ -10,7 +10,7 @@
 
 由于 `add_files` 默认不会添加不存在的文件，所以需要配置 `always_added = true`，即使文件当前还不存在也能强制添加。
 
-<FileExplorer rootFilesDir="examples/cpp/autogen/simple" />
+<FileExplorer rootFilesDir="examples/configuration/autogen/simple" />
 
 这种方式有很多局限性，实际场景下不常用，但胜在简单易懂。
 
@@ -18,7 +18,7 @@
 
 有时我们需要通过执行项目中的某个目标程序来生成代码，可以通过如下方式实现：
 
-<FileExplorer rootFilesDir="examples/cpp/autogen/rule" />
+<FileExplorer rootFilesDir="examples/configuration/autogen/rule" />
 
 首先需要配置一个 autogen 目标程序，它必须能在当前编译平台运行，因此需通过 `set_plat(os.host())` 强制为主机平台编译。
 
