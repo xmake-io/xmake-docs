@@ -337,6 +337,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Multi-level Directories', link: 'configuration/multi_level_directories' },
         { text: 'Namespace Isolation', link: 'configuration/namespace_isolation' },
         { text: 'Custom Toolchain', link: 'configuration/custom_toolchain' },
+        { text: 'Remote Toolchain', link: 'configuration/remote_toolchain' },
         { text: 'Custom Rule', link: 'configuration/custom_rule' },
         { text: 'Custom Module', link: 'configuration/custom_module' },
         { text: 'Custom Scope API', link: 'configuration/custom_scope_api' },
