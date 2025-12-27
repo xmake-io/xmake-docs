@@ -419,6 +419,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: '命名空间隔离', link: 'configuration/namespace_isolation' },
         { text: '自定义工具链', link: 'configuration/custom_toolchain' },
         { text: '远程工具链', link: 'configuration/remote_toolchain' },
+        { text: 'Unity 编译加速', link: 'configuration/unity_build' },
         { text: '自定义规则', link: 'configuration/custom_rule' },
         { text: '自定义模块', link: 'configuration/custom_module' },
         { text: '自定义描述域 API', link: 'configuration/custom_scope_api' },

@@ -226,6 +226,7 @@ In addition, we have improved dependent library resolution, support for extracti
 * [#7145](https://github.com/xmake-io/xmake/pull/7145): Improve Clang/LLVM runtime support
 * [#7136](https://github.com/xmake-io/xmake/pull/7136): Improve clang-cl depfiles generation
 * [#7135](https://github.com/xmake-io/xmake/pull/7135): Improve `xrepo env` to add session ID
+* [#7155](https://github.com/xmake-io/xmake/pull/7155): Refactor Windows ASan for clang-cl (runtime linking, linker flags, PATH/CMAKE_LINKER_TYPE setup, toolchain streamlining)
 * [#7109](https://github.com/xmake-io/xmake/pull/7109): Improve binutils to read symbols from binary file
 * [#7102](https://github.com/xmake-io/xmake/pull/7102): Improve bin2c rule
 * [#7098](https://github.com/xmake-io/xmake/pull/7098): Refactor and improve Golang support

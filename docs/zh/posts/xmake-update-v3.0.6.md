@@ -226,6 +226,7 @@ extractlib("/path/to/lib.a", "/path/to/outputdir")
 * [#7145](https://github.com/xmake-io/xmake/pull/7145)：改进 Clang/LLVM 运行时支持
 * [#7136](https://github.com/xmake-io/xmake/pull/7136)：改进 clang-cl 依赖文件生成
 * [#7135](https://github.com/xmake-io/xmake/pull/7135)：`xrepo env` 增加 session ID
+* [#7155](https://github.com/xmake-io/xmake/pull/7155)：重构 clang-cl 的 Windows ASan 支持（运行时链接，链接器标志，PATH/CMAKE_LINKER_TYPE 设置，工具链简化）
 * [#7109](https://github.com/xmake-io/xmake/pull/7109)：binutils 支持从二进制文件读取符号
 * [#7102](https://github.com/xmake-io/xmake/pull/7102)：改进 bin2c 规则
 * [#7098](https://github.com/xmake-io/xmake/pull/7098)：重构并改进 Golang 支持

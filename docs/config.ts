@@ -338,6 +338,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Namespace Isolation', link: 'configuration/namespace_isolation' },
         { text: 'Custom Toolchain', link: 'configuration/custom_toolchain' },
         { text: 'Remote Toolchain', link: 'configuration/remote_toolchain' },
+        { text: 'Unity Build', link: 'configuration/unity_build' },
         { text: 'Custom Rule', link: 'configuration/custom_rule' },
         { text: 'Custom Module', link: 'configuration/custom_module' },
         { text: 'Custom Scope API', link: 'configuration/custom_scope_api' },
