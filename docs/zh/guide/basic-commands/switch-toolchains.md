@@ -142,7 +142,7 @@ $ xmake
 
 ## SDCC
 
-也是一个嵌入式的 arm 编译工具链。
+一个嵌入式的 Intel MCS51(8031、8032、8051、8052等) 编译工具链。官网：https://sdcc.sourceforge.net
 
 ```sh
 $ xmake f --toolchain=sdcc -a stm8

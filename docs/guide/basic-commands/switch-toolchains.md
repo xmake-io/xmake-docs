@@ -147,7 +147,7 @@ $ xmake
 
 ## SDCC
 
-It is also an embedded arm compilation toolchain.
+[SDCC](https://sdcc.sourceforge.net/) is a retargettable, optimizing Standard C (ANSI C89, ISO C99, ISO C11, ISO C23) compiler suite that targets the Intel MCS51 based microprocessors (8031, 8032, 8051, 8052, etc.)
 
 ```sh
 $ xmake f --toolchain=sdcc -a stm8
