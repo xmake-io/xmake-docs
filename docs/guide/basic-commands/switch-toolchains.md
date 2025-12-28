@@ -147,7 +147,7 @@ $ xmake
 
 ## SDCC
 
-It is also an embedded arm compilation toolchain.
+[SDCC](https://sdcc.sourceforge.net/) is a C compiler suite for various microcontrollers, such as the Intel MCS51, STM8 and Z80.
 
 ```sh
 $ xmake f --toolchain=sdcc -a stm8
