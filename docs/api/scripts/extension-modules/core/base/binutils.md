@@ -42,6 +42,30 @@ binutils.bin2obj(binaryfile: <string>, outputfile: <string>, opt: <table>)
 | outputfile | Required. Output object file path |
 | opt | Optional. Options: <br>- `format`: object format (coff, elf, macho) <br>- `symbol_prefix`: symbol prefix (default: `_binary_`) <br>- `arch`: architecture (default: x86_64) <br>- `plat`: platform (default: macosx, only for macho) <br>- `basename`: base name for symbols <br>- `target_minver`: target minimum version (only for macho) <br>- `xcode_sdkver`: Xcode SDK version (only for macho) <br>- `zeroend`: append null terminator (default: false) |
 
+::: tip NOTE
+The builtin rule [`util.bin2obj`](https://xmake.io/api/description/builtin-rules.html#utils-bin2obj) automatically detects the arch and platform, but when calling `binutils.bin2obj`, these options should be configured manually. In most scenarios, use `target:arch()` and `target:plat()` to easily acquire and fill in the parameters.
+:::
+
+### Symbol Name
+
+Different from the rule [`util.bin2obj`](https://xmake.io/api/description/builtin-rules.html#utils-bin2obj) which provides a data pointer and a size, `binutils.bin2obj` provides two symbols in the generated object file: `<symbol_prefix><basename>_start` and `<symbol_prefix><basename>_end`. The `_start` symbol marks the start of the binary data, and `_end` marks the end.
+
+Example: (with `symbol_prefix = "_foo_"`, `basename = "bar"`, `C++20`)
+```cpp
+#include <span>
+
+extern "C"
+{
+	extern const std::byte _foo_bar_start;
+	extern const std::byte _foo_bar_end;
+}
+
+void example()
+{
+	std::span<const std::byte> data = {&_foo_bar_start, &_foo_bar_end};
+}
+```
+
 ## binutils.readsyms
 
 Read symbols from object file (auto-detect format: COFF, ELF, or Mach-O).
