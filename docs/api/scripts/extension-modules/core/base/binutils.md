@@ -48,7 +48,7 @@ The builtin rule [`util.bin2obj`](https://xmake.io/api/description/builtin-rules
 
 ### Symbol Name
 
-Different from the rule [`util.bin2obj`](https://xmake.io/api/description/builtin-rules.html#utils-bin2obj) which provides a data pointer and a size, `binutils.bin2obj` provides two symbols in the generated object file: `<symbol_prefix><basename>_start` and `<symbol_prefix><basename>_end`. The `_start` symbol marks the start of the binary data, and `_end` marks the end.
+Similar to the rule [`util.bin2obj`](https://xmake.io/api/description/builtin-rules.html#utils-bin2obj), `binutils.bin2obj` provides two symbols in the generated object file: `<symbol_prefix><basename>_start` and `<symbol_prefix><basename>_end`. The `_start` symbol marks the start of the binary data, and `_end` marks the end.
 
 Example: (with `symbol_prefix = "_foo_"`, `basename = "bar"`, `C++20`)
 ```cpp
@@ -56,13 +56,13 @@ Example: (with `symbol_prefix = "_foo_"`, `basename = "bar"`, `C++20`)
 
 extern "C"
 {
-    extern const std::byte _foo_bar_start;
-    extern const std::byte _foo_bar_end;
+    extern const std::byte _foo_bar_start[];
+    extern const std::byte _foo_bar_end[];
 }
 
 void example()
 {
-    std::span<const std::byte> data = {&_foo_bar_start, &_foo_bar_end};
+    std::span<const std::byte> data = {_foo_bar_start, _foo_bar_end};
 }
 ```
 
