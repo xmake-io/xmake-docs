@@ -198,6 +198,22 @@ extractlib("/path/to/lib.a", "/path/to/outputdir")
 
 此外，我们还改进了依赖库解析，静态库合并用到的对象文件抽取，以及符号导出功能。
 
+### CLion 插件更新
+
+最近我们对 CLion 的 [xmake-idea](https://github.com/xmake-io/xmake-idea) 插件做了大量的改进。
+
+尤其是增加了对 lldb/gdb-dap 的调试支持，现在我们不再需要通过生成 `CMakeLists.txt` 去变相支持调试了，而是直接支持调试 xmake 项目。
+
+<img src="/assets/img/posts/xmake/xmake-idea-dap-debug-conf.png" width="650px" />
+
+<img src="/assets/img/posts/xmake/xmake-idea-dap-debug-run.png" width="650px" />
+
+另外，我们还修复了运行前没有自动保存的问题，以及 Run Configuration 配置面板的一些 bug。
+
+并且，我们还增加了自动更新 `compile_commands.json` 的支持，以改进 C++ 代码的自动补全和高亮体验。
+
+<img src="/assets/img/posts/xmake/xmake-idea-update-compd.png" width="650px" />
+
 ---
 
 ## 更新日志

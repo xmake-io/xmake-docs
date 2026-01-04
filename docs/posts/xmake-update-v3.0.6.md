@@ -198,6 +198,22 @@ extractlib("/path/to/lib.a", "/path/to/outputdir")
 
 In addition, we have improved dependent library resolution, support for extracting objects used in static library merging, and symbol dumping.
 
+### Xmake Plugin for CLion
+
+We have recently made significant improvements to the [xmake-idea](https://github.com/xmake-io/xmake-idea) plugin for CLion.
+
+Most notably, we added support for lldb/gdb-dap debugging. You no longer need to generate `CMakeLists.txt` to support debugging; you can now debug Xmake projects directly.
+
+<img src="/assets/img/posts/xmake/xmake-idea-dap-debug-conf.png" width="650px" />
+
+<img src="/assets/img/posts/xmake/xmake-idea-dap-debug-run.png" width="650px" />
+
+In addition, we fixed some bugs in the Run Configuration panel and resolved the issue where files were not automatically saved before running.
+
+We also added support for automatically updating `compile_commands.json` to improve C++ Intellisense.
+
+<img src="/assets/img/posts/xmake/xmake-idea-update-compd.png" width="650px" />
+
 ---
 
 ## Changelog
