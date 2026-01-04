@@ -55,13 +55,13 @@ binutils.bin2obj(binaryfile: <string>, outputfile: <string>, opt: <table>)
 
 extern "C"
 {
-	extern const std::byte _foo_bar_start;
-	extern const std::byte _foo_bar_end;
+    extern const std::byte _foo_bar_start;
+    extern const std::byte _foo_bar_end;
 }
 
 void example()
 {
-	std::span<const std::byte> data = {&_foo_bar_start, &_foo_bar_end};
+    std::span<const std::byte> data = {&_foo_bar_start, &_foo_bar_end};
 }
 ```
 
