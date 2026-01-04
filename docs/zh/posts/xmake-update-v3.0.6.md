@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.0.6 预览版，原生 Android 应用、Flang、CUDA 13、Qt 打包
+title: Xmake v3.0.6 发布，原生 Android 应用、Flang、CUDA 13、Qt 打包
 tags: [xmake, android, flang, cuda, qt, packaging, msvc, binutils]
 date: 2025-12-17
 author: Ruki
