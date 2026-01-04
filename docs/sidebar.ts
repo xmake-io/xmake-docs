@@ -63,6 +63,7 @@ function coreBaseModulesApiSidebar(): DefaultTheme.SidebarItem {
     text: 'base',
     collapsed: true,
     items: [
+      { text: 'binutils', link: 'extension-modules/core/base/binutils' },
       { text: 'bit', link: 'extension-modules/core/base/bit' },
       { text: 'bloom_filter', link: 'extension-modules/core/base/bloom_filter' },
       { text: 'bytes', link: 'extension-modules/core/base/bytes' },

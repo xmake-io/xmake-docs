@@ -42,6 +42,29 @@ binutils.bin2obj(binaryfile: <string>, outputfile: <string>, opt: <table>)
 | outputfile | 必需。输出对象文件路径 |
 | opt | 可选。选项：<br>- `format`: 对象格式 (coff, elf, macho) <br>- `symbol_prefix`: 符号前缀 (默认: `_binary_`) <br>- `arch`: 架构 (默认: x86_64) <br>- `plat`: 平台 (默认: macosx, 仅限 macho) <br>- `basename`: 符号基名 <br>- `target_minver`: 目标最小版本 (仅限 macho) <br>- `xcode_sdkver`: Xcode SDK 版本 (仅限 macho) <br>- `zeroend`: 追加空终止符 (默认: false) |
 
+::: tip NOTE
+尽管自带规则[`util.bin2obj`](https://xmake.io/zh/api/description/builtin-rules.html#utils-bin2obj)会自动探测目标的架构和平台，`binutils.bin2obj`需要调用者手动获取并传递架构（`arch`）和平台（`plat`）等参数。在绝大多数场景中，可使用`target:arch()`和`target:plat()`轻松获取这些参数。
+:::
+
+### 符号名称
+
+与[`util.bin2obj`](https://xmake.io/zh/api/description/builtin-rules.html#utils-bin2obj)类似，`binutils.bin2obj`生成的目标文件提供`<symbol_prefix><basename>_start`和`<symbol_prefix><basename>_end`符号，分别代表二进制数据的起始地址和终止地址。参考以下用例：（`symbol_prefix = "_foo_"`, `basename = "bar"`, `C++20`）
+
+```cpp
+#include <span>
+
+extern "C"
+{
+    extern const std::byte _foo_bar_start[];
+    extern const std::byte _foo_bar_end[];
+}
+
+void example()
+{
+    const auto data = std::span<const std::byte>(_foo_bar_start, _foo_bar_end);
+}
+```
+
 ## binutils.readsyms
 
 读取对象文件符号（自动检测格式：COFF, ELF, 或 Mach-O）。
