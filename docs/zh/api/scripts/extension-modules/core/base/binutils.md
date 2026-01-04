@@ -61,7 +61,7 @@ extern "C"
 
 void example()
 {
-    std::span<const std::byte> data = {_foo_bar_start, _foo_bar_end};
+    const auto data = std::span<const std::byte>(_foo_bar_start, _foo_bar_end);
 }
 ```
 
