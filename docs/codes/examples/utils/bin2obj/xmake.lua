@@ -1,4 +1,5 @@
 add_rules("mode.debug", "mode.release")
+set_xmakever("3.0.6")
 
 target("test")
     set_kind("binary")
