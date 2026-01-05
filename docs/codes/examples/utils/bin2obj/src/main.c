@@ -1,9 +1,15 @@
 #include <stdio.h>
+#include <stdint.h>
 
-extern unsigned char test_png_data[];
-extern unsigned int test_png_size;
+extern const uint8_t _binary_test_png_start[];
+extern const uint8_t _binary_test_png_end[];
 
-int main(int argc, char** argv) {
-    printf("image size: %d\n", test_png_size);
+int main() {
+    const uint32_t size = (uint32_t)(_binary_test_png_end - _binary_test_png_start);
+    
+    printf("Data size: %u bytes\n", size);
+    for (uint32_t i = 0; i < size; i++) {
+        printf("%02x ", _binary_test_png_start[i]);
+    }
     return 0;
 }
