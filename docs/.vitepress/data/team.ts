@@ -69,7 +69,8 @@ export const coreTeamMembers: TeamMember[] = [
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     links: [
-      { icon: 'github', link: 'https://github.com/SirLynix' }
+      { icon: 'github', link: 'https://github.com/SirLynix' },
+      { icon: 'twitter', link: 'https://x.com/SirLynix' }
     ],
     sponsor: 'https://github.com/sponsors/SirLynix'
   },
