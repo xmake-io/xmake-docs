@@ -46,6 +46,7 @@
 
 /* colors */
 :root {
+  --vp-c-sponsor: #db2777;
   --vp-c-default-1: var(--vp-c-gray-1);
   --vp-c-default-2: var(--vp-c-gray-2);
   --vp-c-default-3: var(--vp-c-gray-3);
@@ -251,18 +252,9 @@ body.is-post .VPDocAside .VPCarbonAds {
   align-items: center !important;
   height: 32px !important;
   padding: 0 16px !important;
-  border: 1px solid currentColor !important;
   border-radius: 6px !important;
-  background-color: var(--vp-c-bg-soft) !important;
   font-size: 14px !important;
   font-weight: 500 !important;
-  transition: color 0.25s, border-color 0.25s, background-color 0.25s !important;
-}
-
-.xmake-team-members .VPTeamMembersItem .sp-link:hover {
-  border-color: var(--vp-c-brand-1) !important;
-  color: var(--vp-c-brand-1) !important;
-  background-color: var(--vp-c-brand-soft) !important;
 }
 
 .xmake-team-members .VPTeamMembersItem .sp-icon {
