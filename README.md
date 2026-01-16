@@ -2,9 +2,6 @@
 
 Support this project by [becoming a sponsor](https://xmake.io/about/sponsor). Your logo will show up here with a link to your website. 🙏
 
-<a href="https://opencollective.com/xmake#sponsors" target="_blank"><img src="https://opencollective.com/xmake/sponsors.svg?width=890"></a>
-<a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
-
 ## Introduction
 
 What is Xmake?
@@ -25,7 +22,7 @@ Although less precise, one can still understand Xmake in the following way:
 Xmake ≈ Make/Ninja + CMake/Meson + Vcpkg/Conan + distcc + ccache/sccache
 ```
 
-If you want to know more, please refer to: the [Documentation](https://xmake.io/guide/quick-start), [GitHub](https://github.com/xmake-io/xmake) or [Gitee](https://gitee.com/tboox/xmake). You are also welcome to join our [community](https://xmake.io/about/contact).
+If you want to know more, please refer to: the [Documentation](https://xmake.io/guide/quick-start), [GitHub](https://github.com/xmake-io/xmake) or [Gitee](https://gitee.com/tboox/xmake). You are also welcome to join our [community](https://xmake.io/about/author#contact).
 
 The official Xmake repository can be found at [xmake-io/xmake-repo](https://github.com/xmake-io/xmake-repo).
 
