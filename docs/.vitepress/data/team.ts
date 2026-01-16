@@ -1,6 +1,10 @@
 import { type DefaultTheme } from 'vitepress'
 
-export const coreTeamMembers: DefaultTheme.TeamMember[] = [
+interface TeamMember extends DefaultTheme.TeamMember {
+  repos?: { name: string; link: string }[]
+}
+
+export const coreTeamMembers: TeamMember[] = [
   {
     avatar: 'https://github.com/waruqi.png',
     name: 'Ruki Wang',
@@ -9,7 +13,11 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
     orgLink: 'https://xmake.io',
     repos: [
       { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { name: 'xmake-idea', link: 'https://github.com/xmake-io/xmake-idea' },
+      { name: 'xmake-vscode', link: 'https://github.com/xmake-io/xmake-vscode' },
+      { name: 'xmake-gradle', link: 'https://github.com/xmake-io/xmake-gradle' },
+      { name: 'xmake.sh', link: 'https://github.com/xmake-io/xmake.sh' }
     ],
     links: [
       { icon: 'github', link: 'https://github.com/waruqi' },
@@ -97,7 +105,7 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
   }
 ]
 
-export const coreTeamEmeriti: DefaultTheme.TeamMember[] = [
+export const coreTeamEmeriti: TeamMember[] = [
   {
     avatar: 'https://github.com/da-liii.png',
     name: 'da-liii',
