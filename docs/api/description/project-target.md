@@ -6171,7 +6171,7 @@ target("test")
 We can also set the current working directory of the test run through rundir, for example:
 
 ```lua
-targett("test")
+target("test")
      add_tests("testname", {rundir = os.projectdir()})
 ```
 
