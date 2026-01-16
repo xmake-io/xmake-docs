@@ -19,7 +19,7 @@ import { coreTeamMembers, coreTeamEmeriti } from '../.vitepress/data/team'
   <div class="xmake-team-section">
     <div class="xmake-team-info">
       <h2>Core Team Members</h2>
-      <p>Core team members are those who are actively involved in the maintenance of one or more core projects. They have made significant contributions to the Xmake ecosystem, with a long term commitment to the success of the project and its users.</p>
+      <p>Core team members are those who are actively involved in the maintenance of one or more core projects. They have made significant contributions to the Xmake ecosystem, especially to the package management repository.</p>
     </div>
     <div class="xmake-team-members">
       <VPTeamMembers :members="coreTeamMembers" />

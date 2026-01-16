@@ -19,7 +19,7 @@ import { coreTeamMembers, coreTeamEmeriti } from '../../.vitepress/data/team'
   <div class="xmake-team-section">
     <div class="xmake-team-info">
       <h2>核心团队成员</h2>
-      <p>核心团队成员是那些积极参与维护一个或多个核心项目的人。他们对 Xmake 的生态系统做出了重大贡献，并对项目及其用户的成功做出了长期的承诺。</p>
+      <p>核心团队成员是那些积极参与维护一个或多个核心项目的人。他们对 Xmake 的生态系统做出了重大贡献，尤其对包管理仓库的贡献巨大。</p>
     </div>
     <div class="xmake-team-members">
       <VPTeamMembers :members="coreTeamMembers" />
