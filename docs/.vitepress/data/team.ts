@@ -4,10 +4,13 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
   {
     avatar: 'https://github.com/waruqi.png',
     name: 'Ruki Wang',
-    title: 'Creator',
+    title: 'Creator and Maintainer',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Creator and Lead Developer of Xmake <br/> Maintains <a href="https://github.com/xmake-io" target="_blank">xmake-io</a> repositories',
+    repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/waruqi' },
       { icon: 'twitter', link: 'https://twitter.com/waruqi' }
@@ -20,7 +23,9 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
     title: 'Maintainer',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Maintains <a href="https://github.com/xmake-io/xmake-repo" target="_blank">xmake-repo</a> repository',
+    repos: [
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/star-hengxing' }
     ]
@@ -31,7 +36,9 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
     title: 'Maintainer',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Maintains <a href="https://github.com/xmake-io/xmake-repo" target="_blank">xmake-repo</a> repository',
+    repos: [
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/SirLynix' }
     ]
@@ -42,7 +49,9 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
     title: 'Maintainer',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Maintains <a href="https://github.com/xmake-io/xmake-repo" target="_blank">xmake-repo</a> repository',
+    repos: [
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/apocelipes' }
     ]
@@ -53,7 +62,9 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
     title: 'Maintainer',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Maintains <a href="https://github.com/xmake-io/xmake-repo" target="_blank">xmake-repo</a> repository',
+    repos: [
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/xq114' }
     ]
@@ -64,7 +75,9 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
     title: 'Maintainer',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Maintains <a href="https://github.com/xmake-io/xmake-repo" target="_blank">xmake-repo</a> repository',
+    repos: [
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/luadebug' }
     ]
@@ -75,7 +88,9 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
     title: 'Maintainer',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Maintains C++ Modules support',
+    repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/Arthapz' }
     ]
@@ -89,7 +104,9 @@ export const coreTeamEmeriti: DefaultTheme.TeamMember[] = [
     title: 'Maintainer',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Maintains <a href="https://github.com/xmake-io/xmake-repo" target="_blank">xmake-repo</a> repository',
+    repos: [
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/da-liii' }
     ]
@@ -100,7 +117,9 @@ export const coreTeamEmeriti: DefaultTheme.TeamMember[] = [
     title: 'Maintainer',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Maintains <a href="https://github.com/xmake-io/xmake-repo" target="_blank">xmake-repo</a> repository',
+    repos: [
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/c8ef' }
     ]
@@ -111,7 +130,9 @@ export const coreTeamEmeriti: DefaultTheme.TeamMember[] = [
     title: 'Contributor',
     org: 'Xmake',
     orgLink: 'https://xmake.io',
-    desc: 'Contributed to CUDA and vsxmake plugins',
+    repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
     links: [
       { icon: 'github', link: 'https://github.com/OpportunityLiu' }
     ]

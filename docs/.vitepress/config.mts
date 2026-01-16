@@ -126,6 +126,12 @@ export default defineConfig({
           replacement: fileURLToPath(
             new URL('./theme/components/VPCarbonAds.vue', import.meta.url)
           )
+        },
+        {
+          find: /^.*\/VPTeamMembersItem\.vue$/,
+          replacement: fileURLToPath(
+            new URL('./theme/components/VPTeamMembersItem.vue', import.meta.url)
+          )
         }
       ]
     }
