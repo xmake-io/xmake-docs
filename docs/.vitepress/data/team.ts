@@ -135,19 +135,6 @@ export const coreTeamEmeriti: TeamMember[] = [
     ]
   },
   {
-    avatar: 'https://github.com/da-liii.png',
-    name: 'da-liii',
-    affiliations: [
-      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
-    ],
-    repos: [
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
-    ],
-    links: [
-      { icon: 'github', link: 'https://github.com/da-liii' }
-    ]
-  },
-  {
     avatar: 'https://github.com/OpportunityLiu.png',
     name: 'OpportunityLiu',
     affiliations: [
