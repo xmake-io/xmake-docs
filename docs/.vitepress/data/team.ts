@@ -34,8 +34,8 @@ export const coreTeamMembers: TeamMember[] = [
       { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     links: [
       { icon: 'github', link: 'https://github.com/star-hengxing' }
@@ -49,8 +49,8 @@ export const coreTeamMembers: TeamMember[] = [
       { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     links: [
       { icon: 'github', link: 'https://github.com/luadebug' }
@@ -65,8 +65,8 @@ export const coreTeamMembers: TeamMember[] = [
       { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     links: [
       { icon: 'github', link: 'https://github.com/SirLynix' },
@@ -82,8 +82,8 @@ export const coreTeamMembers: TeamMember[] = [
       { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     links: [
       { icon: 'github', link: 'https://github.com/xq114' }
@@ -96,8 +96,8 @@ export const coreTeamMembers: TeamMember[] = [
       { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     links: [
       { icon: 'github', link: 'https://github.com/apocelipes' }
@@ -155,8 +155,8 @@ export const coreTeamEmeriti: TeamMember[] = [
       { title: 'Contributor', repo: 'Xmake/vsxmake, Cuda', link: 'https://github.com/xmake-io/xmake' }
     ],
     repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
-      { name: 'github-action-setup-xmake', link: 'https://github.com/xmake-io/github-action-setup-xmake' }
+      { name: 'github-action-setup-xmake', link: 'https://github.com/xmake-io/github-action-setup-xmake' },
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
     ],
     links: [
       { icon: 'github', link: 'https://github.com/OpportunityLiu' }
