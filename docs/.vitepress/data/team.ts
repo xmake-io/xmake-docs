@@ -42,6 +42,22 @@ export const coreTeamMembers: TeamMember[] = [
     ]
   },
   {
+    avatar: 'https://github.com/luadebug.png',
+    name: 'luadebug',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
+    repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
+    links: [
+      { icon: 'github', link: 'https://github.com/luadebug' }
+    ],
+    sponsor: 'https://github.com/sponsors/luadebug'
+  },
+  {
     avatar: 'https://github.com/SirLynix.png',
     name: 'SirLynix',
     affiliations: [
@@ -56,20 +72,6 @@ export const coreTeamMembers: TeamMember[] = [
       { icon: 'github', link: 'https://github.com/SirLynix' }
     ],
     sponsor: 'https://github.com/sponsors/SirLynix'
-  },
-  {
-    avatar: 'https://github.com/apocelipes.png',
-    name: 'apocelipes',
-    affiliations: [
-      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
-    ],
-    repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
-    ],
-    links: [
-      { icon: 'github', link: 'https://github.com/apocelipes' }
-    ]
   },
   {
     avatar: 'https://github.com/xq114.png',
@@ -87,20 +89,18 @@ export const coreTeamMembers: TeamMember[] = [
     ]
   },
   {
-    avatar: 'https://github.com/luadebug.png',
-    name: 'luadebug',
+    avatar: 'https://github.com/apocelipes.png',
+    name: 'apocelipes',
     affiliations: [
-      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
-      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     repos: [
       { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     links: [
-      { icon: 'github', link: 'https://github.com/luadebug' }
-    ],
-    sponsor: 'https://github.com/sponsors/luadebug'
+      { icon: 'github', link: 'https://github.com/apocelipes' }
+    ]
   },
   {
     avatar: 'https://github.com/Arthapz.png',
