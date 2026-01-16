@@ -2,15 +2,16 @@ import { type DefaultTheme } from 'vitepress'
 
 interface TeamMember extends DefaultTheme.TeamMember {
   repos?: { name: string; link: string }[]
+  affiliations?: { title: string; repo: string; link: string }[]
 }
 
 export const coreTeamMembers: TeamMember[] = [
   {
     avatar: 'https://github.com/waruqi.png',
     name: 'Ruki Wang',
-    title: 'Creator and Maintainer',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    affiliations: [
+      { title: 'Creator and Maintainer', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
     repos: [
       { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
@@ -28,10 +29,12 @@ export const coreTeamMembers: TeamMember[] = [
   {
     avatar: 'https://github.com/star-hengxing.png',
     name: 'star-hengxing',
-    title: 'Maintainer',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
     repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     links: [
@@ -41,10 +44,12 @@ export const coreTeamMembers: TeamMember[] = [
   {
     avatar: 'https://github.com/SirLynix.png',
     name: 'SirLynix',
-    title: 'Maintainer',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
     repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     links: [
@@ -55,9 +60,10 @@ export const coreTeamMembers: TeamMember[] = [
     avatar: 'https://github.com/apocelipes.png',
     name: 'apocelipes',
     title: 'Maintainer',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    repo: 'Xmake-repo',
+    orgLink: 'https://github.com/xmake-io/xmake-repo',
     repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     links: [
@@ -67,10 +73,12 @@ export const coreTeamMembers: TeamMember[] = [
   {
     avatar: 'https://github.com/xq114.png',
     name: 'xq114',
-    title: 'Maintainer',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
     repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     links: [
@@ -80,10 +88,12 @@ export const coreTeamMembers: TeamMember[] = [
   {
     avatar: 'https://github.com/luadebug.png',
     name: 'luadebug',
-    title: 'Maintainer',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
     repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     links: [
@@ -93,11 +103,13 @@ export const coreTeamMembers: TeamMember[] = [
   {
     avatar: 'https://github.com/Arthapz.png',
     name: 'Arthapz',
-    title: 'Maintainer',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake/C++ Modules', link: 'https://github.com/xmake-io/xmake' },
+      { title: 'Contributor', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
     links: [
       { icon: 'github', link: 'https://github.com/Arthapz' }
@@ -109,9 +121,9 @@ export const coreTeamEmeriti: TeamMember[] = [
   {
     avatar: 'https://github.com/da-liii.png',
     name: 'da-liii',
-    title: 'Maintainer',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     repos: [
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
@@ -122,9 +134,9 @@ export const coreTeamEmeriti: TeamMember[] = [
   {
     avatar: 'https://github.com/c8ef.png',
     name: 'c8ef',
-    title: 'Maintainer',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     repos: [
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
     ],
@@ -135,11 +147,13 @@ export const coreTeamEmeriti: TeamMember[] = [
   {
     avatar: 'https://github.com/OpportunityLiu.png',
     name: 'OpportunityLiu',
-    title: 'Contributor',
-    org: 'Xmake',
-    orgLink: 'https://xmake.io',
+    affiliations: [
+      { title: 'Maintainer', repo: 'github-action-setup-xmake', link: 'https://github.com/xmake-io/github-action-setup-xmake' },
+      { title: 'Contributor', repo: 'Xmake/vsxmake, Cuda', link: 'https://github.com/xmake-io/xmake' }
+    ],
     repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
+      { name: 'github-action-setup-xmake', link: 'https://github.com/xmake-io/github-action-setup-xmake' }
     ],
     links: [
       { icon: 'github', link: 'https://github.com/OpportunityLiu' }

@@ -4,7 +4,9 @@ import VPLink from 'vitepress/dist/client/theme-default/components/VPLink.vue'
 import VPSocialLinks from 'vitepress/dist/client/theme-default/components/VPSocialLinks.vue'
 
 interface TeamMember extends DefaultTheme.TeamMember {
+  repo?: string
   repos?: { name: string; link: string }[]
+  affiliations?: { title: string; repo: string; link: string }[]
 }
 
 interface Props {
@@ -27,20 +29,20 @@ withDefaults(defineProps<Props>(), {
         <h1 class="name">
           {{ member.name }}
         </h1>
-        <p v-if="member.title || member.org" class="affiliation">
-          <span v-if="member.title" class="title">
-            {{ member.title }}
-          </span>
-          <span v-if="member.title && member.org" class="at"> @ </span>
-          <VPLink
-            v-if="member.org"
-            class="org"
-            :class="{ link: member.orgLink }"
-            :href="member.orgLink"
-            no-icon
-          >
-            {{ member.org }}
+        <div v-if="member.sponsor" class="sp-mobile">
+          <VPLink class="sp-link" :href="member.sponsor" no-icon>
+            <span class="vpi-heart sp-icon" /> {{ member.actionText || 'Sponsor' }}
           </VPLink>
+        </div>
+        <p v-if="member.affiliations" class="affiliation">
+          <template v-for="(aff, index) in member.affiliations" :key="index">
+            <span class="title">{{ aff.title }}</span>
+            <span class="at"> @ </span>
+            <VPLink class="org" :class="{ link: aff.link }" :href="aff.link" no-icon>
+              {{ aff.repo || aff.org }}
+            </VPLink>
+            <span v-if="index < member.affiliations.length - 1">, </span>
+          </template>
         </p>
         <p v-if="member.desc" class="desc" v-html="member.desc" />
         <div v-if="member.repos" class="repos">
@@ -53,7 +55,7 @@ withDefaults(defineProps<Props>(), {
         </div>
       </div>
     </div>
-    <div v-if="member.sponsor" class="sp">
+    <div v-if="member.sponsor" class="sp sp-desktop">
       <VPLink class="sp-link" :href="member.sponsor" no-icon>
         <span class="vpi-heart sp-icon" /> {{ member.actionText || 'Sponsor' }}
       </VPLink>
@@ -108,7 +110,7 @@ withDefaults(defineProps<Props>(), {
 }
 
 .VPTeamMembersItem.medium .profile {
-  padding: 48px 32px;
+  padding: 48px 32px 0;
 }
 
 .VPTeamMembersItem.medium .data {
@@ -130,7 +132,7 @@ withDefaults(defineProps<Props>(), {
 
 .VPTeamMembersItem.medium .affiliation {
   padding-top: 4px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .VPTeamMembersItem.medium .desc {
@@ -140,8 +142,13 @@ withDefaults(defineProps<Props>(), {
 }
 
 .VPTeamMembersItem.medium .links {
-  margin: 0 -16px -12px;
-  padding: 16px 12px 0;
+  margin: 0 -16px 0;
+  padding: 12px 12px 6px;
+}
+
+.links :deep(.VPSocialLink) {
+  width: 32px;
+  height: 32px;
 }
 
 .profile {
@@ -205,7 +212,7 @@ withDefaults(defineProps<Props>(), {
 .links {
   display: flex;
   justify-content: center;
-  height: 56px;
+  height: auto;
 }
 
 .sp-link {
@@ -213,12 +220,14 @@ withDefaults(defineProps<Props>(), {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 16px;
+  padding: 12px;
+  width: 100%;
   font-size: 14px;
   font-weight: 500;
   color: var(--vp-c-sponsor);
   background-color: var(--vp-c-bg-soft);
   transition: color 0.25s, background-color 0.25s;
+  gap: 8px;
 }
 
 .sp .sp-link.link:hover,
@@ -229,13 +238,15 @@ withDefaults(defineProps<Props>(), {
 }
 
 .sp-icon {
-  margin-right: 8px;
   font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 /* Repos Styles */
 .repos {
-  display: block;
+  display: inline-block;
+  text-align: left;
   line-height: 28px;
   margin-top: 12px;
   padding-left: 24px;
@@ -267,5 +278,42 @@ withDefaults(defineProps<Props>(), {
 
 .repo-link:hover {
   color: var(--vp-c-brand-1);
+}
+
+@media (max-width: 640px) {
+  .VPTeamMembersItem.medium .profile {
+    padding-top: 48px;
+  }
+  
+  .sp-desktop {
+    display: none !important;
+  }
+  
+  .sp-mobile {
+    display: flex !important;
+    justify-content: flex-start;
+    margin: 8px 0;
+  }
+  
+  .sp-mobile .sp-link {
+    width: auto;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background-color: var(--vp-c-bg-alt);
+    border: 1px solid var(--vp-c-divider);
+    font-size: 13px;
+    color: var(--vp-c-text-2);
+  }
+  
+  .sp-mobile .sp-link .sp-icon {
+    font-size: 14px;
+    color: var(--vp-c-sponsor);
+  }
+}
+
+@media (min-width: 641px) {
+  .sp-mobile {
+    display: none;
+  }
 }
 </style>

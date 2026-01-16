@@ -2,7 +2,19 @@ Xmake is an independent, community-driven open-source project. Its ongoing devel
 
 Your sponsorship helps sustain the project, ensuring it remains robust, feature-rich, and free for everyone. Whether you're an individual user or a company benefiting from Xmake, your contribution makes a difference.
 
-If you'd like to support us, please consider making a donation. For corporate sponsorship inquiries or exclusive benefits, feel free to [contact us](/about/contact).
+## Sponsoring as an Individual
+
+If you are an individual user and have enjoyed the productivity of using Xmake, please consider donating as a sign of appreciation—like buying us a coffee once in a while. You can find each team member's profile and their "Sponsor" button on our [Team Page](/about/team).
+
+You can also try to convince your employer to sponsor Xmake as a business. This may not be easy, but business sponsorships typically have a much larger impact on the sustainability of open source projects than individual donations, so if you can manage to do it, you will help us even more.
+
+## Sponsoring as a Business
+
+Sponsoring Xmake as a business ensures the long-term sustainability of the project. Your funds help maintain the project, develop new features, and improve documentation.
+
+In return, we will display your company's logo and link on our homepage, documentation, and README. This not only increases your brand exposure within the developer community but also demonstrates your support for open source software and the developer ecosystem.
+
+If you are interested in becoming a corporate sponsor or would like to learn more about exclusive benefits, please feel free to [contact us](/about/contact).
 
 ## Payment Methods
 
