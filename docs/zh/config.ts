@@ -25,6 +25,7 @@ export default defineAdditionalConfig({
           text: '关于',
           items: [
             { text: '在线赞助', link: '/zh/about/sponsor' },
+            { text: '认识团队', link: '/zh/about/team' },
             { text: '社区', link: '/zh/about/contact' },
             { text: '谁在使用 Xmake?', link: '/zh/about/who_is_using_xmake' },
           ]
@@ -162,9 +163,15 @@ function nav(): DefaultTheme.NavItem[] {
         {
           text: '帮助',
           items: [
-            { text: '社区', link: '/zh/about/contact' },
             { text: '问题反馈', link: 'https://github.com/xmake-io/xmake/issues' },
-            { text: '谁在使用 Xmake?', link: '/zh/about/who_is_using_xmake' }
+          ]
+        },
+        {
+          text: '关于',
+          items: [
+            { text: '社区', link: '/zh/about/contact' },
+            { text: '谁在使用 Xmake?', link: '/zh/about/who_is_using_xmake' },
+            { text: '认识团队', link: '/zh/about/team' },
           ]
         },
         {

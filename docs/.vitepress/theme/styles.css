@@ -103,3 +103,90 @@ body.is-post .VPDocAside .VPDocAsideCarbonAds,
 body.is-post .VPDocAside .VPCarbonAds {
   display: none !important;
 }
+
+/* Team Page Layout */
+.xmake-team-page {
+  margin-top: 64px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1152px;
+  padding: 0 24px;
+}
+
+.xmake-team-header {
+  margin-bottom: 64px;
+}
+
+.xmake-team-header h1 {
+  margin-bottom: 24px;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+}
+
+.xmake-team-header p {
+  margin: 0;
+  max-width: 512px;
+  color: var(--vp-c-text-2);
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.xmake-team-divider {
+  margin: 64px 0;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.xmake-team-section {
+  margin-bottom: 64px;
+}
+
+.xmake-team-info h2 {
+  margin-top: 0 !important;
+  border-top: none !important;
+  padding-top: 0 !important;
+  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  line-height: 32px;
+}
+
+.xmake-team-info p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  line-height: 24px;
+}
+
+.xmake-team-info {
+  margin-bottom: 24px;
+}
+
+@media (min-width: 960px) {
+  .xmake-team-page {
+    padding: 0 48px;
+  }
+
+  .xmake-team-header {
+    margin-left: 24px;
+  }
+
+  .xmake-team-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 64px;
+  }
+  
+  .xmake-team-info {
+    flex: 0 0 260px;
+    position: sticky;
+    top: 100px;
+    margin-bottom: 0;
+    margin-left: 24px;
+  }
+  
+  .xmake-team-members {
+    flex: 1;
+    min-width: 0;
+  }
+}
