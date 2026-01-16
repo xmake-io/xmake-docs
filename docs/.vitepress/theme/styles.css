@@ -190,3 +190,89 @@ body.is-post .VPDocAside .VPCarbonAds {
     min-width: 0;
   }
 }
+
+/* Customize Team Member Card */
+.xmake-team-members .VPTeamMembersItem {
+  position: relative !important;
+  text-align: left !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .profile {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  padding: 24px !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .avatar {
+  flex: 0 0 64px !important;
+  width: 64px !important;
+  height: 64px !important;
+  margin: 0 24px 0 0 !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .data {
+  flex: 1 !important;
+  padding-top: 0 !important;
+  text-align: left !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .name {
+  margin: 0 !important;
+  font-weight: 600 !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .affiliation {
+  margin: 4px 0 0 !important;
+  padding-top: 0 !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .desc {
+  margin: 12px 0 !important;
+  padding-top: 0 !important;
+  text-align: left !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .links {
+  margin: 12px 0 0 !important;
+  padding: 0 !important;
+  justify-content: flex-start !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .sp {
+  position: absolute !important;
+  top: 24px !important;
+  right: 24px !important;
+  margin: 0 !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .sp-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 32px !important;
+  padding: 0 16px !important;
+  border: 1px solid currentColor !important;
+  border-radius: 6px !important;
+  background-color: var(--vp-c-bg-soft) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: color 0.25s, border-color 0.25s, background-color 0.25s !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .sp-link:hover {
+  border-color: var(--vp-c-brand-1) !important;
+  color: var(--vp-c-brand-1) !important;
+  background-color: var(--vp-c-brand-soft) !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .sp-icon {
+  margin-right: 8px !important;
+  width: 14px !important;
+  height: 14px !important;
+  fill: currentColor !important;
+}
+
+.xmake-team-members .VPTeamMembersItem .VPSocialLinks {
+  justify-content: flex-start !important;
+}
+

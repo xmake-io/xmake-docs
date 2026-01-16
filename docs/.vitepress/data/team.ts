@@ -13,6 +13,17 @@ export const coreTeamMembers: DefaultTheme.TeamMember[] = [
       { icon: 'twitter', link: 'https://twitter.com/waruqi' }
     ],
     sponsor: 'https://github.com/sponsors/waruqi'
+  },
+  {
+    avatar: 'https://github.com/star-hengxing.png',
+    name: 'star-hengxing',
+    title: 'Maintainer',
+    org: 'Xmake',
+    orgLink: 'https://xmake.io',
+    desc: 'Maintains <a href="https://github.com/xmake-io/xmake-repo" target="_blank">xmake-repo</a> repository',
+    links: [
+      { icon: 'github', link: 'https://github.com/star-hengxing' }
+    ]
   }
 ]
 
