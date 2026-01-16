@@ -24,7 +24,7 @@ export const coreTeamMembers: TeamMember[] = [
       { icon: 'github', link: 'https://github.com/waruqi' },
       { icon: 'twitter', link: 'https://twitter.com/waruqi' }
     ],
-    sponsor: 'https://github.com/sponsors/waruqi'
+    sponsor: './author'
   },
   {
     avatar: 'https://github.com/star-hengxing.png',

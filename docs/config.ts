@@ -23,6 +23,7 @@ export default defineAdditionalConfig({
           text: 'About',
           items: [
             { text: 'Sponsor', link: '/about/sponsor' },
+            { text: 'About Author', link: '/about/author' },
             { text: 'Meet the Team', link: '/about/team' },
             { text: 'Contact', link: '/about/contact' },
             { text: 'Who is using Xmake?', link: '/about/who_is_using_xmake' },
@@ -97,6 +98,7 @@ function nav(): DefaultTheme.NavItem[] {
             { text: 'Community', link: '/about/contact' },
             { text: 'Who is using Xmake?', link: '/about/who_is_using_xmake' },
             { text: 'Meet the Team', link: '/about/team' },
+            { text: 'About Author', link: '/about/author' },
           ]
         }
       ]
