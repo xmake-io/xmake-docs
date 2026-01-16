@@ -14,39 +14,9 @@ Xmake 的赞助商通过提供资金支持，确保了项目的长期可持续�
 
 作为赞助的回报，我们会在项目首页、文档以及 README 中展示贵公司的 Logo 和链接，这不仅能够提升贵公司在开发者社区中的品牌曝光度，还表明了贵公司对开源软件和开发者生态的支持。
 
-如果您有兴趣成为企业赞助商，或了解更多专属权益，欢迎随时[联系我们](/zh/about/contact)。
+如果您有兴趣成为企业赞助商，或了解更多专属权益，欢迎随时[联系我们](/zh/about/author#contact)。
 
-## 赞助方式
-
-### 支付宝
-
-<SponsorButton text="点击查看支付宝二维码" image="/assets/img/alipay.png" />
-
-账号：waruqi@gmail.com
-
-### 微信
-
-<SponsorButton text="点击查看微信二维码" image="/assets/img/weixin.png" />
-
-### GitHub Sponsor
-
-[通过 GitHub Sponsors 成为赞助者](https://github.com/sponsors/waruqi)
-
-### PayPal
-
-[通过 PayPal 捐赠](https://paypal.me/tboox/5)
-
-### OpenCollective
-
-[通过 OpenCollective 成为赞助者](https://opencollective.com/xmake#sponsor)
-
-### 购买周边
-
-您也可以通过购买 Xmake 限量版周边纪念品（如马克杯）来支持我们。
-
-[点击查看周边详情](/zh/about/peripheral_items)
-
-## 支持者
+## 支持者 {#supporters}
 
 此列表会不定期更新，并非实时数据。如有遗漏，请联系我们更新。
 

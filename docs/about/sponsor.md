@@ -14,22 +14,7 @@ Sponsoring Xmake as a business ensures the long-term sustainability of the proje
 
 In return, we will display your company's logo and link on our homepage, documentation, and README. This not only increases your brand exposure within the developer community but also demonstrates your support for open source software and the developer ecosystem.
 
-If you are interested in becoming a corporate sponsor or would like to learn more about exclusive benefits, please feel free to [contact us](/about/contact).
-
-## Payment Methods
-
-### PayPal
-
-[Donate via PayPal](https://paypal.me/tboox/5)
-
-### GitHub Sponsor
-
-[Become a sponsor via GitHub Sponsors](https://github.com/sponsors/waruqi)
-
-### OpenCollective
-
-[Become a sponsor via OpenCollective](https://opencollective.com/xmake#sponsor)
-
+If you are interested in becoming a corporate sponsor or would like to learn more about exclusive benefits, please feel free to [contact us](/about/author#contact).
 
 ## Supporters
 

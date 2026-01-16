@@ -25,6 +25,7 @@ export default defineAdditionalConfig({
           text: '关于',
           items: [
             { text: '在线赞助', link: '/zh/about/sponsor' },
+            { text: '关于作者', link: '/zh/about/author' },
             { text: '认识团队', link: '/zh/about/team' },
             { text: '社区', link: '/zh/about/contact' },
             { text: '谁在使用 Xmake?', link: '/zh/about/who_is_using_xmake' },
@@ -172,6 +173,7 @@ function nav(): DefaultTheme.NavItem[] {
             { text: '社区', link: '/zh/about/contact' },
             { text: '谁在使用 Xmake?', link: '/zh/about/who_is_using_xmake' },
             { text: '认识团队', link: '/zh/about/team' },
+            { text: '关于作者', link: '/zh/about/author' },
           ]
         },
         {
