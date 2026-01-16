@@ -54,14 +54,15 @@ export const coreTeamMembers: TeamMember[] = [
     ],
     links: [
       { icon: 'github', link: 'https://github.com/SirLynix' }
-    ]
+    ],
+    sponsor: 'https://github.com/sponsors/SirLynix'
   },
   {
     avatar: 'https://github.com/apocelipes.png',
     name: 'apocelipes',
-    title: 'Maintainer',
-    repo: 'Xmake-repo',
-    orgLink: 'https://github.com/xmake-io/xmake-repo',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
     repos: [
       { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
       { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
@@ -98,7 +99,8 @@ export const coreTeamMembers: TeamMember[] = [
     ],
     links: [
       { icon: 'github', link: 'https://github.com/luadebug' }
-    ]
+    ],
+    sponsor: 'https://github.com/sponsors/luadebug'
   },
   {
     avatar: 'https://github.com/Arthapz.png',
