@@ -37,4 +37,3 @@ We are grateful to all our GitHub Sponsors. View the full list of supporters on 
 | -- | -- | -- | -- | -- |
 | 2021.09.06 | Stefan Boberg  | PayPal         | € 25  |                                                                         |
 | 2021.06.08 | Daniel Roussel | PayPal         | 5 EUR  |                                                                         |
-
