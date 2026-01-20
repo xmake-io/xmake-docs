@@ -660,7 +660,8 @@ add_configs(name: <string>, {
     description = <string>,
     default = <string|boolean|number>,
     values = <array>,
-    type = <string>
+    type = <string>,
+    readonly = <boolean>
 })
 ```
 :::
@@ -675,6 +676,7 @@ add_configs(name: <string>, {
 | default | Default value for the configuration |
 | values | Allowed values array |
 | type | Configuration type: "string", "boolean", "number" |
+| readonly | Prevent the modification of the configuration value |
 
 #### Usage
 
@@ -715,6 +717,19 @@ Then in the project, enable these configurations and compile the package with th
 
 ```lua
 add_requires("pcre2", {configs = {bitwidth = 16}})
+```
+
+It is possible to overwrite a standard configuration, to force a value for instance:
+
+```lua
+package("my-package")
+    add_configs("shared", {description = "Build shared library.", default = false, type = "boolean", readonly = true})
+```
+
+`my-package` can only be built as `shared` and a warning will be issued if the value of `shared` is set to `false`.
+
+```
+warning: configs.shared is readonly in package(my-package), it's always true
 ```
 
 ## add_extsources
