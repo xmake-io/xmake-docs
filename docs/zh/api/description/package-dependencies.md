@@ -652,7 +652,8 @@ add_configs(name: <string>, {
     description = <string>,
     default = <string|boolean|number>,
     values = <array>,
-    type = <string>
+    type = <string>,
+    readonly = <boolean>
 })
 ```
 :::
@@ -667,6 +668,7 @@ add_configs(name: <string>, {
 | default | 配置的默认值 |
 | values | 允许的值数组 |
 | type | 配置类型："string", "boolean", "number" |
+| readonly | 阻止对配置值的修改 |
 
 #### 用法说明
 
@@ -707,6 +709,19 @@ The package info of project:
 
 ```lua
 add_requires("pcre2", {configs = {bitwidth = 16}})
+```
+
+可以覆盖标准配置，例如强制使用某个值：
+
+```lua
+package("my-package")
+    add_configs("shared", {description = "Build shared library.", default = false, type = "boolean", readonly = true})
+```
+
+`my-package` 只能构建为 `shared`，如果将 `shared` 的值设置为 `false`，则会发出警告。
+
+```
+warning: configs.shared is readonly in package(my-package), it's always true
 ```
 
 ## add_extsources
