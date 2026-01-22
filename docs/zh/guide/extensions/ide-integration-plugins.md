@@ -22,6 +22,137 @@
 
 可以在状态栏设置平台、架构、编译模式、工具链等选项，随后点击 Build 开始构建。
 
+### 调试支持
+
+xmake-vscode 插件提供了完整的断点调试支持，支持多种调试器类型：
+
+#### 调试器类型
+- **default**: 自动选择合适的调试器（macOS 默认使用 CodeLLDB，其他平台使用 GDB）
+- **codelldb**: 使用 CodeLLDB 调试器（推荐用于 macOS）
+- **lldb-dap**: 使用 LLVM 官方 LLDB DAP 调试器
+- **gdb-dap**: 使用 GDB DAP 调试器（需要 C/C++ 插件支持）
+
+#### 调试环境要求
+
+**必需的 VSCode 插件：**
+- **CodeLLDB**: 用于 macOS 和 Linux 调试（推荐安装 `vadimcn.vscode-lldb`）
+- **C/C++**: 用于 GDB DAP 调试支持（安装 `ms-vscode.cpptools`）
+- **LLDB DAP**: 用于官方 LLDB 调试（安装 `llvm-vs-code-extensions.lldb-dap`）
+
+**系统调试器要求：**
+- **macOS**: 需要安装 Xcode Command Line Tools（包含 `lldb` 命令）
+- **Linux**: 需要安装 `gdb` 或 `lldb` 调试器
+- **Windows**: 需要 Visual Studio Build Tools 或 MinGW-w64（包含 `gdb`）
+
+**安装命令：**
+```bash
+# macOS
+xcode-select --install
+
+# Ubuntu/Debian
+sudo apt install gdb
+
+# CentOS/RHEL
+sudo yum install gdb
+
+# Windows (使用 Chocolatey)
+choco install gdb
+```
+
+#### 调试配置
+xmake-vscode 插件会自动生成调试配置并传递给调试器，用户无需手动创建 `launch.json`。
+
+如果需要覆盖内部调试配置，可以使用 `xmake.customDebugConfig` 设置：
+
+```json
+{
+  "xmake.customDebugConfig": {
+    "stopAtEntry": false,
+    "args": ["--custom-arg"],
+    "env": {
+      "CUSTOM_ENV": "value"
+    }
+  }
+}
+```
+
+### 配置选项
+
+插件支持丰富的配置选项，可在 VSCode 设置中配置：
+
+#### 基础配置
+```json
+{
+  "xmake.executable": "xmake",
+  "xmake.logLevel": "normal",
+  "xmake.buildLevel": "normal",
+  "xmake.runMode": "runOnly"
+}
+```
+
+#### 路径配置
+```json
+{
+  "xmake.buildDirectory": "${workspaceRoot}/build",
+  "xmake.installDirectory": "",
+  "xmake.packageDirectory": "",
+  "xmake.workingDirectory": "${workspaceRoot}",
+  "xmake.compileCommandsDirectory": ".vscode"
+}
+```
+
+#### 工具链配置
+```json
+{
+  "xmake.androidNDKDirectory": "",
+  "xmake.QtDirectory": "",
+  "xmake.WDKDirectory": ""
+}
+```
+
+#### IntelliSense 配置
+```json
+{
+  "xmake.compileCommandsBackend": "clangd",
+  "xmake.autoGenerateCompileCommands": "onFileChange",
+  "xmake.compileCommandsDirectory": ".vscode",
+  "xmake.enableSyntaxCheck": true
+}
+```
+
+> **提示**: 关于这些配置选项的详细说明（如自动生成模式、生成路径等），请跳转到下面的 [配置 IntelliSense](#intellisense) 章节。
+
+#### 调试配置
+```json
+{
+  "xmake.debugConfigType": "default",
+  "xmake.debuggingTargetsArguments": {
+    "default": ["--debug"],
+    "mytarget": ["--arg1", "--arg2"]
+  },
+  "xmake.runningTargetsArguments": {
+    "default": []
+  },
+  "xmake.envBehaviour": "merge"
+}
+```
+
+#### 状态栏配置
+```json
+{
+  "xmake.status.showProject": false,
+  "xmake.status.showXMake": true,
+  "xmake.status.showPlatform": false,
+  "xmake.status.showArch": false,
+  "xmake.status.showMode": false,
+  "xmake.status.showToolchain": false,
+  "xmake.status.showTarget": false,
+  "xmake.status.showBuild": true,
+  "xmake.status.showRun": true,
+  "xmake.status.showDebug": true
+}
+```
+
 ### 自定义选项
 
 如果这些选项不够，可以创建 .vscode/settings.json 并编写 xmake 需要的设置，如：
@@ -77,6 +208,17 @@ target("test")
 
 ```sh
 $ xmake project -k compile_commands .vscode
+```
+
+#### IntelliSense 配置
+
+```json
+{
+  "xmake.compileCommandsBackend": "clangd",
+  "xmake.autoGenerateCompileCommands": "onFileChange",
+  "xmake.compileCommandsDirectory": ".vscode",
+  "xmake.enableSyntaxCheck": true
+}
 ```
 
 #### vscode-cpptools
@@ -161,21 +303,25 @@ $ xmake project -k compile_commands .vscode
 
 如果配置后，还是没生效，可以尝试重启 VSCode 和 clangd 进程，再验证。
 
-## Sublime 插件 {#sublime-plugin}
-
-* [xmake-sublime](https://github.com/xmake-io/xmake-sublime)
-
-<img src="https://raw.githubusercontent.com/xmake-io/xmake-sublime/master/res/problem.gif" width="650px" />
-
 ## Intellij IDEA/CLion 插件 {#clion-plugin}
 
 * [xmake-idea](https://github.com/xmake-io/xmake-idea)
 
 <img src="https://raw.githubusercontent.com/xmake-io/xmake-idea/master/res/problem.gif" width="650px" />
 
-## Vim 插件 {#vim-plugin}
+**CLion 2025.3+ 版本新特性**: 支持 lldb/gdb-dap 调试，现在可以直接调试 Xmake 项目，不再需要通过生成 `CMakeLists.txt` 来变相支持调试。支持设置断点、单步调试和查看变量值。
 
-* [xmake.vim](https://github.com/luzhlon/xmake.vim) (第三方开发, 感谢[@luzhlon](https://github.com/luzhlon))
+调试配置界面：
+
+<img src="/assets/img/posts/xmake/xmake-idea-dap-debug-conf.png" width="650px" />
+
+运行时调试界面：
+
+<img src="/assets/img/posts/xmake/xmake-idea-dap-debug-run.png" width="650px" />
+
+此外，插件还增加了自动更新 `compile_commands.json` 的支持，以改进 C++ 代码的自动补全和高亮体验。
+
+<img src="/assets/img/posts/xmake/xmake-idea-update-compd.png" width="650px" />
 
 ## Neovim 插件 {#neovim-plugin}
 
@@ -184,6 +330,78 @@ $ xmake project -k compile_commands .vscode
 该插件提供了易用的配置UI和自动生成*compile_commands.json*文件
 
 <img src="https://raw.githubusercontent.com/Mythos-404/xmake.nvim/main/assets/XmakePreview.gif" width="650px" />
+
+## Zed 编辑器插件 {#zed-plugin}
+
+* [xmake-zed](https://github.com/xmake-io/xmake-zed)
+
+[Zed](https://zed.dev/) 是一个高性能的多人协作代码编辑器，xmake 为其提供了插件支持。
+
+### 插件安装
+
+Zed 编辑器插件提供了与 xmake 的无缝集成，提供以下功能：
+
+- 项目配置和构建管理
+- 实时构建状态和错误报告
+- 通过 compile_commands.json 生成支持 IntelliSense
+- 快速访问常用 xmake 命令
+
+> **注意**: 插件正在提交到 Zed 官方市场，等待审核中 ([PR #4565](https://github.com/zed-industries/extensions/pull/4565))。在此期间，您可以通过本地安装方式使用：
+
+#### 本地安装
+
+1. 克隆插件仓库：
+   ```sh
+   git clone https://github.com/xmake-io/xmake-zed.git
+   ```
+
+2. 在 Zed 中打开插件目录：
+   - 打开 Zed 编辑器
+   - 转到 `Zed > Extensions`
+   - 点击 `Load Extension` 并选择克隆的 `xmake-zed` 目录
+
+#### 市场安装（未来支持）
+
+等待官方审核通过后，您可以直接在 Zed 中转到 `Zed > Extensions`，然后搜索 `xmake` 并安装官方插件。
+
+### 使用方法
+
+安装后，插件将自动检测工作区中的 xmake 项目并提供以下功能：
+
+- **完整的 LSP 支持**: 通过 xmake_ls 提供代码补全、诊断、悬停信息、代码操作、符号导航和格式化
+- **语法高亮**: 支持 300+ XMake API 函数的语法高亮
+- **项目模板**: 支持 25+ 项目模板，涵盖 15 种编程语言
+- **自动安装**: 自动下载和安装 xmake_ls 语言服务器
+
+> **提示**: 插件会自动下载和安装 xmake_ls 语言服务器，无需手动配置。
+
+### 配置
+
+插件支持以下主要配置选项：
+
+```json
+{
+  "lsp": {
+    "xmake-ls": {
+      "settings": {
+        "linuxVariant": "auto",
+        "logLevel": "Info",
+        "enableDiagnostics": true,
+        "enableCompletion": true,
+        "enableHover": true,
+        "enableCodeActions": true,
+        "xmakePath": ""
+      }
+    }
+  }
+}
+```
+
+主要配置项：
+- **linuxVariant**: Linux 二进制变体（auto/musl/x64 等）
+- **logLevel**: 日志级别（Error/Warning/Info/Debug/Trace）
+- **enableDiagnostics/Completion/Hover/CodeActions**: 启用/禁用各项功能
+- **xmakePath**: xmake 可执行文件路径
 
 ## Gradle插件（JNI）{#gradle-plugin}
 
@@ -337,3 +555,13 @@ $ ./gradlew app:assembleDebug
 ```sh
 $ ./gradlew nativelib:xmakeRebuild
 ```
+
+## Sublime 插件 {#sublime-plugin}
+
+* [xmake-sublime](https://github.com/xmake-io/xmake-sublime)
+
+<img src="https://raw.githubusercontent.com/xmake-io/xmake-sublime/master/res/problem.gif" width="650px" />
+
+## Vim 插件 {#vim-plugin}
+
+* [xmake.vim](https://github.com/luzhlon/xmake.vim) (第三方开发, 感谢[@luzhlon](https://github.com/luzhlon))
