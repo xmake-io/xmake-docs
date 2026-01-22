@@ -1,3 +1,7 @@
+---
+title: IDE Integration Plugins
+---
+
 # IDE Integration Plugins
 
 ## VSCode Plugin
