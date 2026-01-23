@@ -124,7 +124,9 @@ The plugin supports rich configuration options that can be configured in VSCode 
 }
 ```
 
-> **Tip**: For detailed explanation of these configuration options (such as auto-generation mode, generation path, etc.), please jump to the [Configure IntelliSense](#intellisense) section below.
+::: tip
+For detailed explanation of these configuration options (such as auto-generation mode, generation path, etc.), please jump to the [Configure IntelliSense](#intellisense) section below.
+:::
 
 #### Debug Configuration
 ```json
@@ -343,7 +345,9 @@ The Zed editor plugin provides seamless integration with xmake, offering feature
 - IntelliSense support through compile_commands.json generation
 - Quick access to common xmake commands
 
-> **Note**: The plugin is currently being submitted to the official Zed marketplace and is pending review ([PR #4565](https://github.com/zed-industries/extensions/pull/4565)). In the meantime, you can install it locally:
+::: note
+The plugin is currently being submitted to the official Zed marketplace and is pending review ([PR #4565](https://github.com/zed-industries/extensions/pull/4565)). In the meantime, you can install it locally:
+:::
 
 #### Local Installation
 
@@ -370,7 +374,9 @@ After installation, the plugin will automatically detect xmake projects and prov
 - **Project Templates**: 25+ project templates covering 15 programming languages
 - **Auto-installation**: Automatically downloads and installs xmake_ls language server
 
-> **Tip**: The plugin will automatically download and install the xmake_ls language server, no manual configuration required.
+::: tip
+The plugin will automatically download and install the xmake_ls language server, no manual configuration required.
+:::
 
 ### Configuration
 
