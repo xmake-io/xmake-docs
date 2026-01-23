@@ -5,7 +5,7 @@ date: 2026-01-23
 author: Xmake 团队
 ---
 
-欢迎！这是 [Xmake 项目](https://xmake.io)及相关仓库为 Google Summer of Code 2026 精心策划的项目创意列表。下面的每个创意都概述了对贡献者有意义的项目。如有任何问题或需要澄清，请加入我们的 [Gitter 社区](https://gitter.im/xmake-io/xmake) 或发起讨论！
+欢迎！这是 [Xmake 项目](https://xmake.io)及相关仓库为 Google Summer of Code 2026 精心策划的项目创意列表。下面的每个创意都概述了对贡献者有意义的项目。如有任何问题或需要澄清，请加入我们的 [Discord 社区](https://discord.gg/xmake) 或发起讨论！
 
 ## 1. 为 [`xmake-io/xmake-repo`](https://github.com/xmake-io/xmake-repo) 创建和打包库
 
