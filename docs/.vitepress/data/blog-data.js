@@ -1,5 +1,21 @@
 export const posts = [
   {
+    "title": "Xmake GSoC 2026 Ideas List",
+    "url": "/posts/xmake-gsoc-2026-ideas",
+    "date": {
+      "time": 1737619200000,
+      "string": "January 23, 2026"
+    },
+    "author": "Xmake Team",
+    "tags": [
+      "xmake",
+      "gsoc",
+      "open-source",
+      "community"
+    ],
+    "excerpt": "<p>Welcome! This is the curated Ideas List for the Xmake Project and related repositories for Google Summer of Code 2026. Each idea below outlines a meaningful project for contributors.</p>\n<p>For any questions or clarifications, please join our Gitter Community or open a discussion!</p>\n"
+  },
+  {
     "title": "Xmake v3.0.6 Preview, Android Native Apps, Flang, AppImage/dmg Support",
     "url": "/posts/xmake-update-v3.0.6",
     "date": {
