@@ -282,4 +282,44 @@ body.is-post .VPDocAside .VPCarbonAds {
   justify-content: flex-start !important;
 }
 
+/* Blog list title styling - force dark gray color and no underline */
+.VPDoc .content h1 a,
+.VPDoc .content h2 a,
+.blog-list h2 a,
+h2 a[href*="/posts/"] {
+  color: #1f2937 !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+.blog-list h2 a:hover,
+h2 a[href*="/posts/"]:hover {
+  color: #1f2937 !important;
+  text-decoration: none !important;
+}
+
+/* Dark mode */
+.dark .VPDoc .content h1 a,
+.dark .VPDoc .content h2 a,
+.dark .blog-list h2 a,
+.dark h2 a[href*="/posts/"] {
+  color: #f3f4f6 !important;
+}
+
+.dark .blog-list h2 a:hover,
+.dark h2 a[href*="/posts/"]:hover {
+  color: #f3f4f6 !important;
+}
+
+/* Remove list markers from blog list */
+.blog-list ul,
+.blog-list li {
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+.blog-list li::before {
+  content: none !important;
+}
+
 
