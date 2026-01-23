@@ -5,7 +5,7 @@ date: 2026-01-23
 author: Xmake Team
 ---
 
-Welcome! This is the curated Ideas List for the [Xmake Project](https://xmake.io) and related repositories for Google Summer of Code 2026. Each idea below outlines a meaningful project for contributors. For any questions or clarifications, please join our [Gitter Community](https://gitter.im/xmake-io/xmake) or open a discussion!
+Welcome! This is the curated Ideas List for the [Xmake Project](https://xmake.io) and related repositories for Google Summer of Code 2026. Each idea below outlines a meaningful project for contributors. For any questions or clarifications, please join our [Discord Community](https://discord.gg/xmake) or open a discussion!
 
 
 ## 1. Create and Package Libraries for [`xmake-io/xmake-repo`](https://github.com/xmake-io/xmake-repo)
