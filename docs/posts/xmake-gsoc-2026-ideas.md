@@ -5,11 +5,8 @@ date: 2026-01-23
 author: Xmake Team
 ---
 
-# Xmake GSoC 2026 Ideas List
-
 Welcome! This is the curated Ideas List for the [Xmake Project](https://xmake.io) and related repositories for Google Summer of Code 2026. Each idea below outlines a meaningful project for contributors. For any questions or clarifications, please join our [Gitter Community](https://gitter.im/xmake-io/xmake) or open a discussion!
 
----
 
 ## 1. Create and Package Libraries for [`xmake-io/xmake-repo`](https://github.com/xmake-io/xmake-repo)
 
@@ -18,7 +15,6 @@ Research, create, and contribute new packages (libraries, tools, or headers) to 
 
 **Skills Required:** Basic cross-platform C/C++ development, build systems, Lua scripting.
 
----
 
 ## 2. Support for Building C#/.NET Projects  
 Related Issue: [xmake-io/xmake#6057](https://github.com/xmake-io/xmake/issues/6057)
@@ -28,7 +24,6 @@ Extend Xmake to natively support building C#/.NET projects on Windows ([proposal
 
 **Skills Required:** Familiarity with build systems, basic C#/.NET development, Lua, cross-platform toolchains.
 
----
 
 ## 3. Zig Package Management and Integration  
 Related Issue: [xmake-io/xmake#4348](https://github.com/xmake-io/xmake/issues/4348)
@@ -38,7 +33,6 @@ Add support in Xmake for Zig's package management and fetching ([zig fetch](http
 
 **Skills Required:** Interest in the Zig language and tooling, Lua scripting, build systems.
 
----
 
 ## Application Process
 

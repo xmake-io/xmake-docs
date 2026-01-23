@@ -51,7 +51,12 @@ const goToNextPage = () => goToPage(currentPage.value + 1)
           <div class="space-y-5 xl:col-span-3">
             <div class="space-y-6">
               <h2 class="text-2xl leading-8 font-bold tracking-tight">
-                <a class="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300" :href="url">{{ title }}</a>
+                <a class="text-black dark:text-white hover:text-black dark:hover:text-white font-bold no-underline" 
+                   :href="url" 
+                   style="color: #1f2937 !important; font-weight: bold !important; text-decoration: none !important;"
+                   :style="{ color: '#1f2937 !important', fontWeight: 'bold !important', textDecoration: 'none !important' }">
+                  {{ title }}
+                </a>
               </h2>
               <div v-if="author" class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
                 <span>by</span>
