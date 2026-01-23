@@ -124,7 +124,9 @@ xmake-vscode 插件会自动生成调试配置并传递给调试器，用户无�
 }
 ```
 
-> **提示**: 关于这些配置选项的详细说明（如自动生成模式、生成路径等），请跳转到下面的 [配置 IntelliSense](#intellisense) 章节。
+::: tip
+关于这些配置选项的详细说明（如自动生成模式、生成路径等），请跳转到下面的 [配置 IntelliSense](#intellisense) 章节。
+:::
 
 #### 调试配置
 ```json
@@ -350,7 +352,9 @@ Zed 编辑器插件提供了与 xmake 的无缝集成，提供以下功能：
 - 通过 compile_commands.json 生成支持 IntelliSense
 - 快速访问常用 xmake 命令
 
-> **注意**: 插件正在提交到 Zed 官方市场，等待审核中 ([PR #4565](https://github.com/zed-industries/extensions/pull/4565))。在此期间，您可以通过本地安装方式使用：
+::: note
+插件正在提交到 Zed 官方市场，等待审核中 ([PR #4565](https://github.com/zed-industries/extensions/pull/4565))。在此期间，您可以通过本地安装方式使用：
+:::
 
 #### 本地安装
 
@@ -377,7 +381,9 @@ Zed 编辑器插件提供了与 xmake 的无缝集成，提供以下功能：
 - **项目模板**: 支持 25+ 项目模板，涵盖 15 种编程语言
 - **自动安装**: 自动下载和安装 xmake_ls 语言服务器
 
-> **提示**: 插件会自动下载和安装 xmake_ls 语言服务器，无需手动配置。
+::: tip
+插件会自动下载和安装 xmake_ls 语言服务器，无需手动配置。
+:::
 
 ### 配置 {#zed-configuration}
 
