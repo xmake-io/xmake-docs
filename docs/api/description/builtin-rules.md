@@ -57,8 +57,40 @@ add_rules("mode.releasedbg")
 ```
 
 ::: tip NOTE
-Compared with the release mode, this mode will also enable additional debugging symbols, which is usually very useful.
+The built-in releasedbg mode generates an executable program without any symbols, and the debugging symbols exist as separate files.
 :::
+
+They exhibit consistent behavior across different platforms:
+
+- **A minimal release program without debug symbols + A separate debug symbol file.**
+- **on windows**: release program + .pdb debug symbol file
+- **on macOS**: release program + .dSYM debug symbol file
+- **on linux**: release program + .sym debug symbol file
+
+Although on Linux, the executable program has stripped its debug symbols, the generated .sym debug symbol file has already been associated with the executable program via objcopy. We can use gdb to load its debug symbols normally.
+
+```sh
+/usr/bin/objcopy --only-keep-debug build/linux/x86_64/releasedbg/test build/linux/x86_64/releasedbg/test.sym
+/usr/bin/strip -s build/linux/x86_64/releasedbg/test
+/usr/bin/objcopy --add-gnu-debuglink=build/linux/x86_64/releasedbg/test.sym build/linux/x86_64/releasedbg/test
+```
+
+gdb will automatically load the test.sym symbol file.
+
+```sh
+gdb build/linux/x86_64/releasedbg/test
+Reading symbols from build/linux/x86_64/releasedbg/test...
+Reading symbols from /tmp/test/build/linux/x86_64/releasedbg/test.sym...
+(gdb) b main
+Breakpoint 1 at 0x10e0: file src/main.cpp, line 3.
+(gdb) r
+Starting program: /tmp/test/build/linux/x86_64/releasedbg/test 
+Breakpoint 1, main (argc=1, argv=0x7ffd8daf0618) at src/main.cpp:3
+3	int main(int argc, char **argv) {
+(gdb) bt
+#0  main (argc=1, argv=0x7ffd8daf0618) at src/main.cpp:3
+(gdb) 
+```
 
 Equivalent to:
 
@@ -71,6 +103,18 @@ end
 ```
 
 We can switch to this compilation mode by `xmake f -m releasedbg`.
+
+If you want to generate a single executable with debug symbols, you can easily override the releasedbg mode in your project configuration.
+
+```lua
+add_rules("mode.release", "mode.releasedbg")
+
+if is_mode("releasedbg") then
+    set_strip("none")
+end
+```
+
+You can also fully customize the releasedbg mode rules without using the built-in mode.releasedbg.
 
 ## mode.minsizerel
 
