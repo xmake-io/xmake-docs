@@ -60,8 +60,40 @@ add_rules("mode.releasedbg")
 ```
 
 ::: tip 注意
-与release模式相比，此模式还会额外开启调试符号，这通常是非常有用的。
+内置的 releasedbg 模式会生成一个没有任何符号的可执行程序，调试符号作为单独文件存在。
 :::
+
+它们在不同平台上表现一致的行为：
+
+- **一个不带调试符号的最小发布程序 + 一个单独的调试符号文件。**
+- **在 windows 上**: 发布程序 + .pdb 调试符号文件
+- **在 macOS 上**: 发布程序 + .dSYM 调试符号文件
+- **在 linux 上**: 发布程序 + .sym 调试符号文件
+
+尽管在 Linux 上，可执行程序已经剥离了调试符号，但生成的 .sym 调试符号文件已经通过 objcopy 与可执行程序关联。我们可以正常使用 gdb 加载其调试符号。
+
+```sh
+/usr/bin/objcopy --only-keep-debug build/linux/x86_64/releasedbg/test build/linux/x86_64/releasedbg/test.sym
+/usr/bin/strip -s build/linux/x86_64/releasedbg/test
+/usr/bin/objcopy --add-gnu-debuglink=build/linux/x86_64/releasedbg/test.sym build/linux/x86_64/releasedbg/test
+```
+
+gdb 会自动加载 test.sym 符号文件。
+
+```sh
+gdb build/linux/x86_64/releasedbg/test
+Reading symbols from build/linux/x86_64/releasedbg/test...
+Reading symbols from /tmp/test/build/linux/x86_64/releasedbg/test.sym...
+(gdb) b main
+Breakpoint 1 at 0x10e0: file src/main.cpp, line 3.
+(gdb) r
+Starting program: /tmp/test/build/linux/x86_64/releasedbg/test 
+Breakpoint 1, main (argc=1, argv=0x7ffd8daf0618) at src/main.cpp:3
+3	int main(int argc, char **argv) {
+(gdb) bt
+#0  main (argc=1, argv=0x7ffd8daf0618) at src/main.cpp:3
+(gdb) 
+```
 
 相当于：
 
@@ -74,6 +106,18 @@ end
 ```
 
 我们可以通过：`xmake f -m releasedbg`来切换到此编译模式。
+
+如果你想要生成带调试符号的单个可执行文件，你可以在项目配置中轻松覆盖 releasedbg 模式。
+
+```lua
+add_rules("mode.release", "mode.releasedbg")
+
+if is_mode("releasedbg") then
+    set_strip("none")
+end
+```
+
+你也可以完全自定义 releasedbg 模式规则，而不使用内置的 mode.releasedbg。
 
 ## mode.minsizerel
 
