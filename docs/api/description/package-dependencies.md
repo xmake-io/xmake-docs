@@ -358,6 +358,46 @@ package("libcurl")
 ...
 ```
 
+## set_sourcedir
+
+- Set the source directory of the package
+
+#### Function Prototype
+
+::: tip API
+```lua
+set_sourcedir(sourcedir: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| sourcedir | Package source directory path |
+
+#### Usage
+
+Set the source directory path of the package, usually used for local source code package integration. When you need to integrate local source code libraries in your project instead of remote downloading and installation, you can specify the source directory through this interface.
+
+For example:
+
+```lua
+package("foo")
+    set_sourcedir(path.join(os.scriptdir(), "foo"))
+    on_install(function (package)
+        local configs = {}
+        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
+        table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
+        import("package.tools.cmake").install(package, configs)
+    end)
+end
+```
+
+::: tip Note
+If it's only for local source code integration, we don't need to additionally set `add_urls` and `add_versions`.
+:::
+
 ## add_patches
 
 - Add package patches
