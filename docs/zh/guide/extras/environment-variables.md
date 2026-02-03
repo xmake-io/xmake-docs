@@ -226,12 +226,106 @@ stack traceback:
 
 我们可以设置一些 xmakerc.lua 全局配置文件，在用户编译项目的时候，全局引入它们，比如全局引入一些用户自定义的帮助脚本，工具链什么的。
 
+### 基本用法
+
 ```sh
 $ export XMAKE_RCFILES=xmakerc.lua
 $ xmake
 ```
 
-如果不设置此环境变量，用户可以在`/etc/xmakerc.lua`、`~/xmakerc.lua`与`$XMAKE_GLOBALDIR/.xmake/xmakerc.lua`设置全局配置文件，搜索优先级从高至低排列。
+### 多个配置文件
+
+可以指定多个配置文件，用分号（Windows）或冒号（Unix-like 系统）分隔：
+
+```sh
+# Unix-like 系统
+$ export XMAKE_RCFILES=~/.xmake/xmakerc.lua:/etc/xmake/xmakerc.lua
+
+# Windows
+$ set XMAKE_RCFILES=C:\xmake\xmakerc.lua;D:\project\xmakerc.lua
+```
+
+### 实用示例
+
+#### 1. 全局工具链配置
+
+创建 `~/.xmake/xmakerc.lua` 为所有项目设置默认工具链：
+
+```lua
+-- ~/.xmake/xmakerc.lua
+-- 为所有项目设置默认编译器
+add_rules("mode.debug", "mode.release")
+
+-- 全局工具链配置
+toolchain("gcc")
+    set_kind("standalone")
+    set_toolset("cc", "gcc-11")
+    set_toolset("cxx", "g++-11")
+    set_toolset("ld", "g++-11", "gcc-11")
+    set_toolset("ar", "gcc-ar")
+    set_toolset("strip", "gcc-strip")
+    set_toolset("objcopy", "gcc-objcopy")
+    set_toolset("objdump", "gcc-objdump")
+
+-- 全局应用
+set_default_plat("linux")
+set_default_arch("x86_64")
+set_default_toolchains("gcc")
+```
+
+#### 2. 包仓库配置
+
+设置自定义包仓库：
+
+```lua
+-- ~/.xmake/xmakerc.lua
+-- 添加自定义包仓库
+add_repositories("mycompany-repo https://github.com/mycompany/xmake-repo.git")
+add_repositories("local-repo /path/to/local/repo")
+
+-- 设置全局包安装目录
+set_installdir("/opt/xmake/packages")
+```
+
+#### 3. 开发环境配置
+
+为开发和生产环境配置不同设置：
+
+```lua
+-- ~/.xmake/xmakerc.lua
+-- 开发环境检测
+if os.getenv("XMAKE_DEV_MODE") == "1" then
+    -- 开发设置
+    add_defines("DEBUG_BUILD", "_DEBUG")
+    set_optimize("none")
+    add_defines("ENABLE_LOGGING")
+    
+    -- 启用详细输出
+    set_policy("build.verbose", true)
+else
+    -- 生产设置
+    set_optimize("fastest")
+    set_strip("all")
+    remove_defines("_DEBUG")
+end
+
+-- CI/CD 检测
+if os.getenv("CI") then
+    -- CI 特定设置
+    set_policy("build.warning", true)
+    set_policy("build.auto", true)
+end
+```
+
+### 默认搜索路径
+
+如果不设置此环境变量，用户可以在`/etc/xmakerc.lua`、`~/xmakerc.lua`与`$XMAKE_GLOBALDIR/.xmake/xmakerc.lua`设置全局配置文件，搜索优先级从高至低排列：
+
+1. `$XMAKE_RCFILES`（环境变量）
+2. `~/.xmake/xmakerc.lua`
+3. `~/xmakerc.lua`
+4. `/etc/xmakerc.lua`
+5. `$XMAKE_GLOBALDIR/.xmake/xmakerc.lua`
 
 ## XMAKE_LOGFILE
 

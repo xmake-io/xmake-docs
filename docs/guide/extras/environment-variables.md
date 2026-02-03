@@ -226,12 +226,106 @@ stack traceback:
 
 We can set up some `xmakerc.lua` global configuration files, and introduce them globally when users compile the project, such as global introduction of some user-defined help scripts, tool chains and so on.
 
+### Basic Usage
+
 ```sh
 $ export XMAKE_RCFILES=xmakerc.lua
 $ xmake
 ```
 
-If this environment variable is not set, users can set the global configuration file in `/etc/xmakerc.lua`, `~/xmakerc.lua`, and `$XMAKE_GLOBALDIR/.xmake/xmakerc.lua`. The search priority is listed from highest to lowest.
+### Multiple Configuration Files
+
+You can specify multiple configuration files separated by semicolons (Windows) or colons (Unix-like systems):
+
+```sh
+# Unix-like systems
+$ export XMAKE_RCFILES=~/.xmake/xmakerc.lua:/etc/xmake/xmakerc.lua
+
+# Windows
+$ set XMAKE_RCFILES=C:\xmake\xmakerc.lua;D:\project\xmakerc.lua
+```
+
+### Practical Examples
+
+#### 1. Global Toolchain Configuration
+
+Create `~/.xmake/xmakerc.lua` to set default toolchains for all projects:
+
+```lua
+-- ~/.xmake/xmakerc.lua
+-- Set default compiler for all projects
+add_rules("mode.debug", "mode.release")
+
+-- Global toolchain configuration
+toolchain("gcc")
+    set_kind("standalone")
+    set_toolset("cc", "gcc-11")
+    set_toolset("cxx", "g++-11")
+    set_toolset("ld", "g++-11", "gcc-11")
+    set_toolset("ar", "gcc-ar")
+    set_toolset("strip", "gcc-strip")
+    set_toolset("objcopy", "gcc-objcopy")
+    set_toolset("objdump", "gcc-objdump")
+
+-- Apply globally
+set_default_plat("linux")
+set_default_arch("x86_64")
+set_default_toolchains("gcc")
+```
+
+#### 2. Package Repository Configuration
+
+Set up custom package repositories:
+
+```lua
+-- ~/.xmake/xmakerc.lua
+-- Add custom package repositories
+add_repositories("mycompany-repo https://github.com/mycompany/xmake-repo.git")
+add_repositories("local-repo /path/to/local/repo")
+
+-- Set global package installation directory
+set_installdir("/opt/xmake/packages")
+```
+
+#### 3. Development Environment Configuration
+
+Configure different settings for development vs production:
+
+```lua
+-- ~/.xmake/xmakerc.lua
+-- Development environment detection
+if os.getenv("XMAKE_DEV_MODE") == "1" then
+    -- Development settings
+    add_defines("DEBUG_BUILD", "_DEBUG")
+    set_optimize("none")
+    add_defines("ENABLE_LOGGING")
+    
+    -- Enable verbose output
+    set_policy("build.verbose", true)
+else
+    -- Production settings
+    set_optimize("fastest")
+    set_strip("all")
+    remove_defines("_DEBUG")
+end
+
+-- CI/CD detection
+if os.getenv("CI") then
+    -- CI-specific settings
+    set_policy("build.warning", true)
+    set_policy("build.auto", true)
+end
+```
+
+### Default Search Paths
+
+If this environment variable is not set, users can set the global configuration file in `/etc/xmakerc.lua`, `~/xmakerc.lua`, and `$XMAKE_GLOBALDIR/.xmake/xmakerc.lua`. The search priority is listed from highest to lowest:
+
+1. `$XMAKE_RCFILES` (environment variable)
+2. `~/.xmake/xmakerc.lua`
+3. `~/xmakerc.lua`
+4. `/etc/xmakerc.lua`
+5. `$XMAKE_GLOBALDIR/.xmake/xmakerc.lua`
 
 ## XMAKE_LOGFILE
 
