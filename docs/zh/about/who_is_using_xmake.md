@@ -40,3 +40,4 @@
 | [laugh12321](https://github.com/laugh12321) | [TensorRT-YOLO](https://github.com/laugh12321/TensorRT-YOLO) | 🚀 TensorRT-YOLO：使用TensorRT推理并集成EfficientNMS，支持YOLOv5、YOLOv8、YOLOv9、PP-YOLOE！TensorRT-YOLO利用xmake进行编译，这使得开发者可以更专注于代码编写，而不是构建过程。|
 | [JXMaster](https://github.com/JX-Master) | [LunaSDK](https://github.com/JX-Master/LunaSDK) | 一个C++的实时渲染框架，使用xmake作为构建系统，支持shader离线编译、资产打包等自定义流程，并支持Windows、macOS等多个系统的应用开发。 |
 | [ygf](https://github.com/cn-ygf) | [ylis](https://github.com/cn-ygf/ylis) 一个`windows`安装包制作工具，使用`lua`脚本引擎，支持大部分安装场景（注册表、服务、执行命令等），适合中小型软件的安装包制作，比`NSIS`方便。| 感觉`xmake`感觉比`cmake`和`Visual Studio`好用多了，IDE改编译选项不灵活，`cmake`语法学不会 |
+| [ast](https://github.com/space-ast/ast) | [ast](https://github.com/space-ast/ast)(/æst/) 是一个专注于航天仿真领域的算法库，提供了轨道力学、姿态控制、轨迹规划等核心算法的现代C++实现。| xmake提供的跨平台编译和测试能力让ast项目能在linux、windows、mingw、wasm等平台编译运行 |
