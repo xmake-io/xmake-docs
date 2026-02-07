@@ -1,5 +1,25 @@
 export const posts = [
   {
+    "title": "Xmake v3.0.7 发布，Verilator JSON, Alpine CI, Nix 改进",
+    "url": "/zh/posts/xmake-update-v3.0.7",
+    "date": {
+      "time": 1770422400000,
+      "string": "February 07, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "verilator",
+      "alpine",
+      "nix",
+      "qt",
+      "nim",
+      "zig",
+      "wasm"
+    ],
+    "excerpt": "<p>在此版本中，我们改进了 Nix 包管理器支持，优化了 Verilator 构建，新增了 Alpine CI 支持，并引入了多个新模块和函数。</p>\n"
+  },
+  {
     "title": "Xmake v3.0.6 预览版，原生 Android 应用、Flang、CUDA 13、Qt 打包",
     "url": "/zh/posts/xmake-update-v3.0.6",
     "date": {
