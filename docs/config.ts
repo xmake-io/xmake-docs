@@ -22,7 +22,7 @@ export default defineAdditionalConfig({
         {
           text: 'About',
           items: [
-            { text: 'Sponsor', link: '/about/sponsor' },
+            { text: 'Sponsor ❤️', link: '/about/sponsor' },
             { text: 'About Author', link: '/about/author' },
             { text: 'Meet the Team', link: '/about/team' },
             { text: 'Contact', link: '/about/contact' },
@@ -104,7 +104,7 @@ function nav(): DefaultTheme.NavItem[] {
       ]
 
     },
-    { text: 'Sponsor', link: '/about/sponsor' }
+    { text: 'Sponsor ❤️', link: '/about/sponsor' }
   ]
 }
 
