@@ -20,6 +20,7 @@ export function builtinModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
     { text: 'hash', link: 'builtin-modules/hash' },
     { text: 'table', link: 'builtin-modules/table' },
     { text: 'string', link: 'builtin-modules/string' },
+    { text: 'utf8', link: 'builtin-modules/utf8' },
     { text: 'coroutine', link: 'builtin-modules/coroutine' },
     { text: 'winos', link: 'builtin-modules/winos' },
     { text: 'macos', link: 'builtin-modules/macos' },
@@ -269,4 +270,3 @@ function packageModulesApiSidebar(): DefaultTheme.SidebarItem {
     ]
   }
 }
-
