@@ -53,6 +53,79 @@ win81    = "6.3"
 win10    = "10.0"
 ```
 
+## winos.processes
+
+- 获取当前系统进程列表
+
+#### 函数原型
+
+::: tip API
+```lua
+winos.processes()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 返回值
+
+返回一个数组，每个元素是一个进程信息表：
+
+| 字段 | 描述 |
+|------|------|
+| name | 进程可执行文件名 |
+| pid | 进程 id |
+| parent_pid | 父进程 id |
+
+非 Windows 平台返回 nil。
+
+#### 用法说明
+
+```lua
+local processes = winos.processes()
+if processes then
+    for _, p in ipairs(processes) do
+        print(p.pid, p.parent_pid, p.name)
+    end
+end
+```
+
+## winos.set_error_mode
+
+- 设置 Windows 进程错误模式
+
+#### 函数原型
+
+::: tip API
+```lua
+winos.set_error_mode(mode: <integer>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| mode | 进程错误模式值（对应 Windows API `SetErrorMode`） |
+
+#### 返回值
+
+返回之前的错误模式值。
+
+#### 用法说明
+
+禁用系统错误弹窗（例如：关键错误、GP fault、打开文件失败对话框等）：
+
+```lua
+local SEM_FAILCRITICALERRORS     = 0x0001
+local SEM_NOGPFAULTERRORBOX      = 0x0002
+local SEM_NOOPENFILEERRORBOX     = 0x8000
+
+local oldmode = winos.set_error_mode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX)
+```
+
 ## winos.registry_keys
 
 - 获取注册表建列表
