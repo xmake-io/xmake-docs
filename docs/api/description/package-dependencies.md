@@ -688,7 +688,39 @@ add_defines(defines: <string|array>, ...)
 
 Some specific definition options can be exported to the integrated package.
 
+
+## add_schemes
+
+- Add package schemes
+
+#### Function Prototype
+
+::: tip API
+```lua
+add_schemes(schemes: <string|array>, ...)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| schemes | Scheme name string or array |
+| ... | Variable parameters, can pass multiple scheme names |
+
+#### Usage
+
+Defines the list of available schemes for the package. The order matters: the first scheme is the default if none is explicitly selected.
+
+For configuration of schemes, please refer to [package:scheme](/api/scripts/package-instance.html#package-scheme).
+
+```lua
+package("mypkg")
+    add_schemes("binary", "source")
+```
+
 ## add_configs
+
 
 - Add package configs
 

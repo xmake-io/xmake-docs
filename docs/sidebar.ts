@@ -169,6 +169,7 @@ function cliModulesApiSidebar(): DefaultTheme.SidebarItem {
     collapsed: true,
     items: [
       { text: 'amalgamate', link: 'extension-modules/cli/amalgamate' },
+      { text: 'iconv', link: 'extension-modules/cli/iconv' },
     ]
   }
 }

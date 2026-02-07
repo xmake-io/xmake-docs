@@ -285,6 +285,20 @@ target("test")
 
 关于这个的详细背景说明，见：[#1976](https://github.com/xmake-io/xmake/issues/1976)
 
+## run.windows_error_dialog <Badge type="tip" text="v3.0.7" />
+
+默认情况下，当 `xmake run` 在 Windows 上执行程序时，如果程序崩溃（例如段错误），Windows 可能会弹出错误对话框。这可能会阻塞自动化脚本或 CI/CD 流水线。
+
+此策略控制在运行目标时是否启用 Windows 错误对话框。默认是启用的。
+
+### 用法
+
+如果你想禁用错误对话框（屏蔽它），可以将此策略设置为 `false`。
+
+```lua
+set_policy("run.windows_error_dialog", false)
+```
+
 ## build.distcc.remote_only <Badge type="tip" text="v3.0.4" />
 
 这个策略用于配置分布式编译的行为。默认情况下，在启用分布式编译后，本机既充当调度节点，也会参与实际的编译工作。

@@ -154,6 +154,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Build Targets', link: 'basic-commands/build-targets' },
         { text: 'Run Targets', link: 'basic-commands/run-targets' },
         { text: 'Run Tests', link: 'basic-commands/run-tests' },
+        { text: 'Clean Targets', link: 'basic-commands/clean-targets' },
         { text: 'Install and Uninstall', link: 'basic-commands/install-and-uninstall' },
         { text: 'Pack Programs', link: 'basic-commands/pack-programs' },
         { text: 'Cross Compilation', link: 'basic-commands/cross-compilation' },

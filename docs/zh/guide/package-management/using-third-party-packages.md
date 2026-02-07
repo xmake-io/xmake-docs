@@ -137,6 +137,27 @@ target("test")
     add_packages("zlib")
 ```
 
+## 使用 Nix 的依赖包
+
+我们也可以使用 Nix 包管理器来集成依赖包。
+
+```lua
+add_requires("nix::zlib", {alias = "zlib"})
+add_requires("nix::pcre2", {alias = "pcre2"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("pcre2", "zlib")
+```
+
+### 语义版本支持
+
+从 v3.0.7 开始，我们支持对 Nix 包的语义版本选择。
+
+```lua
+add_requires("nix::zlib 1.2.x")
+```
 ## 使用 pacman 的依赖包
 
 我们既支持 archlinux 上的 pacman 包安装和集成，也支持 msys2 上 pacman 的 mingw x86_64/i386 包安装和集成。

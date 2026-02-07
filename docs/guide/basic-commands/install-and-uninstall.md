@@ -50,6 +50,12 @@ ruki:test ruki$ tree /tmp/usr
 2 directories, 2 files
 ```
 
+Since v3.0.7, we can also configure the installation directories for different types of files through `--bindir`, `--libdir`, `--includedir`, etc.
+
+```sh
+$ xmake install -o /tmp/usr --bindir=mybin --libdir=mylib
+```
+
 In addition, we can also configure the default installation path in the configuration file through the [set_installdir](/api/description/project-target#set-installdir) interface. For details, please refer to the API manual.
 
 ## Uninstaller

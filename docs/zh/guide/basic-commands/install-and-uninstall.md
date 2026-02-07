@@ -50,6 +50,12 @@ ruki:test ruki$ tree /tmp/usr
 2 directories, 2 files
 ```
 
+从 v3.0.7 开始，我们也可以通过 `--bindir`, `--libdir`, `--includedir` 等参数，分别配置不同类型文件的安装目录。
+
+```sh
+$ xmake install -o /tmp/usr --bindir=mybin --libdir=mylib
+```
+
 另外，我们也可以通过 [set_installdir](/zh/api/description/project-target#set-installdir) 接口，在配置文件中进行默认安装路径的配置，具体可以看 API 手册里面的详细说明。
 
 ## 卸载程序

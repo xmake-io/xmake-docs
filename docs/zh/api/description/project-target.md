@@ -6340,6 +6340,20 @@ target("test")
     add_tests("testname", {plain = true, pass_outputs = "foo", fail_outputs = "hello"})
 ```
 
+我们也可以通过 `pass_output_files` 和 `fail_output_files` 来匹配文件内容，里面的路径是相对于当前 `xmake.lua` 脚本目录的。
+
+`pass_output_files` 指定的文件内容将作为期望的标准输出，如果实际输出跟文件内容匹配，则测试通过。
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_tests("test1", {
+        runargs = {"arg1"},
+        pass_output_files = "test1.out"
+    })
+```
+
 #### 配置测试组
 
 我们也可以通过 `group = "foo"` 来配置一个测试组，进行分组测试：

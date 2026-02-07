@@ -8,6 +8,42 @@ This module is also a native module of lua, and xmake has been extended to provi
 Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os module can be used in the description scope. Other interfaces can only be used in the script domain, for example: `os.cp`, `os .rm`etc.
 :::
 
+## os.access
+
+- Check file access permissions
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.access(path: <string>, mode: <string>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | File or directory path |
+| mode | Access mode: 'r' (read), 'w' (write), 'x' (execute) |
+
+#### Usage
+
+```lua
+if os.access("file", "r") then
+    print("readable")
+end
+
+if os.access("file", "w") then
+    print("writable")
+end
+
+if os.access("file", "x") then
+    print("executable")
+end
+```
+
 ## os.cp
 
 - Copy files or directories
@@ -461,6 +497,36 @@ end
 -- Judging the existence of the file
 if os.exists("$(builddir)/libxxx.a") then
     -- ...
+end
+```
+
+
+## os.access
+
+- Check file access permissions
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.access(path: <string>, mode: <string>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | File path |
+| mode | Access mode (e.g., 'r', 'w', 'x', 'rw', 'rwx') |
+
+#### Usage
+
+Checks if the file has the specified access permissions. Returns `true` if accessible, `false` otherwise.
+
+```lua
+if os.access("file", "w") then
+    print("file is writable")
 end
 ```
 
