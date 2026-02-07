@@ -681,7 +681,39 @@ add_defines(defines: <string|array>, ...)
 
 可以对集成的包对外输出一些特定的定义选项。
 
+
+## add_schemes
+
+- 添加包方案
+
+#### 函数原型
+
+::: tip API
+```lua
+add_schemes(schemes: <string|array>, ...)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| schemes | 方案名称字符串或数组 |
+| ... | 可变参数，可传入多个方案名称 |
+
+#### 用法说明
+
+定义包的可用方案列表。顺序很重要：如果没有显式选择，第一个方案是默认方案。
+
+关于方案的配置，请参考 [package:scheme](/zh/api/scripts/package-instance.html#package-scheme)。
+
+```lua
+package("mypkg")
+    add_schemes("binary", "source")
+```
+
 ## add_configs
+
 
 - 添加包配置
 

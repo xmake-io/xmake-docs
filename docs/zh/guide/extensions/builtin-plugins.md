@@ -164,6 +164,21 @@ $ xmake lua /tmp/test.lua
 当然，你也可以像宏脚本那样，使用`import`接口导入扩展模块，实现复杂的功能。
 :::
 
+### 从标准输入运行脚本
+
+`xmake lua` 命令现在支持从标准输入 (stdin) 读取并运行脚本，允许你通过管道将脚本内容传递给 xmake。
+
+```bash
+$ echo 'print("hello xmake")' | xmake lua --stdin
+hello xmake
+```
+
+或者：
+
+```bash
+$ cat script.lua | xmake lua --stdin
+```
+
 ### 运行内置的脚本命令
 
 你可以运行 `xmake lua -l` 来列举所有内置的脚本名，例如：

@@ -137,6 +137,28 @@ target("test")
      add_packages("zlib")
 ```
 
+## Using Nix dependency package
+
+We can also use the Nix package manager to integrate dependencies.
+
+```lua
+add_requires("nix::zlib", {alias = "zlib"})
+add_requires("nix::pcre2", {alias = "pcre2"})
+
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+    add_packages("pcre2", "zlib")
+```
+
+### Semantic Versioning
+
+Starting from v3.0.7, we support semantic versioning for Nix packages.
+
+```lua
+add_requires("nix::zlib 1.2.x")
+```
+
 ## Using Pacman dependency package
 
 We support not only the installation and integration of the pacman package on archlinux, but also the installation and integration of the mingw x86_64/i386 package of pacman on msys2.

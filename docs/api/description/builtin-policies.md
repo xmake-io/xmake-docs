@@ -292,6 +292,20 @@ Whereas by default Cuda binary/shared is devlink enabled, we can also disable it
 
 For a detailed background on this, see: [#1976](https://github.com/xmake-io/xmake/issues/1976)
 
+## run.windows_error_dialog <Badge type="tip" text="v3.0.7" />
+
+By default, when `xmake run` executes a program on Windows, if the program crashes (e.g. segmentation fault), Windows might pop up an error dialog. This can block automated scripts or CI/CD pipelines.
+
+This policy controls whether to enable the Windows error dialog when running targets. It is enabled by default.
+
+### Usage
+
+If you want to disable the error dialog (suppress it), you can set this policy to `false`.
+
+```lua
+set_policy("run.windows_error_dialog", false)
+```
+
 ## build.distcc.remote_only <Badge type="tip" text="v3.0.4" />
 
 This policy is used to configure the behavior of distributed compilation. By default, when distributed compilation is enabled, the local machine acts as both a scheduler and participates in the actual compilation work.

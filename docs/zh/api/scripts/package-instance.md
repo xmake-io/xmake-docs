@@ -867,7 +867,71 @@ package:addenv()
 package:addenv("PATH", "bin", "lib")
 ```
 
+
+## package:scheme
+
+- 根据名称获取方案实例
+
+#### 函数原型
+
+::: tip API
+```lua
+package:scheme(name: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 方案名称 |
+
+#### 用法说明
+
+根据名称获取方案实例。用于配置特定方案的设置（URL、版本、哈希等），通常在 `on_source` 或 `on_load` 中使用。
+
+```lua
+on_source(function (package)
+    -- 配置 'binary' 方案
+    local binary = package:scheme("binary")
+    binary:add("urls", "https://example.com/mypkg-v$(version)-bin.zip")
+    binary:add("versions", "1.0.0", "<sha256_of_binary>")
+end)
+```
+
+## package:current_scheme
+
+- 获取当前选中的方案
+
+#### 函数原型
+
+::: tip API
+```lua
+package:current_scheme()
+```
+:::
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+获取当前选中的方案。这在 `on_install` 中用于确定要执行的构建逻辑非常有用。
+
+```lua
+on_install(function (package)
+    local scheme = package:current_scheme()
+    if scheme and scheme:name() == "binary" then
+        -- 预编译二进制文件的安装逻辑
+    else
+        -- 源码构建逻辑
+    end
+end)
+```
+
 ## package:versions
+
 
 - 获取包的所有版本列表。
 

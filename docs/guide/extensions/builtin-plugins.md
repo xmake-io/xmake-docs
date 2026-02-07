@@ -163,6 +163,21 @@ $ xmake lua /tmp/test.lua
 You can also use the `import` API to write a more advanced Lua script.
 :::
 
+### Run script from stdin
+
+The `xmake lua` command now supports reading and running scripts from standard input (stdin), allowing you to pipe script content to xmake.
+
+```bash
+$ echo 'print("hello xmake")' | xmake lua --stdin
+hello xmake
+```
+
+Or:
+
+```bash
+$ cat script.lua | xmake lua --stdin
+```
+
 ### Run the builtin script
 
 You can run `xmake lua -l` to list all builtin script name, for example:

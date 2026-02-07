@@ -1,10 +1,10 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.7 发布，Verilator JSON, Alpine CI, Nix 改进",
+    "title": "Xmake v3.0.7 预览，包方案支持，Wasm 浏览器运行与 UTF-8 模块",
     "url": "/zh/posts/xmake-update-v3.0.7",
     "date": {
-      "time": 1770422400000,
-      "string": "February 07, 2026"
+      "time": 1770465600000,
+      "string": "February 7, 2026"
     },
     "author": "Ruki",
     "tags": [
@@ -15,12 +15,29 @@ export const posts = [
       "qt",
       "nim",
       "zig",
-      "wasm"
+      "wasm",
+      "utf8"
     ],
-    "excerpt": "<p>在此版本中，我们改进了 Nix 包管理器支持，优化了 Verilator 构建，新增了 Alpine CI 支持，并引入了多个新模块和函数。</p>\n"
+    "excerpt": "<p>在此版本中，我们新增了包方案 (Package Schemes) 支持，提供了更加灵活的包安装和回退机制。同时，我们改进了 Nix 包管理器支持，优化了 Verilator 构建，并新增了对 Qt SDK 动态 mkspec 的选择支持。</p>\n<p>此外，我们还支持了在浏览器中运行 Wasm 程序，支持从标准输入 (stdin) 读取脚本运行，并引入了 <code>cli.iconv</code>, <code>utf8</code> 和 <code>os.access</code> 等多个新模块和函数。</p>\n<p><code>scheme</code> 特性主要用于提供多种安装方案，每种方案可能使用不同的 url、version 和 install 逻辑。每当一种方案安装失败时，会自动尝试下一种安装方案，从而提高安装成功率。尤其是在二进制包和源码安装同时存在时，非常有用。</p>\n"
   },
   {
-    "title": "Xmake v3.0.6 预览版，原生 Android 应用、Flang、CUDA 13、Qt 打包",
+    "title": "Xmake GSoC 2026 项目创意列表",
+    "url": "/zh/posts/xmake-gsoc-2026-ideas",
+    "date": {
+      "time": 1769169600000,
+      "string": "January 23, 2026"
+    },
+    "author": "Xmake 团队",
+    "tags": [
+      "xmake",
+      "gsoc",
+      "开源",
+      "社区"
+    ],
+    "excerpt": "<p>欢迎！这是 <a href=\"https://xmake.io\">Xmake 项目</a>及相关仓库为 Google Summer of Code 2026 精心策划的项目创意列表。下面的每个创意都概述了对贡献者有意义的项目。如有任何问题或需要澄清，请加入我们的 <a href=\"https://discord.gg/xmake\">Discord 社区</a> 或发起讨论！</p>\n<p><strong>目标：</strong><br>\n研究、创建并向社区导向的 <a href=\"https://github.com/xmake-io/xmake-repo\">xmake-repo</a> 包仓库贡献新的包（库、工具或头文件）。任务包括<strong>编写包脚本、在各种平台上测试/修复构建脚本以及记录用法</strong>，以帮助 Xmake 生态系统。</p>\n<p><strong>所需技能：</strong> 基本的跨平台 C/C++ 开发、构建系统、Lua 脚本。</p>\n"
+  },
+  {
+    "title": "Xmake v3.0.6 发布，原生 Android 应用、Flang、CUDA 13、Qt 打包",
     "url": "/zh/posts/xmake-update-v3.0.6",
     "date": {
       "time": 1765972800000,

@@ -6268,6 +6268,20 @@ target("test")
      add_tests("testname", {plain = true, pass_outputs = "foo", fail_outputs = "hello"})
 ```
 
+We can also match the file content through `pass_output_files` and `fail_output_files`. The path inside is relative to the current `xmake.lua` script directory.
+
+The content of the file specified by `pass_output_files` will serve as the expected standard output. If the actual output matches the file content, the test passes.
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_tests("test1", {
+        runargs = {"arg1"},
+        pass_output_files = "test1.out"
+    })
+```
+
 #### Configure test group
 
 We can also configure a test group through `group = "foo"` for group testing:

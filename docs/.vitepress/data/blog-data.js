@@ -1,10 +1,10 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.7 Released, Verilator JSON, Alpine CI, Nix Improvements",
+    "title": "Xmake v3.0.7 Preview, Package Schemes, Wasm in Browser and UTF-8 Module",
     "url": "/posts/xmake-update-v3.0.7",
     "date": {
-      "time": 1770422400000,
-      "string": "February 07, 2026"
+      "time": 1770465600000,
+      "string": "February 7, 2026"
     },
     "author": "Ruki",
     "tags": [
@@ -15,15 +15,16 @@ export const posts = [
       "qt",
       "nim",
       "zig",
-      "wasm"
+      "wasm",
+      "utf8"
     ],
-    "excerpt": "<p>In this version, we have improved the Nix package manager support, Verilator build optimization, Alpine CI support, and added several new modules and functions.</p>\n"
+    "excerpt": "<p>In this release, we have added support for Package Schemes, providing more flexible package installation and fallback mechanisms. We also improved Nix package manager support, optimized Verilator builds, and added support for Qt SDK dynamic mkspec selection.</p>\n<p>Additionally, we now support running Wasm programs in the browser, reading scripts from standard input (stdin), and introduced several new modules and functions, such as <code>cli.iconv</code>, <code>utf8</code>, and <code>os.access</code>.</p>\n<p>The <code>scheme</code> feature is mainly used to provide multiple installation schemes, where each scheme may use different urls, versions, and install logic. Whenever one scheme fails to install, Xmake will automatically try the next installation scheme, thereby improving the installation success rate. This...</p>\n"
   },
   {
     "title": "Xmake GSoC 2026 Ideas List",
     "url": "/posts/xmake-gsoc-2026-ideas",
     "date": {
-      "time": 1737619200000,
+      "time": 1769169600000,
       "string": "January 23, 2026"
     },
     "author": "Xmake Team",
@@ -33,10 +34,10 @@ export const posts = [
       "open-source",
       "community"
     ],
-    "excerpt": "<p>Welcome! This is the curated Ideas List for the Xmake Project and related repositories for Google Summer of Code 2026. Each idea below outlines a meaningful project for contributors.</p>\n<p>For any questions or clarifications, please join our Gitter Community or open a discussion!</p>\n"
+    "excerpt": "<p>Welcome! This is the curated Ideas List for the <a href=\"https://xmake.io\">Xmake Project</a> and related repositories for Google Summer of Code 2026. Each idea below outlines a meaningful project for contributors. For any questions or clarifications, please join our [Discord Community](https://discord.gg/xmake...</p>\n<p><strong>Goal:</strong><br>\nResearch, create, and contribute new packages (libraries, tools, or headers) to the community-oriented <a href=\"https://github.com/xmake-io/xmake-repo\">xmake-repo</a> package repository. Tasks include **writing package scripts, testing/fixing build scripts on various platforms, and documenting usag...</p>\n<p><strong>Skills Required:</strong> Basic cross-platform C/C++ development, build systems, Lua scripting.</p>\n"
   },
   {
-    "title": "Xmake v3.0.6 Preview, Android Native Apps, Flang, AppImage/dmg Support",
+    "title": "Xmake v3.0.6 Released, Android Native Apps, Flang, AppImage/dmg Support",
     "url": "/posts/xmake-update-v3.0.6",
     "date": {
       "time": 1765972800000,

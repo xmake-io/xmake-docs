@@ -8,6 +8,42 @@
 os 模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：`os.cp`, `os.rm`等
 :::
 
+## os.access
+
+- 检查文件访问权限
+
+#### 函数原型
+
+::: tip API
+```lua
+os.access(path: <string>, mode: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 文件或目录路径 |
+| mode | 访问模式：'r' (读), 'w' (写), 'x' (执行) |
+
+#### 用法说明
+
+```lua
+if os.access("file", "r") then
+    print("readable")
+end
+
+if os.access("file", "w") then
+    print("writable")
+end
+
+if os.access("file", "x") then
+    print("executable")
+end
+```
+
 ## os.cp
 
 - 复制文件或目录
@@ -459,6 +495,36 @@ end
 -- 判断文件存在
 if os.exists("$(builddir)/libxxx.a") then
     -- ...
+end
+```
+
+
+## os.access
+
+- 检查文件访问权限
+
+#### 函数原型
+
+::: tip API
+```lua
+os.access(path: <string>, mode: <string>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 文件路径 |
+| mode | 访问模式（例如：'r', 'w', 'x', 'rw', 'rwx'） |
+
+#### 用法说明
+
+检查文件是否具有指定的访问权限。如果可访问返回 `true`，否则返回 `false`。
+
+```lua
+if os.access("file", "w") then
+    print("file is writable")
 end
 ```
 
