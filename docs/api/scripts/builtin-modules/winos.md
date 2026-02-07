@@ -52,6 +52,79 @@ win81 = "6.3"
 win10 = "10.0"
 ```
 
+## winos.processes
+
+- Get current system process list
+
+#### Function Prototype
+
+::: tip API
+```lua
+winos.processes()
+```
+:::
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Return Value
+
+Returns an array, each element is a process info table:
+
+| Field | Description |
+|-------|-------------|
+| name | Process executable name |
+| pid | Process id |
+| parent_pid | Parent process id |
+
+Returns nil on non-Windows platforms.
+
+#### Usage
+
+```lua
+local processes = winos.processes()
+if processes then
+    for _, p in ipairs(processes) do
+        print(p.pid, p.parent_pid, p.name)
+    end
+end
+```
+
+## winos.set_error_mode
+
+- Set Windows process error mode
+
+#### Function Prototype
+
+::: tip API
+```lua
+winos.set_error_mode(mode: <integer>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| mode | Process error mode value (Windows API `SetErrorMode`) |
+
+#### Return Value
+
+Returns the previous error mode value.
+
+#### Usage
+
+Disable system error dialogs (e.g. critical errors, GP fault, open-file error dialogs):
+
+```lua
+local SEM_FAILCRITICALERRORS     = 0x0001
+local SEM_NOGPFAULTERRORBOX      = 0x0002
+local SEM_NOOPENFILEERRORBOX     = 0x8000
+
+local oldmode = winos.set_error_mode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX)
+```
+
 ## winos.registry_keys
 
 - Get the list of registry builds
