@@ -1,5 +1,25 @@
 export const posts = [
   {
+    "title": "Xmake v3.0.7 Released, Verilator JSON, Alpine CI, Nix Improvements",
+    "url": "/posts/xmake-update-v3.0.7",
+    "date": {
+      "time": 1770422400000,
+      "string": "February 07, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "verilator",
+      "alpine",
+      "nix",
+      "qt",
+      "nim",
+      "zig",
+      "wasm"
+    ],
+    "excerpt": "<p>In this version, we have improved the Nix package manager support, Verilator build optimization, Alpine CI support, and added several new modules and functions.</p>\n"
+  },
+  {
     "title": "Xmake GSoC 2026 Ideas List",
     "url": "/posts/xmake-gsoc-2026-ideas",
     "date": {
