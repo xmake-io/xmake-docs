@@ -237,7 +237,7 @@ print(utf8.sub(s, 1, 2)) -- 你好
 $ xmake run
 ```
 
-然后，根据输出提示，在浏览器中访问 http://localhost:8000 即可运行 Wasm 程序。
+然后，根据输出提示，在浏览器中访问 `http://localhost:8000` 即可运行 Wasm 程序。
 
 ### Xmake Lua 从标准输入运行
 
