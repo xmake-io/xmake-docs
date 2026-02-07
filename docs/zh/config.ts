@@ -301,6 +301,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: '常见问题', link: 'best-practices/faq' },
+        { text: '配置优化', link: 'best-practices/configuration-optimization' },
         { text: '性能优化', link: 'best-practices/performance' },
         { text: 'AI 问答优化', link: 'best-practices/ai-qa-optimization' },
       ]

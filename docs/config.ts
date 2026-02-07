@@ -220,6 +220,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'FAQ', link: 'best-practices/faq' },
+        { text: 'Configuration Optimization', link: 'best-practices/configuration-optimization' },
         { text: 'Performance', link: 'best-practices/performance' },
         { text: 'AI Q&A Optimization', link: 'best-practices/ai-qa-optimization' },
       ]
