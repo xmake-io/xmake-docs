@@ -237,7 +237,7 @@ You can run your Wasm application simply by executing:
 $ xmake run
 ```
 
-Then, follow the output instructions to access http://localhost:8000 in your browser to run the Wasm program.
+Then, follow the output instructions to access `http://localhost:8000` in your browser to run the Wasm program.
 
 ### Run Xmake Lua from Stdin
 
