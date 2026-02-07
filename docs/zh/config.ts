@@ -24,7 +24,7 @@ export default defineAdditionalConfig({
         {
           text: '关于',
           items: [
-            { text: '在线赞助', link: '/zh/about/sponsor' },
+            { text: '在线赞助 ❤️', link: '/zh/about/sponsor' },
             { text: '关于作者', link: '/zh/about/author' },
             { text: '认识团队', link: '/zh/about/team' },
             { text: '社区', link: '/zh/about/contact' },
@@ -185,7 +185,7 @@ function nav(): DefaultTheme.NavItem[] {
         }
       ]
     },
-    { text: '赞助', link: '/zh/about/sponsor' }
+    { text: '赞助 ❤️', link: '/zh/about/sponsor' }
   ]
 }
 
