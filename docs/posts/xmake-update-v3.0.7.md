@@ -16,9 +16,7 @@ Additionally, we now support running Wasm programs in the browser, reading scrip
 
 The `scheme` feature is mainly used to provide multiple installation schemes, where each scheme may use different urls, versions, and install logic. Whenever one scheme fails to install, Xmake will automatically try the next installation scheme, thereby improving the installation success rate. This is especially useful when both binary packages and source code installation options exist.
 
-#### API
-
-##### `add_schemes`
+#### `add_schemes`
 
 Defines the list of available schemes for the package. The order matters: the first scheme is the default if none is explicitly selected.
 
@@ -27,7 +25,7 @@ package("mypkg")
     add_schemes("binary", "source")
 ```
 
-##### `package:scheme(name)`
+#### `package:scheme(name)`
 
 Retrieves the scheme instance by name. This is used to configure scheme-specific settings (URLs, versions, hashes, etc.), typically inside `on_source` or `on_load`.
 
@@ -45,7 +43,7 @@ on_source(function (package)
 end)
 ```
 
-##### `package:current_scheme()`
+#### `package:current_scheme()`
 
 Retrieves the currently selected scheme. This is useful in `on_install` to determine which build logic to execute.
 
@@ -62,7 +60,7 @@ on_install(function (package)
 end)
 ```
 
-##### Scheme Object Methods
+#### Scheme Object Methods
 
 The scheme object returned by `package:scheme("name")` supports the following methods:
 
@@ -77,9 +75,7 @@ The scheme object returned by `package:scheme("name")` supports the following me
 -   `scheme:patches()`: Get patches for the current version.
 -   `scheme:resources()`: Get resources for the current version.
 
-#### Usage
-
-##### Defining a Package with Schemes
+#### Defining a Package with Schemes
 
 In this example, the `binary` scheme is prioritized. If a matching binary package does not exist or fails to run after installation, it falls back to the `source` scheme.
 
@@ -123,7 +119,7 @@ package("ninja")
     end)
 ```
 
-##### Scheme Selection and Fallback
+#### Scheme Selection and Fallback
 
 Xmake automatically manages scheme selection based on the order defined in `add_schemes`.
 
@@ -147,7 +143,7 @@ please input: y (y/n/m)
   => install ninja 1.13.1 (source) .. ok
 ```
 
-##### Custom Install Script per Scheme
+#### Custom Install Script per Scheme
 
 Instead of checking `package:current_scheme()` inside a global `on_install`, you can define a specific installation script for each scheme using `scheme:set("install", ...)`. This keeps the logic encapsulated.
 
@@ -161,7 +157,7 @@ on_source(function (package)
 end)
 ```
 
-##### Precompiled Artifacts
+#### Precompiled Artifacts
 
 The internal logic for downloading and installing precompiled artifacts has also been refactored to use the scheme mechanism.
 
