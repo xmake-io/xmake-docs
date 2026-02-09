@@ -282,6 +282,45 @@ This is particularly useful for packaging systems (like Homebrew, ArchLinux PKGB
 $ xmake install --bindir=/usr/bin --libdir=/usr/lib64 --includedir=/usr/include
 ```
 
+### Multiple Remote Build Hosts Configuration
+
+The remote build configuration now supports multiple hosts, allowing you to easily switch between different remote build servers without manually editing configuration files.
+
+You can configure multiple hosts in the `client.conf` file:
+
+```lua
+remote_build = {
+    hosts = {
+        {
+            name = "local",
+            connect = "127.0.0.1:9691",
+            token = "ab9dcb6fe6ddd9ec93338361f7e2e320"
+        },
+        {
+            name = "windows",
+            connect = "10.5.138.247:9691",
+            token = "0e052f8c7153a6111d5a418e514020ee"
+        }
+    }
+}
+```
+
+Then you can connect to specific hosts using:
+
+```bash
+# Connect to the first host (local)
+xmake service --connect
+
+# Connect to a specific host by name
+xmake service --connect --host=windows
+
+# Connect to a specific IP address
+xmake service --connect --host=10.5.138.247
+xmake service --connect --host=10.5.138.247:9691
+```
+
+This makes it much easier to manage multiple remote build environments and switch between them as needed.
+
 ### Improved Windows Run Error Output
 
 We have improved the error message when a DLL is missing during Windows program execution. It now automatically displays the missing DLL name and shows an error dialog.
@@ -360,6 +399,7 @@ Additionally, we enhanced Nim support for shared libraries and RPATH handling, i
 * [#7293](https://github.com/xmake-io/xmake/pull/7293): Add support for running wasm target in browser
 * [#7300](https://github.com/xmake-io/xmake/pull/7300): Add libdir,includedir,bindir support for install/uninstall
 * [#7295](https://github.com/xmake-io/xmake/pull/7295): Support test output files
+* [#7306](https://github.com/xmake-io/xmake/pull/7306): Support multiple remote build hosts configuration
 
 ### Changes
 
