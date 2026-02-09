@@ -16,9 +16,7 @@ outline: deep
 
 `scheme` 特性主要用于提供多种安装方案，每种方案可能使用不同的 url、version 和 install 逻辑。每当一种方案安装失败时，会自动尝试下一种安装方案，从而提高安装成功率。尤其是在二进制包和源码安装同时存在时，非常有用。
 
-#### API
-
-##### `add_schemes`
+#### `add_schemes`
 
 定义包的可用方案列表。顺序很重要：如果没有显式选择，第一个方案是默认方案。
 
@@ -27,7 +25,7 @@ package("mypkg")
     add_schemes("binary", "source")
 ```
 
-##### `package:scheme(name)`
+#### `package:scheme(name)`
 
 按名称检索方案实例。这用于配置特定于方案的设置（URL、版本、哈希等），通常在 `on_source` 或 `on_load` 中使用。
 
@@ -45,7 +43,7 @@ on_source(function (package)
 end)
 ```
 
-##### `package:current_scheme()`
+#### `package:current_scheme()`
 
 检索当前选定的方案。这在 `on_install` 中用于确定要执行的构建逻辑。
 
@@ -62,7 +60,7 @@ on_install(function (package)
 end)
 ```
 
-##### Scheme 对象方法
+#### Scheme 对象方法
 
 `package:scheme("name")` 返回的 scheme 对象支持以下方法：
 
@@ -77,9 +75,7 @@ end)
 -   `scheme:patches()`: 获取当前版本的补丁。
 -   `scheme:resources()`: 获取当前版本的资源。
 
-#### 使用
-
-##### 定义带方案的包
+#### 定义带方案的包
 
 这个例子中，优先尝试 `binary` 二进制安装方案，如果不存在匹配的二进制包，或者安装后运行不起来，则回退到 `source` 源码安装。
 
@@ -123,7 +119,7 @@ package("ninja")
     end)
 ```
 
-##### 方案选择和回退
+#### 方案选择和回退
 
 Xmake 根据 `add_schemes` 中定义的顺序自动管理方案选择。
 
@@ -147,7 +143,7 @@ please input: y (y/n/m)
   => install ninja 1.13.1 (source) .. ok
 ```
 
-##### 每个方案的自定义安装脚本
+#### 每个方案的自定义安装脚本
 
 除了在全局 `on_install` 中检查 `package:current_scheme()` 之外，您还可以使用 `scheme:set("install", ...)` 为每个方案定义特定的安装脚本。这使得逻辑更加封装。
 
@@ -161,7 +157,7 @@ on_source(function (package)
 end)
 ```
 
-##### 预编译二进制包
+#### 预编译二进制包
 
 下载和安装预编译二进制包的内部逻辑也已重构为使用 scheme 机制。
 
