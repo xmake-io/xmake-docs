@@ -282,6 +282,45 @@ target("test")
 $ xmake install --bindir=/usr/bin --libdir=/usr/lib64 --includedir=/usr/include
 ```
 
+### 多远程构建主机配置
+
+远程构建配置现在支持多个主机，允许您轻松切换不同的远程构建服务器，而无需手动编辑配置文件。
+
+您可以在 `client.conf` 文件中配置多个主机：
+
+```lua
+remote_build = {
+    hosts = {
+        {
+            name = "local",
+            connect = "127.0.0.1:9691",
+            token = "ab9dcb6fe6ddd9ec93338361f7e2e320"
+        },
+        {
+            name = "windows",
+            connect = "10.5.138.247:9691",
+            token = "0e052f8c7153a6111d5a418e514020ee"
+        }
+    }
+}
+```
+
+然后可以使用以下命令连接到指定主机：
+
+```bash
+# 连接到第一个主机（local）
+xmake service --connect
+
+# 通过名称连接到指定主机
+xmake service --connect --host=windows
+
+# 连接到指定 IP 地址
+xmake service --connect --host=10.5.138.247
+xmake service --connect --host=10.5.138.247:9691
+```
+
+这使得管理多个远程构建环境并在需要时切换它们变得更加容易。
+
 ### 改进 Windows 运行程序错误提示
 
 改进了 Windows 程序执行时，DLL 缺失的错误信息。现在会自动显示缺少的 DLL 名称，并弹窗提示错误。
@@ -352,6 +391,7 @@ Please check your PATH environment variable or copy the missing DLLs to the exec
 * [#7293](https://github.com/xmake-io/xmake/pull/7293): 支持在浏览器中运行 wasm 目标
 * [#7300](https://github.com/xmake-io/xmake/pull/7300): 为 install/uninstall 添加 libdir, includedir, bindir 支持
 * [#7295](https://github.com/xmake-io/xmake/pull/7295): 支持测试输出文件
+* [#7306](https://github.com/xmake-io/xmake/pull/7306): 支持多远程构建主机配置
 
 ### 改进
 

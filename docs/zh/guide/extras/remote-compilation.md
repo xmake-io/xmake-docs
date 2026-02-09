@@ -63,6 +63,8 @@ $ cat ~/.xmake/service/server.conf
 2.6.5 版本，配置地址在 `~/.xmake/service.conf`，后续版本做了大量改进，分离了配置文件，如果用的是 2.6.6 以上版本，请使用新的配置文件。
 :::
 
+### 单主机配置
+
 ```sh
 $ cat ~/.xmake/service/client.conf
 {
@@ -71,6 +73,44 @@ $ cat ~/.xmake/service/client.conf
         token = "e438d816c95958667747c318f1532c0f"
     }
 }
+```
+
+### 多主机配置
+
+3.0.7 版本及以上支持配置多个远程构建主机，使得在不同构建服务器之间切换更加方便。
+
+```sh
+$ cat ~/.xmake/service/client.conf
+{
+    remote_build = {
+        hosts = {
+            {
+                name = "local",
+                connect = "127.0.0.1:9691",
+                token = "ab9dcb6fe6ddd9ec93338361f7e2e320"
+            },
+            {
+                name = "windows",
+                connect = "10.5.138.247:9691",
+                token = "0e052f8c7153a6111d5a418e514020ee"
+            }
+        }
+    }
+}
+```
+
+配置多个主机后，可以使用 `--host` 参数连接到指定主机：
+
+```bash
+# 连接到第一个主机（local）
+xmake service --connect
+
+# 通过名称连接到指定主机
+xmake service --connect --host=windows
+
+# 连接到指定 IP 地址
+xmake service --connect --host=10.5.138.247
+xmake service --connect --host=10.5.138.247:9691
 ```
 
 ## 用户认证和授权 {#user-authorization}

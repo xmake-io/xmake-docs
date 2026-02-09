@@ -60,6 +60,8 @@ The client configuration file is in `~/.xmake/service/client.conf`, where we can
 Version 2.6.5, the configuration address is in `~/.xmake/service.conf`. Subsequent versions have made a lot of improvements and separated the configuration file. If you are using version 2.6.6 or above, please use the new configuration file.
 :::
 
+### Single Host Configuration
+
 ```sh
 {
     remote_build = {
@@ -67,6 +69,43 @@ Version 2.6.5, the configuration address is in `~/.xmake/service.conf`. Subseque
         token = "e438d816c95958667747c318f1532c0f"
     }
 }
+```
+
+### Multiple Hosts Configuration
+
+Version 3.0.7 and above supports configuring multiple remote build hosts, making it easier to switch between different build servers.
+
+```sh
+{
+    remote_build = {
+        hosts = {
+            {
+                name = "local",
+                connect = "127.0.0.1:9691",
+                token = "ab9dcb6fe6ddd9ec93338361f7e2e320"
+            },
+            {
+                name = "windows",
+                connect = "10.5.138.247:9691",
+                token = "0e052f8c7153a6111d5a418e514020ee"
+            }
+        }
+    }
+}
+```
+
+With multiple hosts configured, you can connect to specific hosts using the `--host` parameter:
+
+```bash
+# Connect to the first host (local)
+xmake service --connect
+
+# Connect to a specific host by name
+xmake service --connect --host=windows
+
+# Connect to a specific IP address
+xmake service --connect --host=10.5.138.247
+xmake service --connect --host=10.5.138.247:9691
 ```
 
 ## User authorization
