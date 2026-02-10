@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.0.7 Preview, Package Schemes, Wasm in Browser and UTF-8 Module
+title: Xmake v3.0.7 Released, Package Schemes, Wasm in Browser and UTF-8 Module
 tags: [xmake, verilator, alpine, nix, qt, nim, zig, wasm, utf8]
 date: 2026-02-07
 author: Ruki

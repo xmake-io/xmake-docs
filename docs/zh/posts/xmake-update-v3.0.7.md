@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.0.7 预览，包方案支持，Wasm 浏览器运行与 UTF-8 模块
+title: Xmake v3.0.7 发布，包方案支持，Wasm 浏览器运行与 UTF-8 模块
 tags: [xmake, verilator, alpine, nix, qt, nim, zig, wasm, utf8]
 date: 2026-02-07
 author: Ruki
