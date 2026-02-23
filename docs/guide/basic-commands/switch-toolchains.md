@@ -266,6 +266,19 @@ $ xmake f -p wasm --toolchain=wasi
 $ xmake
 ```
 
+For WebAssembly System Interface (WASI) development, you can configure the WASI SDK path using the `--sdk` parameter. This allows you to use specific WASI SDK versions for cross-compilation to WebAssembly.
+
+```sh
+# Configure WASI SDK path
+$ xmake f -p wasm --toolchain=wasi --sdk=/home/lin/issue-wasi-ar/wasi-sdk-30.0-x86_64-linux
+$ xmake
+```
+
+The `--sdk` parameter accepts the path to your WASI SDK installation, allowing you to use different SDK versions as needed for your projects. This enables:
+- Using specific WASI SDK installations
+- Cross-compilation to WebAssembly with WASI support
+- Integration with WASI syscalls for system-level operations
+
 ## Icc (Intel C/C++ Compiler)
 
 We can also switch to Intel's C/C++ compiler to use.

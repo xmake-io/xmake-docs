@@ -261,6 +261,19 @@ $ xmake f -p wasm --toolchain=wasi
 $ xmake
 ```
 
+对于 WebAssembly 系统接口 (WASI) 开发，你可以使用 `--sdk` 参数配置 WASI SDK 路径。这允许你使用特定的 WASI SDK 版本进行 WebAssembly 交叉编译。
+
+```sh
+# 配置 WASI SDK 路径
+$ xmake f -p wasm --toolchain=wasi --sdk=/home/lin/issue-wasi-ar/wasi-sdk-30.0-x86_64-linux
+$ xmake
+```
+
+`--sdk` 参数接受你的 WASI SDK 安装路径，允许你根据项目需要使用不同的 SDK 版本。此配置支持：
+- 使用特定的 WASI SDK 安装
+- 交叉编译到支持 WASI 的 WebAssembly
+- 与 WASI 系统调用集成，支持系统级操作
+
 ## Icc (Intel C/C++ Compiler)
 
 我们也可以切换到 Intel 的 C/C++ 编译器去使用。
