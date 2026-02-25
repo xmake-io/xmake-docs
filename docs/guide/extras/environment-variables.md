@@ -124,6 +124,13 @@ $ xmake l os.programdir
 
 This is only available to xmake developers, and is used to analyze the time spent running xmake and track the calling process.
 
+### Available profiling modes
+
+- `perf:call` - Analyze function call time
+- `perf:process` - Analyze process time consumption
+- `trace` - Track xmake running process
+- `stuck` - Analyze and troubleshoot stuck processes
+
 ### Analyze the time taken to call functions
 
 ```sh
