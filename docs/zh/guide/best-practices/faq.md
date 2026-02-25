@@ -55,6 +55,145 @@ $ xmake [-v|--verbose]
 $ xmake -v -D
 ```
 
+## 如何排查 xmake 运行卡住的问题？
+
+如果 xmake 在执行过程中卡住，你可以使用 `XMAKE_PROFILE=stuck` 环境变量来启用卡住进程调试，获取详细的回溯信息。
+
+### 在不同平台上设置 XMAKE_PROFILE
+
+#### Unix-like 系统 (Linux/macOS)
+
+```bash
+# 临时设置当前命令
+$ XMAKE_PROFILE=stuck xmake
+
+# 设置当前会话
+$ export XMAKE_PROFILE=stuck
+$ xmake
+```
+
+#### Windows PowerShell
+
+```powershell
+# 临时设置当前命令
+PS> $env:XMAKE_PROFILE="stuck"; xmake
+
+# 设置当前会话
+PS> $env:XMAKE_PROFILE="stuck"
+PS> xmake
+```
+
+#### Windows CMD
+
+```cmd
+# 临时设置当前命令
+C:\> set XMAKE_PROFILE=stuck && xmake
+
+# 设置当前会话
+C:\> set XMAKE_PROFILE=stuck
+C:\> xmake
+```
+
+### 获取当前卡住的回溯信息
+
+设置 `XMAKE_PROFILE=stuck` 来启用此功能。例如，使用一个测试脚本：
+
+```lua
+-- test.lua
+function main()
+    io.read()
+end
+```
+
+启用性能分析并在卡住时按 `Ctrl+C`：
+
+```console
+$ XMAKE_PROFILE=stuck xmake l test.lua
+<Ctrl+C>
+stack traceback:
+        [C]: in function 'base/io.file_read'
+        @programdir/core/base/io.lua:177: in method '_read'
+        @programdir/core/sandbox/modules/io.lua:90: in function <@programdir/core/sandbox/module
+s/io.lua:89>
+        (...tail calls...)
+        /Users/ruki/share/test.lua:2: in function </Users/ruki/share/test.lua:1>
+        (...tail calls...)
+        @programdir/plugins/lua/main.lua:123: in function <@programdir/plugins/lua/main.lua:79>
+        (...tail calls...)
+        [C]: in function 'xpcall'
+        @programdir/core/base/utils.lua:280: in function 'sandbox/modules/utils.trycall'
+        (...tail calls...)
+        @programdir/core/base/task.lua:519: in function 'base/task.run'
+        @programdir/core/main.lua:278: in upvalue 'cotask'
+        @programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lu
+a:368>
+```
+
+### 追踪进程执行
+
+性能分析还会显示子进程执行追踪，帮助识别 xmake 在哪里卡住：
+
+```console
+$ XMAKE_PROFILE=stuck xmake f -c
+<subprocess: sysctl>: /usr/sbin/sysctl -n machdep.cpu.vendor machdep.cpu.model machdep.cpu.famil
+y machdep.cpu.features machdep.cpu.brand_string
+checking for platform ... macosx
+checking for architecture ... x86_64
+<subprocess: security>: /usr/bin/security find-identity
+checking for Xcode directory ... /Applications/Xcode.app
+checking for Codesign Identity of Xcode ... Apple Development: waruqi@gmail.com (T3NA4MRVPU)
+<subprocess: sw_vers>: sw_vers -productVersion
+checking for SDK version of Xcode for macosx (x86_64) ... 11.3
+checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
+<subprocess: which>: which dmd
+<subprocess: dmd>: /usr/local/bin/dmd --version
+<subprocess: which>: which zig
+<subprocess: zig>: /usr/local/bin/zig version
+<subprocess: which>: which "xcrun -sdk macosx clang"
+^C[xmake]: [engine]: stack traceback:
+        @programdir/core/base/scheduler.lua:429: in function 'base/scheduler.co_suspend'
+        @programdir/core/base/scheduler.lua:465: in function 'base/scheduler.co_sleep'
+        (...tail calls...)
+        ...mdir/core/sandbox/modules/import/core/base/scheduler.lua:73: in function 'sandbox/mod
+ules/import/core/base/scheduler.co_yield'
+        .../core/sandbox/modules/import/lib/detect/find_program.lua:266: in function <.../core/s
+andbox/modules/import/lib/detect/find_program.lua:260>
+        (...tail calls...)
+        @programdir/modules/detect/tools/find_clang.lua:44: in function <@programdir/modules/det
+ect/tools/find_clang.lua:38>
+        (...tail calls...)
+        @programdir/modules/lib/detect/find_tool.lua:33: in global '_find_from_modules'
+        @programdir/modules/lib/detect/find_tool.lua:48: in global '_find_tool'
+        @programdir/modules/lib/detect/find_tool.lua:100: in function <@programdir/modules/lib/d
+etect/find_tool.lua:93>
+        (...tail calls...)
+        @programdir/core/tool/toolchain.lua:425: in method '_checktool'
+        @programdir/core/tool/toolchain.lua:193: in method 'tool'
+        ...     (skipping 12 levels)
+        @programdir/core/project/option.lua:170: in method '_do_check_cxsnippets'
+        @programdir/core/project/option.lua:223: in function <@programdir/core/project/option.lu
+a:220>
+        (...tail calls...)
+        @programdir/core/project/option.lua:271: in method '_check'
+        @programdir/core/project/option.lua:328: in method 'check'
+        ...dir/core/sandbox/modules/import/core/project/project.lua:106: in upvalue 'jobfunc'
+        @programdir/modules/private/async/runjobs.lua:208: in function <@programdir/modules/priv
+ate/async/runjobs.lua:202>
+        [C]: in function 'xpcall'
+        @programdir/core/base/utils.lua:280: in function 'base/utils.trycall'
+        @programdir/core/sandbox/modules/try.lua:121: in global 'try'
+        @programdir/modules/private/async/runjobs.lua:200: in upvalue 'cotask'
+        @programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lu
+a:368>
+```
+
+这些调试信息有助于识别：
+- 哪个子进程导致了卡住
+- xmake 在 Lua 调用栈中卡住的确切位置
+- 导致卡住的操作序列
+
+使用这些信息来报告问题或识别可能导致 xmake 卡住的配置问题。
+
 ## 如何使用 git bisect 快速定位问题？{#use-git-bisect-to-locate-issues}
 
 当你发现某个功能在某个版本之后出现了问题，但不确定是哪个提交引入的，可以使用 xmake 内置的 git bisect 功能来快速定位问题。

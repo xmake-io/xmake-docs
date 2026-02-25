@@ -124,6 +124,13 @@ $ xmake l os.programdir
 
 这个仅对 xmake 的开发者开放，用于分析 xmake 运行过程中的耗时情况，追踪调用过程。
 
+### 可用的性能分析模式
+
+- `perf:call` - 分析函数调用耗时
+- `perf:process` - 分析进程耗时
+- `trace` - 追踪 xmake 的运行过程
+- `stuck` - 分析和排查卡死进程问题
+
 ### 分析函数调用耗时
 
 ```sh

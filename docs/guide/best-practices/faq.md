@@ -55,6 +55,145 @@ And add `-D` to get the verbose backtrace and diagnostic info, then you can subm
 $ xmake -v -D
 ```
 
+## How to troubleshoot stuck xmake processes?
+
+If xmake becomes stuck during execution, you can use the `XMAKE_PROFILE=stuck` environment variable to enable stuck process debugging and get detailed backtrace information.
+
+### Setting XMAKE_PROFILE on different platforms
+
+#### Unix-like systems (Linux/macOS)
+
+```bash
+# Temporary setting for current command
+$ XMAKE_PROFILE=stuck xmake
+
+# Set for current session
+$ export XMAKE_PROFILE=stuck
+$ xmake
+```
+
+#### Windows PowerShell
+
+```powershell
+# Temporary setting for current command
+PS> $env:XMAKE_PROFILE="stuck"; xmake
+
+# Set for current session
+PS> $env:XMAKE_PROFILE="stuck"
+PS> xmake
+```
+
+#### Windows CMD
+
+```cmd
+# Temporary setting for current command
+C:\> set XMAKE_PROFILE=stuck && xmake
+
+# Set for current session
+C:\> set XMAKE_PROFILE=stuck
+C:\> xmake
+```
+
+### Get current stuck backtrace
+
+Set `XMAKE_PROFILE=stuck` to enable this feature. For example, with a test script:
+
+```lua
+-- test.lua
+function main()
+    io.read()
+end
+```
+
+Run with the profiling enabled and press `Ctrl+C` when it gets stuck:
+
+```console
+$ XMAKE_PROFILE=stuck xmake l test.lua
+<Ctrl+C>
+stack traceback:
+        [C]: in function 'base/io.file_read'
+        @programdir/core/base/io.lua:177: in method '_read'
+        @programdir/core/sandbox/modules/io.lua:90: in function <@programdir/core/sandbox/module
+s/io.lua:89>
+        (...tail calls...)
+        /Users/ruki/share/test.lua:2: in function </Users/ruki/share/test.lua:1>
+        (...tail calls...)
+        @programdir/plugins/lua/main.lua:123: in function <@programdir/plugins/lua/main.lua:79>
+        (...tail calls...)
+        [C]: in function 'xpcall'
+        @programdir/core/base/utils.lua:280: in function 'sandbox/modules/utils.trycall'
+        (...tail calls...)
+        @programdir/core/base/task.lua:519: in function 'base/task.run'
+        @programdir/core/main.lua:278: in upvalue 'cotask'
+        @programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lu
+a:368>
+```
+
+### Trace process execution
+
+The profiling also shows subprocess execution traces, which helps identify where xmake gets stuck:
+
+```console
+$ XMAKE_PROFILE=stuck xmake f -c
+<subprocess: sysctl>: /usr/sbin/sysctl -n machdep.cpu.vendor machdep.cpu.model machdep.cpu.famil
+y machdep.cpu.features machdep.cpu.brand_string
+checking for platform ... macosx
+checking for architecture ... x86_64
+<subprocess: security>: /usr/bin/security find-identity
+checking for Xcode directory ... /Applications/Xcode.app
+checking for Codesign Identity of Xcode ... Apple Development: waruqi@gmail.com (T3NA4MRVPU)
+<subprocess: sw_vers>: sw_vers -productVersion
+checking for SDK version of Xcode for macosx (x86_64) ... 11.3
+checking for Minimal target version of Xcode for macosx (x86_64) ... 11.4
+<subprocess: which>: which dmd
+<subprocess: dmd>: /usr/local/bin/dmd --version
+<subprocess: which>: which zig
+<subprocess: zig>: /usr/local/bin/zig version
+<subprocess: which>: which "xcrun -sdk macosx clang"
+^C[xmake]: [engine]: stack traceback:
+        @programdir/core/base/scheduler.lua:429: in function 'base/scheduler.co_suspend'
+        @programdir/core/base/scheduler.lua:465: in function 'base/scheduler.co_sleep'
+        (...tail calls...)
+        ...mdir/core/sandbox/modules/import/core/base/scheduler.lua:73: in function 'sandbox/mod
+ules/import/core/base/scheduler.co_yield'
+        .../core/sandbox/modules/import/lib/detect/find_program.lua:266: in function <.../core/s
+andbox/modules/import/lib/detect/find_program.lua:260>
+        (...tail calls...)
+        @programdir/modules/detect/tools/find_clang.lua:44: in function <@programdir/modules/det
+ect/tools/find_clang.lua:38>
+        (...tail calls...)
+        @programdir/modules/lib/detect/find_tool.lua:33: in global '_find_from_modules'
+        @programdir/modules/lib/detect/find_tool.lua:48: in global '_find_tool'
+        @programdir/modules/lib/detect/find_tool.lua:100: in function <@programdir/modules/lib/d
+etect/find_tool.lua:93>
+        (...tail calls...)
+        @programdir/core/tool/toolchain.lua:425: in method '_checktool'
+        @programdir/core/tool/toolchain.lua:193: in method 'tool'
+        ...     (skipping 12 levels)
+        @programdir/core/project/option.lua:170: in method '_do_check_cxsnippets'
+        @programdir/core/project/option.lua:223: in function <@programdir/core/project/option.lu
+a:220>
+        (...tail calls...)
+        @programdir/core/project/option.lua:271: in method '_check'
+        @programdir/core/project/option.lua:328: in method 'check'
+        ...dir/core/sandbox/modules/import/core/project/project.lua:106: in upvalue 'jobfunc'
+        @programdir/modules/private/async/runjobs.lua:208: in function <@programdir/modules/priv
+ate/async/runjobs.lua:202>
+        [C]: in function 'xpcall'
+        @programdir/core/base/utils.lua:280: in function 'base/utils.trycall'
+        @programdir/core/sandbox/modules/try.lua:121: in global 'try'
+        @programdir/modules/private/async/runjobs.lua:200: in upvalue 'cotask'
+        @programdir/core/base/scheduler.lua:371: in function <@programdir/core/base/scheduler.lu
+a:368>
+```
+
+This debugging information helps identify:
+- Which subprocess is causing the hang
+- The exact location in the Lua call stack where xmake is stuck
+- The sequence of operations leading to the hang
+
+Use this information to report issues or identify configuration problems that may be causing xmake to hang.
+
 ## How to use git bisect to quickly locate issues? {#use-git-bisect-to-locate-issues}
 
 When you discover that a feature broke after a certain version but aren't sure which commit introduced the issue, you can use xmake's built-in git bisect feature to quickly locate the problem.
