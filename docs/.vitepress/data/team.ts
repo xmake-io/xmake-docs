@@ -102,6 +102,19 @@ export const coreTeamMembers: TeamMember[] = [
     links: [
       { icon: 'github', link: 'https://github.com/Arthapz' }
     ]
+  },
+  {
+    avatar: 'https://github.com/jeleferai.png',
+    name: 'jeleferai',
+    affiliations: [
+      { title: 'Maintainer', repo: 'xmake-zed', link: 'https://github.com/xmake-io/xmake-zed' }
+    ],
+    repos: [
+      { name: 'xmake-zed', link: 'https://github.com/xmake-io/xmake-zed' }
+    ],
+    links: [
+      { icon: 'github', link: 'https://github.com/jeleferai' }
+    ]
   }
 ]
 
