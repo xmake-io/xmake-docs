@@ -212,7 +212,7 @@ print(path.filename("$(tmpdir)/dir/file.txt"))
 
 ::: tip API
 ```lua
-path.extension(path: <string>)
+path.extension(path: <string>, level?: <number>)
 ```
 :::
 
@@ -222,6 +222,7 @@ path.extension(path: <string>)
 | 参数 | 描述 |
 |------|------|
 | path | 路径字符串 |
+| level | 可选。后缀层级，默认为 1 |
 
 #### 用法说明
 
@@ -230,6 +231,22 @@ print(path.extension("$(tmpdir)/dir/file.txt"))
 ```
 
 显示结果为：`.txt`
+
+通过指定 `level` 参数可以获取多级后缀名，例如：
+
+```lua
+print(path.extension("/tmp/file.tar.gz", 2))
+```
+
+显示结果为：`.tar.gz`
+
+也支持通过 `level` 参数获取多级后缀名，例如 `.tar.gz`：
+
+```lua
+print(path.extension("foo.tar.gz", 2))
+```
+
+显示结果为：`.tar.gz`
 
 ## path.directory
 
@@ -393,4 +410,262 @@ local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 ```
 
 结果为一个包含了输入字符串中路径的数组。
+
+## path.joinenv
+
+- 拼接环境变量路径
+
+#### 函数原型
+
+::: tip API
+```lua
+path.joinenv(paths: <array>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| paths | 路径字符串数组 |
+
+#### 用法说明
+
+```lua
+-- 在 Unix 上
+print(path.joinenv({"/usr/bin", "/usr/local/bin"}))
+-- 结果为：/usr/bin:/usr/local/bin
+
+-- 在 Windows 上
+print(path.joinenv({"C:\\Windows", "C:\\Windows\\System32"}))
+-- 结果为：C:\Windows;C:\Windows\System32
+```
+
+## path.split
+
+- 按路径分隔符分割路径
+
+#### 函数原型
+
+::: tip API
+```lua
+path.split(path: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 要分割的路径字符串 |
+
+#### 用法说明
+
+```lua
+local items = path.split("/tmp/dir/file.txt")
+-- 结果为：{ "tmp", "dir", "file.txt" }
+```
+
+## path.sep
+
+- 获取当前平台的路径分隔符
+
+#### 函数原型
+
+::: tip API
+```lua
+path.sep()
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| 无 | 无参数 |
+
+#### 用法说明
+
+```lua
+print(path.sep())
+```
+
+在 Unix 上显示结果为：`/`，在 Windows 上显示结果为：`\`
+
+## path.envsep
+
+- 获取当前平台的环境变量路径分隔符
+
+#### 函数原型
+
+::: tip API
+```lua
+path.envsep()
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| 无 | 无参数 |
+
+#### 用法说明
+
+```lua
+print(path.envsep())
+```
+
+在 Unix 上显示结果为：`:`，在 Windows 上显示结果为：`;`
+
+## path.islastsep
+
+- 判断路径最后一个字符是否为路径分隔符
+
+#### 函数原型
+
+::: tip API
+```lua
+path.islastsep(path: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 要检查的路径字符串 |
+
+#### 用法说明
+
+```lua
+if path.islastsep("/tmp/dir/") then
+    -- 最后一个字符是路径分隔符
+end
+```
+
+## path.unix
+
+- 转换路径为 Unix 风格
+
+#### 函数原型
+
+::: tip API
+```lua
+path.unix(path: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 路径字符串 |
+
+#### 用法说明
+
+将路径中的分隔符统一替换为 `/`，通常用于 Windows 平台上需要 Unix 风格路径的场景，例如：
+
+```lua
+print(path.unix("C:\\Windows\\System32"))
+-- 结果为：C:/Windows/System32
+```
+
+## path.cygwin
+
+- 转换路径为 Cygwin 风格
+
+#### 函数原型
+
+::: tip API
+```lua
+path.cygwin(path: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| path | 路径字符串 |
+
+#### 用法说明
+
+将 Windows 路径转换为 Cygwin 风格路径，会将盘符 `C:\` 转换为 `/c/`，并将 `\` 替换为 `/`：
+
+```lua
+print(path.cygwin("C:\\Windows\\System32"))
+-- 结果为：/c/Windows/System32
+```
+
+## path.pattern
+
+- 转换路径模式为 Lua 匹配模式
+
+#### 函数原型
+
+::: tip API
+```lua
+path.pattern(pattern: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| pattern | 路径模式字符串 |
+
+#### 用法说明
+
+将路径中的通配符 `*` 和 `**` 转换为 Lua 匹配模式，`*` 匹配单层目录内的文件名，`**` 匹配任意层级路径：
+
+```lua
+print(path.pattern("src/*.lua"))
+-- 结果类似：src/[^/]*%.lua
+
+print(path.pattern("src/**.lua"))
+-- 结果类似：src/.*%.lua
+```
+
+## path.instance_of
+
+- 判断是否为路径实例
+
+#### 函数原型
+
+::: tip API
+```lua
+path.instance_of(p: <any>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| p | 要检查的对象 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| boolean | 如果是路径实例返回 true，否则返回 false |
+
+#### 用法说明
+
+```lua
+local p = path.new("/tmp/file.txt")
+print(path.instance_of(p))      -- 输出: true
+print(path.instance_of("/tmp")) -- 输出: false
+```
 

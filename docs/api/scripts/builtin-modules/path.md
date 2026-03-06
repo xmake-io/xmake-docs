@@ -212,7 +212,7 @@ The result is: `file.txt`
 
 ::: tip API
 ```lua
-path.extension(path: <string>)
+path.extension(path: <string>, level?: <number>)
 ```
 :::
 
@@ -222,6 +222,7 @@ path.extension(path: <string>)
 | Parameter | Description |
 |-----------|-------------|
 | path | Path string |
+| level | Optional. Extension level, default is 1 |
 
 #### Usage
 
@@ -230,6 +231,14 @@ print(path.extension("$(tmpdir)/dir/file.txt"))
 ```
 
 The result is: `.txt`
+
+You can specify the `level` parameter to get multi-level extensions, for example:
+
+```lua
+print(path.extension("/tmp/file.tar.gz", 2))
+```
+
+The result is: `.tar.gz`
 
 ## path.directory
 
@@ -527,32 +536,6 @@ print(path.envsep())
 
 The result is: `;`
 
-## path.cygwin_path
-
--  Get the converted MSYS2/Cygwin style path
-
-#### Function Prototype
-
-::: tip API
-```lua
-path.cygwin_path(path: <string>)
-```
-:::
-
-
-#### Parameter Description
-
-| Parameter | Description |
-|-----------|-------------|
-| path | Windows path string to convert |
-
-#### Usage
-
-```lua
-print(path.cygwin_path("C:\\Windows"))
-```
-The result is: `/C/Windows`
-
 ## path.pattern
 
 - Convert path pattern to lua pattern
@@ -579,3 +562,92 @@ print(path.pattern("/tmp/file.txt"))
 ```
 
 The result is: `/[tT][mM][pP]/[fF][iI][lL][eE]%.[tT][xX][tT]`
+
+## path.unix
+
+- Convert path to Unix style
+
+#### Function Prototype
+
+::: tip API
+```lua
+path.unix(path: <string>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | Path string |
+
+#### Usage
+
+Replace all path separators with `/`, typically used on Windows when Unix-style paths are needed:
+
+```lua
+print(path.unix("C:\\Windows\\System32"))
+-- Output: C:/Windows/System32
+```
+
+## path.cygwin
+
+- Convert path to Cygwin style
+
+#### Function Prototype
+
+::: tip API
+```lua
+path.cygwin(path: <string>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| path | Path string |
+
+#### Usage
+
+Convert a Windows path to Cygwin style, transforming the drive letter `C:\` to `/c/` and replacing `\` with `/`:
+
+```lua
+print(path.cygwin("C:\\Windows\\System32"))
+-- Output: /c/Windows/System32
+```
+
+## path.instance_of
+
+- Check if a value is a path instance
+
+#### Function Prototype
+
+::: tip API
+```lua
+path.instance_of(p: <any>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| p | The value to check |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| boolean | Returns true if it is a path instance, false otherwise |
+
+#### Usage
+
+```lua
+local p = path.new("/tmp/file.txt")
+print(path.instance_of(p))      -- Output: true
+print(path.instance_of("/tmp")) -- Output: false
+```
