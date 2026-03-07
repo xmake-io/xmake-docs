@@ -464,7 +464,7 @@ if package:is_plat("windows") and package:config("shared") then
 end
 ```
 
-#### 5.2.4 Forcing tests/examples to build: if the upstream has no switch to disable them, use `io.replace` to comment out the relevant `add_subdirectory` calls:
+#### 5.2.4 Disabling tests/examples to build: if the upstream has no switch to disable them, use `io.replace` to comment out the relevant `add_subdirectory` calls:
 
 ```lua
 io.replace("CMakeLists.txt", "add_subdirectory(tests)", "", {plain = true})
