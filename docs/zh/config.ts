@@ -8,7 +8,7 @@ const pkg = require('vitepress/package.json')
 
 export default defineAdditionalConfig({
   lang: 'zh-Hans',
-  description: '一个基于Lua的轻量级跨平台自动构建工具',
+  description: '一个基于 Lua 的轻量级跨平台自动构建工具',
 
   themeConfig: {
     nav: nav(),
@@ -305,6 +305,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: '配置优化', link: 'best-practices/configuration-optimization' },
         { text: '性能优化', link: 'best-practices/performance' },
         { text: 'AI 问答优化', link: 'best-practices/ai-qa-optimization' },
+        { text: '仓库打包规范', link: 'best-practices/package-spec' },
       ]
     },
     {
