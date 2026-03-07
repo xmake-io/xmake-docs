@@ -464,7 +464,7 @@ if package:is_plat("windows") and package:config("shared") then
 end
 ```
 
-#### 5.2.4 强制编译 Test/Examples: 若上游无关闭开关，使用 `io.replace` 注释掉相关 `add_subdirectory`：
+#### 5.2.4 禁用 Test/Examples 编译: 若上游无关闭开关，使用 `io.replace` 注释掉相关 `add_subdirectory`：
 
 ```lua
 io.replace("CMakeLists.txt", "add_subdirectory(tests)", "", {plain = true})
