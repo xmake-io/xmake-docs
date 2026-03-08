@@ -141,7 +141,7 @@ $ xmake f -p harmony
 xmake will automatically detect the default SDK path, but you can also specify the Harmony SDK path.
 
 ```sh
-$ xmake f -p Harmony --sdk=/Users/ruki/Library/Huawei/Sdk/openharmony/10/native
+$ xmake f -p harmony --sdk=/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native --bin=/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/llvm/bin
 ```
 
 ## Global Configuration
