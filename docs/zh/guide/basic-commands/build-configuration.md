@@ -140,7 +140,7 @@ $ xmake f -p harmony
 xmake 会自动探测默认的 SDK 路径，当然我们也可以指定 Harmony SDK 路径。
 
 ```sh
-$ xmake f -p Harmony --sdk=/Users/ruki/Library/Huawei/Sdk/openharmony/10/native
+$ xmake f -p harmony -vD --sdk=/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native --bin=/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/llvm/bin
 ```
 
 
