@@ -224,6 +224,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Configuration Optimization', link: 'best-practices/configuration-optimization' },
         { text: 'Performance', link: 'best-practices/performance' },
         { text: 'AI Q&A Optimization', link: 'best-practices/ai-qa-optimization' },
+        { text: 'Xrepo Packing Specifications', link: 'best-practices/package-spec' },
       ]
     },
     {
