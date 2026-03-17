@@ -4,7 +4,7 @@ set_languages("c++20")
 
 target("bar")
     set_kind("static")
-    add_files("src/bar.mpp")
+    add_files("src/bar.mpp", {public = true})
 
 target("app")
     set_kind("binary")
