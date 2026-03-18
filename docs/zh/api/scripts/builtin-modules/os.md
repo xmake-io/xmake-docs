@@ -2229,3 +2229,230 @@ benchmark(function()
     os.sleep(100)
 end)
 ```
+
+## os.getpid
+
+- 获取当前进程 ID
+
+#### 函数原型
+
+::: tip API
+```lua
+os.getpid()
+```
+:::
+
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+```lua
+print(os.getpid())
+```
+
+## os.uid
+
+- 获取用户 ID 信息
+
+#### 函数原型
+
+::: tip API
+```lua
+os.uid(name?: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 可选。用户名 |
+
+#### 用法说明
+
+返回包含用户 ID 信息的 table，包括 `uid` 和 `euid` 等字段：
+
+```lua
+local id = os.uid()
+print(id.euid)
+```
+
+::: tip 注意
+此接口仅在 Linux/macOS 上可用。
+:::
+
+## os.gid
+
+- 获取用户组 ID 信息
+
+#### 函数原型
+
+::: tip API
+```lua
+os.gid(name?: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| name | 可选。组名 |
+
+#### 用法说明
+
+返回包含组 ID 信息的 table，包括 `gid` 和 `egid` 等字段：
+
+```lua
+local id = os.gid()
+print(id.egid)
+```
+
+::: tip 注意
+此接口仅在 Linux/macOS 上可用。
+:::
+
+## os.nuldev
+
+- 获取空设备路径
+
+#### 函数原型
+
+::: tip API
+```lua
+os.nuldev(input?: <boolean>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| input | 可选。是否获取输入空设备路径 |
+
+#### 用法说明
+
+获取当前平台的空设备路径，在 Unix 上为 `/dev/null`，在 Windows 上为 `nul`：
+
+```lua
+print(os.nuldev())
+```
+
+## os.pbpaste
+
+- 从系统剪贴板获取内容
+
+#### 函数原型
+
+::: tip API
+```lua
+os.pbpaste()
+```
+:::
+
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+```lua
+local content = os.pbpaste()
+if content then
+    print(content)
+end
+```
+
+::: tip 注意
+此接口仅在 macOS 和 Linux（需要 xsel）上可用。
+:::
+
+## os.pbcopy
+
+- 复制内容到系统剪贴板
+
+#### 函数原型
+
+::: tip API
+```lua
+os.pbcopy(data: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| data | 要复制到剪贴板的字符串 |
+
+#### 用法说明
+
+```lua
+os.pbcopy("hello xmake")
+```
+
+::: tip 注意
+此接口仅在 macOS 和 Linux（需要 xsel）上可用。
+:::
+
+## os.projectfile
+
+- 获取工程文件路径
+
+#### 函数原型
+
+::: tip API
+```lua
+os.projectfile()
+```
+:::
+
+
+#### 参数说明
+
+此函数不需要参数。
+
+#### 用法说明
+
+获取当前项目的 xmake.lua 文件路径：
+
+```lua
+print(os.projectfile())
+```
+
+## os.atexit
+
+- 注册退出回调函数
+
+#### 函数原型
+
+::: tip API
+```lua
+os.atexit(on_exit: <function>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| on_exit | 退出时要执行的回调函数 |
+
+#### 用法说明
+
+注册在 xmake 退出时执行的回调函数：
+
+```lua
+os.atexit(function ()
+    print("xmake exited")
+end)
+```

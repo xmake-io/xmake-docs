@@ -2210,3 +2210,230 @@ benchmark(function()
     os.sleep(100)
 end)
 ```
+
+## os.getpid
+
+- Get the current process ID
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.getpid()
+```
+:::
+
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+```lua
+print(os.getpid())
+```
+
+## os.uid
+
+- Get user ID information
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.uid(name?: <string>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Optional. User name |
+
+#### Usage
+
+Returns a table containing user ID information, including `uid` and `euid` fields:
+
+```lua
+local id = os.uid()
+print(id.euid)
+```
+
+::: tip Note
+This interface is only available on Linux/macOS.
+:::
+
+## os.gid
+
+- Get group ID information
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.gid(name?: <string>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| name | Optional. Group name |
+
+#### Usage
+
+Returns a table containing group ID information, including `gid` and `egid` fields:
+
+```lua
+local id = os.gid()
+print(id.egid)
+```
+
+::: tip Note
+This interface is only available on Linux/macOS.
+:::
+
+## os.nuldev
+
+- Get the null device path
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.nuldev(input?: <boolean>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| input | Optional. Whether to get the input null device path |
+
+#### Usage
+
+Get the null device path for the current platform, `/dev/null` on Unix and `nul` on Windows:
+
+```lua
+print(os.nuldev())
+```
+
+## os.pbpaste
+
+- Get content from the system clipboard
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.pbpaste()
+```
+:::
+
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+```lua
+local content = os.pbpaste()
+if content then
+    print(content)
+end
+```
+
+::: tip Note
+This interface is only available on macOS and Linux (requires xsel).
+:::
+
+## os.pbcopy
+
+- Copy content to the system clipboard
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.pbcopy(data: <string>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| data | String to copy to clipboard |
+
+#### Usage
+
+```lua
+os.pbcopy("hello xmake")
+```
+
+::: tip Note
+This interface is only available on macOS and Linux (requires xsel).
+:::
+
+## os.projectfile
+
+- Get the project file path
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.projectfile()
+```
+:::
+
+
+#### Parameter Description
+
+No parameters required for this function.
+
+#### Usage
+
+Get the xmake.lua file path of the current project:
+
+```lua
+print(os.projectfile())
+```
+
+## os.atexit
+
+- Register an exit callback function
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.atexit(on_exit: <function>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| on_exit | Callback function to execute on exit |
+
+#### Usage
+
+Register a callback function to be executed when xmake exits:
+
+```lua
+os.atexit(function ()
+    print("xmake exited")
+end)
+```

@@ -222,7 +222,7 @@ xmake automatically detects and handles different newline formats (LF, CRLF) and
 
 ::: tip API
 ```lua
-io.writefile(filename: <string>, data: <string>)
+io.writefile(filename: <string>, data: <string>, options?: <table>)
 ```
 :::
 
@@ -233,6 +233,7 @@ io.writefile(filename: <string>, data: <string>)
 |-----------|-------------|
 | filename | File path string |
 | data | Data string to write |
+| options | Options table (optional) |
 
 #### Usage
 
@@ -250,7 +251,7 @@ io.writefile("xxx.txt", "all data")
 
 ::: tip API
 ```lua
-io.gsub(filename: <string>, pattern: <string>, replacement: <string>)
+io.gsub(filename: <string>, pattern: <string>, replacement: <string>, options?: <table>)
 ```
 :::
 
@@ -262,6 +263,7 @@ io.gsub(filename: <string>, pattern: <string>, replacement: <string>)
 | filename | File path string |
 | pattern | Pattern string |
 | replacement | Replacement string |
+| options | Options table (optional) |
 
 #### Usage
 
@@ -536,3 +538,222 @@ io.replace("xxx.txt", "1+1=2", "2+2=4", {plain = true})
 Option parameters:
 - `plain`: If true, use simple string matching; if false, use pattern matching
 - `encoding`: Specify file encoding format
+
+## io.insert
+
+- Insert text before a line number in a file
+
+#### Function Prototype
+
+::: tip API
+```lua
+io.insert(filepath: <string>, lineidx: <number>, text: <string>, options?: <table>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filepath | File path string |
+| lineidx | Line number to insert before |
+| text | Text content to insert |
+| options | Options table (optional) |
+
+#### Usage
+
+Insert a line of text before the specified line number in a file:
+
+```lua
+io.insert("xxx.txt", 3, "new line content")
+```
+
+## io.read
+
+- Read data from standard input
+
+#### Function Prototype
+
+::: tip API
+```lua
+io.read(fmt?: <string>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| fmt | Optional. Read format, e.g. `"*l"` (read a line), `"*n"` (read a number), `"*a"` (read all) |
+
+#### Usage
+
+```lua
+-- Read a line from standard input
+local line = io.read("*l")
+```
+
+## io.write
+
+- Write data to standard output
+
+#### Function Prototype
+
+::: tip API
+```lua
+io.write(...)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| ... | Content to write |
+
+#### Usage
+
+```lua
+io.write("hello xmake\n")
+```
+
+## io.flush
+
+- Flush standard output buffer
+
+#### Function Prototype
+
+::: tip API
+```lua
+io.flush()
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| None | No parameters |
+
+#### Usage
+
+```lua
+io.write("hello")
+io.flush()
+```
+
+## io.readable
+
+- Check if standard input is readable
+
+#### Function Prototype
+
+::: tip API
+```lua
+io.readable()
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| None | No parameters |
+
+#### Usage
+
+```lua
+if io.readable() then
+    local data = io.read("*l")
+end
+```
+
+## io.isatty
+
+- Check if a file is a terminal device
+
+#### Function Prototype
+
+::: tip API
+```lua
+io.isatty(file?: <file>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| file | Optional. File object, defaults to stdout |
+
+#### Usage
+
+```lua
+if io.isatty() then
+    -- stdout is a terminal
+end
+```
+
+## io.close
+
+- Close a file
+
+#### Function Prototype
+
+::: tip API
+```lua
+io.close(file?: <file>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| file | Optional. File object, defaults to stdout |
+
+#### Usage
+
+```lua
+local file = io.open("xxx.txt", "r")
+-- ...
+io.close(file)
+```
+
+## io.convert
+
+- Convert file encoding
+
+#### Function Prototype
+
+::: tip API
+```lua
+io.convert(inputfile: <string>, outputfile: <string>, opt?: <table>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| inputfile | Input file path |
+| outputfile | Output file path |
+| opt | Optional. Options table |
+
+#### Usage
+
+Convert a file from one encoding to another:
+
+```lua
+io.convert("input.txt", "output.txt", {from = "gbk", to = "utf8"})
+```
+
+Supported encodings: `"utf8"`, `"utf8bom"`, `"utf16"`, `"utf16le"`, `"utf16lebom"`, `"utf16be"`, `"gb2312"`, `"gbk"`, `"iso8859"`, `"ucs2"`, `"ucs4"`, `"utf32"`, etc.

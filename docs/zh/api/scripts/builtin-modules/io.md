@@ -534,3 +534,222 @@ io.replace("xxx.txt", "%d[^\n]*", "xmake")
 > .plain: 若为 true，使用pattern进行简单匹配；为 false，则进行模式匹配；
 >
 > .encoding: 指定文件编码格式
+
+## io.insert
+
+- 在文件指定行号前插入文本
+
+#### 函数原型
+
+::: tip API
+```lua
+io.insert(filepath: <string>, lineidx: <number>, text: <string>, options?: <table>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filepath | 文件路径字符串 |
+| lineidx | 要插入的行号 |
+| text | 要插入的文本内容 |
+| options | 选项表（可选） |
+
+#### 用法说明
+
+在文件的指定行号前插入一行文本：
+
+```lua
+io.insert("xxx.txt", 3, "new line content")
+```
+
+## io.read
+
+- 从标准输入读取数据
+
+#### 函数原型
+
+::: tip API
+```lua
+io.read(fmt?: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| fmt | 可选。读取格式，如 `"*l"`（读取一行）、`"*n"`（读取一个数字）、`"*a"`（读取全部） |
+
+#### 用法说明
+
+```lua
+-- 从标准输入读取一行
+local line = io.read("*l")
+```
+
+## io.write
+
+- 向标准输出写入数据
+
+#### 函数原型
+
+::: tip API
+```lua
+io.write(...)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| ... | 要写入的内容 |
+
+#### 用法说明
+
+```lua
+io.write("hello xmake\n")
+```
+
+## io.flush
+
+- 刷新标准输出缓冲区
+
+#### 函数原型
+
+::: tip API
+```lua
+io.flush()
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| 无 | 无参数 |
+
+#### 用法说明
+
+```lua
+io.write("hello")
+io.flush()
+```
+
+## io.readable
+
+- 判断标准输入是否可读
+
+#### 函数原型
+
+::: tip API
+```lua
+io.readable()
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| 无 | 无参数 |
+
+#### 用法说明
+
+```lua
+if io.readable() then
+    local data = io.read("*l")
+end
+```
+
+## io.isatty
+
+- 判断文件是否为终端设备
+
+#### 函数原型
+
+::: tip API
+```lua
+io.isatty(file?: <file>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| file | 可选。文件对象，默认为 stdout |
+
+#### 用法说明
+
+```lua
+if io.isatty() then
+    -- 标准输出是终端
+end
+```
+
+## io.close
+
+- 关闭文件
+
+#### 函数原型
+
+::: tip API
+```lua
+io.close(file?: <file>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| file | 可选。文件对象，默认为 stdout |
+
+#### 用法说明
+
+```lua
+local file = io.open("xxx.txt", "r")
+-- ...
+io.close(file)
+```
+
+## io.convert
+
+- 转换文件编码格式
+
+#### 函数原型
+
+::: tip API
+```lua
+io.convert(inputfile: <string>, outputfile: <string>, opt?: <table>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| inputfile | 输入文件路径 |
+| outputfile | 输出文件路径 |
+| opt | 可选。选项表 |
+
+#### 用法说明
+
+将文件从一种编码格式转换为另一种：
+
+```lua
+io.convert("input.txt", "output.txt", {from = "gbk", to = "utf8"})
+```
+
+支持的编码格式：`"utf8"`、`"utf8bom"`、`"utf16"`、`"utf16le"`、`"utf16lebom"`、`"utf16be"`、`"gb2312"`、`"gbk"`、`"iso8859"`、`"ucs2"`、`"ucs4"`、`"utf32"` 等。
