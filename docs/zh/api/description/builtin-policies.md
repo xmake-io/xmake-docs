@@ -3,6 +3,8 @@
 Xmake 有很多的默认行为，比如：自动检测和映射编译、链接标志、跨工程目标并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定能满足所有的用户的使用习惯和需求。
 因此， xmake 提供了**针对默认策略的修改设置**，在一定程度上给予了用户**修改策略**的权限。这个功能主要通过 [set_policy](/zh/api/description/project-target#set-policy) 接口来实现，我们通常可以使用这个接口来配置修改 target, package 以及工程整体的一些行为策略。
 
+策略通过 [set_policy()](/zh/api/description/project-target#set-policy) 接口设置，可在 [target()](/zh/api/description/project-target#target)、[package()](/zh/api/description/package-dependencies#package) 或全局域中使用。
+
 ## 使用方式 {#usage}
 
 ::: tip 注意

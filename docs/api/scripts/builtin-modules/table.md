@@ -5,6 +5,8 @@ Table belongs to the module provided by Lua native. For the native interface, yo
 
 It has been extended in xmake to add some extension interfaces:
 
+For string operations, see the [string module](/api/scripts/builtin-modules/string).
+
 ## table.join
 
 - Merge multiple tables and return

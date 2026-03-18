@@ -9,6 +9,8 @@ We can view the complete list of built-in rules by running the following command
 $ xmake show -l rules
 ```
 
+Built-in rules are applied to targets via [add_rules()](/api/description/project-target#add-rules). To create custom rules, see [Custom Rule API](/api/description/custom-rule). For related policy configurations, see [Built-in Policies](/api/description/builtin-policies).
+
 ## mode.debug
 
 Add the configuration rules for the debug compilation mode for the current project xmake.lua, for example:

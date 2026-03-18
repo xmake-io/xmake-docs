@@ -2,6 +2,8 @@
 
 Conditions are generally used to handle some special compilation platforms.
 
+These conditional APIs are typically used with [if-then](/guide/project-configuration/syntax-description) statements. For related built-in variables, see [Built-in Variables](/api/description/builtin-variables).
+
 ## is_os
 
 ### Is the current compilation target system

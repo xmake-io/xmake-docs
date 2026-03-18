@@ -3,6 +3,8 @@
 
 路径操作模块，实现跨平台的路径操作，这是 xmake 的一个自定义的模块。
 
+文件读写操作请参阅 [io 模块](/zh/api/scripts/builtin-modules/io)，文件和目录管理请参阅 [os 模块](/zh/api/scripts/builtin-modules/os)。
+
 ## path.new
 
 - 创建新的路径实例

@@ -26,6 +26,7 @@ option("test2")
 `option`域是可以重复进入来实现分离设置的，如果要显示离开当前选项的作用域设置，可以手动调用[option_end](#option-end)接口。
 :::
 
+选项的值可以通过 [has_config()](/zh/api/description/conditions#has-config) 和 [get_config()](/zh/api/description/conditions#get-config) 在条件判断中使用。xmake 还提供了一系列[辅助检测接口](/zh/api/description/helper-interfaces)来自动检测编译器特性。如需定义编译选项，请参阅[定义选项指南](/zh/guide/project-configuration/define-options)。
 
 ## option
 

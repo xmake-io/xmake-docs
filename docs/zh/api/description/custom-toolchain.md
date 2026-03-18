@@ -73,6 +73,8 @@ $ xmake f --toolchain=myclang
 $ xmake show -l toolchains
 ```
 
+目标中通过 [set_toolchains()](/zh/api/description/project-target#set-toolchains) 指定使用自定义工具链。工具链配置的入门教程请参阅[工具链配置指南](/zh/guide/project-configuration/toolchain-configuration)。
+
 ## toolchain
 
 - 定义工具链

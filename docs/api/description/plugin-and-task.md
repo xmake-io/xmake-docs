@@ -2,6 +2,8 @@
 
 Xmake can implement custom tasks or plugins. The core of both is the `task` task. The two are actually the same. The xmake plugins are implemented with `task`.
 
+To extend the build process rather than define standalone tasks, see [Custom Rules](/api/description/custom-rule). For a plugin development tutorial, see the [Plugin Development Guide](/guide/extensions/plugin-development).
+
 ## task
 
 - Defining plugins or tasks

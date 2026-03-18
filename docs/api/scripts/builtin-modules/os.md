@@ -8,6 +8,8 @@ This module is also a native module of lua, and xmake has been extended to provi
 Only some readonly interfaces (for example: `os.getenv`, `os.arch`) in the os module can be used in the description scope. Other interfaces can only be used in the script domain, for example: `os.cp`, `os .rm`etc.
 :::
 
+For file I/O operations, see the [io module](/api/scripts/builtin-modules/io). For path operations, see the [path module](/api/scripts/builtin-modules/path).
+
 ## os.access
 
 - Check file access permissions

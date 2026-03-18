@@ -3,6 +3,8 @@
 
 hash 模块提供了哈希值计算和 UUID 生成功能，这是 xmake 的一个内置模块。
 
+字符串操作请参阅 [string 模块](/zh/api/scripts/builtin-modules/string)，文件操作请参阅 [io 模块](/zh/api/scripts/builtin-modules/io)。
+
 ## hash.md5
 
 - 计算文件或二进制数据的 MD5 哈希值

@@ -5,6 +5,8 @@ The string module is a native module of lua. For details, see: [lua official man
 
 It has been extended in xmake to add some extension interfaces:
 
+For table operations, see the [table module](/api/scripts/builtin-modules/table). For file I/O, see the [io module](/api/scripts/builtin-modules/io).
+
 ## string.startswith
 
 - Determine if the beginning of the string matches

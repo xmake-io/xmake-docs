@@ -2,6 +2,8 @@
 
 条件判断的 API，一般用于必须要处理特定平台的编译逻辑的场合，他们通常跟 lua 的 if 语句配合使用。
 
+这些条件判断接口通常与 [if-then](/zh/guide/project-configuration/syntax-description) 语句配合使用。相关的内置变量请参阅[内置变量](/zh/api/description/builtin-variables)。
+
 ## is_os
 
 ### 判断当前构建目标的操作系统

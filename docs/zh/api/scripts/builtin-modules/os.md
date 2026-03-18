@@ -8,6 +8,8 @@
 os 模块里面只有部分readonly接口（例如：`os.getenv`, `os.arch`）是可以在描述域中使用，其他接口只能在脚本域中使用，例如：`os.cp`, `os.rm`等
 :::
 
+文件读写操作请参阅 [io 模块](/zh/api/scripts/builtin-modules/io)，路径操作请参阅 [path 模块](/zh/api/scripts/builtin-modules/path)。
+
 ## os.access
 
 - 检查文件访问权限

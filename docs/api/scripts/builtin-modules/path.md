@@ -3,6 +3,8 @@
 
 The path operation module implements cross-platform path operations, which is a custom module of xmake.
 
+For file I/O operations, see the [io module](/api/scripts/builtin-modules/io). For file and directory management, see the [os module](/api/scripts/builtin-modules/os).
+
 ## path.new
 
 - Create a new path instance

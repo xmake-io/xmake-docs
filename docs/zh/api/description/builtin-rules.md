@@ -8,6 +8,8 @@
 $ xmake show -l rules
 ```
 
+内置规则通过 [add_rules()](/zh/api/description/project-target#add-rules) 添加到目标中使用。如需创建自定义规则，请参阅[自定义规则接口](/zh/api/description/custom-rule)。相关的策略配置请参阅[内置策略](/zh/api/description/builtin-policies)。
+
 ## mode.debug
 
 为当前工程xmake.lua添加debug编译模式的配置规则，例如：

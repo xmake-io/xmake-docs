@@ -5,6 +5,8 @@
 
 Xmake 中对其进行了扩展，增加了一些扩展接口：
 
+表操作请参阅 [table 模块](/zh/api/scripts/builtin-modules/table)，文件读写请参阅 [io 模块](/zh/api/scripts/builtin-modules/io)。
+
 ## string.startswith
 
 - 判断字符串开头是否匹配

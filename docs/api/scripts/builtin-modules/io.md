@@ -3,6 +3,8 @@
 
 The io operation module extends lua's built-in io module to provide more easy-to-use interfaces.
 
+For file and directory management (copy, move, delete, etc.), see the [os module](/api/scripts/builtin-modules/os). For path joining and parsing, see the [path module](/api/scripts/builtin-modules/path). For serialization, see [string.serialize](/api/scripts/builtin-modules/string#string-serialize).
+
 ## io.open
 
 - Open file for reading and writing

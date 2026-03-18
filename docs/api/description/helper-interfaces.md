@@ -8,6 +8,8 @@ Among them, we provide two types of interfaces, `check_xxx` and `configvar_check
 
 And `check_xxx` only defines related macros to participate in compilation, but it will not be persisted in `config.h.in`.
 
+Helper interfaces are imported via [includes()](/api/description/global-interfaces#includes). Detection results can be checked with [has_config()](/api/description/conditions#has-config) and can also be used with [option()](/api/description/configuration-option).
+
 For related issues, see:
 
 -[#342](https://github.com/xmake-io/xmake/issues/342)

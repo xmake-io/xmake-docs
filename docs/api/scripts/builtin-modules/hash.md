@@ -3,6 +3,8 @@
 
 The hash module provides hash value calculation and UUID generation functions. It is a built-in module of xmake.
 
+For string operations, see the [string module](/api/scripts/builtin-modules/string). For file operations, see the [io module](/api/scripts/builtin-modules/io).
+
 ## hash.md5
 
 - Calculate the MD5 hash value of a file or binary data

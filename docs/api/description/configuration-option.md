@@ -26,6 +26,8 @@ option("test2")
 The `option` field can be repeatedly entered to implement separate settings. If you want to display the scope settings away from the current option, you can manually call the [option_end](#option-end) interface.
 :::
 
+Option values can be checked via [has_config()](/api/description/conditions#has-config) and [get_config()](/api/description/conditions#get-config) in conditional logic. Xmake also provides [helper detection interfaces](/api/description/helper-interfaces) for auto-detecting compiler features. For a guide on defining options, see [Define Options Guide](/guide/project-configuration/define-options).
+
 ## option
 
 ### Defining options

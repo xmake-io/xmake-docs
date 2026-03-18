@@ -46,6 +46,8 @@ target("test")
 
 既然支持直接从配置选项中获取，那么当然也就能很方便的扩展自定义的选项，来获取自定义的变量了，具体如何自定义选项见：[option](/zh/api/description/configuration-option)
 
+内置变量可在描述域的大部分字符串参数中使用。相关的条件判断接口请参阅[条件判断](/zh/api/description/conditions)，如 [is_os()](/zh/api/description/conditions#is-os)、[is_arch()](/zh/api/description/conditions#is-arch) 等。在脚本域中，可通过 [vformat()](/zh/api/scripts/builtin-modules/vformat) 展开内置变量。
+
 ## var.$(os)
 
 - 获取当前编译平台的操作系统

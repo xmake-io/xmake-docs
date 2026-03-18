@@ -4,6 +4,8 @@
 
 在脚本域中，可以通过 `option` 参数来操作当前选项的各种属性和配置。
 
+关于在描述域中定义选项的接口，请参阅[配置选项描述域 API](/zh/api/description/configuration-option)。选项值的条件判断请参阅 [has_config()](/zh/api/description/conditions#has-config) 和 [get_config()](/zh/api/description/conditions#get-config)。
+
 ## option:name
 
 - 获取选项的名字

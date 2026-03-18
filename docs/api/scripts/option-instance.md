@@ -4,6 +4,8 @@ This page describes the `option` interface for functions like `on_load()`, `on_c
 
 In the script scope, you can operate various properties and configurations of the current option through the `option` parameter.
 
+For defining options in the description domain, see [Configuration Option API](/api/description/configuration-option). To check option values in conditions, see [has_config()](/api/description/conditions#has-config) and [get_config()](/api/description/conditions#get-config).
+
 ## option:name
 
 - Get the name of the option (without namespace)

@@ -47,6 +47,8 @@ What are the specific parameters, you can check it out by `xmake f -h`.
 Since the support is directly obtained from the configuration options, it is of course convenient to extend the custom options to get the custom variables.
 For details on how to customize the options, see: [option](/api/description/configuration-option)
 
+Built-in variables can be used in most string parameters in the description domain. For related conditional APIs, see [Conditions](/api/description/conditions) such as [is_os()](/api/description/conditions#is-os), [is_arch()](/api/description/conditions#is-arch), etc. In the script domain, use [vformat()](/api/scripts/builtin-modules/vformat) to expand built-in variables.
+
 ## var.$(os)
 
 - Get the operating system of the current build platform

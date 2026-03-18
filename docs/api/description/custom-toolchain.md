@@ -73,6 +73,8 @@ Before customizing the tool, we can run the following command to view the comple
 $ xmake show -l toolchains
 ```
 
+Custom toolchains are applied to targets via [set_toolchains()](/api/description/project-target#set-toolchains). For a getting started tutorial, see the [Toolchain Configuration Guide](/guide/project-configuration/toolchain-configuration).
+
 ## toolchain
 
 - Define toolchain

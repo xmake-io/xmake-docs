@@ -5,6 +5,8 @@ table 属于 lua 原生提供的模块，对于原生接口使用可以参考：
 
 Xmake 中对其进行了扩展，增加了一些扩展接口：
 
+字符串操作请参阅 [string 模块](/zh/api/scripts/builtin-modules/string)。
+
 ## table.join
 
 - 合并多个table并返回

@@ -5,6 +5,8 @@ Xmake incorporates many default behaviors, such as automatically detecting and m
 Therefore, xmake provides a way to override its default build policies, giving users a higher degree of control.
 This is primarily achieved through the [set_policy](/api/description/project-target#set-policy) API, which can be used to modify the default behavior of targets, packages, or the entire project.
 
+Policies are configured via [set_policy()](/api/description/project-target#set-policy) and can be used in [target()](/api/description/project-target#target), [package()](/api/description/package-dependencies#package), or at the global scope.
+
 ## Usage
 
 ::: tip NOTE

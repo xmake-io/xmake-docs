@@ -3,6 +3,8 @@
 
 io 操作模块，扩展了 lua 内置的 io 模块，提供更多易用的接口。
 
+文件和目录的管理操作（如复制、移动、删除等）请参阅 [os 模块](/zh/api/scripts/builtin-modules/os)，路径拼接和解析请参阅 [path 模块](/zh/api/scripts/builtin-modules/path)。序列化相关操作请参阅 [string.serialize](/zh/api/scripts/builtin-modules/string#string-serialize)。
+
 ## io.open
 
 - 打开文件用于读写

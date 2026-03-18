@@ -8,6 +8,8 @@
 
 而 `check_xxx` 仅仅只是定义相关 macros 参与编译，但不会持久化到 `config.h.in` 中去。
 
+辅助接口通过 [includes()](/zh/api/description/global-interfaces#includes) 导入使用，检测结果可以通过 [has_config()](/zh/api/description/conditions#has-config) 判断，也可以配合 [option()](/zh/api/description/configuration-option) 使用。
+
 相关 issues 见：
 
 - [#342](https://github.com/xmake-io/xmake/issues/342)
