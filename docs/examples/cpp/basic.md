@@ -4,6 +4,8 @@ We briefly introduce some commonly used project examples. More and more complete
 
 We can also use the `xmake create` command to create various commonly used empty projects to quickly start. For the introduction of this command and the supported project templates, you can type the following command to view:
 
+For detailed target configuration, see [Configure Targets](/guide/project-configuration/configure-targets) and [Project Target API](/api/description/project-target).
+
 ```sh
 xmake create --help
 ```

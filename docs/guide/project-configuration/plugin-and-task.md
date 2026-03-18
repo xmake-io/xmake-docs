@@ -6,6 +6,8 @@ outline: deep
 
 Xmake supports custom tasks and plugins, both implemented using the `task` system. Tasks can be used for automating build processes, code generation, file processing, and various other project requirements.
 
+For the complete plugin and task API, see [Plugin and Task API](/api/description/plugin-and-task). To extend the build process, see also [Custom Rules](/guide/project-configuration/custom-rule).
+
 ## Basic Concepts {#basic-concepts}
 
 - **Task**: Custom build steps or tools that can be called within projects

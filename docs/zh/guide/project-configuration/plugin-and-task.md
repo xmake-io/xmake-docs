@@ -6,6 +6,8 @@ outline: deep
 
 Xmake 支持自定义任务和插件，它们都基于 `task` 任务系统实现。任务可以用于自动化构建流程、代码生成、文件处理等各种项目需求。
 
+关于插件和任务的完整描述域接口，请参阅[插件任务 API](/zh/api/description/plugin-and-task)。如需扩展构建流程，也可以参阅[自定义规则](/zh/guide/project-configuration/custom-rule)。
+
 ## 基础概念 {#basic-concepts}
 
 - **任务 (Task)**: 自定义的构建步骤或工具，可以在项目中调用

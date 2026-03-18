@@ -3,6 +3,8 @@
 
 我们也可以通过：`xmake create`命令创建各种常用的空工程来快速开始，具体对于这个命令的介绍以及支持的工程模板，可以敲下面的命令查看：
 
+关于目标配置的详细说明，请参阅[配置目标](/zh/guide/project-configuration/configure-targets)和[项目目标 API](/zh/api/description/project-target)。
+
 ```sh
 xmake create --help
 ```

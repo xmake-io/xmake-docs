@@ -3,6 +3,8 @@
 
 在脚本域我们可以通过 import 导入各种丰富的扩展模块来使用，而在描述域我们可以通过[includes](/zh/api/description/global-interfaces.html#includes)接口，来引入项目子目录下的xmake.lua配置。
 
+如需对子工程进行命名空间隔离以避免命名冲突，请参阅[命名空间隔离](/zh/guide/project-configuration/namespace-isolation)。
+
 记住：xmake的includes是按照tree结构来处理配置关系的，子目录下的xmake.lua里面的target配置会继承父xmake.lua中的根域配置，例如：
 
 目前有如下项目结构：

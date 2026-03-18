@@ -4,6 +4,8 @@ We briefly mentioned before that we can use the `xmake build` command to build a
 
 Here we will explain it in detail. First, let's take a look at its complete command format.
 
+For pre-build configuration options (platform, architecture, etc.), see [Build Configuration](/guide/basic-commands/build-configuration). For cross-compilation, see [Cross Compilation](/guide/basic-commands/cross-compilation).
+
 ## Command format
 
 ```sh

@@ -8,6 +8,8 @@ We can use `toolchain()` to define custom toolchains to support special compiler
 
 For details on custom toolchain configuration, see: [Custom Toolchain API](/api/description/custom-toolchain).
 
+For a detailed tutorial, see [Toolchain Configuration Guide](/guide/project-configuration/toolchain-configuration) and [Switch Toolchains](/guide/basic-commands/switch-toolchains).
+
 ## Basic Example
 
 <FileExplorer rootFilesDir="examples/configuration/custom_toolchain/basic" />

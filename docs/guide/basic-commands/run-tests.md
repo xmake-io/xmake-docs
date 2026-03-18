@@ -4,6 +4,8 @@ Xmake provides a built-in `xmake test` command for running unit tests and test c
 
 This provides great convenience for automated testing, and even if a target is set to `set_default(false)`, xmake will still automatically compile it when executing tests and then run all tests.
 
+For running regular target programs, see [Run Targets](/guide/basic-commands/run-targets).
+
 ## Command format
 
 ```sh

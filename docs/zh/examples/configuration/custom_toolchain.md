@@ -8,6 +8,8 @@ outline: deep
 
 关于自定义工具链的更多详情，请参考：[自定义工具链 API](/zh/api/description/custom-toolchain)。
 
+工具链配置的详细教程请参阅[工具链配置指南](/zh/guide/project-configuration/toolchain-configuration)和[切换工具链](/zh/guide/basic-commands/switch-toolchains)。
+
 ## 基础示例
 
 <FileExplorer rootFilesDir="examples/configuration/custom_toolchain/basic" />

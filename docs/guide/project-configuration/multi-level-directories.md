@@ -3,6 +3,8 @@
 In the script field we can import various rich extension modules by import,
 and in the description field we can introduce the project subdirectory through the [includes](/api/description/global-interfaces.html#includes) interface.
 
+To isolate sub-projects with namespaces to avoid naming conflicts, see [Namespace Isolation](/guide/project-configuration/namespace-isolation).
+
 Remember: Xmake's includes handles the configuration relationship according to the tree structure. The target configuration in `xmake.lua` in the subdirectory inherits the root domain configuration in the parent `xmake.lua`, for example:
 
 Currently, there is the following project structure:

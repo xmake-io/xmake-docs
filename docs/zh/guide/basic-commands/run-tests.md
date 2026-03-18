@@ -4,6 +4,8 @@ Xmake 提供了内置的 `xmake test` 命令用于运行单元测试和测试用
 
 这为自动化测试提供了极大的便利，即使目标被设置为 `set_default(false)`，xmake 在执行测试时仍会自动编译它，然后运行所有测试。
 
+关于运行普通目标程序，请参阅[运行目标](/zh/guide/basic-commands/run-targets)。
+
 ## 命令格式
 
 ```sh

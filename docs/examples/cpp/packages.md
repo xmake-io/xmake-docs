@@ -8,6 +8,8 @@ Xmake provides a powerful package management system that allows you to easily in
 
 For more detailed documentation, please refer to [Add Packages](/guide/project-configuration/add-packages).
 
+For detailed package management tutorials, see [Using Official Packages](/guide/package-management/using-official-packages). For package description APIs, see [Package Dependencies API](/api/description/package-dependencies).
+
 ## Use Fmt
 
 <FileExplorer rootFilesDir="examples/cpp/packages/fmt" />

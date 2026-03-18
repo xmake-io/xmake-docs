@@ -4,6 +4,8 @@
 
 这里我们再来详细讲解下，首先，我们先看下它的完整命令格式。
 
+关于构建前的配置选项（如平台、架构等），请参阅[构建配置](/zh/guide/basic-commands/build-configuration)。如需交叉编译，请参阅[交叉编译](/zh/guide/basic-commands/cross-compilation)。
+
 ## 命令格式
 
 ```sh

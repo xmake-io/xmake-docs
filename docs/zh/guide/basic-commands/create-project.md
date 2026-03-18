@@ -12,6 +12,8 @@ xmake [action] [arguments] ...
 
 其中，action 就是 xmake cli 提供的子命令，而对于创建工程，它就是 `xmake create`。
 
+创建工程后，关于 xmake.lua 的配置说明请参阅[项目配置语法说明](/zh/guide/project-configuration/syntax-description)。关于目标配置的详细接口，请参阅[项目目标 API](/zh/api/description/project-target)。
+
 ## 创建一个 C++ 空工程
 
 首先，我们可以尝试创建一个名叫 `hello` 的 `c++` 控制台空工程。

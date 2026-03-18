@@ -6,6 +6,8 @@ outline: deep
 
 通常，如果我们需要在当前pc环境编译生成其他设备上才能运行的目标文件时候，就需要通过对应的交叉编译工具链来编译生成它们，比如在win/macos上编译linux的程序，或者在linux上编译其他嵌入式设备的目标文件等。
 
+关于工具链的切换和配置，请参阅[切换工具链](/zh/guide/basic-commands/switch-toolchains)和[工具链配置](/zh/guide/project-configuration/toolchain-configuration)。自定义工具链接口请参阅[自定义工具链 API](/zh/api/description/custom-toolchain)。
+
 通常的交叉编译工具链都是基于gcc/clang的，大都具有类似如下的结构：
 
 ```

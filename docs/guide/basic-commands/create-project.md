@@ -12,6 +12,8 @@ xmake [action] [arguments] ...
 
 Here, action is the subcommand provided by the xmake CLI, and for creating a project, it is `xmake create`.
 
+After creating a project, see [Project Configuration Syntax](/guide/project-configuration/syntax-description) for xmake.lua configuration. For detailed target APIs, see [Project Target API](/api/description/project-target).
+
 ## Create a C++ empty project
 
 First, we can try to create a `c++` console empty project named `hello`.

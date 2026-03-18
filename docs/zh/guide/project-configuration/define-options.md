@@ -1,5 +1,7 @@
 # 定义选项 {#define-option}
 
+关于选项的完整描述域接口，请参阅[配置选项 API](/zh/api/description/configuration-option)。选项值的条件判断请参阅 [has_config()](/zh/api/description/conditions#has-config)。
+
 ## 自定义命令行选项
 
 我们可以定义一个选项开关，用于控制内部的配置逻辑，例如：

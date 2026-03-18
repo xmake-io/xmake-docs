@@ -6,6 +6,8 @@ outline: deep
 
 Generally, if we need to compile and generate object files that can be run on other devices in the current PC environment, we need to compile and generate them through the corresponding cross-compilation toolchain, such as compiling Linux programs on Windows/macOS, or compiling object files for other embedded devices, etc.
 
+For toolchain switching and configuration, see [Switch Toolchains](/guide/basic-commands/switch-toolchains) and [Toolchain Configuration](/guide/project-configuration/toolchain-configuration). For the custom toolchain API, see [Custom Toolchain API](/api/description/custom-toolchain).
+
 The usual cross-compilation toolchain is based on GCC/Clang, and most of them have a structure similar to the following:
 
 ```

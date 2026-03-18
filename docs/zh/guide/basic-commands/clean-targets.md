@@ -2,6 +2,8 @@
 
 我们可以通过 `xmake clean` 命令来清理构建过程中生成的临时文件。
 
+关于构建目标的详细说明，请参阅[构建目标](/zh/guide/basic-commands/build-targets)。
+
 ## 命令格式
 
 ```sh

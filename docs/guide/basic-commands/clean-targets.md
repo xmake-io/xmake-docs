@@ -2,6 +2,8 @@
 
 We can use the `xmake clean` command to clean up the generated files during the build process.
 
+For details on building targets, see [Build Targets](/guide/basic-commands/build-targets).
+
 ## Command format
 
 ```sh

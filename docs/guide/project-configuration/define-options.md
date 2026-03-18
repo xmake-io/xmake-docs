@@ -1,5 +1,7 @@
 # Define options {#define-option}
 
+For the complete option description API, see [Configuration Option API](/api/description/configuration-option). To check option values in conditions, see [has_config()](/api/description/conditions#has-config).
+
 ## Customize command line options
 
 We can define an option switch to control the internal configuration logic, for example:
