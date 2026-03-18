@@ -26,6 +26,8 @@ Since a project may have multiple target programs, each target program may requi
 
 In the above configuration example, the foo target binds the tbox and libpng packages, while the bar target binds the zlib package.
 
+For more detailed package management usage, see the [Package Management Guide](/guide/package-management/using-official-packages). For the complete custom package description API, see [Package Dependencies API](/api/description/package-dependencies).
+
 ## Basic Usage and Common Scenarios {#basic-usage}
 
 - `add_requires("pkgname")` declares dependencies, supports version, optional, alias, etc.

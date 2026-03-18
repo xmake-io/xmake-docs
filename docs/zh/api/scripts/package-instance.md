@@ -2,6 +2,8 @@
 
 此页面描述了 [包依赖管理](/zh/api/description/package-dependencies) 的 `on_load()`、`on_install()` 或 `on_test()` 等函数的 `package` 接口
 
+关于在描述域中定义包依赖的接口，请参阅[包依赖描述域 API](/zh/api/description/package-dependencies)。包管理的使用教程请参阅[添加依赖包](/zh/guide/project-configuration/add-packages)。
+
 ## package:name
 
 - 获取包的名字

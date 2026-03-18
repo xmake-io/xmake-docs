@@ -2,6 +2,8 @@
 
 After the 2.2.1 release, xmake not only natively supports the construction of multi-language files, but also allows users to implement complex unknown file builds by custom building rules.
 
+For a tutorial on custom rules, see the [Custom Rules Guide](/guide/project-configuration/custom-rule). For a list of built-in rules, see [Built-in Rules Reference](/api/description/builtin-rules).
+
 Custom build rules can have a set of file extensions associated to them using `set_extensions`.
 Once these extensions are associated to the rule a later call to `add_files` will automatically use this custom rule.
 Here is an example rule that will use Pandoc to convert markdown files added to a build target in to HTML files:

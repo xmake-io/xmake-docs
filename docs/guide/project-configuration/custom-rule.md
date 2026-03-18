@@ -6,6 +6,8 @@ outline: deep
 
 Xmake not only natively supports multi-language file building, but also allows users to implement complex unknown file building through custom build rules. Custom rules let you define specialized build logic for specific file types.
 
+For the complete custom rule description API, see [Custom Rule API](/api/description/custom-rule). For a list of built-in rules, see [Built-in Rules Reference](/api/description/builtin-rules).
+
 ## Basic Concepts {#basic-concepts}
 
 Custom build rules are defined using the `rule()` function and associate a set of file extensions to rules through `set_extensions()`. Once these extensions are associated with rules, calls to `add_files()` will automatically use this custom rule.

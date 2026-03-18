@@ -6,6 +6,8 @@ outline: deep
 
 Set compilation configuration before building the project with the command `xmake f|config`. If you want to know more options, please run: `xmake f --help`.
 
+For detailed project configuration in xmake.lua, see the [Project Configuration Guide](/guide/project-configuration/configure-targets).
+
 ::: tip NOTE
 You can use short or long command options, for example:<br>
 `xmake f` or `xmake config`.<br>

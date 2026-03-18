@@ -2,6 +2,8 @@
 
 This page describes the interface for `package` of functions like `on_load()`, `on_install()` or `on_test()` of the [Package Dependencies](/api/description/package-dependencies)
 
+For defining package dependencies in the description domain, see [Package Dependencies API](/api/description/package-dependencies). For package management tutorials, see [Adding Packages](/guide/project-configuration/add-packages).
+
 ## package:name
 
 - Get the name of the package

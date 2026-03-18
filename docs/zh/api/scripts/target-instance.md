@@ -2,6 +2,8 @@
 
 此页面描述了 [工程目标](/zh/api/description/project-target) 的 `on_load()`、`before_build()` 或 `after_install()` 等函数的 `target` 接口。
 
+关于在描述域中配置目标的接口，请参阅[项目目标描述域 API](/zh/api/description/project-target)。脚本域中可使用的内置模块（如 [os](/zh/api/scripts/builtin-modules/os)、[io](/zh/api/scripts/builtin-modules/io)、[path](/zh/api/scripts/builtin-modules/path) 等），请参阅[内置模块文档](/zh/api/scripts/builtin-modules/import)。
+
 ## target:name
 
 - 获取目标的名字

@@ -1,5 +1,7 @@
 # Package Dependencies
 
+For package management tutorials, see [Adding Packages](/guide/project-configuration/add-packages) and the [Package Management Guide](/guide/package-management/using-official-packages). To access package instances in the script domain, see [Package Instance API](/api/scripts/package-instance).
+
 ## package
 
 - Define package configuration

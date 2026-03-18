@@ -22,6 +22,8 @@ target("test")
     add_files("src/*.cpp")
 ```
 
+关于 `target()` 的完整接口列表，请参阅[项目目标描述域 API](/zh/api/description/project-target)。在脚本域中访问目标实例的接口，请参阅 [target 实例接口](/zh/api/scripts/target-instance)。
+
 ## 配置宏定义 {#configure-defines}
 
 我们可以通过 [add_defines](/zh/api/description/project-target#add-defines) 为目标程序添加一个宏定义选项，例如：

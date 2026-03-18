@@ -6,6 +6,8 @@ outline: deep
 
 通过`xmake f|config`配置命令，设置构建前的相关配置信息，详细参数选项，请运行: `xmake f --help`。
 
+关于在 xmake.lua 中进行项目配置的详细说明，请参阅[项目配置指南](/zh/guide/project-configuration/configure-targets)。
+
 ::: tip 注意
 你可以使用命令行缩写来简化输入，也可以使用全名，例如: <br>
 `xmake f` 或者 `xmake config`.<br>

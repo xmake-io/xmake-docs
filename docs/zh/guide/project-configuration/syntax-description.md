@@ -10,6 +10,8 @@ target("test")
     add_files("src/*.c")
 ```
 
+关于描述域和脚本域中可以使用的完整接口列表，请参阅[描述域接口文档](/zh/api/description/specification)和[脚本域内置模块文档](/zh/api/scripts/builtin-modules/os)。
+
 ## 配置分离
 
 xmake.lua采用二八原则实现了描述域、脚本域两层分离式配置。

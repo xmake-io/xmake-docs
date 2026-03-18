@@ -18,3 +18,5 @@ It's according to the following rules:
 | `scope("name")`       | Define a description scope, .e.g `target("xxx")`, `option("xxx")`|
 | scope/settings        | Indentation with spaces                                          |
 
+If you are new to xmake, it is recommended to read the [Project Configuration Syntax Guide](/guide/project-configuration/syntax-description) first to understand the basic structure of xmake.lua. The naming conventions below apply to all [Description Domain APIs](/api/description/global-interfaces).
+

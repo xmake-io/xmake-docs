@@ -2,6 +2,8 @@
 
 The global interface affects the whole project description scope and all sub-project files.
 
+For API naming conventions, see [API Specification](/api/description/specification). For target-specific configuration APIs, see [Project Target API](/api/description/project-target).
+
 ## includes
 
 ### Add sub-project files and directories

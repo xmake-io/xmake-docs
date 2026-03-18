@@ -10,6 +10,8 @@ target("test")
     add_files("src/*.c")
 ```
 
+For a complete list of available interfaces in the description and script domains, see [Description Domain API](/api/description/specification) and [Script Domain Built-in Modules](/api/scripts/builtin-modules/os).
+
 ## Configuration Separation
 
 Xmake.lua uses the 80:20 rule (aka [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle)) to implement a two-layer separate configuration of the description domain and the script domain.

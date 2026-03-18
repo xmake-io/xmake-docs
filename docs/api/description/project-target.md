@@ -2,6 +2,8 @@
 
 We can use `target("test")` to define a project target named "test", each target generates an executable program, a static library, or a dynamic library.
 
+For a quick start guide on target configuration, see [Configure Targets Guide](/guide/project-configuration/configure-targets). To access target instances in the script domain (e.g. `on_load`, `on_build` callbacks), see [Target Instance API](/api/scripts/target-instance).
+
 :::tip NOTE
 All interfaces of target can be set in the global scope, which affects all sub-targets.
 :::

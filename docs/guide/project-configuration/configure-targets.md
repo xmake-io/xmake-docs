@@ -22,6 +22,8 @@ target("test")
     add_files("src/*.cpp")
 ```
 
+For the complete `target()` API reference, see [Project Target Description API](/api/description/project-target). To access target instances in the script domain, see [Target Instance API](/api/scripts/target-instance).
+
 ## Configure macro definition {#configure-defines}
 
 We can add a macro definition option to the target program through [add_defines](/api/description/project-target#add-defines), for example:

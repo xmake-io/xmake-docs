@@ -2,6 +2,8 @@
 
 This page describes the interface for `target` of functions like `on_load()`, `before_build()` or `after_install()` of the [Project target](/api/description/project-target).
 
+For configuring targets in the description domain, see [Project Target Description API](/api/description/project-target). For built-in modules available in the script domain (such as [os](/api/scripts/builtin-modules/os), [io](/api/scripts/builtin-modules/io), [path](/api/scripts/builtin-modules/path), etc.), see [Built-in Modules](/api/scripts/builtin-modules/import).
+
 ## target:name
 
 - Get the name of the target

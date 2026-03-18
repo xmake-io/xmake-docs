@@ -17,6 +17,8 @@ target("test")
 
 The above `add_requires` is used to describe the dependencies required by the current project, and `add_packages` is used to apply dependencies to the test target. Only these settings will automatically add links, linkdirs, includedirs, etc.
 
+For a quick introduction to basic package integration, see [Adding Packages Quick Start](/guide/project-configuration/add-packages). To access package instances in the script domain, see [Package Instance API](/api/scripts/package-instance).
+
 Then directly compile:
 
 ```sh

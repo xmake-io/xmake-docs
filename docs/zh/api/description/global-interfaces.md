@@ -2,6 +2,8 @@
 
 全局接口影响整个工程描述，被调用后，后面被包含进来的所有子`xmake.lua`都会受影响。
 
+关于接口命名规范，请参阅[接口规范说明](/zh/api/description/specification)。针对项目目标的配置接口，请参阅[项目目标接口](/zh/api/description/project-target)。
+
 ## includes
 
 ### 添加子工程文件和目录 {#add-sub-project-and-configurations}

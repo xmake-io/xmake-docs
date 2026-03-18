@@ -17,6 +17,8 @@ target("test")
 
 上面的 `add_requires` 用于描述当前项目需要的依赖包，而 `add_packages` 用于将依赖包应用到 test 目标，只有设置这个才会自动追加 links、linkdirs、includedirs 等设置。
 
+如果只需了解基本的包集成方式，可以先参阅[添加依赖包快速入门](/zh/guide/project-configuration/add-packages)。在脚本域中访问包实例的接口，请参阅 [package 实例接口](/zh/api/scripts/package-instance)。
+
 然后直接执行编译即可：
 
 ```sh

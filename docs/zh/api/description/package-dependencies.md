@@ -1,5 +1,7 @@
 # 包依赖 {#package-dependencies}
 
+关于包管理的使用教程，请参阅[添加依赖包](/zh/guide/project-configuration/add-packages)和[包管理使用指南](/zh/guide/package-management/using-official-packages)。在脚本域中访问包实例的接口，请参阅 [package 实例接口](/zh/api/scripts/package-instance)。
+
 ## package
 
 - 仓库依赖包定义描述

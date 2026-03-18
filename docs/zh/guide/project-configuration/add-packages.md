@@ -26,6 +26,8 @@ target("bar")
 
 上面的配置示例中，foo 目标绑定了 tbox 和 libpng 两个包，而 bar 目标绑定了 zlib 包。
 
+更多包管理的详细用法，请参阅[包管理使用指南](/zh/guide/package-management/using-official-packages)。关于自定义包描述的完整接口，请参阅[包依赖描述域 API](/zh/api/description/package-dependencies)。
+
 ## 基本用法与常见场景 {#basic-usage}
 
 - `add_requires("pkgname")` 声明依赖包，支持版本、可选、别名等

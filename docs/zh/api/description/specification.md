@@ -16,4 +16,5 @@
 | `scope("name")`的接口   | 表示为定义一个描述域，例如：`target("xxx")`, `option("xxx")` |
 | 描述域/描述设置         | 建议缩进表示                                                 |
 
+如果你是初次使用 xmake，建议先阅读[项目配置语法说明](/zh/guide/project-configuration/syntax-description)了解 xmake.lua 的基本结构。下面的接口命名规范适用于所有[描述域接口](/zh/api/description/global-interfaces)。
 

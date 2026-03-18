@@ -6,6 +6,8 @@ outline: deep
 
 Xmake 不仅原生支持多语言文件的构建，还允许用户通过自定义构建规则实现复杂的未知文件构建。自定义规则可以让你为特定文件类型定义专门的构建逻辑。
 
+关于自定义规则的完整描述域接口，请参阅[自定义规则 API](/zh/api/description/custom-rule)。xmake 内置的规则列表请参阅[内置规则参考](/zh/api/description/builtin-rules)。
+
 ## 基础概念 {#basic-concepts}
 
 自定义构建规则使用 `rule()` 函数定义，通过 `set_extensions()` 将一组文件扩展名关联到规则。一旦这些扩展与规则相关联，对 `add_files()` 的调用将自动使用此自定义规则。

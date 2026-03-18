@@ -2,6 +2,8 @@
 
 定义和设置子工程模块，每个`target`对应一个子工程，最后会生成一个目标程序，有可能是可执行程序，也有可能是库模块。
 
+关于如何快速上手目标配置，请参阅[配置目标指南](/zh/guide/project-configuration/configure-targets)。在脚本域（如 `on_load`、`on_build` 等回调中）访问目标实例的接口，请参阅 [target 实例接口](/zh/api/scripts/target-instance)。
+
 :::tip 注意
 target的接口，都是可以放置在target外面的全局作用域中的，如果在全局中设置，那么会影响所有子工程target。
 :::
