@@ -54,6 +54,8 @@ local p = path("/tmp/file.txt")  -- Automatically creates an instance
 print(p:filename())
 ```
 
+Use [path.instance_of](#path-instance_of) to check if a value is a path instance.
+
 ## path.normalize
 
 - Normalize the path
@@ -86,6 +88,8 @@ Normalize the path (simplify `.` and `..`):
 print(path.normalize("/tmp/./../file.txt"))  -- Output: /file.txt
 print(path.normalize("c:\\tmp\\..\\.."))     -- On Windows: c:\\..
 ```
+
+If you only need to convert path separators without simplifying `.` and `..`, use [path.translate](#path-translate).
 
 ## path.join
 
@@ -150,6 +154,8 @@ print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
 
 The path strings of the above three different formats, after being standardized by `translate`, will become the format supported by the current platform, and the redundant path separator will be removed.
 
+If you also need to simplify `.` and `..`, use [path.normalize](#path-normalize).
+
 ## path.basename
 
 - Get the file name with no suffix at the end of the path
@@ -176,6 +182,8 @@ print(path.basename("$(tmpdir)/dir/file.txt"))
 ```
 
 The result is: `file`
+
+To get the filename with extension, use [path.filename](#path-filename); for the extension, use [path.extension](#path-extension); for the directory part, use [path.directory](#path-directory).
 
 ## path.filename
 
@@ -304,6 +312,8 @@ print(path.relative("$(tmpdir)/dir/file.txt"))
 
 The result is the same.
 
+The reverse operation is [path.absolute](#path-absolute), which converts relative paths to absolute paths. Use [path.is_absolute](#path-is_absolute) to check if a path is absolute.
+
 ## path.absolute
 
 - Convert to absolute path
@@ -340,6 +350,8 @@ print(path.absolute("dir/file.txt"))
 ```
 
 The result is the same.
+
+The reverse operation is [path.relative](#path-relative), which converts absolute paths to relative paths.
 
 ## path.is_absolute
 
@@ -393,6 +405,8 @@ path.split(path: <string>)
 print(path.split("/tmp/file.txt"))
 ```
 The result is: `{ "tmp", "file.txt" }`
+
+The reverse operation is [path.join](#path-join), which joins multiple paths into one.
 
 ## path.sep
 
@@ -483,6 +497,8 @@ local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 
 The result is an array of strings, each item is a path in the input string.
 
+The reverse operation is [path.joinenv](#path-joinenv), which joins a path array into an environment variable string. Use [os.getenv](/api/scripts/builtin-modules/os#os-getenv) to get environment variable values.
+
 ## path.joinenv
 
 - Join path array into an environment variable string
@@ -513,6 +529,8 @@ print(path.joinenv({"/usr/bin", "/usr/local/bin"}))
 print(path.joinenv({"C:\\Windows", "C:\\Windows\\System32"}))
 -- Output: C:\Windows;C:\Windows\System32
 ```
+
+The reverse operation is [path.splitenv](#path-splitenv), which splits an environment variable string into a path array. The environment variable separator for the current platform can be obtained via [path.envsep](#path-envsep).
 
 ## path.envsep
 
@@ -596,6 +614,8 @@ print(path.unix("C:\\Windows\\System32"))
 -- Output: C:/Windows/System32
 ```
 
+If you need Cygwin-style conversion (with drive letter transformation), use [path.cygwin](#path-cygwin). To convert to the native style of the current platform, use [path.translate](#path-translate).
+
 ## path.cygwin
 
 - Convert path to Cygwin style
@@ -656,3 +676,5 @@ local p = path.new("/tmp/file.txt")
 print(path.instance_of(p))      -- Output: true
 print(path.instance_of("/tmp")) -- Output: false
 ```
+
+Path instances are created with [path.new](#path-new).

@@ -43,6 +43,8 @@ local newtable = table.join({a = "a", b = "b"}, {c = "c"}, {d = "d"})
 
 The result is: `{a = "a", b = "b", c = "c", d = "d"}`
 
+If you don't want to expand table arguments but append them as elements directly, use [table.shallow_join](#table-shallow_join). To merge results into an existing table, use [table.join2](#table-join2).
+
 ## table.join2
 
 - Combine multiple tables into the first table
@@ -103,6 +105,8 @@ local newtable = table.unique({1, 1, 2, 3, 4, 4, 5})
 ```
 
 The result is: `{1, 2, 3, 4, 5}`
+
+To keep the last occurrence of each element (deduplicate from the end), use [table.reverse_unique](#table-reverse_unique).
 
 ## table.slice
 
@@ -172,6 +176,8 @@ end
 
 As long as the table contains any value from 1, 2, 3, it returns true
 
+To get the specific indices or keys of matching values, use [table.find](#table-find) or [table.find_first](#table-find_first).
+
 ## table.orderkeys
 
 - Get an ordered list of keys
@@ -194,6 +200,8 @@ table.orderkeys(tbl: <table>)
 #### Usage
 
 The order of the key list returned by `table.keys(t)` is random. If you want to get an ordered key list, you can use this interface.
+
+To iterate key/value pairs in sorted order, use [table.orderpairs](#table-orderpairs).
 
 ## table.keys
 
@@ -220,6 +228,8 @@ table.keys(tbl: <table>)
 local keys = table.keys({a = 1, b = 2, c = 3})
 -- Result: {"a", "b", "c"} (order is not guaranteed)
 ```
+
+For an ordered key list, use [table.orderkeys](#table-orderkeys). To get all values, use [table.values](#table-values).
 
 ## table.values
 
@@ -338,6 +348,8 @@ table.wrap(nil)       -- Result: {}
 table.wrap("a")       -- Result: {"a"}
 table.wrap({"a", "b"}) -- Result: {"a", "b"}
 ```
+
+The reverse operation is [table.unwrap](#table-unwrap), which unwraps single-element arrays. To lock a table to prevent unwrapping, use [table.wrap_lock](#table-wrap_lock).
 
 ## table.unwrap
 
@@ -562,6 +574,8 @@ local indices = table.find({1, 2, 3, 2, 1}, 2)
 -- Result: {2, 4}
 ```
 
+To find by condition, use [table.find_if](#table-find_if). To find only the first match, use [table.find_first](#table-find_first). To simply check if a value exists, use [table.contains](#table-contains).
+
 ## table.find_if
 
 - Find indices or keys matching a predicate
@@ -695,6 +709,8 @@ end)
 -- t = {1, 3, 5}
 ```
 
+To find without removing, use [table.find_if](#table-find_if).
+
 ## table.shallow_join
 
 - Shallow join objects into a new table (without expanding sub-tables)
@@ -809,6 +825,8 @@ table.to_array(iterator: <function>, state: <any>, var: <any>)
 local lines = table.to_array(io.lines("file.txt"))
 ```
 
+Often used with [io.lines](/api/scripts/builtin-modules/io#io-lines) to convert a file line iterator into an array.
+
 ## table.inherit
 
 - Inherit interfaces and create a new instance
@@ -922,6 +940,8 @@ Polyfill of Lua 5.2 `table.pack`:
 local t = table.pack(1, 2, 3)
 -- t = {1, 2, 3, n = 3}
 ```
+
+The reverse operation is [table.unpack](#table-unpack).
 
 ## table.unpack
 

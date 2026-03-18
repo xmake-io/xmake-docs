@@ -129,6 +129,8 @@ if data then
 end
 ```
 
+For in-memory serialization/deserialization, use [string.serialize](/api/scripts/builtin-modules/string#string-serialize) and [string.deserialize](/api/scripts/builtin-modules/string#string-deserialize).
+
 ## io.save
 
 - Serialize all table contents to the specified path file
@@ -214,6 +216,8 @@ Option parameters:
 
 xmake automatically detects and handles different newline formats (LF, CRLF) and automatically detects UTF-8 BOM.
 
+To read a file line by line, use [io.lines](#io-lines). To load serialized table data, use [io.load](#io-load).
+
 ## io.writefile
 
 - Write all content to the specified path file
@@ -242,6 +246,8 @@ It is more convenient to directly write the contents of the entire file without 
 ```lua
 io.writefile("xxx.txt", "all data")
 ```
+
+The corresponding read operation is [io.readfile](#io-readfile). To serialize and save table data, use [io.save](#io-save).
 
 ## io.gsub
 
@@ -273,6 +279,8 @@ Similar to the [string.gsub](#stringgsub) interface, the full-text pattern match
 -- Remove all whitespace characters from the file
 io.gsub("xxx.txt", "%s+", "")
 ```
+
+To use plain text matching for replacement (avoiding special character issues), use [io.replace](#io-replace).
 
 ## io.tail
 
@@ -329,6 +337,8 @@ Read all the contents of the file and display it, similar to the `cat xxx.txt` c
 ```lua
 io.cat("xxx.txt")
 ```
+
+To display only the tail of a file, use [io.tail](#io-tail). To read content into a variable, use [io.readfile](#io-readfile).
 
 ## io.print
 
@@ -539,6 +549,8 @@ Option parameters:
 - `plain`: If true, use simple string matching; if false, use pattern matching
 - `encoding`: Specify file encoding format
 
+For pattern matching replacement, you can also use [io.gsub](#io-gsub). For string-level replacement, see [string.replace](/api/scripts/builtin-modules/string#string-replace).
+
 ## io.insert
 
 - Insert text before a line number in a file
@@ -569,6 +581,8 @@ Insert a line of text before the specified line number in a file:
 io.insert("xxx.txt", 3, "new line content")
 ```
 
+To replace content in a file instead of inserting, use [io.replace](#io-replace) or [io.gsub](#io-gsub).
+
 ## io.read
 
 - Read data from standard input
@@ -594,6 +608,8 @@ io.read(fmt?: <string>)
 -- Read a line from standard input
 local line = io.read("*l")
 ```
+
+Use [io.readable](#io-readable) to check if stdin is readable before reading. To write to stdout, use [io.write](#io-write).
 
 ## io.write
 
@@ -757,3 +773,5 @@ io.convert("input.txt", "output.txt", {from = "gbk", to = "utf8"})
 ```
 
 Supported encodings: `"utf8"`, `"utf8bom"`, `"utf16"`, `"utf16le"`, `"utf16lebom"`, `"utf16be"`, `"gb2312"`, `"gbk"`, `"iso8859"`, `"ucs2"`, `"ucs4"`, `"utf32"`, etc.
+
+[io.open](#io-open), [io.readfile](#io-readfile) and other interfaces also support specifying encoding via the `encoding` option.

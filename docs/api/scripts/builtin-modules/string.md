@@ -34,6 +34,8 @@ if s:startswith("hello") then
 end
 ```
 
+See also [string.endswith](#string-endswith) for checking string endings.
+
 ## string.endswith
 
 - Determine if the end of the string matches
@@ -149,6 +151,8 @@ string.trim("    hello xmake!    ")
 ```
 
 The result is: "hello xmake!"
+
+To trim only the left side, use [string.ltrim](#string-ltrim); for the right side only, use [string.rtrim](#string-rtrim).
 
 ## string.ltrim
 
@@ -270,6 +274,8 @@ print(("hello (world)"):replace("(world)", "xmake", {plain = true}))
 -- Output: hello xmake
 ```
 
+To replace content directly in a file, use [io.replace](/api/scripts/builtin-modules/io#io-replace) or [io.gsub](/api/scripts/builtin-modules/io#io-gsub).
+
 ## string.serialize
 
 - Serialize an object to a string
@@ -297,6 +303,8 @@ local str = string.serialize({a = 1, b = "hello"})
 print(str)
 ```
 
+The reverse operation is [string.deserialize](#string-deserialize), which restores a serialized string back to an object. To serialize and save an object to a file, use [io.save](/api/scripts/builtin-modules/io#io-save).
+
 ## string.deserialize
 
 - Deserialize a string to an object
@@ -323,6 +331,8 @@ local obj = ("{a = 1, b = 'hello'}"):deserialize()
 print(obj.a)  -- Output: 1
 print(obj.b)  -- Output: hello
 ```
+
+The reverse operation is [string.serialize](#string-serialize). To load serialized data from a file, use [io.load](/api/scripts/builtin-modules/io#io-load).
 
 ## string.ipattern
 

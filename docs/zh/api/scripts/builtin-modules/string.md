@@ -34,6 +34,8 @@ if s:startswith("hello") then
 end
 ```
 
+另请参阅 [string.endswith](#string-endswith) 用于判断字符串结尾。
+
 ## string.endswith
 
 - 判断字符串结尾是否匹配
@@ -151,6 +153,8 @@ string.trim("    hello xmake!    ")
 ```
 
 结果为："hello xmake!"
+
+如只需去掉左边空白，请使用 [string.ltrim](#string-ltrim)；只去掉右边空白，请使用 [string.rtrim](#string-rtrim)。
 
 ## string.ltrim
 
@@ -272,6 +276,8 @@ print(("hello (world)"):replace("(world)", "xmake", {plain = true}))
 -- 输出: hello xmake
 ```
 
+如需直接对文件内容进行替换操作，请使用 [io.replace](/zh/api/scripts/builtin-modules/io#io-replace) 或 [io.gsub](/zh/api/scripts/builtin-modules/io#io-gsub)。
+
 ## string.serialize
 
 - 序列化对象为字符串
@@ -299,6 +305,8 @@ local str = string.serialize({a = 1, b = "hello"})
 print(str)
 ```
 
+与之相反的操作是 [string.deserialize](#string-deserialize)，可以将序列化后的字符串还原为对象。如需将对象序列化后保存到文件，可以使用 [io.save](/zh/api/scripts/builtin-modules/io#io-save)。
+
 ## string.deserialize
 
 - 反序列化字符串为对象
@@ -325,6 +333,8 @@ local obj = ("{a = 1, b = 'hello'}"):deserialize()
 print(obj.a)  -- 输出: 1
 print(obj.b)  -- 输出: hello
 ```
+
+与之相反的操作是 [string.serialize](#string-serialize)。如需从文件加载序列化数据，可以使用 [io.load](/zh/api/scripts/builtin-modules/io#io-load)。
 
 ## string.ipattern
 

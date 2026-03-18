@@ -54,6 +54,8 @@ local p = path("/tmp/file.txt")  -- 自动创建实例
 print(p:filename())
 ```
 
+可通过 [path.instance_of](#path-instance_of) 判断一个对象是否为路径实例。
+
 ## path.normalize
 
 - 规范化路径
@@ -86,6 +88,8 @@ path.normalize(p: <string>)
 print(path.normalize("/tmp/./../file.txt"))  -- 输出: /file.txt
 print(path.normalize("c:\\tmp\\..\\.."))     -- 在 Windows 上输出: c:\\..
 ```
+
+如果只需要转换路径分隔符而不需要简化 `.` 和 `..`，可以使用 [path.translate](#path-translate)。
 
 ## path.join
 
@@ -150,6 +154,8 @@ print(path.translate("$(tmpdir)\\dir/dir2//file.txt"))
 
 上面这三种不同格式的路径字符串，经过`translate`规范化后，就会变成当前平台支持的格式，并且会去掉冗余的路径分隔符。
 
+如果还需要进一步简化 `.` 和 `..`，可以使用 [path.normalize](#path-normalize)。
+
 ## path.basename
 
 - 获取路径最后不带后缀的文件名
@@ -176,6 +182,8 @@ print(path.basename("$(tmpdir)/dir/file.txt"))
 ```
 
 显示结果为：`file`
+
+如需获取带后缀的文件名，请使用 [path.filename](#path-filename)；获取后缀名请使用 [path.extension](#path-extension)；获取目录部分请使用 [path.directory](#path-directory)。
 
 ## path.filename
 
@@ -304,6 +312,8 @@ print(path.relative("$(tmpdir)/dir/file.txt"))
 
 这样结果是一样的。
 
+与之相反的操作是 [path.absolute](#path-absolute)，可以将相对路径转换为绝对路径。可使用 [path.is_absolute](#path-is_absolute) 判断路径是否为绝对路径。
+
 ## path.absolute
 
 - 转换成绝对路径
@@ -340,6 +350,8 @@ print(path.absolute("dir/file.txt"))
 ```
 
 这样结果是一样的。
+
+与之相反的操作是 [path.relative](#path-relative)，可以将绝对路径转换为相对路径。
 
 ## path.is_absolute
 
@@ -403,6 +415,8 @@ local pathes = path.splitenv("/usr/bin:/usr/local/bin")
 
 结果为一个包含了输入字符串中路径的数组。
 
+与之相反的操作是 [path.joinenv](#path-joinenv)，可以将路径数组拼接为环境变量字符串。可通过 [os.getenv](/zh/api/scripts/builtin-modules/os#os-getenv) 获取环境变量值。
+
 ## path.joinenv
 
 - 拼接环境变量路径
@@ -434,6 +448,8 @@ print(path.joinenv({"C:\\Windows", "C:\\Windows\\System32"}))
 -- 结果为：C:\Windows;C:\Windows\System32
 ```
 
+与之相反的操作是 [path.splitenv](#path-splitenv)，可以将环境变量字符串分割为路径数组。当前平台的环境变量分隔符可通过 [path.envsep](#path-envsep) 获取。
+
 ## path.split
 
 - 按路径分隔符分割路径
@@ -459,6 +475,8 @@ path.split(path: <string>)
 local items = path.split("/tmp/dir/file.txt")
 -- 结果为：{ "tmp", "dir", "file.txt" }
 ```
+
+与之相反的操作是 [path.join](#path-join)，可以将多个路径拼接为一个路径。
 
 ## path.sep
 
@@ -569,6 +587,8 @@ print(path.unix("C:\\Windows\\System32"))
 -- 结果为：C:/Windows/System32
 ```
 
+如果需要转换为 Cygwin 风格（含盘符转换），请使用 [path.cygwin](#path-cygwin)。如需转换为当前平台原生风格，请使用 [path.translate](#path-translate)。
+
 ## path.cygwin
 
 - 转换路径为 Cygwin 风格
@@ -660,4 +680,6 @@ local p = path.new("/tmp/file.txt")
 print(path.instance_of(p))      -- 输出: true
 print(path.instance_of("/tmp")) -- 输出: false
 ```
+
+路径实例通过 [path.new](#path-new) 创建。
 

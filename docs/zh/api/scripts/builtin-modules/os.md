@@ -2285,6 +2285,8 @@ print(id.euid)
 此接口仅在 Linux/macOS 上可用。
 :::
 
+[os.isroot](#os-isroot) 内部使用此接口判断当前用户是否为 root。另请参阅 [os.gid](#os-gid) 获取用户组信息。
+
 ## os.gid
 
 - 获取用户组 ID 信息
@@ -2316,6 +2318,8 @@ print(id.egid)
 ::: tip 注意
 此接口仅在 Linux/macOS 上可用。
 :::
+
+另请参阅 [os.uid](#os-uid) 获取用户 ID 信息。
 
 ## os.nuldev
 
@@ -2374,6 +2378,8 @@ end
 此接口仅在 macOS 和 Linux（需要 xsel）上可用。
 :::
 
+与之相反的操作是 [os.pbcopy](#os-pbcopy)，用于复制内容到剪贴板。
+
 ## os.pbcopy
 
 - 复制内容到系统剪贴板
@@ -2403,6 +2409,8 @@ os.pbcopy("hello xmake")
 此接口仅在 macOS 和 Linux（需要 xsel）上可用。
 :::
 
+与之相反的操作是 [os.pbpaste](#os-pbpaste)，用于从剪贴板获取内容。
+
 ## os.projectfile
 
 - 获取工程文件路径
@@ -2427,6 +2435,8 @@ os.projectfile()
 ```lua
 print(os.projectfile())
 ```
+
+如需获取项目目录路径，请使用 [os.projectdir](#os-projectdir)。
 
 ## os.atexit
 

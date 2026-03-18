@@ -129,6 +129,8 @@ if data then
 end
 ```
 
+如果是在内存中进行序列化/反序列化操作，可以使用 [string.serialize](/zh/api/scripts/builtin-modules/string#string-serialize) 和 [string.deserialize](/zh/api/scripts/builtin-modules/string#string-deserialize)。
+
 ## io.save
 
 - 序列化保存所有table内容到指定路径文件
@@ -214,6 +216,8 @@ local data = io.readfile("xxx.txt", {continuation = "\\"})
 
 xmake 会自动检测并处理不同的换行符格式（LF、CRLF），并自动检测 UTF-8 BOM。
 
+如需逐行读取文件，请使用 [io.lines](#io-lines)。如需加载序列化后的 table 数据，请使用 [io.load](#io-load)。
+
 ## io.writefile
 
 - 写入所有内容到指定路径文件
@@ -242,6 +246,8 @@ io.writefile(filename: <string>, content: <string>, options: <table>)
 ```lua
 io.writefile("xxx.txt", "all data")
 ```
+
+与之对应的读取操作是 [io.readfile](#io-readfile)。如需序列化保存 table 数据，请使用 [io.save](#io-save)。
 
 ## io.gsub
 
@@ -273,6 +279,8 @@ io.gsub(filepath: <string>, pattern: <string>, replace: <string|function>, optio
 -- 移除文件所有的空白字符
 io.gsub("xxx.txt", "%s+", "")
 ```
+
+如需使用纯文本匹配进行替换（避免特殊字符问题），请使用 [io.replace](#io-replace)。
 
 ## io.tail
 
@@ -329,6 +337,8 @@ io.cat(filepath: <string>)
 ```lua
 io.cat("xxx.txt")
 ```
+
+如只需显示文件末尾的部分内容，请使用 [io.tail](#io-tail)。如需将内容读取到变量中，请使用 [io.readfile](#io-readfile)。
 
 ## io.print
 
@@ -535,6 +545,8 @@ io.replace("xxx.txt", "%d[^\n]*", "xmake")
 >
 > .encoding: 指定文件编码格式
 
+如需使用模式匹配进行替换，也可以使用 [io.gsub](#io-gsub)。对于字符串级别的替换操作，请参阅 [string.replace](/zh/api/scripts/builtin-modules/string#string-replace)。
+
 ## io.insert
 
 - 在文件指定行号前插入文本
@@ -565,6 +577,8 @@ io.insert(filepath: <string>, lineidx: <number>, text: <string>, options?: <tabl
 io.insert("xxx.txt", 3, "new line content")
 ```
 
+如需替换文件中的内容而非插入，请使用 [io.replace](#io-replace) 或 [io.gsub](#io-gsub)。
+
 ## io.read
 
 - 从标准输入读取数据
@@ -590,6 +604,8 @@ io.read(fmt?: <string>)
 -- 从标准输入读取一行
 local line = io.read("*l")
 ```
+
+使用前可通过 [io.readable](#io-readable) 判断标准输入是否可读。向标准输出写入数据请使用 [io.write](#io-write)。
 
 ## io.write
 
@@ -753,3 +769,5 @@ io.convert("input.txt", "output.txt", {from = "gbk", to = "utf8"})
 ```
 
 支持的编码格式：`"utf8"`、`"utf8bom"`、`"utf16"`、`"utf16le"`、`"utf16lebom"`、`"utf16be"`、`"gb2312"`、`"gbk"`、`"iso8859"`、`"ucs2"`、`"ucs4"`、`"utf32"` 等。
+
+[io.open](#io-open)、[io.readfile](#io-readfile) 等接口也支持通过 `encoding` 选项指定编码格式。

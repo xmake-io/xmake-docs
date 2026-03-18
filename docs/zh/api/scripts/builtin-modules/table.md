@@ -43,6 +43,8 @@ local newtable = table.join({a = "a", b = "b"}, {c = "c"}, {d = "d"})
 
 结果为：`{a = "a", b = "b", c = "c", d = "d"}`
 
+如果不需要展开 table 参数，而是直接作为元素追加，请使用 [table.shallow_join](#table-shallow_join)。如需将结果合并到已有 table 中，请使用 [table.join2](#table-join2)。
+
 ## table.join2
 
 - 合并多个table到第一个table
@@ -103,6 +105,8 @@ local newtable = table.unique({1, 1, 2, 3, 4, 4, 5})
 ```
 
 结果为：`{1, 2, 3, 4, 5}`
+
+如需保留最后一次出现的元素（从后向前去重），请使用 [table.reverse_unique](#table-reverse_unique)。
 
 ## table.slice
 
@@ -172,6 +176,8 @@ end
 
 只要 table 中包含 1, 2, 3 里面任意一个值，则返回 true。
 
+如需获取匹配值的具体索引或键，请使用 [table.find](#table-find) 或 [table.find_first](#table-find_first)。
+
 ## table.orderkeys
 
 - 获取有序的 key 列表
@@ -194,6 +200,8 @@ table.orderkeys(tbl: <table>)
 #### 用法说明
 
 `table.keys(t)` 返回的 key 列表顺序是随机的，想要获取有序 key 列表，可以用这个接口。
+
+如需有序遍历 key/value 对，请使用 [table.orderpairs](#table-orderpairs)。
 
 ## table.keys
 
@@ -220,6 +228,8 @@ table.keys(tbl: <table>)
 local keys = table.keys({a = 1, b = 2, c = 3})
 -- 结果为：{"a", "b", "c"}（顺序不确定）
 ```
+
+如需获取有序的 key 列表，请使用 [table.orderkeys](#table-orderkeys)。获取所有 value 请使用 [table.values](#table-values)。
 
 ## table.values
 
@@ -338,6 +348,8 @@ table.wrap(nil)       -- 结果为：{}
 table.wrap("a")       -- 结果为：{"a"}
 table.wrap({"a", "b"}) -- 结果为：{"a", "b"}
 ```
+
+与之相反的操作是 [table.unwrap](#table-unwrap)，可以解包单元素数组。如需锁定 table 以防止被 unwrap，请使用 [table.wrap_lock](#table-wrap_lock)。
 
 ## table.unwrap
 
@@ -562,6 +574,8 @@ local indices = table.find({1, 2, 3, 2, 1}, 2)
 -- 结果为：{2, 4}
 ```
 
+如需根据条件查找，请使用 [table.find_if](#table-find_if)。如只需查找第一个匹配项，请使用 [table.find_first](#table-find_first)。仅判断是否包含某个值，可使用 [table.contains](#table-contains)。
+
 ## table.find_if
 
 - 根据条件查找 table 中匹配的索引或键
@@ -695,6 +709,8 @@ end)
 -- t = {1, 3, 5}
 ```
 
+如只需查找而不移除，请使用 [table.find_if](#table-find_if)。
+
 ## table.shallow_join
 
 - 浅合并多个对象到新 table（不展开子 table）
@@ -809,6 +825,8 @@ table.to_array(iterator: <function>, state: <any>, var: <any>)
 local lines = table.to_array(io.lines("file.txt"))
 ```
 
+常与 [io.lines](/zh/api/scripts/builtin-modules/io#io-lines) 搭配使用，将文件行迭代器转换为数组。
+
 ## table.inherit
 
 - 继承接口并创建新实例
@@ -922,6 +940,8 @@ Lua 5.2 `table.pack` 的兼容实现：
 local t = table.pack(1, 2, 3)
 -- t = {1, 2, 3, n = 3}
 ```
+
+与之相反的操作是 [table.unpack](#table-unpack)。
 
 ## table.unpack
 

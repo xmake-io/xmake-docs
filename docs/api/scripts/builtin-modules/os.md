@@ -2266,6 +2266,8 @@ print(id.euid)
 This interface is only available on Linux/macOS.
 :::
 
+[os.isroot](#os-isroot) uses this interface internally to check if the current user is root. See also [os.gid](#os-gid) for group information.
+
 ## os.gid
 
 - Get group ID information
@@ -2297,6 +2299,8 @@ print(id.egid)
 ::: tip Note
 This interface is only available on Linux/macOS.
 :::
+
+See also [os.uid](#os-uid) for user ID information.
 
 ## os.nuldev
 
@@ -2355,6 +2359,8 @@ end
 This interface is only available on macOS and Linux (requires xsel).
 :::
 
+The reverse operation is [os.pbcopy](#os-pbcopy), which copies content to the clipboard.
+
 ## os.pbcopy
 
 - Copy content to the system clipboard
@@ -2384,6 +2390,8 @@ os.pbcopy("hello xmake")
 This interface is only available on macOS and Linux (requires xsel).
 :::
 
+The reverse operation is [os.pbpaste](#os-pbpaste), which gets content from the clipboard.
+
 ## os.projectfile
 
 - Get the project file path
@@ -2408,6 +2416,8 @@ Get the xmake.lua file path of the current project:
 ```lua
 print(os.projectfile())
 ```
+
+To get the project directory path, use [os.projectdir](#os-projectdir).
 
 ## os.atexit
 
