@@ -277,6 +277,10 @@ target("hello")
     add_files("src/*.cpp")
 ```
 
+For more about the `xmake.lua` syntax and configuration, see [Project Configuration Syntax](/guide/project-configuration/syntax-description). For complete API references of `target()`, `add_files()`, etc., see [Project Target API](/api/description/project-target).
+
+For more project creation options (e.g. language, template), see [Create Project Command](/guide/basic-commands/create-project).
+
 ## Build Project
 
 ```sh
@@ -284,11 +288,15 @@ $ cd hello
 $ xmake
 ```
 
+For build configuration options (platform, architecture, build mode, etc.), see [Build Configuration](/guide/basic-commands/build-configuration). For more build options, see [Build Targets](/guide/basic-commands/build-targets).
+
 ## Run Program
 
 ```sh
 $ xmake run
 ```
+
+For more run options, see [Run Targets](/guide/basic-commands/run-targets).
 
 ## Debug Program
 
@@ -336,7 +344,26 @@ $ xmake run -d hello
 
 ## What's Next?
 
-Continue with the guide: [Create Project](/guide/basic-commands/create-project)
-Check out the examples: [Examples](/examples/cpp/basic)
-Check out the API reference: [API Reference](/api/description/specification)
+Congratulations on completing the basic introduction to xmake! Here are some recommended next steps:
+
+**Basic Commands**
+- [Create Project](/guide/basic-commands/create-project) - More project creation options
+- [Build Configuration](/guide/basic-commands/build-configuration) - Switch platforms, architectures, and build modes
+- [Install and Uninstall](/guide/basic-commands/install-and-uninstall) - Install build artifacts to the system
+
+**Project Configuration**
+- [Syntax Description](/guide/project-configuration/syntax-description) - Understand the description and script domains in xmake.lua
+- [Configure Targets](/guide/project-configuration/configure-targets) - Detailed target configuration
+- [Add Packages](/guide/project-configuration/add-packages) - Integrate third-party libraries
+
+**Package Management**
+- [Using Official Packages](/guide/package-management/using-official-packages) - Remote package management
+
+**API Reference**
+- [Description Domain API](/api/description/specification) - Complete configuration API reference
+- [Script Domain Built-in Modules](/api/scripts/builtin-modules/os) - Script programming module reference
+
+**Examples and Best Practices**
+- [C/C++ Basic Examples](/examples/cpp/basic) - Example code for common scenarios
+- [FAQ](/guide/best-practices/faq) - Frequently asked questions
 

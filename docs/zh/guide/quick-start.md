@@ -278,6 +278,10 @@ target("hello")
     add_files("src/*.cpp")
 ```
 
+关于 `xmake.lua` 的语法结构和配置方式，请参阅[项目配置语法说明](/zh/guide/project-configuration/syntax-description)。关于 `target()` 和 `add_files()` 等完整接口说明，请参阅[项目目标 API](/zh/api/description/project-target)。
+
+更多创建工程的选项（如指定语言、模板等），请参阅[创建工程命令详解](/zh/guide/basic-commands/create-project)。
+
 ## 构建工程 {#build-project}
 
 ```sh
@@ -285,11 +289,15 @@ $ cd hello
 $ xmake
 ```
 
+关于构建配置（如切换平台、架构、编译模式等），请参阅[构建配置命令详解](/zh/guide/basic-commands/build-configuration)。关于构建目标的更多选项，请参阅[构建目标命令详解](/zh/guide/basic-commands/build-targets)。
+
 ## 运行程序 {#run-program}
 
 ```sh
 $ xmake run
 ```
+
+更多运行选项请参阅[运行目标命令详解](/zh/guide/basic-commands/run-targets)。
 
 ## 调试程序 {#debug-program}
 
@@ -335,7 +343,26 @@ $ xmake run -d hello
 
 ## 下一步 {#next-steps}
 
-- 继续阅读该指南. [创建工程](/zh/guide/basic-commands/create-project)
-- 查看示例. [实例](/zh/examples/cpp/basic)
-- 查看 API 手册. [API 手册](/zh/api/description/specification)
+恭喜你完成了 xmake 的基本入门！接下来可以根据需要深入学习：
+
+**基础命令**
+- [创建工程](/zh/guide/basic-commands/create-project) - 了解更多工程创建选项
+- [构建配置](/zh/guide/basic-commands/build-configuration) - 切换平台、架构、编译模式
+- [安装和卸载](/zh/guide/basic-commands/install-and-uninstall) - 安装编译产物到系统
+
+**项目配置**
+- [语法说明](/zh/guide/project-configuration/syntax-description) - 理解 xmake.lua 的描述域和脚本域
+- [配置目标](/zh/guide/project-configuration/configure-targets) - 详细的目标配置方法
+- [添加依赖包](/zh/guide/project-configuration/add-packages) - 集成第三方库
+
+**包管理**
+- [使用官方包](/zh/guide/package-management/using-official-packages) - 远程依赖包的使用和管理
+
+**API 参考**
+- [描述域接口](/zh/api/description/specification) - 完整的配置接口参考
+- [脚本域内置模块](/zh/api/scripts/builtin-modules/os) - 脚本编程模块参考
+
+**示例和最佳实践**
+- [C/C++ 基础示例](/zh/examples/cpp/basic) - 常见场景的示例代码
+- [常见问题](/zh/guide/best-practices/faq) - 常见问题解答
 
