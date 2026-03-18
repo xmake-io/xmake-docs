@@ -240,14 +240,6 @@ print(path.extension("/tmp/file.tar.gz", 2))
 
 显示结果为：`.tar.gz`
 
-也支持通过 `level` 参数获取多级后缀名，例如 `.tar.gz`：
-
-```lua
-print(path.extension("foo.tar.gz", 2))
-```
-
-显示结果为：`.tar.gz`
-
 ## path.directory
 
 - 获取路径的目录名

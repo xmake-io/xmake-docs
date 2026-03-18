@@ -396,7 +396,7 @@ The result is: `{ "tmp", "file.txt" }`
 
 ## path.sep
 
-- Return the current separator, usually `/`
+- Get the path separator of the current platform
 
 #### Function Prototype
 
@@ -419,7 +419,7 @@ path.sep()
 print(path.sep())
 ```
 
-The result is: `/`
+The result is: `/` on Unix, `\` on Windows.
 
 ## path.islastsep
 
@@ -485,7 +485,7 @@ The result is an array of strings, each item is a path in the input string.
 
 ## path.joinenv
 
-- Concat two environment variable by the environment separator
+- Join path array into an environment variable string
 
 #### Function Prototype
 
@@ -505,13 +505,18 @@ path.joinenv(paths: <array>)
 #### Usage
 
 ```lua
-print(path.joinenv({"/tmp/dir", "/tmp/dir2"}))
+-- on Unix
+print(path.joinenv({"/usr/bin", "/usr/local/bin"}))
+-- Output: /usr/bin:/usr/local/bin
+
+-- on Windows
+print(path.joinenv({"C:\\Windows", "C:\\Windows\\System32"}))
+-- Output: C:\Windows;C:\Windows\System32
 ```
-The result is: `/tmp/dir;/tmp/dir2` (on Windows)
 
 ## path.envsep
 
-- Get the environment separator
+- Get the environment variable path separator of the current platform
 
 #### Function Prototype
 
@@ -534,7 +539,7 @@ path.envsep()
 print(path.envsep())
 ```
 
-The result is: `;`
+The result is: `:` on Unix, `;` on Windows.
 
 ## path.pattern
 
