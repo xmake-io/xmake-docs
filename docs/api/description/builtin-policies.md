@@ -223,7 +223,7 @@ target("test")
 The libmul.a static library automatically merges the libadd.a and libsub.a sub-dependent static libraries.
 
 
-## build.release.strip
+## build.release.strip <Badge type="tip" text="v3.0.8" />
 
 Automatically strip debug symbols from binaries in `mode.release` and `mode.releasedbg` modes. This policy is enabled by default.
 
@@ -647,3 +647,315 @@ You can enable multi-row progress output in two ways:
    ```
 
 This provides better visibility into parallel build progress, makes it easier to identify slow compilation units, and improves the overall user experience for large projects with many source files or parallel builds with multiple compilation units.
+
+## build.ccache.global_storage <Badge type="tip" text="v2.9.5" />
+
+Use global storage for build cache when build.ccache is enabled.
+
+```lua
+set_policy("build.ccache.global_storage", true)
+```
+
+## build.c++.modules <Badge type="tip" text="v2.7.1" />
+
+Enable C++ modules support even if no .mpp files are involved.
+
+```lua
+set_policy("build.c++.modules", true)
+```
+
+## build.c++.modules.std <Badge type="tip" text="v2.8.1" />
+
+Enable std module import support, enabled by default.
+
+```lua
+set_policy("build.c++.modules.std", false) -- disable
+```
+
+## build.c++.modules.culling <Badge type="tip" text="v2.9.4" />
+
+Enable unreferenced and non-public named module culling, enabled by default.
+
+```lua
+set_policy("build.c++.modules.culling", false)
+```
+
+## build.c++.modules.reuse <Badge type="tip" text="v3.0.5" />
+
+Reuse compiled module BMI files if possible, enabled by default.
+
+```lua
+set_policy("build.c++.modules.reuse", false)
+```
+
+## build.c++.modules.reuse.nocheck <Badge type="tip" text="v3.0.5" />
+
+Disable flag compatibility check when reusing modules.
+
+```lua
+set_policy("build.c++.modules.reuse.nocheck", true)
+```
+
+## build.c++.modules.reuse.strict <Badge type="tip" text="v3.0.5" />
+
+Enable strict defines comparison when trying to reuse modules.
+
+```lua
+set_policy("build.c++.modules.reuse.strict", true)
+```
+
+## build.c++.modules.fallbackscanner <Badge type="tip" text="v3.0.5" />
+
+Force fallback module dependency scanner for all compilers.
+
+```lua
+set_policy("build.c++.modules.fallbackscanner", true)
+```
+
+## build.c++.modules.clang.fallbackscanner <Badge type="tip" text="v3.0.5" />
+
+Force clang fallback module dependency scanner.
+
+```lua
+set_policy("build.c++.modules.clang.fallbackscanner", true)
+```
+
+## build.c++.modules.msvc.fallbackscanner <Badge type="tip" text="v3.0.5" />
+
+Force msvc fallback module dependency scanner.
+
+```lua
+set_policy("build.c++.modules.msvc.fallbackscanner", true)
+```
+
+## build.c++.modules.gcc.fallbackscanner <Badge type="tip" text="v3.0.5" />
+
+Force gcc fallback module dependency scanner.
+
+```lua
+set_policy("build.c++.modules.gcc.fallbackscanner", true)
+```
+
+## build.c++.modules.gcc.cxx11abi <Badge type="tip" text="v2.8.5" />
+
+Force to enable new cxx11 ABI in C++ modules for gcc.
+
+```lua
+set_policy("build.c++.modules.gcc.cxx11abi", true)
+```
+
+## build.c++.modules.non_cascading_changes <Badge type="tip" text="v3.0.5" />
+
+Enable non-cascading changes support (experimental), disabled by default.
+
+```lua
+set_policy("build.c++.modules.non_cascading_changes", true)
+```
+
+## build.c++.modules.hide_dependencies <Badge type="tip" text="v3.0.5" />
+
+Hide dependencies from the commandline when building C++ modules, may reduce build performance.
+
+```lua
+set_policy("build.c++.modules.hide_dependencies", true)
+```
+
+## build.c++.modules.two_phases <Badge type="tip" text="v3.0.5" />
+
+Enable two-phase compilation if supported, enabled by default.
+
+```lua
+set_policy("build.c++.modules.two_phases", false)
+```
+
+## build.c++.msvc.runtime <Badge type="tip" text="v3.0.5" />
+
+Set the default MSVC runtime, values: `MT` or `MD`.
+
+```lua
+set_policy("build.c++.msvc.runtime", "MT")
+```
+
+## build.linker.output <Badge type="tip" text="v3.0.5" />
+
+Enable linker output, e.g. show -Wl,--print-memory-usage output for gcc/g++.
+
+```lua
+set_policy("build.linker.output", true)
+```
+
+## build.jobgraph <Badge type="tip" text="v3.0.5" />
+
+Enable build jobgraph, enabled by default.
+
+```lua
+set_policy("build.jobgraph", false) -- disable
+```
+
+## build.progress_show_target <Badge type="tip" text="v3.0.8" />
+
+Show target name in build progress output, enabled by default.
+
+```lua
+set_policy("build.progress_show_target", false)
+```
+
+## install.strip_packagelibs <Badge type="tip" text="v2.9.4" />
+
+Strip package libraries for installation, enabled by default.
+
+```lua
+set_policy("install.strip_packagelibs", false)
+```
+
+## platform.longpaths <Badge type="tip" text="v2.6.9" />
+
+Enable long paths when building target or installing package on Windows.
+
+```lua
+set_policy("platform.longpaths", true)
+```
+
+## package.install_locally <Badge type="tip" text="v3.0.5" />
+
+Install packages in the local project folder.
+
+```lua
+set_policy("package.install_locally", true)
+```
+
+## package.keep_source <Badge type="tip" text="v3.0.8" />
+
+Keep package source code after installing.
+
+```lua
+set_policy("package.keep_source", true)
+```
+
+## package.include_external_headers <Badge type="tip" text="v2.7.6" />
+
+Use package includes as external headers (e.g. -isystem) to reduce warnings.
+
+```lua
+set_policy("package.include_external_headers", false)
+```
+
+## package.inherit_external_configs <Badge type="tip" text="v2.8.5" />
+
+Inherit configs from external command arguments (e.g. toolchains), enabled by default.
+
+```lua
+set_policy("package.inherit_external_configs", false)
+```
+
+## package.resolve_depconflict <Badge type="tip" text="v2.9.1" />
+
+Automatically resolve package dependencies conflict, enabled by default.
+
+```lua
+set_policy("package.resolve_depconflict", false)
+```
+
+## package.sync_requires_to_deps <Badge type="tip" text="v2.9.1" />
+
+Synchronize requires configuration to all package dependencies.
+
+```lua
+set_policy("package.sync_requires_to_deps", true)
+```
+
+## package.xmake.pass_depconfs <Badge type="tip" text="v2.8.5" />
+
+Automatically passes dependency configuration for inner xmake package, enabled by default.
+
+```lua
+set_policy("package.xmake.pass_depconfs", false)
+```
+
+## package.cmake_generator.ninja <Badge type="tip" text="v2.8.7" />
+
+Force cmake package to use ninja for build.
+
+```lua
+set_policy("package.cmake_generator.ninja", true)
+```
+
+## package.msbuild.multi_tool_task <Badge type="tip" text="v3.0.5" />
+
+Enable msbuild MultiToolTask parallel compilation.
+
+```lua
+set_policy("package.msbuild.multi_tool_task", true)
+```
+
+## package.merge_staticlibs <Badge type="tip" text="v2.9.4" />
+
+Merge all static libraries after installing package.
+
+```lua
+set_policy("package.merge_staticlibs", true)
+```
+
+## package.build.ccache <Badge type="tip" text="v3.0.5" />
+
+Enable C/C++ package build cache, disabled by default.
+
+```lua
+set_policy("package.build.ccache", true)
+```
+
+## test.stop_on_first_failure <Badge type="tip" text="v2.8.5" />
+
+Stop testing on the first failure.
+
+```lua
+set_policy("test.stop_on_first_failure", true)
+```
+
+## test.return_zero_on_failure <Badge type="tip" text="v2.8.5" />
+
+Return zero as the exit code on failure.
+
+```lua
+set_policy("test.return_zero_on_failure", true)
+```
+
+## diagnosis.check_build_deps <Badge type="tip" text="v2.9.4" />
+
+Show diagnosis info for checking build dependencies.
+
+```lua
+set_policy("diagnosis.check_build_deps", true)
+```
+
+## network.mode <Badge type="tip" text="v2.9.4" />
+
+Set the network mode. Set to `private` to disable fetching from remote package repositories.
+
+```lua
+set_policy("network.mode", "private")
+```
+
+## compatibility.version <Badge type="tip" text="v3.0.5" />
+
+Set the compatibility version, values: `2.0` or `3.0`, default `3.0`.
+
+```lua
+set_policy("compatibility.version", "2.0")
+```
+
+## generator.compile_commands <Badge type="tip" text="v3.0.5" />
+
+Enable compile_commands.json generation, enabled by default.
+
+```lua
+set_policy("generator.compile_commands", false)
+```
+
+## generator.vsxmake.root_sln <Badge type="tip" text="v3.0.5" />
+
+Generate the solution file in root output directory.
+
+```lua
+set_policy("generator.vsxmake.root_sln", true)
+```

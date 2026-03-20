@@ -216,7 +216,7 @@ target("test")
 libmul.a 静态库会自动合并 libadd.a 和 libsub.a 两个子依赖的静态库。
 
 
-## build.release.strip
+## build.release.strip <Badge type="tip" text="v3.0.8" />
 
 在 `mode.release` 和 `mode.releasedbg` 模式下，自动裁剪二进制文件中的调试符号。此策略默认启用。
 
@@ -638,3 +638,315 @@ set_policy("windows.manifest.uac.ui", true)
    ```
 
 这提供了更好的并行构建进度可见性，更容易识别编译缓慢的单元，并为包含大量源文件或具有多个编译单元的并行构建的大型项目改善了整体用户体验。
+
+## build.ccache.global_storage <Badge type="tip" text="v2.9.5" />
+
+开启 `build.ccache` 后，使用全局存储来存放编译缓存。
+
+```lua
+set_policy("build.ccache.global_storage", true)
+```
+
+## build.c++.modules <Badge type="tip" text="v2.7.1" />
+
+即使没有 `.mpp` 文件参与编译，也强制启用 C++ Modules 支持。
+
+```lua
+set_policy("build.c++.modules", true)
+```
+
+## build.c++.modules.std <Badge type="tip" text="v2.8.1" />
+
+启用 std 模块导入支持，默认启用。
+
+```lua
+set_policy("build.c++.modules.std", false) -- 禁用
+```
+
+## build.c++.modules.culling <Badge type="tip" text="v2.9.4" />
+
+启用未引用和非公开命名模块的裁剪，默认启用。
+
+```lua
+set_policy("build.c++.modules.culling", false)
+```
+
+## build.c++.modules.reuse <Badge type="tip" text="v3.0.5" />
+
+尽可能复用已编译的模块 BMI 文件，默认启用。
+
+```lua
+set_policy("build.c++.modules.reuse", false)
+```
+
+## build.c++.modules.reuse.nocheck <Badge type="tip" text="v3.0.5" />
+
+复用模块时禁用编译标志兼容性检查。
+
+```lua
+set_policy("build.c++.modules.reuse.nocheck", true)
+```
+
+## build.c++.modules.reuse.strict <Badge type="tip" text="v3.0.5" />
+
+复用模块时，如果依赖目标的宏定义不同则不复用。
+
+```lua
+set_policy("build.c++.modules.reuse.strict", true)
+```
+
+## build.c++.modules.fallbackscanner <Badge type="tip" text="v3.0.5" />
+
+强制所有编译器使用回退模块依赖扫描器。
+
+```lua
+set_policy("build.c++.modules.fallbackscanner", true)
+```
+
+## build.c++.modules.clang.fallbackscanner <Badge type="tip" text="v3.0.5" />
+
+强制 clang 使用回退模块依赖扫描器。
+
+```lua
+set_policy("build.c++.modules.clang.fallbackscanner", true)
+```
+
+## build.c++.modules.msvc.fallbackscanner <Badge type="tip" text="v3.0.5" />
+
+强制 msvc 使用回退模块依赖扫描器。
+
+```lua
+set_policy("build.c++.modules.msvc.fallbackscanner", true)
+```
+
+## build.c++.modules.gcc.fallbackscanner <Badge type="tip" text="v3.0.5" />
+
+强制 gcc 使用回退模块依赖扫描器。
+
+```lua
+set_policy("build.c++.modules.gcc.fallbackscanner", true)
+```
+
+## build.c++.modules.gcc.cxx11abi <Badge type="tip" text="v2.8.5" />
+
+强制在 gcc 的 C++ Modules 中启用新的 cxx11 ABI。
+
+```lua
+set_policy("build.c++.modules.gcc.cxx11abi", true)
+```
+
+## build.c++.modules.non_cascading_changes <Badge type="tip" text="v3.0.5" />
+
+启用非级联变更支持（实验性），默认关闭。
+
+```lua
+set_policy("build.c++.modules.non_cascading_changes", true)
+```
+
+## build.c++.modules.hide_dependencies <Badge type="tip" text="v3.0.5" />
+
+隐藏 C++ Modules 编译时命令行中的依赖文件，减少噪音（可能降低构建性能）。
+
+```lua
+set_policy("build.c++.modules.hide_dependencies", true)
+```
+
+## build.c++.modules.two_phases <Badge type="tip" text="v3.0.5" />
+
+如果编译器支持，启用两阶段编译，默认启用。
+
+```lua
+set_policy("build.c++.modules.two_phases", false)
+```
+
+## build.c++.msvc.runtime <Badge type="tip" text="v3.0.5" />
+
+设置默认的 MSVC 运行时，可选值为 `MT` 或 `MD`。
+
+```lua
+set_policy("build.c++.msvc.runtime", "MT")
+```
+
+## build.linker.output <Badge type="tip" text="v3.0.5" />
+
+启用链接器输出信息，例如显示 gcc/g++ 的 `-Wl,--print-memory-usage` 输出。
+
+```lua
+set_policy("build.linker.output", true)
+```
+
+## build.jobgraph <Badge type="tip" text="v3.0.5" />
+
+启用构建 jobgraph，默认启用。
+
+```lua
+set_policy("build.jobgraph", false) -- 禁用
+```
+
+## build.progress_show_target <Badge type="tip" text="v3.0.8" />
+
+在构建进度输出中显示目标名称，默认启用。
+
+```lua
+set_policy("build.progress_show_target", false)
+```
+
+## install.strip_packagelibs <Badge type="tip" text="v2.9.4" />
+
+安装时裁剪包库文件中的符号，默认启用。
+
+```lua
+set_policy("install.strip_packagelibs", false)
+```
+
+## platform.longpaths <Badge type="tip" text="v2.6.9" />
+
+在 Windows 上构建目标或安装包时启用长路径支持。
+
+```lua
+set_policy("platform.longpaths", true)
+```
+
+## package.install_locally <Badge type="tip" text="v3.0.5" />
+
+将包安装到本地项目目录而非全局目录。
+
+```lua
+set_policy("package.install_locally", true)
+```
+
+## package.keep_source <Badge type="tip" text="v3.0.8" />
+
+安装包后保留源码，不清理源码目录。
+
+```lua
+set_policy("package.keep_source", true)
+```
+
+## package.include_external_headers <Badge type="tip" text="v2.7.6" />
+
+将包的头文件作为外部头文件引用（如使用 `-isystem`），减少警告。
+
+```lua
+set_policy("package.include_external_headers", false)
+```
+
+## package.inherit_external_configs <Badge type="tip" text="v2.8.5" />
+
+从外部命令行参数继承配置（如工具链），默认启用。
+
+```lua
+set_policy("package.inherit_external_configs", false)
+```
+
+## package.resolve_depconflict <Badge type="tip" text="v2.9.1" />
+
+自动解决包依赖冲突，默认启用。
+
+```lua
+set_policy("package.resolve_depconflict", false)
+```
+
+## package.sync_requires_to_deps <Badge type="tip" text="v2.9.1" />
+
+将顶层 `add_requires` 配置同步到所有包依赖项。
+
+```lua
+set_policy("package.sync_requires_to_deps", true)
+```
+
+## package.xmake.pass_depconfs <Badge type="tip" text="v2.8.5" />
+
+自动将依赖配置传递给内部 xmake 包，默认启用。
+
+```lua
+set_policy("package.xmake.pass_depconfs", false)
+```
+
+## package.cmake_generator.ninja <Badge type="tip" text="v2.8.7" />
+
+强制 cmake 包使用 ninja 进行构建。
+
+```lua
+set_policy("package.cmake_generator.ninja", true)
+```
+
+## package.msbuild.multi_tool_task <Badge type="tip" text="v3.0.5" />
+
+启用 msbuild 的 MultiToolTask 并行编译。
+
+```lua
+set_policy("package.msbuild.multi_tool_task", true)
+```
+
+## package.merge_staticlibs <Badge type="tip" text="v2.9.4" />
+
+安装包后合并所有静态库。
+
+```lua
+set_policy("package.merge_staticlibs", true)
+```
+
+## package.build.ccache <Badge type="tip" text="v3.0.5" />
+
+启用 C/C++ 包构建缓存，默认关闭。
+
+```lua
+set_policy("package.build.ccache", true)
+```
+
+## test.stop_on_first_failure <Badge type="tip" text="v2.8.5" />
+
+在第一个测试失败时停止运行后续测试。
+
+```lua
+set_policy("test.stop_on_first_failure", true)
+```
+
+## test.return_zero_on_failure <Badge type="tip" text="v2.8.5" />
+
+测试失败时返回 0 作为退出码。
+
+```lua
+set_policy("test.return_zero_on_failure", true)
+```
+
+## diagnosis.check_build_deps <Badge type="tip" text="v2.9.4" />
+
+显示构建依赖检查的诊断信息。
+
+```lua
+set_policy("diagnosis.check_build_deps", true)
+```
+
+## network.mode <Badge type="tip" text="v2.9.4" />
+
+设置网络模式，设为 `private` 时将禁用远程包仓库获取。
+
+```lua
+set_policy("network.mode", "private")
+```
+
+## compatibility.version <Badge type="tip" text="v3.0.5" />
+
+设置兼容性版本，可选值为 `2.0` 或 `3.0`，默认 `3.0`。
+
+```lua
+set_policy("compatibility.version", "2.0")
+```
+
+## generator.compile_commands <Badge type="tip" text="v3.0.5" />
+
+启用 compile_commands.json 生成，默认启用。
+
+```lua
+set_policy("generator.compile_commands", false)
+```
+
+## generator.vsxmake.root_sln <Badge type="tip" text="v3.0.5" />
+
+在根输出目录生成解决方案文件。
+
+```lua
+set_policy("generator.vsxmake.root_sln", true)
+```

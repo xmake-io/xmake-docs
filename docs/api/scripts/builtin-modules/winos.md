@@ -213,7 +213,7 @@ local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Micros
 local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger")
 ```
 
-## winos.file_signature
+## winos.file_signature <Badge type="tip" text="v3.0.8" />
 
 - Get the digital signature information of a file
 
