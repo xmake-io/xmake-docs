@@ -223,6 +223,17 @@ target("test")
 The libmul.a static library automatically merges the libadd.a and libsub.a sub-dependent static libraries.
 
 
+## build.release.strip
+
+Automatically strip debug symbols from binaries in `mode.release` and `mode.releasedbg` modes. This policy is enabled by default.
+
+When this policy is enabled and the target has not explicitly called `set_strip()`, it will automatically apply `set_strip("all")`.
+
+```lua
+-- Enabled by default, set to false to disable
+set_policy("build.release.strip", false)
+```
+
 ## build.ccache <Badge type="tip" text="v2.6.7" />
 
 Xmake has a built-in build cache enabled by default, which can be explicitly disabled by setting this policy.

@@ -92,7 +92,7 @@ $ xmake
 $ xmake run -d hello
 ```
 
-Xmake will use the debugger to load the program and run it. Currently, it supports various debuggers such as lldb, gdb, windbg, vsjitdebugger, ollydbg, etc.
+Xmake will use the debugger to load the program and run it. Currently, it supports various debuggers such as lldb, gdb, windbg, vsjitdebugger, ollydbg, nnd, etc.
 
 ```sh
 [lldb]$target create "build/hello"

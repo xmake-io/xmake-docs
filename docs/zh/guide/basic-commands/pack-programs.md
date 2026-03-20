@@ -66,8 +66,8 @@ $ tree ./build/foo.pkg/
 - Windows NSIS 二进制安装包
 - Windows WIX 二进制安装包
 - runself (shell) 自编译安装包
-- zip/tar.gz 二进制包
-- zip/tar.gz 源码包
+- zip/tar.gz/tar.xz 二进制包
+- zip/tar.gz/tar.xz 源码包
 - RPM 二进制安装包
 - SRPM 源码安装包
 - DEB 二进制安装包

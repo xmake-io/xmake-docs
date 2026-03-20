@@ -165,3 +165,32 @@ fortran, c
 ```
 
 Among them, the most commonly used are templates for creating console programs (console), static libraries (static), and dynamic libraries (shared).
+
+## Custom Templates {#custom-templates}
+
+In addition to built-in templates, xmake supports custom project templates. Templates are searched in priority order from:
+
+1. **Repository templates** - `templates` directory in repositories added via `xmake repo`
+2. **Global templates** - `~/.xmake/templates` directory
+
+### List Available Templates
+
+```bash
+# List all available templates
+$ xmake create --list
+
+# Filter by language
+$ xmake create --list -l c++
+```
+
+### Use Custom Templates
+
+```bash
+$ xmake create -t mytemplate hello
+```
+
+### Remote Template Distribution
+
+Templates support remote distribution via repositories. Users can upload custom templates to a repository, and others can use them by adding that repository.
+
+The template directory structure is: `<rootdir>/<language>/<template_id>/xmake.lua`. Template files can use variables like `${TARGET_NAME}` that are automatically replaced during project creation.

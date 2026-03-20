@@ -212,3 +212,48 @@ Get the value under the specified registry path, if the value name is not specif
 local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug")
 local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger")
 ```
+
+## winos.file_signature
+
+- Get the digital signature information of a file
+
+#### Function Prototype
+
+::: tip API
+```lua
+winos.file_signature(filepath: <string>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| filepath | Windows executable file path |
+
+#### Return Value
+
+| Type | Description |
+|------|-------------|
+| table/nil | Returns a table with signature information, nil if the file has no signature |
+
+The returned table contains the following fields:
+- `is_signed`: Whether the file is digitally signed
+- `is_trusted`: Whether the signature is trusted by the OS
+- `signer_name`: Name of the signer
+
+#### Usage
+
+```lua
+local info = winos.file_signature("C:\\Windows\\System32\\notepad.exe")
+if info then
+    print(info.is_signed)    -- true
+    print(info.is_trusted)   -- true
+    print(info.signer_name)  -- "Microsoft Windows"
+end
+```
+
+::: tip Note
+This interface is only available on Windows.
+:::

@@ -216,6 +216,17 @@ target("test")
 libmul.a 静态库会自动合并 libadd.a 和 libsub.a 两个子依赖的静态库。
 
 
+## build.release.strip
+
+在 `mode.release` 和 `mode.releasedbg` 模式下，自动裁剪二进制文件中的调试符号。此策略默认启用。
+
+当该策略启用且目标未显式调用 `set_strip()` 时，会自动设置 `set_strip("all")`。
+
+```lua
+-- 默认已启用，如需关闭
+set_policy("build.release.strip", false)
+```
+
 ## build.ccache <Badge type="tip" text="v2.6.7" />
 
 Xmake 默认是开启内置的编译缓存的，通过设置这个策略，可以显式禁用缓存。

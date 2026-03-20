@@ -404,6 +404,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       text: 'Other Languages',
       collapsed: true,
       items: [
+        { text: 'C# Programs', link: 'other-languages/csharp' },
         { text: 'ObjC Programs', link: 'other-languages/objc' },
         { text: 'Cuda Programs', link: 'other-languages/cuda' },
         { text: 'Lex/Yacc Programs', link: 'other-languages/lex-yacc' },

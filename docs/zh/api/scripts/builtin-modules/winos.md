@@ -213,3 +213,48 @@ winos.registry_query(keypath: <string>)
 local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug")
 local value, errors = winos.registry_query("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AeDebug;Debugger")
 ```
+
+## winos.file_signature
+
+- 获取文件的数字签名信息
+
+#### 函数原型
+
+::: tip API
+```lua
+winos.file_signature(filepath: <string>)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| filepath | Windows 可执行文件路径 |
+
+#### 返回值说明
+
+| 类型 | 描述 |
+|------|------|
+| table/nil | 返回包含签名信息的 table，文件无签名时返回 nil |
+
+返回的 table 包含以下字段：
+- `is_signed`：文件是否已签名
+- `is_trusted`：签名是否受操作系统信任
+- `signer_name`：签名者名称
+
+#### 用法说明
+
+```lua
+local info = winos.file_signature("C:\\Windows\\System32\\notepad.exe")
+if info then
+    print(info.is_signed)    -- true
+    print(info.is_trusted)   -- true
+    print(info.signer_name)  -- "Microsoft Windows"
+end
+```
+
+::: tip 注意
+此接口仅在 Windows 上可用。
+:::

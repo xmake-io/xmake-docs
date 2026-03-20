@@ -485,6 +485,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
       text: '其他语言',
       collapsed: true,
       items: [
+        { text: 'C# 程序', link: 'other-languages/csharp' },
         { text: 'ObjC 程序', link: 'other-languages/objc' },
         { text: 'Cuda 程序', link: 'other-languages/cuda' },
         { text: 'Lex/Yacc 程序', link: 'other-languages/lex-yacc' },

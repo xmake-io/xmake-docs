@@ -64,8 +64,8 @@ The last packaging method is the most powerful, implemented through the `xmake p
 - Windows NSIS binary installation package
 - Windows WIX binary installation package
 - runself (shell) self-compiled installation package
-- zip/tar.gz binary package
-- zip/tar.gz source package
+- zip/tar.gz/tar.xz binary package
+- zip/tar.gz/tar.xz source package
 - RPM binary installation package
 - SRPM source installation package
 - DEB binary installation package

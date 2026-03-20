@@ -166,3 +166,32 @@ $ xmake
 
 其中，最常用的就是创建控制台（console）、静态库（static）和动态库（shared）等程序。
 
+## 自定义模板 {#custom-templates}
+
+除了内置模板，xmake 还支持自定义工程模板。模板按优先级从以下位置搜索：
+
+1. **仓库模板** - 通过 `xmake repo` 添加的仓库中的 `templates` 目录
+2. **全局模板** - `~/.xmake/templates` 目录
+
+### 列出可用模板
+
+```bash
+# 列出所有可用模板
+$ xmake create --list
+
+# 按语言过滤
+$ xmake create --list -l c++
+```
+
+### 使用自定义模板
+
+```bash
+$ xmake create -t mytemplate hello
+```
+
+### 远程模板分发
+
+模板支持通过远程仓库分发，用户可以将自定义模板上传到仓库，其他人通过添加仓库即可使用。
+
+模板目录结构为：`<rootdir>/<language>/<template_id>/xmake.lua`，模板文件中可使用 `${TARGET_NAME}` 等变量，在创建工程时自动替换。
+
