@@ -275,7 +275,7 @@ io.gsub(filepath: <string>, pattern: <string>, replace: <string|function>, optio
 
 #### 用法说明
 
-类似[string.gsub](#stringgsub)接口，全文模式匹配替换内容，不过这里是直接操作文件，例如：
+类似 `string.gsub` 接口，全文模式匹配替换内容，不过这里是直接操作文件，例如：
 
 ```lua
 -- 移除文件所有的空白字符

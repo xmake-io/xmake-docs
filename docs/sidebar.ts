@@ -13,7 +13,7 @@ export function builtinModulesApiSidebarItems(): DefaultTheme.SidebarItem[] {
     { text: 'cprintf', link: 'builtin-modules/cprintf' },
     { text: 'format', link: 'builtin-modules/format' },
     { text: 'vformat', link: 'builtin-modules/vformat' },
-    { text: 'raise', link: 'builtin-pmodules/raise' },
+    { text: 'raise', link: 'builtin-modules/raise' },
     { text: 'os', link: 'builtin-modules/os' },
     { text: 'io', link: 'builtin-modules/io' },
     { text: 'path', link: 'builtin-modules/path' },

@@ -503,34 +503,6 @@ end
 ```
 
 
-## os.access
-
-- Check file access permissions
-
-#### Function Prototype
-
-::: tip API
-```lua
-os.access(path: <string>, mode: <string>)
-```
-:::
-
-#### Parameter Description
-
-| Parameter | Description |
-|-----------|-------------|
-| path | File path |
-| mode | Access mode (e.g., 'r', 'w', 'x', 'rw', 'rwx') |
-
-#### Usage
-
-Checks if the file has the specified access permissions. Returns `true` if accessible, `false` otherwise.
-
-```lua
-if os.access("file", "w") then
-    print("file is writable")
-end
-```
 
 ## os.islink
 

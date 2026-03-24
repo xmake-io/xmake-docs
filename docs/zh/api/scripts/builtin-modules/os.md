@@ -501,35 +501,6 @@ end
 ```
 
 
-## os.access
-
-- 检查文件访问权限
-
-#### 函数原型
-
-::: tip API
-```lua
-os.access(path: <string>, mode: <string>)
-```
-:::
-
-#### 参数说明
-
-| 参数 | 描述 |
-|------|------|
-| path | 文件路径 |
-| mode | 访问模式（例如：'r', 'w', 'x', 'rw', 'rwx'） |
-
-#### 用法说明
-
-检查文件是否具有指定的访问权限。如果可访问返回 `true`，否则返回 `false`。
-
-```lua
-if os.access("file", "w") then
-    print("file is writable")
-end
-```
-
 ## os.islink
 
 - 判断是否为符号链接

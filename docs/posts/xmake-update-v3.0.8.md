@@ -1,7 +1,7 @@
 ---
-title: Xmake v3.0.8 Preview, C# Language Support, Custom Templates and WASI Running
+title: Xmake v3.0.8 Released, C# Language Support, Custom Templates and WASI Running
 tags: [xmake, csharp, dotnet, pinvoke, wasi, nnd, templates]
-date: 2026-03-20
+date: 2026-03-24
 author: Ruki
 outline: deep
 ---

@@ -466,7 +466,7 @@ end
 
 ## path.splitenv
 
-- Split a environment variable value of an array of pathes
+- Split an environment variable value into an array of paths
 
 #### Function Prototype
 
@@ -486,14 +486,14 @@ path.splitenv(envpath: <string>)
 #### Usage
 
 ```lua
-local pathes = path.splitenv(vformat("$(env PATH)"))
+local paths = path.splitenv(vformat("$(env PATH)"))
 
 -- for windows
-local pathes = path.splitenv("C:\\Windows;C:\\Windows\\System32")
+local paths = path.splitenv("C:\\Windows;C:\\Windows\\System32")
 -- got { "C:\\Windows", "C:\\Windows\\System32" }
 
 -- for *nix
-local pathes = path.splitenv("/usr/bin:/usr/local/bin")
+local paths = path.splitenv("/usr/bin:/usr/local/bin")
 -- got { "/usr/bin", "/usr/local/bin" }
 ```
 

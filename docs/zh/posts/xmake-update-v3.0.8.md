@@ -1,7 +1,7 @@
 ---
-title: Xmake v3.0.8 预览，C# 语言支持，自定义模板与 WASI 运行
+title: Xmake v3.0.8 发布，C# 语言支持，自定义模板与 WASI 运行
 tags: [xmake, csharp, dotnet, pinvoke, wasi, nnd, templates]
-date: 2026-03-20
+date: 2026-03-24
 author: Ruki
 outline: deep
 ---

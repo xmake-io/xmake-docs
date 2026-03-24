@@ -427,7 +427,7 @@ Additionally, we enhanced Nim support for shared libraries and RPATH handling, i
 ### Bugs fixed
 
 * [#7210](https://github.com/xmake-io/xmake/pull/7210): Fix package version
-* [#7213](https://github.com/xmake-io/xmake/pull/7213): Fix installdir of imporfiles
+* [#7213](https://github.com/xmake-io/xmake/pull/7213): Fix installdir of importfiles
 * [#7231](https://github.com/xmake-io/xmake/pull/7231): Fix get flag in module support
 * [#7245](https://github.com/xmake-io/xmake/pull/7245): Fix to select scheme version
 * [#7259](https://github.com/xmake-io/xmake/pull/7259): Fix export c++ function symbols

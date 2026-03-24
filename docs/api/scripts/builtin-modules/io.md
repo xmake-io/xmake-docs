@@ -275,7 +275,7 @@ io.gsub(filename: <string>, pattern: <string>, replacement: <string>, options?: 
 
 #### Usage
 
-Similar to the [string.gsub](#stringgsub) interface, the full-text pattern matches the replacement content, but here is the direct operation file, for example:
+Similar to the `string.gsub` interface, the full-text pattern matches the replacement content, but here is the direct operation file, for example:
 
 ```lua
 -- Remove all whitespace characters from the file
