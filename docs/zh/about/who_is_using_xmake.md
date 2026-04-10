@@ -41,3 +41,4 @@
 | [JXMaster](https://github.com/JX-Master) | [LunaSDK](https://github.com/JX-Master/LunaSDK) | 一个C++的实时渲染框架，使用xmake作为构建系统，支持shader离线编译、资产打包等自定义流程，并支持Windows、macOS等多个系统的应用开发。 |
 | [ygf](https://github.com/cn-ygf) | [ylis](https://github.com/cn-ygf/ylis) 一个`windows`安装包制作工具，使用`lua`脚本引擎，支持大部分安装场景（注册表、服务、执行命令等），适合中小型软件的安装包制作，比`NSIS`方便。| 感觉`xmake`感觉比`cmake`和`Visual Studio`好用多了，IDE改编译选项不灵活，`cmake`语法学不会 |
 | [ast](https://github.com/space-ast/ast) | [ast](https://github.com/space-ast/ast)(/æst/) 是一个专注于航天仿真领域的算法库，提供了轨道力学、姿态控制、轨迹规划等核心算法的现代C++实现。| xmake提供的跨平台编译和测试能力让ast项目能在linux、windows、mingw、wasm等平台编译运行 |
+| [LeviMC](https://github.com/LiteLDev) | [LeviLamina](https://github.com/LiteLDev/levilamina) | 这就是适合我们项目的构建系统和C++包管理器 |
