@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useData } from 'vitepress'
+import { VPBadge } from 'vitepress/theme'
 import { xmakeRelease } from '../../data/xmake-release.js'
 
 type HeroConfig = {
@@ -46,7 +47,7 @@ const badgeTitle = computed(() => {
         :title="badgeTitle"
         :aria-label="badgeTitle"
       >
-        {{ releaseTag }}
+        <VPBadge class="small xmake-release-badge-chip" type="tip" :text="releaseTag" />
       </a>
     </span>
     <span v-if="hero.text" v-html="hero.text" class="text"></span>
@@ -109,29 +110,23 @@ const badgeTitle = computed(() => {
 }
 
 .xmake-release-badge {
+  display: inline-flex;
+  align-items: flex-start;
   position: relative;
-  top: -1.9em;
-  margin-left: 0.04em;
-  padding: 0.05em 0.16em;
-  border-radius: 0.45em;
-  background: transparent;
-  color: var(--vp-c-brand-1);
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 0.16em;
+  top: -0.6em;
+  margin-left: 0.08em;
+  text-decoration: none;
   white-space: nowrap;
-  font-size: 0.26em;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  font-variant-numeric: tabular-nums;
-  transition: background-color 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
-.xmake-release-badge:hover {
-  background: rgba(66, 211, 146, 0.12);
-  color: var(--vp-c-brand-2);
-  text-decoration-color: currentColor;
+.xmake-release-badge-chip {
+  margin-left: 0;
+  transform: none;
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.xmake-release-badge:hover .xmake-release-badge-chip {
+  filter: brightness(1.08);
 }
 
 @media (min-width: 640px) {
