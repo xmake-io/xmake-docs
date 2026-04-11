@@ -6,6 +6,7 @@ import WWAds from './components/WWAds.vue'
 import VPCarbonAds from './components/VPCarbonAds.vue'
 import SponsorButton from './components/SponsorButton.vue'
 import FileExplorer from './components/FileExplorer.vue'
+import HomeHeroInfo from './components/HomeHeroInfo.vue'
 import { useData } from 'vitepress'
 import { data as codes } from '../data/codes-data.js'
 import './styles.css'
@@ -37,6 +38,9 @@ export default {
              page.value.relativePath.startsWith('zh/') || 
              page.value.filePath.includes('/zh/')
     })
+    const isHomePage = computed(() => {
+      return page.value.relativePath === 'index.md' || page.value.relativePath === 'zh/index.md'
+    })
     const isPost = computed(() => {
       return page.value.filePath.includes('posts/') || page.value.filePath.includes('blog/')
     })
@@ -51,7 +55,7 @@ export default {
       }, { immediate: true })
     }
 
-    return h(Theme.Layout, { class: { 'is-post': isPost.value } }, {
+    const slots: Record<string, () => ReturnType<typeof h> | null> = {
       'doc-content-before': () => h(VPDoc),
       'doc-after': () => {
         if (isZh.value) {
@@ -59,7 +63,13 @@ export default {
         }
         return null
       }
-    })
+    }
+
+    if (isHomePage.value) {
+      slots['home-hero-info'] = () => h(HomeHeroInfo)
+    }
+
+    return h(Theme.Layout, { class: { 'is-post': isPost.value } }, slots)
   },
   enhanceApp({ app, router }) {
     // Register global components
