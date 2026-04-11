@@ -5,6 +5,9 @@ hero:
   name: "Xmake"
   text: "A cross-platform build utility based on Lua"
   tagline: <i>Modern C/C++ build tools</i>
+    <a href="https://github.com/xmake-io/xmake/releases">
+      <img src="https://img.shields.io/github/release/xmake-io/xmake.svg?style=plastic&prefix=v&color=42b883&logo=lua" alt="Github All Releases" />
+    </a>
   actions:
     - theme: brand
       text: Get Started ->

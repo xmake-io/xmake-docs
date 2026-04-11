@@ -5,6 +5,9 @@ hero:
   name: "Xmake"
   text: "一个基于Lua的轻量级跨平台自动构建工具"
   tagline: <i>现代化的 C/C++ 构建工具</i>
+    <a href="https://github.com/xmake-io/xmake/releases">
+      <img src="https://img.shields.io/github/release/xmake-io/xmake.svg?style=plastic&prefix=v&color=42b883&logo=lua" alt="Github All Releases" />
+    </a>
   actions:
     - theme: brand
       text: 快速上手 ->
