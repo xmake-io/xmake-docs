@@ -22,6 +22,11 @@
   }
 }
 
+.VPHomeHero .xmake-release-badge:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+}
+
 /* button */
 :root {
   --vp-button-brand-border: transparent;

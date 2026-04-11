@@ -1,9 +1,10 @@
 {
   "type": "module",
   "scripts": {
-    "docs:dev": "node scripts/generate-blog-data.js && node scripts/generate-codes-data.js && vitepress dev docs",
-    "docs:build": "node scripts/generate-blog-data.js && node scripts/generate-codes-data.js && vitepress build docs && node scripts/fix-llms-txt.cjs",
+    "docs:dev": "node scripts/generate-release-data.js && node scripts/generate-blog-data.js && node scripts/generate-codes-data.js && vitepress dev docs",
+    "docs:build": "node scripts/generate-release-data.js && node scripts/generate-blog-data.js && node scripts/generate-codes-data.js && vitepress build docs && node scripts/fix-llms-txt.cjs",
     "docs:preview": "vitepress preview docs",
+    "generate-release": "node scripts/generate-release-data.js",
     "generate-blog": "node scripts/generate-blog-data.js",
     "generate-codes": "node scripts/generate-codes-data.js"
   },

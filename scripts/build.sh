@@ -9,6 +9,7 @@ npm add @types/node -D
 npm add shiki -D
 npm add jszip
 npm install
+npm run generate-release
 npm run generate-blog
 npm run generate-codes
 npx vitepress build docs
