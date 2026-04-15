@@ -83,7 +83,8 @@ function nav(): DefaultTheme.NavItem[] {
         {
           text: 'Resources',
           items: [
-            { text: 'Xmake Packages', link: 'https://xmake.microblock.cc/' }
+            { text: 'Xmake Packages', link: 'https://xmake.microblock.cc/' },
+            { text: 'Xmake Skills', link: 'https://github.com/xmake-io/xmake-skills' }
           ]
         },
         {

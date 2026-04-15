@@ -23,6 +23,18 @@
 如何配置一个使用 C++20 模块的目标？
 ```
 
+## 使用 Xmake Agent Skills
+
+对于支持 [Agent Skills](https://www.anthropic.com/news/agent-skills) 格式的 AI 编程助手（例如 Claude Code），[**xmake-skills**](https://github.com/xmake-io/xmake-skills) 提供了一套按任务组织的 skill 集合，覆盖工程配置、工具链、交叉编译、包管理、测试、打包、脚本扩展、性能优化、故障排查，以及各语言（Rust、Go、Swift、CUDA、Objective-C、D、Fortran 等）的支持。
+
+每个 skill 都基于 xmake 的真实行为编写，并在 description 中清晰描述了 *何时* 应被加载，这样 AI 助手就能按需拉取与当前任务相关的文档，避免编造 API 或使用过时的参数。
+
+```bash
+git clone https://github.com/xmake-io/xmake-skills.git
+```
+
+然后将 `skills/` 目录指向你的 Agent，或参考对应 Agent 平台的文档安装单个 skill。
+
 ## 提供完整的上下文信息
 
 在提问时，尽量提供完整的上下文信息，包括：

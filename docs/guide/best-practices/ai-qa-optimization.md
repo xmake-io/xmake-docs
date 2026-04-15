@@ -23,6 +23,18 @@ Please read https://xmake.io/llms-full.txt first to understand xmake's API and f
 How do I configure a target that uses C++20 modules?
 ```
 
+## Use Xmake Agent Skills
+
+For AI coding assistants that support the [Agent Skills](https://www.anthropic.com/news/agent-skills) format (such as Claude Code), [**xmake-skills**](https://github.com/xmake-io/xmake-skills) provides a curated collection of task-focused skills covering project configuration, toolchains, cross-compilation, packages, testing, packaging, scripting, performance tuning, troubleshooting, and per-language support (Rust, Go, Swift, CUDA, Objective-C, D, Fortran, etc.).
+
+Each skill is grounded in real xmake behavior and describes *when* the agent should load it, so the assistant pulls in only the documentation relevant to the task at hand — avoiding hallucinated APIs and outdated flags.
+
+```bash
+git clone https://github.com/xmake-io/xmake-skills.git
+```
+
+Then point your agent at the `skills/` directory, or install individual skills following your agent platform's documentation.
+
 ## Provide Complete Context Information
 
 When asking questions, try to provide complete context information, including:
