@@ -3222,7 +3222,7 @@ target("test")
 
 相关背景细节见：[#5109](https://github.com/xmake-io/xmake/issues/5109)
 
-2.9.4 之后，我们新增了 `add_rpathdirs("xxx", {install_only = true})` ，可以单独配置安装后的 rpath 路径。
+2.9.4 之后，我们新增了 `add_rpathdirs("xxx", {installonly = true})` ，可以单独配置安装后的 rpath 路径。
 
 ## add_includedirs
 

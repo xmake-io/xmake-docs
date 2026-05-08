@@ -3158,7 +3158,7 @@ We can specify it through additional parameters, `add_rpathdirs("xxx", {runpath 
 
 For relevant background details, see: [#5109](https://github.com/xmake-io/xmake/issues/5109)
 
-After 2.9.4, we added `add_rpathdirs("xxx", {install_only = true})`, which can configure the installed rpath path separately.
+After 2.9.4, we added `add_rpathdirs("xxx", {installonly = true})`, which can configure the installed rpath path separately.
 
 ## add_includedirs
 
