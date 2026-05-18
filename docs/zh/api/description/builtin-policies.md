@@ -215,6 +215,20 @@ target("test")
 
 libmul.a 静态库会自动合并 libadd.a 和 libsub.a 两个子依赖的静态库。
 
+自 v3.0.9 起，该策略同时会把 `add_packages(...)` 引入的静态库一起合并到父目标中。例如：
+
+```lua
+add_requires("libpng", {system = false})
+add_requireconfs("libpng.*", {system = false, override = true})
+
+target("foo")
+    set_kind("static")
+    add_files("src/png.c")
+    add_packages("libpng")
+    set_policy("build.merge_archive", true)
+```
+
+构建完成后，`libfoo.a` 里会包含 `png.c.o` 以及 `libpng.a` 与其传递依赖 `zlib.a` 中的全部目标文件，下游目标只需要链接 `foo` 即可。
 
 ## build.release.strip <Badge type="tip" text="v3.0.8" />
 

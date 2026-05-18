@@ -342,7 +342,7 @@ toolchain("myclang")
 
 ::: tip API
 ```lua
-on_check(script: <function (toolchain)>)
+on_check(script: <function (toolchain)> | <string>)
 ```
 :::
 
@@ -351,7 +351,7 @@ on_check(script: <function (toolchain)>)
 
 | 参数 | 描述 |
 |------|------|
-| script | 检测脚本函数，参数为toolchain |
+| script | 检测脚本函数，参数为 toolchain；也可以是一个字符串，引用同目录下的 `.lua` 文件（v3.0.9 及以上） |
 
 #### 用法说明
 
@@ -366,6 +366,35 @@ toolchain("myclang")
     end)
 ```
 
+自 v3.0.9 起，`on_check` 也接受一个字符串参数，引用工具链目录下的同级 `.lua` 文件。被引用的文件需要定义 `main(toolchain)` 函数。这种方式便于把较大的工具链定义拆分到多个文件中：
+
+```lua
+-- xmake/toolchains/mytoolchain/xmake.lua
+toolchain("mytoolchain")
+    set_kind("standalone")
+    on_check("check")    -- 实际加载 xmake/toolchains/mytoolchain/check.lua
+```
+
+```lua
+-- xmake/toolchains/mytoolchain/check.lua
+function main(toolchain)
+    return import("lib.detect.find_tool")("mycc")
+end
+```
+
+::: tip 注意
+自 v3.0.9 起，通过 `add_toolchaindirs` 注册的每个用户自定义工具链目录下的 `modules/` 子目录会被自动加入 `import()` 的模块搜索路径，可以把工具模块和工具链定义放在一起。
+
+```
+xmake/toolchains/mytoolchain/
+├── xmake.lua          -- toolchain("mytoolchain") 定义
+├── check.lua          -- function main(toolchain) ... end
+├── load.lua           -- function main(toolchain) ... end
+└── modules/           -- 自动加入 import() 搜索路径
+    └── helper.lua
+```
+:::
+
 ## on_load
 
 - 加载工具链
@@ -374,7 +403,7 @@ toolchain("myclang")
 
 ::: tip API
 ```lua
-on_load(script: <function (toolchain)>)
+on_load(script: <function (toolchain)> | <string>)
 ```
 :::
 
@@ -383,7 +412,7 @@ on_load(script: <function (toolchain)>)
 
 | 参数 | 描述 |
 |------|------|
-| script | 加载脚本函数，参数为toolchain |
+| script | 加载脚本函数，参数为 toolchain；也可以是一个字符串，引用同目录下的 `.lua` 文件（v3.0.9 及以上） |
 
 #### 用法说明
 
@@ -404,6 +433,23 @@ toolchain("myclang")
         toolchain:add("ldflags", march)
         toolchain:add("shflags", march)
     end)
+```
+
+自 v3.0.9 起，`on_load` 也接受一个字符串参数，引用工具链目录下的同级 `.lua` 文件。被引用的文件需要定义 `main(toolchain)` 函数：
+
+```lua
+-- xmake/toolchains/mytoolchain/xmake.lua
+toolchain("mytoolchain")
+    set_kind("standalone")
+    on_load("load")    -- 实际加载 xmake/toolchains/mytoolchain/load.lua
+```
+
+```lua
+-- xmake/toolchains/mytoolchain/load.lua
+function main(toolchain)
+    toolchain:set("toolset", "cc", "mycc")
+    toolchain:set("toolset", "cxx", "mycxx")
+end
 ```
 
 ## toolchain_end

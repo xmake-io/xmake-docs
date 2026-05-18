@@ -442,6 +442,48 @@ This is particularly useful for:
 - Custom project analysis tools
 - Documentation generation
 
+### Show target dependency graph <Badge type="tip" text="v3.0.9" />
+
+The `xmake show --info=depgraph` command prints the dependency graph between targets. Three output formats are supported via `--format`:
+
+```sh
+# ASCII tree (default)
+$ xmake show --info=depgraph
+
+# Scoped to a single root target
+$ xmake show --info=depgraph --target=app
+
+# JSON output, suitable for tool integration
+$ xmake show --info=depgraph --format=json
+
+# Graphviz DOT output
+$ xmake show --info=depgraph --format=dot
+```
+
+The JSON output has the following shape:
+
+```json
+{
+  "root_targets": ["app"],
+  "targets": [
+    {"name": "core", "deps": []},
+    {"name": "ui",   "deps": ["core"]},
+    {"name": "app",  "deps": ["core", "ui"]}
+  ]
+}
+```
+
+And the DOT output:
+
+```
+digraph {
+    "core"
+    "ui" -> "core"
+    "app" -> "core"
+    "app" -> "ui"
+}
+```
+
 ### Show builtin compilation modes list
 
 ```sh

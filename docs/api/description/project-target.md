@@ -3953,6 +3953,46 @@ Equivalent to:
 add_cugencodes("sm_60")
 ```
 
+## add_ascnpuarchs <Badge type="tip" text="v3.0.9" />
+
+### Add NPU architectures for Huawei Ascend C
+
+#### Function Prototype
+
+::: tip API
+```lua
+add_ascnpuarchs(archs: <string|array>, ...)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| archs | Ascend NPU architecture string or array, such as "dav-2201" |
+| ... | Variable parameters, can pass multiple NPU architecture strings |
+
+#### Usage
+
+Used with the [Ascend C toolchain](custom-toolchain.md) to specify the target NPU architecture for `.asc` (Ascend C kernel) and `.aicpu` (AI-CPU) source files. The values are mapped to the `--npu-arch=...` flag of the Bisheng compiler.
+
+```lua
+target("ascendc_mixed")
+    set_kind("binary")
+    add_files("src/main.asc", "src/helper.aicpu")
+    add_ascnpuarchs("dav-2201")
+```
+
+Multiple architectures can also be specified:
+
+```lua
+target("ascendc_mixed")
+    set_kind("binary")
+    add_files("src/main.asc")
+    add_ascnpuarchs("dav-2201", "dav-2202")
+```
+
 ## add_ldflags
 
 ### Add static library link flags

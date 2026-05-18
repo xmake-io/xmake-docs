@@ -48,3 +48,14 @@ for key, val in pairs(t, function (v, a, b) return v:upper() .. a .. b end, "a",
      print("%s: %s", key, val)
 end
 ```
+
+::: tip NOTE
+Since v3.0.9, xmake's built-in Lua runtime has been upgraded to 5.5. To preserve the familiar semantics where the loop body can safely reassign the loop key, xmake's sandbox `pairs` keeps the iteration state in an internal closure, so the following idiom keeps working without changes:
+
+```lua
+for k, v in pairs(t) do
+    k = k:gsub("_", "-")
+    do_something(k, v)
+end
+```
+:::
