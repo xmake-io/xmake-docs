@@ -43,23 +43,6 @@ export const coreTeamMembers: TeamMember[] = [
     sponsor: 'https://github.com/sponsors/luadebug'
   },
   {
-    avatar: 'https://github.com/SirLynix.png',
-    name: 'SirLynix',
-    affiliations: [
-      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
-      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
-    ],
-    repos: [
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
-    ],
-    links: [
-      { icon: 'github', link: 'https://github.com/SirLynix' },
-      { icon: 'twitter', link: 'https://x.com/SirLynix' }
-    ],
-    sponsor: 'https://github.com/sponsors/SirLynix'
-  },
-  {
     avatar: 'https://github.com/apocelipes.png',
     name: 'apocelipes',
     affiliations: [
@@ -71,21 +54,6 @@ export const coreTeamMembers: TeamMember[] = [
     ],
     links: [
       { icon: 'github', link: 'https://github.com/apocelipes' }
-    ]
-  },
-  {
-    avatar: 'https://github.com/Arthapz.png',
-    name: 'Arthapz',
-    affiliations: [
-      { title: 'Maintainer', repo: 'Xmake/C++ Modules', link: 'https://github.com/xmake-io/xmake' },
-      { title: 'Contributor', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
-    ],
-    repos: [
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
-    ],
-    links: [
-      { icon: 'github', link: 'https://github.com/Arthapz' }
     ]
   },
   {
@@ -117,6 +85,38 @@ export const coreTeamEmeriti: TeamMember[] = [
     ],
     links: [
       { icon: 'github', link: 'https://github.com/star-hengxing' }
+    ]
+  },
+  {
+    avatar: 'https://github.com/SirLynix.png',
+    name: 'SirLynix',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
+    repos: [
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
+    links: [
+      { icon: 'github', link: 'https://github.com/SirLynix' },
+      { icon: 'twitter', link: 'https://x.com/SirLynix' }
+    ],
+    sponsor: 'https://github.com/sponsors/SirLynix'
+  },
+  {
+    avatar: 'https://github.com/Arthapz.png',
+    name: 'Arthapz',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake/C++ Modules', link: 'https://github.com/xmake-io/xmake' },
+      { title: 'Contributor', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
+    repos: [
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' },
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' }
+    ],
+    links: [
+      { icon: 'github', link: 'https://github.com/Arthapz' }
     ]
   },
   {
