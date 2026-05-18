@@ -1,6 +1,45 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.7 预览，包方案支持，Wasm 浏览器运行与 UTF-8 模块",
+    "title": "Xmake v3.0.9 预览，升级 Lua 5.5，Zig C 互操作，Fil-C 与 Ascend C 工具链",
+    "url": "/zh/posts/xmake-update-v3.0.9",
+    "date": {
+      "time": 1778760000000,
+      "string": "May 14, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "zig",
+      "filc",
+      "ascendc",
+      "depgraph",
+      "aria2",
+      "lld-link"
+    ],
+    "excerpt": "<p>在此版本中，我们将内置 Lua 运行时升级到 5.5，新增了 <code>utils.replace</code> 内置规则，为 Zig 工具链添加了 C 互操作支持，并引入了两个新工具链：Fil-C（内存安全的 C/C++ 实现）和华为昇腾 Ascend C（用于 NPU 编程）。</p>\n<p>此外，我们还新增了基于 aria2 的多线程下载后端，支持以 JSON / DOT 格式导出目标和包依赖图，vsxmake 对 C# 目标生成 <code>.csproj</code> 工程，以及围绕自定义工具链、lld-link、包静态库合并等方面的多项改进。</p>\n<p>内置 Lua 运行时已从 5.4 升级到 5.5。为了在新运行时下保持 <code>xmake.lua</code> 脚本一贯的语义，本次升级伴随两项配套修改：</p>\n"
+  },
+  {
+    "title": "Xmake v3.0.8 发布，C# 语言支持，自定义模板与 WASI 运行",
+    "url": "/zh/posts/xmake-update-v3.0.8",
+    "date": {
+      "time": 1774353600000,
+      "string": "March 24, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "csharp",
+      "dotnet",
+      "pinvoke",
+      "wasi",
+      "nnd",
+      "templates"
+    ],
+    "excerpt": "<p>在此版本中，我们新增了 C# 语言和 dotnet 工具链支持，并支持了 C# 与 C/C++ 通过 P/Invoke 进行互操作。同时，我们引入了自定义工程模板功能，支持 <code>xmake create --list</code> 列出模板和远程模板分发。</p>\n<p>此外，我们还新增了 <code>build.release.strip</code> 策略、<code>winos.file_signature</code> 函数、WASI 目标运行支持、nnd 调试器支持以及 tarxz 打包格式。</p>\n<p>我们新增了对 C# 语言的完整支持，集成了 dotnet 工具链，可以直接在 xmake 中构建 C# 项目，包括控制台应用、共享库、多库依赖和 NuGet 包集成。</p>\n"
+  },
+  {
+    "title": "Xmake v3.0.7 发布，包方案支持，Wasm 浏览器运行与 UTF-8 模块",
     "url": "/zh/posts/xmake-update-v3.0.7",
     "date": {
       "time": 1770465600000,

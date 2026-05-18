@@ -48,3 +48,14 @@ for key, val in pairs(t, function (v, a, b) return v:upper() .. a .. b end, "a",
      print("%s: %s", key, val)
 end
 ```
+
+::: tip 注意
+自 v3.0.9 起，xmake 的内置 Lua 运行时升级到 5.5。为了保留循环体里可以重新赋值循环 key 的语义，沙箱的 `pairs` 把迭代状态保存在一个内部闭包中，因此下面这种写法在升级后依然能正常工作：
+
+```lua
+for k, v in pairs(t) do
+    k = k:gsub("_", "-")
+    do_something(k, v)
+end
+```
+:::

@@ -1,6 +1,45 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.7 Preview, Package Schemes, Wasm in Browser and UTF-8 Module",
+    "title": "Xmake v3.0.9 Preview, Lua 5.5 Runtime, Zig C Interop, Fil-C and Ascend C Toolchains",
+    "url": "/posts/xmake-update-v3.0.9",
+    "date": {
+      "time": 1778760000000,
+      "string": "May 14, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "lua",
+      "zig",
+      "filc",
+      "ascendc",
+      "depgraph",
+      "aria2",
+      "lld-link"
+    ],
+    "excerpt": "<p>In this release, we upgraded the built-in Lua runtime to 5.5, added a new <code>utils.replace</code> built-in rule, brought C interop to the Zig toolchain, and introduced two new toolchains: Fil-C (a memory-safe C/C++ implementation) and Huawei Ascend C (for NPU programming).</p>\n<p>Additionally, we added a multi-threaded aria2 download backend, support for exporting target and package dependency graphs as JSON or DOT, <code>.csproj</code> generation for C# targets in vsxmake, and many other improvements around custom toolchains, lld-link, and package archive merging.</p>\n<p>The built-in Lua runtime has been upgraded from 5.4 to 5.5. To preserve the familiar semantics of <code>xmake.lua</code> scripts under the new runtime, this upgrade ships together with two companion changes:</p>\n"
+  },
+  {
+    "title": "Xmake v3.0.8 Released, C# Language Support, Custom Templates and WASI Running",
+    "url": "/posts/xmake-update-v3.0.8",
+    "date": {
+      "time": 1774353600000,
+      "string": "March 24, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "csharp",
+      "dotnet",
+      "pinvoke",
+      "wasi",
+      "nnd",
+      "templates"
+    ],
+    "excerpt": "<p>In this release, we have added C# language and dotnet toolchain support, along with C# and C/C++ interop support via P/Invoke. We also introduced custom project templates with <code>xmake create --list</code> for listing templates and remote template distribution.</p>\n<p>Additionally, we added the <code>build.release.strip</code> policy, <code>winos.file_signature</code> function, WASI target running support, nnd debugger support, and the tarxz pack format.</p>\n<p>We have added full C# language support with dotnet toolchain integration, allowing you to build C# projects directly with xmake, including console apps, shared libraries, multi-library dependencies, and NuGet package integration.</p>\n"
+  },
+  {
+    "title": "Xmake v3.0.7 Released, Package Schemes, Wasm in Browser and UTF-8 Module",
     "url": "/posts/xmake-update-v3.0.7",
     "date": {
       "time": 1770465600000,

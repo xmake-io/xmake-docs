@@ -27,21 +27,6 @@ export const coreTeamMembers: TeamMember[] = [
     sponsor: './author'
   },
   {
-    avatar: 'https://github.com/star-hengxing.png',
-    name: 'star-hengxing',
-    affiliations: [
-      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
-      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
-    ],
-    repos: [
-      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
-      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
-    ],
-    links: [
-      { icon: 'github', link: 'https://github.com/star-hengxing' }
-    ]
-  },
-  {
     avatar: 'https://github.com/luadebug.png',
     name: 'luadebug',
     affiliations: [
@@ -119,6 +104,21 @@ export const coreTeamMembers: TeamMember[] = [
 ]
 
 export const coreTeamEmeriti: TeamMember[] = [
+  {
+    avatar: 'https://github.com/star-hengxing.png',
+    name: 'star-hengxing',
+    affiliations: [
+      { title: 'Maintainer', repo: 'Xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { title: 'Contributor', repo: 'Xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
+    repos: [
+      { name: 'xmake-repo', link: 'https://github.com/xmake-io/xmake-repo' },
+      { name: 'xmake', link: 'https://github.com/xmake-io/xmake' }
+    ],
+    links: [
+      { icon: 'github', link: 'https://github.com/star-hengxing' }
+    ]
+  },
   {
     avatar: 'https://github.com/xq114.png',
     name: 'xq114',

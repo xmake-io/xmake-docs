@@ -736,6 +736,49 @@ int main() {
 
 此外，`glsl2spv` 和 `hlsl2spv` 规则也新增了对 `bin2obj` 的支持，可以直接将编译后的 SPIR-V 文件作为对象文件嵌入。
 
+## utils.replace <Badge type="tip" text="v3.0.9" />
+
+此规则会在源码送入编译器之前对其做文本替换。替换后的文件会写到目标的自动生成目录下，同时原始文件所在目录会被自动加入 `includedirs`，所以替换后文件里的相对 `#include` 依然能正确解析。
+
+规则带有依赖追踪，只有源文件或替换列表真正发生变化时，才会重新执行替换。
+
+### Lua 模式替换（默认）
+
+```lua
+target("foo")
+    set_kind("binary")
+    add_files("src/foo.c", {rules = "utils.replace", replaces = {
+        {"old_pattern", "new_text"},
+    }})
+```
+
+### 纯文本替换
+
+传入 `replace_plain = true` 时，匹配模式会被当作字面字符串处理，而不再是 Lua 模式。
+
+```lua
+target("foo")
+    set_kind("binary")
+    add_files("src/foo.c", {rules = "utils.replace",
+        replaces = {{"old text", "new text"}},
+        replace_plain = true})
+```
+
+### 函数式转换
+
+`replaces` 也可以是一个函数，接收文件内容并返回替换后的内容。
+
+```lua
+target("foo")
+    set_kind("binary")
+    add_files("src/foo.c", {rules = "utils.replace", replaces = function (content)
+        content = content:gsub("old", "new")
+        return content
+    end})
+```
+
+xmake 自身正是借助这条规则在新版 Lua 5.5 运行时下打补丁 `lparser.c`，从而保留 for-in 循环变量可以被重新赋值的特性。
+
 ## utils.glsl2spv
 
 v2.6.1 以上版本可以使用此规则，在项目中引入 `*.vert/*.frag` 等 glsl shader 文件，然后实现自动编译生成 `*.spv` 文件。

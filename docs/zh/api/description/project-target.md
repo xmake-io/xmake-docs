@@ -4037,6 +4037,46 @@ add_cugencodes("native")
 add_cugencodes("sm_60")
 ```
 
+## add_ascnpuarchs <Badge type="tip" text="v3.0.9" />
+
+### 添加华为昇腾 Ascend C 的 NPU 架构
+
+#### 函数原型
+
+::: tip API
+```lua
+add_ascnpuarchs(archs: <string|array>, ...)
+```
+:::
+
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| archs | 昇腾 NPU 架构字符串或数组，如 "dav-2201" |
+| ... | 可变参数，可传入多个 NPU 架构字符串 |
+
+#### 用法说明
+
+配合 [Ascend C 工具链](custom-toolchain.md) 一起使用，为 `.asc`（Ascend C 内核）和 `.aicpu`（AI-CPU）源文件指定目标 NPU 架构。该值会映射成 Bisheng 编译器的 `--npu-arch=...` 参数。
+
+```lua
+target("ascendc_mixed")
+    set_kind("binary")
+    add_files("src/main.asc", "src/helper.aicpu")
+    add_ascnpuarchs("dav-2201")
+```
+
+也支持指定多个架构：
+
+```lua
+target("ascendc_mixed")
+    set_kind("binary")
+    add_files("src/main.asc")
+    add_ascnpuarchs("dav-2201", "dav-2202")
+```
+
 ## add_ldflags
 
 ### 添加链接选项

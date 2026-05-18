@@ -222,6 +222,20 @@ target("test")
 
 The libmul.a static library automatically merges the libadd.a and libsub.a sub-dependent static libraries.
 
+Since v3.0.9, this policy also merges static libraries contributed by `add_packages(...)` into the parent target. For example:
+
+```lua
+add_requires("libpng", {system = false})
+add_requireconfs("libpng.*", {system = false, override = true})
+
+target("foo")
+    set_kind("static")
+    add_files("src/png.c")
+    add_packages("libpng")
+    set_policy("build.merge_archive", true)
+```
+
+After build, `libfoo.a` will contain `png.c.o` plus all object files from `libpng.a` and its transitive `zlib.a`, so downstream targets only need to link `foo`.
 
 ## build.release.strip <Badge type="tip" text="v3.0.8" />
 

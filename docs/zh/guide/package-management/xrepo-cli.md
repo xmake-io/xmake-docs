@@ -339,6 +339,38 @@ The package info of project:
             -> values: {"MT","MD"}
 ```
 
+### 查看包依赖图 <Badge type="tip" text="v3.0.9" />
+
+通过 `xrepo info --depgraph` 可以打印一个或多个包的依赖图，支持三种输出格式：ASCII 树形（默认）、JSON 和 Graphviz DOT。
+
+```sh
+# ASCII 树形（默认）
+$ xrepo info --depgraph libpng
+
+# JSON 输出
+$ xrepo info --depgraph --format=json libpng
+
+# Graphviz DOT 输出
+$ xrepo info --depgraph --format=dot libpng
+
+# 带包配置
+$ xrepo info --depgraph -k shared -m debug --configs="thread=true" boost
+```
+
+JSON 输出结构如下：
+
+```json
+{
+  "root_packages": ["libpng"],
+  "packages": [
+    {"name": "libpng", "version": "1.6.x", "deps": ["zlib"]},
+    {"name": "zlib",   "version": "1.3.2", "deps": []}
+  ]
+}
+```
+
+在工程目录下，也可以通过 `xmake require --depgraph` 得到同样的效果。
+
 ### 下载包源码
 
 我们可以使用 `xrepo download` 命令，仅仅下载指定包的源码，而不去安装它。

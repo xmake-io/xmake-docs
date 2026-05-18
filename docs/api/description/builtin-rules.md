@@ -746,6 +746,49 @@ int main() {
 }
 ```
 
+## utils.replace <Badge type="tip" text="v3.0.9" />
+
+This rule applies in-memory text substitutions on a source file before it is fed to the compiler. The rewritten file is written under the target's auto-generated directory, and the original file's directory is automatically added to `includedirs` so relative `#include` directives in the rewritten file still resolve.
+
+The rule uses dependency tracking, so the substitution is only re-run when the source file or the replace list actually changes.
+
+### Lua-pattern replacement (default)
+
+```lua
+target("foo")
+    set_kind("binary")
+    add_files("src/foo.c", {rules = "utils.replace", replaces = {
+        {"old_pattern", "new_text"},
+    }})
+```
+
+### Plain-text replacement
+
+When `replace_plain = true` is passed, the patterns are treated as literal text instead of Lua patterns.
+
+```lua
+target("foo")
+    set_kind("binary")
+    add_files("src/foo.c", {rules = "utils.replace",
+        replaces = {{"old text", "new text"}},
+        replace_plain = true})
+```
+
+### Function-based transform
+
+`replaces` also accepts an arbitrary function that takes the file content and returns the rewritten content.
+
+```lua
+target("foo")
+    set_kind("binary")
+    add_files("src/foo.c", {rules = "utils.replace", replaces = function (content)
+        content = content:gsub("old", "new")
+        return content
+    end})
+```
+
+This rule is what xmake itself uses internally to patch the bundled Lua 5.5 `lparser.c`, so that writing to the for-in control variable is still allowed under the new runtime.
+
 ## utils.glsl2spv
 
 This rule can be used in v2.6.1 and above. Import glsl shader files such as `*.vert/*.frag` into the project, and then realize automatic compilation to generate `*.spv` files.

@@ -451,6 +451,48 @@ TARGET_NAME=$(echo $TARGET_INFO | jq -r '.targets[0].name')
 - 自定义项目分析工具
 - 文档生成
 
+### 显示目标依赖图 <Badge type="tip" text="v3.0.9" />
+
+通过 `xmake show --info=depgraph` 可以打印项目中各 target 之间的依赖图。`--format` 参数支持三种输出格式：
+
+```sh
+# ASCII 树形（默认）
+$ xmake show --info=depgraph
+
+# 限定为单个目标
+$ xmake show --info=depgraph --target=app
+
+# JSON 输出，便于工具集成
+$ xmake show --info=depgraph --format=json
+
+# Graphviz DOT 输出
+$ xmake show --info=depgraph --format=dot
+```
+
+JSON 输出结构如下：
+
+```json
+{
+  "root_targets": ["app"],
+  "targets": [
+    {"name": "core", "deps": []},
+    {"name": "ui",   "deps": ["core"]},
+    {"name": "app",  "deps": ["core", "ui"]}
+  ]
+}
+```
+
+DOT 输出：
+
+```
+digraph {
+    "core"
+    "ui" -> "core"
+    "app" -> "core"
+    "app" -> "ui"
+}
+```
+
 ### 显示内置编译模式列表
 
 ```sh

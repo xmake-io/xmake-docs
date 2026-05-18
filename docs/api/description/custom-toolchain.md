@@ -380,6 +380,35 @@ toolchain("myclang")
     end)
 ```
 
+Since v3.0.9, `on_check` also accepts a string that refers to a sibling `.lua` file in the toolchain directory. The referenced file should define a `main(toolchain)` function. This is helpful for splitting large toolchain definitions across multiple files:
+
+```lua
+-- xmake/toolchains/mytoolchain/xmake.lua
+toolchain("mytoolchain")
+    set_kind("standalone")
+    on_check("check")    -- resolves to xmake/toolchains/mytoolchain/check.lua
+```
+
+```lua
+-- xmake/toolchains/mytoolchain/check.lua
+function main(toolchain)
+    return import("lib.detect.find_tool")("mycc")
+end
+```
+
+::: tip NOTE
+Since v3.0.9, the `modules/` subdirectory under each user-defined toolchain (registered via `add_toolchaindirs`) is automatically added as an `import()` module search path. This lets you bundle tool modules right next to the toolchain definition.
+
+```
+xmake/toolchains/mytoolchain/
+├── xmake.lua          -- toolchain("mytoolchain") definition
+├── check.lua          -- function main(toolchain) ... end
+├── load.lua           -- function main(toolchain) ... end
+└── modules/           -- automatically added to import() search path
+    └── helper.lua
+```
+:::
+
 ## on_load
 
 - Load toolchain
@@ -388,7 +417,7 @@ toolchain("myclang")
 
 ::: tip API
 ```lua
-on_load(script: <function (toolchain)>)
+on_load(script: <function (toolchain)> | <string>)
 ```
 :::
 
@@ -397,7 +426,7 @@ on_load(script: <function (toolchain)>)
 
 | Parameter | Description |
 |-----------|-------------|
-| script | Load script function with toolchain parameter |
+| script | Load script function with toolchain parameter, or a string referring to a sibling `.lua` file (v3.0.9 and above) |
 
 #### Usage
 
@@ -418,6 +447,23 @@ toolchain("myclang")
         toolchain:add("ldflags", march)
         toolchain:add("shflags", march)
     end)
+```
+
+Since v3.0.9, `on_load` also accepts a string that refers to a sibling `.lua` file in the toolchain directory. The referenced file should define a `main(toolchain)` function:
+
+```lua
+-- xmake/toolchains/mytoolchain/xmake.lua
+toolchain("mytoolchain")
+    set_kind("standalone")
+    on_load("load")    -- resolves to xmake/toolchains/mytoolchain/load.lua
+```
+
+```lua
+-- xmake/toolchains/mytoolchain/load.lua
+function main(toolchain)
+    toolchain:set("toolset", "cc", "mycc")
+    toolchain:set("toolset", "cxx", "mycxx")
+end
 ```
 
 ## toolchain_end
