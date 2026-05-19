@@ -1,6 +1,6 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.9 Released, Lua 5.5 Runtime, Zig C Interop, Fil-C and Ascend C Toolchains",
+    "title": "Xmake v3.0.9 Released, Lua 5.5 Upgrade, Zig C Interop and Ascend C",
     "url": "/posts/xmake-update-v3.0.9",
     "date": {
       "time": 1779192000000,
