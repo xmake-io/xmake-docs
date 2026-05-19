@@ -1,10 +1,10 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.9 Preview, Lua 5.5 Runtime, Zig C Interop, Fil-C and Ascend C Toolchains",
+    "title": "Xmake v3.0.9 Released, Lua 5.5 Runtime, Zig C Interop, Fil-C and Ascend C Toolchains",
     "url": "/posts/xmake-update-v3.0.9",
     "date": {
-      "time": 1778760000000,
-      "string": "May 14, 2026"
+      "time": 1779192000000,
+      "string": "May 19, 2026"
     },
     "author": "Ruki",
     "tags": [
@@ -15,9 +15,9 @@ export const posts = [
       "ascendc",
       "depgraph",
       "aria2",
-      "lld-link"
+      "clang-cl"
     ],
-    "excerpt": "<p>In this release, we upgraded the built-in Lua runtime to 5.5, added a new <code>utils.replace</code> built-in rule, brought C interop to the Zig toolchain, and introduced two new toolchains: Fil-C (a memory-safe C/C++ implementation) and Huawei Ascend C (for NPU programming).</p>\n<p>Additionally, we added a multi-threaded aria2 download backend, support for exporting target and package dependency graphs as JSON or DOT, <code>.csproj</code> generation for C# targets in vsxmake, and many other improvements around custom toolchains, lld-link, and package archive merging.</p>\n<p>The built-in Lua runtime has been upgraded from 5.4 to 5.5. To preserve the familiar semantics of <code>xmake.lua</code> scripts under the new runtime, this upgrade ships together with two companion changes:</p>\n"
+    "excerpt": "<p>In this release, we upgraded the built-in Lua runtime to 5.5, added a new <code>utils.replace</code> built-in rule, brought C interop to the Zig toolchain, and introduced two new toolchains: Fil-C (a memory-safe C/C++ implementation) and Huawei Ascend C (for NPU programming).</p>\n<p>Additionally, we added a multi-threaded aria2 download backend, support for exporting target and package dependency graphs as JSON or DOT, <code>.csproj</code> generation for C# targets in vsxmake, and many other improvements around custom toolchains, the <code>clang-cl[llvm]</code> toolset, and package archive merging.</p>\n<p>The built-in Lua runtime has been upgraded from 5.4 to 5.5. Lua 5.5 introduces some syntactic and behavioral changes (for example, the for-in control variable is now treated as a const local, and a few legacy library APIs have been removed) that could break existing <code>xmake.lua</code> configurations writte...</p>\n"
   },
   {
     "title": "Xmake v3.0.8 Released, C# Language Support, Custom Templates and WASI Running",

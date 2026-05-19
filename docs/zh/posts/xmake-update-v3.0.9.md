@@ -1,7 +1,7 @@
 ---
-title: Xmake v3.0.9 预览，升级 Lua 5.5，Zig C 互操作，Fil-C 与 Ascend C 工具链
+title: Xmake v3.0.9 发布，升级 Lua 5.5，Zig C 互操作，Fil-C 与 Ascend C 工具链
 tags: [xmake, lua, zig, filc, ascendc, depgraph, aria2, clang-cl]
-date: 2026-05-14
+date: 2026-05-19
 author: Ruki
 outline: deep
 ---

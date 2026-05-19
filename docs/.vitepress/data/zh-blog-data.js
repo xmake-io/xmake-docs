@@ -1,10 +1,10 @@
 export const posts = [
   {
-    "title": "Xmake v3.0.9 预览，升级 Lua 5.5，Zig C 互操作，Fil-C 与 Ascend C 工具链",
+    "title": "Xmake v3.0.9 发布，升级 Lua 5.5，Zig C 互操作，Fil-C 与 Ascend C 工具链",
     "url": "/zh/posts/xmake-update-v3.0.9",
     "date": {
-      "time": 1778760000000,
-      "string": "May 14, 2026"
+      "time": 1779192000000,
+      "string": "May 19, 2026"
     },
     "author": "Ruki",
     "tags": [
@@ -15,9 +15,9 @@ export const posts = [
       "ascendc",
       "depgraph",
       "aria2",
-      "lld-link"
+      "clang-cl"
     ],
-    "excerpt": "<p>在此版本中，我们将内置 Lua 运行时升级到 5.5，新增了 <code>utils.replace</code> 内置规则，为 Zig 工具链添加了 C 互操作支持，并引入了两个新工具链：Fil-C（内存安全的 C/C++ 实现）和华为昇腾 Ascend C（用于 NPU 编程）。</p>\n<p>此外，我们还新增了基于 aria2 的多线程下载后端，支持以 JSON / DOT 格式导出目标和包依赖图，vsxmake 对 C# 目标生成 <code>.csproj</code> 工程，以及围绕自定义工具链、lld-link、包静态库合并等方面的多项改进。</p>\n<p>内置 Lua 运行时已从 5.4 升级到 5.5。为了在新运行时下保持 <code>xmake.lua</code> 脚本一贯的语义，本次升级伴随两项配套修改：</p>\n"
+    "excerpt": "<p>在此版本中，我们将内置 Lua 运行时升级到 5.5，新增了 <code>utils.replace</code> 内置规则，为 Zig 工具链添加了 C 互操作支持，并引入了两个新工具链：Fil-C（内存安全的 C/C++ 实现）和华为昇腾 Ascend C（用于 NPU 编程）。</p>\n<p>此外，我们还新增了基于 aria2 的多线程下载后端，支持以 JSON / DOT 格式导出目标和包依赖图，vsxmake 对 C# 目标生成 <code>.csproj</code> 工程，以及围绕自定义工具链、<code>clang-cl[llvm]</code> 工具集、包静态库合并等方面的多项改进。</p>\n<p>内置 Lua 运行时已从 5.4 升级到 5.5。Lua 5.5 在语法和行为上有一些改动（例如 for-in 循环变量被视为 const 局部变量、部分旧版库 API 被移除等），可能导致一些在旧版本 xmake 下能正常工作的 <code>xmake.lua</code> 配置代码出现兼容性问题。为了尽可能保持向下兼容，本次升级伴随了几项补丁，把 5.5 之前的常见语义还原回来：</p>\n"
   },
   {
     "title": "Xmake v3.0.8 发布，C# 语言支持，自定义模板与 WASI 运行",
