@@ -55,7 +55,10 @@ export const coreTeamMembers: TeamMember[] = [
     links: [
       { icon: 'github', link: 'https://github.com/apocelipes' }
     ]
-  },
+  }
+]
+
+export const coreTeamEmeriti: TeamMember[] = [
   {
     avatar: 'https://github.com/jeleferai.png',
     name: 'jeleferai',
@@ -68,10 +71,7 @@ export const coreTeamMembers: TeamMember[] = [
     links: [
       { icon: 'github', link: 'https://github.com/jeleferai' }
     ]
-  }
-]
-
-export const coreTeamEmeriti: TeamMember[] = [
+  },
   {
     avatar: 'https://github.com/star-hengxing.png',
     name: 'star-hengxing',
