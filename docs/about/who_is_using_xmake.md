@@ -46,3 +46,5 @@ If it is inconvenient for you to add your project address, you can briefly descr
 | [JXMaster](https://github.com/JX-Master) | [LunaSDK](https://github.com/JX-Master/LunaSDK) | A C++ software development framework for real-time rendering applications. |
 | [ast](https://github.com/space-ast/ast) | [ast](https://github.com/space-ast/ast)(/æst/) is an open-source aerospace simulation algorithm library written in C++, providing computational foundations for space mission analysis and design.| xmake’s cross-platform compilation and testing capabilities enable the ast project to compile and run on platforms like linux, windows, mingw, and wasm. |
 | [LeviMC](https://github.com/LiteLDev) | [LeviLamina](https://github.com/LiteLDev/levilamina) | A build system and C++ package manager which is suitable for our project. |
+| [Epic Games](https://github.com/EpicGames) | [Zen](https://github.com/EpicGames/zen) | Zen Storage Server used by Unreal Engine. |
+| [Microsoft](https://github.com/microsoft) | [CHERIoT RTOS](https://github.com/CHERIoT-Platform/cheriot-rtos) | A real-time operating system built on top of the CHERIoT ISA, supported by Microsoft Research. |
