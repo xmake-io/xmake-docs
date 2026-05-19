@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.0.9 Released, Lua 5.5 Runtime, Zig C Interop, Fil-C and Ascend C Toolchains
+title: Xmake v3.0.9 Released, Lua 5.5 Upgrade, Zig C Interop and Ascend C
 tags: [xmake, lua, zig, filc, ascendc, depgraph, aria2, clang-cl]
 date: 2026-05-19
 author: Ruki
