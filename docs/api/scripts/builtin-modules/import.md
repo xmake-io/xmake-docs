@@ -151,7 +151,7 @@ Version 2.1.5 adds two new properties: `import("xxx.xxx", {try = true, anonymous
 If the try is true, the imported module does not exist, only return nil, and will not interrupt xmake after throwing an exception.
 If anonymous is true, the imported module will not introduce the current scope, only the imported object reference will be returned in the import interface.
 
-### Custom module resolvers
+### Custom module resolvers {#custom-module-resolvers}
 
 In addition to loading modules from the current script directory, the extended class library, or directories configured by [`add_moduledirs`](/api/description/global-interfaces#add-moduledirs), projects can register custom module resolvers with [`add_moduleresolver`](/api/description/global-interfaces#add-moduleresolver).
 

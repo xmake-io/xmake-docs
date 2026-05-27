@@ -350,7 +350,7 @@ add_moduledirs(os.projectdir() .. "/modules")
 ```
 xmake will load the given module in the given directory when calling [`import`](/api/scripts/builtin-modules/import).
 
-## add_moduleresolver
+## add_moduleresolver {#add-moduleresolver}
 
 ### Add a custom module resolver
 
