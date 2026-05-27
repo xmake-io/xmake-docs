@@ -76,6 +76,7 @@ The import mechanism is as follows:
 
 1. Import from the current script directory first
 2. Import from the extended class library
+3. If normal module lookup fails, try custom module resolvers registered by [`add_moduleresolver`](/api/description/global-interfaces#add-moduleresolver)
 
 Imported grammar rules:
 
@@ -149,6 +150,36 @@ Version 2.1.5 adds two new properties: `import("xxx.xxx", {try = true, anonymous
 
 If the try is true, the imported module does not exist, only return nil, and will not interrupt xmake after throwing an exception.
 If anonymous is true, the imported module will not introduce the current scope, only the imported object reference will be returned in the import interface.
+
+### Custom module resolvers
+
+In addition to loading modules from the current script directory, the extended class library, or directories configured by [`add_moduledirs`](/api/description/global-interfaces#add-moduledirs), projects can register custom module resolvers with [`add_moduleresolver`](/api/description/global-interfaces#add-moduleresolver).
+
+A module resolver is a fallback provider. It is called only after normal module lookup fails, so existing built-in modules and modules found in configured module directories still take precedence.
+
+For example, a resolver can provide a virtual module:
+
+```lua
+add_moduleresolver(function (name, ctx)
+    if name == "virtual.hello" then
+        return ctx.module({
+            hello = function ()
+                return "hello"
+            end
+        })
+    end
+    return ctx.miss()
+end)
+```
+
+Then we can import it normally:
+
+```lua
+local hello = import("virtual.hello", {anonymous = true})
+print(hello.hello())
+```
+
+Resolvers can also provide generated Lua module files by returning `ctx.file(path)`. For more details, see [`add_moduleresolver`](/api/description/global-interfaces#add-moduleresolver).
 
 ## Custom extension module
 

@@ -350,6 +350,112 @@ add_moduledirs(os.projectdir() .. "/modules")
 ```
 xmake will load the given module in the given directory when calling [`import`](/api/scripts/builtin-modules/import).
 
+## add_moduleresolver
+
+### Add a custom module resolver
+
+#### Function Prototype
+
+::: tip API
+```lua
+add_moduleresolver(resolver: <function>)
+```
+:::
+
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| resolver | Module resolver callback function |
+
+#### Usage
+
+In addition to loading modules from module directories added by [`add_moduledirs`](#add-moduledirs), we can also register custom module resolvers.
+
+A module resolver is a fallback provider for [`import`](/api/scripts/builtin-modules/import). It is called only after normal module lookup fails, so existing built-in modules and modules found in configured module directories still take precedence.
+
+The resolver receives the requested module name and a resolver context object.
+
+```lua
+add_moduleresolver(function (name, ctx)
+    if name == "virtual.hello" then
+        return ctx.module({
+            hello = function ()
+                return "hello"
+            end
+        })
+    end
+
+    return ctx.miss()
+end)
+```
+
+Then we can import the module normally.
+
+```lua
+local hello = import("virtual.hello", {anonymous = true})
+print(hello.hello())
+```
+
+This is useful for generated modules, virtual modules, test modules, or project-specific module providers that do not map directly to static Lua files in a module directory.
+
+#### Resolver result helpers
+
+The resolver context provides the following helper functions.
+
+| Helper | Description |
+|--------|-------------|
+| `ctx.file(path)` | Resolves the module to a Lua file path. The file is loaded through the normal module loader. |
+| `ctx.module(exports)` | Resolves the module to an in-memory module export table. |
+| `ctx.miss()` | Skips the current resolver and allows later resolvers, or the normal import failure path, to continue. |
+
+#### Resolve to a generated file
+
+If a project generates a Lua module on demand, the resolver can return the generated file with `ctx.file`.
+
+```lua
+add_moduleresolver(function (name, ctx)
+    if name == "generated.hello" then
+        local modulefile = path.join(os.tmpdir(), "generated", "hello.lua")
+
+        os.mkdir(path.directory(modulefile))
+        io.writefile(modulefile, [[
+function hello()
+    return "hello from generated module"
+end
+]])
+
+        return ctx.file(modulefile)
+    end
+
+    return ctx.miss()
+end)
+
+local hello = import("generated.hello", {anonymous = true})
+print(hello.hello())
+```
+
+#### Resolution order
+
+Custom module resolvers are fallback providers. The resolution order is:
+
+1. normal module lookup, including built-in modules and directories added by [`add_moduledirs`](#add-moduledirs)
+2. registered module resolvers, in registration order
+3. normal import failure
+
+This preserves existing module lookup behavior and avoids accidentally shadowing existing modules.
+
+#### Cache behavior
+
+Resolver results are cached by the requested module name, like normal imported modules.
+
+If we want to force a module to be resolved again, we can use `nocache` with `import`.
+
+```lua
+local hello = import("generated.hello", {anonymous = true, nocache = true})
+```
+
 ## add_plugindirs
 
 ### Add plugin directories
