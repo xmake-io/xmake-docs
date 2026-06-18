@@ -10,6 +10,134 @@
 
 另外，Xmake 还内置提供了一些常用的工具链，可以直接切换使用，但前提是：用户自己已经在系统上安装了对应的工具链环境。
 
+## MSVC
+
+在 Windows 上，xmake 默认会自动检测并使用已安装的最新版本 Visual Studio MSVC 工具链，通常不需要手动指定工具链。
+
+### 选择 Visual Studio 版本
+
+如果安装了多个版本的 Visual Studio，可以通过 `--vs` 选项指定使用哪个版本（默认值为 `auto`，即使用已安装的最新版本）：
+
+```sh
+$ xmake f --vs=2022
+$ xmake
+```
+
+可选的值为 VS 的年份编号，例如 `2015`、`2017`、`2019`、`2022`。
+
+非常老的版本同样支持。例如 Visual C++ 6.0（VC6），可以直接传入它的版本号来选择：
+
+```sh
+$ xmake f --vs=6.0
+$ xmake
+```
+
+### 选择工具集版本
+
+Visual Studio 可以同时安装多个并存的 MSVC 工具集（例如 VS2015 的 v140、VS2017 的 v141、VS2019 的 v142、VS2022 的 v143）。类似于 CMake 的 `-T v140`，xmake 可以通过 `--vs_toolset` 选项，传入工具集对应的语义版本号，来指定使用哪个工具集进行构建：
+
+```sh
+$ xmake f --vs_toolset=14.0 # 使用 v140 工具集 (VS2015)
+$ xmake
+```
+
+版本号会按照 `v<主版本><次版本第一位>` 的规则映射到平台工具集名称，例如：
+
+| `--vs_toolset` | 平台工具集 | Visual Studio |
+| -------------- | ---------- | ------------- |
+| `14.0`         | v140       | VS2015        |
+| `14.1`         | v141       | VS2017        |
+| `14.2`         | v142       | VS2019        |
+| `14.3`         | v143       | VS2022        |
+
+在生成 Visual Studio 工程时，这些配置同样会生效，生成的工程会使用对应的平台工具集：
+
+```sh
+$ xmake f --vs_toolset=14.0
+$ xmake project -k vsxmake2022
+```
+
+::: tip 注意
+在 Windows 上使用 `clang-cl` 工具链时，`--vs_toolset` 选项同样会被正确处理，可参考 [Clang-cl](#clang-cl)。
+:::
+
+### 选择 Windows SDK 版本
+
+如果安装了多个 Windows SDK，可以通过 `--vs_sdkver` 选项，传入完整的 SDK 版本号，来指定使用哪个 SDK 进行编译和链接：
+
+```sh
+$ xmake f --vs_sdkver=10.0.15063.0
+$ xmake
+```
+
+它可以和上面的工具集选择组合使用，例如 `xmake f --vs_toolset=14.0 --vs_sdkver=10.0.15063.0`。
+
+### 构建兼容 XP 的程序
+
+如果想要生成一个仍然能在 Windows XP 上运行的程序，需要两个条件：使用 MSVC v140（或 v141）工具集搭配 Windows 7.1 SDK，以及一个面向 XP 的链接器子系统版本。
+
+首先切换到 v140 工具集，然后在 `xmake.lua` 中配置 target：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+
+    -- 使用兼容 XP 的 Windows 7.1 SDK 构建
+    add_defines("_USING_V140_SDK71_")
+
+    -- 指定 XP 子系统版本
+    if is_arch("x86") then
+        add_ldflags("/subsystem:console,5.01") -- Windows XP (x86)
+    else
+        add_ldflags("/subsystem:console,5.02") -- Windows XP x64 / Server 2003
+    end
+```
+
+子系统版本决定了可执行文件能加载运行的最低系统版本：`5.01` 对应 Windows XP（32 位），`5.02` 对应 64 位 XP / Server 2003 系列。如果是 GUI 程序，则把 `console` 换成 `windows`，例如 `/subsystem:windows,5.01`。
+
+然后使用 v140 工具集构建：
+
+```sh
+$ xmake f --vs_toolset=14.0
+$ xmake
+```
+
+如果生成 Visual Studio 工程，同样的配置也会生效：
+
+```sh
+$ xmake f --vs_toolset=14.0
+$ xmake project -k vsxmake2022
+```
+
+::: tip 注意
+xmake 自身正是用这种方式构建，从而保持在 Windows XP 上可以运行。其中子系统版本号的映射关系与 [winos.version](/zh/api/scripts/builtin-modules/winos#winos-version) 一致（`winxp = 5.1`，`ws03 = 5.2`）。
+:::
+
+### 在 Linux/macOS 上使用 MSVC 构建 (msvc-wine)
+
+自 v2.9.7 起，xmake 支持在 Linux 和 macOS 上，通过 Wine 运行一套可移植的 MSVC 工具链（例如 [msvc-wine](https://github.com/mstorsjo/msvc-wine) 或 PortableBuildTools），来构建 Windows MSVC 目标程序。前提是系统上已安装 Wine，并且有一个可移植的 MSVC SDK 目录。
+
+切换到 windows 平台并使用 msvc 工具链，通过 `--sdk` 指向可移植的 MSVC 安装目录：
+
+```sh
+$ xmake f -p windows -a x64 --sdk=/path/to/msvc-wine/sdk
+$ xmake
+```
+
+上面介绍的 `--vs`、`--vs_toolset`、`--vs_sdkver` 选项在这里同样适用：
+
+```sh
+$ xmake f -p windows -a x64 --sdk=/path/to/msvc-wine/sdk --vs_toolset=14.16 --vs_sdkver=10.0.19041.0
+$ xmake
+```
+
+当使用 `xmake run` 运行构建出来的程序时，xmake 会自动通过 Wine 来调用它，因此不需要我们手动执行 `wine`：
+
+```sh
+$ xmake run
+```
+
 ## Gcc
 
 如果 linux 上安装了 gcc 工具链，通常 xmake 都会优先检测使用，当然我们也可以手动切换到 gcc 来构建。

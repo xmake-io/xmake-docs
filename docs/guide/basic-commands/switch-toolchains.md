@@ -10,6 +10,134 @@ If we want to switch it in the xmake.lua project configuration file, we can go t
 
 In addition, Xmake also provides some commonly used toolchains that can be switched directly, but the premise is that the user has installed the corresponding toolchain environment on the system.
 
+## MSVC
+
+On Windows, xmake detects and uses the latest installed Visual Studio MSVC toolchain by default, so usually you don't need to specify the toolchain manually.
+
+### Select the Visual Studio version
+
+If several versions of Visual Studio are installed, you can pick which one to use with the `--vs` flag (it defaults to `auto`, the latest installed version):
+
+```sh
+$ xmake f --vs=2022
+$ xmake
+```
+
+The accepted values are the VS year numbers, e.g. `2015`, `2017`, `2019`, `2022`.
+
+Very old versions are supported as well. For example, Visual C++ 6.0 (VC6) can be selected by passing its version number directly:
+
+```sh
+$ xmake f --vs=6.0
+$ xmake
+```
+
+### Select the toolset version
+
+Visual Studio can install multiple side-by-side MSVC toolsets (e.g. v140 for VS2015, v141 for VS2017, v142 for VS2019, v143 for VS2022). Similar to CMake's `-T v140`, xmake lets you pick which toolset to build with via the `--vs_toolset` flag, by passing the toolset's semantic version:
+
+```sh
+$ xmake f --vs_toolset=14.0 # use the v140 toolset (VS2015)
+$ xmake
+```
+
+The version is mapped to the platform toolset name as `v<major><first digit of minor>`, for example:
+
+| `--vs_toolset` | Platform toolset | Visual Studio |
+| -------------- | ---------------- | ------------- |
+| `14.0`         | v140             | VS2015        |
+| `14.1`         | v141             | VS2017        |
+| `14.2`         | v142             | VS2019        |
+| `14.3`         | v143             | VS2022        |
+
+These settings are also honored when generating a Visual Studio solution, so the project will use the matching platform toolset:
+
+```sh
+$ xmake f --vs_toolset=14.0
+$ xmake project -k vsxmake2022
+```
+
+::: tip NOTE
+When using the `clang-cl` toolchain on Windows, the `--vs_toolset` option is also handled correctly, see [Clang-cl](#clang-cl).
+:::
+
+### Select the Windows SDK version
+
+If several Windows SDKs are installed, you can pick which one to compile and link against with the `--vs_sdkver` flag, by passing the full SDK version number:
+
+```sh
+$ xmake f --vs_sdkver=10.0.15063.0
+$ xmake
+```
+
+This can be combined with the toolset selection above, e.g. `xmake f --vs_toolset=14.0 --vs_sdkver=10.0.15063.0`.
+
+### Build XP-compatible programs
+
+To produce a program that still runs on Windows XP, you need two things: the MSVC v140 (or v141) toolset together with the Windows 7.1 SDK, and a linker subsystem version that targets XP.
+
+First switch to the v140 toolset, then configure the target in `xmake.lua`:
+
+```lua
+target("test")
+    set_kind("binary")
+    add_files("src/*.c")
+
+    -- build with the XP-compatible Windows 7.1 SDK
+    add_defines("_USING_V140_SDK71_")
+
+    -- target the XP subsystem version
+    if is_arch("x86") then
+        add_ldflags("/subsystem:console,5.01") -- Windows XP (x86)
+    else
+        add_ldflags("/subsystem:console,5.02") -- Windows XP x64 / Server 2003
+    end
+```
+
+The subsystem version selects the minimum OS the executable will load on: `5.01` is Windows XP (32-bit) and `5.02` is the 64-bit XP / Server 2003 family. Use `/subsystem:windows,5.01` instead of `console` for GUI applications.
+
+Then build with the v140 toolset:
+
+```sh
+$ xmake f --vs_toolset=14.0
+$ xmake
+```
+
+If you generate a Visual Studio project, the same configuration applies:
+
+```sh
+$ xmake f --vs_toolset=14.0
+$ xmake project -k vsxmake2022
+```
+
+::: tip NOTE
+This is exactly how xmake itself is built to keep running on Windows XP. The subsystem version mapping matches [winos.version](/api/scripts/builtin-modules/winos#winos-version) (`winxp = 5.1`, `ws03 = 5.2`).
+:::
+
+### Build with MSVC on Linux/macOS (msvc-wine)
+
+Since v2.9.7, xmake can build Windows MSVC targets on Linux and macOS by running a portable MSVC toolchain (e.g. [msvc-wine](https://github.com/mstorsjo/msvc-wine) or PortableBuildTools) through Wine. You need Wine installed, plus a portable MSVC SDK directory.
+
+Switch to the windows platform with the msvc toolchain and point `--sdk` at the portable MSVC install:
+
+```sh
+$ xmake f -p windows -a x64 --sdk=/path/to/msvc-wine/sdk
+$ xmake
+```
+
+The `--vs`, `--vs_toolset` and `--vs_sdkver` options described above work here too:
+
+```sh
+$ xmake f -p windows -a x64 --sdk=/path/to/msvc-wine/sdk --vs_toolset=14.16 --vs_sdkver=10.0.19041.0
+$ xmake
+```
+
+When you run the resulting program with `xmake run`, xmake automatically invokes it through Wine, so you don't need to call `wine` yourself:
+
+```sh
+$ xmake run
+```
+
 ## Gcc
 
 If the GCC toolchain is installed on Linux, xmake will usually detect and use it first. Of course, we can also manually switch to GCC to build.
