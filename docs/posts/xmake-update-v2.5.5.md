@@ -11,7 +11,7 @@ Each time you install a package by the built-in package manager of xmake, you mu
 
 Especially on windows, not only the dependence of the third party package on the compilation environment is more complicated, but also many packages and compilation are very slow, such as boost, openssl and so on.
 
-To this end, we implement cloud pre-compilation of packages based on github action, and pre-compile all commonly used packages, and then store them in [build-artifacts](https://github.com/xmake-mirror/build- artifacts) under Releases of the repository.
+To this end, we implement cloud pre-compilation of packages based on github action, and pre-compile all commonly used packages, and then store them in [build-artifacts](https://github.com/xmake-mirror/build-artifacts) under Releases of the repository.
 
 Then, when we install the package, we will automatically download it from the binary image package source to achieve rapid integration (currently only pre-compiled windows packages are supported, and will be gradually released to other platforms in the future).
 
