@@ -689,6 +689,10 @@ cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
 如果你使用支持 C23 `#embed` 特性的编译器（如 clang 或 gcc），也可以直接使用 `#embed` 指令来嵌入二进制文件。需要先通过 `set_languages("c23")` 设置 C23 语言标准，然后使用 [add_embeddirs](project-target.md#add_embeddirs) 来设置搜索路径。这种方式更符合 C23 标准，无需生成额外的头文件。
 :::
 
+### 转换函数 <Badge type="tip" text="v3.1.0" />
+
+在v3.1.0中，xmake添加了转换函数接口。利用该接口，可以自定义被生成为头文件的二进制数据。用法请参考 [utils.bin2obj](#转换函数-1)
+
 ## utils.bin2obj
 
 v3.0.6 以上版本可以使用此规则，相比 `utils.bin2c` 具有极快的构建速度。因为它跳过了 C 代码生成和编译步骤，直接生成对象文件（COFF, ELF, Mach-O）参与链接。
@@ -735,6 +739,68 @@ int main() {
 ```
 
 此外，`glsl2spv` 和 `hlsl2spv` 规则也新增了对 `bin2obj` 的支持，可以直接将编译后的 SPIR-V 文件作为对象文件嵌入。
+
+### 转换函数 <Badge type="tip" text="v3.1.0" />
+
+在v3.1.0中，xmake添加了转换函数接口。利用该接口，可以自定义被生成为对象文件的二进制数据，如使用LZ4（[core.compress.lz4](../scripts/extension-modules/core/compress/lz4.md)）压缩文件后再生成为对象文件，嵌入程序中。
+
+#### 内联转换函数
+
+转换函数可内联在描述域中，适合简单的转换：
+
+```lua
+target("test")
+    set_kind("binary")
+    add_rules("utils.bin2obj")
+    add_files("src/*.c")
+    add_files("src/asset.bin", {transform = function (inputfile, outputfile, opt)
+        import("core.base.bytes")
+        local data = io.readfile(inputfile, {encoding = "binary"})
+        io.writefile(outputfile, data:reverse(), {encoding = "binary"})
+    end})
+```
+
+::: tip 警告
+内联转换函数无法用于生成的第三方工程文件（见[生成IDE工程文件](../../guide/extensions/builtin-plugins.md#generate-ide-project-files)）。如有需要，请使用Lua文件形式
+:::
+
+#### Lua文件形式
+
+对于更加复杂的转化，可以将转换函数单独写在Lua文件中：
+
+`xmake.lua`:
+```lua
+target("test")
+    set_kind("binary")
+    add_rules("utils.bin2obj")
+    add_files("src/*.c")
+    add_files("src/asset.bin", {transform = path.join(os.projectdir(), "transform.lua")})
+```
+
+`transform.lua`:
+```lua
+function main(inputfile, outputfile)
+    import("core.base.bytes")
+    local data = io.readfile(inputfile, {encoding = "binary"})
+    io.writefile(outputfile, data:reverse(), {encoding = "binary"})
+end
+```
+
+#### 规则级转换函数
+
+转换函数不仅可作用于文件或者文件组，还可以写成以下的形式，以作用于整个规则：
+
+```lua
+add_rules("utils.bin2obj", {
+    transform = path.join(os.projectdir(), "transform.lua")
+})
+```
+
+::: tip 提示
+- 在使用`io.readfile`或`io.writefile`处理二进制时，记得加入`{encoding = "binary"}`参数
+- 使用Lua形式转换函数时，最好传入由`path.join(os.projectdir(), <路径>)`得到的绝对路径
+- 可参考xmake提供的二进制处理API：[core.base.bytes](../scripts/extension-modules/core/base/bytes.md)
+:::
 
 ## utils.replace <Badge type="tip" text="v3.0.9" />
 
