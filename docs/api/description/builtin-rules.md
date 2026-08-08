@@ -700,6 +700,10 @@ cat build/.gens/test/macosx/x86_64/release/rules/c++/bin2c/image.png.h
 If you are using a compiler that supports the C23 `#embed` feature (such as clang or gcc), you can also use the `#embed` directive directly to embed binary files. You need to set the C23 language standard first via `set_languages("c23")`, and then use [add_embeddirs](project-target.md#add_embeddirs) to set the search path. This approach is more aligned with the C23 standard and does not require generating additional header files.
 :::
 
+### Transform <Badge type="tip" text="v3.1.0" />
+
+Since v3.1.0, binary files can be transformed before being generated as a header. Transform functions are assigned in the same way as [utils.bin2obj](#transform-1).
+
 ## utils.bin2obj
 
 New rule added in v3.0.6 to convert binary files to object files and link them into the target program.
@@ -721,7 +725,7 @@ target("myapp")
     add_files("assets/data.bin", {zeroend = true})
 ```
 
-### Access Data
+### Accessing Data
 
 In C/C++ code, we can access the embedded data via symbols. The symbol name generation rule is: `_binary_<filename>_start` and `_binary_<filename>_end`.
 Non-alphanumeric characters in the filename are replaced with underscores.
@@ -745,6 +749,68 @@ int main() {
     return 0;
 }
 ```
+
+### Transform <Badge type="tip" text="v3.1.0" />
+
+Since v3.1.0, binary files can be transformed before converting into object files by using the newly added `transform` parameter. For example, an asset file can be compressed using LZ4 ([core.compress.lz4](../scripts/extension-modules/core/compress/lz4.md)) before embedding into the application. See below for detailed usage.
+
+#### Inline Function
+
+Inline function can be used to transform the binary file. Suitable for short and simple conversions.
+
+```lua
+target("test")
+    set_kind("binary")
+    add_rules("utils.bin2obj")
+    add_files("src/*.c")
+    add_files("src/asset.bin", {transform = function (inputfile, outputfile, opt)
+        import("core.base.bytes")
+        local data = io.readfile(inputfile, {encoding = "binary"})
+        io.writefile(outputfile, data:reverse(), {encoding = "binary"})
+    end})
+```
+
+::: tip WARNING
+Inline transform functions are not compatible with [generated projects](../../guide/extensions/builtin-plugins.md#generate-ide-project-files). Write the function in a lua file instead.
+:::
+
+#### Function In Lua File
+
+For more complex transforms, writing the function in a separate lua file keeps the code clear.
+
+`xmake.lua`:
+```lua
+target("test")
+    set_kind("binary")
+    add_rules("utils.bin2obj")
+    add_files("src/*.c")
+    add_files("src/asset.bin", {transform = path.join(os.projectdir(), "transform.lua")})
+```
+
+`transform.lua`:
+```lua
+function main(inputfile, outputfile)
+    import("core.base.bytes")
+    local data = io.readfile(inputfile, {encoding = "binary"})
+    io.writefile(outputfile, data:reverse(), {encoding = "binary"})
+end
+```
+
+#### Per-rule Transform Function
+
+Besides writing a function for each file or file group, a transform function can also be applied across the entire rule scope.
+
+```lua
+add_rules("utils.bin2obj", {
+    transform = path.join(os.projectdir(), "transform.lua")
+})
+```
+
+::: tip NOTE
+- Remember to pass argument `{encoding = "binary"}` to `io.readfile` or `io.writefile` when reading or writing binary data
+- It's preferred to pass an absolute path (formed by joining `os.projectdir()` with the relative path) to the transform lua file
+- See [core.base.bytes](../scripts/extension-modules/core/base/bytes.md) for handling binary data
+:::
 
 ## utils.replace <Badge type="tip" text="v3.0.9" />
 
