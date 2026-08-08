@@ -1,6 +1,6 @@
 export const posts = [
   {
-    "title": "Xmake v3.1.0 Released, Plugin Distribution via Repositories, Binary Asset Transform and alignof Detection",
+    "title": "Xmake v3.1.0 Released, Plugin Distribution and Binary Asset Transform",
     "url": "/posts/xmake-update-v3.1.0",
     "date": {
       "time": 1786190400000,
