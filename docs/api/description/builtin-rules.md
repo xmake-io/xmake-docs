@@ -806,10 +806,15 @@ add_rules("utils.bin2obj", {
 })
 ```
 
+The per-file config takes precedence over the per-rule one, so a rule-scoped transform can still be overridden for a specific file.
+
 ::: tip NOTE
 - Remember to pass argument `{encoding = "binary"}` to `io.readfile` or `io.writefile` when reading or writing binary data
 - It's preferred to pass an absolute path (formed by joining `os.projectdir()` with the relative path) to the transform lua file
 - See [core.base.bytes](../scripts/extension-modules/core/base/bytes.md) for handling binary data
+- The transform receives an extra `opt` table as its last argument, `opt.target` is the target instance being built
+- The transformed file is written under the target's auto-generated directory and tracked by the dependency system, so it is only re-run when the source file actually changes
+- Under the hood this is implemented with [batchcmds:call](custom-rule.md#batchcmds-call), which is also available in your own rules
 :::
 
 ## utils.replace <Badge type="tip" text="v3.0.9" />

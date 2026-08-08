@@ -48,6 +48,18 @@ $ xmake build foo
 这个时候，需要写全 build 子命令，否则目标名可能会跟其他子命令冲突。
 :::
 
+## 构建多个目标 <Badge type="tip" text="v3.1.0" />
+
+在 v3.1.0 之后，我们可以一次传入多个目标名。
+
+```sh
+$ xmake build foo bar test
+```
+
+重复的目标名会被自动去重，不存在的目标名会在执行前统一检查并报错，同时给出相近目标名的提示。
+
+`xmake clean`、`xmake install`、`xmake uninstall`、`xmake package` 和 `xmake format` 也同样支持。
+
 ## 重新构建目标
 
 ```sh

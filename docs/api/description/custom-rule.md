@@ -598,6 +598,29 @@ batchcmds:compile(sourcefile_cx, objectfile, {configs = {includedirs = sourcefil
 batchcmds:link(objectfiles, targetfile, {configs = {linkdirs = ""}})
 ```
 
+### batchcmds:call <Badge type="tip" text="v3.1.0" />
+
+Since v3.1.0, we can also register a plain Lua function as a build command with `batchcmds:call`, instead of spawning a subprocess through `batchcmds:vrunv`.
+
+```lua
+rule("myrule")
+    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
+        batchcmds:call(function (inputfile, outputfile, opt)
+            io.writefile(outputfile, io.readfile(inputfile))
+        end, {sourcefile, target:autogenfile(sourcefile)}, {name = "myrule/copy", target = target})
+    end)
+```
+
+The given function is forked into the current sandbox before running, so `import()`, `os.*`, `io.*` and the other sandbox interfaces can be used inside its body as usual. The second argument is the argument list passed to the function, and the third one is an extra options table appended as its last argument.
+
+The first argument can also be the path of a Lua script file, in which case it behaves exactly like `batchcmds:lua(...)`.
+
+This is what the `transform` config of [utils.bin2c](builtin-rules.md#utils-bin2c) and [utils.bin2obj](builtin-rules.md#utils-bin2obj) is built on.
+
+::: tip NOTE
+A raw Lua function cannot be exported by the vs/cmake project generators, they will skip it with a warning. Use the script file form if your rule needs to support project generation.
+:::
+
 At the same time, we also simplify the configuration of dependency execution in it. The following is a complete example:
 
 ```lua

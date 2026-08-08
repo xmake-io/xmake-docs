@@ -1,5 +1,25 @@
 export const posts = [
   {
+    "title": "Xmake v3.1.0 Released, Plugin Distribution via Repositories, Binary Asset Transform and alignof Detection",
+    "url": "/posts/xmake-update-v3.1.0",
+    "date": {
+      "time": 1786190400000,
+      "string": "August 8, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "plugin",
+      "xrepo",
+      "bin2c",
+      "bin2obj",
+      "alignof",
+      "xpack",
+      "gcc"
+    ],
+    "excerpt": "<p>In this release, we reworked the <code>xmake plugin</code> manager. Plugins can now be installed from repositories such as xmake-repo just like packages, and also from git urls and local directories, with a unified listing of built-in, installed and available plugins.</p>\n<p>Additionally, we added <code>check_alignof</code> / <code>configvar_check_alignof</code> type alignment detection, a <code>transform</code> config for the <code>utils.bin2c</code> / <code>utils.bin2obj</code> rules to preprocess embedded binary assets, a new <code>batchcmds:call</code> interface, unified <code>--format=json</code> output for <code>xmake show</code>, multiple target nam...</p>\n<p>Distributing an xmake plugin used to mean asking users to copy the plugin directory into <code>~/.xmake/plugins/</code> by hand, or to clone the repository themselves. In this release we rewrote the <code>xmake plugin</code> command: installing, removing and listing plugins now all go through a single entry point, and th...</p>\n"
+  },
+  {
     "title": "Xmake v3.0.9 Released, Lua 5.5 Upgrade, Zig C Interop and Ascend C",
     "url": "/posts/xmake-update-v3.0.9",
     "date": {
@@ -534,7 +554,7 @@ export const posts = [
       "mirror",
       "package"
     ],
-    "excerpt": "<p>Each time you install a package by the built-in package manager of xmake, you must download the corresponding package source code, and then perform local compilation and installation integration. This is for some large packages that compile very slowly, and some packages that rely on a lot of compil...</p>\n<p>Especially on windows, not only the dependence of the third party package on the compilation environment is more complicated, but also many packages and compilation are very slow, such as boost, openssl and so on.</p>\n<p>To this end, we implement cloud pre-compilation of packages based on github action, and pre-compile all commonly used packages, and then store them in [build-artifacts](https://github.com/xmake-mirror/build- artifacts) under Releases of the repository.</p>\n"
+    "excerpt": "<p>Each time you install a package by the built-in package manager of xmake, you must download the corresponding package source code, and then perform local compilation and installation integration. This is for some large packages that compile very slowly, and some packages that rely on a lot of compil...</p>\n<p>Especially on windows, not only the dependence of the third party package on the compilation environment is more complicated, but also many packages and compilation are very slow, such as boost, openssl and so on.</p>\n<p>To this end, we implement cloud pre-compilation of packages based on github action, and pre-compile all commonly used packages, and then store them in <a href=\"https://github.com/xmake-mirror/build-artifacts\">build-artifacts</a> under Releases of the repository.</p>\n"
   },
   {
     "title": "xmake v2.5.4 Released, Support apt/portage package manager and improve xrepo shell",

@@ -493,6 +493,26 @@ digraph {
 }
 ```
 
+### 以 JSON 格式显示列表信息 <Badge type="tip" text="v3.1.0" />
+
+在 v3.1.0 之后，`xmake show` 的输出格式统一到了 `--format` 参数上，`-l/--list` 列表信息也支持 JSON 输出了。
+
+```sh
+# 纯文本输出（默认）
+$ xmake show -l targets
+$ xmake show -l targets --format=plain
+
+# JSON 输出
+$ xmake show -l targets --format=json
+["app","core","ui"]
+```
+
+`--format` 支持 `plain`、`json` 和 `dot`，其中 `dot` 只对 `--info=depgraph` 有效。如果给列表信息传入了不支持的格式，xmake 会直接报错，而不是静默地回退到纯文本。
+
+::: tip 注意
+原有的 `--json` 参数依然可用，但已经标记为废弃，建议统一改用 `--format=json`。
+:::
+
 ### 显示内置编译模式列表
 
 ```sh

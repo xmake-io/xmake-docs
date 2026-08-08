@@ -46,6 +46,18 @@ $ xmake build foo
 
 At this time, you need to write the full build subcommand, otherwise the target name may conflict with other subcommands.
 
+## Build multiple targets <Badge type="tip" text="v3.1.0" />
+
+Since v3.1.0, several target names can be passed at once.
+
+```sh
+$ xmake build foo bar test
+```
+
+Duplicated names are deduplicated automatically, and unknown target names are all checked up front, with suggestions for the closest matching target names.
+
+This also works for `xmake clean`, `xmake install`, `xmake uninstall`, `xmake package` and `xmake format`.
+
 ## Rebuild the target
 
 ```sh

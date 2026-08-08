@@ -1,5 +1,25 @@
 export const posts = [
   {
+    "title": "Xmake v3.1.0 发布，插件仓库分发，二进制资源转换与 alignof 检测",
+    "url": "/zh/posts/xmake-update-v3.1.0",
+    "date": {
+      "time": 1786190400000,
+      "string": "August 8, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "plugin",
+      "xrepo",
+      "bin2c",
+      "bin2obj",
+      "alignof",
+      "xpack",
+      "gcc"
+    ],
+    "excerpt": "<p>在此版本中，我们重构了 <code>xmake plugin</code> 插件管理器，插件现在可以像包一样，从 xmake-repo 这样的仓库中安装，也支持从 git 地址和本地目录安装，并且能够列出内置、已安装以及仓库中可用的所有插件。</p>\n<p>此外，我们还新增了 <code>check_alignof</code> / <code>configvar_check_alignof</code> 类型对齐检测，为 <code>utils.bin2c</code> / <code>utils.bin2obj</code> 规则添加了二进制资源的 transform 支持，新增了 <code>batchcmds:call</code> 接口，<code>xmake show</code> 支持统一的 <code>--format=json</code> 输出，<code>build</code> / <code>clean</code> / <code>install</code> 等命令支持一次传入多个目标名，xpack 的安装文件列表支持内置变量，以及 gcc-16 工具链支持。</p>\n<p>以前想要分发一个 xmake 插件，只能让用户手动把插件目录拷贝到 <code>~/.xmake/plugins/</code> 下，或者自己去 clone 仓库。这个版本我们重写了 <code>xmake plugin</code> 命令，插件的安装、删除、列举现在都有了统一的入口，并且完全复用了 xmake 的包安装流程。</p>\n"
+  },
+  {
     "title": "Xmake v3.0.9 发布，升级 Lua 5.5，Zig C 互操作，Fil-C 与 Ascend C 工具链",
     "url": "/zh/posts/xmake-update-v3.0.9",
     "date": {
