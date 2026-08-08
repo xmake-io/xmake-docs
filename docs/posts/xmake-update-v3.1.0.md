@@ -1,5 +1,5 @@
 ---
-title: Xmake v3.1.0 Released, Plugin Distribution via Repositories, Binary Asset Transform and alignof Detection
+title: Xmake v3.1.0 Released, Plugin Distribution and Binary Asset Transform
 tags: [xmake, plugin, xrepo, bin2c, bin2obj, alignof, xpack, gcc]
 date: 2026-08-08
 author: Ruki
