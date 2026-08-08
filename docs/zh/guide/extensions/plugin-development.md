@@ -97,3 +97,71 @@ target("demo")
         task.run("hello")
     end)
 ```
+
+## 安装插件 <Badge type="tip" text="v3.1.0" />
+
+在 v3.1.0 之后，我们可以通过 `xmake plugin` 直接安装插件，不再需要手动拷贝目录。
+
+```sh
+# 按名称从已配置的仓库中安装
+$ xmake plugin --install hello
+
+# 从指定仓库安装
+$ xmake plugin --install xmake-repo@hello
+
+# 从 git 地址安装，支持 `github:` 简写和 `#分支名`
+$ xmake plugin --install https://github.com/myrepo/hello-world
+$ xmake plugin --install github:myrepo/hello-world
+$ xmake plugin --install github:myrepo/hello-world#dev
+
+# 从本地目录安装，方便插件的本地开发调试
+$ xmake plugin --install /tmp/my-plugin
+```
+
+安装后的插件位于 `~/.xmake/plugins/<插件名>`，对当前 xmake 全局生效。
+
+`--list` 会把内置插件、已安装插件，以及仓库中可安装但尚未安装的插件分组列出，并带上各自的描述。
+
+```sh
+$ xmake plugin --list
+```
+
+删除插件：
+
+```sh
+# 删除指定插件
+$ xmake plugin --remove hello
+
+# 清理所有已安装的插件
+$ xmake plugin --clear
+```
+
+## 分发插件 <Badge type="tip" text="v3.1.0" />
+
+如果希望自己的插件可以从仓库安装，只需要把它描述成一个 `plugin` 类型的包，并采用和 packages 一致的目录布局，即 `<repodir>/plugins/<首字母>/<插件名>/xmake.lua`。
+
+```lua
+-- plugins/h/hello/xmake.lua
+package("hello")
+    set_kind("plugin")
+    set_description("Hello xmake!")
+    set_sourcedir(path.join(os.scriptdir(), "src"))
+```
+
+其中 `src` 目录里就是插件本身的实现，也就是上面介绍的 `xmake.lua` + `main.lua`。
+
+```
+plugins
+|-- h
+|  |-- hello
+|  |  |-- xmake.lua      -- 包描述文件
+|  |  |-- src
+|  |  |  |-- xmake.lua   -- 插件任务定义
+|  |  |  |-- main.lua    -- 插件入口
+```
+
+对于这种源码直接内置在仓库里的插件，`on_install` 是可以省略的，xmake 会默认把插件目录整个拷贝到 `~/.xmake/plugins/<插件名>` 下。
+
+由于插件本质上就是一个 `plugin` 类型的包，所以 `add_urls`、`add_versions`、`add_deps`，以及自定义 `on_install` / `on_test` 这些包的能力它同样都有。
+
+关于如何添加自己的仓库，可以参考[仓库管理](../package-management/repository-management.md)。

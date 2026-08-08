@@ -933,6 +933,17 @@ xpack("test")
      add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
 ```
 
+Since v3.1.0, builtin variables are also expanded in the file patterns, so `$(projectdir)`, `$(builddir)` and the values of the xpack itself such as `$(version)` can be used directly.
+
+```lua
+xpack("test")
+     set_version("1.0.0")
+     add_installfiles("$(projectdir)/assets/(**.png)", {prefixdir = "share"})
+     add_installfiles("$(builddir)/test-$(version).txt")
+```
+
+The expansion happens before the `()` root-directory marker is parsed, so the builtin variable syntax and the path grouping syntax coexist correctly.
+
 ## add_buildrequires
 
 - Add package build dependencies

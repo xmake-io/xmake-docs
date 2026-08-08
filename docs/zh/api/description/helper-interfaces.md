@@ -401,6 +401,45 @@ checking for STRING_SIZE ... 24
 
 另外，我也可以通过 `target:check_sizeof` 在脚本域进行检测。
 
+## 检测类型对齐 <Badge type="tip" text="v3.1.0" />
+
+在 3.1.0 版本之后，我们新增了 `check_alignof` 接口，用于检测指定类型的对齐大小，用法和 `check_sizeof` 完全一致。
+
+```lua
+includes("@builtin/check")
+
+target("test")
+    set_kind("static")
+    add_files("*.cpp")
+    check_alignof("LONG_ALIGN", "long")
+    check_alignof("STRING_ALIGN", "std::string", {includes = "string"})
+```
+
+```sh
+$ xmake f -c
+checking for LONG_ALIGN ... 8
+checking for STRING_ALIGN ... 8
+```
+
+如果希望把检测结果写入 `config.h`，而不是定义成宏，可以使用 `configvar_check_alignof`。
+
+```lua
+target("test")
+    set_kind("static")
+    add_files("*.cpp")
+    add_configfiles("config.h.in")
+    configvar_check_alignof("ALIGNOF_LONG", "long")
+```
+
+```c
+// config.h.in
+#define ALIGNOF_LONG ${ALIGNOF_LONG}
+```
+
+检测代码会根据编译器和语言标准，自动选择 `alignof` / `_Alignof` / `__alignof` / `__alignof__`，因此 C11 之前的 C 代码以及 MSVC 也都能正常工作。并且由于结果是从编译产物中提取的，无需运行程序，所以同样支持交叉编译。
+
+另外，我也可以通过 `target:check_alignof` 在脚本域进行检测。
+
 ## 检测大小端
 
 在 2.8.9 版本之后，我们新增了 `check_bigendian` 接口，来判断当前编译目标是否为大端模式。

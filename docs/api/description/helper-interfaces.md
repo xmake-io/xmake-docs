@@ -401,6 +401,45 @@ checking for STRING_SIZE ... 24
 
 Alternatively, I can check for it in the script field with `target:check_sizeof`.
 
+## Detect type alignment <Badge type="tip" text="v3.1.0" />
+
+After version 3.1.0, we added the `check_alignof` interface to detect the alignment of the given type. It works exactly like `check_sizeof`.
+
+```lua
+includes("@builtin/check")
+
+target("test")
+    set_kind("static")
+    add_files("*.cpp")
+    check_alignof("LONG_ALIGN", "long")
+    check_alignof("STRING_ALIGN", "std::string", {includes = "string"})
+```
+
+```sh
+$ xmake f -c
+checking for LONG_ALIGN ... 8
+checking for STRING_ALIGN ... 8
+```
+
+If you want to write the result into `config.h` instead of defining a macro, use `configvar_check_alignof`.
+
+```lua
+target("test")
+    set_kind("static")
+    add_files("*.cpp")
+    add_configfiles("config.h.in")
+    configvar_check_alignof("ALIGNOF_LONG", "long")
+```
+
+```c
+// config.h.in
+#define ALIGNOF_LONG ${ALIGNOF_LONG}
+```
+
+The check snippet automatically picks `alignof` / `_Alignof` / `__alignof` / `__alignof__` according to the compiler and the language standard, so it also works for pre-C11 C code and MSVC. And since the result is extracted from the compiled artifact instead of running the program, it supports cross-compilation as well.
+
+Alternatively, I can check for it in the script field with `target:check_alignof`.
+
 ## Detecting big-endian
 
 After version 2.8.9, we added the ``check_bigendian`` interface to determine if the current compilation target is in bigendian mode.

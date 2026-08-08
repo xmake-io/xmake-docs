@@ -971,6 +971,17 @@ xpack("test")
     add_installfiles("doc/(tbox/*.md)", {prefixdir = "share/doc"})
 ```
 
+在 v3.1.0 之后，文件模式中的内置变量也会被展开，因此可以直接使用 `$(projectdir)`、`$(builddir)` 这类变量，以及 xpack 自身的 `$(version)` 等值。
+
+```lua
+xpack("test")
+    set_version("1.0.0")
+    add_installfiles("$(projectdir)/assets/(**.png)", {prefixdir = "share"})
+    add_installfiles("$(builddir)/test-$(version).txt")
+```
+
+变量展开发生在解析 `()` 根目录标记之前，所以内置变量语法和路径分组语法可以正常共存。
+
 ## add_buildrequires
 
 - 添加包的构建依赖

@@ -484,6 +484,26 @@ digraph {
 }
 ```
 
+### Show list information as JSON <Badge type="tip" text="v3.1.0" />
+
+Since v3.1.0, the output format of `xmake show` is unified behind the `--format` flag, and the `-l/--list` information supports JSON output as well.
+
+```sh
+# plain text (default)
+$ xmake show -l targets
+$ xmake show -l targets --format=plain
+
+# json output
+$ xmake show -l targets --format=json
+["app","core","ui"]
+```
+
+`--format` accepts `plain`, `json` and `dot`, where `dot` only applies to `--info=depgraph`. If an unsupported format is passed for list information, xmake raises an error instead of silently falling back to plain text.
+
+::: tip NOTE
+The old `--json` flag still works, but it is deprecated in favor of `--format=json`.
+:::
+
 ### Show builtin compilation modes list
 
 ```sh

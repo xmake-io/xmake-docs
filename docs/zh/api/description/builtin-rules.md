@@ -796,10 +796,15 @@ add_rules("utils.bin2obj", {
 })
 ```
 
+文件级的配置优先级高于规则级，因此规则级的转换函数仍然可以被某个具体文件覆盖。
+
 ::: tip 提示
 - 在使用`io.readfile`或`io.writefile`处理二进制时，记得加入`{encoding = "binary"}`参数
 - 使用Lua形式转换函数时，最好传入由`path.join(os.projectdir(), <路径>)`得到的绝对路径
 - 可参考xmake提供的二进制处理API：[core.base.bytes](../scripts/extension-modules/core/base/bytes.md)
+- 转换函数的最后一个参数是附加的 `opt` 表，其中 `opt.target` 是当前正在构建的 target 实例
+- 转换后的文件会写到目标的自动生成目录下，并纳入依赖追踪，只有源文件真正变化时才会重新执行
+- 它底层是基于 [batchcmds:call](custom-rule.md#batchcmds-call) 实现的，我们在自己的规则里也可以使用这个接口
 :::
 
 ## utils.replace <Badge type="tip" text="v3.0.9" />
