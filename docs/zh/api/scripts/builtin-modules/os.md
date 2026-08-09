@@ -776,6 +776,69 @@ os.runv("echo", {"hello", "xmake!"})
 os.runv("echo", {"hello", "xmake!"}, {envs = {PATH = "xxx;xx", CFLAGS = "xx"}})
 ```
 
+## os.vrun
+
+- 仅在 verbose 模式回显并运行原生 shell 命令
+
+#### 函数原型
+
+::: tip API
+```lua
+os.vrun(command: <string>, ...)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| command | 命令字符串 |
+| ... | 命令的可变参数 |
+
+#### 用法说明
+
+与 [os.run](#os-run) 类似，但当通过 `xmake -v` 或 `xmake --verbose` 启用 verbose 模式时，会先回显格式化后的命令，再执行该命令。未启用 verbose 时，命令静默执行。
+
+```lua
+os.vrun("echo hello %s!", "xmake")
+```
+
+适用于希望常规构建保持安静、调试时才显示命令的自定义脚本。
+
+## os.vrunv
+
+- 仅在 verbose 模式回显并运行原生 shell 命令，带参数列表
+
+#### 函数原型
+
+::: tip API
+```lua
+os.vrunv(program: <string>, args: <table>, options: <table>)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 描述 |
+|------|------|
+| program | 程序名 |
+| args | 参数表 |
+| options | 选项表（可选），支持 `os.runv` 和 `os.execv` 的选项；设置 `{dryrun = true}` 时不执行命令 |
+
+#### 用法说明
+
+与 [os.runv](#os-runv) 类似，但当通过 `xmake -v` 或 `xmake --verbose` 启用 verbose 模式时，会先回显完整命令，并以 `os.execv` 的方式执行；未启用 verbose 时，以 `os.runv` 的方式静默执行。
+
+```lua
+os.vrunv("echo", {"hello", "xmake!"})
+```
+
+在 verbose 模式下仅查看将要执行的命令而不实际运行：
+
+```lua
+os.vrunv("echo", {"hello", "xmake!"}, {dryrun = true})
+```
+
 ## os.exec
 
 - 回显运行原生shell命令
