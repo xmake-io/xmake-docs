@@ -778,6 +778,69 @@ Similar to [os.run](#os-run), just the way to pass parameters is passed through 
 os.runv("echo", {"hello", "xmake!"})
 ```
 
+## os.vrun
+
+- Run native shell commands and echo them only in verbose mode
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.vrun(command: <string>, ...)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| command | Command string |
+| ... | Variable arguments for command |
+
+#### Usage
+
+Similar to [os.run](#os-run), but when verbose mode is enabled with `xmake -v` or `xmake --verbose`, it first echoes the formatted command and then runs it. Without verbose mode, the command runs quietly.
+
+```lua
+os.vrun("echo hello %s!", "xmake")
+```
+
+Use it in custom scripts that should remain quiet during normal builds while showing commands during debugging.
+
+## os.vrunv
+
+- Run native shell commands with an argument list and echo them only in verbose mode
+
+#### Function Prototype
+
+::: tip API
+```lua
+os.vrunv(program: <string>, args: <table>, options: <table>)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| program | Program name |
+| args | Arguments table |
+| options | Optional options table. Supports the options of `os.runv` and `os.execv`; set `{dryrun = true}` to skip execution |
+
+#### Usage
+
+Similar to [os.runv](#os-runv), but when verbose mode is enabled with `xmake -v` or `xmake --verbose`, it first echoes the full command and runs it through `os.execv`. Without verbose mode, it runs quietly through `os.runv`.
+
+```lua
+os.vrunv("echo", {"hello", "xmake!"})
+```
+
+To show the command in verbose mode without executing it:
+
+```lua
+os.vrunv("echo", {"hello", "xmake!"}, {dryrun = true})
+```
+
 ## os.exec
 
 - Echo running native shell commands
