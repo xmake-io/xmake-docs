@@ -4,38 +4,65 @@
   <AIAssistant />
 </ClientOnly>
 
-When asking questions about xmake to AI assistants (such as ChatGPT, Claude, Cursor, etc.), using some techniques can help AI better understand the context and provide more accurate, higher-quality answers.
+When asking questions about xmake to AI assistants (such as Claude Code, ChatGPT, Cursor, etc.), using some techniques can help AI better understand the context and provide more accurate, higher-quality answers.
 
-## Provide Reference Documentation Links
+## Use Xmake Agent Skills (Recommended) {#agent-skills}
 
-When asking questions, explicitly providing xmake's LLMs reference documentation link can help AI quickly understand xmake's complete API and features.
+For AI coding assistants that support [Agent Skills](https://www.anthropic.com/news/agent-skills) (such as Claude Code), the easiest option is to install [**xmake-skills**](https://github.com/xmake-io/xmake-skills).
 
-Reference documentation link: [https://xmake.io/llms-full.txt](https://xmake.io/llms-full.txt)
+It provides a curated collection of task-focused skills covering project configuration, toolchains, cross-compilation, packages, testing, packaging, scripting, performance tuning, troubleshooting, and per-language support (Rust, Go, Swift, CUDA, Objective-C, D, Fortran, etc.).
 
-```
-Please refer to https://xmake.io/llms-full.txt before answering my question: ...
-```
+### Installation {#install-skills}
 
-Or more specifically:
+Install directly from GitHub in Claude Code:
 
-```
-Please read https://xmake.io/llms-full.txt first to understand xmake's API and features, then answer:
-How do I configure a target that uses C++20 modules?
+```bash
+claude plugins install xmake-io/xmake-skills
 ```
 
-## Use Xmake Agent Skills
+Or add it as a marketplace first, then install:
 
-For AI coding assistants that support the [Agent Skills](https://www.anthropic.com/news/agent-skills) format (such as Claude Code), [**xmake-skills**](https://github.com/xmake-io/xmake-skills) provides a curated collection of task-focused skills covering project configuration, toolchains, cross-compilation, packages, testing, packaging, scripting, performance tuning, troubleshooting, and per-language support (Rust, Go, Swift, CUDA, Objective-C, D, Fortran, etc.).
+```bash
+# In a Claude Code interactive session
+/plugin marketplace add xmake-io/xmake-skills
+/plugin install xmake-skills
+```
 
-Each skill is grounded in real xmake behavior and describes *when* the agent should load it, so the assistant pulls in only the documentation relevant to the task at hand — avoiding hallucinated APIs and outdated flags.
+For other agent platforms, clone the repository manually and install the skills under `skills/` following your platform's documentation:
 
 ```bash
 git clone https://github.com/xmake-io/xmake-skills.git
 ```
 
-Then point your agent at the `skills/` directory, or install individual skills following your agent platform's documentation.
+### Why This Is Recommended {#why-skills}
 
-## Provide Complete Context Information
+- **Loaded on demand, token-efficient**: The trigger descriptions of all skills add up to only about 4k tokens, which stay in context, while the full body of a skill is loaded only when the task matches it. By contrast, the whole `llms-full.txt` documentation is close to 1.5M tokens — it does not even fit in most conversations, and it crowds out the context that actually matters.
+- **Grounded in real xmake behavior**: Each skill describes *when* the agent should load it, so the assistant pulls in only the documentation relevant to the task at hand — avoiding hallucinated APIs and outdated flags.
+- **No prompt pasting**: Install once and just ask your question; the assistant decides which documentation to load.
+
+## Let AI Look Up the Docs On Demand {#reference-docs}
+
+If you use a regular chat-style AI assistant (without Agent Skills support) that can browse the web, have it **look up documentation on demand** instead of reading the entire documentation at once:
+
+1. Documentation index: [https://xmake.io/llms.txt](https://xmake.io/llms.txt) — titles and links of all documentation pages
+2. Every documentation page has a Markdown source: just append `.md` to the page path, e.g. [https://xmake.io/guide/basic-commands/build-targets.md](https://xmake.io/guide/basic-commands/build-targets.md)
+
+The corresponding prompt:
+
+```
+Answer based on the official xmake documentation, do not guess APIs from memory:
+1. First fetch the documentation index https://xmake.io/llms.txt
+2. Pick the 1-3 most relevant pages and fetch their Markdown source
+3. Answer only from the documentation content, and say so if the docs do not cover it
+
+My question: How do I configure a target that uses C++20 modules?
+```
+
+::: tip About llms-full.txt
+[https://xmake.io/llms-full.txt](https://xmake.io/llms-full.txt) contains the full content of the entire documentation — nearly 5 MB, about 1.5M tokens. It is better suited to offline indexing or building a RAG pipeline. Having an AI read it directly in a conversation is not recommended: it consumes a huge amount of tokens and makes it harder for the model to focus on what matters.
+:::
+
+## Provide Complete Context Information {#provide-context}
 
 When asking questions, try to provide complete context information, including:
 
@@ -48,8 +75,6 @@ When asking questions, try to provide complete context information, including:
 Example:
 
 ```
-Please refer to https://xmake.io/llms-full.txt to help me solve the following problem:
-
 Project Type: C++ project
 Platform: Linux
 Compiler: gcc-12
@@ -58,22 +83,22 @@ Current xmake.lua content:
 [Paste your xmake.lua content]
 ```
 
-## Reference Specific API Documentation
+## Reference Specific API Documentation {#reference-api}
 
-If the question involves specific APIs, you can reference relevant documentation links when asking:
+If the question involves specific APIs, link the corresponding documentation page directly — this is more precise than letting the AI search for it:
 
 ```
-Please refer to the target-related APIs in https://xmake.io/llms-full.txt to help me configure:
+Please refer to https://xmake.io/api/description/project-target.md to help me configure:
 1. How to set the target's compilation mode (debug/release)
 2. How to add precompiled header file support
 ```
 
-## Provide Code Examples
+## Provide Code Examples {#provide-code}
 
 When asking questions, if possible, provide your current code or configuration:
 
 ```
-Please refer to https://xmake.io/llms-full.txt to help me optimize the following xmake.lua configuration:
+Help me optimize the following xmake.lua configuration:
 
 target("mytarget")
     set_kind("binary")
@@ -85,7 +110,7 @@ I want to add the following features:
 - Configure different optimization options for debug and release modes
 ```
 
-## Clarify Question Type
+## Clarify Question Type {#clarify-question}
 
 When asking questions, clearly state the question type:
 
@@ -97,7 +122,7 @@ When asking questions, clearly state the question type:
 Example:
 
 ```
-Please refer to https://xmake.io/llms-full.txt. This is a configuration question:
+This is a configuration question:
 
 I want to configure CUDA project compilation in xmake, and need:
 1. Specify CUDA SDK version
@@ -105,19 +130,19 @@ I want to configure CUDA project compilation in xmake, and need:
 3. Configure compilation options
 ```
 
-## Ask Step by Step
+## Ask Step by Step {#step-by-step}
 
 For complex questions, you can ask step by step:
 
 ```
-Please refer to https://xmake.io/llms-full.txt to help me configure step by step:
+Help me configure step by step:
 
 Step 1: How to create a basic C++ target
 Step 2: How to add dependency packages
 Step 3: How to configure cross-compilation
 ```
 
-## Verify Answer Accuracy
+## Verify Answer Accuracy {#verify}
 
 AI answers may not be completely accurate. It is recommended to:
 
@@ -125,10 +150,11 @@ AI answers may not be completely accurate. It is recommended to:
 2. **Actually Test**: Actually test the configuration provided by AI in your project
 3. **Cross-verify**: If possible, ask questions in different ways to verify answer consistency
 
-## Example: Complete Question Template
+## Example: Complete Question Template {#template}
 
 ```
-Please refer to https://xmake.io/llms-full.txt to understand xmake's complete API and features.
+Answer based on the official xmake documentation, do not guess APIs from memory:
+First fetch the documentation index https://xmake.io/llms.txt, then fetch the Markdown source of the most relevant pages before answering.
 
 Project Information:
 - Type: C++ project
@@ -155,4 +181,3 @@ Please help me:
 ```
 
 Through the above methods, you can help AI better understand your needs and provide more accurate and useful answers.
-
