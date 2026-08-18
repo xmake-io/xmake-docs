@@ -233,3 +233,5 @@ if is_option("demo") then
     add_subdirs("src/demo")
 end
 ```
+
+关于`option`的详细用法，详情可参考[配置选项](zh/api/description/configuration-option)。
