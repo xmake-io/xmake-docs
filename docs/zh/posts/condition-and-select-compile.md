@@ -15,15 +15,15 @@ xmake 提供了一些内置的条件判断api，用于在选择性编译时，�
 我们先讲讲最常用的`is_mode`，这个api主要用来判断当前的编译模式，例如平常编译配置的时候，会执行：
 
 ```bash
-xmake f -m debug
-xmake
+$ xmake f -m debug
+$ xmake
 ```
 
 来编译`debug`版本，那么模式就是`debug`，那么`release`版本，也就是`release`了：
 
 ```bash
-xmake f -m release
-xmake
+$ xmake f -m release
+$ xmake
 ```
 
 但是如果仅仅只是这么配置，xmake不知道在debug模式和release模式分别应该怎么编译，因为模式名只是个代号，没有默认行为。
@@ -141,7 +141,7 @@ add_files("src/*.c", "test.c", "hello.cpp")
 用法和`is_plat`类似，用来判断当前编译的目标架构，也就是：
 
 ```bash
-xmake f --arch=x86_64
+$ xmake f --arch=x86_64
 ```
 
 然后，我们在工程描述中，进行判断：
@@ -210,14 +210,13 @@ target("test")
 编译配置时，可手动切换编译类型：
 
 ```bash
-
 # 编译静态库
-xmake f -k static
-xmake
+$ xmake f -k static
+$ xmake
 
 # 编译动态库
-xmake f -k shared
-xmake
+$ xmake f -k shared
+$ xmake
 ```
 
 ### `is_option`
