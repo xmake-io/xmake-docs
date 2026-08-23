@@ -356,7 +356,7 @@ $ xmake
 We can also use the `zig cc` compiler provided by zig to compile C/C++ code.
 
 ```sh
-$ xmake f --cc="zig cc" --cxx="zig cc" --ld="zig c++" -c
+$ xmake f --cc="zig cc" --cxx="zig c++" --ld="zig c++" -c
 $ xmake
 ```
 
