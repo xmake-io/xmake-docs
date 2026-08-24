@@ -40,6 +40,49 @@ git clone https://github.com/xmake-io/xmake-skills.git
 - **Grounded in real xmake behavior**: Each skill describes *when* the agent should load it, so the assistant pulls in only the documentation relevant to the task at hand — avoiding hallucinated APIs and outdated flags.
 - **No prompt pasting**: Install once and just ask your question; the assistant decides which documentation to load.
 
+## Use `xmake ai` in the Terminal {#xmake-harness}
+
+[**xmake-harness**](https://github.com/xmake-addons/xmake-harness) is an agent harness
+written entirely in xmake lua. Installed as an addon, it gives you `xmake ai` — a terminal
+coding agent that already knows the project it is sitting in.
+
+### Installation {#install-harness}
+
+```bash
+xmake addon --install xmake-harness
+xmake ai --setup                     # interactive wizard: provider, api key, model
+```
+
+Or directly from the repository:
+
+```bash
+xmake addon --install github:xmake-addons/xmake-harness
+```
+
+::: tip NOTE
+Addons need xmake from the dev branch for now. The api key can also be set without the
+wizard: `xmake ai --config=providers.deepseek.apikey=sk-xxxxxx`.
+:::
+
+### Usage {#usage-harness}
+
+```bash
+xmake ai                                   # interactive tui
+xmake ai "add a unit test for foo"         # start with a prompt
+xmake ai -c                                # continue the last session of this directory
+xmake ai --print "what does this build?"   # non-interactive, for scripts and ci
+xmake ai --mode=plan                       # read-only, plan before touching anything
+xmake ai --sandbox                         # confine the commands it runs
+xmake ai --doctor                          # check the environment
+```
+
+Because it is an xmake addon, it can also run the build, read the project configuration and
+use the same [xmake-skills](https://github.com/xmake-io/xmake-skills) as Claude Code:
+
+```bash
+xmake ai --list=skills
+```
+
 ## Let AI Look Up the Docs On Demand {#reference-docs}
 
 If you use a regular chat-style AI assistant (without Agent Skills support) that can browse the web, have it **look up documentation on demand** instead of reading the entire documentation at once:
