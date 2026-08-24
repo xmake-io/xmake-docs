@@ -43,44 +43,26 @@ git clone https://github.com/xmake-io/xmake-skills.git
 ## 在终端里使用 `xmake ai` {#xmake-harness}
 
 [**xmake-harness**](https://github.com/xmake-addons/xmake-harness) 是一个完全用 xmake lua 编写的 Agent 框架。
-以 addon 的方式安装后，它提供 `xmake ai` 命令 —— 一个终端里的编码助手，天然了解它所在的工程。
-
-### 安装 {#install-harness}
+以 addon 的方式安装后，它提供 `xmake ai` —— 一个就在你工程里、并且会构建这个工程的终端编码助手。
 
 ```bash
 xmake addon --install xmake-harness
-xmake ai --setup                     # 交互式向导：选择服务商、填 api key 和模型
+xmake ai --setup                     # 选服务商、填 api key、选模型
+xmake ai                             # 交互式界面
+xmake ai --print "这个工程构建出什么？"  # 非交互模式，适合脚本和 CI
 ```
 
-也可以直接从仓库安装：
-
-```bash
-xmake addon --install github:xmake-addons/xmake-harness
-```
-
-::: tip 注意
-addon 目前需要 dev 分支的 xmake。api key 也可以不走向导直接设置：
-`xmake ai --config=providers.deepseek.apikey=sk-xxxxxx`。
-:::
-
-### 使用 {#usage-harness}
-
-```bash
-xmake ai                                   # 交互式界面
-xmake ai "给 foo 加个单元测试"              # 带提示词直接开始
-xmake ai -c                                # 继续当前目录的上一次会话
-xmake ai --print "这个工程构建出什么？"      # 非交互模式，适合脚本和 CI
-xmake ai --mode=plan                       # 只读模式，先规划再动手
-xmake ai --sandbox                         # 在沙箱里执行命令
-xmake ai --doctor                          # 检查运行环境
-```
-
-因为它本身就是 xmake addon，所以可以直接执行构建、读取工程配置，也能复用和 Claude Code 相同的
+因为它本身就是 xmake addon，所以可以直接执行构建、读取工程配置，也能加载和 Claude Code 相同的
 [xmake-skills](https://github.com/xmake-io/xmake-skills)：
 
-```bash
-xmake ai --list=skills
 ```
+/skills install xmake
+```
+
+::: tip 提示
+配置分层、支持的服务商、权限模式、斜杠命令（`/xmake`、`/skills`、`/context` 等）以及 skill 管理，
+详见 [xmake-harness](/zh/guide/extensions/addons/official/xmake-harness)。
+:::
 
 ## 让 AI 按需查阅文档 {#reference-docs}
 

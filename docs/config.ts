@@ -211,6 +211,28 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       text: 'Extensions',
       collapsed: false,
       items: [
+        {
+          text: 'Addons',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: 'extensions/addons/introduction' },
+            { text: 'Installation and Usage', link: 'extensions/addons/installation' },
+            { text: 'Writing an Addon', link: 'extensions/addons/development' },
+            {
+              text: 'Official Addons',
+              collapsed: true,
+              items: [
+                { text: 'xmake-harness (xmake ai)', link: 'extensions/addons/official/xmake-harness' },
+                { text: 'esp32-devel', link: 'extensions/addons/official/esp32-devel' },
+                { text: 'avr-devel', link: 'extensions/addons/official/avr-devel' },
+                { text: 'serial-tools', link: 'extensions/addons/official/serial-tools' },
+                { text: 'yaml', link: 'extensions/addons/official/yaml' },
+                { text: 'Plugin Addons', link: 'extensions/addons/official/plugin-addons' },
+                { text: 'basic-templates', link: 'extensions/addons/official/basic-templates' },
+              ]
+            },
+          ]
+        },
         { text: 'Plugin Development', link: 'extensions/plugin-development' },
         { text: 'Builtin Plugins', link: 'extensions/builtin-plugins' },
         { text: 'IDE Integration Plugins', link: 'extensions/ide-integration-plugins' },

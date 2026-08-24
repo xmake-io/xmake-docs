@@ -292,6 +292,28 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       text: '扩展',
       collapsed: false,
       items: [
+        {
+          text: 'Addons 扩展包',
+          collapsed: true,
+          items: [
+            { text: '简介', link: 'extensions/addons/introduction' },
+            { text: '安装和使用', link: 'extensions/addons/installation' },
+            { text: '编写 Addon', link: 'extensions/addons/development' },
+            {
+              text: '官方 Addons',
+              collapsed: true,
+              items: [
+                { text: 'xmake-harness (xmake ai)', link: 'extensions/addons/official/xmake-harness' },
+                { text: 'esp32-devel', link: 'extensions/addons/official/esp32-devel' },
+                { text: 'avr-devel', link: 'extensions/addons/official/avr-devel' },
+                { text: 'serial-tools', link: 'extensions/addons/official/serial-tools' },
+                { text: 'yaml', link: 'extensions/addons/official/yaml' },
+                { text: '插件类 Addon', link: 'extensions/addons/official/plugin-addons' },
+                { text: 'basic-templates', link: 'extensions/addons/official/basic-templates' },
+              ]
+            },
+          ]
+        },
         { text: '插件开发', link: 'extensions/plugin-development' },
         { text: '内置插件', link: 'extensions/builtin-plugins' },
         { text: 'IDE 集成插件', link: 'extensions/ide-integration-plugins' },
