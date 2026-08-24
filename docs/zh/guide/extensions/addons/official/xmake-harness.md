@@ -91,15 +91,16 @@ $ xmake ai --notools             # 纯聊天，不启用任何工具
 | 命令 | 作用 |
 | --- | --- |
 | `/xmake` | 直接在这里执行 xmake，**不消耗 token**，例如 `/xmake build`、`/xmake run -d` |
-| `/xmakedocs` | 拉取或更新 xmake 文档，让 agent 能查 API |
+| `/xmake-docs` | 拉取或更新 xmake 文档，让 agent 能查 API |
 | `/skills` | 列出、安装、更新或删除 skill 包 |
 | `/model` | 查看或切换模型，例如 `/model deepseek-reasoner` |
 | `/context` | 查看上下文占用分布，`/context full` 保留全部 |
-| `/session`、`/clear` | 管理会话、开新会话 |
+| `/sessions`、`/clear` | 管理会话、开新会话 |
 | `/jobs` | 查看它启动的后台任务 |
 | `/mcp` | 查看对接的 MCP 服务 |
 | `/config` | 查看或设置配置项 |
-| `/loop` | 按计划重复执行某个任务 |
+| `/loop` | 按周期重复一个任务，例如 `/loop 30m 看看 ci` |
+| `/rewind` | 把文件恢复到某次请求之前的样子 |
 
 `/xmake` 最值得记住：构建输出直接进你的终端，不进模型上下文，所以一次长编译不花任何 token。
 
@@ -110,6 +111,46 @@ $ xmake ai --command=doctor
 $ xmake ai --command='model deepseek-reasoner'
 $ xmake ai --list=skills     # 还可以是 agents、tools、commands、plugins、providers、sessions
 ```
+
+## 会话与上下文
+
+每一轮都会追加到磁盘上的日志里，按工程区分。关掉终端不会丢东西：
+
+```sh
+$ xmake ai -c              # 继续当前目录下最近的一次对话
+$ xmake ai -r              # 从本工程的会话里挑一个
+$ xmake ai -r 6a86cfc5     # 直接恢复指定的那个
+$ xmake ai --new           # 即使配了 -c，也强制新开一个
+```
+
+对话接近模型上下文窗口时会自动压缩：小模型把较早的轮次写成摘要，日志从摘要继续。
+`/context` 看窗口被什么占着，`/compact` 立刻压缩，`/cost` 看 token 消耗和缓存命中率。
+
+## 耗时长的命令
+
+一次二十分钟的构建不该把对话扣为人质。慢的东西可以在旁边跑：
+
+- agent 把它作为**后台任务**启动，自己接着干别的，随时收取新输出
+- 它已经在前台跑的命令，你可以在执行期间按 **`ctrl+b`** 自己把它丢到后台 —— 命令继续跑，这一轮继续走
+- `/jobs` 列出全部，`/jobs kill <id>` 停掉一个
+
+后台任务属于当前会话，会话结束时全部停止 —— 绝不会给你留下一个你没启动、也看不见的进程。
+
+## 撤销它做过的修改
+
+一个改了十二个文件、第十一个改错了的 agent，会让你除了 git 无路可退 —— 而**会话开始前就躺在工作区里的那些活儿，恰恰是 git 没有的**。
+
+所以每次写入都会留下被覆盖的内容。`/rewind` 列出可以回到的点（每个改动过文件的请求一个），`/rewind <n>` 把那之后动过的每个文件恢复到当时的内容 —— 包括**删掉那些原本不存在的新文件**。执行前会先确认，因为那之后你手工改的东西也会被覆盖。
+
+**它只撤销编辑，别的一概不管。** agent 跑过的命令、通过 shell 删掉的文件、工程之外的任何改动 —— 都没有记录，`/rewind` 也不会假装能收拾。
+
+
+## 答案的出处
+
+回答落在代码某个具体位置时，agent 会写成 `src/main.cpp:42`，多数终端会把它变成可点击的。
+
+**这个引用在显示前会被校验**：指向不存在的文件，或超出文件实际行数的，会用错误色渲染。
+一个引用了自己从没读过的行的模型，比什么都不说的更有说服力，而且一样是错的。
 
 ## Agent Skills
 
@@ -132,18 +173,35 @@ Harness 加载的是和 Claude Code 相同的 [Agent Skills](https://www.anthrop
 
 Skill 是按需加载的：常驻上下文的只有一行描述，任务匹配时才会拉进完整内容。
 
+它**识别现实中存在的各种布局**，而不是强求自己那一种 —— Claude 的 `SKILL.md` 目录、
+Claude 的 plugin 与 marketplace、单文件 skill，或者一个 `.zip` 包。
+两个 skill 抢同一个名字时会**明确报告**而不是悄悄丢弃；
+指向你已经在用的工具时，目录是**软链接**而不是拷贝：
+
+```
+/skills install ~/.claude            你已经有的 claude skills
+/skills install ./bundle.zip         打包好的 bundle
+```
+
+已安装的包每天在后台检查一次上游，有更新会在下次启动时提示。**不问过你就绝不拉取。**
+
 ## 工具、子 agent 和 MCP
 
 Agent 通过一组固定的工具干活 —— 读写文件、glob、搜索文本、执行命令、抓取 url、维护 todo、启动子 agent —— 每一个都受权限模式约束。耗时长的命令会转为后台任务（`/jobs`）。
 
-它也可以派生**子 agent** 处理独立的子任务，并通过 **MCP** 服务获得自身没有的能力（`/mcp`）。
+它也可以派生**子 agent** 处理独立的子任务 —— 每个子 agent 有自己的 prompt、工具集、模型和
+上下文窗口，只把结论报回来 —— 并通过 **MCP** 服务获得自身没有的能力（`/mcp`）。
+
+多个子 agent 还能**一次接收整个计划**：互不相干的探索并发跑，需要它们结果的节点等齐再启动，
+只有最后的节点回报主对话。于是一次全代码库的摸底，主对话只付一段话的代价，而不是四十次文件读取。
 
 ## 数据存放位置
 
 ```
 ~/.xmake/harness/config.json         用户配置，含 api key
 ~/.xmake/harness/skills/<pack>       已安装的 skill 包
-<project>/.xmake-harness/            工程配置和会话记录
+~/.xmake/harness/projects/<工程>      该工程的会话记录
+<project>/.xmake-harness/            工程级配置、skills、agents、命令
 ```
 
 `XMAKE_HARNESS_HOME` 可以把 harness 的主目录挪到别处。

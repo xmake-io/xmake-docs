@@ -103,15 +103,16 @@ Inside the tui, `/` opens the command list. The built-in ones:
 | Command | What it does |
 | --- | --- |
 | `/xmake` | run xmake here **without spending tokens**, e.g. `/xmake build`, `/xmake run -d` |
-| `/xmakedocs` | fetch or update the xmake documentation so the agent can look the apis up |
+| `/xmake-docs` | fetch or update the xmake documentation so the agent can look the apis up |
 | `/skills` | list, install, update or remove skill packs |
 | `/model` | show or switch the model, e.g. `/model deepseek-reasoner` |
 | `/context` | show the context breakdown, `/context full` keeps everything |
-| `/session`, `/clear` | manage the conversation, start a new session |
+| `/sessions`, `/resume`, `/clear` | the conversation history, resume one, start a new one |
 | `/jobs` | the background jobs it started |
 | `/mcp` | the MCP servers it talks to |
 | `/config` | show or set a configuration value |
-| `/loop` | repeat a task on a schedule |
+| `/loop` | repeat a task on a schedule, e.g. `/loop 30m check the ci` |
+| `/rewind` | put the files back the way they were before a request |
 
 `/xmake` is the one to remember: the build output goes to your terminal, not into the
 model's context, so a long compile costs nothing.
@@ -123,6 +124,62 @@ $ xmake ai --command=doctor
 $ xmake ai --command='model deepseek-reasoner'
 $ xmake ai --list=skills     # also: agents, tools, commands, plugins, providers, sessions
 ```
+
+## Sessions and context
+
+Every turn is appended to a log on disk, per project. Closing the terminal loses nothing:
+
+```sh
+$ xmake ai -c              # continue the last conversation in this directory
+$ xmake ai -r              # pick one of this project's conversations
+$ xmake ai -r 6a86cfc5     # resume that one
+$ xmake ai --new           # start fresh even with -c configured
+```
+
+When the conversation approaches the model's context window it is compacted: the small
+model writes a summary of the older turns and the log continues from there. `/context`
+shows what is taking up the window, `/compact` summarises now, and `/cost` shows the tokens
+spent and the cache hit rate.
+
+## Long-running commands
+
+A build which takes twenty minutes should not hold the conversation hostage. Anything slow
+can run beside it:
+
+- the agent starts it as a background job, keeps working, and collects the output as it
+  arrives
+- you can push a command it started into the background yourself with **`ctrl+b`** while it
+  runs — it keeps going, the turn continues
+- `/jobs` lists them, `/jobs kill <id>` stops one
+
+Jobs belong to the session and are all stopped when it ends, so you are never left with a
+process you did not start and cannot see.
+
+## Undoing what it changed
+
+An agent which edits twelve files and gets the eleventh wrong leaves you with no way back
+except git — and the work which was in the tree before the session started is exactly the
+work git does not have.
+
+So every write keeps what it replaced. `/rewind` lists the points you can go back to, one
+per request which changed something, and `/rewind <n>` puts every file touched since then
+back to what it held at that point — including removing a file which did not exist before.
+It asks first, because anything you changed by hand since then is overwritten too.
+
+**It undoes edits and nothing else.** Commands the agent ran, files removed through the
+shell, anything outside the project: none of that is recorded, and a rewind does not
+pretend otherwise.
+
+
+## Where an answer comes from
+
+When an answer rests on a particular place in the code the agent cites it as
+`src/main.cpp:42`, which most terminals turn into something you can click.
+
+The citation is checked against the file before it is shown: one which points at a file
+that does not exist, or past the end of one that does, is rendered in the error colour. A
+model which cites a line it never read is more convincing than one which says nothing, and
+just as wrong.
 
 ## Agent skills
 
@@ -149,21 +206,41 @@ xmake know-how it teaches Claude Code:
 A skill is loaded on demand: only its one-line description stays in context, the body is
 pulled in when the task matches it.
 
+It reads the layouts which exist rather than demanding its own — a Claude `SKILL.md`
+directory, a Claude plugin or marketplace, a single-file skill, or a `.zip` bundle. Two
+skills wanting the same name is reported rather than silently resolved, and pointing it at
+a tool you already use links the directory instead of copying it:
+
+```
+/skills install ~/.claude            the claude skills you already have
+/skills install ./bundle.zip         a packed bundle
+```
+
+Installed packs are checked against upstream once a day, in the background, and the next
+start says so. Nothing is ever fetched without you asking.
+
 ## Tools, agents and MCP
 
 The agent works through a fixed tool set — reading and writing files, globbing, searching
 text, running commands, fetching urls, tracking todos, launching subagents — each of them
 gated by the permission mode. Long-running commands become background jobs (`/jobs`).
 
-It can also spawn **subagents** for isolated work, and talk to **MCP servers** for the
-capabilities it does not have itself (`/mcp`).
+It can also spawn **subagents** for isolated work — each with its own prompt, tools, model
+and context window, reporting back only its conclusion — and talk to **MCP servers** for
+the capabilities it does not have itself (`/mcp`).
+
+Several subagents can be handed a whole plan at once: independent explorations run
+together, whatever needs their reports waits for them, and only the last of them reports
+back. A wide sweep of the codebase then costs the main conversation a paragraph instead of
+forty file reads.
 
 ## Where it stores things
 
 ```
 ~/.xmake/harness/config.json         the user config, including the api keys
 ~/.xmake/harness/skills/<pack>       the installed skill packs
-<project>/.xmake-harness/            the project config and its sessions
+~/.xmake/harness/projects/<project>   the conversations of that project
+<project>/.xmake-harness/            the project config, its skills, agents and commands
 ```
 
 `XMAKE_HARNESS_HOME` moves the harness home somewhere else.
