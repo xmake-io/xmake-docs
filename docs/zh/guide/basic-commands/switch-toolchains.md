@@ -348,25 +348,63 @@ $ xmake
 
 ### Zig CC
 
-我们也可以使用 zig 提供的 `zig cc` 编译器去编译 C/C++ 代码。
+如果要用 zig 提供的 `zig cc`/`zig c++` 去编译 C/C++ 代码，切换到 `zigcc` 工具链即可。
 
 ```sh
-$ xmake f --cc="zig cc" --cxx="zig cc" --ld="zig c++" -c
+$ xmake f --toolchain=zigcc -c
 $ xmake
+```
+
+它会配置整套工具集，编译器、链接器、`ar`、`ranlib`、`objcopy` 和资源编译器都在内，所以静态库和动态库也能正常构建。
+
+::: tip 注意
+不要用 `--cc="zig cc" --cxx="zig c++" --ld="zig c++"` 这种逐个设置工具的方式，那样只替换了三个工具，下面的 `-target` 处理也不会生效。
+:::
+
+也可以指定 zig 的路径。
+
+```sh
+$ xmake f --toolchain=zigcc --zc=/xxxx/zig -c
 ```
 
 ### 交叉编译
 
-另外，我们也可以使用 zig 实现交叉编译。
+zig cc 本身就是交叉编译器，不需要额外的 sysroot 和工具链，xmake 只负责把正确的 `-target <tuple>` 传给它。
+
+对于 xmake 已知的平台，直接切换平台和架构就行，target 会自动推导出来：
 
 ```sh
-$ xmake f -p cross --cross=riscv64-linux-musl --toolchain=zig
+$ xmake f -p linux -a arm64 --toolchain=zigcc -c
+$ xmake f -p macosx -a arm64 --toolchain=zigcc -c
+$ xmake f -p mingw -a x86_64 --toolchain=zigcc -c
+$ xmake f -p windows -a x86_64 --toolchain=zigcc -c
 $ xmake
 ```
 
-或者编译 arm64 架构：
+| 平台 | 对应的 target |
+| --- | --- |
+| `linux` | `<arch>-linux-gnu`（`arm-linux-gnueabi`、`mips64-linux-gnuabi64`） |
+| `macosx` | `<arch>-macos-none` |
+| `windows` | `<arch>-windows-msvc` |
+| `mingw` | `<arch>-windows-gnu` |
+
+其它目标则用 `--cross` 自己指定 target，它会被原样传给 zig：
 
 ```sh
+$ xmake f -p cross --cross=riscv64-linux-musl --toolchain=zigcc
+$ xmake f -p freebsd --cross=x86_64-freebsd --toolchain=zigcc
+$ xmake f -p linux --cross=x86_64-linux-musl --toolchain=zigcc
+$ xmake
+```
+
+::: tip 注意
+不在上面表格里的平台（比如 `freebsd`）没有对应的 target 推导，必须加 `--cross`，否则不会传 `-target`，xmake 会去找该平台的本地工具链。
+:::
+
+zig 程序的交叉编译方式一样，只是换成 `zig` 工具链：
+
+```sh
+$ xmake f -p cross --cross=riscv64-linux-musl --toolchain=zig
 $ xmake f --toolchain=zig -a arm64 -c
 $ xmake
 ```

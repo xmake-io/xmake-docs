@@ -353,25 +353,69 @@ $ xmake
 
 ### Zig CC
 
-We can also use the `zig cc` compiler provided by zig to compile C/C++ code.
+To compile C/C++ code with the `zig cc`/`zig c++` compiler, switch to the `zigcc` toolchain.
 
 ```sh
-$ xmake f --cc="zig cc" --cxx="zig c++" --ld="zig c++" -c
+$ xmake f --toolchain=zigcc -c
 $ xmake
+```
+
+It sets up the whole toolset — the compiler, the linker, `ar`, `ranlib`, `objcopy` and the
+resource compiler — so it also works for static and shared libraries.
+
+::: tip NOTE
+Do not set the tools one by one with `--cc="zig cc" --cxx="zig c++" --ld="zig c++"`. It only
+patches three tools, and none of the `-target` handling below applies.
+:::
+
+The path of zig can be set as well.
+
+```sh
+$ xmake f --toolchain=zigcc --zc=/xxxx/zig -c
 ```
 
 ### Cross compilation
 
-In addition, we can also use zig to achieve cross-compilation.
+zig cc is a cross compiler, it needs no extra sysroot or toolchain, xmake only passes the
+right `-target <tuple>` to it.
+
+For the platforms which xmake knows, just switch the platform and the architecture, the
+target tuple is derived from them:
 
 ```sh
-$ xmake f -p cross --cross=riscv64-linux-musl --toolchain=zig
+$ xmake f -p linux -a arm64 --toolchain=zigcc -c
+$ xmake f -p macosx -a arm64 --toolchain=zigcc -c
+$ xmake f -p mingw -a x86_64 --toolchain=zigcc -c
+$ xmake f -p windows -a x86_64 --toolchain=zigcc -c
 $ xmake
 ```
 
-Or compile the arm64 architecture:
+| Platform | Target tuple |
+| --- | --- |
+| `linux` | `<arch>-linux-gnu` (`arm-linux-gnueabi`, `mips64-linux-gnuabi64`) |
+| `macosx` | `<arch>-macos-none` |
+| `windows` | `<arch>-windows-msvc` |
+| `mingw` | `<arch>-windows-gnu` |
+
+For any other target, pass the tuple yourself with `--cross`, it is used as-is:
 
 ```sh
+$ xmake f -p cross --cross=riscv64-linux-musl --toolchain=zigcc
+$ xmake f -p freebsd --cross=x86_64-freebsd --toolchain=zigcc
+$ xmake f -p linux --cross=x86_64-linux-musl --toolchain=zigcc
+$ xmake
+```
+
+::: tip NOTE
+A platform which is not in the table above (e.g. `freebsd`) has no tuple of its own, so
+`--cross` is required — otherwise no `-target` is passed and xmake looks for a native
+toolchain of that platform.
+:::
+
+`zig build` programs cross-compile the same way, only with the `zig` toolchain:
+
+```sh
+$ xmake f -p cross --cross=riscv64-linux-musl --toolchain=zig
 $ xmake f --toolchain=zig -a arm64 -c
 $ xmake
 ```
