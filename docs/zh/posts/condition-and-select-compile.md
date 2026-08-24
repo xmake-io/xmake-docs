@@ -67,7 +67,7 @@ end
 
 当然，如果我们的项目还设置了其他模式，例如性能分析模式：profile，那么还可以通过这个来判断是否需要添加性能分析方面的编译选项。
 
-自 xmake 2.2.1 起，部分常用模式配置可通过内置规则简化，请参阅[内置规则](zh/api/description/builtin-rules)。
+自 xmake 2.2.1 起，部分常用模式配置可通过内置规则简化，请参阅[内置规则](/zh/api/description/builtin-rules)。
 
 ### `is_plat`
 
@@ -233,4 +233,4 @@ if is_option("demo") then
 end
 ```
 
-关于`option`的详细用法，请参阅[配置选项](zh/api/description/configuration-option.html)。
+关于`option`的详细用法，请参阅[配置选项](/zh/api/description/configuration-option)。

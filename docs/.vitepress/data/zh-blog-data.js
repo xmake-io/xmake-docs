@@ -1336,7 +1336,7 @@ export const posts = [
       "xmake.lua",
       "条件判断"
     ],
-    "excerpt": "<p>xmake 提供了一些内置的条件判断api，用于在选择性编译时，获取到一些工程状态的相关信息，来调整编译逻辑。。</p>\n<p>例如：<code>is_os</code>, <code>is_plat</code>, <code>is_arch</code>, <code>is_kind</code>, <code>is_mode</code>, <code>is_option</code></p>\n<p>我们先拿最常用的<code>is_mode</code>来讲讲如何使用，这个api主要用来判断当前的编译模式，例如平常编译配置的时候，会执行：</p>\n"
+    "excerpt": "<p>xmake 提供了一些内置的条件判断api，用于在选择性编译时，获取到一些工程状态的相关信息，来调整编译逻辑。</p>\n<p>例如：<code>is_os</code>, <code>is_plat</code>, <code>is_arch</code>, <code>is_kind</code>, <code>is_mode</code>, <code>is_option</code></p>\n<p>我们先讲讲最常用的<code>is_mode</code>，这个api主要用来判断当前的编译模式，例如平常编译配置的时候，会执行：</p>\n"
   },
   {
     "title": "如何通过xmake进行交叉编译",
