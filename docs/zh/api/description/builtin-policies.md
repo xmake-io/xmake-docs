@@ -829,6 +829,19 @@ set_policy("platform.longpaths", true)
 set_policy("package.install_locally", true)
 ```
 
+它只影响平台侧的包。主机包 —— 也就是用来构建其它包的工具，例如交叉工具链 —— 不依赖工程配置，而且跨工程复用，所以仍然装在全局目录，并有自己的策略，@see `package.host.install_locally`。
+
+## package.host.install_locally <Badge type="tip" text="v3.1.1" />
+
+让主机包（例如工具链）也安装到本地项目目录。
+
+```lua
+set_policy("package.install_locally", true)
+set_policy("package.host.install_locally", true)
+```
+
+适用于工程需要完全自包含的场景，比如要求连工具链都放在 `build/.packages` 下的可复现构建。不开启时，只有你的程序真正链接的那些包会装在本地。
+
 ## package.keep_source <Badge type="tip" text="v3.0.8" />
 
 安装包后保留源码，不清理源码目录。

@@ -449,6 +449,65 @@ set_config("ld", "g++")
 
 不过，我们还是可以通过`$ xmake f --name=value`的方式，去修改xmake.lua中的默认配置。
 
+## add_addons <Badge type="tip" text="v3.1.1" />
+
+### 添加工程依赖的 addon
+
+#### 函数原型
+
+::: tip API
+```lua
+add_addons(addons: <string|array>, ...)
+```
+:::
+
+#### 参数说明
+
+| 参数 | 说明 |
+|-----------|-------------|
+| addons | addon 名字，字符串或数组，支持语义版本，例如 "esp32-devel 1.0.x" |
+| ... | 可变参数，可以传入多个 addon 名字 |
+
+#### 用法说明
+
+Addon 用插件、规则、工具链、工程模板、lua 模块和 includes 文件来扩展 xmake 自身。在这里声明之后，别人克隆下来不需要任何手动准备：加载工程时 xmake 会自动安装缺失的 addon。
+
+```lua
+add_addons("esp32-devel")           -- 任意版本
+add_addons("esp32-devel 1.0.x")     -- 版本范围
+add_addons("esp32-devel", "serial-tools")
+```
+
+解析出来的版本会写进 `xmake.lua` 旁边的 `xmake-addons.lock`，保证所有人构建时用的是同一批版本，这个文件建议提交。
+
+然后引用 addon 的载荷，它们都是带命名空间的：
+
+```lua
+add_addons("esp32-devel")
+
+includes("@addon/esp32-devel/board")
+
+target("blink")
+    add_rules("@addon/esp32-devel/app")
+    add_files("src/*.c")
+```
+
+| 引用形式 | 指向 |
+|-----------|-----------|
+| `@addon/<name>/<payload>` | addon 的规则、工具链或 includes 文件 |
+| `@addon.<name>.<module>` | addon 的 lua 模块，供 `import()` 使用 |
+| `@self.<module>` | 当前脚本所属 addon 自己的模块 |
+
+也可以用命令行管理，@see `xmake addon --help`：
+
+```sh
+$ xmake addon --install esp32-devel
+$ xmake addon --list
+$ xmake addon --upgrade
+```
+
+完整介绍见 [Addons](/zh/guide/extensions/addons/introduction)。
+
 ## add_requires
 
 ### 添加需要的依赖包

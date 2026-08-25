@@ -1,5 +1,23 @@
 export const posts = [
   {
+    "title": "Xmake v3.1.1 预览，Addons 扩展 Xmake 自身",
+    "url": "/zh/posts/xmake-update-v3.1.1",
+    "date": {
+      "time": 1787572800000,
+      "string": "August 24, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "addon",
+      "plugin",
+      "toolchain",
+      "template",
+      "ai"
+    ],
+    "excerpt": "<p>这是 dev 分支上的改动预览，尚未正式发布。</p>\n<p>这个周期的主角是 <strong>addons</strong>。v3.1.0 重构了 <code>xmake plugin</code>，让插件能像包一样分发；addons 把这件事做到底：一个 addon 不只能携带插件，还能携带规则、工具链、工程模板、lua 模块和 includes 文件 —— 一整套开发工具包，一条命令装好，或者由工程声明后自动安装。</p>\n<p>除此之外，还新增了 <code>package.host.install_locally</code> 策略、新的交叉编译架构、重构后的模板分发，以及 BSD 的 <code>pkg</code> 包管理器支持。</p>\n"
+  },
+  {
     "title": "Xmake v3.1.0 发布，插件仓库分发，二进制资源转换与 alignof 检测",
     "url": "/zh/posts/xmake-update-v3.1.0",
     "date": {

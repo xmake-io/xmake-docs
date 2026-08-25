@@ -838,6 +838,24 @@ Install packages in the local project folder.
 set_policy("package.install_locally", true)
 ```
 
+It only affects the target-side packages. The host packages — the tools which build the
+other packages, e.g. the cross toolchains — do not depend on the project configuration and
+are shared between the projects, so they stay in the global directory and have their own
+policy, @see `package.host.install_locally`.
+
+## package.host.install_locally <Badge type="tip" text="v3.1.1" />
+
+Install the host packages in the local project folder too, e.g. the toolchains.
+
+```lua
+set_policy("package.install_locally", true)
+set_policy("package.host.install_locally", true)
+```
+
+Use it when the project must be self-contained, e.g. a fully reproducible build where even
+the toolchain lives under `build/.packages`. Without it, only the packages your program
+links against are installed locally.
+
 ## package.keep_source <Badge type="tip" text="v3.0.8" />
 
 Keep package source code after installing.

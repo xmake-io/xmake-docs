@@ -448,6 +448,68 @@ set_config("ld", "g++")
 
 However, we can still modify the default configuration in xmake.lua by `$xmake f --name=value`.
 
+## add_addons <Badge type="tip" text="v3.1.1" />
+
+### Add the required addons
+
+#### Function Prototype
+
+::: tip API
+```lua
+add_addons(addons: <string|array>, ...)
+```
+:::
+
+#### Parameter Description
+
+| Parameter | Description |
+|-----------|-------------|
+| addons | Addon name string or array, supports semantic version like "esp32-devel 1.0.x" |
+| ... | Variable parameters, can pass multiple addon names |
+
+#### Usage
+
+An addon extends xmake itself with plugins, rules, toolchains, project templates, lua
+modules and includes files. Declaring it here means a fresh clone of the project needs no
+manual setup: xmake installs the missing addons when the project is loaded.
+
+```lua
+add_addons("esp32-devel")           -- any version
+add_addons("esp32-devel 1.0.x")     -- a version range
+add_addons("esp32-devel", "serial-tools")
+```
+
+The resolved versions are written to `xmake-addons.lock` next to `xmake.lua`, so everyone
+who builds the project gets the same addon versions. Commit that file.
+
+Then reference the payloads of the addon, they are namespaced:
+
+```lua
+add_addons("esp32-devel")
+
+includes("@addon/esp32-devel/board")
+
+target("blink")
+    add_rules("@addon/esp32-devel/app")
+    add_files("src/*.c")
+```
+
+| Reference | Points at |
+|-----------|-----------|
+| `@addon/<name>/<payload>` | a rule, toolchain or includes file of the addon |
+| `@addon.<name>.<module>` | a lua module of the addon, used by `import()` |
+| `@self.<module>` | a module of the addon which owns the running script |
+
+Addons can also be managed from the command line, @see `xmake addon --help`:
+
+```sh
+$ xmake addon --install esp32-devel
+$ xmake addon --list
+$ xmake addon --upgrade
+```
+
+@see [Addons](/guide/extensions/addons/introduction) for the whole picture.
+
 ## add_requires
 
 ### Add the required dependency packages

@@ -71,6 +71,8 @@ subagents — so the main model is spent only on the real task.
 
 ## Running it
 
+![xmake ai in the terminal](/assets/img/harness/xmake-ai-tui.png)
+
 ```sh
 $ xmake ai                                   # interactive tui
 $ xmake ai "add a unit test for foo"         # start with a prompt
@@ -83,6 +85,72 @@ $ xmake ai --print "what does this build?"   # non-interactive, for scripts and 
 ```
 
 Sessions are per directory, so `-c` in another project continues a different thread.
+
+## The web ui
+
+```sh
+$ xmake ai --web                 # serve the ui and open the browser on it
+$ xmake ai --web --port=9800     # take another port
+$ xmake ai --web --nobrowser     # just print the url
+$ xmake ai --web --cwd=/path/to/project
+```
+
+It starts a small http server on the loopback, prints a url which carries a
+per-run token, and opens your default browser on it:
+
+```
+  web ui  http://127.0.0.1:9736/?token=e07091070…
+  project /path/to/your/project
+```
+
+| Option | Description |
+| --- | --- |
+| `--web` | serve the web ui instead of the terminal ui |
+| `--port=N` | the port to take, `9736` by default (the first free one from there) |
+| `--nobrowser` | do not open the browser, just print the url |
+| `--cwd=DIR` | the project to open, the current directory by default |
+| `--mode=M` | the permission mode to start in, `acceptedits` by default |
+
+It opens on the **last conversation of this project** rather than an empty one, because a
+browser window survives a reload, a crash or a laptop waking up. `--web --new` starts a
+fresh one.
+
+![the web ui, chat](/assets/img/harness/xmake-ai-web-chat.png)
+
+The same harness is behind it as in the terminal — the same tools, skills,
+permission modes and session files. The page has four screens: the conversation,
+the changes, the conversations of this project, and the settings (project
+directory, theme, provider, models, api keys).
+
+The changes screen lists the files *this conversation* changed — not the working
+tree, which holds whatever was already in it. The list is on the left, the
+highlighted diff of the one you picked on the right, and each file has a tick to
+keep the change and a cross to put the file back the way it was before the
+conversation touched it.
+
+![the web ui, changes](/assets/img/harness/xmake-ai-web-changes.png)
+
+There is no framework and no build step in it: plain html, css and es modules,
+served straight from the addon. The markdown is rendered by the harness itself,
+and the events cross as server-sent events, which browsers speak natively.
+
+The server binds to `127.0.0.1` and demands the token, which lives only as long
+as the process. The url is not for sharing — this is a service which edits files
+and runs commands. The api keys are never sent back to the page: it shows
+whether one is configured and lets you replace it.
+
+The slash commands are there too: type `/` in the box and the list appears. They
+are the same commands the terminal runs, through an adapter rather than a second
+implementation, so `/compact`, `/model`, `/permissions` and `/xmake build` all
+work — the output of a build comes back as a card in the conversation.
+
+Confirmations work as they do in the terminal, decided by the same policy — the
+ordinary commands run, and what is hard to undo asks first. The question appears
+in the conversation rather than as a dialog over it, carries the diff when it is
+an edit, and is pushed to every open tab.
+
+It adapts to a phone: the navigation moves to the bottom and the changes screen
+becomes one column.
 
 ## Permission modes
 

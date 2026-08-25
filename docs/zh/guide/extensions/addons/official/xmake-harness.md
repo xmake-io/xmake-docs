@@ -59,6 +59,8 @@ $ xmake ai --smallmodel=deepseek-chat     # 供标题/摘要/轻量子 agent 使
 
 ## 运行
 
+![终端里的 xmake ai](/assets/img/harness/xmake-ai-tui.png)
+
 ```sh
 $ xmake ai                                   # 交互式界面
 $ xmake ai "给 foo 加个单元测试"               # 带提示词直接开始
@@ -71,6 +73,61 @@ $ xmake ai --print "这个工程构建出什么？"       # 非交互，适合�
 ```
 
 会话是按目录区分的，所以在另一个工程里 `-c` continue 的是另一条线程。
+
+## Web 界面
+
+```sh
+$ xmake ai --web                 # 起 web 界面，并自动打开默认浏览器
+$ xmake ai --web --port=9800     # 换个端口
+$ xmake ai --web --nobrowser     # 只打印 url，不开浏览器
+$ xmake ai --web --cwd=/path/to/project
+```
+
+它在本地回环上起一个小的 http 服务，打印一个带 token 的 url（token 每次运行重新生成），
+并用默认浏览器打开：
+
+```
+  web ui  http://127.0.0.1:9736/?token=e07091070…
+  project /path/to/your/project
+```
+
+| 参数 | 说明 |
+| --- | --- |
+| `--web` | 启动 web 界面，而不是终端界面 |
+| `--port=N` | 端口，默认 `9736`（从它开始找第一个空闲端口） |
+| `--nobrowser` | 不打开浏览器，只打印 url |
+| `--cwd=DIR` | 要打开的工程目录，默认当前目录 |
+| `--mode=M` | 启动时的权限模式，默认 `acceptedits` |
+
+打开时进入的是**当前工程的上一次会话**，而不是空会话，因为浏览器窗口会经历刷新、崩溃、合盖唤醒。想要新会话用 `--web --new`。
+
+![web 界面：对话](/assets/img/harness/xmake-ai-web-chat.png)
+
+后面是同一个 harness —— 同样的工具、技能、权限模式和会话文件。页面有四块：
+对话、改动、当前工程的历史会话，以及设置（工程目录、主题、服务商、模型、api key）。
+
+改动那一页列的是*这次对话*改过的文件 —— 不是工作区，工作区里本来有什么它都会显示。
+左边是列表，右边是选中文件的高亮 diff，每个文件上有一个勾（保留改动）
+和一个叉（恢复成对话动它之前的样子）。
+
+![web 界面：改动](/assets/img/harness/xmake-ai-web-changes.png)
+
+里面不含任何框架，也没有构建步骤：就是普通的 html、css 和 es module，直接由 addon 提供。
+markdown 由 harness 自己渲染，事件走浏览器原生支持的 server-sent events。
+
+服务只绑定 `127.0.0.1` 并校验 token，token 随进程结束而消失。这个 url 不要分享出去 ——
+它背后是一个能改文件、能执行命令的服务。api key 不会回传给页面：
+页面只显示「有没有配」，并允许替换。
+
+斜杠命令也在：输入框里打 `/` 就会列出来。它们就是终端里那批命令，走适配层而不是重写一遍，
+所以 `/compact`、`/model`、`/permissions`、`/xmake build` 都能用 ——
+构建输出会以卡片形式回到对话里。
+
+权限确认和终端里一致，判断用的是同一套策略 —— 常规命令直接执行，
+难以撤销的才会问一句。问题出现在对话流里面，而不是盖在页面上的弹框，
+改文件时带上 diff，并推送到所有打开的标签页。
+
+手机上也能用：导航栏移到底部，改动页从两栏变成一栏。
 
 ## 权限模式
 
