@@ -16,43 +16,32 @@ outline: deep
 
 我们平时用的包，提供的是程序要链接的库，而 addon 扩展的是 xmake 本身，给构建工具增加新的能力。
 
-```sh
-$ xmake addon --install esp32-devel
-$ xmake create -t esp32.blink -l c blink
-$ cd blink
-$ xmake f --board=esp32c3
-$ xmake
-$ xmake install                       # 烧写到板子
-```
-
-整个 ESP32 的开发流程就这几行，交叉工具链、构建规则、烧写逻辑和工程模板，全部由这个 addon 提供，用户不需要再单独去装任何东西。
-
 #### 一个 addon 可以提供什么
 
 下面这几类扩展内容都是可选的，addon 提供哪些就带哪些：
 
 | 目录 | 提供的能力 | 使用方式 |
 | --- | --- | --- |
-| `plugins/` | 新的 xmake 命令 | `xmake monitor` |
-| `rules/` | 构建规则 | `add_rules("@addon/esp32-devel/app")` |
-| `toolchains/` | 工具链 | `set_toolchains("@addon/esp32-devel/esp32")` |
-| `templates/` | 工程模板 | `xmake create -t esp32.blink` |
-| `modules/` | 可导入的 lua 模块 | `import("@addon.serial-tools.serial")` |
-| `includes/` | 可包含的配置片段 | `includes("@addon/esp32-devel/board")` |
+| `plugins/` | 新的 xmake 命令 | `xmake hello` |
+| `rules/` | 构建规则 | `add_rules("@addon/my-addon/app")` |
+| `toolchains/` | 工具链 | `set_toolchains("@addon/my-addon/mycc")` |
+| `templates/` | 工程模板 | `xmake create -t myapp` |
+| `modules/` | 可导入的 lua 模块 | `import("@addon.my-addon.utils")` |
+| `includes/` | 可包含的配置片段 | `includes("@addon/my-addon/board")` |
 
 这些扩展内容都是带命名空间的，统一通过 `@addon/<name>/...` 来引用，所以两个 addon 即使提供了同名的规则也不会冲突。只有插件和模板是例外，因为命令名和模板 id 是全局的，如果安装的 addon 会覆盖掉别的 addon 的命令，xmake 会直接拒绝。
 
 #### addon 的管理
 
 ```sh
-$ xmake addon --install esp32-devel                      # 从仓库索引安装
-$ xmake addon --install github:xmake-addons/esp32-devel  # 从 github 安装，支持 `#branch`
+$ xmake addon --install my-addon                         # 从仓库索引安装
+$ xmake addon --install github:myrepo/my-addon           # 从 github 安装，支持 `#branch`
 $ xmake addon --install https://github.com/user/repo.git # 从任意 git url 安装
 $ xmake addon --install /path/to/my-addon                # 从本地目录安装
 
 $ xmake addon --list
-$ xmake addon --search esp32
-$ xmake addon --remove esp32-devel
+$ xmake addon --search my
+$ xmake addon --remove my-addon
 $ xmake addon --upgrade
 ```
 
@@ -61,12 +50,12 @@ $ xmake addon --upgrade
 工程也可以直接声明自己需要哪些 addon，这样别人克隆下来就不用手动安装了，加载工程的时候，xmake 会自动把缺失的 addon 拉下来：
 
 ```lua
-add_addons("esp32-devel 1.0.x")
+add_addons("my-addon 1.0.x")
 
-includes("@addon/esp32-devel/board")
+includes("@addon/my-addon/board")
 
-target("blink")
-    add_rules("@addon/esp32-devel/app")
+target("hello")
+    add_rules("@addon/my-addon/app")
     add_files("src/*.c")
 ```
 
@@ -139,7 +128,7 @@ addon 相关的接口不多，主要就是下面三个地方：
 
 ```lua
 -- 1. 在 xmake.lua 中，声明工程需要哪些 addon
-add_addons("esp32-devel 1.0.x")
+add_addons("my-addon 1.0.x")
 ```
 
 ```lua
@@ -150,7 +139,7 @@ addon("my-addon")
     set_license("Apache-2.0")
     set_sourcedir("src")        -- 仓库内存放扩展目录的根目录
     add_deps("serial-tools")    -- 依赖的其他 addon
-    add_globalmodules("detect.tools.find_avrdude")  -- 只有需要被 xmake 按名字查找的模块才用得上
+    add_globalmodules("detect.tools.find_mytool")   -- 只有需要被 xmake 按名字查找的模块才用得上
 ```
 
 ```lua
@@ -187,10 +176,10 @@ addon 提供的所有东西，都要通过 `@addon/<name>/...` 或者 `@addon.<n
 
 ```lua
 -- src/includes/packages/xmake.lua
-package("avr-gcc")
+package("mycc")
     set_kind("toolchain")
-    add_urls("https://.../avr-gcc-$(version).tar.bz2")
-    add_versions("7.3.0", "<sha256>")
+    add_urls("https://.../mycc-$(version).tar.gz")
+    add_versions("1.0.0", "<sha256>")
     on_install(function (package)
         os.cp("*", package:installdir())
     end)
@@ -200,11 +189,11 @@ package_end()
 ```lua
 -- src/includes/board/xmake.lua
 includes("../packages")
-option("board", {default = "uno", description = "Set the target board."})
-add_requires("avr-gcc", "avrdude")
+option("board", {default = "myboard", description = "Set the target board."})
+add_requires("mycc", "myflasher")
 ```
 
-工程里只需要 `includes("@addon/avr-devel/board")` 一行，配置选项、工具链和烧写工具就都齐了。
+工程里只需要 `includes("@addon/my-addon/board")` 一行，配置选项、工具链和烧写工具就都齐了。
 
 #### 目前提供的官方 addon
 
@@ -219,6 +208,17 @@ add_requires("avr-gcc", "avrdude")
 | `xmake-harness` | `xmake ai`，用 xmake lua 写的终端编码助手 |
 | `format-plugin` / `doxygen-plugin` / `macro-plugin` | 原来的几个内置命令 |
 | `basic-templates` | 依赖外部 SDK 的工程模板（sdl、qt、verilator） |
+
+以 `esp32-devel` 为例，交叉工具链、构建规则、烧写逻辑和工程模板都由它提供，所以整个 ESP32 的开发流程就这么几行，用户不需要再单独去装什么东西：
+
+```sh
+$ xmake addon --install esp32-devel
+$ xmake create -t esp32.blink -l c blink
+$ cd blink
+$ xmake f --board=esp32c3
+$ xmake
+$ xmake install                       # 烧写到板子
+```
 
 ### xmake ai，用 xmake lua 写的 AI 助手
 
@@ -332,7 +332,7 @@ set_policy("package.host.install_locally", true)   -- 如果你确实想让工�
 
 ### 重构模板分发
 
-我们重新组织了模板目录，也重构了模板的分发方式，addon 的 `templates/` 目录正是基于这个改动才能实现，`xmake create -t esp32.blink` 这个模板来自 addon，而不是 xmake 安装包自带的。
+我们重新组织了模板目录，也重构了模板的分发方式，addon 的 `templates/` 目录正是基于这个改动才能实现，`xmake create -t` 用到的模板现在可以由 addon 提供，而不必内置在 xmake 安装包里。
 
 ### BSD 的 pkg 包管理器
 

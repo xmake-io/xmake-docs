@@ -22,30 +22,18 @@ architectures, a reworked template distribution, and a `pkg` package manager for
 An addon extends **xmake itself**. Where a package provides libraries for your program, an
 addon provides new abilities for the build tool.
 
-```sh
-$ xmake addon --install esp32-devel
-$ xmake create -t esp32.blink -l c blink
-$ cd blink
-$ xmake f --board=esp32c3
-$ xmake
-$ xmake install                       # flash it to the board
-```
-
-Those five lines are the whole ESP32 setup: the addon carried the cross toolchain, the build
-rules, the flashing logic and the project template.
-
 #### What an addon can carry
 
 Every payload is optional, an addon ships only what it provides:
 
 | Payload | What it becomes | Used as |
 | --- | --- | --- |
-| `plugins/` | a new xmake command | `xmake monitor` |
-| `rules/` | a build rule | `add_rules("@addon/esp32-devel/app")` |
-| `toolchains/` | a toolchain | `set_toolchains("@addon/esp32-devel/esp32")` |
-| `templates/` | a project template | `xmake create -t esp32.blink` |
-| `modules/` | importable lua modules | `import("@addon.serial-tools.serial")` |
-| `includes/` | includable configuration | `includes("@addon/esp32-devel/board")` |
+| `plugins/` | a new xmake command | `xmake hello` |
+| `rules/` | a build rule | `add_rules("@addon/my-addon/app")` |
+| `toolchains/` | a toolchain | `set_toolchains("@addon/my-addon/mycc")` |
+| `templates/` | a project template | `xmake create -t myapp` |
+| `modules/` | importable lua modules | `import("@addon.my-addon.utils")` |
+| `includes/` | includable configuration | `includes("@addon/my-addon/board")` |
 
 The payloads are namespaced through `@addon/<name>/...`, so two addons never collide. Plugins
 and templates are the exception — a command name is global — and an install which would
@@ -54,14 +42,14 @@ shadow another addon's command is rejected.
 #### Managing addons
 
 ```sh
-$ xmake addon --install esp32-devel                      # from the repository index
-$ xmake addon --install github:xmake-addons/esp32-devel  # from github, `#branch` works too
+$ xmake addon --install my-addon                         # from the repository index
+$ xmake addon --install github:myrepo/my-addon           # from github, `#branch` works too
 $ xmake addon --install https://github.com/user/repo.git # from any git url
 $ xmake addon --install /path/to/my-addon                # from a local directory
 
 $ xmake addon --list
-$ xmake addon --search esp32
-$ xmake addon --remove esp32-devel
+$ xmake addon --search my
+$ xmake addon --remove my-addon
 $ xmake addon --upgrade
 ```
 
@@ -71,12 +59,12 @@ A project can declare what it needs, so a fresh clone does not have to install a
 hand — xmake fetches the missing addons when the project is loaded:
 
 ```lua
-add_addons("esp32-devel 1.0.x")
+add_addons("my-addon 1.0.x")
 
-includes("@addon/esp32-devel/board")
+includes("@addon/my-addon/board")
 
-target("blink")
-    add_rules("@addon/esp32-devel/app")
+target("hello")
+    add_rules("@addon/my-addon/app")
     add_files("src/*.c")
 ```
 
@@ -153,7 +141,7 @@ Three places, a handful of interfaces:
 
 ```lua
 -- 1. in xmake.lua, what a project needs
-add_addons("esp32-devel 1.0.x")
+add_addons("my-addon 1.0.x")
 ```
 
 ```lua
@@ -164,7 +152,7 @@ addon("my-addon")
     set_license("Apache-2.0")
     set_sourcedir("src")        -- the payload root inside the repository
     add_deps("serial-tools")    -- other addons this one needs
-    add_globalmodules("detect.tools.find_avrdude")  -- only for the lookups xmake does by name
+    add_globalmodules("detect.tools.find_mytool")   -- only for the lookups xmake does by name
 ```
 
 ```lua
@@ -206,10 +194,10 @@ carries the package recipes and exposes them through an includes file:
 
 ```lua
 -- src/includes/packages/xmake.lua
-package("avr-gcc")
+package("mycc")
     set_kind("toolchain")
-    add_urls("https://.../avr-gcc-$(version).tar.bz2")
-    add_versions("7.3.0", "<sha256>")
+    add_urls("https://.../mycc-$(version).tar.gz")
+    add_versions("1.0.0", "<sha256>")
     on_install(function (package)
         os.cp("*", package:installdir())
     end)
@@ -219,11 +207,11 @@ package_end()
 ```lua
 -- src/includes/board/xmake.lua
 includes("../packages")
-option("board", {default = "uno", description = "Set the target board."})
-add_requires("avr-gcc", "avrdude")
+option("board", {default = "myboard", description = "Set the target board."})
+add_requires("mycc", "myflasher")
 ```
 
-The project writes one line — `includes("@addon/avr-devel/board")` — and gets the options,
+The project writes one line — `includes("@addon/my-addon/board")` — and gets the options,
 the toolchain and the flash tool.
 
 #### The official addons
@@ -239,6 +227,18 @@ The first batch is already in xmake-repo:
 | `xmake-harness` | `xmake ai`, a terminal coding agent written in xmake lua |
 | `format-plugin` / `doxygen-plugin` / `macro-plugin` | the former builtin commands |
 | `basic-templates` | the templates which need an external sdk (sdl, qt, verilator) |
+
+`esp32-devel`, for instance, carries the cross toolchain, the build rules, the flashing logic
+and the project template, so the whole ESP32 setup is:
+
+```sh
+$ xmake addon --install esp32-devel
+$ xmake create -t esp32.blink -l c blink
+$ cd blink
+$ xmake f --board=esp32c3
+$ xmake
+$ xmake install                       # flash it to the board
+```
 
 ### xmake ai, an Agent Written in Xmake Lua
 
@@ -375,8 +375,8 @@ New architectures for the cross and linux platforms, e.g. SPARC64.
 ### Reworked Template Distribution
 
 The templates directory was reorganized and the distribution reworked, which is what makes the
-`templates/` payload of an addon possible — `xmake create -t esp32.blink` comes from an addon,
-not from the xmake installation.
+`templates/` payload of an addon possible — the templates behind `xmake create -t` can now come
+from an addon instead of being built into the xmake installation.
 
 ### pkg Package Manager for BSD
 
