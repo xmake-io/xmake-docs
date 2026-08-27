@@ -303,13 +303,45 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
               text: '官方 Addons',
               collapsed: true,
               items: [
-                { text: 'xmake-harness (xmake ai)', link: 'extensions/addons/official/xmake-harness' },
-                { text: 'esp32-devel', link: 'extensions/addons/official/esp32-devel' },
-                { text: 'avr-devel', link: 'extensions/addons/official/avr-devel' },
-                { text: 'serial-tools', link: 'extensions/addons/official/serial-tools' },
-                { text: 'yaml', link: 'extensions/addons/official/yaml' },
-                { text: '插件类 Addon', link: 'extensions/addons/official/plugin-addons' },
-                { text: 'basic-templates', link: 'extensions/addons/official/basic-templates' },
+                {
+                  text: '开发套件类',
+                  collapsed: true,
+                  items: [
+                    { text: 'esp32-devel', link: 'extensions/addons/official/esp32-devel' },
+                    { text: 'avr-devel', link: 'extensions/addons/official/avr-devel' },
+                  ]
+                },
+                {
+                  text: '工具类',
+                  collapsed: true,
+                  items: [
+                    { text: 'xmake-harness (xmake ai)', link: 'extensions/addons/official/xmake-harness' },
+                    { text: 'serial-tools', link: 'extensions/addons/official/serial-tools' },
+                  ]
+                },
+                {
+                  text: '扩展模块类',
+                  collapsed: true,
+                  items: [
+                    { text: 'yaml', link: 'extensions/addons/official/yaml' },
+                  ]
+                },
+                {
+                  text: '插件类',
+                  collapsed: true,
+                  items: [
+                    { text: 'format-plugin', link: 'extensions/addons/official/format-plugin' },
+                    { text: 'doxygen-plugin', link: 'extensions/addons/official/doxygen-plugin' },
+                    { text: 'macro-plugin', link: 'extensions/addons/official/macro-plugin' },
+                  ]
+                },
+                {
+                  text: '模板类',
+                  collapsed: true,
+                  items: [
+                    { text: 'basic-templates', link: 'extensions/addons/official/basic-templates' },
+                  ]
+                },
               ]
             },
           ]

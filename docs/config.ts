@@ -222,13 +222,45 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
               text: 'Official Addons',
               collapsed: true,
               items: [
-                { text: 'xmake-harness (xmake ai)', link: 'extensions/addons/official/xmake-harness' },
-                { text: 'esp32-devel', link: 'extensions/addons/official/esp32-devel' },
-                { text: 'avr-devel', link: 'extensions/addons/official/avr-devel' },
-                { text: 'serial-tools', link: 'extensions/addons/official/serial-tools' },
-                { text: 'yaml', link: 'extensions/addons/official/yaml' },
-                { text: 'Plugin Addons', link: 'extensions/addons/official/plugin-addons' },
-                { text: 'basic-templates', link: 'extensions/addons/official/basic-templates' },
+                {
+                  text: 'Development Kits',
+                  collapsed: true,
+                  items: [
+                    { text: 'esp32-devel', link: 'extensions/addons/official/esp32-devel' },
+                    { text: 'avr-devel', link: 'extensions/addons/official/avr-devel' },
+                  ]
+                },
+                {
+                  text: 'Tools',
+                  collapsed: true,
+                  items: [
+                    { text: 'xmake-harness (xmake ai)', link: 'extensions/addons/official/xmake-harness' },
+                    { text: 'serial-tools', link: 'extensions/addons/official/serial-tools' },
+                  ]
+                },
+                {
+                  text: 'Modules',
+                  collapsed: true,
+                  items: [
+                    { text: 'yaml', link: 'extensions/addons/official/yaml' },
+                  ]
+                },
+                {
+                  text: 'Plugins',
+                  collapsed: true,
+                  items: [
+                    { text: 'format-plugin', link: 'extensions/addons/official/format-plugin' },
+                    { text: 'doxygen-plugin', link: 'extensions/addons/official/doxygen-plugin' },
+                    { text: 'macro-plugin', link: 'extensions/addons/official/macro-plugin' },
+                  ]
+                },
+                {
+                  text: 'Templates',
+                  collapsed: true,
+                  items: [
+                    { text: 'basic-templates', link: 'extensions/addons/official/basic-templates' },
+                  ]
+                },
               ]
             },
           ]
