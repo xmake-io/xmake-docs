@@ -480,7 +480,7 @@ add_addons("esp32-devel", "serial-tools")
 
 解析出来的版本会写进 `xmake.lua` 旁边的 `xmake-addons.lock`，保证所有人构建时用的是同一批版本，这个文件建议提交。
 
-然后引用 addon 的载荷，它们都是带命名空间的：
+然后引用 addon 提供的扩展内容，它们都是带命名空间的：
 
 ```lua
 add_addons("esp32-devel")

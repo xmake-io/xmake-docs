@@ -6,7 +6,7 @@ outline: deep
 
 [avr-devel](https://github.com/xmake-addons/avr-devel) 是 esp32-devel 在 8 位 AVR 上的对应物：avr 交叉工具链、构建规则、烧写和 blink 模板。
 
-| 载荷 | 提供什么 |
+| 目录 | 提供什么 |
 | --- | --- |
 | `toolchains/avr` | 所选开发板的 avr 交叉工具链 |
 | `rules/app` | 生成可烧写镜像、报告固件大小，`xmake install` 时烧写 |

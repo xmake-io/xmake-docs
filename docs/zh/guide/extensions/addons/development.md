@@ -4,7 +4,7 @@ outline: deep
 
 # 编写 Addon
 
-一个 addon 就是一个目录：一份 manifest，加上若干载荷目录。除此之外不需要任何东西 —— 没有构建步骤，也不用注册。
+一个 addon 就是一个目录：一份 manifest，加上若干扩展目录。除此之外不需要任何东西 —— 没有构建步骤，也不用注册。
 
 ## 目录结构
 
@@ -13,7 +13,7 @@ my-addon/
 ├── addon.lua              # manifest，唯一必需的文件
 ├── README.md
 ├── tests/test.lua         # 不会被安装
-└── src/                   # 载荷根目录，@see set_sourcedir
+└── src/                   # 扩展目录的根目录，@see set_sourcedir
     ├── plugins/hello/     # xmake hello           （新命令）
     ├── rules/app/         # add_rules("@addon/my-addon/app")
     ├── toolchains/mycc/   # set_toolchains("@addon/my-addon/mycc")
@@ -22,7 +22,7 @@ my-addon/
     └── templates/c/foo/   # xmake create -t foo
 ```
 
-只有载荷目录会被安装，所以 tests、CI 脚本和 README 不会进到用户的 `~/.xmake/addons/<name>/<version>/`。
+只有这些扩展目录会被安装，所以 tests、CI 脚本和 README 不会进到用户的 `~/.xmake/addons/<name>/<version>/`。
 
 ## Manifest
 
@@ -32,7 +32,7 @@ addon("my-addon")
     set_homepage("https://github.com/me/my-addon")
     set_description("这个 addon 提供什么，一句话说清。")
     set_license("Apache-2.0")
-    set_sourcedir("src")            -- 载荷直接放仓库根目录时可省略
+    set_sourcedir("src")            -- 扩展目录直接放在仓库根目录时可省略
     add_deps("serial-tools")        -- 依赖的其它 addon
 ```
 
@@ -40,7 +40,7 @@ addon("my-addon")
 | --- | --- |
 | `addon("name")` | addon 名字，不依赖仓库名 |
 | `set_description` / `set_homepage` / `set_license` | 元信息，`xmake addon --list` 会显示 |
-| `set_sourcedir` | 仓库内的载荷根目录 |
+| `set_sourcedir` | 仓库内存放扩展目录的根目录 |
 | `add_deps` | 依赖的其它 addon |
 | `add_globalmodules` | 把模块暴露成全局名字，见下文 |
 
@@ -107,7 +107,7 @@ inherit("core.tools.gcc")   -- avr-gcc 就是 gcc 的交叉版本
 ```sh
 $ xmake addon --install .           # 从工作副本安装
 $ xmake addon --list
-$ xmake hello                       # 实际跑一下载荷
+$ xmake hello                       # 实际运行一下试试
 $ xmake addon --remove my-addon
 ```
 

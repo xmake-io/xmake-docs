@@ -1,10 +1,10 @@
 export const posts = [
   {
-    "title": "Xmake v3.1.1 Preview, Addons Extend Xmake Itself",
+    "title": "Xmake v3.1.1 Released, Addons Extend Xmake Itself",
     "url": "/posts/xmake-update-v3.1.1",
     "date": {
-      "time": 1787572800000,
-      "string": "August 24, 2026"
+      "time": 1787832000000,
+      "string": "August 27, 2026"
     },
     "author": "Ruki",
     "tags": [
@@ -15,7 +15,7 @@ export const posts = [
       "template",
       "ai"
     ],
-    "excerpt": "<p>This is a preview of the changes on the dev branch, they are not released yet.</p>\n<p>The headline of this cycle is <strong>addons</strong>. v3.1.0 reworked <code>xmake plugin</code> so that plugins\ncould be distributed like packages; addons take that idea to its conclusion: an addon can\ncarry not only a plugin, but rules, toolchains, project templates, lua modules and includes\nfiles — a complete developmen...</p>\n<p>Besides that, we added the <code>package.host.install_locally</code> policy, new cross-compilation\narchitectures, a reworked template distribution, and a <code>pkg</code> package manager for BSD.</p>\n"
+    "excerpt": "<p>The headline of this cycle is <strong>addons</strong>. v3.1.0 reworked <code>xmake plugin</code> so that plugins\ncould be distributed like packages; addons take that idea to its conclusion: an addon can\ncarry not only a plugin, but rules, toolchains, project templates, lua modules and includes\nfiles — a complete developmen...</p>\n<p>Besides that, we added the <code>package.host.install_locally</code> policy, new cross-compilation\narchitectures, a reworked template distribution, and a <code>pkg</code> package manager for BSD.</p>\n<p>An addon extends <strong>xmake itself</strong>. Where a package provides libraries for your program, an\naddon provides new abilities for the build tool.</p>\n"
   },
   {
     "title": "Xmake v3.1.0 Released, Plugin Distribution and Binary Asset Transform",

@@ -6,7 +6,7 @@ outline: deep
 
 [serial-tools](https://github.com/xmake-addons/serial-tools) 是串口工具包：提供 `xmake monitor` 命令，以及一个供其它 addon 复用的串口模块。
 
-| 载荷 | 提供什么 |
+| 目录 | 提供什么 |
 | --- | --- |
 | `plugins/monitor` | `xmake monitor` 命令，把串口输出实时打到终端 |
 | `modules/serial` | 串口模块，其它 addon 可复用端口探测和监视能力 |

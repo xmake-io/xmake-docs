@@ -6,7 +6,7 @@ outline: deep
 
 [yaml](https://github.com/xmake-addons/yaml) 提供纯 lua 实现的 yaml 解析器和生成器，外加一个命令行工具。零外部依赖，xmake 能跑的地方它都能跑。
 
-| 载荷 | 提供什么 |
+| 目录 | 提供什么 |
 | --- | --- |
 | `modules/yaml` | 公开模块，`import("@addon.yaml.yaml")` |
 | `modules/private/yaml/*` | 扫描、解析、生成和命令行的内部实现 |

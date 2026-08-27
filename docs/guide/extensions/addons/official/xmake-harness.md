@@ -118,17 +118,32 @@ fresh one.
 ![the web ui, chat](/assets/img/harness/xmake-ai-web-chat.png)
 
 The same harness is behind it as in the terminal — the same tools, skills,
-permission modes and session files. The page has four screens: the conversation,
-the changes, the conversations of this project, and the settings (project
-directory, theme, provider, models, api keys).
+permission modes and session files.
 
-The changes screen lists the files *this conversation* changed — not the working
-tree, which holds whatever was already in it. The list is on the left, the
-highlighted diff of the one you picked on the right, and each file has a tick to
-keep the change and a cross to put the file back the way it was before the
-conversation touched it.
+It starts as a conversation with the room to itself. When you go to look at what
+it changed — by clicking a file in the list at the end of a turn, or the button
+in the corner — it opens out into a workspace: the conversation on the left, the
+file being read in the middle, the project tree on the right.
 
-![the web ui, changes](/assets/img/harness/xmake-ai-web-changes.png)
+![the web ui, the workspace](/assets/img/harness/xmake-ai-web-workspace.png)
+
+The middle is the **file**, all of it, syntax coloured, with what this
+conversation changed marked on it: the lines which came in green, the lines
+which went in red where they were. It is editable — type in it and save with
+⌘S — and a write from the page goes through the same door as a write from the
+agent, so it keeps a copy of what it replaced and appears in the list of what
+this conversation changed.
+
+Each changed file has two answers, a tick and a cross at the top right: **keep**
+the change, or **put the file back** the way it was before the conversation
+touched it. It is a list of decisions and it empties: a file leaves it the moment
+it is decided about, and comes back if the agent touches it again. The tree marks
+the changed files with what was done to them and what was decided.
+
+`/goal`, `/loop`, the slash commands, `@` file attachments and `!` shell commands
+all work here as they do in the terminal. **Settings** carries the project
+directory, the theme, the provider, the models, the api keys, and the skills:
+what is loaded, what packs are installed, and a box to install another.
 
 There is no framework and no build step in it: plain html, css and es modules,
 served straight from the addon. The markdown is rendered by the harness itself,
@@ -138,6 +153,10 @@ The server binds to `127.0.0.1` and demands the token, which lives only as long
 as the process. The url is not for sharing — this is a service which edits files
 and runs commands. The api keys are never sent back to the page: it shows
 whether one is configured and lets you replace it.
+
+`/goal make the tests pass` works at an objective turn after turn until the
+agent can say it is reached — the repeating task with its clock taken out — and
+stops by itself when it is, or when the turn budget runs out.
 
 The slash commands are there too: type `/` in the box and the list appears. They
 are the same commands the terminal runs, through an adapter rather than a second

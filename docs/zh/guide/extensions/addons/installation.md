@@ -51,7 +51,7 @@ add_addons("esp32-devel 1.0.x")     -- 版本范围
 
 解析出来的版本会写进 `xmake.lua` 旁边的 `xmake-addons.lock`，保证所有人构建时用的是同一批版本。这个文件建议提交到仓库。
 
-然后引用其中的载荷：
+然后引用它提供的扩展内容：
 
 ```lua
 add_addons("esp32-devel")
@@ -76,14 +76,14 @@ import("@addon.serial-tools.serial")             -- 模块用点号，不是斜�
 ## 文件位置
 
 ```
-~/.xmake/addons/<name>/<version>/    已安装的载荷
+~/.xmake/addons/<name>/<version>/    已安装的扩展内容
 ~/.xmake/addons/addons.conf          xmake 启动时读取的注册表
 <project>/xmake-addons.lock          当前工程解析出的版本
 ```
 
 ## 配置
 
-Addon 的配置就是它的载荷所声明的那些选项。携带 includes 文件的 addon 一般把选项定义在那里：
+Addon 的配置，就是它提供的扩展内容里声明的那些选项。携带 includes 文件的 addon 一般把选项定义在那里：
 
 ```sh
 $ xmake f --board=esp32c3 --port=/dev/ttyUSB0

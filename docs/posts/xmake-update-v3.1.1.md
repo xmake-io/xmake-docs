@@ -1,12 +1,10 @@
 ---
-title: Xmake v3.1.1 Preview, Addons Extend Xmake Itself
+title: Xmake v3.1.1 Released, Addons Extend Xmake Itself
 tags: [xmake, addon, plugin, toolchain, template, ai]
-date: 2026-08-24
+date: 2026-08-27
 author: Ruki
 outline: deep
 ---
-
-This is a preview of the changes on the dev branch, they are not released yet.
 
 The headline of this cycle is **addons**. v3.1.0 reworked `xmake plugin` so that plugins
 could be distributed like packages; addons take that idea to its conclusion: an addon can
@@ -294,10 +292,12 @@ conversation of the project rather than an empty one.
 
 ![the web ui, chat](/assets/img/harness/xmake-ai-web-chat.png)
 
-The changes screen lists the files *this conversation* changed (not the working tree), with the
-diff on the right and a tick or a cross on each to keep it or put it back:
+It starts as a conversation with the room to itself. When you go to look at what it changed, it
+opens out into a workspace: the conversation on the left, the file in the middle with what *this
+conversation* changed marked on it, and the project tree on the right. The file is editable, and a
+write from the page goes through the same door as a write from the agent:
 
-![the web ui, changes](/assets/img/harness/xmake-ai-web-changes.png)
+![the web ui, the workspace](/assets/img/harness/xmake-ai-web-workspace.png)
 
 #### Configuring it
 
@@ -423,11 +423,15 @@ exports — an addon can no longer shadow a module of xmake itself.
 * [#7713](https://github.com/xmake-io/xmake/pull/7713): Run `hlsl2spv` / `glsl2spv` before the C++ module scan
 * [#7722](https://github.com/xmake-io/xmake/pull/7722): Improve the interpreter, project loading, search cache and semver
 * [#7733](https://github.com/xmake-io/xmake/pull/7733): Check the name conflicts of the global modules of addons
+* [#7726](https://github.com/xmake-io/xmake/pull/7726): Improve the mingw toolchain for clang and libc++
 
 ### Bugs fixed
 
+* [#7737](https://github.com/xmake-io/xmake/pull/7737): Fix the duplicated packages of the nested builds when installing them locally
+* [#7738](https://github.com/xmake-io/xmake/issues/7738): Fix the platform menu of the remote build, e.g. `xmake f -p windows --wdk=xxx`
 * [#7710](https://github.com/xmake-io/xmake/pull/7710): Fix the link name of libraries ending with `.lib`
 * [#7709](https://github.com/xmake-io/xmake/pull/7709): Fix the runtime flags of clang
 * [#7703](https://github.com/xmake-io/xmake/pull/7703): Fix wix to recognize `x86_64` when passing `-arch`
 * [#7701](https://github.com/xmake-io/xmake/pull/7701): Fix the dependency check to detect appended nested values
 * [#7698](https://github.com/xmake-io/xmake/pull/7698): Fix the semver version selection and build metadata sorting
+* Fix `scheduler.co_resume` to raise the errors of the resumed coroutine

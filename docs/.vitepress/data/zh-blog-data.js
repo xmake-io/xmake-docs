@@ -1,10 +1,10 @@
 export const posts = [
   {
-    "title": "Xmake v3.1.1 预览，Addons 扩展 Xmake 自身",
+    "title": "Xmake v3.1.1 发布，Addons 扩展 Xmake 自身",
     "url": "/zh/posts/xmake-update-v3.1.1",
     "date": {
-      "time": 1787572800000,
-      "string": "August 24, 2026"
+      "time": 1787832000000,
+      "string": "August 27, 2026"
     },
     "author": "Ruki",
     "tags": [
@@ -15,7 +15,7 @@ export const posts = [
       "template",
       "ai"
     ],
-    "excerpt": "<p>这是 dev 分支上的改动预览，尚未正式发布。</p>\n<p>这个周期的主角是 <strong>addons</strong>。v3.1.0 重构了 <code>xmake plugin</code>，让插件能像包一样分发；addons 把这件事做到底：一个 addon 不只能携带插件，还能携带规则、工具链、工程模板、lua 模块和 includes 文件 —— 一整套开发工具包，一条命令装好，或者由工程声明后自动安装。</p>\n<p>除此之外，还新增了 <code>package.host.install_locally</code> 策略、新的交叉编译架构、重构后的模板分发，以及 BSD 的 <code>pkg</code> 包管理器支持。</p>\n"
+    "excerpt": "<p>在此版本中，我们新增了 addons 扩展支持。上个版本我们重构了 <code>xmake plugin</code>，让插件可以像包一样分发，而 addons 把这件事做得更彻底：一个 addon 不仅可以携带插件，还能携带规则、工具链、工程模板、lua 模块和 includes 文件，相当于一整套开发工具包，一条命令就能装好，也可以由工程声明后自动安装。</p>\n<p>此外，我们还新增了 <code>package.host.install_locally</code> 策略和一批新的交叉编译架构，重构了模板的分发方式，并且新增了 BSD 上的 <code>pkg</code> 包管理器支持。</p>\n<p>我们平时用的包，提供的是程序要链接的库，而 addon 扩展的是 xmake 本身，给构建工具增加新的能力。</p>\n"
   },
   {
     "title": "Xmake v3.1.0 发布，插件仓库分发，二进制资源转换与 alignof 检测",

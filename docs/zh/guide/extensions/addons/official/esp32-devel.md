@@ -6,7 +6,7 @@ outline: deep
 
 [esp32-devel](https://github.com/xmake-addons/esp32-devel) 把 xmake 变成一套 ESP32 SDK：交叉工具链、构建规则、烧写和 blink 模板，装一次全都有。
 
-| 载荷 | 提供什么 |
+| 目录 | 提供什么 |
 | --- | --- |
 | `toolchains/esp32` | 所选开发板的交叉工具链（risc-v） |
 | `rules/app` | 链接预编译的 esp-idf 库、生成可启动镜像，`xmake install` 时烧写 |
