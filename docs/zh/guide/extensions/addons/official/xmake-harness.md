@@ -95,11 +95,56 @@ $ xmake ai --web --cwd=/path/to/project
 | --- | --- |
 | `--web` | 启动 web 界面，而不是终端界面 |
 | `--port=N` | 端口，默认 `9736`（从它开始找第一个空闲端口） |
+| `--host=ADDR` | 监听地址，默认回环；`0.0.0.0` 表示所有网卡 |
 | `--nobrowser` | 不打开浏览器，只打印 url |
 | `--cwd=DIR` | 要打开的工程目录，默认当前目录 |
 | `--mode=M` | 启动时的权限模式，默认 `acceptedits` |
 
 打开时进入的是**当前工程的上一次会话**，而不是空会话，因为浏览器窗口会经历刷新、崩溃、合盖唤醒。想要新会话用 `--web --new`。
+
+### 在另一台机器上用 {#web-remote}
+
+它默认只监听回环地址，因为一个能改文件、能执行命令的服务，不该随手挂到网络上。想从另一台
+机器访问，有两种做法。
+
+第一种是 ssh 端口转发，服务本身仍然只在回环上，推荐：
+
+```sh
+# 远程机器上
+$ xmake ai --web --nobrowser
+
+# 本地
+$ ssh -L 9736:127.0.0.1:9736 user@remote
+```
+
+然后在本地浏览器里打开远程打印的那个 url 即可。
+
+第二种是直接监听对外地址：
+
+```sh
+$ xmake ai --web --host=0.0.0.0        # 所有网卡
+$ xmake ai --host=192.168.1.7 --web    # 只监听某一个
+```
+
+这时它会把别的机器能用的 url 一并打印出来，因为 `127.0.0.1` 那个 url 恰恰是在别的机器上
+唯一不能用的：
+
+```
+  web ui  http://127.0.0.1:9736/?token=e07091070…
+  or      http://192.168.1.7:9736/?token=e07091070…
+
+  it is listening on every interface: anything which can reach this machine
+  can reach the harness, and only the token is in the way
+```
+
+::: warning 注意
+监听对外地址时，挡在别人和 harness 之间的只有 url 里那个 token。**这个 url 等同于这台机器的
+文件读写和命令执行权限，不要分享出去。** 在不可信的网络上，请用 ssh 端口转发，不要用
+`--host=0.0.0.0`。
+:::
+
+这条路子也是一种远程开发方式：代码、构建和 agent 全在远程机器上，本地只有一个浏览器。它和
+[远程编译](/zh/guide/extras/remote-compilation)解决的不是同一个问题，可以对照着看。
 
 ![web 界面：对话](/assets/img/harness/xmake-ai-web-chat.png)
 

@@ -8,6 +8,24 @@
 
 甚至我们可以在 VS/Sublime/VSCode/IDEA 等编辑器和 IDE 中无缝实现远程编译，而不需要依赖 IDE 本身对远程编译的支持。
 
+::: tip 另一种远程开发方式
+如果你要的不是「本地编辑、远程编译」，而是整个开发过程都在远程机器上进行，可以看看
+[xmake-harness](/zh/guide/extensions/addons/official/xmake-harness) 的
+[web 界面](/zh/guide/extensions/addons/official/xmake-harness#web-remote)：在远程机器上跑
+`xmake ai --web`，本地用浏览器打开就行，不需要在本地装 xmake，也不需要同步工程文件。
+
+两者的侧重点不同：
+
+| | 远程编译（`xmake service`） | web 界面（`xmake ai --web`） |
+| --- | --- | --- |
+| 工程文件在哪 | 本地，自动同步到远程 | 只在远程 |
+| 本地需要什么 | xmake + 你惯用的编辑器/IDE | 一个浏览器 |
+| 谁来编译 | 远程服务端 | 远程机器本身 |
+| 适合 | 跨平台编译，本地保持熟悉的开发环境 | 手上没有开发环境，或者临时接管一台机器 |
+
+两者也可以叠加使用：在远程机器上跑 web 界面，那台机器再作为客户端连到第三台机器做交叉编译。
+:::
+
 ## 开启服务 {#start-service}
 
 ```sh

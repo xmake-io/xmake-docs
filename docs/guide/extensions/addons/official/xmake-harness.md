@@ -107,6 +107,7 @@ per-run token, and opens your default browser on it:
 | --- | --- |
 | `--web` | serve the web ui instead of the terminal ui |
 | `--port=N` | the port to take, `9736` by default (the first free one from there) |
+| `--host=ADDR` | where to listen, the loopback by default; `0.0.0.0` for every interface |
 | `--nobrowser` | do not open the browser, just print the url |
 | `--cwd=DIR` | the project to open, the current directory by default |
 | `--mode=M` | the permission mode to start in, `acceptedits` by default |
@@ -114,6 +115,55 @@ per-run token, and opens your default browser on it:
 It opens on the **last conversation of this project** rather than an empty one, because a
 browser window survives a reload, a crash or a laptop waking up. `--web --new` starts a
 fresh one.
+
+### Reaching it from another machine {#web-remote}
+
+It listens on the loopback by default, because a service which edits files and
+runs commands is not something to put on a network by accident. There are two
+ways to reach it from elsewhere.
+
+An ssh tunnel keeps it on the loopback, and is the one to prefer:
+
+```sh
+# on the remote machine
+$ xmake ai --web --nobrowser
+
+# on your machine
+$ ssh -L 9736:127.0.0.1:9736 user@remote
+```
+
+Then open the url it printed in your local browser.
+
+Or listen on a reachable address directly:
+
+```sh
+$ xmake ai --web --host=0.0.0.0        # every interface
+$ xmake ai --host=192.168.1.7 --web    # just one of them
+```
+
+It then also prints the urls another machine can use, because `127.0.0.1` is the
+one url which does *not* work from anywhere else:
+
+```
+  web ui  http://127.0.0.1:9736/?token=e07091070…
+  or      http://192.168.1.7:9736/?token=e07091070…
+
+  it is listening on every interface: anything which can reach this machine
+  can reach the harness, and only the token is in the way
+```
+
+::: warning NOTE
+When it listens on a reachable address, the token in the url is the only thing
+between the harness and anybody who can reach the port. **That url is read/write
+access to the files and a shell on that machine, it is not for sharing.** On an
+untrusted network, use the ssh tunnel instead of `--host=0.0.0.0`.
+:::
+
+This is a form of remote development in its own right: the sources, the builds
+and the agent all live on the remote machine and your laptop only runs a
+browser. It solves a different problem from
+[remote compilation](/guide/extras/remote-compilation) — the two are worth
+comparing.
 
 ![the web ui, chat](/assets/img/harness/xmake-ai-web-chat.png)
 

@@ -4,6 +4,21 @@ Version 2.6.5 provides remote compilation support, through which we can compile 
 
 Compared with ssh remote login and compilation, it is more stable and smoother to use. It will not cause ssh terminal input to be stuck due to network instability, and it can also quickly edit code files locally. We can even seamlessly implement remote compilation in editors and IDEs such as VS/Sublime/VSCode/IDEA without relying on the IDE's own support for remote compilation.
 
+::: tip Another way to develop remotely
+If what you want is not "edit locally, compile remotely" but to do the whole thing on the remote machine, have a look at the [web ui](/guide/extensions/addons/official/xmake-harness#web-remote) of [xmake-harness](/guide/extensions/addons/official/xmake-harness): run `xmake ai --web` on the remote machine and open it in your local browser. Nothing has to be installed locally and no project files are synced.
+
+The two solve different problems:
+
+| | remote compilation (`xmake service`) | the web ui (`xmake ai --web`) |
+| --- | --- | --- |
+| where the sources live | locally, synced to the remote | only on the remote |
+| what you need locally | xmake and your editor / ide | a browser |
+| what compiles | the remote server | the remote machine itself |
+| good for | cross-platform builds while keeping your own environment | no dev environment at hand, or taking over a machine for a while |
+
+They also stack: run the web ui on a remote machine and let that machine connect, as a client, to a third one for the cross build.
+:::
+
 ## Start the service
 
 ```sh
