@@ -241,7 +241,12 @@ Inside the tui, `/` opens the command list. The built-in ones:
 | --- | --- |
 | `/xmake` | run xmake here **without spending tokens**, e.g. `/xmake build`, `/xmake run -d` |
 | `/xmake-docs` | fetch or update the xmake documentation so the agent can look the apis up |
+| `/import` | convert a cmake, visual studio, meson or scons project to xmake |
 | `/skills` | list, install, update or remove skill packs |
+| `/agents` | list, install, update or remove subagents |
+| `/goal` | work at an objective until it is reached, e.g. `/goal make the tests pass` |
+| `/trust` | what this directory is allowed to tell the agent |
+| `/reload` | read the configuration, skills, subagents and commands again |
 | `/model` | show or switch the model, e.g. `/model deepseek-reasoner` |
 | `/context` | show the context breakdown, `/context full` keeps everything |
 | `/sessions`, `/resume`, `/clear` | the conversation history, resume one, start a new one |
@@ -356,6 +361,50 @@ a tool you already use links the directory instead of copying it:
 Installed packs are checked against upstream once a day, in the background, and the next
 start says so. Nothing is ever fetched without you asking.
 
+## Bringing an existing project in
+
+A project built with CMake, Visual Studio, Meson or SCons is converted with one command:
+
+```
+/import
+```
+
+The conversion splits in two, and the split is why it is worth doing this way rather than
+asking a model to read the `CMakeLists.txt`. The **facts** — the targets, their kinds,
+their sources, includes, defines and dependencies — are read deterministically and have
+exactly one right answer. The **judgements** — an `if(WIN32)` that was never evaluated, a
+`find_package(Foo)` whose name is CMake's and not xmake-repo's, a flag that is a rule in
+xmake — are listed with the file and the line they came from, and those are what the agent
+actually works on.
+
+The compiler flags are translated rather than copied, which is most of what makes a
+converted file readable:
+
+```cmake
+target_compile_options(demo PRIVATE -fvisibility=hidden -Wall -Wextra -O2 -g -std=c++17 -fPIC)
+target_link_libraries(demo PRIVATE m pthread z)
+```
+```lua
+target("demo")
+    set_kind("binary")
+    set_languages("c++17")
+    set_warnings("all", "extra")
+    set_symbols("hidden")
+    add_files("src/main.cpp")
+    add_links("z")
+    add_syslinks("m", "pthread")
+```
+
+`-O2` and `-g` are gone because `mode.debug` and `mode.release` already set them, and
+their answer is right on every compiler. `-fPIC` is gone because xmake does it for shared
+libraries. `m` and `pthread` are the system's; `z` is not, so it stays and comes with a
+question — most libraries linked by name should be `add_requires`, and only
+`xrepo search` can say which. Nothing is dropped silently.
+
+It finishes by checking itself: does it configure, does it build, and does it have the
+targets the original had. A conversion which builds can still be missing one, and that is
+the check which catches it.
+
 ## Tools, agents and MCP
 
 The agent works through a fixed tool set — reading and writing files, globbing, searching
@@ -371,11 +420,37 @@ together, whatever needs their reports waits for them, and only the last of them
 back. A wide sweep of the codebase then costs the main conversation a paragraph instead of
 forty file reads.
 
+Subagents are installed and written the same way skills are:
+
+```
+/agents                              what is loaded, installed and available
+/agents install github:user/repo     a pack of them
+/agents install ~/my-agents          a local directory
+/agents remove <pack>
+/agents disable <name>
+```
+
+One is a markdown file with a name, a description and its instructions — or a directory,
+when it needs more than that:
+
+```
+my-porter/
+    AGENT.md            the prompt and the tools it may use
+    agent.lua           optional: what it works out before the first request
+    skills/             the skills it reads, installed with it
+```
+
+`agent.lua` is for the agent whose first step is always the same command. The one which
+converts projects uses it: detecting the build system and reading it are the same answer
+every time, so it does them before the first request and arrives already knowing what it
+is looking at.
+
 ## Where it stores things
 
 ```
 ~/.xmake/harness/config.json         the user config, including the api keys
 ~/.xmake/harness/skills/<pack>       the installed skill packs
+~/.xmake/harness/agents/<pack>       the installed subagent packs
 ~/.xmake/harness/projects/<project>   the conversations of that project
 <project>/.xmake-harness/            the project config, its skills, agents and commands
 ```

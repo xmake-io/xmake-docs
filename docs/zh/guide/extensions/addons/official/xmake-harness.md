@@ -203,7 +203,12 @@ $ xmake ai --notools             # 纯聊天，不启用任何工具
 | --- | --- |
 | `/xmake` | 直接在这里执行 xmake，**不消耗 token**，例如 `/xmake build`、`/xmake run -d` |
 | `/xmake-docs` | 拉取或更新 xmake 文档，让 agent 能查 API |
+| `/import` | 把 cmake / visual studio / meson / scons 工程转成 xmake |
 | `/skills` | 列出、安装、更新或删除 skill 包 |
+| `/agents` | 列出、安装、更新或删除子 agent |
+| `/goal` | 朝一个目标反复推进直到达成，如 `/goal 让测试全过` |
+| `/trust` | 这个目录能对 agent 说什么 |
+| `/reload` | 重新读取配置、skills、子 agent、命令 |
 | `/model` | 查看或切换模型，例如 `/model deepseek-reasoner` |
 | `/context` | 查看上下文占用分布，`/context full` 保留全部 |
 | `/sessions`、`/clear` | 管理会话、开新会话 |
@@ -296,6 +301,45 @@ Claude 的 plugin 与 marketplace、单文件 skill，或者一个 `.zip` 包。
 
 已安装的包每天在后台检查一次上游，有更新会在下次启动时提示。**不问过你就绝不拉取。**
 
+## 把已有工程导入进来
+
+用 CMake、Visual Studio、Meson 或 SCons 构建的工程，一条命令转过来：
+
+```
+/import
+```
+
+转换分成两半，而**这个切分本身就是它值得这么做的原因** —— 而不是把 `CMakeLists.txt`
+原文丢给模型去读。**事实**（有哪些 target、什么类型、源文件、包含目录、宏定义、依赖）
+是确定性读出来的，只有一个正确答案；**判断**（没求值的 `if(WIN32)`、一个属于 CMake
+而不属于 xmake-repo 的 `find_package(Foo)` 名字、某个其实是 rule 的 flag）会连同
+**它出自哪个文件的哪一行**一起列出来 —— 那才是 agent 真正要做的事。
+
+编译选项是**翻译**而不是照搬，这是转换结果读起来舒服的主要原因：
+
+```cmake
+target_compile_options(demo PRIVATE -fvisibility=hidden -Wall -Wextra -O2 -g -std=c++17 -fPIC)
+target_link_libraries(demo PRIVATE m pthread z)
+```
+```lua
+target("demo")
+    set_kind("binary")
+    set_languages("c++17")
+    set_warnings("all", "extra")
+    set_symbols("hidden")
+    add_files("src/main.cpp")
+    add_links("z")
+    add_syslinks("m", "pthread")
+```
+
+`-O2` 和 `-g` 没了，因为 `mode.debug` / `mode.release` 已经设了，而且它们的答案在每个
+编译器上都对。`-fPIC` 没了，因为 xmake 对动态库本来就加。`m` 和 `pthread` 是系统库；
+`z` 不是，所以留着并附一个问题 —— 按名字链接的库大多应该是 `add_requires`，
+而只有 `xrepo search` 能回答是哪个。**没有一处是悄悄丢的。**
+
+最后它会自己验一遍：能不能配置、能不能编译、**target 是不是跟原来一样多**。
+能编译不等于没漏 —— 悄悄少一个 target 照样编译得好好的，这一步就是抓它的。
+
 ## 工具、子 agent 和 MCP
 
 Agent 通过一组固定的工具干活 —— 读写文件、glob、搜索文本、执行命令、抓取 url、维护 todo、启动子 agent —— 每一个都受权限模式约束。耗时长的命令会转为后台任务（`/jobs`）。
@@ -306,11 +350,36 @@ Agent 通过一组固定的工具干活 —— 读写文件、glob、搜索文�
 多个子 agent 还能**一次接收整个计划**：互不相干的探索并发跑，需要它们结果的节点等齐再启动，
 只有最后的节点回报主对话。于是一次全代码库的摸底，主对话只付一段话的代价，而不是四十次文件读取。
 
+子 agent 的安装和编写方式跟 skills 完全一样：
+
+```
+/agents                              已加载的、已安装的、可安装的
+/agents install github:user/repo     装一个包
+/agents install ~/my-agents          本地目录
+/agents remove <包名>
+/agents disable <名字>
+```
+
+一个子 agent 就是一个 markdown 文件：一个名字、一句描述、一段指令。
+需要的不止这些时，写成目录：
+
+```
+my-porter/
+    AGENT.md            提示词，以及它能用哪些工具
+    agent.lua           可选：在第一次请求之前它自己先查清楚的东西
+    skills/             它要读的技能，跟着一起装
+```
+
+`agent.lua` 是给「第一步永远是同一条命令」的 agent 用的。做工程转换的那个就用了它：
+探测构建系统、读取工程，每次答案都一样，所以在第一次请求之前就做完 ——
+**它一出场就已经知道自己在看什么了**。
+
 ## 数据存放位置
 
 ```
 ~/.xmake/harness/config.json         用户配置，含 api key
 ~/.xmake/harness/skills/<pack>       已安装的 skill 包
+~/.xmake/harness/agents/<pack>       已安装的子 agent 包
 ~/.xmake/harness/projects/<工程>      该工程的会话记录
 <project>/.xmake-harness/            工程级配置、skills、agents、命令
 ```
