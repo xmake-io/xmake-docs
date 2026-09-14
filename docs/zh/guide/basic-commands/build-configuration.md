@@ -146,6 +146,101 @@ $ xmake f -p Harmony --sdk=/Users/ruki/Library/Huawei/Sdk/openharmony/10/native
 ```
 
 
+## 工作目录与构建目录 {#working-and-build-directories}
+
+xmake 涉及三个目录,平时它们是同一个,所以很少需要区分:
+
+| 目录 | 是什么 | 怎么指定 |
+| --- | --- | --- |
+| 工程目录 | 根 `xmake.lua` 所在的目录 | `-P/--project` 或 `-F/--file` |
+| 工作目录 | xmake 运行的当前目录,`.xmake` 配置缓存放在这里 | 就是当前目录 |
+| 构建目录 | 构建产物的输出目录 | `-o/--buildir` |
+
+### 默认:工作目录就是工程目录
+
+这是一直以来的行为,在工程根目录下直接运行 `xmake`,`build` 和 `.xmake` 都生成在工程里:
+
+```
+projectdir (工作目录)
+├── xmake.lua
+├── src
+├── build     (生成)
+└── .xmake    (生成)
+```
+
+```sh
+$ cd projectdir
+$ xmake
+```
+
+### 把构建目录放到别处
+
+`-o` 只改变产物的输出位置,工作目录仍然是工程根目录:
+
+```
+projectdir (工作目录)
+├── xmake.lua
+├── src
+└── .xmake    (生成)
+build         (生成)
+```
+
+```sh
+$ cd projectdir
+$ xmake f -o ../build
+$ xmake
+```
+
+### 外部工作目录 {#external-working-directory}
+
+用 `-P` 指定工程目录之后,当前目录就成为独立的工作目录,**工程目录一个字都不会被写入**,适合源码目录只读、或者想让同一份源码有多个并行构建的场景:
+
+```
+workdir
+├── build     (生成)
+└── .xmake    (生成)
+projectdir
+├── xmake.lua
+└── src
+```
+
+```sh
+$ cd workdir
+$ xmake f -P ../projectdir
+$ xmake
+```
+
+两个都放到外面也可以:
+
+```sh
+$ cd workdir
+$ xmake f -P ../projectdir -o ../build
+```
+
+::: tip 注意
+`-P` 指定的工程目录会被**记住**。之后在这个工作目录里直接运行 `xmake`、`xmake run` 等命令,
+不用再带 `-P`,构建的仍然是之前配置的那个工程。这个绑定保存在 `.xmake` 里,是外部工作目录模式
+的设计本意。
+:::
+
+### 解除工程绑定 {#unbind-project}
+
+如果当前工作目录本身也是一个工程(它自己有 `xmake.lua`),而之前又在这里绑定过别的工程,
+那么直接运行 `xmake` 构建的会是被绑定的那个,而不是本地的。这种情况下 xmake 会给出提示:
+
+```
+warning: we are building the project(/path/to/other) which has been configured in this directory,
+it shadows the xmake.lua of this directory, please run `xmake f -P .` to build that one instead.
+```
+
+按提示重新绑定到当前目录即可:
+
+```sh
+$ xmake f -P .
+```
+
+也可以直接删掉 `.xmake` 目录,恢复到默认行为。
+
 ## 全局配置
 
 我们也可以将一些常用配置保存到全局配置中，来简化频繁地输入：

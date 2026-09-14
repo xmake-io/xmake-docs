@@ -255,6 +255,7 @@ Inside the tui, `/` opens the command list. The built-in ones:
 | `/config` | show or set a configuration value |
 | `/loop` | repeat a task on a schedule, e.g. `/loop 30m check the ci` |
 | `/rewind` | put the files back the way they were before a request |
+| `/diff` | hide or show the changes, in a column beside the conversation |
 
 `/xmake` is the one to remember: the build output goes to your terminal, not into the
 model's context, so a long compile costs nothing.
@@ -363,7 +364,8 @@ start says so. Nothing is ever fetched without you asking.
 
 ## Bringing an existing project in
 
-A project built with CMake, Visual Studio, Meson or SCons is converted with one command:
+A project built with CMake, Visual Studio, Autotools, QMake, Meson or SCons is
+converted with one command:
 
 ```
 /import
@@ -404,6 +406,18 @@ question — most libraries linked by name should be `add_requires`, and only
 It finishes by checking itself: does it configure, does it build, and does it have the
 targets the original had. A conversion which builds can still be missing one, and that is
 the check which catches it.
+
+If the project has a `compile_commands.json`, it checks one thing more — the includes and
+defines of every file, against what the compiler was actually told:
+
+```
+2 files are compiled differently from what `compile_commands.json` records:
+- `src/main.c` (demo): missing includedirs vendor, defines EXTRA=2
+```
+
+Nothing else catches that: a conversion which builds the right targets with the wrong `-I`
+compiles, passes every other check, and behaves differently. A compile database on its own
+is also enough to convert from, when there is nothing else left to read.
 
 ## Tools, agents and MCP
 

@@ -217,6 +217,7 @@ $ xmake ai --notools             # 纯聊天，不启用任何工具
 | `/config` | 查看或设置配置项 |
 | `/loop` | 按周期重复一个任务，例如 `/loop 30m 看看 ci` |
 | `/rewind` | 把文件恢复到某次请求之前的样子 |
+| `/diff` | 收起或叫回对话旁边那一栏（显示本次会话改了什么） |
 
 `/xmake` 最值得记住：构建输出直接进你的终端，不进模型上下文，所以一次长编译不花任何 token。
 
@@ -303,7 +304,7 @@ Claude 的 plugin 与 marketplace、单文件 skill，或者一个 `.zip` 包。
 
 ## 把已有工程导入进来
 
-用 CMake、Visual Studio、Meson 或 SCons 构建的工程，一条命令转过来：
+用 CMake、Visual Studio、Autotools、QMake、Meson 或 SCons 构建的工程，一条命令转过来：
 
 ```
 /import
@@ -339,6 +340,17 @@ target("demo")
 
 最后它会自己验一遍：能不能配置、能不能编译、**target 是不是跟原来一样多**。
 能编译不等于没漏 —— 悄悄少一个 target 照样编译得好好的，这一步就是抓它的。
+
+如果工程里有 `compile_commands.json`，还会多验一层 —— 逐文件比对 includes 和 defines，
+对照**编译器实际拿到的命令行**：
+
+```
+2 files are compiled differently from what `compile_commands.json` records:
+- `src/main.c` (demo): missing includedirs vendor, defines EXTRA=2
+```
+
+**这是别的手段抓不到的**：target 建对了但 `-I` 错了，照样编译通过、照样过前面每一项检查，
+但行为已经不一样了。实在没有别的可读时，一份 compile database 本身也足以作为转换的输入。
 
 ## 工具、子 agent 和 MCP
 

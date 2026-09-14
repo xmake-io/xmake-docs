@@ -146,6 +146,108 @@ xmake will automatically detect the default SDK path, but you can also specify t
 $ xmake f -p Harmony --sdk=/Users/ruki/Library/Huawei/Sdk/openharmony/10/native
 ```
 
+## Working and Build Directories {#working-and-build-directories}
+
+There are three directories involved, and they are usually the same one, so they rarely
+need to be told apart:
+
+| Directory | What it is | How to set it |
+| --- | --- | --- |
+| project directory | where the root `xmake.lua` lives | `-P/--project` or `-F/--file` |
+| working directory | where xmake runs, the `.xmake` config cache goes here | the current directory |
+| build directory | where the build artifacts go | `-o/--buildir` |
+
+### The default: the working directory is the project directory
+
+This is what xmake has always done. Run `xmake` in the project root and both `build` and
+`.xmake` are generated inside the project:
+
+```
+projectdir (working directory)
+├── xmake.lua
+├── src
+├── build     (generated)
+└── .xmake    (generated)
+```
+
+```sh
+$ cd projectdir
+$ xmake
+```
+
+### Putting the build directory elsewhere
+
+`-o` only moves the artifacts, the working directory is still the project root:
+
+```
+projectdir (working directory)
+├── xmake.lua
+├── src
+└── .xmake    (generated)
+build         (generated)
+```
+
+```sh
+$ cd projectdir
+$ xmake f -o ../build
+$ xmake
+```
+
+### The external working directory {#external-working-directory}
+
+Once `-P` names a project directory, the current directory becomes an independent working
+directory and **nothing is written into the project directory at all**. It is what you want
+when the sources are read-only, or when one source tree should have several builds beside
+each other:
+
+```
+workdir
+├── build     (generated)
+└── .xmake    (generated)
+projectdir
+├── xmake.lua
+└── src
+```
+
+```sh
+$ cd workdir
+$ xmake f -P ../projectdir
+$ xmake
+```
+
+Both of them can go outside as well:
+
+```sh
+$ cd workdir
+$ xmake f -P ../projectdir -o ../build
+```
+
+::: tip NOTE
+The project directory given with `-P` is **remembered**. Later `xmake`, `xmake run` and the
+other commands in that working directory keep building the project which was configured
+there, without `-P`. The binding lives in `.xmake` and it is the point of the external
+working directory mode.
+:::
+
+### Unbinding a project {#unbind-project}
+
+If the working directory is a project of its own (it has an `xmake.lua`) and another project
+was bound there earlier, a plain `xmake` builds the bound one and not the local one. xmake
+says so when that happens:
+
+```
+warning: we are building the project(/path/to/other) which has been configured in this directory,
+it shadows the xmake.lua of this directory, please run `xmake f -P .` to build that one instead.
+```
+
+Bind it back to the current directory as the warning says:
+
+```sh
+$ xmake f -P .
+```
+
+Removing the `.xmake` directory restores the default behaviour as well.
+
 ## Global Configuration
 
 You can save to the global configuration to simplify operation.
