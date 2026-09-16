@@ -217,6 +217,7 @@ $ xmake ai --notools             # 纯聊天，不启用任何工具
 | `/config` | 查看或设置配置项 |
 | `/loop` | 按周期重复一个任务，例如 `/loop 30m 看看 ci` |
 | `/rewind` | 把文件恢复到某次请求之前的样子 |
+| `/memory` | 它学到的关于这个工程的事，以及撤回其中一条 |
 | `/diff` | 收起或叫回对话旁边那一栏（显示本次会话改了什么） |
 
 `/xmake` 最值得记住：构建输出直接进你的终端，不进模型上下文，所以一次长编译不花任何 token。
@@ -386,6 +387,11 @@ my-porter/
 探测构建系统、读取工程，每次答案都一样，所以在第一次请求之前就做完 ——
 **它一出场就已经知道自己在看什么了**。
 
+可以导出 `define`、`tools`、`prompt`、`before`、`validate`、`after`、`cleanup` ——
+一次运行里的各个节点，按发生顺序排列。`validate` 是其中最有意思的一个：报告过得去就
+返回 nil，过不去就返回理由，agent 会带着这个理由**重做一次**。适合用在答案有形状、
+脚本认得出来的场合。每个钩子都是可选的，脚本报错会被上报然后忽略。
+
 ## 数据存放位置
 
 ```
@@ -393,7 +399,9 @@ my-porter/
 ~/.xmake/harness/skills/<pack>       已安装的 skill 包
 ~/.xmake/harness/agents/<pack>       已安装的子 agent 包
 ~/.xmake/harness/projects/<工程>      该工程的会话记录
+~/.xmake/harness/MEMORY.md           它学到的关于你的事
 <project>/.xmake-harness/            工程级配置、skills、agents、命令
+<project>/.xmake-harness/MEMORY.md   它学到的关于这个工程的事，随工程入库
 ```
 
 `XMAKE_HARNESS_HOME` 可以把 harness 的主目录挪到别处。

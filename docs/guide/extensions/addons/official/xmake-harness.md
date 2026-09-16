@@ -255,6 +255,7 @@ Inside the tui, `/` opens the command list. The built-in ones:
 | `/config` | show or set a configuration value |
 | `/loop` | repeat a task on a schedule, e.g. `/loop 30m check the ci` |
 | `/rewind` | put the files back the way they were before a request |
+| `/memory` | what it learned about this project, and forget one |
 | `/diff` | hide or show the changes, in a column beside the conversation |
 
 `/xmake` is the one to remember: the build output goes to your terminal, not into the
@@ -459,6 +460,12 @@ converts projects uses it: detecting the build system and reading it are the sam
 every time, so it does them before the first request and arrives already knowing what it
 is looking at.
 
+It may export `define`, `tools`, `prompt`, `before`, `validate`, `after` and `cleanup` —
+the points of one run, in the order they happen. `validate` is the interesting one: it
+returns nil when the report will do and the reason when it will not, and the agent goes
+back round once, told what to fix. Use it where the answer has a shape a script can
+check. Every hook is optional and a script which raises is reported and then ignored.
+
 ## Where it stores things
 
 ```
@@ -466,7 +473,9 @@ is looking at.
 ~/.xmake/harness/skills/<pack>       the installed skill packs
 ~/.xmake/harness/agents/<pack>       the installed subagent packs
 ~/.xmake/harness/projects/<project>   the conversations of that project
+~/.xmake/harness/MEMORY.md           what it learned about you
 <project>/.xmake-harness/            the project config, its skills, agents and commands
+<project>/.xmake-harness/MEMORY.md   what it learned about the project, checked in
 ```
 
 `XMAKE_HARNESS_HOME` moves the harness home somewhere else.
