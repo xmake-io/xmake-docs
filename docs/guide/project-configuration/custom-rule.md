@@ -168,23 +168,21 @@ rule("markdown")
 
 ## Generated Files and the Link {#generated-files}
 
-What a rule produces does not join the target on its own, and which step is missing
-depends on what it produces:
+What a rule produces takes part in the build in one of three ways:
 
 - **The final artifact.** A rule which turns markdown into html, or packs some assets, is
-  done once the file is written. Nothing else has to happen.
-- **A source file which has to be compiled.** Generating it is only half of the work, the
-  rule also has to compile it and hand the object to the link.
-- **An object file.** It has to be added to the objects the target links.
+  done once the file is written.
+- **A source file which has to be compiled.** The rule compiles it itself with
+  `batchcmds:compile()` and hands the object to the link.
+- **An object file.** The rule adds it to the objects which the target links.
 
-For the last two, the object has to be known **before the build starts**:
+For the last two, register the object in `after_load`, so that it is part of the build
+plan from the start:
 
 ```lua
 rule("myrule")
     set_extensions(".myext")
 
-    -- a file which is added during the build is never compiled, the build plan has
-    -- already been made by then, so we register the object here
     after_load(function (target)
         local sourcebatch = target:sourcebatches()["myrule"]
         for _, sourcefile in ipairs(sourcebatch and sourcebatch.sourcefiles) do
@@ -192,11 +190,6 @@ rule("myrule")
         end
     end)
 ```
-
-::: warning NOTE
-`target:add("files", ...)` inside `on_build_file` does not work. The file arrives too late
-to be compiled, and the link then fails on a missing object file.
-:::
 
 ## Rule Dependencies {#rule-dependencies}
 

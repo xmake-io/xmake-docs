@@ -168,20 +168,18 @@ rule("markdown")
 
 ## 生成的文件如何参与构建 {#generated-files}
 
-规则产出的东西不会自动加入目标,缺的那一步是什么,取决于它产出的是什么:
+规则产出的东西,按下面三种方式之一参与构建:
 
-- **最终产物。** 把 markdown 转成 html、把资源打个包,文件写完就结束了,不需要再做什么。
-- **需要被编译的源文件。** 生成只是一半,规则还得把它编译掉,并把 object 交给链接。
-- **object 文件。** 要把它加进目标参与链接的 object 列表。
+- **最终产物。** 把 markdown 转成 html、把资源打个包,文件写完就结束了。
+- **需要被编译的源文件。** 规则自己用 `batchcmds:compile()` 把它编掉,再把 object 交给链接。
+- **object 文件。** 规则把它加进目标参与链接的 object 列表。
 
-后两种情况,object 必须在**构建开始之前**就登记好:
+后两种情况,在 `after_load` 里登记 object,让它从一开始就在构建计划里:
 
 ```lua
 rule("myrule")
     set_extensions(".myext")
 
-    -- 构建过程中才添加的文件不会被编译，那时构建计划已经定了，
-    -- 所以在这里登记 object
     after_load(function (target)
         local sourcebatch = target:sourcebatches()["myrule"]
         for _, sourcefile in ipairs(sourcebatch and sourcebatch.sourcefiles) do
@@ -189,11 +187,6 @@ rule("myrule")
         end
     end)
 ```
-
-::: warning 注意
-在 `on_build_file` 里写 `target:add("files", ...)` 是无效的。文件来得太晚,不会被编译,
-链接时会直接报 object 文件不存在。
-:::
 
 ## 规则依赖 {#rule-dependencies}
 
