@@ -43,7 +43,7 @@ rule("markdown")
         depend.on_changed(function ()
             -- 调用 pandoc 将 markdown 转换为 html
             os.vrunv('pandoc', {"-s", "-f", "markdown", "-t", "html", "-o", targetfile, sourcefile})
-        end, {files = sourcefile})
+        end, {dependfile = target:dependfile(targetfile), files = sourcefile})
     end)
 
 target("test")
@@ -166,6 +166,35 @@ rule("markdown")
     end)
 ```
 
+## 生成的文件如何参与构建 {#generated-files}
+
+规则产出的东西不会自动加入目标,缺的那一步是什么,取决于它产出的是什么:
+
+- **最终产物。** 把 markdown 转成 html、把资源打个包,文件写完就结束了,不需要再做什么。
+- **需要被编译的源文件。** 生成只是一半,规则还得把它编译掉,并把 object 交给链接。
+- **object 文件。** 要把它加进目标参与链接的 object 列表。
+
+后两种情况,object 必须在**构建开始之前**就登记好:
+
+```lua
+rule("myrule")
+    set_extensions(".myext")
+
+    -- 构建过程中才添加的文件不会被编译，那时构建计划已经定了，
+    -- 所以在这里登记 object
+    after_load(function (target)
+        local sourcebatch = target:sourcebatches()["myrule"]
+        for _, sourcefile in ipairs(sourcebatch and sourcebatch.sourcefiles) do
+            table.insert(target:objectfiles(), target:objectfile(sourcefile))
+        end
+    end)
+```
+
+::: warning 注意
+在 `on_build_file` 里写 `target:add("files", ...)` 是无效的。文件来得太晚,不会被编译,
+链接时会直接报 object 文件不存在。
+:::
+
 ## 规则依赖 {#rule-dependencies}
 
 ### 添加规则依赖
@@ -226,44 +255,88 @@ rule("myrule")
 
 ### 示例 1：资源文件处理
 
+`windres` 直接把 `.rc` 编成 object,所以规则只要执行它、再把 object 登记上就行,
+参考[生成的文件如何参与构建](#generated-files):
+
 ```lua
 rule("resource")
-    set_extensions(".rc", ".res")
-    on_build_file(function (target, sourcefile, opt)
-        import("core.project.depend")
-        
-        local targetfile = target:objectfile(sourcefile)
-        depend.on_changed(function ()
-            os.vrunv("windres", {sourcefile, "-o", targetfile})
-        end, {files = sourcefile})
+    set_extensions(".rc")
+
+    after_load(function (target)
+        local sourcebatch = target:sourcebatches()["resource"]
+        for _, sourcefile in ipairs(sourcebatch and sourcebatch.sourcefiles) do
+            table.insert(target:objectfiles(), target:objectfile(sourcefile))
+        end
+    end)
+
+    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
+        local objectfile = target:objectfile(sourcefile)
+        batchcmds:show_progress(opt.progress, "${color.build.object}compiling.resource %s", sourcefile)
+        batchcmds:mkdir(path.directory(objectfile))
+        batchcmds:vrunv("windres", {sourcefile, "-o", objectfile})
+        batchcmds:add_depfiles(sourcefile)
+        batchcmds:set_depcache(target:dependfile(objectfile))
+        batchcmds:set_depmtime(os.mtime(objectfile))
     end)
 ```
 
 ### 示例 2：协议缓冲区编译
 
+`protoc` 生成的是 `.pb.cc`,所以这条规则比上一条多一步:它自己用 `batchcmds:compile()`
+把生成的源文件编译掉。
+
 ```lua
 rule("protobuf")
+    add_deps("c++")
     set_extensions(".proto")
-    on_build_file(function (target, sourcefile, opt)
-        import("core.project.depend")
-        
-        local targetfile = path.join(target:autogendir(), path.basename(sourcefile) .. ".pb.cc")
-        depend.on_changed(function ()
-            os.vrunv("protoc", {"--cpp_out=" .. target:autogendir(), sourcefile})
-        end, {files = sourcefile})
-        
-        -- 将生成的文件添加到目标
-        target:add("files", targetfile)
+
+    after_load(function (target)
+        local sourcebatch = target:sourcebatches()["protobuf"]
+        for _, sourcefile_proto in ipairs(sourcebatch and sourcebatch.sourcefiles) do
+            local sourcefile_cc = target:autogenfile(sourcefile_proto,
+                {rootdir = path.join(target:autogendir(), "rules", "protobuf"),
+                 filename = path.basename(sourcefile_proto) .. ".pb.cc"})
+
+            -- 目标里的其他源文件要能 include 到生成的头文件
+            target:add("includedirs", path.directory(sourcefile_cc))
+            table.insert(target:objectfiles(), target:objectfile(sourcefile_cc))
+        end
+    end)
+
+    on_buildcmd_file(function (target, batchcmds, sourcefile_proto, opt)
+        local sourcefile_cc = target:autogenfile(sourcefile_proto,
+            {rootdir = path.join(target:autogendir(), "rules", "protobuf"),
+             filename = path.basename(sourcefile_proto) .. ".pb.cc"})
+        local objectfile = target:objectfile(sourcefile_cc)
+
+        batchcmds:show_progress(opt.progress, "${color.build.object}compiling.proto %s", sourcefile_proto)
+        batchcmds:mkdir(path.directory(sourcefile_cc))
+        batchcmds:vrunv("protoc", {"--cpp_out=" .. path.directory(sourcefile_cc),
+                                   "-I", path.directory(sourcefile_proto), sourcefile_proto})
+        batchcmds:compile(sourcefile_cc, objectfile)
+
+        batchcmds:add_depfiles(sourcefile_proto)
+        batchcmds:set_depcache(target:dependfile(objectfile))
+        batchcmds:set_depmtime(os.mtime(objectfile))
     end)
 ```
 
+::: tip 注意
+protobuf 是内置支持的,工程里 `add_rules("protobuf.cpp")` 就够了,参考[内置规则](/zh/api/description/builtin-rules)。
+上面这条规则是用来演示代码生成类规则的写法,不是用来替代它的。
+:::
+
 ## 最佳实践 {#best-practices}
 
-1. **使用依赖检查**: 通过 `depend.on_changed()` 避免不必要的重新构建
-2. **错误处理**: 在规则中添加适当的错误处理逻辑
-3. **进度显示**: 使用 `opt.progress` 显示构建进度
-4. **模块化**: 将复杂规则拆分为多个简单规则
-5. **文档化**: 为自定义规则添加清晰的注释和文档
+1. **优先用 `on_buildcmd_file`**: 它记录下来的命令会参与依赖检查,也能进入
+   `xmake project -k compile_commands`,这些是 `on_build_file` 做不到的
+2. **一定要记录依赖**: `batchcmds:add_depfiles()` 配 `set_depcache()`,或者
+   `depend.on_changed({dependfile = target:dependfile(targetfile), ...})`,否则每次构建都会重跑
+3. **在 `after_load` 里登记生成的 object**,参考[生成的文件如何参与构建](#generated-files)
+4. **生成的文件放到 `target:autogendir()` 下**: `xmake clean` 认得这个目录,
+   而且两个目标之间不会撞文件名
+5. **先找找有没有内置规则**: protobuf、lex/yacc、qt、wdk 等等都已经有了,
+   参考[内置规则](/zh/api/description/builtin-rules)
 
 ## 更多信息 {#more-information}
 

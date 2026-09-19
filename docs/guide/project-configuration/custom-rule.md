@@ -43,7 +43,7 @@ rule("markdown")
         depend.on_changed(function ()
             -- call pandoc to convert markdown to html
             os.vrunv('pandoc', {"-s", "-f", "markdown", "-t", "html", "-o", targetfile, sourcefile})
-        end, {files = sourcefile})
+        end, {dependfile = target:dependfile(targetfile), files = sourcefile})
     end)
 
 target("test")
@@ -166,6 +166,38 @@ rule("markdown")
     end)
 ```
 
+## Generated Files and the Link {#generated-files}
+
+What a rule produces does not join the target on its own, and which step is missing
+depends on what it produces:
+
+- **The final artifact.** A rule which turns markdown into html, or packs some assets, is
+  done once the file is written. Nothing else has to happen.
+- **A source file which has to be compiled.** Generating it is only half of the work, the
+  rule also has to compile it and hand the object to the link.
+- **An object file.** It has to be added to the objects the target links.
+
+For the last two, the object has to be known **before the build starts**:
+
+```lua
+rule("myrule")
+    set_extensions(".myext")
+
+    -- a file which is added during the build is never compiled, the build plan has
+    -- already been made by then, so we register the object here
+    after_load(function (target)
+        local sourcebatch = target:sourcebatches()["myrule"]
+        for _, sourcefile in ipairs(sourcebatch and sourcebatch.sourcefiles) do
+            table.insert(target:objectfiles(), target:objectfile(sourcefile))
+        end
+    end)
+```
+
+::: warning NOTE
+`target:add("files", ...)` inside `on_build_file` does not work. The file arrives too late
+to be compiled, and the link then fails on a missing object file.
+:::
+
 ## Rule Dependencies {#rule-dependencies}
 
 ### Adding Rule Dependencies
@@ -224,46 +256,92 @@ rule("myrule")
 
 ## Practical Examples {#practical-examples}
 
-### Example 1: Resource File Processing
+### Example 1: Resource Files
+
+`windres` compiles a `.rc` file straight into an object, so the rule only has to run it
+and register the object, @see [Generated Files and the Link](#generated-files):
 
 ```lua
 rule("resource")
-    set_extensions(".rc", ".res")
-    on_build_file(function (target, sourcefile, opt)
-        import("core.project.depend")
-        
-        local targetfile = target:objectfile(sourcefile)
-        depend.on_changed(function ()
-            os.vrunv("windres", {sourcefile, "-o", targetfile})
-        end, {files = sourcefile})
+    set_extensions(".rc")
+
+    after_load(function (target)
+        local sourcebatch = target:sourcebatches()["resource"]
+        for _, sourcefile in ipairs(sourcebatch and sourcebatch.sourcefiles) do
+            table.insert(target:objectfiles(), target:objectfile(sourcefile))
+        end
+    end)
+
+    on_buildcmd_file(function (target, batchcmds, sourcefile, opt)
+        local objectfile = target:objectfile(sourcefile)
+        batchcmds:show_progress(opt.progress, "${color.build.object}compiling.resource %s", sourcefile)
+        batchcmds:mkdir(path.directory(objectfile))
+        batchcmds:vrunv("windres", {sourcefile, "-o", objectfile})
+        batchcmds:add_depfiles(sourcefile)
+        batchcmds:set_depcache(target:dependfile(objectfile))
+        batchcmds:set_depmtime(os.mtime(objectfile))
     end)
 ```
 
 ### Example 2: Protocol Buffer Compilation
 
+`protoc` generates a `.pb.cc`, so this rule has one more step than the last one: it
+compiles that source itself with `batchcmds:compile()`.
+
 ```lua
 rule("protobuf")
+    add_deps("c++")
     set_extensions(".proto")
-    on_build_file(function (target, sourcefile, opt)
-        import("core.project.depend")
-        
-        local targetfile = path.join(target:autogendir(), path.basename(sourcefile) .. ".pb.cc")
-        depend.on_changed(function ()
-            os.vrunv("protoc", {"--cpp_out=" .. target:autogendir(), sourcefile})
-        end, {files = sourcefile})
-        
-        -- add generated file to target
-        target:add("files", targetfile)
+
+    after_load(function (target)
+        local sourcebatch = target:sourcebatches()["protobuf"]
+        for _, sourcefile_proto in ipairs(sourcebatch and sourcebatch.sourcefiles) do
+            local sourcefile_cc = target:autogenfile(sourcefile_proto,
+                {rootdir = path.join(target:autogendir(), "rules", "protobuf"),
+                 filename = path.basename(sourcefile_proto) .. ".pb.cc"})
+
+            -- the other sources of this target include the generated header
+            target:add("includedirs", path.directory(sourcefile_cc))
+            table.insert(target:objectfiles(), target:objectfile(sourcefile_cc))
+        end
+    end)
+
+    on_buildcmd_file(function (target, batchcmds, sourcefile_proto, opt)
+        local sourcefile_cc = target:autogenfile(sourcefile_proto,
+            {rootdir = path.join(target:autogendir(), "rules", "protobuf"),
+             filename = path.basename(sourcefile_proto) .. ".pb.cc"})
+        local objectfile = target:objectfile(sourcefile_cc)
+
+        batchcmds:show_progress(opt.progress, "${color.build.object}compiling.proto %s", sourcefile_proto)
+        batchcmds:mkdir(path.directory(sourcefile_cc))
+        batchcmds:vrunv("protoc", {"--cpp_out=" .. path.directory(sourcefile_cc),
+                                   "-I", path.directory(sourcefile_proto), sourcefile_proto})
+        batchcmds:compile(sourcefile_cc, objectfile)
+
+        batchcmds:add_depfiles(sourcefile_proto)
+        batchcmds:set_depcache(target:dependfile(objectfile))
+        batchcmds:set_depmtime(os.mtime(objectfile))
     end)
 ```
 
+::: tip NOTE
+Protobuf is supported out of the box, `add_rules("protobuf.cpp")` is all a project needs,
+@see [Built-in Rules](/api/description/builtin-rules). The rule above is here to show the
+shape of a code generator rule, not as a replacement for it.
+:::
+
 ## Best Practices {#best-practices}
 
-1. **Use Dependency Checking**: Avoid unnecessary rebuilds through `depend.on_changed()`
-2. **Error Handling**: Add appropriate error handling logic in rules
-3. **Progress Display**: Use `opt.progress` to display build progress
-4. **Modularization**: Break complex rules into multiple simple rules
-5. **Documentation**: Add clear comments and documentation for custom rules
+1. **Prefer `on_buildcmd_file`**: the commands it records take part in the dependency
+   check and in `xmake project -k compile_commands`, which a plain `on_build_file` cannot do
+2. **Always record the dependencies**: `batchcmds:add_depfiles()` and `set_depcache()`, or
+   `depend.on_changed({dependfile = target:dependfile(targetfile), ...})`, otherwise the
+   rule runs on every build
+3. **Register the generated objects in `after_load`**, @see [Generated Files and the Link](#generated-files)
+4. **Put the generated files under `target:autogendir()`**: `xmake clean` knows about it,
+   and the file names of two targets cannot collide there
+5. **Look for a built-in rule first**: protobuf, lex/yacc, qt, wdk and many others are
+   already there, @see [Built-in Rules](/api/description/builtin-rules)
 
 ## More Information {#more-information}
 
