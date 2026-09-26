@@ -3152,9 +3152,9 @@ It should be noted that under macos, if the add_rpathdirs setting is in effect, 
 `$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib`
 We can also check if there is a path with @rpath via `otool -L libxxx.dylib`
 
-In addition, for gcc, `add_rpathdirs` defaults to runpath. If you want to configure it explicitly, use `-Wl,--enable-new-dtags`, `-Wl,--disable-new-dtags` to configure rpath. Or runpath
+For gcc, when `runpath` is unspecified, `add_rpathdirs` passes only `-Wl,-rpath=...`. Whether the ELF binary gets `RUNPATH` or `RPATH` depends on whether the linker enables new dtags by default.
 
-We can specify it through additional parameters, `add_rpathdirs("xxx", {runpath = true})`
+Use `add_rpathdirs("xxx", {runpath = true})` to explicitly request `RUNPATH` (`--enable-new-dtags`), or `add_rpathdirs("xxx", {runpath = false})` to request `RPATH` (`--disable-new-dtags`), provided the linker supports the corresponding option.
 
 For relevant background details, see: [#5109](https://github.com/xmake-io/xmake/issues/5109)
 

@@ -3216,9 +3216,9 @@ target("test")
 `$install_name_tool -add_rpath @rpath/libxxx.dylib xxx/libxxx.dylib`
 我们也可以通过`otool -L libxxx.dylib`查看是否存在带@rpath的路径
 
-另外，对于 gcc， `add_rpathdirs` 默认设置的是 runpath，如果想要显式的配置上 `-Wl,--enable-new-dtags`, `-Wl,--disable-new-dtags` 去配置 rpath 还是 runpath
+对于 gcc，未指定 `runpath` 时，`add_rpathdirs` 只传递 `-Wl,-rpath=...`；最终生成 ELF 的 `RUNPATH` 还是 `RPATH`，取决于链接器是否默认启用 new dtags。
 
-我们可以通过额外的参数指定，`add_rpathdirs("xxx", {runpath = true})`
+可以用 `add_rpathdirs("xxx", {runpath = true})` 显式请求 `RUNPATH`（`--enable-new-dtags`），或用 `add_rpathdirs("xxx", {runpath = false})` 请求 `RPATH`（`--disable-new-dtags`），前提是链接器支持相应参数。
 
 相关背景细节见：[#5109](https://github.com/xmake-io/xmake/issues/5109)
 
