@@ -44,3 +44,4 @@
 | [LeviMC](https://github.com/LiteLDev) | [LeviLamina](https://github.com/LiteLDev/levilamina) | 这就是适合我们项目的构建系统和C++包管理器 |
 | [Epic Games](https://github.com/EpicGames) | [Zen](https://github.com/EpicGames/zen) | 虚幻引擎（Unreal Engine）使用的 Zen 存储服务。 |
 | [Microsoft](https://github.com/microsoft) | [CHERIoT RTOS](https://github.com/CHERIoT-Platform/cheriot-rtos) | 由微软研究院支持的、基于 CHERIoT 指令集架构构建的实时操作系统。 |
+| [李均豪](https://ljh.sh) | [x-cmd](https://x-cmd.com/install/xmake) | xmake 用 Lua 写构建脚本，几行就能讲清楚一个包怎么编，比维护 Makefile 舒服太多 — `x-cmd pkg` 里的原生包正在慢慢往 xmake 迁，portable 二进制这条线也想借它走得更顺。 |
