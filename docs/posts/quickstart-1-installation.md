@@ -20,18 +20,18 @@ Usually we only need to install the script with a one-click installation script.
 ### Using curl
 
 ```bash
-Bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh)
 ```
 
 ### Using wget
 
 ```bash
-Bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh -O -)
+bash <(wget https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.sh -O -)
 ```
 
 ### Using powershell
 
-```bash
+```ps1
 Invoke-Expression (Invoke-Webrequest 'https://raw.githubusercontent.com/tboox/xmake/master/scripts/get.ps1' -UseBasicParsing).Content
 ```
 
@@ -54,13 +54,13 @@ Windows provides a pre-made nsis installation package, we can download the insta
 
 ### Using scoop
 
-```bash
+```ps1
 Scoop install xmake
 ```
 
 ## MacOS
 
-```bash
+```zsh
 $ ruby ​​-e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 $ brew install xmake
 ```
@@ -85,7 +85,7 @@ $ bash <(curl -fsSL https://raw.githubusercontent.com/tboox/xmake/master/scripts
 Install on archlinux:
 
 ```bash
-$ yaourt xmake
+$ sudo pacman -S xmake
 ```
 
 Or download the deb package to install:
@@ -155,7 +155,7 @@ Note: This is also the source code compilation and installation, but the install
 Compile and install via make:
 
 ```bash
-$ make build; sudo make install
+$ make build && sudo make install
 ```
 
 Install to other specified directories:
