@@ -64,6 +64,7 @@ add_installfiles("assets/**", {prefixdir = "share/foo/assets"})
 If our library is only used within the local LAN or shared with others via a network drive, and does not need to be deployed to a remote git repository, we can use local package distribution.
 
 The advantages of local packages are:
+
 - No need to set up a Git repository
 - Pre-compiled binaries are distributed directly, resulting in fast integration
 - Supports binary packages for multiple platforms, architectures, and build modes (Debug/Release)
@@ -116,8 +117,6 @@ build/packages/
 
 Each package directory contains the generated binary library files (`.a`/`.lib`/`.so`/`.dll`) and header files.
 
-
-
 ### Consume Local Package {#local-package-integration}
 
 We copy the generated `build/packages` directory to any location, or use it directly. Then configure it in the consumer project's `xmake.lua`:
@@ -126,7 +125,7 @@ We copy the generated `build/packages` directory to any location, or use it dire
 add_rules("mode.debug", "mode.release")
 
 -- Add local package repository directory, pointing to the packages directory
-add_repositories("local-repo /path/to/test/build/packages")
+add_repositories("local-repo /path/to/test/build")
 
 -- Import foo package
 add_requires("foo")
@@ -138,6 +137,7 @@ target("bar")
 ```
 
 Here we use several interfaces:
+
 * [`add_repositories`](/api/description/global-interfaces.html#add_repositories): Add a custom package repository. The first argument `local-repo` is the repository name, and the second argument is the repository address (here it is a local path).
 * [`add_requires`](/api/description/global-interfaces.html#add_requires): Declare the packages that the project depends on.
 * [`add_packages`](/api/description/project-target.html#add_packages): Link the specified packages to the current target.
@@ -173,6 +173,7 @@ When executing `xmake` to build, Xmake will link the corresponding binary librar
 If we need to manage versions and distribute via a git repository, we can use the remote package mode. It supports distributing both source packages and binary packages.
 
 The advantages of remote packages are:
+
 - Version control based on Git
 - Supports source distribution (automatic compilation) and binary distribution (direct installation)
 - Support for multi-version switching
@@ -235,6 +236,7 @@ In addition, we can also refer to the existing package configurations in the off
 We need to create a private git repository (e.g., `my-repo`) to store all package configurations. Push the generated `packages` directory to this repository.
 
 The directory structure is similar to:
+
 ```
 my-repo/
 └── packages/
