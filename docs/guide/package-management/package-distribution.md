@@ -69,6 +69,10 @@ Of course, some packages rely on source code implementation and are not complete
 
 For more detailed package configuration API descriptions, see: [Package Interface Documentation](/api/description/package-dependencies)
 
+### Integrating common build systems
+
+The example above calls `package.tools.autoconf` inside `on_install`. CMake, Autoconf, Meson, Make, Ninja, MSBuild, and xmake projects can be integrated the same way, without writing the full configure, build, and install commands yourself. See [package.tools](/api/scripts/extension-modules/package/tools).
+
 ### Extended configuration parameters
 
 See: [add_configs](/api/description/package-dependencies#add-configs) for details.

@@ -69,6 +69,10 @@ package("zlib")
 
 更多详细的包配置 API 说明见：[包接口文档](/zh/api/description/package-dependencies)
 
+### 集成常见构建系统
+
+上面的例子在 `on_install` 里调用了 `package.tools.autoconf`。CMake、Autoconf、Meson、Make、Ninja、MSBuild 和 xmake 项目都可以这样快速接入，不必自己拼完整的配置、编译和安装命令。用法见：[package.tools](/zh/api/scripts/extension-modules/package/tools)。
+
 ### 扩展配置参数
 
 详细见：[add_configs](/zh/api/description/package-dependencies#add-configs)
