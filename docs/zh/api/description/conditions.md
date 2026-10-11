@@ -126,13 +126,23 @@ end
 
 目前支持的平台有：
 
-* windows
+* android
+* appletvos
+* applexros
+* bsd
 * cross
+* cygwin
+* haiku
+* harmony
+* iphoneos
 * linux
 * macosx
-* android
-* iphoneos
+* mingw
+* msys
+* solaris
+* wasm
 * watchos
+* windows
 
 当然你也可以自己扩展添加自己的平台，甚至直接指定自己的平台名：
 

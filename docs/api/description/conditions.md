@@ -132,15 +132,24 @@ Available platforms:
 | cross     |
 | cygwin    |
 | haiku     |
+| harmony   |
 | iphoneos  |
 | linux     |
 | macosx    |
 | mingw     |
 | msys      |
+| solaris   |
 | wasm      |
 | watchos   |
 | windows   |
 
+You can also extend xmake with your own platform, or pass a custom platform name directly:
+
+```sh
+$ xmake f -p other --sdk=...
+```
+
+If the given platform does not exist, xmake falls back to the `cross` platform for cross-compilation. `is_plat("other")` still matches the name you passed.
 
 ## is_host
 
