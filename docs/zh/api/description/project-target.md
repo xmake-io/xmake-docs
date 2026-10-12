@@ -4646,7 +4646,7 @@ target("test")
     set_arch(os.arch())
 ```
 
-这块的应用场景和example可以看下：https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua
+这块的应用场景和example可以看下：https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/v2.1.0-beta4.20260109/xmake.lua
 
 luajit里面就需要同时编译host平台的minilua/buildvm来生成jit相关代码，然后开始针对性编译luajit自身到不同的交叉工具链。
 

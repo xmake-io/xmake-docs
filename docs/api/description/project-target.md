@@ -4563,7 +4563,7 @@ target("test")
     set_arch(os.arch())
 ```
 
-The application scenario and example of this piece can be seen: https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/xmake.lua
+The application scenario and example of this piece can be seen: https://github.com/xmake-io/xmake-repo/blob/dev/packages/l/luajit/port/v2.1.0-beta4.20260109/xmake.lua
 
 In luajit, you need to compile the minilua/buildvm of the host platform to generate jit related code, and then start compiling luajit itself to different cross tool chains.
 
