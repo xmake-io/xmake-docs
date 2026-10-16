@@ -155,3 +155,7 @@ $ xmake l scripts/test_addons.lua --addon my-addon
 - 命令名和模板 id 是全局的，取名尽量避开容易撞车的词。
 - 版本来自 package recipe，所以升级时改 tag，不用改 `addon.lua`。
 - `set_sourcedir` 是把 `tests/` 挡在安装之外的关键。
+
+## 可运行示例
+
+参见[Addon 示例](/zh/examples/configuration/addons)。八组可下载的独立工程均包含用户工程、addon payload 和本地仓库，演示自动安装、includes、描述域 API/函数扩展，rule 与模块组合、插件、模板和工具链分发。

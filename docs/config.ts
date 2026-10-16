@@ -410,6 +410,7 @@ function examplesSidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Custom Rule', link: 'configuration/custom_rule' },
         { text: 'Custom Module', link: 'configuration/custom_module' },
         { text: 'Custom Scope API', link: 'configuration/custom_scope_api' },
+        { text: 'Addon Examples', link: 'configuration/addons' },
         { text: 'Config Header Generation', link: 'configuration/add_configfiles' },
         { text: 'Autogen Programs', link: 'configuration/autogen' },
       ]

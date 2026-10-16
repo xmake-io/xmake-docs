@@ -3,4 +3,5 @@
 # npm add vitepress-plugin-group-icons -D
 # npm add vitepress-plugin-llms -D
 npm run generate-release
+npm run generate-codes
 npx vitepress dev docs

@@ -58,8 +58,8 @@ Inside the tui the same thing is reachable with `/config`, `/model` and `/provid
 ### Providers and models
 
 The builtin providers are `deepseek` (default), `anthropic`, `openai`, `moonshot`,
-`dashscope`, `siliconflow`, `openrouter` and `zhipu`. Any OpenAI-compatible endpoint works
-by setting a `baseurl`.
+`dashscope`, `siliconflow`, `openrouter`, `zhipu` and `ollama`. Any OpenAI-compatible
+endpoint works by setting a `baseurl`.
 
 ```sh
 $ xmake ai --provider=deepseek --model=deepseek-chat
@@ -68,6 +68,27 @@ $ xmake ai --smallmodel=deepseek-chat     # used by the title/summary/light suba
 
 A *small model* is used for the cheap background work — session titles, summaries, light
 subagents — so the main model is spent only on the real task.
+
+#### A local or LAN model, with no api key
+
+`ollama` is a preset like the rest, and it carries a placeholder key: the OpenAI-compatible
+endpoint wants an `Authorization` header and does not care what is in it, so there is
+nothing to sign up for and nothing to set.
+
+```sh
+$ xmake ai -p ollama                                                    # on this machine
+$ xmake ai --config=providers.ollama.baseurl=http://192.168.1.50:11434  # on another one
+$ xmake ai --config=providers.ollama.models.main=qwen2.5-coder:14b
+$ xmake ai --config=providers.ollama.models.small=qwen2.5-coder:7b
+```
+
+The base url is the **host and port only** — `/v1/chat/completions` is appended, which is
+where ollama serves its OpenAI-compatible api, so do not put `/v1` in it. On the machine
+running ollama, it must listen on more than the loopback (`OLLAMA_HOST=0.0.0.0 ollama
+serve`) and the model you name must already be pulled.
+
+The same applies to anything else which speaks that api — vllm, llama.cpp's server,
+LM Studio: `kind = "openai"`, a base url, and a placeholder key.
 
 ## Running it
 

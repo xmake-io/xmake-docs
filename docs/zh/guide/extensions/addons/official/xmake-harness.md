@@ -48,7 +48,7 @@ $ xmake ai --doctor                                       # 检查运行环境
 
 ### 服务商和模型
 
-内置服务商有 `deepseek`（默认）、`anthropic`、`openai`、`moonshot`、`dashscope`、`siliconflow`、`openrouter` 和 `zhipu`。任何 OpenAI 兼容的接口，配上 `baseurl` 即可使用。
+内置服务商有 `deepseek`（默认）、`anthropic`、`openai`、`moonshot`、`dashscope`、`siliconflow`、`openrouter`、`zhipu` 和 `ollama`。任何 OpenAI 兼容的接口，配上 `baseurl` 即可使用。
 
 ```sh
 $ xmake ai --provider=deepseek --model=deepseek-chat
@@ -56,6 +56,25 @@ $ xmake ai --smallmodel=deepseek-chat     # 供标题/摘要/轻量子 agent 使
 ```
 
 *小模型* 用来干那些便宜的后台活儿 —— 生成会话标题、做摘要、跑轻量子 agent —— 好把主模型省给真正的任务。
+
+#### 本地 / 局域网模型，不需要 api key
+
+`ollama` 和其它预设一样是内置的，而且自带一个**占位 key**：OpenAI 兼容接口要求有
+`Authorization` 头，但并不在乎里面是什么 —— 所以没有什么要注册，也没有什么要设。
+
+```sh
+$ xmake ai -p ollama                                                    # 跑在本机
+$ xmake ai --config=providers.ollama.baseurl=http://192.168.1.50:11434  # 跑在另一台
+$ xmake ai --config=providers.ollama.models.main=qwen2.5-coder:14b
+$ xmake ai --config=providers.ollama.models.small=qwen2.5-coder:7b
+```
+
+base url **只写主机和端口** —— `/v1/chat/completions` 会自动拼上去，那正是 ollama 提供
+OpenAI 兼容接口的位置，所以**不要**把 `/v1` 写进去。跑 ollama 那台机器上，它得监听在回环
+地址之外（`OLLAMA_HOST=0.0.0.0 ollama serve`），并且你写的那个模型要已经 pull 下来。
+
+任何别的说这套接口的东西同理 —— vllm、llama.cpp 的 server、LM Studio：
+`kind = "openai"`、一个 base url、加一个占位 key。
 
 ## 运行
 

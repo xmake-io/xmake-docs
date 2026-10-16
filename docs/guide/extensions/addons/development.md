@@ -163,3 +163,7 @@ script checks that the two agree.
 - Command names and template ids are global — pick something unlikely to collide.
 - The version comes from the package recipe, so bump the tag, not `addon.lua`.
 - `set_sourcedir` is what keeps `tests/` out of the install.
+
+## Runnable examples
+
+See [Addon Examples](/examples/configuration/addons) for eight downloadable projects, each bundling the user project, addon payloads, and a local repository. They demonstrate automatic installation, includes, custom description APIs/functions, rules with modules, plugins, templates, and toolchains.
