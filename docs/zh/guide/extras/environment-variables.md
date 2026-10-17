@@ -378,6 +378,15 @@ $ export XMAKE_BINARY_REPO = https://github.com/xmake-mirror/build-artifacts.git
 $ export XMAKE_THEME=plain
 ```
 
+## XMAKE_DOWNLOADER <Badge type="tip" text="v3.1.2" />
+
+选择 HTTP 下载工具，可取 `aria2`、`curl`、`wget`、`powershell` 或 `pwsh`。
+单次下载选项和 `xmake g --downloader` 全局配置优先于该变量。
+
+```sh
+export XMAKE_DOWNLOADER=curl
+```
+
 ## XMAKE_STATS
 
 - 开启或禁用用户量统计

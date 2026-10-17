@@ -11,7 +11,7 @@ Download an example using the file explorer's **Download Zip** button, extract i
 run the commands from the directory containing the top-level `xmake.lua`.
 
 ::: tip Requirements
-Use a current **Xmake dev build with addon support**, Git, and a native C compiler
+Use **Xmake v3.1.2 or later**, Git, and a native C compiler
 (Clang, GCC, or MSVC). The module and plugin bootstrap projects do not compile application
 sources. No example requires a third-party SDK or library.
 :::

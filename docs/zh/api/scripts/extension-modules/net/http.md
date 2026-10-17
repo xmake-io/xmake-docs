@@ -37,3 +37,16 @@ import("net.http")
 
 http.download("https://xmake.io", "/tmp/index.html")
 ```
+
+## 选择下载工具 <Badge type="tip" text="v3.1.2" />
+
+```lua
+import("net.http")
+http.download("https://xmake.io", "index.html", {downloader = "curl"})
+```
+
+支持 `aria2`、`curl`、`wget`、`powershell` 和 `pwsh`。
+选择顺序为调用选项、可用的命令行 `downloader` 选项、全局配置、`XMAKE_DOWNLOADER` 环境变量。
+也可执行 `xmake g --downloader=curl` 设置全局默认值。
+显式选定工具后，工具缺失或下载失败会报错，不会自动切换到其他后端。
+未指定时仍按默认顺序选择可用工具。

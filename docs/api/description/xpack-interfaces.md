@@ -398,6 +398,7 @@ Currently supported formats are:
 | Format | Description |
 | ---- | ---- |
 | nsis | Windows NSIS installation package, binary installation |
+| inno | Windows Inno Setup installer, supported since v3.1.2 |
 | zip | Binary zip package, does not contain installation script |
 | targz | Binary tar.gz package, does not contain the installation script |
 | srczip | zip source package |
@@ -1352,6 +1353,25 @@ after_uninstallcmd(script: <function (package, batchcmds)>)
 | script | After uninstall script function with package and batchcmds parameters |
 
 Similar to after_installcmd, please refer to after_installcmd description.
+
+## set_displayicon <Badge type="tip" text="v3.1.2" />
+
+Set the icon shown in Windows Add/Remove Programs for NSIS and Inno Setup installers.
+The path is relative to the installation directory and may name an `.ico` file or an
+executable with an icon. By default, Xmake uses an associated binary target's executable.
+
+```lua
+includes("@builtin/xpack")
+
+xpack("demo")
+    set_formats("inno")
+    set_version("1.0.0")
+    add_targets("demo")
+    set_displayicon("bin/demo.exe")
+```
+
+Run `xmake pack -f inno` on Windows to generate the installer.
+The older `set_nsis_displayicon` remains compatible but is deprecated in favor of `set_displayicon`.
 
 ## set_nsis_displayicon
 

@@ -376,6 +376,15 @@ Usually we can set the color theme through `xmake g --theme=plain`, but it is gl
 $ export XMAKE_THEME=plain
 ```
 
+## XMAKE_DOWNLOADER <Badge type="tip" text="v3.1.2" />
+
+Select the HTTP download tool: `aria2`, `curl`, `wget`, `powershell`, or `pwsh`.
+Per-download options and the `xmake g --downloader` global setting take precedence.
+
+```sh
+export XMAKE_DOWNLOADER=curl
+```
+
 ## XMAKE_STATS
 
 - Enable or disable user statistics

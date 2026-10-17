@@ -37,3 +37,17 @@ import("net.http")
 
 http.download("https://xmake.io", "/tmp/index.html")
 ```
+
+## Select a downloader <Badge type="tip" text="v3.1.2" />
+
+```lua
+import("net.http")
+http.download("https://xmake.io", "index.html", {downloader = "curl"})
+```
+
+Supported values are `aria2`, `curl`, `wget`, `powershell`, and `pwsh`.
+Selection precedence is call options, an available command-line `downloader` option,
+global configuration, then the `XMAKE_DOWNLOADER` environment variable.
+Use `xmake g --downloader=curl` to set the global default.
+An explicitly selected tool fails if unavailable or unable to download; it does not
+silently switch backends. Without a selection, the normal available-tool order applies.

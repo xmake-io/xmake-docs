@@ -1,5 +1,23 @@
 export const posts = [
   {
+    "title": "Xmake v3.1.2 Released, Incremental Build Improvements and Inno Setup Packaging",
+    "url": "/posts/xmake-update-v3.1.2",
+    "date": {
+      "time": 1792238400000,
+      "string": "October 17, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "cpp",
+      "modules",
+      "pch",
+      "xpack",
+      "addon"
+    ],
+    "excerpt": "<p>Xmake v3.1.2 improves incremental builds for static libraries, C++ modules, and precompiled\nheaders. It also adds Inno Setup packaging, output-on-failure for tests, selectable HTTP\ndownloaders, and custom pkg-config search directories.</p>\n<p>Addons introduced in v3.1.1 receive fixes for local repositories and installed-version\nselection, together with eight runnable distribution examples. This release also prevents\nrepository updates from resetting a user's project after a failed clone.</p>\n<p>For a chain such as <code>a -&gt; b -&gt; c -&gt; app</code>, changing an implementation file in <code>a</code> should\nrecompile that file, re-archive <code>a</code>, and relink <code>app</code>. Ordinary <code>b</code> and <code>c</code> archives contain\nonly their own objects, so changing <code>a</code> does not require recreating them.</p>\n"
+  },
+  {
     "title": "Xmake v3.1.1 Released, Addons Extend Xmake Itself",
     "url": "/posts/xmake-update-v3.1.1",
     "date": {

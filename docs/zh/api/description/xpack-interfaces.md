@@ -410,6 +410,7 @@ $ xmake pack -f "nsis,zip"
 | 格式     | 说明                              |
 | ----     | ----                              |
 | nsis     | Windows NSIS 安装包，二进制安装   |
+| inno | Windows Inno Setup 安装包，v3.1.2 起支持 |
 | zip      | 二进制 zip 包，不包含安装脚本     |
 | targz    | 二进制 tar.gz 包，不包含安装脚本  |
 | srczip   | zip 源码包                        |
@@ -1443,6 +1444,25 @@ after_uninstallcmd(script: <function (package, batchcmds)>)
 在卸载完成后执行的自定义脚本，用于后处理操作。
 
 跟 after_installcmd 类似，请参考 after_installcmd 说明。
+
+## set_displayicon <Badge type="tip" text="v3.1.2" />
+
+设置 Windows 安装包在“添加或删除程序”中显示的图标，供 NSIS 和 Inno Setup 共用。
+路径相对于安装目录，可指向 `.ico` 文件或带图标的可执行文件。
+未设置时，默认使用关联 binary target 的可执行文件图标。
+
+```lua
+includes("@builtin/xpack")
+
+xpack("demo")
+    set_formats("inno")
+    set_version("1.0.0")
+    add_targets("demo")
+    set_displayicon("bin/demo.exe")
+```
+
+在 Windows 上执行 `xmake pack -f inno` 生成安装包。
+旧的 `set_nsis_displayicon` 仍兼容，但已弃用，请改用 `set_displayicon`。
 
 ## set_nsis_displayicon
 

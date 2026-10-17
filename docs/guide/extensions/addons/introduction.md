@@ -9,8 +9,8 @@ addon provides new abilities for the build tool: commands, build rules, toolchai
 templates and lua modules.
 
 ::: tip NOTE
-Addons require xmake from the dev branch for now. Before them, only plugins could be
-distributed, through the older `xmake plugin --install`.
+Addons are supported since v3.1.1. Use v3.1.2 or later for fixes to local-repository
+paths and installed-version selection.
 :::
 
 ## What an addon can carry

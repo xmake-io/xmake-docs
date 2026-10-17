@@ -1,5 +1,23 @@
 export const posts = [
   {
+    "title": "Xmake v3.1.2 发布，增量构建改进与 Inno Setup 打包",
+    "url": "/zh/posts/xmake-update-v3.1.2",
+    "date": {
+      "time": 1792238400000,
+      "string": "October 17, 2026"
+    },
+    "author": "Ruki",
+    "tags": [
+      "xmake",
+      "cpp",
+      "modules",
+      "pch",
+      "xpack",
+      "addon"
+    ],
+    "excerpt": "<p>Xmake v3.1.2 改进了静态库、C++ Modules 和预编译头的增量构建，同时新增 Inno Setup 打包、\n测试失败时显示输出、HTTP 下载工具选择，以及自定义 pkg-config 搜索目录等功能。</p>\n<p>在 v3.1.1 引入的 addon 基础上，这次修复了本地仓库路径和已安装版本选择，并提供八组可直接运行的分发示例。\n此外，仓库更新不再因为克隆失败而误操作用户工程的 Git 仓库。</p>\n<p>对于 <code>a -&gt; b -&gt; c -&gt; app</code> 这样的依赖链，修改 <code>a</code> 的实现文件后，应当只编译该文件、重新归档 <code>a</code>，\n最后重新链接 <code>app</code>。普通 <code>b</code>、<code>c</code> 静态库只包含自己的对象文件，不需要因为 <code>a</code> 变化而重新生成。</p>\n"
+  },
+  {
     "title": "Xmake v3.1.1 发布，Addons 扩展 Xmake 自身",
     "url": "/zh/posts/xmake-update-v3.1.1",
     "date": {

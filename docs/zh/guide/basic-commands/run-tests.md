@@ -307,6 +307,16 @@ target("mylib_test")
     add_files("tests/*.cpp")
     add_packages("gtest")
     add_tests("default")
+```
+
+## 仅显示失败测试的输出 <Badge type="tip" text="v3.1.2" />
+
+```sh
+xmake test --output-on-failure
+```
+
+保留正常测试报告，仅为失败或非预期通过的测试显示标准输出和标准错误。
+适合 CI 中减少成功测试的日志；需要查看所有测试输出时继续使用 `-v`。
 
 ## 详细输出
 

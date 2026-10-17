@@ -773,6 +773,17 @@ set_policy("build.c++.modules.hide_dependencies", true)
 set_policy("build.c++.modules.two_phases", false)
 ```
 
+## build.c++.modules.clang.precompile_reduced_bmi <Badge type="tip" text="v3.1.2" />
+
+启用 Clang 的 `--precompile-reduced-bmi` 编译流程，默认关闭。
+需要同时启用两阶段编译，且编译器支持该参数；条件不满足时继续使用原有流程。
+Reduced BMI 用于模块依赖，生成对象文件时仍编译原始模块源文件。
+
+```lua
+set_policy("build.c++.modules.two_phases", true)
+set_policy("build.c++.modules.clang.precompile_reduced_bmi", true)
+```
+
 ## build.c++.msvc.runtime <Badge type="tip" text="v3.0.5" />
 
 设置默认的 MSVC 运行时，可选值为 `MT` 或 `MD`。

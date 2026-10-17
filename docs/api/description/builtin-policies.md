@@ -782,6 +782,18 @@ Enable two-phase compilation if supported, enabled by default.
 set_policy("build.c++.modules.two_phases", false)
 ```
 
+## build.c++.modules.clang.precompile_reduced_bmi <Badge type="tip" text="v3.1.2" />
+
+Enable Clang's `--precompile-reduced-bmi` pipeline, disabled by default.
+This requires two-phase compilation and a compiler that supports the flag; otherwise
+Xmake keeps the existing pipeline. The reduced BMI serves module dependencies, while
+object generation still compiles the original module source.
+
+```lua
+set_policy("build.c++.modules.two_phases", true)
+set_policy("build.c++.modules.clang.precompile_reduced_bmi", true)
+```
+
 ## build.c++.msvc.runtime <Badge type="tip" text="v3.0.5" />
 
 Set the default MSVC runtime, values: `MT` or `MD`.

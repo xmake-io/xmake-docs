@@ -291,3 +291,20 @@ set_kind("binary")
 add_files("src/*.cpp")
 add_packages("zlib")
 ```
+
+## Use pkg-config packages
+
+```lua
+add_requires("pkgconfig::ncurses", {configs = {
+    configdirs = {"/opt/ncurses/lib/pkgconfig", "/opt/ncurses/share/pkgconfig"}
+}})
+
+target("demo")
+    set_kind("binary")
+    add_files("src/main.c")
+    add_packages("pkgconfig::ncurses")
+```
+
+Since v3.1.2, `configs.configdirs` supplies custom `.pc` search directories through
+pkg-config's `PKG_CONFIG_PATH`. It accepts a directory or list of directories without
+changing the process-wide environment. The library and its `.pc` files must already exist.

@@ -7,7 +7,7 @@ outline: deep
 Addon 扩展的是 **xmake 本身**。包（package）为你的程序提供库，而 addon 为构建工具本身提供新能力：命令、构建规则、工具链、工程模板和 lua 模块。
 
 ::: tip 注意
-Addon 目前需要 dev 分支的 xmake。在此之前只能分发插件，走的是旧的 `xmake plugin --install`。
+Addon 自 v3.1.1 起支持。建议使用 v3.1.2 或更新版本，其中修复了本地仓库路径和已安装版本选择等问题。
 :::
 
 ## Addon 能携带什么

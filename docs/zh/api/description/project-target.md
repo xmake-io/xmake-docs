@@ -5400,6 +5400,17 @@ ${DEBUG} and ${debug} -> 1 or 0
 ${OS} and ${os} -> IOS or ios
 ```
 
+自 v3.1.2 起，`VERSION_PRERELEASE` 和 `VERSION_BUILD` 也可从语义版本中读取。
+例如 `set_version("1.2.3-rc.1+build.7")` 对应 `rc.1` 和 `build.7`。
+显式的 `set_version(..., {build = ...})` 优先于版本字符串中的 build 元数据。
+字符串形式的值应在模板中加引号：
+
+```c
+#define APP_PRERELEASE "${VERSION_PRERELEASE}"
+#define APP_BUILD "${VERSION_BUILD}"
+```
+
+
 例如：
 
 config.h.in

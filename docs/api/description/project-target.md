@@ -5317,6 +5317,17 @@ ${DEBUG} and ${debug} -> 1 or 0
 ${OS} and ${os} -> IOS or ios
 ```
 
+Since v3.1.2, `VERSION_PRERELEASE` and `VERSION_BUILD` also come from semantic-version
+metadata: `set_version("1.2.3-rc.1+build.7")` yields `rc.1` and `build.7`.
+An explicit `set_version(..., {build = ...})` overrides build metadata in the version string.
+Quote string-valued variables in the template:
+
+```c
+#define APP_PRERELEASE "${VERSION_PRERELEASE}"
+#define APP_BUILD "${VERSION_BUILD}"
+```
+
+
 E.g:
 
 Config.h.in

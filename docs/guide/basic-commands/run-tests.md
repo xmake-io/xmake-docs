@@ -307,6 +307,16 @@ target("mylib_test")
     add_files("tests/*.cpp")
     add_packages("gtest")
     add_tests("default")
+```
+
+## Show output only on failure <Badge type="tip" text="v3.1.2" />
+
+```sh
+xmake test --output-on-failure
+```
+
+Keep the normal test report and show stdout/stderr only for failed or unexpectedly
+passing tests. This reduces successful-test noise in CI; use `-v` to see all test output.
 
 ## Verbose output
 

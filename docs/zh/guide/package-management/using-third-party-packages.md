@@ -290,3 +290,19 @@ target("test")
     add_files("src/*.cpp")
     add_packages("zlib")
 ```
+
+## 使用 pkg-config 的依赖包
+
+```lua
+add_requires("pkgconfig::ncurses", {configs = {
+    configdirs = {"/opt/ncurses/lib/pkgconfig", "/opt/ncurses/share/pkgconfig"}
+}})
+
+target("demo")
+    set_kind("binary")
+    add_files("src/main.c")
+    add_packages("pkgconfig::ncurses")
+```
+
+v3.1.2 起可用 `configs.configdirs` 指定 `.pc` 搜索目录，传给 pkg-config 的 `PKG_CONFIG_PATH`。
+支持单个目录或目录列表，不需要修改进程全局环境。依赖库和 `.pc` 文件须已安装。

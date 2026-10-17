@@ -9,7 +9,7 @@ outline: deep
 点击文件浏览器的 **Download Zip** 下载整组文件，解压后进入最外层 `xmake.lua` 所在目录执行命令。
 
 ::: tip 环境要求
-请使用支持 addon 的最新 **Xmake dev 版本**，并准备 Git 和本机编译器（Clang、GCC 或 MSVC）。模块和插件引导工程不编译应用源文件。
+请使用 **Xmake v3.1.2 或更新版本**，并准备 Git 和本机编译器（Clang、GCC 或 MSVC）。模块和插件引导工程不编译应用源文件。
 示例不依赖额外 SDK 或第三方库。
 :::
 
