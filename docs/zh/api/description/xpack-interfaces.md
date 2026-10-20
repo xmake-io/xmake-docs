@@ -561,7 +561,7 @@ add_components(components: <string|array>, ...)
 
 #### 用法说明
 
-我们也支持为安装包添加自定义组件，按组件模式进行选择安装。目前仅仅对 NSIS 包会有比较的支持效果。
+我们也支持为安装包添加自定义组件，按组件模式进行选择安装。目前仅 NSIS 和 Inno Setup 包对组件的支持比较完善。
 
 我们可以通过 `xpack_component()` 定义一个组件域，然后使用 `add_components()` 加指定的组件跟包进行关联绑定。
 
@@ -591,7 +591,7 @@ xpack_component("LongPath")
 
 只有当我们勾选 LongPath 后，才会启用，当然，我们也可以通过 `set_default()` 配置组件默认是否处于启用状态。
 
-除了 NSIS 包，其他包尽管没有对组件有完善的支持，但是同样会执行组件里面的脚本实现打包，仅仅可能无法显示对应的组件 UI 和勾选框。
+除了 NSIS 和 Inno Setup 包，其他包尽管没有对组件有完善的支持，但是同样会执行组件里面的脚本实现打包，仅仅可能无法显示对应的组件 UI 和勾选框。
 
 ## set_bindir
 
@@ -625,7 +625,7 @@ xpack("xmake")
     set_bindir("mybin")
 ```
 
-那么会将可执行文件安装在 `installdir/mybin` 下面，如果是 NSIS 包，安装后，还会自动设置此路径到 `%PATH%`。
+那么会将可执行文件安装在 `installdir/mybin` 下面。对于 NSIS 和 Inno Setup 包，安装后还会自动将此路径添加到 `%PATH%`。
 
 ## set_libdir
 

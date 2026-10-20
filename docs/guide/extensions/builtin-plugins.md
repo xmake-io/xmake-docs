@@ -792,6 +792,7 @@ $ xmake check clang.tidy --fix_notes
 This plug-in can help users quickly generate installation packages and source code packages for different platforms. It will generate the following installation package formats:
 
 - Windows NSIS binary installation package
+- Windows Inno Setup binary installation package
 - Windows Wix binary installation package
 - runself (shell) self-compile installation package
 - zip/tar.gz binary package

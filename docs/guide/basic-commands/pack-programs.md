@@ -62,6 +62,7 @@ For specific details, see the document: [Generate Remote Package](/guide/package
 The last packaging method is the most powerful, implemented through the `xmake pack` plugin command. It is comparable to CMake's CPack packaging and can provide packaging for various system installation packages to achieve the distribution of target programs.
 
 - Windows NSIS binary installation package
+- Windows Inno Setup binary installation package
 - Windows WIX binary installation package
 - runself (shell) self-compiled installation package
 - zip/tar.gz/tar.xz binary package

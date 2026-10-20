@@ -64,6 +64,7 @@ $ tree ./build/foo.pkg/
 最后这种打包方式最为强大，通过 `xmake pack` 插件命令实现，它对标 CMake 的 CPack 打包，可以提供各种系统安装包的打包，来实现对目标程序的分发。
 
 - Windows NSIS 二进制安装包
+- Windows Inno Setup 二进制安装包
 - Windows WIX 二进制安装包
 - runself (shell) 自编译安装包
 - zip/tar.gz/tar.xz 二进制包
