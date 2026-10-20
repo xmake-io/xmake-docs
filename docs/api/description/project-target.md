@@ -1451,7 +1451,7 @@ target("test")
     on_clean(function (target)
 
         -- Delete only target files
-        os.rm(targetfile())
+        os.rm(target:targetfile())
     end)
 ```
 
@@ -4274,7 +4274,7 @@ target("test")
     add_ldflags("-framework Foundation", "-framework CoreFoundation")
 ```
 
-If it is not for both platforms, these settings will be ignored.
+Additionally, Qt programs can use this interface to link Qt modules, for example: [Qt Static Library](/examples/cpp/graphics/qt/#static-library). Module names starting with `Qt` are translated by the Qt rules into the corresponding platform libraries, so they are not subject to the platform restriction below.
 
 ## add_frameworkdirs
 
@@ -5309,7 +5309,9 @@ ${VERSION} -> 1.6.3
 ${VERSION_MAJOR} -> 1
 ${VERSION_MINOR} -> 6
 ${VERSION_ALTER} -> 3
-${VERSION_BUILD} -> set_version("1.6.3", {build = "%Y%m%d%H%M"}) -> 201902031421
+${VERSION_BUILD} -> set_version("1.6.3-rc.1+0") -> 0
+                    set_version("1.6.3-rc.1+0", {build = "%Y%m%d%H%M"}) -> 201902031421
+${VERSION_PRERELEASE} -> set_version("1.6.3-rc.1+0") -> rc.1
 ${PLAT} and ${plat} -> MACOS and macosx
 ${ARCH} and ${arch} -> ARM and arm
 ${MODE} and ${mode} -> DEBUG/RELEASE and debug/release

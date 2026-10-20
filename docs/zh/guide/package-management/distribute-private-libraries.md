@@ -469,7 +469,7 @@ Xmake 还支持使用 [XPack](/zh/guide/basic-commands/pack-programs.html#xpack)
 
 ### 支持格式
 
-* **Windows**: `nsis`, `wix`, `zip`, `targz`
+* **Windows**: `nsis`, `inno`, `wix`, `zip`, `targz`
 * **Linux**: `deb`, `rpm`, `srpm`, `runself` (shell 自解压脚本), `targz`, `srczip`, `appimage`
 * **MacOS**: `dmg`, `zip`, `targz`, `runself`
 

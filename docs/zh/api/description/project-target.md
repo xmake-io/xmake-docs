@@ -1515,7 +1515,7 @@ target("test")
     on_clean(function (target)
 
         -- 仅删掉目标文件
-        os.rm(targetfile())
+        os.rm(target:targetfile())
     end)
 ```
 
@@ -4355,7 +4355,7 @@ target("test")
     add_ldflags("-framework Foundation", "-framework CoreFoundation")
 ```
 
-如果不是这两个平台，这些设置将会被忽略。
+此外，在 Qt 程序中，该接口也可用于链接 Qt 模块，例如：[Qt 静态库程序](/zh/examples/cpp/graphics/qt/#static-library)。以 `Qt` 开头的模块名会由 Qt 规则转换为对应平台的链接库，因此不受平台限制。
 
 ## add_frameworkdirs
 
@@ -5392,7 +5392,9 @@ ${VERSION} -> 1.6.3
 ${VERSION_MAJOR} -> 1
 ${VERSION_MINOR} -> 6
 ${VERSION_ALTER} -> 3
-${VERSION_BUILD} -> set_version("1.6.3", {build = "%Y%m%d%H%M"}) -> 201902031421
+${VERSION_BUILD} -> set_version("1.6.3-rc.1+0") -> 0
+                    set_version("1.6.3-rc.1+0", {build = "%Y%m%d%H%M"}) -> 201902031421
+${VERSION_PRERELEASE} -> set_version("1.6.3-rc.1+0") -> rc.1
 ${PLAT} and ${plat} -> MACOS and macosx
 ${ARCH} and ${arch} -> ARM and arm
 ${MODE} and ${mode} -> DEBUG/RELEASE and debug/release
@@ -5648,7 +5650,7 @@ set_policy(policy: <string>, value: <boolean>)
 
 #### 用法说明
 
-xmake有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但重口难调，不一定满足所有的用户的使用习惯和需求。
+xmake有很多的默认行为，比如：自动检测和映射flags、跨target并行构建等，虽然提供了一定的智能化处理，但众口难调，不一定满足所有的用户的使用习惯和需求。
 
 因此，从v2.3.4开始，xmake提供默认构建策略的修改设置，开放给用户一定程度上的可配置性。
 

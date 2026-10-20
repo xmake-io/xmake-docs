@@ -541,7 +541,7 @@ add_components(components: <string|array>, ...)
 | components | Component name string or array |
 | ... | Variable parameters, can pass multiple component names |
 
-We also support adding custom components to the installation package and selecting and installing them according to the component mode. Currently, only NSIS packages have comparative support effects.
+We also support adding custom components to the installation package and selecting and installing them according to the component mode. Currently, only NSIS and Inno Setup packages have good support for components.
 
 We can define a component domain through `xpack_component()`, and then use `add_components()` to add the specified component and associate it with the package.
 
@@ -571,7 +571,7 @@ Here, we use `batchcmds:rawcmd("nsis", "...")` to add an nsis-specific installat
 
 It will only be enabled when we check LongPath. Of course, we can also configure whether the component is enabled by default through `set_default()`.
 
-Except for the NSIS package, although other packages do not have complete support for components, they will also execute the scripts in the components to implement packaging, but may not be able to display the corresponding component UI and check boxes.
+Except for NSIS and Inno Setup packages, although other packages do not have complete support for components, they will also execute the scripts in the components to implement packaging, but may not be able to display the corresponding component UI and check boxes.
 
 ## set_bindir
 
@@ -603,7 +603,7 @@ xpack("xmake")
      set_bindir("mybin")
 ```
 
-Then the executable file will be installed under `installdir/mybin`. If it is an NSIS package, this path will be automatically set to `%PATH%` after installation.
+Then the executable file will be installed under `installdir/mybin`. For NSIS and Inno Setup packages, this path is added to `%PATH%` after installation.
 
 ## set_libdir
 

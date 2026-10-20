@@ -473,7 +473,7 @@ This is very useful for distributing binary SDKs or deploying to production envi
 
 ### Supported Formats
 
-* **Windows**: `nsis`, `wix`, `zip`, `targz`
+* **Windows**: `nsis`, `inno`, `wix`, `zip`, `targz`
 * **Linux**: `deb`, `rpm`, `srpm`, `runself` (shell self-extracting script), `targz`, `srczip`, `appimage`
 * **MacOS**: `dmg`, `zip`, `targz`, `runself`
 
