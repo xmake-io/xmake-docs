@@ -1,7 +1,7 @@
 export const xmakeRelease = {
-  "tagName": "v3.1.1",
-  "name": "xmake v3.1.1",
-  "url": "https://github.com/xmake-io/xmake/releases/tag/v3.1.1",
-  "publishedAt": "2026-08-27T01:20:22Z",
-  "fetchedAt": "2026-10-16T13:03:53.067Z"
+  "tagName": "v3.1.2",
+  "name": "xmake v3.1.2",
+  "url": "https://github.com/xmake-io/xmake/releases/tag/v3.1.2",
+  "publishedAt": "2026-10-16T14:09:02Z",
+  "fetchedAt": "2026-10-21T09:38:24.058Z"
 }

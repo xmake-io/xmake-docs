@@ -25,6 +25,32 @@ Addon 自 v3.1.1 起支持。建议使用 v3.1.2 或更新版本，其中修复�
 
 所以一个 addon 可以是一整套开发工具包：esp32-devel 携带了交叉工具链、构建规则、烧写逻辑和 blink 模板 —— 装上它，xmake 就变成了 ESP32 的 SDK。
 
+## 同名资源简写
+
+开发版本支持省略与 addon 同名的资源名，完整写法继续兼容：
+
+| 资源 | 简写 | 完整写法 |
+| --- | --- | --- |
+| 工具链 | `@addon/xclang` | `@addon/xclang/xclang` |
+| 规则 | `@addon/demo` | `@addon/demo/demo` |
+| 配置片段 | `@addon/demo` | `@addon/demo/demo` |
+| 模块 | `@addon.demo` | `@addon.demo.demo` |
+
+例如，使用 xclang addon 的同名工具链并绑定 SDK 包：
+
+```lua
+add_addons("xclang")
+add_requires("xclang")
+
+target("hello")
+    set_kind("binary")
+    set_toolchains("@addon/xclang", {packages = "xclang"})
+    add_files("src/main.cpp")
+```
+
+工具链配置（如 `@addon/xclang[sdkdir=/path/to/sdk]`）和包后缀（如 `@addon/xclang@xclang`）仍可使用。
+省略的资源名固定展开为 addon 名；引用其他名称的资源时，继续使用完整路径。
+
 ## 整体架构
 
 ```

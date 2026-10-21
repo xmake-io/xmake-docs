@@ -27,6 +27,56 @@
   outline-offset: 3px;
 }
 
+/* Keep the build illustration in normal flow, including on narrow screens. */
+.VPHomeHero .image {
+  margin: 0;
+  min-width: 0;
+}
+
+.VPHomeHero .image-container {
+  width: 100%;
+  height: auto;
+  transform: none;
+}
+
+.VPHomeHero .image-bg {
+  width: 68%;
+  height: 65%;
+  opacity: 0;
+}
+
+@media (min-width: 960px) {
+  .VPHomeHero .container {
+    align-items: center;
+    gap: 24px;
+  }
+
+  .VPHomeHero.has-image .main {
+    width: 52%;
+    flex-shrink: 1;
+  }
+
+  .VPHomeHero .image {
+    width: 48%;
+  }
+}
+
+@media (max-width: 959px) {
+  .VPHomeHero .image {
+    order: 3;
+    width: min(100%, 440px);
+    align-self: center;
+    margin-top: 32px;
+  }
+
+  .VPHomeHero .xmake-hero-name,
+  .VPHomeHero .text,
+  .VPHomeHero .tagline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 /* button */
 :root {
   --vp-button-brand-border: transparent;

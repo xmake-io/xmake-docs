@@ -7,6 +7,7 @@ import VPCarbonAds from './components/VPCarbonAds.vue'
 import SponsorButton from './components/SponsorButton.vue'
 import FileExplorer from './components/FileExplorer.vue'
 import HomeHeroInfo from './components/HomeHeroInfo.vue'
+import HomeHeroArtwork from './components/HomeHeroArtwork.vue'
 import { useData } from 'vitepress'
 import { data as codes } from '../data/codes-data.js'
 import './styles.css'
@@ -67,6 +68,7 @@ export default {
 
     if (isHomePage.value) {
       slots['home-hero-info'] = () => h(HomeHeroInfo)
+      slots['home-hero-image'] = () => h(HomeHeroArtwork)
     }
 
     return h(Theme.Layout, { class: { 'is-post': isPost.value } }, slots)

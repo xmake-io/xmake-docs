@@ -30,6 +30,34 @@ So one addon can be a complete development kit: the esp32-devel addon carries th
 toolchain, the build rules, the flashing logic and a blink template — installing it turns
 xmake into an ESP32 SDK.
 
+## Same-name payload shorthand
+
+Development builds allow omitting a payload name that matches the addon name.
+The full form remains supported:
+
+| Payload | Shorthand | Full form |
+| --- | --- | --- |
+| Toolchain | `@addon/xclang` | `@addon/xclang/xclang` |
+| Rule | `@addon/demo` | `@addon/demo/demo` |
+| Include | `@addon/demo` | `@addon/demo/demo` |
+| Module | `@addon.demo` | `@addon.demo.demo` |
+
+For example, select the xclang addon's same-name toolchain and bind its SDK package:
+
+```lua
+add_addons("xclang")
+add_requires("xclang")
+
+target("hello")
+    set_kind("binary")
+    set_toolchains("@addon/xclang", {packages = "xclang"})
+    add_files("src/main.cpp")
+```
+
+Toolchain configurations such as `@addon/xclang[sdkdir=/path/to/sdk]` and package
+suffixes such as `@addon/xclang@xclang` still work. An omitted payload name always
+expands to the addon name. Use the full path to reference a differently named payload.
+
 ## Architecture
 
 ```
