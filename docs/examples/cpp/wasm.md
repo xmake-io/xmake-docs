@@ -1,3 +1,4 @@
+# Wasm Programs with Xmake
 
 All c/c++ programs can be compiled to Wasm without any xmake.lua configuration changes, just switch to the wasm compilation platform and compile.
 

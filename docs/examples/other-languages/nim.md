@@ -1,3 +1,5 @@
+# Nim Programs with Xmake
+
 After v2.5.9, we have added support for the Nimlang project. For related issues, see: [#1756](https://github.com/xmake-io/xmake/issues/1756)
 
 ## Create an empty project

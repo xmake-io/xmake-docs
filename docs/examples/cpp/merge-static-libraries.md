@@ -1,3 +1,4 @@
+# Merge Static Libraries with Xmake
 
 ## Automatically merge target libraries
 

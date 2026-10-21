@@ -11,7 +11,7 @@ import llmstxt from 'vitepress-plugin-llms'
 import { addTitleFromFrontmatter } from './plugins/add-title'
 import enConfig from '../config'
 import zhConfig from '../zh/config'
-import { seoHead, mergeSeoHead, isIndexable } from './seo.mjs'
+import { seoHead, mergeSeoHead, isIndexable, descriptionPlugin } from './seo.mjs'
 
 export default defineConfig({
   title: "Xmake",
@@ -19,6 +19,7 @@ export default defineConfig({
 
   markdown: {
     config(md) {
+      md.use(descriptionPlugin)
       // Add title from frontmatter plugin FIRST, before groupIconMdPlugin
       // Only process files in posts directory
       const originalParse = md.parse.bind(md)
@@ -148,7 +149,8 @@ export default defineConfig({
       pageData.relativePath
     )
     const pageTitle = pageData.title || site.title
-    const title = pageTitle === site.title ? site.title : `${pageTitle} | ${site.title}`
+    const title = pageData.frontmatter.titleTemplate === false || pageTitle === site.title
+      ? pageTitle : `${pageTitle} | ${site.title}`
     pageData.frontmatter.head = mergeSeoHead(
       (pageData.frontmatter.head ?? []) as HeadConfig[],
       seoHead({

@@ -1,3 +1,4 @@
+# Xmake Vala 程序示例
 
 2.5.7 之后开始支持构建 Vala 程序，我们需要应用 `add_rules("vala")` 规则，并且 glib 包是必须的。
 

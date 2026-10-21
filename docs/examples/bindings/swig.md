@@ -1,3 +1,5 @@
+# Swig Modules with Xmake
+
 Version 2.5.8 supports the construction of Swig modules. We provide `swig.c` and `swig.cpp` rules, which respectively support the generation of c/c++ module interface code, and cooperate with xmake's package management system to realize fully automated modules and dependent packages. Integration.
 
 Related issues: [#1622](https://github.com/xmake-io/xmake/issues/1622)

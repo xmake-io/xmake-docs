@@ -41,3 +41,38 @@ export function mergeSeoHead(existing, generated) {
   const managed = new Set(generated.map(key))
   return [...existing.filter(item => !managed.has(key(item))), ...generated]
 }
+
+// Reuse MarkdownIt's parsed prose; code blocks, HTML components, image alt text,
+// tables and navigation lists are not suitable search descriptions.
+export function proseDescription(tokens, isZh = false) {
+  const paragraphs = []
+  for (let i = 0; i < tokens.length - 1; i++) {
+    if (tokens[i].type === 'heading_open' && paragraphs.length) break
+    if (tokens[i].type !== 'paragraph_open' || tokens[i].level !== 0) continue
+    const inline = tokens[i + 1]
+    if (inline.type !== 'inline') continue
+    const text = (inline.children ?? []).map(token =>
+      ['text', 'code_inline'].includes(token.type) ? token.content :
+      ['softbreak', 'hardbreak'].includes(token.type) ? ' ' : ''
+    ).join('').replace(/\s+/g, ' ').trim()
+    if (text.length < 25 || text.includes('{{')) continue
+    paragraphs.push(text)
+    if (paragraphs.join(' ').length >= (isZh ? 80 : 140) || paragraphs.length === 2) break
+  }
+  const text = paragraphs.join(' ')
+  const limit = isZh ? 110 : 190
+  if (text.length <= limit) return text
+  const boundary = !isZh ? text.lastIndexOf(' ', limit) : limit
+  return text.slice(0, boundary > limit / 2 ? boundary : limit).replace(/[\s,;，；]+$/, '') + '…'
+}
+
+export function descriptionPlugin(md) {
+  md.core.ruler.push('xmake-description', state => {
+    const frontmatter = state.env.frontmatter
+    if (!frontmatter || Object.hasOwn(frontmatter, 'description')) return
+    const relativePath = state.env.relativePath || ''
+    if (!/^(zh\/)?(guide|api|examples|posts)\//.test(relativePath)) return
+    const description = proseDescription(state.tokens, relativePath.startsWith('zh/'))
+    if (description) frontmatter.description = description
+  })
+}

@@ -1,3 +1,5 @@
+# Vala Programs with Xmake
+
 After 2.5.7 to support the construction of Vala programs, we need to apply the `add_rules("vala")` rule, and the glib package is necessary.
 
 related issues: [#1618](https://github.com/xmake-io/xmake/issues/1618)

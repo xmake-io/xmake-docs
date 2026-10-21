@@ -1,3 +1,4 @@
+# Pascal Programs with Xmake
 
 After 2.5.8, we can support the construction of Pascal programs. For related issues, see: [#388](https://github.com/xmake-io/xmake/issues/388)
 

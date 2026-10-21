@@ -1,3 +1,4 @@
+# Xmake Node.js 模块示例
 
 参考[例子](https://github.com/tonyfettes/coc-rime/blob/master/xmake.lua)。
 

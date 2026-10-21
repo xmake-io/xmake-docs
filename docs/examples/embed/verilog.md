@@ -1,3 +1,5 @@
+# Verilog Programs with Xmake
+
 ## iVerilog Simulator
 
 Through `add_requires("iverilog")` configuration, we can automatically pull the iverilog toolchain package, and then use `set_toolchains("@iverilog")` to automatically bind the toolchain to compile the project.

@@ -1,3 +1,5 @@
+# MFC Programs with Xmake
+
 ## MFC Static Library
 
 <FileExplorer rootFilesDir="examples/mfc/static_library" />

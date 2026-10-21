@@ -1,3 +1,4 @@
+# Xmake Pascal 程序示例
 
 2.5.8 之后，我们能够支持构建 Pascal 程序，相关 issues 见：[#388](https://github.com/xmake-io/xmake/issues/388)
 

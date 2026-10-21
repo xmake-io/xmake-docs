@@ -1,3 +1,4 @@
+# Fortran Programs with Xmake
 
 After v2.3.6, the gfortran compiler is supported to compile fortran projects. We can quickly create an empty project based on fortran by using the following command:
 

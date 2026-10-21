@@ -1,3 +1,4 @@
+# Xmake Nim 程序示例
 
 v2.5.9 之后，我们新增了对 Nimlang 项目的支持，相关 issues 见：[#1756](https://github.com/xmake-io/xmake/issues/1756)
 

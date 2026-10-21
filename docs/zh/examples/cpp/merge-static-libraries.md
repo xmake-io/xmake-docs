@@ -1,3 +1,4 @@
+# Xmake 合并静态库示例
 
 ## 自动合并 target 库 {#auto-merge-target-libs}
 
