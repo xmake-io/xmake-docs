@@ -4274,7 +4274,7 @@ target("test")
     add_ldflags("-framework Foundation", "-framework CoreFoundation")
 ```
 
-Additionally, Qt programs can use this interface to link Qt modules, for example: [Qt Static Library](/examples/cpp/graphics/qt/#static-library). Module names starting with `Qt` are translated by the Qt rules into the corresponding platform libraries, so they are not subject to the platform restriction below.
+Additionally, Qt programs can use this interface to link Qt modules, for example: [Qt Static Library](/examples/cpp/graphics/qt#static-library). Module names starting with `Qt` are translated by the Qt rules into the corresponding platform libraries, so they are not subject to the platform restriction below.
 
 ## add_frameworkdirs
 

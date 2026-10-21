@@ -4355,7 +4355,7 @@ target("test")
     add_ldflags("-framework Foundation", "-framework CoreFoundation")
 ```
 
-此外，在 Qt 程序中，该接口也可用于链接 Qt 模块，例如：[Qt 静态库程序](/zh/examples/cpp/graphics/qt/#static-library)。以 `Qt` 开头的模块名会由 Qt 规则转换为对应平台的链接库，因此不受平台限制。
+此外，在 Qt 程序中，该接口也可用于链接 Qt 模块，例如：[Qt 静态库程序](/zh/examples/cpp/graphics/qt#static-library)。以 `Qt` 开头的模块名会由 Qt 规则转换为对应平台的链接库，因此不受平台限制。
 
 ## add_frameworkdirs
 
