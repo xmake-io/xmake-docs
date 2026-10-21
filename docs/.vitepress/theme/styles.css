@@ -22,6 +22,14 @@
   }
 }
 
+.VPHomeHero .tagline { font-size: 16px; }
+@media (min-width: 640px) {
+  .VPHomeHero .tagline { font-size: 18px; }
+}
+@media (min-width: 960px) {
+  .VPHomeHero .tagline { font-size: 22px; }
+}
+
 .VPHomeHero .xmake-release-badge:focus-visible {
   outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 3px;
@@ -80,6 +88,34 @@
 /* On phones, keep the introduction and actions ahead of decorative artwork. */
 @media (max-width: 639px) {
   .VPHomeHero .image { display: none; }
+}
+
+/* Compact home features: icon and heading share one row. */
+.VPHome .VPFeature .box {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  align-content: start;
+  column-gap: 10px;
+  row-gap: 8px;
+  padding: 20px;
+}
+.VPHome .VPFeature .icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 0;
+  font-size: 20px;
+}
+.VPHome .VPFeature .title { align-self: center; }
+.VPHome .VPFeature .details {
+  grid-column: 1 / -1;
+  padding-top: 0;
+  line-height: 22px;
+}
+@media (max-width: 639px) {
+  .VPHome .VPFeature .box { padding: 16px; }
+  .VPHome .VPFeatures .items { margin: -6px; }
+  .VPHome .VPFeatures .item { padding: 6px; }
 }
 
 /* button */

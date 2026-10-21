@@ -18,13 +18,13 @@ hero:
 
 features:
   - icon: 🚀
-    title: Simple and Fast
-    details: Features a concise Lua syntax that is accessible even without prior experience. Delivers high-performance builds with built-in caching, parallel compilation, and optimized dependency analysis.
+    title: Simple & Fast
+    details: Configure projects with concise Lua syntax, even without prior Lua experience. Built-in caching, parallel compilation, and dependency analysis keep builds fast.
   - icon: 💪
-    title: Powerful
-    details: Offers extensive flexibility through custom rules, plugins, and modules. Supports remote and distributed builds, mixed-language projects, and automatic project generation for major IDEs.
+    title: Flexible Builds
+    details: Extend builds with custom rules, plugins, and modules. Supports remote and distributed compilation, mixed-language projects, and project generation for major IDEs.
   - icon: 📦
-    title: Package Management
-    details: Streamlines dependency management by automatically fetching and integrating C/C++ libraries and toolchains. Supports private repositories, cloud builds, and seamless integration with Conan and Vcpkg.
+    title: Built-in Packages
+    details: Automatically fetch and integrate C/C++ libraries and toolchains. Use private repositories and prebuilt packages, or integrate with Conan and Vcpkg.
 ---
 
