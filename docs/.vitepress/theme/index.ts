@@ -5,6 +5,9 @@ import AIAssistant from './components/AIAssistant.vue'
 import WWAds from './components/WWAds.vue'
 import VPCarbonAds from './components/VPCarbonAds.vue'
 import SponsorButton from './components/SponsorButton.vue'
+import SponsorChannels from './components/SponsorChannels.vue'
+import SponsorPrompt from './components/SponsorPrompt.vue'
+import HomeSponsors from './components/HomeSponsors.vue'
 import FileExplorer from './components/FileExplorer.vue'
 import HomeHeroInfo from './components/HomeHeroInfo.vue'
 import HomeHeroArtwork from './components/HomeHeroArtwork.vue'
@@ -58,6 +61,7 @@ export default {
 
     const slots: Record<string, () => ReturnType<typeof h> | null> = {
       'doc-content-before': () => h(VPDoc),
+      'doc-footer-before': () => /^(zh\/)?(guide|api|examples|posts)\//.test(page.value.relativePath) ? h(SponsorPrompt) : null,
       'doc-after': () => {
         if (isZh.value) {
           return h('div', { class: 'mobile-only-ads' }, h(WWAds))
@@ -69,6 +73,10 @@ export default {
     if (isHomePage.value) {
       slots['home-hero-info'] = () => h(HomeHeroInfo)
       slots['home-hero-image'] = () => h(HomeHeroArtwork)
+      slots['home-features-after'] = () => h('div', { class: 'home-sponsor-sections' }, [
+        h(HomeSponsors, { tier: 'platinum' }),
+        h(HomeSponsors, { tier: 'gold' })
+      ])
     }
 
     return h(Theme.Layout, { class: { 'is-post': isPost.value } }, slots)
@@ -77,6 +85,7 @@ export default {
     // Register global components
     app.component('AIAssistant', AIAssistant)
     app.component('SponsorButton', SponsorButton)
+    app.component('SponsorChannels', SponsorChannels)
     app.component('FileExplorer', FileExplorer)
     
     // Provide codes data globally

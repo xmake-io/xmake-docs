@@ -1,31 +1,54 @@
-Xmake 是一个完全由社区驱动的独立开源项目，其持续的开发与维护离不开您的支持。
+---
+title: 支持 Xmake
+description: 赞助 Xmake 的持续维护、跨平台构建和包生态发展。
+---
 
-您的赞助将帮助项目持续发展，确保其保持稳定、功能丰富，并对所有人免费开放。无论您是个人开发者还是从中受益的企业，您的每一份支持都至关重要。
+# 支持 Xmake
+
+如果 Xmake 为你节省了构建和维护工程的时间，欢迎支持它的持续发展。Xmake 是由社区驱动的独立开源项目，每一份赞助都会帮助我们投入更多时间维护项目。
+
+你的支持将用于 **构建与工具链适配、包生态维护、问题修复和文档改进**。
 
 ## 以个人名义赞助 {#sponsoring-as-an-individual}
 
-如果您是个人用户，并且享受到了 Xmake 带来的生产力提升，请考虑捐赠以示感谢——就当是请我们喝杯咖啡。在我们的[团队页面](/zh/about/team)上，您可以找到每位成员的个人资料及其“赞助”按钮。
+请维护者喝杯咖啡，或按你自己的节奏支持项目。金额自选，感谢每一份心意。
 
-您也可以尝试说服您的雇主以企业的名义赞助 Xmake。虽然这可能并不容易，但企业赞助通常对开源项目的可持续性发展有着比个人捐赠更大的影响。如果您能促成此事，这对我们的帮助将是巨大的。
+<SponsorChannels />
+
+习惯使用海外平台？也可以通过 [GitHub Sponsors](https://github.com/sponsors/waruqi)、[OpenCollective](https://opencollective.com/xmake) 或 [PayPal](https://paypal.me/tboox/5) 赞助。
 
 ## 以企业名义赞助 {#sponsoring-as-a-business}
 
-Xmake 的赞助商通过提供资金支持，确保了项目的长期可持续性发展。这部分资金主要用于维护项目运行、开发新功能以及改进文档。
+如果你的团队正在使用 Xmake，企业赞助可以帮助项目持续维护你们依赖的构建工具与包生态。
 
-作为赞助的回报，我们会在项目首页、文档以及 README 中展示贵公司的 Logo 和链接，这不仅能够提升贵公司在开发者社区中的品牌曝光度，还表明了贵公司对开源软件和开发者生态的支持。
+### 白金赞助 · 500 美元 / 月 {#platinum-sponsor}
 
-如果您有兴趣成为企业赞助商，或了解更多专属权益，欢迎随时[联系我们](/zh/about/author#contact)。
+- **首页优先展示**：在三块功能介绍下方、黄金赞助商上方展示企业 Logo，并链接到企业官网。
+- **README 展示**：在 Xmake 项目 README 中展示企业 Logo 和官网链接。
+- 同时展示于中文和英文首页，展示周期与赞助周期一致。
+
+[成为白金赞助商 →](mailto:waruqi@gmail.com?subject=Xmake%20白金赞助%20USD500%2F月)
+
+### 黄金赞助 · 200 美元 / 月 {#gold-sponsor}
+
+- **首页下方展示**：在白金赞助商下方的黄金赞助商区域展示企业 Logo，并链接到企业官网。
+- **README 展示**：在 Xmake 项目 README 中展示企业 Logo 和官网链接。
+- 同时展示于中文和英文首页，展示周期与赞助周期一致。
+
+[成为黄金赞助商 →](mailto:waruqi@gmail.com?subject=Xmake%20黄金赞助%20USD200%2F月)
+
+请邮件发送企业名称、官网链接、Logo 和所选档位至 [waruqi@gmail.com](mailto:waruqi@gmail.com)。确认支付方式和赞助起止时间后，我们会安排首页及 README 展示。以上价格均以美元计价。
 
 ## 支持者 {#supporters}
 
 此列表会不定期更新，并非实时数据。如有遗漏，请联系我们更新。
 
-另外，如果您每月赞助超过 200 美金，可以邮件联系我们，以便在 Xmake 项目 README.md 中展示您的 Logo 和链接。
+白金与黄金赞助均包含 Xmake 项目 README 的 Logo 和链接展示，详情见上方企业赞助档位。
 
 ### OpenCollective
 
-<a href="https://opencollective.com/xmake#sponsors" target="_blank"><img src="https://opencollective.com/xmake/sponsors.svg?width=890"></a>
-<a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
+<a href="https://opencollective.com/xmake#sponsors" target="_blank" rel="noopener noreferrer"><img alt="OpenCollective sponsors" loading="lazy" src="https://opencollective.com/xmake/sponsors.svg?width=890"></a>
+<a href="https://opencollective.com/xmake#backers" target="_blank" rel="noopener noreferrer"><img alt="OpenCollective backers" loading="lazy" src="https://opencollective.com/xmake/backers.svg?width=890"></a>
 
 ### GitHub Sponsor
 

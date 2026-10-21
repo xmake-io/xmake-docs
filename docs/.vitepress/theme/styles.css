@@ -27,7 +27,7 @@
   outline-offset: 3px;
 }
 
-/* Keep the build illustration in normal flow, including on narrow screens. */
+/* Keep the desktop illustration in normal flow. */
 .VPHomeHero .image {
   margin: 0;
   min-width: 0;
@@ -64,9 +64,9 @@
 @media (max-width: 959px) {
   .VPHomeHero .image {
     order: 3;
-    width: min(100%, 440px);
+    width: min(100%, 280px);
     align-self: center;
-    margin-top: 32px;
+    margin-top: 12px;
   }
 
   .VPHomeHero .xmake-hero-name,
@@ -75,6 +75,11 @@
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+/* On phones, keep the introduction and actions ahead of decorative artwork. */
+@media (max-width: 639px) {
+  .VPHomeHero .image { display: none; }
 }
 
 /* button */

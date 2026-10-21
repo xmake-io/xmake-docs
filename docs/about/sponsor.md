@@ -1,31 +1,52 @@
-Xmake is an independent, community-driven open-source project. Its ongoing development and maintenance rely on your support.
+---
+title: Support Xmake
+description: Support ongoing Xmake maintenance, cross-platform builds, and its package ecosystem.
+---
 
-Your sponsorship helps sustain the project, ensuring it remains robust, feature-rich, and free for everyone. Whether you're an individual user or a company benefiting from Xmake, your contribution makes a difference.
+# Support Xmake
+
+If Xmake saves you time building and maintaining your projects, help keep it moving forward. Xmake is an independent, community-driven open-source project. Every contribution gives us more time to maintain it.
+
+Your support helps fund **build and toolchain compatibility, package maintenance, bug fixes, and better documentation**.
 
 ## Sponsoring as an Individual
 
-If you are an individual user and have enjoyed the productivity of using Xmake, please consider donating as a sign of appreciation—like buying us a coffee once in a while. You can find each team member's profile and their "Sponsor" button on our [Team Page](/about/team).
+Buy the maintainers a coffee or support the project regularly. Choose the channel and contribution that work for you.
 
-You can also try to convince your employer to sponsor Xmake as a business. This may not be easy, but business sponsorships typically have a much larger impact on the sustainability of open source projects than individual donations, so if you can manage to do it, you will help us even more.
+<SponsorChannels />
 
 ## Sponsoring as a Business
 
-Sponsoring Xmake as a business ensures the long-term sustainability of the project. Your funds help maintain the project, develop new features, and improve documentation.
+If your team relies on Xmake, corporate sponsorship helps sustain the build tools and package ecosystem you depend on.
 
-In return, we will display your company's logo and link on our homepage, documentation, and README. This not only increases your brand exposure within the developer community but also demonstrates your support for open source software and the developer ecosystem.
+### Platinum sponsorship · US$500 / month {#platinum-sponsor}
 
-If you are interested in becoming a corporate sponsor or would like to learn more about exclusive benefits, please feel free to [contact us](/about/author#contact).
+- **Priority homepage placement**: your company logo and website link directly after the three feature cards, above gold sponsors.
+- **README placement**: your company logo and website link in the Xmake project README.
+- Included on both English and Chinese homepages for the duration of your sponsorship.
+
+[Become a platinum sponsor →](mailto:waruqi@gmail.com?subject=Xmake%20platinum%20sponsorship%20USD500%2Fmonth)
+
+### Gold sponsorship · US$200 / month {#gold-sponsor}
+
+- **Lower homepage placement**: your company logo and website link in the gold sponsors section below platinum sponsors.
+- **README placement**: your company logo and website link in the Xmake project README.
+- Included on both English and Chinese homepages for the duration of your sponsorship.
+
+[Become a gold sponsor →](mailto:waruqi@gmail.com?subject=Xmake%20gold%20sponsorship%20USD200%2Fmonth)
+
+Email [waruqi@gmail.com](mailto:waruqi@gmail.com) with your company name, website, logo, and chosen tier. We will confirm payment arrangements and sponsorship dates, then arrange homepage and README placement. All prices are in US dollars.
 
 ## Supporters
 
 This list is updated periodically and is not real-time. If there are any omissions, please contact us for updates.
 
-Additionally, if your monthly sponsorship exceeds $200, please contact us via email to display your logo and link in the Xmake project README.
+Both platinum and gold sponsorships include logo and website placement in the Xmake project README. See the business sponsorship tiers above.
 
 ### OpenCollective
 
-<a href="https://opencollective.com/xmake#sponsors" target="_blank"><img src="https://opencollective.com/xmake/sponsors.svg?width=890"></a>
-<a href="https://opencollective.com/xmake#backers" target="_blank"><img src="https://opencollective.com/xmake/backers.svg?width=890"></a>
+<a href="https://opencollective.com/xmake#sponsors" target="_blank" rel="noopener noreferrer"><img alt="OpenCollective sponsors" loading="lazy" src="https://opencollective.com/xmake/sponsors.svg?width=890"></a>
+<a href="https://opencollective.com/xmake#backers" target="_blank" rel="noopener noreferrer"><img alt="OpenCollective backers" loading="lazy" src="https://opencollective.com/xmake/backers.svg?width=890"></a>
 
 ### GitHub Sponsor
 
