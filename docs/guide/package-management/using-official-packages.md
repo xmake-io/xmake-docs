@@ -1,4 +1,6 @@
 ---
+title: "Use C/C++ Packages with Xmake: add_requires and add_packages"
+description: "Declare C/C++ dependencies with add_requires, link them to targets with add_packages, and configure versions and package options."
 outline: deep
 ---
 

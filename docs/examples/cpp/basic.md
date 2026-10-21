@@ -67,3 +67,8 @@ If we want to create c language program. We can add `-l c` argument. for example
 ```sh
 xmake create -l c shared test
 ```
+
+
+## Related tutorial
+
+[Build a C++ static library and executable](/guide/best-practices/cpp-library-project) with a complete example, shared headers, and troubleshooting steps.

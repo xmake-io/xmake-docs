@@ -1,5 +1,8 @@
 ---
 layout: home
+title: "Xmake：跨平台 C/C++ 构建工具与包管理器"
+titleTemplate: false
+description: 使用简洁的 Lua 配置构建 C/C++ 工程，自动管理依赖，支持构建缓存、并行编译和跨平台工具链。查看 Xmake 安装指南、API 文档与工程示例。
 
 hero:
   name: "Xmake"

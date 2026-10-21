@@ -66,3 +66,8 @@ xmake create -t shared test
 ```sh
 xmake create -l c -t shared test
 ```
+
+
+## 相关实战
+
+通过[构建 C++ 静态库与可执行程序](/zh/guide/best-practices/cpp-library-project)的完整示例，了解目标依赖、公共头文件与常见问题排查。

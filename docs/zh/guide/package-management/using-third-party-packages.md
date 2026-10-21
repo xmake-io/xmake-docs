@@ -1,3 +1,8 @@
+---
+title: "Xmake 集成 Conan、Vcpkg 与 Homebrew 依赖"
+description: "在 Xmake 工程中使用 Conan、Vcpkg 和 Homebrew 提供的 C/C++ 依赖，查看包声明、配置与集成示例。"
+---
+
 # 使用第三方依赖包 {#using-third-party-packages}
 
 2.2.5 版本之后，xmake 支持对第三方包管理器中的依赖库进行安装，例如：conan、brew、vcpkg 等。

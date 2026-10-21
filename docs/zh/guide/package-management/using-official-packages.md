@@ -1,4 +1,6 @@
 ---
+title: "Xmake 依赖管理：add_requires 与 add_packages 用法"
+description: "用 add_requires 声明 C/C++ 依赖，通过 add_packages 关联到构建目标，并配置依赖版本与选项。"
 outline: deep
 ---
 

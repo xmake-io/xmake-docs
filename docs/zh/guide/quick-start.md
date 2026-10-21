@@ -1,4 +1,6 @@
 ---
+title: "Xmake 快速入门：安装、构建与运行 C++ 工程"
+description: "安装 Xmake，创建 C/C++ 工程，配置编译器，并在 Windows、Linux 或 macOS 上完成第一次构建与运行。"
 outline: deep
 ---
 
@@ -366,3 +368,8 @@ $ xmake run -d hello
 - [C/C++ 基础示例](/zh/examples/cpp/basic) - 常见场景的示例代码
 - [常见问题](/zh/guide/best-practices/faq) - 常见问题解答
 
+
+
+## 相关实战
+
+通过[构建 C++ 静态库与可执行程序](/zh/guide/best-practices/cpp-library-project)的完整示例，了解目标依赖、公共头文件与常见问题排查。

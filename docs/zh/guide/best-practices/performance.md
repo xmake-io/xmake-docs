@@ -1,3 +1,8 @@
+---
+title: "Xmake 编译加速：并行构建、缓存与 Unity Build"
+description: "了解 Xmake 并行编译、构建缓存、Unity Build 和分布式编译的使用场景，为 C/C++ 工程选择合适的加速方式。"
+---
+
 # 性能优化 {#performance}
 
 ## 并行编译

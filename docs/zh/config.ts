@@ -356,6 +356,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       text: '最佳实践',
       collapsed: false,
       items: [
+        { text: 'C++ 静态库实战', link: 'best-practices/cpp-library-project' },
         { text: '常见问题', link: 'best-practices/faq' },
         { text: '配置优化', link: 'best-practices/configuration-optimization' },
         { text: '性能优化', link: 'best-practices/performance' },

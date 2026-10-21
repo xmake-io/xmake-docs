@@ -1,3 +1,8 @@
+---
+title: "Xmake Build Cache: Local and Remote Compilation Caching"
+description: "Configure local and shared remote compilation caches in Xmake, including cache services, client configuration, and troubleshooting options."
+---
+
 # Build Cache Acceleration
 
 Xmake supports various methods of caching in the build process, which can speed up your builds.

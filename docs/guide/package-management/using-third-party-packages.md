@@ -1,3 +1,8 @@
+---
+title: "Use Conan, Vcpkg and Homebrew Packages with Xmake"
+description: "Integrate third-party C/C++ packages from Conan, Vcpkg, and Homebrew into Xmake projects, with dependency configuration examples."
+---
+
 # Using third-party packages
 
 After version 2.2.5, xmake supports dependency libraries in third-party package managers, such as: conan, brew, vcpkg, clib, etc.

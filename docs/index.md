@@ -1,5 +1,8 @@
 ---
 layout: home
+title: "Xmake: Cross-Platform C/C++ Build Tool and Package Manager"
+titleTemplate: false
+description: Build C/C++ projects with Lua configuration, automatic dependency management, caching, and parallel compilation. Get started with Xmake on Windows, Linux, and macOS.
 
 hero:
   name: "Xmake"

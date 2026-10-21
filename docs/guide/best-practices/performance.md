@@ -1,3 +1,8 @@
+---
+title: "Speed Up Xmake Builds: Parallel Compilation, Cache and Unity Build"
+description: "Choose parallel compilation, build caching, Unity Build, or distributed compilation to reduce C/C++ build times with Xmake."
+---
+
 # Performance Optimization {#performance}
 
 ## Parallel Compilation

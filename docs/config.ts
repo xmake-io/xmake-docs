@@ -275,6 +275,7 @@ function guideSidebar(): DefaultTheme.SidebarItem[] {
       text: 'Best Practices',
       collapsed: false,
       items: [
+        { text: 'C++ Library Tutorial', link: 'best-practices/cpp-library-project' },
         { text: 'FAQ', link: 'best-practices/faq' },
         { text: 'Configuration Optimization', link: 'best-practices/configuration-optimization' },
         { text: 'Performance', link: 'best-practices/performance' },

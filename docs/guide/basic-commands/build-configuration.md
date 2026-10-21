@@ -1,4 +1,6 @@
 ---
+title: "Xmake Build Configuration: Platforms, Modes and Compilers"
+description: "Configure Xmake build modes, platforms, architectures, and compilers with xmake f, including platform-specific setup examples."
 outline: deep
 ---
 

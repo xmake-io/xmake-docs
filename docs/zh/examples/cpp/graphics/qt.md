@@ -1,3 +1,10 @@
+---
+title: "Xmake 构建 Qt 工程：Widgets、Quick 与库示例"
+description: "使用 Xmake 创建与配置 Qt 应用和库，了解 Qt SDK 探测、工程模板，并查看 Widgets、Quick 和静态库等完整源码示例。"
+---
+
+# 用 Xmake 构建 Qt 工程
+
 创建一个空工程：
 
 ```sh

@@ -160,3 +160,8 @@ local-repo/
 - 包依赖 API：[包依赖 API](/zh/api/description/package-dependencies)
 - 包实例接口：[package 实例 API](/zh/api/scripts/package-instance)
 - 包管理与查找：可使用 [xrepo 命令行工具](/zh/guide/package-management/xrepo-cli) 进行包的搜索、安装、卸载等操作。
+
+
+## 相关实战
+
+通过[构建 C++ 静态库与可执行程序](/zh/guide/best-practices/cpp-library-project)的完整示例，了解目标依赖、公共头文件与常见问题排查。

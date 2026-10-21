@@ -11,6 +11,7 @@ import llmstxt from 'vitepress-plugin-llms'
 import { addTitleFromFrontmatter } from './plugins/add-title'
 import enConfig from '../config'
 import zhConfig from '../zh/config'
+import { seoHead, mergeSeoHead, isIndexable } from './seo.mjs'
 
 export default defineConfig({
   title: "Xmake",
@@ -48,7 +49,7 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://xmake.io',
     transformItems(items) {
-      return items.filter((item) => !item.url.includes('migration'))
+      return items.filter((item) => isIndexable(item.url))
     }
   },
 
@@ -64,7 +65,6 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#3c8772' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: 'Xmake' }],
-    ['meta', { property: 'og:url', content: 'https://xmake.io/' }],
     ['meta', { name: 'algolia-site-verification', content: '47A51984C60C423B' }]
   ],
 
@@ -147,10 +147,18 @@ export default defineConfig({
       ctx.siteConfig.site,
       pageData.relativePath
     )
-    const title = `${pageData.title || site.title} | ${pageData.description || site.description}`
-    ;((pageData.frontmatter.head ??= []) as HeadConfig[]).push(
-      ['meta', { property: 'og:locale', content: site.lang }],
-      ['meta', { property: 'og:title', content: title }]
-    )
+    const pageTitle = pageData.title || site.title
+    const title = pageTitle === site.title ? site.title : `${pageTitle} | ${site.title}`
+    pageData.frontmatter.head = mergeSeoHead(
+      (pageData.frontmatter.head ?? []) as HeadConfig[],
+      seoHead({
+        relativePath: pageData.relativePath,
+        pages: ctx.siteConfig.pages,
+        cleanUrls: ctx.siteConfig.cleanUrls,
+        title,
+        description: pageData.description || site.description,
+        lang: site.lang
+      })
+    ) as HeadConfig[]
   }
 })

@@ -1,4 +1,6 @@
 ---
+title: "Xmake 交叉编译：SDK、工具链与目标架构配置"
+description: "使用 Xmake 配置交叉编译 SDK、编译器前缀和目标架构，结合命令与工具链示例构建其他平台的程序。"
 outline: deep
 ---
 

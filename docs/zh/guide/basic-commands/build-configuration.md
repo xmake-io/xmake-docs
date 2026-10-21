@@ -1,4 +1,6 @@
 ---
+title: "Xmake 构建配置：平台、编译模式与编译器"
+description: "通过 xmake f 配置构建模式、目标平台、架构和编译器，查看各平台的配置命令与使用示例。"
 outline: deep
 ---
 

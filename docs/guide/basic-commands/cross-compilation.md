@@ -1,4 +1,6 @@
 ---
+title: "Cross-Compile with Xmake: SDKs and Toolchains"
+description: "Configure cross-compilation SDKs, compiler prefixes, and target architectures in Xmake, with commands and toolchain examples."
 outline: deep
 ---
 

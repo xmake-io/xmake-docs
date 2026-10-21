@@ -1,3 +1,10 @@
+---
+title: "Build Qt Projects with Xmake: Widgets, Quick and Libraries"
+description: "Create and configure Qt applications and libraries with Xmake, including Qt SDK detection, project templates, and runnable source examples."
+---
+
+# Build Qt Projects with Xmake
+
 Create an empty project:
 
 ```sh

@@ -1,4 +1,6 @@
 ---
+title: "Xmake Quick Start: Install, Build and Run C++"
+description: "Install Xmake, create a C/C++ project, configure your compiler, and build and run your first program on Windows, Linux, or macOS."
 outline: deep
 ---
 
@@ -367,3 +369,8 @@ Congratulations on completing the basic introduction to xmake! Here are some rec
 - [C/C++ Basic Examples](/examples/cpp/basic) - Example code for common scenarios
 - [FAQ](/guide/best-practices/faq) - Frequently asked questions
 
+
+
+## Related tutorial
+
+[Build a C++ static library and executable](/guide/best-practices/cpp-library-project) with a complete example, shared headers, and troubleshooting steps.

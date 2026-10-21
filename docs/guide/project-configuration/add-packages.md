@@ -160,3 +160,8 @@ local-repo/
 - Package dependency API: [Package Dependency API](/api/description/package-dependencies)
 - Package instance APIs: [package instance API](/api/scripts/package-instance)
 - Package management and search: You can also use the [xrepo CLI tool](/guide/package-management/xrepo-cli) to search, install, and uninstall packages.
+
+
+## Related tutorial
+
+[Build a C++ static library and executable](/guide/best-practices/cpp-library-project) with a complete example, shared headers, and troubleshooting steps.
