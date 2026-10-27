@@ -56,7 +56,6 @@ const isZh = computed(() => {
     <VPCarbonAds 
       v-if="(isPost || isBlogHome) && theme.carbonAds && isAsideEnabled" 
       :carbon-ads="theme.carbonAds" 
-      :key="'aside-' + page.relativePath"
     />
 
     <slot name="aside-outline-before" />

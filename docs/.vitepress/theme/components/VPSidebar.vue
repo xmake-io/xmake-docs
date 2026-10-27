@@ -89,8 +89,7 @@ watch(
       <VPCarbonAds 
         v-if="theme.carbonAds" 
         :carbon-ads="theme.carbonAds" 
-        :key="'sidebar-' + page.relativePath"
-      />
+        />
 
       <span class="visually-hidden" id="sidebar-aria-label">
         Sidebar Navigation

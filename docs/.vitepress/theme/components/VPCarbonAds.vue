@@ -1,51 +1,19 @@
 <script setup lang="ts">
 import type { DefaultTheme } from 'vitepress/theme'
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useData } from 'vitepress/dist/client/theme-default/composables/data'
-
+import { registerCarbonSlot } from '../carbonAds'
 const { page } = useData()
-const props = defineProps<{
-  carbonAds: DefaultTheme.CarbonAdsOptions
-}>()
-
-const carbonOptions = props.carbonAds
-
-const container = ref()
-
-let isInitialized = false
-
-function init() {
-  if (!isInitialized) {
-    isInitialized = true
-    const s = document.createElement('script')
-    s.id = '_carbonads_js'
-    s.src = `//cdn.carbonads.com/carbon.js?serve=${carbonOptions.code}&placement=${carbonOptions.placement}`
-    s.async = true
-    // Only add if container exists and is empty to avoid duplication
-    if (container.value && container.value.innerHTML === '') {
-        container.value.appendChild(s)
-    }
-  }
-}
-
-watch(() => page.value.relativePath, () => {
-  if (isInitialized) {
-    ;(window as any)._carbonads?.refresh()
-  }
-})
-
-// no need to account for option changes during dev, we can just
-// refresh the page
-if (carbonOptions) {
-  onMounted(() => {
-    // Only initialize if the container is visible to avoid ID conflicts
-    // with other instances (e.g. sidebar vs bottom)
-    if (container.value) {
-      init()
-    }
+const props = defineProps<{ carbonAds: DefaultTheme.CarbonAdsOptions }>()
+const container = ref<HTMLElement>()
+let slot: ReturnType<typeof registerCarbonSlot> | undefined
+onMounted(() => {
+  if (container.value && props.carbonAds) slot = registerCarbonSlot(container.value, {
+    ...props.carbonAds, path: page.value.relativePath, minWidth: 960,
   })
-}
-
+})
+watch(() => page.value.relativePath, path => slot?.update(path), { flush: 'post' })
+onBeforeUnmount(() => slot?.dispose())
 </script>
 
 <template>
