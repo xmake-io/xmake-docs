@@ -101,8 +101,10 @@ export function registerCarbonSlot(element: HTMLElement, options: CarbonSlotOpti
     timer = setTimeout(reconcile, 0)
   } else schedule()
   return {
-    update(path: string) {
-      if (normalize(path) === normalize(slot.options.path)) return
+    recheck: schedule,
+    update(path: string, minWidth = slot.options.minWidth) {
+      if (normalize(path) === normalize(slot.options.path) && minWidth === slot.options.minWidth) return
+      slot.options.minWidth = minWidth
       slot.options.path = path
       schedule()
     },

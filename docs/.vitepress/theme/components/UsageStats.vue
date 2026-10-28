@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useData } from 'vitepress'
 import stats from '../../data/usage-stats.json'
 const { lang } = useData()
@@ -8,6 +8,24 @@ const selectedMetric = ref<'uniques'|'clones'>('uniques')
 const unit = ref('day')
 const year = ref('all')
 const month = ref('all')
+const filtersOpen = ref(false)
+const filterRoot = ref<HTMLElement>()
+const filterButton = ref<HTMLButtonElement>()
+const units = computed(() => [
+ { value:'day', label:zh.value?'按天':'Daily' },
+ { value:'month', label:zh.value?'按月':'Monthly' },
+ { value:'year', label:zh.value?'按年':'Yearly' },
+])
+const filterLabel = computed(() => [units.value.find(u=>u.value===unit.value)?.label,
+ year.value==='all'?(zh.value?'全部时间':'All time'):year.value,
+ unit.value==='day' && month.value!=='all' ? (zh.value?Number(month.value)+'月':month.value) : '',
+].filter(Boolean).join(' · '))
+function outsideFilter(event: PointerEvent) {
+ if (filterRoot.value && !filterRoot.value.contains(event.target as Node)) filtersOpen.value = false
+}
+function closeFilters() { filtersOpen.value = false; filterButton.value?.focus() }
+onMounted(() => document.addEventListener('pointerdown', outsideFilter))
+onBeforeUnmount(() => document.removeEventListener('pointerdown', outsideFilter))
 const years = [...new Set(stats.days.map((d: any) => d.date.slice(0, 4)))].sort().reverse()
 const today = new Date().toISOString().slice(0, 10)
 const points = computed(() => {
@@ -59,10 +77,21 @@ const stale = computed(()=>stats.updatedAt && Date.now()-Date.parse(stats.update
  <figure>
   <div class="chart-toolbar">
    <div class="metric-switch" role="group" :aria-label="zh?'统计指标':'Metric'"><button v-for="metric in metrics" :key="metric.key" type="button" :class="'series-'+metric.key" :aria-pressed="selectedMetric === metric.key" @click="selectedMetric = metric.key">{{metric.title}}</button></div>
-   <div class="filters">
-    <select v-model="unit" :aria-label="zh?'统计周期':'Group by'"><option value="day">{{zh?'按天':'Daily'}}</option><option value="month">{{zh?'按月':'Monthly'}}</option><option value="year">{{zh?'按年':'Yearly'}}</option></select>
-    <select v-model="year" :aria-label="zh?'年份':'Year'"><option value="all">{{zh?'全部年份':'All years'}}</option><option v-for="v in years" :key="v">{{v}}</option></select>
-    <select v-if="unit==='day'" v-model="month" :aria-label="zh?'月份':'Month'"><option value="all">{{zh?'全部月份':'All months'}}</option><option v-for="m in 12" :key="m" :value="String(m).padStart(2,'0')">{{zh?m+'月':new Date(2000,m-1).toLocaleString('en',{month:'short'})}}</option></select>
+   <div ref="filterRoot" class="filters" @keydown.esc.stop.prevent="closeFilters" @focusout="event => { if (!filterRoot?.contains(event.relatedTarget as Node)) filtersOpen = false }">
+    <button ref="filterButton" class="filter-trigger" type="button" :aria-expanded="filtersOpen" @click="filtersOpen = !filtersOpen">
+     <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2 4h12M4 8h8M6 12h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+     {{filterLabel}}<span aria-hidden="true">⌄</span>
+    </button>
+    <div v-if="filtersOpen" class="filter-panel" role="group" :aria-label="zh?'时间筛选':'Date filters'">
+     <div class="filter-options" role="group" :aria-label="zh?'统计周期':'Group by'"><button v-for="u in units" :key="u.value" type="button" :aria-pressed="unit===u.value" @click="unit=u.value">{{u.label}}</button></div>
+     <span class="filter-label">{{zh?'年份':'Year'}}</span>
+     <div class="filter-options year-options"><button type="button" :aria-pressed="year==='all'" @click="year='all'">{{zh?'全部':'All'}}</button><button v-for="v in years" :key="v" type="button" :aria-pressed="year===v" @click="year=v">{{v}}</button></div>
+     <template v-if="unit==='day'">
+      <span class="filter-label">{{zh?'月份':'Month'}}</span>
+      <div class="filter-options month-options"><button type="button" :aria-pressed="month==='all'" @click="month='all'">{{zh?'全部':'All'}}</button><button v-for="m in 12" :key="m" type="button" :aria-pressed="month===String(m).padStart(2,'0')" @click="month=String(m).padStart(2,'0')">{{zh?m+'月':new Date(2000,m-1).toLocaleString('en',{month:'short'})}}</button></div>
+     </template>
+     <button type="button" class="filter-done" @click="closeFilters">{{zh?'完成':'Done'}}</button>
+    </div>
    </div>
   </div>
   <p v-if="!stats.days.length" class="empty muted">{{zh?'暂无统计数据。':'No statistics available yet.'}}</p>
@@ -96,7 +125,21 @@ const stale = computed(()=>stats.updatedAt && Date.now()-Date.parse(stats.update
 <style scoped>
 .usage-stats { margin:24px 0 36px; }
 .chart-toolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
-.filters { display:flex; flex-wrap:wrap; gap:6px; }
+.filters { position:relative; }
+.filter-trigger { display:flex; align-items:center; gap:6px; padding:6px 8px; border-radius:6px; font-size:12px; color:var(--vp-c-text-2); cursor:pointer; }
+.filter-trigger:hover, .filter-trigger[aria-expanded="true"] { background:var(--vp-c-bg); color:var(--vp-c-brand-1); }
+.filter-trigger svg { width:14px; height:14px; flex:none; }
+.filter-panel { position:absolute; z-index:5; top:calc(100% + 6px); right:0; width:260px; max-width:calc(100vw - 72px); padding:12px; border:1px solid var(--vp-c-divider); border-radius:10px; background:var(--vp-c-bg); box-shadow:var(--vp-shadow-2); }
+.filter-options { display:flex; flex-wrap:wrap; gap:4px; }
+.filter-options button { padding:5px 9px; border-radius:5px; font-size:12px; cursor:pointer; color:var(--vp-c-text-2); }
+.filter-options button:hover { background:var(--vp-c-bg-soft); }
+.filter-options button[aria-pressed="true"] { background:var(--vp-c-brand-soft); color:var(--vp-c-brand-1); }
+.filter-label { display:block; margin:10px 0 4px; font-size:11px; color:var(--vp-c-text-3); }
+.year-options { max-height:100px; overflow-y:auto; }
+.month-options { display:grid; grid-template-columns:repeat(4,1fr); }
+.filter-done { display:block; margin:10px 0 0 auto; font-size:12px; color:var(--vp-c-brand-1); cursor:pointer; padding:4px 8px; }
+.filters button:focus-visible { outline:2px solid var(--vp-c-brand-1); outline-offset:2px; }
+:global(.vp-doc h2#user-statistics) { border-top:0; padding-top:0; }
 .metric-switch { display:flex; flex-wrap:wrap; gap:4px; padding:3px; border:1px solid var(--vp-c-divider); border-radius:8px; }
 .metric-switch button { padding:6px 10px; border-radius:5px; font-size:12px; color:var(--vp-c-text-2); cursor:pointer; }
 .metric-switch button[aria-pressed="true"] { background:var(--vp-c-bg); color:var(--series-color); box-shadow:0 1px 3px #00000012; }
@@ -107,7 +150,6 @@ const stale = computed(()=>stats.updatedAt && Date.now()-Date.parse(stats.update
 .series-clones .line { stroke-dasharray:5 3; }
 .empty { padding:32px 0; text-align:center; }
 label { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--vp-c-text-2); }
-select { border:1px solid var(--vp-c-divider); border-radius:6px; padding:5px 26px 5px 10px; background:var(--vp-c-bg); color:var(--vp-c-text-2); font-size:12px; cursor:pointer; }
 figure { margin:0 0 16px; padding:16px; border:1px solid var(--vp-c-divider); border-radius:12px; background:var(--vp-c-bg-soft); }
 figcaption { font-weight:600; font-size:15px; }
 svg { display:block; width:100%; height:auto; overflow:visible; }
@@ -124,5 +166,5 @@ circle { fill:var(--series-color); }
 .muted { color:var(--vp-c-text-2); font-size:13px; line-height:1.7; }
 .stats-note { color:var(--vp-c-text-3); font-size:12px; line-height:1.6; }
 .stats-note code { font-size:inherit; }
-@media(max-width:640px) { .plot-tooltip { left:50% !important; } figure { padding:12px; } .chart-toolbar { gap:10px; } .filters { width:100%; } select { flex:1; min-width:0; padding:6px 16px 6px 5px; font-size:11px; } svg text { font-size:24px; } }
+@media(max-width:640px) { .plot-tooltip { left:50% !important; } figure { padding:12px; } .chart-toolbar { gap:10px; } .filters { margin-left:auto; } .filter-trigger { padding:4px 6px; font-size:11px; } svg text { font-size:24px; } }
 </style>

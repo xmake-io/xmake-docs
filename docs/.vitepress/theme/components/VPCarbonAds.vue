@@ -12,12 +12,20 @@ let resizeObserver: ResizeObserver | undefined
 let sidebarObserver: MutationObserver | undefined
 let sidebar: HTMLElement | null = null
 function register() {
-  slot?.dispose()
   if (!container.value) return
+  const minWidth = props.mobileFooter || (props.mobileSidebar && longArticle.value) ? 0 : 960
+  if (slot) {
+    slot.update(page.value.relativePath, minWidth)
+    slot.recheck()
+    return
+  }
   slot = registerCarbonSlot(container.value, {
     ...props.carbonAds, path: page.value.relativePath,
-    minWidth: props.mobileFooter || (props.mobileSidebar && longArticle.value) ? 0 : 960,
+    minWidth,
   })
+}
+function onSidebarTransition(event: TransitionEvent) {
+  if (event.target === sidebar && (event.propertyName === 'transform' || event.propertyName === 'opacity')) slot?.recheck()
 }
 function measure() {
   const article = document.querySelector('.VPDoc .vp-doc')
@@ -43,7 +51,7 @@ onMounted(() => {
   if (props.mobileSidebar && sidebar) {
     sidebarObserver = new MutationObserver(register)
     sidebarObserver.observe(sidebar, { attributes: true, attributeFilter: ['class'] })
-    sidebar.addEventListener('transitionend', register)
+    sidebar.addEventListener('transitionend', onSidebarTransition)
   }
   register()
   observeArticle()
@@ -53,7 +61,7 @@ onBeforeUnmount(() => {
   resizeObserver?.disconnect()
   sidebarObserver?.disconnect()
   window.removeEventListener('resize', measure)
-  sidebar?.removeEventListener('transitionend', register)
+  sidebar?.removeEventListener('transitionend', onSidebarTransition)
   slot?.dispose()
 })
 </script>
