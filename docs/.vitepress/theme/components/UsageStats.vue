@@ -28,6 +28,16 @@ onMounted(() => document.addEventListener('pointerdown', outsideFilter))
 onBeforeUnmount(() => document.removeEventListener('pointerdown', outsideFilter))
 const years = [...new Set(stats.days.map((d: any) => d.date.slice(0, 4)))].sort().reverse()
 const today = new Date().toISOString().slice(0, 10)
+const dailyAverage = computed(() => {
+ const cutoff = new Date(Date.parse(today) - 30 * 86400000).toISOString().slice(0, 10)
+ const days = (stats.days as {date:string;clones:number;uniques:number}[])
+  .filter(day => day.date >= cutoff && day.date < today)
+ if (!days.length) return null
+ return {
+  uniques: Math.round(days.reduce((sum, day) => sum + day.uniques, 0) / days.length),
+  clones: Math.round(days.reduce((sum, day) => sum + day.clones, 0) / days.length),
+ }
+})
 const points = computed(() => {
  const groups = new Map<string, { date: string; clones: number; uniques: number; days: number }>()
  for (const d of stats.days as {date:string;clones:number;uniques:number}[]) {
@@ -86,6 +96,7 @@ const stale = computed(()=>stats.updatedAt && Date.now()-Date.parse(stats.update
 </script>
 <template>
 <section class="usage-stats">
+ <p v-if="dailyAverage" class="usage-summary">{{zh?'平均每天约有 ':'On average, about '}}<strong>{{dailyAverage.uniques.toLocaleString()}}</strong>{{zh?' 位用户、':' users and '}}<strong>{{dailyAverage.clones.toLocaleString()}}</strong>{{zh?' 个项目在使用 Xmake。':' projects use Xmake each day.'}}</p>
  <figure>
   <div class="chart-toolbar">
    <div class="metric-switch" role="group" :aria-label="zh?'统计指标':'Metric'"><button v-for="metric in metrics" :key="metric.key" type="button" :class="'series-'+metric.key" :aria-pressed="selectedMetric === metric.key" @click="selectedMetric = metric.key"><span class="full-label">{{metric.title}}</span><span class="short-label">{{metric.key==='uniques'?(zh?'用户数':'Users'):(zh?'项目数':'Projects')}}</span></button></div>
@@ -136,6 +147,8 @@ const stale = computed(()=>stats.updatedAt && Date.now()-Date.parse(stats.update
 </template>
 <style scoped>
 .usage-stats { margin:24px 0 36px; }
+.usage-summary { font-size:12px; line-height:1.7; color:var(--vp-c-text-2); }
+.usage-summary strong { color:var(--vp-c-brand-1); font-weight:700; font-size:inherit; font-variant-numeric:tabular-nums; }
 .chart-toolbar { display:flex; flex-wrap:nowrap; align-items:center; justify-content:space-between; gap:8px; margin-bottom:12px; }
 .filters { position:relative; }
 .filter-trigger { display:flex; align-items:center; gap:6px; padding:3px 8px; min-height:32px; line-height:20px; white-space:nowrap; border-radius:7px; background:var(--vp-c-bg-alt); font-size:12px; color:var(--vp-c-text-2); cursor:pointer; }
