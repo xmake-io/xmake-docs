@@ -1,3 +1,13 @@
+<script setup>
+import UsageStats from "../../.vitepress/theme/components/UsageStats.vue"
+</script>
+
+## 用户统计 {#user-statistics}
+
+<UsageStats />
+
+## 用户列表 {#user-list}
+
 如果您正在使用 xmake，欢迎点击编辑 [此页面](https://github.com/xmake-io/xmake-docs/edit/master/docs/zh/about/who_is_using_xmake.md)，通过 PR 将信息提交至下方列表，让更多用户了解有多少人在使用 xmake，也能让用户更加安心地使用 xmake。
 
 我们也会有更多动力持续投入，让 xmake 项目和社区更加繁荣。
@@ -5,8 +15,6 @@
 ::: tip 注意
 如果您不方便添加您的项目地址，可以简单描述项目的使用场景。
 :::
-
-## 用户列表 {#user-list}
 
 | 用户 (公司名/个人联系方式) | 项目 (项目简介/项目地址) | 评论 (可选) |
 | :--- | :--- | :--- |

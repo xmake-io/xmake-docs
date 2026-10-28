@@ -389,6 +389,8 @@ export XMAKE_DOWNLOADER=curl
 
 ## XMAKE_STATS
 
+每日统计和按月、年汇总的趋势图见[谁在使用 Xmake](/zh/about/who_is_using_xmake#user-statistics)。图表使用 GitHub 克隆统计估计使用量；设置 `XMAKE_STATS=false` 可禁用统计。
+
 - 开启或禁用用户量统计
 
 由于目前 xmake 还在发展初期，我们需要知道大概的用户量增长情况，以便于提供我们持续更新 xmake 的动力。

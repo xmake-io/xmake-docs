@@ -1,6 +1,7 @@
 name: Azure Static Web Apps CI/CD
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -11,7 +12,7 @@ on:
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
@@ -19,6 +20,16 @@ jobs:
         with:
           submodules: true
           lfs: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Refresh usage statistics before building
+        if: github.event_name != 'pull_request'
+        run: node scripts/collect-usage-stats.mjs --optional
+        env:
+          XMAKE_STATS_TOKEN: ${{ secrets.XMAKE_STATS_TOKEN }}
 
       - name: Deploy
         id: builddeploy

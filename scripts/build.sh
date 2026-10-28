@@ -14,5 +14,6 @@ npm install
 npm run generate-release
 npm run generate-blog
 npm run generate-codes
+node scripts/collect-usage-stats.mjs --optional
 npx vitepress build docs
 node scripts/fix-llms-txt.cjs

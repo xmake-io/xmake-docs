@@ -387,6 +387,8 @@ export XMAKE_DOWNLOADER=curl
 
 ## XMAKE_STATS
 
+See [Who is using Xmake](/about/who_is_using_xmake#user-statistics) for daily, monthly and yearly trends based on GitHub clone statistics. Set `XMAKE_STATS=false` to opt out.
+
 - Enable or disable user statistics
 
 Since Xmake is still in the early stages of development, we need to know the approximate user growth in order to provide us with the motivation to continue to update Xmake. Therefore, Xmake defaults to the first project build every day, and it will automatically git clone an empty warehouse in the background process: https://github.com/xmake-io/xmake-stats

@@ -1,3 +1,13 @@
+<script setup>
+import UsageStats from "../.vitepress/theme/components/UsageStats.vue"
+</script>
+
+## User statistics {#user-statistics}
+
+<UsageStats />
+
+## User List
+
 If you are using Xmake, please click to edit [this page](https://github.com/xmake-io/xmake-docs/edit/master/docs/about/who_is_using_xmake.md) to submit your information to the following list, so more users can know how many people are using Xmake.
 
 This also allows users to use Xmake more confidently, and gives us more motivation to maintain it continuously,
@@ -6,8 +16,6 @@ so that the Xmake project and community will grow stronger.
 ::: tip NOTE
 If it is inconvenient for you to add your project address, you can briefly describe the usage scenarios of your project.
 :::
-
-## User List
 
 | User (Company Name or Personal Contact) | Project (Project Introduction or Address) | Comment (optional) |
 | :--- | :--- | :--- |
