@@ -4,9 +4,8 @@ import { useData } from 'vitepress'
 import { useAside } from 'vitepress/dist/client/theme-default/composables/aside'
 import VPDocAsideOutline from 'vitepress/dist/client/theme-default/components/VPDocAsideOutline.vue'
 import VPCarbonAds from './VPCarbonAds.vue'
-import WWAds from './WWAds.vue'
 
-const { theme, page, lang } = useData()
+const { theme, page } = useData()
 const { isAsideEnabled } = useAside()
 
 // Check if current page is a blog post article
@@ -36,17 +35,6 @@ const isBlogHome = computed(() => {
   return path === 'blog.md' || path === 'blog/index.md'
 })
 
-const isSponsor = computed(() => {
-  const path = page.value.relativePath || page.value.filePath || ''
-  return path.includes('about/sponsor')
-})
-
-const isZh = computed(() => {
-  return lang.value === 'zh' || 
-         lang.value === 'zh-CN' || 
-         page.value.relativePath.startsWith('zh/') || 
-         page.value.filePath.includes('/zh/')
-})
 </script>
 
 <template>
@@ -66,20 +54,6 @@ const isZh = computed(() => {
 
     <slot name="aside-bottom" />
     
-    <div class="aside-wwads-wrapper">
-      <div v-if="isZh">
-        <WWAds />
-      </div>
-    </div>
+
   </div>
 </template>
-
-<style scoped>
-/* Hide aside ads on small screens to avoid duplication with doc-after ads */
-@media (max-width: 1280px) {
-  .aside-wwads-wrapper {
-    display: none;
-  }
-}
-</style>
-

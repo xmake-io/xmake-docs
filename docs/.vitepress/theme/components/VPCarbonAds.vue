@@ -1,23 +1,65 @@
 <script setup lang="ts">
 import type { DefaultTheme } from 'vitepress/theme'
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useData } from 'vitepress/dist/client/theme-default/composables/data'
 import { registerCarbonSlot } from '../carbonAds'
 const { page } = useData()
-const props = defineProps<{ carbonAds: DefaultTheme.CarbonAdsOptions }>()
+const props = defineProps<{ carbonAds: DefaultTheme.CarbonAdsOptions; mobileFooter?: boolean; mobileSidebar?: boolean }>()
 const container = ref<HTMLElement>()
 let slot: ReturnType<typeof registerCarbonSlot> | undefined
-onMounted(() => {
-  if (container.value && props.carbonAds) slot = registerCarbonSlot(container.value, {
-    ...props.carbonAds, path: page.value.relativePath, minWidth: 960,
+const longArticle = ref(false)
+let resizeObserver: ResizeObserver | undefined
+let sidebarObserver: MutationObserver | undefined
+let sidebar: HTMLElement | null = null
+function register() {
+  slot?.dispose()
+  if (!container.value) return
+  slot = registerCarbonSlot(container.value, {
+    ...props.carbonAds, path: page.value.relativePath,
+    minWidth: props.mobileFooter || (props.mobileSidebar && longArticle.value) ? 0 : 960,
   })
+}
+function measure() {
+  const article = document.querySelector('.VPDoc .vp-doc')
+  // Pages without a navigation drawer retain their footer placement.
+  const next = !!document.querySelector('.VPSidebar') && (article?.getBoundingClientRect().height || 0) > window.innerHeight * 2
+  if (next !== longArticle.value) {
+    longArticle.value = next
+    nextTick(register)
+  }
+}
+async function observeArticle() {
+  await nextTick()
+  resizeObserver?.disconnect()
+  const article = document.querySelector('.VPDoc .vp-doc')
+  if (article) resizeObserver?.observe(article)
+  measure()
+  slot?.update(page.value.relativePath)
+}
+onMounted(() => {
+  resizeObserver = new ResizeObserver(measure)
+  window.addEventListener('resize', measure)
+  sidebar = document.querySelector('.VPSidebar')
+  if (props.mobileSidebar && sidebar) {
+    sidebarObserver = new MutationObserver(register)
+    sidebarObserver.observe(sidebar, { attributes: true, attributeFilter: ['class'] })
+    sidebar.addEventListener('transitionend', register)
+  }
+  register()
+  observeArticle()
 })
-watch(() => page.value.relativePath, path => slot?.update(path), { flush: 'post' })
-onBeforeUnmount(() => slot?.dispose())
+watch(() => page.value.relativePath, observeArticle, { flush: 'post' })
+onBeforeUnmount(() => {
+  resizeObserver?.disconnect()
+  sidebarObserver?.disconnect()
+  window.removeEventListener('resize', measure)
+  sidebar?.removeEventListener('transitionend', register)
+  slot?.dispose()
+})
 </script>
 
 <template>
-  <div class="VPCarbonAds" ref="container" />
+  <div class="VPCarbonAds" :class="{ 'carbon-mobile-footer': mobileFooter, 'carbon-hide-mobile': (mobileFooter && longArticle) || (mobileSidebar && !longArticle) }" ref="container" />
 </template>
 
 <style scoped>
@@ -144,5 +186,29 @@ onBeforeUnmount(() => slot?.dispose())
   letter-spacing: 0.5px;
   text-align: center;
   text-transform: uppercase;
+}
+</style>
+
+<style scoped>
+.VPCarbonAds.carbon-mobile-footer { display: none; }
+@media (max-width: 959px) {
+  .VPCarbonAds.carbon-mobile-footer {
+    display: flex;
+    width: 100%;
+    max-width: 400px !important;
+    margin: 24px auto;
+    padding: 12px;
+    min-height: 0;
+  }
+  .carbon-mobile-footer :deep(.carbon-wrap) { display: flex; align-items: center; gap: 12px; }
+  .carbon-mobile-footer :deep(.carbon-img) { flex: 0 0 130px; }
+  .carbon-mobile-footer :deep(.carbon-img img) { width: 130px; height: auto; }
+  .carbon-mobile-footer :deep(.carbon-text) { padding: 0; text-align: left; min-width: 0; }
+}
+</style>
+
+<style scoped>
+@media (max-width: 959px) {
+  .VPCarbonAds.carbon-hide-mobile { display: none; }
 }
 </style>

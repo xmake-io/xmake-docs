@@ -88,7 +88,8 @@ watch(
       <!-- Show carbonAds at the top of left sidebar -->
       <VPCarbonAds 
         v-if="theme.carbonAds" 
-        :carbon-ads="theme.carbonAds" 
+        :carbon-ads="theme.carbonAds"
+        mobile-sidebar
         />
 
       <span class="visually-hidden" id="sidebar-aria-label">

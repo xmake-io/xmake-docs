@@ -2,7 +2,6 @@ import Theme from 'vitepress/theme'
 import { h, computed, watch } from 'vue'
 import VPDoc from './components/VPDoc.vue'
 import AIAssistant from './components/AIAssistant.vue'
-import WWAds from './components/WWAds.vue'
 import VPCarbonAds from './components/VPCarbonAds.vue'
 import SponsorButton from './components/SponsorButton.vue'
 import SponsorChannels from './components/SponsorChannels.vue'
@@ -35,13 +34,7 @@ const hashToRoute = {
 export default {
   extends: Theme,
   Layout: () => {
-    const { lang, page, theme } = useData()
-    const isZh = computed(() => {
-      return lang.value === 'zh' || 
-             lang.value === 'zh-CN' || 
-             page.value.relativePath.startsWith('zh/') || 
-             page.value.filePath.includes('/zh/')
-    })
+    const { page, theme } = useData()
     const isHomePage = computed(() => {
       return page.value.relativePath === 'index.md' || page.value.relativePath === 'zh/index.md'
     })
@@ -62,12 +55,9 @@ export default {
     const slots: Record<string, () => ReturnType<typeof h> | null> = {
       'doc-content-before': () => h(VPDoc),
       'doc-footer-before': () => /^(zh\/)?(guide|api|examples|posts)\//.test(page.value.relativePath) ? h(SponsorPrompt) : null,
-      'doc-after': () => {
-        if (isZh.value) {
-          return h('div', { class: 'mobile-only-ads' }, h(WWAds))
-        }
-        return null
-      }
+      'doc-after': () => theme.value.carbonAds
+        ? h(VPCarbonAds, { carbonAds: theme.value.carbonAds, mobileFooter: true })
+        : null
     }
 
     if (isHomePage.value) {

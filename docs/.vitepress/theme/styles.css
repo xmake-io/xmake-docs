@@ -188,13 +188,6 @@
   --vp-sidebar-bg-color: var(--vp-c-bg-alt);
 }
 
-/* Mobile only ads */
-@media (min-width: 1280px) {
-  .mobile-only-ads {
-    display: none;
-  }
-}
-
 /* Hide right sidebar carbon ads on post pages */
 body.is-post .VPDocAside .VPDocAsideCarbonAds,
 body.is-post .VPDocAside .VPCarbonAds {
