@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useData } from 'vitepress'
 import stats from '../../data/usage-stats.json'
 const { lang } = useData()
@@ -37,6 +37,21 @@ function segments(key:'clones'|'uniques') {
   segment+=`${segment?' L':'M'}${x(i)},${y(p[key])}`
  });if(segment)segments.push(segment);return segments
 }
+const hovered = ref<number | null>(null)
+const plot = ref<SVGSVGElement>()
+const hoveredPoint = computed(() => hovered.value === null ? null : points.value[hovered.value])
+const tooltipLeft = computed(() => {
+ const position = x(hovered.value ?? 0) / 650 * 100
+ return Math.max(25, Math.min(75, position))
+})
+function inspectPoint(event: PointerEvent) {
+ if (!plot.value || !points.value.length) return
+ const matrix = plot.value.getScreenCTM()
+ if (!matrix) return
+ const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse())
+ hovered.value = points.value.length === 1 ? 0 : Math.max(0, Math.min(points.value.length - 1, Math.round((point.x - 42) / 588 * (points.value.length - 1))))
+}
+watch([points, selectedMetric], () => { hovered.value = null })
 const stale = computed(()=>stats.updatedAt && Date.now()-Date.parse(stats.updatedAt)>3*86400000)
 </script>
 <template>
@@ -52,7 +67,8 @@ const stale = computed(()=>stats.updatedAt && Date.now()-Date.parse(stats.update
   </div>
   <p v-if="!stats.days.length" class="empty muted">{{zh?'暂无统计数据。':'No statistics available yet.'}}</p>
   <p v-else-if="!points.length" class="empty muted">{{zh?'所选时间范围暂无完整日期的数据。':'No completed daily records in this period.'}}</p>
-  <svg v-else viewBox="0 0 650 215" role="img" :aria-label="activeMetric.title">
+  <div v-else class="plot" @pointerleave="hovered = null">
+  <svg ref="plot" @pointermove="inspectPoint" @pointerdown="inspectPoint" viewBox="0 0 650 215" role="img" :aria-label="activeMetric.title">
    <title>{{activeMetric.title}}</title>
    <path class="grid" d="M42 30H630 M42 105H630 M42 180H630"/>
    <text x="4" y="24">{{maximum.toLocaleString()}}</text><text x="20" y="184">0</text>
@@ -60,8 +76,17 @@ const stale = computed(()=>stats.updatedAt && Date.now()-Date.parse(stats.update
     <path v-for="(path,i) in segments(activeMetric.key)" :key="i" class="line" :d="path"/>
     <circle v-for="(p,i) in points" :key="p.date" :cx="x(i)" :cy="y(p[activeMetric.key])" r="3"><title>{{p.date}} · {{activeMetric.title}}: {{p[activeMetric.key].toLocaleString()}}</title></circle>
    </g>
+   <g v-if="hoveredPoint && hovered !== null" class="plot-cursor" :class="'series-'+activeMetric.key" aria-hidden="true">
+    <line :x1="x(hovered)" :x2="x(hovered)" y1="30" y2="180" />
+    <circle :cx="x(hovered)" :cy="y(hoveredPoint[activeMetric.key])" r="5" />
+   </g>
    <text x="42" y="207">{{points[0].date}}</text><text v-if="points.length>1" x="630" y="207" text-anchor="end">{{points.at(-1)?.date}}</text>
   </svg>
+  <div v-if="hoveredPoint" class="plot-tooltip" :style="{ left: tooltipLeft + '%' }" role="status">
+   <strong>{{hoveredPoint.date}}</strong>
+   <span>{{activeMetric.title}}：{{hoveredPoint[activeMetric.key].toLocaleString()}}</span>
+  </div>
+  </div>
  </figure>
  <p v-if="stats.updatedAt" class="muted">{{zh?'更新于':'Updated'}} {{stats.updatedAt.slice(0,10)}} · UTC <span v-if="stale">· {{zh?'数据更新延迟':'Update delayed'}}</span></p>
  <p class="stats-note">{{zh?'基于 GitHub 对':'Estimated from GitHub clone statistics for the empty'}} <a href="https://github.com/xmake-io/xmake-stats">xmake-stats</a> {{zh?'空仓库的克隆统计估算，月／年用户数为日均值。设置':'repository; monthly/yearly users are daily averages. Set'}} <code>XMAKE_STATS=false</code> {{zh?'可禁用统计。':'to opt out.'}} <a :href="(zh?'/zh':'')+'/guide/extras/environment-variables.html#xmake-stats'">{{zh?'了解更多':'Learn more'}}</a></p>
@@ -87,11 +112,17 @@ figure { margin:0 0 16px; padding:16px; border:1px solid var(--vp-c-divider); bo
 figcaption { font-weight:600; font-size:15px; }
 svg { display:block; width:100%; height:auto; overflow:visible; }
 svg text { fill:var(--vp-c-text-2); font-size:12px; }
+.plot { position:relative; touch-action:pan-y; }
+.plot-tooltip { position:absolute; top:0; transform:translateX(-50%); pointer-events:none; padding:8px 12px; border:1px solid var(--vp-c-divider); border-radius:8px; background:var(--vp-c-bg); box-shadow:0 4px 16px #00000014; font-size:12px; line-height:1.6; white-space:normal; width:max-content; max-width:calc(100% - 16px); color:var(--vp-c-text-1); }
+.plot-tooltip strong, .plot-tooltip span { display:block; }
+.plot-cursor { pointer-events:none; }
+.plot-cursor line { stroke:var(--vp-c-text-3); stroke-dasharray:3 3; }
+.plot-cursor circle { stroke:var(--vp-c-bg); stroke-width:2; }
 .grid { stroke:var(--vp-c-divider); fill:none; }
 .line { stroke:var(--series-color); stroke-width:2; fill:none; stroke-linejoin:round; }
 circle { fill:var(--series-color); }
 .muted { color:var(--vp-c-text-2); font-size:13px; line-height:1.7; }
 .stats-note { color:var(--vp-c-text-3); font-size:12px; line-height:1.6; }
 .stats-note code { font-size:inherit; }
-@media(max-width:640px) { figure { padding:12px; } .chart-toolbar { gap:10px; } .filters { width:100%; } select { flex:1; min-width:0; padding:6px 16px 6px 5px; font-size:11px; } svg text { font-size:24px; } }
+@media(max-width:640px) { .plot-tooltip { left:50% !important; } figure { padding:12px; } .chart-toolbar { gap:10px; } .filters { width:100%; } select { flex:1; min-width:0; padding:6px 16px 6px 5px; font-size:11px; } svg text { font-size:24px; } }
 </style>
