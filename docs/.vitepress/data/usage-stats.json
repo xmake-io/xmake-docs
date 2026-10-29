@@ -1,5 +1,76 @@
 {
   "source": "xmake-io/xmake-stats",
-  "updatedAt": null,
-  "days": []
+  "updatedAt": "2026-10-29T10:57:45.240Z",
+  "days": [
+    {
+      "date": "2026-10-15",
+      "clones": 8208,
+      "uniques": 2017
+    },
+    {
+      "date": "2026-10-16",
+      "clones": 9304,
+      "uniques": 2021
+    },
+    {
+      "date": "2026-10-17",
+      "clones": 5107,
+      "uniques": 1711
+    },
+    {
+      "date": "2026-10-18",
+      "clones": 6025,
+      "uniques": 2135
+    },
+    {
+      "date": "2026-10-19",
+      "clones": 6954,
+      "uniques": 1937
+    },
+    {
+      "date": "2026-10-20",
+      "clones": 8798,
+      "uniques": 2162
+    },
+    {
+      "date": "2026-10-21",
+      "clones": 8307,
+      "uniques": 2256
+    },
+    {
+      "date": "2026-10-22",
+      "clones": 8435,
+      "uniques": 2384
+    },
+    {
+      "date": "2026-10-23",
+      "clones": 9408,
+      "uniques": 2676
+    },
+    {
+      "date": "2026-10-24",
+      "clones": 7172,
+      "uniques": 2185
+    },
+    {
+      "date": "2026-10-25",
+      "clones": 7250,
+      "uniques": 2012
+    },
+    {
+      "date": "2026-10-26",
+      "clones": 8905,
+      "uniques": 2247
+    },
+    {
+      "date": "2026-10-27",
+      "clones": 7796,
+      "uniques": 2243
+    },
+    {
+      "date": "2026-10-28",
+      "clones": 8989,
+      "uniques": 2278
+    }
+  ]
 }
