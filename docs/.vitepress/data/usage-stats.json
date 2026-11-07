@@ -1,6 +1,6 @@
 {
   "source": "xmake-io/xmake-stats",
-  "updatedAt": "2026-11-06T12:15:08.882Z",
+  "updatedAt": "2026-11-07T11:11:05.245Z",
   "days": [
     {
       "date": "2026-10-15",
@@ -111,6 +111,11 @@
       "date": "2026-11-05",
       "clones": 11818,
       "uniques": 2565
+    },
+    {
+      "date": "2026-11-06",
+      "clones": 10685,
+      "uniques": 2614
     }
   ]
 }
