@@ -33,7 +33,7 @@ target("test2")
     add_files("src/*.c")
     add_defines("TEST2")
 
-Includes("src")
+includes("src")
 ```
 
 The global root domain is configured with `add_defines("ROOT")`, which affects all target configurations below, including all target configurations in the `sub-xmake.lua` of includes, so this is the global total configuration.
